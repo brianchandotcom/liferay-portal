@@ -19,6 +19,10 @@ definition {
 			User.firstLoginPG();
 		}
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Add a site") {
 			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}

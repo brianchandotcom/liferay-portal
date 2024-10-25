@@ -31,6 +31,10 @@ definition {
 	@description = "This is a use case for LPS-109102. User Segment specific Assets Lists should be correctly published to live site."
 	@priority = 4
 	test FilterCollectionItemsByPersonalizedVariationsInLiveSite {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Given a site administrator displays a collection with personalized variations on Asset Publisher in staging site") {
 			for (var pageName : list "home,admin") {
 				JSONLayout.addPublicLayout(

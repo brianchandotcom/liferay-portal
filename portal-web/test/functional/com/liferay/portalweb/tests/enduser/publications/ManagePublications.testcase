@@ -27,6 +27,10 @@ definition {
 
 	@priority = 4
 	test AssertDependenciesMovePublicationsWithParentChange {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Add 2 different publications") {
 			JSONPublications.addPublication(publicationName = "Publication 1 Name");
 

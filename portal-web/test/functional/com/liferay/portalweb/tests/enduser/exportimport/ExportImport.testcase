@@ -1023,6 +1023,10 @@ definition {
 	@description = "This is a use case for LPS-84201. Verify if asset publisher's scope settings can be export/import."
 	@priority = 3
 	test ExportImportSiteWithAssetPublisherScopeSetting {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Given: User adds a new site with a page, then adds an AP widget to it") {
 			HeadlessSite.addSite(siteName = "Site Name A");
 

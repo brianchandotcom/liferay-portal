@@ -2280,6 +2280,10 @@ definition {
 	test ViewWidgetPageAtTheTop {
 		var portalURL = PropsUtil.get("portal.url");
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Given an created Web Content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 

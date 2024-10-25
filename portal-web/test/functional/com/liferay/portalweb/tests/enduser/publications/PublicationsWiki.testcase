@@ -16,6 +16,10 @@ definition {
 		User.firstLoginPG();
 
 		WikiPortlet.enableWiki();
+
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
 	}
 
 	tearDown {

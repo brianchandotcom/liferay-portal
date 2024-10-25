@@ -242,6 +242,10 @@ definition {
 	test PreviewContentOnWidgetPageBySegment {
 		property asset.publisher.selection.style = "asset-list";
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Given a site administrator displays manual collection with variation on a widget page") {
 			var roleId = JSONPermissionSetter.setRoleId(roleTitle = "Owner");
 

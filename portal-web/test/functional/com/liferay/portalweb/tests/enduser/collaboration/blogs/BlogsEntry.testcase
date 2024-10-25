@@ -1343,6 +1343,10 @@ definition {
 	@description = "This is a use case for LPS-82204. View blogs entry with XSS custom abstract."
 	@priority = 3
 	test CannotExecuteXSSInCustomAbstractViaAP {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		property testray.component.names = "Security";
 
 		var entryAbstractDescription = '''<script>alert(123)</script>''';

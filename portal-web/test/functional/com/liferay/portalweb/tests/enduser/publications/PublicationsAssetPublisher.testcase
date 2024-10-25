@@ -26,6 +26,10 @@ definition {
 
 	@priority = 4
 	test ViewProductionWebContentInPublication {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONWebcontent.addWebContent(

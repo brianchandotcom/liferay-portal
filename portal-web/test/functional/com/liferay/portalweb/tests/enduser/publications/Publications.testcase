@@ -1796,6 +1796,10 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Create a new tag") {
 			JSONAssettag.addTag(
 				groupName = "Guest",

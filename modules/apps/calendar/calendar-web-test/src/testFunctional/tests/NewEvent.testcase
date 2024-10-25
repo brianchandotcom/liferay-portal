@@ -764,6 +764,10 @@ definition {
 
 	@priority = 4
 	test AddWithRelatedAssetViaAssetPublisher {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ProductMenu.gotoPortlet(

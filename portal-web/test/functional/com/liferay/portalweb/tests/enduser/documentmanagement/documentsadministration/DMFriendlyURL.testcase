@@ -322,6 +322,10 @@ definition {
 	@description = "This ensures that an image in Asset Publisher can be rendered correctly after moving it to a folder."
 	@priority = 4
 	test CanViewImageViaAPAfterMovingToFolder {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1",

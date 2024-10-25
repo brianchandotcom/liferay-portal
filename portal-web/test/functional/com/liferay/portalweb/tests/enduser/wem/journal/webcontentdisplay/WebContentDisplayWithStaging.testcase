@@ -126,6 +126,10 @@ definition {
 	@description = "This is a test for LPS-153676.The Asset Publisher should display the site scope web content after publish global scoped Web Content Display to live."
 	@priority = 4
 	test PublishGlobalScopedWebContentDisplayToLive {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Given a user displays the global web content on Web Content Display and the site web content on Asset Publisher in staging site") {
 			HeadlessWebcontent.addBasicWebContent(
 				content = "Global Web Content Content",

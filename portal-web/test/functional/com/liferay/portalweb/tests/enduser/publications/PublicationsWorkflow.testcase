@@ -28,6 +28,10 @@ definition {
 	@description = "This is a use case for LPS-170104."
 	@priority = 3
 	test CanApproveContentPage {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Add new Content Page and enable workflow for Content Pages") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",

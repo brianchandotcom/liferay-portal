@@ -17,6 +17,10 @@ definition {
 			User.firstLoginPG();
 		}
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Enable wiki") {
 			WikiPortlet.enableWiki();
 		}

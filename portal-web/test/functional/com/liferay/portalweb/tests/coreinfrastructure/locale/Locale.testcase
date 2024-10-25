@@ -1122,6 +1122,10 @@ definition {
 
 		User.firstLoginPG();
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -1173,6 +1177,10 @@ definition {
 		property test.run.type = "sequential";
 
 		User.firstLoginPG();
+
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
 
 		HeadlessSite.addSite(siteName = "Test Site Name");
 

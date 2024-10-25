@@ -1245,6 +1245,10 @@ definition {
 
 	@priority = 4
 	test XSSScriptWebContent {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Navigator.openURL();

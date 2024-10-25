@@ -258,6 +258,10 @@ definition {
 	@description = "This ensures that a depot category can be selected in Category Navigation on a connected site."
 	@priority = 4
 	test CanSelectCategoryInCategoriesNavigation {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		for (var portletName : list "Asset Publisher,Category Filter") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Site Name",

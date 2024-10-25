@@ -12,6 +12,10 @@ definition {
 	setUp {
 		SignIn.signIn();
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		SearchAdministration.executeReindex();
 	}
 

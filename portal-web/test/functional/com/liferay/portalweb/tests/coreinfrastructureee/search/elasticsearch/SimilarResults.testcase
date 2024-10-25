@@ -935,6 +935,10 @@ definition {
 
 	@priority = 4
 	test ViewOnContentPages {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",

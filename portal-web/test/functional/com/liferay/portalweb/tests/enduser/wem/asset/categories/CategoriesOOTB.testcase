@@ -385,6 +385,10 @@ definition {
 	@description = ""
 	@priority = 4
 	test CheckBlogFilterByCategoryAtAssetPublisher {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		property portal.acceptance = "true";
 
 		task ("Add a global category") {

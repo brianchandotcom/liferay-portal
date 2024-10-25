@@ -420,6 +420,10 @@ definition {
 	@description = "This is a test for LPS-171967. Disable and enable configuration for managing asset.categories.search.hierarchical property from the UI."
 	@priority = 4
 	test DisableAndEnableIncludeChildCategoriesWhenSearchingParentCategories {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Given an administrator disables the Include child categories when searching parent categories") {
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Assets",

@@ -28,6 +28,10 @@ definition {
 		property test.run.type = "single";
 		property timeout.explicit.wait = "120";
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",

@@ -105,6 +105,10 @@ definition {
 	@description = "Assert we can publish the publication with edited message board thread."
 	@priority = 4
 	test PublishEditedMessageBoardThread {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(

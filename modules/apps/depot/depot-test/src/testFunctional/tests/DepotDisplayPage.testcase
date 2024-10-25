@@ -10,6 +10,10 @@ definition {
 
 		User.firstLoginPG();
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONDepot.addDepot(

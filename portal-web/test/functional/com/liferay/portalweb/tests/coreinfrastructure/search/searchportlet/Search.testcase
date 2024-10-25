@@ -2691,6 +2691,10 @@ definition {
 	@description = "This is a use case for LPS-152937."
 	@priority = 3
 	test SortAccentedWords {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		var digit = 1;
 
 		for (var content : list "Alicante,Barcelona,Álava,Alava") {

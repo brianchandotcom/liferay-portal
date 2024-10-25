@@ -596,6 +596,10 @@ definition {
 	@description = "This is a use case for LPS-162398. View friendlyURL in global web contents with translations."
 	@priority = 4
 	test ViewFriendlyURLInGlobalWebContentsWithTranslations {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Given a global web content with translations") {
 			task ("Add a Web Content Structure in Global with a text field") {
 				WebContentNavigator.openWebContentAdmin(siteURLKey = "global");

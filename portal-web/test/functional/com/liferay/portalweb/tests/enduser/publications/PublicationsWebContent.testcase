@@ -655,6 +655,10 @@ definition {
 
 	@priority = 4
 	test PublishWebContentWithFriendlyURL {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");

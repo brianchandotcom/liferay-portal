@@ -26,6 +26,10 @@ definition {
 			var siteId = HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Connect and synchronyze with Analytics Cloud") {
 			ACDXPSettings.connectDXPtoAnalyticsCloudWithTryAgain(siteName = "Test Site Name");
 		}

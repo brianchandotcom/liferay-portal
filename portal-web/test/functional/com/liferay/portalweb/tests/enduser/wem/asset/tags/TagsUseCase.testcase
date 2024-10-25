@@ -18,6 +18,10 @@ definition {
 			WikiPortlet.enableWiki();
 		}
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Add a site") {
 			HeadlessSite.addSite(siteName = "Test Site Name");
 		}

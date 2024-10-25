@@ -18,6 +18,10 @@ definition {
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
+
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
 	}
 
 	@description = "Inactive and reactive site."

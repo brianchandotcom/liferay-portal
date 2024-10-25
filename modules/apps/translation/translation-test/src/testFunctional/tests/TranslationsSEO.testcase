@@ -152,6 +152,10 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		TranslationsSEO.enableOnlyTranslatedHreflangs(
 			configurationScope = "Site Settings",
 			siteURLKey = "test-site-name");

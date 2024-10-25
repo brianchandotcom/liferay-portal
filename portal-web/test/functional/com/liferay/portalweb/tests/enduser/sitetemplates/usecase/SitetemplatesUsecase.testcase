@@ -1606,6 +1606,10 @@ definition {
 	test ViewPortletConfigurationOfGlobalTemplatesPageCopyFromSitesTemplate {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		task ("Given: User add a new Site Template") {
 			SiteTemplates.addCP(
 				siteTemplateActive = "Yes",

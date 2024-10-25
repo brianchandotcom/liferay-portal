@@ -204,6 +204,11 @@ test.describe('Manage object entries through Page Templates', () => {
 			titleObjectFieldName: 'text',
 		});
 
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
 		const objectAdminRestClient = await apiHelpers.buildRestClient(
 			ObjectAdminRestClient
 		);
@@ -229,11 +234,7 @@ test.describe('Manage object entries through Page Templates', () => {
 				},
 			});
 
-		apiHelpers.data.push({
-			id: listTypeDefinition.id,
-			type: 'listTypeDefinition',
-		});
-		apiHelpers.data.push({
+		apiHelpers.data.unshift({
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
@@ -354,6 +355,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 				],
 			});
 
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
 		const objectAdminRestClient = await apiHelpers.buildRestClient(
 			ObjectAdminRestClient
 		);
@@ -380,11 +386,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				},
 			});
 
-		apiHelpers.data.push({
-			id: listTypeDefinition.id,
-			type: 'listTypeDefinition',
-		});
-		apiHelpers.data.push({
+		apiHelpers.data.unshift({
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
@@ -517,6 +519,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 				],
 			});
 
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
 		const objectAdminRestClient = await apiHelpers.buildRestClient(
 			ObjectAdminRestClient
 		);
@@ -543,11 +550,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				},
 			});
 
-		apiHelpers.data.push({
-			id: listTypeDefinition.id,
-			type: 'listTypeDefinition',
-		});
-		apiHelpers.data.push({
+		apiHelpers.data.unshift({
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});

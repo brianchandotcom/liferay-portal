@@ -43,14 +43,17 @@
 		"zod": "^3.21.4"
 	},
 	"devDependencies": {
+		"@liferay/eslint-plugin": "1.6.0",
 		"@types/dompurify": "^3.0.2",
-		"@types/md5": "^2.3.2",
+		"@types/node": "^22.7.9",
 		"@types/react": "^18.2.6",
 		"@types/react-dom": "^18.0.9",
 		"@types/warning": "^3.0.0",
-		"@vitejs/plugin-react": "^3.0.0",
+		"@typescript-eslint/eslint-plugin": "8.5.0",
+		"@vitejs/plugin-react-swc": "^3.7.1",
+		"eslint": "8.56.0",
 		"typescript": "^4.9.3",
-		"vite": "4.0.0"
+		"vite": "5.4.10"
 	},
 	"eslintConfig": {
 		"globals": {
@@ -63,10 +66,7 @@
 	"scripts": {
 		"build": "tsc && vite build",
 		"dev": "vite",
-		"format": "liferay-npm-scripts format --experimental-standalone 'src/**'",
-		"lint": "liferay-npm-scripts lint:fix --experimental-standalone 'src/**'",
 		"preview": "vite preview"
 	},
-	"type": "module",
 	"version": "0.0.0"
 }

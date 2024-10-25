@@ -9,7 +9,6 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {AccountAndAppCard} from '../../components/Card/AccountAndAppCard';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
-import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import {ORDER_TYPES} from '../../enums/Order';
 import withProviders from '../../hoc/withProviders';
 import i18n from '../../i18n';
@@ -40,7 +39,6 @@ export function NextSteps() {
 		isLoading,
 		product,
 	} = useNextSteps(orderId as string);
-	const {properties} = useMarketplaceContext();
 
 	const {name: appName = ''} = firstCartItem ?? {};
 
@@ -65,7 +63,6 @@ export function NextSteps() {
 		[PaymentStatus.PAID]: (
 			<Header
 				description={
-					properties.featureFlags?.includes('LPD-34129') &&
 					orderTypeExternalReferenceCode === ORDER_TYPES.CLOUDAPP ? (
 						<span>
 							<p>
@@ -197,18 +194,14 @@ export function NextSteps() {
 
 				<NewAppPageFooterButtons
 					backButtonText={i18n.translate(
-						properties.featureFlags?.includes('LPD-34129') &&
-							orderTypeExternalReferenceCode ===
-								ORDER_TYPES.CLOUDAPP
+						orderTypeExternalReferenceCode === ORDER_TYPES.CLOUDAPP
 							? 'go-to-my-apps'
 							: 'go-to-dashboard'
 					)}
 					continueButtonText={i18n.translate(
 						orderTypeExternalReferenceCode === ORDER_TYPES.DXPAPP
 							? 'download-app'
-							: properties.featureFlags?.includes('LPD-34129')
-								? 'continue-to-install'
-								: 'go-to-cloud-console'
+							: 'continue-to-install'
 					)}
 					onClickBack={() => {
 						return CommerceSelectAccountImpl.selectAccount(
@@ -243,20 +236,12 @@ export function NextSteps() {
 							orderTypeExternalReferenceCode ===
 							ORDER_TYPES.CLOUDAPP
 						) {
-							if (
-								properties.featureFlags?.includes('LPD-34129')
-							) {
-								Liferay.Util.navigate(
-									Liferay.ThemeDisplay.getLayoutURL().replace(
-										'/next-steps',
-										`/customer-dashboard#/order/${orderId}/cloud-provisioning`
-									)
-								);
-							}
-							else {
-								window.location.href =
-									'https://console.liferay.cloud/projects';
-							}
+							Liferay.Util.navigate(
+								Liferay.ThemeDisplay.getLayoutURL().replace(
+									'/next-steps',
+									`/customer-dashboard#/order/${orderId}/cloud-provisioning`
+								)
+							);
 						}
 					}}
 					showContinueButton={true}

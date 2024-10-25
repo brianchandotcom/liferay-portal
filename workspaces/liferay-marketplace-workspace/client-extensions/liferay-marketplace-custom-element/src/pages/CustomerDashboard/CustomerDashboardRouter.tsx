@@ -5,7 +5,6 @@
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
-import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import withProviders from '../../hoc/withProviders';
 import CustomerDashboardOutlet from './CustomerDashboardOutlet';
 import Apps from './pages/Apps';
@@ -25,8 +24,6 @@ import Solution from './pages/Solutions/Solution';
 import SolutionOutlet from './pages/Solutions/SolutionOutlet';
 
 const CustomerDashboardRouter = () => {
-	const {properties} = useMarketplaceContext();
-
 	return (
 		<HashRouter>
 			<Routes>
@@ -39,12 +36,10 @@ const CustomerDashboardRouter = () => {
 
 						<Route element={<Licenses />} path="licenses" />
 
-						{properties.featureFlags?.includes('LPD-34129') && (
-							<Route
-								element={<Provisioning />}
-								path="cloud-provisioning"
-							/>
-						)}
+						<Route
+							element={<Provisioning />}
+							path="cloud-provisioning"
+						/>
 					</Route>
 					<Route element={<Solutions />} path="solutions" />
 

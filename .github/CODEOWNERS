@@ -1,7 +1,7 @@
 modules/apps/accessibility/    @liferay-platform-experience
-modules/apps/account/
+modules/apps/account/    @liferay-commerce
 modules/apps/adaptive-media/    @liferay-content-management
-modules/apps/address/
+modules/apps/address/    @liferay-commerce
 modules/apps/ai-creator/
 modules/apps/analytics/
 modules/apps/announcements/    @liferay-content-management
@@ -41,7 +41,7 @@ modules/apps/commerce/    @liferay-commerce
 modules/apps/company/
 modules/apps/configuration-admin/    @liferay-platform-experience
 modules/apps/connected-app/    @liferay-content-management
-modules/apps/contacts/
+modules/apps/contacts/    @liferay-commerce
 modules/apps/content-dashboard/    @liferay-content-management
 modules/apps/cookies/
 modules/apps/cookies/cookies-banner-web/    @liferay-frontend
@@ -77,12 +77,12 @@ modules/apps/frontend-token/    @liferay-platform-experience
 modules/apps/glowroot/
 modules/apps/gogo-shell/
 modules/apps/google-places/
-modules/apps/headless/headless-admin-address/
+modules/apps/headless/headless-admin-address/    @liferay-commerce
 modules/apps/headless/headless-admin-content/
 modules/apps/headless/headless-admin-list-type/
 modules/apps/headless/headless-admin-site/    @liferay-page-management
 modules/apps/headless/headless-admin-taxonomy/
-modules/apps/headless/headless-admin-user/
+modules/apps/headless/headless-admin-user/    @liferay-commerce
 modules/apps/headless/headless-admin-workflow/
 modules/apps/headless/headless-batch-engine/    @liferay-headless
 modules/apps/headless/headless-builder/    @liferay-headless
@@ -92,7 +92,7 @@ modules/apps/headless/headless-discovery/    @liferay-headless
 modules/apps/headless/headless-form/
 modules/apps/headless/headless-portal-instances/
 modules/apps/headless/headless-site/
-modules/apps/headless/headless-user-notification/
+modules/apps/headless/headless-user-notification/    @liferay-commerce
 modules/apps/hello-velocity/
 modules/apps/iframe/
 modules/apps/iframe/iframe-web    @liferay-page-management
@@ -166,8 +166,8 @@ modules/apps/oauth2-provider/
 modules/apps/object/    @liferay-bpm
 modules/apps/object/object-rest-impl    @liferay-headless
 modules/apps/object/object-rest-test    @liferay-headless
-modules/apps/on-demand-admin/
-modules/apps/organizations/
+modules/apps/on-demand-admin/    @liferay-commerce
+modules/apps/organizations/    @liferay-commerce
 modules/apps/password-policies-admin/
 modules/apps/plugins-admin/
 modules/apps/portal-background-task/
@@ -210,6 +210,8 @@ modules/apps/portal-validation/
 modules/apps/portal-vulcan/    @liferay-headless
 modules/apps/portal-workflow/    @liferay-bpm
 modules/apps/portal/
+modules/apps/portal/portal-default-permissions-api/    @liferay-commerce
+modules/apps/portal/portal-default-permissions-web/    @liferay-commerce
 modules/apps/portlet-configuration/
 modules/apps/portlet-configuration/portlet-configuration-web    @liferay-page-management
 modules/apps/portlet-configuration/portlet-configuration-css-web    @liferay-page-management
@@ -225,6 +227,7 @@ modules/apps/product-navigation/product-navigation-simulation-api    @liferay-pa
 modules/apps/product-navigation/product-navigation-simulation-device    @liferay-page-management
 modules/apps/product-navigation/product-navigation-simulation-theme-contributor    @liferay-page-management
 modules/apps/product-navigation/product-navigation-simulation-web    @liferay-page-management
+modules/apps/product-navigation/product-navigation-user-personal-bar-web/    @liferay-commerce
 modules/apps/push-notifications/
 modules/apps/questions/    @liferay-content-management
 modules/apps/ratings/    @liferay-content-management
@@ -232,7 +235,7 @@ modules/apps/reading-time/    @liferay-content-management
 modules/apps/redirect/
 modules/apps/release-feature-flag/    @liferay-platform-experience
 modules/apps/repository/    @liferay-content-management
-modules/apps/roles/
+modules/apps/roles/    @liferay-commerce
 modules/apps/rss/
 modules/apps/rss/rss-api    @liferay-page-management
 modules/apps/rss/rss-impl    @liferay-page-management
@@ -258,12 +261,12 @@ modules/apps/text-localizer/
 modules/apps/translation/    @liferay-content-management
 modules/apps/trash/    @liferay-content-management
 modules/apps/upload/    @liferay-content-management
-modules/apps/user-associated-data/
-modules/apps/user-groups-admin/
+modules/apps/user-associated-data/    @liferay-commerce
+modules/apps/user-groups-admin/    @liferay-commerce
 modules/apps/user/
-modules/apps/users-admin/
+modules/apps/users-admin/    @liferay-commerce
 modules/apps/view-count/
-modules/apps/website/
+modules/apps/website/    @liferay-commerce
 modules/apps/websocket/
 modules/apps/wiki/    @liferay-content-management
 modules/apps/words/

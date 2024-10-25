@@ -23,7 +23,7 @@ public int countBy${entityFinder.name}(
 </#list>
 
 ) {
-	<#if entityFinder.isCollection()>
+	<#if (entityFinder.isCollection() || serviceBuilder.isVersionLTE_7_3_0())>
 		<#if entity.isChangeTrackingEnabled()>
 			try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
 		</#if>

@@ -12,7 +12,7 @@
 	private FinderPath _finderPathFetchBy${entityFinder.name};
 </#if>
 
-<#if !entityFinder.hasCustomComparator() && entityFinder.isCollection()>
+<#if !entityFinder.hasCustomComparator() && (entityFinder.isCollection() || serviceBuilder.isVersionLTE_7_3_0())>
 	private FinderPath _finderPathCountBy${entityFinder.name};
 </#if>
 

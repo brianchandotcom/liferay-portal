@@ -2868,7 +2868,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					);
 			</#if>
 
-			<#if !entityFinder.hasCustomComparator() && entityFinder.isCollection()>
+			<#if !entityFinder.hasCustomComparator() && (entityFinder.isCollection() || serviceBuilder.isVersionLTE_7_3_0())>
 				_finderPathCountBy${entityFinder.name} =
 					<#if serviceBuilder.isVersionGTE_7_4_0()>
 						new FinderPath(

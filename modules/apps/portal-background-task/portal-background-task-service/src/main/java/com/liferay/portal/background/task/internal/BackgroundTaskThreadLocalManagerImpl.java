@@ -93,12 +93,12 @@ public class BackgroundTaskThreadLocalManagerImpl
 	public void setThreadLocalValues(
 		long companyId, Map<String, Serializable> threadLocalValues) {
 
-		if (MapUtil.isEmpty(threadLocalValues)) {
-			return;
-		}
-
 		if (companyId > 0) {
 			CompanyThreadLocal.setCompanyId(_requireCompany(companyId));
+		}
+
+		if (MapUtil.isEmpty(threadLocalValues)) {
+			return;
 		}
 
 		Boolean clusterInvoke = (Boolean)threadLocalValues.get("clusterInvoke");

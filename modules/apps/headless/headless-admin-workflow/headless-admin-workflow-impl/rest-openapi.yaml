@@ -258,6 +258,8 @@ components:
             properties:
                 className:
                     type: string
+                externalReferenceCode:
+                    type: string
                 groupId:
                     format: int64
                     type: integer
@@ -732,6 +734,63 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/WorkflowDefinition"
             tags: ["WorkflowDefinition"]
+    "/workflow-definitions/by-external-reference-code/{externalReferenceCode}/workflow-definition-links":
+        get:
+            operationId: getWorkflowDefinitionByExternalReferenceCodeWorkflowDefinitionLinksPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowDefinitionLink"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowDefinitionLink"
+                                type: array
+            tags: ["WorkflowDefinitionLink"]
+        post:
+            operationId: postWorkflowDefinitionByExternalReferenceCodeWorkflowDefinitionLink
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowDefinitionLink"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowDefinitionLink"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowDefinitionLink"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowDefinitionLink"
+            tags: ["WorkflowDefinitionLink"]
     "/workflow-definitions/by-name/{name}":
         get:
             operationId: getWorkflowDefinitionByName
@@ -915,7 +974,7 @@ paths:
             tags: ["WorkflowDefinition"]
     "/workflow-definitions/{workflowDefinitionId}/workflow-definition-links":
         get:
-            operationId: getWorkflowDefinitionLinks
+            operationId: getWorkflowDefinitionWorkflowDefinitionLinksPage
             parameters:
                 - in: path
                   name: workflowDefinitionId
@@ -946,7 +1005,7 @@ paths:
                                 type: array
             tags: ["WorkflowDefinitionLink"]
         post:
-            operationId: postWorkflowDefinitionLink
+            operationId: postWorkflowDefinitionWorkflowDefinitionLink
             parameters:
                 - in: path
                   name: workflowDefinitionId

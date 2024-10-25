@@ -81,6 +81,14 @@ public interface UserGroupResource {
 			String externalReferenceCode, UserGroup userGroup)
 		throws Exception;
 
+	public void deleteUserGroupByExternalReferenceCodeUsers(
+			String externalReferenceCode, Long[] longs)
+		throws Exception;
+
+	public void postUserGroupByExternalReferenceCodeUsers(
+			String externalReferenceCode, Long[] longs)
+		throws Exception;
+
 	public void deleteUserGroup(Long userGroupId) throws Exception;
 
 	public Response deleteUserGroupBatch(String callbackURL, Object object)

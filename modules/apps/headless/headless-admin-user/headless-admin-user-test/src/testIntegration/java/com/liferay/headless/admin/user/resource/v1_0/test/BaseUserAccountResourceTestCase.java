@@ -4175,6 +4175,461 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGetUserGroupByExternalReferenceCodeUsersPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetUserGroupByExternalReferenceCodeUsersPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetUserGroupByExternalReferenceCodeUsersPage_getIrrelevantExternalReferenceCode();
+
+		Page<UserAccount> page =
+			userAccountResource.getUserGroupByExternalReferenceCodeUsersPage(
+				externalReferenceCode, null, null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantExternalReferenceCode != null) {
+			UserAccount irrelevantUserAccount =
+				testGetUserGroupByExternalReferenceCodeUsersPage_addUserAccount(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantUserAccount());
+
+			page =
+				userAccountResource.
+					getUserGroupByExternalReferenceCodeUsersPage(
+						irrelevantExternalReferenceCode, null, null,
+						Pagination.of(1, (int)totalCount + 1), null);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantUserAccount, (List<UserAccount>)page.getItems());
+			assertValid(
+				page,
+				testGetUserGroupByExternalReferenceCodeUsersPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		UserAccount userAccount1 =
+			testGetUserGroupByExternalReferenceCodeUsersPage_addUserAccount(
+				externalReferenceCode, randomUserAccount());
+
+		UserAccount userAccount2 =
+			testGetUserGroupByExternalReferenceCodeUsersPage_addUserAccount(
+				externalReferenceCode, randomUserAccount());
+
+		page = userAccountResource.getUserGroupByExternalReferenceCodeUsersPage(
+			externalReferenceCode, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(userAccount1, (List<UserAccount>)page.getItems());
+		assertContains(userAccount2, (List<UserAccount>)page.getItems());
+		assertValid(
+			page,
+			testGetUserGroupByExternalReferenceCodeUsersPage_getExpectedActions(
+				externalReferenceCode));
+
+		userAccountResource.deleteUserAccount(userAccount1.getId());
+
+		userAccountResource.deleteUserAccount(userAccount2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetUserGroupByExternalReferenceCodeUsersPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetUserGroupByExternalReferenceCodeUsersPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetUserGroupByExternalReferenceCodeUsersPage_getExternalReferenceCode();
+
+		UserAccount userAccount1 = randomUserAccount();
+
+		userAccount1 =
+			testGetUserGroupByExternalReferenceCodeUsersPage_addUserAccount(
+				externalReferenceCode, userAccount1);
+
+		for (EntityField entityField : entityFields) {
+			Page<UserAccount> page =
+				userAccountResource.
+					getUserGroupByExternalReferenceCodeUsersPage(
+						externalReferenceCode, null,
+						getFilterString(entityField, "between", userAccount1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(userAccount1),
+				(List<UserAccount>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetUserGroupByExternalReferenceCodeUsersPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetUserGroupByExternalReferenceCodeUsersPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetUserGroupByExternalReferenceCodeUsersPageWithFilterStringContains()
+		throws Exception {
+
+		testGetUserGroupByExternalReferenceCodeUsersPageWithFilter(
+			"contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetUserGroupByExternalReferenceCodeUsersPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetUserGroupByExternalReferenceCodeUsersPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetUserGroupByExternalReferenceCodeUsersPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetUserGroupByExternalReferenceCodeUsersPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetUserGroupByExternalReferenceCodeUsersPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetUserGroupByExternalReferenceCodeUsersPage_getExternalReferenceCode();
+
+		UserAccount userAccount1 =
+			testGetUserGroupByExternalReferenceCodeUsersPage_addUserAccount(
+				externalReferenceCode, randomUserAccount());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount2 =
+			testGetUserGroupByExternalReferenceCodeUsersPage_addUserAccount(
+				externalReferenceCode, randomUserAccount());
+
+		for (EntityField entityField : entityFields) {
+			Page<UserAccount> page =
+				userAccountResource.
+					getUserGroupByExternalReferenceCodeUsersPage(
+						externalReferenceCode, null,
+						getFilterString(entityField, operator, userAccount1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(userAccount1),
+				(List<UserAccount>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetUserGroupByExternalReferenceCodeUsersPageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetUserGroupByExternalReferenceCodeUsersPage_getExternalReferenceCode();
+
+		Page<UserAccount> userAccountPage =
+			userAccountResource.getUserGroupByExternalReferenceCodeUsersPage(
+				externalReferenceCode, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(userAccountPage.getTotalCount());
+
+		UserAccount userAccount1 =
+			testGetUserGroupByExternalReferenceCodeUsersPage_addUserAccount(
+				externalReferenceCode, randomUserAccount());
+
+		UserAccount userAccount2 =
+			testGetUserGroupByExternalReferenceCodeUsersPage_addUserAccount(
+				externalReferenceCode, randomUserAccount());
+
+		UserAccount userAccount3 =
+			testGetUserGroupByExternalReferenceCodeUsersPage_addUserAccount(
+				externalReferenceCode, randomUserAccount());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<UserAccount> page1 =
+				userAccountResource.
+					getUserGroupByExternalReferenceCodeUsersPage(
+						externalReferenceCode, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(userAccount1, (List<UserAccount>)page1.getItems());
+
+			Page<UserAccount> page2 =
+				userAccountResource.
+					getUserGroupByExternalReferenceCodeUsersPage(
+						externalReferenceCode, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
+
+			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
+
+			Page<UserAccount> page3 =
+				userAccountResource.
+					getUserGroupByExternalReferenceCodeUsersPage(
+						externalReferenceCode, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
+
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
+		else {
+			Page<UserAccount> page1 =
+				userAccountResource.
+					getUserGroupByExternalReferenceCodeUsersPage(
+						externalReferenceCode, null, null,
+						Pagination.of(1, totalCount + 2), null);
+
+			List<UserAccount> userAccounts1 =
+				(List<UserAccount>)page1.getItems();
+
+			Assert.assertEquals(
+				userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+
+			Page<UserAccount> page2 =
+				userAccountResource.
+					getUserGroupByExternalReferenceCodeUsersPage(
+						externalReferenceCode, null, null,
+						Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<UserAccount> userAccounts2 =
+				(List<UserAccount>)page2.getItems();
+
+			Assert.assertEquals(
+				userAccounts2.toString(), 1, userAccounts2.size());
+
+			Page<UserAccount> page3 =
+				userAccountResource.
+					getUserGroupByExternalReferenceCodeUsersPage(
+						externalReferenceCode, null, null,
+						Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(userAccount1, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount2, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetUserGroupByExternalReferenceCodeUsersPageWithSortDateTime()
+		throws Exception {
+
+		testGetUserGroupByExternalReferenceCodeUsersPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, userAccount1, userAccount2) -> {
+				BeanTestUtil.setProperty(
+					userAccount1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetUserGroupByExternalReferenceCodeUsersPageWithSortDouble()
+		throws Exception {
+
+		testGetUserGroupByExternalReferenceCodeUsersPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, userAccount1, userAccount2) -> {
+				BeanTestUtil.setProperty(
+					userAccount1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					userAccount2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetUserGroupByExternalReferenceCodeUsersPageWithSortInteger()
+		throws Exception {
+
+		testGetUserGroupByExternalReferenceCodeUsersPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, userAccount1, userAccount2) -> {
+				BeanTestUtil.setProperty(
+					userAccount1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					userAccount2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetUserGroupByExternalReferenceCodeUsersPageWithSortString()
+		throws Exception {
+
+		testGetUserGroupByExternalReferenceCodeUsersPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, userAccount1, userAccount2) -> {
+				Class<?> clazz = userAccount1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						userAccount1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						userAccount2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						userAccount1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						userAccount2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						userAccount1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						userAccount2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetUserGroupByExternalReferenceCodeUsersPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, UserAccount, UserAccount, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetUserGroupByExternalReferenceCodeUsersPage_getExternalReferenceCode();
+
+		UserAccount userAccount1 = randomUserAccount();
+		UserAccount userAccount2 = randomUserAccount();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, userAccount1, userAccount2);
+		}
+
+		userAccount1 =
+			testGetUserGroupByExternalReferenceCodeUsersPage_addUserAccount(
+				externalReferenceCode, userAccount1);
+
+		userAccount2 =
+			testGetUserGroupByExternalReferenceCodeUsersPage_addUserAccount(
+				externalReferenceCode, userAccount2);
+
+		Page<UserAccount> page =
+			userAccountResource.getUserGroupByExternalReferenceCodeUsersPage(
+				externalReferenceCode, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<UserAccount> ascPage =
+				userAccountResource.
+					getUserGroupByExternalReferenceCodeUsersPage(
+						externalReferenceCode, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":asc");
+
+			assertContains(userAccount1, (List<UserAccount>)ascPage.getItems());
+			assertContains(userAccount2, (List<UserAccount>)ascPage.getItems());
+
+			Page<UserAccount> descPage =
+				userAccountResource.
+					getUserGroupByExternalReferenceCodeUsersPage(
+						externalReferenceCode, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":desc");
+
+			assertContains(
+				userAccount2, (List<UserAccount>)descPage.getItems());
+			assertContains(
+				userAccount1, (List<UserAccount>)descPage.getItems());
+		}
+	}
+
+	protected UserAccount
+			testGetUserGroupByExternalReferenceCodeUsersPage_addUserAccount(
+				String externalReferenceCode, UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetUserGroupByExternalReferenceCodeUsersPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetUserGroupByExternalReferenceCodeUsersPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetUserGroupUsersPage() throws Exception {
 		Long userGroupId = testGetUserGroupUsersPage_getUserGroupId();
 		Long irrelevantUserGroupId =

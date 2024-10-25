@@ -160,6 +160,18 @@ public class LocalizedMapUtilTest {
 					"pt_BR", defaultValue
 				).build(),
 				RandomTestUtil.randomString()));
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				"en_US", defaultValue
+			).put(
+				"pt_BR", defaultValue
+			).build(),
+			LocalizedMapUtil.populateI18nMap(
+				"pt_BR",
+				HashMapBuilder.put(
+					"pt-BR", defaultValue
+				).build(),
+				RandomTestUtil.randomString()));
 
 		// Populate international map with site default value when default
 		// language is undefined

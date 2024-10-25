@@ -497,6 +497,19 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			StringBundler.concat(
 				user1.getEmailAddress(), StringPool.COMMA,
 				user2.getEmailAddress()));
+
+		// One email to a deactivated user
+
+		User user = UserTestUtil.addUser();
+
+		_userLocalService.updateStatus(
+			user.getUserId(), WorkflowConstants.STATUS_INACTIVE,
+			ServiceContextThreadLocal.getServiceContext());
+
+		_testSendNotification(
+			0, Collections.emptyList(), false, user.getEmailAddress());
+
+		_userLocalService.deleteUser(user.getUserId());
 	}
 
 	@Test
@@ -1560,6 +1573,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntries.toString(),
 			expectedNotificationQueueEntriesCount,
 			notificationQueueEntries.size());
+
+		if (notificationQueueEntries.isEmpty()) {
+			return;
+		}
 
 		_assertNotificationQueueEntry(
 			user2.getEmailAddress() + ",bcc@liferay.com",

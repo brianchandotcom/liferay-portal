@@ -22,6 +22,10 @@ public class PlaywrightTestClassMethod extends TestClassMethod {
 			testClass.getName(), " > ", super.getName());
 	}
 
+	public String getTestName() {
+		return super.getName();
+	}
+
 	protected PlaywrightTestClassMethod(
 		boolean ignored, String name, TestClass testClass) {
 

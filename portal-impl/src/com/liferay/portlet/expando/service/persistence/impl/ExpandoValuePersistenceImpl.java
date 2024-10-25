@@ -3243,7 +3243,6 @@ public class ExpandoValuePersistenceImpl
 		"expandoValue.classPK = ?";
 
 	private FinderPath _finderPathFetchByC_R;
-	private FinderPath _finderPathCountByC_R;
 
 	/**
 	 * Returns the expando value where columnId = &#63; and rowId = &#63; or throws a <code>NoSuchValueException</code> if it could not be found.
@@ -3415,55 +3414,13 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByC_R(long columnId, long rowId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
+		ExpandoValue expandoValue = fetchByC_R(columnId, rowId);
 
-			FinderPath finderPath = _finderPathCountByC_R;
-
-			Object[] finderArgs = new Object[] {columnId, rowId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_R_COLUMNID_2);
-
-				sb.append(_FINDER_COLUMN_C_R_ROWID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(columnId);
-
-					queryPos.add(rowId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (expandoValue == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_R_COLUMNID_2 =
@@ -4023,7 +3980,6 @@ public class ExpandoValuePersistenceImpl
 		"expandoValue.classPK = ?";
 
 	private FinderPath _finderPathFetchByT_C_C;
-	private FinderPath _finderPathCountByT_C_C;
 
 	/**
 	 * Returns the expando value where tableId = &#63; and columnId = &#63; and classPK = &#63; or throws a <code>NoSuchValueException</code> if it could not be found.
@@ -4210,59 +4166,13 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByT_C_C(long tableId, long columnId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
+		ExpandoValue expandoValue = fetchByT_C_C(tableId, columnId, classPK);
 
-			FinderPath finderPath = _finderPathCountByT_C_C;
-
-			Object[] finderArgs = new Object[] {tableId, columnId, classPK};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
-
-				sb.append(_FINDER_COLUMN_T_C_C_TABLEID_2);
-
-				sb.append(_FINDER_COLUMN_T_C_C_COLUMNID_2);
-
-				sb.append(_FINDER_COLUMN_T_C_C_CLASSPK_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(tableId);
-
-					queryPos.add(columnId);
-
-					queryPos.add(classPK);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (expandoValue == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_T_C_C_TABLEID_2 =
@@ -5036,8 +4946,6 @@ public class ExpandoValuePersistenceImpl
 			};
 
 			FinderCacheUtil.putResult(
-				_finderPathCountByC_R, args, Long.valueOf(1));
-			FinderCacheUtil.putResult(
 				_finderPathFetchByC_R, args, expandoValueModelImpl);
 
 			args = new Object[] {
@@ -5046,8 +4954,6 @@ public class ExpandoValuePersistenceImpl
 				expandoValueModelImpl.getClassPK()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByT_C_C, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByT_C_C, args, expandoValueModelImpl);
 		}
@@ -5847,11 +5753,6 @@ public class ExpandoValuePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"columnId", "rowId_"}, true);
 
-		_finderPathCountByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"columnId", "rowId_"}, false);
-
 		_finderPathWithPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
@@ -5877,13 +5778,6 @@ public class ExpandoValuePersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"tableId", "columnId", "classPK"}, true);
-
-		_finderPathCountByT_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"tableId", "columnId", "classPK"}, false);
 
 		_finderPathWithPaginationFindByT_C_D = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_C_D",

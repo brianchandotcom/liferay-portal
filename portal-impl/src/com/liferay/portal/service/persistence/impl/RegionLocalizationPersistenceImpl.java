@@ -598,7 +598,6 @@ public class RegionLocalizationPersistenceImpl
 		"regionLocalization.regionId = ?";
 
 	private FinderPath _finderPathFetchByRegionId_LanguageId;
-	private FinderPath _finderPathCountByRegionId_LanguageId;
 
 	/**
 	 * Returns the region localization where regionId = &#63; and languageId = &#63; or throws a <code>NoSuchRegionLocalizationException</code> if it could not be found.
@@ -792,68 +791,14 @@ public class RegionLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countByRegionId_LanguageId(long regionId, String languageId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					RegionLocalization.class)) {
+		RegionLocalization regionLocalization = fetchByRegionId_LanguageId(
+			regionId, languageId);
 
-			languageId = Objects.toString(languageId, "");
-
-			FinderPath finderPath = _finderPathCountByRegionId_LanguageId;
-
-			Object[] finderArgs = new Object[] {regionId, languageId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_REGIONLOCALIZATION_WHERE);
-
-				sb.append(_FINDER_COLUMN_REGIONID_LANGUAGEID_REGIONID_2);
-
-				boolean bindLanguageId = false;
-
-				if (languageId.isEmpty()) {
-					sb.append(_FINDER_COLUMN_REGIONID_LANGUAGEID_LANGUAGEID_3);
-				}
-				else {
-					bindLanguageId = true;
-
-					sb.append(_FINDER_COLUMN_REGIONID_LANGUAGEID_LANGUAGEID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(regionId);
-
-					if (bindLanguageId) {
-						queryPos.add(languageId);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (regionLocalization == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_REGIONID_LANGUAGEID_REGIONID_2 =
@@ -990,8 +935,6 @@ public class RegionLocalizationPersistenceImpl
 				regionLocalizationModelImpl.getLanguageId()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByRegionId_LanguageId, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByRegionId_LanguageId, args,
 				regionLocalizationModelImpl);
@@ -1711,12 +1654,6 @@ public class RegionLocalizationPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByRegionId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"regionId", "languageId"}, true);
-
-		_finderPathCountByRegionId_LanguageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByRegionId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"regionId", "languageId"}, false);
 
 		RegionLocalizationUtil.setPersistence(this);
 	}

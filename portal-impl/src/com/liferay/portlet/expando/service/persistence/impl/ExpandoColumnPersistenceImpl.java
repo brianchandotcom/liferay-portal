@@ -1848,8 +1848,6 @@ public class ExpandoColumnPersistenceImpl
 			};
 
 			FinderCacheUtil.putResult(
-				_finderPathCountByT_N, args, Long.valueOf(1));
-			FinderCacheUtil.putResult(
 				_finderPathFetchByT_N, args, expandoColumnModelImpl);
 		}
 	}

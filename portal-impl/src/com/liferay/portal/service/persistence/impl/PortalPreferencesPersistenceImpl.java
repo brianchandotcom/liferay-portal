@@ -577,7 +577,6 @@ public class PortalPreferencesPersistenceImpl
 		"portalPreferences.ownerType = ?";
 
 	private FinderPath _finderPathFetchByO_O;
-	private FinderPath _finderPathCountByO_O;
 
 	/**
 	 * Returns the portal preferences where ownerId = &#63; and ownerType = &#63; or throws a <code>NoSuchPreferencesException</code> if it could not be found.
@@ -759,50 +758,13 @@ public class PortalPreferencesPersistenceImpl
 	 */
 	@Override
 	public int countByO_O(long ownerId, int ownerType) {
-		FinderPath finderPath = _finderPathCountByO_O;
+		PortalPreferences portalPreferences = fetchByO_O(ownerId, ownerType);
 
-		Object[] finderArgs = new Object[] {ownerId, ownerType};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_PORTALPREFERENCES_WHERE);
-
-			sb.append(_FINDER_COLUMN_O_O_OWNERID_2);
-
-			sb.append(_FINDER_COLUMN_O_O_OWNERTYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ownerId);
-
-				queryPos.add(ownerType);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (portalPreferences == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_O_O_OWNERID_2 =
@@ -919,7 +881,6 @@ public class PortalPreferencesPersistenceImpl
 			portalPreferencesModelImpl.getOwnerType()
 		};
 
-		FinderCacheUtil.putResult(_finderPathCountByO_O, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
 			_finderPathFetchByO_O, args, portalPreferencesModelImpl);
 	}
@@ -1382,11 +1343,6 @@ public class PortalPreferencesPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByO_O",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"ownerId", "ownerType"}, true);
-
-		_finderPathCountByO_O = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_O",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"ownerId", "ownerType"}, false);
 
 		PortalPreferencesUtil.setPersistence(this);
 	}

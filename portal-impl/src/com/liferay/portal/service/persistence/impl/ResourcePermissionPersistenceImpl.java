@@ -8902,8 +8902,6 @@ public class ResourcePermissionPersistenceImpl
 			};
 
 			FinderCacheUtil.putResult(
-				_finderPathCountByC_N_S_P_R, args, Long.valueOf(1));
-			FinderCacheUtil.putResult(
 				_finderPathFetchByC_N_S_P_R, args, resourcePermissionModelImpl);
 		}
 	}

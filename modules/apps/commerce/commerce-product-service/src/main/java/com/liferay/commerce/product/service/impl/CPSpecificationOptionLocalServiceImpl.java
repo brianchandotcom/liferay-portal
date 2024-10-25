@@ -13,6 +13,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
+import com.liferay.commerce.product.service.CPSpecificationOptionListTypeDefinitionRelLocalService;
 import com.liferay.commerce.product.service.base.CPSpecificationOptionLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.CharPool;
@@ -76,7 +77,7 @@ public class CPSpecificationOptionLocalServiceImpl
 	@Override
 	public CPSpecificationOption addCPSpecificationOption(
 			String externalReferenceCode, long userId, long cpOptionCategoryId,
-			long listTypeDefinitionId, Map<Locale, String> titleMap,
+			long[] listTypeDefinitionIds, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, boolean facetable, String key,
 			double priority, ServiceContext serviceContext)
 		throws PortalException {
@@ -99,7 +100,6 @@ public class CPSpecificationOptionLocalServiceImpl
 		cpSpecificationOption.setUserId(user.getUserId());
 		cpSpecificationOption.setUserName(user.getFullName());
 		cpSpecificationOption.setCPOptionCategoryId(cpOptionCategoryId);
-		cpSpecificationOption.setListTypeDefinitionId(listTypeDefinitionId);
 		cpSpecificationOption.setTitleMap(titleMap);
 		cpSpecificationOption.setDescriptionMap(descriptionMap);
 		cpSpecificationOption.setFacetable(facetable);
@@ -115,15 +115,18 @@ public class CPSpecificationOptionLocalServiceImpl
 		_resourceLocalService.addModelResources(
 			cpSpecificationOption, serviceContext);
 
+		if (listTypeDefinitionIds != null) {
+			for (long listTypeDefinitionId : listTypeDefinitionIds) {
+				if (listTypeDefinitionId > 0) {
+					_cpSpecificationOptionListTypeDefinitionRelLocalService.
+						addCPSpecificationOptionListTypeDefinitionRel(
+							cpSpecificationOption.getCPSpecificationOptionId(),
+							listTypeDefinitionId);
+				}
+			}
+		}
+
 		return cpSpecificationOption;
-	}
-
-	@Override
-	public int countCPSpecificationOptionByListTypeDefinitionId(
-		long listTypeDefinitionId) {
-
-		return cpSpecificationOptionPersistence.countByListTypeDefinitionId(
-			listTypeDefinitionId);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -232,7 +235,7 @@ public class CPSpecificationOptionLocalServiceImpl
 	@Override
 	public CPSpecificationOption updateCPSpecificationOption(
 			String externalReferenceCode, long cpSpecificationOptionId,
-			long cpOptionCategoryId, long listTypeDefinitionId,
+			long cpOptionCategoryId, long[] listTypeDefinitionIds,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			boolean facetable, String key, double priority,
 			ServiceContext serviceContext)
@@ -251,7 +254,6 @@ public class CPSpecificationOptionLocalServiceImpl
 
 		cpSpecificationOption.setExternalReferenceCode(externalReferenceCode);
 		cpSpecificationOption.setCPOptionCategoryId(cpOptionCategoryId);
-		cpSpecificationOption.setListTypeDefinitionId(listTypeDefinitionId);
 		cpSpecificationOption.setTitleMap(titleMap);
 		cpSpecificationOption.setDescriptionMap(descriptionMap);
 		cpSpecificationOption.setFacetable(facetable);
@@ -261,6 +263,21 @@ public class CPSpecificationOptionLocalServiceImpl
 
 		cpSpecificationOption = cpSpecificationOptionPersistence.update(
 			cpSpecificationOption);
+
+		if (listTypeDefinitionIds != null) {
+			_cpSpecificationOptionListTypeDefinitionRelLocalService.
+				deleteCPSpecificationOptionListTypeDefinitionRels(
+					cpSpecificationOption.getCPSpecificationOptionId());
+
+			for (long listTypeDefinitionId : listTypeDefinitionIds) {
+				if (listTypeDefinitionId > 0) {
+					_cpSpecificationOptionListTypeDefinitionRelLocalService.
+						addCPSpecificationOptionListTypeDefinitionRel(
+							cpSpecificationOption.getCPSpecificationOptionId(),
+							listTypeDefinitionId);
+				}
+			}
+		}
 
 		_reindexCPDefinitions1(
 			cpSpecificationOption.getCompanyId(), cpSpecificationOptionId);
@@ -470,6 +487,10 @@ public class CPSpecificationOptionLocalServiceImpl
 	@Reference
 	private CPDefinitionSpecificationOptionValueLocalService
 		_cpDefinitionSpecificationOptionValueLocalService;
+
+	@Reference
+	private CPSpecificationOptionListTypeDefinitionRelLocalService
+		_cpSpecificationOptionListTypeDefinitionRelLocalService;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;

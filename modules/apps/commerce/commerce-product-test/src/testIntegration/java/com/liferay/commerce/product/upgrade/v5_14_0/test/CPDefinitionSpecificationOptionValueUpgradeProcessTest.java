@@ -77,7 +77,7 @@ public class CPDefinitionSpecificationOptionValueUpgradeProcessTest {
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionLocalService.addCPSpecificationOption(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				cpOptionCategory.getCPOptionCategoryId(), 0,
+				cpOptionCategory.getCPOptionCategoryId(), null,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
 				CPDefinition.class.getName(), RandomTestUtil.randomDouble(),

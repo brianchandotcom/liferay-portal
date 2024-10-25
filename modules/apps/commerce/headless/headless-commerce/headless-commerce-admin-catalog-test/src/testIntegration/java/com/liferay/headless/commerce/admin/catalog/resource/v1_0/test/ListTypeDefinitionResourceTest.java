@@ -56,7 +56,7 @@ public class ListTypeDefinitionResourceTest
 		_cpSpecificationOption =
 			_cpSpecificationOptionLocalService.addCPSpecificationOption(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				cpOptionCategory.getCPOptionCategoryId(), 0,
+				cpOptionCategory.getCPOptionCategoryId(), null,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),

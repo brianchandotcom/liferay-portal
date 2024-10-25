@@ -155,7 +155,7 @@ public class ProductSpecificationUtil {
 					_getCPOptionCategoryId(
 						cpOptionCategoryService, cpSpecificationOption,
 						productSpecification, serviceContext),
-					0,
+					null,
 					LanguageUtils.getLocalizedMap(
 						productSpecification.getLabel()),
 					LanguageUtils.getLocalizedMap(

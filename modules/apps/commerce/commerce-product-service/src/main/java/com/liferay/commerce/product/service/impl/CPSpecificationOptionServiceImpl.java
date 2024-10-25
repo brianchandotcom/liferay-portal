@@ -39,7 +39,7 @@ public class CPSpecificationOptionServiceImpl
 	@Override
 	public CPSpecificationOption addCPSpecificationOption(
 			String externalReferenceCode, long cpOptionCategoryId,
-			long listTypeDefinitionId, Map<Locale, String> titleMap,
+			long[] listTypeDefinitionIds, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, boolean facetable, String key,
 			double priority, ServiceContext serviceContext)
 		throws PortalException {
@@ -54,7 +54,7 @@ public class CPSpecificationOptionServiceImpl
 
 		return cpSpecificationOptionLocalService.addCPSpecificationOption(
 			externalReferenceCode, getUserId(), cpOptionCategoryId,
-			listTypeDefinitionId, titleMap, descriptionMap, facetable, key,
+			listTypeDefinitionIds, titleMap, descriptionMap, facetable, key,
 			priority, serviceContext);
 	}
 
@@ -148,7 +148,7 @@ public class CPSpecificationOptionServiceImpl
 	@Override
 	public CPSpecificationOption updateCPSpecificationOption(
 			String externalReferenceCode, long cpSpecificationOptionId,
-			long cpOptionCategoryId, long listTypeDefinitionId,
+			long cpOptionCategoryId, long[] listTypeDefinitionIds,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			boolean facetable, String key, double priority,
 			ServiceContext serviceContext)
@@ -159,7 +159,7 @@ public class CPSpecificationOptionServiceImpl
 
 		return cpSpecificationOptionLocalService.updateCPSpecificationOption(
 			externalReferenceCode, cpSpecificationOptionId, cpOptionCategoryId,
-			listTypeDefinitionId, titleMap, descriptionMap, facetable, key,
+			listTypeDefinitionIds, titleMap, descriptionMap, facetable, key,
 			priority, serviceContext);
 	}
 

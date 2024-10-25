@@ -6,13 +6,14 @@
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.commerce.product.service.CPSpecificationOptionListTypeDefinitionRelService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ListTypeDefinitionResource;
-import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -34,6 +35,21 @@ public class ListTypeDefinitionResourceImpl
 	extends BaseListTypeDefinitionResourceImpl {
 
 	@Override
+	public void deleteSpecificationListTypeDefinition(
+			Long specificationId, Long listTypeDefinitionId)
+		throws Exception {
+
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionService.getCPSpecificationOption(
+				specificationId);
+
+		_cpSpecificationOptionListTypeDefinitionRelService.
+			deleteCPSpecificationOptionListTypeDefinitionRel(
+				cpSpecificationOption.getCPSpecificationOptionId(),
+				listTypeDefinitionId);
+	}
+
+	@Override
 	public Page<ListTypeDefinition> getSpecificationIdListTypeDefinitionsPage(
 			Long id)
 		throws Exception {
@@ -41,18 +57,14 @@ public class ListTypeDefinitionResourceImpl
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionService.getCPSpecificationOption(id);
 
-		long listTypeDefinitionId =
-			cpSpecificationOption.getListTypeDefinitionId();
-
-		if (listTypeDefinitionId == 0) {
+		if (ListUtil.isEmpty(cpSpecificationOption.getListTypeDefinitions())) {
 			return Page.of(Collections.emptyList());
 		}
 
 		return Page.of(
-			Collections.singletonList(
-				_toListTypeDefinition(
-					_listTypeDefinitionService.getListTypeDefinition(
-						listTypeDefinitionId))));
+			transform(
+				cpSpecificationOption.getListTypeDefinitions(),
+				this::_toListTypeDefinition));
 	}
 
 	@Override
@@ -72,18 +84,27 @@ public class ListTypeDefinitionResourceImpl
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionService.getCPSpecificationOption(id);
 
-		_cpSpecificationOptionService.updateCPSpecificationOption(
-			cpSpecificationOption.getExternalReferenceCode(),
-			cpSpecificationOption.getCPSpecificationOptionId(),
-			cpSpecificationOption.getCPOptionCategoryId(),
-			serviceBuilderListTypeDefinition.getListTypeDefinitionId(),
-			cpSpecificationOption.getTitleMap(),
-			cpSpecificationOption.getDescriptionMap(),
-			cpSpecificationOption.isFacetable(), cpSpecificationOption.getKey(),
-			cpSpecificationOption.getPriority(),
-			_serviceContextHelper.getServiceContext());
+		_cpSpecificationOptionListTypeDefinitionRelService.
+			addCPSpecificationOptionListTypeDefinitionRel(
+				cpSpecificationOption.getCPSpecificationOptionId(),
+				serviceBuilderListTypeDefinition.getListTypeDefinitionId());
 
 		return _toListTypeDefinition(serviceBuilderListTypeDefinition);
+	}
+
+	@Override
+	public void postSpecificationListTypeDefinition(
+			Long specificationId, Long listTypeDefinitionId)
+		throws Exception {
+
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionService.getCPSpecificationOption(
+				specificationId);
+
+		_cpSpecificationOptionListTypeDefinitionRelService.
+			addCPSpecificationOptionListTypeDefinitionRel(
+				cpSpecificationOption.getCPSpecificationOptionId(),
+				listTypeDefinitionId);
 	}
 
 	private Locale _getLocale() {
@@ -120,12 +141,13 @@ public class ListTypeDefinitionResourceImpl
 	}
 
 	@Reference
+	private CPSpecificationOptionListTypeDefinitionRelService
+		_cpSpecificationOptionListTypeDefinitionRelService;
+
+	@Reference
 	private CPSpecificationOptionService _cpSpecificationOptionService;
 
 	@Reference
 	private ListTypeDefinitionService _listTypeDefinitionService;
-
-	@Reference
-	private ServiceContextHelper _serviceContextHelper;
 
 }

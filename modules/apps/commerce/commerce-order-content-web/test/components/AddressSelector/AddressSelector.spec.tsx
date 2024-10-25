@@ -588,6 +588,11 @@ describe('AddressSelector', () => {
 		const handlerCallbackResult: IPostalAddress =
 			await handlerCallbackInstance(new Event(''));
 		expect(handlerCallbackResult.id).toBe(100);
+
+		expect(fetchMock.calls().matched[2][1].body).toBe(
+			'{"addressType":"shipping","id":0,"primary":false,"addressRegion":"Alabama","addressCountry":"United States","addressLocality":"addressLocality","name":"name","phoneNumber":"phoneNumberInput","postalCode":"postalCode","streetAddressLine1":"streetAddressLine1","streetAddressLine2":"streetAddressLine2","streetAddressLine3":"streetAddressLine3"}'
+		);
+		expect(fetchMock.calls().matched[2][1].method).toBe('POST');
 	});
 
 	it('Must submit selected address', async () => {

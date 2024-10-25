@@ -14,6 +14,7 @@ import {
 
 import '@testing-library/jest-dom/extend-expect';
 import {RenderResult, cleanup, render, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
@@ -31,6 +32,7 @@ interface ILocators {
 	row0CopyColumnAction: HTMLButtonElement;
 	row0RemoveItemAction: HTMLButtonElement;
 	row0ResetRowAction: HTMLButtonElement;
+	row0Select: HTMLInputElement;
 	row0SplitQuantityAction: HTMLButtonElement;
 	skuNameCell: HTMLElement;
 }
@@ -69,6 +71,9 @@ const getLocators = (
 		row0ResetRowAction: renderedComponent.queryByTestId(
 			'row0ResetRow'
 		) as HTMLButtonElement,
+		row0Select: renderedComponent.queryByTestId(
+			'row0Select'
+		) as HTMLInputElement,
 		row0SplitQuantityAction: renderedComponent.queryByTestId(
 			'row0SplitQuantity'
 		) as HTMLButtonElement,
@@ -117,6 +122,7 @@ describe('OrderItemRow', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={[]}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem}
@@ -168,6 +174,7 @@ describe('OrderItemRow', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem}
@@ -235,18 +242,18 @@ describe('OrderItemRow', () => {
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
 				disabled={true}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem as any}
 			/>
 		);
 
-		const {deliveryGroup1Input, deliveryGroup2Input} = getLocators(
-			deliveryGroups,
-			orderItem.id,
-			renderedComponent
-		);
+		const {deliveryGroup1Input, deliveryGroup2Input, row0Select} =
+			getLocators(deliveryGroups, orderItem.id, renderedComponent);
 
+		expect(row0Select).toBeInTheDocument();
+		expect(row0Select).toBeDisabled();
 		expect(deliveryGroup1Input).toBeInTheDocument();
 		expect(deliveryGroup1Input).toBeDisabled();
 		expect(deliveryGroup2Input).toBeInTheDocument();
@@ -303,6 +310,7 @@ describe('OrderItemRow', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -369,6 +377,7 @@ describe('OrderItemRow', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -444,6 +453,7 @@ describe('OrderItemRow', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -553,6 +563,7 @@ describe('OrderItemRow', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmitWrapper}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -595,6 +606,11 @@ describe('OrderItemRow', () => {
 			});
 		});
 
+		expect(fetchMock.calls().matched[0][1].body).toBe(
+			'{"deliveryGroup":"DeliveryGroup1","options":"[]","quantity":10,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":100,"skuId":1001,"skuUnitOfMeasure":{}}'
+		);
+		expect(fetchMock.calls().matched[0][1].method).toBe('PATCH');
+
 		await setFieldValue(deliveryGroup2Input, 8);
 
 		expect(quantityCell).toHaveTextContent(String(18));
@@ -621,6 +637,11 @@ describe('OrderItemRow', () => {
 				},
 			});
 		});
+
+		expect(fetchMock.calls().matched[1][1].body).toBe(
+			'{"deliveryGroup":"DeliveryGroup2","options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":100,"skuId":1001,"skuUnitOfMeasure":{}}'
+		);
+		expect(fetchMock.calls().matched[1][1].method).toBe('PATCH');
 	});
 
 	it('Must save a new delivery group', async () => {
@@ -708,6 +729,7 @@ describe('OrderItemRow', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmitWrapper}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -751,6 +773,11 @@ describe('OrderItemRow', () => {
 			});
 		});
 
+		expect(fetchMock.calls().matched[0][1].body).toBe(
+			'{"deliveryGroup":"DeliveryGroup2","options":"[]","quantity":20,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":100,"skuId":1001,"skuUnitOfMeasure":{}}'
+		);
+		expect(fetchMock.calls().matched[0][1].method).toBe('POST');
+
 		await setFieldValue(deliveryGroup2Input, 8);
 
 		expect(quantityCell).toHaveTextContent(String(12));
@@ -777,6 +804,11 @@ describe('OrderItemRow', () => {
 				},
 			});
 		});
+
+		expect(fetchMock.calls().matched[1][1].body).toBe(
+			'{"deliveryGroup":"DeliveryGroup2","options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":100,"skuId":1001,"skuUnitOfMeasure":{}}'
+		);
+		expect(fetchMock.calls().matched[1][1].method).toBe('PATCH');
 	});
 
 	it('Must delete a new delivery group', async () => {
@@ -847,6 +879,7 @@ describe('OrderItemRow', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmitWrapper}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -883,6 +916,7 @@ describe('OrderItemRow', () => {
 		await setFieldValue(deliveryGroup2Input, 0);
 
 		expect(quantityCell).toHaveTextContent(String(0));
+		expect(fetchMock.calls().matched[0][1].method).toBe('DELETE');
 
 		await waitFor(() => {
 			expect(handleSubmit).toBeCalledWith({});
@@ -913,6 +947,7 @@ describe('OrderItemRow', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={[]}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -1003,6 +1038,7 @@ describe('OrderItemRow', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmitWrapper}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -1034,6 +1070,142 @@ describe('OrderItemRow', () => {
 		await waitFor(() => {
 			expect(quantityCell).toHaveTextContent(String(3));
 		});
+	});
+
+	it('Must preload checkbox', async () => {
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroup: 'DeliveryGroup1',
+			deliveryGroups: {
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 4,
+					quantity: 4,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 4,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 1,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 100,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				checked={true}
+				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
+				handleSubmit={jest.fn()}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {row0Select} = getLocators(
+			deliveryGroups,
+			orderItem.id,
+			renderedComponent
+		);
+
+		expect(row0Select).toBeChecked();
+		expect(row0Select).toBeEnabled();
+	});
+
+	it('Must propagate the selection status', async () => {
+		const handleSelection = jest.fn(() => {});
+
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			deliveryGroup: 'DeliveryGroup1',
+			deliveryGroups: {
+				10000: {
+					options: '[]',
+					orderItemId: 100,
+					originalQuantity: 4,
+					quantity: 4,
+					replacedSkuId: 0,
+					skuId: 1001,
+					skuUnitOfMeasure: {},
+				},
+			},
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 4,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 1,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 100,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSelection={handleSelection}
+				handleSubmit={jest.fn()}
+				orderId={10}
+				orderItem={orderItem as any}
+			/>
+		);
+
+		const {row0Select} = getLocators(
+			deliveryGroups,
+			orderItem.id,
+			renderedComponent
+		);
+
+		expect(row0Select).not.toBeChecked();
+
+		userEvent.click(row0Select);
+
+		expect(handleSelection).toBeCalledWith(100);
+		expect(row0Select).toBeChecked();
+
+		userEvent.click(row0Select);
+
+		expect(handleSelection).toBeCalledWith(100);
+		expect(row0Select).not.toBeChecked();
 	});
 });
 
@@ -1107,6 +1279,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -1167,6 +1340,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -1245,6 +1419,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -1346,6 +1521,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmitWrapper}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -1489,6 +1665,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmitWrapper}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -1617,6 +1794,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmitWrapper}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -1728,6 +1906,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -1818,6 +1997,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -1919,6 +2099,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmitWrapper}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -2030,6 +2211,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -2129,6 +2311,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -2209,6 +2392,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmit}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -2305,6 +2489,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmitWrapper}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -2388,7 +2573,7 @@ describe('OrderItemRow - actions', () => {
 		});
 	});
 
-	it('Must split the quantities with reminder', async () => {
+	it('Must split the quantities with remainder', async () => {
 		jest.spyOn(window, 'confirm').mockImplementation(() => true);
 
 		const handleSubmitWrapper = jest.fn((param: IOrderItem) => {
@@ -2444,6 +2629,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmitWrapper}
 				orderId={10}
 				orderItem={orderItem as any}
@@ -2561,6 +2747,7 @@ describe('OrderItemRow - actions', () => {
 		const renderedComponent = render(
 			<OrderItemRow
 				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
 				handleSubmit={handleSubmitWrapper}
 				orderId={10}
 				orderItem={orderItem as any}

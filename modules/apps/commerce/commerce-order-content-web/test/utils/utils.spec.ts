@@ -7,6 +7,10 @@ import userEvent from '@testing-library/user-event';
 
 import '@testing-library/jest-dom/extend-expect';
 import {fireEvent} from '@testing-library/react';
+
+// @ts-ignore
+
+import {differenceWith, isEqual} from 'lodash';
 import {act} from 'react-dom/test-utils';
 
 export async function setFieldValue(
@@ -39,4 +43,8 @@ export async function setFieldValue(
 	else {
 		expect(field).toHaveValue(value);
 	}
+}
+
+export function isArrayEqual(array1: Array<any>, array2: Array<any>): boolean {
+	return !differenceWith(array1, array2, isEqual).length;
 }

@@ -53,8 +53,6 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 		<aui:input helpMessage="key-help" name="key" />
 
 		<aui:input name="priority" />
-
-		<aui:input name="listTypeDefinitionId" type="hidden" value="<%= (cpSpecificationOption == null) ? 0 : cpSpecificationOption.getListTypeDefinitionId() %>" />
 	</aui:fieldset>
 </commerce-ui:panel>
 

@@ -14,20 +14,15 @@ const propsTransformer = ({additionalProps: {specificationId}, ...props}) => ({
 		action: {
 			data: {id: actionId},
 		},
+		itemData: {listTypeDefinitionId},
 		loadData: refresh,
 	}) => {
 		if (actionId === 'removePicklistRelation') {
-			AdminCatalogResource.updateSpecificationById(specificationId, {
-				listTypeDefinitionId: 0,
-			})
+			AdminCatalogResource.deleteSpecificationListTypeDefinition(
+				specificationId,
+				listTypeDefinitionId
+			)
 				.then(() => {
-					const picklistIdInput =
-						window.parent.document.querySelector(
-							`input[name="${props.portletNamespace}listTypeDefinitionId"]`
-						);
-
-					picklistIdInput.value = 0;
-
 					refresh();
 
 					openToast({

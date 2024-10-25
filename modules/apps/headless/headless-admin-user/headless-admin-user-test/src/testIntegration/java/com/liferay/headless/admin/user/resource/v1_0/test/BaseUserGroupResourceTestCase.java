@@ -920,6 +920,58 @@ public abstract class BaseUserGroupResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteUserGroupByExternalReferenceCodeUsers()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserGroup userGroup =
+			testDeleteUserGroupByExternalReferenceCodeUsers_addUserGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			userGroupResource.
+				deleteUserGroupByExternalReferenceCodeUsersHttpResponse(
+					userGroup.getExternalReferenceCode(), null));
+	}
+
+	protected UserGroup
+			testDeleteUserGroupByExternalReferenceCodeUsers_addUserGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostUserGroupByExternalReferenceCodeUsers()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserGroup userGroup =
+			testPostUserGroupByExternalReferenceCodeUsers_addUserGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			userGroupResource.
+				postUserGroupByExternalReferenceCodeUsersHttpResponse(
+					userGroup.getExternalReferenceCode(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			userGroupResource.
+				postUserGroupByExternalReferenceCodeUsersHttpResponse(
+					userGroup.getExternalReferenceCode(), null));
+	}
+
+	protected UserGroup
+			testPostUserGroupByExternalReferenceCodeUsers_addUserGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteUserGroup() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserGroup userGroup = testDeleteUserGroup_addUserGroup();

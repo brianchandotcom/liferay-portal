@@ -920,6 +920,16 @@ public class ServletDataImpl implements ServletData {
 							UserGroupResourceImpl.class,
 							"putUserGroupByExternalReferenceCode"));
 					put(
+						"mutation#deleteUserGroupByExternalReferenceCodeUsers",
+						new ObjectValuePair<>(
+							UserGroupResourceImpl.class,
+							"deleteUserGroupByExternalReferenceCodeUsers"));
+					put(
+						"mutation#createUserGroupByExternalReferenceCodeUsers",
+						new ObjectValuePair<>(
+							UserGroupResourceImpl.class,
+							"postUserGroupByExternalReferenceCodeUsers"));
+					put(
 						"mutation#deleteUserGroup",
 						new ObjectValuePair<>(
 							UserGroupResourceImpl.class, "deleteUserGroup"));
@@ -1340,6 +1350,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class, "getUserAccount"));
 					put(
+						"query#userGroupByExternalReferenceCodeUsers",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getUserGroupByExternalReferenceCodeUsersPage"));
+					put(
 						"query#userGroupUsers",
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class,
@@ -1597,6 +1612,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WebUrlResourceImpl.class,
 							"getWebUrlByExternalReferenceCode"));
+					put(
+						"query#Account.userGroupByExternalReferenceCodeUsers",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getUserGroupByExternalReferenceCodeUsersPage"));
 					put(
 						"query#Account.roleByExternalReferenceCode",
 						new ObjectValuePair<>(

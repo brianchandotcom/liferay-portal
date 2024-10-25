@@ -13,7 +13,6 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.list.type.model.ListTypeEntry;
-import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -22,10 +21,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -181,17 +182,21 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 		CPSpecificationOption cpSpecificationOption =
 			cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
 
-		if (cpSpecificationOption.getListTypeDefinitionId() == 0) {
+		if (ListUtil.isEmpty(cpSpecificationOption.getListTypeEntries())) {
 			return _localization.getLocalizationMap(actionRequest, "value");
 		}
 
 		String value = ParamUtil.getString(actionRequest, "value");
 
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.getListTypeEntry(
-				cpSpecificationOption.getListTypeDefinitionId(), value);
+		for (ListTypeEntry listTypeEntry :
+				cpSpecificationOption.getListTypeEntries()) {
 
-		return listTypeEntry.getNameMap();
+			if (value.equals(listTypeEntry.getKey())) {
+				return listTypeEntry.getNameMap();
+			}
+		}
+
+		return new HashMap<>();
 	}
 
 	private CPDefinitionSpecificationOptionValue
@@ -232,9 +237,6 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 
 	@Reference
 	private CPSpecificationOptionService _cpSpecificationOptionService;
-
-	@Reference
-	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private Localization _localization;

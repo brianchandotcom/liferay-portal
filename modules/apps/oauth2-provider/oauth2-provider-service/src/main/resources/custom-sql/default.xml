@@ -19,23 +19,4 @@
 
 		]]>
 	</sql>
-	<sql id="com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder.findByC_A_B_A">
-		<![CDATA[
-			SELECT
-				{OAuth2ScopeGrant.*}, {OAuth2Authorization.*}
-		 	FROM
-			 	OAuth2ScopeGrant
-			INNER JOIN
-				OA2Auths_OA2ScopeGrants ON
-					OAuth2ScopeGrant.oAuth2ScopeGrantId = OA2Auths_OA2ScopeGrants.oAuth2ScopeGrantId
-			INNER JOIN
-				OAuth2Authorization ON
-					OAuth2Authorization.oAuth2AuthorizationId = OA2Auths_OA2ScopeGrants.oAuth2AuthorizationId
-			WHERE
-				(OAuth2ScopeGrant.companyId = ?) AND
-				(OAuth2ScopeGrant.applicationName = ?) AND
-				(OAuth2ScopeGrant.bundleSymbolicName = ?) AND
-				(OAuth2Authorization.accessTokenContentHash = ?)
-		]]>
-	</sql>
 </custom-sql>

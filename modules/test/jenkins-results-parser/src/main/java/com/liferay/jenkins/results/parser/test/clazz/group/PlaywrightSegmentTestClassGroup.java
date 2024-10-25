@@ -17,26 +17,8 @@ import org.json.JSONObject;
  */
 public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 
-	@Override
-	public Integer getMinimumSlaveRAM() {
-		for (AxisTestClassGroup axisTestClassGroup : getAxisTestClassGroups()) {
-			return axisTestClassGroup.getMinimumSlaveRAM();
-		}
-
-		return super.getMinimumSlaveRAM();
-	}
-
 	public String getProjectName() {
 		return _projectName;
-	}
-
-	@Override
-	public String getSlaveLabel() {
-		for (AxisTestClassGroup axisTestClassGroup : getAxisTestClassGroups()) {
-			return axisTestClassGroup.getSlaveLabel();
-		}
-
-		return super.getSlaveLabel();
 	}
 
 	@Override

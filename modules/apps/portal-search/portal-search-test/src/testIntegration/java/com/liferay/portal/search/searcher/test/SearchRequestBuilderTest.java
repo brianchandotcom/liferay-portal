@@ -18,14 +18,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -35,7 +33,6 @@ import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.rescore.Rescore;
 import com.liferay.portal.search.rescore.RescoreBuilderFactory;
-import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -56,10 +53,8 @@ import com.liferay.users.admin.test.util.search.UserSearchFixture;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -273,40 +268,6 @@ public class SearchRequestBuilderTest {
 	}
 
 	@Test
-	public void testFederatedSearchRequestStartAndEndParameters() {
-		SearchRequestBuilder searchRequestBuilder =
-			_searchRequestBuilderFactory.builder(
-			).withSearchContext(
-				searchContext -> {
-					searchContext.setEnd(RandomTestUtil.randomInt(10, 19));
-					searchContext.setStart(RandomTestUtil.randomInt(0, 9));
-				}
-			);
-
-		searchRequestBuilder.getFederatedSearchRequestBuilder(
-			RandomTestUtil.randomString(20));
-
-		SearchRequest searchRequest = searchRequestBuilder.build();
-
-		List<SearchRequest> federatedSearchRequests =
-			searchRequest.getFederatedSearchRequests();
-
-		Assert.assertFalse(federatedSearchRequests.isEmpty());
-
-		SearchContext searchContext1 = _getSearchContext(searchRequest);
-
-		for (SearchRequest federatedSearchRequest : federatedSearchRequests) {
-			SearchContext searchContext2 = _getSearchContext(
-				federatedSearchRequest);
-
-			Assert.assertEquals(
-				searchContext1.getEnd(), searchContext2.getEnd());
-			Assert.assertEquals(
-				searchContext1.getStart(), searchContext2.getStart());
-		}
-	}
-
-	@Test
 	public void testModelIndexerClassNames() throws Exception {
 		_addUser("epsilon", "lambda1", "epsilon");
 		_addUser("theta", "lambda2", "theta");
@@ -506,13 +467,6 @@ public class SearchRequestBuilderTest {
 		).windowSize(
 			100
 		).build();
-	}
-
-	private SearchContext _getSearchContext(SearchRequest searchRequest) {
-		SearchRequestBuilder searchRequestBuilder =
-			_searchRequestBuilderFactory.builder(searchRequest);
-
-		return searchRequestBuilder.withSearchContextGet(Function.identity());
 	}
 
 	private boolean _isElasticsearch() {

@@ -3,9 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import {defineConfig, splitVendorChunkPlugin} from 'vite';
+
+const BASE_URL =
+	process.env.BASE_URL || '/o/liferay-marketplace-custom-element';
 
 export default defineConfig({
 	build: {
@@ -20,7 +23,7 @@ export default defineConfig({
 	},
 	experimental: {
 		renderBuiltUrl(filename: string) {
-			return `/o/liferay-marketplace-custom-element/${filename}`;
+			return `${BASE_URL}/${filename}`;
 		},
 	},
 	plugins: [react(), splitVendorChunkPlugin()],

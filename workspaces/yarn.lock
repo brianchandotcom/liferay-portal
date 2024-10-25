@@ -53,10 +53,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@liferay/eslint-plugin@1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@liferay/eslint-plugin/-/eslint-plugin-1.5.0.tgz#4f12a13061ac2961d30487bd255206f17d5613f4"
-  integrity sha512-AJ9d9aU9SqBb/u4DW/zAMbLGaU6uEfLqWuBy5ZbVw5JhAedRW53vw3ubeysayRKOZzP+q+LICa0VbJn70Et0ag==
+"@liferay/eslint-plugin@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@liferay/eslint-plugin/-/eslint-plugin-1.6.0.tgz#e59015aaee989a11b6dbca727ed7a45584101b3f"
+  integrity sha512-Y+BcUkD/EimG/HVjqB3ejKSDUCW2fO/htsXsjEfKKGfSxIQAqM4GGEmRPAAiz4VpEI3+WOAgN2U+u3OVwFL8zA==
   dependencies:
     "@typescript-eslint/eslint-plugin" "4.30.0"
     "@typescript-eslint/parser" "4.30.0"

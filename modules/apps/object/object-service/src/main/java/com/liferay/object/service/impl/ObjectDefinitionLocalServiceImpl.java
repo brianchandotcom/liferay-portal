@@ -182,16 +182,17 @@ public class ObjectDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
-			long userId, long objectFolderId, boolean enableComments,
-			boolean enableIndexSearch, boolean enableLocalization,
-			boolean enableObjectEntryDraft, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
-			String storageType, List<ObjectField> objectFields)
+			long userId, long objectFolderId, String className,
+			boolean enableComments, boolean enableIndexSearch,
+			boolean enableLocalization, boolean enableObjectEntryDraft,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			boolean portlet, String scope, String storageType,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
-			null, userId, objectFolderId, null, null, enableComments,
+			null, userId, objectFolderId, className, null, enableComments,
 			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
 			labelMap, true, name, panelAppOrder, panelCategoryKey, null, null,
 			pluralLabelMap, portlet, scope, storageType, false, null, 0,
@@ -1166,7 +1167,7 @@ public class ObjectDefinitionLocalServiceImpl
 			long accountEntryRestrictedObjectFieldId,
 			long descriptionObjectFieldId, long objectFolderId,
 			long titleObjectFieldId, boolean accountEntryRestricted,
-			boolean active, boolean enableCategorization,
+			boolean active, String className, boolean enableCategorization,
 			boolean enableComments, boolean enableIndexSearch,
 			boolean enableLocalization, boolean enableObjectEntryDraft,
 			boolean enableObjectEntryHistory, Map<Locale, String> labelMap,
@@ -1224,8 +1225,8 @@ public class ObjectDefinitionLocalServiceImpl
 			externalReferenceCode, objectDefinition,
 			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 			objectFolderId, titleObjectFieldId, accountEntryRestricted, active,
-			null, enableCategorization, enableComments, enableIndexSearch,
-			enableLocalization, enableObjectEntryDraft,
+			className, null, enableCategorization, enableComments,
+			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
 			enableObjectEntryHistory, labelMap, name, panelAppOrder,
 			panelCategoryKey, portlet, null, null, pluralLabelMap, scope,
 			status);
@@ -2137,14 +2138,14 @@ public class ObjectDefinitionLocalServiceImpl
 			long accountEntryRestrictedObjectFieldId,
 			long descriptionObjectFieldId, long objectFolderId,
 			long titleObjectFieldId, boolean accountEntryRestricted,
-			boolean active, String dbTableName, boolean enableCategorization,
-			boolean enableComments, boolean enableIndexSearch,
-			boolean enableLocalization, boolean enableObjectEntryDraft,
-			boolean enableObjectEntryHistory, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			boolean portlet, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			String scope, int status)
+			boolean active, String className, String dbTableName,
+			boolean enableCategorization, boolean enableComments,
+			boolean enableIndexSearch, boolean enableLocalization,
+			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, boolean portlet,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<Locale, String> pluralLabelMap, String scope, int status)
 		throws PortalException {
 
 		long oldObjectFolderId = objectDefinition.getObjectFolderId();
@@ -2198,8 +2199,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setActive(active);
 		objectDefinition.setClassName(
 			_getClassName(
-				objectDefinition.getObjectDefinitionId(),
-				objectDefinition.getClassName(),
+				objectDefinition.getObjectDefinitionId(), className,
 				objectDefinition.isModifiable(), objectDefinition.isSystem()));
 		objectDefinition.setEnableCategorization(enableCategorization);
 		objectDefinition.setEnableComments(enableComments);

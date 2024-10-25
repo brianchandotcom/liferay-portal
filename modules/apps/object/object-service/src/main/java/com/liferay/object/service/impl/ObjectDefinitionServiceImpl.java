@@ -41,7 +41,7 @@ public class ObjectDefinitionServiceImpl
 
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
-			long objectFolderId, boolean enableComments,
+			long objectFolderId, String className, boolean enableComments,
 			boolean enableIndexSearch, boolean enableLocalization,
 			boolean enableObjectEntryDraft, Map<Locale, String> labelMap,
 			String name, String panelAppOrder, String panelCategoryKey,
@@ -58,10 +58,10 @@ public class ObjectDefinitionServiceImpl
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return objectDefinitionLocalService.addCustomObjectDefinition(
-			getUserId(), objectFolderId, enableComments, enableIndexSearch,
-			enableLocalization, enableObjectEntryDraft, labelMap, name,
-			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
-			storageType, objectFields);
+			getUserId(), objectFolderId, className, enableComments,
+			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
+			labelMap, name, panelAppOrder, panelCategoryKey, pluralLabelMap,
+			portlet, scope, storageType, objectFields);
 	}
 
 	@Override
@@ -223,7 +223,7 @@ public class ObjectDefinitionServiceImpl
 			long accountEntryRestrictedObjectFieldId,
 			long descriptionObjectFieldId, long objectFolderId,
 			long titleObjectFieldId, boolean accountEntryRestricted,
-			boolean active, boolean enableCategorization,
+			boolean active, String className, boolean enableCategorization,
 			boolean enableComments, boolean enableIndexSearch,
 			boolean enableLocalization, boolean enableObjectEntryDraft,
 			boolean enableObjectEntryHistory, Map<Locale, String> labelMap,
@@ -243,7 +243,7 @@ public class ObjectDefinitionServiceImpl
 			externalReferenceCode, objectDefinitionId,
 			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 			objectFolderId, titleObjectFieldId, accountEntryRestricted, active,
-			enableCategorization, enableComments, enableIndexSearch,
+			className, enableCategorization, enableComments, enableIndexSearch,
 			enableLocalization, enableObjectEntryDraft,
 			enableObjectEntryHistory, labelMap, name, panelAppOrder,
 			panelCategoryKey, portlet, pluralLabelMap, scope, status);

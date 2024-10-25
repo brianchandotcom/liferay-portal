@@ -409,7 +409,7 @@ public class ObjectRelatedModelsProviderTest {
 
 		ObjectDefinition scopeSiteObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, false, true, false, false,
+				TestPropsValues.getUserId(), 0, null, false, true, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"C" + RandomTestUtil.randomString(), null,
 				PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT,
@@ -567,7 +567,7 @@ public class ObjectRelatedModelsProviderTest {
 
 		_objectDefinition3 =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, false, true, false, false,
+				TestPropsValues.getUserId(), 0, null, false, true, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

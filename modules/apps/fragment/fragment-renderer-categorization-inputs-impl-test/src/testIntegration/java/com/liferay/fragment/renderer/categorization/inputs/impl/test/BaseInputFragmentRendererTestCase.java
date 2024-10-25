@@ -211,7 +211,7 @@ public abstract class BaseInputFragmentRendererTestCase {
 			objectDefinition.getDescriptionObjectFieldId(), 0,
 			objectDefinition.getTitleObjectFieldId(),
 			objectDefinition.isAccountEntryRestricted(),
-			objectDefinition.isActive(), false,
+			objectDefinition.isActive(), objectDefinition.getClassName(), false,
 			objectDefinition.isEnableComments(),
 			objectDefinition.isEnableIndexSearch(),
 			objectDefinition.isEnableLocalization(),

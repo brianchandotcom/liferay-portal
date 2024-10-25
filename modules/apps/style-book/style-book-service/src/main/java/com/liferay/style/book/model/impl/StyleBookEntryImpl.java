@@ -55,6 +55,8 @@ public class StyleBookEntryImpl extends StyleBookEntryBaseImpl {
 			"frontendTokensValuesPath", "frontend-tokens-values.json"
 		).put(
 			"name", getName()
+		).put(
+			"themeId", getThemeId()
 		);
 
 		FileEntry previewFileEntry = _getPreviewFileEntry();

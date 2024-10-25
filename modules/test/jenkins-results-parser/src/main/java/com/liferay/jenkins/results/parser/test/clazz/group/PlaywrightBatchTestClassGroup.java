@@ -134,6 +134,35 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		setTestClasses();
 	}
 
+	protected int getAxisCount(List<TestClass> testClasses) {
+		Long totalDuration = 0L;
+
+		for (TestClass testClass : testClasses) {
+			totalDuration += testClass.getAverageDuration();
+		}
+
+		if (totalDuration != 0L) {
+			JobProperty jobProperty = getJobProperty(
+				"test.batch.target.axis.duration");
+
+			String jobPropertyValue = jobProperty.getValue();
+
+			if (JenkinsResultsParserUtil.isInteger(jobPropertyValue)) {
+				recordJobProperty(jobProperty);
+
+				Long targetAxisTargetDuration = Long.parseLong(
+					jobPropertyValue);
+
+				Long axisCount =
+					Math.floorDiv(totalDuration, targetAxisTargetDuration) + 1;
+
+				return Math.toIntExact(axisCount);
+			}
+		}
+
+		return getAxisCount();
+	}
+
 	protected File getPlaywrightBaseDir() {
 		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)getJob();
 
@@ -204,19 +233,44 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 				playwrightSegmentTestClassGroup.setProjectName(projectName);
 
-				AxisTestClassGroup axisTestClassGroup =
-					TestClassGroupFactory.newAxisTestClassGroup(this);
+				int axisCount = getAxisCount(testClasses);
 
-				playwrightSegmentTestClassGroup.addAxisTestClassGroup(
-					axisTestClassGroup);
+				if (axisCount >= 1) {
+					for (int axisIndex = 0; axisIndex < axisCount;
+						 axisIndex++) {
 
-				for (TestClass testClass : testClasses) {
-					axisTestClassGroup.addTestClass(testClass);
+						AxisTestClassGroup axisTestClassGroup =
+							TestClassGroupFactory.newAxisTestClassGroup(this);
 
-					addTestClass(testClass);
+						playwrightSegmentTestClassGroup.addAxisTestClassGroup(
+							axisTestClassGroup);
+
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("npx playwright test --project=");
+						sb.append(projectName);
+						sb.append(" --shard=");
+						sb.append(axisIndex + 1);
+						sb.append("/");
+						sb.append(axisCount);
+						sb.append(" --list");
+
+						String result = _callNPMCommand(
+							getPlaywrightBaseDir(), sb.toString());
+
+						for (TestClass testClass : testClasses) {
+							if (result.contains(testClass.getName())) {
+								axisTestClassGroup.addTestClass(testClass);
+							}
+						}
+
+						addAxisTestClassGroup(axisTestClassGroup);
+					}
 				}
 
-				addAxisTestClassGroup(axisTestClassGroup);
+				for (TestClass testClass : testClasses) {
+					addTestClass(testClass);
+				}
 
 				addSegmentTestClassGroup(playwrightSegmentTestClassGroup);
 			}

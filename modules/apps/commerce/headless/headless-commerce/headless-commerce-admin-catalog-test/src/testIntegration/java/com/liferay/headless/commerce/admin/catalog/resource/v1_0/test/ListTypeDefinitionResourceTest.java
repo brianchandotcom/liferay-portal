@@ -81,7 +81,9 @@ public class ListTypeDefinitionResourceTest
 			_cpSpecificationOptionLocalService.getCPSpecificationOption(
 				_cpSpecificationOption.getCPSpecificationOptionId());
 
-		Assert.assertTrue(cpSpecificationOption.getListTypeDefinitionId() != 0);
+		Assert.assertFalse(
+			cpSpecificationOption.getListTypeDefinitions(
+			).isEmpty());
 	}
 
 	@Override

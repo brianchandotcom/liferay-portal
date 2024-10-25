@@ -13,7 +13,9 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.web.internal.exception.NoninstanceablePortletException;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.layout.util.CheckNoninstanceablePortletThreadLocal;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -65,67 +67,73 @@ public abstract class BaseDuplicateItemMVCActionCommand
 			ActionRequest actionRequest, long fragmentEntryLinkId)
 		throws PortalException {
 
-		FragmentEntryLink fragmentEntryLink =
-			fragmentEntryLinkLocalService.getFragmentEntryLink(
-				fragmentEntryLinkId);
+		try (SafeCloseable safeCloseable =
+				CheckNoninstanceablePortletThreadLocal.
+					setCheckNoninstanceablePortletWithSafeCloseable(true)) {
 
-		JSONObject editableValuesJSONObject = jsonFactory.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+			FragmentEntryLink fragmentEntryLink =
+				fragmentEntryLinkLocalService.getFragmentEntryLink(
+					fragmentEntryLinkId);
 
-		String portletId = editableValuesJSONObject.getString("portletId");
+			JSONObject editableValuesJSONObject = jsonFactory.createJSONObject(
+				fragmentEntryLink.getEditableValues());
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
+			String portletId = editableValuesJSONObject.getString("portletId");
 
-		String namespace = StringUtil.randomId();
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
 
-		if (Validator.isNotNull(portletId)) {
-			Portlet portlet = portletLocalService.getPortletById(portletId);
+			String namespace = StringUtil.randomId();
 
-			if (!portlet.isInstanceable()) {
-				editableValuesJSONObject.put("instanceId", StringPool.BLANK);
+			if (Validator.isNotNull(portletId)) {
+				Portlet portlet = portletLocalService.getPortletById(portletId);
+
+				if (!portlet.isInstanceable()) {
+					editableValuesJSONObject.put(
+						"instanceId", StringPool.BLANK);
+				}
+				else {
+					String oldInstanceId = editableValuesJSONObject.getString(
+						"instanceId");
+
+					editableValuesJSONObject.put("instanceId", namespace);
+
+					_copyPortletPermissions(
+						fragmentEntryLink.getCompanyId(),
+						fragmentEntryLink.getGroupId(), namespace,
+						oldInstanceId, fragmentEntryLink.getPlid(), portletId);
+					_copyPortletPreferences(
+						serviceContext.getRequest(), portletId, oldInstanceId,
+						namespace);
+				}
 			}
-			else {
-				String oldInstanceId = editableValuesJSONObject.getString(
-					"instanceId");
 
-				editableValuesJSONObject.put("instanceId", namespace);
+			if (fragmentEntryLink.isTypeInput()) {
+				JSONObject freemarkerFragmentEntryProcessorJSONObject =
+					editableValuesJSONObject.getJSONObject(
+						FragmentEntryProcessorConstants.
+							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
-				_copyPortletPermissions(
-					fragmentEntryLink.getCompanyId(),
-					fragmentEntryLink.getGroupId(), namespace, oldInstanceId,
-					fragmentEntryLink.getPlid(), portletId);
-				_copyPortletPreferences(
-					serviceContext.getRequest(), portletId, oldInstanceId,
-					namespace);
+				if (freemarkerFragmentEntryProcessorJSONObject != null) {
+					freemarkerFragmentEntryProcessorJSONObject.remove(
+						"inputFieldId");
+				}
 			}
+
+			FragmentEntryLink duplicatedFragmentEntryLink =
+				fragmentEntryLinkService.addFragmentEntryLink(
+					null, fragmentEntryLink.getGroupId(), 0,
+					fragmentEntryLink.getFragmentEntryId(),
+					fragmentEntryLink.getSegmentsExperienceId(),
+					fragmentEntryLink.getPlid(), fragmentEntryLink.getCss(),
+					fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
+					fragmentEntryLink.getConfiguration(),
+					editableValuesJSONObject.toString(), namespace, 0,
+					fragmentEntryLink.getRendererKey(),
+					fragmentEntryLink.getType(), serviceContext);
+
+			return duplicatedFragmentEntryLink.getFragmentEntryLinkId();
 		}
-
-		if (fragmentEntryLink.isTypeInput()) {
-			JSONObject freemarkerFragmentEntryProcessorJSONObject =
-				editableValuesJSONObject.getJSONObject(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-			if (freemarkerFragmentEntryProcessorJSONObject != null) {
-				freemarkerFragmentEntryProcessorJSONObject.remove(
-					"inputFieldId");
-			}
-		}
-
-		FragmentEntryLink duplicatedFragmentEntryLink =
-			fragmentEntryLinkService.addFragmentEntryLink(
-				null, fragmentEntryLink.getGroupId(), 0,
-				fragmentEntryLink.getFragmentEntryId(),
-				fragmentEntryLink.getSegmentsExperienceId(),
-				fragmentEntryLink.getPlid(), fragmentEntryLink.getCss(),
-				fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
-				fragmentEntryLink.getConfiguration(),
-				editableValuesJSONObject.toString(), namespace, 0,
-				fragmentEntryLink.getRendererKey(), fragmentEntryLink.getType(),
-				serviceContext);
-
-		return duplicatedFragmentEntryLink.getFragmentEntryLinkId();
 	}
 
 	protected JSONArray getFragmentEntryLinksJSONArray(

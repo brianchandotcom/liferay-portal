@@ -21,7 +21,9 @@ import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
+import com.liferay.layout.util.CheckNoninstanceablePortletThreadLocal;
 import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
@@ -849,15 +851,20 @@ public class FragmentEntryLinkLocalServiceImpl
 			fragmentEntryLink);
 
 		if (modified) {
-			_updateFragmentEntryLinkLayout(fragmentEntryLink);
+			try (SafeCloseable safeCloseable =
+					CheckNoninstanceablePortletThreadLocal.
+						setCheckNoninstanceablePortletWithSafeCloseable(true)) {
 
-			for (FragmentEntryLinkListener fragmentEntryLinkListener :
-					_fragmentEntryLinkListenerRegistry.
-						getFragmentEntryLinkListeners()) {
+				_updateFragmentEntryLinkLayout(fragmentEntryLink);
 
-				fragmentEntryLinkListener.
-					onUpdateFragmentEntryLinkConfigurationValues(
-						fragmentEntryLink);
+				for (FragmentEntryLinkListener fragmentEntryLinkListener :
+						_fragmentEntryLinkListenerRegistry.
+							getFragmentEntryLinkListeners()) {
+
+					fragmentEntryLinkListener.
+						onUpdateFragmentEntryLinkConfigurationValues(
+							fragmentEntryLink);
+				}
 			}
 		}
 	}

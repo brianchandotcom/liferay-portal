@@ -13,7 +13,7 @@
 						<span class="breadcrumb-text-truncate">${htmlUtil.escape(entry.getTitle())}</span>
 					</a>
 				<#else>
-					<span class="active breadcrumb-text-truncate">${htmlUtil.escape(entry.getTitle())}</span>
+					<span aria-current="page" class="active breadcrumb-text-truncate">${htmlUtil.escape(entry.getTitle())}</span>
 				</#if>
 			</li>
 		</#list>

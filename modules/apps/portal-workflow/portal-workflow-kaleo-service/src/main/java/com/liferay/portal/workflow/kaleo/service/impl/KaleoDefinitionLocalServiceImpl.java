@@ -237,6 +237,15 @@ public class KaleoDefinitionLocalServiceImpl
 
 	@Override
 	public KaleoDefinition getKaleoDefinition(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return kaleoDefinitionPersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public KaleoDefinition getKaleoDefinition(
 			String name, ServiceContext serviceContext)
 		throws PortalException {
 

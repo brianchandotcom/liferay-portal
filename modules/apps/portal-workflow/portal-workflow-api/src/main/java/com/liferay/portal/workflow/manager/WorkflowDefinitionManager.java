@@ -105,6 +105,13 @@ public interface WorkflowDefinitionManager {
 			long companyId, String name, int version)
 		throws PortalException;
 
+	public default WorkflowDefinition getWorkflowDefinition(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, String name, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)

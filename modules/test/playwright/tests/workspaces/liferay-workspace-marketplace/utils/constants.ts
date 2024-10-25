@@ -21,11 +21,7 @@ export const products = {
 	cloud_free: {
 		categories: ['Analytics and Optimization'],
 		cloudCompatible: true,
-		compatibleOfferings: [
-			'Liferay Self-Hosted',
-			'Liferay PaaS',
-			'Liferay SaaS',
-		],
+		compatibleOfferings: ['Liferay SaaS'],
 		description: 'My free cloud app',
 		dxpVersions: ['7.3'],
 		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),
@@ -45,11 +41,7 @@ export const products = {
 	cloud_paid: {
 		categories: ['Customer Data Management'],
 		cloudCompatible: true,
-		compatibleOfferings: [
-			'Liferay Self-Hosted',
-			'Liferay PaaS',
-			'Liferay SaaS',
-		],
+		compatibleOfferings: ['Liferay SaaS'],
 		description: 'My paid cloud app',
 		dxpVersions: ['7.3'],
 		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),
@@ -78,11 +70,7 @@ export const products = {
 	dxp_free: {
 		categories: ['Analytics and Optimization'],
 		cloudCompatible: false,
-		compatibleOfferings: [
-			'Liferay Self-Hosted',
-			'Self-Managed',
-			'Fully-Managed',
-		],
+		compatibleOfferings: ['Liferay Self-Hosted', 'Liferay PaaS'],
 		description: 'My free Dxp app',
 		dxpVersions: ['7.3'],
 		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),
@@ -98,11 +86,7 @@ export const products = {
 	dxp_paid: {
 		categories: ['Customer Data Management'],
 		cloudCompatible: false,
-		compatibleOfferings: [
-			'Liferay Self-Hosted',
-			'Self-Managed',
-			'Fully-Managed',
-		],
+		compatibleOfferings: ['Liferay Self-Hosted', 'Liferay PaaS'],
 		description: 'My paid cloud app',
 		dxpVersions: ['7.3'],
 		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),

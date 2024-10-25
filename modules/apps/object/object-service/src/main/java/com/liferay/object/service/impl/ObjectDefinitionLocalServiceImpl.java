@@ -23,6 +23,7 @@ import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedObjectFieldIdException;
 import com.liferay.object.exception.ObjectDefinitionActiveException;
+import com.liferay.object.exception.ObjectDefinitionClassNameException;
 import com.liferay.object.exception.ObjectDefinitionEnableCategorizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableCommentsException;
 import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
@@ -1467,6 +1468,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		_validateExternalReferenceCode(
 			true, externalReferenceCode, modifiable, name, system);
+		_validateClassName(
+			0, user.getCompanyId(), className, modifiable, system);
 		_validateEnableComments(
 			enableComments, modifiable, storageType, system);
 		_validateLabel(labelMap);
@@ -1776,7 +1779,9 @@ public class ObjectDefinitionLocalServiceImpl
 		long objectDefinitionId, String className, boolean modifiable,
 		boolean system) {
 
-		if (_isUnmodifiableSystemObject(modifiable, system)) {
+		if (Validator.isNotNull(className) ||
+			_isUnmodifiableSystemObject(modifiable, system)) {
+
 			return className;
 		}
 
@@ -2150,6 +2155,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		long oldObjectFolderId = objectDefinition.getObjectFolderId();
 		boolean oldActive = objectDefinition.isActive();
+		String oldClassName = objectDefinition.getClassName();
 
 		_validateExternalReferenceCode(
 			false, externalReferenceCode, objectDefinition.isModifiable(), name,
@@ -2160,6 +2166,14 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateObjectFieldId(objectDefinition, descriptionObjectFieldId);
 		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
 		_validateActive(active, status);
+
+		if (Validator.isNull(oldClassName)) {
+			_validateClassName(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getCompanyId(), className,
+				objectDefinition.isModifiable(), objectDefinition.isSystem());
+		}
+
 		_validateEnableCategorization(
 			enableCategorization, objectDefinition.isModifiable(),
 			objectDefinition.getStorageType(), objectDefinition.isSystem());
@@ -2197,10 +2211,15 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setTitleObjectFieldId(titleObjectFieldId);
 		objectDefinition.setAccountEntryRestricted(accountEntryRestricted);
 		objectDefinition.setActive(active);
-		objectDefinition.setClassName(
-			_getClassName(
-				objectDefinition.getObjectDefinitionId(), className,
-				objectDefinition.isModifiable(), objectDefinition.isSystem()));
+
+		if (Validator.isNull(oldClassName)) {
+			objectDefinition.setClassName(
+				_getClassName(
+					objectDefinition.getObjectDefinitionId(), className,
+					objectDefinition.isModifiable(),
+					objectDefinition.isSystem()));
+		}
+
 		objectDefinition.setEnableCategorization(enableCategorization);
 		objectDefinition.setEnableComments(enableComments);
 		objectDefinition.setEnableObjectEntryDraft(enableObjectEntryDraft);
@@ -2381,6 +2400,37 @@ public class ObjectDefinitionLocalServiceImpl
 
 			throw new ObjectDefinitionActiveException(
 				"Object definitions must be published before being activated");
+		}
+	}
+
+	private void _validateClassName(
+			long objectDefinitionId, long companyId, String className,
+			boolean modifiable, boolean system)
+		throws PortalException {
+
+		if (Validator.isNull(className) ||
+			_isUnmodifiableSystemObject(modifiable, system)) {
+
+			return;
+		}
+
+		ObjectDefinition existingObjectDefinition =
+			objectDefinitionPersistence.fetchByC_C(companyId, className);
+
+		if ((existingObjectDefinition != null) &&
+			(existingObjectDefinition.getObjectDefinitionId() !=
+				objectDefinitionId)) {
+
+			throw new ObjectDefinitionClassNameException.MustNotBeDuplicate(
+				className);
+		}
+
+		if (!StringUtil.startsWith(
+				className,
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
+
+			throw new ObjectDefinitionClassNameException.MustStartWithPrefix();
 		}
 	}
 

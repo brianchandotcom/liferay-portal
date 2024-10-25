@@ -218,6 +218,11 @@ public interface UserAccountResource {
 			Long userAccountId, MultipartBody multipartBody)
 		throws Exception;
 
+	public Page<UserAccount> getUserGroupByExternalReferenceCodeUsersPage(
+			String externalReferenceCode, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public Page<UserAccount> getUserGroupUsersPage(
 			Long userGroupId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)

@@ -15,6 +15,7 @@ import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionStatusAdapter;
+import com.liferay.portal.vulcan.internal.constants.VulcanConstants;
 
 import java.io.IOException;
 
@@ -74,7 +75,7 @@ public class TransactionContainerRequestFilter
 							_transactionAttributeAdapter));
 
 			containerRequestContext.setProperty(
-				_TRANSACTION_CLEAN_UP_MESSAGE_OBSERVER,
+				VulcanConstants.TRANSACTION_CLEAN_UP_MESSAGE_OBSERVER,
 				transactionCleanUpMessageObserver);
 
 			interceptorChain.add(transactionCleanUpMessageObserver);
@@ -92,7 +93,7 @@ public class TransactionContainerRequestFilter
 		TransactionCleanUpMessageObserver transactionCleanUpMessageObserver =
 			(TransactionCleanUpMessageObserver)
 				containerRequestContext.getProperty(
-					_TRANSACTION_CLEAN_UP_MESSAGE_OBSERVER);
+					VulcanConstants.TRANSACTION_CLEAN_UP_MESSAGE_OBSERVER);
 
 		if (transactionCleanUpMessageObserver == null) {
 			return;
@@ -111,10 +112,6 @@ public class TransactionContainerRequestFilter
 					containerResponseContext.getStatus()));
 		}
 	}
-
-	private static final String _TRANSACTION_CLEAN_UP_MESSAGE_OBSERVER =
-		TransactionContainerRequestFilter.class.getName() +
-			"#TRANSACTION_CLEAN_UP_MESSAGE_OBSERVER";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TransactionContainerRequestFilter.class);

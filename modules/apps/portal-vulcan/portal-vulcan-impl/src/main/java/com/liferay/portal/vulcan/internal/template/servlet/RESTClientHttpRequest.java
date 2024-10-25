@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.internal.constants.VulcanConstants;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -119,8 +120,19 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 
 	@Override
 	public Object getAttribute(String name) {
-		return _attributes.getOrDefault(
-			name, _httpServletRequest.getAttribute(name));
+		Object attributeValue = _attributes.get(name);
+
+		if (attributeValue != null) {
+			return attributeValue;
+		}
+
+		if (VulcanConstants.TRANSACTION_CLEAN_UP_MESSAGE_OBSERVER.equals(
+				name)) {
+
+			return null;
+		}
+
+		return _httpServletRequest.getAttribute(name);
 	}
 
 	@Override

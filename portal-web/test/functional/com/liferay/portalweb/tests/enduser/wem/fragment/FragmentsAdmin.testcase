@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-90063 and LPS-159235. Add folders to fragment resource and check hints."
+	@description = "This is a test for LPS-90063, LPS-108566 and LPS-159235. Add folders to fragment resource and check hints."
 	@priority = 4
 	test AddFoldersToResourceAndCheckHints {
 		task ("When user is in resources tab") {

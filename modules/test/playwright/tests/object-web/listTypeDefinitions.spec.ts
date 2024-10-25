@@ -210,7 +210,7 @@ test.describe('ensure picklist translation', () => {
 				status: {code: 0},
 			});
 
-		apiHelpers.data.push({
+		apiHelpers.data.unshift({
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
@@ -308,7 +308,7 @@ test.describe('ensure picklist translation', () => {
 				status: {code: 0},
 			});
 
-		apiHelpers.data.push({
+		apiHelpers.data.unshift({
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});

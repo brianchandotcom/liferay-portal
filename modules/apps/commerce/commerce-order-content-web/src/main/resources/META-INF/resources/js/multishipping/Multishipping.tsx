@@ -4,22 +4,34 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
-import {ClayInput} from '@clayui/form';
+import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import ClayManagementToolbar, {
+	ClayResultsBar,
+} from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
 
 // @ts-ignore
 
-import {CommerceServiceProvider} from 'commerce-frontend-js';
+import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import './Multishipping.scss';
+
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import {openConfirmModal} from 'frontend-js-web';
+
 import AddDeliveryGroupButton from './AddDeliveryGroupButton';
 import DeliveryGroupHeaderCell from './DeliveryGroupHeaderCell';
 import {showError} from './ErrorMessage';
-import OrderItemRow from './OrderItemRow';
+import OrderItemRow, {
+	copyColumnOrderItem,
+	removeOrderItem,
+	resetOrderItem,
+	splitOrderItem,
+} from './OrderItemRow';
 import {
 	IAPIResponseError,
 	IDeliveryGroup,
@@ -32,6 +44,8 @@ const MAX_DELIVERY_GROUPS = 20;
 
 interface IMultishippingProps {
 	accountId: number;
+	defaultAddressId?: number;
+	defaultAddressName?: string;
 	namespace?: string;
 	orderId: number;
 	readonly?: boolean;
@@ -95,7 +109,6 @@ const createRequestData = (
 			}
 		}
 		else {
-			console.error(orderItem.quantity);
 			if (orderItem.quantity > 0) {
 				data.push(
 					formatCartItem(
@@ -118,6 +131,8 @@ const createRequestData = (
 
 const Multishipping = ({
 	accountId,
+	defaultAddressId = 0,
+	defaultAddressName = '',
 	namespace = '',
 	orderId,
 	readonly = false,
@@ -126,6 +141,9 @@ const Multishipping = ({
 	const [deliveryGroups, setDeliveryGroups] = useState<Array<IDeliveryGroup>>(
 		[]
 	);
+	const [checkedOrderItemIds, setCheckedOrderItemIds] = useState<
+		Array<number>
+	>([]);
 	const [filterFormattedOrderItems, setFilteredFormattedOrderItems] =
 		useState<Array<IOrderItem>>([]);
 	const [formattedOrderItems, setFormattedOrderItems] = useState<
@@ -240,10 +258,33 @@ const Multishipping = ({
 					return;
 				}
 				catch (error) {
-					console.error(error);
-
 					showError(error as IAPIResponseError);
 				}
+			}
+		}
+		else if (defaultAddressId) {
+			try {
+
+				// eslint-disable-next-line @typescript-eslint/no-use-before-define
+				await updateFullCart(
+					formattedItems.map((item) => {
+						return formatCartItem(
+							{
+								addressId: defaultAddressId,
+								deliveryDate: '',
+								id: 0,
+								name: defaultAddressName || 'Default',
+							},
+							item,
+							item.quantity
+						);
+					})
+				);
+
+				return;
+			}
+			catch (error) {
+				showError(error as IAPIResponseError);
 			}
 		}
 
@@ -268,8 +309,6 @@ const Multishipping = ({
 				await prepareData(response.items);
 			})
 			.catch((error: IAPIResponseError) => {
-				console.error(error);
-
 				showError(error);
 			})
 			.finally(() => {
@@ -291,12 +330,98 @@ const Multishipping = ({
 				)
 				.then(async (response: IOrderItemAPIResponse) => {
 					await prepareData(response.cartItems);
+
+					Liferay.fire(commerceEvents.ORDER_INFORMATION_ALTERED, {
+						order: response,
+					});
 				})
 				.finally(() => {
 					setSaving(false);
 				});
 		},
 		[orderId, prepareData]
+	);
+
+	const handleBulkAction = useCallback(
+		async (action: string) => {
+			const originalFormattedOrderItems = JSON.parse(
+				JSON.stringify(formattedOrderItems)
+			);
+
+			try {
+				let currentFormattedOrderItems = JSON.parse(
+					JSON.stringify(formattedOrderItems)
+				);
+
+				for (const orderItemId of checkedOrderItemIds) {
+					const orderItem = currentFormattedOrderItems.find(
+						(orderItem: IOrderItem) => orderItem.id === orderItemId
+					);
+
+					if (!orderItem) {
+						continue;
+					}
+
+					let currentOrderItem: IOrderItem | null = null;
+
+					if (action === 'remove') {
+						currentOrderItem = removeOrderItem(orderItem);
+					}
+					else if (action === 'reset') {
+						currentOrderItem = resetOrderItem(
+							deliveryGroups[0],
+							orderItem
+						);
+					}
+					else if (action === 'split') {
+						currentOrderItem = splitOrderItem(
+							deliveryGroups,
+							orderItem
+						);
+					}
+					else {
+						currentOrderItem = copyColumnOrderItem(
+							deliveryGroups,
+							orderItem
+						);
+					}
+
+					currentFormattedOrderItems = currentFormattedOrderItems.map(
+						(item: IOrderItem) => {
+							if (item.id === orderItemId) {
+								return currentOrderItem;
+							}
+
+							return item;
+						}
+					);
+				}
+
+				await updateFullCart(
+					createRequestData(
+						deliveryGroups,
+						currentFormattedOrderItems
+					)
+				);
+
+				setCheckedOrderItemIds([]);
+			}
+			catch (error) {
+				setFormattedOrderItems(originalFormattedOrderItems);
+
+				showError({
+					detail: Liferay.Language.get(
+						'the-item-s-quantity-is-not-valid-for-the-number-of-delivery-groups'
+					),
+				});
+			}
+		},
+		[
+			checkedOrderItemIds,
+			deliveryGroups,
+			formattedOrderItems,
+			updateFullCart,
+		]
 	);
 
 	const handleDeleteDeliveryGroup = useCallback(
@@ -334,8 +459,6 @@ const Multishipping = ({
 				}
 			}
 			catch (error) {
-				console.error(error);
-
 				showError(error as IAPIResponseError);
 			}
 		},
@@ -356,9 +479,31 @@ const Multishipping = ({
 		}));
 	}, []);
 
+	const handleRowSelection = useCallback(async (orderItemId: number) => {
+		setCheckedOrderItemIds((prevState) => {
+			const currentCheckedOrderItemIds = [...prevState];
+
+			if (currentCheckedOrderItemIds.includes(orderItemId)) {
+				currentCheckedOrderItemIds.splice(
+					currentCheckedOrderItemIds.indexOf(orderItemId),
+					1
+				);
+			}
+			else {
+				currentCheckedOrderItemIds.push(orderItemId);
+			}
+
+			return currentCheckedOrderItemIds;
+		});
+	}, []);
+
 	const handleRowUpdate = useCallback(
 		async (orderItem: IOrderItem, saveFullOrder: boolean = false) => {
-			const originalFormattedOrderItems = {...formattedOrderItems};
+			const originalFormattedOrderItems = formattedOrderItems.map(
+				(item) => {
+					return {...item};
+				}
+			);
 			const currentFormattedOrderItems = formattedOrderItems.map(
 				(item) => {
 					if (item.id === orderItem.id) {
@@ -381,8 +526,6 @@ const Multishipping = ({
 					);
 				}
 				catch (error) {
-					console.error(error);
-
 					setFormattedOrderItems(originalFormattedOrderItems);
 
 					showError(error as IAPIResponseError);
@@ -412,8 +555,6 @@ const Multishipping = ({
 					);
 				}
 				catch (error) {
-					console.error(error);
-
 					showError(error as IAPIResponseError);
 				}
 			}
@@ -436,8 +577,6 @@ const Multishipping = ({
 						);
 					}
 					catch (error) {
-						console.error(error);
-
 						showError(error as IAPIResponseError);
 
 						setDeliveryGroups([]);
@@ -483,42 +622,235 @@ const Multishipping = ({
 	const managementBar = (
 		<div className="management-bar-wrapper">
 			<>
-				<ClayManagementToolbar>
-					<ClayManagementToolbar.Search>
-						<ClayInput.Group>
-							<ClayInput.GroupItem>
-								<ClayInput
-									aria-label="search"
-									className="form-control"
-									disabled={loading}
-									onChange={({target: {value}}) => {
-										setSearch(value);
+				{!checkedOrderItemIds.length && (
+					<ClayManagementToolbar>
+						<ClayManagementToolbar.ItemList>
+							<ClayManagementToolbar.Item>
+								<ClayCheckbox
+									aria-label={
+										checkedOrderItemIds.length
+											? Liferay.Language.get(
+													'unselect-all'
+												)
+											: Liferay.Language.get('select-all')
+									}
+									checked={!!checkedOrderItemIds.length}
+									data-qa-id="selectAllCheckbox"
+									disabled={loading || readonly || saving}
+									onChange={({target}) => {
+										setCheckedOrderItemIds(
+											target.checked
+												? filterFormattedOrderItems.map(
+														(orderItem) =>
+															orderItem.id
+													)
+												: []
+										);
 									}}
-									type="text"
-									value={search}
 								/>
-							</ClayInput.GroupItem>
-						</ClayInput.Group>
-					</ClayManagementToolbar.Search>
+							</ClayManagementToolbar.Item>
+						</ClayManagementToolbar.ItemList>
 
-					<ClayManagementToolbar.ItemList>
-						<ClayManagementToolbar.Item>
-							<AddDeliveryGroupButton
-								accountId={accountId}
-								disabled={
-									loading ||
-									readonly ||
-									saving ||
-									deliveryGroups.length >= MAX_DELIVERY_GROUPS
+						<ClayManagementToolbar.Search>
+							<ClayInput.Group>
+								<ClayInput.GroupItem>
+									<ClayInput
+										aria-label="search"
+										className="form-control"
+										disabled={loading}
+										onChange={({target: {value}}) => {
+											setSearch(value);
+										}}
+										type="text"
+										value={search}
+									/>
+								</ClayInput.GroupItem>
+							</ClayInput.Group>
+						</ClayManagementToolbar.Search>
+
+						<ClayManagementToolbar.ItemList>
+							<ClayManagementToolbar.Item>
+								<AddDeliveryGroupButton
+									accountId={accountId}
+									disabled={
+										loading ||
+										readonly ||
+										saving ||
+										deliveryGroups.length >=
+											MAX_DELIVERY_GROUPS
+									}
+									handleSubmit={handleSubmitDeliveryGroup}
+									hasManageAddressesPermission={true}
+									namespace={namespace}
+									spritemap={spritemap}
+								/>
+							</ClayManagementToolbar.Item>
+						</ClayManagementToolbar.ItemList>
+					</ClayManagementToolbar>
+				)}
+
+				{!!checkedOrderItemIds.length && (
+					<ClayResultsBar>
+						<ClayResultsBar.Item className="justify-content-center">
+							<ClayCheckbox
+								aria-label={
+									checkedOrderItemIds.length
+										? Liferay.Language.get('unselect-all')
+										: Liferay.Language.get('select-all')
 								}
-								handleSubmit={handleSubmitDeliveryGroup}
-								hasManageAddressesPermission={true}
-								namespace={namespace}
-								spritemap={spritemap}
+								checked={!!checkedOrderItemIds.length}
+								data-qa-id="selectAllCheckbox"
+								onChange={({target}) => {
+									setCheckedOrderItemIds(
+										target.checked
+											? filterFormattedOrderItems.map(
+													(orderItem) => orderItem.id
+												)
+											: []
+									);
+								}}
 							/>
-						</ClayManagementToolbar.Item>
-					</ClayManagementToolbar.ItemList>
-				</ClayManagementToolbar>
+						</ClayResultsBar.Item>
+
+						<ClayResultsBar.Item>
+							<span className="component-text text-truncate-inline">
+								<span
+									className="text-truncate"
+									data-qa-id="selectionStats"
+								>
+									{`${checkedOrderItemIds.length} ${Liferay.Language.get('of')} ${filterFormattedOrderItems.length}`}
+								</span>
+							</span>
+						</ClayResultsBar.Item>
+
+						<ClayResultsBar.Item expand>
+							<ClayButton
+								className="tbar-link"
+								data-qa-id="selectAllButton"
+								displayType="link"
+								onClick={() => {
+									setCheckedOrderItemIds(
+										filterFormattedOrderItems.map(
+											(orderItem) => orderItem.id
+										)
+									);
+								}}
+							>
+								{Liferay.Language.get('select-all')}
+							</ClayButton>
+						</ClayResultsBar.Item>
+
+						<ClayResultsBar.Item>
+							<ClayButton
+								borderless
+								className="tbar-link"
+								data-qa-id="bulkSplitAction"
+								disabled={!deliveryGroups.length}
+								displayType="secondary"
+								onClick={async () => {
+									openConfirmModal({
+										message: Liferay.Language.get(
+											'if-the-total-quantity-cannot-be-equally-distributed,-any-remaining-units-will-be-allocated-to-the-primary-delivery-group.-are-you-sure-you-want-to-proceed-with-the-split'
+										),
+										onConfirm: async (isConfirmed) => {
+											if (isConfirmed) {
+												await handleBulkAction('split');
+											}
+										},
+									});
+								}}
+							>
+								<span className="inline-item inline-item-before">
+									<ClayIcon
+										spritemap={spritemap}
+										symbol="arrow-split"
+									/>
+								</span>
+
+								{Liferay.Language.get('split-quantity-evenly')}
+							</ClayButton>
+
+							<ClayButton
+								borderless
+								className="tbar-link"
+								data-qa-id="bulkResetAction"
+								disabled={!deliveryGroups.length}
+								displayType="secondary"
+								onClick={async () => {
+									openConfirmModal({
+										message: Liferay.Language.get(
+											'by-resetting-the-rows-will-set-all-columns-to-zero,-except-the-first-one,-which-will-have-the-minimum-allowed-quantity.-are-you-sure-you-want-to-proceed-with-the-reset'
+										),
+										onConfirm: async (isConfirmed) => {
+											if (isConfirmed) {
+												await handleBulkAction('reset');
+											}
+										},
+									});
+								}}
+							>
+								<span className="inline-item inline-item-before">
+									<ClayIcon
+										spritemap={spritemap}
+										symbol="reload"
+									/>
+								</span>
+
+								{Liferay.Language.get('reset-rows')}
+							</ClayButton>
+
+							<ClayButton
+								borderless
+								className="tbar-link"
+								data-qa-id="bulkCopyAction"
+								disabled={!deliveryGroups.length}
+								displayType="secondary"
+								onClick={async () => {
+									await handleBulkAction('copy');
+								}}
+							>
+								<span className="inline-item inline-item-before">
+									<ClayIcon
+										spritemap={spritemap}
+										symbol="copy"
+									/>
+								</span>
+
+								{Liferay.Language.get('copy-column-1-to-all')}
+							</ClayButton>
+
+							<ClayButton
+								borderless
+								className="tbar-link"
+								data-qa-id="bulkRemoveAction"
+								displayType="secondary"
+								onClick={async () => {
+									openConfirmModal({
+										message: Liferay.Language.get(
+											'by-removing-the-item-s,-it-they-will-disappear-from-the-list-of-ordered-items.-are-you-sure-you-want-to-proceed-with-the-remove'
+										),
+										onConfirm: async (isConfirmed) => {
+											if (isConfirmed) {
+												await handleBulkAction(
+													'remove'
+												);
+											}
+										},
+									});
+								}}
+							>
+								<span className="inline-item inline-item-before">
+									<ClayIcon
+										spritemap={spritemap}
+										symbol="times-circle"
+									/>
+								</span>
+
+								{Liferay.Language.get('remove-items')}
+							</ClayButton>
+						</ClayResultsBar.Item>
+					</ClayResultsBar>
+				)}
 			</>
 		</div>
 	);
@@ -530,10 +862,14 @@ const Multishipping = ({
 					borderedColumns
 					borderless
 					className="order-items-table"
-					striped
 				>
 					<ClayTable.Head>
 						<ClayTable.Row>
+							<ClayTable.Cell
+								headingCell
+								key="selection"
+							></ClayTable.Cell>
+
 							<ClayTable.Cell headingCell key="sku">
 								<div className="align-items-center d-flex flex-nowrap">
 									<div className="flex-grow-1">
@@ -581,8 +917,12 @@ const Multishipping = ({
 							)
 							.map((orderItem, currentIndex) => (
 								<OrderItemRow
+									checked={checkedOrderItemIds.includes(
+										orderItem.id
+									)}
 									deliveryGroups={deliveryGroups}
 									disabled={readonly || saving}
+									handleSelection={handleRowSelection}
 									handleSubmit={handleRowUpdate}
 									key={orderItem.id}
 									orderId={orderId}
@@ -626,7 +966,7 @@ const Multishipping = ({
 		<div className="data-set data-set-fluid multishipping-container">
 			{managementBar}
 
-			<div className="container-fluid container-fluid-max-xl">
+			<div>
 				{loading ? (
 					<ClayLoadingIndicator
 						data-qa-id="loadingSpinner"

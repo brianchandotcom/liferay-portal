@@ -5,11 +5,14 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import DropDown from '@clayui/drop-down';
+import {ClayCheckbox} from '@clayui/form';
 import ClayLink from '@clayui/link';
 import {useModal} from '@clayui/modal';
 import ClayTable from '@clayui/table';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import classNames from 'classnames';
 import {
+	commerceEvents,
 	CommerceServiceProvider,
 	QuantitySelectorComponent as QuantitySelector,
 
@@ -17,7 +20,7 @@ import {
 
 } from 'commerce-frontend-js';
 import {debounce, openConfirmModal} from 'frontend-js-web';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {showError} from './ErrorMessage';
 import {formatCartItem} from './Multishipping';
@@ -30,7 +33,9 @@ import {
 } from './Types';
 
 interface IOrderItemRowProps {
+	handleSelection(orderItemId: number): void;
 	handleSubmit(item: IOrderItem, saveFullOrder?: boolean): void;
+	checked?: boolean;
 	deliveryGroups?: Array<IDeliveryGroup>;
 	disabled?: boolean;
 	namespace?: string;
@@ -51,16 +56,26 @@ const calculateOrderItemQuantity = (orderItemDeliveryGroups: {
 	);
 };
 
-const copyColumnOrderItem = (
+export function copyColumnOrderItem(
 	deliveryGroups: Array<IDeliveryGroup>,
 	orderItem: IOrderItem
-): IOrderItem => {
+): IOrderItem {
 	orderItem.deliveryGroups = orderItem.deliveryGroups || {};
 
 	const defaultDeliveryGroup = orderItem.deliveryGroups[deliveryGroups[0].id];
 
 	if (!defaultDeliveryGroup) {
 		return orderItem;
+	}
+
+	if (
+		(deliveryGroups?.length || 0) <= 1 ||
+		!(orderItem.deliveryGroups || {})[deliveryGroups[0].id] ||
+		(orderItem.settings?.maxQuantity || 1) <
+			(orderItem.deliveryGroups || {})[deliveryGroups[0].id].quantity *
+				deliveryGroups?.length
+	) {
+		throw new Error('invalid quantity');
 	}
 
 	for (const deliveryGroup of deliveryGroups) {
@@ -84,9 +99,9 @@ const copyColumnOrderItem = (
 	orderItem.quantity = calculateOrderItemQuantity(orderItem.deliveryGroups);
 
 	return orderItem;
-};
+}
 
-const removeOrderItem = (orderItem: IOrderItem): IOrderItem => {
+export function removeOrderItem(orderItem: IOrderItem): IOrderItem {
 	orderItem.deliveryGroups = orderItem.deliveryGroups || {};
 	orderItem.quantity = 0;
 
@@ -95,12 +110,12 @@ const removeOrderItem = (orderItem: IOrderItem): IOrderItem => {
 	}
 
 	return orderItem;
-};
+}
 
-const resetOrderItem = (
+export function resetOrderItem(
 	deliveryGroup: IDeliveryGroup,
 	orderItem: IOrderItem
-): IOrderItem => {
+): IOrderItem {
 	orderItem.deliveryGroups = orderItem.deliveryGroups || {};
 	orderItem.quantity = orderItem.settings?.minQuantity || 1;
 
@@ -126,20 +141,29 @@ const resetOrderItem = (
 	}
 
 	return orderItem;
-};
+}
 
-const splitOrderItem = (
+export function splitOrderItem(
 	deliveryGroups: Array<IDeliveryGroup>,
 	orderItem: IOrderItem
-): IOrderItem => {
+): IOrderItem {
 	orderItem.deliveryGroups = orderItem.deliveryGroups || {};
 
 	if (!orderItem.quantity || !deliveryGroups.length) {
 		return orderItem;
 	}
 
+	if (
+		(deliveryGroups?.length || 0) <= 1 ||
+		!!orderItem.settings?.allowedQuantities?.length ||
+		orderItem.quantity <
+			(orderItem.settings?.minQuantity || 1) * deliveryGroups?.length
+	) {
+		throw new Error('invalid quantity');
+	}
+
 	const quantity = Math.floor(orderItem.quantity / deliveryGroups.length);
-	const reminder = orderItem.quantity % deliveryGroups.length;
+	const remainder = orderItem.quantity % deliveryGroups.length;
 
 	for (const deliveryGroup of deliveryGroups) {
 		if (orderItem.deliveryGroups[deliveryGroup.id]) {
@@ -159,18 +183,20 @@ const splitOrderItem = (
 	}
 
 	orderItem.deliveryGroups[deliveryGroups[0].id].originalQuantity =
-		quantity + reminder;
+		quantity + remainder;
 	orderItem.deliveryGroups[deliveryGroups[0].id].quantity =
-		quantity + reminder;
+		quantity + remainder;
 
 	orderItem.quantity = calculateOrderItemQuantity(orderItem.deliveryGroups);
 
 	return orderItem;
-};
+}
 
 const OrderItemRow = ({
+	checked = false,
 	deliveryGroups = [],
 	disabled = false,
+	handleSelection,
 	handleSubmit,
 	orderId,
 	orderItem: orderItemProp,
@@ -178,6 +204,7 @@ const OrderItemRow = ({
 	spritemap = 'OrderItemRow',
 }: IOrderItemRowProps) => {
 	const {observer, onOpenChange, open} = useModal();
+	const [isChecked, setIsChecked] = useState(checked);
 	const [orderItem, setOrderItem] = useState<IOrderItem>(orderItemProp);
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -207,6 +234,10 @@ const OrderItemRow = ({
 							)
 							.then(() => {
 								delete orderItemDeliveryGroups[deliveryGroupId];
+
+								Liferay.fire(
+									commerceEvents.ORDER_INFORMATION_ALTERED
+								);
 							})
 							.catch((error: IAPIResponseError) => {
 								showError(error);
@@ -230,6 +261,10 @@ const OrderItemRow = ({
 									response.quantity;
 								existingOrderItemDeliveryGroup.quantity =
 									response.quantity;
+
+								Liferay.fire(
+									commerceEvents.ORDER_INFORMATION_ALTERED
+								);
 							})
 							.catch((error: IAPIResponseError) => {
 								showError(error);
@@ -257,6 +292,10 @@ const OrderItemRow = ({
 									originalQuantity: quantity,
 									quantity,
 								};
+
+								Liferay.fire(
+									commerceEvents.ORDER_INFORMATION_ALTERED
+								);
 							})
 							.catch((error: IAPIResponseError) => {
 								showError(error);
@@ -283,6 +322,14 @@ const OrderItemRow = ({
 		),
 		[handleSubmit]
 	);
+
+	const handleInternalSelection = useCallback(() => {
+		setIsChecked((prevState) => {
+			return !prevState;
+		});
+
+		handleSelection(orderItem.id);
+	}, [handleSelection, orderItem]);
 
 	const handleUpdateField = useCallback(
 		(deliveryGroupId: number, quantity: number) => {
@@ -338,11 +385,27 @@ const OrderItemRow = ({
 		[deliveryGroups, finalizeSave, orderId, orderItem]
 	);
 
+	useEffect(() => {
+		setIsChecked(checked);
+	}, [checked]);
+
 	return (
 		<ClayTable.Row
+			className={classNames({
+				'row-checked': isChecked,
+			})}
 			data-qa-id={`orderItem${orderItem.id}Row`}
 			key={orderItem.id}
 		>
+			<ClayTable.Cell>
+				<ClayCheckbox
+					checked={isChecked}
+					data-qa-id={`row${rowIndex}Select`}
+					disabled={disabled}
+					onChange={() => handleInternalSelection()}
+				/>
+			</ClayTable.Cell>
+
 			<ClayTable.Cell aria-label="sku-name">
 				<ClayTooltipProvider>
 					<div className="align-items-center d-flex flex-nowrap sku-name">
@@ -367,7 +430,7 @@ const OrderItemRow = ({
 						<DropDown
 							trigger={
 								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get('Actions')}
+									aria-label={Liferay.Language.get('actions')}
 									data-qa-id={`row${rowIndex}Actions`}
 									disabled={disabled}
 									displayType="unstyled"
@@ -396,7 +459,7 @@ const OrderItemRow = ({
 									onClick={() => {
 										openConfirmModal({
 											message: Liferay.Language.get(
-												'if-the-quantity-cannot-be-equally-distributed,-the-primary-delivery-group-will-have-the-remaining-quantity-to-reach-the-total-quantity-set.-are-you-sure-you-want-to-split'
+												'if-the-total-quantity-cannot-be-equally-distributed,-any-remaining-units-will-be-allocated-to-the-primary-delivery-group.-are-you-sure-you-want-to-proceed-with-the-split'
 											),
 											onConfirm: (isConfirmed) => {
 												if (isConfirmed) {
@@ -429,7 +492,7 @@ const OrderItemRow = ({
 												1) *
 												deliveryGroups?.length
 											? Liferay.Language.get(
-													'the-item-s-quantity-is-not-valid-for-the-the-number-of-delivery-groups'
+													'the-item-s-quantity-is-not-valid-for-the-number-of-delivery-groups'
 												)
 											: ''
 									}
@@ -449,7 +512,7 @@ const OrderItemRow = ({
 									onClick={() => {
 										openConfirmModal({
 											message: Liferay.Language.get(
-												'by-resetting-the-row-s,-all-the-columns-will-have-a-quantity-of-0-except-the-first-one,-which-will-have-the-minimum quantity.-are-you-sure-you-want-to-reset'
+												'by-resetting-the-rows-will-set-all-columns-to-zero,-except-the-first-one,-which-will-have-the-minimum-allowed-quantity.-are-you-sure-you-want-to-proceed-with-the-reset'
 											),
 											onConfirm: (isConfirmed) => {
 												if (isConfirmed) {
@@ -519,7 +582,7 @@ const OrderItemRow = ({
 											].quantity *
 												deliveryGroups?.length
 											? Liferay.Language.get(
-													'the-item-s-quantity-is-not-valid-for-the-the-number-of-delivery-groups'
+													'the-item-s-quantity-is-not-valid-for-the-number-of-delivery-groups'
 												)
 											: ''
 									}
@@ -538,7 +601,7 @@ const OrderItemRow = ({
 									onClick={() => {
 										openConfirmModal({
 											message: Liferay.Language.get(
-												'by-removing-the-item-s,-it-they-will-disappear-from-the-list-of-ordered-items.-are-you-sure-you-want-to-remove-the-item-s'
+												'by-removing-the-item-s,-it-they-will-disappear-from-the-list-of-ordered-items.-are-you-sure-you-want-to-proceed-with-the-remove'
 											),
 											onConfirm: (isConfirmed) => {
 												if (isConfirmed) {

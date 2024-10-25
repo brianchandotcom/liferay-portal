@@ -542,7 +542,7 @@
 														"definition": {
 															"widgetInstance": {
 																"widgetConfig": {
-																	"displayStyle": "ddmTemplate_MARKETPLACE-PRICE-MODEL",
+																	"displayStyle": "ddmTemplate_MARKETPLACE-SPECIFICATIONS-FACET",
 																	"displayStyleGroupId": "[$GROUP_ID$]",
 																	"frequenciesVisible": "true",
 																	"frequencyThreshold": "1",

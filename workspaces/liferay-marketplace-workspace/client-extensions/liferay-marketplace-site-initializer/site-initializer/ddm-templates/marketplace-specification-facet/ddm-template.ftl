@@ -32,7 +32,7 @@
 		collapsible=true
 		cssClass="font-size-paragraph-small font-weight-semi-bold search-facet"
 		extended=!browserSniffer.isMobile(request)
-		id="${namespace + 'facetPriceModelCategoriesPanel'}"
+		id="${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()}"
 		markupView="lexicon"
 		persistState=true
 		title="${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?replace('-',' ')}">

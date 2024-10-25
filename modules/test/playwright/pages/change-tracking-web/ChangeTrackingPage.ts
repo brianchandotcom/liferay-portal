@@ -318,34 +318,35 @@ export class ChangeTrackingPage {
 	}
 
 	async toggleSandboxConfiguration(check: boolean) {
-		await this.instanceSettingsPage.goToInstanceSetting(
-			'Publications',
-			'Publications Settings'
-		);
+		await this.goto();
 
-		await expect(this.page.getByText('Sandbox Enabled')).toBeVisible();
+		await this.page.getByLabel('Options').click();
 
-		const checkBox = this.page.getByLabel('Sandbox Enabled');
+		await this.page.getByRole('menuitem', {name: 'Settings'}).click();
+
+		await expect(this.page.getByText('Sandbox Only')).toBeVisible();
+
+		const checkBox = this.page.getByRole('checkbox', {
+			name: 'enable-sandbox-only',
+		});
+
+		const publicationsEnabled = this.page.getByRole('checkbox', {
+			name: 'Enable Publications',
+		});
 
 		if (check) {
 			await checkBox.setChecked(true);
 
-			await this.instanceSettingsPage.saveButton.click();
+			await expect(publicationsEnabled).toBeChecked();
 
-			await waitForAlert(
-				this.page,
-				`Success:Your request completed successfully.`
-			);
+			await expect(checkBox).toBeChecked();
 		}
 		else {
 			await checkBox.setChecked(false);
 
-			await this.instanceSettingsPage.saveButton.click();
+			await expect(publicationsEnabled).toBeChecked();
 
-			await waitForAlert(
-				this.page,
-				`Success:Your request completed successfully.`
-			);
+			await expect(checkBox).not.toBeChecked();
 		}
 	}
 

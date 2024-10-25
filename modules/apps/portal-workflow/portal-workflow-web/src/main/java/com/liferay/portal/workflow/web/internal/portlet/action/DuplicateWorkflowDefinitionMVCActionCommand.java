@@ -63,14 +63,14 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		if ((workflowDefinition != null) && workflowDefinition.isActive()) {
 			workflowDefinition =
 				workflowDefinitionManager.deployWorkflowDefinition(
-					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+					null, themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 					getTitle(actionRequest, titleMap), name,
 					content.getBytes());
 		}
 		else {
 			workflowDefinition =
 				workflowDefinitionManager.saveWorkflowDefinition(
-					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+					null, themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 					getTitle(actionRequest, titleMap), name,
 					content.getBytes());
 		}

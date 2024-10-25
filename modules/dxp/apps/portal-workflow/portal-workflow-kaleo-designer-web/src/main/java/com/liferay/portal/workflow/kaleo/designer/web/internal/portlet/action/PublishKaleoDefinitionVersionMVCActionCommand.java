@@ -84,7 +84,7 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 
 		WorkflowDefinition workflowDefinition =
 			unproxiedWorkflowDefinitionManager.deployWorkflowDefinition(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				null, themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 				getTitle(actionRequest, titleMap), name, content.getBytes());
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =

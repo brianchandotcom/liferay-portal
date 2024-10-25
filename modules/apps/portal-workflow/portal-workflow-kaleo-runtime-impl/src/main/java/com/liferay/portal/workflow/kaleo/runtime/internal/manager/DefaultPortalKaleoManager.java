@@ -176,7 +176,7 @@ public class DefaultPortalKaleoManager
 			User guestUser = userLocalService.getGuestUser(companyId);
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				serviceContext.getCompanyId(), guestUser.getUserId(),
+				null, serviceContext.getCompanyId(), guestUser.getUserId(),
 				_getLocalizedTitle(companyId, definitionName), definitionName,
 				FileUtil.getBytes(inputStream));
 		}

@@ -638,7 +638,6 @@ definition {
 	@description = "This is a use case for LPS-105151 and LPS-139642 TC-9: Users could login with instance-level configured OpenID Connect provider."
 	@priority = 5
 	test OpenIDConnectOnInstanceLevelSmoke {
-		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

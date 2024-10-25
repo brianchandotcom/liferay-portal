@@ -14,10 +14,24 @@ function resolvePath(basePath = '', id = '') {
 }
 export default function Specification(basePath) {
 	return {
+		createSpecificationListTypeDefinition: (
+			specificationId,
+			listTypeDefinitionId
+		) =>
+			AJAX.POST(
+				`${resolvePath(basePath, specificationId)}/list-type-definitions/${listTypeDefinitionId}`
+			),
 		createSpecificationListTypeDefinitionById: (specificationId, json) =>
 			AJAX.POST(
 				`${resolvePath(basePath, specificationId)}/list-type-definitions`,
 				json
+			),
+		deleteSpecificationListTypeDefinition: (
+			specificationId,
+			listTypeDefinitionId
+		) =>
+			AJAX.DELETE(
+				`${resolvePath(basePath, specificationId)}/list-type-definitions/${listTypeDefinitionId}`
 			),
 		getSpecificationListTypeDefinitionsById: (specificationId, json) =>
 			AJAX.GET(

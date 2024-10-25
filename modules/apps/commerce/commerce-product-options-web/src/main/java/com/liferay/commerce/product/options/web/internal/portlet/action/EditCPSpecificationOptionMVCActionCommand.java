@@ -118,8 +118,6 @@ public class EditCPSpecificationOptionMVCActionCommand
 
 		long cpOptionCategoryId = ParamUtil.getLong(
 			actionRequest, "CPOptionCategoryId");
-		long listTypeDefinitionId = ParamUtil.getLong(
-			actionRequest, "listTypeDefinitionId");
 		Map<Locale, String> titleMap = _localization.getLocalizationMap(
 			actionRequest, "title");
 		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
@@ -139,8 +137,8 @@ public class EditCPSpecificationOptionMVCActionCommand
 
 			cpSpecificationOption =
 				_cpSpecificationOptionService.addCPSpecificationOption(
-					null, cpOptionCategoryId, listTypeDefinitionId, titleMap,
-					descriptionMap, facetable, key, priority, serviceContext);
+					null, cpOptionCategoryId, null, titleMap, descriptionMap,
+					facetable, key, priority, serviceContext);
 		}
 		else {
 
@@ -148,9 +146,9 @@ public class EditCPSpecificationOptionMVCActionCommand
 
 			cpSpecificationOption =
 				_cpSpecificationOptionService.updateCPSpecificationOption(
-					null, cpSpecificationOptionId, cpOptionCategoryId,
-					listTypeDefinitionId, titleMap, descriptionMap, facetable,
-					key, priority, serviceContext);
+					null, cpSpecificationOptionId, cpOptionCategoryId, null,
+					titleMap, descriptionMap, facetable, key, priority,
+					serviceContext);
 		}
 
 		return cpSpecificationOption;

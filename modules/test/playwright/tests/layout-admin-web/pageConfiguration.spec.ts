@@ -640,6 +640,8 @@ test.describe('SEO configuration', () => {
 
 		// Edit custom meta tags
 
+		await page.getByLabel('Add Custom Tags').waitFor();
+
 		const property1 = page.getByLabel('Property', {exact: true}).nth(0);
 
 		await property1.waitFor();

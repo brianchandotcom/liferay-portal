@@ -38,9 +38,9 @@ export default function CreateOrAssignCPSpecificationOptionListTypeDefinition({
 				listTypeDefinitionId = id;
 			}
 			else if (cmd === CMD.ASSIGN) {
-				await AdminCatalogResource.updateSpecificationById(
+				await AdminCatalogResource.createSpecificationListTypeDefinition(
 					cpSpecificationOptionId,
-					{listTypeDefinitionId}
+					listTypeDefinitionId
 				);
 			}
 
@@ -51,13 +51,6 @@ export default function CreateOrAssignCPSpecificationOptionListTypeDefinition({
 					)
 				);
 			}
-
-			const listTypeDefinitionIdInput =
-				window.parent.document.querySelector(
-					`input[name="${namespace}listTypeDefinitionId"]`
-				);
-
-			listTypeDefinitionIdInput.value = listTypeDefinitionId;
 
 			window.parent.Liferay.fire(commerceEvents.CLOSE_MODAL, {
 				successNotification: {

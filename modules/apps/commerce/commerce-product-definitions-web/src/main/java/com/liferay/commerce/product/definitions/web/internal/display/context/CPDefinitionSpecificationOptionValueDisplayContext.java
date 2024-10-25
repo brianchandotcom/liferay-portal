@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
@@ -163,7 +164,7 @@ public class CPDefinitionSpecificationOptionValueDisplayContext
 		CPSpecificationOption cpSpecificationOption =
 			_cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
 
-		if (cpSpecificationOption.getListTypeDefinitionId() == 0) {
+		if (ListUtil.isEmpty(cpSpecificationOption.getListTypeEntries())) {
 			return selectOptions;
 		}
 
@@ -173,9 +174,7 @@ public class CPDefinitionSpecificationOptionValueDisplayContext
 			LanguageUtil.getLanguageId(httpServletRequest));
 
 		for (ListTypeEntry listTypeEntry :
-				_listTypeEntryService.getListTypeEntries(
-					cpSpecificationOption.getListTypeDefinitionId(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+				cpSpecificationOption.getListTypeEntries()) {
 
 			selectOptions.add(
 				new SelectOption(

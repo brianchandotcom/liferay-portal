@@ -12,11 +12,12 @@ import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
-import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -52,14 +53,19 @@ public class CommerceSpecificationOptionListTypeDefinitionFDSDataProvider
 			_cpSpecificationOptionService.getCPSpecificationOption(
 				specificationId);
 
-		if (cpSpecificationOption.getListTypeDefinitionId() == 0) {
+		if (ListUtil.isEmpty(cpSpecificationOption.getListTypeDefinitions())) {
 			return Collections.emptyList();
 		}
 
-		return Collections.singletonList(
-			_toListTypeDefinition(
-				_listTypeDefinitionService.getListTypeDefinition(
-					cpSpecificationOption.getListTypeDefinitionId())));
+		List<ListTypeDefinition> listTypeDefinitions = new ArrayList<>();
+
+		for (com.liferay.list.type.model.ListTypeDefinition listTypeDefinition :
+				cpSpecificationOption.getListTypeDefinitions()) {
+
+			listTypeDefinitions.add(_toListTypeDefinition(listTypeDefinition));
+		}
+
+		return listTypeDefinitions;
 	}
 
 	@Override
@@ -78,11 +84,11 @@ public class CommerceSpecificationOptionListTypeDefinitionFDSDataProvider
 			_cpSpecificationOptionService.getCPSpecificationOption(
 				specificationId);
 
-		if (cpSpecificationOption.getListTypeDefinitionId() == 0) {
-			return 0;
-		}
+		List<com.liferay.list.type.model.ListTypeDefinition>
+			listTypeDefinitions =
+				cpSpecificationOption.getListTypeDefinitions();
 
-		return 1;
+		return listTypeDefinitions.size();
 	}
 
 	private ListTypeDefinition _toListTypeDefinition(
@@ -97,8 +103,5 @@ public class CommerceSpecificationOptionListTypeDefinitionFDSDataProvider
 
 	@Reference
 	private CPSpecificationOptionService _cpSpecificationOptionService;
-
-	@Reference
-	private ListTypeDefinitionService _listTypeDefinitionService;
 
 }

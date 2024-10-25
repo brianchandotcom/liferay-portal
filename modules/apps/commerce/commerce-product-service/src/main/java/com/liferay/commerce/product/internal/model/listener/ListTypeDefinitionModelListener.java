@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.product.internal.model.listener;
 
-import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
+import com.liferay.commerce.product.service.CPSOListTypeDefinitionRelLocalService;
 import com.liferay.list.type.exception.RequiredListTypeDefinitionException;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -27,8 +27,8 @@ public class ListTypeDefinitionModelListener
 		throws ModelListenerException {
 
 		int count =
-			_cpSpecificationOptionLocalService.
-				countCPSpecificationOptionByListTypeDefinitionId(
+			_cpsoListTypeDefinitionRelLocalService.
+				getCPSOListTypeDefinitionRelsCount(
 					listTypeDefinition.getListTypeDefinitionId());
 
 		if (count > 0) {
@@ -38,7 +38,7 @@ public class ListTypeDefinitionModelListener
 	}
 
 	@Reference
-	private CPSpecificationOptionLocalService
-		_cpSpecificationOptionLocalService;
+	private CPSOListTypeDefinitionRelLocalService
+		_cpsoListTypeDefinitionRelLocalService;
 
 }

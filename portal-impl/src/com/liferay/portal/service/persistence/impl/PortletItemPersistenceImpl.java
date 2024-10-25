@@ -1239,7 +1239,6 @@ public class PortletItemPersistenceImpl
 		"portletItem.classNameId = ?";
 
 	private FinderPath _finderPathFetchByG_N_P_C;
-	private FinderPath _finderPathCountByG_N_P_C;
 
 	/**
 	 * Returns the portlet item where groupId = &#63; and name = &#63; and portletId = &#63; and classNameId = &#63; or throws a <code>NoSuchPortletItemException</code> if it could not be found.
@@ -1483,85 +1482,14 @@ public class PortletItemPersistenceImpl
 	public int countByG_N_P_C(
 		long groupId, String name, String portletId, long classNameId) {
 
-		name = Objects.toString(name, "");
-		portletId = Objects.toString(portletId, "");
+		PortletItem portletItem = fetchByG_N_P_C(
+			groupId, name, portletId, classNameId);
 
-		FinderPath finderPath = _finderPathCountByG_N_P_C;
-
-		Object[] finderArgs = new Object[] {
-			groupId, name, portletId, classNameId
-		};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_PORTLETITEM_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_N_P_C_GROUPID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_N_P_C_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_G_N_P_C_NAME_2);
-			}
-
-			boolean bindPortletId = false;
-
-			if (portletId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_N_P_C_PORTLETID_3);
-			}
-			else {
-				bindPortletId = true;
-
-				sb.append(_FINDER_COLUMN_G_N_P_C_PORTLETID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_G_N_P_C_CLASSNAMEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				if (bindName) {
-					queryPos.add(StringUtil.toLowerCase(name));
-				}
-
-				if (bindPortletId) {
-					queryPos.add(portletId);
-				}
-
-				queryPos.add(classNameId);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (portletItem == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_N_P_C_GROUPID_2 =
@@ -1687,8 +1615,6 @@ public class PortletItemPersistenceImpl
 			portletItemModelImpl.getClassNameId()
 		};
 
-		FinderCacheUtil.putResult(
-			_finderPathCountByG_N_P_C, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
 			_finderPathFetchByG_N_P_C, args, portletItemModelImpl);
 	}
@@ -2195,15 +2121,6 @@ public class PortletItemPersistenceImpl
 				String.class.getName(), Long.class.getName()
 			},
 			new String[] {"groupId", "name", "portletId", "classNameId"}, true);
-
-		_finderPathCountByG_N_P_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N_P_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "name", "portletId", "classNameId"},
-			false);
 
 		PortletItemUtil.setPersistence(this);
 	}

@@ -1116,7 +1116,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 		"announcementsDelivery.userId = ?";
 
 	private FinderPath _finderPathFetchByU_T;
-	private FinderPath _finderPathCountByU_T;
 
 	/**
 	 * Returns the announcements delivery where userId = &#63; and type = &#63; or throws a <code>NoSuchDeliveryException</code> if it could not be found.
@@ -1303,68 +1302,13 @@ public class AnnouncementsDeliveryPersistenceImpl
 	 */
 	@Override
 	public int countByU_T(long userId, String type) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AnnouncementsDelivery.class)) {
+		AnnouncementsDelivery announcementsDelivery = fetchByU_T(userId, type);
 
-			type = Objects.toString(type, "");
-
-			FinderPath finderPath = _finderPathCountByU_T;
-
-			Object[] finderArgs = new Object[] {userId, type};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_ANNOUNCEMENTSDELIVERY_WHERE);
-
-				sb.append(_FINDER_COLUMN_U_T_USERID_2);
-
-				boolean bindType = false;
-
-				if (type.isEmpty()) {
-					sb.append(_FINDER_COLUMN_U_T_TYPE_3);
-				}
-				else {
-					bindType = true;
-
-					sb.append(_FINDER_COLUMN_U_T_TYPE_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(userId);
-
-					if (bindType) {
-						queryPos.add(type);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (announcementsDelivery == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_U_T_USERID_2 =
@@ -1513,8 +1457,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 				announcementsDeliveryModelImpl.getType()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByU_T, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByU_T, args, announcementsDeliveryModelImpl);
 		}
@@ -2260,11 +2202,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_T",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "type_"}, true);
-
-		_finderPathCountByU_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "type_"}, false);
 
 		AnnouncementsDeliveryUtil.setPersistence(this);
 	}

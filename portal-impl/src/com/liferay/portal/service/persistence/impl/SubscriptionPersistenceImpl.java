@@ -2928,8 +2928,6 @@ public class SubscriptionPersistenceImpl
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByC_U_C_C, args, Long.valueOf(1));
-		FinderCacheUtil.putResult(
 			_finderPathFetchByC_U_C_C, args, subscriptionModelImpl);
 	}
 

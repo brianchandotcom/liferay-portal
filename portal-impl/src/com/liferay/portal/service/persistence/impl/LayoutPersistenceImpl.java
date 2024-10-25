@@ -636,7 +636,6 @@ public class LayoutPersistenceImpl
 		"(layout.uuid IS NULL OR layout.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G_P;
-	private FinderPath _finderPathCountByUUID_G_P;
 
 	/**
 	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -841,72 +840,13 @@ public class LayoutPersistenceImpl
 	public int countByUUID_G_P(
 		String uuid, long groupId, boolean privateLayout) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Layout.class)) {
+		Layout layout = fetchByUUID_G_P(uuid, groupId, privateLayout);
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUUID_G_P;
-
-			Object[] finderArgs = new Object[] {uuid, groupId, privateLayout};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_LAYOUT_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_G_P_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_G_P_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_G_P_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_UUID_G_P_PRIVATELAYOUT_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(groupId);
-
-					queryPos.add(privateLayout);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (layout == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_P_UUID_2 =
@@ -3385,7 +3325,6 @@ public class LayoutPersistenceImpl
 		"layout.parentPlid = ? AND layout.system = [$FALSE$]";
 
 	private FinderPath _finderPathFetchByIconImageId;
-	private FinderPath _finderPathCountByIconImageId;
 
 	/**
 	 * Returns the layout where iconImageId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -3557,51 +3496,13 @@ public class LayoutPersistenceImpl
 	 */
 	@Override
 	public int countByIconImageId(long iconImageId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Layout.class)) {
+		Layout layout = fetchByIconImageId(iconImageId);
 
-			FinderPath finderPath = _finderPathCountByIconImageId;
-
-			Object[] finderArgs = new Object[] {iconImageId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_LAYOUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_ICONIMAGEID_ICONIMAGEID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(iconImageId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (layout == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_ICONIMAGEID_ICONIMAGEID_2 =
@@ -8257,7 +8158,6 @@ public class LayoutPersistenceImpl
 		"(layout.layoutPrototypeUuid IS NULL OR layout.layoutPrototypeUuid = '') AND layout.system = [$FALSE$]";
 
 	private FinderPath _finderPathFetchByP_I;
-	private FinderPath _finderPathCountByP_I;
 
 	/**
 	 * Returns the layout where privateLayout = &#63; and iconImageId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -8446,55 +8346,13 @@ public class LayoutPersistenceImpl
 	 */
 	@Override
 	public int countByP_I(boolean privateLayout, long iconImageId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Layout.class)) {
+		Layout layout = fetchByP_I(privateLayout, iconImageId);
 
-			FinderPath finderPath = _finderPathCountByP_I;
-
-			Object[] finderArgs = new Object[] {privateLayout, iconImageId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_LAYOUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_P_I_PRIVATELAYOUT_2);
-
-				sb.append(_FINDER_COLUMN_P_I_ICONIMAGEID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(privateLayout);
-
-					queryPos.add(iconImageId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (layout == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_P_I_PRIVATELAYOUT_2 =
@@ -8504,7 +8362,6 @@ public class LayoutPersistenceImpl
 		"layout.iconImageId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
-	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the layout where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -8693,55 +8550,13 @@ public class LayoutPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Layout.class)) {
+		Layout layout = fetchByC_C(classNameId, classPK);
 
-			FinderPath finderPath = _finderPathCountByC_C;
-
-			Object[] finderArgs = new Object[] {classNameId, classPK};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_LAYOUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (layout == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
@@ -8751,7 +8566,6 @@ public class LayoutPersistenceImpl
 		"layout.classPK = ?";
 
 	private FinderPath _finderPathFetchByG_P_L;
-	private FinderPath _finderPathCountByG_P_L;
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -8943,61 +8757,13 @@ public class LayoutPersistenceImpl
 	public int countByG_P_L(
 		long groupId, boolean privateLayout, long layoutId) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Layout.class)) {
+		Layout layout = fetchByG_P_L(groupId, privateLayout, layoutId);
 
-			FinderPath finderPath = _finderPathCountByG_P_L;
-
-			Object[] finderArgs = new Object[] {
-				groupId, privateLayout, layoutId
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_LAYOUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_L_PRIVATELAYOUT_2);
-
-				sb.append(_FINDER_COLUMN_G_P_L_LAYOUTID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(privateLayout);
-
-					queryPos.add(layoutId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (layout == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_P_L_GROUPID_2 =
@@ -12406,7 +12172,6 @@ public class LayoutPersistenceImpl
 		"(" + removeConjunction(_FINDER_COLUMN_G_P_T_TYPE_3) + ")";
 
 	private FinderPath _finderPathFetchByG_P_F;
-	private FinderPath _finderPathCountByG_P_F;
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -12611,74 +12376,13 @@ public class LayoutPersistenceImpl
 	public int countByG_P_F(
 		long groupId, boolean privateLayout, String friendlyURL) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Layout.class)) {
+		Layout layout = fetchByG_P_F(groupId, privateLayout, friendlyURL);
 
-			friendlyURL = Objects.toString(friendlyURL, "");
-
-			FinderPath finderPath = _finderPathCountByG_P_F;
-
-			Object[] finderArgs = new Object[] {
-				groupId, privateLayout, friendlyURL
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_LAYOUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_F_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
-
-				boolean bindFriendlyURL = false;
-
-				if (friendlyURL.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
-				}
-				else {
-					bindFriendlyURL = true;
-
-					sb.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(privateLayout);
-
-					if (bindFriendlyURL) {
-						queryPos.add(friendlyURL);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (layout == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_P_F_GROUPID_2 =
@@ -12694,7 +12398,6 @@ public class LayoutPersistenceImpl
 		"(layout.friendlyURL IS NULL OR layout.friendlyURL = '')";
 
 	private FinderPath _finderPathFetchByG_P_SPLU;
-	private FinderPath _finderPathCountByG_P_SPLU;
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -12929,77 +12632,14 @@ public class LayoutPersistenceImpl
 	public int countByG_P_SPLU(
 		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Layout.class)) {
+		Layout layout = fetchByG_P_SPLU(
+			groupId, privateLayout, sourcePrototypeLayoutUuid);
 
-			sourcePrototypeLayoutUuid = Objects.toString(
-				sourcePrototypeLayoutUuid, "");
-
-			FinderPath finderPath = _finderPathCountByG_P_SPLU;
-
-			Object[] finderArgs = new Object[] {
-				groupId, privateLayout, sourcePrototypeLayoutUuid
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_LAYOUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_SPLU_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2);
-
-				boolean bindSourcePrototypeLayoutUuid = false;
-
-				if (sourcePrototypeLayoutUuid.isEmpty()) {
-					sb.append(
-						_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
-				}
-				else {
-					bindSourcePrototypeLayoutUuid = true;
-
-					sb.append(
-						_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(privateLayout);
-
-					if (bindSourcePrototypeLayoutUuid) {
-						queryPos.add(sourcePrototypeLayoutUuid);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (layout == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_P_SPLU_GROUPID_2 =
@@ -19190,7 +18830,6 @@ public class LayoutPersistenceImpl
 		"layout.priority <= ? AND layout.system_ = [$FALSE$]";
 
 	private FinderPath _finderPathFetchByERC_G;
-	private FinderPath _finderPathCountByERC_G;
 
 	/**
 	 * Returns the layout where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -19377,68 +19016,13 @@ public class LayoutPersistenceImpl
 	 */
 	@Override
 	public int countByERC_G(String externalReferenceCode, long groupId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Layout.class)) {
+		Layout layout = fetchByERC_G(externalReferenceCode, groupId);
 
-			externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-			FinderPath finderPath = _finderPathCountByERC_G;
-
-			Object[] finderArgs = new Object[] {externalReferenceCode, groupId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_LAYOUT_WHERE);
-
-				boolean bindExternalReferenceCode = false;
-
-				if (externalReferenceCode.isEmpty()) {
-					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
-				}
-				else {
-					bindExternalReferenceCode = true;
-
-					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
-				}
-
-				sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindExternalReferenceCode) {
-						queryPos.add(externalReferenceCode);
-					}
-
-					queryPos.add(groupId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (layout == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2 =
@@ -19622,14 +19206,10 @@ public class LayoutPersistenceImpl
 			};
 
 			FinderCacheUtil.putResult(
-				_finderPathCountByUUID_G_P, args, Long.valueOf(1));
-			FinderCacheUtil.putResult(
 				_finderPathFetchByUUID_G_P, args, layoutModelImpl);
 
 			args = new Object[] {layoutModelImpl.getIconImageId()};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByIconImageId, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByIconImageId, args, layoutModelImpl);
 
@@ -19639,16 +19219,12 @@ public class LayoutPersistenceImpl
 			};
 
 			FinderCacheUtil.putResult(
-				_finderPathCountByP_I, args, Long.valueOf(1));
-			FinderCacheUtil.putResult(
 				_finderPathFetchByP_I, args, layoutModelImpl);
 
 			args = new Object[] {
 				layoutModelImpl.getClassNameId(), layoutModelImpl.getClassPK()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByC_C, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByC_C, args, layoutModelImpl);
 
@@ -19658,8 +19234,6 @@ public class LayoutPersistenceImpl
 			};
 
 			FinderCacheUtil.putResult(
-				_finderPathCountByG_P_L, args, Long.valueOf(1));
-			FinderCacheUtil.putResult(
 				_finderPathFetchByG_P_L, args, layoutModelImpl);
 
 			args = new Object[] {
@@ -19667,8 +19241,6 @@ public class LayoutPersistenceImpl
 				layoutModelImpl.getFriendlyURL()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByG_P_F, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByG_P_F, args, layoutModelImpl);
 
@@ -19678,8 +19250,6 @@ public class LayoutPersistenceImpl
 			};
 
 			FinderCacheUtil.putResult(
-				_finderPathCountByG_P_SPLU, args, Long.valueOf(1));
-			FinderCacheUtil.putResult(
 				_finderPathFetchByG_P_SPLU, args, layoutModelImpl);
 
 			args = new Object[] {
@@ -19687,8 +19257,6 @@ public class LayoutPersistenceImpl
 				layoutModelImpl.getGroupId()
 			};
 
-			FinderCacheUtil.putResult(
-				_finderPathCountByERC_G, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByERC_G, args, layoutModelImpl);
 		}
@@ -20524,14 +20092,6 @@ public class LayoutPersistenceImpl
 			},
 			new String[] {"uuid_", "groupId", "privateLayout"}, true);
 
-		_finderPathCountByUUID_G_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G_P",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"uuid_", "groupId", "privateLayout"}, false);
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -20609,11 +20169,6 @@ public class LayoutPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByIconImageId",
 			new String[] {Long.class.getName()}, new String[] {"iconImageId"},
 			true);
-
-		_finderPathCountByIconImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByIconImageId",
-			new String[] {Long.class.getName()}, new String[] {"iconImageId"},
-			false);
 
 		_finderPathWithPaginationFindByLayoutPrototypeUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLayoutPrototypeUuid",
@@ -20737,20 +20292,10 @@ public class LayoutPersistenceImpl
 			new String[] {Boolean.class.getName(), Long.class.getName()},
 			new String[] {"privateLayout", "iconImageId"}, true);
 
-		_finderPathCountByP_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_I",
-			new String[] {Boolean.class.getName(), Long.class.getName()},
-			new String[] {"privateLayout", "iconImageId"}, false);
-
 		_finderPathFetchByC_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
 
 		_finderPathFetchByG_P_L = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_L",
@@ -20759,14 +20304,6 @@ public class LayoutPersistenceImpl
 				Long.class.getName()
 			},
 			new String[] {"groupId", "privateLayout", "layoutId"}, true);
-
-		_finderPathCountByG_P_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "layoutId"}, false);
 
 		_finderPathWithPaginationFindByG_P_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_P",
@@ -20842,14 +20379,6 @@ public class LayoutPersistenceImpl
 			},
 			new String[] {"groupId", "privateLayout", "friendlyURL"}, true);
 
-		_finderPathCountByG_P_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_F",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "friendlyURL"}, false);
-
 		_finderPathFetchByG_P_SPLU = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_SPLU",
 			new String[] {
@@ -20860,17 +20389,6 @@ public class LayoutPersistenceImpl
 				"groupId", "privateLayout", "sourcePrototypeLayoutUuid"
 			},
 			true);
-
-		_finderPathCountByG_P_SPLU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_SPLU",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"groupId", "privateLayout", "sourcePrototypeLayoutUuid"
-			},
-			false);
 
 		_finderPathWithPaginationFindByG_P_ST = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_ST",
@@ -21025,11 +20543,6 @@ public class LayoutPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, true);
-
-		_finderPathCountByERC_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, false);
 
 		LayoutUtil.setPersistence(this);
 	}

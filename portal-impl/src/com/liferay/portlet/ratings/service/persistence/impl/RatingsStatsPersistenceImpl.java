@@ -797,8 +797,6 @@ public class RatingsStatsPersistenceImpl
 			};
 
 			FinderCacheUtil.putResult(
-				_finderPathCountByC_C, args, Long.valueOf(1));
-			FinderCacheUtil.putResult(
 				_finderPathFetchByC_C, args, ratingsStatsModelImpl);
 		}
 	}

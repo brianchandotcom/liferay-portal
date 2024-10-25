@@ -3119,8 +3119,6 @@ public class RatingsEntryPersistenceImpl
 			};
 
 			FinderCacheUtil.putResult(
-				_finderPathCountByU_C_C, args, Long.valueOf(1));
-			FinderCacheUtil.putResult(
 				_finderPathFetchByU_C_C, args, ratingsEntryModelImpl);
 		}
 	}

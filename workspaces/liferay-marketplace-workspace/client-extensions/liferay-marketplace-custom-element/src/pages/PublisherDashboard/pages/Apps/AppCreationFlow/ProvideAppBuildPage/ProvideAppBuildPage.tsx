@@ -39,7 +39,6 @@ import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
 
 import './ProvideAppBuildPage.scss';
 import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../../../enums/Product';
-import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {base64ToText, fileToBase64} from '../../../../../../utils/file';
 import ResourceRequirements from './ResourceRequirements';
@@ -66,7 +65,6 @@ export function ProvideAppBuildPage({
 		{
 			appBuild,
 			appERC,
-			appId,
 			appProductId,
 			appType,
 			buildAppPackages,
@@ -75,13 +73,6 @@ export function ProvideAppBuildPage({
 		},
 		dispatch,
 	] = useAppContext();
-
-	const {getTemporaryProductIdForSpefication} = useFeaturePreview();
-
-	const _tempProductId = getTemporaryProductIdForSpefication({
-		appId,
-		productId: appProductId,
-	});
 
 	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
 		string[]
@@ -350,7 +341,7 @@ export function ProvideAppBuildPage({
 					specificationKey: productSpecification.specificationKey,
 					value: {en_US: productSpecification.value},
 				},
-				id: dataSpecification?.id || _tempProductId,
+				id: dataSpecification?.id || appProductId,
 			});
 		}
 	};
@@ -374,7 +365,7 @@ export function ProvideAppBuildPage({
 				specificationKey: dataSpecification.key,
 				value: {en_US: appType.value},
 			},
-			id: _tempProductId,
+			id: appProductId,
 		});
 
 		dispatch({

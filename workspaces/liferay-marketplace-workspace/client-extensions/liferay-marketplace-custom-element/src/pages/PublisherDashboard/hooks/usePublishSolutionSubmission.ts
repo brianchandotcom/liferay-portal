@@ -18,7 +18,6 @@ import {
 	PRODUCT_WORKFLOW_STATUS_CODE,
 } from '../../../enums/Product';
 import {ProductVocabulary} from '../../../enums/ProductVocabulary';
-import useFeaturePreview from '../../../hooks/useFeaturePreview';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import headlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
@@ -78,73 +77,57 @@ const addOrUpdateImages = async (
 	}
 };
 
-const _updateSpecification =
-	(
-		getTemporaryProductIdForSpefication: ReturnType<
-			typeof useFeaturePreview
-		>['getTemporaryProductIdForSpefication']
-	) =>
-	async (
-		product: Product,
-		specificationKey: PRODUCT_SPECIFICATION_KEY,
-		value: string
-	) => {
-		const {id, productId, productSpecifications = []} = product;
+const updateSpecification = async (
+	product: Product,
+	specificationKey: PRODUCT_SPECIFICATION_KEY,
+	value: string
+) => {
+	const {productId, productSpecifications = []} = product;
 
-		const specification = productSpecifications.find(
-			(productSpecification) =>
-				productSpecification.specificationKey === specificationKey
-		);
+	const specification = productSpecifications.find(
+		(productSpecification) =>
+			productSpecification.specificationKey === specificationKey
+	);
 
-		if (
-			!value?.trim() ||
-			(specification && specification.value.en_US === value)
-		) {
+	if (
+		!value?.trim() ||
+		(specification && specification.value.en_US === value)
+	) {
 
-			// No need to update the specification if the value is equal
-			// the previous value or empty.
+		// No need to update the specification if the value is equal
+		// the previous value or empty.
 
-			return;
+		return;
+	}
+
+	const fn = specification
+		? headlessCommerceAdminCatalogImpl.updateProductSpecification
+		: headlessCommerceAdminCatalogImpl.createProductSpecification;
+
+	const result = await fn(
+		(specification ? specification.id : productId) as number,
+		{
+			specificationKey,
+			value: {en_US: value},
 		}
+	);
 
-		const _productId = getTemporaryProductIdForSpefication({
-			appId: id,
-			productId,
-		});
+	if (specification) {
+		specification.value.en_US = value;
 
-		const fn = specification
-			? headlessCommerceAdminCatalogImpl.updateProductSpecification
-			: headlessCommerceAdminCatalogImpl.createProductSpecification;
+		return;
+	}
 
-		const result = await fn(
-			(specification ? specification.id : _productId) as number,
-			{
-				specificationKey,
-				value: {en_US: value},
-			}
-		);
-
-		if (specification) {
-			specification.value.en_US = value;
-
-			return;
-		}
-
-		productSpecifications.push(result);
-	};
+	productSpecifications.push(result);
+};
 
 const usePublishSolutionSubmission = (
 	context: SolutionInitialState,
 	dispatch: Dispatch<AppActions>
 ) => {
 	const {productId} = useParams();
-	const featurePreview = useFeaturePreview();
 	const location = useLocation();
 	const navigate = useNavigate();
-
-	const updateSpecification = _updateSpecification(
-		featurePreview.getTemporaryProductIdForSpefication
-	);
 
 	const syncProfile = async (config: ProductConfig) => {
 		const {

@@ -24,7 +24,6 @@ import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 
 import './InformLicensingTermsPage.scss';
-import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
 
 type InformLicensingTermsPageProps = {
 	onClickBack: () => void;
@@ -37,7 +36,6 @@ export function InformLicensingTermsPage({
 }: InformLicensingTermsPageProps) {
 	const [
 		{
-			appId,
 			appLicense,
 			appLicensePrice,
 			appNotes,
@@ -52,13 +50,6 @@ export function InformLicensingTermsPage({
 		},
 		dispatch,
 	] = useAppContext();
-
-	const {getTemporaryProductIdForSpefication} = useFeaturePreview();
-
-	const _tempProductId = getTemporaryProductIdForSpefication({
-		appId,
-		productId: appProductId,
-	});
 
 	const [isProcessing, setProcessing] = useState(false);
 
@@ -88,7 +79,7 @@ export function InformLicensingTermsPage({
 				specificationKey: dataSpecification.key,
 				value,
 			},
-			id: _tempProductId,
+			id: appProductId,
 		});
 
 		dispatch({

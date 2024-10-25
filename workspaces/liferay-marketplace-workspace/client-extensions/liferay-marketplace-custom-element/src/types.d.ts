@@ -345,7 +345,6 @@ type DefaultProperties = {
 	contactSupportURL: string;
 	eulaBaseURL: string;
 	featureFlags: string[];
-	featurePreviews: ['use-product-id-for-specification'];
 	marketoFormId: string;
 	productId: string;
 	trialAccountCheck: 'false' | 'true';

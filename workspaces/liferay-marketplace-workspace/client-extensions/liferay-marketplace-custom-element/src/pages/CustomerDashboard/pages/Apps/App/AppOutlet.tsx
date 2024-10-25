@@ -118,7 +118,6 @@ const AppOutlet = () => {
 						{
 							name: i18n.translate('app-provisioning'),
 							path: 'cloud-provisioning',
-							visible: true,
 						},
 					];
 				}

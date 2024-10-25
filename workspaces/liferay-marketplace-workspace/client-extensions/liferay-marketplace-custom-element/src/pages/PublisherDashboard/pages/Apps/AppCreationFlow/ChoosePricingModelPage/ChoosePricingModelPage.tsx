@@ -14,7 +14,6 @@ import {
 
 import './ChoosePricingModelPage.scss';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
-import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
 import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 
@@ -27,15 +26,7 @@ export function ChoosePricingModelPage({
 	onClickBack,
 	onClickContinue,
 }: ChoosePricingModelPageProps) {
-	const [{appId, appLicense, appProductId, priceModel}, dispatch] =
-		useAppContext();
-
-	const {getTemporaryProductIdForSpefication} = useFeaturePreview();
-
-	const _tempProductId = getTemporaryProductIdForSpefication({
-		appId,
-		productId: appProductId,
-	});
+	const [{appLicense, appProductId, priceModel}, dispatch] = useAppContext();
 
 	return (
 		<div className="choose-pricing-model-page-container">
@@ -129,7 +120,7 @@ export function ChoosePricingModelPage({
 											? {en_US: 'Free'}
 											: {en_US: 'Paid'},
 								},
-								id: _tempProductId,
+								id: appProductId,
 							});
 
 							dispatch({

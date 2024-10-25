@@ -18,7 +18,6 @@ import {
 	PRODUCT_PRICE_MODEL,
 	PRODUCT_SUPPORT_SPECIFICATION_KEY,
 } from '../../../../../../enums/Product';
-import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
 
 interface ProvideAppSupportAndHelpPageProps {
 	onClickBack: () => void;
@@ -33,7 +32,6 @@ export function ProvideAppSupportAndHelpPage({
 	const [
 		{
 			appDocumentationURL,
-			appId,
 			appInstallationGuideURL,
 			appProductId,
 			appUsageTermsURL,
@@ -45,13 +43,6 @@ export function ProvideAppSupportAndHelpPage({
 		},
 		dispatch,
 	] = useAppContext();
-
-	const {getTemporaryProductIdForSpefication} = useFeaturePreview();
-
-	const _tempProductId = getTemporaryProductIdForSpefication({
-		appId,
-		productId: appProductId,
-	});
 
 	const bodySpecification = useMemo(
 		() => [
@@ -240,10 +231,7 @@ export function ProvideAppSupportAndHelpPage({
 				onClickContinue={async () => {
 					setProcessing(true);
 
-					await submitSpecification(
-						_tempProductId as number,
-						bodySpecification
-					);
+					await submitSpecification(appProductId, bodySpecification);
 
 					setProcessing(false);
 

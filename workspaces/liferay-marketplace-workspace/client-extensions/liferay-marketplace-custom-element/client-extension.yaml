@@ -15,7 +15,6 @@ liferay-marketplace-custom-element:
         contactSupportURL: https://www.liferay.com/contact-us
         eulaBaseURL: https://www.liferay.com/legal/marketplace-terms-of-service
         featureFlags:
-        featurePreviews: use-product-id-for-specification
         marketoFormId: 3738
         trialEulaURL: https://marketplace.liferay.com/documents/d/marketplace/evaluation-agreement-cloud-services
     type: customElement

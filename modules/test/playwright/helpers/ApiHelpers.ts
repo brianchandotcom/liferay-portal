@@ -493,7 +493,7 @@ export class DataApiHelpers extends ApiHelpers {
 		this.data.length = 0;
 
 		while (data.length) {
-			this.data.push(data.pop());
+			this.data.unshift(data.pop());
 		}
 	}
 }

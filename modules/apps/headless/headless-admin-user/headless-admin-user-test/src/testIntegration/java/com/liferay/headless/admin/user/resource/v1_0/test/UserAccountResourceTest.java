@@ -1396,6 +1396,28 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
+	protected UserAccount
+			testGetUserGroupByExternalReferenceCodeUsersPage_addUserAccount(
+				String externalReferenceCode, UserAccount userAccount)
+		throws Exception {
+
+		userAccount = _addUserAccount(testGroup.getGroupId(), userAccount);
+
+		_userLocalService.addUserGroupUser(
+			_userGroup.getUserGroupId(), userAccount.getId());
+
+		return userAccount;
+	}
+
+	@Override
+	protected String
+			testGetUserGroupByExternalReferenceCodeUsersPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _userGroup.getExternalReferenceCode();
+	}
+
+	@Override
 	protected UserAccount testGetUserGroupUsersPage_addUserAccount(
 			Long userGroupId, UserAccount userAccount)
 		throws Exception {

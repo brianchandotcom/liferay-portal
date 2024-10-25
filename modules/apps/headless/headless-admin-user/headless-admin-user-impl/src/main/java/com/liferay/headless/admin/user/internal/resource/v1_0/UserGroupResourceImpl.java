@@ -64,6 +64,18 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 	}
 
 	@Override
+	public void deleteUserGroupByExternalReferenceCodeUsers(
+			String externalReferenceCode, Long[] userIds)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.UserGroup userGroup =
+			_userGroupService.getUserGroupByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		deleteUserGroupUsers(userGroup.getUserGroupId(), userIds);
+	}
+
+	@Override
 	public void deleteUserGroupUsers(Long userGroupId, Long[] userIds)
 		throws Exception {
 
@@ -139,12 +151,63 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 	}
 
 	@Override
+	public UserGroup patchUserGroup(Long userGroupId, UserGroup userGroup)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.UserGroup serviceBuilderUserGroup =
+			_userGroupService.getUserGroup(userGroupId);
+
+		serviceBuilderUserGroup = _userGroupService.updateUserGroup(
+			userGroupId,
+			GetterUtil.getString(
+				userGroup.getName(), serviceBuilderUserGroup.getName()),
+			GetterUtil.getString(
+				userGroup.getDescription(),
+				serviceBuilderUserGroup.getDescription()),
+			null);
+
+		if (Validator.isNotNull(userGroup.getExternalReferenceCode())) {
+			serviceBuilderUserGroup =
+				_userGroupService.updateExternalReferenceCode(
+					serviceBuilderUserGroup,
+					userGroup.getExternalReferenceCode());
+		}
+
+		return _toUserGroup(serviceBuilderUserGroup);
+	}
+
+	@Override
+	public UserGroup patchUserGroupByExternalReferenceCode(
+			String externalReferenceCode, UserGroup userGroup)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.UserGroup serviceBuilderUserGroup =
+			_userGroupService.getUserGroupByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		return patchUserGroup(
+			serviceBuilderUserGroup.getUserGroupId(), userGroup);
+	}
+
+	@Override
 	public UserGroup postUserGroup(UserGroup userGroup) throws Exception {
 		return _toUserGroup(
 			_userGroupService.updateExternalReferenceCode(
 				_userGroupService.addUserGroup(
 					userGroup.getName(), userGroup.getDescription(), null),
 				userGroup.getExternalReferenceCode()));
+	}
+
+	@Override
+	public void postUserGroupByExternalReferenceCodeUsers(
+			String externalReferenceCode, Long[] userIds)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.UserGroup serviceBuilderUserGroup =
+			_userGroupService.getUserGroupByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		postUserGroupUsers(serviceBuilderUserGroup.getUserGroupId(), userIds);
 	}
 
 	@Override
@@ -157,6 +220,10 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 	@Override
 	public UserGroup putUserGroup(Long userGroupId, UserGroup userGroup)
 		throws Exception {
+
+		if (userGroupId <= 0) {
+			return postUserGroup(userGroup);
+		}
 
 		return _toUserGroup(
 			_userGroupService.updateExternalReferenceCode(

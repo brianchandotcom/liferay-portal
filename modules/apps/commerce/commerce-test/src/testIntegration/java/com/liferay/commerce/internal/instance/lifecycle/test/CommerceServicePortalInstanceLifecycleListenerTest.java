@@ -44,48 +44,50 @@ public class CommerceServicePortalInstanceLifecycleListenerTest {
 
 	@Test
 	public void testDefaultRolePermissionsDoNotRevert() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		Company company = CompanyTestUtil.addCompany();
 
 		try {
-			_role = _roleLocalService.fetchRole(
-				_company.getCompanyId(),
+			Role role = _roleLocalService.fetchRole(
+				company.getCompanyId(),
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
 
-			Assert.assertNotNull(_role);
+			Assert.assertNotNull(role);
 
-			_resourcePermission =
+			ResourcePermission resourcePermission =
 				_resourcePermissionLocalService.fetchResourcePermission(
-					_company.getCompanyId(), AccountEntry.class.getName(),
+					company.getCompanyId(), AccountEntry.class.getName(),
 					ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-					_role.getRoleId());
+					role.getRoleId());
 
-			_resourcePermission.removeResourceAction(
+			resourcePermission.removeResourceAction(
 				AccountActionKeys.MANAGE_ADDRESSES);
 
-			_resourcePermission =
+			resourcePermission =
 				_resourcePermissionLocalService.updateResourcePermission(
-					_resourcePermission);
-
-			_portalInstanceLifecycleListener.portalInstanceRegistered(_company);
-
-			_resourcePermission =
-				_resourcePermissionLocalService.fetchResourcePermission(
-					_company.getCompanyId(), AccountEntry.class.getName(),
-					ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-					_role.getRoleId());
+					resourcePermission);
 
 			Assert.assertFalse(
-				_resourcePermission.hasActionId(
+				resourcePermission.hasActionId(
+					AccountActionKeys.MANAGE_ADDRESSES));
+
+			_portalInstanceLifecycleListener.portalInstanceRegistered(company);
+
+			resourcePermission =
+				_resourcePermissionLocalService.fetchResourcePermission(
+					company.getCompanyId(), AccountEntry.class.getName(),
+					ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+					role.getRoleId());
+
+			Assert.assertFalse(
+				resourcePermission.hasActionId(
 					AccountActionKeys.MANAGE_ADDRESSES));
 		}
 		finally {
-			if (_company != null) {
-				_companyLocalService.deleteCompany(_company.getCompanyId());
+			if (company != null) {
+				_companyLocalService.deleteCompany(company.getCompanyId());
 			}
 		}
 	}
-
-	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
@@ -95,12 +97,8 @@ public class CommerceServicePortalInstanceLifecycleListenerTest {
 	)
 	private PortalInstanceLifecycleListener _portalInstanceLifecycleListener;
 
-	private ResourcePermission _resourcePermission;
-
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	private Role _role;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

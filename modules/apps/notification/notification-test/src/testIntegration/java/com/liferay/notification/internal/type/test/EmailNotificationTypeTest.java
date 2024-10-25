@@ -484,6 +484,19 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			"[%CURRENT_USER_EMAIL_ADDRESS%];" +
 				getTermName("emailTextObjectField"));
 
+		// No email sent to an inactive user
+
+		User user = UserTestUtil.addUser();
+
+		_userLocalService.updateStatus(
+			user.getUserId(), WorkflowConstants.STATUS_INACTIVE,
+			ServiceContextThreadLocal.getServiceContext());
+
+		_testSendNotification(
+			0, Collections.emptyList(), false, user.getEmailAddress());
+
+		_userLocalService.deleteUser(user.getUserId());
+
 		// One email including all main recipients
 
 		_testSendNotification(
@@ -497,19 +510,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			StringBundler.concat(
 				user1.getEmailAddress(), StringPool.COMMA,
 				user2.getEmailAddress()));
-
-		// One email to a deactivated user
-
-		User user = UserTestUtil.addUser();
-
-		_userLocalService.updateStatus(
-			user.getUserId(), WorkflowConstants.STATUS_INACTIVE,
-			ServiceContextThreadLocal.getServiceContext());
-
-		_testSendNotification(
-			0, Collections.emptyList(), false, user.getEmailAddress());
-
-		_userLocalService.deleteUser(user.getUserId());
 	}
 
 	@Test
@@ -1574,7 +1574,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			expectedNotificationQueueEntriesCount,
 			notificationQueueEntries.size());
 
-		if (notificationQueueEntries.isEmpty()) {
+		if (expectedNotificationQueueEntriesCount == 0) {
 			return;
 		}
 

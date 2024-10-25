@@ -5,7 +5,7 @@ liferay-partner-etc-spring-boot-oahs:
     .serviceScheme: http
     name: Liferay Partner Etc Spring Boot OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Admin.User.read
+        - Liferay.Headless.Admin.User.everything.read
         - c_activity.everything
         - c_mdfclaim.everything
         - c_mdfrequest.everything

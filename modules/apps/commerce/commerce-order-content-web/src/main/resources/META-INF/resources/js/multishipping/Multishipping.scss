@@ -1,13 +1,18 @@
 .multishipping-container {
 	.order-items-table {
+		border: 0;
 		width: auto;
 
 		td,
 		th {
 			width: auto;
 
+			&:first-child {
+				border-left: 0;
+			}
+
 			&.delivery-group {
-				min-width: 15rem;
+				min-width: 12rem;
 
 				.loading-animation {
 					margin-bottom: 0;
@@ -19,11 +24,56 @@
 				width: 2rem;
 			}
 		}
+
+		th {
+			border-bottom: 0;
+		}
+
+		th,
+		tr:last-child td {
+			border-bottom: 0;
+		}
+
+		.row-checked {
+			background-color: var(--gray-100, #f7f8f9);
+		}
 	}
 
 	.sku-name {
 		a {
 			color: var(--body-color, #1c1c24);
+		}
+	}
+
+	.subnav-tbar {
+		align-items: center;
+		height: 4rem;
+
+		button.tbar-link {
+			font-size: 0.875rem;
+			padding-left: 0.5rem;
+			padding-right: 0.5rem;
+
+			&.btn-outline-borderless {
+				color: var(--gray-900, #272833);
+				font-weight: normal;
+			}
+		}
+	}
+
+	.table-responsive {
+		border-bottom: 0.0625rem solid var(--gray-300, #e7e7ed);
+		border-top: 0.0625rem solid var(--gray-300, #e7e7ed);
+		margin-bottom: 0.5rem;
+		position: relative;
+
+		&:after {
+			border-bottom: 0.0625rem solid var(--gray-300, #e7e7ed);
+			content: '';
+			display: block;
+			position: absolute;
+			top: 55px;
+			width: 100%;
 		}
 	}
 }

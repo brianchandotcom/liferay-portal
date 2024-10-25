@@ -24,65 +24,7 @@ definition {
 		}
 	}
 
-	@description = "Assert modification conflict displays when modify the same document in two Publications"
-	@priority = 5
-	test AssertModificationConflictDisplays {
-		property portal.acceptance = "true";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
-
-		JSONPublications.addPublication(publicationName = "Publication 1 Name");
-
-		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.editCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentDescriptionEdit = "DM Document Description Edit 1",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit 1");
-
-		JSONPublications.addPublication(publicationName = "Publication 2 Name");
-
-		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.editCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentDescriptionEdit = "DM Document Description Edit 2",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit 2");
-
-		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
-
-		Publications.publishPublication(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Publication 1 Name");
-
-		PublicationsNavigator.gotoReviewChanges(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Publication 2 Name");
-
-		PublicationsNavigator.gotoPublish(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Publication 2 Name");
-
-		Publications.viewNeedsManualResolution(
-			entryTitle = "DM Document Title Edit 2",
-			warningMessage = "Entity Recently Updated");
-
-		Publications.viewNeedsManualResolution(
-			entryTitle = "DM Document Title Edit 2",
-			warningMessage = "Duplicate Document Version");
-	}
-
-	@description = "Assert the conflict changes disply when modifying and deleting the same document in two Publications"
+	@description = "Assert the conflict changes display when modifying and deleting the same document in two Publications"
 	@priority = 4
 	test AssertModificationDeletionConflictDisplays {
 		property portal.acceptance = "true";

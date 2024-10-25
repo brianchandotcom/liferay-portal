@@ -103,7 +103,7 @@ public class DeleteStalePWCVersionsUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDeletePWCVersionsPreservesCheckedOutDocumentsWithPublication()
+	public void testDeletePWCVersionsPreservesCheckedOutDocumentsWithCTCollection()
 		throws Exception {
 
 		try (CompanyConfigurationTemporarySwapper

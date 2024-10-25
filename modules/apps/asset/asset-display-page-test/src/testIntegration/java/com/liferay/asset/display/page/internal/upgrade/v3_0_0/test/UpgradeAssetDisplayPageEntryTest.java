@@ -125,7 +125,7 @@ public class UpgradeAssetDisplayPageEntryTest {
 	}
 
 	@Test
-	public void testUpgradeProcessWithPublication() throws Exception {
+	public void testUpgradeProcessWithCTCollection() throws Exception {
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(

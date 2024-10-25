@@ -95,7 +95,7 @@ public class ListTypeDefinitionModelListenerTest {
 		_cpSpecificationOptionLocalService.addCPSpecificationOption(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_cpOptionCategory.getCPOptionCategoryId(),
-			_listTypeDefinition.getListTypeDefinitionId(),
+			new long[] {_listTypeDefinition.getListTypeDefinitionId()},
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), true,
 			CPDefinitionSpecificationOptionValueTableReferenceDefinitionTest.

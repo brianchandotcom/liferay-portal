@@ -148,7 +148,7 @@ modules/apps/login/
 modules/apps/mail/
 modules/apps/map/
 modules/apps/map/map-google-maps    @liferay-page-management
-modules/apps/marketplace/
+modules/apps/marketplace/    @liferay-commerce
 modules/apps/mentions/    @liferay-content-management
 modules/apps/message-boards/    @liferay-content-management
 modules/apps/microblogs/    @liferay-content-management
@@ -304,3 +304,4 @@ modules/util/portal-tools-rest-builder-test-client/    @liferay-headless
 modules/util/portal-tools-rest-builder-test-client-js/    @liferay-headless
 modules/util/portal-tools-rest-builder-test-impl/    @liferay-headless
 modules/util/portal-tools-rest-builder-test-test/    @liferay-headless
+workspaces/liferay-marketplace-workspace/    @liferay-commerce

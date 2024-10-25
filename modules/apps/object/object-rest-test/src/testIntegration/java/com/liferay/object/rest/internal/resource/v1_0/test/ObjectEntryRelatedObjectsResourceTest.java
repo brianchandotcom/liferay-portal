@@ -9,7 +9,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -145,6 +147,229 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinition2);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition3);
+	}
+
+	@Test
+	public void testCustomObjectNestedFieldOneToManyRelationshipPriorities()
+		throws Exception {
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			_objectDefinition1, _objectDefinition2,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		// nestedFields before ID
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+			).put(
+				objectRelationship.getName(),
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
+				).put(
+					"externalReferenceCode",
+					_objectEntry1.getExternalReferenceCode()
+				)
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					ObjectFieldSettingUtil.getValue(
+						ObjectFieldSettingConstants.
+							NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+						objectField),
+					_objectEntry1.getExternalReferenceCode()
+				).put(
+					objectRelationship.getName(),
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
+					).put(
+						"externalReferenceCode",
+						_objectEntry1.getExternalReferenceCode()
+					).put(
+						"status",
+						JSONUtil.put(
+							"code", 0
+						).put(
+							"label", "approved"
+						).put(
+							"label_i18n", "Approved"
+						)
+					)
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship.getName(), "_",
+						_objectDefinition1.getPKObjectFieldName()),
+					Long.MAX_VALUE
+				).put(
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+				).put(
+					"status",
+					JSONUtil.put(
+						"code", 0
+					).put(
+						"label", "approved"
+					).put(
+						"label_i18n", "Approved"
+					)
+				).toString(),
+				_objectDefinition2.getRESTContextPath(
+				).substring(
+					1
+				),
+				Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		//  ID before invalid ERC
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+			).put(
+				StringBundler.concat(
+					"r_", objectRelationship.getName(), "_",
+					_objectDefinition1.getPKObjectFieldName()),
+				(Long)_objectEntry1.getObjectEntryId()
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					ObjectFieldSettingUtil.getValue(
+						ObjectFieldSettingConstants.
+							NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+						objectField),
+					_objectEntry1.getExternalReferenceCode()
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship.getName(), "_",
+						_objectDefinition1.getPKObjectFieldName()),
+					_objectEntry1.getObjectEntryId()
+				).put(
+					StringUtil.replaceLast(
+						StringBundler.concat(
+							"r_", objectRelationship.getName(), "_",
+							_objectDefinition1.getPKObjectFieldName()),
+						"Id", "ERC"),
+					RandomTestUtil.randomString()
+				).put(
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+				).put(
+					"status",
+					JSONUtil.put(
+						"code", 0
+					).put(
+						"label", "approved"
+					).put(
+						"label_i18n", "Approved"
+					)
+				).toString(),
+				_objectDefinition2.getRESTContextPath(
+				).substring(
+					1
+				),
+				Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		// nestedFields ERC after invalid ID
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+			).put(
+				StringUtil.replaceLast(
+					StringBundler.concat(
+						"r_", objectRelationship.getName(), "_",
+						_objectDefinition1.getPKObjectFieldName()),
+					"Id", "ERC"),
+				_objectEntry1.getExternalReferenceCode()
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					ObjectFieldSettingUtil.getValue(
+						ObjectFieldSettingConstants.
+							NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+						objectField),
+					_objectEntry1.getExternalReferenceCode()
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship.getName(),
+						_objectDefinition1.getPKObjectFieldName()),
+					Long.MAX_VALUE
+				).put(
+					StringUtil.replaceLast(
+						StringBundler.concat(
+							"r_", objectRelationship.getName(), "_",
+							_objectDefinition1.getPKObjectFieldName()),
+						"Id", "ERC"),
+					_objectEntry1.getExternalReferenceCode()
+				).put(
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+				).put(
+					"status",
+					JSONUtil.put(
+						"code", 0
+					).put(
+						"label", "approved"
+					).put(
+						"label_i18n", "Approved"
+					)
+				).toString(),
+				_objectDefinition2.getRESTContextPath(
+				).substring(
+					1
+				),
+				Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		// invalid nestedFields before ID
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				"BAD_REQUEST",
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						ObjectFieldSettingUtil.getValue(
+							ObjectFieldSettingConstants.
+								NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+							objectField),
+						_objectEntry1.getExternalReferenceCode()
+					).put(
+						objectRelationship.getName(),
+						RandomTestUtil.randomString()
+					).put(
+						StringBundler.concat(
+							"r_", objectRelationship.getName(), "_",
+							_objectDefinition1.getPKObjectFieldName()),
+						Long.MAX_VALUE
+					).put(
+						_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+					).put(
+						"status",
+						JSONUtil.put(
+							"code", 0
+						).put(
+							"label", "approved"
+						).put(
+							"label_i18n", "Approved"
+						)
+					).toString(),
+					_objectDefinition2.getRESTContextPath(
+					).substring(
+						1
+					),
+					Http.Method.POST
+				).get(
+					"status"
+				));
+		}
 	}
 
 	@Test

@@ -41,6 +41,43 @@ async function checkBackButtonTitle(page: Page, title: string) {
 }
 
 test(
+	'Autosave',
+	{
+		tag: '@LPS-114145',
+	},
+	async ({fragmentEditorPage, fragmentsPage, page, site}) => {
+
+		// Go to fragment administration and create fragment set
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		const setName = getRandomString();
+
+		await fragmentsPage.createFragmentSet(setName);
+
+		// Create fragment
+
+		const fragmentName = getRandomString();
+
+		await fragmentsPage.createFragment(setName, fragmentName);
+
+		await fragmentEditorPage.addHTML('<p>Custom Text</p>');
+
+		await expect(page.getByText('Changes Saved')).toBeVisible();
+
+		// Edit fragment and assert changes were saved
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		await fragmentsPage.gotoFragmentSet(setName);
+
+		await fragmentsPage.clickAction('Edit', fragmentName);
+
+		await expect(page.getByText('<p>Custom Text</p>')).toBeVisible();
+	}
+);
+
+test(
 	'Back button have correct title in edit fragment',
 	{
 		tag: '@LPS-177682',

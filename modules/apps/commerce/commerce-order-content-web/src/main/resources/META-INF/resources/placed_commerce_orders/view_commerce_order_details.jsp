@@ -351,14 +351,14 @@ if (commerceOrder != null) {
 	</aui:form>
 
 	<c:if test="<%= commerceOrderContentDisplayContext.isShowProcessQuote() %>">
-		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "handleCTA('processQuote');" %>' value="process-quote" />
+		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "handleCTA(null, 'processQuote', null);" %>' value="process-quote" />
 	</c:if>
 
 	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10562") && (commerceOrder.getOrderStatus() == CommerceOrderConstants.ORDER_STATUS_COMPLETED) %>'>
-		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "handleCTA('makeReturn');" %>' value="make-a-return" />
+		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "handleCTA(null, 'makeReturn', null);" %>' value="make-a-return" />
 	</c:if>
 
-	<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "handleCTA('reorder');" %>' value="reorder" />
+	<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "handleCTA(null, 'reorder', null);" %>' value="reorder" />
 
 	<c:if test="<%= commerceOrderContentDisplayContext.isShowRetryPayment() %>">
 		<aui:button cssClass="btn-lg" href="<%= commerceOrderContentDisplayContext.getRetryPaymentURL() %>" primary="<%= true %>" value="retry-payment" />

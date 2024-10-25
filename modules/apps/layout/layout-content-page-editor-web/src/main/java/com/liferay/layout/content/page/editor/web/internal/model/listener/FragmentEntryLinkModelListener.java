@@ -21,6 +21,7 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.layout.util.CheckNoninstanceablePortletThreadLocal;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -113,7 +113,9 @@ public class FragmentEntryLinkModelListener
 	public void onBeforeCreate(FragmentEntryLink fragmentEntryLink)
 		throws ModelListenerException {
 
-		if (CopyLayoutThreadLocal.isCopyLayout()) {
+		if (!CheckNoninstanceablePortletThreadLocal.
+				isCheckNoninstanceablePortlet()) {
+
 			return;
 		}
 
@@ -126,7 +128,8 @@ public class FragmentEntryLinkModelListener
 			FragmentEntryLink fragmentEntryLink)
 		throws ModelListenerException {
 
-		if (CopyLayoutThreadLocal.isCopyLayout() ||
+		if (!CheckNoninstanceablePortletThreadLocal.
+				isCheckNoninstanceablePortlet() ||
 			Objects.equals(
 				originalFragmentEntryLink.getHtml(),
 				fragmentEntryLink.getHtml())) {

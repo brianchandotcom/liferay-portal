@@ -32,6 +32,32 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteUserGroupByExternalReferenceCodeUsers()
+		throws Exception {
+
+		UserGroup userGroup =
+			testDeleteUserGroupByExternalReferenceCodeUsers_addUserGroup();
+
+		User user = UserTestUtil.addUser();
+
+		_userLocalService.addUserGroupUser(userGroup.getId(), user.getUserId());
+
+		List<User> users = _userLocalService.getUserGroupUsers(
+			userGroup.getId());
+
+		Assert.assertTrue(users.contains(user));
+
+		userGroupResource.deleteUserGroupByExternalReferenceCodeUsers(
+			userGroup.getExternalReferenceCode(),
+			new Long[] {user.getUserId()});
+
+		users = _userLocalService.getUserGroupUsers(userGroup.getId());
+
+		Assert.assertFalse(users.contains(user));
+	}
+
+	@Override
+	@Test
 	public void testDeleteUserGroupUsers() throws Exception {
 		UserGroup userGroup = testDeleteUserGroupUsers_addUserGroup();
 
@@ -79,6 +105,28 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
 	@Override
 	@Test
+	public void testPostUserGroupByExternalReferenceCodeUsers()
+		throws Exception {
+
+		UserGroup userGroup =
+			testPostUserGroupByExternalReferenceCodeUsers_addUserGroup();
+
+		Assert.assertTrue(userGroup.getUsersCount() == 0);
+
+		User user = UserTestUtil.addUser();
+
+		Long[] userIds = {user.getUserId()};
+
+		userGroupResource.postUserGroupByExternalReferenceCodeUsers(
+			userGroup.getExternalReferenceCode(), userIds);
+
+		Assert.assertArrayEquals(
+			_userGroupLocalService.getUserPrimaryKeys(userGroup.getId()),
+			ArrayUtil.toArray(userIds));
+	}
+
+	@Override
+	@Test
 	public void testPostUserGroupUsers() throws Exception {
 		UserGroup userGroup = _postUserGroup();
 
@@ -113,6 +161,14 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 	@Override
 	protected UserGroup
 			testDeleteUserGroupByExternalReferenceCode_addUserGroup()
+		throws Exception {
+
+		return _postUserGroup();
+	}
+
+	@Override
+	protected UserGroup
+			testDeleteUserGroupByExternalReferenceCodeUsers_addUserGroup()
 		throws Exception {
 
 		return _postUserGroup();
@@ -186,6 +242,14 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 		throws Exception {
 
 		return _postUserGroup(userGroup);
+	}
+
+	@Override
+	protected UserGroup
+			testPostUserGroupByExternalReferenceCodeUsers_addUserGroup()
+		throws Exception {
+
+		return _postUserGroup();
 	}
 
 	@Override

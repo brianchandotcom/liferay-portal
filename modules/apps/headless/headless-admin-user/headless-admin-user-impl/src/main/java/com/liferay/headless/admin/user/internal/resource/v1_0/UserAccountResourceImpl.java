@@ -503,6 +503,20 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	}
 
 	@Override
+	public Page<UserAccount> getUserGroupByExternalReferenceCodeUsersPage(
+			String externalReferenceCode, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		UserGroup userGroup =
+			_userGroupService.getUserGroupByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		return getUserGroupUsersPage(
+			userGroup.getUserGroupId(), search, filter, pagination, sorts);
+	}
+
+	@Override
 	public Page<UserAccount> getUserGroupUsersPage(
 			Long userGroupId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)

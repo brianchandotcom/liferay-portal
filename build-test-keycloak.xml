@@ -35,7 +35,7 @@
 				<http url="http://127.0.0.1:18080/" />
 			</waitfor>
 			<exec executable="curl" outputproperty="curl.output">
-				<arg line="-s -o /dev/null -w '%{http_code}' http://127.0.0.1:18080" />
+				<arg line="-s -o /dev/null -w &quot;%{http_code}&quot; http://127.0.0.1:18080" />
 			</exec>
 
 			<echo>${curl.output}</echo>

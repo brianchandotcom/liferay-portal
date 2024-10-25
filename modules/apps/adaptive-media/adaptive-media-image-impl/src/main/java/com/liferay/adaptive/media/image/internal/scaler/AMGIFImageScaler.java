@@ -62,7 +62,7 @@ public class AMGIFImageScaler implements AMImageScaler {
 
 			Future<Map.Entry<byte[], byte[]>> collectorFuture =
 				ProcessUtil.execute(
-					CollectorOutputProcessor.INSTANCE, "gifsicle",
+					CollectorOutputProcessor.INSTANCE, "gifsicle", "--careful",
 					"--resize-fit",
 					_getResizeFitValues(amImageConfigurationEntry), "--output",
 					"-", file.getAbsolutePath());

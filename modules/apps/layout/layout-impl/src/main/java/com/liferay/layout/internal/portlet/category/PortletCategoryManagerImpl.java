@@ -171,67 +171,6 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		_serviceTrackerMap.close();
 	}
 
-	private String _getConfigurationTemplatesURL(
-		HttpServletRequest httpServletRequest) {
-
-		try {
-			return PortletURLBuilder.create(
-				PortletProviderUtil.getPortletURL(
-					httpServletRequest,
-					PortletConfigurationApplicationType.PortletConfiguration.
-						CLASS_NAME,
-					PortletProvider.Action.VIEW)
-			).setMVCPath(
-				"/edit_configuration_templates.jsp"
-			).setRedirect(
-				() -> {
-					String redirect = ParamUtil.getString(
-						httpServletRequest, "redirect");
-
-					if (Validator.isNotNull(redirect)) {
-						return redirect;
-					}
-
-					return null;
-				}
-			).setPortletResource(
-				() -> {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					PortletDisplay portletDisplay =
-						themeDisplay.getPortletDisplay();
-
-					return portletDisplay.getId();
-				}
-			).setParameter(
-				"portletConfiguration", true
-			).setParameter(
-				"returnToFullPageURL",
-				() -> {
-					String returnToFullPageURL = ParamUtil.getString(
-						httpServletRequest, "returnToFullPageURL");
-
-					if (Validator.isNotNull(returnToFullPageURL)) {
-						return returnToFullPageURL;
-					}
-
-					return null;
-				}
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return StringPool.BLANK;
-	}
-
 	private Set<String> _getFragmentEntryLinksPortletNames(
 		boolean deleted, ThemeDisplay themeDisplay) {
 
@@ -552,9 +491,6 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		for (Portlet portlet : portlets) {
 			jsonArray.put(
 				JSONUtil.put(
-					"configurationTemplatesURL",
-					_getConfigurationTemplatesURL(httpServletRequest)
-				).put(
 					"embedded",
 					() -> {
 						if (deletedFragmentEntryLinksPortletNames.contains(

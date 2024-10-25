@@ -181,11 +181,20 @@ public class AddToCartTag extends IncludeTag {
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
-					_disabled &=
-						!_commerceOrderPortletResourcePermission.contains(
-							themeDisplay.getPermissionChecker(),
-							accountEntry.getAccountEntryGroupId(),
-							CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
+					if (_disabled) {
+						_disabled &=
+							!_commerceOrderPortletResourcePermission.contains(
+								themeDisplay.getPermissionChecker(),
+								accountEntry.getAccountEntryGroupId(),
+								CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
+					}
+					else {
+						_disabled =
+							!_commerceOrderPortletResourcePermission.contains(
+								themeDisplay.getPermissionChecker(),
+								accountEntry.getAccountEntryGroupId(),
+								CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
+					}
 				}
 				else {
 					CommerceChannel commerceChannel =
@@ -201,12 +210,22 @@ public class AddToCartTag extends IncludeTag {
 									CommerceConstants.
 										SERVICE_NAME_COMMERCE_ORDER));
 
-					_disabled &=
-						accountEntry.isGuestAccount() &&
-						(CommerceChannelConstants.SITE_TYPE_B2B ==
-							commerceContext.getCommerceSiteType()) &&
-						!commerceOrderCheckoutConfiguration.
-							guestCheckoutEnabled();
+					if (_disabled) {
+						_disabled &=
+							accountEntry.isGuestAccount() &&
+							(CommerceChannelConstants.SITE_TYPE_B2B ==
+								commerceContext.getCommerceSiteType()) &&
+							!commerceOrderCheckoutConfiguration.
+								guestCheckoutEnabled();
+					}
+					else {
+						_disabled =
+							accountEntry.isGuestAccount() &&
+							(CommerceChannelConstants.SITE_TYPE_B2B ==
+								commerceContext.getCommerceSiteType()) &&
+							!commerceOrderCheckoutConfiguration.
+								guestCheckoutEnabled();
+					}
 				}
 			}
 

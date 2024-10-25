@@ -464,7 +464,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		}
 
 		content = _renderFragmentEntry(
-			configurationJSONObject.toString(), css, fragmentRendererContext,
+			configurationJSONObject.toString(4), css, fragmentRendererContext,
 			html, httpServletRequest);
 
 		if (_isCacheable(fragmentEntryLink, fragmentRendererContext)) {

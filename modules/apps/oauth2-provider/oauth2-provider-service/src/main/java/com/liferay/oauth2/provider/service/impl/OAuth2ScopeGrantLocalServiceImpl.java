@@ -127,9 +127,19 @@ public class OAuth2ScopeGrantLocalServiceImpl
 			return Collections.emptyList();
 		}
 
-		return oAuth2ScopeGrantPersistence.
-			getOAuth2AuthorizationOAuth2ScopeGrants(
+		List<OAuth2ScopeGrant> oAuth2ScopeGrants =
+			oAuth2ScopeGrantPersistence.getOAuth2AuthorizationOAuth2ScopeGrants(
 				oAuth2Authorization.getOAuth2AuthorizationId());
+
+		oAuth2ScopeGrants.removeIf(
+			oAuth2ScopeGrant ->
+				!Objects.equals(
+					oAuth2ScopeGrant.getApplicationName(), applicationName) ||
+				!Objects.equals(
+					oAuth2ScopeGrant.getBundleSymbolicName(),
+					bundleSymbolicName));
+
+		return oAuth2ScopeGrants;
 	}
 
 	@Override

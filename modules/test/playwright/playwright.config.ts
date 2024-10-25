@@ -97,6 +97,7 @@ import {
 } from './tests/setup/page-management-site/config';
 import {config as siteAdminWebConfig} from './tests/site-admin-web/config';
 import {config as siteNavigationAdminWebConfig} from './tests/site-navigation-admin-web/config';
+import {config as siteNavigationBreadcrumbWebConfig} from './tests/site-navigation-breadcrumb-web/config';
 import {config as siteNavigationLanguageWebConfig} from './tests/site-navigation-language-web/config';
 import {config as stableConfig} from './tests/stable/config';
 import {config as stagingConfig} from './tests/staging-configuration-web/config';
@@ -208,6 +209,7 @@ export default defineConfig({
 		segmentExperimentWebConfig,
 		siteAdminWebConfig,
 		siteNavigationAdminWebConfig,
+		siteNavigationBreadcrumbWebConfig,
 		siteNavigationLanguageWebConfig,
 		stableConfig,
 		stagingConfig,

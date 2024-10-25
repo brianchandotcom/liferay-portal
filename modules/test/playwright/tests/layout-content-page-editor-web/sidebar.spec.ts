@@ -1258,6 +1258,71 @@ test.describe('Page Contents Panel', () => {
 			).toBeVisible();
 		}
 	);
+
+	test(
+		'View inline text in different experiences',
+		{
+			tag: ['@LPS-122148'],
+		},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a page
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition(),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Create new experience and check it's the last one and inactive
+
+			await pageEditorPage.createExperience('E1');
+
+			// Edit heading fragment editable value
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			const headingId2 = await pageEditorPage.getFragmentId('Heading');
+
+			await pageEditorPage.editTextEditable(
+				headingId2,
+				'element-text',
+				'E1 Text'
+			);
+
+			// Go to content panel and assert that only second heading fragment appears
+
+			await pageEditorPage.goToSidebarTab('Page Content');
+
+			await expect(page.getByTitle('E1 Text')).toBeVisible();
+
+			// Change to default experience
+
+			await pageEditorPage.switchExperience('Default');
+
+			// Edit heading fragment editable value
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			const headingId1 = await pageEditorPage.getFragmentId('Heading');
+
+			await pageEditorPage.editTextEditable(
+				headingId1,
+				'element-text',
+				'Default Text'
+			);
+
+			// Go to content panel and assert that only first heading fragment appears
+
+			await pageEditorPage.goToSidebarTab('Page Content');
+
+			await expect(page.getByTitle('Default Text')).toBeVisible();
+
+			await expect(page.getByTitle('E1 Text')).not.toBeVisible();
+		}
+	);
 });
 
 test.describe('Page Design Options', () => {

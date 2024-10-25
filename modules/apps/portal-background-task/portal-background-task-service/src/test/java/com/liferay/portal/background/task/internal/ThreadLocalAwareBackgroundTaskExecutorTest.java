@@ -11,11 +11,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.io.Serializable;
-
-import java.util.Collections;
-import java.util.HashMap;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -60,12 +55,9 @@ public class ThreadLocalAwareBackgroundTaskExecutorTest
 		BackgroundTask backgroundTask = Mockito.mock(BackgroundTask.class);
 
 		Mockito.when(
-			backgroundTask.getTaskContextMap()
+			backgroundTask.getCompanyId()
 		).thenReturn(
-			Collections.singletonMap(
-				BackgroundTaskThreadLocalManagerImpl.KEY_THREAD_LOCAL_VALUES,
-				(Serializable)new HashMap<>(
-					Collections.singletonMap("companyId", 1)))
+			1L
 		);
 
 		BackgroundTaskResult backgroundTaskResult =

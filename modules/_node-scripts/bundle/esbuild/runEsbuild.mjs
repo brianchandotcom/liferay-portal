@@ -19,6 +19,14 @@ async function doRunEsbuild(esbuildesbuildConfig, configName) {
 
 	try {
 		await esbuild.build({
+			define: {
+
+				// Flag to use React 16 instead of React 18. See render.tsx in frontend-js-react-web.
+
+				'process.env.USE_REACT_16': process.env.USE_REACT_16
+					? 'true'
+					: 'false',
+			},
 			minify: process.env.NODE_ENV === 'production',
 			...esbuildesbuildConfig,
 		});

@@ -42,7 +42,10 @@ public class FrontendJSReactWebJSImportMapsContributor
 		}
 	}
 
-	private static final String[] _MODULE_NAMES = {"react", "react-dom"};
+	private static final String[] _MODULE_NAMES = {
+		"react", "react-16", "react-18", "react-dom", "react-dom-16",
+		"react-dom-18"
+	};
 
 	private JSONObject _importMapsJSONObject;
 

@@ -8,6 +8,7 @@ import React from 'react';
 import {createPortal} from 'react-dom';
 
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
+	children?: React.ReactNode;
 
 	/**
 	 * Element to render portal into.
@@ -21,6 +22,7 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 	wrapper?:
 		| string
 		| React.ComponentType<{
+				children?: React.ReactNode | undefined;
 				className: string;
 				id?: string;
 				ref?: React.Ref<HTMLElement>;
@@ -28,7 +30,7 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 		| false;
 }
 
-const ReactPortal = React.forwardRef<HTMLElement, IProps>(
+const LiferayReactPortal = React.forwardRef<HTMLElement, IProps>(
 	(
 		{
 			children,
@@ -39,10 +41,10 @@ const ReactPortal = React.forwardRef<HTMLElement, IProps>(
 			...otherProps
 		},
 		ref
-	) => {
+	): React.ReactPortal => {
 		const cssClass = classNames('lfr-tooltip-scope', className);
 
-		let content: React.ReactNode;
+		let content: React.ReactNode = null;
 
 		if (Wrapper) {
 			content = (
@@ -61,9 +63,10 @@ const ReactPortal = React.forwardRef<HTMLElement, IProps>(
 			);
 		}
 
+		// @ts-ignore
 		// eslint-disable-next-line @liferay/portal/no-react-dom-create-portal
 		return createPortal(content, container || document.body);
 	}
 );
 
-export default ReactPortal;
+export default LiferayReactPortal;

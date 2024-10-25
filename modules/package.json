@@ -6,6 +6,8 @@
 		"@liferay/stylelint-plugin": "1.1.0",
 		"@types/ckeditor4": "4.16.2",
 		"@types/codemirror": "^5.60.5",
+		"@types/react": "18.2.19",
+		"@types/react-dom": "^18.2.12",
 		"@types/react-router-dom": "^5.3.3",
 		"@types/react-transition-group": "^4.4.6",
 		"@types/warning": "^3.0.0",

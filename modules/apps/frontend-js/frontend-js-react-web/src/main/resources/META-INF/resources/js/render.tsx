@@ -11,9 +11,18 @@ import {
 } from '@liferay/accessibility-settings-state-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web';
 import React, {useMemo} from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 
 let counter = 0;
+
+const CLASSNAME_TOOLTIP_SCOPE = 'lfr-tooltip-scope';
+
+/**
+ * This flag is a temporary workaround for unit tests that still use React 16.
+ * It will be removed once the tests are converted to React 18
+ */
+const USE_REACT_16 = process.env.USE_REACT_16 === 'true';
 
 /**
  * Wrapper for ReactDOM render that automatically:
@@ -38,6 +47,7 @@ export default function render(
 		| NonNullable<React.ForwardRefExoticComponent<any>>
 		| (() => NonNullable<React.ReactNode>),
 	renderData: {
+		__reactDOMFlushSync?: boolean;
 		componentId?: string;
 		portletId?: string;
 		[key: string]: unknown;
@@ -48,47 +58,51 @@ export default function render(
 		return;
 	}
 
-	if (!(window.Liferay as any).SPA || (window.Liferay as any).SPA.app) {
-		const {portletId} = renderData;
-
-		// Temporary workaround until frontend-icons-web is converted to ESM.
-		// We will replace with an import from frontend-icons-web later.
-
-		const spritemap = ((Liferay as any).Icons || {}).spritemap as string;
+	if (!Liferay.SPA || Liferay.SPA.app) {
+		const {
+			__reactDOMFlushSync,
+			hasBodyContent,
+			portletId,
+			...componentProps
+		} = renderData;
 
 		let {componentId} = renderData;
-
-		const destroyOnNavigate = !portletId;
 
 		if (!componentId) {
 			componentId = `__UNNAMED_COMPONENT__${portletId}__${counter++}`;
 		}
 
-		(window.Liferay as any).component(
+		if (hasBodyContent) {
+			const children = container.querySelectorAll(
+				'.tag-body-content > *'
+			);
+
+			if (children.length) {
+				componentProps.children = children;
+			}
+		}
+
+		container.classList.add(CLASSNAME_TOOLTIP_SCOPE);
+
+		let root: any;
+
+		if (!USE_REACT_16) {
+			root = createRoot(container);
+		}
+
+		Liferay.component(
 			componentId,
 			{
 				destroy: () => {
-					container.classList.remove('lfr-tooltip-scope');
+					container.classList.remove(CLASSNAME_TOOLTIP_SCOPE);
 
-					/**
-					 * When navigating to another page, this error can be thrown
-					 * when a component uses a React portal:
-					 *
-					 * "Uncaught DOMException: Failed to execute 'removeChild'
-					 * on 'Node': The node to be removed is not a child of this
-					 * node."
-					 *
-					 * This is because the contents of the React portal can be
-					 * placed in an additional senna surface <div> so when
-					 * `container.removeChild(child)` is called, this error is
-					 * thrown. (`container` being document.body and `child`
-					 * being the portal contents)
-					 *
-					 * This temporarily catches this error until a better fix
-					 * can be found.
-					 */
 					try {
-						ReactDOM.unmountComponentAtNode(container);
+						if (USE_REACT_16) {
+							ReactDOM.unmountComponentAtNode(container);
+						}
+						else {
+							root.unmount();
+						}
 					}
 					catch (error) {
 						if (process.env.NODE_ENV === 'development') {
@@ -97,10 +111,7 @@ export default function render(
 					}
 				},
 			},
-			{
-				destroyOnNavigate,
-				portletId,
-			}
+			{destroyOnNavigate: !portletId, portletId}
 		);
 
 		const Component: React.ElementType =
@@ -109,30 +120,43 @@ export default function render(
 				? (renderable as any)
 				: null;
 
-		container.classList.add('lfr-tooltip-scope');
+		const App = (
+			<LiferayProvider spritemap={Liferay.Icons.spritemap}>
+				{
+					(Component ? (
+						<Component {...componentProps} portletId={portletId} />
+					) : (
+						renderable
+					)) as React.ReactNode
+				}
+			</LiferayProvider>
+		);
 
-		if (renderData.hasBodyContent) {
-			const children = container.querySelectorAll(
-				'.tag-body-content > *'
-			);
+		if (USE_REACT_16) {
 
-			if (children.length) {
-				renderData.children = children;
+			// eslint-disable-next-line @liferay/portal/no-react-dom-render
+			ReactDOM.render(App, container);
+		}
+		else {
+			const renderApp = () => {
+				root.render(App);
+			};
+
+			// `__reactDOMFlushSync` is an escape hatch to avoid async rendering in React 18
+			// This is only intended to be used for incremental upgrading.
+
+			if (__reactDOMFlushSync) {
+				ReactDOM.flushSync(renderApp);
+			}
+			else {
+				renderApp();
 			}
 		}
 
-		delete renderData.hasBodyContent;
-
-		// eslint-disable-next-line @liferay/portal/no-react-dom-render
-		ReactDOM.render(
-			<LiferayProvider spritemap={spritemap}>
-				{Component ? <Component {...renderData} /> : renderable}
-			</LiferayProvider>,
-			container
-		);
+		return root;
 	}
 	else {
-		(window.Liferay as any).once('SPAReady', () => {
+		Liferay.once('SPAReady', () => {
 			render(renderable, renderData, container);
 		});
 	}

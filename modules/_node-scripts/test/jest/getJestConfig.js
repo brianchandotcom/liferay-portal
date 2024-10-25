@@ -6,9 +6,37 @@
 const path = require('path');
 
 function getJestConfig({rootDir = '<rootDir>'}) {
+	let moduleNameMapper = {};
+
+	if (process.env.USE_REACT_16 === 'true') {
+		moduleNameMapper = {
+
+			// Testing dependencies
+
+			'^@testing-library/dom((\\/.*)?)$': '@testing-library/dom-8.11.1$1',
+			'^@testing-library/jest-dom((\\/.*)?)$':
+				'@testing-library/jest-dom-4.2.4$1',
+			'^@testing-library/react((\\/.*)?)$':
+				'@testing-library/react-12.1.2$1',
+			'^@testing-library/react-hooks((\\/.*)?)$':
+				'@testing-library/react-hooks-3.4.2$1',
+			'^@testing-library/user-event((\\/.*)?)$':
+				'@testing-library/user-event-4.2.4$1',
+
+			// React Dependencies
+
+			'^react$': 'react-16',
+			'^react-dom$': 'react-dom-16',
+			'^react-dom/client$': 'react-dom/client',
+			'^react-dom/server$': 'react-dom-16/server',
+			'^react-dom/test-utils$': 'react-dom-16/test-utils',
+		};
+	}
+
 	return {
 		coverageDirectory: 'build/coverage',
 		globalSetup: path.join(__dirname, 'globalSetup.js'),
+		moduleNameMapper,
 		modulePathIgnorePatterns: ['/__fixtures__/', '/build/', '/classes/'],
 		prettierPath: null,
 		resolver: path.join(__dirname, 'resolver.js'),

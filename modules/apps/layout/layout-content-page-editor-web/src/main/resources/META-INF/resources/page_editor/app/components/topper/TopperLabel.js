@@ -29,6 +29,14 @@ export function TopperLabel({children, isDragging, isHovered, itemElement}) {
 		[globalContext]
 	);
 
+	const [visible, setVisible] = useState(false);
+
+	useEffect(() => {
+		if (isHovered) {
+			setTimeout(() => setVisible(true), 1);
+		}
+	}, [isHovered]);
+
 	useEffect(() => {
 		if (itemElement) {
 			const pageEditorWrapper =
@@ -180,7 +188,7 @@ export function TopperLabel({children, isDragging, isHovered, itemElement}) {
 				)}
 				onMouseOver={(event) => event.stopPropagation()}
 				style={{
-					...(isDragging && {opacity: 0}),
+					...((isDragging || !visible) && {opacity: 0}),
 					...positionConfig.style,
 				}}
 			>

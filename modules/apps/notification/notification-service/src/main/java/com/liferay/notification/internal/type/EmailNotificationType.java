@@ -39,7 +39,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -78,6 +77,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.util.PropsValues;
@@ -645,11 +645,18 @@ public class EmailNotificationType extends BaseNotificationType {
 	private String _getValidEmailAddresses(
 		long companyId, String emailAddresses) {
 
-		StringBundler sb = new StringBundler();
+		List<String> validAndActiveEmailAddressesList = new ArrayList<>();
 
 		for (String emailAddress : StringUtil.split(emailAddresses)) {
+			if (Validator.isNull(emailAddress)) {
+				continue;
+			}
+
 			EmailAddressValidator emailAddressValidator =
 				EmailAddressValidatorFactory.getInstance();
+
+			User recipientUser = _userLocalService.fetchUserByEmailAddress(
+				companyId, emailAddress);
 
 			if (!emailAddressValidator.validate(companyId, emailAddress)) {
 				if (_log.isInfoEnabled()) {
@@ -659,14 +666,14 @@ public class EmailNotificationType extends BaseNotificationType {
 				continue;
 			}
 
-			if (sb.index() > 0) {
-				sb.append(StringPool.COMMA);
-			}
+			if (recipientUser.getStatus() !=
+					WorkflowConstants.STATUS_INACTIVE) {
 
-			sb.append(emailAddress);
+				validAndActiveEmailAddressesList.add(emailAddress);
+			}
 		}
 
-		return sb.toString();
+		return String.join(",", validAndActiveEmailAddressesList);
 	}
 
 	private String _getValue(

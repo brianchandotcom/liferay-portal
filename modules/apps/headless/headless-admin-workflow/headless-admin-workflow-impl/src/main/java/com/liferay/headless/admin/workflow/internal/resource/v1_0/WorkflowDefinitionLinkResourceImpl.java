@@ -57,6 +57,31 @@ public class WorkflowDefinitionLinkResourceImpl
 	}
 
 	@Override
+	public Page<WorkflowDefinitionLink> getWorkflowDefinitionLinksByExternalReferenceCode(
+			String externalReferenceCode, Pagination pagination)
+		throws Exception {
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.getWorkflowDefinition(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		List<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
+			workflowDefinitionLinks =
+				_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+					contextCompany.getCompanyId(), workflowDefinition.getName(),
+					workflowDefinition.getVersion());
+
+		return Page.of(
+			transform(
+				ListUtil.subList(
+					workflowDefinitionLinks, pagination.getStartPosition(),
+					pagination.getEndPosition()),
+				workflowDefinitionLink -> _toWorkflowDefinitionLink(
+					workflowDefinitionLink)),
+			pagination, workflowDefinitionLinks.size());
+	}
+
+	@Override
 	public WorkflowDefinitionLink postWorkflowDefinitionLink(
 			Long workflowDefinitionId,
 			WorkflowDefinitionLink workflowDefinitionLink)

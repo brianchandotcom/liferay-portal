@@ -65,6 +65,18 @@ public class KaleoDefinitionServiceImpl extends KaleoDefinitionServiceBaseImpl {
 
 	@Override
 	public KaleoDefinition getKaleoDefinition(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		_kaleoDefinitionModelResourcePermission.check(
+			getPermissionChecker(), null, ActionKeys.VIEW);
+
+		return _kaleoDefinitionLocalService.getKaleoDefinition(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public KaleoDefinition getKaleoDefinition(
 			String name, ServiceContext serviceContext)
 		throws PortalException {
 

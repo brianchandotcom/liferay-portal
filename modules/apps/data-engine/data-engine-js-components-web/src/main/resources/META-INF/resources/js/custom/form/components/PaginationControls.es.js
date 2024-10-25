@@ -64,7 +64,7 @@ export function PaginationControls({
 				<ClayButton
 					className="float-left lfr-ddm-form-pagination-next"
 					displayType="primary"
-					onClick={() =>
+					onClick={() => {
 						dispatch(
 							createNextPage({
 								activePage,
@@ -72,8 +72,10 @@ export function PaginationControls({
 									getFormNode(containerElement.current)
 								),
 							})
-						)
-					}
+						);
+
+						containerElement.current?.scrollIntoView();
+					}}
 					type="button"
 				>
 					{strings !== null

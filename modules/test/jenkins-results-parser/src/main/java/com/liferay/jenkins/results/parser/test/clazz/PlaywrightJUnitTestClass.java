@@ -22,6 +22,35 @@ import org.json.JSONObject;
 public class PlaywrightJUnitTestClass extends JUnitTestClass {
 
 	@Override
+	public long getAverageDuration() {
+		if (_averageDuration != null) {
+			return _averageDuration;
+		}
+
+		for (TestClassMethod testClassMethod : getTestClassMethods()) {
+			PlaywrightTestClassMethod playwrightTestClassMethod =
+				(PlaywrightTestClassMethod)testClassMethod;
+
+			String testName =
+				getName() + "." + playwrightTestClassMethod.getTestName();
+
+			BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+			Long averageDuration = batchTestClassGroup.getAverageTestDuration(
+				testName);
+
+			if (_averageDuration == null) {
+				_averageDuration = averageDuration;
+			}
+			else {
+				_averageDuration += averageDuration;
+			}
+		}
+
+		return _averageDuration;
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
@@ -110,6 +139,7 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 
 	private static final String _SLAVE_LABEL_DEFAULT = "!master";
 
+	private static Long _averageDuration;
 	private static final Pattern _testFilePathPattern = Pattern.compile(
 		".+/playwright/tests/(?<specFilePath>.+)");
 

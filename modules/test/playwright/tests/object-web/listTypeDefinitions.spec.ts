@@ -98,8 +98,6 @@ test.describe('manage picklists inside the picklists portlet', () => {
 		await expect(
 			page.getByRole('link', {name: listTypeDefinition.name})
 		).toBeVisible();
-
-		await siteSettingsLocalizationPage.setCustomDefaultLanguage('en_US');
 	});
 
 	test('ensure picklist entry keys starting with upper case are correctly rendered in the entries', async ({
@@ -254,16 +252,6 @@ test.describe('ensure picklist translation', () => {
 				name: listTypeDefinitionName + ' translated',
 			})
 		).toBeVisible();
-
-		await page.goto('/');
-		await page.locator('button[data-qa-id="userPersonalMenu"]').click();
-		await page
-			.getByRole('menuitem', {name: 'Configurações da Conta'})
-			.click();
-		await page.getByLabel('Linguagem').selectOption('en_US');
-		await page.getByRole('button', {
-			name: 'Salvar',
-		});
 	});
 
 	test('verify if translated picklist item will be displayed on forms', async ({

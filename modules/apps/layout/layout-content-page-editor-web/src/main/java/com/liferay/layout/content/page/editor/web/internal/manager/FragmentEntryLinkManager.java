@@ -34,6 +34,8 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -48,6 +50,8 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.configuration.icon.EditModePortletConfigurationIcon;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -67,7 +71,10 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -152,6 +159,12 @@ public class FragmentEntryLinkManager {
 					"portletId");
 
 				return JSONUtil.put(
+					"actions",
+					_getActionsJSONObject(
+						httpServletRequest,
+						editableValuesJSONObject.getString("instanceId"),
+						portletId)
+				).put(
 					"comments",
 					_getFragmentEntryLinkCommentsJSONArray(
 						fragmentEntryLink, httpServletRequest)
@@ -423,6 +436,54 @@ public class FragmentEntryLinkManager {
 		return editableValuesJSONObject;
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, EditModePortletConfigurationIcon.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
+	}
+
+	private JSONObject _getActionsJSONObject(
+		HttpServletRequest httpServletRequest, String instanceId,
+		String portletId) {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		String encodedPortletId = PortletIdCodec.encode(portletId, instanceId);
+
+		for (EditModePortletConfigurationIcon editModePortletConfigurationIcon :
+				_serviceTrackerList.toList()) {
+
+			if (!editModePortletConfigurationIcon.isShow(
+					httpServletRequest, encodedPortletId)) {
+
+				continue;
+			}
+
+			Class<?> clazz = editModePortletConfigurationIcon.getClass();
+
+			jsonObject.put(
+				clazz.getSimpleName(),
+				JSONUtil.put(
+					"icon", editModePortletConfigurationIcon.getIcon()
+				).put(
+					"title",
+					editModePortletConfigurationIcon.getTitle(
+						httpServletRequest)
+				).put(
+					"url",
+					editModePortletConfigurationIcon.getURL(
+						httpServletRequest, encodedPortletId)
+				));
+		}
+
+		return jsonObject;
+	}
+
 	private String _getContent(
 		DefaultFragmentRendererContext defaultFragmentRendererContext,
 		JSONObject editableValuesJSONObject,
@@ -660,5 +721,8 @@ public class FragmentEntryLinkManager {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	private ServiceTrackerList<EditModePortletConfigurationIcon>
+		_serviceTrackerList;
 
 }

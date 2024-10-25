@@ -1304,23 +1304,21 @@ public class ImagePersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
-		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctMergeColumnNames.add("type_");
-		ctMergeColumnNames.add("height");
-		ctMergeColumnNames.add("width");
-		ctMergeColumnNames.add("size_");
+		ctStrictColumnNames.add("type_");
+		ctStrictColumnNames.add("height");
+		ctStrictColumnNames.add("width");
+		ctStrictColumnNames.add("size_");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
-		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("imageId"));
 		_ctColumnNamesMap.put(

@@ -19977,7 +19977,6 @@ public class LayoutPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
-		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -19990,45 +19989,44 @@ public class LayoutPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctMergeColumnNames.add("parentPlid");
-		ctMergeColumnNames.add("privateLayout");
-		ctMergeColumnNames.add("layoutId");
-		ctMergeColumnNames.add("parentLayoutId");
+		ctStrictColumnNames.add("parentPlid");
+		ctStrictColumnNames.add("privateLayout");
+		ctStrictColumnNames.add("layoutId");
+		ctStrictColumnNames.add("parentLayoutId");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
-		ctMergeColumnNames.add("name");
-		ctMergeColumnNames.add("title");
-		ctMergeColumnNames.add("description");
-		ctMergeColumnNames.add("keywords");
-		ctMergeColumnNames.add("robots");
-		ctMergeColumnNames.add("type_");
-		ctMergeColumnNames.add("typeSettings");
-		ctMergeColumnNames.add("hidden_");
-		ctMergeColumnNames.add("system_");
-		ctMergeColumnNames.add("friendlyURL");
-		ctMergeColumnNames.add("iconImageId");
-		ctMergeColumnNames.add("themeId");
-		ctMergeColumnNames.add("colorSchemeId");
-		ctMergeColumnNames.add("styleBookEntryId");
-		ctMergeColumnNames.add("css");
-		ctMergeColumnNames.add("priority");
-		ctMergeColumnNames.add("faviconFileEntryId");
-		ctMergeColumnNames.add("masterLayoutPlid");
-		ctMergeColumnNames.add("layoutPrototypeUuid");
-		ctMergeColumnNames.add("layoutPrototypeLinkEnabled");
-		ctMergeColumnNames.add("sourcePrototypeLayoutUuid");
-		ctMergeColumnNames.add("publishDate");
-		ctMergeColumnNames.add("lastPublishDate");
-		ctMergeColumnNames.add("status");
-		ctMergeColumnNames.add("statusByUserId");
-		ctMergeColumnNames.add("statusByUserName");
-		ctMergeColumnNames.add("statusDate");
+		ctStrictColumnNames.add("name");
+		ctStrictColumnNames.add("title");
+		ctStrictColumnNames.add("description");
+		ctStrictColumnNames.add("keywords");
+		ctStrictColumnNames.add("robots");
+		ctStrictColumnNames.add("type_");
+		ctStrictColumnNames.add("typeSettings");
+		ctStrictColumnNames.add("hidden_");
+		ctStrictColumnNames.add("system_");
+		ctStrictColumnNames.add("friendlyURL");
+		ctStrictColumnNames.add("iconImageId");
+		ctStrictColumnNames.add("themeId");
+		ctStrictColumnNames.add("colorSchemeId");
+		ctStrictColumnNames.add("styleBookEntryId");
+		ctStrictColumnNames.add("css");
+		ctStrictColumnNames.add("priority");
+		ctStrictColumnNames.add("faviconFileEntryId");
+		ctStrictColumnNames.add("masterLayoutPlid");
+		ctStrictColumnNames.add("layoutPrototypeUuid");
+		ctStrictColumnNames.add("layoutPrototypeLinkEnabled");
+		ctStrictColumnNames.add("sourcePrototypeLayoutUuid");
+		ctStrictColumnNames.add("publishDate");
+		ctStrictColumnNames.add("lastPublishDate");
+		ctStrictColumnNames.add("status");
+		ctStrictColumnNames.add("statusByUserId");
+		ctStrictColumnNames.add("statusByUserName");
+		ctStrictColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
-		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("plid"));
 		_ctColumnNamesMap.put(

@@ -5599,7 +5599,6 @@ public class CountryPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
-		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -5611,25 +5610,24 @@ public class CountryPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctMergeColumnNames.add("a2");
-		ctMergeColumnNames.add("a3");
-		ctMergeColumnNames.add("active_");
-		ctMergeColumnNames.add("billingAllowed");
-		ctMergeColumnNames.add("groupFilterEnabled");
-		ctMergeColumnNames.add("idd_");
-		ctMergeColumnNames.add("name");
-		ctMergeColumnNames.add("number_");
-		ctMergeColumnNames.add("position");
-		ctMergeColumnNames.add("shippingAllowed");
-		ctMergeColumnNames.add("subjectToVAT");
-		ctMergeColumnNames.add("zipRequired");
-		ctMergeColumnNames.add("lastPublishDate");
+		ctStrictColumnNames.add("a2");
+		ctStrictColumnNames.add("a3");
+		ctStrictColumnNames.add("active_");
+		ctStrictColumnNames.add("billingAllowed");
+		ctStrictColumnNames.add("groupFilterEnabled");
+		ctStrictColumnNames.add("idd_");
+		ctStrictColumnNames.add("name");
+		ctStrictColumnNames.add("number_");
+		ctStrictColumnNames.add("position");
+		ctStrictColumnNames.add("shippingAllowed");
+		ctStrictColumnNames.add("subjectToVAT");
+		ctStrictColumnNames.add("zipRequired");
+		ctStrictColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
-		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("countryId"));
 		_ctColumnNamesMap.put(

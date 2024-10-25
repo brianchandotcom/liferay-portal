@@ -3614,22 +3614,20 @@ public class PortletPreferenceValuePersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
-		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctMergeColumnNames.add("portletPreferencesId");
-		ctMergeColumnNames.add("index_");
-		ctMergeColumnNames.add("largeValue");
-		ctMergeColumnNames.add("name");
-		ctMergeColumnNames.add("readOnly");
-		ctMergeColumnNames.add("smallValue");
+		ctStrictColumnNames.add("portletPreferencesId");
+		ctStrictColumnNames.add("index_");
+		ctStrictColumnNames.add("largeValue");
+		ctStrictColumnNames.add("name");
+		ctStrictColumnNames.add("readOnly");
+		ctStrictColumnNames.add("smallValue");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
-		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("portletPreferenceValueId"));

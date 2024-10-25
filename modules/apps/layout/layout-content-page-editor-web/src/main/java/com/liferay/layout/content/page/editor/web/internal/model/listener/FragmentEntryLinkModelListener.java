@@ -187,7 +187,8 @@ public class FragmentEntryLinkModelListener
 				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
 					curFragmentEntryLink.getFragmentEntryLinkId());
 
-			if (layoutStructure.isItemMarkedForDeletion(
+			if ((layoutStructureItem != null) &&
+				layoutStructure.isItemMarkedForDeletion(
 					layoutStructureItem.getItemId())) {
 
 				continue;

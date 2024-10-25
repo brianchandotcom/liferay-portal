@@ -14,7 +14,6 @@ import {
 
 import Navbar, {NavbarProps} from '../../../../../components/Navbar';
 import {PageRenderer} from '../../../../../components/Page';
-import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
 import {OrderType} from '../../../../../enums/OrderType';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
@@ -90,8 +89,6 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 };
 
 const AppOutlet = () => {
-	const {properties} = useMarketplaceContext();
-
 	return (
 		<BaseOutlet
 			backTitle={i18n.translate('back-to-my-apps')}
@@ -121,8 +118,7 @@ const AppOutlet = () => {
 						{
 							name: i18n.translate('app-provisioning'),
 							path: 'cloud-provisioning',
-							visible:
-								properties.featureFlags.includes('LPD-34129'),
+							visible: true,
 						},
 					];
 				}

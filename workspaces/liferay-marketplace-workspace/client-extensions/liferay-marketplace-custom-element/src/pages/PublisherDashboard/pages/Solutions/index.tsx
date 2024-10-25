@@ -26,7 +26,7 @@ const Solutions = () => {
 	const [page, setPage] = useState(1);
 	const {catalogId} = useOutletContext<any>();
 	const {data: supplierAccount} = useAccount();
-	const {myUserAccount, properties} = useMarketplaceContext();
+	const {myUserAccount} = useMarketplaceContext();
 	const navigate = useNavigate();
 
 	const supplierAccountRoleBriefs =
@@ -37,9 +37,6 @@ const Solutions = () => {
 	const isSolutionPublisher = supplierAccountRoleBriefs.find(
 		({name}) => name === SOLUTION_PUBLISHER_ROLE
 	);
-
-	const canPublishSolution =
-		isSolutionPublisher && properties.featureFlags?.includes('LPD-20220');
 
 	const {
 		data: publishedSolutionsTable = {},
@@ -79,7 +76,7 @@ const Solutions = () => {
 			description="Manage and publish solutions on the Marketplace"
 			pageRendererProps={{error, isLoading}}
 			rightButton={
-				canPublishSolution && (
+				isSolutionPublisher && (
 					<ClayButton
 						disabled={!(catalogId && catalogId > 0)}
 						onClick={() => navigate('/solutions/publisher')}

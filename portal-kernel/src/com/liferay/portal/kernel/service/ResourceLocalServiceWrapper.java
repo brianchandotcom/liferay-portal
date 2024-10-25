@@ -378,6 +378,16 @@ public class ResourceLocalServiceWrapper
 			userId, resourceId, resources, actionId, roleIds);
 	}
 
+	@Override
+	public void removeResourcePermission(
+			long companyId, java.lang.String name, int scope,
+			java.lang.String primKey, long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_resourceLocalService.removeResourcePermission(
+			companyId, name, scope, primKey, roleId, actionId);
+	}
+
 	/**
 	 * Updates the resources for the model, replacing their group and guest
 	 * permissions with new ones from the service context.

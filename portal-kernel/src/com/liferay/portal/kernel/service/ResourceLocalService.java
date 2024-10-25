@@ -298,6 +298,11 @@ public interface ResourceLocalService extends BaseLocalService {
 			String actionId, long[] roleIds)
 		throws PortalException;
 
+	public void removeResourcePermission(
+			long companyId, String name, int scope, String primKey, long roleId,
+			String actionId)
+		throws PortalException;
+
 	/**
 	 * Updates the resources for the model, replacing their group and guest
 	 * permissions with new ones from the service context.

@@ -878,6 +878,28 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro enableDynamicAndManualSelection() {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Feature Flags",
+			configurationName = "Deprecation",
+			configurationScope = "Virtual Instance Scope");
+
+		if (IsElementPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Asset Selection for Asset Publisher", toggle_state = "Disabled")) {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Asset Selection for Asset Publisher",
+				toggle_state = "Disabled");
+		}
+
+		Navigator.openURL();
+	}
+
+	@summary = "Default summary"
 	macro enableRSSSubscription() {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

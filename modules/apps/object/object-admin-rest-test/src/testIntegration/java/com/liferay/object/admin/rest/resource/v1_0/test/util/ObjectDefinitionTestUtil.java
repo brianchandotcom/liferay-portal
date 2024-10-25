@@ -50,7 +50,7 @@ public class ObjectDefinitionTestUtil {
 				getRandomName();
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-			TestPropsValues.getUserId(), objectFolderId, false, true,
+			TestPropsValues.getUserId(), objectFolderId, null, false, true,
 			enableLocalization, false, LocalizedMapUtil.getLocalizedMap(value),
 			value, null, null, LocalizedMapUtil.getLocalizedMap(value), true,
 			ObjectDefinitionConstants.SCOPE_COMPANY,

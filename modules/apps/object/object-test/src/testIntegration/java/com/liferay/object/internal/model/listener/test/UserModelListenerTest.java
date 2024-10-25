@@ -109,7 +109,7 @@ public class UserModelListenerTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				user.getUserId(), 0, false, false, false, false,
+				user.getUserId(), 0, null, false, false, false, false,
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
 				LocalizedMapUtil.getLocalizedMap("Ables"), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,

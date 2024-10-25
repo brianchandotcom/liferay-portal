@@ -723,7 +723,7 @@ public class EditInfoItemStrutsActionTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				_user.getUserId(), 0, false, true, false, true,
+				_user.getUserId(), 0, null, false, true, false, true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null,
 				"control_panel.sites",

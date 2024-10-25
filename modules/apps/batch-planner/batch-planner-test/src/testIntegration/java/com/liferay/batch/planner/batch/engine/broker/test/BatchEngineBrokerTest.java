@@ -1162,7 +1162,7 @@ public class BatchEngineBrokerTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				user.getUserId(), 0, false, true, false, false,
+				user.getUserId(), 0, null, false, true, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				name, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

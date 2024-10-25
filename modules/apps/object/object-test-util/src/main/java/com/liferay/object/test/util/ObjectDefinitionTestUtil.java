@@ -73,7 +73,8 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-			userId, objectFolderId, false, true, enableLocalization, false,
+			userId, objectFolderId, null, false, true, enableLocalization,
+			false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			name, null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -184,7 +185,7 @@ public class ObjectDefinitionTestUtil {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				userId, 0, false, true, localized, false,
+				userId, 0, null, false, true, localized, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				name, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

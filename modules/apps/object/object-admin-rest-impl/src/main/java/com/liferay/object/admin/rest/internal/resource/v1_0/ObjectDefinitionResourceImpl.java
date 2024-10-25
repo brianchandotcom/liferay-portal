@@ -281,6 +281,7 @@ public class ObjectDefinitionResourceImpl
 					_getObjectFolderId(
 						objectDefinition.
 							getObjectFolderExternalReferenceCode()),
+					objectDefinition.getClassName(),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableIndexSearch(), true),
@@ -521,6 +522,7 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getBoolean(
 						objectDefinition.getActive(),
 						serviceBuilderObjectDefinition.isActive()),
+					objectDefinition.getClassName(),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableCategorization(), true),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),

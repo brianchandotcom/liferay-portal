@@ -50,8 +50,9 @@ public class WorkflowEngineConcurrentTest extends BaseWorkflowManagerTestCase {
 	public void testConcurrentExecuteTimerWorkflowInstance() throws Exception {
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
 				FileUtil.getBytes(
 					getResourceInputStream(
 						"multiple-timer-workflow-definition.xml")));

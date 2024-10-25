@@ -158,9 +158,9 @@ public class TimerExecutorTest {
 
 		_workflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				content.getBytes());
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), content.getBytes());
 
 		_kaleoDefinitionVersion =
 			_kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(

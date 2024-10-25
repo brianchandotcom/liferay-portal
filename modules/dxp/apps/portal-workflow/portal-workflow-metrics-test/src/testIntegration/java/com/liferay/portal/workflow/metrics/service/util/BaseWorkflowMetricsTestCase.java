@@ -271,7 +271,7 @@ public abstract class BaseWorkflowMetricsTestCase {
 
 	protected void updateWorkflowDefinition(byte[] bytes) throws Exception {
 		workflowDefinition = workflowDefinitionManager.deployWorkflowDefinition(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			workflowDefinition.getTitle(), workflowDefinition.getName(), bytes);
 	}
 
@@ -291,7 +291,7 @@ public abstract class BaseWorkflowMetricsTestCase {
 
 	private void _deployWorkflowDefinition() throws Exception {
 		workflowDefinition = workflowDefinitionManager.deployWorkflowDefinition(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			StringUtil.randomId(), StringUtil.randomId(),
 			WorkflowDefinitionUtil.getBytes());
 	}

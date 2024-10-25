@@ -100,16 +100,19 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 				TestPropsValues.getUserId());
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				"PublishedWorkflowDefinition", StringUtil.randomId(),
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), "PublishedWorkflowDefinition",
+				StringUtil.randomId(),
 				_getContentBytes("workflow-definition-1.json"));
 
 			_workflowDefinitionManager.saveWorkflowDefinition(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(),
 				"UnpublishedGroovyWorkflowDefinition", StringUtil.randomId(),
 				_getContentBytes("workflow-definition-2.json"));
 			_workflowDefinitionManager.saveWorkflowDefinition(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(),
 				"UnpublishedJavaWorkflowDefinition", StringUtil.randomId(),
 				_getContentBytes("workflow-definition-3.json"));
 		}
@@ -153,8 +156,9 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 
 		_testUpgrade(
 			() -> _workflowDefinitionManager.deployWorkflowDefinition(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				StringUtil.randomId(), StringUtil.randomId(),
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), StringUtil.randomId(),
+				StringUtil.randomId(),
 				_getContentBytes("workflow-definition-2.json")));
 	}
 
@@ -164,8 +168,9 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 
 		_testUpgrade(
 			() -> _workflowDefinitionManager.deployWorkflowDefinition(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				StringUtil.randomId(), StringUtil.randomId(),
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), StringUtil.randomId(),
+				StringUtil.randomId(),
 				_getContentBytes("workflow-definition-3.json")));
 	}
 

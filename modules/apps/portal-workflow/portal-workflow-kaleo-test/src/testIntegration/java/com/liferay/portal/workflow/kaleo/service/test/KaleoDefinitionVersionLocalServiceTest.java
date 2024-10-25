@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionVersionException;
@@ -67,16 +68,18 @@ public class KaleoDefinitionVersionLocalServiceTest
 		KaleoDefinitionVersion kaleoDefinitionVersion1 =
 			getLatestKaleoDefinitionVersion(
 				addKaleoDefinition(
-					"Name 1", "First definition", "Description 1"));
+					StringUtil.randomString(), "Name 1", "First definition",
+					"Description 1"));
 		KaleoDefinitionVersion kaleoDefinitionVersion2 =
 			getLatestKaleoDefinitionVersion(
 				addKaleoDefinition(
-					"Name 2", "My title 2", RandomTestUtil.randomString()));
+					StringUtil.randomString(), "Name 2", "My title 2",
+					RandomTestUtil.randomString()));
 		KaleoDefinitionVersion kaleoDefinitionVersion3 =
 			getLatestKaleoDefinitionVersion(
 				addKaleoDefinition(
-					RandomTestUtil.randomString(), "My title 3",
-					"Description 3"));
+					StringUtil.randomString(), RandomTestUtil.randomString(),
+					"My title 3", "Description 3"));
 
 		Assert.assertEquals(
 			Arrays.asList(kaleoDefinitionVersion1, kaleoDefinitionVersion3),

@@ -42,8 +42,9 @@ public class WorkflowInstanceManagerImplTest
 
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
 				FileUtil.getBytes(
 					getResourceInputStream(
 						"join-xor-workflow-definition.xml")));
@@ -112,7 +113,7 @@ public class WorkflowInstanceManagerImplTest
 		try (ServiceRegistrationHolder serviceRegistrationHolder =
 				registryWorkflowHandler(
 					_workflowDefinitionManager.deployWorkflowDefinition(
-						TestPropsValues.getCompanyId(),
+						null, TestPropsValues.getCompanyId(),
 						TestPropsValues.getUserId(),
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString(),

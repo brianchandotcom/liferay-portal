@@ -95,10 +95,6 @@ export function Container({
 		};
 	}, [alertDismissed, showPartialResultsToRespondents, showReport]);
 
-	useEffect(() => {
-		document.getElementById('main-content').scrollTop = 0;
-	}, [activePage]);
-
 	return (
 		<>
 			{showReport ? (

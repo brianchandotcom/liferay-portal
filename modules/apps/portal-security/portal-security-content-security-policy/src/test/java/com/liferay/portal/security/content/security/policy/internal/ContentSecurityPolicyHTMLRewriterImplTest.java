@@ -35,7 +35,7 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 			"<div onclick=\"alert(1);\" onchange=\"alert(2);\">hey</div>";
 
 		html = contentSecurityPolicyHTMLRewriterImpl.rewriteInlineEventHandlers(
-			html, "TEST_NONCE");
+			html, "TEST_NONCE", false);
 
 		Assert.assertTrue(
 			"Rewritten HTML does not start with [<div id=\"...]:\n" + html,
@@ -69,7 +69,7 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 		String html = "<div id=\"TEST_ID\" onclick=\"alert(1);\">hey</div>";
 
 		html = contentSecurityPolicyHTMLRewriterImpl.rewriteInlineEventHandlers(
-			html, "TEST_NONCE");
+			html, "TEST_NONCE", false);
 
 		Assert.assertTrue(
 			"Rewritten HTML maintains the original id in HTML:\n" + html,
@@ -78,6 +78,27 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 		Assert.assertTrue(
 			"Rewritten HTML maintains the original id in script:\n" + html,
 			_matches(html, ".*document\\.getElementById\\('TEST_ID'\\).*"));
+	}
+
+	@Test
+	public void testRewriteInlineEventHandlersNonrecursive() {
+		ContentSecurityPolicyHTMLRewriterImpl
+			contentSecurityPolicyHTMLRewriterImpl =
+				new ContentSecurityPolicyHTMLRewriterImpl();
+
+		String html =
+			"<body onload=\"alert(1);\"><div onclick=\"alert(2);\">hey</div>" +
+				"</body>";
+
+		html = contentSecurityPolicyHTMLRewriterImpl.rewriteInlineEventHandlers(
+			html, "TEST_NONCE", false);
+
+		Assert.assertFalse(
+			"The div's onclick appears in the <script> node:\n" + html,
+			_matches(
+				html,
+				".*<script nonce=\"TEST_NONCE\">.*onclick.*alert\\(2\\);.*" +
+					"</script>.*"));
 	}
 
 	@Test
@@ -90,7 +111,7 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 			"<body onclick=\"alert(1);\" onchange=\"alert(2);\">hey</body>";
 
 		html = contentSecurityPolicyHTMLRewriterImpl.rewriteInlineEventHandlers(
-			html, "TEST_NONCE");
+			html, "TEST_NONCE", false);
 
 		Assert.assertTrue(
 			"Rewritten HTML does not start with [<body>]:\n" + html,
@@ -128,7 +149,7 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 		String html = "<BODY onclick=\"alert(1);\">hey</BODY>";
 
 		html = contentSecurityPolicyHTMLRewriterImpl.rewriteInlineEventHandlers(
-			html, "TEST_NONCE");
+			html, "TEST_NONCE", false);
 
 		Assert.assertTrue(
 			"Rewritten HTML does not start with [<body>]:\n" + html,
@@ -148,6 +169,49 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 				html,
 				".*document\\.body\\.onclick=" +
 					"function\\(event\\)\\{alert\\(1\\);}.*"));
+	}
+
+	@Test
+	public void testRewriteInlineEventHandlersProcessesMultipleTopNodes() {
+		ContentSecurityPolicyHTMLRewriterImpl
+			contentSecurityPolicyHTMLRewriterImpl =
+				new ContentSecurityPolicyHTMLRewriterImpl();
+
+		String html =
+			"<div onclick=\"alert(1);\">hey</div><div onclick=\"alert(2);\">" +
+				"hey</div>";
+
+		html = contentSecurityPolicyHTMLRewriterImpl.rewriteInlineEventHandlers(
+			html, "TEST_NONCE", false);
+
+		Assert.assertTrue(
+			"The two div's onclicks do not appear in the <script> node:\n" +
+				html,
+			_matches(
+				html,
+				".*<script nonce=\"TEST_NONCE\">.*onclick.*alert\\(1\\);.*" +
+					"onclick.*alert\\(2\\);.*</script>.*"));
+	}
+
+	@Test
+	public void testRewriteInlineEventHandlersRecursive() {
+		ContentSecurityPolicyHTMLRewriterImpl
+			contentSecurityPolicyHTMLRewriterImpl =
+				new ContentSecurityPolicyHTMLRewriterImpl();
+
+		String html =
+			"<body onload=\"alert(1);\"><div onclick=\"alert(2);\">hey</div>" +
+				"</body>";
+
+		html = contentSecurityPolicyHTMLRewriterImpl.rewriteInlineEventHandlers(
+			html, "TEST_NONCE", true);
+
+		Assert.assertTrue(
+			"The div's onclick does not appear in the <script> node:\n" + html,
+			_matches(
+				html,
+				".*<script nonce=\"TEST_NONCE\">.*onclick.*alert\\(2\\);.*" +
+					"</script>.*"));
 	}
 
 	private boolean _matches(String html, String regexp) {

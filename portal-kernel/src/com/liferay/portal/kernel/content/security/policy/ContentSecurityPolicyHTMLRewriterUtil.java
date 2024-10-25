@@ -20,7 +20,12 @@ public class ContentSecurityPolicyHTMLRewriterUtil {
 		return _snapshot.get();
 	}
 
-	public static String rewriteInlineEventHandlers(String html, String nonce) {
+	/**
+	 * @see ContentSecurityPolicyHTMLRewriter#rewriteInlineEventHandlers(String, String, boolean)
+	 */
+	public static String rewriteInlineEventHandlers(
+		String html, String nonce, boolean recursive) {
+
 		ContentSecurityPolicyHTMLRewriter contentSecurityPolicyHTMLRewriter =
 			getContentSecurityPolicyHTMLRewriter();
 
@@ -31,7 +36,7 @@ public class ContentSecurityPolicyHTMLRewriterUtil {
 		}
 
 		return contentSecurityPolicyHTMLRewriter.rewriteInlineEventHandlers(
-			html, nonce);
+			html, nonce, recursive);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

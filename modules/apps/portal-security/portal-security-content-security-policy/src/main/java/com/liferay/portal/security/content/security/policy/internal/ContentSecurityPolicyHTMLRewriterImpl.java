@@ -29,14 +29,25 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 	implements ContentSecurityPolicyHTMLRewriter {
 
 	@Override
-	public String rewriteInlineEventHandlers(String html, String nonce) {
+	public String rewriteInlineEventHandlers(
+		String html, String nonce, boolean recursive) {
+
+		StringBundler sb = new StringBundler();
+
+		boolean containsBodyTag = _containsBodyTag(html);
+
 		Document document = Jsoup.parse(html);
 
 		Element body = document.body();
 
-		StringBundler sb = new StringBundler();
-
-		_extractInlineHandlers(body, sb);
+		if (containsBodyTag) {
+			_extractInlineHandlers(body, sb, recursive);
+		}
+		else {
+			for (Element child : body.children()) {
+				_extractInlineHandlers(child, sb, recursive);
+			}
+		}
 
 		if (sb.length() == 0) {
 			return html;
@@ -49,7 +60,7 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 
 		body.appendChild(element);
 
-		if (_containsBodyTag(html)) {
+		if (containsBodyTag) {
 			return body.outerHtml();
 		}
 
@@ -64,7 +75,9 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 		return lowerCaseTrimmedHTML.startsWith("<body");
 	}
 
-	private void _extractInlineHandlers(Element element, StringBundler sb) {
+	private void _extractInlineHandlers(
+		Element element, StringBundler sb, boolean recursive) {
+
 		String id = element.attr("id");
 
 		List<String> attributesToRemove = new ArrayList<>();
@@ -105,8 +118,10 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 			element.removeAttr(key);
 		}
 
-		for (Element child : element.children()) {
-			_extractInlineHandlers(child, sb);
+		if (recursive) {
+			for (Element child : element.children()) {
+				_extractInlineHandlers(child, sb, true);
+			}
 		}
 	}
 

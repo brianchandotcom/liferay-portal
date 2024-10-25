@@ -39,7 +39,8 @@ public class ContentSecurityPolicyTag
 
 			jspWriter.write(
 				ContentSecurityPolicyHTMLRewriterUtil.
-					rewriteInlineEventHandlers(bodyContent.getString(), nonce));
+					rewriteInlineEventHandlers(
+						bodyContent.getString(), nonce, _recursive));
 
 			return super.doEndTag();
 		}
@@ -60,21 +61,21 @@ public class ContentSecurityPolicyTag
 		return EVAL_BODY_BUFFERED;
 	}
 
-	public String getEvent() {
-		return _event;
+	public boolean isRecursive() {
+		return _recursive;
 	}
 
 	@Override
 	public void release() {
-		_event = null;
+		_recursive = false;
 
 		super.release();
 	}
 
-	public void setEvent(String event) {
-		_event = event;
+	public void setRecursive(boolean recursive) {
+		_recursive = recursive;
 	}
 
-	private String _event;
+	private boolean _recursive;
 
 }

@@ -219,8 +219,8 @@ public class FragmentEntryFragmentRendererTest {
 			content.contains(
 				"fragmentNamespace = '" + fragmentEntryLink.getNamespace()));
 
-		Assert.assertTrue(content.contains("\"buttonSize\":\"nm\""));
-		Assert.assertTrue(content.contains("\"buttonType\":\"primary\""));
+		Assert.assertTrue(content.contains("\"buttonSize\": \"nm\""));
+		Assert.assertTrue(content.contains("\"buttonType\": \"primary\""));
 	}
 
 	@Test

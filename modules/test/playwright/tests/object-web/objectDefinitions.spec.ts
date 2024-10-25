@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -22,7 +21,6 @@ import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDe
 import {createObjectField} from './utils/mockObjectFields';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	collectionsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({

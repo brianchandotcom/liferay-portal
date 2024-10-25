@@ -9,7 +9,6 @@ import {
 	ObjectAdminRestClient,
 	ObjectField,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
@@ -28,7 +27,6 @@ import keepCheckingAfterFound from './utils/keepCheckingAfterFound';
 import {mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	applicationsMenuPageTest,
 	collectionsPagesTest,
 	dataApiHelpersTest,

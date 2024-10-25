@@ -11,7 +11,6 @@ import {
 	ObjectAdminRestClient,
 	ObjectDefinition,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {editObjectDefinitionPagesTest} from '../../fixtures/editObjectDefinitionPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -21,7 +20,6 @@ import {waitForAlert} from '../../utils/waitForAlert';
 import {mockedObjectFields} from './dependencies/objectMockedFields';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	dataApiHelpersTest,
 	editObjectDefinitionPagesTest,
 	loginTest(),

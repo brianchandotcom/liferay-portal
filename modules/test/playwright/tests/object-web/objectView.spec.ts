@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
@@ -14,7 +13,6 @@ import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	dataApiHelpersTest,
 	loginTest(),
 	objectPagesTest

@@ -10,14 +10,12 @@ import {
 	ObjectField,
 	ObjectRelationship,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	dataApiHelpersTest,
 	loginTest(),
 	objectPagesTest

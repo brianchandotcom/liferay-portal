@@ -14,6 +14,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.Sp
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SpecificationResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -173,7 +174,8 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 				_cpSpecificationOptionService.addCPSpecificationOption(
 					specification.getExternalReferenceCode(),
 					_getCPOptionCategoryId(specification),
-					GetterUtil.getLong(specification.getListTypeDefinitionId()),
+					GetterUtil.getLongValues(
+						specification.getListTypeDefinitionIds()),
 					LanguageUtils.getLocalizedMap(specification.getTitle()),
 					LanguageUtils.getLocalizedMap(
 						specification.getDescription()),
@@ -193,7 +195,7 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			GetterUtil.getString(specification.getExternalReferenceCode()),
 			cpSpecificationOption.getCPSpecificationOptionId(),
 			GetterUtil.getLong(_getCPOptionCategoryId(specification)),
-			GetterUtil.getLong(specification.getListTypeDefinitionId()),
+			GetterUtil.getLongValues(specification.getListTypeDefinitionIds()),
 			LanguageUtils.getLocalizedMap(titleMap),
 			LanguageUtils.getLocalizedMap(descriptionMap),
 			GetterUtil.getBoolean(specification.getFacetable()),
@@ -295,7 +297,8 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			_cpSpecificationOptionService.addCPSpecificationOption(
 				specification.getExternalReferenceCode(),
 				_getCPOptionCategoryId(specification),
-				GetterUtil.getLong(specification.getListTypeDefinitionId()),
+				GetterUtil.getLongValues(
+					specification.getListTypeDefinitionIds()),
 				LanguageUtils.getLocalizedMap(specification.getTitle()),
 				LanguageUtils.getLocalizedMap(specification.getDescription()),
 				GetterUtil.getBoolean(specification.getFacetable()),
@@ -353,9 +356,11 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			GetterUtil.getLong(
 				cpSpecificationOption.getCPOptionCategoryId(),
 				_getCPOptionCategoryId(specification)),
-			GetterUtil.getLong(
-				specification.getListTypeDefinitionId(),
-				cpSpecificationOption.getListTypeDefinitionId()),
+			GetterUtil.getLongValues(
+				specification.getListTypeDefinitionIds(),
+				transformToLongArray(
+					cpSpecificationOption.getListTypeDefinitions(),
+					ListTypeDefinition::getListTypeDefinitionId)),
 			LanguageUtils.getLocalizedMap(titleMap),
 			LanguageUtils.getLocalizedMap(descriptionMap),
 			GetterUtil.getBoolean(

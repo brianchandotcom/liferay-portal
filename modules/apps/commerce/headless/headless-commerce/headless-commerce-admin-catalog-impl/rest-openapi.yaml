@@ -2239,11 +2239,11 @@ components:
                 key:
                     example: specification-key
                     type: string
-                listTypeDefinitionId:
-                    example: 31130
-                    format: int64
-                    minimum: 0
-                    type: integer
+                listTypeDefinitionIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
                 optionCategory:
                     $ref: "#/components/schemas/OptionCategory"
                 priority:
@@ -17919,6 +17919,49 @@ paths:
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates a picklist and links it to the specification.
+            tags: ["ListTypeDefinition"]
+    "/specifications/{specificationId}/list-type-definitions/{listTypeDefinitionId}":
+        delete:
+            operationId: deleteSpecificationListTypeDefinition
+            parameters:
+                - in: path
+                  name: specificationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: listTypeDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ListTypeDefinition"]
+        post:
+            operationId: postSpecificationListTypeDefinition
+            parameters:
+                - in: path
+                  name: specificationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: listTypeDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
             tags: ["ListTypeDefinition"]
     "/unit-of-measure-skus":
         get:

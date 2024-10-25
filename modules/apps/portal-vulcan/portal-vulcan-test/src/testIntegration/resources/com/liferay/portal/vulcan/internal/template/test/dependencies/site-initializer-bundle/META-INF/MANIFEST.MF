@@ -1,0 +1,7 @@
+Manifest-Version: 2
+Bundle-ManifestVersion: 2
+Bundle-Name: Liferay Portal Vulcan Test Site Initializer
+Bundle-SymbolicName: com.liferay.portal.vulcan.test.site.initializer
+Bundle-Version: 1.0.0
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /portal-vulcan-test-site-initializer

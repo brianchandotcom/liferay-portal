@@ -1,0 +1,23 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "country",
+						"siteKey": "Vulcan"
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

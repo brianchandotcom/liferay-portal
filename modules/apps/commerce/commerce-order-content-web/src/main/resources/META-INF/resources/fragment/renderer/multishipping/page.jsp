@@ -11,11 +11,11 @@
 	module="{Multishipping} from commerce-order-content-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"accountId", accountId
+			"accountId", commerceAccountId
 		).put(
-			"orderId", orderId
+			"orderId", commerceOrderId
 		).put(
-			"readonly", readonly
+			"readonly", readOnly
 		).build()
 	%>'
 />

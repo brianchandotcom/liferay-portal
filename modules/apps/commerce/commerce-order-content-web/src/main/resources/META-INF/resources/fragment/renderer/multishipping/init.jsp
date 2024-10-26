@@ -13,7 +13,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <liferay-theme:defineObjects />
 
 <%
-long accountId = (long)request.getAttribute("liferay-commerce:multishipping:accountId");
-long orderId = (long)request.getAttribute("liferay-commerce:multishipping:orderId");
-boolean readonly = (boolean)request.getAttribute("liferay-commerce:multishipping:readonly");
+long commerceAccountId = (long)request.getAttribute("liferay-commerce:multishipping:commerceAccountId");
+long commerceOrderId = (long)request.getAttribute("liferay-commerce:multishipping:commerceOrderId");
+boolean readOnly = (boolean)request.getAttribute("liferay-commerce:multishipping:readOnly");
 %>

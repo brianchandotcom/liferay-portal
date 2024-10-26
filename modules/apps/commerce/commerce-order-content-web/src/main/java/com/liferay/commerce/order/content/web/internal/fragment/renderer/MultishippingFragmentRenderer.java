@@ -112,13 +112,13 @@ public class MultishippingFragmentRenderer implements FragmentRenderer {
 					"/fragment/renderer/multishipping/page.jsp");
 
 			httpServletRequest.setAttribute(
-				"liferay-commerce:multishipping:accountId",
+				"liferay-commerce:multishipping:commerceAccountId",
 				commerceOrder.getCommerceAccountId());
 			httpServletRequest.setAttribute(
-				"liferay-commerce:multishipping:orderId",
+				"liferay-commerce:multishipping:commerceOrderId",
 				commerceOrder.getCommerceOrderId());
 			httpServletRequest.setAttribute(
-				"liferay-commerce:multishipping:readonly",
+				"liferay-commerce:multishipping:readOnly",
 				!commerceOrder.isOpen());
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);

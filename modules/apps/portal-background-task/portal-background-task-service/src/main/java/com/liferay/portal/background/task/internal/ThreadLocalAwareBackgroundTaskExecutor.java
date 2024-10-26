@@ -43,10 +43,9 @@ public class ThreadLocalAwareBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
+		long companyId = CompanyThreadLocal.getCompanyId();
 		Map<String, Serializable> threadLocalValues =
 			_backgroundTaskThreadLocalManager.getThreadLocalValues();
-
-		long companyId = CompanyThreadLocal.getCompanyId();
 
 		try {
 			try {

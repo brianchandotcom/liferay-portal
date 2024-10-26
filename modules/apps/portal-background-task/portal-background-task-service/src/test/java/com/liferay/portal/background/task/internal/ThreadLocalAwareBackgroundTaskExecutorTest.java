@@ -57,7 +57,7 @@ public class ThreadLocalAwareBackgroundTaskExecutorTest
 		Mockito.when(
 			backgroundTask.getCompanyId()
 		).thenReturn(
-			1L
+			1
 		);
 
 		BackgroundTaskResult backgroundTaskResult =

@@ -118,18 +118,22 @@ public class OAuth2ScopeGrantLocalServiceImpl
 		long companyId, String applicationName, String bundleSymbolicName,
 		String accessTokenContent) {
 
-		OAuth2Authorization oAuth2Authorization =
-			_oAuth2AuthorizationLocalService.
-				fetchOAuth2AuthorizationByAccessTokenContent(
-					accessTokenContent);
+		List<OAuth2Authorization> oAuth2Authorizations =
+			oAuth2AuthorizationPersistence.findByC_ATCH(
+				companyId, accessTokenContent.hashCode());
 
-		if (oAuth2Authorization == null) {
+		if (oAuth2Authorizations.isEmpty()) {
 			return Collections.emptyList();
 		}
 
-		List<OAuth2ScopeGrant> oAuth2ScopeGrants =
-			oAuth2ScopeGrantPersistence.getOAuth2AuthorizationOAuth2ScopeGrants(
-				oAuth2Authorization.getOAuth2AuthorizationId());
+		List<OAuth2ScopeGrant> oAuth2ScopeGrants = new ArrayList<>();
+
+		for (OAuth2Authorization oAuth2Authorization : oAuth2Authorizations) {
+			oAuth2ScopeGrants.addAll(
+				oAuth2ScopeGrantPersistence.
+					getOAuth2AuthorizationOAuth2ScopeGrants(
+						oAuth2Authorization.getOAuth2AuthorizationId()));
+		}
 
 		oAuth2ScopeGrants.removeIf(
 			oAuth2ScopeGrant ->

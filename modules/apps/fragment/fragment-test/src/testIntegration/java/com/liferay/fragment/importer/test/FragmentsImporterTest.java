@@ -605,6 +605,7 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
+	@TestInfo("LPS-188478")
 	public void testImportInvalidFragmentComposition() throws Exception {
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

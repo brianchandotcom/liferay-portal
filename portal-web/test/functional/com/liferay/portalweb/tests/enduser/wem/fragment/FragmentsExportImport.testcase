@@ -22,32 +22,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-188478. Assert new import page of composition works."
-	@priority = 3
-	test CannotImportInvalidFragmentComposition {
-		task ("Given a user accesses to the Fragments import page") {
-			FragmentsAdminNavigator.gotoImportCollection();
-
-			WaitForPageLoad();
-		}
-
-		task ("When the user uploads an invalid fragment composition") {
-			UploadDependencyFile.uploadArchiveFile(fileName = "collections-invalid-composition.zip");
-		}
-
-		task ("Then the user cannot import the invalid fragment composition") {
-			Button.clickImport();
-
-			Alert.viewInfoMessageSpecific(infoMessage = "No new items were imported.");
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "There are no fragments.");
-		}
-	}
-
 	@description = "This is a test case for LPS-101256. The fragment composition could be exported and imported."
 	@priority = 4
 	test ExportFragmentCompositionAndImport {

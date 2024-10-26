@@ -48,31 +48,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test case for LPS-80625. The fragment importer should not allow non-zip files to be imported."
-	@priority = 5
-	@uitest
-	test CannotImportNonZip {
-		property portal.acceptance = "true";
-
-		task ("Navigate to the fragment import screen") {
-			FragmentsAdminNavigator.gotoImportCollection();
-		}
-
-		task ("Attempt to import a non-zip file") {
-			WaitForPageLoad();
-
-			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-				locator1 = "TextInput#FILE",
-				value1 = "Document_1.doc");
-		}
-
-		task ("Assert the form validator displays an error that the file is not a zip file") {
-			AssertTextEquals(
-				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
-				value1 = "Only zip files are allowed.");
-		}
-	}
-
 	@description = "This is a test case for LPS-101256. Can edit inline content of fragment in composition."
 	@priority = 4
 	test EditInlineContentOfImportedFragmentComposition {

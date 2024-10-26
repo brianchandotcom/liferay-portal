@@ -1222,6 +1222,66 @@ test.describe('Localizable Configuration', () => {
 	}
 
 	test(
+		'Can localize date format on date fragment',
+		{tag: '@LPS-147897'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+			const basicWebContentTitle = getRandomString();
+
+			await apiHelpers.headlessDelivery.postStructuredContent({
+				contentStructureId:
+					await getBasicWebContentStructureId(apiHelpers),
+				datePublished: '2024-01-01T00:00:00Z',
+				siteId: site.id,
+				title: basicWebContentTitle,
+				viewableBy: 'Anyone',
+			});
+
+			const dateFragmentId = getRandomString();
+
+			const layoutTitle = getRandomString();
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: dateFragmentId,
+						key: 'BASIC_COMPONENT-date',
+					}),
+				]),
+				siteId: site.id,
+				title: layoutTitle,
+			});
+
+			// Navigate to the page editor
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Change the link of the containers
+
+			await pageEditorPage.selectEditable(dateFragmentId, 'element-date');
+
+			await pageEditorPage.setMappingConfiguration({
+				mapping: {
+					entity: 'Web Content',
+					entry: basicWebContentTitle,
+					field: 'Display Date',
+				},
+			});
+
+			await expect(page.getByText('1/1/24')).toBeVisible();
+
+			await pageEditorPage.switchLanguage('es-ES');
+
+			await page.getByLabel('Date Format').selectOption('yy/MM/dd');
+
+			await expect(page.getByText('24/01/01')).toBeVisible();
+
+			await pageEditorPage.switchLanguage('en-US');
+
+			await expect(page.getByText('1/1/24')).toBeVisible();
+		}
+	);
+
+	test(
 		'View localizable fragment configuration field value in translated languages',
 		{tag: '@LPS-118100'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {

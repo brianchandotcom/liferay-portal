@@ -9,7 +9,6 @@ import com.liferay.oauth2.provider.exception.DuplicateOAuth2ScopeGrantException;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
-import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.oauth2.provider.service.base.OAuth2ScopeGrantLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,7 +22,6 @@ import java.util.Objects;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -118,42 +116,35 @@ public class OAuth2ScopeGrantLocalServiceImpl
 		long companyId, String applicationName, String bundleSymbolicName,
 		String accessTokenContent) {
 
-		List<OAuth2Authorization> oAuth2Authorizations =
-			oAuth2AuthorizationPersistence.findByC_ATCH(
-				companyId, accessTokenContent.hashCode());
-
-		if (oAuth2Authorizations.isEmpty()) {
-			return Collections.emptyList();
-		}
-
 		List<OAuth2ScopeGrant> oAuth2ScopeGrants = new ArrayList<>();
 
-		oAuth2Authorizations.forEach(
-			oAuth2Authorization -> {
-				if (!Objects.equals(
-						oAuth2Authorization.getAccessTokenContent(),
-						accessTokenContent)) {
+		for (OAuth2Authorization oAuth2Authorization :
+				oAuth2AuthorizationPersistence.findByC_ATCH(
+					companyId, accessTokenContent.hashCode())) {
 
-					return;
+			if (!Objects.equals(
+					accessTokenContent,
+					oAuth2Authorization.getAccessTokenContent())) {
+
+				continue;
+			}
+
+			for (OAuth2ScopeGrant oAuth2ScopeGrant :
+					oAuth2ScopeGrantPersistence.
+						getOAuth2AuthorizationOAuth2ScopeGrants(
+							oAuth2Authorization.getPrimaryKey())) {
+
+				if (Objects.equals(
+						applicationName,
+						oAuth2ScopeGrant.getApplicationName()) &&
+					Objects.equals(
+						bundleSymbolicName,
+						oAuth2ScopeGrant.getBundleSymbolicName())) {
+
+					oAuth2ScopeGrants.add(oAuth2ScopeGrant);
 				}
-
-				oAuth2ScopeGrantPersistence.
-					getOAuth2AuthorizationOAuth2ScopeGrants(
-						oAuth2Authorization.getOAuth2AuthorizationId()
-					).forEach(
-						oAuth2ScopeGrant -> {
-							if (Objects.equals(
-									oAuth2ScopeGrant.getApplicationName(),
-									applicationName) &&
-								Objects.equals(
-									oAuth2ScopeGrant.getBundleSymbolicName(),
-									bundleSymbolicName)) {
-
-								oAuth2ScopeGrants.add(oAuth2ScopeGrant);
-							}
-						}
-					);
-			});
+			}
+		}
 
 		return oAuth2ScopeGrants;
 	}
@@ -220,8 +211,5 @@ public class OAuth2ScopeGrantLocalServiceImpl
 
 		return true;
 	}
-
-	@Reference
-	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
 }

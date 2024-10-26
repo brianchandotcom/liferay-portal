@@ -129,7 +129,14 @@ public class OAuth2ScopeGrantLocalServiceImpl
 		List<OAuth2ScopeGrant> oAuth2ScopeGrants = new ArrayList<>();
 
 		oAuth2Authorizations.forEach(
-			oAuth2Authorization ->
+			oAuth2Authorization -> {
+				if (!Objects.equals(
+						oAuth2Authorization.getAccessTokenContent(),
+						accessTokenContent)) {
+
+					return;
+				}
+
 				oAuth2ScopeGrantPersistence.
 					getOAuth2AuthorizationOAuth2ScopeGrants(
 						oAuth2Authorization.getOAuth2AuthorizationId()
@@ -145,7 +152,8 @@ public class OAuth2ScopeGrantLocalServiceImpl
 								oAuth2ScopeGrants.add(oAuth2ScopeGrant);
 							}
 						}
-					));
+					);
+			});
 
 		return oAuth2ScopeGrants;
 	}

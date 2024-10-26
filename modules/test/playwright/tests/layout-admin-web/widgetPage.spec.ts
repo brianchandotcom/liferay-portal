@@ -28,6 +28,56 @@ const test = mergeTests(
 	pageViewModePagesTest
 );
 
+test(
+	'Drag handler is shown only in non-static widgets',
+	{tag: ['@LPD-33348']},
+	async ({apiHelpers, page, site, widgetPagePage}) => {
+
+		// Create widget page and add a widget
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {
+				type: 'portlet',
+			},
+			title: getRandomString(),
+		});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await widgetPagePage.addPortlet('Web Content Display');
+
+		// Check drag handler is shown in topper
+
+		await page
+			.locator('.portlet-content')
+			.getByText('Web Content Display')
+			.hover();
+
+		await expect(
+			page
+				.locator('.portlet-topper', {hasText: 'Web Content Display'})
+				.locator('.lexicon-icon-drag')
+		).toBeVisible();
+
+		// Check drag handler is not shown for static widgets
+
+		await page.locator('.portlet-content').getByText('Search Bar').hover();
+
+		await expect(
+			page
+				.locator('.portlet-topper', {hasText: 'Search Bar'})
+				.locator('.portlet-name-text')
+		).toBeVisible();
+
+		await expect(
+			page
+				.locator('.portlet-topper', {hasText: 'Search Bar'})
+				.locator('.lexicon-icon-drag')
+		).not.toBeVisible();
+	}
+);
+
 test.describe('Content tab add panel', () => {
 	test(
 		'Check correct web contents are displayed in Content tab of the Add panel',

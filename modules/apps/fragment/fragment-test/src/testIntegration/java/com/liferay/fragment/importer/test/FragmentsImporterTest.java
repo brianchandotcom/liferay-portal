@@ -680,6 +680,37 @@ public class FragmentsImporterTest {
 		_importFragmentsByType(FragmentConstants.TYPE_SECTION);
 	}
 
+	@Test
+	@TestInfo("LPS-96113")
+	public void testValidateFragments() throws Exception {
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try {
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0,
+				_generateZipFile(
+					_PATH_DEPENDENCIES +
+						"fragments-collection/collection-name"),
+				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0,
+				_generateZipFile(
+					_PATH_DEPENDENCIES + "fragments-collection/freemarker"),
+				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0,
+				_generateZipFile(
+					_PATH_DEPENDENCIES + "fragments-collection/widgets"),
+				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	private void _addFragmentEntryType(JSONObject jsonObject) {
 		int type = FragmentConstants.getTypeFromLabel(
 			jsonObject.getString("type"));

@@ -1334,33 +1334,6 @@ definition {
 		}
 	}
 
-	@description = "This is a testcase for LPS-96113. All fragments in dependencies should validate successfully."
-	@priority = 5
-	@uitest
-	test ValidateDependenciesFragments {
-		property portal.acceptance = "true";
-
-		task ("Import a fragment collection") {
-			FragmentsAdminNavigator.gotoImportCollection();
-
-			WaitForPageLoad();
-
-			UploadDependencyFile.uploadArchiveFile(fileName = "fragment-collection.zip");
-
-			Button.clickImport();
-		}
-
-		task ("Assert the zip imported properly") {
-			AssertVisible(locator1 = "Message#SUCCESS_IMPORT");
-		}
-
-		task ("Assert that all fragments validated") {
-			AssertElementNotPresent(locator1 = "Message#WARNING_IMPORT");
-
-			AssertElementNotPresent(locator1 = "Message#ERROR_IMPORT");
-		}
-	}
-
 	@description = "This is a test case for LPS-128652. View the changes of fragment on content page still persist after overwrite the fragment."
 	@priority = 4
 	test ViewChangesOfFragmentOnContentPagePersistAfterOverwriteTheFragment {

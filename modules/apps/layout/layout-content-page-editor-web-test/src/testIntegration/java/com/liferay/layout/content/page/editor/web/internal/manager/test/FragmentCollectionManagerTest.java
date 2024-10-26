@@ -47,6 +47,20 @@ public class FragmentCollectionManagerTest {
 
 	@Test
 	@TestInfo("LPS-162848")
+	public void testGetLayoutElementMapsListMapWithoutApprovedObject()
+		throws Exception {
+
+		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
+			ReflectionTestUtil.invoke(
+				_fragmentCollectionManager, "getLayoutElementMapsListMap",
+				new Class<?>[] {PermissionChecker.class},
+				PermissionThreadLocal.getPermissionChecker());
+
+		Assert.assertFalse(layoutElementMapsListMap.containsKey("INPUTS"));
+	}
+
+	@Test
+	@TestInfo("LPS-162848")
 	public void testGetLayoutElementMapsListMapWithoutPermissions()
 		throws Exception {
 

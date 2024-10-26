@@ -1195,6 +1195,109 @@ test.describe('General Configuration', () => {
 	);
 });
 
+test.describe('Localizable Configuration', () => {
+	const CONTENT_DISPLAY_FRAGMENT_HTML =
+		'<div class="fragment-example">' +
+		'<button type="button" class="btn btn-primary">${configuration.buttonText}</button>' +
+		'</div>';
+
+	function getFragmentConfiguration(): FragmentConfiguration {
+		return {
+			fieldSets: [
+				{
+					fields: [
+						{
+							dataType: 'string',
+							defaultValue: 'Go Somewhere',
+							label: 'Button Text',
+							localizable: true,
+							name: 'buttonText',
+							type: 'text',
+						},
+					],
+					label: 'Button',
+				},
+			],
+		};
+	}
+
+	test(
+		'View localizable fragment configuration field value in translated languages',
+		{tag: '@LPS-118100'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a fragment with configuration
+
+			const {fragmentCollectionId} =
+				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+					{
+						groupId: site.id,
+						name: getRandomString(),
+					}
+				);
+
+			const fragmentEntryName = getRandomString();
+
+			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+				configuration: getFragmentConfiguration(),
+				fragmentCollectionId,
+				groupId: site.id,
+				html: CONTENT_DISPLAY_FRAGMENT_HTML,
+				name: fragmentEntryName,
+			});
+
+			// Create a content page with created fragment
+
+			const fragmentName = getRandomString();
+
+			const fragmentDefinition = getFragmentDefinition({
+				id: fragmentName,
+				key: fragmentEntryName,
+			});
+
+			// Create a content page and go to edit mode
+
+			const layoutTitle = getRandomString();
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([fragmentDefinition]),
+				siteId: site.id,
+				title: layoutTitle,
+			});
+
+			// Go to edit mode and change form configuration
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await expect(
+				page.locator('.fragment-example').getByText('Go Somewhere')
+			).toBeVisible();
+
+			await pageEditorPage.switchLanguage('es-ES');
+
+			await pageEditorPage.selectFragment(fragmentName);
+
+			const value = getRandomString();
+
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Button Text',
+				tab: 'General',
+				value,
+			});
+
+			await expect(
+				page.locator('.fragment-example').getByText(value)
+			).toBeVisible();
+
+			await pageEditorPage.switchLanguage('en-US');
+
+			await expect(
+				page.locator('.fragment-example').getByText('Go Somewhere')
+			).toBeVisible();
+		}
+	);
+});
+
 test.describe('Styles Configuration', () => {
 	test(
 		'Allows selecting a color palette color',

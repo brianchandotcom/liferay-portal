@@ -16,6 +16,7 @@ type FragmentConfigurationField = {
 	dataType?: string;
 	defaultValue?: boolean | string;
 	label: string;
+	localizable?: boolean;
 	name: string;
 	type:
 		| 'itemSelector'
@@ -51,6 +52,7 @@ type FragmentTypeOptions = {
 
 type FragmentConfigurationFieldSet = {
 	fields: FragmentConfigurationField[];
+	label?: string;
 };
 
 type FragmentEntry = {

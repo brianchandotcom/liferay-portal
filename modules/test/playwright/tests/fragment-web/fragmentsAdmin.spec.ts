@@ -41,6 +41,52 @@ async function checkBackButtonTitle(page: Page, title: string) {
 }
 
 test(
+	'Autocomplete',
+	{
+		tag: ['@LPS-80503', '@LPS-108566'],
+	},
+	async ({fragmentsPage, page, site}) => {
+
+		// Go to fragment administration and create fragment set
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		const setName = getRandomString();
+
+		await fragmentsPage.createFragmentSet(setName);
+
+		// Create fragment
+
+		const fragmentName = getRandomString();
+
+		await fragmentsPage.createFragment(setName, fragmentName);
+
+		// Assert fragment editor autocomplete for lfr-widget tags
+
+		await page.locator('.html.source-editor .CodeMirror').click();
+
+		await page.keyboard.type('<lfr-');
+
+		await expect(page.getByText('lfr-widget-asset-list')).toBeVisible();
+
+		await page.keyboard.press('Enter');
+
+		// Assert fragment editor autocomplete for variables
+
+		await page.keyboard.type('${');
+
+		await expect(page.getByText('getterUtil')).toBeVisible();
+
+		await page.keyboard.press('Enter');
+		await page.keyboard.press('Enter');
+
+		await page.keyboard.type('[@');
+
+		await expect(page.getByText('liferay_aui')).toBeVisible();
+	}
+);
+
+test(
 	'Autosave',
 	{
 		tag: '@LPS-114145',

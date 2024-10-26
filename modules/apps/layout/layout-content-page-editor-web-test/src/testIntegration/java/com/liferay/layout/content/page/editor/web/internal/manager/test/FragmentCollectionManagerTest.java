@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -45,6 +46,7 @@ public class FragmentCollectionManagerTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
+	@TestInfo("LPS-162848")
 	public void testGetLayoutElementMapsListMapWithoutPermissions()
 		throws Exception {
 
@@ -79,6 +81,7 @@ public class FragmentCollectionManagerTest {
 	}
 
 	@Test
+	@TestInfo("LPS-162848")
 	public void testGetLayoutElementMapsListMapWithPermissions()
 		throws Exception {
 

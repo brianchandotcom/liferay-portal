@@ -380,81 +380,6 @@ public class AssetListAssetEntryProviderImpl
 		};
 	}
 
-	private Map<AssetListEntryAssetEntryRel, Long>
-		_getGroupIds(
-			AssetListEntry assetListEntry, long[] segmentsEntryIds) {
-
-		if (_assetListConfiguration.combineAssetsFromAllSegmentsManual()) {
-			Map<AssetListEntryAssetEntryRel, Long>
-				groupIds = new HashMap<>();
-
-			segmentsEntryIds = _sortSegmentsByPriority(
-				assetListEntry,
-				_getCombinedSegmentsEntryIds(assetListEntry, segmentsEntryIds));
-
-			for (long segmentId : segmentsEntryIds) {
-				groupIds.putAll(
-					_getGroupIds(
-						_assetListEntryAssetEntryRelLocalService.
-							getAssetListEntryAssetEntryRels(
-								assetListEntry.getAssetListEntryId(),
-								new long[] {segmentId}, QueryUtil.ALL_POS,
-								QueryUtil.ALL_POS)));
-			}
-
-			return groupIds;
-		}
-
-		return _getGroupIds(
-			_assetListEntryAssetEntryRelLocalService.
-				getAssetListEntryAssetEntryRels(
-					assetListEntry.getAssetListEntryId(),
-					new long[] {
-						_getFirstSegmentsEntryId(
-							assetListEntry, segmentsEntryIds)
-					},
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
-	}
-
-	private Map<AssetListEntryAssetEntryRel, Long>
-		_getGroupIds(
-			List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels) {
-
-		Map<AssetListEntryAssetEntryRel, Long>
-			groupIds = new HashMap<>();
-
-		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
-				assetListEntryAssetEntryRels) {
-
-			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-				assetListEntryAssetEntryRel.getAssetEntryId());
-
-			if ((assetEntry == null) || !assetEntry.isVisible()) {
-				continue;
-			}
-
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						assetEntry.getClassName());
-
-			if (assetRendererFactory == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"No asset renderer factory found for class " +
-							assetEntry.getClassName());
-				}
-
-				continue;
-			}
-
-			groupIds.put(
-				assetListEntryAssetEntryRel, assetEntry.getGroupId());
-		}
-
-		return groupIds;
-	}
-
 	private String[] _getAssetTagNames(UnicodeProperties unicodeProperties) {
 		List<String> allAssetTagNames = new ArrayList<>();
 
@@ -774,6 +699,76 @@ public class AssetListAssetEntryProviderImpl
 		return assetListEntrySegmentsEntryRel.getSegmentsEntryId();
 	}
 
+	private Map<AssetListEntryAssetEntryRel, Long> _getGroupIds(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
+
+		if (_assetListConfiguration.combineAssetsFromAllSegmentsManual()) {
+			Map<AssetListEntryAssetEntryRel, Long> groupIds = new HashMap<>();
+
+			segmentsEntryIds = _sortSegmentsByPriority(
+				assetListEntry,
+				_getCombinedSegmentsEntryIds(assetListEntry, segmentsEntryIds));
+
+			for (long segmentId : segmentsEntryIds) {
+				groupIds.putAll(
+					_getGroupIds(
+						_assetListEntryAssetEntryRelLocalService.
+							getAssetListEntryAssetEntryRels(
+								assetListEntry.getAssetListEntryId(),
+								new long[] {segmentId}, QueryUtil.ALL_POS,
+								QueryUtil.ALL_POS)));
+			}
+
+			return groupIds;
+		}
+
+		return _getGroupIds(
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					assetListEntry.getAssetListEntryId(),
+					new long[] {
+						_getFirstSegmentsEntryId(
+							assetListEntry, segmentsEntryIds)
+					},
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+	}
+
+	private Map<AssetListEntryAssetEntryRel, Long> _getGroupIds(
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels) {
+
+		Map<AssetListEntryAssetEntryRel, Long> groupIds = new HashMap<>();
+
+		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
+				assetListEntryAssetEntryRels) {
+
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				assetListEntryAssetEntryRel.getAssetEntryId());
+
+			if ((assetEntry == null) || !assetEntry.isVisible()) {
+				continue;
+			}
+
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						assetEntry.getClassName());
+
+			if (assetRendererFactory == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No asset renderer factory found for class " +
+							assetEntry.getClassName());
+				}
+
+				continue;
+			}
+
+			groupIds.put(assetListEntryAssetEntryRel, assetEntry.getGroupId());
+		}
+
+		return groupIds;
+	}
+
 	private String[] _getKeywords(UnicodeProperties unicodeProperties) {
 		String[] allKeywords = new String[0];
 
@@ -809,10 +804,8 @@ public class AssetListAssetEntryProviderImpl
 		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
 		int start, int end) {
 
-		Map<AssetListEntryAssetEntryRel, Long>
-			groupIds =
-				_getGroupIds(
-					assetListEntry, segmentsEntryIds);
+		Map<AssetListEntryAssetEntryRel, Long> groupIds = _getGroupIds(
+			assetListEntry, segmentsEntryIds);
 
 		if (MapUtil.isEmpty(groupIds)) {
 			return InfoPage.of(Collections.emptyList());
@@ -831,9 +824,7 @@ public class AssetListAssetEntryProviderImpl
 					assetCategoryIds, assetEntryIds, assetTagNames,
 					assetListEntry.getCompanyId(), keywords),
 				_getManualAssetEntryQuery(
-					assetListEntry,
-					ArrayUtil.toLongArray(
-						groupIds.values())),
+					assetListEntry, ArrayUtil.toLongArray(groupIds.values())),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			List<AssetEntry> assetEntries = _assetHelper.getAssetEntries(hits);

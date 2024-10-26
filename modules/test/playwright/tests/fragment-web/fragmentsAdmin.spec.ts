@@ -4,6 +4,7 @@
  */
 
 import {Page, expect, mergeTests} from '@playwright/test';
+import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -83,6 +84,77 @@ test(
 		await page.keyboard.type('[@');
 
 		await expect(page.getByText('liferay_aui')).toBeVisible();
+	}
+);
+
+test(
+	'Autocomplete resources with folders',
+	{
+		tag: ['@LPS-90063', '@LPS-108566', '@LPS-159235'],
+	},
+	async ({fragmentsPage, page, site}) => {
+
+		// Go to fragment administration and create fragment set
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		const setName = getRandomString();
+
+		await fragmentsPage.createFragmentSet(setName);
+
+		// Go to resources tab
+
+		await page.getByRole('link', {name: 'Resources'}).click();
+
+		// Creates a new folder
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Folder'}),
+			trigger: page.getByRole('button', {exact: true, name: 'New'}),
+		});
+
+		const folderName = getRandomString();
+
+		await page.getByLabel('Name').fill(folderName);
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page);
+
+		await page.getByRole('link', {name: folderName}).click();
+
+		// Adds new file
+
+		const fileChooserPromise = page.waitForEvent('filechooser');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'File Upload'}),
+			trigger: page.getByRole('button', {exact: true, name: 'New'}),
+		});
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(
+			path.join(__dirname, '/dependencies/image.jpg')
+		);
+
+		await expect(page.getByText('Image')).toBeVisible();
+
+		// Create fragment
+
+		const fragmentName = getRandomString();
+
+		await fragmentsPage.createFragment(setName, fragmentName);
+
+		// Assert fragment editor autocomplete for lfr-widget tags
+
+		await page.locator('.html.source-editor .CodeMirror').click();
+
+		await page.keyboard.type('[resources:');
+
+		await expect(page.getByText(`${folderName}/image.jpg`)).toBeVisible();
 	}
 );
 

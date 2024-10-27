@@ -510,19 +510,20 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGetPlacedOrderPlacedOrderBillingAddres() throws Exception {
+	public void testGetPlacedOrderPlacedOrderBillingAddress() throws Exception {
 		PlacedOrderAddress postPlacedOrderAddress =
-			testGetPlacedOrderPlacedOrderBillingAddres_addPlacedOrderAddress();
+			testGetPlacedOrderPlacedOrderBillingAddress_addPlacedOrderAddress();
 
 		PlacedOrderAddress getPlacedOrderAddress =
-			placedOrderAddressResource.getPlacedOrderPlacedOrderBillingAddres(
-				testGetPlacedOrderPlacedOrderBillingAddres_getPlacedOrderId());
+			placedOrderAddressResource.getPlacedOrderPlacedOrderBillingAddress(
+				testGetPlacedOrderPlacedOrderBillingAddress_getPlacedOrderId());
 
 		assertEquals(postPlacedOrderAddress, getPlacedOrderAddress);
 		assertValid(getPlacedOrderAddress);
 	}
 
-	protected Long testGetPlacedOrderPlacedOrderBillingAddres_getPlacedOrderId()
+	protected Long
+			testGetPlacedOrderPlacedOrderBillingAddress_getPlacedOrderId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -530,7 +531,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	protected PlacedOrderAddress
-			testGetPlacedOrderPlacedOrderBillingAddres_addPlacedOrderAddress()
+			testGetPlacedOrderPlacedOrderBillingAddress_addPlacedOrderAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -538,11 +539,11 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetPlacedOrderPlacedOrderBillingAddres()
+	public void testGraphQLGetPlacedOrderPlacedOrderBillingAddress()
 		throws Exception {
 
 		PlacedOrderAddress placedOrderAddress =
-			testGraphQLGetPlacedOrderPlacedOrderBillingAddres_addPlacedOrderAddress();
+			testGraphQLGetPlacedOrderPlacedOrderBillingAddress_addPlacedOrderAddress();
 
 		// No namespace
 
@@ -553,17 +554,17 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"placedOrderPlacedOrderBillingAddres",
+								"placedOrderPlacedOrderBillingAddress",
 								new HashMap<String, Object>() {
 									{
 										put(
 											"placedOrderId",
-											testGraphQLGetPlacedOrderPlacedOrderBillingAddres_getPlacedOrderId());
+											testGraphQLGetPlacedOrderPlacedOrderBillingAddress_getPlacedOrderId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
-						"Object/placedOrderPlacedOrderBillingAddres"))));
+						"Object/placedOrderPlacedOrderBillingAddress"))));
 
 		// Using the namespace headlessCommerceDeliveryOrder_v1_0
 
@@ -576,22 +577,22 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 							new GraphQLField(
 								"headlessCommerceDeliveryOrder_v1_0",
 								new GraphQLField(
-									"placedOrderPlacedOrderBillingAddres",
+									"placedOrderPlacedOrderBillingAddress",
 									new HashMap<String, Object>() {
 										{
 											put(
 												"placedOrderId",
-												testGraphQLGetPlacedOrderPlacedOrderBillingAddres_getPlacedOrderId());
+												testGraphQLGetPlacedOrderPlacedOrderBillingAddress_getPlacedOrderId());
 										}
 									},
 									getGraphQLFields()))),
 						"JSONObject/data",
 						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
-						"Object/placedOrderPlacedOrderBillingAddres"))));
+						"Object/placedOrderPlacedOrderBillingAddress"))));
 	}
 
 	protected Long
-			testGraphQLGetPlacedOrderPlacedOrderBillingAddres_getPlacedOrderId()
+			testGraphQLGetPlacedOrderPlacedOrderBillingAddress_getPlacedOrderId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -599,7 +600,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetPlacedOrderPlacedOrderBillingAddresNotFound()
+	public void testGraphQLGetPlacedOrderPlacedOrderBillingAddressNotFound()
 		throws Exception {
 
 		Long irrelevantPlacedOrderId = RandomTestUtil.randomLong();
@@ -611,7 +612,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"placedOrderPlacedOrderBillingAddres",
+						"placedOrderPlacedOrderBillingAddress",
 						new HashMap<String, Object>() {
 							{
 								put("placedOrderId", irrelevantPlacedOrderId);
@@ -630,7 +631,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 					new GraphQLField(
 						"headlessCommerceDeliveryOrder_v1_0",
 						new GraphQLField(
-							"placedOrderPlacedOrderBillingAddres",
+							"placedOrderPlacedOrderBillingAddress",
 							new HashMap<String, Object>() {
 								{
 									put(
@@ -644,27 +645,29 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	protected PlacedOrderAddress
-			testGraphQLGetPlacedOrderPlacedOrderBillingAddres_addPlacedOrderAddress()
+			testGraphQLGetPlacedOrderPlacedOrderBillingAddress_addPlacedOrderAddress()
 		throws Exception {
 
 		return testGraphQLPlacedOrderAddress_addPlacedOrderAddress();
 	}
 
 	@Test
-	public void testGetPlacedOrderPlacedOrderShippingAddres() throws Exception {
+	public void testGetPlacedOrderPlacedOrderShippingAddress()
+		throws Exception {
+
 		PlacedOrderAddress postPlacedOrderAddress =
-			testGetPlacedOrderPlacedOrderShippingAddres_addPlacedOrderAddress();
+			testGetPlacedOrderPlacedOrderShippingAddress_addPlacedOrderAddress();
 
 		PlacedOrderAddress getPlacedOrderAddress =
-			placedOrderAddressResource.getPlacedOrderPlacedOrderShippingAddres(
-				testGetPlacedOrderPlacedOrderShippingAddres_getPlacedOrderId());
+			placedOrderAddressResource.getPlacedOrderPlacedOrderShippingAddress(
+				testGetPlacedOrderPlacedOrderShippingAddress_getPlacedOrderId());
 
 		assertEquals(postPlacedOrderAddress, getPlacedOrderAddress);
 		assertValid(getPlacedOrderAddress);
 	}
 
 	protected Long
-			testGetPlacedOrderPlacedOrderShippingAddres_getPlacedOrderId()
+			testGetPlacedOrderPlacedOrderShippingAddress_getPlacedOrderId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -672,7 +675,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	protected PlacedOrderAddress
-			testGetPlacedOrderPlacedOrderShippingAddres_addPlacedOrderAddress()
+			testGetPlacedOrderPlacedOrderShippingAddress_addPlacedOrderAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -680,11 +683,11 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetPlacedOrderPlacedOrderShippingAddres()
+	public void testGraphQLGetPlacedOrderPlacedOrderShippingAddress()
 		throws Exception {
 
 		PlacedOrderAddress placedOrderAddress =
-			testGraphQLGetPlacedOrderPlacedOrderShippingAddres_addPlacedOrderAddress();
+			testGraphQLGetPlacedOrderPlacedOrderShippingAddress_addPlacedOrderAddress();
 
 		// No namespace
 
@@ -695,17 +698,17 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"placedOrderPlacedOrderShippingAddres",
+								"placedOrderPlacedOrderShippingAddress",
 								new HashMap<String, Object>() {
 									{
 										put(
 											"placedOrderId",
-											testGraphQLGetPlacedOrderPlacedOrderShippingAddres_getPlacedOrderId());
+											testGraphQLGetPlacedOrderPlacedOrderShippingAddress_getPlacedOrderId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
-						"Object/placedOrderPlacedOrderShippingAddres"))));
+						"Object/placedOrderPlacedOrderShippingAddress"))));
 
 		// Using the namespace headlessCommerceDeliveryOrder_v1_0
 
@@ -718,22 +721,22 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 							new GraphQLField(
 								"headlessCommerceDeliveryOrder_v1_0",
 								new GraphQLField(
-									"placedOrderPlacedOrderShippingAddres",
+									"placedOrderPlacedOrderShippingAddress",
 									new HashMap<String, Object>() {
 										{
 											put(
 												"placedOrderId",
-												testGraphQLGetPlacedOrderPlacedOrderShippingAddres_getPlacedOrderId());
+												testGraphQLGetPlacedOrderPlacedOrderShippingAddress_getPlacedOrderId());
 										}
 									},
 									getGraphQLFields()))),
 						"JSONObject/data",
 						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
-						"Object/placedOrderPlacedOrderShippingAddres"))));
+						"Object/placedOrderPlacedOrderShippingAddress"))));
 	}
 
 	protected Long
-			testGraphQLGetPlacedOrderPlacedOrderShippingAddres_getPlacedOrderId()
+			testGraphQLGetPlacedOrderPlacedOrderShippingAddress_getPlacedOrderId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -741,7 +744,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetPlacedOrderPlacedOrderShippingAddresNotFound()
+	public void testGraphQLGetPlacedOrderPlacedOrderShippingAddressNotFound()
 		throws Exception {
 
 		Long irrelevantPlacedOrderId = RandomTestUtil.randomLong();
@@ -753,7 +756,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"placedOrderPlacedOrderShippingAddres",
+						"placedOrderPlacedOrderShippingAddress",
 						new HashMap<String, Object>() {
 							{
 								put("placedOrderId", irrelevantPlacedOrderId);
@@ -772,7 +775,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 					new GraphQLField(
 						"headlessCommerceDeliveryOrder_v1_0",
 						new GraphQLField(
-							"placedOrderPlacedOrderShippingAddres",
+							"placedOrderPlacedOrderShippingAddress",
 							new HashMap<String, Object>() {
 								{
 									put(
@@ -786,7 +789,7 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	protected PlacedOrderAddress
-			testGraphQLGetPlacedOrderPlacedOrderShippingAddres_addPlacedOrderAddress()
+			testGraphQLGetPlacedOrderPlacedOrderShippingAddress_addPlacedOrderAddress()
 		throws Exception {
 
 		return testGraphQLPlacedOrderAddress_addPlacedOrderAddress();

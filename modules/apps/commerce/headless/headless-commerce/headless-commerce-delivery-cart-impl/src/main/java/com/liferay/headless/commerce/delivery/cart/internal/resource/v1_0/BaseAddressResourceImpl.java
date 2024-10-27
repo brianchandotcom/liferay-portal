@@ -66,7 +66,7 @@ public abstract class BaseAddressResourceImpl implements AddressResource {
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Address getCartByExternalReferenceCodeBillingAddres(
+	public Address getCartByExternalReferenceCodeBillingAddress(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
@@ -101,7 +101,7 @@ public abstract class BaseAddressResourceImpl implements AddressResource {
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Address getCartByExternalReferenceCodeShippingAddres(
+	public Address getCartByExternalReferenceCodeShippingAddress(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")

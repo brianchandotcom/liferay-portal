@@ -51,21 +51,21 @@ public interface PlacedOrderAddressResource {
 				String externalReferenceCode)
 		throws Exception;
 
-	public PlacedOrderAddress getPlacedOrderPlacedOrderBillingAddres(
+	public PlacedOrderAddress getPlacedOrderPlacedOrderBillingAddress(
 			Long placedOrderId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getPlacedOrderPlacedOrderBillingAddresHttpResponse(
+			getPlacedOrderPlacedOrderBillingAddressHttpResponse(
 				Long placedOrderId)
 		throws Exception;
 
-	public PlacedOrderAddress getPlacedOrderPlacedOrderShippingAddres(
+	public PlacedOrderAddress getPlacedOrderPlacedOrderShippingAddress(
 			Long placedOrderId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getPlacedOrderPlacedOrderShippingAddresHttpResponse(
+			getPlacedOrderPlacedOrderShippingAddressHttpResponse(
 				Long placedOrderId)
 		throws Exception;
 
@@ -394,12 +394,12 @@ public interface PlacedOrderAddressResource {
 			return httpInvoker.invoke();
 		}
 
-		public PlacedOrderAddress getPlacedOrderPlacedOrderBillingAddres(
+		public PlacedOrderAddress getPlacedOrderPlacedOrderBillingAddress(
 				Long placedOrderId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getPlacedOrderPlacedOrderBillingAddresHttpResponse(
+				getPlacedOrderPlacedOrderBillingAddressHttpResponse(
 					placedOrderId);
 
 			String content = httpResponse.getContent();
@@ -463,7 +463,7 @@ public interface PlacedOrderAddressResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getPlacedOrderPlacedOrderBillingAddresHttpResponse(
+				getPlacedOrderPlacedOrderBillingAddressHttpResponse(
 					Long placedOrderId)
 			throws Exception {
 
@@ -501,12 +501,12 @@ public interface PlacedOrderAddressResource {
 			return httpInvoker.invoke();
 		}
 
-		public PlacedOrderAddress getPlacedOrderPlacedOrderShippingAddres(
+		public PlacedOrderAddress getPlacedOrderPlacedOrderShippingAddress(
 				Long placedOrderId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getPlacedOrderPlacedOrderShippingAddresHttpResponse(
+				getPlacedOrderPlacedOrderShippingAddressHttpResponse(
 					placedOrderId);
 
 			String content = httpResponse.getContent();
@@ -570,7 +570,7 @@ public interface PlacedOrderAddressResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getPlacedOrderPlacedOrderShippingAddresHttpResponse(
+				getPlacedOrderPlacedOrderShippingAddressHttpResponse(
 					Long placedOrderId)
 			throws Exception {
 

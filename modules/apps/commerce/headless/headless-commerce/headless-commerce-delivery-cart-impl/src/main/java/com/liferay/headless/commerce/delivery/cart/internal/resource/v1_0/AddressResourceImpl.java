@@ -51,7 +51,7 @@ public class AddressResourceImpl extends BaseAddressResourceImpl {
 	}
 
 	@Override
-	public Address getCartByExternalReferenceCodeBillingAddres(
+	public Address getCartByExternalReferenceCodeBillingAddress(
 			String externalReferenceCode)
 		throws Exception {
 
@@ -76,7 +76,7 @@ public class AddressResourceImpl extends BaseAddressResourceImpl {
 	}
 
 	@Override
-	public Address getCartByExternalReferenceCodeShippingAddres(
+	public Address getCartByExternalReferenceCodeShippingAddress(
 			String externalReferenceCode)
 		throws Exception {
 

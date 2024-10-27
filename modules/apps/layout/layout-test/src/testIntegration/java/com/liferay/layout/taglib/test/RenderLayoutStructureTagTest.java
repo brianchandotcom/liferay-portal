@@ -872,6 +872,102 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	@TestInfo("LPS-169924")
+	public void testRenderEditionFormWithAddPermissionAndWithoutViewPermission()
+		throws Exception {
+
+		MockObject mockObject = new MockObject(
+			true, RandomTestUtil.randomLong(), false, false);
+
+		InfoField<TextInfoFieldType> infoField1 = _getInfoField(false);
+
+		String infoField1Value = RandomTestUtil.randomString();
+
+		mockObject.addInfoField(infoField1, infoField1Value);
+
+		InfoField<TextInfoFieldType> infoField2 = _getInfoField(false);
+
+		String infoField2Value = RandomTestUtil.randomString();
+
+		mockObject.addInfoField(infoField2, infoField2Value);
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField1, infoField2)
+						).build(),
+						mockObject, _portal, _displayPageInfoItemCapability,
+						_editPageInfoItemCapability)) {
+
+			Layout layout = _addDisplayPageWithFormAndGetLayout(
+				infoField1, infoField2);
+
+			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+				layout,
+				_getMockHttpServletRequest(
+					layout,
+					mockInfoServiceRegistrationHolder.
+						getMockObjectLayoutDisplayPageObjectProvider()));
+
+			String content = mockHttpServletResponse.getContentAsString();
+
+			Assert.assertTrue(
+				content.contains("<fieldset disabled=\"disabled\">"));
+
+			_assertInfoFieldInput(infoField1, content, infoField1Value);
+			_assertInfoFieldInput(infoField2, content, infoField2Value);
+
+			_assertInputJSONObject(content, infoField1, infoField2);
+		}
+	}
+
+	@Test
+	@TestInfo("LPS-169924")
+	public void testRenderEditionFormWithoutAddPermission() throws Exception {
+		MockObject mockObject = new MockObject(
+			false, RandomTestUtil.randomLong(), false, false);
+
+		InfoField<TextInfoFieldType> infoField1 = _getInfoField(false);
+
+		String infoField1Value = RandomTestUtil.randomString();
+
+		mockObject.addInfoField(infoField1, infoField1Value);
+
+		InfoField<TextInfoFieldType> infoField2 = _getInfoField(false);
+
+		String infoField2Value = RandomTestUtil.randomString();
+
+		mockObject.addInfoField(infoField2, infoField2Value);
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField1, infoField2)
+						).build(),
+						mockObject, _portal, _displayPageInfoItemCapability,
+						_editPageInfoItemCapability)) {
+
+			Layout layout = _addDisplayPageWithFormAndGetLayout(
+				infoField1, infoField2);
+
+			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+				layout,
+				_getMockHttpServletRequest(
+					layout,
+					mockInfoServiceRegistrationHolder.
+						getMockObjectLayoutDisplayPageObjectProvider()));
+
+			String content = mockHttpServletResponse.getContentAsString();
+
+			Assert.assertTrue(content.isEmpty());
+		}
+	}
+
+	@Test
 	public void testRenderEditionFormWithoutUpdatePermission()
 		throws Exception {
 

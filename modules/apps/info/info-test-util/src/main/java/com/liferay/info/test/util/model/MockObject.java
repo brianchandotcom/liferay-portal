@@ -17,6 +17,16 @@ import java.util.Objects;
  */
 public class MockObject {
 
+	public MockObject(
+		boolean addPermission, long classPK, boolean updatePermission,
+		boolean viewPermission) {
+
+		_addPermission = addPermission;
+		_classPK = classPK;
+		_updatePermission = updatePermission;
+		_viewPermission = viewPermission;
+	}
+
 	public MockObject(long classPK) {
 		this(classPK, true, true);
 	}
@@ -24,9 +34,7 @@ public class MockObject {
 	public MockObject(
 		long classPK, boolean updatePermission, boolean viewPermission) {
 
-		_classPK = classPK;
-		_updatePermission = updatePermission;
-		_viewPermission = viewPermission;
+		this(true, classPK, updatePermission, viewPermission);
 	}
 
 	public void addInfoField(InfoField infoField, Object value) {
@@ -41,6 +49,10 @@ public class MockObject {
 		return _infoFieldsMap;
 	}
 
+	public boolean hasAddPermission() {
+		return _addPermission;
+	}
+
 	public boolean hasPermission(String actionId) {
 		if (Objects.equals(ActionKeys.UPDATE, actionId)) {
 			return _updatePermission;
@@ -53,6 +65,11 @@ public class MockObject {
 		return false;
 	}
 
+	public boolean hasViewPermission() {
+		return _viewPermission;
+	}
+
+	private final boolean _addPermission;
 	private final long _classPK;
 	private final Map<InfoField<?>, Object> _infoFieldsMap = new HashMap<>();
 	private final boolean _updatePermission;

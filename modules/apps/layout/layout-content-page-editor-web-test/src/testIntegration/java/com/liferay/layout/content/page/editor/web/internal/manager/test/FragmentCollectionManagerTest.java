@@ -8,6 +8,7 @@ package com.liferay.layout.content.page.editor.web.internal.manager.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.model.User;
@@ -64,12 +65,13 @@ public class FragmentCollectionManagerTest {
 	public void testGetLayoutElementMapsListMapWithoutPermissions()
 		throws Exception {
 
-		ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, "First Name",
-					"firstName")));
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
+						"firstName")));
 
 		User user = UserTestUtil.addUser();
 
@@ -91,6 +93,9 @@ public class FragmentCollectionManagerTest {
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
+
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
 		}
 	}
 
@@ -99,20 +104,27 @@ public class FragmentCollectionManagerTest {
 	public void testGetLayoutElementMapsListMapWithPermissions()
 		throws Exception {
 
-		ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, "First Name",
-					"firstName")));
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
+						"firstName")));
 
-		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
-			ReflectionTestUtil.invoke(
-				_fragmentCollectionManager, "getLayoutElementMapsListMap",
-				new Class<?>[] {PermissionChecker.class},
-				PermissionThreadLocal.getPermissionChecker());
+		try {
+			Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
+				ReflectionTestUtil.invoke(
+					_fragmentCollectionManager, "getLayoutElementMapsListMap",
+					new Class<?>[] {PermissionChecker.class},
+					PermissionThreadLocal.getPermissionChecker());
 
-		Assert.assertTrue(layoutElementMapsListMap.containsKey("INPUTS"));
+			Assert.assertTrue(layoutElementMapsListMap.containsKey("INPUTS"));
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
 	}
 
 	@Inject(

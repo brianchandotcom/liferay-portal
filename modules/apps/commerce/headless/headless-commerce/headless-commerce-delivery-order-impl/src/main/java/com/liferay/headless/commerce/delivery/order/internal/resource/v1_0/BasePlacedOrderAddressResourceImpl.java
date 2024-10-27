@@ -145,7 +145,7 @@ public abstract class BasePlacedOrderAddressResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PlacedOrderAddress getPlacedOrderPlacedOrderBillingAddres(
+	public PlacedOrderAddress getPlacedOrderPlacedOrderBillingAddress(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("placedOrderId")
@@ -182,7 +182,7 @@ public abstract class BasePlacedOrderAddressResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PlacedOrderAddress getPlacedOrderPlacedOrderShippingAddres(
+	public PlacedOrderAddress getPlacedOrderPlacedOrderShippingAddress(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("placedOrderId")

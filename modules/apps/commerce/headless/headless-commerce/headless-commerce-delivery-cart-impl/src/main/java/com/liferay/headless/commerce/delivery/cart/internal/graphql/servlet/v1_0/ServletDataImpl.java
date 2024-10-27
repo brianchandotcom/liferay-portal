@@ -324,15 +324,15 @@ public class ServletDataImpl implements ServletData {
 							"postCartShippingMethodsPageExportBatch"));
 
 					put(
-						"query#cartByExternalReferenceCodeBillingAddres",
+						"query#cartByExternalReferenceCodeBillingAddress",
 						new ObjectValuePair<>(
 							AddressResourceImpl.class,
-							"getCartByExternalReferenceCodeBillingAddres"));
+							"getCartByExternalReferenceCodeBillingAddress"));
 					put(
-						"query#cartByExternalReferenceCodeShippingAddres",
+						"query#cartByExternalReferenceCodeShippingAddress",
 						new ObjectValuePair<>(
 							AddressResourceImpl.class,
-							"getCartByExternalReferenceCodeShippingAddres"));
+							"getCartByExternalReferenceCodeShippingAddress"));
 					put(
 						"query#cartBillingAddres",
 						new ObjectValuePair<>(
@@ -476,11 +476,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							TermResourceImpl.class, "getCartPaymentTermsPage"));
 					put(
-						"query#Cart.byExternalReferenceCodeShippingAddres",
-						new ObjectValuePair<>(
-							AddressResourceImpl.class,
-							"getCartByExternalReferenceCodeShippingAddres"));
-					put(
 						"query#Cart.deliveryTerms",
 						new ObjectValuePair<>(
 							TermResourceImpl.class,
@@ -522,10 +517,15 @@ public class ServletDataImpl implements ServletData {
 							CartCommentResourceImpl.class,
 							"getCartCommentByExternalReferenceCode"));
 					put(
-						"query#Cart.byExternalReferenceCodeBillingAddres",
+						"query#Cart.byExternalReferenceCodeBillingAddress",
 						new ObjectValuePair<>(
 							AddressResourceImpl.class,
-							"getCartByExternalReferenceCodeBillingAddres"));
+							"getCartByExternalReferenceCodeBillingAddress"));
+					put(
+						"query#Cart.byExternalReferenceCodeShippingAddress",
+						new ObjectValuePair<>(
+							AddressResourceImpl.class,
+							"getCartByExternalReferenceCodeShippingAddress"));
 					put(
 						"query#Cart.comments",
 						new ObjectValuePair<>(

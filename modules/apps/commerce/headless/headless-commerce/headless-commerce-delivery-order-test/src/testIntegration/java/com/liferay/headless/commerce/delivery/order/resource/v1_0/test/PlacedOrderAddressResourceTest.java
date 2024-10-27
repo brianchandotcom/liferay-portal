@@ -193,7 +193,8 @@ public class PlacedOrderAddressResourceTest
 	}
 
 	@Override
-	protected Long testGetPlacedOrderPlacedOrderBillingAddress_getPlacedOrderId()
+	protected Long
+			testGetPlacedOrderPlacedOrderBillingAddress_getPlacedOrderId()
 		throws Exception {
 
 		return _commerceOrder.getCommerceOrderId();

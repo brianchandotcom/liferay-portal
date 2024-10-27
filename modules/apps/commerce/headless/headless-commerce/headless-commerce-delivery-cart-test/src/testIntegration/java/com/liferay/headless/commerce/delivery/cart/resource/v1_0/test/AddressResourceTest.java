@@ -132,7 +132,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 
 	@Override
 	protected Address
-			testGetCartByExternalReferenceCodeBillingAddres_addAddress()
+			testGetCartByExternalReferenceCodeBillingAddress_addAddress()
 		throws Exception {
 
 		return _toAddress(_getCommerceAddress());
@@ -140,7 +140,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 
 	@Override
 	protected String
-			testGetCartByExternalReferenceCodeBillingAddres_getExternalReferenceCode(
+			testGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
 				Address address)
 		throws Exception {
 
@@ -149,7 +149,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 
 	@Override
 	protected Address
-			testGetCartByExternalReferenceCodeShippingAddres_addAddress()
+			testGetCartByExternalReferenceCodeShippingAddress_addAddress()
 		throws Exception {
 
 		return _toAddress(_getCommerceAddress());
@@ -157,7 +157,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 
 	@Override
 	protected String
-			testGetCartByExternalReferenceCodeShippingAddres_getExternalReferenceCode(
+			testGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
 				Address address)
 		throws Exception {
 
@@ -188,7 +188,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 
 	@Override
 	protected String
-			testGraphQLGetCartByExternalReferenceCodeBillingAddres_getExternalReferenceCode(
+			testGraphQLGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
 				Address address)
 		throws Exception {
 
@@ -197,7 +197,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 
 	@Override
 	protected String
-			testGraphQLGetCartByExternalReferenceCodeShippingAddres_getExternalReferenceCode(
+			testGraphQLGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
 				Address address)
 		throws Exception {
 

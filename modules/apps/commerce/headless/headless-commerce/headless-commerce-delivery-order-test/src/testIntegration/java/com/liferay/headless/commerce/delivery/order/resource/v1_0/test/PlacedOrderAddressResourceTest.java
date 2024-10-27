@@ -186,14 +186,14 @@ public class PlacedOrderAddressResourceTest
 
 	@Override
 	protected PlacedOrderAddress
-			testGetPlacedOrderPlacedOrderBillingAddres_addPlacedOrderAddress()
+			testGetPlacedOrderPlacedOrderBillingAddress_addPlacedOrderAddress()
 		throws Exception {
 
 		return _updateBillingAndShippingAddresses();
 	}
 
 	@Override
-	protected Long testGetPlacedOrderPlacedOrderBillingAddres_getPlacedOrderId()
+	protected Long testGetPlacedOrderPlacedOrderBillingAddress_getPlacedOrderId()
 		throws Exception {
 
 		return _commerceOrder.getCommerceOrderId();
@@ -201,7 +201,7 @@ public class PlacedOrderAddressResourceTest
 
 	@Override
 	protected PlacedOrderAddress
-			testGetPlacedOrderPlacedOrderShippingAddres_addPlacedOrderAddress()
+			testGetPlacedOrderPlacedOrderShippingAddress_addPlacedOrderAddress()
 		throws Exception {
 
 		return _updateBillingAndShippingAddresses();
@@ -209,7 +209,7 @@ public class PlacedOrderAddressResourceTest
 
 	@Override
 	protected Long
-			testGetPlacedOrderPlacedOrderShippingAddres_getPlacedOrderId()
+			testGetPlacedOrderPlacedOrderShippingAddress_getPlacedOrderId()
 		throws Exception {
 
 		return _commerceOrder.getCommerceOrderId();
@@ -235,7 +235,7 @@ public class PlacedOrderAddressResourceTest
 
 	@Override
 	protected Long
-			testGraphQLGetPlacedOrderPlacedOrderBillingAddres_getPlacedOrderId()
+			testGraphQLGetPlacedOrderPlacedOrderBillingAddress_getPlacedOrderId()
 		throws Exception {
 
 		return _commerceOrder.getCommerceOrderId();
@@ -243,7 +243,7 @@ public class PlacedOrderAddressResourceTest
 
 	@Override
 	protected Long
-			testGraphQLGetPlacedOrderPlacedOrderShippingAddres_getPlacedOrderId()
+			testGraphQLGetPlacedOrderPlacedOrderShippingAddress_getPlacedOrderId()
 		throws Exception {
 
 		return _commerceOrder.getCommerceOrderId();

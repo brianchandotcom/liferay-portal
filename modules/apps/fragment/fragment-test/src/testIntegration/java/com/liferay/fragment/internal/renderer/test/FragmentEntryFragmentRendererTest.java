@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -212,8 +213,7 @@ public class FragmentEntryFragmentRendererTest {
 			mockHttpServletResponse);
 
 		Document document = Jsoup.parseBodyFragment(
-			_fragmentEntryLinkCache.getFragmentEntryLinkContent(
-				fragmentEntryLink, _locale));
+			mockHttpServletResponse.getContentAsString());
 
 		Elements styleElements = document.getElementsByTag("style");
 
@@ -226,6 +226,15 @@ public class FragmentEntryFragmentRendererTest {
 		Element scriptElement = scriptElements.get(0);
 
 		Assert.assertEquals(nonce, scriptElement.attr("nonce"));
+
+		String cachedContent =
+			_fragmentEntryLinkCache.getFragmentEntryLinkContent(
+				fragmentEntryLink, _locale);
+
+		Assert.assertFalse(cachedContent, cachedContent.contains(nonce));
+		Assert.assertEquals(
+			cachedContent, 2,
+			StringUtil.count(cachedContent, "data-lfr-nonce"));
 	}
 
 	@Test
@@ -280,28 +289,6 @@ public class FragmentEntryFragmentRendererTest {
 
 		Assert.assertTrue(content.contains("\"buttonSize\":\"nm\""));
 		Assert.assertTrue(content.contains("\"buttonType\":\"primary\""));
-	}
-
-	@Test
-	public void testFragmentEntryLinkNonceAttribute() throws Exception {
-		FragmentEntry fragmentEntry = _getFragmentEntry(true);
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
-				_defaultSegmentsExperienceId, _layout.getPlid(),
-				fragmentEntry.getCss(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
-				StringPool.BLANK, 0, null, fragmentEntry.getType(),
-				_serviceContext);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			_renderFragmentEntryLink(fragmentEntryLink);
-
-		String content = mockHttpServletResponse.getContentAsString();
-
-		Assert.assertFalse(content.contains("data-lfr-nonce"));
 	}
 
 	@Test

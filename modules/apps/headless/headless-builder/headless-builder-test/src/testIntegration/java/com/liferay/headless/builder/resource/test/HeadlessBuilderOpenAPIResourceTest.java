@@ -875,7 +875,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					).put(
 						"name", "post endpoint"
 					).put(
-						"path", "/post-path"
+						"path", "/path"
 					).put(
 						"r_requestAPISchemaToAPIEndpoints_l_apiSchemaERC",
 						_API_SCHEMA_ERC
@@ -897,7 +897,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					).put(
 						"name", "site scoped post endpoint"
 					).put(
-						"path", "/site-scoped-post-path"
+						"path", "/site-scoped-path"
 					).put(
 						"r_requestAPISchemaToAPIEndpoints_l_apiSchemaERC",
 						_API_SITE_SCOPED_SCHEMA_ERC

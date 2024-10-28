@@ -467,11 +467,9 @@
 				"tags": [
 					"SchemaName"
 				]
-			}
-		},
-		"/post-path": {
+			},
 			"post": {
-				"operationId": "postPostPath",
+				"operationId": "postPath",
 				"requestBody": {
 					"content": {
 						"application/json": {
@@ -649,11 +647,9 @@
 				"tags": [
 					"SiteScopedSchemaName"
 				]
-			}
-		},
-		"/scopes/{scopeKey}/site-scoped-post-path": {
+			},
 			"post": {
-				"operationId": "postScopeScopeKeySiteScopedPostPath",
+				"operationId": "postScopeScopeKeySiteScopedPath",
 				"parameters": [
 					{
 						"in": "path",

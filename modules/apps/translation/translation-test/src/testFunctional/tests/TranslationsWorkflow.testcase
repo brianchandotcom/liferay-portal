@@ -248,7 +248,7 @@ definition {
 			webContentDescription = "Descripcion",
 			webContentTitle = "Titulodelcontenidoweb");
 
-		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_TRANSLATED");
 
 		AssertTextEquals(
 			key_localizedLanguage = "es-ES",

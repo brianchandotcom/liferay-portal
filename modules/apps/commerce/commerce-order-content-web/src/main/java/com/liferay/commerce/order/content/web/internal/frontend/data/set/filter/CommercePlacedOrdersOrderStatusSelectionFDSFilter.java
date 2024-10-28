@@ -75,9 +75,7 @@ public class CommercePlacedOrdersOrderStatusSelectionFDSFilter
 	private static final List<Integer> _commerceOrderOpenStatuses =
 		Arrays.asList(
 			CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS,
-			CommerceOrderConstants.ORDER_STATUS_ON_HOLD,
-			CommerceOrderConstants.ORDER_STATUS_OPEN,
-			CommerceOrderConstants.ORDER_STATUS_PENDING);
+			CommerceOrderConstants.ORDER_STATUS_OPEN);
 
 	@Reference
 	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;

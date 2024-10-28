@@ -19,6 +19,7 @@ export const CP_QUANTITY_SELECTOR_CHANGED =
 export const CP_UNIT_OF_MEASURE_SELECTOR_CHANGED =
 	'unit-of-measure-changed-from-unit-of-measure-selector';
 export const CURRENT_ACCOUNT_UPDATED = 'current-account-updated';
+export const CURRENT_ORDER_DELETED = 'current-order-deleted';
 export const CURRENT_ORDER_UPDATED = 'current-order-updated';
 export const CURRENT_PRODUCT_STATUS_CHANGED = 'current-product-status-changed';
 export const CURRENT_PRODUCT_UPDATED = 'current-product-updated';

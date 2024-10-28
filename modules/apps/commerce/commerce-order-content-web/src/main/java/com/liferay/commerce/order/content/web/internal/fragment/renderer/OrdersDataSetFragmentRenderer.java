@@ -302,10 +302,9 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 					"view", "view", _language.get(httpServletRequest, "view"),
 					null, null, "link"),
 				new FDSActionDropdownItem(
-					"/o/headless-commerce-delivery-cart/v1.0/carts/{id}",
-					"trash", "delete",
+					StringPool.BLANK, "trash", "delete",
 					_language.get(httpServletRequest, "delete"), "delete", null,
-					"async"),
+					"link"),
 				new FDSActionDropdownItem(
 					StringPool.BLANK, "pencil", "rename",
 					_language.get(httpServletRequest, "rename"), null, null,

@@ -12,6 +12,7 @@ import './account_selector.scss';
 import ServiceProvider from '../../ServiceProvider/index';
 import {
 	CURRENT_ACCOUNT_UPDATED,
+	CURRENT_ORDER_DELETED,
 	CURRENT_ORDER_UPDATED,
 } from '../../utilities/eventsDefinitions';
 import {showErrorNotification} from '../../utilities/notifications';
@@ -84,7 +85,9 @@ function AccountSelector({
 	const updateOrderModel = useCallback(
 		({order}) => {
 			if (!currentOrder || currentOrder.id !== order.id) {
-				setCurrentOrder((current) => ({...current, ...order}));
+				setCurrentOrder((current) =>
+					order.id === 0 ? {id: order.id} : {...current, ...order}
+				);
 			}
 		},
 		[currentOrder, setCurrentOrder]
@@ -92,8 +95,10 @@ function AccountSelector({
 
 	useEffect(() => {
 		Liferay.on(CURRENT_ORDER_UPDATED, updateOrderModel);
+		Liferay.on(CURRENT_ORDER_DELETED, updateOrderModel);
 
 		return () => {
+			Liferay.detach(CURRENT_ORDER_DELETED, updateOrderModel);
 			Liferay.detach(CURRENT_ORDER_UPDATED, updateOrderModel);
 		};
 	}, [updateOrderModel]);

@@ -31,13 +31,11 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 			PlaywrightTestClassMethod playwrightTestClassMethod =
 				(PlaywrightTestClassMethod)testClassMethod;
 
-			String testName =
-				getName() + "." + playwrightTestClassMethod.getTestName();
-
 			BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-			Long averageDuration = batchTestClassGroup.getAverageTestDuration(
-				testName);
+			long averageDuration = batchTestClassGroup.getAverageTestDuration(
+				JenkinsResultsParserUtil.combine(
+					getName(), ".", playwrightTestClassMethod.getTestName()));
 
 			if (_averageDuration == null) {
 				_averageDuration = averageDuration;

@@ -27,7 +27,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -39,9 +39,19 @@ import org.junit.runner.RunWith;
 public class WorkflowDefinitionLinkResourceTest
 	extends BaseWorkflowDefinitionLinkResourceTestCase {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		BaseWorkflowDefinitionLinkResourceTestCase.setUpClass();
+	public WorkflowDefinitionLink addWorkflowDefinitionLink(
+			Long workflowDefinitionId,
+			WorkflowDefinitionLink workflowDefinitionLink)
+		throws Exception {
+
+		return workflowDefinitionLinkResource.postWorkflowDefinitionLink(
+			workflowDefinitionId, workflowDefinitionLink);
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
 
 		_workflowDefinition =
 			WorkflowDefinitionTestUtil.addWorkflowDefinition();
@@ -52,15 +62,6 @@ public class WorkflowDefinitionLinkResourceTest
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(
 				UserLocalServiceUtil.getUser(TestPropsValues.getUserId())));
-	}
-
-	public WorkflowDefinitionLink addWorkflowDefinitionLink(
-			Long workflowDefinitionId,
-			WorkflowDefinitionLink workflowDefinitionLink)
-		throws Exception {
-
-		return workflowDefinitionLinkResource.postWorkflowDefinitionLink(
-			workflowDefinitionId, workflowDefinitionLink);
 	}
 
 	@After

@@ -78,7 +78,8 @@ public class DTOOpenAPIParser {
 			String propertySchemaName = entry.getKey();
 
 			properties.put(
-				_getPropertyName(propertySchema, propertySchemaName),
+				_getPropertyName(
+					configYAML, propertySchema, propertySchemaName),
 				_getPropertyType(
 					configYAML, javaDataTypeMap, openAPIYAML, propertySchema,
 					propertySchemaName));
@@ -107,7 +108,7 @@ public class DTOOpenAPIParser {
 			Schema propertySchema = entry.getValue();
 
 			String curPropertyName = _getPropertyName(
-				propertySchema, propertySchemaName);
+				configYAML, propertySchema, propertySchemaName);
 
 			if (StringUtil.equalsIgnoreCase(curPropertyName, propertyName)) {
 				return propertySchema;
@@ -168,7 +169,8 @@ public class DTOOpenAPIParser {
 	}
 
 	private static String _getPropertyName(
-		Schema propertySchema, String propertySchemaName) {
+		ConfigYAML configYAML, Schema propertySchema,
+		String propertySchemaName) {
 
 		String name = StringUtil.replace(
 			CamelCaseUtil.toCamelCase(propertySchemaName),
@@ -178,7 +180,7 @@ public class DTOOpenAPIParser {
 		if (StringUtil.equalsIgnoreCase(propertySchema.getType(), "object") &&
 			(propertySchema.getItems() != null)) {
 
-			return OpenAPIUtil.formatSingular(name);
+			return OpenAPIUtil.formatSingular(configYAML, name);
 		}
 
 		return name;
@@ -236,6 +238,7 @@ public class DTOOpenAPIParser {
 			StringUtil.equalsIgnoreCase(items.getType(), "object")) {
 
 			String name = OpenAPIUtil.formatSingular(
+				configYAML,
 				StringUtil.upperCaseFirstLetter(propertySchemaName));
 
 			if (javaDataTypeMap.containsKey(name)) {
@@ -250,7 +253,7 @@ public class DTOOpenAPIParser {
 			String name = StringUtil.upperCaseFirstLetter(propertySchemaName);
 
 			if (items != null) {
-				name = OpenAPIUtil.formatSingular(name);
+				name = OpenAPIUtil.formatSingular(configYAML, name);
 			}
 
 			if (javaDataTypeMap.containsKey(name)) {

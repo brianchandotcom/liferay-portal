@@ -50,14 +50,13 @@ public class OpenAPIUtil {
 		return "v" + matcher.replaceFirst("");
 	}
 
-	public static String formatSingular(String s) {
-		if (StringUtil.lowerCase(
-				s
-			).endsWith(
-				"address"
-			)) {
+	public static String formatSingular(ConfigYAML configYAML, String s) {
+		if (ConfigUtil.isVersionCompatible(configYAML, 6)) {
+			String lowerCaseS = StringUtil.lowerCase(s);
 
-			return s;
+			if (StringUtil.endsWith(lowerCaseS, "address")) {
+				return s;
+			}
 		}
 
 		if (s.endsWith("ases")) {
@@ -153,7 +152,7 @@ public class OpenAPIUtil {
 					entry.getKey());
 
 				if (items != null) {
-					schemaName = formatSingular(schemaName);
+					schemaName = formatSingular(configYAML, schemaName);
 				}
 
 				allExternalSchemas.put(schemaName, schema);
@@ -251,7 +250,7 @@ public class OpenAPIUtil {
 					entry.getKey());
 
 				if (items != null) {
-					schemaName = formatSingular(schemaName);
+					schemaName = formatSingular(configYAML, schemaName);
 				}
 
 				allSchemas.put(schemaName, schema);
@@ -311,7 +310,7 @@ public class OpenAPIUtil {
 					entry.getKey());
 
 				if (items != null) {
-					schemaName = formatSingular(schemaName);
+					schemaName = formatSingular(configYAML, schemaName);
 				}
 
 				globalEnumSchemas.put(schemaName, schema);

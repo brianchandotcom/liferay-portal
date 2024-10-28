@@ -5,8 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 import {CommerceAdminProductDetailsPage} from './commerceAdminProductDetailsPage';
-import {CommerceDNDTablePage} from './commerceDNDTablePage';
 
 export class CommerceAdminProductDetailsProductRelationsPage extends CommerceDNDTablePage {
 	readonly addProductRelationHeading: (

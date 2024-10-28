@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class CommerceAdminProductPage {
 	readonly addVirtualProductFileEntryButton: Locator;

@@ -9,7 +9,7 @@ import {
 	CommerceDNDTablePage,
 	searchTableRowByValue,
 } from '../commerceDNDTablePage';
-import {CommerceLayoutsPage} from '../commerceLayoutsPage';
+import {CommerceLayoutsPage} from './commerceLayoutsPage';
 
 export class PendingOrdersPage extends CommerceDNDTablePage {
 	readonly approveButton: Locator;

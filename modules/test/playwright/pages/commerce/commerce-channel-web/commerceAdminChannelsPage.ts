@@ -5,9 +5,9 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
-import {waitForAlert} from '../../utils/waitForAlert';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
-import {searchTableRowByValue} from './commerceDNDTablePage';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {searchTableRowByValue} from '../commerceDNDTablePage';
 
 export class CommerceAdminChannelsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;

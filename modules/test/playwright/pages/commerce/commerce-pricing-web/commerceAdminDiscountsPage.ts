@@ -5,8 +5,8 @@
 
 import {Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
-import {CommerceDNDTablePage} from './commerceDNDTablePage';
+import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class CommerceAdminDiscountsPage extends CommerceDNDTablePage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;

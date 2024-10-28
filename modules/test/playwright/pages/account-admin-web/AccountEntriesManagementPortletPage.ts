@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {CommerceLayoutsPage} from '../commerce/commerceLayoutsPage';
+import {CommerceLayoutsPage} from '../commerce/commerce-order-content-web/commerceLayoutsPage';
 import {searchTableRowByValue} from '../users-admin-web/UsersAndOrganizationsPage';
 
 export class AccountEntriesManagementPortletPage {

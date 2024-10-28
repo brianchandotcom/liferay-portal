@@ -5,8 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
-import {CommerceIframeDNDTablePage} from './commerceIframeDNDTablePage';
+import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {CommerceIframeDNDTablePage} from '../commerceIframeDNDTablePage';
 
 export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 	readonly addQuantityInShipment: Locator;

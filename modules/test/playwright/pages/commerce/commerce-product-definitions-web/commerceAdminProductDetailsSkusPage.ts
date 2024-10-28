@@ -5,7 +5,7 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {CommerceDNDTablePage} from './commerceDNDTablePage';
+import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class CommerceAdminProductDetailsSkusPage extends CommerceDNDTablePage {
 	readonly page: Page;

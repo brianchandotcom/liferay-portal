@@ -5,8 +5,8 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
-import {DataApiHelpers} from '../../helpers/ApiHelpers';
-import {liferayConfig} from '../../liferay.config';
+import {DataApiHelpers} from '../../../helpers/ApiHelpers';
+import {liferayConfig} from '../../../liferay.config';
 
 export class CommerceLayoutsPage {
 	readonly addOrderButton: Locator;

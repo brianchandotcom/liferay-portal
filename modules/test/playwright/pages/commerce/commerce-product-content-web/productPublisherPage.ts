@@ -5,7 +5,7 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {CommerceLayoutsPage} from '../commerceLayoutsPage';
+import {CommerceLayoutsPage} from '../commerce-order-content-web/commerceLayoutsPage';
 
 export class ProductPublisherPage {
 	readonly closeButton: Locator;

@@ -6,7 +6,7 @@
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
-import {CommerceLayoutsPage} from '../commerceLayoutsPage';
+import {CommerceLayoutsPage} from './commerceLayoutsPage';
 
 export class PlacedOrdersPage extends CommerceDNDTablePage {
 	readonly commerceBillingAddress: Locator;

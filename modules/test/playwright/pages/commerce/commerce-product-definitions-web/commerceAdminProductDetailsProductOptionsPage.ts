@@ -5,7 +5,7 @@
 
 import {Page} from '@playwright/test';
 
-import {CommerceDNDTablePage} from './commerceDNDTablePage';
+import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class CommerceAdminProductDetailsProductOptionsPage extends CommerceDNDTablePage {
 	readonly page: Page;

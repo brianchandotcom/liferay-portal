@@ -5,11 +5,11 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
 import {
 	CommerceDNDTablePage,
 	searchTableRowByValue,
-} from './commerceDNDTablePage';
+} from '../commerceDNDTablePage';
 
 export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;

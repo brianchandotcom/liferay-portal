@@ -5,8 +5,8 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
-import {CommerceDNDTablePage} from './commerceDNDTablePage';
+import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class CommerceAdminReturnsPage extends CommerceDNDTablePage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;

@@ -6,7 +6,7 @@
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {CommerceLayoutsPage} from '../commerceLayoutsPage';
+import {CommerceLayoutsPage} from '../commerce-order-content-web/commerceLayoutsPage';
 
 export class ProductDetailsPage {
 	readonly addToCartButton: Locator;

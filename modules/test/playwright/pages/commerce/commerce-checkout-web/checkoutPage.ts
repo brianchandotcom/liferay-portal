@@ -5,7 +5,7 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
-import {CommerceLayoutsPage} from '../commerceLayoutsPage';
+import {CommerceLayoutsPage} from '../commerce-order-content-web/commerceLayoutsPage';
 
 type TAddress = {
 	city: string;

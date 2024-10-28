@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {CommerceDNDTablePage} from './commerceDNDTablePage';
+import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class CommerceAdminProductDetailsDiagramPage extends CommerceDNDTablePage {
 	readonly dragAndDropImages: Locator;

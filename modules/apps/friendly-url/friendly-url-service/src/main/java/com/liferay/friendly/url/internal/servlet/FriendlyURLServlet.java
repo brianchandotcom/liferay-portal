@@ -175,232 +175,247 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		Map<String, String[]> params = httpServletRequest.getParameterMap();
 
+		String actualURL = null;
+
 		try {
-			LayoutFriendlyURLSeparatorComposite
-				layoutFriendlyURLSeparatorComposite =
-					portal.getLayoutFriendlyURLSeparatorComposite(
-						group.getGroupId(), _private, layoutFriendlyURL, params,
-						requestContext);
+			try {
+				LayoutFriendlyURLSeparatorComposite
+					layoutFriendlyURLSeparatorComposite =
+						portal.getLayoutFriendlyURLSeparatorComposite(
+							group.getGroupId(), _private, layoutFriendlyURL,
+							params, requestContext);
 
-			if (layoutFriendlyURLSeparatorComposite.isRedirect()) {
-				pos = path.indexOf(
-					layoutFriendlyURLSeparatorComposite.getURLSeparator());
+				if (layoutFriendlyURLSeparatorComposite.isRedirect()) {
+					pos = path.indexOf(
+						layoutFriendlyURLSeparatorComposite.getURLSeparator());
 
-				if (pos != 1) {
-					String requestURL = portal.getCurrentCompleteURL(
-						httpServletRequest);
+					if (pos != 1) {
+						String requestURL = portal.getCurrentCompleteURL(
+							httpServletRequest);
 
-					int friendlyURLPos = requestURL.indexOf(layoutFriendlyURL);
+						int friendlyURLPos = requestURL.indexOf(
+							layoutFriendlyURL);
 
-					String friendlyURL =
-						layoutFriendlyURLSeparatorComposite.getFriendlyURL();
+						String friendlyURL =
+							layoutFriendlyURLSeparatorComposite.
+								getFriendlyURL();
 
-					String redirectURL = null;
+						String redirectURL = null;
 
-					if (friendlyURLPos > 0) {
-						redirectURL =
-							requestURL.substring(0, friendlyURLPos) +
-								friendlyURL;
+						if (friendlyURLPos > 0) {
+							redirectURL =
+								requestURL.substring(0, friendlyURLPos) +
+									friendlyURL;
+						}
+						else {
+							redirectURL = StringBundler.concat(
+								portal.getPathContext(),
+								PropsValues.
+									LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+								path.substring(0, pos), friendlyURL);
+						}
+
+						String queryString = HttpComponentsUtil.getQueryString(
+							portal.getOriginalServletRequest(
+								httpServletRequest));
+
+						if (Validator.isNotNull(queryString)) {
+							redirectURL += StringPool.QUESTION + queryString;
+						}
+
+						return new Redirect(
+							redirectURL, true,
+							_isPermanentRedirect(group.getCompanyId()));
 					}
-					else {
-						redirectURL = StringBundler.concat(
-							portal.getPathContext(),
-							PropsValues.
-								LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
-							path.substring(0, pos), friendlyURL);
-					}
-
-					String queryString = HttpComponentsUtil.getQueryString(
-						portal.getOriginalServletRequest(httpServletRequest));
-
-					if (Validator.isNotNull(queryString)) {
-						redirectURL += StringPool.QUESTION + queryString;
-					}
-
-					return new Redirect(
-						redirectURL, true,
-						_isPermanentRedirect(group.getCompanyId()));
-				}
-			}
-
-			Layout layout = layoutFriendlyURLSeparatorComposite.getLayout();
-
-			if (layout != null) {
-				User user = _getUser(httpServletRequest);
-
-				PermissionChecker permissionChecker =
-					PermissionThreadLocal.getPermissionChecker(
-						user, !user.isGuestUser());
-
-				if (!LayoutPermissionUtil.contains(
-						permissionChecker, layout, ActionKeys.VIEW)) {
-
-					if (AuthLoginGroupSettingsUtil.isPromptEnabled(
-							group.getGroupId())) {
-
-						String redirect = portal.getLayoutActualURL(
-							layout, Portal.PATH_MAIN);
-
-						return new Redirect(redirect);
-					}
-
-					throw new LayoutPermissionException();
 				}
 
-				if (user.isGuestUser() && layout.isSystem() &&
-					Objects.equals(
-						layout.getFriendlyURL(),
-						PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
+				Layout layout = layoutFriendlyURLSeparatorComposite.getLayout();
 
-					throw new NoSuchLayoutException();
-				}
+				if (layout != null) {
+					User user = _getUser(httpServletRequest);
 
-				if ((redirectProviderRedirect != null) &&
-					!LayoutPermissionUtil.containsLayoutUpdatePermission(
-						permissionChecker, layout)) {
+					PermissionChecker permissionChecker =
+						PermissionThreadLocal.getPermissionChecker(
+							user, !user.isGuestUser());
 
-					return redirectProviderRedirect;
-				}
-			}
+					if (!LayoutPermissionUtil.contains(
+							permissionChecker, layout, ActionKeys.VIEW)) {
 
-			defaultLayout = layout;
+						if (AuthLoginGroupSettingsUtil.isPromptEnabled(
+								group.getGroupId())) {
 
-			httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+							String redirect = portal.getLayoutActualURL(
+								layout, Portal.PATH_MAIN);
 
-			if (Objects.equals(
-					httpServletRequest.getRequestURI(),
-					PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
+							return new Redirect(redirect);
+						}
 
-				httpServletRequest.removeAttribute(
-					NoSuchLayoutException.class.getName());
-			}
-
-			String layoutFriendlyURLSeparatorCompositeFriendlyURL =
-				layoutFriendlyURLSeparatorComposite.getFriendlyURL();
-
-			if (Validator.isNull(
-					layoutFriendlyURLSeparatorCompositeFriendlyURL)) {
-
-				layoutFriendlyURLSeparatorCompositeFriendlyURL =
-					layout.getFriendlyURL(locale);
-			}
-
-			pos = layoutFriendlyURLSeparatorCompositeFriendlyURL.indexOf(
-				layoutFriendlyURLSeparatorComposite.getURLSeparator());
-
-			if (pos != 0) {
-				if (pos != -1) {
-					layoutFriendlyURLSeparatorCompositeFriendlyURL =
-						layoutFriendlyURLSeparatorCompositeFriendlyURL.
-							substring(0, pos);
-				}
-
-				String i18nLanguageId = (String)httpServletRequest.getAttribute(
-					WebKeys.I18N_LANGUAGE_ID);
-
-				boolean localeUnavailable = false;
-
-				if (Validator.isNotNull(i18nLanguageId) &&
-					!LanguageUtil.isAvailableLocale(
-						group.getGroupId(), i18nLanguageId) &&
-					(!portal.isGroupControlPanelPath(path) ||
-					 !LanguageUtil.isAvailableLocale(i18nLanguageId))) {
-
-					localeUnavailable = true;
-				}
-
-				if (localeUnavailable || (alternativeSiteFriendlyURL != null) ||
-					!_equalsLayoutFriendlyURL(
-						layoutFriendlyURLSeparatorCompositeFriendlyURL, layout,
-						locale)) {
-
-					Locale originalLocale = _setAlternativeLayoutFriendlyURL(
-						companyId, httpServletRequest, layout,
-						layoutFriendlyURLSeparatorCompositeFriendlyURL,
-						alternativeSiteFriendlyURL);
-
-					if (localeUnavailable &&
-						PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE) {
-
-						locale = LocaleUtil.fromLanguageId(
-							group.getDefaultLanguageId());
+						throw new LayoutPermissionException();
 					}
 
-					String redirect = _getLocalizedFriendlyURL(
-						httpServletRequest, layout, locale, originalLocale);
-
-					HttpServletRequest originalHttpServletRequest =
-						portal.getOriginalServletRequest(httpServletRequest);
-
-					if (redirect.equals(
-							originalHttpServletRequest.getRequestURI())) {
+					if (user.isGuestUser() && layout.isSystem() &&
+						Objects.equals(
+							layout.getFriendlyURL(),
+							PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
 
 						throw new NoSuchLayoutException();
 					}
 
-					boolean forcePermanentRedirect = true;
+					if ((redirectProviderRedirect != null) &&
+						!LayoutPermissionUtil.containsLayoutUpdatePermission(
+							permissionChecker, layout)) {
 
-					if (Validator.isNull(i18nLanguageId)) {
-						forcePermanentRedirect = _isPermanentRedirect(
-							group.getCompanyId());
+						return redirectProviderRedirect;
+					}
+				}
+
+				defaultLayout = layout;
+
+				httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+				if (Objects.equals(
+						httpServletRequest.getRequestURI(),
+						PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
+
+					httpServletRequest.removeAttribute(
+						NoSuchLayoutException.class.getName());
+				}
+
+				String layoutFriendlyURLSeparatorCompositeFriendlyURL =
+					layoutFriendlyURLSeparatorComposite.getFriendlyURL();
+
+				if (Validator.isNull(
+						layoutFriendlyURLSeparatorCompositeFriendlyURL)) {
+
+					layoutFriendlyURLSeparatorCompositeFriendlyURL =
+						layout.getFriendlyURL(locale);
+				}
+
+				pos = layoutFriendlyURLSeparatorCompositeFriendlyURL.indexOf(
+					layoutFriendlyURLSeparatorComposite.getURLSeparator());
+
+				if (pos != 0) {
+					if (pos != -1) {
+						layoutFriendlyURLSeparatorCompositeFriendlyURL =
+							layoutFriendlyURLSeparatorCompositeFriendlyURL.
+								substring(0, pos);
 					}
 
-					return new Redirect(redirect, true, forcePermanentRedirect);
+					String i18nLanguageId =
+						(String)httpServletRequest.getAttribute(
+							WebKeys.I18N_LANGUAGE_ID);
+
+					boolean localeUnavailable = false;
+
+					if (Validator.isNotNull(i18nLanguageId) &&
+						!LanguageUtil.isAvailableLocale(
+							group.getGroupId(), i18nLanguageId) &&
+						(!portal.isGroupControlPanelPath(path) ||
+						 !LanguageUtil.isAvailableLocale(i18nLanguageId))) {
+
+						localeUnavailable = true;
+					}
+
+					if (localeUnavailable ||
+						(alternativeSiteFriendlyURL != null) ||
+						!_equalsLayoutFriendlyURL(
+							layoutFriendlyURLSeparatorCompositeFriendlyURL,
+							layout, locale)) {
+
+						Locale originalLocale =
+							_setAlternativeLayoutFriendlyURL(
+								companyId, httpServletRequest, layout,
+								layoutFriendlyURLSeparatorCompositeFriendlyURL,
+								alternativeSiteFriendlyURL);
+
+						if (localeUnavailable &&
+							PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE) {
+
+							locale = LocaleUtil.fromLanguageId(
+								group.getDefaultLanguageId());
+						}
+
+						String redirect = _getLocalizedFriendlyURL(
+							httpServletRequest, layout, locale, originalLocale);
+
+						HttpServletRequest originalHttpServletRequest =
+							portal.getOriginalServletRequest(
+								httpServletRequest);
+
+						if (redirect.equals(
+								originalHttpServletRequest.getRequestURI())) {
+
+							throw new NoSuchLayoutException();
+						}
+
+						boolean forcePermanentRedirect = true;
+
+						if (Validator.isNull(i18nLanguageId)) {
+							forcePermanentRedirect = _isPermanentRedirect(
+								group.getCompanyId());
+						}
+
+						return new Redirect(
+							redirect, true, forcePermanentRedirect);
+					}
 				}
 			}
-		}
-		catch (LayoutPermissionException | NoSuchLayoutException exception) {
-			Layout redirectLayout = null;
+			catch (LayoutPermissionException | NoSuchLayoutException
+						exception) {
 
-			if (!(exception instanceof LayoutPermissionException)) {
-				if (layoutFriendlyURL == null) {
-					redirectLayout = defaultLayout;
-				}
-				else {
-					redirectLayout = _getLayoutFriendlyURLLayout(
-						group, layoutFriendlyURL, httpServletRequest);
-				}
-			}
+				Layout redirectLayout = null;
 
-			if (redirectLayout != null) {
-				String redirect = portal.getLayoutActualURL(
-					redirectLayout, Portal.PATH_MAIN);
-
-				return new Redirect(redirect);
-			}
-
-			RedirectNotFoundTracker currentRedirectNotFoundTracker =
-				_redirectNotFoundTrackerSnapshot.get();
-
-			if (currentRedirectNotFoundTracker != null) {
-				currentRedirectNotFoundTracker.trackURL(
-					group, _normalizeFriendlyURL(layoutFriendlyURL));
-			}
-
-			if (Validator.isNotNull(
-					PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
-
-				if (exception instanceof NoSuchLayoutException) {
-					throw exception;
+				if (!(exception instanceof LayoutPermissionException)) {
+					if (layoutFriendlyURL == null) {
+						redirectLayout = defaultLayout;
+					}
+					else {
+						redirectLayout = _getLayoutFriendlyURLLayout(
+							group, layoutFriendlyURL, httpServletRequest);
+					}
 				}
 
-				throw new NoSuchLayoutException(exception);
+				if (redirectLayout != null) {
+					String redirect = portal.getLayoutActualURL(
+						redirectLayout, Portal.PATH_MAIN);
+
+					return new Redirect(redirect);
+				}
+
+				RedirectNotFoundTracker currentRedirectNotFoundTracker =
+					_redirectNotFoundTrackerSnapshot.get();
+
+				if (currentRedirectNotFoundTracker != null) {
+					currentRedirectNotFoundTracker.trackURL(
+						group, _normalizeFriendlyURL(layoutFriendlyURL));
+				}
+
+				if (Validator.isNotNull(
+						PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
+
+					if (exception instanceof NoSuchLayoutException) {
+						throw exception;
+					}
+
+					throw new NoSuchLayoutException(exception);
+				}
+
+				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+				httpServletRequest.setAttribute(
+					NoSuchLayoutException.class.getName(), Boolean.TRUE);
+
+				layoutFriendlyURL = null;
 			}
 
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-			httpServletRequest.setAttribute(
-				NoSuchLayoutException.class.getName(), Boolean.TRUE);
-
-			layoutFriendlyURL = null;
+			actualURL = portal.getActualURL(
+				group.getGroupId(), _private, Portal.PATH_MAIN,
+				layoutFriendlyURL, params, requestContext);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
-		String actualURL = portal.getActualURL(
-			group.getGroupId(), _private, Portal.PATH_MAIN, layoutFriendlyURL,
-			params, requestContext);
 		String portalURL = portal.getPortalURL(httpServletRequest);
 
 		if (actualURL.startsWith(portalURL)) {

@@ -2,6 +2,8 @@
 definition {
 
 	property ci.retries.disabled = "true";
+	property custom.properties = "feature.flag.LPD-35013=false";
+	property osgi.modules.includes = "wiki";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Categories";
@@ -298,6 +300,8 @@ definition {
 	@description = "Add a vocabulary for Wiki Page."
 	@priority = 3
 	test AddVocabularyForWikiPage {
+		WikiPortlet.enableWiki();
+
 		task ("Add a vocabulary for Wiki Page") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 

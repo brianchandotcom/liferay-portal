@@ -750,7 +750,7 @@ const Multishipping = ({
 								onClick={async () => {
 									openConfirmModal({
 										message: Liferay.Language.get(
-											'if-the-total-quantity-cannot-be-equally-distributed,-any-remaining-units-will-be-allocated-to-the-primary-delivery-group.-are-you-sure-you-want-to-proceed-with-the-split'
+											'if-the-total-quantity-cannot-be-equally-distributed,-any-remaining-units-will-be-allocated-to-the-primary-delivery-group'
 										),
 										onConfirm: async (isConfirmed) => {
 											if (isConfirmed) {
@@ -779,7 +779,7 @@ const Multishipping = ({
 								onClick={async () => {
 									openConfirmModal({
 										message: Liferay.Language.get(
-											'by-resetting-the-rows-will-set-all-columns-to-zero,-except-the-first-one,-which-will-have-the-minimum-allowed-quantity.-are-you-sure-you-want-to-proceed-with-the-reset'
+											'by-resetting-the-rows,-all-columns-will-be-set-to-zero,-except-the-first-one'
 										),
 										onConfirm: async (isConfirmed) => {
 											if (isConfirmed) {
@@ -827,7 +827,7 @@ const Multishipping = ({
 								onClick={async () => {
 									openConfirmModal({
 										message: Liferay.Language.get(
-											'by-removing-the-item-s,-it-they-will-disappear-from-the-list-of-ordered-items.-are-you-sure-you-want-to-proceed-with-the-remove'
+											'by-removing-the-items,-they-will-disappear-from-the-list-of-ordered-items'
 										),
 										onConfirm: async (isConfirmed) => {
 											if (isConfirmed) {

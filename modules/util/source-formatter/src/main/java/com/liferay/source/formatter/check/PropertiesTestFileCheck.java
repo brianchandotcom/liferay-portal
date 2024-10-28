@@ -7,11 +7,21 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.comparator.PropertyNameComparator;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.StringReader;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,13 +32,15 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws IOException {
 
 		if (!fileName.endsWith("/test.properties")) {
 			return content;
 		}
 
 		_checkTestPropertiesOrder(fileName, content);
+		_checkTestrayMainComponentName(fileName, absolutePath, content);
 
 		return _sortTestCategories(
 			fileName, content, StringPool.BLANK,
@@ -127,6 +139,93 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 		}
 	}
 
+	private void _checkTestrayMainComponentName(
+			String fileName, String absolutePath, String content)
+		throws IOException {
+
+		String rootDirName = SourceUtil.getRootDirName(absolutePath);
+
+		if (rootDirName.equals(StringPool.BLANK) ||
+			absolutePath.matches(rootDirName + "/test.properties")) {
+
+			return;
+		}
+
+		Properties properties = new Properties();
+
+		properties.load(new StringReader(content));
+
+		String testrayMainComponentName = properties.getProperty(
+			_TESTRAY_MAIN_COMPONENT_NAME);
+
+		if (testrayMainComponentName == null) {
+			return;
+		}
+
+		List<String> testrayAllTeamsComponentNames =
+			_getTestrayAllTeamsComponentNames();
+
+		if (!testrayAllTeamsComponentNames.contains(testrayMainComponentName)) {
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Property value \"", testrayMainComponentName,
+					"\" does not exist in \"testray.team.*.component.names\" ",
+					"in ", SourceUtil.getRootDirName(absolutePath),
+					"/test.properties"));
+		}
+	}
+
+	private synchronized List<String> _getTestrayAllTeamsComponentNames()
+		throws IOException {
+
+		if (_testrayAllTeamsComponentNames != null) {
+			return _testrayAllTeamsComponentNames;
+		}
+
+		_testrayAllTeamsComponentNames = new ArrayList<>();
+
+		File file = new File(getPortalDir(), "test.properties");
+
+		if (!file.exists()) {
+			return _testrayAllTeamsComponentNames;
+		}
+
+		Properties properties = new Properties();
+
+		properties.load(new FileInputStream(file));
+
+		List<String> testrayAvailableComponentNames = ListUtil.fromString(
+			properties.getProperty("testray.available.component.names"),
+			StringPool.COMMA);
+
+		for (String testrayAvailableComponentName :
+				testrayAvailableComponentNames) {
+
+			if (!testrayAvailableComponentName.startsWith("${") &&
+				!testrayAvailableComponentName.endsWith("}")) {
+
+				continue;
+			}
+
+			String testrayTeamComponentName =
+				testrayAvailableComponentName.substring(
+					2, testrayAvailableComponentName.length() - 1);
+
+			List<String> testrayTeamComponentNames = ListUtil.fromString(
+				properties.getProperty(testrayTeamComponentName),
+				StringPool.COMMA);
+
+			if (ListUtil.isEmpty(testrayTeamComponentNames)) {
+				continue;
+			}
+
+			_testrayAllTeamsComponentNames.addAll(testrayTeamComponentNames);
+		}
+
+		return _testrayAllTeamsComponentNames;
+	}
+
 	private String _sortTestCategories(
 		String fileName, String content, String indent, String pounds) {
 
@@ -192,6 +291,11 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _TESTRAY_MAIN_COMPONENT_NAME =
+		"testray.main.component.name";
+
+	private List<String> _testrayAllTeamsComponentNames;
 
 	private class CommentComparator extends NaturalOrderStringComparator {
 

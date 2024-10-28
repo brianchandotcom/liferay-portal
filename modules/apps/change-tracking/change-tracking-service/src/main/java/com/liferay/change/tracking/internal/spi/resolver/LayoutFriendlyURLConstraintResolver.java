@@ -61,7 +61,7 @@ public class LayoutFriendlyURLConstraintResolver
 			constraintResolverContext.getTargetCTModel();
 
 		_layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
-			layoutFriendlyURL.getLayoutFriendlyURLId());
+			layoutFriendlyURL);
 	}
 
 	@Reference

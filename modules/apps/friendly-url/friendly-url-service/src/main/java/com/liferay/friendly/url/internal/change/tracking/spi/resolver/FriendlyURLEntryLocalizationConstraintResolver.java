@@ -62,7 +62,7 @@ public class FriendlyURLEntryLocalizationConstraintResolver
 			constraintResolverContext.getTargetCTModel();
 
 		_friendlyURLEntryLocalizationPersistence.remove(
-			friendlyURLEntryLocalization.getFriendlyURLEntryLocalizationId());
+			friendlyURLEntryLocalization);
 	}
 
 	@Reference

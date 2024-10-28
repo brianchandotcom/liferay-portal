@@ -58,8 +58,7 @@ public class AMImageEntryConstraintResolver
 		AMImageEntry amImageEntry =
 			constraintResolverContext.getTargetCTModel();
 
-		_amImageEntryLocalService.deleteAMImageEntry(
-			amImageEntry.getAmImageEntryId());
+		_amImageEntryLocalService.deleteAMImageEntry(amImageEntry);
 	}
 
 	@Reference

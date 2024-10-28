@@ -58,8 +58,7 @@ public class LayoutSEOEntryConstraintResolver
 		LayoutSEOEntry layoutSEOEntry =
 			constraintResolverContext.getTargetCTModel();
 
-		_layoutSEOEntryLocalService.deleteLayoutSEOEntry(
-			layoutSEOEntry.getLayoutSEOEntryId());
+		_layoutSEOEntryLocalService.deleteLayoutSEOEntry(layoutSEOEntry);
 	}
 
 	@Reference

@@ -12,6 +12,7 @@ import {
 	CART_RESET,
 	CART_UPDATED,
 	CURRENT_ACCOUNT_UPDATED,
+	CURRENT_ORDER_DELETED,
 	CURRENT_ORDER_UPDATED,
 } from '../../utilities/eventsDefinitions';
 import {showErrorNotification} from '../../utilities/notifications';
@@ -92,15 +93,21 @@ function MiniCart({
 
 	const resetCartState = useCallback(
 		({accountId = 0, id = 0}) => {
-			if (cartState.accountId !== accountId || cartState.id === id) {
+			const isAccountChanged = cartState.accountId !== accountId;
+			const isCartEmptied = cartState.id === id;
+			const isOrderDeleted =
+				id === 0 && cartState.accountId === accountId;
+
+			if (isAccountChanged || isCartEmptied || isOrderDeleted) {
 				setCartState({
 					accountId,
+					channel: {channel},
 					id,
 					summary: {itemsQuantity: 0},
 				});
 			}
 		},
-		[cartState.accountId, cartState.id, setCartState]
+		[cartState.accountId, cartState.id, channel, setCartState]
 	);
 
 	const updateCartModel = useCallback(
@@ -180,11 +187,14 @@ function MiniCart({
 	}, [orderId, updateCartModel]);
 
 	useEffect(() => {
-		Liferay.on(CURRENT_ACCOUNT_UPDATED, resetCartState);
 		Liferay.on(CART_RESET, resetCartState);
+		Liferay.on(CURRENT_ACCOUNT_UPDATED, resetCartState);
+		Liferay.on(CURRENT_ORDER_DELETED, resetCartState);
 
 		return () => {
+			Liferay.detach(CART_RESET, resetCartState);
 			Liferay.detach(CURRENT_ACCOUNT_UPDATED, resetCartState);
+			Liferay.detach(CURRENT_ORDER_DELETED, resetCartState);
 		};
 	}, [resetCartState]);
 

@@ -27,31 +27,34 @@ const PendingOrdersFDSPropsTransformer = (props) => ({
 					),
 					cartId
 				)}\n${Liferay.Language.get('this-operation-cannot-be-undone')}`,
-				onConfirm: () =>
-					DeliveryCartAPI.deleteCartById(cartId)
-						.then(() => {
-							loadData();
+				onConfirm: (isConfirmed = false) => {
+					if (isConfirmed) {
+						DeliveryCartAPI.deleteCartById(cartId)
+							.then(() => {
+								loadData();
 
-							openToast({
-								message: Liferay.Language.get(
-									'your-request-completed-successfully'
-								),
-								type: 'success',
-							});
+								openToast({
+									message: Liferay.Language.get(
+										'your-request-completed-successfully'
+									),
+									type: 'success',
+								});
 
-							Liferay.fire(commerceEvents.CART_RESET, {
-								accountId,
-								id: cartId,
+								Liferay.fire(commerceEvents.CART_RESET, {
+									accountId,
+									id: cartId,
+								});
+							})
+							.catch(() => {
+								openToast({
+									message: Liferay.Language.get(
+										'an-unexpected-error-occurred'
+									),
+									type: 'danger',
+								});
 							});
-						})
-						.catch(() => {
-							openToast({
-								message: Liferay.Language.get(
-									'an-unexpected-error-occurred'
-								),
-								type: 'danger',
-							});
-						}),
+					}
+				},
 				title: sub(Liferay.Language.get('delete-order-x'), cartId),
 			});
 		}
@@ -120,36 +123,64 @@ const PendingOrdersFDSPropsTransformer = (props) => ({
 			data: {id: actionId},
 		},
 		loadData,
-		selectedData: {items},
+		selectedData: {items: selectedCarts},
 	}) => {
 		if (actionId === 'delete') {
-			DeliveryCartAPI.deleteCartsById(items)
-				.then(() => {
-					setTimeout(() => {
-						loadData();
+			openConfirmModal({
+				message: `${Liferay.Language.get(
+					'are-you-sure-you-want-to-delete-the-selected-orders'
+				)}\n${Liferay.Language.get('this-operation-cannot-be-undone')}`,
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						DeliveryCartAPI.deleteCartsById(selectedCarts)
+							.then(() => {
+								setTimeout(() => {
+									loadData();
 
-						openToast({
-							message: Liferay.Language.get(
-								'your-request-completed-successfully'
-							),
-							type: 'success',
-						});
+									openToast({
+										message: Liferay.Language.get(
+											'your-request-completed-successfully'
+										),
+										type: 'success',
+									});
 
-						Liferay.fire(commerceEvents.CART_RESET, {
-							accountId: props.additionalProps.accountId,
-						});
-					}, 500);
-				})
-				.catch((error) => {
-					openToast({
-						message:
-							error.message ||
-							Liferay.Language.get(
-								'an-unexpected-error-occurred'
-							),
-						type: 'danger',
-					});
-				});
+									const {orderId: activeCart} =
+										Liferay?.CommerceContext?.order;
+
+									const includesActiveCart =
+										!!selectedCarts.find(
+											({id}) => id === activeCart
+										);
+
+									if (includesActiveCart) {
+										Liferay.fire(
+											commerceEvents.CURRENT_ORDER_DELETED,
+											{
+												accountId: parseInt(
+													props.additionalProps
+														.accountId,
+													10
+												),
+												id: 0,
+												order: {id: 0},
+											}
+										);
+									}
+								}, 500);
+							})
+							.catch((error) => {
+								openToast({
+									message:
+										error.message ||
+										Liferay.Language.get(
+											'an-unexpected-error-occurred'
+										),
+									type: 'danger',
+								});
+							});
+					}
+				},
+			});
 		}
 	},
 });

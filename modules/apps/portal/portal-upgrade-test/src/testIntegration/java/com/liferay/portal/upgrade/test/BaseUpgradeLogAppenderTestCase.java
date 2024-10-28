@@ -63,6 +63,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -848,23 +849,28 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 						sql2));
 			}
 
-			Map<String, Long> sqlExecutionTimes = ReflectionTestUtil.invoke(
-				_upgradeRecorder, "getSQLExecutionTimes", new Class<?>[0]);
+			Set<UpgradeSQLRecorder.RunningSQLEntry> runningSQLEntries =
+				ReflectionTestUtil.invoke(
+					_upgradeRecorder, "getRunningSQLEntries", new Class<?>[0]);
 
-			for (Map.Entry<String, Long> entry : sqlExecutionTimes.entrySet()) {
-				Long duration = entry.getValue();
+			for (UpgradeSQLRecorder.RunningSQLEntry runningSQLEntry :
+					runningSQLEntries) {
 
-				String sql = entry.getKey();
+				long duration = runningSQLEntry.getDuration();
 
-				String[] parts = sql.split("\\|");
+				String sql = runningSQLEntry.getSQL();
+
+				String upgradeProcessClassName =
+					runningSQLEntry.getUpgradeProcessClassName();
 
 				_assertLogContextDiagnostics(
 					"upgrade.report.longest.running.sqls",
-					String.format("%s:%s:%d ms", parts[0], parts[1], duration));
+					String.format(
+						"%s:%s:%d ms", upgradeProcessClassName, sql, duration));
 				_assertReportDiagnostics(
 					String.format(
 						"Upgrade Process: %s\nSQL: %s\nDuration: %d ms",
-						parts[0], parts[1], duration));
+						upgradeProcessClassName, sql, duration));
 			}
 		}
 		finally {

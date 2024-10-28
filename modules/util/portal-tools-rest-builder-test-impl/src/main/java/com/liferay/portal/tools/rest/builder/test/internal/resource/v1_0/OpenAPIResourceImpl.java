@@ -87,6 +87,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(TestEntityResourceImpl.class);
 
+			add(TestEntityAddressResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

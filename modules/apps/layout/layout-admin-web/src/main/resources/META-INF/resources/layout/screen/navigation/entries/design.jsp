@@ -51,6 +51,10 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 	<h2 class="c-mb-4 text-7"><liferay-ui:message key="design" /></h2>
 
 	<liferay-frontend:edit-form-body>
+		<liferay-ui:error exception="<%= LayoutNameException.class %>">
+			<liferay-ui:message arguments="<%= layoutsAdminDisplayContext.getLayoutNameLabel() %>" key="please-add-a-x" />
+		</liferay-ui:error>
+
 		<c:if test="<%= layoutsAdminDisplayContext.isShowPublishedConfigurationMessage() %>">
 			<clay:alert
 				displayType="info"

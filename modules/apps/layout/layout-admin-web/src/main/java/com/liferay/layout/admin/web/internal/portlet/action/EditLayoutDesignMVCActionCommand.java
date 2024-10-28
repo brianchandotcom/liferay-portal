@@ -14,8 +14,11 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -25,6 +28,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -63,7 +67,8 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		_updateLayout(
-			actionRequest, _portal.getUploadPortletRequest(actionRequest));
+			actionRequest, actionResponse,
+			_portal.getUploadPortletRequest(actionRequest));
 	}
 
 	private void _addClientExtensionEntryRel(
@@ -176,14 +181,14 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _updateLayout(
-			ActionRequest actionRequest,
+			ActionRequest actionRequest, ActionResponse actionResponse,
 			UploadPortletRequest uploadPortletRequest)
 		throws Exception {
 
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
+		try {
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 			long stagingGroupId = ParamUtil.getLong(
@@ -324,6 +329,17 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
+		catch (LayoutNameException layoutNameException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(layoutNameException);
+			}
+
+			SessionErrors.add(actionRequest, LayoutNameException.class);
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			sendRedirect(actionRequest, actionResponse);
+		}
 		catch (ModelListenerException modelListenerException) {
 			if (modelListenerException.getCause() instanceof PortalException) {
 				throw (PortalException)modelListenerException.getCause();
@@ -332,6 +348,9 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 			throw modelListenerException;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditLayoutDesignMVCActionCommand.class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

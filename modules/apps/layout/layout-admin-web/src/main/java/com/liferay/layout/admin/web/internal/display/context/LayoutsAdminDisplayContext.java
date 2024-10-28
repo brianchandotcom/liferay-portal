@@ -736,6 +736,37 @@ public class LayoutsAdminDisplayContext {
 		return _keywords;
 	}
 
+	public String getLayoutNameLabel() {
+		Layout layout = getSelLayout();
+
+		if (layout.isTypeAssetDisplay()) {
+			return "display-page-name";
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+		}
+
+		if (layoutPageTemplateEntry == null) {
+			return "page-name";
+		}
+
+		if (Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
+
+			return "master-name";
+		}
+
+		return "page-template-name";
+	}
+
 	public PortletURL getLayoutScreenNavigationPortletURL(long plid) {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse

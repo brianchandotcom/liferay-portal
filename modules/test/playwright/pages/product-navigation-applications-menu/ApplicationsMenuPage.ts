@@ -22,6 +22,7 @@ export class ApplicationsMenuPage {
 	private readonly commerceReturnsMenuItem: Locator;
 	private readonly commerceShipmentsMenuItem: Locator;
 	private readonly commerceSpecificationsMenuItem: Locator;
+	private readonly componentsMenuItem: Locator;
 	private readonly controlPanelButton: Locator;
 	private readonly countriesManagementItem: Locator;
 	private readonly customFieldsMenuItem: Locator;
@@ -105,6 +106,10 @@ export class ApplicationsMenuPage {
 		this.commerceSpecificationsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Specifications',
+		});
+		this.componentsMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Components',
 		});
 		this.controlPanelButton = page.getByRole('tab', {
 			name: 'Control Panel',
@@ -255,6 +260,12 @@ export class ApplicationsMenuPage {
 	async goToClientExtensions() {
 		await this.goto();
 		await this.clientExtensionsLink.click();
+	}
+
+	async goToComponents() {
+		await this.goto();
+		await this.controlPanelButton.click();
+		await this.componentsMenuItem.click();
 	}
 
 	async goToCountriesManagement() {

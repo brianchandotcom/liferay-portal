@@ -6,18 +6,20 @@
 package com.liferay.frontend.taglib.clay.sample.web.internal.portlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HtmlParserUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.search.test.util.IndexerFixture;
+import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -25,8 +27,10 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
+
+import javax.portlet.PortletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,12 +56,6 @@ public class ClaySamplePortletTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_locale = _portal.getSiteDefaultLocale(_group);
-
-		_languageId = LocaleUtil.toLanguageId(_locale);
-
-		_layoutIndexerFixture = new IndexerFixture<>(Layout.class);
-
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
@@ -67,20 +65,26 @@ public class ClaySamplePortletTest {
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		Assert.assertNotNull(draftLayout);
-
-		ContentLayoutTestUtil.addPortletToLayout(
-			draftLayout,
-			"com_liferay_clay_sample_web_portlet_ClaySamplePortlet");
+		LayoutTestUtil.addPortletToLayout(
+			TestPropsValues.getUserId(), layout, _PORTLET_NAME, "column-1",
+			new HashMap<String, String[]>());
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"net.htmlparser.jericho", LoggerTestUtil.ERROR)) {
 
-			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+			PortletContainerTestUtil.Response response =
+				PortletContainerTestUtil.request(
+					PortletURLBuilder.create(
+						_portletURLFactory.create(
+							PortletContainerTestUtil.getHttpServletRequest(
+								_group, layout),
+							_PORTLET_NAME, layout.getPlid(),
+							PortletRequest.RENDER_PHASE)
+					).buildString());
+
+			HtmlParserUtil.extractText(response.getBody());
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -88,14 +92,16 @@ public class ClaySamplePortletTest {
 		}
 	}
 
+	private static final String _PORTLET_NAME =
+		"com_liferay_clay_sample_web_portlet_ClaySamplePortlet";
+
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private String _languageId;
-	private IndexerFixture<Layout> _layoutIndexerFixture;
-	private Locale _locale;
-
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private PortletURLFactory _portletURLFactory;
 
 }

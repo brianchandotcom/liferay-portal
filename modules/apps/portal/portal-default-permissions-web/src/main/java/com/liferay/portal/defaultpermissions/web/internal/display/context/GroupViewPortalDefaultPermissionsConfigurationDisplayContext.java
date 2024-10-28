@@ -9,7 +9,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.defaultpermissions.resource.PortalDefaultPermissionsModelResourceRegistry;
+import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResourceRegistry;
 import com.liferay.portal.defaultpermissions.web.internal.search.PortalDefaultPermissionsSearch;
 import com.liferay.portal.defaultpermissions.web.internal.search.PortalDefaultPermissionsSearchEntry;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
@@ -201,10 +201,9 @@ public class GroupViewPortalDefaultPermissionsConfigurationDisplayContext
 			_portalDefaultPermissionsModelResourceRegistry.
 				getPortalDefaultPermissionsModelResources(),
 			portalDefaultPermissionsModelResource -> {
-				ExtendedObjectClassDefinition.Scope scope =
-					portalDefaultPermissionsModelResource.getScope();
+				if (!ExtendedObjectClassDefinition.Scope.GROUP.equals(
+						portalDefaultPermissionsModelResource.getScope())) {
 
-				if (!scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
 					return null;
 				}
 

@@ -6,7 +6,7 @@
 package com.liferay.portal.defaultpermissions.web.internal.util.comparator;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
-import com.liferay.portal.defaultpermissions.resource.PortalDefaultPermissionsModelResource;
+import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResource;
 
 import java.io.Serializable;
 

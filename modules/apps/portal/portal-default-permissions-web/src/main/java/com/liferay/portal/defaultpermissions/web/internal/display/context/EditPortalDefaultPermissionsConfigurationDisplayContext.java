@@ -7,6 +7,9 @@ package com.liferay.portal.defaultpermissions.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.defaultpermissions.kernel.configuration.manager.PortalDefaultPermissionsConfigurationManager;
+import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResource;
+import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResourceRegistry;
+import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResourceRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -126,13 +129,15 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 		String[] actions = defaultPermissions.get(role.getName());
 
 		if (actions == null) {
-			if (Objects.equals(role.getName(), RoleConstants.GUEST)) {
+			if (RoleConstants.GUEST.equals(role.getName())) {
 				return ResourceActionsUtil.getModelResourceGuestDefaultActions(
 					getModelResource());
 			}
-			else if (Objects.equals(
-						role.getName(), RoleConstants.SITE_MEMBER)) {
-
+			else if (RoleConstants.OWNER.equals(role.getName())) {
+				return ResourceActionsUtil.getModelResourceOwnerDefaultActions(
+					getModelResource());
+			}
+			else if (RoleConstants.SITE_MEMBER.equals(role.getName())) {
 				return ResourceActionsUtil.getModelResourceGroupDefaultActions(
 					getModelResource());
 			}
@@ -148,9 +153,14 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 			return _groupDisabledActions;
 		}
 
-		_groupDisabledActions =
-			ResourceActionsUtil.getModelResourceGroupDefaultActions(
-				getModelResource());
+		if (_isAllowOverridePermissions()) {
+			_groupDisabledActions = Collections.emptyList();
+		}
+		else {
+			_groupDisabledActions =
+				ResourceActionsUtil.getModelResourceGroupDefaultActions(
+					getModelResource());
+		}
 
 		return _groupDisabledActions;
 	}
@@ -160,11 +170,15 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 			return _guestDisabledActions;
 		}
 
-		_guestDisabledActions = ListUtil.concat(
-			ResourceActionsUtil.getModelResourceGuestDefaultActions(
-				getModelResource()),
+		_guestDisabledActions =
 			ResourceActionsUtil.getModelResourceGuestUnsupportedActions(
-				getModelResource()));
+				getModelResource());
+
+		if (!_isAllowOverridePermissions()) {
+			_guestDisabledActions.addAll(
+				ResourceActionsUtil.getModelResourceGuestDefaultActions(
+					getModelResource()));
+		}
 
 		return _guestDisabledActions;
 	}
@@ -207,6 +221,23 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 		return _modelResource;
 	}
 
+	public List<String> getOwnerDisabledActions() {
+		if (_ownerDisabledActions != null) {
+			return _ownerDisabledActions;
+		}
+
+		if (_isAllowOverridePermissions()) {
+			_ownerDisabledActions = Collections.emptyList();
+		}
+		else {
+			_ownerDisabledActions =
+				ResourceActionsUtil.getModelResourceOwnerDefaultActions(
+					getModelResource());
+		}
+
+		return _ownerDisabledActions;
+	}
+
 	public SearchContainer<Role> getRoleSearchContainer() throws Exception {
 		if (_roleSearchContainer != null) {
 			return _roleSearchContainer;
@@ -224,7 +255,6 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 		Set<String> excludedRoleNamesSet = new HashSet<String>() {
 			{
 				add(RoleConstants.ADMINISTRATOR);
-				add(RoleConstants.OWNER);
 			}
 		};
 
@@ -429,6 +459,25 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 		return _roleTypesParam;
 	}
 
+	private boolean _isAllowOverridePermissions() {
+		if (_portalDefaultPermissionsModelResource != null) {
+			return _portalDefaultPermissionsModelResource.
+				isAllowOverridePermissions();
+		}
+
+		PortalDefaultPermissionsModelResourceRegistry
+			portalDefaultPermissionsModelResourceRegistry =
+				PortalDefaultPermissionsModelResourceRegistryUtil.
+					getPortalDefaultPermissionsModelResourceRegistry();
+
+		_portalDefaultPermissionsModelResource =
+			portalDefaultPermissionsModelResourceRegistry.
+				getPortalDefaultPermissionsModelResource(getModelResource());
+
+		return _portalDefaultPermissionsModelResource.
+			isAllowOverridePermissions();
+	}
+
 	private static final int[] _TYPES_DEPOT_AND_REGULAR = {
 		RoleConstants.TYPE_DEPOT, RoleConstants.TYPE_REGULAR
 	};
@@ -440,8 +489,11 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 	private List<String> _guestDisabledActions;
 	private final HttpServletRequest _httpServletRequest;
 	private String _modelResource;
+	private List<String> _ownerDisabledActions;
 	private final PortalDefaultPermissionsConfigurationManager
 		_portalDefaultPermissionsConfigurationManager;
+	private PortalDefaultPermissionsModelResource
+		_portalDefaultPermissionsModelResource;
 	private String _portletResource;
 	private final RenderRequest _renderRequest;
 	private Long _resourceGroupId;

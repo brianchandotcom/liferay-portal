@@ -6,7 +6,7 @@
 package com.liferay.portal.defaultpermissions.web.internal.resource;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.defaultpermissions.resource.PortalDefaultPermissionsModelResource;
+import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResource;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,8 +34,13 @@ public class LayoutPortalDefaultPermissionsModelResource
 	}
 
 	@Override
-	public ExtendedObjectClassDefinition.Scope getScope() {
-		return ExtendedObjectClassDefinition.Scope.GROUP;
+	public String getScope() {
+		return ExtendedObjectClassDefinition.Scope.GROUP.toString();
+	}
+
+	@Override
+	public boolean isAllowOverridePermissions() {
+		return true;
 	}
 
 }

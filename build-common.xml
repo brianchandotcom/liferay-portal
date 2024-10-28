@@ -1877,7 +1877,7 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 						<arg value="--build-file=${project.dir}/modules/util.gradle" />
 					</gradle-execute>
 
-					<retry retrycount="5" retrydelay="10000">
+					<retry retrycount="5" retrydelay="30000">
 						<gradle-execute dir="${project.dir}/modules" task=":portalYarnInstall" />
 					</retry>
 

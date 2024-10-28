@@ -200,20 +200,20 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 			ServiceTracker<Object, Object> serviceTracker)
 		throws Exception {
 
-		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
-			_batchEngineTaskItemDelegateProvider.toBatchEngineTaskItemDelegate(
-				service);
+		int importStrategy =
+			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL;
 
 		Map<String, Serializable> parameters =
 			batchEngineUnitConfiguration.getParameters();
-
-		int importStrategy =
-			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL;
 
 		if (Validator.isNotNull(parameters.get("importStrategy"))) {
 			importStrategy = BatchEngineImportTaskConstants.getImportStrategy(
 				(String)parameters.get("importStrategy"));
 		}
+
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
+			_batchEngineTaskItemDelegateProvider.toBatchEngineTaskItemDelegate(
+				service);
 
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(

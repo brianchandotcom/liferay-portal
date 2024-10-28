@@ -36,16 +36,16 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 
 		Document document = Jsoup.parse(html);
 
-		Element body = document.body();
+		Element bodyElement = document.body();
 
 		boolean containsBodyTag = _containsBodyTag(html);
 
 		if (containsBodyTag) {
-			_extractInlineHandlers(body, sb, recursive);
+			_extractInlineHandlers(bodyElement, sb, recursive);
 		}
 		else {
-			for (Element child : body.children()) {
-				_extractInlineHandlers(child, sb, recursive);
+			for (Element childElement : bodyElement.children()) {
+				_extractInlineHandlers(childElement, sb, recursive);
 			}
 		}
 
@@ -58,13 +58,13 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 		element.attr("nonce", nonce);
 		element.html(sb.toString());
 
-		body.appendChild(element);
+		bodyElement.appendChild(element);
 
 		if (containsBodyTag) {
-			return body.outerHtml();
+			return bodyElement.outerHtml();
 		}
 
-		return body.html();
+		return bodyElement.html();
 	}
 
 	private boolean _containsBodyTag(String html) {

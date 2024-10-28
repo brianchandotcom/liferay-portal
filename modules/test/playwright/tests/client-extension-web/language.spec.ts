@@ -15,20 +15,24 @@ const EXPECTED_LANGUAGE_KEY: TLanguageKey = {
 	key: 'do-you-like-to-eat-pizza-with-anchovies',
 	translations: [
 		{
-			languageId: 'de-DE',
-			value: 'Magst du es, Pizza mit Sardellen zu essen?',
-		},
-		{
 			languageId: 'en-US',
 			value: 'Do you like to eat pizza with anchovies?',
 		},
 		{
-			languageId: 'hu-HU',
-			value: 'Szereted a pizzát szardellával enni?',
+			languageId: 'es-AR',
+			value: '¿Te gusta comer pizza con anchoas?',
 		},
 		{
 			languageId: 'ja-JP',
 			value: 'アンチョビ入りのピザは好きですか？',
+		},
+		{
+			languageId: 'pt-BR',
+			value: 'Você gosta de comer pizza com anchovas?',
+		},
+		{
+			languageId: 'pt-PT',
+			value: 'Você gosta de comer pizza com anchovas?',
 		},
 	],
 };

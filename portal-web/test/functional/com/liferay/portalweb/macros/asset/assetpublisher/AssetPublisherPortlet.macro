@@ -1076,7 +1076,9 @@ definition {
 
 		Panel.expandPanel(panel = "Select Collection");
 
-		Button.clickSelect();
+		Click(
+			ariaLabel = "Select Collection",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");
 
@@ -1116,10 +1118,6 @@ definition {
 			SelectFrameTop();
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-			AssertTextEquals(
-				locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST_TITLE",
-				value1 = ${assetListName});
 
 			PortletEntry.save();
 

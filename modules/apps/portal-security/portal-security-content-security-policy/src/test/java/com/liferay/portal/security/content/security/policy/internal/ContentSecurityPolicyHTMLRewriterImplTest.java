@@ -47,7 +47,7 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 	}
 
 	@Test
-	public void testRewriteInlineEventHandlersMantainsIdWhenPresent() {
+	public void testRewriteInlineEventHandlersWithId() {
 		String html = _rewriteInlineEventHandlers(
 			"<div id=\"TEST_ID\" onclick=\"alert(1);\">hey</div>", "TEST_NONCE",
 			false);
@@ -58,8 +58,21 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 	}
 
 	@Test
-	public void testRewriteInlineEventHandlersPassingBodyTag() {
+	public void testRewriteInlineEventHandlersWithBody() {
 		String html = _rewriteInlineEventHandlers(
+			"<BODY onclick=\"alert(1);\">hey</BODY>", "TEST_NONCE", false);
+
+		Assert.assertTrue(_matches(html, ".*</body>"));
+		Assert.assertTrue(
+			_matches(html, ".*<script nonce=\"TEST_NONCE\">.*</script>.*"));
+		Assert.assertTrue(
+			_matches(
+				html,
+				".*document\\.body\\.onclick=" +
+					"function\\(event\\)\\{alert\\(1\\);}.*"));
+		Assert.assertTrue(_matches(html, "<body>.*"));
+
+		html = _rewriteInlineEventHandlers(
 			"<body onclick=\"alert(1);\" onchange=\"alert(2);\">hey</body>",
 			"TEST_NONCE", false);
 
@@ -80,23 +93,7 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 	}
 
 	@Test
-	public void testRewriteInlineEventHandlersPassingUpperCaseBodyTag() {
-		String html = _rewriteInlineEventHandlers(
-			"<BODY onclick=\"alert(1);\">hey</BODY>", "TEST_NONCE", false);
-
-		Assert.assertTrue(_matches(html, ".*</body>"));
-		Assert.assertTrue(
-			_matches(html, ".*<script nonce=\"TEST_NONCE\">.*</script>.*"));
-		Assert.assertTrue(
-			_matches(
-				html,
-				".*document\\.body\\.onclick=" +
-					"function\\(event\\)\\{alert\\(1\\);}.*"));
-		Assert.assertTrue(_matches(html, "<body>.*"));
-	}
-
-	@Test
-	public void testRewriteInlineEventHandlersProcessesMultipleTopNodes() {
+	public void testRewriteInlineEventHandlersWithMultipleTopNodes() {
 		String html = _rewriteInlineEventHandlers(
 			"<div onclick=\"alert(1);\">hey</div><div onclick=\"alert(2);\">" +
 				"hey</div>",

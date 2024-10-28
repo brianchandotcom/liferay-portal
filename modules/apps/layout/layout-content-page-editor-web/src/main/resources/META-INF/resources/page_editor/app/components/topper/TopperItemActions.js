@@ -15,10 +15,7 @@ import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {PORTLET_DEFAULT_ACTIONS} from '../../config/constants/portletDefaultActions';
-import {
-	useCopiedItemIds,
-	useSetCopiedItemIds,
-} from '../../contexts/ClipboardContext';
+import {useClipboard, useSetClipboard} from '../../contexts/ClipboardContext';
 import {
 	useSelectItem,
 	useSelectMultipleItems,
@@ -50,13 +47,14 @@ import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
 import hasDropZoneChild from '../layout_data_items/hasDropZoneChild';
 
 export default function TopperItemActions({disabled, item}) {
-	const copiedItemIds = useCopiedItemIds();
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.itemId);
 	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
-	const setCopiedItemIds = useSetCopiedItemIds();
 	const getWidgets = useGetWidgets();
+
+	const clipboard = useClipboard();
+	const setClipboard = useSetClipboard();
 
 	const selectItems = Liferay.FeatureFlags['LPD-18221']
 		? selectMultipleItems
@@ -135,7 +133,7 @@ export default function TopperItemActions({disabled, item}) {
 		) {
 			items.push({
 				action: () => {
-					setCopiedItemIds([item.itemId]);
+					setClipboard([item.itemId]);
 					dispatch(
 						deleteItem({
 							itemIds: [item.itemId],
@@ -157,7 +155,7 @@ export default function TopperItemActions({disabled, item}) {
 				)
 			) {
 				items.push({
-					action: () => setCopiedItemIds([item.itemId]),
+					action: () => setClipboard([item.itemId]),
 					icon: 'copy',
 					isBetaFeature: true,
 					label: Liferay.Language.get('copy'),
@@ -194,12 +192,12 @@ export default function TopperItemActions({disabled, item}) {
 			items.push({
 				action: () => {
 					if (
-						copiedItemIds.every(
-							(copiedItemId) =>
-								!!layoutData.items[copiedItemId] &&
+						clipboard.every(
+							(itemId) =>
+								!!layoutData.items[itemId] &&
 								!!item &&
 								canBeCopied(
-									copiedItemId,
+									itemId,
 									fragmentEntryLinks,
 									item.itemId,
 									layoutData,
@@ -209,14 +207,14 @@ export default function TopperItemActions({disabled, item}) {
 					) {
 						dispatch(
 							pasteItem({
-								copiedItemIds,
+								clipboard,
 								parentItemId: item.itemId,
 								selectItems,
 							})
 						);
 					}
 				},
-				disabled: !copiedItemIds?.length,
+				disabled: !clipboard?.length,
 				icon: 'paste',
 				isBetaFeature: true,
 				label: Liferay.Language.get('paste'),
@@ -273,7 +271,7 @@ export default function TopperItemActions({disabled, item}) {
 
 		return items;
 	}, [
-		copiedItemIds,
+		clipboard,
 		dispatch,
 		fragmentEntryLink,
 		fragmentEntryLinks,
@@ -284,7 +282,7 @@ export default function TopperItemActions({disabled, item}) {
 		portletActions,
 		portletId,
 		selectedViewportSize,
-		setCopiedItemIds,
+		setClipboard,
 		selectItems,
 	]);
 

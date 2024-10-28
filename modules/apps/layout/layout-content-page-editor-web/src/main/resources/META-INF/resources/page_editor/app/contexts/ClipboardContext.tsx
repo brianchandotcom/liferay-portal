@@ -5,29 +5,30 @@
 
 import React, {ReactNode, useCallback, useContext, useState} from 'react';
 
+import {LayoutDataItem} from '../../types/layout_data/LayoutData';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useSelectorRef} from './StoreContext';
 
-type ItemIds = [];
+type Clipboard = Array<LayoutDataItem['itemId']>;
 
 const INITIAL_STATE: {
-	copiedItemIds: ItemIds;
-	setCopiedItemIds: (itemIds: ItemIds) => void;
+	clipboard: Clipboard;
+	setClipboard: (itemIds: Clipboard) => void;
 } = {
-	copiedItemIds: [],
-	setCopiedItemIds: () => [],
+	clipboard: [],
+	setClipboard: () => [],
 };
 
 const ClipboardContext = React.createContext(INITIAL_STATE);
 
 function ClipboardContextProvider({children}: {children: ReactNode}) {
-	const [copiedItemIds, setCopiedItemIds] = useState<ItemIds>([]);
+	const [clipboard, setClipboard] = useState<Clipboard>([]);
 
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 
-	const updateCopiedItemIds = useCallback(
-		(itemIds: ItemIds) => {
-			const nextItemIds: ItemIds = [];
+	const updateClipboard = useCallback(
+		(itemIds: Clipboard) => {
+			const nextItemIds = [];
 
 			for (const itemId of itemIds) {
 				const item = layoutDataRef.current?.items[itemId];
@@ -45,7 +46,7 @@ function ClipboardContextProvider({children}: {children: ReactNode}) {
 					nextItemIds.push(itemId);
 				}
 
-				setCopiedItemIds(nextItemIds);
+				setClipboard(nextItemIds);
 			}
 		},
 		[layoutDataRef]
@@ -54,8 +55,8 @@ function ClipboardContextProvider({children}: {children: ReactNode}) {
 	return (
 		<ClipboardContext.Provider
 			value={{
-				copiedItemIds,
-				setCopiedItemIds: updateCopiedItemIds,
+				clipboard,
+				setClipboard: updateClipboard,
 			}}
 		>
 			{children}
@@ -63,12 +64,12 @@ function ClipboardContextProvider({children}: {children: ReactNode}) {
 	);
 }
 
-function useCopiedItemIds() {
-	return useContext(ClipboardContext).copiedItemIds;
+function useClipboard() {
+	return useContext(ClipboardContext).clipboard;
 }
 
-function useSetCopiedItemIds() {
-	return useContext(ClipboardContext).setCopiedItemIds;
+function useSetClipboard() {
+	return useContext(ClipboardContext).setClipboard;
 }
 
-export {ClipboardContextProvider, useCopiedItemIds, useSetCopiedItemIds};
+export {ClipboardContextProvider, useClipboard, useSetClipboard};

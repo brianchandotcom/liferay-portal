@@ -21,10 +21,7 @@ import {
 	Z_KEY_CODE,
 } from '../config/constants/keyboardCodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {
-	useCopiedItemIds,
-	useSetCopiedItemIds,
-} from '../contexts/ClipboardContext';
+import {useClipboard, useSetClipboard} from '../contexts/ClipboardContext';
 import {
 	useActiveItemIds,
 	useActiveItemType,
@@ -82,19 +79,20 @@ export default function ShortcutManager() {
 	const activeItemIds = useActiveItemIds();
 	const activeItemType = useActiveItemType();
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
-	const copiedItemIds = useCopiedItemIds();
 	const dispatch = useDispatch();
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 	const openShortcutModal = useOpenShortcutModal();
 	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
-	const setCopiedItemIds = useSetCopiedItemIds();
 	const setEditedNodeId = useSetEditedNodeId();
 	const setOpenShortcutModal = useSetOpenShortcutModal();
 	const state = useSelector((state) => state);
 	const sidebarHidden = state.sidebar.hidden;
 	const {onRedo, onUndo} = useUndoRedoActions();
 	const getWidgets = useGetWidgets();
+
+	const clipboard = useClipboard();
+	const setClipboard = useSetClipboard();
 
 	const selectItems = Liferay.FeatureFlags['LPD-18221']
 		? selectMultipleItems
@@ -118,11 +116,11 @@ export default function ShortcutManager() {
 	);
 
 	const copy = () => {
-		setCopiedItemIds(activeItemIds);
+		setClipboard(activeItemIds);
 	};
 
 	const cut = () => {
-		setCopiedItemIds(activeItemIds);
+		setClipboard(activeItemIds);
 
 		dispatch(
 			deleteItem({
@@ -168,7 +166,7 @@ export default function ShortcutManager() {
 	const paste = () => {
 		dispatch(
 			pasteItem({
-				copiedItemIds,
+				clipboard,
 				parentItemId: getParentItemId(),
 				selectItems,
 			})
@@ -361,25 +359,25 @@ export default function ShortcutManager() {
 					!isInteractiveElement(document.activeElement) &&
 					canUpdatePageStructure &&
 					isOnlyOneParentSelected(activeItemIds) &&
-					!!copiedItemIds.length &&
-					copiedItemIds.every(
-						(copiedItemId) =>
-							!!layoutData.items[copiedItemId] &&
+					!!clipboard.length &&
+					clipboard.every(
+						(itemId) =>
+							!!layoutData.items[itemId] &&
 							!!layoutData.items[getParentItemId()] &&
 							canBeCopied(
-								copiedItemId,
+								itemId,
 								fragmentEntryLinks,
 								getParentItemId(),
 								layoutData,
 								getWidgets
 							)
 					) &&
-					copiedItemIds.every(
-						(copiedItemId) =>
-							!!layoutData.items[copiedItemId] &&
+					clipboard.every(
+						(itemId) =>
+							!!layoutData.items[itemId] &&
 							canBeDuplicated(
 								fragmentEntryLinks,
-								layoutData.items[copiedItemId],
+								layoutData.items[itemId],
 								layoutData,
 								getWidgets
 							)

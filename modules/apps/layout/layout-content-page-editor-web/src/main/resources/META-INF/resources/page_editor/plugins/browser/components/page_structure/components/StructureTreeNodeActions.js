@@ -18,8 +18,8 @@ import hasDropZoneChild from '../../../../../app/components/layout_data_items/ha
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {
-	useCopiedItemIds,
-	useSetCopiedItemIds,
+	useClipboard,
+	useSetClipboard,
 } from '../../../../../app/contexts/ClipboardContext';
 import {
 	useSelectItem,
@@ -142,15 +142,16 @@ export default function StructureTreeNodeActions({disabled, item, visible}) {
 }
 
 const ActionList = ({item, setActive, setOpenSaveModal}) => {
-	const copiedItemIds = useCopiedItemIds();
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.id);
 	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
-	const setCopiedItemIds = useSetCopiedItemIds();
 	const setEditedNodeId = useSetEditedNodeId();
 	const setText = useSetMovementText();
 	const getWidgets = useGetWidgets();
+
+	const clipboard = useClipboard();
+	const setClipboard = useSetClipboard();
 
 	const selectItems = Liferay.FeatureFlags['LPD-18221']
 		? selectMultipleItems
@@ -235,7 +236,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		) {
 			items.push({
 				action: () => {
-					setCopiedItemIds([item.id]);
+					setClipboard([item.id]);
 					dispatch(
 						deleteItem({
 							itemIds: [item.id],
@@ -261,7 +262,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		) {
 			items.push({
 				action: () => {
-					setCopiedItemIds([item.id]);
+					setClipboard([item.id]);
 
 					setText(Liferay.Language.get('item-copied'));
 				},
@@ -305,12 +306,12 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 			items.push({
 				action: () => {
 					if (
-						copiedItemIds.every(
-							(copiedItemId) =>
-								!!layoutData.items[copiedItemId] &&
+						clipboard.every(
+							(itemId) =>
+								!!layoutData.items[itemId] &&
 								!!item &&
 								canBeCopied(
-									copiedItemId,
+									itemId,
 									fragmentEntryLinks,
 									item.id,
 									layoutData,
@@ -320,7 +321,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 					) {
 						dispatch(
 							pasteItem({
-								copiedItemIds,
+								clipboard,
 								parentItemId: item.id,
 								selectItems,
 							})
@@ -329,7 +330,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 						setText(Liferay.Language.get('item-pasted'));
 					}
 				},
-				disabled: !copiedItemIds?.length,
+				disabled: !clipboard?.length,
 				icon: 'paste',
 				isBetaFeature: true,
 				label: Liferay.Language.get('paste'),
@@ -368,7 +369,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 
 		return items;
 	}, [
-		copiedItemIds,
+		clipboard,
 		dispatch,
 		fragmentEntryLinks,
 		getWidgets,
@@ -378,7 +379,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		layoutDataItem,
 		selectedViewportSize,
 		selectItem,
-		setCopiedItemIds,
+		setClipboard,
 		setEditedNodeId,
 		setOpenSaveModal,
 		setText,

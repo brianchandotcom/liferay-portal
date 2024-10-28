@@ -12,7 +12,7 @@ import React from 'react';
 import hasDropZoneChild from '../../../../../app/components/layout_data_items/hasDropZoneChild';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes';
-import {useSetCopiedItemIds} from '../../../../../app/contexts/ClipboardContext';
+import {useSetClipboard} from '../../../../../app/contexts/ClipboardContext';
 import {useSelectMultipleItems} from '../../../../../app/contexts/ControlsContext';
 import {useSetMovementSources} from '../../../../../app/contexts/KeyboardMovementContext';
 import {
@@ -39,7 +39,7 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 		(state) => state.selectedViewportSize
 	);
 	const selectItems = useSelectMultipleItems();
-	const setCopiedItemIds = useSetCopiedItemIds();
+	const setClipboard = useSetClipboard();
 	const setMovementSources = useSetMovementSources();
 	const getWidgets = useGetWidgets();
 
@@ -101,7 +101,7 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 		{
 			isBetaFeature: true,
 			label: Liferay.Language.get('copy'),
-			onClick: () => setCopiedItemIds(activeItemIds),
+			onClick: () => setClipboard(activeItemIds),
 			symbolLeft: 'copy',
 		},
 		{
@@ -109,7 +109,7 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 			label: Liferay.Language.get('cut'),
 			onClick: () => {
 				if (itemsCanBeDeleted()) {
-					setCopiedItemIds(activeItemIds);
+					setClipboard(activeItemIds);
 					dispatch(
 						deleteItem({
 							itemIds: activeItemIds,

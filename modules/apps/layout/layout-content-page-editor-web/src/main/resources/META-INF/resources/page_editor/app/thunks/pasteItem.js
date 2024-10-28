@@ -11,7 +11,7 @@ import sortItemIds from '../utils/sortItemIds';
 import filterSelectedItems from './filterSelectedItems';
 
 export default function pasteItem({
-	copiedItemIds = [],
+	clipboard = [],
 	parentItemId,
 	selectItems = () => {},
 }) {
@@ -20,7 +20,7 @@ export default function pasteItem({
 
 		FragmentService.pasteItem({
 			itemIds: sortItemIds(
-				filterSelectedItems(copiedItemIds, layoutData.items),
+				filterSelectedItems(clipboard, layoutData.items),
 				layoutData
 			),
 			onNetworkStatus: dispatch,

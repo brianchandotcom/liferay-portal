@@ -12,7 +12,7 @@ import React, {useRef} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
-import {useCopiedItemIds} from '../../contexts/ClipboardContext';
+import {useClipboard} from '../../contexts/ClipboardContext';
 import {
 	useActiveItemIds,
 	useHoverItem,
@@ -258,7 +258,7 @@ const ActivableTopperEmpty = ({
 };
 
 const TopperEmptyLabel = ({isActive, isHovered, item, itemElement}) => {
-	const copiedItemIds = useCopiedItemIds();
+	const clipboard = useClipboard();
 	const activeItemIds = useActiveItemIds();
 
 	const selectItems = useSelectMultipleItems();
@@ -315,19 +315,19 @@ const TopperEmptyLabel = ({isActive, isHovered, item, itemElement}) => {
 						>
 							<ClayDropDown.ItemList>
 								<ClayDropDown.Item
-									disabled={!copiedItemIds?.length}
+									disabled={!clipboard?.length}
 									onClick={(event) => {
 										event.stopPropagation();
 
 										if (
-											copiedItemIds.every(
-												(copiedItemId) =>
+											clipboard.every(
+												(itemId) =>
 													!!layoutData.items[
-														copiedItemId
+														itemId
 													] &&
 													!!item &&
 													canBeCopied(
-														copiedItemId,
+														itemId,
 														fragmentEntryLinks,
 														item.itemId,
 														layoutData,
@@ -337,7 +337,7 @@ const TopperEmptyLabel = ({isActive, isHovered, item, itemElement}) => {
 										) {
 											dispatch(
 												pasteItem({
-													copiedItemIds,
+													clipboard,
 													parentItemId: item.itemId,
 													selectItems,
 												})

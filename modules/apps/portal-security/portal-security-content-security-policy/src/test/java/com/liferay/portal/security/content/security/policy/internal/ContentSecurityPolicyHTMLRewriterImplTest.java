@@ -27,10 +27,9 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 
 	@Test
 	public void testRewriteInlineEventHandlers() {
-		String html =
-			"<div onclick=\"alert(1);\" onchange=\"alert(2);\">hey</div>";
-
-		html = _rewriteInlineEventHandlers(html, "TEST_NONCE", false);
+		String html = _rewriteInlineEventHandlers(
+			"<div onclick=\"alert(1);\" onchange=\"alert(2);\">hey</div>",
+			"TEST_NONCE", false);
 
 		Assert.assertTrue(
 			_matches(html, ".*<script nonce=\"TEST_NONCE\">.*</script>"));
@@ -49,9 +48,9 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 
 	@Test
 	public void testRewriteInlineEventHandlersMantainsIdWhenPresent() {
-		String html = "<div id=\"TEST_ID\" onclick=\"alert(1);\">hey</div>";
-
-		html = _rewriteInlineEventHandlers(html, "TEST_NONCE", false);
+		String html = _rewriteInlineEventHandlers(
+			"<div id=\"TEST_ID\" onclick=\"alert(1);\">hey</div>", "TEST_NONCE",
+			false);
 
 		Assert.assertTrue(
 			_matches(html, ".*document\\.getElementById\\('TEST_ID'\\).*"));
@@ -60,10 +59,9 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 
 	@Test
 	public void testRewriteInlineEventHandlersPassingBodyTag() {
-		String html =
-			"<body onclick=\"alert(1);\" onchange=\"alert(2);\">hey</body>";
-
-		html = _rewriteInlineEventHandlers(html, "TEST_NONCE", false);
+		String html = _rewriteInlineEventHandlers(
+			"<body onclick=\"alert(1);\" onchange=\"alert(2);\">hey</body>",
+			"TEST_NONCE", false);
 
 		Assert.assertTrue(_matches(html, ".*</body>"));
 		Assert.assertTrue(
@@ -83,9 +81,8 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 
 	@Test
 	public void testRewriteInlineEventHandlersPassingUpperCaseBodyTag() {
-		String html = "<BODY onclick=\"alert(1);\">hey</BODY>";
-
-		html = _rewriteInlineEventHandlers(html, "TEST_NONCE", false);
+		String html = _rewriteInlineEventHandlers(
+			"<BODY onclick=\"alert(1);\">hey</BODY>", "TEST_NONCE", false);
 
 		Assert.assertTrue(_matches(html, ".*</body>"));
 		Assert.assertTrue(
@@ -100,11 +97,10 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 
 	@Test
 	public void testRewriteInlineEventHandlersProcessesMultipleTopNodes() {
-		String html =
+		String html = _rewriteInlineEventHandlers(
 			"<div onclick=\"alert(1);\">hey</div><div onclick=\"alert(2);\">" +
-				"hey</div>";
-
-		html = _rewriteInlineEventHandlers(html, "TEST_NONCE", false);
+				"hey</div>",
+			"TEST_NONCE", false);
 
 		Assert.assertTrue(
 			_matches(

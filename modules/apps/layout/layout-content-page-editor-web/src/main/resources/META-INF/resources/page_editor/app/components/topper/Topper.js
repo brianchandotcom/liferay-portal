@@ -194,6 +194,7 @@ function TopperContent({
 	const {elementRef, isFocusable} = useLayoutKeyboardNavigation(item);
 
 	const isNotAllowed =
+		!isActive &&
 		multiSelectReady &&
 		activeItemIds.some((activeItemId) => item.itemId === activeItemId);
 

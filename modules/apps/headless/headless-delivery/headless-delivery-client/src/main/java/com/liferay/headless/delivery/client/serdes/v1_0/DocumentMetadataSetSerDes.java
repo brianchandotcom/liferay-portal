@@ -127,6 +127,16 @@ public class DocumentMetadataSetSerDes {
 			sb.append("]");
 		}
 
+		if (documentMetadataSet.getDataLayout() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dataLayout\": ");
+
+			sb.append(documentMetadataSet.getDataLayout());
+		}
+
 		if (documentMetadataSet.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -286,6 +296,15 @@ public class DocumentMetadataSetSerDes {
 				String.valueOf(documentMetadataSet.getDataDefinitionFields()));
 		}
 
+		if (documentMetadataSet.getDataLayout() == null) {
+			map.put("dataLayout", null);
+		}
+		else {
+			map.put(
+				"dataLayout",
+				String.valueOf(documentMetadataSet.getDataLayout()));
+		}
+
 		if (documentMetadataSet.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -388,6 +407,9 @@ public class DocumentMetadataSetSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "dataLayout")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
@@ -459,6 +481,12 @@ public class DocumentMetadataSetSerDes {
 
 					documentMetadataSet.setDataDefinitionFields(
 						dataDefinitionFieldsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dataLayout")) {
+				if (jsonParserFieldValue != null) {
+					documentMetadataSet.setDataLayout(
+						DataLayoutSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

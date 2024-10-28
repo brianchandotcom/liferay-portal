@@ -201,7 +201,7 @@ public abstract class BaseDocumentMetadataSetResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/document-metadata-sets' -d $'{"description": ___, "description_i18n": ___, "name": ___, "name_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/document-metadata-sets' -d $'{"dataLayout": ___, "description": ___, "description_i18n": ___, "name": ___, "name_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -553,7 +553,7 @@ public abstract class BaseDocumentMetadataSetResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/document-metadata-sets' -d $'{"description": ___, "description_i18n": ___, "name": ___, "name_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/document-metadata-sets' -d $'{"dataLayout": ___, "description": ___, "description_i18n": ___, "name": ___, "name_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

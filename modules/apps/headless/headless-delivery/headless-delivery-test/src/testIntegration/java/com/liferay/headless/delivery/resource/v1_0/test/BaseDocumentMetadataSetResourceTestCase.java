@@ -1252,6 +1252,14 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("dataLayout", additionalAssertFieldName)) {
+				if (documentMetadataSet.getDataLayout() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (documentMetadataSet.getDescription() == null) {
 					valid = false;
@@ -1437,6 +1445,17 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 				if (!Objects.deepEquals(
 						documentMetadataSet1.getDataDefinitionFields(),
 						documentMetadataSet2.getDataDefinitionFields())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dataLayout", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						documentMetadataSet1.getDataLayout(),
+						documentMetadataSet2.getDataLayout())) {
 
 					return false;
 				}
@@ -1686,6 +1705,11 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dataDefinitionFields")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("dataLayout")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

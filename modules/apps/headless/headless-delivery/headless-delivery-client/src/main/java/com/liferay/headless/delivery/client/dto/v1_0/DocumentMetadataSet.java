@@ -115,6 +115,27 @@ public class DocumentMetadataSet implements Cloneable, Serializable {
 
 	protected DataDefinitionField[] dataDefinitionFields;
 
+	public DataLayout getDataLayout() {
+		return dataLayout;
+	}
+
+	public void setDataLayout(DataLayout dataLayout) {
+		this.dataLayout = dataLayout;
+	}
+
+	public void setDataLayout(
+		UnsafeSupplier<DataLayout, Exception> dataLayoutUnsafeSupplier) {
+
+		try {
+			dataLayout = dataLayoutUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected DataLayout dataLayout;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}

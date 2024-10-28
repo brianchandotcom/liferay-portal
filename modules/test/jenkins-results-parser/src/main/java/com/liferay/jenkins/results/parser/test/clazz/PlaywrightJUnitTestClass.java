@@ -137,10 +137,10 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 
 	private static final String _SLAVE_LABEL_DEFAULT = "!master";
 
-	private static Long _averageDuration;
 	private static final Pattern _testFilePathPattern = Pattern.compile(
 		".+/playwright/tests/(?<specFilePath>.+)");
 
+	private Long _averageDuration;
 	private final Integer _minimumSlaveRAM;
 	private final String _slaveLabel;
 

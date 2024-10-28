@@ -43,7 +43,7 @@ public class CommerceServicePortalInstanceLifecycleListenerTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testDefaultRolePermissionsDoNotRevert() throws Exception {
+	public void testPortalInstanceRegistered() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
 		try {

@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
@@ -48,8 +49,8 @@ public class UpgradeRecorder {
 		return _errorMessages;
 	}
 
-	public List<String> getFailedSQLMessages() {
-		return UpgradeSQLRecorder.getFailedSQLMessages();
+	public List<UpgradeSQLRecorder.FailedSQLEntry> getFailedSQLEntries() {
+		return UpgradeSQLRecorder.getFailedSQLEntries();
 	}
 
 	public String getFinalSchemaVersion(String servletContextName) {
@@ -78,8 +79,8 @@ public class UpgradeRecorder {
 		return _result;
 	}
 
-	public Map<String, Long> getSQLExecutionTimes() {
-		return UpgradeSQLRecorder.getSQLExecutionTimes();
+	public Set<UpgradeSQLRecorder.RunningSQLEntry> getRunningSQLEntries() {
+		return UpgradeSQLRecorder.getRunningSQLEntries();
 	}
 
 	public String getType() {

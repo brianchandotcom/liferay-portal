@@ -58,25 +58,25 @@ public class CookiesDomainTest {
 	@Test
 	public void testDomain1() throws Exception {
 		Assert.assertEquals(
-			".cdn.liferay.com",
+			"cdn.liferay.com",
 			CookiesManagerUtil.getDomain("www.cdn.liferay.com"));
 		Assert.assertEquals(
-			".cdn.liferay.qld.gov.au",
+			"cdn.liferay.qld.gov.au",
 			CookiesManagerUtil.getDomain("www.cdn.liferay.qld.gov.au"));
 		Assert.assertEquals(
-			".liferay.com", CookiesManagerUtil.getDomain("liferay.com"));
+			"liferay.com", CookiesManagerUtil.getDomain("liferay.com"));
 		Assert.assertEquals(
-			".liferay.com", CookiesManagerUtil.getDomain("www.liferay.com"));
+			"liferay.com", CookiesManagerUtil.getDomain("www.liferay.com"));
 		Assert.assertEquals(
-			".liferay.qld.gov.au",
+			"liferay.qld.gov.au",
 			CookiesManagerUtil.getDomain("liferay.qld.gov.au"));
 		Assert.assertEquals(
-			".liferay.qld.gov.au",
+			"liferay.qld.gov.au",
 			CookiesManagerUtil.getDomain("www.liferay.qld.gov.au"));
 		Assert.assertEquals(
-			".liferay.test", CookiesManagerUtil.getDomain("liferay.test"));
+			"liferay.test", CookiesManagerUtil.getDomain("liferay.test"));
 		Assert.assertEquals(
-			".liferay.test", CookiesManagerUtil.getDomain("www.liferay.test"));
+			"liferay.test", CookiesManagerUtil.getDomain("www.liferay.test"));
 		Assert.assertEquals(
 			"127.0.0.1", CookiesManagerUtil.getDomain("127.0.0.1"));
 		Assert.assertNull(CookiesManagerUtil.getDomain("com"));
@@ -92,7 +92,7 @@ public class CookiesDomainTest {
 		mockHttpServletRequest.setServerName("www.liferay.com");
 
 		Assert.assertEquals(
-			".liferay.com",
+			"liferay.com",
 			CookiesManagerUtil.getDomain(mockHttpServletRequest));
 	}
 
@@ -131,7 +131,7 @@ public class CookiesDomainTest {
 
 		try {
 			Assert.assertEquals(
-				".liferay.com",
+				"liferay.com",
 				CookiesManagerUtil.getDomain(mockHttpServletRequest));
 		}
 		finally {

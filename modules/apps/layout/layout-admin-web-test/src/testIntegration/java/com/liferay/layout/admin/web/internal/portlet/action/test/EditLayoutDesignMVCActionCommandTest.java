@@ -8,6 +8,7 @@ package com.liferay.layout.admin.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
@@ -34,6 +36,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -44,6 +49,9 @@ import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
+
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -151,6 +159,72 @@ public class EditLayoutDesignMVCActionCommandTest {
 			updatedDraftLayout.getStyleBookEntryId());
 	}
 
+	@Test
+	@TestInfo("LPP-56406")
+	public void testEditLayoutPageTemplateEntryDesignWithLayoutWithoutName()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		draftLayout.setName(StringPool.BLANK);
+
+		draftLayout = _layoutLocalService.updateLayout(draftLayout);
+
+		Assert.assertTrue(
+			MapUtil.toString(draftLayout.getNameMap()),
+			MapUtil.isEmpty(draftLayout.getNameMap()));
+
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		mockMultipartHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
+
+		MockActionRequest mockActionRequest = _getMockActionRequest(
+			draftLayout);
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_updateLayout",
+			new Class<?>[] {
+				ActionRequest.class, ActionResponse.class,
+				UploadPortletRequest.class
+			},
+			mockActionRequest, new MockActionResponse(),
+			UploadTestUtil.createUploadPortletRequest(
+				UploadTestUtil.createUploadServletRequest(
+					mockMultipartHttpServletRequest, null, null),
+				null, RandomTestUtil.randomString()));
+
+		Assert.assertTrue(SessionErrors.isEmpty(mockActionRequest));
+
+		draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
+
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				draftLayout.getTypeSettingsProperty(
+					LayoutTypeSettingsConstants.
+						KEY_DESIGN_CONFIGURATION_MODIFIED)));
+
+		Map<Locale, String> nameMap = draftLayout.getNameMap();
+
+		Assert.assertEquals(MapUtil.toString(nameMap), 1, nameMap.size());
+
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getName(),
+			draftLayout.getName(_portal.getSiteDefaultLocale(_group)));
+	}
+
 	private MockActionRequest _getMockActionRequest(Layout layout)
 		throws Exception {
 
@@ -200,6 +274,9 @@ public class EditLayoutDesignMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/layout_admin/edit_layout_design")
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

@@ -60,7 +60,7 @@
 														"fragmentImage": {
 															"url": {
 																"value_i18n": {
-																	"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/Commerce/site_logo.svg$]"
+																	"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/Commerce/site_logo.png$]"
 																}
 															}
 														},

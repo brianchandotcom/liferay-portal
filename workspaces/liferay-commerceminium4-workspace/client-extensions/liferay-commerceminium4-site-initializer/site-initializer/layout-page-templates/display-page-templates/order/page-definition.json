@@ -171,7 +171,7 @@
 																							},
 																							"url": {
 																								"value_i18n": {
-																									"en_US": "[$DOCUMENT_URL:site-initializer/documents/group/Commerce/Page Icons/orders.png$]"
+																									"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/Commerce/Page Icons/orders.png$]"
 																								}
 																							}
 																						},

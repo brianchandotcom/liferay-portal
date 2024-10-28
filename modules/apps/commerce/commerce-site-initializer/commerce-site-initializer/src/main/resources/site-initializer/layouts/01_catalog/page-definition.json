@@ -6,7 +6,7 @@
 					"cssClasses": [
 						"catalog-container"
 					],
-					"customCSS": ".[$FRAGMENT_CLASS$] {\n\n}\n\n.[$FRAGMENT_CLASS$] > .lfr-layout-structure-item-row {\noverflow: clip;\n}",
+					"customCSS": ".[$FRAGMENT_CLASS$] > .lfr-layout-structure-item-row:nth-child(1) {\noverflow: unset;\n}",
 					"fragmentStyle": {
 						"marginTop": "4"
 					},

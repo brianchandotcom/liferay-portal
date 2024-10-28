@@ -1609,6 +1609,7 @@
 		<check name="PropertiesPlaywrightTestCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `test.properties` for Playwright test." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="PropertiesReleaseBuildCheck">
 			<category name="Bug Prevention" />

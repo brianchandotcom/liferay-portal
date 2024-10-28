@@ -380,6 +380,11 @@ public class DDMIndexerImplTest {
 						return null;
 					}
 
+					@Override
+					public int[] getEmbeddingVectorDimensions() {
+						return new int[0];
+					}
+
 					public String getNodesString() {
 						return null;
 					}

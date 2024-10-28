@@ -631,7 +631,7 @@ public class CompanyLocalServiceDBPartitionTest
 							if (Objects.equals(
 									method.getName(), "getCreateTableSQL") &&
 								StringUtil.equalsIgnoreCase(
-									(String)args[2], "VirtualHost")) {
+									(String)args[3], "VirtualHost")) {
 
 								throw new Exception();
 							}

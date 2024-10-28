@@ -74,7 +74,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 				<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(title) %>">
-							<%= title %>
+							<%= HtmlUtil.escape(title) %>
 						</c:when>
 						<c:when test="<%= Validator.isNotNull(portlet.getDisplayName()) %>">
 							<%= portlet.getDisplayName() %>

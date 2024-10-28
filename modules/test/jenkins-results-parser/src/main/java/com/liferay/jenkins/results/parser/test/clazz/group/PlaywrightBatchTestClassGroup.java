@@ -135,7 +135,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected int getAxisCount(List<TestClass> testClasses) {
-		Long totalDuration = 0L;
+		long totalDuration = 0L;
 
 		for (TestClass testClass : testClasses) {
 			totalDuration += testClass.getAverageDuration();
@@ -150,11 +150,12 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			if (JenkinsResultsParserUtil.isInteger(jobPropertyValue)) {
 				recordJobProperty(jobProperty);
 
-				Long targetAxisTargetDuration = Long.parseLong(
+				long testBatchTargetAxisDuration = Long.parseLong(
 					jobPropertyValue);
 
-				Long axisCount =
-					Math.floorDiv(totalDuration, targetAxisTargetDuration) + 1;
+				long axisCount =
+					Math.floorDiv(totalDuration, testBatchTargetAxisDuration) +
+						1;
 
 				return Math.toIntExact(axisCount);
 			}

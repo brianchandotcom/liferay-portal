@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 
 import java.net.URL;
+import java.net.URLConnection;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -36,6 +37,8 @@ import javax.servlet.Servlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import javax.xml.bind.DatatypeConverter;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -274,6 +277,63 @@ public class AuthVerifierTest {
 				"/guestAllowed");
 
 		Assert.assertEquals("guest-allowed", URLUtil.toString(url));
+	}
+
+	@Test
+	public void testAllowGuestFailsForInvalidBasicAuth() throws Exception {
+		URL url = new URL(
+			"http://localhost:8080/o/auth-verifier-guest-allowed-true-test" +
+				"/guestAllowed");
+
+		URLConnection connection = url.openConnection();
+
+		String credentialsToken = DatatypeConverter.printBase64Binary(
+			"test@liferay.com:wrongpassword".getBytes());
+
+		String basicAuthToken = "Basic " + credentialsToken;
+
+		connection.setRequestProperty("Authorization", basicAuthToken);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN);
+			InputStream inputStream = connection.getInputStream()) {
+
+			Assert.fail();
+		}
+		catch (IOException ioException) {
+			String message = ioException.getMessage();
+
+			Assert.assertTrue(
+				message.startsWith("Server returned HTTP response code: 401"));
+		}
+	}
+
+	@Test
+	public void testAllowGuestFailsForInvalidOAuthToken() throws Exception {
+		URL url = new URL(
+			"http://localhost:8080/o/auth-verifier-guest-allowed-true-test" +
+				"/guestAllowed");
+
+		URLConnection connection = url.openConnection();
+
+		String oAuthToken =
+			"Authorization: Bearer " +
+				"3646534f4654396f6e565648315557534253613062673d3d";
+
+		connection.setRequestProperty("Authorization", oAuthToken);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN);
+			InputStream inputStream = connection.getInputStream()) {
+
+			Assert.fail();
+		}
+		catch (IOException ioException) {
+			String message = ioException.getMessage();
+
+			Assert.assertTrue(
+				message.startsWith("Server returned HTTP response code: 401"));
+		}
 	}
 
 	@Test

@@ -21,6 +21,7 @@ export function AddObjectFieldsDataToProperties({
 	const propertiesTreeViewItems = schemaProperties.map(
 		({
 			description,
+			externalReferenceCode,
 			id,
 			name,
 			objectFieldERC,
@@ -30,6 +31,7 @@ export function AddObjectFieldsDataToProperties({
 			if (type.key === 'record') {
 				return {
 					businessType: type.name,
+					externalReferenceCode,
 					id,
 					name,
 					type: 'trewViewItem',
@@ -83,6 +85,7 @@ export function AddObjectFieldsDataToProperties({
 					...((description || description === '') && {
 						description,
 					}),
+					externalReferenceCode,
 					id,
 					name,
 					objectDefinitionName: parentObjectDefinition?.name!,

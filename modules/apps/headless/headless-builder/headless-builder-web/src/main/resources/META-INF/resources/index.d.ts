@@ -263,6 +263,7 @@ interface TreeViewItemData {
 	businessType: ObjectFieldBusinessType;
 	children?: TreeViewItemData[];
 	description?: string;
+	externalReferenceCode?: string;
 	id?: number;
 	name: string;
 	objectDefinitionName: string;

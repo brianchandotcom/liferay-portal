@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.MasterLayoutException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -2909,7 +2910,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		String name = nameMap.get(LocaleUtil.getSiteDefault());
 
-		if (Validator.isNull(name)) {
+		if (Validator.isNull(name) && nameMap.isEmpty()) {
+			throw new LayoutNameException(
+				"Name is required for layout PLID " + layout.getPlid(),
+				LayoutNameException.REQUIRED);
+		}
+		else if (Validator.isNull(name)) {
 			List<String> values = new ArrayList<>(nameMap.values());
 
 			name = values.get(0);

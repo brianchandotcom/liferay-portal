@@ -6,6 +6,7 @@
 import hasDropZoneChild from '../components/layout_data_items/hasDropZoneChild';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import getWidget from '../utils/getWidget';
+import isStepper from './isStepper';
 
 export default function canBeDuplicated(
 	fragmentEntryLinks,
@@ -40,7 +41,7 @@ export default function canBeDuplicated(
 				}
 			}
 
-			if (fragmentEntryLink.fieldTypes?.includes('stepper')) {
+			if (isStepper(fragmentEntryLink)) {
 				return false;
 			}
 

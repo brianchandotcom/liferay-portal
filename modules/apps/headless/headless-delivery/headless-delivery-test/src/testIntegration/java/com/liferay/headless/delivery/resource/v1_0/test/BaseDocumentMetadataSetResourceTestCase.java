@@ -26,6 +26,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -269,6 +270,15 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/document-metadata-sets/batch".
+				replace("{assetLibraryId}", String.valueOf(assetLibraryId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
 		return expectedActions;
 	}
 
@@ -390,8 +400,8 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 				Long assetLibraryId, DocumentMetadataSet documentMetadataSet)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return documentMetadataSetResource.postAssetLibraryDocumentMetadataSet(
+			assetLibraryId, documentMetadataSet);
 	}
 
 	protected Long
@@ -406,6 +416,29 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostAssetLibraryDocumentMetadataSet() throws Exception {
+		DocumentMetadataSet randomDocumentMetadataSet =
+			randomDocumentMetadataSet();
+
+		DocumentMetadataSet postDocumentMetadataSet =
+			testPostAssetLibraryDocumentMetadataSet_addDocumentMetadataSet(
+				randomDocumentMetadataSet);
+
+		assertEquals(randomDocumentMetadataSet, postDocumentMetadataSet);
+		assertValid(postDocumentMetadataSet);
+	}
+
+	protected DocumentMetadataSet
+			testPostAssetLibraryDocumentMetadataSet_addDocumentMetadataSet(
+				DocumentMetadataSet documentMetadataSet)
+		throws Exception {
+
+		return documentMetadataSetResource.postAssetLibraryDocumentMetadataSet(
+			testGetAssetLibraryDocumentMetadataSetsPage_getAssetLibraryId(),
+			documentMetadataSet);
 	}
 
 	@Test
@@ -433,8 +466,8 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			testDeleteDocumentMetadataSet_addDocumentMetadataSet()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return documentMetadataSetResource.postSiteDocumentMetadataSet(
+			testGroup.getGroupId(), randomDocumentMetadataSet());
 	}
 
 	@Test
@@ -540,8 +573,8 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			testGetDocumentMetadataSet_addDocumentMetadataSet()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return documentMetadataSetResource.postSiteDocumentMetadataSet(
+			testGroup.getGroupId(), randomDocumentMetadataSet());
 	}
 
 	@Test
@@ -710,6 +743,15 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/document-metadata-sets/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
 		return expectedActions;
 	}
 
@@ -824,8 +866,8 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 				Long siteId, DocumentMetadataSet documentMetadataSet)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return documentMetadataSetResource.postSiteDocumentMetadataSet(
+			siteId, documentMetadataSet);
 	}
 
 	protected Long testGetSiteDocumentMetadataSetsPage_getSiteId()
@@ -921,12 +963,146 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		return testGraphQLDocumentMetadataSet_addDocumentMetadataSet();
 	}
 
+	@Test
+	public void testPostSiteDocumentMetadataSet() throws Exception {
+		DocumentMetadataSet randomDocumentMetadataSet =
+			randomDocumentMetadataSet();
+
+		DocumentMetadataSet postDocumentMetadataSet =
+			testPostSiteDocumentMetadataSet_addDocumentMetadataSet(
+				randomDocumentMetadataSet);
+
+		assertEquals(randomDocumentMetadataSet, postDocumentMetadataSet);
+		assertValid(postDocumentMetadataSet);
+	}
+
+	protected DocumentMetadataSet
+			testPostSiteDocumentMetadataSet_addDocumentMetadataSet(
+				DocumentMetadataSet documentMetadataSet)
+		throws Exception {
+
+		return documentMetadataSetResource.postSiteDocumentMetadataSet(
+			testGetSiteDocumentMetadataSetsPage_getSiteId(),
+			documentMetadataSet);
+	}
+
+	@Test
+	public void testGraphQLPostSiteDocumentMetadataSet() throws Exception {
+		DocumentMetadataSet randomDocumentMetadataSet =
+			randomDocumentMetadataSet();
+
+		DocumentMetadataSet documentMetadataSet =
+			testGraphQLDocumentMetadataSet_addDocumentMetadataSet(
+				randomDocumentMetadataSet);
+
+		Assert.assertTrue(
+			equals(randomDocumentMetadataSet, documentMetadataSet));
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
+	}
+
 	protected DocumentMetadataSet
 			testGraphQLDocumentMetadataSet_addDocumentMetadataSet()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLDocumentMetadataSet_addDocumentMetadataSet(
+			randomDocumentMetadataSet());
+	}
+
+	protected DocumentMetadataSet
+			testGraphQLDocumentMetadataSet_addDocumentMetadataSet(
+				DocumentMetadataSet documentMetadataSet)
+		throws Exception {
+
+		JSONDeserializer<DocumentMetadataSet> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(DocumentMetadataSet.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(documentMetadataSet));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteDocumentMetadataSet",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + testGroup.getGroupId() + "\"");
+								put("documentMetadataSet", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteDocumentMetadataSet"),
+			DocumentMetadataSet.class);
 	}
 
 	protected void assertContains(

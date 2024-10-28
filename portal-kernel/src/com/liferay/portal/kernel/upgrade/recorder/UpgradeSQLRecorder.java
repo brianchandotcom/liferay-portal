@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.upgrade.recorder;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.util.CallableStatementWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.ConnectionWrapper;
@@ -15,7 +16,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -27,9 +27,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * @author István András Dézsi
@@ -165,24 +165,117 @@ public class UpgradeSQLRecorder {
 		};
 	}
 
-	public static List<String> getFailedSQLMessages() {
-		return _failedSQLMessages;
+	public static List<FailedSQLEntry> getFailedSQLEntries() {
+		return _failedSQLEntries;
 	}
 
-	public static Map<String, Long> getSQLExecutionTimes() {
-		return _sqlExecutionTimes;
+	public static Set<RunningSQLEntry> getRunningSQLEntries() {
+		return _runningSQLEntries;
 	}
 
 	public static void start() {
 		_enabled = true;
 
-		_failedSQLMessages.clear();
+		_failedSQLEntries.clear();
 
-		_sqlExecutionTimes.clear();
+		_runningSQLEntries.clear();
 	}
 
 	public static void stop() {
 		_enabled = false;
+	}
+
+	public static class FailedSQLEntry {
+
+		public FailedSQLEntry(String sql) {
+			this(StringPool.BLANK, sql);
+		}
+
+		public FailedSQLEntry(String message, String sql) {
+			_message = message;
+			_sql = sql;
+		}
+
+		public String getMessage() {
+			return _message;
+		}
+
+		public String getSQL() {
+			return _sql;
+		}
+
+		private final String _message;
+		private final String _sql;
+
+	}
+
+	public static class RunningSQLEntry {
+
+		public RunningSQLEntry(long duration, String sql) {
+			this(duration, sql, StringPool.BLANK);
+		}
+
+		public RunningSQLEntry(
+			long duration, String sql, String upgradeProcessClassName) {
+
+			_duration = duration;
+			_sql = sql;
+			_upgradeProcessClassName = upgradeProcessClassName;
+		}
+
+		@Override
+		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
+
+			if (!(object instanceof RunningSQLEntry)) {
+				return false;
+			}
+
+			RunningSQLEntry runningSQLEntry = (RunningSQLEntry)object;
+
+			if (Validator.isBlank(_upgradeProcessClassName)) {
+				return _sql.equals(runningSQLEntry._sql);
+			}
+
+			if (_sql.equals(runningSQLEntry._sql) &&
+				_upgradeProcessClassName.equals(
+					runningSQLEntry._upgradeProcessClassName)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		public long getDuration() {
+			return _duration;
+		}
+
+		public String getSQL() {
+			return _sql;
+		}
+
+		public String getUpgradeProcessClassName() {
+			return _upgradeProcessClassName;
+		}
+
+		@Override
+		public int hashCode() {
+			if (Validator.isBlank(_upgradeProcessClassName)) {
+				return _sql.hashCode();
+			}
+
+			int hashCode = HashUtil.hash(0, _sql);
+
+			return HashUtil.hash(hashCode, _upgradeProcessClassName);
+		}
+
+		private final long _duration;
+		private final String _sql;
+		private final String _upgradeProcessClassName;
+
 	}
 
 	private static <T> T _execute(SQLCallable<T> sqlCallable, Object object)
@@ -202,10 +295,10 @@ public class UpgradeSQLRecorder {
 				String message = sqlException.getMessage();
 
 				if (Validator.isBlank(message)) {
-					_failedSQLMessages.add(sql);
+					_failedSQLEntries.add(new FailedSQLEntry(sql));
 				}
 				else {
-					_failedSQLMessages.add(sql + StringPool.PIPE + message);
+					_failedSQLEntries.add(new FailedSQLEntry(message, sql));
 				}
 			}
 
@@ -232,19 +325,18 @@ public class UpgradeSQLRecorder {
 		}
 
 		if (Validator.isBlank(_upgradeProcessClassName)) {
-			_sqlExecutionTimes.put(sql, duration);
+			_runningSQLEntries.add(new RunningSQLEntry(duration, sql));
 		}
 		else if (DBPartition.isPartitionEnabled()) {
-			_sqlExecutionTimes.put(
-				StringBundler.concat(
-					_upgradeProcessClassName, StringPool.AT,
-					String.valueOf(CompanyThreadLocal.getCompanyId()),
-					StringPool.PIPE, sql),
-				duration);
+			_runningSQLEntries.add(
+				new RunningSQLEntry(
+					duration, sql,
+					_upgradeProcessClassName + StringPool.AT +
+						String.valueOf(CompanyThreadLocal.getCompanyId())));
 		}
 		else {
-			_sqlExecutionTimes.put(
-				_upgradeProcessClassName + StringPool.PIPE + sql, duration);
+			_runningSQLEntries.add(
+				new RunningSQLEntry(duration, sql, _upgradeProcessClassName));
 		}
 	}
 
@@ -395,10 +487,10 @@ public class UpgradeSQLRecorder {
 			PropsUtil.get(PropsKeys.UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD));
 
 	private static boolean _enabled;
-	private static final List<String> _failedSQLMessages =
+	private static final List<FailedSQLEntry> _failedSQLEntries =
 		new CopyOnWriteArrayList<>();
-	private static final Map<String, Long> _sqlExecutionTimes =
-		new ConcurrentHashMap<>();
+	private static final Set<RunningSQLEntry> _runningSQLEntries =
+		new CopyOnWriteArraySet<>();
 	private static volatile String _upgradeProcessClassName = StringPool.BLANK;
 
 	@FunctionalInterface

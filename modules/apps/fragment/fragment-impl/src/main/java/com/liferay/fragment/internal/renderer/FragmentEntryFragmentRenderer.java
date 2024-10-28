@@ -481,14 +481,14 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			fragmentRendererContext, html, httpServletRequest);
 
 		if (cacheable) {
+			_fragmentEntryLinkCache.putFragmentEntryLinkContent(
+				content, fragmentEntryLink,
+				fragmentRendererContext.getLocale());
+
 			content = StringUtil.replace(
 				content, _NONCE_PLACEHOLDER_ATTRIBUTE,
 				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					httpServletRequest));
-
-			_fragmentEntryLinkCache.putFragmentEntryLinkContent(
-				content, fragmentEntryLink,
-				fragmentRendererContext.getLocale());
 		}
 
 		return content;

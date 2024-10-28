@@ -77,8 +77,7 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 		Element element, boolean recursive, StringBundler sb) {
 
 		String id = element.attr("id");
-
-		List<String> attributesToRemove = new ArrayList<>();
+		List<String> keys = new ArrayList<>();
 
 		for (Attribute attribute : element.attributes()) {
 			String key = attribute.getKey();
@@ -104,7 +103,7 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 				sb.append(element.attr(key));
 				sb.append("};");
 
-				attributesToRemove.add(key);
+				keys.add(key);
 			}
 		}
 
@@ -112,13 +111,13 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 			element.attr("id", id);
 		}
 
-		for (String key : attributesToRemove) {
+		for (String key : keys) {
 			element.removeAttr(key);
 		}
 
 		if (recursive) {
-			for (Element child : element.children()) {
-				_extractInlineHandlers(child, true, sb);
+			for (Element childElement : element.children()) {
+				_extractInlineHandlers(childElement, true, sb);
 			}
 		}
 	}

@@ -28,12 +28,22 @@ test('Cannot publish empty ctCollection', async ({
 	ctCollection,
 	page,
 }) => {
-	await changeTrackingPage.workOnProduction();
+	await changeTrackingPage.workOnPublication(ctCollection);
 
 	await blogsEditBlogEntryPage.goto();
 
-	let title = getRandomString();
-	let content = getRandomString();
+	const title = getRandomString();
+	const content = getRandomString();
+
+	await blogsEditBlogEntryPage.editBlogEntry({
+		content,
+		publish: true,
+		title,
+	});
+
+	await changeTrackingPage.workOnProduction();
+
+	await blogsEditBlogEntryPage.goto();
 
 	await blogsEditBlogEntryPage.editBlogEntry({
 		content,
@@ -43,28 +53,9 @@ test('Cannot publish empty ctCollection', async ({
 
 	await changeTrackingPage.workOnPublication(ctCollection);
 
-	await page.getByRole('link', {name: title}).click();
-
-	title = getRandomString();
-	content = getRandomString();
-
-	await blogsEditBlogEntryPage.editBlogEntry({
-		content,
-		publish: true,
-		title,
-	});
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
 
 	await page.reload();
-
-	await changeTrackingPage.workOnProduction();
-
-	await page.getByLabel('More actions').click();
-
-	await page.getByRole('menuitem', {name: 'Delete'}).click();
-
-	await page.waitForLoadState();
-
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
 
 	await page.getByRole('link', {name: 'Publish'}).click();
 
@@ -72,7 +63,7 @@ test('Cannot publish empty ctCollection', async ({
 
 	await page
 		.locator('li')
-		.filter({hasText: 'Test Test modified a Asset'})
+		.filter({hasText: 'Test Test added a Blogs Entry'})
 		.getByRole('button')
 		.click();
 
@@ -83,12 +74,6 @@ test('Cannot publish empty ctCollection', async ({
 	await discardMenuItem.click();
 
 	const discardButton = page.getByRole('button', {name: 'Discard'});
-
-	await discardButton.click();
-
-	await page.getByRole('group').locator('div').getByRole('button').click();
-
-	await discardMenuItem.click();
 
 	await discardButton.click();
 

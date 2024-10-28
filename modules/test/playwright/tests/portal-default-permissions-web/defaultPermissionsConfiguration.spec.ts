@@ -268,3 +268,91 @@ test('LPD-22040 Check default permissions for pages', async ({
 		}
 	});
 });
+
+test('LPD-35542 Default Permissions changes Unlock the values checked', async ({
+	apiHelpers,
+	defaultPermissionsConfigurationPage,
+	defaultPermissionsSiteConfigurationPage,
+	page,
+}) => {
+	await defaultPermissionsConfigurationPage.goto();
+
+	await expect(
+		defaultPermissionsConfigurationPage.portalDefaultPermissionsSearchContainer
+	).toBeVisible();
+	await page.waitForTimeout(500);
+
+	await defaultPermissionsConfigurationPage.editPageButton.click();
+
+	await defaultPermissionsConfigurationPage.frameSaveButton.waitFor({
+		state: 'attached',
+	});
+	await page.waitForTimeout(300);
+
+	await expect(
+		defaultPermissionsConfigurationPage.guestUpdateDiscussionCheckbox
+	).toBeDisabled();
+
+	await defaultPermissionsConfigurationPage.guestViewCheckbox.setChecked(
+		false
+	);
+
+	await expect(
+		defaultPermissionsConfigurationPage.guestViewCheckbox
+	).toBeChecked({checked: false});
+
+	await defaultPermissionsConfigurationPage.ownerUpdateDiscussionCheckbox.setChecked(
+		false
+	);
+
+	await expect(
+		defaultPermissionsConfigurationPage.ownerUpdateDiscussionCheckbox
+	).toBeChecked({checked: false});
+
+	await defaultPermissionsConfigurationPage.siteMemberCustomizeCheckbox.setChecked(
+		false
+	);
+
+	await expect(
+		defaultPermissionsConfigurationPage.siteMemberCustomizeCheckbox
+	).toBeChecked({checked: false});
+
+	await defaultPermissionsSiteConfigurationPage.frameSaveButton.click();
+
+	await defaultPermissionsSiteConfigurationPage.frameSaveButton.waitFor({
+		state: 'detached',
+	});
+
+	await waitForAlert(page);
+
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	// @ts-ignore
+
+	layout.pagePermissions.forEach((pagePermission) => {
+		if (['Guest'].indexOf(pagePermission.roleKey) >= 0) {
+			expect(
+				pagePermission.actionKeys.indexOf('VIEW')
+			).toBeLessThanOrEqual(0);
+		}
+		else if (['Owner'].indexOf(pagePermission.roleKey) >= 0) {
+			expect(
+				pagePermission.actionKeys.indexOf('UPDATE_DISCUSSION')
+			).toBeLessThanOrEqual(0);
+		}
+		else if (['Site Member'].indexOf(pagePermission.roleKey) >= 0) {
+			expect(
+				pagePermission.actionKeys.indexOf('CUSTOMIZE')
+			).toBeLessThanOrEqual(0);
+		}
+	});
+});

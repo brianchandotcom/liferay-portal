@@ -13,11 +13,15 @@ export class PortalDefaultPermissionsConfigurationPage {
 	readonly editDefaultPermissionsFrame: FrameLocator;
 	readonly editPageButton: Locator;
 	readonly frameSaveButton: Locator;
+	readonly guestUpdateDiscussionCheckbox: Locator;
+	readonly guestViewCheckbox: Locator;
+	readonly ownerUpdateDiscussionCheckbox: Locator;
 	readonly page: Page;
 	readonly portalDefaultPermissionsSearchContainer: Locator;
 	readonly powerUserUpdateDiscussionCheckbox: Locator;
 	readonly saveButton: Locator;
 	readonly searchInput: Locator;
+	readonly siteMemberCustomizeCheckbox: Locator;
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
@@ -40,10 +44,22 @@ export class PortalDefaultPermissionsConfigurationPage {
 			'button',
 			{name: 'Save'}
 		);
+		this.guestUpdateDiscussionCheckbox = this.editDefaultPermissionsFrame
+			.getByTestId('guest_ACTION_UPDATE_DISCUSSION')
+			.getByRole('checkbox');
+		this.guestViewCheckbox = this.editDefaultPermissionsFrame
+			.getByTestId('guest_ACTION_VIEW')
+			.getByRole('checkbox');
+		this.ownerUpdateDiscussionCheckbox = this.editDefaultPermissionsFrame
+			.getByTestId('owner_ACTION_UPDATE_DISCUSSION')
+			.getByRole('checkbox');
 		this.powerUserUpdateDiscussionCheckbox =
 			this.editDefaultPermissionsFrame
 				.getByTestId('power-user_ACTION_UPDATE_DISCUSSION')
 				.getByRole('checkbox');
+		this.siteMemberCustomizeCheckbox = this.editDefaultPermissionsFrame
+			.getByTestId('owner_ACTION_CUSTOMIZE')
+			.getByRole('checkbox');
 	}
 
 	async goto() {

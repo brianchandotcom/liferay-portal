@@ -337,7 +337,7 @@ public class CookiesManagerImpl implements CookiesManager {
 		}
 
 		if (internetDomainName.isTopPrivateDomain()) {
-			return StringPool.PERIOD + internetDomainName.toString();
+			return internetDomainName.toString();
 		}
 
 		int x = host.indexOf(CharPool.PERIOD);
@@ -349,10 +349,10 @@ public class CookiesManagerImpl implements CookiesManager {
 		int y = host.indexOf(CharPool.PERIOD, x + 1);
 
 		if (y <= 0) {
-			return StringPool.PERIOD + host;
+			return host;
 		}
 
-		return host.substring(x);
+		return host.substring(x + 1);
 	}
 
 	@Override

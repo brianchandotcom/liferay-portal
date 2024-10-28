@@ -84,27 +84,29 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 
 			String lowerCaseKey = StringUtil.toLowerCase(key);
 
-			if (lowerCaseKey.startsWith("on")) {
-				if (Objects.equals(element.nodeName(), "body")) {
-					sb.append("document.body.");
-				}
-				else {
-					if (Validator.isBlank(id)) {
-						id = StringUtil.randomString(8);
-					}
-
-					sb.append("document.getElementById('");
-					sb.append(id);
-					sb.append("').");
-				}
-
-				sb.append(key);
-				sb.append("=function(event){");
-				sb.append(element.attr(key));
-				sb.append("};");
-
-				keys.add(key);
+			if (!lowerCaseKey.startsWith("on")) {
+				continue;
 			}
+
+			if (Objects.equals(element.nodeName(), "body")) {
+				sb.append("document.body.");
+			}
+			else {
+				if (Validator.isBlank(id)) {
+					id = StringUtil.randomString(8);
+				}
+
+				sb.append("document.getElementById('");
+				sb.append(id);
+				sb.append("').");
+			}
+
+			sb.append(key);
+			sb.append("=function(event){");
+			sb.append(element.attr(key));
+			sb.append("};");
+
+			keys.add(key);
 		}
 
 		if (!Validator.isBlank(id)) {

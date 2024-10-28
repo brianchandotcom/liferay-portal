@@ -38,26 +38,18 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 			html, "TEST_NONCE", false);
 
 		Assert.assertTrue(
-			"Rewritten HTML does not start with [<div id=\"...]:\n" + html,
-			_matches(html, "<div id=\"[^\"]+\">.*</div>.*"));
-
-		Assert.assertTrue(
-			"Rewritten HTML does not end with [<script nonce=\"...>]:\n" + html,
 			_matches(html, ".*<script nonce=\"TEST_NONCE\">.*</script>"));
-
 		Assert.assertTrue(
-			"Rewritten HTML does not contain onclick handler:\n" + html,
-			_matches(
-				html,
-				".*document\\.getElementById\\('[^']+'\\)\\.onclick=" +
-					"function\\(event\\)\\{alert\\(1\\);}.*"));
-
-		Assert.assertTrue(
-			"Rewritten HTML does not contain onchange handler:\n" + html,
 			_matches(
 				html,
 				".*document\\.getElementById\\('[^']+'\\)\\.onchange=" +
 					"function\\(event\\)\\{alert\\(2\\);}.*"));
+		Assert.assertTrue(
+			_matches(
+				html,
+				".*document\\.getElementById\\('[^']+'\\)\\.onclick=" +
+					"function\\(event\\)\\{alert\\(1\\);}.*"));
+		Assert.assertTrue(_matches(html, "<div id=\"[^\"]+\">.*</div>.*"));
 	}
 
 	@Test
@@ -72,12 +64,8 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 			html, "TEST_NONCE", false);
 
 		Assert.assertTrue(
-			"Rewritten HTML maintains the original id in HTML:\n" + html,
-			_matches(html, "<div id=\"TEST_ID\">.*</div>.*"));
-
-		Assert.assertTrue(
-			"Rewritten HTML maintains the original id in script:\n" + html,
 			_matches(html, ".*document\\.getElementById\\('TEST_ID'\\).*"));
+		Assert.assertTrue(_matches(html, "<div id=\"TEST_ID\">.*</div>.*"));
 	}
 
 	@Test
@@ -94,7 +82,6 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 			html, "TEST_NONCE", false);
 
 		Assert.assertFalse(
-			"The div's onclick appears in the <script> node:\n" + html,
 			_matches(
 				html,
 				".*<script nonce=\"TEST_NONCE\">.*onclick.*alert\\(2\\);.*" +
@@ -113,31 +100,20 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 		html = contentSecurityPolicyHTMLRewriterImpl.rewriteInlineEventHandlers(
 			html, "TEST_NONCE", false);
 
+		Assert.assertTrue(_matches(html, ".*</body>"));
 		Assert.assertTrue(
-			"Rewritten HTML does not start with [<body>]:\n" + html,
-			_matches(html, "<body>.*"));
-
-		Assert.assertTrue(
-			"Rewritten HTML does not end with [</body>]:\n" + html,
-			_matches(html, ".*</body>"));
-
-		Assert.assertTrue(
-			"Rewritten HTML does not contain [<script nonce=\"...>]:\n" + html,
 			_matches(html, ".*<script nonce=\"TEST_NONCE\">.*</script>.*"));
-
 		Assert.assertTrue(
-			"Rewritten HTML does not contain onclick handler:\n" + html,
-			_matches(
-				html,
-				".*document\\.body\\.onclick=" +
-					"function\\(event\\)\\{alert\\(1\\);}.*"));
-
-		Assert.assertTrue(
-			"Rewritten HTML does not contain onchange handler:\n" + html,
 			_matches(
 				html,
 				".*document\\.body\\.onchange=" +
 					"function\\(event\\)\\{alert\\(2\\);}.*"));
+		Assert.assertTrue(
+			_matches(
+				html,
+				".*document\\.body\\.onclick=" +
+					"function\\(event\\)\\{alert\\(1\\);}.*"));
+		Assert.assertTrue(_matches(html, "<body>.*"));
 	}
 
 	@Test
@@ -151,24 +127,15 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 		html = contentSecurityPolicyHTMLRewriterImpl.rewriteInlineEventHandlers(
 			html, "TEST_NONCE", false);
 
+		Assert.assertTrue(_matches(html, ".*</body>"));
 		Assert.assertTrue(
-			"Rewritten HTML does not start with [<body>]:\n" + html,
-			_matches(html, "<body>.*"));
-
-		Assert.assertTrue(
-			"Rewritten HTML does not end with [</body>]:\n" + html,
-			_matches(html, ".*</body>"));
-
-		Assert.assertTrue(
-			"Rewritten HTML does not contain [<script nonce=\"...>]:\n" + html,
 			_matches(html, ".*<script nonce=\"TEST_NONCE\">.*</script>.*"));
-
 		Assert.assertTrue(
-			"Rewritten HTML does not contain onclick handler:\n" + html,
 			_matches(
 				html,
 				".*document\\.body\\.onclick=" +
 					"function\\(event\\)\\{alert\\(1\\);}.*"));
+		Assert.assertTrue(_matches(html, "<body>.*"));
 	}
 
 	@Test
@@ -185,8 +152,6 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 			html, "TEST_NONCE", false);
 
 		Assert.assertTrue(
-			"The two div's onclicks do not appear in the <script> node:\n" +
-				html,
 			_matches(
 				html,
 				".*<script nonce=\"TEST_NONCE\">.*onclick.*alert\\(1\\);.*" +
@@ -207,7 +172,6 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 			html, "TEST_NONCE", true);
 
 		Assert.assertTrue(
-			"The div's onclick does not appear in the <script> node:\n" + html,
 			_matches(
 				html,
 				".*<script nonce=\"TEST_NONCE\">.*onclick.*alert\\(2\\);.*" +

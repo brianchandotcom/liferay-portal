@@ -284,7 +284,7 @@ public class FragmentEntryFragmentRendererTest {
 
 	@Test
 	public void testFragmentEntryLinkNonceAttribute() throws Exception {
-		FragmentEntry fragmentEntry = _getFragmentEntry(false);
+		FragmentEntry fragmentEntry = _getFragmentEntry(true);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(

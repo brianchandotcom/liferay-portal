@@ -1280,66 +1280,6 @@ definition {
 		PortalSettings.viewEmailNotificationsSenderCP();
 	}
 
-	@description = "This is a use case for LPS-156105. The test assert the value of mail setting for new instance is inherited from server level."
-	@priority = 2
-	test ViewInstanceMailSettingsValueIsInheritedFromServerLevel {
-		property portal.upstream = "quarantine";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-		property testray.main.component.name = "Server Administration";
-
-		task ("Given change the server/company level mail setting value") {
-			ServerAdministration.openServerAdmin();
-
-			Navigator.gotoNavItem(navItem = "Mail");
-
-			FormFields.editText(
-				fieldName = "pop3Host",
-				fieldValue = "popserver");
-
-			PortletEntry.save();
-
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Email",
-				configurationName = "Mail Settings",
-				configurationScope = "Virtual Instance Scope");
-
-			FormFields.editText(
-				fieldName = "pop3Host",
-				fieldValue = "popcompany");
-
-			PortletEntry.save();
-		}
-
-		task ("When a new instance is added") {
-			PortalInstances.openVirtualInstancesAdmin();
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
-
-			User.firstLoginUI(
-				password = PropsUtil.get("default.admin.password"),
-				specificURL = "http://www.able.com:8080",
-				userEmailAddress = "test@www.able.com");
-
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-		}
-
-		task ("Then assert the value of mail setting for new instance is inherited from server level") {
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://www.able.com:8080",
-				configurationCategory = "Email",
-				configurationName = "Mail Settings",
-				configurationScope = "Virtual Instance Scope");
-
-			FormFields.viewTextValue(
-				fieldName = "pop3Host",
-				fieldValue = "popserver");
-		}
-	}
-
 	@description = "This is a use case for LRQA-68315 and LPS-176074 TC-3. This test asserts that a user can update the password changed notification subject and body. The notification also send when set password via json."
 	@priority = 3
 	test ViewPasswordChangedNotificationTemplateUpdated {

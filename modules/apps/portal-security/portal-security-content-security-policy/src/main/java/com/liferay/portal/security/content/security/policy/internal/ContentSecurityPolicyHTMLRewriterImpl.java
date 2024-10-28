@@ -41,11 +41,11 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 		boolean containsBodyTag = _containsBodyTag(html);
 
 		if (containsBodyTag) {
-			_extractInlineHandlers(bodyElement, sb, recursive);
+			_extractInlineHandlers(bodyElement, recursive, sb);
 		}
 		else {
 			for (Element childElement : bodyElement.children()) {
-				_extractInlineHandlers(childElement, sb, recursive);
+				_extractInlineHandlers(childElement, recursive, sb);
 			}
 		}
 
@@ -74,7 +74,7 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 	}
 
 	private void _extractInlineHandlers(
-		Element element, StringBundler sb, boolean recursive) {
+		Element element, boolean recursive, StringBundler sb) {
 
 		String id = element.attr("id");
 
@@ -118,7 +118,7 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 
 		if (recursive) {
 			for (Element child : element.children()) {
-				_extractInlineHandlers(child, sb, true);
+				_extractInlineHandlers(child, true, sb);
 			}
 		}
 	}

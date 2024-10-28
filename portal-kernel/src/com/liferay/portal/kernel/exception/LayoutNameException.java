@@ -10,6 +10,8 @@ package com.liferay.portal.kernel.exception;
  */
 public class LayoutNameException extends PortalException {
 
+	public static final int REQUIRED = 0;
+
 	public static final int TOO_LONG = 1;
 
 	public static final int TOO_SHORT = 2;
@@ -26,6 +28,12 @@ public class LayoutNameException extends PortalException {
 		super(msg);
 
 		_type = TOO_SHORT;
+	}
+
+	public LayoutNameException(String msg, int type) {
+		super(msg);
+
+		_type = type;
 	}
 
 	public LayoutNameException(String msg, Throwable throwable) {

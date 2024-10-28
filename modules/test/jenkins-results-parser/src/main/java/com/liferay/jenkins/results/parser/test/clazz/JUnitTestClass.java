@@ -152,21 +152,20 @@ public class JUnitTestClass extends BaseTestClass {
 		_testrayMainComponentName = testrayMainComponentName;
 	}
 
-	protected File getParentTestPropertiesFile(File currentDirectory) {
-		if (currentDirectory.compareTo(_modulesBaseDir) == 0) {
+	protected File getParentTestPropertiesFile(File currentDir) {
+		if (currentDir.compareTo(_modulesBaseDir) == 0) {
 			return null;
 		}
 
-		File parentDirectory = currentDirectory.getParentFile();
+		File parentDir = currentDir.getParentFile();
 
-		File parentPropertiesFile = new File(
-			parentDirectory, "test.properties");
+		File parentPropertiesFile = new File(parentDir, "test.properties");
 
 		if (parentPropertiesFile.exists()) {
 			return parentPropertiesFile;
 		}
 
-		return getParentTestPropertiesFile(parentDirectory);
+		return getParentTestPropertiesFile(parentDir);
 	}
 
 	protected File getPortalModulesBaseDir() {

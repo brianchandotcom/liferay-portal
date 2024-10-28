@@ -290,13 +290,33 @@ public class JournalPortlet extends MVCPortlet {
 
 				ActionUtil.getArticle(httpServletRequest);
 			}
-			else if (Objects.equals(path, "/view_ddm_structures.jsp")) {
+			else if (Objects.equals(path, "/view_ddm_structures.jsp") ||
+					 Objects.equals(path, "/edit_data_definition.jsp")) {
+
 				httpServletRequest.setAttribute(
 					CTTimelineKeys.CLASS_NAME, DDMStructure.class.getName());
+
+				long ddmStructureId = ParamUtil.getLong(
+					httpServletRequest, "ddmStructureId");
+
+				if (ddmStructureId > 0) {
+					httpServletRequest.setAttribute(
+						CTTimelineKeys.CLASS_PK, ddmStructureId);
+				}
 			}
-			else if (Objects.equals(path, "/view_ddm_templates.jsp")) {
+			else if (Objects.equals(path, "/view_ddm_templates.jsp") ||
+					 Objects.equals(path, "/edit_ddm_template.jsp")) {
+
 				httpServletRequest.setAttribute(
 					CTTimelineKeys.CLASS_NAME, DDMTemplate.class.getName());
+
+				long ddmTemplateId = ParamUtil.getLong(
+					httpServletRequest, "ddmTemplateId");
+
+				if (ddmTemplateId > 0) {
+					httpServletRequest.setAttribute(
+						CTTimelineKeys.CLASS_PK, ddmTemplateId);
+				}
 			}
 			else if (Validator.isNull(path)) {
 				httpServletRequest.setAttribute(

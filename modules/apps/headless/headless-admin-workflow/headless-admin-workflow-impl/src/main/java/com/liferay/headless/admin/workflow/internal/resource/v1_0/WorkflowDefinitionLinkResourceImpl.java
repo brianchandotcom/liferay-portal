@@ -57,8 +57,9 @@ public class WorkflowDefinitionLinkResourceImpl
 	}
 
 	@Override
-	public Page<WorkflowDefinitionLink> getWorkflowDefinitionLinksByExternalReferenceCode(
-			String externalReferenceCode, Pagination pagination)
+	public Page<WorkflowDefinitionLink>
+			getWorkflowDefinitionLinksByExternalReferenceCode(
+				String externalReferenceCode, Pagination pagination)
 		throws Exception {
 
 		WorkflowDefinition workflowDefinition =
@@ -90,6 +91,25 @@ public class WorkflowDefinitionLinkResourceImpl
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.getWorkflowDefinition(
 				workflowDefinitionId);
+
+		return _toWorkflowDefinitionLink(
+			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+				contextUser.getUserId(), contextCompany.getCompanyId(),
+				workflowDefinitionLink.getGroupId(),
+				workflowDefinitionLink.getClassName(), 0, 0,
+				workflowDefinition.getName(), workflowDefinition.getVersion()));
+	}
+
+	@Override
+	public WorkflowDefinitionLink
+			postWorkflowDefinitionLinkByExternalReferenceCode(
+				String externalReferenceCode,
+				WorkflowDefinitionLink workflowDefinitionLink)
+		throws Exception {
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.getWorkflowDefinition(
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		return _toWorkflowDefinitionLink(
 			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(

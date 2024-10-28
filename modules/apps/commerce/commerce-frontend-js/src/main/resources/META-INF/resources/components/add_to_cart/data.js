@@ -142,9 +142,11 @@ export async function addToCart(
 				parseFloat(includedCartItem.quantity) +
 				parseFloat(cpInstance.quantity);
 
-			includedCartItem.quantity = Number(includedCartItem.quantity.toFixed(
-				cpInstance.skuUnitOfMeasure?.precision || 0
-			));
+			includedCartItem.quantity = Number(
+				includedCartItem.quantity.toFixed(
+					cpInstance.skuUnitOfMeasure?.precision || 0
+				)
+			);
 		}
 		else {
 			updatedCartItems.push(

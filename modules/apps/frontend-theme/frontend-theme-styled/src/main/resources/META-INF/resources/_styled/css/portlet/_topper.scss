@@ -11,6 +11,11 @@ html#{$cadmin-selector} {
 		padding: 3px 12px 3px 24px;
 		position: relative;
 
+		.lexicon-icon {
+			height: 12px;
+			width: 12px;
+		}
+
 		.lexicon-icon.lexicon-icon-drag {
 			height: 16px;
 			width: 16px;

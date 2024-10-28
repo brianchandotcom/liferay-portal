@@ -232,9 +232,7 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 								"commerceOrderImporterTypeKey",
 								commerceOrderImporterType.getKey()
 							).setParameter(
-								"orderDetailURL",
-								commerceOrderFriendlyURL +
-									commerceOrder.getCommerceOrderId()
+								"orderDetailURL", commerceOrderFriendlyURL
 							).setWindowState(
 								LiferayWindowState.POP_UP
 							).buildString()

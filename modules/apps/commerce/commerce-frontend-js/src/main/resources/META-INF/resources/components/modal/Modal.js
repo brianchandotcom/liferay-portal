@@ -136,6 +136,7 @@ function Modal(props) {
 					>
 						<iframe
 							data-add-to-cart={addToCart}
+							onLoad={() => setLoading(false)}
 							src={url}
 							title={title}
 						/>

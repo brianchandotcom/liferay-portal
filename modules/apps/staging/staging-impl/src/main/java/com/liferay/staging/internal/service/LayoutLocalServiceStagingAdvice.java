@@ -8,6 +8,7 @@ package com.liferay.staging.internal.service;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -142,6 +143,12 @@ public class LayoutLocalServiceStagingAdvice {
 		String name = nameMap.get(LocaleUtil.getSiteDefault());
 
 		if (Validator.isNull(name)) {
+			if(nameMap.isEmpty()) {
+				throw new LayoutNameException(
+					"Name is required for layout PLID " + layout.getPlid(),
+					LayoutNameException.REQUIRED);
+			}
+
 			List<String> values = new ArrayList<>(nameMap.values());
 
 			name = values.get(0);

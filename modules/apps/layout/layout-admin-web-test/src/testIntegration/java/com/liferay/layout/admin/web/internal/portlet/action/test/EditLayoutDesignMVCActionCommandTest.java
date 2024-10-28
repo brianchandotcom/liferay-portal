@@ -41,10 +41,12 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upload.test.util.UploadTestUtil;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -125,8 +127,11 @@ public class EditLayoutDesignMVCActionCommandTest {
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_updateLayout",
-			new Class<?>[] {ActionRequest.class, UploadPortletRequest.class},
-			_getMockActionRequest(draftLayout),
+			new Class<?>[] {
+				ActionRequest.class, ActionResponse.class,
+				UploadPortletRequest.class
+			},
+			_getMockActionRequest(draftLayout), new MockActionResponse(),
 			UploadTestUtil.createUploadPortletRequest(
 				UploadTestUtil.createUploadServletRequest(
 					mockMultipartHttpServletRequest, null, null),

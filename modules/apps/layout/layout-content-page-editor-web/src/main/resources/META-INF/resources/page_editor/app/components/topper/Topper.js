@@ -37,6 +37,7 @@ import {
 	useSelectorCallback,
 } from '../../contexts/StoreContext';
 import {useLayoutKeyboardNavigation} from '../../hooks/app_hooks/useLayoutKeyboardNavigation';
+import {useMultiSelectReady} from '../../hooks/app_hooks/useMultiSelectReady';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
@@ -105,6 +106,7 @@ function TopperContent({
 	const hoverItem = useHoverItem();
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
 	const isMultiSelect = activeItemIds.length > 1;
+	const multiSelectReady = useMultiSelectReady();
 	const {itemId: keyboardMovementTargetId} = useMovementTarget();
 	const keyboardMovementPosition = useMovementTargetPosition();
 	const selectItem = useSelectItem();
@@ -191,9 +193,9 @@ function TopperContent({
 
 	const {elementRef, isFocusable} = useLayoutKeyboardNavigation(item);
 
-	const isNotAllowed = activeItemIds.some(
-		(activeItemId) => item.itemId === activeItemId
-	);
+	const isNotAllowed =
+		multiSelectReady &&
+		activeItemIds.some((activeItemId) => item.itemId === activeItemId);
 
 	return (
 		<div

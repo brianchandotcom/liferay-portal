@@ -9,8 +9,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.defaultpermissions.resource.PortalDefaultPermissionsModelResource;
-import com.liferay.portal.defaultpermissions.resource.PortalDefaultPermissionsModelResourceRegistry;
+import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResource;
+import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResourceRegistry;
 import com.liferay.portal.defaultpermissions.web.internal.util.comparator.PortalDefaultPermissionsModelResourceComparator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

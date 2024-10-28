@@ -189,17 +189,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		return inputTemplateNode.toJSONObject();
 	}
 
-	private String _getNonceAttribute(
-		boolean cacheable, HttpServletRequest httpServletRequest) {
-
-		if (cacheable) {
-			return StringPool.SPACE + _NONCE_PLACEHOLDER_ATTRIBUTE;
-		}
-
-		return ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-			httpServletRequest);
-	}
-
 	private boolean _isCacheable(
 		FragmentEntryLink fragmentEntryLink,
 		FragmentRendererContext fragmentRendererContext) {
@@ -269,9 +258,9 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _renderFragmentEntry(
-		boolean cacheable, String configuration, String css,
+		String configuration, String css,
 		FragmentRendererContext fragmentRendererContext, String html,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, String nonce) {
 
 		StringBundler sb = new StringBundler(29);
 
@@ -290,8 +279,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			if (fragmentRendererContext.isEditMode() ||
 				fragmentRendererContext.isIndexMode()) {
 
-				sb.append("<style");
-				sb.append(_getNonceAttribute(cacheable, httpServletRequest));
+				sb.append("<style ");
+				sb.append(nonce);
 				sb.append(StringPool.GREATER_THAN);
 				sb.append(css);
 				sb.append("</style>");
@@ -323,9 +312,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				}
 
 				if (!cssLoaded) {
-					sb.append("<style");
-					sb.append(
-						_getNonceAttribute(cacheable, httpServletRequest));
+					sb.append("<style ");
+					sb.append(nonce);
 					sb.append(StringPool.GREATER_THAN);
 					sb.append(css);
 					sb.append("</style>");
@@ -346,8 +334,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				httpServletRequest);
 
 			if (javaScriptModuleEnabled) {
-				sb.append("<script type=\"module\"");
-				sb.append(_getNonceAttribute(cacheable, httpServletRequest));
+				sb.append("<script type=\"module\" ");
+				sb.append(nonce);
 				sb.append(StringPool.GREATER_THAN);
 			}
 			else {
@@ -408,6 +396,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		boolean cacheable = _isCacheable(
 			fragmentEntryLink, fragmentRendererContext);
 
+		String nonce = _NONCE_PLACEHOLDER_ATTRIBUTE;
+
 		if (cacheable) {
 			content = _fragmentEntryLinkCache.getFragmentEntryLinkContent(
 				fragmentEntryLink, fragmentRendererContext.getLocale());
@@ -418,6 +408,10 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 						httpServletRequest));
 			}
+		}
+		else {
+			nonce = ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest);
 		}
 
 		DefaultFragmentEntryProcessorContext
@@ -477,8 +471,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		}
 
 		content = _renderFragmentEntry(
-			cacheable, configurationJSONObject.toString(), css,
-			fragmentRendererContext, html, httpServletRequest);
+			configurationJSONObject.toString(), css, fragmentRendererContext,
+			html, httpServletRequest, nonce);
 
 		if (cacheable) {
 			_fragmentEntryLinkCache.putFragmentEntryLinkContent(

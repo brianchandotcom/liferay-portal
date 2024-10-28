@@ -73,6 +73,16 @@
 									}
 								},
 								"type": "Widget"
+							},
+							{
+								"definition": {
+									"widgetInstance": {
+										"widgetConfig": {
+										},
+										"widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet"
+									}
+								},
+								"type": "Widget"
 							}
 						],
 						"type": "Section"
@@ -87,10 +97,6 @@
 		"colorSchemeName": "01",
 		"masterPage": {
 			"key": "commerce-classic-master"
-		},
-		"styleBook": {
-			"key": "commerce-classic",
-			"name": "Commerce Classic"
 		},
 		"themeName": "Classic",
 		"themeSettings": {

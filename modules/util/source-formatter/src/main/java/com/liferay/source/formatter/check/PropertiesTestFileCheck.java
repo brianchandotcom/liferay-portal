@@ -143,7 +143,9 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (absolutePath.contains("/modules/apps/archived/")) {
+		if (!isModulesFile(absolutePath) ||
+			absolutePath.contains("/modules/apps/archived/")) {
+
 			return;
 		}
 

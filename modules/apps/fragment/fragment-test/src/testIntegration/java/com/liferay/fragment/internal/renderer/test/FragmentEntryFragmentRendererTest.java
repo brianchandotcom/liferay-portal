@@ -191,50 +191,16 @@ public class FragmentEntryFragmentRendererTest {
 				StringPool.BLANK, 0, null, fragmentEntry.getType(),
 				_serviceContext);
 
-		DefaultFragmentRendererContext defaultFragmentRendererContext =
-			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		defaultFragmentRendererContext.setLocale(_locale);
-
-		HttpServletRequest httpServletRequest = _getHttpServletRequest();
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		String nonce = RandomTestUtil.randomString();
 
-		httpServletRequest.setAttribute(
-			"com.liferay.portal.security.content.security.policy.internal." +
-				"ContentSecurityPolicyNonceManager#NONCE",
-			nonce);
+		_testRenderWithNonce(fragmentEntryLink, nonce);
 
-		_fragmentRenderer.render(
-			defaultFragmentRendererContext, httpServletRequest,
-			mockHttpServletResponse);
+		String content = _fragmentEntryLinkCache.getFragmentEntryLinkContent(
+			fragmentEntryLink, _locale);
 
-		Document document = Jsoup.parseBodyFragment(
-			mockHttpServletResponse.getContentAsString());
-
-		Elements styleElements = document.getElementsByTag("style");
-
-		Element styleElement = styleElements.get(0);
-
-		Assert.assertEquals(nonce, styleElement.attr("nonce"));
-
-		Elements scriptElements = document.getElementsByTag("script");
-
-		Element scriptElement = scriptElements.get(0);
-
-		Assert.assertEquals(nonce, scriptElement.attr("nonce"));
-
-		String cachedContent =
-			_fragmentEntryLinkCache.getFragmentEntryLinkContent(
-				fragmentEntryLink, _locale);
-
-		Assert.assertFalse(cachedContent, cachedContent.contains(nonce));
+		Assert.assertFalse(content, content.contains(nonce));
 		Assert.assertEquals(
-			cachedContent, 2,
-			StringUtil.count(cachedContent, "data-lfr-nonce"));
+			content, 2, StringUtil.count(content, "data-lfr-nonce"));
 	}
 
 	@Test
@@ -464,41 +430,7 @@ public class FragmentEntryFragmentRendererTest {
 				StringPool.BLANK, 0, null, fragmentEntry.getType(),
 				_serviceContext);
 
-		DefaultFragmentRendererContext defaultFragmentRendererContext =
-			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		defaultFragmentRendererContext.setLocale(_locale);
-
-		HttpServletRequest httpServletRequest = _getHttpServletRequest();
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		String nonce = RandomTestUtil.randomString();
-
-		httpServletRequest.setAttribute(
-			"com.liferay.portal.security.content.security.policy.internal." +
-				"ContentSecurityPolicyNonceManager#NONCE",
-			nonce);
-
-		_fragmentRenderer.render(
-			defaultFragmentRendererContext, httpServletRequest,
-			mockHttpServletResponse);
-
-		Document document = Jsoup.parseBodyFragment(
-			mockHttpServletResponse.getContentAsString());
-
-		Elements styleElements = document.getElementsByTag("style");
-
-		Element styleElement = styleElements.get(0);
-
-		Assert.assertEquals(nonce, styleElement.attr("nonce"));
-
-		Elements scriptElements = document.getElementsByTag("script");
-
-		Element scriptElement = scriptElements.get(0);
-
-		Assert.assertEquals(nonce, scriptElement.attr("nonce"));
+		_testRenderWithNonce(fragmentEntryLink, RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -836,6 +768,45 @@ public class FragmentEntryFragmentRendererTest {
 			mockHttpServletResponse);
 
 		return mockHttpServletResponse;
+	}
+
+	private void _testRenderWithNonce(
+			FragmentEntryLink fragmentEntryLink, String nonce)
+		throws Exception {
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		defaultFragmentRendererContext.setLocale(_locale);
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		httpServletRequest.setAttribute(
+			"com.liferay.portal.security.content.security.policy.internal." +
+				"ContentSecurityPolicyNonceManager#NONCE",
+			nonce);
+
+		_fragmentRenderer.render(
+			defaultFragmentRendererContext, httpServletRequest,
+			mockHttpServletResponse);
+
+		Document document = Jsoup.parseBodyFragment(
+			mockHttpServletResponse.getContentAsString());
+
+		Elements styleElements = document.getElementsByTag("style");
+
+		Element styleElement = styleElements.get(0);
+
+		Assert.assertEquals(nonce, styleElement.attr("nonce"));
+
+		Elements scriptElements = document.getElementsByTag("script");
+
+		Element scriptElement = scriptElements.get(0);
+
+		Assert.assertEquals(nonce, scriptElement.attr("nonce"));
 	}
 
 	@Inject

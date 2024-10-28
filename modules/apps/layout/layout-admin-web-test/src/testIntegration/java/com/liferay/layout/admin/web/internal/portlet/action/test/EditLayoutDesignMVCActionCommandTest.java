@@ -14,6 +14,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -41,6 +42,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -50,6 +54,7 @@ import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -157,6 +162,70 @@ public class EditLayoutDesignMVCActionCommandTest {
 		Assert.assertEquals(
 			draftLayout.getStyleBookEntryId(),
 			updatedDraftLayout.getStyleBookEntryId());
+	}
+
+	@Test
+	@TestInfo("LPP-56406")
+	public void testEditLayoutDesignWithLayoutWithoutName() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		draftLayout.setName(StringPool.BLANK);
+
+		draftLayout = _layoutLocalService.updateLayout(draftLayout);
+
+		Assert.assertTrue(
+			MapUtil.toString(draftLayout.getNameMap()),
+			MapUtil.isEmpty(draftLayout.getNameMap()));
+
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		mockMultipartHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
+
+		MockActionRequest mockActionRequest = _getMockActionRequest(
+			draftLayout);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.layout.admin.web.internal.portlet.action." +
+					"EditLayoutDesignMVCActionCommand",
+				LoggerTestUtil.DEBUG)) {
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateLayout",
+				new Class<?>[] {
+					ActionRequest.class, ActionResponse.class,
+					UploadPortletRequest.class
+				},
+				mockActionRequest, new MockActionResponse(),
+				UploadTestUtil.createUploadPortletRequest(
+					UploadTestUtil.createUploadServletRequest(
+						mockMultipartHttpServletRequest, null, null),
+					null, RandomTestUtil.randomString()));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+		}
+
+		Assert.assertFalse(SessionErrors.isEmpty(mockActionRequest));
+		Assert.assertEquals(
+			LayoutNameException.class.getName(),
+			SessionErrors.get(mockActionRequest, LayoutNameException.class));
+
+		draftLayout = _layoutLocalService.fetchLayout(draftLayout.getPlid());
+
+		Assert.assertFalse(
+			GetterUtil.getBoolean(
+				draftLayout.getTypeSettingsProperty(
+					LayoutTypeSettingsConstants.
+						KEY_DESIGN_CONFIGURATION_MODIFIED)));
+
+		Assert.assertTrue(
+			MapUtil.toString(draftLayout.getNameMap()),
+			MapUtil.isEmpty(draftLayout.getNameMap()));
 	}
 
 	@Test

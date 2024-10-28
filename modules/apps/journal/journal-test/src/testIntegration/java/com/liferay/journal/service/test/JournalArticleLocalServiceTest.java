@@ -170,6 +170,42 @@ public class JournalArticleLocalServiceTest {
 		_themeDisplay = _getThemeDisplay();
 	}
 
+	@Test
+	public void testAddArticleWithEmptyDefaultLanguageFriendlyURLWithAnotherLanguageFriendlyURL()
+		throws Exception {
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent();
+
+		Locale defaultLocale = _portal.getSiteDefaultLocale(
+			_group.getGroupId());
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+			PortalUtil.getClassNameId(JournalArticle.class), StringPool.BLANK,
+			true, 0,
+			HashMapBuilder.put(
+				defaultLocale, "title"
+			).build(),
+			Collections.emptyMap(),
+			HashMapBuilder.put(
+				defaultLocale, ""
+			).put(
+				LocaleUtil.SPAIN, "friendly-url-es"
+			).build(),
+			content, ddmStructure.getStructureId(), null, null, 1, 1, 1965, 0,
+			0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0,
+			null, null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+
+		Assert.assertNotNull(friendlyURLMap.get(defaultLocale));
+	}
+
 	@Test(expected = DuplicateArticleExternalReferenceCodeException.class)
 	public void testAddArticleWithExistingExternalReferenceCode()
 		throws Exception {

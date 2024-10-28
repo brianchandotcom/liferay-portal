@@ -24,6 +24,7 @@ import getWidget from '../getWidget';
 import {hasCollectionParent} from '../hasCollectionParent';
 import {hasFormStepParent} from '../hasFormStepParent';
 import {isMultistepForm} from '../isMultistepForm';
+import isStepper from '../isStepper';
 import {isUnmappedCollection} from '../isUnmappedCollection';
 
 type DragAndDropItem = LayoutDataItem & {
@@ -122,11 +123,10 @@ export default function checkAllowedChild(
 		return false;
 	}
 
-	const isStepper = child.fieldTypes?.includes('stepper');
 	const formParent = getFormParent(parent, layoutData);
 
 	if (
-		!isStepper &&
+		!isStepper(child) &&
 		isMultistepForm(formParent) &&
 		!hasFormStepParent(parent, layoutData)
 	) {
@@ -134,7 +134,7 @@ export default function checkAllowedChild(
 	}
 
 	if (child.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-		if (isStepper) {
+		if (isStepper(child)) {
 			if (parent.type !== LAYOUT_DATA_ITEM_TYPES.form) {
 				return false;
 			}

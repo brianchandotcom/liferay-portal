@@ -22,6 +22,7 @@ import hasVisibleSubmitChild from './hasVisibleSubmitChild';
 import {isItemHidden} from './isItemHidden';
 import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
 import {isMultistepForm} from './isMultistepForm';
+import isStepper from './isStepper';
 import isVisible from './isVisible';
 
 export default function useCheckFormsValidity() {
@@ -255,7 +256,7 @@ async function checkUnmappedInputChild(
 		if (
 			fragmentEntryLink.fragmentEntryType !==
 				FRAGMENT_ENTRY_TYPES.input ||
-			fragmentEntryLink.fieldTypes?.includes('stepper')
+			isStepper(fragmentEntryLink)
 		) {
 			continue;
 		}

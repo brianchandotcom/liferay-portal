@@ -35,6 +35,7 @@ import getItemWidget from '../getItemWidget';
 import {getStepperChild} from '../getStepperChild';
 import getWidget from '../getWidget';
 import {hasCollectionParent} from '../hasCollectionParent';
+import isStepper from '../isStepper';
 import checkAllowedChild from './checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import defaultComputeHover from './defaultComputeHover';
@@ -468,9 +469,7 @@ function computeDrop({
 				'form-components-can-only-be-placed-inside-a-mapped-form-container'
 			);
 
-			if (
-				sourceItems.some((item) => item.fieldTypes?.includes('stepper'))
-			) {
+			if (sourceItems.some((item) => isStepper(item))) {
 				const form = getFormParent(
 					dropTargetItem,
 					layoutDataRef.current
@@ -552,7 +551,7 @@ function computeDrop({
 
 		if (
 			formParent &&
-			sourceItems.some((item) => item.fieldTypes?.includes('stepper')) &&
+			sourceItems.some((item) => isStepper(item)) &&
 			!isMultistepForm(formParent)
 		) {
 			openFormConversionModal({

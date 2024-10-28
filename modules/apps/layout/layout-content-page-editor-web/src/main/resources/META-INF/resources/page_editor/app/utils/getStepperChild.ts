@@ -6,6 +6,7 @@
 import {FormLayoutDataItem} from '../../types/layout_data/FormLayoutDataItem';
 import {LayoutData, LayoutDataItem} from '../../types/layout_data/LayoutData';
 import {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
+import isStepper from './isStepper';
 
 export function getStepperChild(
 	form: FormLayoutDataItem,
@@ -26,7 +27,7 @@ export function getStepperChild(
 		const fragment =
 			fragmentEntryLinks?.[child.config.fragmentEntryLinkId!];
 
-		if (fragment.fieldTypes?.includes('stepper')) {
+		if (isStepper(fragment)) {
 			return child;
 		}
 	}

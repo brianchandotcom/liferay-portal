@@ -52,6 +52,7 @@ import {
 	useIsDroppable,
 } from '../../utils/drag_and_drop/useDragAndDrop';
 import getNormalizedDragItems from '../../utils/getNormalizedDragItems';
+import isStepper from '../../utils/isStepper';
 import useDropContainerId from '../../utils/useDropContainerId';
 import TopperItemActions from './TopperItemActions';
 import {TopperLabel} from './TopperLabel';
@@ -168,7 +169,7 @@ function TopperContent({
 	};
 
 	const onDragEnd = (parentItemId, position) => {
-		const thunk = lastDragSource.fieldTypes?.includes('stepper')
+		const thunk = isStepper(lastDragSource)
 			? moveStepper({
 					itemId: item.itemId,
 					parentItemId,

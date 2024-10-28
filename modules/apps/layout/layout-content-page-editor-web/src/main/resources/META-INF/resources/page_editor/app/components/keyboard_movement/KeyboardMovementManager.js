@@ -43,6 +43,7 @@ import getDropData from '../../utils/drag_and_drop/getDropData';
 import itemIsAncestor from '../../utils/drag_and_drop/itemIsAncestor';
 import {getFormParent} from '../../utils/getFormParent';
 import {isMultistepForm} from '../../utils/isMultistepForm';
+import isStepper from '../../utils/isStepper';
 import {isUnmappedCollection} from '../../utils/isUnmappedCollection';
 import {openFormConversionModal} from '../../utils/openFormConversionModal';
 
@@ -114,7 +115,7 @@ export default function KeyboardMovementManager() {
 						return;
 					}
 
-					thunk = lastSource.fieldTypes?.includes('stepper')
+					thunk = isStepper(lastSource)
 						? moveStepper({
 								itemId: lastSource.itemId,
 								parentItemId: dropItemId,
@@ -139,7 +140,7 @@ export default function KeyboardMovementManager() {
 								selectItems,
 							});
 						}
-						else if (source.fieldTypes?.includes('stepper')) {
+						else if (isStepper(source)) {
 							thunk = addStepper({
 								fragmentEntryKey: source.fragmentEntryKey,
 								groupId: source.groupId,
@@ -196,9 +197,7 @@ export default function KeyboardMovementManager() {
 
 				if (
 					formParent &&
-					sources.every((source) =>
-						source.fieldTypes?.includes('stepper')
-					) &&
+					sources.every((source) => isStepper(source)) &&
 					!isMultistepForm(formParent)
 				) {
 					openFormConversionModal({

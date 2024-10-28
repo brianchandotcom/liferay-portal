@@ -388,15 +388,14 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
+		String content = StringPool.BLANK;
+		String nonce = _NONCE;
+
 		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
 			fragmentRendererContext);
 
-		String content = StringPool.BLANK;
-
 		boolean cacheable = _isCacheable(
 			fragmentEntryLink, fragmentRendererContext);
-
-		String nonce = _NONCE_PLACEHOLDER_ATTRIBUTE;
 
 		if (cacheable) {
 			content = _fragmentEntryLinkCache.getFragmentEntryLinkContent(
@@ -404,7 +403,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 			if (Validator.isNotNull(content)) {
 				return StringUtil.replace(
-					content, _NONCE_PLACEHOLDER_ATTRIBUTE,
+					content, _NONCE,
 					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 						httpServletRequest));
 			}
@@ -480,7 +479,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				fragmentRendererContext.getLocale());
 
 			content = StringUtil.replace(
-				content, _NONCE_PLACEHOLDER_ATTRIBUTE,
+				content, _NONCE,
 				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					httpServletRequest));
 		}
@@ -505,7 +504,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		return unsyncStringWriter.toString();
 	}
 
-	private static final String _NONCE_PLACEHOLDER_ATTRIBUTE = "data-lfr-nonce";
+	private static final String _NONCE = "data-lfr-nonce";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryFragmentRenderer.class);

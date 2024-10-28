@@ -26,6 +26,12 @@ export class StyleBooksPage {
 		);
 	}
 
+	async changePreviewPage(currentPage: string, nextPage: string) {
+		await this.page.getByRole('button', {name: currentPage}).click();
+
+		await this.page.getByRole('menuitem', {name: nextPage}).click();
+	}
+
 	async create(styleBookName: string) {
 		await this.page.getByRole('button', {exact: true, name: 'Add'}).click();
 
@@ -88,6 +94,19 @@ export class StyleBooksPage {
 		await this.page.getByRole('button', {name: buttonText}).click();
 
 		await this.page.getByText(category).click();
+	}
+
+	async updateTokenInput(label: string, value: string, section?: string) {
+		const parentElement = section
+			? this.page.locator('.panel').filter({hasText: section})
+			: this.page;
+
+		const input = parentElement
+			.locator('.form-group')
+			.filter({hasText: label})
+			.locator('input');
+
+		await fillAndClickOutside(this.page, input, value);
 	}
 
 	async updateTokenInputColor(

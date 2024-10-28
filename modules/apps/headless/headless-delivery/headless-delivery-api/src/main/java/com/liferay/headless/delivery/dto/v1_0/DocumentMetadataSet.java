@@ -35,6 +35,8 @@ import java.util.function.Supplier;
 import javax.annotation.Generated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -48,6 +50,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 	value = "DocumentMetadataSet"
 )
 @JsonFilter("Liferay.Vulcan")
+@Schema(
+	description = "Represents a Document Metadata Set.",
+	requiredProperties = {
+		"availableLanguages", "dataDefinitionFields", "dataLayout", "name"
+	}
+)
 @XmlRootElement(name = "DocumentMetadataSet")
 public class DocumentMetadataSet implements Serializable {
 
@@ -191,7 +199,8 @@ public class DocumentMetadataSet implements Serializable {
 	@GraphQLField(
 		description = "The list of languages the navigation menu item has a translation for."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected String[] availableLanguages;
 
 	@JsonIgnore
@@ -240,7 +249,8 @@ public class DocumentMetadataSet implements Serializable {
 	@GraphQLField(
 		description = "The list of fields that store the structured content's information."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected DataDefinitionField[] dataDefinitionFields;
 
 	@JsonIgnore
@@ -287,6 +297,7 @@ public class DocumentMetadataSet implements Serializable {
 		description = "The layout of the document data definition type fields."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected DataLayout dataLayout;
 
 	@JsonIgnore
@@ -537,6 +548,7 @@ public class DocumentMetadataSet implements Serializable {
 
 	@GraphQLField(description = "The Document Metadata Set's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
 	protected String name;
 
 	@JsonIgnore

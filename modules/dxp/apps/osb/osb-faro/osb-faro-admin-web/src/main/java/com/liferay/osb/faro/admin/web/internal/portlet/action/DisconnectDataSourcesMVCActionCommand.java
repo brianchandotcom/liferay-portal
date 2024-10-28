@@ -6,19 +6,16 @@
 package com.liferay.osb.faro.admin.web.internal.portlet.action;
 
 import com.liferay.osb.faro.admin.web.internal.constants.FaroAdminPortletKeys;
+import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -55,20 +52,11 @@ public class DisconnectDataSourcesMVCActionCommand
 			FaroProject faroProject = _faroProjectLocalService.getFaroProject(
 				faroProjectId);
 
-			Http.Options options = new Http.Options();
+			_contactsEngineClient.disconnectDataSources(faroProject);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			faroProject.setDataSourceConnected(false);
 
-			options.setLocation(
-				StringBundler.concat(
-					themeDisplay.getPortalURL(), "/o/faro/contacts/",
-					faroProject.getGroupId(), "/data_source/disconnect-all"));
-
-			options.setPost(true);
-			options.setHeaders(getHeaders(actionRequest));
-
-			_http.URLtoString(options);
+			_faroProjectLocalService.updateFaroProject(faroProject);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -98,10 +86,10 @@ public class DisconnectDataSourcesMVCActionCommand
 		DisconnectDataSourcesMVCActionCommand.class);
 
 	@Reference
-	private FaroProjectLocalService _faroProjectLocalService;
+	private ContactsEngineClient _contactsEngineClient;
 
 	@Reference
-	private Http _http;
+	private FaroProjectLocalService _faroProjectLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -48,9 +48,7 @@ public class FragmentCollectionManagerTest {
 
 	@Test
 	@TestInfo("LPS-162848")
-	public void testGetLayoutElementMapsListMapWithoutApprovedObject()
-		throws Exception {
-
+	public void testGetLayoutElementMapsListMapWithoutApprovedObjectDefinition() {
 		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
 			ReflectionTestUtil.invoke(
 				_fragmentCollectionManager, "getLayoutElementMapsListMap",

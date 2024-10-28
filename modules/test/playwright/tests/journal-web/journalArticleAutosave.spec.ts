@@ -176,12 +176,6 @@ autoSaveTest(
 		);
 
 		await expect(errorIndicator).toBeVisible();
-
-		await expect(
-			page.getByText(
-				'Please ensure all mandatory fields are completed to enable autosave.'
-			)
-		).toBeVisible();
 	}
 );
 

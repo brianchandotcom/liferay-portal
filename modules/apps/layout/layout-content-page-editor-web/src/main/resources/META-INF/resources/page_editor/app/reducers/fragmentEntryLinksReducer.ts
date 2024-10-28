@@ -16,7 +16,7 @@ import deleteFragmentEntryLinkComment from '../actions/deleteFragmentEntryLinkCo
 import deleteItem from '../actions/deleteItem';
 import duplicateItem from '../actions/duplicateItem';
 import editFragmentEntryLinkComment from '../actions/editFragmentEntryLinkComment';
-import pasteItem from '../actions/pasteItem';
+import pasteItems from '../actions/pasteItems';
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_FRAGMENT_ENTRY_LINK_COMMENT,
@@ -57,7 +57,7 @@ export default function fragmentEntryLinksReducer(
 		| typeof deleteItem
 		| typeof deleteFragmentEntryLinkComment
 		| typeof duplicateItem
-		| typeof pasteItem
+		| typeof pasteItems
 		| typeof editFragmentEntryLinkComment
 		| typeof updateCollectionDisplayCollection
 		| typeof updateEditableValues

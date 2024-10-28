@@ -28,7 +28,7 @@ import {
 import {useGetWidgets} from '../../contexts/WidgetsContext';
 import deleteItem from '../../thunks/deleteItem';
 import duplicateItem from '../../thunks/duplicateItem';
-import pasteItem from '../../thunks/pasteItem';
+import pasteItems from '../../thunks/pasteItems';
 import canBeCopied from '../../utils/canBeCopied';
 import canBeDuplicated from '../../utils/canBeDuplicated';
 import canBeRemoved from '../../utils/canBeRemoved';
@@ -206,7 +206,7 @@ export default function TopperItemActions({disabled, item}) {
 						)
 					) {
 						dispatch(
-							pasteItem({
+							pasteItems({
 								clipboard,
 								parentItemId: item.itemId,
 								selectItems,

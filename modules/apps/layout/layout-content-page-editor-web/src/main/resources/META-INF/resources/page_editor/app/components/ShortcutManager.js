@@ -38,7 +38,7 @@ import {useGetWidgets} from '../contexts/WidgetsContext';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
-import pasteItem from '../thunks/pasteItem';
+import pasteItems from '../thunks/pasteItems';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import canBeCopied from '../utils/canBeCopied';
 import canBeDuplicated from '../utils/canBeDuplicated';
@@ -165,7 +165,7 @@ export default function ShortcutManager() {
 
 	const paste = () => {
 		dispatch(
-			pasteItem({
+			pasteItems({
 				clipboard,
 				parentItemId: getParentItemId(),
 				selectItems,

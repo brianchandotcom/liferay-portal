@@ -13,7 +13,7 @@ import deleteRule from '../actions/deleteRule';
 import duplicateItem from '../actions/duplicateItem';
 import moveItems from '../actions/moveItems';
 import moveStepper from '../actions/moveStepper';
-import pasteItem from '../actions/pasteItem';
+import pasteItems from '../actions/pasteItems';
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_ITEM,
@@ -62,7 +62,7 @@ export default function layoutDataReducer(
 		| ReturnType<typeof deleteItem>
 		| ReturnType<typeof deleteRule>
 		| ReturnType<typeof duplicateItem>
-		| ReturnType<typeof pasteItem>
+		| ReturnType<typeof pasteItems>
 		| ReturnType<typeof moveItems>
 		| ReturnType<typeof moveStepper>
 		| ReturnType<typeof updateCollectionDisplayCollection>

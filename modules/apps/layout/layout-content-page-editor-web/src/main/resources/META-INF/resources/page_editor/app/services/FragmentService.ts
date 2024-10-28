@@ -259,7 +259,7 @@ export default {
 		);
 	},
 
-	pasteItem({
+	pasteItems({
 		itemIds,
 		onNetworkStatus,
 		parentItemId,

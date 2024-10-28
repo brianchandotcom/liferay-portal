@@ -34,7 +34,7 @@ import {useGetWidgets} from '../../contexts/WidgetsContext';
 import {useLayoutKeyboardNavigation} from '../../hooks/app_hooks/useLayoutKeyboardNavigation';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
-import pasteItem from '../../thunks/pasteItem';
+import pasteItems from '../../thunks/pasteItems';
 import canBeCopied from '../../utils/canBeCopied';
 import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
 import {
@@ -336,7 +336,7 @@ const TopperEmptyLabel = ({isActive, isHovered, item, itemElement}) => {
 											)
 										) {
 											dispatch(
-												pasteItem({
+												pasteItems({
 													clipboard,
 													parentItemId: item.itemId,
 													selectItems,

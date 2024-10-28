@@ -5,7 +5,7 @@
 
 import duplicateItem from '../actions/duplicateItem';
 import {InitAction} from '../actions/init';
-import pasteItem from '../actions/pasteItem';
+import pasteItems from '../actions/pasteItems';
 import {DUPLICATE_ITEM, INIT, PASTE_ITEM} from '../actions/types';
 
 export const INITIAL_STATE = new Set<string>();
@@ -15,7 +15,7 @@ export default function restrictedItemIdsReducer(
 	action:
 		| InitAction
 		| ReturnType<typeof duplicateItem>
-		| ReturnType<typeof pasteItem>
+		| ReturnType<typeof pasteItems>
 ) {
 	switch (action.type) {
 		case INIT:

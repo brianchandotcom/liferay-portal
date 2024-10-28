@@ -287,7 +287,7 @@ autoSaveTest(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('option', {
-				name: 'Catalan Language: Not',
+				name: 'Catalan Language: Not Translated',
 			}),
 			trigger: translationButton,
 		});
@@ -307,7 +307,7 @@ autoSaveTest(
 		await clickAndExpectToBeVisible({
 			autoClick: false,
 			target: page.getByRole('option', {
-				name: 'Catalan Language: Not',
+				name: 'Catalan Language: Not Translated',
 			}),
 			trigger: translationButton,
 		});

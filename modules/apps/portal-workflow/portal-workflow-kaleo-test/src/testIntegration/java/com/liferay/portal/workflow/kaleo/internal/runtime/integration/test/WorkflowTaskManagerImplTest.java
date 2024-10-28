@@ -969,6 +969,30 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 	}
 
 	@Test
+	public void testIsNotifiableUser() throws Exception {
+		User user = UserTestUtil.addUser(RandomTestUtil.randomString());
+
+		_activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
+
+		_addBlogsEntry();
+
+		WorkflowTask workflowTask = _getWorkflowTask();
+
+		Assert.assertFalse(
+			_workflowTaskManager.isNotifiableUser(
+				user.getUserId(), workflowTask.getWorkflowTaskId()));
+
+		Role role = _roleLocalService.getRole(
+			_company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
+
+		Assert.assertTrue(
+			_workflowTaskManager.isNotifiableUser(
+				user.getUserId(), workflowTask.getWorkflowTaskId()));
+	}
+
+	@Test
 	public void testMovetoTrashAndRestoreFromTrashPendingDLFileEntryInDLFolderWithWorkflow()
 		throws Exception {
 

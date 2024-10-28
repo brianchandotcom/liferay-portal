@@ -559,9 +559,11 @@ while (manageableCalendarsIterator.hasNext()) {
 					return;
 				}
 
-				const calendarId = calendarIdNode.value;
+				const index = childCalendarIds.indexOf(calendarIdNode.value);
 
-				childCalendarIds.splice(childCalendarIds.indexOf(calendarId), 1);
+				if (index > -1) {
+					childCalendarIds.splice(index, 1);
+				}
 
 				const childCalendarIdsNode = document.getElementById(
 					'<portlet:namespace />childCalendarIds'

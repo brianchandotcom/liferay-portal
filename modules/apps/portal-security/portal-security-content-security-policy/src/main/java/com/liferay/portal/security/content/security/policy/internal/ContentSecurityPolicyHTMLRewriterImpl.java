@@ -102,7 +102,7 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 			}
 
 			sb.append(key);
-			sb.append("=function(event){");
+			sb.append(" = function(event) {");
 			sb.append(element.attr(key));
 			sb.append("};");
 

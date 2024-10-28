@@ -96,8 +96,7 @@ public class LoginAction implements Action {
 			}
 
 			if (redirect.charAt(0) == CharPool.SLASH) {
-				String portalURL = PortalUtil.getPortalURL(
-					httpServletRequest, httpServletRequest.isSecure());
+				String portalURL = themeDisplay.getURLPortal();
 
 				if (Validator.isNotNull(portalURL)) {
 					redirect = portalURL.concat(redirect);

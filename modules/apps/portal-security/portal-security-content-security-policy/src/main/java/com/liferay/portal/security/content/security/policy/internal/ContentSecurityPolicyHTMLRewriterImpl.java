@@ -34,11 +34,11 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 
 		StringBundler sb = new StringBundler();
 
-		boolean containsBodyTag = _containsBodyTag(html);
-
 		Document document = Jsoup.parse(html);
 
 		Element body = document.body();
+
+		boolean containsBodyTag = _containsBodyTag(html);
 
 		if (containsBodyTag) {
 			_extractInlineHandlers(body, sb, recursive);

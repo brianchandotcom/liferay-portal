@@ -60,13 +60,13 @@ public class JUnitTestClass extends BaseTestClass {
 
 		super(batchTestClassGroup, testClassFile);
 
-		File modulesBaseDirectory = getPortalModulesBaseDir();
+		File modulesBaseDir = getPortalModulesBaseDir();
 
-		if ((modulesBaseDirectory != null) && modulesBaseDirectory.exists()) {
-			_modulesBaseDirectory = modulesBaseDirectory;
+		if ((modulesBaseDir != null) && modulesBaseDir.exists()) {
+			_modulesBaseDir = modulesBaseDir;
 		}
 		else {
-			_modulesBaseDirectory = new File(".");
+			_modulesBaseDir = new File(".");
 		}
 
 		File testPropertiesBaseDir = getTestPropertiesBaseDir(
@@ -82,7 +82,7 @@ public class JUnitTestClass extends BaseTestClass {
 					"testray.main.component.name");
 
 			if ((testrayMainComponentName == null) &&
-				_modulesBaseDirectory.exists()) {
+				_modulesBaseDir.exists()) {
 
 				testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
 					JenkinsResultsParserUtil.getProperties(
@@ -117,13 +117,13 @@ public class JUnitTestClass extends BaseTestClass {
 
 		super(batchTestClassGroup, jsonObject);
 
-		File modulesBaseDirectory = getPortalModulesBaseDir();
+		File modulesBaseDir = getPortalModulesBaseDir();
 
-		if ((modulesBaseDirectory != null) && modulesBaseDirectory.exists()) {
-			_modulesBaseDirectory = modulesBaseDirectory;
+		if ((modulesBaseDir != null) && modulesBaseDir.exists()) {
+			_modulesBaseDir = modulesBaseDir;
 		}
 		else {
-			_modulesBaseDirectory = null;
+			_modulesBaseDir = null;
 		}
 
 		_classIgnored = jsonObject.getBoolean("ignored");
@@ -142,9 +142,7 @@ public class JUnitTestClass extends BaseTestClass {
 		String testrayMainComponentName = jsonObject.optString(
 			"testray_main_component_name");
 
-		if ((testrayMainComponentName == null) &&
-			_modulesBaseDirectory.exists()) {
-
+		if ((testrayMainComponentName == null) && _modulesBaseDir.exists()) {
 			testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getProperties(
 					getParentTestPropertiesFile(testPropertiesBaseDir)),
@@ -155,7 +153,7 @@ public class JUnitTestClass extends BaseTestClass {
 	}
 
 	protected File getParentTestPropertiesFile(File currentDirectory) {
-		if (currentDirectory.compareTo(_modulesBaseDirectory) == 0) {
+		if (currentDirectory.compareTo(_modulesBaseDir) == 0) {
 			return null;
 		}
 
@@ -363,7 +361,7 @@ public class JUnitTestClass extends BaseTestClass {
 			"(?<methodName>[^\\(\\s]+)"));
 
 	private boolean _classIgnored;
-	private final File _modulesBaseDirectory;
+	private final File _modulesBaseDir;
 	private final File _testPropertiesFile;
 	private final String _testrayMainComponentName;
 

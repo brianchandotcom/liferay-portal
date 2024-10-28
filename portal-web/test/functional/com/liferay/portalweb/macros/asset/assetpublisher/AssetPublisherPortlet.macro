@@ -245,45 +245,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureCollectionProviderPG(columnNumnber = null, collectionProviderName = null) {
-		AssetPublisherPortlet.gotoConfigurationPG(portletIndex = ${columnNumnber});
-
-		Navigator.gotoNavTab(navTab = "Asset Selection");
-
-		Panel.expandPanel(panel = "Asset Selection");
-
-		if (IsNotChecked(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST")) {
-			Check(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
-
-			Alert.viewSuccessMessage();
-		}
-
-		Panel.expandPanel(panel = "Select Collection");
-
-		Button.clickSelect();
-
-		WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		NavItem.click(navItem = "Collection Providers");
-
-		LexiconCard.clickCard(card = ${collectionProviderName});
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		AssertTextEquals(
-			locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST_TITLE",
-			value1 = ${collectionProviderName});
-
-		PortletEntry.save();
-
-		IFrame.closeFrame();
-	}
-
-	@summary = "Default summary"
 	macro configureDisplayConversionsPG(documentTypes = null, check = null, uncheck = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 

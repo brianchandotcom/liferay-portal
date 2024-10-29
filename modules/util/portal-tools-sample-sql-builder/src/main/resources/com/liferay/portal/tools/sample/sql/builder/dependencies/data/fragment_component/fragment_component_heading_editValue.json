@@ -1,0 +1,13 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"element-text": {
+			"collectionFieldId": "${collectionFieldId}",
+			"config": {
+			},
+			"defaultValue": "Heading Example"
+		}
+	},
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+		"headingLevel": "h1"
+	}
+}

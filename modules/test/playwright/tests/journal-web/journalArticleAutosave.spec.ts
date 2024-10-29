@@ -731,3 +731,27 @@ autosaveWithoutPermissionsTest(
 		await expect(page.getByTitle(articleTitle)).toBeVisible();
 	}
 );
+
+autosaveWithoutPermissionsTest(
+	'Web Content publish button is enabled after required error messages appear',
+	{
+		tag: '@LPD-40531',
+	},
+	async ({journalEditArticlePage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const articleTitle = 'Web Content Title';
+
+		await journalEditArticlePage.publishButton.click();
+
+		await expect(
+			page.getByText('The Title field is required.')
+		).toBeVisible();
+
+		await journalEditArticlePage.fillTitle(articleTitle);
+
+		await journalEditArticlePage.publishButton.click();
+
+		await expect(page.getByTitle(articleTitle)).toBeVisible();
+	}
+);

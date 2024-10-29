@@ -52,6 +52,17 @@ public class ListTypeDefinitionExportImportTest
 
 	@Test
 	public void testExportImportObjectDefinition() throws Exception {
+
+		// Localized list type definition
+
+		testExportImport(
+			"test-list-type-definition.portuguese-locale.json",
+			"test-list-type-definition.site-default-locale.json",
+			"TESTLISTTYPEDEFINITIONPORTUGUESE",
+			"TestListTypeDefinitionPortuguese");
+
+		// Localized list type definition re-imported for update
+
 		testExportImport(
 			"test-list-type-definition.portuguese-locale.json",
 			"test-list-type-definition.site-default-locale.json",

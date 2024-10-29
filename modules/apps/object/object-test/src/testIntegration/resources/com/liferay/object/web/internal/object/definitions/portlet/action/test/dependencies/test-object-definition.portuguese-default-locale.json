@@ -96,6 +96,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "NAME",
 			"label": {
 				"pt_BR": "Nome"
 			},
@@ -113,6 +114,7 @@
 		{
 			"DBType": "Integer",
 			"businessType": "Integer",
+			"externalReferenceCode": "AGE",
 			"label": {
 				"en_US": "Age"
 			},
@@ -123,6 +125,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "DESCRIPTION",
 			"label": {
 				"pt_BR": "Descrição"
 			},
@@ -133,6 +136,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "EMAIL",
 			"label": {
 				"es_ES": "Correo Electrónico"
 			},

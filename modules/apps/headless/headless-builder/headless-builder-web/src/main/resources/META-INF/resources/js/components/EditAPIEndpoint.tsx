@@ -225,7 +225,9 @@ export default function EditAPIEndpoint({
 
 				updateData<APIEndpointItem>({
 					dataToUpdate: {
-						description: localUIData.description,
+						description: localUIData.description
+							? localUIData.description
+							: STR_BLANK,
 						...(localUIData.path && {
 							path: beginStringWithForwardSlash(
 								localUIData.path +

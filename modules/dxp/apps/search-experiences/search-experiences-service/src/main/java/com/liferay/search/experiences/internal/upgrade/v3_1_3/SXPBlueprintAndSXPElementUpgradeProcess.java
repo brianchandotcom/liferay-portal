@@ -255,11 +255,11 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			JSONFactoryUtil.createJSONArray();
 
 		for (int i = 0; i < scopeGroupIdsJSONArray.length(); i++) {
-			JSONObject scopeGroupIDJSONObject =
+			JSONObject scopeGroupIdJSONObject =
 				scopeGroupIdsJSONArray.getJSONObject(i);
 
 			Group group = _groupLocalService.getGroup(
-				scopeGroupIDJSONObject.getLong("value"));
+				scopeGroupIdJSONObject.getLong("value"));
 
 			groupIdsExternalReferenceCodesJSONArray.put(
 				JSONUtil.put(

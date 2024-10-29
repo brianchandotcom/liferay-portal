@@ -343,6 +343,8 @@ export default function _JournalPortlet({
 				}
 			}
 		);
+
+		lockHolder.lock?.unlock();
 	};
 
 	const handleResetValuesButtonClick = (event) => {

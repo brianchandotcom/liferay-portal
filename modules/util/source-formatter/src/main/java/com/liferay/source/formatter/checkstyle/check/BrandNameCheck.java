@@ -37,10 +37,10 @@ public class BrandNameCheck extends BaseCheck {
 
 		String tokenTypeName = StringUtil.toLowerCase(detailAST.getText());
 
-		int i = tokenTypeName.indexOf("_");
+		int pos = tokenTypeName.indexOf("_");
 
-		if (i != -1) {
-			tokenTypeName = tokenTypeName.substring(0, i);
+		if (pos != -1) {
+			tokenTypeName = tokenTypeName.substring(0, pos);
 		}
 
 		for (String brandName : _BRAND_NAMES) {
@@ -64,6 +64,8 @@ public class BrandNameCheck extends BaseCheck {
 						name.substring(lowerCaseBrandName.length());
 
 				log(detailAST, _MSG_RENAME, tokenTypeName, name, newName);
+
+				return;
 			}
 
 			String upperCaseBrandName = StringUtil.upperCaseFirstLetter(
@@ -77,6 +79,8 @@ public class BrandNameCheck extends BaseCheck {
 						name.substring(x + brandName.length());
 
 				log(detailAST, _MSG_RENAME, tokenTypeName, name, newName);
+
+				return;
 			}
 		}
 	}

@@ -210,6 +210,7 @@ public abstract class BaseIndexingTestCase {
 	protected SearchContext createSearchContext() {
 		SearchContext searchContext = new SearchContext();
 
+		searchContext.setCommitImmediately(true);
 		searchContext.setCompanyId(getCompanyId());
 		searchContext.setGroupIds(new long[] {_GROUP_ID});
 

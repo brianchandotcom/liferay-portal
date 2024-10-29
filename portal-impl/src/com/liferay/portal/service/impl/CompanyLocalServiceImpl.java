@@ -2465,6 +2465,19 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	private long _getNextCompanyId() {
+		if (PropsValues.COMPANY_STATIC_ID_ENABLED) {
+			if (_nextCompanyId == -1) {
+				_nextCompanyId = counterLocalService.increment(
+					Company.class.getName(), _FIRST_COMPANY_ID_INCREMENT);
+			}
+			else {
+				_nextCompanyId = counterLocalService.increment(
+					Company.class.getName());
+			}
+
+			return _nextCompanyId;
+		}
+
 		long nextLong = 0;
 
 		ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
@@ -2591,6 +2604,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	private static final String _DEFAULT_VIRTUAL_HOST = "localhost";
 
+	private static final int _FIRST_COMPANY_ID_INCREMENT = 10000;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyLocalServiceImpl.class);
 
@@ -2630,6 +2645,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	@BeanReference(type = LayoutSetPrototypeLocalService.class)
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	private long _nextCompanyId = -1;
 
 	@BeanReference(type = OrganizationLocalService.class)
 	private OrganizationLocalService _organizationLocalService;

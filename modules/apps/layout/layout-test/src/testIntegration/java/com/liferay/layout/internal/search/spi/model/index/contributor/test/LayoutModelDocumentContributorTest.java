@@ -270,6 +270,7 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-22568")
 	public void testReindexPublishedLayoutLayoutSetThemeNotAvailable()
 		throws Exception {
 
@@ -288,6 +289,7 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-22568")
 	public void testReindexPublishedLayoutSpecificThemeAndLayoutSetThemeNotAvailable()
 		throws Exception {
 
@@ -308,6 +310,7 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-22568")
 	public void testReindexPublishedLayoutThemeNotAvailable() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME_THEME_LOCAL_SERVICE_IMPL, LoggerTestUtil.INFO)) {

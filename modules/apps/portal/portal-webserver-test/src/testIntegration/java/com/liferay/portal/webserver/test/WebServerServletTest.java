@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
@@ -124,8 +123,8 @@ public class WebServerServletTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			PortalUtil.getClassNameId(LiferayRepository.class.getName()),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			PortletKeys.BACKGROUND_TASK, StringPool.BLANK,
-			PortletKeys.BACKGROUND_TASK, new UnicodeProperties(), true,
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			RandomTestUtil.randomString(), new UnicodeProperties(), true,
 			ServiceContextTestUtil.getServiceContext());
 
 		ServiceContext serviceContext =

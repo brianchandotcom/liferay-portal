@@ -6,10 +6,13 @@
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TCartItem = {
+	deliveryGroup?: string;
 	id?: number;
 	options?: string;
 	quantity: number;
 	replacedSkuId?: number;
+	requestedDeliveryDate?: string;
+	shippingAddressId?: string;
 	skuId: number;
 	skuUnitOfMeasure?: TCartItemUOM;
 };

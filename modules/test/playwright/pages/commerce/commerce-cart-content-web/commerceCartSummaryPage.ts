@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 import {CommerceLayoutsPage} from '../commerce-order-content-web/commerceLayoutsPage';
 
 export class CommerceCartSummaryPage {
+	readonly checkoutButton: Locator;
 	readonly layoutsPage: CommerceLayoutsPage;
 	readonly orderItemActionsButton: Locator;
 	readonly orderItemActionsButtonEdit: Locator;
@@ -18,6 +19,7 @@ export class CommerceCartSummaryPage {
 	readonly viewButton: Locator;
 
 	constructor(page: Page) {
+		this.checkoutButton = page.getByRole('button', {name: 'Checkout'});
 		this.layoutsPage = new CommerceLayoutsPage(page);
 		this.orderItemActionsButton = page.getByRole('button', {
 			name: 'Actions',

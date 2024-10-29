@@ -40,3 +40,19 @@ export function getUTCHourAndDateFormat(date: string, locale: string) {
 		})
 		.replace(',', '');
 }
+
+export function getDateFormatted(value: Date, locale: string) {
+	return new Intl.DateTimeFormat(locale, {
+		day: 'numeric',
+		month: 'short',
+		year: 'numeric',
+	}).format(new Date(value));
+}
+
+export function setFutureDate(day: number) {
+	const now = new Date().getTime();
+
+	const fiveDaysFromNow = now + 1000 * 60 * 60 * 24 * day;
+
+	return new Date(fiveDaysFromNow).toISOString();
+}

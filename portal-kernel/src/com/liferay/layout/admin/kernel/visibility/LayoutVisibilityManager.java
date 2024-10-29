@@ -13,8 +13,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface LayoutVisibilityManager {
 
-	public boolean isPrivateLayoutsEnabled();
-
 	public boolean isPrivateLayoutsEnabled(long companyId);
 
 }

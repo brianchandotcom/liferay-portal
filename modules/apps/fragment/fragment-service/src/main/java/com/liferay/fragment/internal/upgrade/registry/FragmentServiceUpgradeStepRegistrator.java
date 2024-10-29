@@ -14,6 +14,7 @@ import com.liferay.fragment.internal.upgrade.v2_1_0.SchemaUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v2_4_0.FragmentEntryLinkUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v2_6_0.util.FragmentEntryVersionTable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -238,13 +240,24 @@ public class FragmentServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"2.13.0", "2.13.1",
+			new com.liferay.fragment.internal.upgrade.v2_13_1.
+				FragmentEntryLinkUpgradeProcess(_jsonFactory, _portal));
 	}
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
 
 	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

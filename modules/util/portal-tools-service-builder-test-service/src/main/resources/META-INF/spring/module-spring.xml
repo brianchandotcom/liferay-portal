@@ -48,6 +48,9 @@
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.FinderWhereClauseEntryModelArgumentsResolver" id="com.liferay.portal.tools.service.builder.test.service.persistence.impl.FinderWhereClauseEntryModelArgumentsResolver" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.FinderWhereClauseEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.FinderWhereClauseEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.GenericMethodsEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.GenericMethodsEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.IndexEntryCTServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.IndexEntryCTService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.IndexEntryModelArgumentsResolver" id="com.liferay.portal.tools.service.builder.test.service.persistence.impl.IndexEntryModelArgumentsResolver" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.IndexEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.IndexEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LazyBlobEntryModelArgumentsResolver" id="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LazyBlobEntryModelArgumentsResolver" />

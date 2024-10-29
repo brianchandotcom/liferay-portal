@@ -90,6 +90,17 @@
 		<field name="name" type="String" />
 		<field name="nickname" type="String" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.IndexEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="indexEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="ownerId" type="long" />
+		<field name="ownerType" type="int" />
+		<field name="plid" type="long" />
+		<field name="portletId" type="String" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry">
 		<field name="uuid" type="String" />
 		<field name="lazyBlobEntryId" type="long" />

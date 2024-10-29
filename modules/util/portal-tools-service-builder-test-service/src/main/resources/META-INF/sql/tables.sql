@@ -108,6 +108,19 @@ create table FinderWhereClauseEntry (
 	nickname VARCHAR(75) null
 );
 
+create table IndexEntry (
+	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
+	externalReferenceCode VARCHAR(75) null,
+	indexEntryId LONG not null,
+	companyId LONG,
+	ownerId LONG,
+	ownerType INTEGER,
+	plid LONG,
+	portletId VARCHAR(75) null,
+	primary key (indexEntryId, ctCollectionId)
+);
+
 create table LVEntries_BigDecimalEntries (
 	companyId LONG not null,
 	bigDecimalEntryId LONG not null,

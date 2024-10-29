@@ -849,19 +849,17 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 						sql2));
 			}
 
-			Set<UpgradeSQLRecorder.RunningSQLEntry> runningSQLEntries =
+			Set<UpgradeSQLRecorder.RunningSQL> runningSQLEntries =
 				ReflectionTestUtil.invoke(
 					_upgradeRecorder, "getRunningSQLEntries", new Class<?>[0]);
 
-			for (UpgradeSQLRecorder.RunningSQLEntry runningSQLEntry :
-					runningSQLEntries) {
+			for (UpgradeSQLRecorder.RunningSQL runningSQL : runningSQLEntries) {
+				long duration = runningSQL.getDuration();
 
-				long duration = runningSQLEntry.getDuration();
-
-				String sql = runningSQLEntry.getSQL();
+				String sql = runningSQL.getSQL();
 
 				String upgradeProcessClassName =
-					runningSQLEntry.getUpgradeProcessClassName();
+					runningSQL.getUpgradeProcessClassName();
 
 				_assertLogContextDiagnostics(
 					"upgrade.report.longest.running.sqls",

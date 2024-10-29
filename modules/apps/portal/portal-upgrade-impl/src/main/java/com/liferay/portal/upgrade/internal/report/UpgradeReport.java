@@ -624,11 +624,11 @@ public class UpgradeReport {
 		).put(
 			"longest.running.sqls",
 			() -> {
-				Set<UpgradeSQLRecorder.RunningSQLEntry> runningSQLEntries =
+				Set<UpgradeSQLRecorder.RunningSQL> runningSQLEntries =
 					upgradeRecorder.getRunningSQLEntries();
 
-				List<UpgradeSQLRecorder.RunningSQLEntry> entries =
-					new ArrayList<>(runningSQLEntries);
+				List<UpgradeSQLRecorder.RunningSQL> entries = new ArrayList<>(
+					runningSQLEntries);
 
 				entries.sort(
 					(entry1, entry2) -> Long.compare(
@@ -848,30 +848,27 @@ public class UpgradeReport {
 					List<?> list = (List<?>)value;
 
 					for (Object object : list) {
-						if (object instanceof
-								UpgradeSQLRecorder.FailedSQLEntry) {
+						if (object instanceof UpgradeSQLRecorder.FailedSQL) {
+							UpgradeSQLRecorder.FailedSQL failedSQL =
+								(UpgradeSQLRecorder.FailedSQL)object;
 
-							UpgradeSQLRecorder.FailedSQLEntry failedSQLEntry =
-								(UpgradeSQLRecorder.FailedSQLEntry)object;
-
-							sb.append(failedSQLEntry.getSQL());
+							sb.append(failedSQL.getSQL());
 
 							sb.append(StringPool.COLON);
-							sb.append(failedSQLEntry.getMessage());
+							sb.append(failedSQL.getMessage());
 						}
 						else if (object instanceof
-									UpgradeSQLRecorder.RunningSQLEntry) {
+									UpgradeSQLRecorder.RunningSQL) {
 
-							UpgradeSQLRecorder.RunningSQLEntry runningSQLEntry =
-								(UpgradeSQLRecorder.RunningSQLEntry)object;
+							UpgradeSQLRecorder.RunningSQL runningSQL =
+								(UpgradeSQLRecorder.RunningSQL)object;
 
-							sb.append(
-								runningSQLEntry.getUpgradeProcessClassName());
+							sb.append(runningSQL.getUpgradeProcessClassName());
 
 							sb.append(StringPool.COLON);
-							sb.append(runningSQLEntry.getSQL());
+							sb.append(runningSQL.getSQL());
 							sb.append(StringPool.COLON);
-							sb.append(runningSQLEntry.getDuration());
+							sb.append(runningSQL.getDuration());
 							sb.append(" ms");
 						}
 						else {

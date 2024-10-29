@@ -15,7 +15,7 @@ import {
 	CP_UNIT_OF_MEASURE_SELECTOR_CHANGED,
 } from '../../utilities/eventsDefinitions';
 import {useCommerceAccount, useCommerceCart} from '../../utilities/hooks';
-import {getMinQuantity} from '../../utilities/quantities';
+import {getMinQuantity, getMultipleQuantity} from '../../utilities/quantities';
 import QuantitySelector from '../quantity_selector/QuantitySelector';
 import UnitOfMeasureSelector from '../unit_of_measure_selector/UnitOfMeasureSelector';
 import AddToCartButton from './AddToCartButton';
@@ -35,8 +35,11 @@ function getQuantity(settings, skuUnitOfMeasure) {
 			skuUnitOfMeasure
 				? settings?.productConfiguration?.minOrderQuantity
 				: Math.ceil(settings?.productConfiguration?.minOrderQuantity),
-			skuUnitOfMeasure?.incrementalOrderQuantity ||
+			getMultipleQuantity(
+				skuUnitOfMeasure?.incrementalOrderQuantity,
 				settings?.productConfiguration?.multipleOrderQuantity,
+				skuUnitOfMeasure?.precision || 0
+			),
 			skuUnitOfMeasure?.precision || 0
 		)
 	);

@@ -23,7 +23,7 @@ export function getMinQuantity(
 	);
 }
 
-export function getMultiple(
+export function getMultipleQuantity(
 	incrementalOrderQuantity = 1,
 	multipleQuantity = 1,
 	precision = 0

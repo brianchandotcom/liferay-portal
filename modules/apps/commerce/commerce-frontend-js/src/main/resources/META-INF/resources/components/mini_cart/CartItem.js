@@ -14,6 +14,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import ServiceProvider from '../../ServiceProvider/index';
 import {debouncePromise} from '../../utilities/debounce';
 import {CART_PRODUCT_QUANTITY_CHANGED} from '../../utilities/eventsDefinitions';
+import {getMultipleQuantity} from '../../utilities/quantities';
 import Price from '../price/Price';
 import QuantitySelector from '../quantity_selector/QuantitySelector';
 import ItemInfoView from './CartItemViews/ItemInfoView';
@@ -278,8 +279,13 @@ function CartItem({
 					}}
 					quantity={selectorQuantity}
 					step={
-						skuUnitOfMeasure?.incrementalOrderQuantity ||
-						settings.multipleQuantity
+						skuUnitOfMeasure
+							? getMultipleQuantity(
+									skuUnitOfMeasure.incrementalOrderQuantity,
+									settings.multipleQuantity,
+									skuUnitOfMeasure.precision
+								)
+							: settings.multipleQuantity
 					}
 					{...settings}
 					unitOfMeasure={skuUnitOfMeasure}

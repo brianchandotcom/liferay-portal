@@ -96,7 +96,7 @@ export default function RulesPopover({
 									Liferay.Language.get(
 										'min-quantity-per-order-is-x'
 									),
-									`<b>${min}</b>`
+									`<b>${Number(min)}</b>`
 								),
 							}}
 						/>
@@ -114,7 +114,7 @@ export default function RulesPopover({
 									Liferay.Language.get(
 										'max-quantity-per-order-is-x'
 									),
-									`<b>${max}</b>`
+									`<b>${Number(max)}</b>`
 								),
 							}}
 						/>

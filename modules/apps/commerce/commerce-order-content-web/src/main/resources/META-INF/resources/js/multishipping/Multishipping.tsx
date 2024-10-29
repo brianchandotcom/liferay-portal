@@ -300,21 +300,28 @@ const Multishipping = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const loadOrderItemData = useCallback(() => {
-		setLoading(true);
+	const loadOrderItemData = useCallback(
+		({updatedFromCart = false}: {updatedFromCart: boolean}) => {
+			if (!updatedFromCart) {
+				return;
+			}
 
-		CommerceServiceProvider.DeliveryCartAPI('v1')
-			.getItemsByCartId(orderId, {pageSize: -1})
-			.then(async (response: IOrderItemAPIResponse) => {
-				await prepareData(response.items);
-			})
-			.catch((error: IAPIResponseError) => {
-				showError(error);
-			})
-			.finally(() => {
-				setLoading(false);
-			});
-	}, [orderId, prepareData]);
+			setLoading(true);
+
+			CommerceServiceProvider.DeliveryCartAPI('v1')
+				.getItemsByCartId(orderId, {pageSize: -1})
+				.then(async (response: IOrderItemAPIResponse) => {
+					await prepareData(response.items);
+				})
+				.catch((error: IAPIResponseError) => {
+					showError(error);
+				})
+				.finally(() => {
+					setLoading(false);
+				});
+		},
+		[orderId, prepareData]
+	);
 
 	const updateFullCart = useCallback(
 		async (data) => {
@@ -331,6 +338,10 @@ const Multishipping = ({
 				.then(async (response: IOrderItemAPIResponse) => {
 					await prepareData(response.cartItems);
 
+					Liferay.fire(commerceEvents.CURRENT_ORDER_UPDATED, {
+						order: response,
+						updatedFromCart: false,
+					});
 					Liferay.fire(commerceEvents.ORDER_INFORMATION_ALTERED, {
 						order: response,
 					});
@@ -596,7 +607,16 @@ const Multishipping = ({
 	);
 
 	useEffect(() => {
-		loadOrderItemData();
+		loadOrderItemData({updatedFromCart: true});
+
+		Liferay.on(commerceEvents.CART_UPDATED, loadOrderItemData);
+
+		return () => {
+			Liferay.detach(
+				commerceEvents.CART_UPDATED,
+				loadOrderItemData as any
+			);
+		};
 	}, [loadOrderItemData]);
 
 	useEffect(() => {

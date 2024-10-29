@@ -109,13 +109,13 @@ public abstract class BaseDuplicateItemMVCActionCommand
 			}
 
 			if (fragmentEntryLink.isTypeInput()) {
-				JSONObject freemarkerFragmentEntryProcessorJSONObject =
+				JSONObject freeMarkerFragmentEntryProcessorJSONObject =
 					editableValuesJSONObject.getJSONObject(
 						FragmentEntryProcessorConstants.
 							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
-				if (freemarkerFragmentEntryProcessorJSONObject != null) {
-					freemarkerFragmentEntryProcessorJSONObject.remove(
+				if (freeMarkerFragmentEntryProcessorJSONObject != null) {
+					freeMarkerFragmentEntryProcessorJSONObject.remove(
 						"inputFieldId");
 				}
 			}

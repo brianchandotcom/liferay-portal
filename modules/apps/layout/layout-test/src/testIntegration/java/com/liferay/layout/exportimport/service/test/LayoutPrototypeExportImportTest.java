@@ -73,29 +73,29 @@ public class LayoutPrototypeExportImportTest {
 
 	@Test
 	public void testExportImport() throws Exception {
-		User guestUser = _company.getGuestUser();
+		User user = _company.getGuestUser();
 
 		LayoutPrototype layoutPrototype =
 			_layoutPrototypeLocalService.addLayoutPrototype(
-				guestUser.getUserId(), _company.getCompanyId(),
+				user.getUserId(), _company.getCompanyId(),
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
 				).build(),
 				null, true,
 				ServiceContextTestUtil.getServiceContext(
 					_company.getCompanyId(), _company.getGroupId(),
-					guestUser.getUserId()));
+					user.getUserId()));
 
 		Map<String, Serializable> exportLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildExportLayoutSettingsMap(
-					guestUser, _company.getGroupId(), false, new long[0],
+					user, _company.getGroupId(), false, new long[0],
 					_getExportParameterMap());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
 				addDraftExportImportConfiguration(
-					guestUser.getUserId(),
+					user.getUserId(),
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 					exportLayoutSettingsMap);
 
@@ -107,19 +107,19 @@ public class LayoutPrototypeExportImportTest {
 		Map<String, Serializable> importLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildImportLayoutSettingsMap(
-					guestUser, _company.getGroupId(), false, null,
+					user, _company.getGroupId(), false, null,
 					_getImportParameterMap());
 
 		exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
 				addExportImportConfiguration(
-					guestUser.getUserId(), _company.getGroupId(),
-					StringPool.BLANK, StringPool.BLANK,
+					user.getUserId(), _company.getGroupId(), StringPool.BLANK,
+					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
 					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					ServiceContextTestUtil.getServiceContext(
 						_company.getCompanyId(), _company.getGroupId(),
-						guestUser.getUserId()));
+						user.getUserId()));
 
 		ExportImportServiceUtil.importLayouts(
 			exportImportConfiguration, larFile);

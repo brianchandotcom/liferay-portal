@@ -40,7 +40,12 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 		}
 
 		_checkTestPropertiesOrder(fileName, content);
-		_checkTestrayMainComponentName(fileName, absolutePath, content);
+
+		if (isAttributeValue(
+				_CHECK_TESTRAY_MAIN_COMPONENT_NAME_KEY, absolutePath)) {
+
+			_checkTestrayMainComponentName(fileName, absolutePath, content);
+		}
 
 		return _sortTestCategories(
 			fileName, content, StringPool.BLANK,
@@ -297,6 +302,9 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _CHECK_TESTRAY_MAIN_COMPONENT_NAME_KEY =
+		"checkTestrayMainComponentName";
 
 	private static final String _TESTRAY_MAIN_COMPONENT_NAME =
 		"testray.main.component.name";

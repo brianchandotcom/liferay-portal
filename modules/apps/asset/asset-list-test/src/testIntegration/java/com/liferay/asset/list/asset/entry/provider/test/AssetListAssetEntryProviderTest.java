@@ -1240,7 +1240,9 @@ public class AssetListAssetEntryProviderTest {
 	}
 
 	@Test
-	public void testGetManualAssetEntriesFromDifferentGroups() throws Exception {
+	public void testGetManualAssetEntriesFromDifferentGroups()
+		throws Exception {
+
 		Group group1 = GroupTestUtil.addGroup();
 		Group group2 = GroupTestUtil.addGroup();
 

@@ -300,12 +300,20 @@ function get_parent_portal_ext_properties_files {
 	done
 }
 
+function get_playwright_base_dir {
+	echo ${_PLAYWRIGHT_BASE_DIR}
+}
+
 function get_playwright_project_dir {
 	find ${_PLAYWRIGHT_BASE_DIR} -name config.ts -type f -print | xargs grep "name: '${PLAYWRIGHT_PROJECT_NAME}'" | sed -n 's/\(.*\)\/config.ts.*/\1/p'
 }
 
 function get_portal_log_file_size {
 	wc --lines --total=always ${LIFERAY_HOME}/logs/liferay.*.log | grep total | awk '{print $1}'
+}
+
+function get_portal_project_dir {
+	echo ${_PORTAL_PROJECT_DIR}
 }
 
 function get_tomcat_dir {

@@ -631,10 +631,9 @@ public class UpgradeReport {
 					(entry1, entry2) -> Long.compare(
 						entry2.getDuration(), entry1.getDuration()));
 
-				return runningSQLs.subList(
-					0,
-					Math.min(_LONGEST_RUNNING_SQLS_COUNT, runningSQLs.size()) -
-						1);
+				return ListUtil.subList(
+					runningSQLs, 0,
+					Math.min(_LONGEST_RUNNING_SQLS_COUNT, runningSQLs.size()));
 			}
 		).put(
 			"warnings",

@@ -221,8 +221,11 @@
 						{
 							"properties": {
 								"scope": {
-									"description": "",
-									"type": "string"
+									"default": "page",
+									"enum": [
+										"instance",
+										"page"
+									]
 								},
 								"scriptElementAttributes": {
 									"additionalProperties": {
@@ -405,7 +408,11 @@
 									"type": "string"
 								},
 								"scope": {
-									"type": "string"
+									"default": "page",
+									"enum": [
+										"controlPanel",
+										"page"
+									]
 								}
 							},
 							"type": "object"

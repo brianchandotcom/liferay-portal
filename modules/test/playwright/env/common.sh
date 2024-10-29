@@ -317,31 +317,9 @@ function get_tomcat_portal_ext_properties_file {
 }
 
 function main {
-	local playwright_env_dir=$(dirname ${BASH_SOURCE[0]})
+	validate_environment_variables
 
-	_PLAYWRIGHT_BASE_DIR=$(get_absolute_dir ${playwright_env_dir}/../..)
-	_PORTAL_PROJECT_DIR=$(get_absolute_dir ${playwright_env_dir}/../../../../..)
-
-	if [[ "${LIFERAY_HOME}" == "" ]]
-	then
-		echo "Set the environment variable LIFERAY_HOME."
-
-		exit 1
-	fi
-
-	if [[ "${LIFERAY_PORTAL_URL}" == "" ]]
-	then
-		echo "Set the environment variable LIFERAY_PORTAL_URL."
-
-		exit 1
-	fi
-
-	if [[ "${PLAYWRIGHT_PROJECT_NAME}" == "" ]]
-	then
-		echo "Set the environment variable PLAYWRIGHT_PROJECT_NAME."
-
-		exit 1
-	fi
+	set_variables
 }
 
 function reverse {
@@ -351,6 +329,13 @@ function reverse {
 	do
 	  echo "${array[$i]}"
 	done
+}
+
+function set_variables {
+	local playwright_env_dir=$(dirname ${BASH_SOURCE[0]})
+
+	_PLAYWRIGHT_BASE_DIR=$(get_absolute_dir ${playwright_env_dir}/../..)
+	_PORTAL_PROJECT_DIR=$(get_absolute_dir ${playwright_env_dir}/../../../../..)
 }
 
 function start_analytics_cloud {
@@ -484,6 +469,29 @@ function update_portal_ext_properties {
 		$(get_parent_portal_ext_properties_files) \
 		\
 		$(get_playwright_project_dir)/env/portal-ext.properties
+}
+
+function validate_environment_variables {
+	if [[ "${LIFERAY_HOME}" == "" ]]
+	then
+		echo "Set the environment variable LIFERAY_HOME."
+
+		exit 1
+	fi
+
+	if [[ "${LIFERAY_PORTAL_URL}" == "" ]]
+	then
+		echo "Set the environment variable LIFERAY_PORTAL_URL."
+
+		exit 1
+	fi
+
+	if [[ "${PLAYWRIGHT_PROJECT_NAME}" == "" ]]
+	then
+		echo "Set the environment variable PLAYWRIGHT_PROJECT_NAME."
+
+		exit 1
+	fi
 }
 
 function wait_for_portal_log_inactivity {

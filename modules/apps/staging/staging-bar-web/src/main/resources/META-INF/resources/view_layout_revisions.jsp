@@ -111,23 +111,11 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 										<span class="current-version"><liferay-ui:message key="current-version" /></span>
 									</c:when>
 									<c:otherwise>
-
-										<%
-										String id = StringUtil.randomId();
-										%>
-
-										<a class="layout-revision selection-handle" data-layoutRevisionId="<%= curLayoutRevision.getLayoutRevisionId() %>" data-layoutSetBranchId="<%= curLayoutRevision.getLayoutSetBranchId() %>" href="javascript:void(0);" id="<%= id %>" title="<liferay-ui:message key="go-to-this-version" />">
-											<%= curLayoutRevision.getLayoutRevisionId() %>
-										</a>
-
-										<aui:script position="inline">
-											document.getElementById('<%= id %>').onclick = function () {
-												<portlet:namespace />selectRevision(
-													<%= curLayoutRevision.getLayoutRevisionId() %>,
-													<%= curLayoutRevision.getLayoutSetBranchId() %>
-												);
-											};
-										</aui:script>
+										<liferay-ui:csp>
+											<a class="layout-revision selection-handle" data-layoutRevisionId="<%= curLayoutRevision.getLayoutRevisionId() %>" data-layoutSetBranchId="<%= curLayoutRevision.getLayoutSetBranchId() %>" href="javascript:void(0);" onclick="<portlet:namespace />selectRevision(<%= curLayoutRevision.getLayoutRevisionId() %>, <%= curLayoutRevision.getLayoutSetBranchId() %>);" title="<liferay-ui:message key="go-to-this-version" />">
+												<%= curLayoutRevision.getLayoutRevisionId() %>
+											</a>
+										</liferay-ui:csp>
 									</c:otherwise>
 								</c:choose>
 							</liferay-ui:search-container-column-text>

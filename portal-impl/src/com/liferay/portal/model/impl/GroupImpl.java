@@ -1011,7 +1011,7 @@ public class GroupImpl extends GroupBaseImpl {
 		LayoutVisibilityManager layoutVisibilityManager =
 			_layoutVisibilityManagerSnapshot.get();
 
-		return layoutVisibilityManager.isPrivateLayoutsEnabled(getGroupId());
+		return layoutVisibilityManager.isPrivateLayoutsEnabled(getCompanyId());
 	}
 
 	@Override

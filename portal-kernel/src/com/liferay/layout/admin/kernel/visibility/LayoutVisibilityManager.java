@@ -15,6 +15,6 @@ public interface LayoutVisibilityManager {
 
 	public boolean isPrivateLayoutsEnabled();
 
-	public boolean isPrivateLayoutsEnabled(long groupId);
+	public boolean isPrivateLayoutsEnabled(long companyId);
 
 }

@@ -23,6 +23,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:commerce:headless:headless-commerce-core-api")
 	testIntegrationImplementation project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-catalog-api")
 	testIntegrationImplementation project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-catalog-client")
+	testIntegrationImplementation project(":apps:list-type:list-type-api")
 	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")
 	testIntegrationImplementation project(":apps:portal-search:portal-search-test-util")
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")

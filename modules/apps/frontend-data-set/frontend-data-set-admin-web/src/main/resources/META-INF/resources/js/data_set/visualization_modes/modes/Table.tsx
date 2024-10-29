@@ -116,10 +116,19 @@ const NewFieldModalContent = ({
 						{Liferay.Language.get('field-name')}
 
 						<RequiredMark />
+
+						<span
+							className="label-icon lfr-portal-tooltip ml-2"
+							title={Liferay.Language.get(
+								'you-can-add-a-field-that-is-in-the-API-response-but-not-declared-in-the-schema'
+							)}
+						>
+							<ClayIcon symbol="question-circle-full" />
+						</span>
 					</label>
 
 					<ClayInput
-						id=""
+						id={`${namespace}FieldNameInput`}
 						onChange={(event) => {
 							setRequiredFieldNameValidationError(false);
 							setFieldName(event.target.value);

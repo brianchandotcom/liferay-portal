@@ -2218,11 +2218,13 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Results<String> getInterestKeywords(
-		FaroProject faroProject, String query, int cur, int delta) {
+		String channelId, FaroProject faroProject, String query, int cur,
+		int delta) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, null);
 
+		uriVariables.put("channelId", channelId);
 		uriVariables.put("name", query);
 
 		PagedModel<?, String> pagedModel = get(

@@ -14,6 +14,7 @@ import React, {useMemo, useState} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {PORTLET_DEFAULT_ACTIONS} from '../../config/constants/portletDefaultActions';
 import {
 	useCopiedItemIds,
 	useSetCopiedItemIds,
@@ -22,7 +23,11 @@ import {
 	useSelectItem,
 	useSelectMultipleItems,
 } from '../../contexts/ControlsContext';
-import {useDispatch, useSelector} from '../../contexts/StoreContext';
+import {
+	useDispatch,
+	useSelector,
+	useSelectorCallback,
+} from '../../contexts/StoreContext';
 import {useGetWidgets} from '../../contexts/WidgetsContext';
 import deleteItem from '../../thunks/deleteItem';
 import duplicateItem from '../../thunks/duplicateItem';
@@ -36,7 +41,6 @@ import {
 	getFormErrorDescription,
 } from '../../utils/getFormErrorDescription';
 import getPortletId from '../../utils/getPortletId';
-import getWidget from '../../utils/getWidget';
 import hideFragment from '../../utils/hideFragment';
 import isInputFragment from '../../utils/isInputFragment';
 import useHasRequiredChild from '../../utils/useHasRequiredChild';
@@ -62,23 +66,23 @@ export default function TopperItemActions({disabled, item}) {
 
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 
-	const widget = useMemo(() => {
-		const fragmentEntryLink =
-			fragmentEntryLinks[item.config.fragmentEntryLinkId];
+	const fragmentEntryLink = useSelectorCallback(
+		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
+		[item.config.fragmentEntryLinkId]
+	);
 
+	const {portletActions, portletId} = useMemo(() => {
 		if (
-			!fragmentEntryLink ||
-			fragmentEntryLink.fragmentEntryType !== FRAGMENT_ENTRY_TYPES.widget
+			fragmentEntryLink?.fragmentEntryType !== FRAGMENT_ENTRY_TYPES.widget
 		) {
-			return null;
+			return {};
 		}
 
-		const {instanceId, portletId} = fragmentEntryLink.editableValues;
-
-		const widget = getWidget(getWidgets(), portletId);
-
-		return {...widget, portletId: getPortletId({instanceId, portletId})};
-	}, [fragmentEntryLinks, getWidgets, item]);
+		return {
+			portletActions: fragmentEntryLink.actions,
+			portletId: getPortletId(fragmentEntryLink.editableValues),
+		};
+	}, [fragmentEntryLink]);
 
 	const dropdownItems = useMemo(() => {
 		const items = [];
@@ -173,15 +177,12 @@ export default function TopperItemActions({disabled, item}) {
 			});
 		}
 
-		if (widget && Liferay.FeatureFlags['LPD-32075']) {
-			items.push({
-				action: () =>
-					Liferay.Util.getPortletConfigurationIconAction(
-						`_${widget.portletId}_exportImport`
-					)(),
-				icon: 'order-arrow',
-				label: Liferay.Language.get('export-import'),
-			});
+		if (portletId && Liferay.FeatureFlags['LPD-32075']) {
+			addPortletAction(
+				items,
+				portletActions[PORTLET_DEFAULT_ACTIONS.exportImport],
+				portletId
+			);
 		}
 
 		if (
@@ -222,44 +223,23 @@ export default function TopperItemActions({disabled, item}) {
 
 		addDivider(items);
 
-		if (widget && Liferay.FeatureFlags['LPD-32075']) {
-			items.push(
-				{
-					action: () =>
-						Liferay.Util.getPortletConfigurationIconAction(
-							`_${widget.portletId}_configuration`
-						)(),
-					icon: 'cog',
-					label: Liferay.Language.get('configuration'),
-				},
-				{
-					action: () => {
-						openModal({
-							onClose: () =>
-								Liferay.Portlet.refresh(
-									`#p_p_id_${widget.portletId}_`
-								),
-							title: Liferay.Language.get(
-								'configuration-templates'
-							),
-							url: widget.configurationTemplatesURL,
-						});
-					},
-					label: Liferay.Language.get('configuration-templates'),
-				},
-				{
-					action: () => {
-						openModal({
-							onClose: () =>
-								Liferay.Portlet.refresh(
-									`#p_p_id_${widget.portletId}_`
-								),
-							title: Liferay.Language.get('permissions'),
-							url: widget.permissionsURL,
-						});
-					},
-					label: Liferay.Language.get('permissions'),
-				}
+		if (portletId && Liferay.FeatureFlags['LPD-32075']) {
+			addPortletAction(
+				items,
+				portletActions[PORTLET_DEFAULT_ACTIONS.configuration],
+				portletId
+			);
+
+			addPortletAction(
+				items,
+				portletActions[PORTLET_DEFAULT_ACTIONS.configurationTemplates],
+				portletId
+			);
+
+			addPortletAction(
+				items,
+				portletActions[PORTLET_DEFAULT_ACTIONS.permissions],
+				portletId
 			);
 		}
 
@@ -283,15 +263,17 @@ export default function TopperItemActions({disabled, item}) {
 	}, [
 		copiedItemIds,
 		dispatch,
+		fragmentEntryLink,
 		fragmentEntryLinks,
 		getWidgets,
 		hasRequiredChild,
 		item,
 		layoutData,
+		portletActions,
+		portletId,
 		selectedViewportSize,
 		setCopiedItemIds,
 		selectItems,
-		widget,
 	]);
 
 	if (!dropdownItems.length) {
@@ -370,6 +352,24 @@ function addDivider(items) {
 
 	items.push({
 		type: 'divider',
+	});
+}
+
+function addPortletAction(items, action, portletId) {
+	if (!action) {
+		return;
+	}
+
+	items.push({
+		action: () => {
+			openModal({
+				onClose: () => Liferay.Portlet.refresh(`#p_p_id_${portletId}_`),
+				title: action.title,
+				url: action.url,
+			});
+		},
+		icon: action.icon,
+		label: action.title,
 	});
 }
 

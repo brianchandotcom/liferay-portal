@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -751,19 +752,23 @@ public class LayoutServiceContextHelperImpl
 				themeDisplay.setLocale(
 					LocaleUtil.fromLanguageId(_layout.getDefaultLanguageId()));
 
+				ColorScheme colorScheme = _layout.getColorScheme();
 				Theme theme = _layout.getTheme();
 
 				if (theme == null) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(_layout.getThemeId() + " is not registered");
+					}
+
+					colorScheme = _themeLocalService.getColorScheme(
+						company.getCompanyId(), layoutSet.getThemeId(),
+						layoutSet.getColorSchemeId());
 					theme = _themeLocalService.getTheme(
 						company.getCompanyId(), layoutSet.getThemeId());
 				}
-				else if (_log.isDebugEnabled()) {
-					_log.debug(_layout.getThemeId() + " is not registered");
-				}
 
 				if (theme != null) {
-					themeDisplay.setLookAndFeel(
-						layoutSet.getTheme(), layoutSet.getColorScheme());
+					themeDisplay.setLookAndFeel(theme, colorScheme);
 				}
 				else if (_log.isDebugEnabled()) {
 					_log.debug(

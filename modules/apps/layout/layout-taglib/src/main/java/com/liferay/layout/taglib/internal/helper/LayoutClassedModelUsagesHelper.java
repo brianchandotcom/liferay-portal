@@ -66,6 +66,10 @@ public class LayoutClassedModelUsagesHelper {
 
 		Layout layout = _layoutLocalService.fetchLayout(plid);
 
+		if (layout == null) {
+			return StringPool.BLANK;
+		}
+
 		if (layout.isDraftLayout()) {
 			plid = layout.getClassPK();
 		}
@@ -177,6 +181,10 @@ public class LayoutClassedModelUsagesHelper {
 		long plid = layoutClassedModelUsage.getPlid();
 
 		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		if (layout == null) {
+			return false;
+		}
 
 		if (layout.isDraftLayout()) {
 			plid = layout.getClassPK();

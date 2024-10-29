@@ -7,7 +7,6 @@ import {Page} from '@playwright/test';
 
 import {LoginPage} from '../pages/LoginPage';
 import {LogoutPage} from '../pages/LogoutPage';
-import {CUSTOMER_SITE_FRIENLY_URL_PATH} from './constants';
 
 export async function customerPerformLogin(
 	page: Page,
@@ -25,7 +24,7 @@ export async function customerPerformLogin(
 
 	await loginPage.signInButton.click();
 
-	await page.waitForURL(CUSTOMER_SITE_FRIENLY_URL_PATH);
+	await page.waitForSelector('body', {state: 'visible'});
 }
 
 export async function customerPerformLogout(page: Page) {

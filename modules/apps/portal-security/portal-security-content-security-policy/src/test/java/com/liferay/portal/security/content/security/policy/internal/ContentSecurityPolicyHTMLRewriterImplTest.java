@@ -75,8 +75,8 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 		Assert.assertTrue(
 			_matches(
 				html,
-				".*document\\.body\\.onclick = " +
-					"function\\(event\\) \\{alert\\(1\\);}.*"));
+				".*document\\.body\\.onclick = function\\(event\\) " +
+					"\\{alert\\(1\\);}.*"));
 		Assert.assertTrue(_matches(html, "<body>.*"));
 
 		html = _rewriteInlineEventHandlers(
@@ -89,13 +89,13 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 		Assert.assertTrue(
 			_matches(
 				html,
-				".*document\\.body\\.onchange = " +
-					"function\\(event\\) \\{alert\\(2\\);}.*"));
+				".*document\\.body\\.onchange = function\\(event\\) " +
+					"\\{alert\\(2\\);}.*"));
 		Assert.assertTrue(
 			_matches(
 				html,
-				".*document\\.body\\.onclick = " +
-					"function\\(event\\) \\{alert\\(1\\);}.*"));
+				".*document\\.body\\.onclick = function\\(event\\) " +
+					"\\{alert\\(1\\);}.*"));
 		Assert.assertTrue(_matches(html, "<body>.*"));
 	}
 

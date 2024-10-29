@@ -428,7 +428,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		File rootDir = new File(configJSONObject.getString("rootDir"));
 
-		Map<File, List<String>> specFileTitlesMap = new HashMap<>();
+		Map<File, Set<String>> specFileTitlesMap = new HashMap<>();
 
 		for (JSONObject specJSONObject : getSpecJSONObjects()) {
 			JSONArray testsJSONArray = specJSONObject.optJSONArray("tests");
@@ -447,10 +447,10 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 			File specFile = new File(rootDir, specJSONObject.getString("file"));
 
-			List<String> specTitles = specFileTitlesMap.get(specFile);
+			Set<String> specTitles = specFileTitlesMap.get(specFile);
 
 			if (specTitles == null) {
-				specTitles = new ArrayList<>();
+				specTitles = new HashSet<>();
 			}
 
 			if (specJSONObject.has("subSuite")) {
@@ -465,7 +465,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			specFileTitlesMap.put(specFile, specTitles);
 		}
 
-		for (Map.Entry<File, List<String>> entry :
+		for (Map.Entry<File, Set<String>> entry :
 				specFileTitlesMap.entrySet()) {
 
 			TestClass testClass = TestClassFactory.newTestClass(

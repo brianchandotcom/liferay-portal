@@ -204,6 +204,8 @@ public class AssetTagIndexerIndexedFieldsTest {
 			"assetCount_Number_sortable",
 			String.valueOf(assetTag.getAssetCount())
 		).put(
+			"externalReferenceCode", assetTag.getExternalReferenceCode()
+		).put(
 			"groupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
 			"name_String_sortable", StringUtil.toLowerCase(assetTag.getName())

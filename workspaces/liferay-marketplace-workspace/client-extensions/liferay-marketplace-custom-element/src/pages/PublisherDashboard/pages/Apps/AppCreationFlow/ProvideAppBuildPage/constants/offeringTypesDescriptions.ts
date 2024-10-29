@@ -38,7 +38,7 @@ export const offeringTypesDescription = {
 		},
 		{
 			description: i18n.translate(
-				'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp-self-hosted-liferay-cloud-formerly-dxp-cloud'
+				'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp-self-managed-liferay-cloud-formerly-dxp-cloud'
 			),
 			label: i18n.translate('liferay-paas'),
 		},

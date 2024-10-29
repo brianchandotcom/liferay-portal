@@ -405,8 +405,8 @@ export default {
 		'The cloud app is client extension based and is compatible with Liferay’s Self-Hosted offering.',
 	'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp':
 		'The DXP app is module-based and is compatible with 7.4 builds of Liferay DXP.',
-	'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp-self-hosted-liferay-cloud-formerly-dxp-cloud':
-		'The DXP app is module-based and is compatible with 7.4 builds of Liferay Self Hosted.',
+	'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp-self-managed-liferay-cloud-formerly-dxp-cloud':
+		'The DXP app is module-based and is compatible with 7.4 builds of Liferay Self-Managed.',
 	'the-installation-process-is-ongoing-and-may-take-some-time-navigating-to-other-sections-will-not-cancel-the-process':
 		'The installation process is ongoing and may take some time....Navigating to other sections will not cancel the process.',
 	'the-installation-process-is-underway-and-should-be-completed-shortly':

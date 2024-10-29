@@ -111,7 +111,7 @@ function MiniCart({
 	);
 
 	const updateCartModel = useCallback(
-		async ({order}) => {
+		async ({order, updatedFromCart = true}) => {
 			try {
 				const updatedCart = order.orderUUID
 					? order
@@ -142,7 +142,10 @@ function MiniCart({
 					return latestCartState;
 				});
 
-				Liferay.fire(CART_UPDATED, {order: updatedCart});
+				Liferay.fire(CART_UPDATED, {
+					order: updatedCart,
+					updatedFromCart,
+				});
 				onAddToCart(latestActionURLs, latestCartState);
 			}
 			catch (error) {

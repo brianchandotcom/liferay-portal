@@ -31,7 +31,13 @@ import {withRequest} from 'shared/hoc';
 
 const MAX_DELTA = 500;
 
-const fetchPropertyGroups = ({groupId}: {groupId: string}): Promise<any> =>
+const fetchPropertyGroups = ({
+	channelId,
+	groupId
+}: {
+	channelId: string;
+	groupId: string;
+}): Promise<any> =>
 	Promise.all([
 		API.fieldMappings.search({
 			context: FieldContexts.Demographics,
@@ -58,7 +64,7 @@ const fetchPropertyGroups = ({groupId}: {groupId: string}): Promise<any> =>
 			groupId,
 			ownerType: FieldOwnerTypes.Organization
 		}),
-		API.interests.searchKeywords({delta: MAX_DELTA, groupId}),
+		API.interests.searchKeywords({channelId, delta: MAX_DELTA, groupId}),
 		Promise.resolve(SESSION_PROPERTIES),
 		client.query({
 			fetchPolicy: 'network-only',

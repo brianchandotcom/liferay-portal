@@ -70,10 +70,11 @@ export function search(params) {
 }
 
 export function searchKeywords(params) {
-	const {delta = DEFAULT_DELTA, groupId, page, query} = params;
+	const {channelId, delta = DEFAULT_DELTA, groupId, page, query} = params;
 
 	return sendRequest({
 		data: {
+			channelId,
 			cur: page,
 			delta,
 			query

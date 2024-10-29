@@ -1510,5 +1510,6 @@
 		<exception>DuplicateCPTaxCategory</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
 		<exception>RequiredCPConfigurationList</exception>
+		<exception>RequiredCPOption</exception>
 	</exceptions>
 </service-builder>

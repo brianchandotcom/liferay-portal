@@ -11,6 +11,7 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ListTypeDefinition;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -87,6 +88,44 @@ public class ListTypeDefinitionResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPostSpecificationListTypeDefinition() throws Exception {
+		com.liferay.list.type.model.ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				RandomTestUtil.randomString(), _user.getUserId(), false);
+
+		assertHttpResponseStatusCode(
+			204,
+			listTypeDefinitionResource.
+				postSpecificationListTypeDefinitionHttpResponse(
+					_cpSpecificationOption.getCPSpecificationOptionId(),
+					listTypeDefinition.getListTypeDefinitionId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			listTypeDefinitionResource.
+				postSpecificationListTypeDefinitionHttpResponse(
+					_cpSpecificationOption.getCPSpecificationOptionId(), 0L));
+	}
+
+	@Override
+	protected ListTypeDefinition
+			testDeleteSpecificationListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		return testPostSpecificationIdListTypeDefinition_addListTypeDefinition(
+			randomListTypeDefinition());
+	}
+
+	@Override
+	protected Long
+			testDeleteSpecificationListTypeDefinition_getSpecificationId()
+		throws Exception {
+
+		return _cpSpecificationOption.getCPSpecificationOptionId();
+	}
+
+	@Override
 	protected ListTypeDefinition
 			testPostSpecificationIdListTypeDefinition_addListTypeDefinition(
 				ListTypeDefinition listTypeDefinition)
@@ -106,6 +145,9 @@ public class ListTypeDefinitionResourceTest
 	@Inject
 	private CPSpecificationOptionLocalService
 		_cpSpecificationOptionLocalService;
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

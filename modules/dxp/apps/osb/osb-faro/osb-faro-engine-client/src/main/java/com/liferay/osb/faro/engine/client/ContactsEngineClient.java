@@ -406,7 +406,8 @@ public interface ContactsEngineClient {
 		List<OrderByField> orderByFields);
 
 	public Results<String> getInterestKeywords(
-		FaroProject faroProject, String query, int cur, int delta);
+		String channelId, FaroProject faroProject, String query, int cur,
+		int delta);
 
 	public Results<Interest> getInterests(
 		FaroProject faroProject, String channelId, String ownerId,

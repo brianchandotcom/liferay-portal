@@ -849,10 +849,11 @@ public abstract class BaseMockContactsEngineClientImpl
 
 	@Override
 	public Results<String> getInterestKeywords(
-		FaroProject faroProject, String query, int cur, int delta) {
+		String channelId, FaroProject faroProject, String query, int cur,
+		int delta) {
 
 		return contactsEngineClient.getInterestKeywords(
-			faroProject, query, cur, delta);
+			channelId, faroProject, query, cur, delta);
 	}
 
 	@Override

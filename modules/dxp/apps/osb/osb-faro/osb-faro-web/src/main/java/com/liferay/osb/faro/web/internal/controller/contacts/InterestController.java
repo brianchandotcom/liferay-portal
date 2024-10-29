@@ -81,12 +81,14 @@ public class InterestController extends BaseFaroController {
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroResultsDisplay searchKeywords(
 			@PathParam("groupId") long groupId,
+			@QueryParam("channelId") String channelId,
 			@QueryParam("query") String query, @QueryParam("cur") int cur,
 			@QueryParam("delta") int delta)
 		throws Exception {
 
 		return new FaroResultsDisplay(
 			contactsEngineClient.getInterestKeywords(
+				channelId,
 				faroProjectLocalService.getFaroProjectByGroupId(groupId), query,
 				cur, delta));
 	}

@@ -56,7 +56,7 @@ const config = {
 		},
 		ecmaVersion: 2023,
 	},
-	plugins: ['@liferay'],
+	plugins: ['@liferay', 'eslint-plugin-react-compiler'],
 	root: true,
 	rules: {
 		'@liferay/import-extensions': 'off',
@@ -91,6 +91,7 @@ const config = {
 			},
 		],
 		'promise/catch-or-return': 'off',
+		'react-compiler/react-compiler': 'error',
 	},
 };
 

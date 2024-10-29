@@ -2183,6 +2183,8 @@ public class DefaultObjectEntryManagerImplTest
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY);
 
+		_decrementSystemDatesByOneSecond(childObjectEntry1);
+
 		assertEquals(
 			childObjectEntry1,
 			new ObjectEntry() {
@@ -4979,6 +4981,29 @@ public class DefaultObjectEntryManagerImplTest
 		objectFieldSetting.setValue(value);
 
 		return objectFieldSetting;
+	}
+
+	private void _decrementSystemDatesByOneSecond(ObjectEntry objectEntry)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceObjectEntry =
+			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
+
+		Date createDate = objectEntry.getDateCreated();
+
+		Date newCreateDate = new Date(createDate.getTime() - 1000);
+
+		objectEntry.setDateCreated(newCreateDate);
+		serviceObjectEntry.setCreateDate(newCreateDate);
+
+		Date modifiedDate = objectEntry.getDateModified();
+
+		Date newModifiedDate = new Date(modifiedDate.getTime() - 1000);
+
+		objectEntry.setDateModified(newModifiedDate);
+		serviceObjectEntry.setModifiedDate(newModifiedDate);
+
+		_objectEntryLocalService.updateObjectEntry(serviceObjectEntry);
 	}
 
 	private void _deleteAccountEntryOrganizationRel(

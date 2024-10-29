@@ -49,8 +49,8 @@ public class UpgradeRecorder {
 		return _errorMessages;
 	}
 
-	public List<UpgradeSQLRecorder.FailedSQLEntry> getFailedSQLEntries() {
-		return UpgradeSQLRecorder.getFailedSQLEntries();
+	public List<UpgradeSQLRecorder.FailedSQL> getFailedSQLEntries() {
+		return UpgradeSQLRecorder.getFailedSQLs();
 	}
 
 	public String getFinalSchemaVersion(String servletContextName) {
@@ -79,8 +79,8 @@ public class UpgradeRecorder {
 		return _result;
 	}
 
-	public Set<UpgradeSQLRecorder.RunningSQLEntry> getRunningSQLEntries() {
-		return UpgradeSQLRecorder.getRunningSQLEntries();
+	public Set<UpgradeSQLRecorder.RunningSQL> getRunningSQLEntries() {
+		return UpgradeSQLRecorder.getRunningSQLs();
 	}
 
 	public String getType() {

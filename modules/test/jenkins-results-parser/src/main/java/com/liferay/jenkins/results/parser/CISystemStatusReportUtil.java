@@ -112,9 +112,9 @@ public class CISystemStatusReportUtil {
 
 		List<Callable<File>> callables = new ArrayList<>();
 
-		List<File> jenkinsConsoleGzFiles = _getJenkinsConsoleGzFiles(jobName);
+		List<File> buildReportJSONGzFiles = _getBuildReportJSONGzFiles(jobName);
 
-		for (final File jenkinsConsoleGzFile : jenkinsConsoleGzFiles) {
+		for (final File buildReportJSONGzFile : buildReportJSONGzFiles) {
 			callables.add(
 				new Callable<File>() {
 
@@ -123,10 +123,22 @@ public class CISystemStatusReportUtil {
 						long start =
 							JenkinsResultsParserUtil.getCurrentTimeMillis();
 
+						File parentFile = buildReportJSONGzFile.getParentFile();
+
+						File buildReportJSONFile = new File(
+							parentFile, "build-report.json");
+
+						JenkinsResultsParserUtil.unGzip(
+							buildReportJSONGzFile, buildReportJSONFile);
+
+						JSONObject buildReportJSONObject =
+							JenkinsResultsParserUtil.toJSONObject(
+								"file://" + buildReportJSONFile.getPath());
+
 						try {
 							TopLevelBuildReport topLevelBuildReport =
 								BuildReportFactory.newTopLevelBuildReport(
-									jenkinsConsoleGzFile);
+									buildReportJSONObject);
 
 							if ((topLevelBuildReport == null) ||
 								!Objects.equals(
@@ -148,13 +160,13 @@ public class CISystemStatusReportUtil {
 
 							results.add(new Result(topLevelBuildReport));
 
-							return jenkinsConsoleGzFile;
+							return buildReportJSONGzFile;
 						}
 						catch (Exception exception) {
 							RuntimeException runtimeException =
 								new RuntimeException(
 									JenkinsResultsParserUtil.getCanonicalPath(
-										jenkinsConsoleGzFile),
+										buildReportJSONGzFile),
 									exception);
 
 							runtimeException.printStackTrace();
@@ -168,7 +180,7 @@ public class CISystemStatusReportUtil {
 							System.out.println(
 								JenkinsResultsParserUtil.combine(
 									JenkinsResultsParserUtil.getCanonicalPath(
-										jenkinsConsoleGzFile),
+										buildReportJSONGzFile),
 									" processed in ",
 									JenkinsResultsParserUtil.toDurationString(
 										end - start)));
@@ -225,6 +237,64 @@ public class CISystemStatusReportUtil {
 		return decimalFormat.format(quotient);
 	}
 
+	private static List<File> _getBuildReportJSONGzFiles(String jobName) {
+		List<File> buildReportJSONGzFiles = new ArrayList<>();
+
+		for (String dateString : _dateStrings) {
+			File testrayLogsDateDir = new File(_TESTRAY_LOGS_DIR, dateString);
+
+			if (!testrayLogsDateDir.exists()) {
+				continue;
+			}
+
+			Process process;
+
+			try {
+				process = JenkinsResultsParserUtil.executeBashCommands(
+					true, _TESTRAY_LOGS_DIR, 1000 * 60 * 60,
+					JenkinsResultsParserUtil.combine(
+						"find ", dateString, "/*/",
+						JenkinsResultsParserUtil.escapeForBash(jobName),
+						"/*/build-report.json.gz"));
+			}
+			catch (IOException | TimeoutException exception) {
+				continue;
+			}
+
+			int exitValue = process.exitValue();
+
+			if (exitValue != 0) {
+				continue;
+			}
+
+			String output = null;
+
+			try {
+				output = JenkinsResultsParserUtil.readInputStream(
+					process.getInputStream());
+
+				output = output.replace(
+					"Finished executing Bash commands.\n", "");
+
+				output = output.trim();
+			}
+			catch (IOException ioException) {
+				continue;
+			}
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(output)) {
+				continue;
+			}
+
+			for (String buildReportJSONGzFilePath : output.split("\n")) {
+				buildReportJSONGzFiles.add(
+					new File(_TESTRAY_LOGS_DIR, buildReportJSONGzFilePath));
+			}
+		}
+
+		return buildReportJSONGzFiles;
+	}
+
 	private static JSONObject _getDownstreamBuildDurationJSONObject() {
 		JSONObject datesDurationsJSONObject = new JSONObject();
 
@@ -269,64 +339,6 @@ public class CISystemStatusReportUtil {
 		);
 
 		return datesDurationsJSONObject;
-	}
-
-	private static List<File> _getJenkinsConsoleGzFiles(String jobName) {
-		List<File> jenkinsConsoleGzFiles = new ArrayList<>();
-
-		for (String dateString : _dateStrings) {
-			File testrayLogsDateDir = new File(_TESTRAY_LOGS_DIR, dateString);
-
-			if (!testrayLogsDateDir.exists()) {
-				continue;
-			}
-
-			Process process;
-
-			try {
-				process = JenkinsResultsParserUtil.executeBashCommands(
-					true, _TESTRAY_LOGS_DIR, 1000 * 60 * 60,
-					JenkinsResultsParserUtil.combine(
-						"find ", dateString, "/*/",
-						JenkinsResultsParserUtil.escapeForBash(jobName),
-						"/*/jenkins-console.txt.gz"));
-			}
-			catch (IOException | TimeoutException exception) {
-				continue;
-			}
-
-			int exitValue = process.exitValue();
-
-			if (exitValue != 0) {
-				continue;
-			}
-
-			String output = null;
-
-			try {
-				output = JenkinsResultsParserUtil.readInputStream(
-					process.getInputStream());
-
-				output = output.replace(
-					"Finished executing Bash commands.\n", "");
-
-				output = output.trim();
-			}
-			catch (IOException ioException) {
-				continue;
-			}
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(output)) {
-				continue;
-			}
-
-			for (String jenkinsConsoleGzFilePath : output.split("\n")) {
-				jenkinsConsoleGzFiles.add(
-					new File(_TESTRAY_LOGS_DIR, jenkinsConsoleGzFilePath));
-			}
-		}
-
-		return jenkinsConsoleGzFiles;
 	}
 
 	private static JSONObject _getRelevantSuiteBuildDataJSONObject() {

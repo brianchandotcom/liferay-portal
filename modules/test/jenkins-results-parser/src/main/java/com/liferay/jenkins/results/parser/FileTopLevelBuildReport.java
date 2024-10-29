@@ -58,6 +58,10 @@ public class FileTopLevelBuildReport extends BaseTopLevelBuildReport {
 		_jenkinsConsoleFile = jenkinsConsoleFile;
 	}
 
+	protected FileTopLevelBuildReport(JSONObject buildReportJSONObject) {
+		super(buildReportJSONObject);
+	}
+
 	@Override
 	protected File getJenkinsConsoleLocalFile() {
 		if (_jenkinsConsoleLocalFile != null) {
@@ -98,6 +102,10 @@ public class FileTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 	@Override
 	protected String getStartYearMonth() {
+		if (_jenkinsConsoleFile == null) {
+			return super.getStartYearMonth();
+		}
+
 		Matcher matcher = _jenkinsConsoleFilePattern.matcher(
 			JenkinsResultsParserUtil.getCanonicalPath(_jenkinsConsoleFile));
 
@@ -158,7 +166,7 @@ public class FileTopLevelBuildReport extends BaseTopLevelBuildReport {
 			"(?<masterHostname>test-\\d+-\\d+)/(?<jobName>[^/]+)/",
 			"(?<buildNumber>\\d+)/jenkins-console.txt.gz"));
 
-	private final File _jenkinsConsoleFile;
+	private File _jenkinsConsoleFile;
 	private File _jenkinsConsoleLocalFile;
 
 }

@@ -44,6 +44,16 @@ public class BuildReportFactory {
 	}
 
 	public static TopLevelBuildReport newTopLevelBuildReport(
+		JSONObject buildReportJSONObject) {
+
+		if (buildReportJSONObject == null) {
+			return null;
+		}
+
+		return new FileTopLevelBuildReport(buildReportJSONObject);
+	}
+
+	public static TopLevelBuildReport newTopLevelBuildReport(
 		JSONObject buildJSONObject, JobReport jobReport) {
 
 		String buildURLString = JenkinsResultsParserUtil.getRemoteURL(

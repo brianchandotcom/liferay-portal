@@ -1468,6 +1468,7 @@
 		<exception>DuplicateCProduct</exception>
 		<exception>DuplicateCPSpecificationOptionKey</exception>
 		<exception>DuplicateCPTaxCategory</exception>
+		<exception>ExistingCPDefinitionOptionRel</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
 	</exceptions>
 </service-builder>

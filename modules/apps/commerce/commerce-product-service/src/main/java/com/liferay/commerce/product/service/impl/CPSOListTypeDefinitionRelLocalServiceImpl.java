@@ -8,12 +8,14 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.exception.DuplicateCPSOListTypeDefinitionRelException;
 import com.liferay.commerce.product.model.CPSOListTypeDefinitionRel;
 import com.liferay.commerce.product.service.base.CPSOListTypeDefinitionRelLocalServiceBaseImpl;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo

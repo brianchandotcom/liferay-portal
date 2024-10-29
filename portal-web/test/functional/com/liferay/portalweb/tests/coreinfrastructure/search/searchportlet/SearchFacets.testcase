@@ -1770,7 +1770,7 @@ definition {
 
 		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "User Facet",
-			termList = "Test Test,carter braxton,john adams,jonathan franklin");
+			termList = "carter braxton,john adams,jonathan franklin,Test Test");
 
 		SearchFacets.updateFacetConfiguration(
 			portletName = "User Facet",
@@ -1780,7 +1780,7 @@ definition {
 
 		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "User Facet",
-			termList = "jonathan franklin,john adams,carter braxton,Test Test");
+			termList = "Test Test,jonathan franklin,john adams,carter braxton");
 	}
 
 	@description = "This is a use case for LPS-194520."

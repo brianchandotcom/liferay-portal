@@ -154,7 +154,9 @@ public class ListTypeDefinitionResourceImpl
 				listTypeDefinition.getExternalReferenceCode(),
 				listTypeDefinitionId,
 				LocalizedMapUtil.getLocalizedMap(
-					listTypeDefinition.getName_i18n()),
+					LocalizedMapUtil.populateI18nMap(
+						listTypeDefinition.getDefaultLanguageId(),
+						listTypeDefinition.getName_i18n(), null)),
 				transformToList(
 					listTypeDefinition.getListTypeEntries(),
 					listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(

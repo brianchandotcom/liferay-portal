@@ -651,7 +651,10 @@ public class ObjectDefinitionResourceImpl
 				GetterUtil.getBoolean(objectField.getIndexed()),
 				GetterUtil.getBoolean(objectField.getIndexedAsKeyword()),
 				objectField.getIndexedLanguageId(),
-				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
+				LocalizedMapUtil.getLocalizedMap(
+					LocalizedMapUtil.populateI18nMap(
+						objectDefinition.getDefaultLanguageId(),
+						objectField.getLabel(), objectField.getName())),
 				GetterUtil.getBoolean(objectField.getLocalized()),
 				objectField.getName(), objectField.getReadOnlyAsString(),
 				objectField.getReadOnlyConditionExpression(),
@@ -762,8 +765,7 @@ public class ObjectDefinitionResourceImpl
 
 		_addObjectDefinitionResources(
 			accountEntryRestrictedObjectRelationshipsNames,
-			_localization.getDefaultLanguageId(
-				serviceBuilderObjectDefinition.getLabel()),
+			objectDefinition.getDefaultLanguageId(),
 			objectActions.toArray(new ObjectAction[0]), objectDefinitionId,
 			objectLayouts,
 			objectRelationships.toArray(new ObjectRelationship[0]),

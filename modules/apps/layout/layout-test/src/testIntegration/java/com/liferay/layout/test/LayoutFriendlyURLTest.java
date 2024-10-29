@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -419,26 +420,17 @@ public class LayoutFriendlyURLTest {
 			_group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
 			false);
 
-		_sites.mergeLayoutSetPrototypeLayouts(
-			_group, _group.getPublicLayoutSet());
+		_testMergeLayoutSetPrototypeLayouts(
+			_group, _group.getPublicLayoutSet(), layoutSetPrototypeLayout);
 
-		Layout groupLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			layoutSetPrototypeLayout.getUuid(), _group.getGroupId(), false);
+		Group curGroup = GroupTestUtil.addGroup();
 
-		List<FriendlyURLEntry> friendlyURLEntries =
-			_friendlyURLEntryLocalService.getFriendlyURLEntries(
-				_group.getGroupId(),
-				_layoutFriendlyURLEntryHelper.getClassNameId(false),
-				groupLayout.getPlid());
+		_sites.updateLayoutSetPrototypesLinks(
+			curGroup, 0, layoutSetPrototype.getLayoutSetPrototypeId(), false,
+			true);
 
-		Assert.assertEquals(
-			friendlyURLEntries.toString(), 1, friendlyURLEntries.size());
-
-		FriendlyURLEntry friendlyURLEntry = friendlyURLEntries.get(0);
-
-		Assert.assertEquals(
-			layoutSetPrototypeLayout.getFriendlyURL(),
-			friendlyURLEntry.getUrlTitle());
+		_testMergeLayoutSetPrototypeLayouts(
+			curGroup, curGroup.getPrivateLayoutSet(), layoutSetPrototypeLayout);
 	}
 
 	@Test
@@ -621,6 +613,33 @@ public class LayoutFriendlyURLTest {
 			RandomTestUtil.randomLocaleStringMap(),
 			LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,
 			friendlyURLMap, serviceContext);
+	}
+
+	private void _testMergeLayoutSetPrototypeLayouts(
+			Group group, LayoutSet layoutSet, Layout layoutSetPrototypeLayout)
+		throws Exception {
+
+		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+
+		Layout groupLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+			layoutSetPrototypeLayout.getUuid(), group.getGroupId(),
+			layoutSet.isPrivateLayout());
+
+		List<FriendlyURLEntry> friendlyURLEntries =
+			_friendlyURLEntryLocalService.getFriendlyURLEntries(
+				group.getGroupId(),
+				_layoutFriendlyURLEntryHelper.getClassNameId(
+					layoutSet.isPrivateLayout()),
+				groupLayout.getPlid());
+
+		Assert.assertEquals(
+			friendlyURLEntries.toString(), 1, friendlyURLEntries.size());
+
+		FriendlyURLEntry friendlyURLEntry = friendlyURLEntries.get(0);
+
+		Assert.assertEquals(
+			layoutSetPrototypeLayout.getFriendlyURL(),
+			friendlyURLEntry.getUrlTitle());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

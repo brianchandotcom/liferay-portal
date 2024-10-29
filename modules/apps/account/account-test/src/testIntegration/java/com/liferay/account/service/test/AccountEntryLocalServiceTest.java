@@ -521,6 +521,23 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetCompanyAccountEntries() throws Exception {
+		User companyUser = UserTestUtil.addUser(TestPropsValues.getCompanyId());
+
+		AccountEntryTestUtil.addAccountEntries(
+			5, AccountEntryArgs.withOwner(companyUser));
+
+		List<AccountEntry> companyAccountEntries =
+			_accountEntryLocalService.getCompanyAccountEntries(
+				TestPropsValues.getCompanyId(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			companyAccountEntries.toString(), 5, companyAccountEntries.size());
+	}
+
+	@Test
 	public void testGetGuestAccountEntry() throws Exception {
 		AccountEntry guestAccountEntry =
 			_accountEntryLocalService.getGuestAccountEntry(

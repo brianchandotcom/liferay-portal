@@ -40,6 +40,7 @@ import {
 	FORM_ERROR_TYPES,
 	getFormErrorDescription,
 } from '../../utils/getFormErrorDescription';
+import getPortletCustomActions from '../../utils/getPortletCustomActions';
 import getPortletId from '../../utils/getPortletId';
 import hideFragment from '../../utils/hideFragment';
 import isInputFragment from '../../utils/isInputFragment';
@@ -241,6 +242,16 @@ export default function TopperItemActions({disabled, item}) {
 				portletActions[PORTLET_DEFAULT_ACTIONS.permissions],
 				portletId
 			);
+
+			const customActions = getPortletCustomActions(fragmentEntryLink);
+
+			if (customActions.length) {
+				addDivider(items);
+
+				for (const action of customActions) {
+					addPortletAction(items, action, portletId);
+				}
+			}
 		}
 
 		if (canBeRemoved(item, layoutData)) {

@@ -138,6 +138,7 @@ export function hasEndpointDataChanged({
 
 	const {
 		description: uiDescription,
+		parameter: uiParameter,
 		path: uiPath,
 		r_responseAPISchemaToAPIEndpoints_l_apiSchemaId:
 			uiR_responseAPISchemaToAPIEndpoints_l_apiSchemaId,
@@ -160,7 +161,12 @@ export function hasEndpointDataChanged({
 			localUIData.apiEndpointToAPIFilters[0].oDataFilter
 	);
 
-	const pathChanged = path !== beginStringWithForwardSlash(uiPath);
+	const pathChanged = uiParameter
+		? path !==
+			beginStringWithForwardSlash(
+				uiPath + '' + beginStringWithForwardSlash(uiParameter)
+			)
+		: path !== beginStringWithForwardSlash(uiPath);
 
 	const schemaIdChanged =
 		((r_responseAPISchemaToAPIEndpoints_l_apiSchemaId === 0 &&

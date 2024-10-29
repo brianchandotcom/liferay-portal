@@ -550,7 +550,7 @@ public class UpgradeReport {
 		).put(
 			"errors", _getMessagesPrinters(upgradeRecorder.getErrorMessages())
 		).put(
-			"failed.sqls", upgradeRecorder.getFailedSQLEntries()
+			"failed.sqls", UpgradeSQLRecorder.getFailedSQLs()
 		).put(
 			"longest.upgrade.processes",
 			() -> {
@@ -624,19 +624,17 @@ public class UpgradeReport {
 		).put(
 			"longest.running.sqls",
 			() -> {
-				Set<UpgradeSQLRecorder.RunningSQL> runningSQLEntries =
-					upgradeRecorder.getRunningSQLEntries();
+				List<UpgradeSQLRecorder.RunningSQL> runningSQLs =
+					new ArrayList<>(UpgradeSQLRecorder.getRunningSQLs());
 
-				List<UpgradeSQLRecorder.RunningSQL> entries = new ArrayList<>(
-					runningSQLEntries);
-
-				entries.sort(
+				runningSQLs.sort(
 					(entry1, entry2) -> Long.compare(
 						entry2.getDuration(), entry1.getDuration()));
 
-				return entries.subList(
+				return runningSQLs.subList(
 					0,
-					Math.min(_LONGEST_RUNNING_SQLS_COUNT, entries.size()) - 1);
+					Math.min(_LONGEST_RUNNING_SQLS_COUNT, runningSQLs.size()) -
+						1);
 			}
 		).put(
 			"warnings",

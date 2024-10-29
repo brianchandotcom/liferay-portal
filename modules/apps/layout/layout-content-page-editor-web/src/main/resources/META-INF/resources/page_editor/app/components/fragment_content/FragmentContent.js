@@ -7,9 +7,8 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
-import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {TEXT_EDITABLE_TYPES} from '../../config/constants/textEditableTypes';
 import {
 	useGetContent,
@@ -31,6 +30,7 @@ import resolveEditableConfig from '../../utils/editable_value/resolveEditableCon
 import resolveEditableValue from '../../utils/editable_value/resolveEditableValue';
 import getLayoutDataItemCssClasses from '../../utils/getLayoutDataItemCssClasses';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
+import getPortletCustomActions from '../../utils/getPortletCustomActions';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import hasInnerCommonStyles from '../../utils/hasInnerCustomStyles';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
@@ -119,6 +119,11 @@ const FragmentContent = ({
 	const fragmentEntryLinkError = fragmentEntryLink?.error;
 
 	const cssClasses = getLayoutDataItemCssClasses(item);
+
+	const portletCustomActions = useMemo(
+		() => getPortletCustomActions(fragmentEntryLink),
+		[fragmentEntryLink]
+	);
 
 	useEffect(() => {
 		if (fragmentEntryLinkError) {
@@ -266,8 +271,7 @@ const FragmentContent = ({
 							'page-editor__fragment-content--portlet-topper-hidden':
 								!canConfigureWidgets ||
 								(Liferay.FeatureFlags['LPD-32075'] &&
-									fragmentEntryLink.fragmentEntryType ===
-										FRAGMENT_ENTRY_TYPES.widget),
+									!portletCustomActions.length),
 						}
 					)}
 					contentRef={elementRef}

@@ -255,7 +255,7 @@ public class CISystemStatusReportUtil {
 					JenkinsResultsParserUtil.combine(
 						"find ", dateString, "/*/",
 						JenkinsResultsParserUtil.escapeForBash(jobName),
-						"/*/build-report.json.gz"));
+						"/*/build-report.json.gz -mtime -15"));
 			}
 			catch (IOException | TimeoutException exception) {
 				continue;

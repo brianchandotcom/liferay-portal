@@ -37,6 +37,7 @@ public class KaleoDefinitionWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("kaleoDefinitionId", getKaleoDefinitionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -67,6 +68,13 @@ public class KaleoDefinitionWrapper
 
 		if (ctCollectionId != null) {
 			setCtCollectionId(ctCollectionId);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long kaleoDefinitionId = (Long)attributes.get("kaleoDefinitionId");
@@ -232,6 +240,16 @@ public class KaleoDefinitionWrapper
 	@Override
 	public String getDescription() {
 		return model.getDescription();
+	}
+
+	/**
+	 * Returns the external reference code of this kaleo definition.
+	 *
+	 * @return the external reference code of this kaleo definition
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -515,6 +533,16 @@ public class KaleoDefinitionWrapper
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
+	}
+
+	/**
+	 * Sets the external reference code of this kaleo definition.
+	 *
+	 * @param externalReferenceCode the external reference code of this kaleo definition
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

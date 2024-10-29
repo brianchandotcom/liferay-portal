@@ -18,13 +18,19 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -32,6 +38,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.workflow.kaleo.exception.DuplicateKaleoDefinitionExternalReferenceCodeException;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionTable;
@@ -3590,6 +3598,218 @@ public class KaleoDefinitionPersistenceImpl
 	private static final String _FINDER_COLUMN_C_S_A_ACTIVE_2 =
 		"kaleoDefinition.active = ?";
 
+	private FinderPath _finderPathFetchByERC_C;
+
+	/**
+	 * Returns the kaleo definition where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching kaleo definition
+	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
+	 */
+	@Override
+	public KaleoDefinition findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchDefinitionException {
+
+		KaleoDefinition kaleoDefinition = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (kaleoDefinition == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchDefinitionException(sb.toString());
+		}
+
+		return kaleoDefinition;
+	}
+
+	/**
+	 * Returns the kaleo definition where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
+	 */
+	@Override
+	public KaleoDefinition fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns the kaleo definition where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
+	 */
+	@Override
+	public KaleoDefinition fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoDefinition.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {externalReferenceCode, companyId};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByERC_C, finderArgs, this);
+			}
+
+			if (result instanceof KaleoDefinition) {
+				KaleoDefinition kaleoDefinition = (KaleoDefinition)result;
+
+				if (!Objects.equals(
+						externalReferenceCode,
+						kaleoDefinition.getExternalReferenceCode()) ||
+					(companyId != kaleoDefinition.getCompanyId())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_SELECT_KALEODEFINITION_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(companyId);
+
+					List<KaleoDefinition> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByERC_C, finderArgs, list);
+						}
+					}
+					else {
+						KaleoDefinition kaleoDefinition = list.get(0);
+
+						result = kaleoDefinition;
+
+						cacheResult(kaleoDefinition);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (KaleoDefinition)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the kaleo definition where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the kaleo definition that was removed
+	 */
+	@Override
+	public KaleoDefinition removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchDefinitionException {
+
+		KaleoDefinition kaleoDefinition = findByERC_C(
+			externalReferenceCode, companyId);
+
+		return remove(kaleoDefinition);
+	}
+
+	/**
+	 * Returns the number of kaleo definitions where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching kaleo definitions
+	 */
+	@Override
+	public int countByERC_C(String externalReferenceCode, long companyId) {
+		KaleoDefinition kaleoDefinition = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (kaleoDefinition == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"kaleoDefinition.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(kaleoDefinition.externalReferenceCode IS NULL OR kaleoDefinition.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"kaleoDefinition.companyId = ?";
+
 	public KaleoDefinitionPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3640,6 +3860,14 @@ public class KaleoDefinitionPersistenceImpl
 				new Object[] {
 					kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
 					kaleoDefinition.isActive()
+				},
+				kaleoDefinition);
+
+			finderCache.putResult(
+				_finderPathFetchByERC_C,
+				new Object[] {
+					kaleoDefinition.getExternalReferenceCode(),
+					kaleoDefinition.getCompanyId()
 				},
 				kaleoDefinition);
 		}
@@ -3763,6 +3991,14 @@ public class KaleoDefinitionPersistenceImpl
 
 			finderCache.putResult(
 				_finderPathFetchByC_N_A, args, kaleoDefinitionModelImpl);
+
+			args = new Object[] {
+				kaleoDefinitionModelImpl.getExternalReferenceCode(),
+				kaleoDefinitionModelImpl.getCompanyId()
+			};
+
+			finderCache.putResult(
+				_finderPathFetchByERC_C, args, kaleoDefinitionModelImpl);
 		}
 	}
 
@@ -3895,6 +4131,72 @@ public class KaleoDefinitionPersistenceImpl
 
 		KaleoDefinitionModelImpl kaleoDefinitionModelImpl =
 			(KaleoDefinitionModelImpl)kaleoDefinition;
+
+		if (Validator.isNull(kaleoDefinition.getExternalReferenceCode())) {
+			kaleoDefinition.setExternalReferenceCode(
+				String.valueOf(kaleoDefinition.getPrimaryKey()));
+		}
+		else {
+			if (!Objects.equals(
+					kaleoDefinitionModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					kaleoDefinition.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = kaleoDefinition.getCompanyId();
+
+					long groupId = kaleoDefinition.getGroupId();
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = kaleoDefinition.getPrimaryKey();
+					}
+
+					try {
+						kaleoDefinition.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								KaleoDefinition.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								kaleoDefinition.getExternalReferenceCode(),
+								null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			KaleoDefinition ercKaleoDefinition = fetchByERC_C(
+				kaleoDefinition.getExternalReferenceCode(),
+				kaleoDefinition.getCompanyId());
+
+			if (isNew) {
+				if (ercKaleoDefinition != null) {
+					throw new DuplicateKaleoDefinitionExternalReferenceCodeException(
+						"Duplicate kaleo definition with external reference code " +
+							kaleoDefinition.getExternalReferenceCode() +
+								" and company " +
+									kaleoDefinition.getCompanyId());
+				}
+			}
+			else {
+				if ((ercKaleoDefinition != null) &&
+					(kaleoDefinition.getKaleoDefinitionId() !=
+						ercKaleoDefinition.getKaleoDefinitionId())) {
+
+					throw new DuplicateKaleoDefinitionExternalReferenceCodeException(
+						"Duplicate kaleo definition with external reference code " +
+							kaleoDefinition.getExternalReferenceCode() +
+								" and company " +
+									kaleoDefinition.getCompanyId());
+				}
+			}
+		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -4441,6 +4743,7 @@ public class KaleoDefinitionPersistenceImpl
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("externalReferenceCode");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
@@ -4464,6 +4767,9 @@ public class KaleoDefinitionPersistenceImpl
 			Collections.singleton("kaleoDefinitionId"));
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"externalReferenceCode", "companyId"});
 	}
 
 	/**
@@ -4605,6 +4911,11 @@ public class KaleoDefinitionPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"companyId", "scope", "active_"}, false);
+
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
 
 		KaleoDefinitionUtil.setPersistence(this);
 	}

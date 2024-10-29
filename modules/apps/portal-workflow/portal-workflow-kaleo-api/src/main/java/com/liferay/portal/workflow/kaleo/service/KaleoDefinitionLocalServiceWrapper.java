@@ -81,13 +81,14 @@ public class KaleoDefinitionLocalServiceWrapper
 
 	@Override
 	public KaleoDefinition addKaleoDefinition(
-			String name, String title, String description, String content,
-			String scope, int version,
+			String externalReferenceCode, String name, String title,
+			String description, String content, String scope, int version,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoDefinitionLocalService.addKaleoDefinition(
-			name, title, description, content, scope, version, serviceContext);
+			externalReferenceCode, name, title, description, content, scope,
+			version, serviceContext);
 	}
 
 	/**
@@ -306,6 +307,15 @@ public class KaleoDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public KaleoDefinition fetchKaleoDefinitionByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _kaleoDefinitionLocalService.
+			fetchKaleoDefinitionByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -343,6 +353,16 @@ public class KaleoDefinitionLocalServiceWrapper
 
 		return _kaleoDefinitionLocalService.getKaleoDefinition(
 			name, serviceContext);
+	}
+
+	@Override
+	public KaleoDefinition getKaleoDefinitionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoDefinitionLocalService.
+			getKaleoDefinitionByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -501,13 +521,14 @@ public class KaleoDefinitionLocalServiceWrapper
 
 	@Override
 	public KaleoDefinition updatedKaleoDefinition(
-			long kaleoDefinitionId, String title, String description,
-			String content,
+			String externalReferenceCode, long kaleoDefinitionId, String title,
+			String description, String content,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoDefinitionLocalService.updatedKaleoDefinition(
-			kaleoDefinitionId, title, description, content, serviceContext);
+			externalReferenceCode, kaleoDefinitionId, title, description,
+			content, serviceContext);
 	}
 
 	/**

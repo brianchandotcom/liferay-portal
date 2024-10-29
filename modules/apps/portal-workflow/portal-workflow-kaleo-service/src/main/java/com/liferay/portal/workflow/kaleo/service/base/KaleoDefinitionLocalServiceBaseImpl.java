@@ -240,6 +240,23 @@ public abstract class KaleoDefinitionLocalServiceBaseImpl
 		return kaleoDefinitionPersistence.fetchByPrimaryKey(kaleoDefinitionId);
 	}
 
+	@Override
+	public KaleoDefinition fetchKaleoDefinitionByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return kaleoDefinitionPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public KaleoDefinition getKaleoDefinitionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return kaleoDefinitionPersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the kaleo definition with the primary key.
 	 *

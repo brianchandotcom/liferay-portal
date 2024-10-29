@@ -86,8 +86,9 @@ public interface KaleoDefinitionLocalService
 	public KaleoDefinition addKaleoDefinition(KaleoDefinition kaleoDefinition);
 
 	public KaleoDefinition addKaleoDefinition(
-			String name, String title, String description, String content,
-			String scope, int version, ServiceContext serviceContext)
+			String externalReferenceCode, String name, String title,
+			String description, String content, String scope, int version,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -231,6 +232,10 @@ public interface KaleoDefinitionLocalService
 		String name, ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoDefinition fetchKaleoDefinitionByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -250,6 +255,11 @@ public interface KaleoDefinitionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoDefinition getKaleoDefinition(
 			String name, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoDefinition getKaleoDefinitionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -341,8 +351,8 @@ public interface KaleoDefinitionLocalService
 		String scope, ServiceContext serviceContext);
 
 	public KaleoDefinition updatedKaleoDefinition(
-			long kaleoDefinitionId, String title, String description,
-			String content, ServiceContext serviceContext)
+			String externalReferenceCode, long kaleoDefinitionId, String title,
+			String description, String content, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

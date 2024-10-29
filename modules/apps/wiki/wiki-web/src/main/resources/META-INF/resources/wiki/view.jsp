@@ -330,9 +330,11 @@ if (portletTitleBasedNavigation) {
 						).buildPortletURL();
 						%>
 
-						<div class="page-redirect" onClick="location.href = '<%= originalViewPageURL.toString() %>';">
-							(<liferay-ui:message arguments="<%= originalPage.getTitle() %>" key="redirected-from-x" translateArguments="<%= false %>" />)
-						</div>
+						<liferay-ui:csp>
+							<div class="page-redirect" onClick="location.href = '<%= originalViewPageURL.toString() %>';">
+								(<liferay-ui:message arguments="<%= originalPage.getTitle() %>" key="redirected-from-x" translateArguments="<%= false %>" />)
+							</div>
+						</liferay-ui:csp>
 					</c:if>
 
 					<c:if test="<%= !wikiPage.isHead() %>">

@@ -6,6 +6,7 @@
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {CommerceLayoutsPage} from '../commerce-order-content-web/commerceLayoutsPage';
+import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 type TAddress = {
 	city: string;
@@ -18,8 +19,9 @@ type TAddress = {
 	zip: string;
 };
 
-export class CheckoutPage {
+export class CheckoutPage extends CommerceDNDTablePage {
 	readonly activeCheckoutStep: Locator;
+	readonly assertDataDeliveryGroupModal: (data: string) => Locator;
 	readonly addressInput: Locator;
 	readonly cityInput: Locator;
 	readonly commerceBillingAddress: Locator;
@@ -32,6 +34,8 @@ export class CheckoutPage {
 	readonly continueButton: Locator;
 	readonly countryInput: Locator;
 	readonly goToOrderDetailsButton: Locator;
+	readonly headingDeliveryGroupModal: (name: string) => Locator;
+	readonly iframeOkButton: Locator;
 	readonly layoutsPage: CommerceLayoutsPage;
 	readonly nameInput: Locator;
 	readonly optionsButton: Locator;
@@ -43,9 +47,14 @@ export class CheckoutPage {
 	readonly shippingAddressSelect: Locator;
 	readonly shippingCost: Locator;
 	readonly useAsBillingCheckbox: Locator;
+	readonly viewDeliveryGroupTableButton: Locator;
 	readonly zipInput: Locator;
 
 	constructor(page: Page) {
+		super(
+			page,
+			'#_com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet_fm .dnd-table'
+		);
 		this.activeCheckoutStep = page.locator(
 			'.multi-step-item.active .multi-step-indicator-label'
 		);
@@ -62,6 +71,11 @@ export class CheckoutPage {
 			'button',
 			{name: 'Save'}
 		);
+		this.assertDataDeliveryGroupModal = (data: string) => {
+			return this.configurationIFrame
+				.locator('p')
+				.filter({hasText: data});
+		};
 		this.configurationIFrameShowFullAddressToggle =
 			this.configurationIFrame.getByLabel(
 				'Order Summary Show Full Address'
@@ -75,6 +89,10 @@ export class CheckoutPage {
 			name: 'Configuration',
 		});
 		this.countryInput = page.getByTitle('Country');
+		this.headingDeliveryGroupModal = (name: string) => {
+			return page.getByRole('heading', {exact: true, name});
+		};
+		this.iframeOkButton = page.getByLabel('close', {exact: true});
 		this.goToOrderDetailsButton = page.getByRole('button', {
 			name: 'Go to Order Details',
 		});
@@ -102,6 +120,7 @@ export class CheckoutPage {
 		this.useAsBillingCheckbox = page.getByLabel(
 			'Use shipping address as billing address'
 		);
+		this.viewDeliveryGroupTableButton = page.getByLabel('view');
 		this.zipInput = page.getByPlaceholder('Zip', {exact: true});
 	}
 

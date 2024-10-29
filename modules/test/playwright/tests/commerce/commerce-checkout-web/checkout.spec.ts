@@ -15,6 +15,7 @@ import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {getDateFormatted, setFutureDate} from '../utils/date';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -358,6 +359,176 @@ test('LPP-55128 Payment Term is reset correctly', async ({
 	await checkoutPage.continueButton.click();
 	await page.waitForURL((url) => url.href.includes('payment-terms'));
 	expect(page.getByLabel('MoneyB')).toBeChecked();
+});
+
+test('LPD-35329 Delivery group multishipping checkout', async ({
+	apiHelpers,
+	checkoutPage,
+	commerceAdminChannelDetailsPage,
+	commerceAdminChannelsPage,
+	commerceCartSummaryPage,
+	commerceLayoutsPage,
+	page,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: getRandomString(),
+		siteGroupId: site.id,
+	});
+
+	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+		channel.name,
+		'B2B'
+	);
+
+	await (
+		await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+			'Flat Rate'
+		)
+	).click();
+	await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+		'Flat Rate',
+		'Shipping Methods'
+	);
+	await commerceAdminChannelDetailsPage.addFlatRateShippingOption(
+		getRandomString()
+	);
+	await commerceAdminChannelDetailsPage.addFlatRateShippingOption(
+		getRandomString()
+	);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+		name: getRandomString(),
+	});
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: 'Product'},
+		shippingConfiguration: {
+			freeShipping: false,
+			shippable: true,
+			shippingSeparately: false,
+		},
+	});
+
+	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+		.getProduct(product.productId)
+		.then((product) => {
+			return product.skus;
+		});
+
+	const sku = productSkus[0];
+
+	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
+		account.id,
+		{phoneNumber: '1234567890', regionISOCode: 'AL'}
+	);
+
+	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+		{
+			accountId: account.id,
+			cartItems: [
+				{
+					deliveryGroupName: getRandomString(),
+					quantity: 1,
+					requestedDeliveryDate: setFutureDate(7),
+					shippingAddressId: address.id,
+					skuId: sku.id,
+				},
+			],
+		},
+		channel.id
+	);
+
+	await commerceLayoutsPage.goToPages(true, site.name);
+	await commerceLayoutsPage.createWidgetPage(getRandomString());
+
+	await page.goto(`/web/${site.name}`);
+
+	await commerceCartSummaryPage.addCartSummaryWidget();
+	await commerceCartSummaryPage.checkoutButton.click();
+
+	await expect(page.getByText('Widget Selection Panel Add')).toBeHidden();
+
+	await commerceLayoutsPage.addWidgetButton.click();
+	await commerceLayoutsPage.searchFormInput.fill('Checkout');
+	await commerceLayoutsPage.addWidgetLabel('Checkout').click();
+
+	const cartItems = await apiHelpers.headlessCommerceDeliveryCart
+		.getCartItems(cart.id)
+		.then((response) => {
+			return response.items;
+		});
+
+	const cartItem = cartItems[0];
+
+	const locale = await page.evaluate(() => {
+		return Liferay.ThemeDisplay.getBCP47LanguageId();
+	});
+
+	await expect(
+		(await checkoutPage.tableRow(0, cartItem.deliveryGroupName, true)).row
+	).toBeVisible();
+	await expect(
+		(
+			await checkoutPage.tableRow(
+				1,
+				address.street1 + ', ' + address.city + ', ' + 'United States',
+				true
+			)
+		).row
+	).toBeVisible();
+	await expect(
+		(
+			await checkoutPage.tableRow(
+				2,
+				getDateFormatted(cartItem.requestedDeliveryDate, locale),
+				true
+			)
+		).row
+	).toBeVisible();
+
+	await checkoutPage.viewDeliveryGroupTableButton.click();
+
+	await expect(
+		checkoutPage.headingDeliveryGroupModal(cartItem.deliveryGroup)
+	).toBeVisible();
+	await expect(
+		checkoutPage.assertDataDeliveryGroupModal(address.street1)
+	).toBeVisible();
+	await expect(
+		checkoutPage.assertDataDeliveryGroupModal(address.street2)
+	).toBeVisible();
+	await expect(
+		checkoutPage.assertDataDeliveryGroupModal(address.street3)
+	).toBeVisible();
+	await expect(
+		checkoutPage.assertDataDeliveryGroupModal(
+			address.city + ' , ' + 'Alabama'
+		)
+	).toBeVisible();
+	await expect(
+		checkoutPage.assertDataDeliveryGroupModal(
+			address.zip + ' , ' + 'United States'
+		)
+	).toBeVisible();
+	await expect(
+		checkoutPage.configurationIFrame.getByText(
+			getDateFormatted(cartItem.requestedDeliveryDate, locale)
+		)
+	).toBeVisible();
 });
 
 test('LPD-40425 Checkout order detail redirect works correctly when order DPT is enabled', async ({

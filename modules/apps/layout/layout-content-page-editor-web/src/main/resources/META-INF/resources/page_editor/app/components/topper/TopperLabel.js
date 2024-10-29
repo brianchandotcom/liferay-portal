@@ -32,9 +32,7 @@ export function TopperLabel({children, isDragging, isHovered, itemElement}) {
 	const [visible, setVisible] = useState(false);
 
 	useEffect(() => {
-		if (isHovered) {
-			setTimeout(() => setVisible(true), 1);
-		}
+		setTimeout(() => setVisible(true), 1);
 	}, [isHovered]);
 
 	useEffect(() => {

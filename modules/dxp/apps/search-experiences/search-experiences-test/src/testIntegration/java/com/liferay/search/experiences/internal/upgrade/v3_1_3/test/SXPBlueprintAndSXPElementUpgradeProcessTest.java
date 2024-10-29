@@ -118,7 +118,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		_multiVMPool.clear();
 
 		_assertSXPBlueprint(
-			_getExpectedInstancesJSON(), sxpBlueprint.getSXPBlueprintId());
+			_getExpectedElementInstancesJSON(),
+			sxpBlueprint.getSXPBlueprintId());
 
 		sxpElement =
 			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
@@ -137,14 +138,14 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	public TestName testName = new TestName();
 
 	private void _assertSXPBlueprint(
-		String expectedInstancesJSON, long sxpBlueprintId) {
+		String expectedElementInstancesJSON, long sxpBlueprintId) {
 
 		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
 			sxpBlueprintId);
 
 		JSONAssert.assertEquals(
-			expectedInstancesJSON, sxpBlueprint.getElementInstancesJSON(),
-			JSONCompareMode.STRICT);
+			expectedElementInstancesJSON,
+			sxpBlueprint.getElementInstancesJSON(), JSONCompareMode.STRICT);
 	}
 
 	private String _getElementInstancesJSON() throws Exception {
@@ -173,7 +174,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			String.valueOf(_group2.getGroupId()));
 	}
 
-	private String _getExpectedInstancesJSON() throws Exception {
+	private String _getExpectedElementInstancesJSON() throws Exception {
 		String elementInstancesJSON = StringUtil.read(
 			_clazz,
 			StringBundler.concat(

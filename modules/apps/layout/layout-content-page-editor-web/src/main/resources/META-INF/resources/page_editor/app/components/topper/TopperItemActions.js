@@ -263,9 +263,9 @@ export default function TopperItemActions({disabled, item}) {
 			);
 		}
 
-		addDivider(items);
-
 		if (canBeRemoved(item, layoutData)) {
+			addDivider(items);
+
 			items.push({
 				action: () =>
 					dispatch(

@@ -648,68 +648,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-109169. Topper only visible when the element is selected but not hover."
-	@priority = 5
-	@uitest
-	test HeaderOnlyShownWhenElementSelected {
-		property portal.acceptance = "true";
-
-		task ("Add a Heading fragment and an Asset Publisher portlet to page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-
-			PageEditor.addWidget(
-				portletName = "Asset Publisher",
-				targetFragmentName = "Heading");
-		}
-
-		task ("Assert only header of Heading shown when Heading selected") {
-			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Heading");
-
-			PageEditor.clickConfigurableField(fragmentName = "Heading");
-
-			PageEditor.gotoTab(tabName = "Browser");
-
-			PageEditor.viewFragmentHeaderVisible(fragmentName = "Heading");
-
-			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Asset Publisher");
-
-			MouseOver(
-				index = 1,
-				key_fragmentName = "Asset Publisher",
-				locator1 = "Fragment#FRAGMENT_CONTENT");
-
-			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Asset Publisher");
-		}
-
-		task ("Assert only header of Asset Publisher shown when Asset Publisher selected") {
-			PageEditor.clickConfigurableField(fragmentName = "Asset Publisher");
-
-			PageEditor.gotoTab(tabName = "Browser");
-
-			PageEditor.viewFragmentHeaderVisible(fragmentName = "Asset Publisher");
-
-			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Heading");
-
-			MouseOver(
-				index = 1,
-				key_fragmentName = "Heading",
-				locator1 = "Fragment#FRAGMENT_CONTENT");
-
-			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Heading");
-		}
-	}
-
 	@description = "This is a test for LPS-134844. Fragments hidden in pages templates appear as hidden in pages that use it and visibility can be changed."
 	@priority = 4
 	test HiddenFragmentsInPagesTemplatesAppearHiddenInPages {

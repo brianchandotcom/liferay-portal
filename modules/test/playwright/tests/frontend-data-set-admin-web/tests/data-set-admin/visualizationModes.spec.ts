@@ -157,11 +157,35 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 			await visualizationModesPage.addCustomFieldInput.waitFor();
 
-			await visualizationModesPage.addCustomFieldInput.fill(fieldName);
+			await test.step('Check helper tooltip', async () => {
+				const parent = page
+					.locator('.form-group')
+					.filter({has: visualizationModesPage.addCustomFieldInput});
 
-			await saveFromModal({
-				page,
-				saveText: 'Add',
+				const tooltipTrigger = parent.locator(
+					'.lexicon-icon-question-circle-full'
+				);
+
+				await expect(tooltipTrigger).toBeVisible();
+
+				await tooltipTrigger.hover();
+
+				await expect(
+					page.getByTitle(
+						'You can add a field that is in the API response but not declared in the Schema.'
+					)
+				).toBeVisible();
+			});
+
+			await test.step('Add manual field', async () => {
+				await visualizationModesPage.addCustomFieldInput.fill(
+					fieldName
+				);
+
+				await saveFromModal({
+					page,
+					saveText: 'Add',
+				});
 			});
 
 			const assignedFieldLocator =
@@ -310,11 +334,35 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 			await visualizationModesPage.addCustomFieldInput.waitFor();
 
-			await visualizationModesPage.addCustomFieldInput.fill(fieldName);
+			await test.step('Check helper tooltip', async () => {
+				const parent = page
+					.locator('.form-group')
+					.filter({has: visualizationModesPage.addCustomFieldInput});
 
-			await saveFromModal({
-				page,
-				saveText: 'Add',
+				const tooltipTrigger = parent.locator(
+					'.lexicon-icon-question-circle-full'
+				);
+
+				await expect(tooltipTrigger).toBeVisible();
+
+				await tooltipTrigger.hover();
+
+				await expect(
+					page.getByTitle(
+						'You can add a field that is in the API response but not declared in the Schema.'
+					)
+				).toBeVisible();
+			});
+
+			await test.step('Add manual field', async () => {
+				await visualizationModesPage.addCustomFieldInput.fill(
+					fieldName
+				);
+
+				await saveFromModal({
+					page,
+					saveText: 'Add',
+				});
 			});
 
 			const assignedFieldLocator =

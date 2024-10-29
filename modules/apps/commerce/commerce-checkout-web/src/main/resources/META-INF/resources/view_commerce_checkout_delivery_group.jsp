@@ -21,45 +21,53 @@ DeliveryGroupDisplayContext deliveryGroupDisplayContext = (DeliveryGroupDisplayC
 		CommerceAddress commerceAddress = deliveryGroupDisplayContext.getCommerceAddress(request);
 		%>
 
-		<p>
-			<span><%= commerceAddress.getName() %></span>
-		</p>
-
-		<p>
-			<span><%= commerceAddress.getStreet1() %></span>
-		</p>
-
-		<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet2()) %>">
+		<c:if test="<%= commerceAddress != null %>">
 			<p>
-				<span><%= commerceAddress.getStreet2() %></span>
+				<span><%= commerceAddress.getName() %></span>
+			</p>
+
+			<p>
+				<span><%= commerceAddress.getStreet1() %></span>
+			</p>
+
+			<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet2()) %>">
+				<p>
+					<span><%= commerceAddress.getStreet2() %></span>
+				</p>
+			</c:if>
+
+			<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet3()) %>">
+				<p>
+					<span><%= commerceAddress.getStreet3() %></span>
+				</p>
+			</c:if>
+
+			<%
+			Region region = commerceAddress.getRegion();
+			%>
+
+			<p>
+				<span><%= commerceAddress.getCity() %></span>
+
+				<c:if test="<%= region != null %>">
+					<span><%= StringPool.COMMA_AND_SPACE %></span>
+					<span><%= region.getName() %></span>
+				</c:if>
+			</p>
+
+			<%
+			Country country = commerceAddress.getCountry();
+			%>
+
+			<p>
+				<span><%= commerceAddress.getZip() %></span>
+
+				<c:if test="<%= country != null %>">
+					<span><%= StringPool.COMMA_AND_SPACE %></span>
+					<span><%= country.getName(locale) %></span>
+				</c:if>
 			</p>
 		</c:if>
-
-		<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet3()) %>">
-			<p>
-				<span><%= commerceAddress.getStreet3() %></span>
-			</p>
-		</c:if>
-
-		<%
-		Region region = commerceAddress.getRegion();
-		%>
-
-		<p>
-			<span><%= commerceAddress.getCity() %></span>
-			<span><%= StringPool.COMMA_AND_SPACE %></span>
-			<span><%= region.getName() %></span>
-		</p>
-
-		<%
-		Country country = commerceAddress.getCountry();
-		%>
-
-		<p>
-			<span><%= commerceAddress.getZip() %></span>
-			<span><%= StringPool.COMMA_AND_SPACE %></span>
-			<span><%= country.getName(locale) %></span>
-		</p>
 	</div>
 
 	<div class="panel-body">
@@ -68,7 +76,7 @@ DeliveryGroupDisplayContext deliveryGroupDisplayContext = (DeliveryGroupDisplayC
 		</div>
 
 		<%
-		Format dateFormat = FastDateFormatFactoryUtil.getDate(DateFormat.MEDIUM, locale, timeZone);
+		Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d, yyyy", locale, timeZone);
 		%>
 
 		<div class="commerce-value"><%= dateFormat.format(deliveryGroupDisplayContext.getDeliveryGroupDate(request)) %></div>

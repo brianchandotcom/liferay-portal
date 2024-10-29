@@ -29,7 +29,7 @@ public class LayoutVisibilityManagerImpl implements LayoutVisibilityManager {
 	}
 
 	@Override
-	public boolean isPrivateLayoutsEnabled(long groupId) {
+	public boolean isPrivateLayoutsEnabled(long companyId) {
 		if (ReleaseFeatureFlagManagerUtil.isEnabled(
 				ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS)) {
 

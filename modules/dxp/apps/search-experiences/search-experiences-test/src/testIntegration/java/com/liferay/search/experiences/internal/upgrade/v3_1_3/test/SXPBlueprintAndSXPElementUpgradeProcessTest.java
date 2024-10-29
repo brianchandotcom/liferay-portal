@@ -62,11 +62,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	public static void setUpClass() throws Exception {
 		_group1 = GroupTestUtil.addGroup();
 		_group2 = GroupTestUtil.addGroup();
-
-		User user = TestPropsValues.getUser();
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group1, user.getUserId());
 	}
 
 	@Test
@@ -101,7 +96,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			_getElementInstancesJSON(), "1.1",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			_serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group1, TestPropsValues.getUserId()));
 
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator,
@@ -198,7 +194,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	private static Group _group1;
 
 	private static Group _group2;
-	private static ServiceContext _serviceContext;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.search.experiences.internal.upgrade.registry.SXPServiceUpgradeStepRegistrator))"

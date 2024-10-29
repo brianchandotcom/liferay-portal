@@ -59,9 +59,7 @@ public class GetLayoutClassedModelUsagesStrutsActionTest {
 	}
 
 	@Test
-	public void testGetLayoutClassedModelUsageWithNonexistingLayout()
-		throws Exception {
-
+	public void testExecute() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);

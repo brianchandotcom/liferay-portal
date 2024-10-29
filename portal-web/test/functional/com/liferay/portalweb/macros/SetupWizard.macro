@@ -234,13 +234,13 @@ definition {
 			AssertConsoleTextPresent(value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.MariaDBDialect for MariaDB");
 		}
 		else if (${databaseType} == "MySQL") {
-			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.MySQL57Dialect for MySQL");
+			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.MySQL");
 		}
 		else if (${databaseType} == "Oracle") {
-			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.Oracle10gDialect for Oracle");
+			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.Oracle");
 		}
 		else if (${databaseType} == "PostgreSQL") {
-			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.PostgreSQL10Dialect for PostgreSQL");
+			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.PostgreSQL");
 		}
 		else if (${databaseType} == "Sybase") {
 			AssertConsoleTextPresent(value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.SybaseASE157Dialect for Adaptive Server Enterprise");

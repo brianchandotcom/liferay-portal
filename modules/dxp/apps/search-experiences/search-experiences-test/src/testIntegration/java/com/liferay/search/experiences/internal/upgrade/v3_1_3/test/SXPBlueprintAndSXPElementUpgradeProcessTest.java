@@ -95,12 +95,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		}
 
 		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			null, TestPropsValues.getUserId(),
-			StringUtil.read(
-				_clazz,
-				StringBundler.concat(
-					"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
-					testName.getMethodName(), ".configurationJSON.json")),
+			null, TestPropsValues.getUserId(), _readJSON("configuration"),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			_getElementInstancesJSON(), "1.1",
@@ -126,11 +121,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				"LIMIT_SEARCH_TO_THESE_SITES", TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(
-			StringUtil.read(
-				_clazz,
-				StringBundler.concat(
-					"dependencies/", _clazz.getSimpleName(),
-					".testSXPElementUpgradeProcess.json")),
+			_readJSON("elementDefinition"),
 			sxpElement.getElementDefinitionJSON());
 	}
 
@@ -149,11 +140,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	}
 
 	private String _getElementInstancesJSON() throws Exception {
-		String elementInstancesJSON = StringUtil.read(
-			_clazz,
-			StringBundler.concat(
-				"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
-				testName.getMethodName(), ".before.json"));
+		String elementInstancesJSON = _readJSON("elementInstances");
 
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_1$]",
@@ -175,29 +162,36 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	}
 
 	private String _getExpectedElementInstancesJSON() throws Exception {
-		String elementInstancesJSON = StringUtil.read(
-			_clazz,
-			StringBundler.concat(
-				"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
-				testName.getMethodName(), ".after.json"));
+		String expectedElementInstancesJSON = _readJSON(
+			"elementInstancesUpdated");
 
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_1$]",
+		expectedElementInstancesJSON = StringUtil.replace(
+			expectedElementInstancesJSON,
+			"[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_1$]",
 			_group1.getExternalReferenceCode());
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_2$]",
+		expectedElementInstancesJSON = StringUtil.replace(
+			expectedElementInstancesJSON,
+			"[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_2$]",
 			_group2.getExternalReferenceCode());
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_1$]",
+		expectedElementInstancesJSON = StringUtil.replace(
+			expectedElementInstancesJSON, "[$SCOPE_GROUP_LABEL_1$]",
 			StringBundler.concat(
 				_group1.getDescriptiveName(), " (ERC: ",
 				_group1.getExternalReferenceCode(), ")"));
 
 		return StringUtil.replace(
-			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_2$]",
+			expectedElementInstancesJSON, "[$SCOPE_GROUP_LABEL_2$]",
 			StringBundler.concat(
 				_group2.getDescriptiveName(), " (ERC: ",
 				_group2.getExternalReferenceCode(), ")"));
+	}
+
+	private String _readJSON(String name) {
+		return StringUtil.read(
+			_clazz,
+			StringBundler.concat(
+				"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
+				testName.getMethodName(), StringPool.DASH, name, ".json"));
 	}
 
 	@DeleteAfterTestRun

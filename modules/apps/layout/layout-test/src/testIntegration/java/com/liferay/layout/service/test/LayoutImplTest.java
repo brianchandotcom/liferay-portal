@@ -30,10 +30,9 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.LayoutTypeControllerImpl;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.release.feature.flag.ReleaseFeatureFlag;
-import com.liferay.release.feature.flag.ReleaseFeatureFlagManager;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -370,21 +369,10 @@ public class LayoutImplTest {
 		}
 	}
 
+	@FeatureFlags("LPD-38869")
 	@Test
 	public void testPrivateLayoutGetTheme() throws Exception {
-		boolean enabled = _releaseFeatureFlagManager.isEnabled(
-			ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS);
-
-		try {
-			_releaseFeatureFlagManager.setEnabled(
-				ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS, false);
-
-			_assertGetTheme(LayoutTestUtil.addTypePortletLayout(_group, true));
-		}
-		finally {
-			_releaseFeatureFlagManager.setEnabled(
-				ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS, enabled);
-		}
+		_assertGetTheme(LayoutTestUtil.addTypePortletLayout(_group, true));
 	}
 
 	@Test
@@ -488,8 +476,5 @@ public class LayoutImplTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
-
-	@Inject
-	private ReleaseFeatureFlagManager _releaseFeatureFlagManager;
 
 }

@@ -184,6 +184,14 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	public void testValidWorkflowTaskIdNotAllowedUserShouldReturnBlankLink()
 		throws Exception {
 
+		Mockito.doReturn(
+			false
+		).when(
+			_workflowTaskManager
+		).isNotifiableUser(
+			Mockito.anyLong(), Mockito.anyLong()
+		);
+
 		Assert.assertEquals(
 			StringPool.BLANK,
 			_workflowTaskUserNotificationHandler.getLink(
@@ -240,8 +248,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	}
 
 	private static void _setUpWorkflowTaskManagerUtil() throws Exception {
-		WorkflowTaskManager workflowTaskManager = Mockito.spy(
-			WorkflowTaskManager.class);
+		_workflowTaskManager = Mockito.spy(WorkflowTaskManager.class);
 
 		WorkflowTask workflowTask = new DefaultWorkflowTask() {
 
@@ -255,17 +262,17 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		Mockito.doReturn(
 			workflowTask
 		).when(
-			workflowTaskManager
+			_workflowTaskManager
 		).fetchWorkflowTask(
 			_VALID_WORKFLOW_TASK_ID
 		);
 
 		Mockito.doReturn(
-			_allowedUsers
+			true
 		).when(
-			workflowTaskManager
-		).getNotifiableUsers(
-			Mockito.anyLong()
+			_workflowTaskManager
+		).isNotifiableUser(
+			Mockito.anyLong(), Mockito.anyLong()
 		);
 
 		Snapshot<WorkflowTaskManager> workflowTaskManagerSnapshot = Mockito.spy(
@@ -273,7 +280,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 				WorkflowTaskManagerUtil.class, WorkflowTaskManager.class));
 
 		Mockito.doReturn(
-			workflowTaskManager
+			_workflowTaskManager
 		).when(
 			workflowTaskManagerSnapshot
 		).get();
@@ -379,6 +386,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 
 	};
 
+	private static WorkflowTaskManager _workflowTaskManager;
 	private static final WorkflowTaskUserNotificationHandler
 		_workflowTaskUserNotificationHandler =
 			new WorkflowTaskUserNotificationHandler();

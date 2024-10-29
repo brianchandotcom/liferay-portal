@@ -1543,7 +1543,7 @@ test.describe('Multistep', () => {
 			});
 
 			await pageEditorPage.changeFragmentConfiguration({
-				fieldLabel: 'Show Steps Titles',
+				fieldLabel: 'Show Step Titles',
 				fragmentId: stepperId,
 				tab: 'General',
 				value: false,

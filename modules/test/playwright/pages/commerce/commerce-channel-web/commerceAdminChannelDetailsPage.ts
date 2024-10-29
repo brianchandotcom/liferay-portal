@@ -276,6 +276,32 @@ export class CommerceAdminChannelDetailsPage {
 		await (await this.closeSidePanelFrame(false, tableName)).click();
 	}
 
+	async addFlatRateShippingOption(name: string) {
+		const tableName = 'Shipping Methods';
+		await (
+			await this.generalCommerceAdminChannelTableLink('Flat Rate')
+		).click();
+		await (await this.shippingOptionsTab(tableName)).click();
+		await (await this.sidePanelFrame(tableName))
+			.getByTestId('management-toolbar')
+			.locator('[data-testid="fdsCreationActionButton"]')
+			.click();
+		await (await this.sidePanelNestedFrame(tableName))
+			.getByLabel('Name')
+			.fill(name);
+		await (await this.sidePanelNestedFrame(tableName))
+			.getByLabel('Key')
+			.fill(name);
+		await (await this.frameSaveButton(true, tableName)).click();
+		await waitForAlert(await this.sidePanelNestedFrame('Shipping Methods'));
+		await (
+			await this.closeSidePanelFrame(true, 'Shipping Methods')
+		).click();
+		await (
+			await this.closeSidePanelFrame(false, 'Shipping Methods')
+		).click();
+	}
+
 	async addVariableRateShippingOption(name: string) {
 		const tableName = 'Shipping Methods';
 		await (

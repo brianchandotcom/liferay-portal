@@ -6,9 +6,12 @@
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TCartItem = {
+	deliveryGroup?: string;
 	options?: string;
 	quantity: number;
 	replacedSkuId?: number;
+	requestedDeliveryDate?: string;
+	shippingAddressId?: string;
 	skuId: number;
 	skuUnitOfMeasure?: TCartItemUOM;
 };
@@ -41,6 +44,12 @@ export class HeadlessCommerceDeliveryCartApiHelper {
 	async checkoutCart(cartId: number) {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/carts/${cartId}/checkout`
+		);
+	}
+
+	async getCart(cartId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/carts/${cartId}/items`
 		);
 	}
 

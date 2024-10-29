@@ -82,6 +82,7 @@ export type TProduct = {
 	shippingConfiguration?: {
 		freeShipping?: boolean;
 		shippable?: boolean;
+		shippingSeparately?: boolean;
 	};
 	shortDescription?: {
 		[key: string]: string;

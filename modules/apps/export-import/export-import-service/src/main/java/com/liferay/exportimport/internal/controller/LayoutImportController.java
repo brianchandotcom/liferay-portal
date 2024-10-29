@@ -34,6 +34,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.lar.PermissionImporter;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
+import com.liferay.layout.admin.kernel.visibility.LayoutVisibilityManager;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
@@ -79,8 +80,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
-import com.liferay.release.feature.flag.ReleaseFeatureFlag;
-import com.liferay.release.feature.flag.ReleaseFeatureFlagManagerUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.site.model.adapter.StagedGroup;
 import com.liferay.sites.kernel.util.Sites;
@@ -886,8 +885,8 @@ public class LayoutImportController implements ImportController {
 			layoutSetPrototypeUuid = GetterUtil.getString(
 				headerElement.attributeValue("type-uuid"));
 
-			if (ReleaseFeatureFlagManagerUtil.isEnabled(
-					ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS)) {
+			if (!_layoutVisibilityManager.isPrivateLayoutsEnabled(
+					group.getCompanyId())) {
 
 				LayoutSet publicLayoutSet =
 					_layoutSetLocalService.fetchLayoutSet(
@@ -1392,6 +1391,9 @@ public class LayoutImportController implements ImportController {
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference
+	private LayoutVisibilityManager _layoutVisibilityManager;
 
 	@Reference
 	private PermissionImporter _permissionImporter;

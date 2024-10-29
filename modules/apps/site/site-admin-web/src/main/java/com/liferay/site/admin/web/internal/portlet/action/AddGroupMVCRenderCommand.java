@@ -7,6 +7,7 @@ package com.liferay.site.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.kernel.visibility.LayoutVisibilityManager;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
@@ -34,10 +35,14 @@ public class AddGroupMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new AddGroupDisplayContext(
-				!_layoutVisibilityManager.isPrivateLayoutsEnabled(),
+				!_layoutVisibilityManager.isPrivateLayoutsEnabled(
+					themeDisplay.getCompanyId()),
 				_portal.getHttpServletRequest(renderRequest), renderResponse));
 
 		return "/add_group.jsp";

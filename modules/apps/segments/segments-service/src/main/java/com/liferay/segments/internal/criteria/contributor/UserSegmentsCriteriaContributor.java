@@ -5,7 +5,10 @@
 
 package com.liferay.segments.internal.criteria.contributor;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
@@ -15,6 +18,8 @@ import com.liferay.segments.internal.odata.entity.EntityModelFieldMapper;
 import com.liferay.segments.internal.odata.entity.UserEntityModel;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.PortletRequest;
 
@@ -39,6 +44,32 @@ public class UserSegmentsCriteriaContributor
 	implements SegmentsCriteriaContributor {
 
 	public static final String KEY = "user";
+
+	@Override
+	public void contribute(
+		Criteria criteria, String filterString,
+		Criteria.Conjunction conjunction) {
+
+		criteria.addCriterion(getKey(), getType(), filterString, conjunction);
+
+		String newFilterString = filterString;
+
+		Matcher matcher = _pattern.matcher(filterString);
+
+		while (matcher.find()) {
+			newFilterString = StringUtil.replace(
+				newFilterString, matcher.group(),
+				String.join(
+					StringPool.BLANK, StringPool.OPEN_PARENTHESIS,
+					matcher.group(), StringPool.SPACE,
+					Criteria.Conjunction.OR.getValue(), StringPool.SPACE,
+					"inheritedRoleIds eq ", StringPool.APOSTROPHE,
+					String.valueOf(_getRoleId(matcher.group())),
+					StringPool.APOSTROPHE, StringPool.CLOSE_PARENTHESIS));
+		}
+
+		criteria.addFilter(getType(), newFilterString, conjunction);
+	}
 
 	@Override
 	public JSONObject getCriteriaJSONObject(Criteria criteria)
@@ -71,6 +102,21 @@ public class UserSegmentsCriteriaContributor
 	public Criteria.Type getType() {
 		return Criteria.Type.MODEL;
 	}
+
+	private long _getRoleId(String criterionString) {
+		int indexOf = criterionString.indexOf("'");
+		int lastIndexOf = criterionString.lastIndexOf("'");
+
+		if ((indexOf == -1) || (lastIndexOf == -1)) {
+			return -1;
+		}
+
+		return GetterUtil.getLong(
+			criterionString.substring(indexOf + 1, lastIndexOf));
+	}
+
+	private static final Pattern _pattern = Pattern.compile(
+		"roleIds eq '\\d+'");
 
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,

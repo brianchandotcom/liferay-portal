@@ -148,21 +148,6 @@ public class UpgradeReport {
 		return simpleDateFormat.format(calendar.getTime());
 	}
 
-	private List<FailedSQLEntryPrinter> _getFailedSQLEntryPrinters(
-		List<UpgradeSQLRecorder.FailedSQLEntry> failedSQLEntries) {
-
-		List<FailedSQLEntryPrinter> failedSQLEntryPrinters = new ArrayList<>();
-
-		for (UpgradeSQLRecorder.FailedSQLEntry failedSQLEntry :
-				failedSQLEntries) {
-
-			failedSQLEntryPrinters.add(
-				new FailedSQLEntryPrinter(failedSQLEntry));
-		}
-
-		return failedSQLEntryPrinters;
-	}
-
 	private List<MessagesPrinter> _getMessagesPrinters(
 		Map<String, Map<String, Integer>> map1) {
 
@@ -565,8 +550,7 @@ public class UpgradeReport {
 		).put(
 			"errors", _getMessagesPrinters(upgradeRecorder.getErrorMessages())
 		).put(
-			"failed.sqls",
-			_getFailedSQLEntryPrinters(upgradeRecorder.getFailedSQLEntries())
+			"failed.sqls", upgradeRecorder.getFailedSQLEntries()
 		).put(
 			"longest.upgrade.processes",
 			() -> {
@@ -639,7 +623,21 @@ public class UpgradeReport {
 			}
 		).put(
 			"longest.running.sqls",
-			_getRunningSQLEntryPrinters(upgradeRecorder.getRunningSQLEntries())
+			() -> {
+				Set<UpgradeSQLRecorder.RunningSQLEntry> runningSQLEntries =
+					upgradeRecorder.getRunningSQLEntries();
+
+				List<UpgradeSQLRecorder.RunningSQLEntry> entries =
+					new ArrayList<>(runningSQLEntries);
+
+				entries.sort(
+					(entry1, entry2) -> Long.compare(
+						entry2.getDuration(), entry1.getDuration()));
+
+				return entries.subList(
+					0,
+					Math.min(_LONGEST_RUNNING_SQLS_COUNT, entries.size()) - 1);
+			}
 		).put(
 			"warnings",
 			_getMessagesPrinters(upgradeRecorder.getWarningMessages())
@@ -771,29 +769,6 @@ public class UpgradeReport {
 		return null;
 	}
 
-	private List<RunningSQLEntryPrinter> _getRunningSQLEntryPrinters(
-		Set<UpgradeSQLRecorder.RunningSQLEntry> runningSQLEntries) {
-
-		List<RunningSQLEntryPrinter> runningSQLEntryPrinters =
-			new ArrayList<>();
-
-		List<UpgradeSQLRecorder.RunningSQLEntry> entries = new ArrayList<>(
-			runningSQLEntries);
-
-		entries.sort(
-			(entry1, entry2) -> Long.compare(
-				entry2.getDuration(), entry1.getDuration()));
-
-		int count = Math.min(_LONGEST_RUNNING_SQLS_COUNT, entries.size());
-
-		for (int i = 0; i < count; i++) {
-			runningSQLEntryPrinters.add(
-				new RunningSQLEntryPrinter(entries.get(i)));
-		}
-
-		return runningSQLEntryPrinters;
-	}
-
 	private Map<String, Integer> _getTableCounts() {
 		try (Connection connection = DataAccess.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -865,6 +840,54 @@ public class UpgradeReport {
 							key + StringPool.PERIOD + entry2.getKey(),
 							String.valueOf(entry2.getValue()));
 					}
+				}
+				else if (value instanceof List<?>) {
+					StringBundler sb = new StringBundler(
+						StringPool.OPEN_BRACKET);
+
+					List<?> list = (List<?>)value;
+
+					for (Object object : list) {
+						if (object instanceof
+								UpgradeSQLRecorder.FailedSQLEntry) {
+
+							UpgradeSQLRecorder.FailedSQLEntry failedSQLEntry =
+								(UpgradeSQLRecorder.FailedSQLEntry)object;
+
+							sb.append(failedSQLEntry.getSQL());
+
+							sb.append(StringPool.COLON);
+							sb.append(failedSQLEntry.getMessage());
+						}
+						else if (object instanceof
+									UpgradeSQLRecorder.RunningSQLEntry) {
+
+							UpgradeSQLRecorder.RunningSQLEntry runningSQLEntry =
+								(UpgradeSQLRecorder.RunningSQLEntry)object;
+
+							sb.append(
+								runningSQLEntry.getUpgradeProcessClassName());
+
+							sb.append(StringPool.COLON);
+							sb.append(runningSQLEntry.getSQL());
+							sb.append(StringPool.COLON);
+							sb.append(runningSQLEntry.getDuration());
+							sb.append(" ms");
+						}
+						else {
+							sb.append(String.valueOf(object));
+						}
+
+						sb.append(StringPool.COMMA_AND_SPACE);
+					}
+
+					if (sb.length() > 1) {
+						sb.setIndex(sb.index() - 1);
+					}
+
+					sb.append(StringPool.CLOSE_BRACKET);
+
+					ThreadContext.put(key, sb.toString());
 				}
 				else {
 					ThreadContext.put(key, String.valueOf(value));
@@ -1002,31 +1025,6 @@ public class UpgradeReport {
 
 	}
 
-	private class FailedSQLEntryPrinter {
-
-		public FailedSQLEntryPrinter(
-			UpgradeSQLRecorder.FailedSQLEntry failedSQLEntry) {
-
-			_failedSQLEntry = failedSQLEntry;
-		}
-
-		@Override
-		public String toString() {
-			if (_logContext) {
-				return StringBundler.concat(
-					_failedSQLEntry.getSQL(), StringPool.COLON,
-					_failedSQLEntry.getMessage());
-			}
-
-			return StringBundler.concat(
-				"SQL: ", _failedSQLEntry.getSQL(), "\nError: ",
-				_failedSQLEntry.getMessage(), "\n");
-		}
-
-		private final UpgradeSQLRecorder.FailedSQLEntry _failedSQLEntry;
-
-	}
-
 	private class MessagesPrinter {
 
 		public MessagesPrinter(String className) {
@@ -1108,34 +1106,6 @@ public class UpgradeReport {
 
 		private final String _key;
 		private final String _value;
-
-	}
-
-	private class RunningSQLEntryPrinter {
-
-		public RunningSQLEntryPrinter(
-			UpgradeSQLRecorder.RunningSQLEntry runningSQLEntry) {
-
-			_runningSQLEntry = runningSQLEntry;
-		}
-
-		@Override
-		public String toString() {
-			if (_logContext) {
-				return StringBundler.concat(
-					_runningSQLEntry.getUpgradeProcessClassName(),
-					StringPool.COLON, _runningSQLEntry.getSQL(),
-					StringPool.COLON, _runningSQLEntry.getDuration(), " ms");
-			}
-
-			return StringBundler.concat(
-				"Upgrade Process: ",
-				_runningSQLEntry.getUpgradeProcessClassName(), "\nSQL: ",
-				_runningSQLEntry.getSQL(), "\nDuration: ",
-				_runningSQLEntry.getDuration(), " ms\n");
-		}
-
-		private final UpgradeSQLRecorder.RunningSQLEntry _runningSQLEntry;
 
 	}
 

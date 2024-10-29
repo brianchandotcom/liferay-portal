@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.upgrade.recorder;
 
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.util.CallableStatementWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.ConnectionWrapper;
@@ -204,6 +205,12 @@ public class UpgradeSQLRecorder {
 			return _sql;
 		}
 
+		@Override
+		public String toString() {
+			return StringBundler.concat(
+				"SQL: ", _sql, "\nError: ", _message, "\n");
+		}
+
 		private final String _message;
 		private final String _sql;
 
@@ -270,6 +277,13 @@ public class UpgradeSQLRecorder {
 			int hashCode = HashUtil.hash(0, _sql);
 
 			return HashUtil.hash(hashCode, _upgradeProcessClassName);
+		}
+
+		@Override
+		public String toString() {
+			return StringBundler.concat(
+				"Upgrade Process: ", _upgradeProcessClassName, "\nSQL: ", _sql,
+				"\nDuration: ", _duration, " ms\n");
 		}
 
 		private final long _duration;

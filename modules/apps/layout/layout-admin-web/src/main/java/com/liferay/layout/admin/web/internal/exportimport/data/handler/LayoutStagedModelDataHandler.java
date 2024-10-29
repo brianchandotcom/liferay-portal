@@ -2140,6 +2140,11 @@ public class LayoutStagedModelDataHandler
 			layout.getPrimaryKey(), importedLayout.getPrimaryKey());
 
 		for (Element friendlyURLEntryElement : friendlyURLEntryElements) {
+			friendlyURLEntryElement.addAttribute(
+				"resource-class-name",
+				_layoutFriendlyURLEntryHelper.getClassName(
+					portletDataContext.isPrivateLayout()));
+
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, friendlyURLEntryElement);
 		}

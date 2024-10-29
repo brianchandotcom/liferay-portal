@@ -42,6 +42,7 @@ import com.liferay.portal.upload.test.util.UploadTestUtil;
 
 import java.util.Objects;
 
+import org.junit.Assert;
 import org.junit.Before;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -137,7 +138,15 @@ public abstract class BaseExportImportTestCase {
 
 		// MVCActionCommand
 
-		_importJSON(externalReferenceCode, actualJSON, name);
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			_importJSON(externalReferenceCode, actualJSON, name);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockLiferayPortletActionResponse.getHttpServletResponse();
+
+		Assert.assertTrue(
+			Validator.isNull(mockHttpServletResponse.getContentAsString()));
 
 		// MVCResourceCommand
 

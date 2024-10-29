@@ -64,6 +64,16 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 	@Test
 	public void testSXPBlueprintUpgradeProcess() throws Exception {
+		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
+			null, TestPropsValues.getUserId(), _readJSON("configuration"),
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			_getElementInstancesJSON(), "1.1",
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			ServiceContextTestUtil.getServiceContext(
+				_group1, TestPropsValues.getUserId()));
+
 		SXPElement sxpElement =
 			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
 				"LIMIT_SEARCH_TO_THESE_SITES", TestPropsValues.getCompanyId());
@@ -86,16 +96,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 					TestPropsValues.getCompanyId(),
 					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 		}
-
-		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			null, TestPropsValues.getUserId(), _readJSON("configuration"),
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			_getElementInstancesJSON(), "1.1",
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			ServiceContextTestUtil.getServiceContext(
-				_group1, TestPropsValues.getUserId()));
 
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator,

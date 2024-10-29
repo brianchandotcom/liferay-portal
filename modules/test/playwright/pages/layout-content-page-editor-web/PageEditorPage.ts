@@ -929,7 +929,10 @@ export class PageEditorPage {
 			.getByRole('button', {name: 'Options'})
 			.click();
 
-		await this.page.locator('.dropdown-menu.show').getByText(name).click();
+		await this.page
+			.locator('.dropdown-menu.show')
+			.getByText(name, {exact: true})
+			.click();
 	}
 
 	async isActive(fragmentId: string, isDesktop = true) {

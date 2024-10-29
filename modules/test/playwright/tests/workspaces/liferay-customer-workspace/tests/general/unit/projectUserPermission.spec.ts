@@ -6,7 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../../../fixtures/apiHelpersTest';
-import getRandomString from '../../../../../../utils/getRandomString';
+import {getRandomInt} from '../../../../../../utils/getRandomInt';
 import {customerApiHelpersTest} from '../../../fixtures/customerApiHelpersTest';
 import {customerPagesTest} from '../../../fixtures/customerPagesTest';
 import {
@@ -27,6 +27,8 @@ const accountExternalReferenceCode = 'ERC-001';
 let userEmailAddress: string;
 
 test.afterEach(async ({apiHelpers, page}) => {
+	await customerPerformUserSwitch(page, 'test@liferay.com');
+
 	const account =
 		await apiHelpers.headlessAdminUser.getAccountByExternalReferenceCode(
 			accountExternalReferenceCode
@@ -109,15 +111,15 @@ test.describe('Project User Permission', () => {
 
 		await projectTeamMembersPage.lastNameField.fill('testlast');
 
-		userEmailAddress = getRandomString() + '@liferay.com';
+		userEmailAddress = getRandomInt() + '@liferay.com';
 
 		await projectTeamMembersPage.emailField.fill(userEmailAddress);
 
 		await projectTeamMembersPage.roleSelect.click({force: true});
 
-		await projectTeamMembersPage.userRoleOption.click();
+		await projectTeamMembersPage.userRoleOption.click({force: true});
 
-		await projectTeamMembersPage.applyButton.click();
+		await projectTeamMembersPage.applyButton.click({force: true});
 
 		await projectTeamMembersPage.sendInvitationsButton.click();
 
@@ -177,7 +179,5 @@ test.describe('Project User Permission', () => {
 		await expect(
 			projectTeamMembersPage.userActionColumnHeader
 		).not.toBeVisible();
-
-		await customerPerformLogout(page);
 	});
 });

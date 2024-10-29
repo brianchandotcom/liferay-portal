@@ -23,7 +23,7 @@ import getRandomString from '../../utils/getRandomString';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {mockedObjectFields} from './dependencies/objectMockedFields';
 import {getFDSDateFormat, getPageEditorDateFormat} from './utils/dateFormat';
-import keepCheckingAfterFound from './utils/keepCheckingAfterFound';
+import evaluateKeepCheckingAfterFound from './utils/keepCheckingAfterFound';
 import {mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(
@@ -585,8 +585,9 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		await removeOptionButton.click();
 
-		const keepsAttached = await page.evaluate(keepCheckingAfterFound, {
+		const keepsAttached = await evaluateKeepCheckingAfterFound({
 			duration: 4000,
+			page,
 			selector: `input[placeholder="${placeHolderText}"]`,
 		});
 

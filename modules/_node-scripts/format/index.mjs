@@ -12,12 +12,14 @@ import gitUtil from '../util/gitUtil.mjs';
 import format from './format.mjs';
 
 export default async function main() {
-	const {all, check, currentBranch, localChanges} = getNamedArguments({
-		all: '--all',
-		check: '--check',
-		currentBranch: '--current-branch',
-		localChanges: '--local-changes',
-	});
+	const {all, check, currentBranch, emitSuppressed, localChanges} =
+		getNamedArguments({
+			all: '--all',
+			check: '--check',
+			currentBranch: '--current-branch',
+			emitSuppressed: '--emit-suppressed',
+			localChanges: '--local-changes',
+		});
 
 	const cwd = path.resolve('.');
 	const rootDir = await getRootDir();
@@ -64,7 +66,9 @@ export default async function main() {
 
 	console.log('📝 Running format...\n');
 
-	const formatOutput = await format(!check, files);
+	const formatOutput = await format(!check, files, {
+		emitSuppressed,
+	});
 
 	if (check && formatOutput) {
 		console.error(formatOutput);

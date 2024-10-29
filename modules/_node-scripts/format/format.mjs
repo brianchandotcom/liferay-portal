@@ -37,7 +37,16 @@ const FALLBACK_FILE_PATH = '__fallback__.js';
  * A string with the result of the format operation (empty if nothing was formatted or had errors)
  * or undefined if no files were checked.
  */
-export default async function format(fix, filesToFormat = undefined) {
+export default async function format(
+	fix,
+	filesToFormat = undefined,
+	{emitSuppressed} = {}
+) {
+	const suppressedErrors = await fs.readFile(
+		path.join(import.meta.dirname, 'suppressed_errors.txt'),
+		'utf-8'
+	);
+
 	const rootDir = await getRootDir();
 
 	const filepaths = await getFilePaths(rootDir, filesToFormat);
@@ -75,15 +84,25 @@ export default async function format(fix, filesToFormat = undefined) {
 	}
 
 	async function formatWithEslint(input, filepath) {
+		const relativePath = path.relative(rootDir, filepath);
 		const [lintResult = {}] = await eslintCLI.lintText(input, {
 			filePath: filepath,
 		});
 
-		const {messages, output} = lintResult;
+		const {messages = [], output} = lintResult;
 
-		if (messages?.length) {
+		const filteredErrors = emitSuppressed
+			? messages
+			: messages.filter(
+					(item) =>
+						!suppressedErrors.includes(
+							`${relativePath}:${item.message}\n`
+						)
+				);
+
+		if (filteredErrors?.length) {
 			errMessages[filepath] = errMessages[filepath] || [];
-			errMessages[filepath].push(...messages);
+			errMessages[filepath].push(...filteredErrors);
 		}
 
 		return output ?? input;

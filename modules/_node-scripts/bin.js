@@ -82,9 +82,12 @@ const COMMANDS = {
 		If --check is passed no file is modified and the command just outputs what files need to be
 		formatted.
 
+		If --emit-suppressed is passed, the list of errors that are suppressed will be logged as well.
+
 		See this help's introduction to find the meaning of --all, --current-branch, ... parameters.
 `,
-		parameters: '[--check] [{--all|--current-branch|--local-changes}]',
+		parameters:
+			'[--check] [--emit-suppressed] [{--all|--current-branch|--local-changes}]',
 		script: './format/index.mjs',
 	},
 	'format:file': {

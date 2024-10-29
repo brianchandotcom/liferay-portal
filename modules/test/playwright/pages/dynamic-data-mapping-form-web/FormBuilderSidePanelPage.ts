@@ -12,6 +12,8 @@ export class FormBuilderSidePanelPage {
 	readonly htmlAutocompleteAttributeField: Locator;
 	readonly label: Locator;
 	readonly objectFieldSelect: Locator;
+	readonly paragraphFieldTextarea: Locator;
+	readonly paragraphFieldTitle: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -27,6 +29,11 @@ export class FormBuilderSidePanelPage {
 		);
 		this.label = page.getByLabel('Label', {exact: true}).first();
 		this.objectFieldSelect = page.getByLabel('Object Field');
+		this.paragraphFieldTextarea = page
+			.frameLocator('iframe')
+			.locator('.cke_editable');
+		this.paragraphFieldTitle = page.getByPlaceholder('Enter a title.');
+
 		this.page = page;
 	}
 
@@ -49,6 +56,16 @@ export class FormBuilderSidePanelPage {
 
 		const option = this.getSelectOptionLocator(objectFieldLabel);
 		await option.click();
+	}
+
+	async fillParagraphField({text}: {text: string}) {
+		await this.paragraphFieldTextarea.fill(text);
+
+		// filling is not enough, we need need a key event to make it work
+
+		await this.paragraphFieldTextarea.press('End');
+
+		await this.page.waitForLoadState('networkidle');
 	}
 
 	getSelectOptionLocator(optionLabel: string) {

@@ -11,14 +11,29 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalServiceUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountGroup;
+import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
+import com.liferay.headless.admin.user.client.dto.v1_0.CustomValue;
+import com.liferay.headless.admin.user.client.pagination.Page;
+import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.problem.Problem;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
+
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -47,6 +62,14 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 			RandomTestUtil.randomString() + "@liferay.com", null, null,
 			AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+	}
+
+	@Override
+	@Test
+	public void testGetAccountGroupsPage() throws Exception {
+		super.testGetAccountGroupsPage();
+
+		_testGetAccountGroupsPageWithCustomFields();
 	}
 
 	@Ignore
@@ -284,6 +307,72 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		return accountGroupResource.postAccountGroup(accountGroup);
 	}
 
+	private void _testGetAccountGroupsPageWithCustomFields() throws Exception {
+		ExpandoTable expandoTable = _expandoTableLocalService.addTable(
+			testGroup.getCompanyId(),
+			_classNameLocalService.getClassNameId(
+				com.liferay.account.model.AccountGroup.class),
+			"CUSTOM_FIELDS");
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.addColumn(
+			expandoTable.getTableId(), "A" + RandomTestUtil.randomString(),
+			ExpandoColumnConstants.STRING);
+
+		UnicodeProperties unicodeProperties =
+			expandoColumn.getTypeSettingsProperties();
+
+		unicodeProperties.setProperty(
+			ExpandoColumnConstants.INDEX_TYPE,
+			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
+
+		expandoColumn.setTypeSettingsProperties(unicodeProperties);
+
+		_expandoColumnLocalService.updateExpandoColumn(expandoColumn);
+
+		AccountGroup accountGroup = randomAccountGroup();
+
+		String value = RandomTestUtil.randomString();
+
+		accountGroup.setCustomFields(
+			() -> new CustomField[] {
+				new CustomField() {
+					{
+						customValue = new CustomValue() {
+							{
+								data = value;
+							}
+						};
+						dataType = "Text";
+						name = expandoColumn.getName();
+					}
+				}
+			});
+
+		accountGroup = testGetAccountGroupsPage_addAccountGroup(accountGroup);
+
+		Page<AccountGroup> page = accountGroupResource.getAccountGroupsPage(
+			null,
+			StringBundler.concat(
+				"(customFields/", expandoColumn.getName(), " eq '",
+				RandomTestUtil.randomString(), "')"),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		page = accountGroupResource.getAccountGroupsPage(
+			null,
+			StringBundler.concat(
+				"(customFields/", expandoColumn.getName(), " eq '", value,
+				"')"),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEquals(
+			Collections.singletonList(accountGroup),
+			(List<AccountGroup>)page.getItems());
+	}
+
 	private void _testPatchAccountGroupByExternalReferenceCodeWithoutName()
 		throws Exception {
 
@@ -388,6 +477,15 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 
 	@Inject
 	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Inject
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 	private ServiceContext _serviceContext;
 

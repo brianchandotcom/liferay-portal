@@ -109,7 +109,8 @@ public class SXPServiceUpgradeStepRegistrator
 		registry.register(
 			"3.1.2", "3.1.3",
 			new com.liferay.search.experiences.internal.upgrade.v3_1_3.
-				SXPBlueprintAndSXPElementUpgradeProcess(_groupLocalService));
+				SXPBlueprintAndSXPElementUpgradeProcess(
+					_groupLocalService, _jsonFactory));
 
 		registry.register(
 			"3.1.3", "3.1.4",

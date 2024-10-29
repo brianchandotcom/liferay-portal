@@ -8,7 +8,7 @@ package com.liferay.search.experiences.internal.upgrade.v3_1_3;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -35,9 +35,10 @@ import java.util.Objects;
 public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 	public SXPBlueprintAndSXPElementUpgradeProcess(
-		GroupLocalService groupLocalService) {
+		GroupLocalService groupLocalService, JSONFactory jsonFactory) {
 
 		_groupLocalService = groupLocalService;
+		_jsonFactory = jsonFactory;
 	}
 
 	@Override
@@ -81,7 +82,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			return elementInstanceJSON;
 		}
 
-		JSONArray elementInstanceJSONArray = JSONFactoryUtil.createJSONArray(
+		JSONArray elementInstanceJSONArray = _jsonFactory.createJSONArray(
 			elementInstanceJSON);
 
 		for (int i = 0; i < elementInstanceJSONArray.length(); i++) {
@@ -150,7 +151,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			JSONUtil.put(
 				"scopeGroupExternalReferenceCode",
 				() -> {
-					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+					JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 					for (long groupId : groupIds) {
 						Group group = _groupLocalService.getGroup(groupId);
@@ -252,7 +253,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		}
 
 		JSONArray groupIdsExternalReferenceCodesJSONArray =
-			JSONFactoryUtil.createJSONArray();
+			_jsonFactory.createJSONArray();
 
 		for (int i = 0; i < scopeGroupIdsJSONArray.length(); i++) {
 			JSONObject scopeGroupIdJSONObject =
@@ -284,5 +285,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		SXPBlueprintAndSXPElementUpgradeProcess.class);
 
 	private final GroupLocalService _groupLocalService;
+	private final JSONFactory _jsonFactory;
 
 }

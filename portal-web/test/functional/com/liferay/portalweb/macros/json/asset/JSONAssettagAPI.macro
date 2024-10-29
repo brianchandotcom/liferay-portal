@@ -10,6 +10,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/assettag/add-tag \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode='' \
 				-d groupId=${groupId} \
 				-d name=${tagName}
 		''';

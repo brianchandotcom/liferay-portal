@@ -126,17 +126,17 @@ public class RelationshipObjectFieldBusinessType
 					return _getPrimaryKeyObj(
 						externalReferenceCode, objectDefinition, 0L);
 				}
-
-				ObjectEntry objectEntry =
-					_objectEntryLocalService.getObjectEntry(
+				try {
+					ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
 						externalReferenceCode,
 						objectDefinition.getObjectDefinitionId());
 
-				if (objectEntry != null) {
 					return objectEntry.getObjectEntryId();
+				} catch (Exception exception) {
+					return 0;
 				}
 			}
-
+			
 			return null;
 		}
 
@@ -172,17 +172,10 @@ public class RelationshipObjectFieldBusinessType
 			}
 		}
 
-		if (Objects.equals(
-				objectField.getRelationshipType(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
-			values.containsKey(objectRelationshipERCObjectFieldName)) {
+		if (values.containsKey(objectRelationshipERCObjectFieldName)) {
 
 			String externalReferenceCode = GetterUtil.getString(
 				values.get(objectRelationshipERCObjectFieldName));
-
-			if (Validator.isNull(externalReferenceCode)) {
-				return null;
-			}
 
 			ObjectDefinition objectDefinition = _getObjectDefinition(
 				objectField);
@@ -200,7 +193,7 @@ public class RelationshipObjectFieldBusinessType
 				return objectEntry.getObjectEntryId();
 			}
 		}
-
+		
 		return null;
 	}
 

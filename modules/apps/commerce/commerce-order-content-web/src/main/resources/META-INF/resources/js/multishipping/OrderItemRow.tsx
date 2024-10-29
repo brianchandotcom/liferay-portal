@@ -236,6 +236,13 @@ const OrderItemRow = ({
 								delete orderItemDeliveryGroups[deliveryGroupId];
 
 								Liferay.fire(
+									commerceEvents.CURRENT_ORDER_UPDATED,
+									{
+										order: {id: orderId},
+										updatedFromCart: false,
+									}
+								);
+								Liferay.fire(
 									commerceEvents.ORDER_INFORMATION_ALTERED
 								);
 							})
@@ -262,6 +269,13 @@ const OrderItemRow = ({
 								existingOrderItemDeliveryGroup.quantity =
 									response.quantity;
 
+								Liferay.fire(
+									commerceEvents.CURRENT_ORDER_UPDATED,
+									{
+										order: {id: orderId},
+										updatedFromCart: false,
+									}
+								);
 								Liferay.fire(
 									commerceEvents.ORDER_INFORMATION_ALTERED
 								);
@@ -293,6 +307,13 @@ const OrderItemRow = ({
 									quantity,
 								};
 
+								Liferay.fire(
+									commerceEvents.CURRENT_ORDER_UPDATED,
+									{
+										order: {id: orderId},
+										updatedFromCart: false,
+									}
+								);
 								Liferay.fire(
 									commerceEvents.ORDER_INFORMATION_ALTERED
 								);
@@ -388,6 +409,10 @@ const OrderItemRow = ({
 	useEffect(() => {
 		setIsChecked(checked);
 	}, [checked]);
+
+	useEffect(() => {
+		setOrderItem(orderItemProp);
+	}, [orderItemProp]);
 
 	return (
 		<ClayTable.Row

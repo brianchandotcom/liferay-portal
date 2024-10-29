@@ -6,10 +6,12 @@
 package com.liferay.headless.admin.user.internal.odata.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,8 +19,9 @@ import java.util.Map;
  */
 public class AccountGroupEntityModel implements EntityModel {
 
-	public AccountGroupEntityModel() {
+	public AccountGroupEntityModel(List<EntityField> entityFields) {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+			new ComplexEntityField("customFields", entityFields),
 			new StringEntityField(
 				"name", locale -> Field.getSortableFieldName(Field.NAME)));
 	}

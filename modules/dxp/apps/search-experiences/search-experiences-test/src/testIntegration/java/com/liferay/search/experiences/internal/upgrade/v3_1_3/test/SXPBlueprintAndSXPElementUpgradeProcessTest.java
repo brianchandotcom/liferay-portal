@@ -10,8 +10,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -34,7 +32,7 @@ import com.liferay.search.experiences.service.SXPElementLocalService;
 import java.util.Collections;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,8 +56,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_group1 = GroupTestUtil.addGroup();
 		_group2 = GroupTestUtil.addGroup();
 	}
@@ -190,17 +188,18 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				testName.getMethodName(), StringPool.DASH, name, ".json"));
 	}
 
-	@DeleteAfterTestRun
-	private static Group _group1;
-
-	private static Group _group2;
-
 	@Inject(
 		filter = "(&(component.name=com.liferay.search.experiences.internal.upgrade.registry.SXPServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	private final Class<?> _clazz = getClass();
+
+	@DeleteAfterTestRun
+	private Group _group1;
+
+	@DeleteAfterTestRun
+	private Group _group2;
 
 	@Inject
 	private MultiVMPool _multiVMPool;

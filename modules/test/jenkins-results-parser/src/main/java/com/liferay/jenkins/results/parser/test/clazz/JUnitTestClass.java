@@ -152,30 +152,6 @@ public class JUnitTestClass extends BaseTestClass {
 		_testrayMainComponentName = testrayMainComponentName;
 	}
 
-	private File _getParentTestPropertiesFile(File currentDir) {
-		if (currentDir.compareTo(_modulesBaseDir) == 0) {
-			return null;
-		}
-
-		File parentDir = currentDir.getParentFile();
-
-		File parentPropertiesFile = new File(parentDir, "test.properties");
-
-		if (parentPropertiesFile.exists()) {
-			return parentPropertiesFile;
-		}
-
-		return _getParentTestPropertiesFile(parentDir);
-	}
-
-	private File _getPortalModulesBaseDir() {
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			getPortalGitWorkingDirectory();
-
-		return new File(
-			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
-	}
-
 	@Override
 	protected String getTestName() {
 		return _getPackageName() + "." + _getClassName();
@@ -283,6 +259,30 @@ public class JUnitTestClass extends BaseTestClass {
 		}
 
 		return _getPackageName();
+	}
+
+	private File _getParentTestPropertiesFile(File currentDir) {
+		if (currentDir.compareTo(_modulesBaseDir) == 0) {
+			return null;
+		}
+
+		File parentDir = currentDir.getParentFile();
+
+		File parentPropertiesFile = new File(parentDir, "test.properties");
+
+		if (parentPropertiesFile.exists()) {
+			return parentPropertiesFile;
+		}
+
+		return _getParentTestPropertiesFile(parentDir);
+	}
+
+	private File _getPortalModulesBaseDir() {
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			getPortalGitWorkingDirectory();
+
+		return new File(
+			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 	}
 
 	private void _initTestClassMethods(String fileContent) {

@@ -142,50 +142,51 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 		</c:choose>
 
 		<aui:script>
+			<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-19787") %>'>
+				function <%= uniqueNamespace %>inputPermissionsToggle() {
+					var isInputPermissionsShowOptionsTrue = (document.getElementById('<%= uniqueNamespace %>inputPermissionsShowOptions').value === 'true');
 
-			function <%= uniqueNamespace %>inputPermissionsToggle() {
-				var isInputPermissionsShowOptionsTrue = (document.getElementById('<%= uniqueNamespace %>inputPermissionsShowOptions').value === 'true');
-
-				<%= uniqueNamespace %>togglePermissionsOptions(!isInputPermissionsShowOptionsTrue);
-			}
-
-			function <%= uniqueNamespace %>togglePermissionsOptions(force) {
-				var inputPermissionsTable = document.getElementById('<%= uniqueNamespace %>inputPermissionsTable');
-
-				if (inputPermissionsTable) {
-					if (force) {
-						inputPermissionsTable.classList.remove('hide');
-					}
-					else {
-						inputPermissionsTable.classList.add('hide');
-					}
+					<%= uniqueNamespace %>togglePermissionsOptions(!isInputPermissionsShowOptionsTrue);
 				}
 
-				var inputPermissionsShowOptionsHelp = document.getElementById('<%= uniqueNamespace %>inputPermissionsShowOptionsHelp');
+				function <%= uniqueNamespace %>togglePermissionsOptions(force) {
+					var inputPermissionsTable = document.getElementById('<%= uniqueNamespace %>inputPermissionsTable');
 
-				if (inputPermissionsShowOptionsHelp) {
-					if (force) {
-						inputPermissionsShowOptionsHelp.classList.add('hide');
+					if (inputPermissionsTable) {
+						if (force) {
+							inputPermissionsTable.classList.remove('hide');
+						}
+						else {
+							inputPermissionsTable.classList.add('hide');
+						}
 					}
-					else {
-						inputPermissionsShowOptionsHelp.classList.remove('hide');
+
+					var inputPermissionsShowOptionsHelp = document.getElementById('<%= uniqueNamespace %>inputPermissionsShowOptionsHelp');
+
+					if (inputPermissionsShowOptionsHelp) {
+						if (force) {
+							inputPermissionsShowOptionsHelp.classList.add('hide');
+						}
+						else {
+							inputPermissionsShowOptionsHelp.classList.remove('hide');
+						}
+					}
+
+					var inputPermissionsShowOptions = document.getElementById('<%= uniqueNamespace %>inputPermissionsShowOptions');
+
+					if (inputPermissionsShowOptions) {
+						inputPermissionsShowOptions.value = force;
+					}
+
+					var inputPermissionsOptionsButton = document.getElementById('<%= uniqueNamespace %>inputPermissionsOptionsButton');
+
+					if (inputPermissionsOptionsButton) {
+						inputPermissionsOptionsButton.innerText = force ? '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "hide-options")) %>' : '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "more-options")) %>' ;
+						inputPermissionsOptionsButton.ariaExpanded = force;
+						inputPermissionsOptionsButton.classList = force ? "btn btn-secondary btn-sm mb-1 mt-3" : "btn btn-secondary btn-sm mb-5 mt-3";
 					}
 				}
-
-				var inputPermissionsShowOptions = document.getElementById('<%= uniqueNamespace %>inputPermissionsShowOptions');
-
-				if (inputPermissionsShowOptions) {
-					inputPermissionsShowOptions.value = force;
-				}
-
-				var inputPermissionsOptionsButton = document.getElementById('<%= uniqueNamespace %>inputPermissionsOptionsButton');
-
-				if (inputPermissionsOptionsButton) {
-					inputPermissionsOptionsButton.innerText = force ? '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "hide-options")) %>' : '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "more-options")) %>' ;
-					inputPermissionsOptionsButton.ariaExpanded = force;
-					inputPermissionsOptionsButton.classList = force ? "btn btn-secondary btn-sm mb-1 mt-3" : "btn btn-secondary btn-sm mb-5 mt-3";
-				}
-			}
+			</c:if>
 
 			function <%= uniqueNamespace %>updatePermissionsView() {
 				var permissionsViewRoleInput = document.getElementById('<%= uniqueNamespace %>inputPermissionsViewRole');

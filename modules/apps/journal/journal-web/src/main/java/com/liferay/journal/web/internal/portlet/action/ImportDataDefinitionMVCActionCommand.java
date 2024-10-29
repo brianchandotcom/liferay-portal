@@ -72,6 +72,8 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getUser()
 				).build();
 
+			dataDefinition.setExternalReferenceCode(() -> null);
+
 			dataDefinitionResource.postSiteDataDefinitionByContentType(
 				themeDisplay.getScopeGroupId(), "journal", dataDefinition);
 

@@ -126,6 +126,23 @@ public class UserSegmentsCriteriaContributorTest {
 	}
 
 	@Test
+	public void testContribute() throws Exception {
+		Criteria criteria = new Criteria();
+
+		SegmentsCriteriaContributor segmentsCriteriaContributor =
+			_getSegmentsCriteriaContributor();
+
+		segmentsCriteriaContributor.contribute(
+			criteria, "(roleIds eq '33916' and (not (roleIds eq '20101')))",
+			Criteria.Conjunction.AND);
+
+		Assert.assertEquals(
+			"((roleIds eq '33916' or inheritedRoleIds eq '33916') and (not " +
+				"((roleIds eq '20101' or inheritedRoleIds eq '20101'))))",
+			criteria.getFilterString(Criteria.Type.MODEL));
+	}
+
+	@Test
 	public void testGetCriteriaJSONObject() throws Exception {
 		SegmentsCriteriaContributor segmentsCriteriaContributor =
 			_getSegmentsCriteriaContributor();

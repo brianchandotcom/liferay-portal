@@ -148,6 +148,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "TESTFIELD",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",

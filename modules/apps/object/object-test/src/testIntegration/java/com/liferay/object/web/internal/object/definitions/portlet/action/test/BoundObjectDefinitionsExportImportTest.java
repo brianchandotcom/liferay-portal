@@ -7,12 +7,17 @@ package com.liferay.object.web.internal.object.definitions.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.BaseExportImportTestCase;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -103,19 +108,47 @@ public class BoundObjectDefinitionsExportImportTest
 
 		// Update draft to approved
 
+		JSONObject statusJSONObject = JSONUtil.put(
+			"code", 0
+		).put(
+			"label", "approved"
+		).put(
+			"label_i18n", "Approved"
+		);
+
 		testExportImportJSON(
 			_getBoundObjectDefinitionsJSONArray(
-				false,
-				JSONUtil.put(
-					"code", 0
+				false, statusJSONObject
+			).toString(),
+			JSONUtil.putAll(
+				jsonFactory.createJSONObject(
+					String.valueOf(
+						boundObjectDefinitionsJSONArray.getJSONObject(0))
 				).put(
-					"label", "approved"
+					"active", true
 				).put(
-					"label_i18n", "Approved"
+					"status", statusJSONObject
+				),
+				jsonFactory.createJSONObject(
+					objectDefinition2JSONObject.toString()
+				).put(
+					"active", true
+				).put(
+					"status", statusJSONObject
+				),
+				jsonFactory.createJSONObject(
+					objectDefinition3JSONObject.toString()
+				).put(
+					"active", true
+				).put(
+					"status", statusJSONObject
 				)
 			).toString(),
-			boundObjectDefinitionsJSONArray.toString(), null,
-			"TestObjectDefinition1");
+			null, "TestObjectDefinition1");
+
+		_deleteObjectDefinition("TESTOBJECTDEFINITION1", "objectRelationship1");
+		_deleteObjectDefinition("TESTOBJECTDEFINITION2", "objectRelationship2");
+		_deleteObjectDefinition("TESTOBJECTDEFINITION3", null);
 	}
 
 	@Override
@@ -160,6 +193,41 @@ public class BoundObjectDefinitionsExportImportTest
 	@Override
 	protected MVCResourceCommand getMVCResourceCommand() {
 		return _mvcResourceCommand;
+	}
+
+	private void _deleteObjectDefinition(
+			String objectDefinitionExternalReferenceCode,
+			String objectRelationshipName)
+		throws Exception {
+
+		com.liferay.object.model.ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					TestPropsValues.getCompanyId());
+
+		if (Validator.isNull(objectRelationshipName)) {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition.getObjectDefinitionId());
+
+			return;
+		}
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.
+				fetchObjectRelationshipByObjectDefinitionId(
+					objectDefinition.getObjectDefinitionId(),
+					objectRelationshipName);
+
+		_objectRelationshipLocalService.updateObjectRelationship(
+			objectRelationship.getExternalReferenceCode(),
+			objectRelationship.getObjectRelationshipId(),
+			objectRelationship.getParameterObjectFieldId(),
+			objectRelationship.getDeletionType(), false,
+			objectRelationship.getLabelMap(), null);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
 	}
 
 	private JSONArray _getBoundObjectDefinitionsJSONArray(
@@ -238,5 +306,11 @@ public class BoundObjectDefinitionsExportImportTest
 		filter = "mvc.command.name=/object_definitions/export_bound_object_definitions"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

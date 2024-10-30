@@ -46,6 +46,8 @@ export async function deleteObjectEntries({
 
 		await page.getByRole('button', {exact: true, name: 'Delete'}).click();
 
+		await page.waitForEvent('load');
+
 		await expect(page.locator('.dnd-tbody .item-actions')).toHaveCount(
 			count - 1
 		);

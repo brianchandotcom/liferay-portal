@@ -344,7 +344,7 @@ export class DataApiHelpers extends ApiHelpers {
 	}
 
 	async clearData() {
-		for await (const item of this.data) {
+		for await (const item of this.data.reverse()) {
 			if (item.type === 'account') {
 				await this.headlessAdminUser.deleteAccount(item.id);
 			}

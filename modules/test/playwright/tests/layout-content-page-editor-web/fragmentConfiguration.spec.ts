@@ -1196,31 +1196,6 @@ test.describe('General Configuration', () => {
 });
 
 test.describe('Localizable Configuration', () => {
-	const CONTENT_DISPLAY_FRAGMENT_HTML =
-		'<div class="fragment-example">' +
-		'<button type="button" class="btn btn-primary">${configuration.buttonText}</button>' +
-		'</div>';
-
-	function getFragmentConfiguration(): FragmentConfiguration {
-		return {
-			fieldSets: [
-				{
-					fields: [
-						{
-							dataType: 'string',
-							defaultValue: 'Go Somewhere',
-							label: 'Button Text',
-							localizable: true,
-							name: 'buttonText',
-							type: 'text',
-						},
-					],
-					label: 'Button',
-				},
-			],
-		};
-	}
-
 	test(
 		'Can localize date format on date fragment',
 		{tag: '@LPS-147897'},
@@ -1298,11 +1273,34 @@ test.describe('Localizable Configuration', () => {
 
 			const fragmentEntryName = getRandomString();
 
+			const configuration: FragmentConfiguration = {
+				fieldSets: [
+					{
+						fields: [
+							{
+								dataType: 'string',
+								defaultValue: 'Go Somewhere',
+								label: 'Button Text',
+								localizable: true,
+								name: 'buttonText',
+								type: 'text',
+							},
+						],
+						label: 'Button',
+					},
+				],
+			};
+
+			const html =
+				'<div class="fragment-example">' +
+				'<button type="button" class="btn btn-primary">${configuration.buttonText}</button>' +
+				'</div>';
+
 			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
-				configuration: getFragmentConfiguration(),
+				configuration,
 				fragmentCollectionId,
 				groupId: site.id,
-				html: CONTENT_DISPLAY_FRAGMENT_HTML,
+				html,
 				name: fragmentEntryName,
 			});
 

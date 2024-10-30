@@ -234,7 +234,7 @@ test.describe('Manage object entries through Page Templates', () => {
 				},
 			});
 
-		apiHelpers.data.unshift({
+		apiHelpers.data.push({
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
@@ -386,7 +386,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				},
 			});
 
-		apiHelpers.data.unshift({
+		apiHelpers.data.push({
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
@@ -550,7 +550,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				},
 			});
 
-		apiHelpers.data.unshift({
+		apiHelpers.data.push({
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});

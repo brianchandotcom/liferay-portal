@@ -12,7 +12,7 @@ import {waitForAlert} from '../../utils/waitForAlert';
 import isSPAEnabled from './utils/isSPAEnabled';
 
 export const test = mergeTests(
-	isolatedLayoutTest(),
+	isolatedLayoutTest({publish: false}),
 	loginTest(),
 	systemSettingsPageTest
 );

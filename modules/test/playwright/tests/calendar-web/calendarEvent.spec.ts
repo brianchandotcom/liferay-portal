@@ -65,7 +65,7 @@ test.beforeEach(
 test('can create all-day calendar event with different time zone', async ({
 	calendarWidgetPage,
 }) => {
-	await calendarWidgetPage.addEvent(true, null, null);
+	await calendarWidgetPage.addEvent(true, null, true, null);
 
 	const endDate = await calendarWidgetPage.endDate.inputValue();
 	const startDate = await calendarWidgetPage.startDate.inputValue();
@@ -122,7 +122,7 @@ test('can create calendar event different start/end dates ensuring that the end 
 
 	const title = getRandomInt().toString();
 
-	await calendarWidgetPage.addEvent(false, endDateFormatted, title);
+	await calendarWidgetPage.addEvent(false, endDateFormatted, true, title);
 
 	await calendarWidgetPage.closeModalEvent();
 
@@ -138,6 +138,48 @@ test('can create calendar event different start/end dates ensuring that the end 
 			} as const)
 		)
 	);
+});
+
+test('can create calendar event with invitation', async ({
+	apiHelpers,
+	calendarWidgetPage,
+	page,
+}) => {
+	const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+	const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	try {
+
+		// Access the calendar widget page as new user to create user calendar resources
+
+		const currentURL = page.url();
+
+		await page.goto(`${currentURL}?doAsUserId=${user1.id}`);
+		await page.goto(`${currentURL}?doAsUserId=${user2.id}`);
+
+		// As user 2, add an event and send an invitation to user 1
+
+		await calendarWidgetPage.addEvent(true, null, false, null);
+
+		await calendarWidgetPage.addInvitation(user1.name);
+
+		await calendarWidgetPage.publishEvent();
+
+		await calendarWidgetPage.openInvitations();
+
+		await expect(
+			calendarWidgetPage.page
+				.frameLocator('iframe')
+				.getByText('Pending (1)')
+		).toBeVisible();
+		await expect(
+			calendarWidgetPage.page.frameLocator('iframe').getByText(user1.name)
+		).toBeVisible();
+	}
+	finally {
+		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user1.id));
+		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user2.id));
+	}
 });
 
 test('can see calendar event inputs alerts', async ({

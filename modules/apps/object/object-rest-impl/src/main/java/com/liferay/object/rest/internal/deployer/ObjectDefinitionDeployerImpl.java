@@ -203,10 +203,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		return new ObjectEntryResourceImpl(
 			_dtoConverterRegistry, _entityModelProvider, objectDefinition,
-			_objectDefinitionLocalService, _objectEntryLocalService,
-			_objectEntryManagerRegistry, _objectFieldLocalService,
-			_objectRelationshipService, _objectScopeProviderRegistry,
-			_systemObjectDefinitionManagerRegistry);
+			_objectDefinitionLocalService, _objectEntryManagerRegistry,
+			_objectEntryLocalService, _objectScopeProviderRegistry,
+			_objectFieldLocalService, _objectRelationshipService,
+			_systemObjectDefinitionManagerRegistry, _userLocalService);
 	}
 
 	private void _disposeComponentInstances(String restContextPath) {

@@ -4732,7 +4732,8 @@ public class JenkinsResultsParserUtil {
 					gitHubAPICall = true;
 
 					if (_updatingHttpRequestMethods.contains(
-							httpRequestMethod) && (retryCount == 0)) {
+							httpRequestMethod) &&
+						(retryCount == 0)) {
 
 						Properties buildProperties = getBuildProperties();
 
@@ -4765,7 +4766,8 @@ public class JenkinsResultsParserUtil {
 				}
 
 				if ((httpAuthorizationHeader == null) &&
-					connectionURL.matches("https://liferay.spiraservice.net.+")) {
+					connectionURL.matches(
+						"https://liferay.spiraservice.net.+")) {
 
 					Properties buildProperties = getBuildProperties();
 
@@ -4800,7 +4802,9 @@ public class JenkinsResultsParserUtil {
 
 				boolean testray1Request = false;
 
-				if (connectionURL.matches("https://testray-old.liferay.com/?.+")) {
+				if (connectionURL.matches(
+						"https://testray-old.liferay.com/?.+")) {
+
 					testray1Request = true;
 				}
 

@@ -63,7 +63,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	}
 
 	@Test
-	public void testSXPBlueprintUpgradeProcess() throws Exception {
+	public void testUpgrade() throws Exception {
 		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
 			null, TestPropsValues.getUserId(), _readJSON("configuration"),
 			Collections.singletonMap(
@@ -185,7 +185,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			_clazz,
 			StringBundler.concat(
 				"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
-				testName.getMethodName(), StringPool.DASH, name, ".json"));
+				name, ".json"));
 	}
 
 	@Inject(

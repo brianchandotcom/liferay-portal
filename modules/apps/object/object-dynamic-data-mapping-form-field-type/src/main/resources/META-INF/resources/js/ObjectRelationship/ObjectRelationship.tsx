@@ -55,6 +55,10 @@ function getLabel<T extends ObjectMap<any>>(
 			});
 		}
 
+		if (objectFieldBusinessType === 'Boolean') {
+			return String(value);
+		}
+
 		return value ? String(value) : '';
 	}
 

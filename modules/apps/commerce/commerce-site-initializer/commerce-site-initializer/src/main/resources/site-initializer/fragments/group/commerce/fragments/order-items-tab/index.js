@@ -112,6 +112,26 @@ function handleDropdownButtonName(item) {
 	}
 }
 
+function main() {
+	const tabItemId = tabItems[persistedTab.getId()] ? persistedTab.getId() : 0;
+
+	tabItems.forEach((item, index) => {
+		item.addEventListener('click', (event) => {
+			openTabPanel(event, index);
+
+			dropdownButton.focus();
+		});
+	});
+
+	dropdownButton.addEventListener('click', (event) => {
+		handleDropdown(event);
+	});
+
+	activeTab(tabItems[tabItemId]);
+	activeTabPanel(tabPanelItems[tabItemId]);
+	handleDropdownButtonName(tabItems[tabItemId]);
+}
+
 function openTabPanel(event, i) {
 	const currentTarget = event.currentTarget;
 	const target = event.target;
@@ -140,26 +160,6 @@ function openTabPanel(event, i) {
 
 		Liferay.fire('tabsFragment:activePanel', {panel: tabPanelItems[i]});
 	}
-}
-
-function main() {
-	const tabItemId = tabItems[persistedTab.getId()] ? persistedTab.getId() : 0;
-
-	tabItems.forEach((item, index) => {
-		item.addEventListener('click', (event) => {
-			openTabPanel(event, index);
-
-			dropdownButton.focus();
-		});
-	});
-
-	dropdownButton.addEventListener('click', (event) => {
-		handleDropdown(event);
-	});
-
-	activeTab(tabItems[tabItemId]);
-	activeTabPanel(tabPanelItems[tabItemId]);
-	handleDropdownButtonName(tabItems[tabItemId]);
 }
 
 main();

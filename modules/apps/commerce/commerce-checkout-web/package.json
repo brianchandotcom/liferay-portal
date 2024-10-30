@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/commerce-order-content-web": "*",
 		"frontend-js-web": "*"
 	},
 	"main": "js/index.js",

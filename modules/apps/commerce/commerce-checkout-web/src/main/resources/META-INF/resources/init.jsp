@@ -16,12 +16,14 @@ taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.account.constants.AccountActionKeys" %><%@
 page import="com.liferay.account.model.AccountEntry" %><%@
 page import="com.liferay.commerce.checkout.web.internal.constants.CommerceCheckoutFDSNames" %><%@
+page import="com.liferay.commerce.checkout.web.internal.constants.CommerceCheckoutScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.checkout.web.internal.display.context.BaseAddressCheckoutStepDisplayContext" %><%@
 page import="com.liferay.commerce.checkout.web.internal.display.context.CheckoutDisplayContext" %><%@
 page import="com.liferay.commerce.checkout.web.internal.display.context.DeliveryGroupDisplayContext" %><%@

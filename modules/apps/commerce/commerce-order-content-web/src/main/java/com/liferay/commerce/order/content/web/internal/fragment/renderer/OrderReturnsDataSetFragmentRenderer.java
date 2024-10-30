@@ -103,7 +103,7 @@ public class OrderReturnsDataSetFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		return FeatureFlagManagerUtil.isEnabled("COMMERCE-9410");
+		return FeatureFlagManagerUtil.isEnabled("LPD-20379");
 	}
 
 	@Override

@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -81,6 +82,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -92,12 +94,14 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.SybaseDump;
 import com.liferay.portal.test.rule.SybaseDumpTransactionLog;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.model.adapter.StagedGroup;
 import com.liferay.sites.kernel.util.Sites;
@@ -836,6 +840,52 @@ public class CompanyLocalServiceTest {
 		}
 		finally {
 			_companyLocalService.deleteCompany(company);
+		}
+	}
+
+	@Test
+	public void testStaticCompanyId() throws Exception {
+		boolean originalCompanyStaticIdEnabled =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "COMPANY_STATIC_ID_ENABLED", true);
+
+		int firstCompanyIdIncrement = ReflectionTestUtil.getFieldValue(
+			CompanyLocalServiceImpl.class, "_FIRST_COMPANY_ID_INCREMENT");
+
+		int rangeSize = GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.COUNTER_INCREMENT_PREFIX + Company.class.getName()),
+			PropsValues.COUNTER_INCREMENT);
+
+		Company company1 = null;
+
+		Company company2 = null;
+
+		try {
+			company1 = addCompany(RandomTestUtil.randomString() + "test.com");
+
+			company2 = addCompany(RandomTestUtil.randomString() + "test.com");
+
+			long companyId1 = company1.getCompanyId();
+
+			long companyId2 = company2.getCompanyId();
+
+			Assert.assertTrue(
+				companyId1 >= (firstCompanyIdIncrement + rangeSize));
+
+			Assert.assertTrue(
+				companyId1 < (firstCompanyIdIncrement + (2 * rangeSize)));
+
+			Assert.assertEquals(1, companyId2 - companyId1);
+		}
+		finally {
+			_companyLocalService.deleteCompany(company1);
+
+			_companyLocalService.deleteCompany(company2);
+
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "COMPANY_STATIC_ID_ENABLED",
+				originalCompanyStaticIdEnabled);
 		}
 	}
 

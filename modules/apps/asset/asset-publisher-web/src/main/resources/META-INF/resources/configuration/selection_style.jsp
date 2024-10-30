@@ -13,17 +13,21 @@
 	<div class="d-flex">
 		<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>" id="selectionStyleDynamic" inlineField="<%= true %>" label="dynamic" name="preferences--selectionStyle--" onChange='<%= liferayPortletResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="<%= AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC %>" />
 
-		<liferay-frontend:feature-indicator
-			type="deprecated"
-		/>
+		<span class="lfr-portal-tooltip" title="<liferay-ui:message key="dynamic-and-manual-asset-selection-are-deprecated,-we-recommend-creating-a-collection-from-current-asset-selection-to-enhance-reusability" />">
+			<liferay-frontend:feature-indicator
+				type="deprecated"
+			/>
+		</span>
 	</div>
 
 	<div class="d-flex">
 		<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>" id="selectionStyleManual" inlineField="<%= true %>" label="manual" name="preferences--selectionStyle--" onChange='<%= liferayPortletResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="<%= AssetPublisherSelectionStyleConstants.TYPE_MANUAL %>" />
 
-		<liferay-frontend:feature-indicator
-			type="deprecated"
-		/>
+		<span class="lfr-portal-tooltip" title="<liferay-ui:message key="dynamic-and-manual-asset-selection-are-deprecated,-we-recommend-creating-a-collection-from-current-asset-selection-to-enhance-reusability" />">
+			<liferay-frontend:feature-indicator
+				type="deprecated"
+			/>
+		</span>
 	</div>
 </aui:fieldset>
 

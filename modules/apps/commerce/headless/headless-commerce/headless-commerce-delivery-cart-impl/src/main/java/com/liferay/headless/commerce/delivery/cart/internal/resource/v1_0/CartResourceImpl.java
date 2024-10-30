@@ -591,7 +591,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		CommerceOrderItem commerceOrderItem = null;
 
-		if (commerceOrderCheckoutConfiguration.showSeparateOrderItems()) {
+		if (commerceOrderCheckoutConfiguration.showSeparateOrderItems() ||
+			commerceOrderCheckoutConfiguration.multishippingEnabled()) {
+
 			commerceOrderItem = _commerceOrderItemService.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(), cartItem.getOptions(),

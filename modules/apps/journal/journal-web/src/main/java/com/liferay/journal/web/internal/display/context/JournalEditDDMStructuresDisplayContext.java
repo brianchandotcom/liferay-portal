@@ -116,11 +116,6 @@ public class JournalEditDDMStructuresDisplayContext {
 	}
 
 	public Map<String, Object> getDataEngineLayoutBuilderHandlerContext() {
-		_httpServletRequest.setAttribute(
-			CTTimelineKeys.CLASS_NAME, DDMStructure.class.getName());
-		_httpServletRequest.setAttribute(
-			CTTimelineKeys.CLASS_PK, getDDMStructureId());
-
 		return HashMapBuilder.<String, Object>put(
 			"defaultLanguageId", getDefaultLanguageId()
 		).put(
@@ -179,6 +174,11 @@ public class JournalEditDDMStructuresDisplayContext {
 
 		_ddmStructureId = ParamUtil.getLong(
 			_httpServletRequest, "ddmStructureId");
+
+		_httpServletRequest.setAttribute(
+			CTTimelineKeys.CLASS_NAME, DDMStructure.class.getName());
+		_httpServletRequest.setAttribute(
+			CTTimelineKeys.CLASS_PK, _ddmStructureId);
 
 		return _ddmStructureId;
 	}

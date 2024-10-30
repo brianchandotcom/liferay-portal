@@ -144,14 +144,6 @@ public class JournalEditDDMTemplateDisplayContext {
 			long scopeGroupId)
 		throws Exception {
 
-		String ddmTemplateId = _httpServletRequest.getParameter(
-			"ddmTemplateId");
-
-		_httpServletRequest.setAttribute(
-			CTTimelineKeys.CLASS_NAME, DDMTemplate.class.getName());
-		_httpServletRequest.setAttribute(
-			CTTimelineKeys.CLASS_PK, ddmTemplateId);
-
 		return HashMapBuilder.<String, Object>put(
 			"editorAutocompleteData", getAutocompleteJSONObject()
 		).put(
@@ -197,6 +189,11 @@ public class JournalEditDDMTemplateDisplayContext {
 
 		_ddmTemplateId = ParamUtil.getLong(
 			_httpServletRequest, "ddmTemplateId");
+
+		_httpServletRequest.setAttribute(
+			CTTimelineKeys.CLASS_NAME, DDMTemplate.class.getName());
+		_httpServletRequest.setAttribute(
+			CTTimelineKeys.CLASS_PK, _ddmTemplateId);
 
 		return _ddmTemplateId;
 	}

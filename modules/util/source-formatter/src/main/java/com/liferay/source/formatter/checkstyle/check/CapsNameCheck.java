@@ -37,10 +37,10 @@ public class CapsNameCheck extends BaseCheck {
 
 		String tokenTypeName = StringUtil.toLowerCase(detailAST.getText());
 
-		int i = tokenTypeName.indexOf("_");
+		int pos = tokenTypeName.indexOf("_");
 
-		if (i != -1) {
-			tokenTypeName = tokenTypeName.substring(0, i);
+		if (pos != -1) {
+			tokenTypeName = tokenTypeName.substring(0, pos);
 		}
 
 		for (String[] array : _ALL_CAPS_STRINGS) {

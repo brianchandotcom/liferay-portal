@@ -29,7 +29,7 @@ const CheckboxFilter = ({availableItems, clearCheckboxes, updateFilters}) => {
 
 	return (
 		<div className="w-100">
-			<div className="pt-2 px-3">
+			<div className="filter-content pt-2 px-3">
 				{availableItems?.map((item, index) => (
 					<ClayCheckbox
 						checked={checkedItems.includes(item)}

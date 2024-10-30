@@ -113,7 +113,7 @@ const KeyTypeFilter = ({
 
 			{(hasVirtualCluster || hasCluster) && (
 				<div
-					className={classNames('py-2 px-3', {
+					className={classNames('filter-content py-2 px-3', {
 						'bg-brand-primary-lighten-5': clusterChecked,
 					})}
 				>

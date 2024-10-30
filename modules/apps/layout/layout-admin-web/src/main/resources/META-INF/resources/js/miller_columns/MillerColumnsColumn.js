@@ -5,11 +5,13 @@
 
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
+import {useSessionState} from 'frontend-js-components-web';
 import {throttle} from 'frontend-js-web';
 import React, {useEffect, useRef} from 'react';
 import {useDrop} from 'react-dnd';
 
 import MillerColumnsItem from './MillerColumnsItem';
+import MillerColumnsResizer from './MillerColumnsResizer';
 import {ACCEPTING_TYPES} from './constants';
 
 const AUTOSCROLL_DELAY = 20;
@@ -91,39 +93,61 @@ const MillerColumnsColumn = ({
 		drop(ref);
 	}, [drop]);
 
+	const [columnWidth, setColumnWidth] = useSessionState(
+		`${namespace}_column-width-${index}`,
+		0
+	);
+
+	const sizeProps = columnWidth
+		? {
+				style: {
+					'max-width': `${columnWidth}px`,
+					'min-width': `${columnWidth}px`,
+					'width': `${columnWidth}px`,
+				},
+			}
+		: {lg: '4', md: '6', size: '11'};
+
 	return (
-		<ClayLayout.Col
-			className={classNames(
-				'miller-columns-col show-quick-actions-on-hover',
-				{
-					'drop-target': canDrop,
-				}
-			)}
-			containerElement="ul"
-			lg="4"
-			md="6"
-			ref={ref}
-			size="11"
-		>
-			{columnItems.map((item, index) => (
-				<MillerColumnsItem
-					createPageTemplateURL={createPageTemplateURL}
-					getItemActionsURL={getItemActionsURL}
-					getPageTemplateCollectionsURL={
-						getPageTemplateCollectionsURL
+		<>
+			<ClayLayout.Col
+				className={classNames(
+					'miller-columns-col show-quick-actions-on-hover',
+					{
+						'drop-target': canDrop,
 					}
-					isLayoutSetPrototype={isLayoutSetPrototype}
-					isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
-					item={{...item, itemIndex: index}}
-					items={items}
-					key={item.key}
-					namespace={namespace}
-					onItemDrop={onItemDrop}
-					onItemStayHover={onItemStayHover}
-					rtl={rtl}
-				/>
-			))}
-		</ClayLayout.Col>
+				)}
+				containerElement="ul"
+				ref={ref}
+				{...sizeProps}
+			>
+				{columnItems.map((item, index) => (
+					<MillerColumnsItem
+						createPageTemplateURL={createPageTemplateURL}
+						getItemActionsURL={getItemActionsURL}
+						getPageTemplateCollectionsURL={
+							getPageTemplateCollectionsURL
+						}
+						isLayoutSetPrototype={isLayoutSetPrototype}
+						isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
+						item={{...item, itemIndex: index}}
+						items={items}
+						key={item.key}
+						namespace={namespace}
+						onItemDrop={onItemDrop}
+						onItemStayHover={onItemStayHover}
+						rtl={rtl}
+					/>
+				))}
+			</ClayLayout.Col>
+
+			<MillerColumnsResizer
+				columnRef={ref}
+				columnWidth={columnWidth}
+				index={index}
+				setColumnWidth={setColumnWidth}
+			/>
+		</>
 	);
 };
 

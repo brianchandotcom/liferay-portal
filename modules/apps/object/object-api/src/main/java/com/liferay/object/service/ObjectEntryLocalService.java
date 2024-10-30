@@ -426,6 +426,13 @@ public interface ObjectEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getPrimaryKeyList(
+			long groupId, long companyId, long userId, long objectDefinitionId,
+			String[] selectedObjectFieldNames, Predicate predicate,
+			String search, int start, int end, Sort[] sorts)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<String, Object> getSystemModelAttributes(
 			ObjectDefinition objectDefinition, long primaryKey)
 		throws PortalException;
@@ -444,13 +451,6 @@ public interface ObjectEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<String, Serializable> getValues(ObjectEntry objectEntry)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Map<String, Serializable>> getValuesList(
-			long groupId, long companyId, long userId, long objectDefinitionId,
-			String[] selectedObjectFieldNames, Predicate predicate,
-			String search, int start, int end, Sort[] sorts)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

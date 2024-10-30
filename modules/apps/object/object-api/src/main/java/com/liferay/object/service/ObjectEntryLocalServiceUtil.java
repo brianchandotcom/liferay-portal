@@ -538,6 +538,19 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static List<Long> getPrimaryKeyList(
+			long groupId, long companyId, long userId, long objectDefinitionId,
+			String[] selectedObjectFieldNames,
+			com.liferay.petra.sql.dsl.expression.Predicate predicate,
+			String search, int start, int end,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws PortalException {
+
+		return getService().getPrimaryKeyList(
+			groupId, companyId, userId, objectDefinitionId,
+			selectedObjectFieldNames, predicate, search, start, end, sorts);
+	}
+
 	public static Map<String, Object> getSystemModelAttributes(
 			com.liferay.object.model.ObjectDefinition objectDefinition,
 			long primaryKey)
@@ -570,19 +583,6 @@ public class ObjectEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getValues(objectEntry);
-	}
-
-	public static List<Map<String, Serializable>> getValuesList(
-			long groupId, long companyId, long userId, long objectDefinitionId,
-			String[] selectedObjectFieldNames,
-			com.liferay.petra.sql.dsl.expression.Predicate predicate,
-			String search, int start, int end,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws PortalException {
-
-		return getService().getValuesList(
-			groupId, companyId, userId, objectDefinitionId,
-			selectedObjectFieldNames, predicate, search, start, end, sorts);
 	}
 
 	public static int getValuesListCount(

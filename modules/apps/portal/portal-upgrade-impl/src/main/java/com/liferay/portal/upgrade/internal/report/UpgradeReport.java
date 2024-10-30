@@ -812,6 +812,71 @@ public class UpgradeReport {
 		}
 	}
 
+	private void _printToLogContext(Map.Entry<String, Object> entry1) {
+		Object value = entry1.getValue();
+
+		if (value == null) {
+			return;
+		}
+
+		String key = "upgrade.report." + entry1.getKey();
+
+		if (value instanceof Map<?, ?>) {
+			Map<?, ?> map = (Map<?, ?>)value;
+
+			for (Map.Entry<?, ?> entry2 : map.entrySet()) {
+				ThreadContext.put(
+					key + StringPool.PERIOD + entry2.getKey(),
+					String.valueOf(entry2.getValue()));
+			}
+		}
+		else if (value instanceof List<?>) {
+			StringBundler sb = new StringBundler(StringPool.OPEN_BRACKET);
+
+			List<?> list = (List<?>)value;
+
+			for (Object object : list) {
+				if (object instanceof UpgradeSQLRecorder.FailedSQL) {
+					UpgradeSQLRecorder.FailedSQL failedSQL =
+						(UpgradeSQLRecorder.FailedSQL)object;
+
+					sb.append(failedSQL.getSQL());
+
+					sb.append(StringPool.COLON);
+					sb.append(failedSQL.getMessage());
+				}
+				else if (object instanceof UpgradeSQLRecorder.RunningSQL) {
+					UpgradeSQLRecorder.RunningSQL runningSQL =
+						(UpgradeSQLRecorder.RunningSQL)object;
+
+					sb.append(runningSQL.getUpgradeProcessClassName());
+
+					sb.append(StringPool.COLON);
+					sb.append(runningSQL.getSQL());
+					sb.append(StringPool.COLON);
+					sb.append(runningSQL.getDuration());
+					sb.append(" ms");
+				}
+				else {
+					sb.append(String.valueOf(object));
+				}
+
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+
+			if (sb.length() > 1) {
+				sb.setIndex(sb.index() - 1);
+			}
+
+			sb.append(StringPool.CLOSE_BRACKET);
+
+			ThreadContext.put(key, sb.toString());
+		}
+		else {
+			ThreadContext.put(key, String.valueOf(value));
+		}
+	}
+
 	private void _printToLogContext(Map<String, Object> reportData) {
 		if (!PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
 			return;
@@ -821,71 +886,7 @@ public class UpgradeReport {
 
 		try {
 			for (Map.Entry<String, Object> entry1 : reportData.entrySet()) {
-				Object value = entry1.getValue();
-
-				if (value == null) {
-					continue;
-				}
-
-				String key = "upgrade.report." + entry1.getKey();
-
-				if (value instanceof Map<?, ?>) {
-					Map<?, ?> map = (Map<?, ?>)value;
-
-					for (Map.Entry<?, ?> entry2 : map.entrySet()) {
-						ThreadContext.put(
-							key + StringPool.PERIOD + entry2.getKey(),
-							String.valueOf(entry2.getValue()));
-					}
-				}
-				else if (value instanceof List<?>) {
-					StringBundler sb = new StringBundler(
-						StringPool.OPEN_BRACKET);
-
-					List<?> list = (List<?>)value;
-
-					for (Object object : list) {
-						if (object instanceof UpgradeSQLRecorder.FailedSQL) {
-							UpgradeSQLRecorder.FailedSQL failedSQL =
-								(UpgradeSQLRecorder.FailedSQL)object;
-
-							sb.append(failedSQL.getSQL());
-
-							sb.append(StringPool.COLON);
-							sb.append(failedSQL.getMessage());
-						}
-						else if (object instanceof
-									UpgradeSQLRecorder.RunningSQL) {
-
-							UpgradeSQLRecorder.RunningSQL runningSQL =
-								(UpgradeSQLRecorder.RunningSQL)object;
-
-							sb.append(runningSQL.getUpgradeProcessClassName());
-
-							sb.append(StringPool.COLON);
-							sb.append(runningSQL.getSQL());
-							sb.append(StringPool.COLON);
-							sb.append(runningSQL.getDuration());
-							sb.append(" ms");
-						}
-						else {
-							sb.append(String.valueOf(object));
-						}
-
-						sb.append(StringPool.COMMA_AND_SPACE);
-					}
-
-					if (sb.length() > 1) {
-						sb.setIndex(sb.index() - 1);
-					}
-
-					sb.append(StringPool.CLOSE_BRACKET);
-
-					ThreadContext.put(key, sb.toString());
-				}
-				else {
-					ThreadContext.put(key, String.valueOf(value));
-				}
+				_printToLogContext(entry1);
 			}
 		}
 		finally {

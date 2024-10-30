@@ -1309,7 +1309,7 @@ public interface JournalArticleLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getArticlesByReviewDate(
-		Date previousCheckDate, Date reviewDate);
+		long companyId, Date previousCheckDate, Date reviewDate);
 
 	/**
 	 * Returns all the web content articles matching the small image ID.

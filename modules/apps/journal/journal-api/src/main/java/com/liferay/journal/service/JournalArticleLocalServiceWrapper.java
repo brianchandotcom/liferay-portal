@@ -1641,10 +1641,11 @@ public class JournalArticleLocalServiceWrapper
 
 	@Override
 	public java.util.List<JournalArticle> getArticlesByReviewDate(
-		java.util.Date previousCheckDate, java.util.Date reviewDate) {
+		long companyId, java.util.Date previousCheckDate,
+		java.util.Date reviewDate) {
 
 		return _journalArticleLocalService.getArticlesByReviewDate(
-			previousCheckDate, reviewDate);
+			companyId, previousCheckDate, reviewDate);
 	}
 
 	/**

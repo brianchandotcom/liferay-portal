@@ -187,7 +187,7 @@ export class FragmentsPage {
 
 		const addButton = this.page.getByRole('button', {name: 'Add'});
 
-		await addButton.waitFor({state: 'visible'});
+		await addButton.waitFor();
 
 		await addButton.click();
 

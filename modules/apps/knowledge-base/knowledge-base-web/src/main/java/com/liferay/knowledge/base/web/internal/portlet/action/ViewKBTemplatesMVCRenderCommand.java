@@ -5,7 +5,9 @@
 
 package com.liferay.knowledge.base.web.internal.portlet.action;
 
+import com.liferay.change.tracking.spi.history.util.CTTimelineUtil;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.web.internal.display.context.ViewKBTemplatesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
@@ -40,6 +42,8 @@ public class ViewKBTemplatesMVCRenderCommand implements MVCRenderCommand {
 				_portal.getHttpServletRequest(renderRequest),
 				_portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse)));
+
+		CTTimelineUtil.setClassName(renderRequest, KBTemplate.class);
 
 		return "/admin/view_kb_templates.jsp";
 	}

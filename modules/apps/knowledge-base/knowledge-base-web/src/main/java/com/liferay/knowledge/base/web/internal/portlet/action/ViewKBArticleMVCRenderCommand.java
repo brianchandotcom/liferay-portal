@@ -5,9 +5,12 @@
 
 package com.liferay.knowledge.base.web.internal.portlet.action;
 
+import com.liferay.change.tracking.spi.history.util.CTTimelineUtil;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.web.internal.configuration.KBSearchPortletInstanceConfiguration;
 import com.liferay.knowledge.base.web.internal.configuration.KBSectionPortletInstanceConfiguration;
+import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -47,6 +50,12 @@ public class ViewKBArticleMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		String rootPortletId = _getRootPortletId(renderRequest);
+
+		KBArticle kbArticle = (KBArticle)renderRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+
+		CTTimelineUtil.setCTTimelineKeys(
+			renderRequest, KBArticle.class, kbArticle.getKbArticleId());
 
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 			return "/admin/view_kb_article.jsp";

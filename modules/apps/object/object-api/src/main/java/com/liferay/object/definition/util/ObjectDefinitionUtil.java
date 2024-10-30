@@ -102,22 +102,23 @@ public class ObjectDefinitionUtil {
 		).put(
 			"DataSet", "/data-set-admin/data-sets"
 		).put(
-			"DataSetAction", "/data-set-admin/actions"
+			"DataSetAction", "/data-set-admin/data-sets/actions"
 		).put(
-			"DataSetCardsSection", "/data-set-admin/cards-sections"
+			"DataSetCardsSection", "/data-set-admin/data-sets/cards-sections"
 		).put(
 			"DataSetClientExtensionFilter",
-			"/data-set-admin/client-extension-filters"
+			"/data-set-admin/data-sets/client-extension-filters"
 		).put(
-			"DataSetDateFilter", "/data-set-admin/date-filters"
+			"DataSetDateFilter", "/data-set-admin/data-sets/date-filters"
 		).put(
-			"DataSetListSection", "/data-set-admin/list-sections"
+			"DataSetListSection", "/data-set-admin/data-sets/list-sections"
 		).put(
-			"DataSetSelectionFilter", "/data-set-admin/selection-filters"
+			"DataSetSelectionFilter",
+			"/data-set-admin/data-sets/selection-filters"
 		).put(
-			"DataSetSort", "/data-set-admin/sorts"
+			"DataSetSort", "/data-set-admin/data-sets/sorts"
 		).put(
-			"DataSetTableSection", "/data-set-admin/table-sections"
+			"DataSetTableSection", "/data-set-admin/data-sets/table-sections"
 		).put(
 			"FDSAction", "/data-set-manager/actions"
 		).put(

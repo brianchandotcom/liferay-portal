@@ -25,12 +25,17 @@ import '../../../css/Actions.scss';
 import sortItems from '../../utils/sortItems';
 import {IOrderable} from '../../utils/types';
 
-export enum EActionType {
+export enum EActionTarget {
 	ASYNC = 'async',
 	HEADLESS = 'headless',
 	LINK = 'link',
 	MODAL = 'modal',
 	SIDEPANEL = 'sidePanel',
+}
+
+export enum EActionType {
+	CREATION = 'creation',
+	ITEM = 'item',
 }
 
 const SECTIONS = {
@@ -43,8 +48,7 @@ const SECTIONS = {
 };
 
 interface IAction extends IOrderable {
-	[OBJECT_RELATIONSHIP.DATA_SET_CREATION_ACTIONS]?: any;
-	[OBJECT_RELATIONSHIP.DATA_SET_ITEM_ACTIONS]?: any;
+	[OBJECT_RELATIONSHIP.DATA_SET_ACTIONS]?: any;
 	actions: {
 		delete: {
 			href: string;
@@ -73,6 +77,7 @@ interface IAction extends IOrderable {
 	successMessage_i18n?: {
 		[key: string]: string;
 	};
+	target: EActionTarget;
 	title?: string;
 	title_i18n?: {
 		[key: string]: string;
@@ -140,16 +145,9 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 	const loadActions = async ({activeTab}: {activeTab: number}) => {
 		setLoading(true);
 
-		const relationShip =
-			activeTab === 0
-				? OBJECT_RELATIONSHIP.DATA_SET_ITEM_ACTIONS
-				: OBJECT_RELATIONSHIP.DATA_SET_CREATION_ACTIONS;
-		const relationshipID =
-			activeTab === 0
-				? OBJECT_RELATIONSHIP.DATA_SET_ITEM_ACTIONS_ID
-				: OBJECT_RELATIONSHIP.DATA_SET_CREATION_ACTIONS_ID;
+		const type = activeTab === 0 ? EActionType.ITEM : EActionType.CREATION;
 
-		const url = `${API_URL.ACTIONS}?filter=(${relationshipID} eq '${dataSet.id}')&nestedFields=${relationShip}&sort=dateCreated:asc`;
+		const url = `${API_URL.ACTIONS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_ACTIONS_ID} eq '${dataSet.id}') and (type eq '${type}')&nestedFields=${OBJECT_RELATIONSHIP.DATA_SET_ACTIONS}&sort=dateCreated:asc`;
 
 		if (activeTab === 0) {
 			setActiveSection(SECTIONS.ITEM_ACTIONS);
@@ -178,7 +176,9 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 			activeTab === 0 ? 'itemActionsOrder' : 'creationActionsOrder';
 
 		const actionsOrder =
-			storedActions?.[0]?.[relationShip]?.[actionTypeOrder];
+			storedActions?.[0]?.[OBJECT_RELATIONSHIP.DATA_SET_ACTIONS]?.[
+				actionTypeOrder
+			];
 
 		setActions(sortItems(storedActions, actionsOrder) as IAction[]);
 

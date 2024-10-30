@@ -273,7 +273,7 @@ function TopperContent({
 					<ul className="tbar-nav">
 						{canBeDragged && isActive && (
 							<li
-								className="page-editor__topper__drag-handler page-editor__topper__item tbar-item"
+								className="p-0 page-editor__topper__drag-handler page-editor__topper__item tbar-item"
 								ref={topperRef}
 							>
 								<ClayIcon
@@ -284,7 +284,7 @@ function TopperContent({
 						)}
 
 						<li
-							className="d-inline-block page-editor__topper__item page-editor__topper__title tbar-item tbar-item-expand"
+							className="d-inline-block mx-2 page-editor__topper__item page-editor__topper__title tbar-item tbar-item-expand"
 							id={topperLabelId}
 						>
 							{name}

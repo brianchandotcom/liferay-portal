@@ -15,7 +15,6 @@ import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 import java.lang.reflect.Field;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,18 +29,15 @@ public class AuthorizationServerMetadataResolverTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() throws Exception {
+	@Test
+	public void testMetadataIsCached() throws Exception {
 		Field field =
 			AuthorizationServerMetadataResolver.class.getDeclaredField(
 				"_oidcProviderMetadataPortalCache");
 
 		field.setAccessible(true);
 		field.set(_authorizationServerMetadataResolver, _portalCache);
-	}
 
-	@Test
-	public void testMetadataIsCached() throws Exception {
 		String authServerWellKnownURI =
 			"https://accounts.google.com/.well-known/openid-configuration";
 

@@ -3,11 +3,10 @@ definition {
 
 	var baseURL = PropsUtil.get("portal.url");
 
-	property custom.properties = "feature.flag.LPS-169981=true";
+	property custom.properties = "feature.flag.LPD-38869=true${line.separator}feature.flag.LPS-169981=true";
 	property osgi.modules.includes = "osb-site-initializer-evp";
 	property portal.release = "false";
 	property portal.upstream = "true";
-	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer EVP";
 
 	setUp {

@@ -1,9 +1,9 @@
 @component-name = "portal-site-management"
 definition {
 
+	property custom.properties = "feature.flag.LPD-38869=true";
 	property portal.release = "false";
 	property portal.upstream = "quarentine";
-	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
 
 	var testSiteName = "Raylife D2C";

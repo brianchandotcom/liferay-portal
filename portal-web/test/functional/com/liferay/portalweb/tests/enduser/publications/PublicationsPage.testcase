@@ -1140,7 +1140,7 @@ definition {
 
 	@priority = 4
 	test PublishPrivateContentPageWithFragment {
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+		property custom.properties = "feature.flag.LPD-38869=true";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 

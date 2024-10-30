@@ -586,7 +586,7 @@ definition {
 	@description = "This is a use case for LPS-166286. TC-2: Verify that site template propagation works well on private page."
 	@priority = 3
 	test AssertSiteTemplatePropagationOnPrivatePage {
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+		property custom.properties = "feature.flag.LPD-38869=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

@@ -215,7 +215,7 @@ definition {
 
 	@priority = 4
 	test AddOrganizationSitePrivatePage {
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+		property custom.properties = "feature.flag.LPD-38869=true";
 		property testray.component.names = "Training";
 
 		var portalURL = PropsUtil.get("portal.url");

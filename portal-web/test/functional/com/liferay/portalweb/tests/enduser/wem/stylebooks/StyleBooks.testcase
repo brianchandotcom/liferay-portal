@@ -589,8 +589,8 @@ definition {
 	@description = "This is a test for LPS-140834. The user could select style book in master page when use public pages theme."
 	@priority = 4
 	test SelectStyleBookInMasterPageWhenUsePublicPagesTheme {
+		property custom.properties = "feature.flag.LPD-38869=true";
 		property portal.release = "false";
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add a public page and change it's theme to Minium") {
 			JSONLayout.addPublicLayout(

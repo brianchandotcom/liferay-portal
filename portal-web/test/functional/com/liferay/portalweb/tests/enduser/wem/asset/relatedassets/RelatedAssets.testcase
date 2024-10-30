@@ -439,7 +439,7 @@ definition {
 	@priority = 4
 	@uitest
 	test ShouldBeDisplayWithCategory {
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+		property custom.properties = "feature.flag.LPD-38869=true";
 
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(

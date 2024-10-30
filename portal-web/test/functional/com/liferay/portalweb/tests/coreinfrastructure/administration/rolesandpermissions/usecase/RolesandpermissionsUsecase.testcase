@@ -603,8 +603,7 @@ definition {
 
 	@priority = 4
 	test NoGuestRolePermissionsFromPrivateLayout {
-		property custom.properties = "permissions.check.guest.enabled=false";
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+		property custom.properties = "feature.flag.LPD-38869=true${line.separator}permissions.check.guest.enabled=false";
 
 		Site.openSitesAdmin();
 
@@ -1243,7 +1242,7 @@ definition {
 
 	@priority = 4
 	test ViewPrivatePageSiteMemberRole {
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+		property custom.properties = "feature.flag.LPD-38869=true";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1295,7 +1294,7 @@ definition {
 
 	@priority = 4
 	test ViewRegRolePermissionsDefaultView {
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+		property custom.properties = "feature.flag.LPD-38869=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

@@ -490,7 +490,7 @@ definition {
 
 	@priority = 3
 	test LocaleNotAppendedToAlternateDefaultLocaleURL {
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+		property custom.properties = "feature.flag.LPD-38869=true";
 
 		User.firstLoginPG();
 

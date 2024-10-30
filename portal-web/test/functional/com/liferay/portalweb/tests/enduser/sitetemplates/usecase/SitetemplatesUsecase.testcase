@@ -1438,7 +1438,7 @@ definition {
 	@description = "This is a use case for LPS-92663. Navigation menus are copied when a site is created from a site template."
 	@priority = 3
 	test ViewNavigationMenuCopyFromSitesTemplate {
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+		property custom.properties = "feature.flag.LPD-38869=true";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

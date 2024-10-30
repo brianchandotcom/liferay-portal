@@ -385,8 +385,8 @@ definition {
 	@priority = 5
 	@uitest
 	test SelectNavigationMenuFromExistingOnes {
+		property custom.properties = "feature.flag.LPD-38869=true";
 		property portal.acceptance = "true";
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add a public widget page") {
 			JSONLayout.addPublicLayout(

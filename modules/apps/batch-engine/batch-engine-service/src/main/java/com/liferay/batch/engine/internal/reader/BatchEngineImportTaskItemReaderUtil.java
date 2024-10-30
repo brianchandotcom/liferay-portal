@@ -6,6 +6,7 @@
 package com.liferay.batch.engine.internal.reader;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -70,6 +72,14 @@ public class BatchEngineImportTaskItemReaderUtil {
 				field.setAccessible(true);
 
 				ObjectMapper objectMapper = _getObjectMapper(field);
+
+				if (field.getName(
+					).equalsIgnoreCase(
+						"creator"
+					)) {
+
+					objectMapper.addMixIn(Creator.class, CreatorMixin.class);
+				}
 
 				field.set(
 					item,
@@ -187,6 +197,16 @@ public class BatchEngineImportTaskItemReaderUtil {
 		}
 
 		return targetFieldNameValueMap;
+	}
+
+	public abstract static class CreatorMixin {
+
+		@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+		public String externalReferenceCode;
+
+		@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+		public Long id;
+
 	}
 
 	private static ObjectMapper _getObjectMapper(Field field)

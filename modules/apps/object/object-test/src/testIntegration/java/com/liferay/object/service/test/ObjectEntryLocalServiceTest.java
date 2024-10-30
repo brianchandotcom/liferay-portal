@@ -83,6 +83,7 @@ import com.liferay.object.tree.Tree;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
@@ -2673,14 +2674,15 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetValuesList() throws Exception {
+	public void testGetPrimaryKeys() throws Exception {
 		Sort[] sorts = {new Sort("id", false)};
 
-		List<Map<String, Serializable>> valuesList =
-			_objectEntryLocalService.getValuesList(
+		List<Map<String, Serializable>> valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeys(
 				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), null, null, null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts);
+				_objectDefinition.getObjectDefinitionId(), null, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 0, valuesList.size());
 
@@ -2699,16 +2701,18 @@ public class ObjectEntryLocalServiceTest {
 
 		_addObjectEntry(values1);
 
-		valuesList = _objectEntryLocalService.getValuesList(
-			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, null, null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts);
+		valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeys(
+				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), null, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
 
 		_assertCount(1);
 
-		_assertObjectEntryValues(29, values1, valuesList.get(0));
+		_assertObjectEntryValues(23, values1, valuesList.get(0));
 
 		// Add second object entry
 
@@ -2723,17 +2727,19 @@ public class ObjectEntryLocalServiceTest {
 
 		_addObjectEntry(values2);
 
-		valuesList = _objectEntryLocalService.getValuesList(
-			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, null, null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts);
+		valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeys(
+				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), null, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 2, valuesList.size());
 
 		_assertCount(2);
 
-		_assertObjectEntryValues(29, values1, valuesList.get(0));
-		_assertObjectEntryValues(29, values2, valuesList.get(1));
+		_assertObjectEntryValues(23, values1, valuesList.get(0));
+		_assertObjectEntryValues(23, values2, valuesList.get(1));
 
 		// Add third object entry
 
@@ -2748,25 +2754,29 @@ public class ObjectEntryLocalServiceTest {
 
 		ObjectEntry objectEntry = _addObjectEntry(values3);
 
-		valuesList = _objectEntryLocalService.getValuesList(
-			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, null, null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts);
+		valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeys(
+				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), null, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 3, valuesList.size());
 
 		_assertCount(3);
 
-		_assertObjectEntryValues(29, values1, valuesList.get(0));
-		_assertObjectEntryValues(29, values2, valuesList.get(1));
-		_assertObjectEntryValues(29, values3, valuesList.get(2));
+		_assertObjectEntryValues(23, values1, valuesList.get(0));
+		_assertObjectEntryValues(23, values2, valuesList.get(1));
+		_assertObjectEntryValues(23, values3, valuesList.get(2));
 
 		// Irrelevant object definition
 
-		valuesList = _objectEntryLocalService.getValuesList(
-			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_irrelevantObjectDefinition.getObjectDefinitionId(), null, null,
-			null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts);
+		valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeys(
+				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				_irrelevantObjectDefinition.getObjectDefinitionId(), null, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 0, valuesList.size());
 
@@ -2792,14 +2802,16 @@ public class ObjectEntryLocalServiceTest {
 
 		_userLocalService.addRoleUser(role.getRoleId(), user);
 
-		valuesList = _objectEntryLocalService.getValuesList(
-			0, TestPropsValues.getCompanyId(), user.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, null, null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts);
+		valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeys(
+				0, TestPropsValues.getCompanyId(), user.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), null, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
 
-		_assertObjectEntryValues(29, values3, valuesList.get(0));
+		_assertObjectEntryValues(23, values3, valuesList.get(0));
 
 		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);
 		PrincipalThreadLocal.setName(originalName);
@@ -2816,54 +2828,64 @@ public class ObjectEntryLocalServiceTest {
 			firstNameColumn.eq("John")
 		);
 
-		valuesList = _objectEntryLocalService.getValuesList(
-			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, predicate, null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts);
+		valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeys(
+				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), predicate, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 2, valuesList.size());
 
-		_assertObjectEntryValues(29, values1, valuesList.get(0));
-		_assertObjectEntryValues(29, values3, valuesList.get(1));
+		_assertObjectEntryValues(23, values1, valuesList.get(0));
+		_assertObjectEntryValues(23, values3, valuesList.get(1));
 
 		// Predicate and search
 
 		String search = "John";
 
-		valuesList = _objectEntryLocalService.getValuesList(
-			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, predicate, search,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts);
+		valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeys(
+				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), predicate, search,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
 
-		_assertObjectEntryValues(29, values3, valuesList.get(0));
+		_assertObjectEntryValues(23, values3, valuesList.get(0));
 
-		valuesList = _objectEntryLocalService.getValuesList(
-			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, predicate,
-			StringUtil.toLowerCase(search), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, sorts);
-
-		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
-
-		_assertObjectEntryValues(29, values3, valuesList.get(0));
-
-		valuesList = _objectEntryLocalService.getValuesList(
-			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, predicate,
-			StringUtil.toUpperCase(search), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, sorts);
+		valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeys(
+				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), predicate,
+				StringUtil.toLowerCase(search), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, sorts),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
 
-		_assertObjectEntryValues(29, values3, valuesList.get(0));
+		_assertObjectEntryValues(23, values3, valuesList.get(0));
 
-		valuesList = _objectEntryLocalService.getValuesList(
-			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, predicate,
-			RandomTestUtil.randomString(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			sorts);
+		valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeys(
+				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), predicate,
+				StringUtil.toUpperCase(search), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, sorts),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
+
+		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
+
+		_assertObjectEntryValues(23, values3, valuesList.get(0));
+
+		valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeys(
+				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), predicate,
+				RandomTestUtil.randomString(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, sorts),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 0, valuesList.size());
 
@@ -2873,14 +2895,16 @@ public class ObjectEntryLocalServiceTest {
 			PermissionCheckerFactoryUtil.create(user));
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		valuesList = _objectEntryLocalService.getValuesList(
-			0, TestPropsValues.getCompanyId(), user.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, predicate, null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts);
+		valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeys(
+				0, TestPropsValues.getCompanyId(), user.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), predicate, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
 
-		_assertObjectEntryValues(29, values3, valuesList.get(0));
+		_assertObjectEntryValues(23, values3, valuesList.get(0));
 
 		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);
 		PrincipalThreadLocal.setName(originalName);
@@ -2891,19 +2915,21 @@ public class ObjectEntryLocalServiceTest {
 			"emailAddressRequired", "firstName"
 		};
 
-		valuesList = _objectEntryLocalService.getValuesList(
-			0, TestPropsValues.getCompanyId(), user.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), selectedObjectFieldNames,
-			null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts);
+		valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeys(
+				0, TestPropsValues.getCompanyId(), user.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), null, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 3, valuesList.size());
 
 		_assertObjectEntryValues(
-			9, values1, valuesList.get(0), selectedObjectFieldNames);
+			23, values1, valuesList.get(0), selectedObjectFieldNames);
 		_assertObjectEntryValues(
-			9, values2, valuesList.get(1), selectedObjectFieldNames);
+			23, values2, valuesList.get(1), selectedObjectFieldNames);
 		_assertObjectEntryValues(
-			9, values3, valuesList.get(2), selectedObjectFieldNames);
+			23, values3, valuesList.get(2), selectedObjectFieldNames);
 	}
 
 	@Test

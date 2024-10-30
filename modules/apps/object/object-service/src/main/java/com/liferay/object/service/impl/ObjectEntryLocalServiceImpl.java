@@ -1027,11 +1027,10 @@ public class ObjectEntryLocalServiceImpl
 		return objectEntryPersistence.dslQueryCount(dslQuery);
 	}
 
-	@Override
-	public List<Long> getPrimaryKeyList(
+	public List<Long> getPrimaryKeys(
 			long groupId, long companyId, long userId, long objectDefinitionId,
-			String[] selectedObjectFieldNames, Predicate predicate,
-			String search, int start, int end, Sort[] sorts)
+			Predicate predicate, String search, int start, int end,
+			Sort[] sorts)
 		throws PortalException {
 
 		DynamicObjectDefinitionLocalizationTable
@@ -1048,7 +1047,7 @@ public class ObjectEntryLocalServiceImpl
 			_getRootDynamicObjectDefinitionTable(objectDefinitionId);
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
-			dynamicObjectDefinitionTable.getPrimaryKeyColumn()
+			ObjectEntryTable.INSTANCE.objectEntryId
 		).from(
 			dynamicObjectDefinitionTable
 		).innerJoinON(

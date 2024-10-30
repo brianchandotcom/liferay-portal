@@ -239,10 +239,10 @@ public class APIPropertyRelevantObjectEntryModelListener
 			}
 
 			if (ListUtil.isNotEmpty(
-					_objectEntryLocalService.getValuesList(
+					_objectEntryLocalService.getPrimaryKeys(
 						objectEntry.getGroupId(), objectEntry.getCompanyId(),
 						objectEntry.getUserId(),
-						objectEntry.getObjectDefinitionId(), null,
+						objectEntry.getObjectDefinitionId(),
 						_filterFactory.create(
 							StringBundler.concat(
 								"id ne '", objectEntry.getObjectEntryId(),

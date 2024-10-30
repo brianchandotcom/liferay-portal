@@ -4719,16 +4719,16 @@ public class JenkinsResultsParserUtil {
 		while (true) {
 			URLConnection urlConnection = null;
 
-			String fixedURL = url;
+			String connectionURL = url;
 
 			try {
 				if (debug) {
-					System.out.println("Downloading " + fixedURL);
+					System.out.println("Downloading " + connectionURL);
 				}
 
-				Matcher matcher = _gitHubAPIURLPattern.matcher(fixedURL);
+				Matcher matcher = _gitHubAPIURLPattern.matcher(connectionURL);
 
-				if (matcher.matches() && (retryCount < (maxRetries - 1))) {
+				if (matcher.matches()) {
 					gitHubAPICall = true;
 
 					if (_updatingHttpRequestMethods.contains(
@@ -4736,7 +4736,7 @@ public class JenkinsResultsParserUtil {
 
 						Properties buildProperties = getBuildProperties();
 
-						fixedURL =
+						connectionURL =
 							buildProperties.getProperty("github.api.proxy") +
 								matcher.group(1);
 					}
@@ -4744,7 +4744,7 @@ public class JenkinsResultsParserUtil {
 
 				if ((httpAuthorizationHeader == null) &&
 					(gitHubAPICall ||
-					 fixedURL.startsWith(
+					 connectionURL.startsWith(
 						 "https://raw.githubusercontent.com/liferay/"))) {
 
 					Properties buildProperties = getBuildProperties();
@@ -4754,7 +4754,7 @@ public class JenkinsResultsParserUtil {
 				}
 
 				if ((httpAuthorizationHeader == null) &&
-					fixedURL.startsWith("https://release.liferay.com")) {
+					connectionURL.startsWith("https://release.liferay.com")) {
 
 					Properties buildProperties = getBuildProperties();
 
@@ -4765,7 +4765,7 @@ public class JenkinsResultsParserUtil {
 				}
 
 				if ((httpAuthorizationHeader == null) &&
-					fixedURL.matches("https://liferay.spiraservice.net.+")) {
+					connectionURL.matches("https://liferay.spiraservice.net.+")) {
 
 					Properties buildProperties = getBuildProperties();
 
@@ -4775,12 +4775,13 @@ public class JenkinsResultsParserUtil {
 				}
 
 				if ((httpAuthorizationHeader == null) &&
-					fixedURL.matches(
+					connectionURL.matches(
 						"https?:\\/\\/test-[135]-\\d+(?:\\.liferay\\.com)?.*?" +
 							"|http:\\/\\/localhost:8081.*?")) {
 
 					if (isCINode() && (retryCount < (maxRetries - 1))) {
 						fixedURL = getLocalURL(fixedURL);
+						connectionURL = getLocalURL(connectionURL);
 					}
 
 					Properties buildProperties = getBuildProperties();
@@ -4788,7 +4789,7 @@ public class JenkinsResultsParserUtil {
 					String jenkinsAdminUserToken = buildProperties.getProperty(
 						"jenkins.admin.user.token");
 
-					if (fixedURL.matches("https?:\\/\\/test-1-0.*")) {
+					if (connectionURL.matches("https?:\\/\\/test-1-0.*")) {
 						jenkinsAdminUserToken = buildProperties.getProperty(
 							"jenkins.admin.user.token[test-1-0]");
 					}
@@ -4800,7 +4801,7 @@ public class JenkinsResultsParserUtil {
 
 				boolean testray1Request = false;
 
-				if (fixedURL.matches("https://testray-old.liferay.com/?.+")) {
+				if (connectionURL.matches("https://testray-old.liferay.com/?.+")) {
 					testray1Request = true;
 				}
 
@@ -4815,11 +4816,11 @@ public class JenkinsResultsParserUtil {
 				}
 
 				Matcher testray2URLMatcher = _testray2URLPattern.matcher(
-					fixedURL);
+					connectionURL);
 
 				if ((httpAuthorizationHeader == null) &&
 					testray2URLMatcher.find() &&
-					!fixedURL.contains("/o/oauth2/token")) {
+					!connectionURL.contains("/o/oauth2/token")) {
 
 					Properties buildProperties = getBuildProperties();
 
@@ -4842,7 +4843,7 @@ public class JenkinsResultsParserUtil {
 							clientId, clientSecret, tokenURL);
 				}
 
-				URL urlObject = new URL(fixedURL);
+				URL urlObject = new URL(connectionURL);
 
 				urlConnection = urlObject.openConnection();
 
@@ -4901,7 +4902,7 @@ public class JenkinsResultsParserUtil {
 						}
 					}
 
-					if (fixedURL.contains("/oauth2/")) {
+					if (connectionURL.contains("/oauth2/")) {
 						httpURLConnection.setRequestProperty(
 							"accept", "application/json");
 						httpURLConnection.setRequestProperty(
@@ -4947,13 +4948,13 @@ public class JenkinsResultsParserUtil {
 							combine(
 								_getGitHubAPIRateLimitStatusMessage(
 									limit, remaining, reset),
-								"\n    ", fixedURL));
+								"\n    ", connectionURL));
 					}
 					catch (Exception exception) {
 						System.out.println(
 							combine(
 								"Unable to parse GitHub API rate limit headers",
-								"\nURL:\n    ", fixedURL));
+								"\nURL:\n    ", connectionURL));
 
 						exception.printStackTrace();
 					}
@@ -4967,10 +4968,10 @@ public class JenkinsResultsParserUtil {
 				}
 
 				if ((ioException instanceof UnknownHostException) &&
-					fixedURL.matches("http://test-\\d+-\\d+/.*")) {
+					connectionURL.matches("http://test-\\d+-\\d+/.*")) {
 
 					return toInputStream(
-						fixedURL.replaceAll(
+						connectionURL.replaceAll(
 							"http://(test-\\d+-\\d+)(/.*)",
 							"https://$1.liferay.com$2"),
 						checkCache, maxRetries, httpRequestMethod, postContent,
@@ -5026,7 +5027,7 @@ public class JenkinsResultsParserUtil {
 						(retryPeriodOverride > _SECONDS_RETRY_PERIOD_MAX)) {
 
 						throw new GitHubSecondaryRateLimitRuntimeException(
-							fixedURL, retryPeriodOverride, ioException);
+							connectionURL, retryPeriodOverride, ioException);
 					}
 				}
 
@@ -5044,7 +5045,7 @@ public class JenkinsResultsParserUtil {
 
 				System.out.println(
 					combine(
-						"Retrying ", fixedURL, " in ",
+						"Retrying ", connectionURL, " in ",
 						toDurationString(retryPeriodMillis)));
 
 				retryCount++;

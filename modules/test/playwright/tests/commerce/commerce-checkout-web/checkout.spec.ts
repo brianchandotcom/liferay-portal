@@ -9,6 +9,7 @@ import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
@@ -20,6 +21,9 @@ export const test = mergeTests(
 	accountsPagesTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-20379': true,
+	}),
 	loginTest(),
 	notificationPagesTest,
 	systemSettingsPageTest
@@ -362,117 +366,92 @@ test('LPD-40425 Checkout order detail redirect works correctly when order DPT is
 	checkoutPage,
 	commerceLayoutsPage,
 	page,
-	systemSettingsPage,
 }) => {
-	try {
-		await systemSettingsPage.goToSystemSetting(
-			'Feature Flags',
-			'Developer'
-		);
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'person',
+	});
 
-		if (!(await page.getByLabel('COMMERCE-9410').isChecked())) {
-			await page.getByLabel('COMMERCE-9410').click();
-		}
+	apiHelpers.data.push({id: account.id, type: 'account'});
 
-		const account = await apiHelpers.headlessAdminUser.postAccount({
-			name: getRandomString(),
-			type: 'person',
-		});
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
 
-		apiHelpers.data.push({id: account.id, type: 'account'});
+	apiHelpers.data.push({id: site.id, type: 'site'});
 
-		const site = await apiHelpers.headlessSite.createSite({
-			name: getRandomString(),
-		});
+	await applicationsMenuPage.goToSite(site.name);
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+	await commerceLayoutsPage.goToDisplayPageTemplates();
+	await commerceLayoutsPage.createDisplayPageTemplate(
+		getRandomString(),
+		'Order',
+		site.name
+	);
+	await commerceLayoutsPage.addFragment('Heading');
 
-		await applicationsMenuPage.goToSite(site.name);
+	await expect(page.getByText('Heading Example')).toBeVisible();
 
-		await commerceLayoutsPage.goToDisplayPageTemplates();
-		await commerceLayoutsPage.createDisplayPageTemplate(
-			getRandomString(),
-			'Order',
-			site.name
-		);
-		await commerceLayoutsPage.addFragment('Heading');
+	await commerceLayoutsPage.publishButton.click();
 
-		await expect(page.getByText('Heading Example')).toBeVisible();
+	await waitForAlert(
+		page,
+		'The display page template was published successfully.'
+	);
 
-		await commerceLayoutsPage.publishButton.click();
+	await commerceLayoutsPage.moreActionsButton.click();
+	await commerceLayoutsPage.markAsDefaultMenuItem.click();
 
-		await waitForAlert(
-			page,
-			'The display page template was published successfully.'
-		);
+	await waitForAlert(page);
 
-		await commerceLayoutsPage.moreActionsButton.click();
-		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+	await expect(
+		commerceLayoutsPage.defaultDisplayPageTemplateIcon
+	).toBeVisible();
 
-		await waitForAlert(page);
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		siteGroupId: site.id,
+	});
 
-		await expect(
-			commerceLayoutsPage.defaultDisplayPageTemplateIcon
-		).toBeVisible();
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
-		const channel =
-			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				siteGroupId: site.id,
-			});
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+	});
 
-		const catalog =
-			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+	const sku = product.skus[0];
 
-		const product =
-			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-				catalogId: catalog.id,
-			});
+	await apiHelpers.headlessCommerceDeliveryCart.postCart(
+		{
+			accountId: account.id,
+			cartItems: [
+				{
+					quantity: 1,
+					skuId: sku.id,
+				},
+			],
+		},
+		channel.id
+	);
 
-		const sku = product.skus[0];
+	await applicationsMenuPage.goToSite(site.name);
 
-		await apiHelpers.headlessCommerceDeliveryCart.postCart(
-			{
-				accountId: account.id,
-				cartItems: [
-					{
-						quantity: 1,
-						skuId: sku.id,
-					},
-				],
-			},
-			channel.id
-		);
+	await commerceLayoutsPage.goToPages(false);
+	await commerceLayoutsPage.createWidgetPage(getRandomString());
 
-		await applicationsMenuPage.goToSite(site.name);
+	await page.goto(`/web/${site.name}`);
 
-		await commerceLayoutsPage.goToPages(false);
-		await commerceLayoutsPage.createWidgetPage(getRandomString());
+	await checkoutPage.addCheckoutWidget();
+	await checkoutPage.performCheckout({
+		shippingAddress: {
+			city: 'testCity',
+			countryLabel: 'United States',
+			name: 'John Doe',
+			regionLabel: 'Florida',
+			street: 'testStreet',
+			zip: '12345',
+		},
+	});
+	await checkoutPage.goToOrderDetailsButton.click();
 
-		await page.goto(`/web/${site.name}`);
-
-		await checkoutPage.addCheckoutWidget();
-		await checkoutPage.performCheckout({
-			shippingAddress: {
-				city: 'testCity',
-				countryLabel: 'United States',
-				name: 'John Doe',
-				regionLabel: 'Florida',
-				street: 'testStreet',
-				zip: '12345',
-			},
-		});
-		await checkoutPage.goToOrderDetailsButton.click();
-
-		await expect(page.getByText('Heading Example')).toBeVisible();
-	}
-	finally {
-		await systemSettingsPage.goToSystemSetting(
-			'Feature Flags',
-			'Developer'
-		);
-
-		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
-			await page.getByLabel('COMMERCE-9410').click();
-		}
-	}
+	await expect(page.getByText('Heading Example')).toBeVisible();
 });

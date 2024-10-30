@@ -275,7 +275,7 @@ const TopperEmptyLabel = ({isActive, isHovered, item, itemElement}) => {
 			itemElement={itemElement}
 		>
 			<ul className="tbar-nav">
-				<li className="d-inline-block page-editor__topper__item page-editor__topper__title tbar-item tbar-item-expand">
+				<li className="d-inline-block mx-2 page-editor__topper__item page-editor__topper__title tbar-item tbar-item-expand">
 					{name}
 				</li>
 

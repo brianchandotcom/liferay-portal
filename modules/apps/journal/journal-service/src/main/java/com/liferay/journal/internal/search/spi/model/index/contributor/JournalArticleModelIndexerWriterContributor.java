@@ -14,6 +14,8 @@ import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -84,6 +86,28 @@ public class JournalArticleModelIndexerWriterContributor
 							journalArticle)));
 		}
 		else {
+			batchIndexingActionable.setAddCriteriaMethod(
+				dynamicQuery -> {
+					Property resourcePrimKeyProperty =
+						PropertyFactoryUtil.forName("resourcePrimKey");
+
+					DynamicQuery journalArticleDynamicQuery =
+						_journalArticleLocalService.dynamicQuery();
+
+					journalArticleDynamicQuery.setProjection(
+						ProjectionFactoryUtil.property("resourcePrimKey"));
+
+					Property property = PropertyFactoryUtil.forName(
+						"classNameId");
+
+					journalArticleDynamicQuery.add(
+						property.eq(
+							PortalUtil.getClassNameId(DDMStructure.class)));
+
+					dynamicQuery.add(
+						resourcePrimKeyProperty.notIn(
+							journalArticleDynamicQuery));
+				});
 			batchIndexingActionable.setInterval(
 				_batchIndexingHelper.getBulkSize(
 					JournalArticleResource.class.getName()));

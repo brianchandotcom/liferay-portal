@@ -4732,7 +4732,7 @@ public class JenkinsResultsParserUtil {
 					gitHubAPICall = true;
 
 					if (_updatingHttpRequestMethods.contains(
-							httpRequestMethod)) {
+							httpRequestMethod) && (retryCount == 0)) {
 
 						Properties buildProperties = getBuildProperties();
 
@@ -4779,8 +4779,7 @@ public class JenkinsResultsParserUtil {
 						"https?:\\/\\/test-[135]-\\d+(?:\\.liferay\\.com)?.*?" +
 							"|http:\\/\\/localhost:8081.*?")) {
 
-					if (isCINode() && (retryCount < (maxRetries - 1))) {
-						fixedURL = getLocalURL(fixedURL);
+					if (isCINode() && (retryCount == 0)) {
 						connectionURL = getLocalURL(connectionURL);
 					}
 

@@ -35,9 +35,9 @@ pageContext.setAttribute("portletURL", portletURL);
 					<div class="input-group-inset-item input-group-inset-item-after">
 						<liferay-ui:csp>
 							<button class="btn btn-light btn-unstyled" onclick="<portlet:namespace />search();" type="submit">
-								<liferay-ui:icon
-									icon="search"
+								<clay:icon
 									markupView="lexicon"
+									symbol="search"
 								/>
 							</button>
 						</liferay-ui:csp>

@@ -7,6 +7,7 @@ package com.liferay.object.info.collection.provider.util;
 
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.filter.KeywordsInfoFilter;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 /**
@@ -16,6 +17,12 @@ public class ObjectEntryInfoCollectionProviderUtil {
 
 	public static Pagination getPagination(
 		com.liferay.info.pagination.Pagination pagination) {
+
+		if ((pagination.getStart() == QueryUtil.ALL_POS) &&
+			(pagination.getEnd() == QueryUtil.ALL_POS)) {
+
+			return Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
 
 		int page = 1;
 

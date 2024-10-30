@@ -26,6 +26,7 @@ import com.liferay.batch.engine.internal.strategy.OnErrorContinueBatchEngineImpo
 import com.liferay.batch.engine.internal.strategy.OnErrorFailBatchEngineImportStrategy;
 import com.liferay.batch.engine.internal.task.progress.BatchEngineTaskProgress;
 import com.liferay.batch.engine.internal.task.progress.BatchEngineTaskProgressFactory;
+import com.liferay.batch.engine.internal.util.ErrorMessageUtil;
 import com.liferay.batch.engine.internal.util.ItemIndexThreadLocal;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
@@ -119,7 +120,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 			_updateBatchEngineImportTask(
 				BatchEngineTaskExecuteStatus.FAILED, batchEngineImportTask,
-				throwable.toString());
+				throwable);
 
 			return;
 		}
@@ -160,7 +161,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 			_updateBatchEngineImportTask(
 				BatchEngineTaskExecuteStatus.FAILED, batchEngineImportTask,
-				throwable.toString());
+				throwable);
 		}
 		finally {
 			file.delete();
@@ -300,7 +301,7 @@ public class BatchEngineImportTaskExecutorImpl
 			batchEngineImportTask.getCompanyId(),
 			batchEngineImportTask.getUserId(),
 			batchEngineImportTask.getBatchEngineImportTaskId(), null,
-			processedItemsCount, exception.toString());
+			processedItemsCount, ErrorMessageUtil.getErrorMessage(exception));
 
 		if (batchEngineImportTask.getImportStrategy() ==
 				BatchEngineImportTaskConstants.
@@ -416,10 +417,11 @@ public class BatchEngineImportTaskExecutorImpl
 
 	private void _updateBatchEngineImportTask(
 		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus,
-		BatchEngineImportTask batchEngineImportTask, String errorMessage) {
+		BatchEngineImportTask batchEngineImportTask, Throwable throwable) {
 
 		batchEngineImportTask.setEndTime(new Date());
-		batchEngineImportTask.setErrorMessage(errorMessage);
+		batchEngineImportTask.setErrorMessage(
+			ErrorMessageUtil.getErrorMessage(throwable));
 		batchEngineImportTask.setExecuteStatus(
 			batchEngineTaskExecuteStatus.toString());
 

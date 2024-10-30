@@ -8,6 +8,7 @@ package com.liferay.batch.engine.internal.strategy;
 import com.liferay.batch.engine.action.ImportTaskPostAction;
 import com.liferay.batch.engine.action.ImportTaskPreAction;
 import com.liferay.batch.engine.context.ImportTaskContext;
+import com.liferay.batch.engine.internal.util.ErrorMessageUtil;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
 import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
@@ -77,7 +78,7 @@ public abstract class BaseBatchEngineImportStrategy
 
 	protected void addBatchEngineImportTaskError(
 		long companyId, long userId, long batchEngineImportTaskId, String item,
-		int itemIndex, String message) {
+		int itemIndex, Exception exception) {
 
 		try {
 			TransactionInvokerUtil.invoke(
@@ -86,7 +87,8 @@ public abstract class BaseBatchEngineImportStrategy
 					BatchEngineImportTaskErrorLocalServiceUtil.
 						addBatchEngineImportTaskError(
 							companyId, userId, batchEngineImportTaskId, item,
-							itemIndex, message);
+							itemIndex,
+							ErrorMessageUtil.getErrorMessage(exception));
 
 					return null;
 				});

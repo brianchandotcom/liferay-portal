@@ -284,6 +284,7 @@ const MillerColumns = ({
 						getPageTemplateCollectionsURL={
 							getPageTemplateCollectionsURL
 						}
+						index={index}
 						isLayoutSetPrototype={isLayoutSetPrototype}
 						isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
 						items={items}

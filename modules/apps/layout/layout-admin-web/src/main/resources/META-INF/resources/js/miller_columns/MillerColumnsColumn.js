@@ -58,6 +58,7 @@ const MillerColumnsColumn = ({
 	namespace,
 	onItemDrop,
 	onItemStayHover,
+	index,
 	parent,
 	rtl,
 }) => {

@@ -1442,7 +1442,7 @@ public class JournalArticleLocalServiceTest {
 
 		List<JournalArticle> journalArticles =
 			_journalArticleLocalService.getArticlesByReviewDate(
-				calendar.getTime(), new Date());
+				_group.getCompanyId(), calendar.getTime(), new Date());
 
 		Assert.assertEquals(
 			journalArticles.toString(), 1, journalArticles.size());

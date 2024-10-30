@@ -154,14 +154,6 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 			return;
 		}
 
-		String rootDirName = SourceUtil.getRootDirName(absolutePath);
-
-		if (rootDirName.equals(StringPool.BLANK) ||
-			absolutePath.matches(rootDirName + "/test.properties")) {
-
-			return;
-		}
-
 		Properties properties = new Properties();
 
 		properties.load(new StringReader(content));

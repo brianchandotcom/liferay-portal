@@ -85,13 +85,31 @@ function visit(itemId, layoutData, list, viewportSize) {
 }
 
 function isSelectable(item) {
-	return [
-		LAYOUT_DATA_ITEM_TYPES.collection,
-		LAYOUT_DATA_ITEM_TYPES.container,
-		LAYOUT_DATA_ITEM_TYPES.form,
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.row,
-	].includes(item.type);
+	if (Liferay.FeatureFlags['LPD-18221']) {
+		return [
+			LAYOUT_DATA_ITEM_TYPES.column,
+			LAYOUT_DATA_ITEM_TYPES.collection,
+			LAYOUT_DATA_ITEM_TYPES.container,
+			LAYOUT_DATA_ITEM_TYPES.form,
+			LAYOUT_DATA_ITEM_TYPES.fragment,
+			LAYOUT_DATA_ITEM_TYPES.formStep,
+			LAYOUT_DATA_ITEM_TYPES.formStepContainer,
+			LAYOUT_DATA_ITEM_TYPES.fragmentDropZone,
+			LAYOUT_DATA_ITEM_TYPES.root,
+			LAYOUT_DATA_ITEM_TYPES.row,
+		].includes(item.type);
+	}
+	else {
+		return [
+			LAYOUT_DATA_ITEM_TYPES.column,
+			LAYOUT_DATA_ITEM_TYPES.collection,
+			LAYOUT_DATA_ITEM_TYPES.container,
+			LAYOUT_DATA_ITEM_TYPES.form,
+			LAYOUT_DATA_ITEM_TYPES.fragment,
+			LAYOUT_DATA_ITEM_TYPES.formStepContainer,
+			LAYOUT_DATA_ITEM_TYPES.row,
+		].includes(item.type);
+	}
 }
 
 export {LayoutKeyboardContext, LayoutKeyboardContextProvider};

@@ -6,9 +6,11 @@ import type { BaseHttpRequest } from './core/BaseHttpRequest';
 import type { OpenAPIConfig } from './core/OpenAPI';
 import { NodeHttpRequest } from './core/NodeHttpRequest';
 import { TestEntityService } from './services/TestEntityService';
+import { TestEntityAddressService } from './services/TestEntityAddressService';
 type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 export class PortalToolsRestBuilderTestClient {
     public readonly testEntity: TestEntityService;
+    public readonly testEntityAddress: TestEntityAddressService;
     public readonly request: BaseHttpRequest;
     constructor(config?: Partial<OpenAPIConfig>, HttpRequest: HttpRequestConstructor = NodeHttpRequest) {
         this.request = new HttpRequest({
@@ -23,6 +25,7 @@ export class PortalToolsRestBuilderTestClient {
             ENCODE_PATH: config?.ENCODE_PATH,
         });
         this.testEntity = new TestEntityService(this.request);
+        this.testEntityAddress = new TestEntityAddressService(this.request);
     }
 }
 

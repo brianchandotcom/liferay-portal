@@ -21,6 +21,8 @@ export type { NestedArrayItemsTestEntity } from './models/NestedArrayItemsTestEn
 export type { NestedTestEntity } from './models/NestedTestEntity';
 export type { PageTestEntity } from './models/PageTestEntity';
 export type { TestEntity } from './models/TestEntity';
+export type { TestEntityAddress } from './models/TestEntityAddress';
 export type { UnreferencedTestEntity } from './models/UnreferencedTestEntity';
 
 export { TestEntityService } from './services/TestEntityService';
+export { TestEntityAddressService } from './services/TestEntityAddressService';

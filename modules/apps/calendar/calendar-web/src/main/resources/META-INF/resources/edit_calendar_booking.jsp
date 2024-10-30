@@ -145,6 +145,10 @@ else if (calendar != null) {
 	}
 	else {
 		pendingCalendarsJSONArray.put(calendarJSONObject);
+
+		if (defaultCalendar.getUserId() == themeDisplay.getUserId()) {
+			acceptedCalendarsJSONArray.put(CalendarUtil.toCalendarJSONObject(themeDisplay, defaultCalendar));
+		}
 	}
 
 	hasWorkflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), calendarResource.getGroupId(), CalendarBooking.class.getName());

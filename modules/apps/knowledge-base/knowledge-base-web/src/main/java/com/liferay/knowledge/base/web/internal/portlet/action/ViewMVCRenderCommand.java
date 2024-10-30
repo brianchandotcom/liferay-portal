@@ -5,7 +5,10 @@
 
 package com.liferay.knowledge.base.web.internal.portlet.action;
 
+import com.liferay.change.tracking.spi.history.util.CTTimelineUtil;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -43,15 +46,29 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		String rootPortletId = _getRootPortletId(renderRequest);
 
+		CTTimelineUtil.setClassName(renderRequest, KBArticle.class);
+
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 			return "/admin/view.jsp";
 		}
 
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+			KBArticle kbArticle = (KBArticle)renderRequest.getAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+
+			CTTimelineUtil.setCTTimelineKeys(
+				renderRequest, KBArticle.class, kbArticle.getKbArticleId());
+
 			return "/article/view.jsp";
 		}
 
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+			KBArticle kbArticle = (KBArticle)renderRequest.getAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+
+			CTTimelineUtil.setCTTimelineKeys(
+				renderRequest, KBArticle.class, kbArticle.getKbArticleId());
+
 			return "/display/view.jsp";
 		}
 

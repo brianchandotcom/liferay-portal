@@ -821,16 +821,7 @@ public class UpgradeReport {
 
 		String key = "upgrade.report." + entry1.getKey();
 
-		if (value instanceof Map<?, ?>) {
-			Map<?, ?> map = (Map<?, ?>)value;
-
-			for (Map.Entry<?, ?> entry2 : map.entrySet()) {
-				ThreadContext.put(
-					key + StringPool.PERIOD + entry2.getKey(),
-					String.valueOf(entry2.getValue()));
-			}
-		}
-		else if (value instanceof List<?>) {
+		if (value instanceof List<?>) {
 			StringBundler sb = new StringBundler(StringPool.OPEN_BRACKET);
 
 			List<?> list = (List<?>)value;
@@ -871,6 +862,15 @@ public class UpgradeReport {
 			sb.append(StringPool.CLOSE_BRACKET);
 
 			ThreadContext.put(key, sb.toString());
+		}
+		else if (value instanceof Map<?, ?>) {
+			Map<?, ?> map = (Map<?, ?>)value;
+
+			for (Map.Entry<?, ?> entry2 : map.entrySet()) {
+				ThreadContext.put(
+					key + StringPool.PERIOD + entry2.getKey(),
+					String.valueOf(entry2.getValue()));
+			}
 		}
 		else {
 			ThreadContext.put(key, String.valueOf(value));

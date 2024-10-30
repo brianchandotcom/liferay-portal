@@ -159,7 +159,7 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 		properties.load(new StringReader(content));
 
 		String testrayMainComponentName = properties.getProperty(
-			_TESTRAY_MAIN_COMPONENT_NAME);
+			"testray.main.component.name");
 
 		if (testrayMainComponentName == null) {
 			return;
@@ -297,9 +297,6 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 
 	private static final String _CHECK_TESTRAY_MAIN_COMPONENT_NAME_KEY =
 		"checkTestrayMainComponentName";
-
-	private static final String _TESTRAY_MAIN_COMPONENT_NAME =
-		"testray.main.component.name";
 
 	private List<String> _testrayAllTeamsComponentNames;
 

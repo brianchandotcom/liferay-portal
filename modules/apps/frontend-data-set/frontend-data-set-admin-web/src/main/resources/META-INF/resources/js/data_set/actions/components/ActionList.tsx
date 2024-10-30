@@ -57,7 +57,7 @@ const ActionList = ({
 				},
 				{
 					label: Liferay.Language.get('type'),
-					name: 'type',
+					name: 'target',
 				},
 			]}
 			items={actions}

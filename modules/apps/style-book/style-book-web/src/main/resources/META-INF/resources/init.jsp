@@ -29,6 +29,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.style.book.constants.StyleBookPortletKeys" %><%@
 page import="com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException" %><%@
 page import="com.liferay.style.book.exception.StyleBookEntryFileException" %><%@
+page import="com.liferay.style.book.exception.StyleBookEntryThemeIdException" %><%@
 page import="com.liferay.style.book.web.internal.display.context.EditStyleBookEntryDisplayContext" %><%@
 page import="com.liferay.style.book.web.internal.display.context.ImportStyleBookDisplayContext" %><%@
 page import="com.liferay.style.book.web.internal.display.context.PreviewFragmentCollectionDisplayContext" %><%@

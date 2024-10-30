@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException;
+import com.liferay.style.book.exception.StyleBookEntryThemeIdException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.service.StyleBookEntryService;
@@ -108,6 +109,10 @@ public class StyleBookEntryZipProcessorImpl
 			long groupId, String frontendTokensValues, String name,
 			boolean overwrite, String styleBookEntryKey, String themeId)
 		throws Exception {
+
+		if (Validator.isBlank(themeId)) {
+			throw new StyleBookEntryThemeIdException.MustNotBeNull();
+		}
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryEntryLocalService.fetchStyleBookEntry(

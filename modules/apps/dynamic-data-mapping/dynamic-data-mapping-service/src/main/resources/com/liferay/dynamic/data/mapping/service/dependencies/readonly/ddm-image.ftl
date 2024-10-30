@@ -27,7 +27,11 @@
 	</#if>
 
 	<#if hasFieldValue>
-		[ <a href="javascript:void(0);" id="${portletNamespace}${namespacedFieldName}ToggleImage" onClick="${portletNamespace}${namespacedFieldName}ToggleImage();">${languageUtil.get(locale, "show")}</a> ]
+		[
+			<@liferay_ui.csp>
+				<a href="javascript:void(0);" id="${portletNamespace}${namespacedFieldName}ToggleImage" onClick="${portletNamespace}${namespacedFieldName}ToggleImage();">${languageUtil.get(locale, "show")}</a>
+			<@/liferay_ui.csp>
+		]
 
 		<div class="hide wcm-image-preview" id="${portletNamespace}${namespacedFieldName}Container">
 			<#if validator.isNotNull(src)>

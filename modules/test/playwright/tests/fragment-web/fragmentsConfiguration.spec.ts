@@ -67,5 +67,13 @@ test(
 		await checkBox.check();
 
 		await page.getByRole('button', {name: 'Save'}).click();
+
+		await expect(async () => {
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			await expect(
+				page.getByText('Success:Your request completed successfully.')
+			).toBeVisible({timeout: 100});
+		}).toPass();
 	}
 );

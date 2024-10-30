@@ -230,7 +230,7 @@ html#{$cadmin-selector} {
 		}
 
 		&__row
-			> .page-editor__col.empty:not(.active):hover
+			> .page-editor__col:not(.active):hover
 			> .page-editor__col__border:after {
 			box-shadow: inset 0 0 0 2px $cadmin-primary-l1;
 			z-index: $portletTopperHoveredZIndex;

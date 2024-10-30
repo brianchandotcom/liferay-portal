@@ -8,6 +8,7 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRuleSetting;
+import com.liferay.object.admin.rest.client.resource.v1_0.ObjectValidationRuleResource;
 import com.liferay.object.admin.rest.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
@@ -16,9 +17,13 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
@@ -40,6 +45,19 @@ public class ObjectValidationRuleResourceTest
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
+		ObjectValidationRuleResource.Builder builder =
+			ObjectValidationRuleResource.builder();
+
+		User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
+
+		objectValidationRuleResource = builder.authentication(
+			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 
 		_modifiableSystemObjectDefinition =
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition();

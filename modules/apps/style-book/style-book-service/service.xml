@@ -58,5 +58,6 @@
 		<exception>DuplicateStyleBookEntryKey</exception>
 		<exception>StyleBookEntryFile</exception>
 		<exception>StyleBookEntryName</exception>
+		<exception>StyleBookEntryThemeId</exception>
 	</exceptions>
 </service-builder>

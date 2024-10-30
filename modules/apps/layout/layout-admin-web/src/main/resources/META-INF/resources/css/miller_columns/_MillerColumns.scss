@@ -1,5 +1,7 @@
 @import 'atlas-variables';
 
+$resizerWidth: 2px;
+
 .miller-columns-row {
 	box-shadow: 0 0 0 1px $gray-400;
 	display: flex;
@@ -25,13 +27,25 @@
 		min-height: 10rem;
 		overflow-y: scroll;
 	}
+
+	&__resizer {
+		background-color: $gray-100;
+		cursor: ew-resize;
+		width: $resizerWidth;
+
+		&:hover,
+		&:focus-visible,
+		&--resizing {
+			background-color: $primary-l1;
+		}
+	}
 }
 
 .miller-columns-item {
 	border-bottom: 1px solid $gray-300;
 	cursor: pointer;
 	min-height: 4.5rem;
-	padding: 1rem;
+	padding: 1rem 0.25rem 1rem 0.1rem;
 	position: relative;
 
 	&:not(:first-child) {

@@ -49,6 +49,15 @@ public class KaleoDefinitionServiceWrapper
 
 	@Override
 	public KaleoDefinition getKaleoDefinition(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoDefinitionService.getKaleoDefinition(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public KaleoDefinition getKaleoDefinition(
 			String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

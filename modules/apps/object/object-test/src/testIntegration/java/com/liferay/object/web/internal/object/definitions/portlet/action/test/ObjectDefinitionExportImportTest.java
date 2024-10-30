@@ -72,7 +72,7 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 			"test-object-definition.site-default-locale.json",
 			"TESTOBJECTDEFINITIONPORTUGUESE", "TestObjectDefinitionptBR");
 
-		// Localized object definition re-imported for update
+		// Localized object definition update
 
 		testExportImport(
 			"test-object-definition.portuguese-default-locale.json",

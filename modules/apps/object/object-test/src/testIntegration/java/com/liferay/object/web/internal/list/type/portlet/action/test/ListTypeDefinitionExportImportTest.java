@@ -61,7 +61,7 @@ public class ListTypeDefinitionExportImportTest
 			"TESTLISTTYPEDEFINITIONPORTUGUESE",
 			"TestListTypeDefinitionPortuguese");
 
-		// Localized list type definition re-imported for update
+		// Localized list type definition update
 
 		testExportImport(
 			"test-list-type-definition.portuguese-locale.json",

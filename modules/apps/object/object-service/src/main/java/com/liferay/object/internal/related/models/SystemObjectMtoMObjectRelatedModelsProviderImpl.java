@@ -269,7 +269,10 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 					if ((groupIdColumn == null) ||
 						Objects.equals(
 							ObjectDefinitionConstants.SCOPE_COMPANY,
-							objectDefinition1.getScope())) {
+							objectDefinition1.getScope()) ||
+						Objects.equals(
+							ObjectDefinitionConstants.SCOPE_COMPANY,
+							objectDefinition2.getScope())) {
 
 						return null;
 					}
@@ -298,7 +301,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 
 	private GroupByStep _getUnrelatedModelsGroupByStep(
 			long companyId, FromStep fromStep, long groupId,
-			ObjectDefinition objectDefinition, long objectEntryId,
+			ObjectDefinition objectDefinition2, long objectEntryId,
 			long objectRelationshipId)
 		throws PortalException {
 
@@ -317,7 +320,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 			dynamicObjectRelationshipMappingTable =
 				new DynamicObjectRelationshipMappingTable(
 					objectDefinition1.getPKObjectFieldDBColumnName(),
-					objectDefinition.getPKObjectFieldDBColumnName(),
+					objectDefinition2.getPKObjectFieldDBColumnName(),
 					objectRelationship.getDBTableName());
 
 		return fromStep.from(
@@ -332,7 +335,10 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 					if ((groupIdColumn == null) ||
 						Objects.equals(
 							ObjectDefinitionConstants.SCOPE_COMPANY,
-							objectDefinition1.getScope())) {
+							objectDefinition1.getScope()) ||
+						Objects.equals(
+							ObjectDefinitionConstants.SCOPE_COMPANY,
+							objectDefinition2.getScope())) {
 
 						return null;
 					}
@@ -351,12 +357,13 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 												getPKObjectFieldDBColumnName());
 
 					Column<?, Long> primaryKeyColumn2 = _table.getColumn(
-						objectDefinition.getPKObjectFieldDBColumnName());
+						objectDefinition2.getPKObjectFieldDBColumnName());
 
 					return primaryKeyColumn2.notIn(
 						DSLQueryFactoryUtil.select(
 							dynamicObjectRelationshipMappingTable.getColumn(
-								objectDefinition.getPKObjectFieldDBColumnName())
+								objectDefinition2.
+									getPKObjectFieldDBColumnName())
 						).from(
 							dynamicObjectRelationshipMappingTable
 						).where(

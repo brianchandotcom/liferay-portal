@@ -94,8 +94,12 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 				Long ctCollectionId, Long modelClassNameId, Long modelClassPK)
 		throws Exception {
 
+		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
+			_ctCollectionHistoryProviderRegistry.getCTCollectionHistoryProvider(
+				modelClassNameId);
+
 		com.liferay.change.tracking.model.CTEntry ctEntry =
-			_ctEntryLocalService.fetchTimelineCTEntry(
+			ctCollectionHistoryProvider.getCTEntry(
 				ctCollectionId, modelClassNameId, modelClassPK);
 
 		if (ctEntry == null) {

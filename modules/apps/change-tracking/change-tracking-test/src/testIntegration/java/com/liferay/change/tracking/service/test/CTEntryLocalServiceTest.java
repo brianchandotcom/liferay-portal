@@ -12,6 +12,8 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
+import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
+import com.liferay.change.tracking.spi.history.CTCollectionHistoryProviderRegistry;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -79,9 +81,15 @@ public class CTEntryLocalServiceTest {
 				journalArticle, RandomTestUtil.randomString());
 		}
 
-		CTEntry ctEntry = _ctEntryLocalService.fetchTimelineCTEntry(
-			ctCollection.getCtCollectionId(),
-			_classNameLocalService.getClassNameId(JournalArticle.class),
+		long journalArticleClassNameId = _classNameLocalService.getClassNameId(
+			JournalArticle.class);
+
+		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
+			_ctCollectionHistoryProviderRegistry.getCTCollectionHistoryProvider(
+				journalArticleClassNameId);
+
+		CTEntry ctEntry = ctCollectionHistoryProvider.getCTEntry(
+			ctCollection.getCtCollectionId(), journalArticleClassNameId,
 			journalArticle.getId());
 
 		Assert.assertNotNull(ctEntry);
@@ -247,6 +255,10 @@ public class CTEntryLocalServiceTest {
 
 	@Inject
 	private static JournalFolderLocalService _journalFolderLocalService;
+
+	@Inject
+	private CTCollectionHistoryProviderRegistry
+		_ctCollectionHistoryProviderRegistry;
 
 	@DeleteAfterTestRun
 	private final List<CTCollection> _ctCollections = new ArrayList<>();

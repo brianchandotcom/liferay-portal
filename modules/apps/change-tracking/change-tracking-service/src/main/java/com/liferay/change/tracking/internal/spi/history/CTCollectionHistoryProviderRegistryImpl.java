@@ -7,6 +7,7 @@ package com.liferay.change.tracking.internal.spi.history;
 
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProviderRegistry;
+import com.liferay.change.tracking.spi.history.DefaultCTCollectionHistoryProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.model.ClassName;
@@ -35,7 +36,14 @@ public class CTCollectionHistoryProviderRegistryImpl
 			return null;
 		}
 
-		return _serviceTrackerMap.getService(className.getValue());
+		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
+			_serviceTrackerMap.getService(className.getValue());
+
+		if (ctCollectionHistoryProvider == null) {
+			return _getDefaultCTCollectionHistoryProvider();
+		}
+
+		return ctCollectionHistoryProvider;
 	}
 
 	@Activate
@@ -60,9 +68,21 @@ public class CTCollectionHistoryProviderRegistryImpl
 			});
 	}
 
+	private CTCollectionHistoryProvider<?>
+		_getDefaultCTCollectionHistoryProvider() {
+
+		if (_defaultctCollectionHistoryProvider == null) {
+			_defaultctCollectionHistoryProvider =
+				new DefaultCTCollectionHistoryProvider<>();
+		}
+
+		return _defaultctCollectionHistoryProvider;
+	}
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
+	private CTCollectionHistoryProvider<?> _defaultctCollectionHistoryProvider;
 	private volatile ServiceTrackerMap<String, CTCollectionHistoryProvider<?>>
 		_serviceTrackerMap;
 

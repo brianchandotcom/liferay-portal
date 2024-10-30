@@ -15,6 +15,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portlet.test.MockLiferayPortletContext;
 
 import java.util.Arrays;
 
@@ -204,7 +206,14 @@ public class DisplayPortletTest {
 
 		mockLiferayPortletRenderRequest.setParameter(
 			"doAsGroupId", String.valueOf(_group.getGroupId()));
-		mockLiferayPortletRenderRequest.setParameter("mvcPath", "");
+
+		String path = "/admin/view.jsp";
+
+		mockLiferayPortletRenderRequest.setParameter("mvcPath", path);
+		mockLiferayPortletRenderRequest.setAttribute(
+			MVCRenderConstants.
+				PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX + path,
+			new MockLiferayPortletContext(path));
 
 		return mockLiferayPortletRenderRequest;
 	}

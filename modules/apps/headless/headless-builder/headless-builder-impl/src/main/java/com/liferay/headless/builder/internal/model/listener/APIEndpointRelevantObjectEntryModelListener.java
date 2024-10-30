@@ -197,12 +197,10 @@ public class APIEndpointRelevantObjectEntryModelListener
 			Predicate predicate = _filterFactory.create(
 				filterString, apiEndpointObjectDefinition);
 
-			List<Map<String, Serializable>> valuesList =
-				_objectEntryLocalService.getValuesList(
-					objectEntry.getGroupId(), objectEntry.getCompanyId(),
-					objectEntry.getUserId(),
-					objectEntry.getObjectDefinitionId(), null, predicate, null,
-					-1, -1, null);
+			List<Long> valuesList = _objectEntryLocalService.getPrimaryKeyList(
+				objectEntry.getGroupId(), objectEntry.getCompanyId(),
+				objectEntry.getUserId(), objectEntry.getObjectDefinitionId(),
+				null, predicate, null, -1, -1, null);
 
 			if (!valuesList.isEmpty()) {
 				throw new ObjectEntryValuesException.InvalidObjectField(

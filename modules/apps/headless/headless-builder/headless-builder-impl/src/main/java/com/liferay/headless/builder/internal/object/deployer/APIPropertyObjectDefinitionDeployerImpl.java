@@ -20,6 +20,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -129,13 +130,14 @@ public class APIPropertyObjectDefinitionDeployerImpl
 			return;
 		}
 
-		List<Map<String, Serializable>> valuesList =
-			_objectEntryLocalService.getValuesList(
+		List<Map<String, Serializable>> valuesList = TransformUtil.transform(
+			_objectEntryLocalService.getPrimaryKeyList(
 				GroupThreadLocal.getGroupId(), objectDefinition.getCompanyId(),
 				objectDefinition.getUserId(),
 				objectDefinition.getObjectDefinitionId(), null,
 				_filterFactory.create("type eq null", objectDefinition), null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		for (Map<String, Serializable> values : valuesList) {
 			Collection<Serializable> collection = values.values();

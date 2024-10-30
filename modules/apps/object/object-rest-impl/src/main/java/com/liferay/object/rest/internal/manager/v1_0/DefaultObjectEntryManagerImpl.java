@@ -456,13 +456,14 @@ public class DefaultObjectEntryManagerImpl
 			).build(),
 			facets,
 			TransformUtil.transform(
-				objectEntryLocalService.getValuesList(
+				objectEntryLocalService.getPrimaryKeyList(
 					groupId, companyId, dtoConverterContext.getUserId(),
 					objectDefinition.getObjectDefinitionId(),
 					selectedObjectFieldNames, predicate, search, start, end,
 					sorts),
-				values -> _getObjectEntry(
-					dtoConverterContext, objectDefinition, values)),
+				primaryKey -> _getObjectEntry(
+					dtoConverterContext, objectDefinition,
+					objectEntryLocalService.getValues(primaryKey))),
 			pagination,
 			objectEntryLocalService.getValuesListCount(
 				groupId, companyId, dtoConverterContext.getUserId(),

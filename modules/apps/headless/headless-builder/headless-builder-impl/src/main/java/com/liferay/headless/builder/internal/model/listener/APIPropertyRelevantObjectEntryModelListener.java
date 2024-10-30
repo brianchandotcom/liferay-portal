@@ -239,7 +239,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 			}
 
 			if (ListUtil.isNotEmpty(
-					_objectEntryLocalService.getValuesList(
+					_objectEntryLocalService.getPrimaryKeyList(
 						objectEntry.getGroupId(), objectEntry.getCompanyId(),
 						objectEntry.getUserId(),
 						objectEntry.getObjectDefinitionId(), null,

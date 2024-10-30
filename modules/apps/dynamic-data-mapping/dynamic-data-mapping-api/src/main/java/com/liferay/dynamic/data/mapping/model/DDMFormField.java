@@ -41,8 +41,13 @@ public class DDMFormField implements Serializable {
 	public DDMFormField(DDMFormField ddmFormField) {
 		_properties = new LinkedHashMap<>(ddmFormField._properties);
 
-		setDDMFormFieldOptions(
-			new DDMFormFieldOptions(ddmFormField.getDDMFormFieldOptions()));
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+
+		if (ddmFormFieldOptions != null) {
+			setDDMFormFieldOptions(
+				new DDMFormFieldOptions(ddmFormFieldOptions));
+		}
 
 		_ddmFormFieldRules = new ArrayList<>(
 			ddmFormField._ddmFormFieldRules.size());
@@ -61,12 +66,35 @@ public class DDMFormField implements Serializable {
 				new DDMFormFieldValidation(ddmFormFieldValidation));
 		}
 
-		setFieldReference(ddmFormField.getFieldReference());
-		setLabel(new LocalizedValue(ddmFormField.getLabel()));
-		setPredefinedValue(
-			new LocalizedValue(ddmFormField.getPredefinedValue()));
-		setStyle(new LocalizedValue(ddmFormField.getStyle()));
-		setTip(new LocalizedValue(ddmFormField.getTip()));
+		String fieldReference = ddmFormField.getFieldReference();
+
+		if (fieldReference != null) {
+			setFieldReference(fieldReference);
+		}
+
+		LocalizedValue label = ddmFormField.getLabel();
+
+		if (label != null) {
+			setLabel(new LocalizedValue(label));
+		}
+
+		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
+
+		if (predefinedValue != null) {
+			setPredefinedValue(new LocalizedValue(predefinedValue));
+		}
+
+		LocalizedValue style = ddmFormField.getStyle();
+
+		if (style != null) {
+			setStyle(new LocalizedValue(style));
+		}
+
+		LocalizedValue tip = ddmFormField.getTip();
+
+		if (tip != null) {
+			setTip(new LocalizedValue(tip));
+		}
 
 		_nestedDDMFormFields = new ArrayList<>(
 			ddmFormField._nestedDDMFormFields.size());

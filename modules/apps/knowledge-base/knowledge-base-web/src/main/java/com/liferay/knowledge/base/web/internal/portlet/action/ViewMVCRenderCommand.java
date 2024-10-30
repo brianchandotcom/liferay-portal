@@ -5,11 +5,15 @@
 
 package com.liferay.knowledge.base.web.internal.portlet.action;
 
+import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -18,7 +22,10 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -43,15 +50,34 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		String rootPortletId = _getRootPortletId(renderRequest);
 
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(renderRequest));
+
+		originalHttpServletRequest.setAttribute(
+			CTTimelineKeys.CLASS_NAME, KBArticle.class.getName());
+
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 			return "/admin/view.jsp";
 		}
 
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+			KBArticle kbArticle = (KBArticle)renderRequest.getAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+
+			originalHttpServletRequest.setAttribute(
+				CTTimelineKeys.CLASS_PK, kbArticle.getKbArticleId());
+
 			return "/article/view.jsp";
 		}
 
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+			KBArticle kbArticle = (KBArticle)renderRequest.getAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+
+			originalHttpServletRequest.setAttribute(
+				CTTimelineKeys.CLASS_PK, kbArticle.getKbArticleId());
+
 			return "/display/view.jsp";
 		}
 
@@ -81,5 +107,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		return "/search/view.jsp";
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

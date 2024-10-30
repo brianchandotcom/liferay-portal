@@ -5,9 +5,12 @@
 
 package com.liferay.knowledge.base.web.internal.portlet.action;
 
+import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.web.internal.configuration.KBSearchPortletInstanceConfiguration;
 import com.liferay.knowledge.base.web.internal.configuration.KBSectionPortletInstanceConfiguration;
+import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -48,6 +51,21 @@ public class ViewKBArticleMVCRenderCommand implements MVCRenderCommand {
 
 		String rootPortletId = _getRootPortletId(renderRequest);
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(httpServletRequest);
+
+		originalHttpServletRequest.setAttribute(
+			CTTimelineKeys.CLASS_NAME, KBArticle.class.getName());
+
+		KBArticle kbArticle = (KBArticle)renderRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+
+		originalHttpServletRequest.setAttribute(
+			CTTimelineKeys.CLASS_PK, kbArticle.getKbArticleId());
+
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 			return "/admin/view_kb_article.jsp";
 		}
@@ -62,9 +80,6 @@ public class ViewKBArticleMVCRenderCommand implements MVCRenderCommand {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
 
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SEARCH)) {
 			try {

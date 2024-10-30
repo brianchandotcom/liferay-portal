@@ -195,6 +195,13 @@ public class DisplayPortletTest {
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			new MockLiferayPortletRenderRequest();
 
+		String path = "/admin/view.jsp";
+
+		mockLiferayPortletRenderRequest.setAttribute(
+			MVCRenderConstants.
+				PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX + path,
+			new MockLiferayPortletContext(path));
+
 		mockLiferayPortletRenderRequest.setAttribute(WebKeys.LAYOUT, _layout);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -206,14 +213,7 @@ public class DisplayPortletTest {
 
 		mockLiferayPortletRenderRequest.setParameter(
 			"doAsGroupId", String.valueOf(_group.getGroupId()));
-
-		String path = "/admin/view.jsp";
-
 		mockLiferayPortletRenderRequest.setParameter("mvcPath", path);
-		mockLiferayPortletRenderRequest.setAttribute(
-			MVCRenderConstants.
-				PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX + path,
-			new MockLiferayPortletContext(path));
 
 		return mockLiferayPortletRenderRequest;
 	}

@@ -12,6 +12,8 @@ import com.liferay.change.tracking.rest.client.pagination.Page;
 import com.liferay.change.tracking.rest.client.pagination.Pagination;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
+import com.liferay.change.tracking.spi.history.CTCollectionHistoryProviderRegistry;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -515,8 +517,12 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 			JournalTestUtil.updateArticle(journalArticle, title);
 		}
 
+		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
+			_ctCollectionHistoryProviderRegistry.getCTCollectionHistoryProvider(
+				_journalArticleClassNameId);
+
 		com.liferay.change.tracking.model.CTEntry serviceBuilderCTEntry =
-			_ctEntryLocalService.fetchTimelineCTEntry(
+			ctCollectionHistoryProvider.getCTEntry(
 				ctCollectionId, _journalArticleClassNameId,
 				journalArticle.getId());
 
@@ -538,6 +544,10 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CTCollectionHistoryProviderRegistry
+		_ctCollectionHistoryProviderRegistry;
 
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;

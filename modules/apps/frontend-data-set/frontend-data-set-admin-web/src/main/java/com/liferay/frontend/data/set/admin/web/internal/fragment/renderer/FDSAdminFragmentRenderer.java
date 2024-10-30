@@ -74,6 +74,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -362,7 +363,11 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			JSONUtil.toJSONArray(
 				_getSortedRelatedObjectEntries(
 					dataSetObjectDefinition, dataSetObjectEntry,
-					"creationActionsOrder", "dataSetToCreationDataSetActions"),
+					"creationActionsOrder",
+					(ObjectEntry objectEntry) ->
+						ActionType.getActionType(objectEntry) ==
+							ActionType.CREATION,
+					"dataSetToDataSetActions"),
 				(ObjectEntry objectEntry) -> {
 					Map<String, Object> properties =
 						objectEntry.getProperties();
@@ -386,7 +391,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					).put(
 						"label", properties.get("label")
 					).put(
-						"target", properties.get("type")
+						"target", properties.get("target")
 					);
 				}));
 	}
@@ -792,7 +797,9 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		return JSONUtil.toJSONArray(
 			_getSortedRelatedObjectEntries(
 				dataSetObjectDefinition, dataSetObjectEntry, "itemActionsOrder",
-				"dataSetToItemDataSetActions"),
+				(ObjectEntry objectEntry) ->
+					ActionType.getActionType(objectEntry) == ActionType.ITEM,
+				"dataSetToDataSetActions"),
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
@@ -828,7 +835,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				).put(
 					"label", properties.get("label")
 				).put(
-					"target", properties.get("type")
+					"target", properties.get("target")
 				);
 			});
 	}
@@ -950,6 +957,17 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			ObjectEntry dataSetObjectEntry, String relationshipName)
 		throws Exception {
 
+		return _getRelatedObjectEntries(
+			dataSetObjectDefinition, dataSetObjectEntry, relationshipName,
+			null);
+	}
+
+	private Collection<ObjectEntry> _getRelatedObjectEntries(
+			ObjectDefinition dataSetObjectDefinition,
+			ObjectEntry dataSetObjectEntry, String relationshipName,
+			Predicate<ObjectEntry> predicate)
+		throws Exception {
+
 		DTOConverterContext dtoConverterContext =
 			new DefaultDTOConverterContext(
 				false, null, null, null, null,
@@ -966,7 +984,14 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				dataSetObjectEntry.getId(), relationshipName,
 				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
-		return relatedObjectEntriesPage.getItems();
+		Collection<ObjectEntry> objectEntries =
+			relatedObjectEntriesPage.getItems();
+
+		if (predicate != null) {
+			objectEntries.removeIf(objectEntry -> !predicate.test(objectEntry));
+		}
+
+		return objectEntries;
 	}
 
 	private JSONArray _getSelectedItemsJSONArray(
@@ -1006,7 +1031,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			ObjectDefinition dataSetObjectDefinition,
 			ObjectEntry dataSetObjectEntry,
 			String dataSetObjectEntryComparatorIdsPropertyKey,
-			String... relationshipNames)
+			Predicate<ObjectEntry> predicate, String... relationshipNames)
 		throws Exception {
 
 		Set<ObjectEntry> objectEntries = new TreeSet<>(
@@ -1023,10 +1048,23 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			objectEntries.addAll(
 				_getRelatedObjectEntries(
 					dataSetObjectDefinition, dataSetObjectEntry,
-					relationshipName));
+					relationshipName, predicate));
 		}
 
 		return objectEntries;
+	}
+
+	private Set<ObjectEntry> _getSortedRelatedObjectEntries(
+			ObjectDefinition dataSetObjectDefinition,
+			ObjectEntry dataSetObjectEntry,
+			String dataSetObjectEntryComparatorIdsPropertyKey,
+			String... relationshipNames)
+		throws Exception {
+
+		return _getSortedRelatedObjectEntries(
+			dataSetObjectDefinition, dataSetObjectEntry,
+			dataSetObjectEntryComparatorIdsPropertyKey, null,
+			relationshipNames);
 	}
 
 	private JSONArray _getSortsJSONArray(
@@ -1194,6 +1232,39 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		}
 
 		private final List<Long> _ids;
+
+	}
+
+	private enum ActionType {
+
+		CREATION("creation"), ITEM("item");
+
+		public static ActionType getActionType(ObjectEntry objectEntry) {
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			return ActionType.parse(String.valueOf(properties.get("type")));
+		}
+
+		public static ActionType parse(String type) {
+			for (ActionType actionType : values()) {
+				if (StringUtil.equalsIgnoreCase(type, actionType.name())) {
+					return actionType;
+				}
+			}
+
+			return null;
+		}
+
+		@Override
+		public String toString() {
+			return _string;
+		}
+
+		private ActionType(String string) {
+			_string = string;
+		}
+
+		private final String _string;
 
 	}
 

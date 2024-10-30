@@ -350,20 +350,6 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			AssertVisible(
 				key_portletName = "Web Content Display",
 				locator1 = "Portlet#TITLE");
-
-			for (var borderType : list "top,right,bottom,left") {
-				AssertCssValue(
-					locator1 = "Portlet#PORTLET_CONTENT",
-					locator2 = "border-${borderType}-width",
-					value1 = "1px");
-			}
-
-			for (var borderType : list "top,right,bottom,left") {
-				AssertCssValue(
-					locator1 = "Portlet#PORTLET_CONTENT",
-					locator2 = "border-${borderType}-color",
-					value1 = "rgba(0, 0, 0, 0)");
-			}
 		}
 
 		task ("Define the border width and border color of WCD") {

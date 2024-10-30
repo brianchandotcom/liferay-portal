@@ -26,17 +26,21 @@ public class ProblemProviderImpl implements ProblemProvider {
 
 	@Override
 	public Problem getProblem(Throwable throwable) {
-		Class<? extends Throwable> clazz = throwable.getClass();
+		while (throwable != null) {
+			Class<? extends Throwable> clazz = throwable.getClass();
 
-		ProblemMapper<Throwable> problemMapper =
-			(ProblemMapper<Throwable>)_serviceTrackerMap.getService(
-				clazz.getName());
+			ProblemMapper<Throwable> problemMapper =
+				(ProblemMapper<Throwable>)_serviceTrackerMap.getService(
+					clazz.getName());
 
-		if (problemMapper == null) {
-			return null;
+			if (problemMapper != null) {
+				return problemMapper.getProblem(throwable);
+			}
+
+			throwable = throwable.getCause();
 		}
 
-		return problemMapper.getProblem(throwable);
+		return null;
 	}
 
 	@Activate

@@ -96,15 +96,17 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 								<li class="facet-value">
 									<div class="custom-checkbox custom-control">
 										<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
-											<input
-												<%= bucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
-												class="custom-control-input facet-term"
-												data-term-id="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getFilterValue()) %>"
-												disabled
-												id="<portlet:namespace />term_<%= i %>"name="<portlet:namespace />term_<%= i %>"
-												onChange="Liferay.Search.FacetUtil.changeSelection(event);"
-												type="checkbox"
-											/>
+											<liferay-ui:csp>
+												<input
+													<%= bucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
+													class="custom-control-input facet-term"
+													data-term-id="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getFilterValue()) %>"
+													disabled
+													id="<portlet:namespace />term_<%= i %>"name="<portlet:namespace />term_<%= i %>"
+													onChange="Liferay.Search.FacetUtil.changeSelection(event);"
+													type="checkbox"
+												/>
+											</liferay-ui:csp>
 
 											<span class="custom-control-label term-name <%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
 												<span class="custom-control-label-text">

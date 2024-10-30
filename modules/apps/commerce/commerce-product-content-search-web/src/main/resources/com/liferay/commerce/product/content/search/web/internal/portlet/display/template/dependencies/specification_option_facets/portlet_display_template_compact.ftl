@@ -24,19 +24,21 @@
 			<#if entries?has_content>
 				<#list entries as entry>
 					<li class="facet-value">
-						<button
-							class="btn btn-link btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} term-name"
-							data-term-id="${entry.getDisplayName()}"
-							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
-						>
-							${htmlUtil.escape(entry.getDisplayName())}
+						<@liferay_ui.csp>
+							<button
+								class="btn btn-link btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} term-name"
+								data-term-id="${entry.getDisplayName()}"
+								onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+							>
+								${htmlUtil.escape(entry.getDisplayName())}
 
-							<#if entry.isFrequencyVisible()>
-								<small class="term-count">
-									(${entry.getFrequency()})
-								</small>
-							</#if>
-						</button>
+								<#if entry.isFrequencyVisible()>
+									<small class="term-count">
+										(${entry.getFrequency()})
+									</small>
+								</#if>
+							</button>
+						</@liferay_ui.csp>
 					</li>
 				</#list>
 			</#if>

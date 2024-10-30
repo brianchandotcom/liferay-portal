@@ -23,20 +23,22 @@
 		<#if entries?has_content>
 			<div class="label-container">
 				<#list entries as entry>
-					<button
-						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
-						data-term-id="${entry.getTerm()}"
-						name="${name + entry?index}"
-						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
-						type="button"
-					>
-						<span class="label-item label-item-expand">
-							${htmlUtil.escape(entry.getTerm())}
-							<#if showFrequencies>
-								(${entry.getFrequency()})
-							</#if>
-						</span>
-					</button>
+					<@liferay_ui.csp>
+						<button
+							class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
+							data-term-id="${entry.getTerm()}"
+							name="${name + entry?index}"
+							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+							type="button"
+						>
+							<span class="label-item label-item-expand">
+								${htmlUtil.escape(entry.getTerm())}
+								<#if showFrequencies>
+									(${entry.getFrequency()})
+								</#if>
+							</span>
+						</button>
+					</@liferay_ui.csp>
 				</#list>
 			</div>
 		</#if>

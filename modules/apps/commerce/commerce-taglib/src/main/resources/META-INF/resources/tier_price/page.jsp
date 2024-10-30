@@ -62,13 +62,15 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 						BigDecimal savings = priceTotal.subtract(total);
 					%>
 
-						<tr class="multiples-row" onclick="<%= randomNamespace %>setQuantity('<%= minQuantity %>');">
-							<td class="price-point-column"><%= minQuantity %></td>
-							<td class="msrp-column table-cell-expand"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), priceTotal, themeDisplay.getLocale()) %></td>
-							<td class="discount-column table-cell-expand"><%= commercePriceFormatter.format(discountPercent, themeDisplay.getLocale()) %> %</td>
-							<td class="savings-column table-cell-expand"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), savings, themeDisplay.getLocale()) %></td>
-							<td class="table-cell-expand total-column"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), total, themeDisplay.getLocale()) %></td>
-						</tr>
+						<liferay-ui:csp>
+							<tr class="multiples-row" onclick="<%= randomNamespace %>setQuantity('<%= minQuantity %>');">
+								<td class="price-point-column"><%= minQuantity %></td>
+								<td class="msrp-column table-cell-expand"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), priceTotal, themeDisplay.getLocale()) %></td>
+								<td class="discount-column table-cell-expand"><%= commercePriceFormatter.format(discountPercent, themeDisplay.getLocale()) %> %</td>
+								<td class="savings-column table-cell-expand"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), savings, themeDisplay.getLocale()) %></td>
+								<td class="table-cell-expand total-column"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), total, themeDisplay.getLocale()) %></td>
+							</tr>
+						</liferay-ui:csp>
 
 					<%
 					}

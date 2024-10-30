@@ -99,15 +99,17 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 													<li class="facet-value">
 														<div class="custom-checkbox custom-control">
 															<label for="<portlet:namespace />term_<%= i %>">
-																<input
-																	<%= cpSpecificationOptionsSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
-																	class="custom-control-input facet-term"
-																	data-term-id="<%= HtmlUtil.escapeAttribute(cpSpecificationOptionsSearchFacetTermDisplayContext.getDisplayName()) %>"
-																	id="<portlet:namespace />term_<%= parameterName + i %>"
-																	name="<portlet:namespace />term_<%= parameterName + i %>"
-																	onChange="Liferay.Search.FacetUtil.changeSelection(event);"
-																	type="checkbox"
-																/>
+																<liferay-ui:csp>
+																	<input
+																		<%= cpSpecificationOptionsSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
+																		class="custom-control-input facet-term"
+																		data-term-id="<%= HtmlUtil.escapeAttribute(cpSpecificationOptionsSearchFacetTermDisplayContext.getDisplayName()) %>"
+																		id="<portlet:namespace />term_<%= parameterName + i %>"
+																		name="<portlet:namespace />term_<%= parameterName + i %>"
+																		onChange="Liferay.Search.FacetUtil.changeSelection(event);"
+																		type="checkbox"
+																	/>
+																</liferay-ui:csp>
 
 																<span class="custom-control-label term-name <%= cpSpecificationOptionsSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
 																	<span class="custom-control-label-text"><%= HtmlUtil.escape(cpSpecificationOptionsSearchFacetTermDisplayContext.getDisplayName()) %></span>

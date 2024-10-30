@@ -53,7 +53,9 @@ String samlSubjectScreenName = (String)request.getAttribute(SamlWebKeys.SAML_SUB
 				</aui:fieldset>
 			</c:when>
 			<c:otherwise>
-				<a onClick="this.closest('form').submit(); return false;"><liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escapeAttribute(samlSubjectScreenName) + "</strong>" %>' key="not-x" /></a>
+				<liferay-ui:csp>
+					<a onClick="this.closest('form').submit(); return false;"><liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escapeAttribute(samlSubjectScreenName) + "</strong>" %>' key="not-x" /></a>
+				</liferay-ui:csp>
 			</c:otherwise>
 		</c:choose>
 	</aui:form>

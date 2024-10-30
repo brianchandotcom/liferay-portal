@@ -502,6 +502,46 @@ while (manageableCalendarsIterator.hasNext()) {
 </aui:form>
 
 <aui:script>
+	for (const container of ['startDateContainer', 'endDateContainer']
+		.map((id) => document.getElementById('<portlet:namespace />' + id))
+		.filter(Boolean)) {
+		const callback = (mutationList, observer) => {
+			for (const mutation of mutationList) {
+				const classMutation =
+					mutation.type === 'attributes' &&
+					mutation.attributeName === 'class';
+
+				if (
+					classMutation &&
+					mutation.target.classList.contains('has-success')
+				) {
+					wrapper.classList.remove('has-success');
+				}
+
+				if (
+					classMutation &&
+					mutation.target.classList.contains('has-error')
+				) {
+					const inputDate = wrapper.querySelector('.lfr-input-date');
+					const formGroupItem = inputDate.closest('.form-group-item');
+
+					formGroupItem.classList.add('has-error');
+					formGroupItem.classList.remove('has-success');
+					formGroupItem.classList.remove('has-warning');
+
+					wrapper.classList.remove('has-error');
+				}
+			}
+		};
+
+		const config = {attributes: true, childList: false, subtree: false};
+		const observer = new MutationObserver(callback);
+		const wrapper = container.querySelector('.input-long-wrapper');
+
+		observer.observe(wrapper, config);
+	}
+</aui:script>
+<aui:script>
 	function <portlet:namespace />filterCalendarBookings(calendarBooking) {
 		return calendarBooking.calendarBookingId !== '<%= calendarBookingId %>';
 	}

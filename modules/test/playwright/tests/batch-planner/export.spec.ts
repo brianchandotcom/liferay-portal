@@ -305,7 +305,7 @@ test('can export as JSON with all field types mapped', async ({
 			},
 		});
 
-	apiHelpers.data.unshift({
+	apiHelpers.data.push({
 		id: objectDefinition.id,
 		type: 'objectDefinition',
 	});
@@ -326,7 +326,7 @@ test('can export as JSON with all field types mapped', async ({
 		'c/stocks'
 	);
 
-	apiHelpers.data.unshift({
+	apiHelpers.data.push({
 		id: objectEntry.customAttachment.id,
 		type: 'document',
 	});

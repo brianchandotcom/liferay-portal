@@ -14,6 +14,7 @@ export class CalendarWidgetPage {
 	readonly calendarWidget: Locator;
 	readonly closeConfigurationButton: Locator;
 	readonly configurationMenuItem: Locator;
+	readonly endDate: Locator;
 	readonly endTime: Locator;
 	readonly modalRecurrencePage: ModalRecurrencePage;
 	readonly miniCalendarBase: Locator;
@@ -24,6 +25,7 @@ export class CalendarWidgetPage {
 	readonly publishEventButton: Locator;
 	readonly repeatCheckbox: Locator;
 	readonly saveConfigurationButton: Locator;
+	readonly startDate: Locator;
 	readonly startTime: Locator;
 	readonly timeZoneDropdown: Locator;
 	readonly title: Locator;
@@ -48,9 +50,13 @@ export class CalendarWidgetPage {
 			exact: true,
 			name: 'Configuration',
 		});
+		this.endDate = page
+			.frameLocator('iframe')
+			.getByLabel('Ends Required', {exact: true});
 		this.endTime = page
 			.frameLocator('iframe')
-			.getByLabel('Ends', {exact: true});
+			.locator('input[type="time"]')
+			.last();
 		this.modalRecurrencePage = new ModalRecurrencePage(page);
 		this.miniCalendarBase = page.locator('.yui3-calendarbase');
 		this.miniCalendarGrid = page.locator('.yui3-calendar-grid');
@@ -73,9 +79,13 @@ export class CalendarWidgetPage {
 		this.saveConfigurationButton = page
 			.frameLocator('iframe')
 			.getByRole('button', {exact: true, name: 'Save'});
+		this.startDate = page
+			.frameLocator('iframe')
+			.getByLabel('Starts Required', {exact: true});
 		this.startTime = page
 			.frameLocator('iframe')
-			.getByLabel('Starts', {exact: true});
+			.locator('input[type="time"]')
+			.first();
 		this.timeZoneDropdown = page
 			.frameLocator('iframe')
 			.getByLabel('Time Zone', {exact: true});
@@ -97,7 +107,7 @@ export class CalendarWidgetPage {
 		await this.allDayCheckbox.setChecked(allDay);
 
 		if (dateEnd) {
-			await this.endTime.fill(dateEnd);
+			await this.endDate.fill(dateEnd);
 		}
 
 		if (title) {

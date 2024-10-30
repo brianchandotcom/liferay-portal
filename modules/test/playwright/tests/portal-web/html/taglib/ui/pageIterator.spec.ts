@@ -56,7 +56,7 @@ test(
 		});
 
 		await test.step('Check aria-label is being translated', async () => {
-			await page.goto('/es/search?q=png');
+			await page.goto('/es/web/guest/search?q=png');
 
 			await page
 				.getByRole('heading', {name: 'Barra de búsqueda'})

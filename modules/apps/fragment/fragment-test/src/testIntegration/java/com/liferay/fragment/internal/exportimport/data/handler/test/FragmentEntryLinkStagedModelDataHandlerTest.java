@@ -32,8 +32,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -79,6 +81,60 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		super.setUp();
 
 		_layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
+	}
+
+	@Test
+	@TestInfo("LPD-40868")
+	public void testFragmentEntryLinkWithFragmentEntryInCompanyGroup()
+		throws Exception {
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(companyGroup.getGroupId());
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				null, TestPropsValues.getUserId(), companyGroup.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), false, null, null, 0, false,
+				FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					companyGroup.getGroupId()));
+
+		StagedModel stagedModel =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, 0, StringPool.BLANK,
+				FragmentConstants.TYPE_COMPONENT,
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		try {
+			exportImportStagedModel(stagedModel);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+
+		StagedModel importedStagedModel = getStagedModel(
+			stagedModel.getUuid(), liveGroup);
+
+		FragmentEntryLink importedFragmentEntryLink =
+			(FragmentEntryLink)importedStagedModel;
+
+		Assert.assertEquals(
+			fragmentEntry.getFragmentEntryId(),
+			importedFragmentEntryLink.getFragmentEntryId());
 	}
 
 	@Test
@@ -480,6 +536,9 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private JSONFactory _jsonFactory;

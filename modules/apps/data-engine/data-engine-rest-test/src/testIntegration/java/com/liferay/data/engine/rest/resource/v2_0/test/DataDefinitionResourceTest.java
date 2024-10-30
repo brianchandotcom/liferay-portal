@@ -127,6 +127,16 @@ public class DataDefinitionResourceTest
 
 	@Override
 	@Test
+	public DataDefinition
+			testDeleteSiteDataDefinitionByContentTypeByExternalReferenceCode_addDataDefinition()
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinitionByContentType(
+			testGroup.getGroupId(), _CONTENT_TYPE, randomDataDefinition());
+	}
+
+	@Override
+	@Test
 	public void testGetDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception {
 
@@ -148,6 +158,16 @@ public class DataDefinitionResourceTest
 				postDataDefinition.getId(), RoleConstants.GUEST);
 
 		Assert.assertNotNull(page);
+	}
+
+	@Override
+	@Test
+	public DataDefinition
+			testGetSiteDataDefinitionByContentTypeByExternalReferenceCode_addDataDefinition()
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinitionByContentType(
+			testGroup.getGroupId(), _CONTENT_TYPE, randomDataDefinition());
 	}
 
 	@Override
@@ -288,6 +308,31 @@ public class DataDefinitionResourceTest
 							"contentType", "\"" + _CONTENT_TYPE + "\""
 						).put(
 							"dataDefinitionKey",
+							"\"" + RandomTestUtil.randomString() + "\""
+						).put(
+							"siteKey",
+							"\"" + irrelevantGroup.getGroupId() + "\""
+						).build(),
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetSiteDataDefinitionByContentTypeByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"dataDefinitionByContentTypeByExternalReferenceCode",
+						HashMapBuilder.<String, Object>put(
+							"contentType", "\"" + _CONTENT_TYPE + "\""
+						).put(
+							"externalReferenceCode",
 							"\"" + RandomTestUtil.randomString() + "\""
 						).put(
 							"siteKey",
@@ -703,6 +748,26 @@ public class DataDefinitionResourceTest
 
 		assertEquals(randomDataDefinition, getDataDefinition);
 		assertValid(getDataDefinition);
+	}
+
+	@Override
+	@Test
+	public DataDefinition
+			testPutSiteDataDefinitionByContentTypeByExternalReferenceCode_addDataDefinition()
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinitionByContentType(
+			testGroup.getGroupId(), _CONTENT_TYPE, randomDataDefinition());
+	}
+
+	@Override
+	@Test
+	public DataDefinition
+			testPutSiteDataDefinitionByContentTypeByExternalReferenceCode_createDataDefinition()
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinitionByContentType(
+			testGroup.getGroupId(), _CONTENT_TYPE, randomDataDefinition());
 	}
 
 	@Rule

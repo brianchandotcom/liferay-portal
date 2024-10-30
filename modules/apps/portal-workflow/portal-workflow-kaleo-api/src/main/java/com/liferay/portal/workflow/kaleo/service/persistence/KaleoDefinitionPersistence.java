@@ -962,6 +962,59 @@ public interface KaleoDefinitionPersistence
 	public int countByC_S_A(long companyId, String scope, boolean active);
 
 	/**
+	 * Returns the kaleo definition where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching kaleo definition
+	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
+	 */
+	public KaleoDefinition findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchDefinitionException;
+
+	/**
+	 * Returns the kaleo definition where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
+	 */
+	public KaleoDefinition fetchByERC_C(
+		String externalReferenceCode, long companyId);
+
+	/**
+	 * Returns the kaleo definition where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
+	 */
+	public KaleoDefinition fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
+
+	/**
+	 * Removes the kaleo definition where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the kaleo definition that was removed
+	 */
+	public KaleoDefinition removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchDefinitionException;
+
+	/**
+	 * Returns the number of kaleo definitions where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching kaleo definitions
+	 */
+	public int countByERC_C(String externalReferenceCode, long companyId);
+
+	/**
 	 * Caches the kaleo definition in the entity cache if it is enabled.
 	 *
 	 * @param kaleoDefinition the kaleo definition

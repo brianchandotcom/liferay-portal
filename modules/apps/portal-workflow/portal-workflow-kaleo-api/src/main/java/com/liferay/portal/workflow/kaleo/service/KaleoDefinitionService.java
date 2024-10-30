@@ -47,8 +47,9 @@ public interface KaleoDefinitionService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoDefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the kaleo definition remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link KaleoDefinitionServiceUtil} if injection and service tracking are not available.
 	 */
 	public KaleoDefinition addKaleoDefinition(
-			String name, String title, String description, String content,
-			String scope, int version, ServiceContext serviceContext)
+			String externalReferenceCode, String name, String title,
+			String description, String content, String scope, int version,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -82,8 +83,8 @@ public interface KaleoDefinitionService extends BaseService {
 		throws PortalException;
 
 	public KaleoDefinition updateKaleoDefinition(
-			long kaleoDefinitionId, String title, String description,
-			String content, ServiceContext serviceContext)
+			String externalReferenceCode, long kaleoDefinitionId, String title,
+			String description, String content, ServiceContext serviceContext)
 		throws PortalException;
 
 }

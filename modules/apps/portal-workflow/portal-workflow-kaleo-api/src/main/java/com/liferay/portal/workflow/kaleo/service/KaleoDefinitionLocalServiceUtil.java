@@ -80,13 +80,14 @@ public class KaleoDefinitionLocalServiceUtil {
 	}
 
 	public static KaleoDefinition addKaleoDefinition(
-			String name, String title, String description, String content,
-			String scope, int version,
+			String externalReferenceCode, String name, String title,
+			String description, String content, String scope, int version,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addKaleoDefinition(
-			name, title, description, content, scope, version, serviceContext);
+			externalReferenceCode, name, title, description, content, scope,
+			version, serviceContext);
 	}
 
 	/**
@@ -270,6 +271,13 @@ public class KaleoDefinitionLocalServiceUtil {
 		return getService().fetchKaleoDefinition(name, serviceContext);
 	}
 
+	public static KaleoDefinition fetchKaleoDefinitionByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchKaleoDefinitionByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -302,6 +310,14 @@ public class KaleoDefinitionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getKaleoDefinition(name, serviceContext);
+	}
+
+	public static KaleoDefinition getKaleoDefinitionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getKaleoDefinitionByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static List<KaleoDefinition> getKaleoDefinitions(
@@ -435,13 +451,14 @@ public class KaleoDefinitionLocalServiceUtil {
 	}
 
 	public static KaleoDefinition updatedKaleoDefinition(
-			long kaleoDefinitionId, String title, String description,
-			String content,
+			String externalReferenceCode, long kaleoDefinitionId, String title,
+			String description, String content,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updatedKaleoDefinition(
-			kaleoDefinitionId, title, description, content, serviceContext);
+			externalReferenceCode, kaleoDefinitionId, title, description,
+			content, serviceContext);
 	}
 
 	/**

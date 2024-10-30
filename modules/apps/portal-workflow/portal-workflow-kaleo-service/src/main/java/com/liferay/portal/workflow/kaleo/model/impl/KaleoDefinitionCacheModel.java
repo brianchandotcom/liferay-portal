@@ -69,12 +69,14 @@ public class KaleoDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", ctCollectionId=");
 		sb.append(ctCollectionId);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", kaleoDefinitionId=");
 		sb.append(kaleoDefinitionId);
 		sb.append(", groupId=");
@@ -114,6 +116,14 @@ public class KaleoDefinitionCacheModel
 
 		kaleoDefinitionImpl.setMvccVersion(mvccVersion);
 		kaleoDefinitionImpl.setCtCollectionId(ctCollectionId);
+
+		if (externalReferenceCode == null) {
+			kaleoDefinitionImpl.setExternalReferenceCode("");
+		}
+		else {
+			kaleoDefinitionImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		kaleoDefinitionImpl.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoDefinitionImpl.setGroupId(groupId);
 		kaleoDefinitionImpl.setCompanyId(companyId);
@@ -192,6 +202,7 @@ public class KaleoDefinitionCacheModel
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 
 		kaleoDefinitionId = objectInput.readLong();
 
@@ -221,6 +232,13 @@ public class KaleoDefinitionCacheModel
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(ctCollectionId);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 
 		objectOutput.writeLong(kaleoDefinitionId);
 
@@ -284,6 +302,7 @@ public class KaleoDefinitionCacheModel
 
 	public long mvccVersion;
 	public long ctCollectionId;
+	public String externalReferenceCode;
 	public long kaleoDefinitionId;
 	public long groupId;
 	public long companyId;

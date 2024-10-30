@@ -232,6 +232,8 @@ public class RepositoryBrowserServletTest {
 			WebKeys.CURRENT_URL, RandomTestUtil.randomString());
 		mockMultipartHttpServletRequest.setAttribute(
 			WebKeys.USER, TestPropsValues.getUser());
+		mockMultipartHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
 		mockMultipartHttpServletRequest.setMethod("PUT");
 		mockMultipartHttpServletRequest.setParameter("name", name);
 		mockMultipartHttpServletRequest.setParameter(
@@ -253,6 +255,8 @@ public class RepositoryBrowserServletTest {
 
 		mockMultipartHttpServletRequest.addFile(mockMultipartFile);
 		mockMultipartHttpServletRequest.setContent(_BYTES);
+		mockMultipartHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
 
 		return UploadTestUtil.createUploadPortletRequest(
 			UploadTestUtil.createUploadServletRequest(

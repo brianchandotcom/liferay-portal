@@ -67,10 +67,10 @@ test('can create all-day calendar event with different time zone', async ({
 }) => {
 	await calendarWidgetPage.addEvent(true, null, null);
 
-	const endTime = await calendarWidgetPage.endTime.inputValue();
-	const startTime = await calendarWidgetPage.startTime.inputValue();
+	const endDate = await calendarWidgetPage.endDate.inputValue();
+	const startDate = await calendarWidgetPage.startDate.inputValue();
 
-	await expect(endTime).toEqual(startTime);
+	await expect(endDate).toEqual(startDate);
 });
 
 test('can update an event with recurrence', async ({calendarWidgetPage}) => {
@@ -195,4 +195,95 @@ test('can create calendar event different start/end dates ensuring that the end 
 			} as const)
 		)
 	);
+});
+
+test('can see calendar event inputs alerts', async ({
+	calendarWidgetPage,
+	page,
+}) => {
+	await calendarWidgetPage.addEventButton.click();
+
+	await page.waitForLoadState('networkidle');
+
+	await calendarWidgetPage.startDate.fill('');
+
+	await calendarWidgetPage.startDate.blur();
+
+	await expect(
+		page
+			.frameLocator('iframe')
+			.getByText(
+				'This field will be automatically filled if it is empty or incomplete.'
+			)
+	).toBeVisible();
+
+	await calendarWidgetPage.startDate.fill('abc');
+
+	await calendarWidgetPage.startDate.blur();
+
+	await expect(
+		page.frameLocator('iframe').getByText('Please enter a valid date.')
+	).toBeVisible();
+
+	await calendarWidgetPage.startDate.fill('10/10/2010');
+
+	await calendarWidgetPage.startDate.blur();
+
+	await expect(
+		page.frameLocator('iframe').getByText('Please enter a valid date.')
+	).toBeHidden();
+
+	await expect(
+		page
+			.frameLocator('iframe')
+			.getByText(
+				'This field will be automatically filled if it is empty or incomplete.'
+			)
+	).toBeHidden();
+
+	await calendarWidgetPage.startTime.focus();
+
+	await page.keyboard.press('Backspace');
+
+	await calendarWidgetPage.startTime.blur();
+
+	await expect(
+		page.frameLocator('iframe').getByText('Please enter a valid time')
+	).toBeVisible();
+
+	await calendarWidgetPage.startTime.evaluate((startTime) => {
+		(startTime as HTMLInputElement).value = '';
+	});
+
+	await calendarWidgetPage.startTime.focus();
+
+	await calendarWidgetPage.startTime.blur();
+
+	await expect(
+		page
+			.frameLocator('iframe')
+			.getByText(
+				'This field will be automatically filled if it is empty or incomplete.'
+			)
+	).toBeVisible();
+
+	await calendarWidgetPage.startTime.evaluate((startTime) => {
+		(startTime as HTMLInputElement).value = '14:30';
+	});
+
+	await calendarWidgetPage.startTime.focus();
+
+	await calendarWidgetPage.startTime.blur();
+
+	await expect(
+		page.frameLocator('iframe').getByText('Please enter a valid time.')
+	).toBeHidden();
+
+	await expect(
+		page
+			.frameLocator('iframe')
+			.getByText(
+				'This field will be automatically filled if it is empty or incomplete.'
+			)
+	).toBeHidden();
 });

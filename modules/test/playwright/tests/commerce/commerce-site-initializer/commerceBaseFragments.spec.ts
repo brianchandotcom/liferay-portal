@@ -15,7 +15,6 @@ import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {liferayConfig} from '../../../liferay.config';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {classicCommerceSetUp} from '../utils/commerce';
 
@@ -74,106 +73,82 @@ test('LPD-35323 Multishipping tab displays correctly when enabled', async ({
 	commerceAdminChannelDetailsPage,
 	commerceAdminChannelsPage,
 	page,
-	systemSettingsPage,
 }) => {
 	test.setTimeout(180000);
 
-	try {
-		await systemSettingsPage.goToSystemSetting(
-			'Feature Flags',
-			'Developer'
-		);
+	const {catalog, channel, site} = await classicCommerceSetUp(
+		apiHelpers,
+		getRandomString()
+	);
 
-		const featureFlagEnabled = await page
-			.getByLabel('COMMERCE-9410')
-			.isChecked();
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
 
-		if (!featureFlagEnabled) {
-			await page.getByLabel('COMMERCE-9410').click();
-		}
+	apiHelpers.data.push({id: account.id, type: 'account'});
 
-		const {catalog, channel, site} = await classicCommerceSetUp(
-			apiHelpers,
-			getRandomString()
-		);
-
-		const account = await apiHelpers.headlessAdminUser.postAccount({
-			name: getRandomString(),
-			type: 'business',
-		});
-
-		apiHelpers.data.push({id: account.id, type: 'account'});
-
-		const product =
-			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-				catalogId: catalog.id,
-				skus: [
-					{
-						cost: 0,
-						price: 20,
-						published: true,
-						purchasable: true,
-						sku: 'Sku' + getRandomInt(),
-					},
-				],
-			});
-
-		const sku = product.skus[0];
-
-		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		skus: [
 			{
-				accountId: account.id,
-				cartItems: [
-					{
-						quantity: 1,
-						skuId: sku.id,
-					},
-				],
+				cost: 0,
+				price: 20,
+				published: true,
+				purchasable: true,
+				sku: 'Sku' + getRandomInt(),
 			},
-			channel.id
-		);
+		],
+	});
 
-		const orderDetailsPageURL =
-			liferayConfig.environment.baseUrl +
-			`/web/${site.name}/order/${cart.id}`;
+	const sku = product.skus[0];
 
-		await page.goto(orderDetailsPageURL);
+	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+		{
+			accountId: account.id,
+			cartItems: [
+				{
+					quantity: 1,
+					skuId: sku.id,
+				},
+			],
+		},
+		channel.id
+	);
 
-		const multishippingTab = page.getByRole('tab', {name: 'Multishipping'});
+	const orderDetailsPageURL =
+		liferayConfig.environment.baseUrl +
+		`/web/${site.name}/order/${cart.id}`;
 
-		await expect(multishippingTab).toHaveCount(0);
+	await page.goto(orderDetailsPageURL);
 
-		await commerceAdminChannelsPage.goto();
+	const multishippingTab = page.getByRole('tab', {name: 'Multishipping'});
 
-		await (
-			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
-		).click();
+	await expect(multishippingTab).toHaveCount(0);
 
-		await commerceAdminChannelDetailsPage.allowMultishippingToggle.setChecked(
-			true
-		);
+	await commerceAdminChannelsPage.goto();
 
-		await expect(
-			commerceAdminChannelDetailsPage.allowMultishippingToggle
-		).toBeChecked();
+	await (
+		await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+	).click();
 
-		await commerceAdminChannelDetailsPage.saveButton.click();
+	await commerceAdminChannelDetailsPage.allowMultishippingToggle.setChecked(
+		true
+	);
 
-		await expect(
-			commerceAdminChannelDetailsPage.allowMultishippingToggle
-		).toBeChecked();
+	await expect(
+		commerceAdminChannelDetailsPage.allowMultishippingToggle
+	).toBeChecked();
 
-		await waitForAlert(page);
+	await commerceAdminChannelDetailsPage.saveButton.click();
 
-		await page.goto(orderDetailsPageURL);
+	await expect(
+		commerceAdminChannelDetailsPage.allowMultishippingToggle
+	).toBeChecked();
 
-		await expect(multishippingTab).toBeVisible();
-	}
-	finally {
-		await page.goto(PORTLET_URLS.systemFeatureFlagDeveloper);
+	await waitForAlert(page);
 
-		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
-			await page.getByLabel('COMMERCE-9410').click();
-		}
-	}
+	await page.goto(orderDetailsPageURL);
+
+	await expect(multishippingTab).toBeVisible();
 });

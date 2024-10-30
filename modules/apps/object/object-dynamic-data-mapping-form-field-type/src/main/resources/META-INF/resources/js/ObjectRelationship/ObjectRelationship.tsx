@@ -32,7 +32,7 @@ async function fetchOptions<T>(url: string) {
 	return (await response.json()) as T;
 }
 
-function getLabel<T extends ObjectMap<any>>(
+export function getLabel<T extends ObjectMap<any>>(
 	item: T,
 	key: keyof T,
 	objectDefinitionDefaultLanguageId: Locale,

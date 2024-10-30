@@ -7,8 +7,13 @@ package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
+import com.liferay.portal.vulcan.problem.ProblemProvider;
+
+import java.util.Locale;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -58,6 +63,20 @@ public class ExceptionMapper extends BaseExceptionMapper<Exception> {
 	protected Problem getProblem(Exception exception) {
 		_log.error(exception);
 
+		ProblemProvider problemProvider =
+			_problemProviderRegistrySnapshot.get();
+
+		com.liferay.portal.vulcan.problem.Problem problem =
+			problemProvider.getProblem(exception);
+
+		if (problem != null) {
+			Locale locale = _acceptLanguage.getPreferredLocale();
+
+			return new Problem(
+				problem.getDetail(locale), problem.getStatus(locale),
+				problem.getTitle(locale), problem.getType());
+		}
+
 		return new Problem(
 			Response.Status.INTERNAL_SERVER_ERROR,
 			Response.Status.INTERNAL_SERVER_ERROR.getReasonPhrase());
@@ -65,6 +84,13 @@ public class ExceptionMapper extends BaseExceptionMapper<Exception> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExceptionMapper.class);
+
+	private static final Snapshot<ProblemProvider>
+		_problemProviderRegistrySnapshot = new Snapshot<>(
+			ExceptionMapper.class, ProblemProvider.class);
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
 
 	@Context
 	private Providers _providers;

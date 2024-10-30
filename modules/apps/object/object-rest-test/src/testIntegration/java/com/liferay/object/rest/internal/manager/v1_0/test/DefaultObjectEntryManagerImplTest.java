@@ -2183,7 +2183,8 @@ public class DefaultObjectEntryManagerImplTest
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		_decrementSystemDatesByOneSecond(childObjectEntry1);
+		childObjectEntry1 = _decrementSystemDates(
+			_objectDefinition2, childObjectEntry1.getId());
 
 		assertEquals(
 			childObjectEntry1,
@@ -4983,27 +4984,24 @@ public class DefaultObjectEntryManagerImplTest
 		return objectFieldSetting;
 	}
 
-	private void _decrementSystemDatesByOneSecond(ObjectEntry objectEntry)
+	private ObjectEntry _decrementSystemDates(
+			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception {
 
-		com.liferay.object.model.ObjectEntry serviceObjectEntry =
-			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
+		com.liferay.object.model.ObjectEntry objectEntry =
+			_objectEntryLocalService.getObjectEntry(objectEntryId);
 
-		Date createDate = objectEntry.getDateCreated();
+		Date date = objectEntry.getCreateDate();
 
-		Date newCreateDate = new Date(createDate.getTime() - 1000);
+		Date newDate = new Date(date.getTime() - 1000);
 
-		objectEntry.setDateCreated(newCreateDate);
-		serviceObjectEntry.setCreateDate(newCreateDate);
+		objectEntry.setCreateDate(newDate);
+		objectEntry.setModifiedDate(newDate);
 
-		Date modifiedDate = objectEntry.getDateModified();
+		_objectEntryLocalService.updateObjectEntry(objectEntry);
 
-		Date newModifiedDate = new Date(modifiedDate.getTime() - 1000);
-
-		objectEntry.setDateModified(newModifiedDate);
-		serviceObjectEntry.setModifiedDate(newModifiedDate);
-
-		_objectEntryLocalService.updateObjectEntry(serviceObjectEntry);
+		return _defaultObjectEntryManager.getObjectEntry(
+			_simpleDTOConverterContext, objectDefinition, objectEntryId);
 	}
 
 	private void _deleteAccountEntryOrganizationRel(

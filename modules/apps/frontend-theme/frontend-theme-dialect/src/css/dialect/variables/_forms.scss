@@ -98,7 +98,8 @@ $form-control-tag-group-padding-y: calc(
 			#{$input-height} - (2 * #{$input-border-width}) - #{map-get(
 					$form-control-label-size,
 					min-height
-				)} - (#{map-get($form-control-label-size, margin-bottom)}) - (#{map-get($form-control-label-size, margin-top)})
+				)} - (#{map-get($form-control-label-size, margin-bottom)}) -
+				(#{map-get($form-control-label-size, margin-top)})
 		) / 2
 );
 

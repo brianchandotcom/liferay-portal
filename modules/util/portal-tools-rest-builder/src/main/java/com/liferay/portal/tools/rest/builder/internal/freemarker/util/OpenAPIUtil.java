@@ -51,15 +51,6 @@ public class OpenAPIUtil {
 	}
 
 	public static String formatSingular(ConfigYAML configYAML, String s) {
-		if (ConfigUtil.isVersionCompatible(configYAML, 6)) {
-
-			// words already singular
-
-			if (s.endsWith("ss")) {
-				return s;
-			}
-		}
-
 		if (s.endsWith("ases")) {
 
 			// bases to base
@@ -78,7 +69,10 @@ public class OpenAPIUtil {
 		else if (s.endsWith("ies")) {
 			s = s.substring(0, s.length() - 3) + "y";
 		}
-		else if (s.endsWith("s")) {
+		else if (s.endsWith("s") &&
+				 (!s.endsWith("ss") ||
+				  !ConfigUtil.isVersionCompatible(configYAML, 6))) {
+
 			s = s.substring(0, s.length() - 1);
 		}
 

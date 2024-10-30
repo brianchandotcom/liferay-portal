@@ -35,6 +35,7 @@
 		<div aria-labelledby="tab1-${fragmentEntryLinkNamespace}" class="d-none tab-panel-item" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tabPanel1-${fragmentEntryLinkNamespace}" role="tabpanel" tabindex="0">
 			<lfr-drop-zone data-lfr-drop-zone-id="1" data-lfr-priority="1"></lfr-drop-zone>
 		</div>
+
 		[#if isMultishippingEnabled || (layouts?size > 0) || (layoutMode == "edit")]
 			<div aria-labelledby="tab2-${fragmentEntryLinkNamespace}" class="d-none tab-panel-item" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tabPanel2-${fragmentEntryLinkNamespace}" role="tabpanel" tabindex="0">
 				<lfr-drop-zone data-lfr-drop-zone-id="2" data-lfr-priority="2"></lfr-drop-zone>

@@ -14,13 +14,19 @@
 		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},
+	"jest": {
+		"testMatch": [
+			"<rootDir>/src/main/resources/META-INF/resources/tests/**/*.spec.*"
+		]
+	},
 	"main": "js/index.ts",
 	"name": "@liferay/object-dynamic-data-mapping-form-field-type",
 	"private": true,
 	"scripts": {
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
-		"format": "node-scripts format"
+		"format": "node-scripts format",
+		"test": "node-scripts test"
 	},
 	"version": "1.0.59"
 }

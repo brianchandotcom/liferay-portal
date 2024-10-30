@@ -104,6 +104,15 @@ public class FragmentEntryLinkStagedModelDataHandler
 					fragmentEntry.getGroupId());
 
 				if (group != null) {
+					Group companyGroup = _groupLocalService.getCompanyGroup(
+						group.getCompanyId());
+
+					if (group.getGroupId() == companyGroup.getGroupId()) {
+						fragmentEntryLinkElement.addAttribute(
+							"fragment-entry-group-global",
+							Boolean.TRUE.toString());
+					}
+
 					fragmentEntryLinkElement.addAttribute(
 						"fragment-entry-group-key", group.getGroupKey());
 				}
@@ -193,12 +202,8 @@ public class FragmentEntryLinkStagedModelDataHandler
 					portletDataContext.getImportDataStagedModelElement(
 						fragmentEntryLink);
 
-				String fragmentEntryGroupKey = GetterUtil.getString(
-					fragmentEntryLinkElement.attributeValue(
-						"fragment-entry-group-key"));
-
-				Group group = _groupLocalService.fetchGroup(
-					fragmentEntryLink.getCompanyId(), fragmentEntryGroupKey);
+				Group group = _fetchGroup(
+					fragmentEntryLink.getCompanyId(), fragmentEntryLinkElement);
 
 				if (group != null) {
 					String fragmentEntryKey = GetterUtil.getString(
@@ -287,6 +292,24 @@ public class FragmentEntryLinkStagedModelDataHandler
 		getStagedModelRepository() {
 
 		return _stagedModelRepository;
+	}
+
+	private Group _fetchGroup(
+		long companyId, Element fragmentEntryLinkElement) {
+
+		boolean fragmentEntryGroupGlobal = GetterUtil.getBoolean(
+			fragmentEntryLinkElement.attributeValue(
+				"fragment-entry-group-global"));
+
+		if (fragmentEntryGroupGlobal) {
+			return _groupLocalService.fetchCompanyGroup(companyId);
+		}
+
+		String fragmentEntryGroupKey = GetterUtil.getString(
+			fragmentEntryLinkElement.attributeValue(
+				"fragment-entry-group-key"));
+
+		return _groupLocalService.fetchGroup(companyId, fragmentEntryGroupKey);
 	}
 
 	@Reference(target = "(content.processor.type=DLReferences)")

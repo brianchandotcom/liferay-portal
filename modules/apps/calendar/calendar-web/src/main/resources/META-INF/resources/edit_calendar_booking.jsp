@@ -540,7 +540,94 @@ while (manageableCalendarsIterator.hasNext()) {
 
 		observer.observe(wrapper, config);
 	}
+
+	for (const dateInput of ['startTime', 'endTime']
+		.map((id) => document.getElementById('<portlet:namespace />' + id))
+		.filter(Boolean)) {
+		dateInput.closest('.form-group-item').classList.add('has-success');
+
+		dateInput.onblur = () => {
+			const {value} = dateInput;
+
+			if (value.length < dateInput.maxLength) {
+				showAlert(
+					dateInput,
+					'<%= LanguageUtil.get(request, "this-field-will-be-automatically-filled-if-it-is-empty-or-incomplete") %>',
+					'warning'
+				);
+			}
+			else {
+				clearAlert(dateInput);
+			}
+		};
+	}
+
+	for (const timeInput of ['startTimeTime', 'endTimeTime']
+		.map((id) => document.getElementById('<portlet:namespace />' + id))
+		.filter(Boolean)) {
+		timeInput.closest('.form-group-item').classList.add('has-success');
+
+		timeInput.onblur = () => {
+			const {value, validity} = timeInput;
+
+			if (validity.valid && value.trim() === '') {
+				showAlert(
+					timeInput,
+					'<%= LanguageUtil.get(request, "this-field-will-be-automatically-filled-if-it-is-empty-or-incomplete") %>',
+					'warning'
+				);
+			}
+			else if (!validity.valid) {
+				showAlert(
+					timeInput,
+					'<%= LanguageUtil.get(request, "please-enter-a-valid-time") %>',
+					'error'
+				);
+			}
+			else {
+				clearAlert(timeInput);
+			}
+		};
+	}
+
+	function showAlert(field, message, type) {
+		clearAlert(field);
+
+		if (!field.parentElement.querySelector('.form-feedback-item')) {
+			field.insertAdjacentHTML(
+				'afterend',
+				'<div aria-live="polite" class="form-feedback-item" role="alert">' +
+					'<span class="form-feedback-indicator">' +
+					message +
+					'</span>' +
+					'</div>'
+			);
+		}
+
+		const formGroupItem = field.closest('.form-group-item');
+
+		if (formGroupItem) {
+			formGroupItem.classList.remove('has-success');
+			formGroupItem.classList.toggle('has-warning', type === 'warning');
+			formGroupItem.classList.toggle('has-error', type === 'error');
+		}
+	}
+
+	function clearAlert(field) {
+		const feedback = field.parentElement.querySelector('.form-feedback-item');
+		const formGroupItem = field.closest('.form-group-item');
+
+		if (formGroupItem) {
+			formGroupItem.classList.add('has-success');
+			formGroupItem.classList.remove('has-warning', 'has-error');
+		}
+
+		if (feedback) {
+			feedback.remove();
+		}
+	}
 </aui:script>
+
 <aui:script>
 	function <portlet:namespace />filterCalendarBookings(calendarBooking) {
 		return calendarBooking.calendarBookingId !== '<%= calendarBookingId %>';

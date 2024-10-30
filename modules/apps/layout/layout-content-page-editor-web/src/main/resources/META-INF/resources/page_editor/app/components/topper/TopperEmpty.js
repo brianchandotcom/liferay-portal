@@ -31,6 +31,7 @@ import {
 	useSelectorCallback,
 } from '../../contexts/StoreContext';
 import {useGetWidgets} from '../../contexts/WidgetsContext';
+import {useLayoutKeyboardNavigation} from '../../hooks/app_hooks/useLayoutKeyboardNavigation';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
 import pasteItem from '../../thunks/pasteItem';
@@ -168,6 +169,8 @@ const ActivableTopperEmpty = ({
 	const hoverItem = useHoverItem();
 	const selectItem = useSelectItem();
 
+	const {elementRef, isFocusable} = useLayoutKeyboardNavigation(item);
+
 	return React.Children.map(realChildren, (child) => {
 		if (!child) {
 			return child;
@@ -203,7 +206,6 @@ const ActivableTopperEmpty = ({
 							origin: ITEM_ACTIVATION_ORIGINS.layout,
 						});
 					},
-					onFocus: (event) => event.stopPropagation(),
 					onMouseLeave: (event) => {
 						event.stopPropagation();
 
@@ -222,6 +224,8 @@ const ActivableTopperEmpty = ({
 					},
 					ref: (node) => {
 						containerRef.current = node;
+						elementRef.current = node;
+
 						targetRef(node);
 
 						// Call the original ref, if any.
@@ -233,6 +237,7 @@ const ActivableTopperEmpty = ({
 							child.ref.current = node;
 						}
 					},
+					tabIndex: isFocusable ? 0 : -1,
 				})}
 
 				{isActive ||

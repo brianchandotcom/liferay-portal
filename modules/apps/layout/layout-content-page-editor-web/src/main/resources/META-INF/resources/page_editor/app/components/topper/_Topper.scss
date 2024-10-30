@@ -54,6 +54,10 @@ html#{$cadmin-selector} {
 				white-space: nowrap;
 			}
 
+			.tbar-nav {
+				margin-top: 1px;
+			}
+
 			&--hovered {
 				background-color: $cadmin-primary-l1;
 				box-shadow: 0 0 0 $borderWidth $cadmin-primary-l1;

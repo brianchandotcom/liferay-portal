@@ -112,9 +112,7 @@ public class PlacedOrderDTOConverter
 					commerceOrder::getExternalReferenceCode);
 				setFriendlyURLSeparator(
 					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled(
-								"COMMERCE-9410")) {
-
+						if (!FeatureFlagManagerUtil.isEnabled("LPD-20379")) {
 							return null;
 						}
 

@@ -147,9 +147,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 					commerceOrder::getExternalReferenceCode);
 				setFriendlyURLSeparator(
 					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled(
-								"COMMERCE-9410")) {
-
+						if (!FeatureFlagManagerUtil.isEnabled("LPD-20379")) {
 							return null;
 						}
 

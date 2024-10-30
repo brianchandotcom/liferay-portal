@@ -26,7 +26,7 @@ public @interface A11yConfiguration {
 	)
 	public String target();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "false", name = "enable", required = false)
 	public boolean enable();
 
 	@Meta.AD(deflt = "false", name = "control-menu-name", required = false)

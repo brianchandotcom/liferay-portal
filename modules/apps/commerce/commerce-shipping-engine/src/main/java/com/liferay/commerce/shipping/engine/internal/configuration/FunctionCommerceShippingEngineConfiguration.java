@@ -18,7 +18,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.commerce.shipping.engine.internal.configuration.FunctionCommerceShippingEngineConfiguration"
+	id = "com.liferay.commerce.shipping.engine.internal.configuration.FunctionCommerceShippingEngineConfiguration",
+	name = "commerce-shipping-engine-configuration-name"
 )
 public interface FunctionCommerceShippingEngineConfiguration {
 
@@ -28,10 +29,16 @@ public interface FunctionCommerceShippingEngineConfiguration {
 	@Meta.AD(name = "name", required = false)
 	public String name();
 
-	@Meta.AD(required = false, type = Meta.Type.String)
+	@Meta.AD(
+		name = "oauth2-application-external-reference-code", required = false,
+		type = Meta.Type.String
+	)
 	public String oAuth2ApplicationExternalReferenceCode();
 
-	@Meta.AD(required = false, type = Meta.Type.String)
+	@Meta.AD(
+		name = "shipping-engine-type-settings", required = false,
+		type = Meta.Type.String
+	)
 	public String shippingEngineTypeSettings();
 
 }

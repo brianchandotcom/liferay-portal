@@ -26,7 +26,7 @@ public interface AMBackwardsCompatibilityHtmlContentTransformerConfiguration {
 	@Meta.AD(
 		deflt = "false",
 		description = "adaptive-media-backwards-compatibility-html-content-transformer-enabled-description",
-		required = false
+		name = "enabled", required = false
 	)
 	public boolean enabled();
 

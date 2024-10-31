@@ -2183,7 +2183,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
-		if (httpServletRequest == null) {
+		if (message.isDiscussion() || (httpServletRequest == null)) {
 			if (Validator.isNull(serviceContext.getLayoutFullURL())) {
 				return StringPool.BLANK;
 			}

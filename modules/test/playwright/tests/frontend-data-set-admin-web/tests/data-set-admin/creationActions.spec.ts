@@ -16,7 +16,7 @@ import checkRequired from '../../utils/checkRequired';
 import clickRowAction from '../../utils/clickRowAction';
 import getRowByText from '../../utils/getRowByText';
 import getSelectOptionLabels from '../../utils/getSelectOptionLabels';
-import {ECreationActionType, EModalActionVariant} from '../../utils/types';
+import {ECreationActionTarget, EModalActionVariant} from '../../utils/types';
 import {actionsPageTest} from './fixtures/actionsPageTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 
@@ -147,7 +147,7 @@ test(
 		let headlessActionKey: string = getRandomString();
 		let icon: string = 'arrow-right-full';
 		let label: string = getRandomString();
-		const type: ECreationActionType = ECreationActionType.LINK;
+		const type: ECreationActionTarget = ECreationActionTarget.LINK;
 		let url: string = getRandomString();
 
 		await test.step('Go to creation actions tab', async () => {
@@ -260,7 +260,7 @@ test(
 		let icon: string = 'check';
 		let label: string = getRandomString();
 		let title: string = getRandomString();
-		const type: ECreationActionType = ECreationActionType.MODAL;
+		const type: ECreationActionTarget = ECreationActionTarget.MODAL;
 		let url: string = getRandomString();
 		let variant = EModalActionVariant.LARGE;
 
@@ -382,7 +382,7 @@ test(
 		let icon: string = 'check';
 		let label: string = getRandomString();
 		let title: string = getRandomString();
-		const type: ECreationActionType = ECreationActionType.MODAL;
+		const type: ECreationActionTarget = ECreationActionTarget.MODAL;
 		let url: string = getRandomString();
 
 		await test.step('Go to creation actions tab', async () => {
@@ -533,7 +533,7 @@ test(
 			await dataSetManagerApiHelpers.createDataSetCreationAction({
 				dataSetERC,
 				label_i18n: {en_US: actionLabel},
-				type: ECreationActionType.LINK,
+				target: ECreationActionTarget.LINK,
 			});
 		});
 

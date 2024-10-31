@@ -3,13 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export enum ECreationActionType {
+export enum EActionType {
+	CREATION = 'creation',
+	ITEM = 'item',
+}
+
+export enum ECreationActionTarget {
 	LINK = 'link',
 	MODAL = 'modal',
 	SIDE_PANEL = 'sidePanel',
 }
 
-export enum EItemActionType {
+export enum EItemActionTarget {
 	ASYNC = 'async',
 	HEADLESS = 'headless',
 	LINK = 'link',
@@ -50,7 +55,7 @@ interface IBaseAction {
 }
 
 export interface ICreationAction extends IBaseAction {
-	type: ECreationActionType;
+	type: ECreationActionTarget;
 }
 
 export interface IItemAction extends IBaseAction {
@@ -60,7 +65,7 @@ export interface IItemAction extends IBaseAction {
 	method?: EAsyncActionMethod;
 	requestBody?: string;
 	successStatusMessage?: string;
-	type: EItemActionType;
+	type: EItemActionTarget;
 }
 
 interface IBaseFilter {

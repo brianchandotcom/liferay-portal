@@ -15,7 +15,7 @@ import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelp
 import {API_ENDPOINT_PATH} from '../../utils/constants';
 import {
 	EAsyncActionMethod,
-	EItemActionType,
+	EItemActionTarget,
 	EModalActionVariant,
 } from '../../utils/types';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
@@ -116,7 +116,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				},
 				dataSetERC,
 				label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
-				type: EItemActionType.LINK,
+				target: EItemActionTarget.LINK,
 			});
 		});
 
@@ -172,15 +172,15 @@ test.describe('Item Actions in Data Set fragment', () => {
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
 				label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
-				type: EItemActionType.LINK,
+				target: EItemActionTarget.LINK,
 			});
 
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
 				label_i18n: {en_US: modalItemActionName},
 				modalSize: EModalActionVariant.SMALL,
+				target: EItemActionTarget.MODAL,
 				title_i18n: {en_US: modalItemActionTitle},
-				type: EItemActionType.MODAL,
 				url: liferayConfig.environment.baseUrl,
 			});
 
@@ -188,8 +188,8 @@ test.describe('Item Actions in Data Set fragment', () => {
 				dataSetERC,
 				label_i18n: {en_US: sidePanelItemActionName},
 				modalSize: EModalActionVariant.SMALL,
+				target: EItemActionTarget.SIDE_PANEL,
 				title_i18n: {en_US: sidePanelItemActionName},
-				type: EItemActionType.SIDE_PANEL,
 				url: liferayConfig.environment.baseUrl,
 			});
 		});
@@ -339,14 +339,14 @@ test.describe('Item Actions in Data Set fragment', () => {
 				dataSetERC,
 				label_i18n: {en_US: headlessItemActionName},
 				permissionKey: headlessItemActionPermissionKey,
-				type: EItemActionType.HEADLESS,
+				target: EItemActionTarget.HEADLESS,
 			});
 
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
 				label_i18n: {en_US: asyncItemActionName},
 				method: EAsyncActionMethod.DELETE,
-				type: EItemActionType.ASYNC,
+				target: EItemActionTarget.ASYNC,
 				url: asyncItemActionUrl,
 			});
 
@@ -356,7 +356,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 					en_US: nonAvailableHeadlessItemActionName,
 				},
 				permissionKey: 'remove',
-				type: EItemActionType.HEADLESS,
+				target: EItemActionTarget.HEADLESS,
 			});
 		});
 
@@ -496,7 +496,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				label_i18n: {en_US: headlessItemActionName},
 				permissionKey: headlessItemActionPermissionKey,
 				requestBody: `{"label_i18n": {"en_US": "${headlessItemNewLabel}"}}`,
-				type: EItemActionType.HEADLESS,
+				target: EItemActionTarget.HEADLESS,
 			});
 
 			await dataSetManagerApiHelpers.createDataSetItemAction({
@@ -504,7 +504,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				label_i18n: {en_US: asyncItemActionName},
 				method: EAsyncActionMethod.PATCH,
 				requestBody: `{"label_i18n": {"en_US": "${asyncItemNewLabel}"}}`,
-				type: EItemActionType.ASYNC,
+				target: EItemActionTarget.ASYNC,
 				url: asyncItemActionUrl,
 			});
 		});
@@ -645,7 +645,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				dataSetERC,
 				label_i18n: {en_US: asyncItemActionName},
 				method: EAsyncActionMethod.DELETE,
-				type: EItemActionType.ASYNC,
+				target: EItemActionTarget.ASYNC,
 				url: asyncItemActionWrongUrl,
 			});
 		});

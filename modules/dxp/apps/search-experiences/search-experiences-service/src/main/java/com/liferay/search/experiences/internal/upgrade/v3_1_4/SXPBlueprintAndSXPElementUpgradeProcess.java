@@ -312,9 +312,9 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			JSONArray mustNotJSONArray = JSONUtil.getValueAsJSONArray(
 				queryJSONObject, "JSONObject/bool", "JSONArray/must_not");
 
-			for (int k = 0; k < mustNotJSONArray.length(); k++) {
+			for (int i = 0; i < mustNotJSONArray.length(); i++) {
 				JSONObject mustNotJSONObject = mustNotJSONArray.getJSONObject(
-					k);
+					i);
 
 				if (!mustNotJSONObject.has("term")) {
 					continue;

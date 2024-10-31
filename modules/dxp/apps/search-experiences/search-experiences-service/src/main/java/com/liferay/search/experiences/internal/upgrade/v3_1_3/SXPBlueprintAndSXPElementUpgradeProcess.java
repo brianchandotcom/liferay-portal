@@ -252,7 +252,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		JSONArray groupIdsExternalReferenceCodesJSONArray =
+		JSONArray scopeGroupExternalReferenceCodesJSONArray =
 			_jsonFactory.createJSONArray();
 
 		for (int i = 0; i < scopeGroupIdsJSONArray.length(); i++) {
@@ -262,7 +262,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			Group group = _groupLocalService.getGroup(
 				scopeGroupIdJSONObject.getLong("value"));
 
-			groupIdsExternalReferenceCodesJSONArray.put(
+			scopeGroupExternalReferenceCodesJSONArray.put(
 				JSONUtil.put(
 					"label",
 					StringBundler.concat(
@@ -275,7 +275,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 		uiConfigurationValuesJSONObject.put(
 			"scope_group_external_reference_codes",
-			groupIdsExternalReferenceCodesJSONArray
+			scopeGroupExternalReferenceCodesJSONArray
 		).remove(
 			"scope_group_ids"
 		);

@@ -82,7 +82,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -94,14 +93,12 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.SybaseDump;
 import com.liferay.portal.test.rule.SybaseDumpTransactionLog;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.model.adapter.StagedGroup;
 import com.liferay.sites.kernel.util.Sites;
@@ -569,11 +566,6 @@ public class CompanyLocalServiceTest {
 			ReflectionTestUtil.getAndSetFieldValue(
 				PropsValues.class, "COMPANY_STATIC_ID_ENABLED", true);
 
-		int rangeSize = GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.COUNTER_INCREMENT_PREFIX + Company.class.getName()),
-			PropsValues.COUNTER_INCREMENT);
-
 		Company company1 = null;
 
 		Company company2 = null;
@@ -583,17 +575,16 @@ public class CompanyLocalServiceTest {
 
 			company2 = addCompany(RandomTestUtil.randomString() + "test.com");
 
-			long companyId1 = company1.getCompanyId();
+			long counterCompanyId =
+				_counterLocalService.increment(Company.class.getName());
 
-			long companyId2 = company2.getCompanyId();
+			Assert.assertEquals(counterCompanyId - 2, company1.getCompanyId());
 
-			Assert.assertTrue(
-				companyId1 >= (firstCompanyIdIncrement + rangeSize));
+			Assert.assertEquals(counterCompanyId - 1, company2.getCompanyId());
 
-			Assert.assertTrue(
-				companyId1 < (firstCompanyIdIncrement + (2 * rangeSize)));
-
-			Assert.assertEquals(1, companyId2 - companyId1);
+			if (originalCompanyStaticIdEnabled == false) {
+				Assert.assertEquals(10000, company1.getCompanyId());
+			}
 		}
 		finally {
 			_companyLocalService.deleteCompany(company1);

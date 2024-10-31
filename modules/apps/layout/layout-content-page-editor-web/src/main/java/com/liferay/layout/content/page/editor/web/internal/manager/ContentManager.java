@@ -1165,7 +1165,8 @@ public class ContentManager {
 			return;
 		}
 
-		String className = _portal.getClassName(classNameId);
+		String className = _infoSearchClassMapperRegistry.getClassName(
+			_portal.getClassName(classNameId));
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.

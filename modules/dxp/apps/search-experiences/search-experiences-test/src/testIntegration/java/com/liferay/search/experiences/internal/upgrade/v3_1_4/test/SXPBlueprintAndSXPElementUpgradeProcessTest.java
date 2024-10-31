@@ -78,7 +78,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
 			companyGroup.getGroupId(), assetVocabulary.getVocabularyId());
 
-		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
+		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
 			null, TestPropsValues.getUserId(), _readJSON("configurationJSON"),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
@@ -107,12 +107,46 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		for (String elementExternalReferenceCode :
 				_ELEMENT_EXTERNAL_REFERENCE_CODES) {
 
-			_addOldElement(elementExternalReferenceCode);
+			SXPElement sxpElement =
+				_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
+					elementExternalReferenceCode,
+					TestPropsValues.getCompanyId());
+
+			if (sxpElement != null) {
+				sxpElement.setElementDefinitionJSON(
+					RandomTestUtil.randomString());
+
+				_sxpElementLocalService.updateSXPElement(sxpElement);
+			}
+			else {
+				_sxpElementLocalService.addSXPElement(
+					elementExternalReferenceCode, TestPropsValues.getUserId(),
+					Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
+					RandomTestUtil.randomString(), StringPool.BLANK,
+					StringPool.BLANK, true, StringPool.BLANK,
+					Collections.singletonMap(
+						LocaleUtil.US, RandomTestUtil.randomString()),
+					0,
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getGroupId(),
+						TestPropsValues.getUserId()));
+			}
 		}
 
-		_runUpgrade();
+		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+			_upgradeStepRegistrator,
+			"com.liferay.search.experiences.internal.upgrade.v3_1_4." +
+				"SXPBlueprintAndSXPElementUpgradeProcess");
 
-		_assertSXPBlueprint(
+		upgradeProcess.upgrade();
+
+		_multiVMPool.clear();
+
+		sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
+			sxpBlueprint.getSXPBlueprintId());
+
+		JSONAssert.assertEquals(
 			StringUtil.replace(
 				_readJSON("elementInstancesUpdated"),
 				new String[] {
@@ -132,61 +166,20 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 						assetCategory2.getName(), " (ERC: ",
 						assetCategory2.getExternalReferenceCode(), ")")
 				}),
-			_sxpBlueprint.getSXPBlueprintId());
+			sxpBlueprint.getElementInstancesJSON(), JSONCompareMode.STRICT);
 
 		for (String elementExternalReferenceCode :
 				_ELEMENT_EXTERNAL_REFERENCE_CODES) {
 
-			_assertElementUpgraded(elementExternalReferenceCode);
+			SXPElement sxpElement =
+				_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
+					elementExternalReferenceCode,
+					TestPropsValues.getCompanyId());
+
+			JSONAssert.assertEquals(
+				_readJSON(StringUtil.toLowerCase(elementExternalReferenceCode)),
+				sxpElement.getElementDefinitionJSON(), JSONCompareMode.STRICT);
 		}
-	}
-
-	private void _addOldElement(String externalReferenceCode) throws Exception {
-		SXPElement sxpElement =
-			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
-				externalReferenceCode, TestPropsValues.getCompanyId());
-
-		if (sxpElement != null) {
-			sxpElement.setElementDefinitionJSON(RandomTestUtil.randomString());
-
-			_sxpElementLocalService.updateSXPElement(sxpElement);
-		}
-		else {
-			_sxpElementLocalService.addSXPElement(
-				externalReferenceCode, TestPropsValues.getUserId(),
-				Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				StringPool.BLANK, true, StringPool.BLANK,
-				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()),
-				0,
-				ServiceContextTestUtil.getServiceContext(
-					TestPropsValues.getCompanyId(),
-					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
-		}
-	}
-
-	private void _assertElementUpgraded(String externalReferenceCode)
-		throws Exception {
-
-		SXPElement sxpElement =
-			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
-				externalReferenceCode, TestPropsValues.getCompanyId());
-
-		JSONAssert.assertEquals(
-			_readJSON(StringUtil.toLowerCase(externalReferenceCode)),
-			sxpElement.getElementDefinitionJSON(), JSONCompareMode.STRICT);
-	}
-
-	private void _assertSXPBlueprint(
-		String expectedInstancesJSON, long sxpBlueprintId) {
-
-		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
-			sxpBlueprintId);
-
-		JSONAssert.assertEquals(
-			expectedInstancesJSON, sxpBlueprint.getElementInstancesJSON(),
-			JSONCompareMode.STRICT);
 	}
 
 	private String _readJSON(String name) {
@@ -195,17 +188,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			StringBundler.concat(
 				"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
 				name, ".json"));
-	}
-
-	private void _runUpgrade() throws Exception {
-		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator,
-			"com.liferay.search.experiences.internal.upgrade.v3_1_4." +
-				"SXPBlueprintAndSXPElementUpgradeProcess");
-
-		upgradeProcess.upgrade();
-
-		_multiVMPool.clear();
 	}
 
 	private static final String[] _ELEMENT_EXTERNAL_REFERENCE_CODES = {
@@ -235,9 +217,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
-
-	@DeleteAfterTestRun
-	private SXPBlueprint _sxpBlueprint;
 
 	@Inject
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;

@@ -78,57 +78,61 @@ export default function BaseAPISchemaProperty({
 	};
 
 	return (
-		ALLOWED_BUSINESS_TYPES.includes(objectField.businessType) && (
-			<ClayButton
-				aria-label={sub(
-					Liferay.Language.get('add-x-property'),
-					localizedPropertyName
-				)}
-				className="property-container"
-				displayType="unstyled"
-				onBlur={() => setFocused(false)}
-				onClick={() => !disabled && handleClick()}
-				onFocus={() => setFocused(true)}
-			>
-				<div
-					className={classNames({
-						disabled,
-						'icon-container': true,
-					})}
+		<>
+			{ALLOWED_BUSINESS_TYPES.includes(objectField.businessType) && (
+				<ClayButton
+					aria-label={sub(
+						Liferay.Language.get('add-x-property'),
+						localizedPropertyName
+					)}
+					className="property-container"
+					displayType="unstyled"
+					onBlur={() => setFocused(false)}
+					onClick={() => !disabled && handleClick()}
+					onFocus={() => setFocused(true)}
 				>
-					<ClayIcon
-						symbol={
-							BUSINESS_TYPES_TO_SYMBOLS[objectField.businessType]
-						}
-					/>
-				</div>
-
-				<div
-					className={classNames({
-						disabled,
-						'label-container': true,
-						'text-truncate': true,
-					})}
-				>
-					{
-						objectField.label[
-							Liferay.ThemeDisplay.getDefaultLanguageId()
-						]
-					}
-				</div>
-
-				{!disabled && (
 					<div
 						className={classNames({
-							'focused-parent': focused,
+							disabled,
 							'icon-container': true,
-							'plus-icon': true,
 						})}
 					>
-						<ClayIcon symbol="plus" />
+						<ClayIcon
+							symbol={
+								BUSINESS_TYPES_TO_SYMBOLS[
+									objectField.businessType
+								]
+							}
+						/>
 					</div>
-				)}
-			</ClayButton>
-		)
+
+					<div
+						className={classNames({
+							disabled,
+							'label-container': true,
+							'text-truncate': true,
+						})}
+					>
+						{
+							objectField.label[
+								Liferay.ThemeDisplay.getDefaultLanguageId()
+							]
+						}
+					</div>
+
+					{!disabled && (
+						<div
+							className={classNames({
+								'focused-parent': focused,
+								'icon-container': true,
+								'plus-icon': true,
+							})}
+						>
+							<ClayIcon symbol="plus" />
+						</div>
+					)}
+				</ClayButton>
+			)}
+		</>
 	);
 }

@@ -231,9 +231,10 @@ export async function initializerSetUp(
 	channelName?: string,
 	siteName?: string
 ) {
+	siteName = siteName || getRandomString();
+
 	catalogName = catalogName || siteName;
 	channelName = channelName || siteName;
-	siteName = siteName || getRandomString();
 
 	const site = await apiHelpers.headlessSite.createSite({
 		name: siteName,
@@ -315,5 +316,11 @@ export async function miniumSetUp(
 	apiHelpers: DataApiHelpers,
 	siteName?: string
 ) {
-	return initializerSetUp(apiHelpers, 'minium-initializer', siteName);
+	return initializerSetUp(
+		apiHelpers,
+		'minium-initializer',
+		null,
+		null,
+		siteName
+	);
 }

@@ -46,10 +46,8 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 				"select FragmentEntryLink.ctCollectionId, ",
 				"FragmentEntryLink.fragmentEntryLinkId, ",
 				"FragmentEntryLink.editableValues from FragmentEntryLink ",
-				"where editableValues like '%",
-				FragmentEntryProcessorConstants.
-					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-				"%\"classNameId\":%\"", dlFileEntryClassNameId, "\"%'");
+				"where editableValues like '%\"classNameId\":%\"",
+				dlFileEntryClassNameId, "\"%'");
 
 			processConcurrently(
 				SQLTransformer.transform(sql),
@@ -70,18 +68,85 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 						JSONObject editableValuesJSONObject =
 							_jsonFactory.createJSONObject(editableValues);
 
+						JSONObject backgroundFragmentEntryProcessorJSONObject =
+							editableValuesJSONObject.getJSONObject(
+								FragmentEntryProcessorConstants.
+									KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR);
+
 						JSONObject editableFragmentEntryProcessorJSONObject =
 							editableValuesJSONObject.getJSONObject(
 								FragmentEntryProcessorConstants.
 									KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-						if (editableFragmentEntryProcessorJSONObject == null) {
+						if ((backgroundFragmentEntryProcessorJSONObject ==
+								null) &&
+							(editableFragmentEntryProcessorJSONObject ==
+								null)) {
+
 							return;
 						}
 
-						Iterator<String> iterator =
-							editableFragmentEntryProcessorJSONObject.keys();
 						boolean modified = false;
+
+						Iterator<String> iterator =
+							backgroundFragmentEntryProcessorJSONObject.keys();
+
+						while (iterator.hasNext()) {
+							String backgroundElementId = iterator.next();
+
+							if (Objects.equals(backgroundElementId, "config")) {
+								continue;
+							}
+
+							JSONObject backgroundElementJSONObject =
+								backgroundFragmentEntryProcessorJSONObject.
+									getJSONObject(backgroundElementId);
+
+							if (backgroundElementJSONObject == null) {
+								continue;
+							}
+
+							Iterator<String> curIterator =
+								backgroundElementJSONObject.keys();
+
+							while (curIterator.hasNext()) {
+								String backgroundElementItemId =
+									curIterator.next();
+
+								if (Objects.equals(
+										backgroundElementItemId, "config")) {
+
+									continue;
+								}
+
+								JSONObject backgroundElementItemJSONObject =
+									backgroundElementJSONObject.getJSONObject(
+										backgroundElementItemId);
+
+								if (backgroundElementItemJSONObject == null) {
+									continue;
+								}
+
+								String classNameId =
+									backgroundElementItemJSONObject.getString(
+										"classNameId");
+
+								if (Objects.equals(
+										classNameId,
+										String.valueOf(
+											dlFileEntryClassNameId))) {
+
+									backgroundElementItemJSONObject.put(
+										"classNameId",
+										String.valueOf(fileEntryClassNameId));
+
+									modified = true;
+								}
+							}
+						}
+
+						iterator =
+							editableFragmentEntryProcessorJSONObject.keys();
 
 						while (iterator.hasNext()) {
 							String editableElementId = iterator.next();

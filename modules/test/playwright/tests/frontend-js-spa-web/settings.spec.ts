@@ -46,7 +46,9 @@ test(
 
 			await customExcludedPathsInput.waitFor({state: 'visible'});
 			await customExcludedPathsInput.click();
-			await customExcludedPathsInput.fill(layout.friendlyURL);
+			await customExcludedPathsInput.fill(
+				`/web/guest/${layout.friendlyURL}`
+			);
 
 			const updateButton = page.getByRole('button', {
 				name: 'Update',
@@ -67,7 +69,7 @@ test(
 		});
 
 		await test.step('Go back to isolated page and check SPA', async () => {
-			await page.goto(layout.friendlyURL);
+			await page.goto(`/web/guest/${layout.friendlyURL}`);
 
 			expect(await isSPAEnabled({page})).toBeFalsy();
 		});

@@ -21,10 +21,8 @@ const InfoBoxModalTermInput = ({
 	setParseResponse,
 	spritemap,
 }) => {
-	const [hasTerms, setHasTerms] = useState(false);
-	const [selectedTermDescription, setSelectedTermDescription] = useState(
-		isOpen ? '' : termDescription
-	);
+	const [selectedTermDescription, setSelectedTermDescription] =
+		useState(termDescription);
 	const [terms, setTerms] = useState([]);
 
 	const getTermsPage = useCallback(
@@ -47,9 +45,11 @@ const InfoBoxModalTermInput = ({
 
 	const handleTermChange = (event) => {
 		const selectedId = Number(event.target.value);
+
 		setInputValue(selectedId);
 
 		const selectedTerm = terms.find((term) => term.id === selectedId);
+
 		setSelectedTermDescription(
 			selectedTerm ? selectedTerm.description : ''
 		);
@@ -69,28 +69,33 @@ const InfoBoxModalTermInput = ({
 	}, [field, setParseResponse]);
 
 	useEffect(() => {
+		if (terms.length === 1 && !inputValue) {
+			setInputValue(terms[0].id);
+		}
 		if (terms.length && inputValue) {
 			const selectedTerm = terms.find(
 				(term) => term.id === Number(inputValue)
 			);
+
 			setSelectedTermDescription(
 				selectedTerm ? selectedTerm.description : ''
 			);
 		}
-	}, [terms, inputValue]);
+	}, [terms, inputValue, setInputValue]);
 
 	useEffect(() => {
 		getTermsPage(orderId)
 			.then((response) => {
 				const terms = response.items || [];
-				const termsAvailable = !!terms.length;
 
-				setHasTerms(termsAvailable);
-				setIsValid(termsAvailable);
+				if (terms.length === 1) {
+					setSelectedTermDescription(terms[0].description);
+				}
+
+				setIsValid(!!terms.length);
 				setTerms(terms);
 			})
 			.catch((error) => {
-				setHasTerms(false);
 				setIsValid(false);
 				setTerms([]);
 
@@ -108,7 +113,7 @@ const InfoBoxModalTermInput = ({
 
 	return (
 		<>
-			{hasTerms && isOpen && (
+			{!!terms.length && isOpen && (
 				<>
 					<ClaySelect
 						className="mb-3"
@@ -116,6 +121,10 @@ const InfoBoxModalTermInput = ({
 						name={orderId}
 						onChange={handleTermChange}
 					>
+						{terms.length > 1 && (
+							<ClaySelect.Option label="" value="" />
+						)}
+
 						{terms.map((term) => (
 							<ClaySelect.Option
 								aria-label={term.label}
@@ -136,7 +145,7 @@ const InfoBoxModalTermInput = ({
 					)}
 				</>
 			)}
-			{hasTerms && !isOpen && (
+			{!!terms.length && !isOpen && (
 				<div
 					className="term-description"
 					dangerouslySetInnerHTML={{
@@ -144,7 +153,7 @@ const InfoBoxModalTermInput = ({
 					}}
 				/>
 			)}
-			{!hasTerms && (
+			{!terms.length && (
 				<ClayAlert displayType="info" spritemap={spritemap}>
 					{field === 'deliveryTermId'
 						? Liferay.Language.get(

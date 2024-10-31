@@ -50,6 +50,10 @@ const DefaultView = ({
 	);
 	const [value, setValue] = useState(fieldValue);
 
+	const hasTerms = () => {
+		return isOpen ? true : !!additionalProps?.termDescription;
+	};
+
 	const submitOrder = useCallback(
 		(inputValue) => {
 			const updateOrder = isOpen
@@ -113,7 +117,10 @@ const DefaultView = ({
 						<div className="h5 info-box-label m-0">{label}</div>
 					) : null}
 
-					{hasPermission && !readOnly && isEditable(field, isOpen) ? (
+					{hasPermission &&
+					!readOnly &&
+					isEditable(field, isOpen) &&
+					hasTerms() ? (
 						<ClayButton
 							aria-controls={`${namespace}infoBoxModal`}
 							aria-label={
@@ -131,9 +138,11 @@ const DefaultView = ({
 							}}
 							size="xs"
 						>
-							{value
-								? Liferay.Language.get('edit')
-								: Liferay.Language.get('add')}
+							{additionalProps?.termDescription && !isOpen
+								? Liferay.Language.get('read')
+								: value
+									? Liferay.Language.get('edit')
+									: Liferay.Language.get('add')}
 						</ClayButton>
 					) : null}
 				</div>
@@ -161,7 +170,10 @@ const DefaultView = ({
 				</div>
 			</div>
 
-			{hasPermission && !readOnly && isEditable(field, isOpen) ? (
+			{hasPermission &&
+			!readOnly &&
+			isEditable(field, isOpen) &&
+			hasTerms() ? (
 				<InfoBoxModal
 					additionalProps={additionalProps}
 					field={field}

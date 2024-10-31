@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.rss.util.RSSUtil;
 
@@ -889,6 +890,49 @@ public class JournalTestUtil {
 			ddmFormValuesToFieldsConverter,
 			PortalUtil.getSiteDefaultLocale(groupId), fieldValue, groupId,
 			journalConverter);
+	}
+
+	public static Tuple addStructureWithPredefinedValues(
+			long userId, long groupId, String title)
+		throws Exception {
+
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			_locales, LocaleUtil.US);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			groupId, JournalArticle.class.getName(), ddmForm, LocaleUtil.US);
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			groupId, ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_FTL, getSampleTemplateFTL(),
+			LocaleUtil.US);
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, "Valor Predefinido"
+			).put(
+				LocaleUtil.US, "Predefined Value"
+			).build(),
+			LocaleUtil.US.toString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId, userId);
+
+		JournalArticle journalArticle =
+			JournalArticleLocalServiceUtil.addArticleDefaultValues(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				PortalUtil.getClassNameId(DDMStructure.class),
+				ddmStructure.getStructureId(),
+				HashMapBuilder.put(
+					LocaleUtil.US, title
+				).build(),
+				null, content, ddmStructure.getStructureId(),
+				ddmTemplate.getTemplateKey(), null, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+				0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
+				serviceContext);
+
+		return new Tuple(ddmStructure, journalArticle);
 	}
 
 	public static void expireArticle(long groupId, JournalArticle article)

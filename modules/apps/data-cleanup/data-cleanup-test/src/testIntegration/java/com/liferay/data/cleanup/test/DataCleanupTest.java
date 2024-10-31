@@ -138,6 +138,14 @@ public class DataCleanupTest {
 	}
 
 	@Test
+	public void testDeprecatedModulesUpgradeHelloVelocity() throws Exception {
+		_testDeprecatedModulesUpgrade(
+			"cleanUpHelloVelocityModuleData", "com.liferay.hello.velocity.web",
+			null, "com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet",
+			null);
+	}
+
+	@Test
 	public void testDeprecatedModulesUpgradeHelloWorld() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpHelloWorldModuleData", "com.liferay.hello.world.web", null,
@@ -518,10 +526,11 @@ public class DataCleanupTest {
 		"com.liferay.chat.service", "com.liferay.currency.converter.web",
 		"com.liferay.dictionary.web", "com.liferay.directory.web",
 		"com.liferay.frontend.image.editor.web", "com.liferay.google.maps.web",
-		"com.liferay.hello.world.web", "com.liferay.html.preview.service",
-		"com.liferay.invitation.web", "com.liferay.loan.calculator.web",
-		"com.liferay.mail.reader.service", "com.liferay.network.utilities.web",
-		"com.liferay.oauth.service", "com.liferay.password.generator.web",
+		"com.liferay.hello.velocity.web", "com.liferay.hello.world.web",
+		"com.liferay.html.preview.service", "com.liferay.invitation.web",
+		"com.liferay.loan.calculator.web", "com.liferay.mail.reader.service",
+		"com.liferay.network.utilities.web", "com.liferay.oauth.service",
+		"com.liferay.password.generator.web",
 		"com.liferay.portal.security.wedeploy.auth.service",
 		"com.liferay.quick.note.web", "com.liferay.recent.documents.web",
 		"com.liferay.shopping.service", "com.liferay.social.activity.web",

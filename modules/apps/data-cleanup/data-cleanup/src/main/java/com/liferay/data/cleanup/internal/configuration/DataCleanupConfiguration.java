@@ -65,6 +65,12 @@ public interface DataCleanupConfiguration {
 	public boolean cleanUpGoogleMapsModuleData();
 
 	@Meta.AD(
+		deflt = "false", name = "clean-up-hello-velocity-module-data",
+		required = false
+	)
+	public boolean cleanUpHelloVelocityModuleData();
+
+	@Meta.AD(
 		deflt = "false", name = "clean-up-hello-world-module-data",
 		required = false
 	)

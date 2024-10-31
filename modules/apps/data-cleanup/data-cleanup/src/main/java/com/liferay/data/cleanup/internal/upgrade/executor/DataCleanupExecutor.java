@@ -14,6 +14,7 @@ import com.liferay.data.cleanup.internal.upgrade.DirectoryUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.DocumentLibraryFileRankServiceUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.GoogleMapsUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.HTMLPreviewServiceUpgradeProcess;
+import com.liferay.data.cleanup.internal.upgrade.HelloVelocityUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.ImageEditorUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.InvitationUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.LoanCalculatorUpgradeProcess;
@@ -114,6 +115,9 @@ public class DataCleanupExecutor {
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpGoogleMapsModuleData,
 			"com.liferay.google.maps.web", GoogleMapsUpgradeProcess::new);
+		_cleanUpModuleData(
+			dataCleanupConfiguration::cleanUpHelloVelocityModuleData,
+			"com.liferay.hello.velocity.web", HelloVelocityUpgradeProcess::new);
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpHelloWorldModuleData,
 			"com.liferay.hello.world.web", UpgradeHelloWorld::new);

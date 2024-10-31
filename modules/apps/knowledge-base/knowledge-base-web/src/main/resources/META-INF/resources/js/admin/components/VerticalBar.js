@@ -5,14 +5,13 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {VerticalBar} from '@clayui/core';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {Suspense, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-const NavigationPanel = React.lazy(() => import('./NavigationPanel'));
-const SuggestionsPanel = React.lazy(() => import('./SuggestionsPanel'));
-const TemplatesPanel = React.lazy(() => import('./TemplatesPanel'));
+import NavigationPanel from './NavigationPanel';
+import SuggestionsPanel from './SuggestionsPanel';
+import TemplatesPanel from './TemplatesPanel';
 
 const CSS_EXPANDED = 'expanded';
 
@@ -184,14 +183,12 @@ const VerticalNavigationBar = ({
 							</div>
 
 							<div className="sidebar-body">
-								<Suspense fallback={<ClayLoadingIndicator />}>
-									<PanelComponent
-										items={item.navigationItems}
-										moveKBObjectURL={moveKBObjectURL}
-										portletNamespace={portletNamespace}
-										selectedItemId={item.selectedItemId}
-									/>
-								</Suspense>
+								<PanelComponent
+									items={item.navigationItems}
+									moveKBObjectURL={moveKBObjectURL}
+									portletNamespace={portletNamespace}
+									selectedItemId={item.selectedItemId}
+								/>
 							</div>
 						</VerticalBar.Panel>
 					);

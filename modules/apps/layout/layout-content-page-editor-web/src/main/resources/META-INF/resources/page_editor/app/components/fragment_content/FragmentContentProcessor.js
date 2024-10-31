@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import {useEffect} from 'react';
 
@@ -30,6 +31,7 @@ export default function FragmentContentProcessor({
 	const languageId = useSelector(selectLanguageId);
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const toControlsId = useToControlsId();
+	const isMounted = useIsMounted();
 
 	const editable = editables.find(
 		(editable) =>
@@ -105,6 +107,10 @@ export default function FragmentContentProcessor({
 					setEditableProcessorUniqueId(null);
 				}
 
+				if (!isMounted()) {
+					return;
+				}
+
 				editable.processor.destroyEditor(
 					editable.element,
 					editableValue.config
@@ -120,6 +126,7 @@ export default function FragmentContentProcessor({
 		editableProcessorUniqueId,
 		editableValues,
 		fragmentEntryLinkId,
+		isMounted,
 		languageId,
 		setEditableProcessorUniqueId,
 	]);

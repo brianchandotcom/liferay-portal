@@ -68,118 +68,20 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 						JSONObject editableValuesJSONObject =
 							_jsonFactory.createJSONObject(editableValues);
 
-						JSONObject backgroundFragmentEntryProcessorJSONObject =
-							editableValuesJSONObject.getJSONObject(
-								FragmentEntryProcessorConstants.
-									KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR);
+						boolean modified =
+							_processBackgroundFragmentEntryProcessorJSONObject(
+								dlFileEntryClassNameId, fileEntryClassNameId,
+								editableValuesJSONObject.getJSONObject(
+									FragmentEntryProcessorConstants.
+										KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR));
 
-						JSONObject editableFragmentEntryProcessorJSONObject =
-							editableValuesJSONObject.getJSONObject(
-								FragmentEntryProcessorConstants.
-									KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+						if (_processEditableFragmentEntryProcessorJSONObject(
+								dlFileEntryClassNameId, fileEntryClassNameId,
+								editableValuesJSONObject.getJSONObject(
+									FragmentEntryProcessorConstants.
+										KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR))) {
 
-						if ((backgroundFragmentEntryProcessorJSONObject ==
-								null) &&
-							(editableFragmentEntryProcessorJSONObject ==
-								null)) {
-
-							return;
-						}
-
-						boolean modified = false;
-
-						Iterator<String> iterator =
-							backgroundFragmentEntryProcessorJSONObject.keys();
-
-						while (iterator.hasNext()) {
-							String backgroundElementId = iterator.next();
-
-							if (Objects.equals(backgroundElementId, "config")) {
-								continue;
-							}
-
-							JSONObject backgroundElementJSONObject =
-								backgroundFragmentEntryProcessorJSONObject.
-									getJSONObject(backgroundElementId);
-
-							if (backgroundElementJSONObject == null) {
-								continue;
-							}
-
-							Iterator<String> curIterator =
-								backgroundElementJSONObject.keys();
-
-							while (curIterator.hasNext()) {
-								String backgroundElementItemId =
-									curIterator.next();
-
-								if (Objects.equals(
-										backgroundElementItemId, "config")) {
-
-									continue;
-								}
-
-								JSONObject backgroundElementItemJSONObject =
-									backgroundElementJSONObject.getJSONObject(
-										backgroundElementItemId);
-
-								if (backgroundElementItemJSONObject == null) {
-									continue;
-								}
-
-								String classNameId =
-									backgroundElementItemJSONObject.getString(
-										"classNameId");
-
-								if (Objects.equals(
-										classNameId,
-										String.valueOf(
-											dlFileEntryClassNameId))) {
-
-									backgroundElementItemJSONObject.put(
-										"classNameId",
-										String.valueOf(fileEntryClassNameId));
-
-									modified = true;
-								}
-							}
-						}
-
-						iterator =
-							editableFragmentEntryProcessorJSONObject.keys();
-
-						while (iterator.hasNext()) {
-							String editableElementId = iterator.next();
-
-							JSONObject editableElementJSONObject =
-								editableFragmentEntryProcessorJSONObject.
-									getJSONObject(editableElementId);
-
-							if (editableElementJSONObject == null) {
-								continue;
-							}
-
-							JSONObject configJSONObject =
-								editableElementJSONObject.getJSONObject(
-									"config");
-
-							if (configJSONObject == null) {
-								continue;
-							}
-
-							String classNameId = configJSONObject.getString(
-								"classNameId");
-
-							if (Objects.equals(
-									classNameId,
-									String.valueOf(dlFileEntryClassNameId))) {
-
-								configJSONObject.put(
-									"classNameId",
-									String.valueOf(fileEntryClassNameId));
-
-								modified = true;
-							}
+							modified = true;
 						}
 
 						if (!modified) {
@@ -201,6 +103,106 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 				},
 				"Unable to update class name ID for fragment entry links");
 		}
+	}
+
+	private boolean _processBackgroundFragmentEntryProcessorJSONObject(
+		long dlFileEntryClassNameId, long fileEntryClassNameId,
+		JSONObject jsonObject) {
+
+		if (jsonObject == null) {
+			return false;
+		}
+
+		boolean modified = false;
+
+		Iterator<String> iterator = jsonObject.keys();
+
+		while (iterator.hasNext()) {
+			String backgroundElementId = iterator.next();
+
+			JSONObject backgroundElementJSONObject = jsonObject.getJSONObject(
+				backgroundElementId);
+
+			if (backgroundElementJSONObject == null) {
+				continue;
+			}
+
+			Iterator<String> curIterator = backgroundElementJSONObject.keys();
+
+			while (curIterator.hasNext()) {
+				String backgroundElementItemId = curIterator.next();
+
+				if (Objects.equals(backgroundElementItemId, "config")) {
+					continue;
+				}
+
+				JSONObject backgroundElementItemJSONObject =
+					backgroundElementJSONObject.getJSONObject(
+						backgroundElementItemId);
+
+				if (backgroundElementItemJSONObject == null) {
+					continue;
+				}
+
+				String classNameId = backgroundElementItemJSONObject.getString(
+					"classNameId");
+
+				if (Objects.equals(
+						classNameId, String.valueOf(dlFileEntryClassNameId))) {
+
+					backgroundElementItemJSONObject.put(
+						"classNameId", String.valueOf(fileEntryClassNameId));
+
+					modified = true;
+				}
+			}
+		}
+
+		return modified;
+	}
+
+	private boolean _processEditableFragmentEntryProcessorJSONObject(
+		long dlFileEntryClassNameId, long fileEntryClassNameId,
+		JSONObject jsonObject) {
+
+		if (jsonObject == null) {
+			return false;
+		}
+
+		boolean modified = false;
+
+		Iterator<String> iterator = jsonObject.keys();
+
+		while (iterator.hasNext()) {
+			String editableElementId = iterator.next();
+
+			JSONObject editableElementJSONObject = jsonObject.getJSONObject(
+				editableElementId);
+
+			if (editableElementJSONObject == null) {
+				continue;
+			}
+
+			JSONObject configJSONObject =
+				editableElementJSONObject.getJSONObject("config");
+
+			if (configJSONObject == null) {
+				continue;
+			}
+
+			String classNameId = configJSONObject.getString("classNameId");
+
+			if (Objects.equals(
+					classNameId, String.valueOf(dlFileEntryClassNameId))) {
+
+				configJSONObject.put(
+					"classNameId", String.valueOf(fileEntryClassNameId));
+
+				modified = true;
+			}
+		}
+
+		return modified;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

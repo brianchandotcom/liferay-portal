@@ -1,3 +1,0 @@
-#set ($foo = "Velocity")
-
-Hello $foo

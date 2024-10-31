@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 /**
  * @author Preston Crary
  */
-@ExtendedObjectClassDefinition(category = "infrastructure")
+@ExtendedObjectClassDefinition(category = "publications")
 @Meta.OCD(
 	id = "com.liferay.change.tracking.internal.configuration.CTMessageBusConfiguration",
 	localization = "content/Language",

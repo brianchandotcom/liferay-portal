@@ -287,7 +287,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			).buildString();
 		}
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	@Override

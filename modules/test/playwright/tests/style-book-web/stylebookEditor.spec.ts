@@ -88,8 +88,6 @@ test('LPD-35561 Preview StyleBook when edit StyleBook', async ({
 	});
 
 	await test.step('Add a content page', async () => {
-		await productMenuPage.openProductMenuIfClosed();
-
 		await productMenuPage.goToPages();
 
 		await pagesAdminPage.createNewPage({
@@ -253,8 +251,6 @@ test('LPD-35560 PreviewStyleBookOnPages', async ({
 	);
 
 	await test.step('Add the first page with a Blogs widget', async () => {
-		await productMenuPage.openProductMenuIfClosed();
-
 		await productMenuPage.goToPages();
 
 		await pagesAdminPage.createNewPage({
@@ -268,19 +264,6 @@ test('LPD-35560 PreviewStyleBookOnPages', async ({
 	});
 
 	await test.step('Add the second page with a My Sites widget', async () => {
-
-		/**
-		 * Hard reload work around for
-		 * "Uncaught DOMException: Failed to execute 'removeChild'
-		 * on 'Node': The node to be removed is not a child of this
-		 * node." on Page Editor blocking playwright JS from running.
-		 * frontend-js-react-web/src/main/resources/META-INF/resources/js/render.tsx
-		 */
-
-		await page.reload({waitUntil: 'load'});
-
-		await productMenuPage.openProductMenuIfClosed();
-
 		await productMenuPage.goToPages();
 
 		await pagesAdminPage.createNewPage({
@@ -294,10 +277,6 @@ test('LPD-35560 PreviewStyleBookOnPages', async ({
 	});
 
 	await test.step('Add a paragraph fragment to the third page and publish', async () => {
-		await page.reload({waitUntil: 'load'});
-
-		await productMenuPage.openProductMenuIfClosed();
-
 		await productMenuPage.goToPages();
 
 		await pagesAdminPage.createNewPage({

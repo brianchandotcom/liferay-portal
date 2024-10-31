@@ -99,9 +99,19 @@ export class ProductMenuPage {
 		await this.membershipsButton.click();
 	}
 
-	async goToPages() {
-		await this.siteBuilderButton.click();
-		await this.pagesButton.click();
+	async goToPages(siteUrl?: string) {
+
+		/**
+		 * Hard reload work around for
+		 * "Uncaught DOMException: Failed to execute 'removeChild'
+		 * on 'Node': The node to be removed is not a child of this
+		 * node." on Page Editor blocking playwright JS from running.
+		 * frontend-js-react-web/src/main/resources/META-INF/resources/js/render.tsx
+		 */
+
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.pages}`
+		);
 	}
 
 	async goToPublishingExport() {

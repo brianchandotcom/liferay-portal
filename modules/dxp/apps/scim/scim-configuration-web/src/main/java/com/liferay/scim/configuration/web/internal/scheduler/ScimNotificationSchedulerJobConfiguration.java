@@ -76,26 +76,26 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	protected boolean isSendNotification(
 		Date accessTokenExpirationDate, Date lastNotificationDate,
-		long notificationDurationMillis) {
+		long notificationValidForMillis) {
 
-		long accessTokenExpirationDurationMillis =
-			accessTokenExpirationDate.getTime() - notificationDurationMillis;
-		long lastNotificationDurationMillis =
+		long accessTokenExpirationValidForMillis =
+			accessTokenExpirationDate.getTime() - notificationValidForMillis;
+		long lastNotificationValidForMillis =
 			accessTokenExpirationDate.getTime() -
 				lastNotificationDate.getTime();
 
 		if (_isSendNotification(
-				accessTokenExpirationDurationMillis,
-				lastNotificationDurationMillis, 30 * Time.DAY) ||
+				accessTokenExpirationValidForMillis,
+				lastNotificationValidForMillis, 30 * Time.DAY) ||
 			_isSendNotification(
-				accessTokenExpirationDurationMillis,
-				lastNotificationDurationMillis, 10 * Time.DAY) ||
+				accessTokenExpirationValidForMillis,
+				lastNotificationValidForMillis, 10 * Time.DAY) ||
 			_isSendNotification(
-				accessTokenExpirationDurationMillis,
-				lastNotificationDurationMillis, Time.DAY) ||
+				accessTokenExpirationValidForMillis,
+				lastNotificationValidForMillis, Time.DAY) ||
 			_isSendNotification(
-				accessTokenExpirationDurationMillis,
-				lastNotificationDurationMillis, 0)) {
+				accessTokenExpirationValidForMillis,
+				lastNotificationValidForMillis, 0)) {
 
 			return true;
 		}
@@ -104,12 +104,12 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	private boolean _isSendNotification(
-		long accessTokenExpirationDurationMillis,
-		long lastNotificationDurationMillis, long notificationDurationMillis) {
+		long accessTokenExpirationValidForMillis,
+		long lastNotificationValidForMillis, long notificationValidForMillis) {
 
-		if ((notificationDurationMillis >=
-				accessTokenExpirationDurationMillis) &&
-			(lastNotificationDurationMillis > notificationDurationMillis)) {
+		if ((notificationValidForMillis >=
+				accessTokenExpirationValidForMillis) &&
+			(lastNotificationValidForMillis > notificationValidForMillis)) {
 
 			return true;
 		}

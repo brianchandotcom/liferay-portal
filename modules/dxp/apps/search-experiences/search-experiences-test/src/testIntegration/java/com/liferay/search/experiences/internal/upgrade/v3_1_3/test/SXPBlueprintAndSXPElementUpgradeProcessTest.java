@@ -146,25 +146,23 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		String expectedElementInstancesJSON = _readJSON(
 			"elementInstancesUpdated");
 
-		expectedElementInstancesJSON = StringUtil.replace(
-			expectedElementInstancesJSON,
-			"[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_1$]",
-			_group1.getExternalReferenceCode());
-		expectedElementInstancesJSON = StringUtil.replace(
-			expectedElementInstancesJSON,
-			"[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_2$]",
-			_group2.getExternalReferenceCode());
-		expectedElementInstancesJSON = StringUtil.replace(
-			expectedElementInstancesJSON, "[$SCOPE_GROUP_LABEL_1$]",
-			StringBundler.concat(
-				_group1.getDescriptiveName(), " (ERC: ",
-				_group1.getExternalReferenceCode(), ")"));
-
 		return StringUtil.replace(
-			expectedElementInstancesJSON, "[$SCOPE_GROUP_LABEL_2$]",
-			StringBundler.concat(
-				_group2.getDescriptiveName(), " (ERC: ",
-				_group2.getExternalReferenceCode(), ")"));
+			expectedElementInstancesJSON,
+			new String[] {
+				"[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_1$]",
+				"[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_2$]",
+				"[$SCOPE_GROUP_LABEL_1$]", "[$SCOPE_GROUP_LABEL_2$]"
+			},
+			new String[] {
+				String.valueOf(_group1.getExternalReferenceCode()),
+				String.valueOf(_group2.getExternalReferenceCode()),
+				StringBundler.concat(
+					_group1.getDescriptiveName(), " (ERC: ",
+					_group1.getExternalReferenceCode(), ")"),
+				StringBundler.concat(
+					_group2.getDescriptiveName(), " (ERC: ",
+					_group2.getExternalReferenceCode(), ")")
+			});
 	}
 
 	private String _readJSON(String name) {

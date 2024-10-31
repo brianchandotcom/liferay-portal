@@ -4,6 +4,7 @@
  */
 
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import {useEffect} from 'react';
 
@@ -48,6 +49,34 @@ export default function FragmentContentProcessor({
 			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues,
 		[fragmentEntryLinkId]
 	);
+
+	useEffect(() => {
+		const onBeforeNavigate = (event) => {
+			if (!editable) {
+				return;
+			}
+
+			event.originalEvent.preventDefault();
+
+			const editableValue =
+				editableValues[editable.editableValueNamespace][
+					editable.editableId
+				];
+
+			editable.processor.destroyEditor(
+				editable.element,
+				editableValue.config
+			);
+
+			navigate(event.path);
+		};
+
+		Liferay.on('beforeNavigate', onBeforeNavigate);
+
+		return () => {
+			Liferay.detach('beforeNavigate', onBeforeNavigate);
+		};
+	}, [editable, editableValues]);
 
 	useEffect(() => {
 		if (

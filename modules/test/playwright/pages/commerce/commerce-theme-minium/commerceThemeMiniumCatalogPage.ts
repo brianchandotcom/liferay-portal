@@ -21,9 +21,13 @@ export class CommerceThemeMiniumCatalogPage {
 		orderId: string,
 		accountName: string
 	) => Locator;
+	readonly quantitySelector: (targetLocator: Locator) => Locator;
 	readonly optionsButton: Locator;
 	readonly orderByButton: Locator;
 	readonly page: Page;
+	readonly popOverMessage: (popOverMessage: string) => Locator;
+	readonly productCard: (productName: string) => Locator;
+	readonly productCardAddToCartButton: (productName: string) => Locator;
 	readonly productLink: (productName: string) => Locator;
 
 	constructor(page: Page) {
@@ -62,7 +66,8 @@ export class CommerceThemeMiniumCatalogPage {
 			page
 				.getByRole('link', {name: orderId})
 				.filter({hasText: accountName});
-
+		this.quantitySelector = (targetLocator: Locator) =>
+			targetLocator.getByRole('spinbutton');
 		this.optionsButton = page
 			.locator(
 				'[id^="portlet_com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet"]'
@@ -70,11 +75,42 @@ export class CommerceThemeMiniumCatalogPage {
 			.getByTitle('Options');
 		this.orderByButton = page.locator('#commerce-order-by');
 		this.page = page;
+		this.popOverMessage = (popOverMessage: string) =>
+			this.page
+				.locator('.popover-body')
+				.getByText(popOverMessage, {exact: true});
+		this.productCard = (productName: string) =>
+			this.page.locator('.product-card').filter({hasText: productName});
+		this.productCardAddToCartButton = (productName: string) =>
+			this.productCard(productName).getByRole('button', {
+				exact: true,
+				name: 'Add to Cart',
+			});
 		this.productLink = (productName: string) =>
 			this.page.getByRole('link', {
 				exact: true,
 				name: productName,
 			});
+	}
+
+	async checkQuantitiesInPopOverMessages(
+		minQuantity: string,
+		maxQuantity: string,
+		multipleQuantity: string
+	) {
+		await expect(
+			this.popOverMessage('Min quantity per order is ' + minQuantity)
+		).toBeVisible();
+		await expect(
+			this.popOverMessage(
+				'Maximum quantity per order is ' + maxQuantity + '.'
+			)
+		).toBeVisible();
+		await expect(
+			this.popOverMessage(
+				'Quantity must be a multiple of ' + multipleQuantity
+			)
+		).toBeVisible();
 	}
 
 	async selectSorting(orderByText: string) {

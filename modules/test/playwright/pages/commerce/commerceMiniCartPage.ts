@@ -13,9 +13,11 @@ export class CommerceMiniCartPage {
 	readonly editUnitOfMeasureLabel: Locator;
 	readonly miniCartButton: Locator;
 	readonly miniCartButtonClose: Locator;
+	readonly miniCartItem: (productName: string) => Locator;
 	readonly miniCartItemsContainer: Locator;
 	readonly miniCartItemPrice: (text: RegExp) => Locator;
 	readonly miniCartSaveButton: Locator;
+	readonly miniCartTotalPrice: Locator;
 	readonly miniCartUnitOfMeasureSelector: Locator;
 	readonly page: Page;
 	readonly editQuantitySelector: Locator;
@@ -51,6 +53,8 @@ export class CommerceMiniCartPage {
 		this.miniCartButton = page.getByTestId('miniCartButton');
 		this.miniCartButtonClose = page.locator('.mini-cart-close');
 		this.miniCartItemsContainer = page.locator('div.mini-cart-cart-items');
+		this.miniCartItem = (productName: string) =>
+			page.locator('div.mini-cart-item').filter({hasText: productName});
 		this.miniCartItemPrice = (text: RegExp) =>
 			page.locator('div').filter({hasText: text}).first();
 		this.miniCartSaveButton = page
@@ -59,6 +63,9 @@ export class CommerceMiniCartPage {
 				exact: true,
 				name: 'Save',
 			});
+		this.miniCartTotalPrice = page.locator(
+			`xpath=//div[text()='Total']/../following-sibling::div/div`
+		);
 		this.miniCartUnitOfMeasureSelector = page.locator(
 			'select[name="minicart-uom-selector"]'
 		);

@@ -14,9 +14,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -63,10 +61,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-		User user = TestPropsValues.getUser();
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, user.getUserId());
 	}
 
 	@Test
@@ -137,18 +131,14 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		throws Exception {
 
 		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			null, TestPropsValues.getUserId(),
-			StringUtil.read(
-				_clazz,
-				StringBundler.concat(
-					"dependencies/", _clazz.getSimpleName(),
-					".configurationJSON.json")),
+			null, TestPropsValues.getUserId(), _readJSON("configurationJSON"),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			elementInstancesJSON, "1.1",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			_serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
 	}
 
 	private void _assertElementUpgraded(String externalReferenceCode)
@@ -159,11 +149,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				externalReferenceCode, TestPropsValues.getCompanyId());
 
 		JSONAssert.assertEquals(
-			StringUtil.read(
-				_clazz,
-				StringBundler.concat(
-					"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
-					StringUtil.toLowerCase(externalReferenceCode), ".json")),
+			_readJSON(StringUtil.toLowerCase(externalReferenceCode)),
 			sxpElement.getElementDefinitionJSON(), JSONCompareMode.STRICT);
 	}
 
@@ -203,11 +189,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	private String _getElementInstancesJSON(
 		AssetCategory assetCategory1, AssetCategory assetCategory2) {
 
-		String elementInstancesJSON = StringUtil.read(
-			_clazz,
-			StringBundler.concat(
-				"dependencies/", _clazz.getSimpleName(),
-				".elementInstances.json"));
+		String elementInstancesJSON = _readJSON("elementInstances");
 
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$ASSET_CATEGORY_ID_1$]",
@@ -228,11 +210,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		AssetCategory assetCategory1, AssetCategory assetCategory2,
 		String companyGroupExternalReferenceCode) {
 
-		String elementInstancesJSON = StringUtil.read(
-			_clazz,
-			StringBundler.concat(
-				"dependencies/", _clazz.getSimpleName(),
-				".elementInstancesUpdated.json"));
+		String elementInstancesJSON = _readJSON("elementInstancesUpdated");
 
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON,
@@ -253,6 +231,14 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		return StringUtil.replace(
 			elementInstancesJSON, "[$ASSET_CATEGORY_LABEL_2$]",
 			_createAssetCategoryExternalReferenceCodeLabel(assetCategory2));
+	}
+
+	private String _readJSON(String name) {
+		return StringUtil.read(
+			_clazz,
+			StringBundler.concat(
+				"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
+				name, ".json"));
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -277,8 +263,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		"HIDE_CONTENTS_IN_A_CATEGORY",
 		"HIDE_CONTENTS_IN_A_CATEGORY_FOR_GUEST_USERS"
 	};
-
-	private static ServiceContext _serviceContext;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.search.experiences.internal.upgrade.registry.SXPServiceUpgradeStepRegistrator))"

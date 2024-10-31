@@ -7,6 +7,7 @@ package com.liferay.change.tracking.service.impl;
 
 import com.liferay.change.tracking.closure.CTClosure;
 import com.liferay.change.tracking.closure.CTClosureFactory;
+import com.liferay.change.tracking.configuration.CTConflictConfiguration;
 import com.liferay.change.tracking.conflict.CTEntryConflictHelper;
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
@@ -54,6 +55,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
@@ -112,6 +114,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
+	configurationPid = "com.liferay.change.tracking.configuration.CTConflictConfiguration",
 	property = "model.class.name=com.liferay.change.tracking.model.CTCollection",
 	service = AopService.class
 )
@@ -184,6 +187,10 @@ public class CTCollectionLocalServiceImpl
 
 		Map<Long, CTConflictChecker<?>> ctConflictCheckers = new HashMap<>();
 
+		CTConflictConfiguration ctConflictConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				CTConflictConfiguration.class, companyId);
+
 		for (CTEntry ctEntry : ctEntries) {
 			CTConflictChecker<?> ctConflictChecker =
 				ctConflictCheckers.computeIfAbsent(
@@ -204,6 +211,7 @@ public class CTCollectionLocalServiceImpl
 						return new CTConflictChecker<>(
 							_classNameLocalService,
 							_constraintResolverServiceTrackerMap,
+							ctConflictConfiguration,
 							_ctDisplayRendererServiceTrackerMap,
 							_ctEntryConflictHelperServiceTrackerMap,
 							_ctEntryLocalService, ctService, modelClassNameId,
@@ -1557,6 +1565,9 @@ public class CTCollectionLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	private ServiceTrackerMap<ConstraintResolverKey, ConstraintResolver<?>>
 		_constraintResolverServiceTrackerMap;

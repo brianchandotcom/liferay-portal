@@ -5,6 +5,7 @@
 
 package com.liferay.change.tracking.internal.conflict;
 
+import com.liferay.change.tracking.configuration.CTConflictConfiguration;
 import com.liferay.change.tracking.conflict.CTEntryConflictHelper;
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
@@ -74,6 +75,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		ClassNameLocalService classNameLocalService,
 		ServiceTrackerMap<ConstraintResolverKey, ConstraintResolver<?>>
 			constraintResolverServiceTrackerMap,
+		CTConflictConfiguration ctConflictConfiguration,
 		ServiceTrackerMap<String, CTDisplayRenderer<?>>
 			ctDisplayRendererServiceTrackerMap,
 		ServiceTrackerMap<String, CTEntryConflictHelper>
@@ -86,6 +88,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		_classNameLocalService = classNameLocalService;
 		_constraintResolverServiceTrackerMap =
 			constraintResolverServiceTrackerMap;
+		_ctConflictConfiguration = ctConflictConfiguration;
 		_ctDisplayRendererServiceTrackerMap =
 			ctDisplayRendererServiceTrackerMap;
 		_ctEntryConflictHelperServiceTrackerMap =
@@ -141,8 +144,12 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		_checkAdditions(
 			connection, ctPersistence, conflictInfos, primaryKeyName);
 
-		_checkDeletions(
-			connection, ctPersistence, conflictInfos, primaryKeyName);
+		if (_ctConflictConfiguration.
+				modificationDeletionConflictCheckEnabled()) {
+
+			_checkDeletions(
+				connection, ctPersistence, conflictInfos, primaryKeyName);
+		}
 
 		if (_modificationCTEntries != null) {
 			_checkModifications(
@@ -1095,6 +1102,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 	private final ServiceTrackerMap
 		<ConstraintResolverKey, ConstraintResolver<?>>
 			_constraintResolverServiceTrackerMap;
+	private final CTConflictConfiguration _ctConflictConfiguration;
 	private final ServiceTrackerMap<String, CTDisplayRenderer<?>>
 		_ctDisplayRendererServiceTrackerMap;
 	private final Set<CTEntry> _ctEntries = new HashSet<>();

@@ -98,7 +98,6 @@ modules/apps/headless/headless-form/
 modules/apps/headless/headless-portal-instances/
 modules/apps/headless/headless-site/
 modules/apps/headless/headless-user-notification/    @liferay-commerce
-modules/apps/hello-velocity/
 modules/apps/iframe/
 modules/apps/iframe/iframe-web    @liferay-page-management
 modules/apps/image-uploader/

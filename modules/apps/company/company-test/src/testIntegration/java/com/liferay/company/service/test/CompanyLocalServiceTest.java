@@ -476,6 +476,32 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
+	public void testAddAndDeleteCompanyWithStaticCompanyId() throws Exception {
+		boolean originalCompanyStaticIdEnabled =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "COMPANY_STATIC_ID_ENABLED", true);
+
+		Company company = null;
+
+		try {
+			company = addCompany();
+
+			if (!originalCompanyStaticIdEnabled) {
+				Assert.assertEquals(10000, company.getCompanyId());
+			}
+		}
+		finally {
+			if (company != null) {
+				_companyLocalService.deleteCompany(company);
+			}
+
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "COMPANY_STATIC_ID_ENABLED",
+				originalCompanyStaticIdEnabled);
+		}
+	}
+
+	@Test
 	public void testAddAndDeleteCompanyWithUserGroup() throws Exception {
 		Company company = addCompany();
 
@@ -558,43 +584,6 @@ public class CompanyLocalServiceTest {
 		Assert.assertNull(
 			_userGroupRoleLocalService.fetchUserGroupRole(
 				user.getUserId(), group.getGroupId(), role.getRoleId()));
-	}
-
-	@Test
-	public void testAddCompanyStaticCompanyId() throws Exception {
-		boolean originalCompanyStaticIdEnabled =
-			ReflectionTestUtil.getAndSetFieldValue(
-				PropsValues.class, "COMPANY_STATIC_ID_ENABLED", true);
-
-		Company company1 = null;
-
-		Company company2 = null;
-
-		try {
-			company1 = addCompany(RandomTestUtil.randomString() + "test.com");
-
-			company2 = addCompany(RandomTestUtil.randomString() + "test.com");
-
-			long counterCompanyId =
-				_counterLocalService.increment(Company.class.getName());
-
-			Assert.assertEquals(counterCompanyId - 2, company1.getCompanyId());
-
-			Assert.assertEquals(counterCompanyId - 1, company2.getCompanyId());
-
-			if (originalCompanyStaticIdEnabled == false) {
-				Assert.assertEquals(10000, company1.getCompanyId());
-			}
-		}
-		finally {
-			_companyLocalService.deleteCompany(company1);
-
-			_companyLocalService.deleteCompany(company2);
-
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "COMPANY_STATIC_ID_ENABLED",
-				originalCompanyStaticIdEnabled);
-		}
 	}
 
 	@Test(expected = NoSuchPasswordPolicyException.class)
@@ -1103,12 +1092,18 @@ public class CompanyLocalServiceTest {
 	}
 
 	protected Company addCompany() throws Exception {
-		long counterCompanyId = _counterLocalService.increment() + 1;
+		long counterCompanyId =
+			_counterLocalService.increment(Company.class.getName()) + 1;
 
 		Company company = addCompany(
 			RandomTestUtil.randomString() + "test.com");
 
-		_verifyRandomCompanyId(company.getCompanyId(), counterCompanyId);
+		if (PropsValues.COMPANY_STATIC_ID_ENABLED) {
+			Assert.assertNotEquals(counterCompanyId, company.getCompanyId());
+		}
+		else {
+			_verifyRandomCompanyId(company.getCompanyId(), counterCompanyId);
+		}
 
 		return company;
 	}

@@ -7,6 +7,7 @@ package com.liferay.search.experiences.internal.upgrade.v3_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -125,9 +126,11 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"select externalReferenceCode from SXPBlueprint where " +
 					"sxpBlueprintId = ?");
-			PreparedStatement preparedStatement3 = connection.prepareStatement(
-				"update PortletPreferenceValue set smallValue = ? where " +
-					"portletPreferencesId = ? and name = 'attributes'")) {
+			PreparedStatement preparedStatement3 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update PortletPreferenceValue set smallValue = ? where " +
+						"portletPreferencesId = ? and name = 'attributes'")) {
 
 			while (resultSet1.next()) {
 				String smallValue = resultSet1.getString("smallValue");

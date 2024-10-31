@@ -43,7 +43,7 @@ public class CKEditorCreoleConfigContributor
 
 		jsonObject.put(
 			"allowedContent",
-			"b strong i u hr h1 h2 h3 h4 h5 h6 em ul ol li pre table tr th; " +
+			"b strong i hr h1 h2 h3 h4 h5 h6 em ul ol li pre table tr th; " +
 				"img a[*]");
 
 		Map<String, String> fileBrowserParams =
@@ -95,7 +95,7 @@ public class CKEditorCreoleConfigContributor
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		return JSONUtil.putAll(
-			toJSONArray("['Bold', 'Italic', 'Underline', '-' ,'RemoveFormat']"),
+			toJSONArray("['Bold', 'Italic', '-' ,'RemoveFormat']"),
 			toJSONArray("['NumberedList', 'BulletedList', '-']"),
 			toJSONArray("['Format']"), toJSONArray("['Link', 'Unlink']"),
 			toJSONArray("['Table', '-','ImageSelector', '-', 'HorizontalRule']")

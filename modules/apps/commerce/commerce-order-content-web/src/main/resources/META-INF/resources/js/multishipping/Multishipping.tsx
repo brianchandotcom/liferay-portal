@@ -21,6 +21,7 @@ import './Multishipping.scss';
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {openConfirmModal} from 'frontend-js-web';
 
 import AddDeliveryGroupButton from './AddDeliveryGroupButton';
@@ -644,32 +645,36 @@ const Multishipping = ({
 			<>
 				{!checkedOrderItemIds.length && (
 					<ClayManagementToolbar>
-						<ClayManagementToolbar.ItemList>
-							<ClayManagementToolbar.Item>
-								<ClayCheckbox
-									aria-label={
-										checkedOrderItemIds.length
-											? Liferay.Language.get(
-													'unselect-all'
-												)
-											: Liferay.Language.get('select-all')
-									}
-									checked={!!checkedOrderItemIds.length}
-									data-qa-id="selectAllCheckbox"
-									disabled={loading || readonly || saving}
-									onChange={({target}) => {
-										setCheckedOrderItemIds(
-											target.checked
-												? filterFormattedOrderItems.map(
-														(orderItem) =>
-															orderItem.id
+						{!readonly && (
+							<ClayManagementToolbar.ItemList>
+								<ClayManagementToolbar.Item>
+									<ClayCheckbox
+										aria-label={
+											checkedOrderItemIds.length
+												? Liferay.Language.get(
+														'unselect-all'
 													)
-												: []
-										);
-									}}
-								/>
-							</ClayManagementToolbar.Item>
-						</ClayManagementToolbar.ItemList>
+												: Liferay.Language.get(
+														'select-all'
+													)
+										}
+										checked={!!checkedOrderItemIds.length}
+										data-qa-id="selectAllCheckbox"
+										disabled={loading || readonly || saving}
+										onChange={({target}) => {
+											setCheckedOrderItemIds(
+												target.checked
+													? filterFormattedOrderItems.map(
+															(orderItem) =>
+																orderItem.id
+														)
+													: []
+											);
+										}}
+									/>
+								</ClayManagementToolbar.Item>
+							</ClayManagementToolbar.ItemList>
+						)}
 
 						<ClayManagementToolbar.Search>
 							<ClayInput.Group>
@@ -688,24 +693,26 @@ const Multishipping = ({
 							</ClayInput.Group>
 						</ClayManagementToolbar.Search>
 
-						<ClayManagementToolbar.ItemList>
-							<ClayManagementToolbar.Item>
-								<AddDeliveryGroupButton
-									accountId={accountId}
-									disabled={
-										loading ||
-										readonly ||
-										saving ||
-										deliveryGroups.length >=
-											MAX_DELIVERY_GROUPS
-									}
-									handleSubmit={handleSubmitDeliveryGroup}
-									hasManageAddressesPermission={true}
-									namespace={namespace}
-									spritemap={spritemap}
-								/>
-							</ClayManagementToolbar.Item>
-						</ClayManagementToolbar.ItemList>
+						{!readonly && (
+							<ClayManagementToolbar.ItemList>
+								<ClayManagementToolbar.Item>
+									<AddDeliveryGroupButton
+										accountId={accountId}
+										disabled={
+											loading ||
+											readonly ||
+											saving ||
+											deliveryGroups.length >=
+												MAX_DELIVERY_GROUPS
+										}
+										handleSubmit={handleSubmitDeliveryGroup}
+										hasManageAddressesPermission={true}
+										namespace={namespace}
+										spritemap={spritemap}
+									/>
+								</ClayManagementToolbar.Item>
+							</ClayManagementToolbar.ItemList>
+						)}
 					</ClayManagementToolbar>
 				)}
 
@@ -881,16 +888,25 @@ const Multishipping = ({
 				<ClayTable
 					borderedColumns
 					borderless
-					className="order-items-table"
+					className={classNames('order-items-table', {
+						'order-items-table-readonly': readonly,
+					})}
 				>
 					<ClayTable.Head>
 						<ClayTable.Row>
-							<ClayTable.Cell
-								headingCell
-								key="selection"
-							></ClayTable.Cell>
+							{!readonly && (
+								<ClayTable.Cell
+									className="td-selection"
+									headingCell
+									key="selection"
+								></ClayTable.Cell>
+							)}
 
-							<ClayTable.Cell headingCell key="sku">
+							<ClayTable.Cell
+								className="td-sku-name"
+								headingCell
+								key="sku"
+							>
 								<div className="align-items-center d-flex flex-nowrap">
 									<div className="flex-grow-1">
 										<div className="text-nowrap text-truncate">
@@ -900,7 +916,11 @@ const Multishipping = ({
 								</div>
 							</ClayTable.Cell>
 
-							<ClayTable.Cell headingCell key="quantity">
+							<ClayTable.Cell
+								className="td-quantity"
+								headingCell
+								key="quantity"
+							>
 								<div className="align-items-center d-flex flex-nowrap">
 									<div className="flex-grow-1">
 										<div className="text-nowrap text-truncate">
@@ -922,6 +942,7 @@ const Multishipping = ({
 										handleSubmitDeliveryGroup
 									}
 									key={deliveryGroup.id}
+									readonly={readonly}
 									saving={saving}
 								/>
 							))}
@@ -947,6 +968,7 @@ const Multishipping = ({
 									key={orderItem.id}
 									orderId={orderId}
 									orderItem={orderItem}
+									readonly={readonly}
 									rowIndex={currentIndex}
 								/>
 							))}

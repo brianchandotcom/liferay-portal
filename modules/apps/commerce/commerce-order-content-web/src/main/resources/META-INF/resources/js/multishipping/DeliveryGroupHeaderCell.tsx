@@ -22,6 +22,7 @@ interface IDeliveryGroupHeaderCellProps {
 	disabled?: boolean;
 	hasManageAddressesPermission?: boolean;
 	namespace?: string;
+	readonly?: boolean;
 	saving?: boolean;
 	spritemap?: string;
 }
@@ -34,6 +35,7 @@ const DeliveryGroupHeaderCell = ({
 	handleSubmitDeliveryGroup,
 	hasManageAddressesPermission = true,
 	namespace = 'DeliveryGroupHeaderCell',
+	readonly = false,
 	saving = false,
 	spritemap = '',
 }: IDeliveryGroupHeaderCellProps) => {
@@ -97,55 +99,63 @@ const DeliveryGroupHeaderCell = ({
 							)}
 						</div>
 
-						<DropDown
-							trigger={
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get('actions')}
-									data-qa-id={`deliveryGroup${deliveryGroup.id}Actions`}
-									disabled={disabled}
-									displayType="unstyled"
-									onClick={(event) => {
-										event.preventDefault();
-										event.stopPropagation();
-									}}
-									size="xs"
-									symbol="ellipsis-v"
-								/>
-							}
-						>
-							<DropDown.ItemList>
-								<DropDown.Item
-									aria-label={Liferay.Language.get('edit')}
-									key={`${deliveryGroup.id}_edit`}
-									onClick={() => {
-										onOpenChange(true);
-									}}
-								>
-									{Liferay.Language.get('edit')}
-								</DropDown.Item>
+						{!readonly && (
+							<DropDown
+								trigger={
+									<ClayButtonWithIcon
+										aria-label={Liferay.Language.get(
+											'actions'
+										)}
+										data-qa-id={`deliveryGroup${deliveryGroup.id}Actions`}
+										disabled={disabled}
+										displayType="unstyled"
+										onClick={(event) => {
+											event.preventDefault();
+											event.stopPropagation();
+										}}
+										size="xs"
+										symbol="ellipsis-v"
+									/>
+								}
+							>
+								<DropDown.ItemList>
+									<DropDown.Item
+										aria-label={Liferay.Language.get(
+											'edit'
+										)}
+										key={`${deliveryGroup.id}_edit`}
+										onClick={() => {
+											onOpenChange(true);
+										}}
+									>
+										{Liferay.Language.get('edit')}
+									</DropDown.Item>
 
-								<DropDown.Item
-									aria-label={Liferay.Language.get('delete')}
-									key="{deliveryGroup.id}_delete"
-									onClick={() => {
-										openConfirmModal({
-											message: Liferay.Language.get(
-												'are-you-sure-you-want-to-delete-this'
-											),
-											onConfirm: (isConfirmed) => {
-												if (isConfirmed) {
-													handleDeleteDeliveryGroupWrapper(
-														deliveryGroup
-													);
-												}
-											},
-										});
-									}}
-								>
-									{Liferay.Language.get('delete')}
-								</DropDown.Item>
-							</DropDown.ItemList>
-						</DropDown>
+									<DropDown.Item
+										aria-label={Liferay.Language.get(
+											'delete'
+										)}
+										key="{deliveryGroup.id}_delete"
+										onClick={() => {
+											openConfirmModal({
+												message: Liferay.Language.get(
+													'are-you-sure-you-want-to-delete-this'
+												),
+												onConfirm: (isConfirmed) => {
+													if (isConfirmed) {
+														handleDeleteDeliveryGroupWrapper(
+															deliveryGroup
+														);
+													}
+												},
+											});
+										}}
+									>
+										{Liferay.Language.get('delete')}
+									</DropDown.Item>
+								</DropDown.ItemList>
+							</DropDown>
+						)}
 					</>
 				)}
 			</div>

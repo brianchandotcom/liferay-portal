@@ -24,5 +24,7 @@ export default function Option(basePath) {
 		createOption: (json) => AJAX.POST(resolveOptionsPath(basePath), json),
 		createOptionValue: (optionId, json) =>
 			AJAX.POST(resolveOptionValuesPath(basePath, optionId), json),
+		deleteOptionById: (optionId) =>
+			AJAX.DELETE(resolveOptionsPath(basePath, optionId)),
 	};
 }

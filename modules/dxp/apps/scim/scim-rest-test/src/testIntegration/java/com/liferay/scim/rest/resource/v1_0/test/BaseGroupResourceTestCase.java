@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -34,6 +35,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.scim.rest.client.dto.v1_0.Group;
+import com.liferay.scim.rest.client.dto.v1_0.User;
 import com.liferay.scim.rest.client.http.HttpInvoker;
 import com.liferay.scim.rest.client.pagination.Page;
 import com.liferay.scim.rest.client.resource.v1_0.GroupResource;
@@ -96,8 +98,13 @@ public abstract class BaseGroupResourceTestCase {
 
 		GroupResource.Builder builder = GroupResource.builder();
 
+		com.liferay.portal.kernel.model.User user = UserTestUtil.getAdminUser(
+			testCompany.getCompanyId());
+
 		groupResource = builder.authentication(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();

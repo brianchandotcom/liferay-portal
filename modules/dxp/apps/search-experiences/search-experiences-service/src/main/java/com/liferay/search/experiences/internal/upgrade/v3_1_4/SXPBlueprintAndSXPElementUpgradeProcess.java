@@ -167,7 +167,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Unable to find assetCategory with id " + assetCategoryId);
+					"Unable to find asset category with id " + assetCategoryId);
 			}
 
 			throw exception;
@@ -186,7 +186,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Unable to find assetCategory with id " + assetCategoryId);
+					"Unable to find asset category with id " + assetCategoryId);
 			}
 
 			throw exception;
@@ -404,7 +404,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Unable to upgrade SXPBlueprint " +
+					"Unable to upgrade search experiences blueprint " +
 						resultSet.getLong("sxpBlueprintId"),
 					exception);
 			}

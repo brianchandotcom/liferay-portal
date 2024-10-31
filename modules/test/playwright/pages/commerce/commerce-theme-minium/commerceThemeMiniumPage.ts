@@ -6,13 +6,15 @@
 import {Locator, Page} from '@playwright/test';
 
 export class CommerceThemeMiniumPage {
-	readonly goToMiniumLink: Locator;
+	readonly goToMiniumLink: (siteName: string) => Promise<Locator>;
 	readonly myProfileItemMenu: Locator;
 	readonly page: Page;
 	readonly stickerUserNav: Locator;
 
 	constructor(page: Page) {
-		this.goToMiniumLink = page.getByRole('link', {name: 'Go to Minium'});
+		this.goToMiniumLink = async (siteName: string) => {
+			return page.getByRole('link', {name: `Go to ${siteName}`});
+		};
 		this.page = page;
 		this.myProfileItemMenu = page.getByRole('link', {name: 'My Profile'});
 		this.stickerUserNav = page.locator('.sticker').first();

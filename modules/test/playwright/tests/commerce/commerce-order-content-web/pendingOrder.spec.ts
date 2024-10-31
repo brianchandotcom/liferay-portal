@@ -193,20 +193,11 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 	apiHelpers,
 	applicationsMenuPage,
 	checkoutPage,
-	commerceLayoutsPage,
 	commerceMiniCartPage,
 	page,
 	queuePage,
 }) => {
 	test.setTimeout(180000);
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'Sales agent can receive email notifications Site',
-		templateKey: 'minium-initializer',
-		templateType: 'site-initializer',
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: 'Sales agent can receive email notifications account',
@@ -232,6 +223,13 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 		user.id
 	);
 
+	apiHelpers.data.push({
+		id: `${roles.items[0].id}_${user.id}`,
+		type: 'roleUserAccountAssociation',
+	});
+
+	const {site} = await miniumSetUp(apiHelpers);
+
 	const notificationTemplate =
 		await apiHelpers.notification.postNotificationTemplate({
 			editorType: 'richText',
@@ -254,6 +252,11 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 			},
 			type: 'email',
 		});
+
+	apiHelpers.data.push({
+		id: notificationTemplate.id,
+		type: 'notificationTemplate',
+	});
 
 	const objectAdminRestClient = await apiHelpers.buildRestClient(
 		ObjectAdminRestClient
@@ -278,9 +281,12 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 			}
 		);
 
-	await applicationsMenuPage.goToSite(
-		'Sales agent can receive email notifications Site'
-	);
+	apiHelpers.data.push({
+		id: objectAction.id,
+		type: 'objectAction',
+	});
+
+	await applicationsMenuPage.goToSite(site.name);
 
 	await commerceMiniCartPage.miniCartButton.click();
 	await commerceMiniCartPage.searchProductsInput.fill('MIN55861');
@@ -309,37 +315,15 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 		).toHaveCount(1);
 	}
 	finally {
-		await commerceLayoutsPage.cleanupSiteInitializerData(
-			apiHelpers,
-			'Sales agent can receive email notifications'
-		);
-
-		await objectAdminRestClient.objectAction.deleteObjectAction({
-			objectActionId: objectAction.id,
-		});
-
 		const notificationQueueEntry =
 			await apiHelpers.notification.getNotificationQueueEntriesPage(
 				'Sales agent can receive email notifications'
 			);
 
-		await apiHelpers.notification.deleteNotificationQueueEntry(
-			notificationQueueEntry.items[0].id
-		);
-
-		await apiHelpers.notification.deleteNotificationTemplate(
-			notificationTemplate.id
-		);
-
-		await apiHelpers.headlessAdminUser.deleteRoleUserAccountAssociation(
-			roles.items[0].id,
-			user.id
-		);
-
-		const orders =
-			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
-
-		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+		apiHelpers.data.push({
+			id: notificationQueueEntry.items[0].id,
+			type: 'notificationQueueEntry',
+		});
 	}
 });
 
@@ -394,20 +378,11 @@ test('COMMERCE-7697 Verify user can download CSV template', async ({
 
 test('LPD-28683 When clicking on order item without visibility the user is not redirected to the catalog page', async ({
 	apiHelpers,
-	commerceLayoutsPage,
 	commerceMiniCartPage,
 	commerceThemeMiniumPage,
 	page,
 	pendingOrdersPage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'Minium',
-		templateKey: 'minium-initializer',
-		templateType: 'site-initializer',
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: 'admin',
 		type: 'business',
@@ -415,7 +390,7 @@ test('LPD-28683 When clicking on order item without visibility the user is not r
 
 	apiHelpers.data.push({id: account.id, type: 'account'});
 
-	await commerceLayoutsPage.cleanupSiteInitializerData(apiHelpers, site.name);
+	const {site} = await miniumSetUp(apiHelpers);
 
 	const accountGroup = await apiHelpers.headlessAdminUser.postAccountGroup({
 		name: 'AG1',
@@ -513,7 +488,9 @@ test('LPD-28683 When clicking on order item without visibility the user is not r
 	await pendingOrdersPage.errorMessageCloseButton.click();
 	await pendingOrdersPage.skuLink(product.items[0].skuFormatted).click();
 
-	await expect(commerceThemeMiniumPage.goToMiniumLink).toBeVisible();
+	await expect(
+		await commerceThemeMiniumPage.goToMiniumLink(site.name)
+	).toBeVisible();
 });
 
 test('LPD-26906 As a buyer, I can edit product options from the pending orders page', async ({
@@ -524,26 +501,13 @@ test('LPD-26906 As a buyer, I can edit product options from the pending orders p
 	page,
 	pendingOrdersPage,
 }) => {
-	const siteName = getRandomString();
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: siteName,
-		templateKey: 'minium-initializer',
-		templateType: 'site-initializer',
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		type: 'business',
 	});
 
 	apiHelpers.data.push({id: account.id, type: 'account'});
 
-	await pendingOrdersPage.layoutsPage.cleanupSiteInitializerData(
-		apiHelpers,
-		siteName
-	);
+	const {site} = await miniumSetUp(apiHelpers);
 
 	const user =
 		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
@@ -597,6 +561,11 @@ test('LPD-26906 As a buyer, I can edit product options from the pending orders p
 		role.id,
 		user.id
 	);
+
+	apiHelpers.data.push({
+		id: `${role.id}_${user.id}`,
+		type: 'roleUserAccountAssociation',
+	});
 
 	await apiHelpers.jsonWebServicesUser.addGroupUsers(site.id, [user.id]);
 
@@ -672,87 +641,79 @@ test('LPD-26906 As a buyer, I can edit product options from the pending orders p
 
 	await expect(page.getByText('Showing 1 to 3 of 3 entries.')).toBeVisible();
 
-	try {
-		await performLogout(page);
+	await performLogout(page);
 
-		await performLogin(page, user.alternateName);
+	await performLogin(page, user.alternateName);
 
-		await page.goto(
-			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}/catalog`
-		);
+	await page.goto(
+		`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}/catalog`
+	);
 
-		await commerceMiniCartPage.miniCartButton.click();
-		await commerceMiniCartPage.searchProductsInput.fill('BLACK');
-		await commerceMiniCartPage.quickAddToCartSku('BLACK').click();
-		await commerceMiniCartPage.quickAddToCartButton.click();
-		await commerceMiniCartPage.searchProductsInput.fill('MIN55858');
-		await commerceMiniCartPage.quickAddToCartSku('MIN55858').click();
-		await commerceMiniCartPage.quickAddToCartButton.click();
-		await commerceMiniCartPage.searchProductsInput.fill('MIN93016A');
-		await commerceMiniCartPage.quickAddToCartSku('MIN93016A').click();
-		await commerceMiniCartPage.quickAddToCartButton.click();
+	await commerceMiniCartPage.miniCartButton.click();
+	await commerceMiniCartPage.searchProductsInput.fill('BLACK');
+	await commerceMiniCartPage.quickAddToCartSku('BLACK').click();
+	await commerceMiniCartPage.quickAddToCartButton.click();
+	await commerceMiniCartPage.searchProductsInput.fill('MIN55858');
+	await commerceMiniCartPage.quickAddToCartSku('MIN55858').click();
+	await commerceMiniCartPage.quickAddToCartButton.click();
+	await commerceMiniCartPage.searchProductsInput.fill('MIN93016A');
+	await commerceMiniCartPage.quickAddToCartSku('MIN93016A').click();
+	await commerceMiniCartPage.quickAddToCartButton.click();
 
-		await pendingOrdersPage.layoutsPage.pendingOrdersLink.click();
-		await page.getByLabel('View').click();
+	await pendingOrdersPage.layoutsPage.pendingOrdersLink.click();
+	await page.getByLabel('View').click();
 
-		await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
-		await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
-		await expect(page.getByText('$ 10.00').nth(1)).toBeVisible();
-		await expect(page.getByText('$ 10.00').nth(3)).toBeVisible();
+	await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
+	await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
+	await expect(page.getByText('$ 10.00').nth(1)).toBeVisible();
+	await expect(page.getByText('$ 10.00').nth(3)).toBeVisible();
 
-		await (
-			await pendingOrdersPage.orderItemsTableRowLink('Brake Fluid')
-		).click();
+	await (
+		await pendingOrdersPage.orderItemsTableRowLink('Brake Fluid')
+	).click();
 
-		await pendingOrdersPage.editMenuItem.click();
+	await pendingOrdersPage.editMenuItem.click();
 
-		await commerceMiniCartPage.selectOption('48', 'Package Quantity');
-		await commerceMiniCartPage.miniCartSaveButton.click();
+	await commerceMiniCartPage.selectOption('48', 'Package Quantity');
+	await commerceMiniCartPage.miniCartSaveButton.click();
 
-		await page.reload();
+	await page.reload();
 
-		await (
-			await pendingOrdersPage.orderItemsTableRowLink(productBundleName)
-		).click();
+	await (
+		await pendingOrdersPage.orderItemsTableRowLink(productBundleName)
+	).click();
 
-		await pendingOrdersPage.editMenuItem.click();
+	await pendingOrdersPage.editMenuItem.click();
 
-		await commerceMiniCartPage.selectOption('White', 'Color');
-		await commerceMiniCartPage.miniCartSaveButton.click();
+	await commerceMiniCartPage.selectOption('White', 'Color');
+	await commerceMiniCartPage.miniCartSaveButton.click();
 
-		await page.reload();
+	await page.reload();
 
-		await (
-			await pendingOrdersPage.orderItemsTableRowLink('Wheel Seal - Front')
-		).click();
+	await (
+		await pendingOrdersPage.orderItemsTableRowLink('Wheel Seal - Front')
+	).click();
 
-		await expect(pendingOrdersPage.editMenuItem).toHaveCount(0);
+	await expect(pendingOrdersPage.editMenuItem).toHaveCount(0);
 
-		await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
-		await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
-		await expect(page.getByText('$ 20.00').nth(1)).toBeVisible();
-		await expect(page.getByText('$ 20.00').nth(3)).toBeVisible();
+	await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
+	await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
+	await expect(page.getByText('$ 20.00').nth(1)).toBeVisible();
+	await expect(page.getByText('$ 20.00').nth(3)).toBeVisible();
 
-		await commerceMiniCartPage.miniCartButton.click();
+	await commerceMiniCartPage.miniCartButton.click();
 
-		await expect(
-			commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 4\.00$/)
-		).toBeVisible();
-		await expect(
-			commerceMiniCartPage.miniCartItemPrice(
-				/^List Price\$ 80\.00Promotion Price\$ 72\.00$/
-			)
-		).toBeVisible();
-		await expect(
-			commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 20\.00$/)
-		).toBeVisible();
-	}
-	finally {
-		await apiHelpers.headlessAdminUser.deleteRoleUserAccountAssociation(
-			role.id,
-			user.id
-		);
-	}
+	await expect(
+		commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 4\.00$/)
+	).toBeVisible();
+	await expect(
+		commerceMiniCartPage.miniCartItemPrice(
+			/^List Price\$ 80\.00Promotion Price\$ 72\.00$/
+		)
+	).toBeVisible();
+	await expect(
+		commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 20\.00$/)
+	).toBeVisible();
 });
 
 test('LPD-3259 As a buyer with approval workflow, when I click review order in minicart, I get redirect to pending orders page', async ({

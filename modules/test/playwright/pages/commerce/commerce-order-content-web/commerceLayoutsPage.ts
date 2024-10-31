@@ -18,7 +18,6 @@ export class CommerceLayoutsPage {
 	readonly availableThemesFrame: FrameLocator;
 	readonly backLink: Locator;
 	readonly cancelButton: Locator;
-	readonly catalogLink: Locator;
 	readonly changeCurrentThemeButton: Locator;
 	readonly closeProductMenuButton: Locator;
 	readonly configureMenuItem: Locator;
@@ -108,10 +107,6 @@ export class CommerceLayoutsPage {
 		this.cancelButton = page.getByRole('button', {
 			exact: true,
 			name: 'Cancel',
-		});
-		this.catalogLink = page.getByRole('link', {
-			exact: true,
-			name: 'Catalog',
 		});
 		this.changeCurrentThemeButton = page.getByRole('button', {
 			exact: true,

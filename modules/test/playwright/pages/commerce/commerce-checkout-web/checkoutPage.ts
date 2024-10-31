@@ -37,8 +37,12 @@ export class CheckoutPage extends CommerceDNDTablePage {
 	readonly headingDeliveryGroupModal: (name: string) => Locator;
 	readonly iframeOkButton: Locator;
 	readonly layoutsPage: CommerceLayoutsPage;
+	readonly multishippingTabLink: Locator;
+	readonly multishippingTableLocator: Locator;
 	readonly nameInput: Locator;
 	readonly optionsButton: Locator;
+	readonly orderItemsTabLink: Locator;
+	readonly orderItemsTableLocator: Locator;
 	readonly orderSuccessMessage: Locator;
 	readonly page: Page;
 	readonly phoneNumberInput: Locator;
@@ -46,6 +50,7 @@ export class CheckoutPage extends CommerceDNDTablePage {
 	readonly regionInput: Locator;
 	readonly shippingAddressSelect: Locator;
 	readonly shippingCost: Locator;
+	readonly orderSummaryShippingMethod: Locator;
 	readonly useAsBillingCheckbox: Locator;
 	readonly viewDeliveryGroupTableButton: Locator;
 	readonly zipInput: Locator;
@@ -97,12 +102,26 @@ export class CheckoutPage extends CommerceDNDTablePage {
 			name: 'Go to Order Details',
 		});
 		this.layoutsPage = new CommerceLayoutsPage(page);
+		this.multishippingTabLink = page.getByRole('link', {
+			exact: true,
+			name: 'Multishipping',
+		});
+		this.multishippingTableLocator = page.locator(
+			'div.multishipping-container'
+		);
 		this.nameInput = page.getByPlaceholder('Name', {exact: true});
 		this.optionsButton = page
 			.locator(
 				'#portlet_com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet'
 			)
 			.getByLabel('Options');
+		this.orderItemsTabLink = page.getByRole('link', {
+			exact: true,
+			name: 'Order Items',
+		});
+		this.orderItemsTableLocator = page.locator(
+			'#_com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet_commerceOrderItems'
+		);
 		this.orderSuccessMessage = page.getByText(
 			'Success! Your order has been processed.'
 		);
@@ -117,6 +136,7 @@ export class CheckoutPage extends CommerceDNDTablePage {
 		);
 		this.shippingAddressSelect = page.getByText('Choose Shipping Address');
 		this.shippingCost = page.locator('.shipping-cost');
+		this.orderSummaryShippingMethod = page.locator('div.shipping-method');
 		this.useAsBillingCheckbox = page.getByLabel(
 			'Use shipping address as billing address'
 		);

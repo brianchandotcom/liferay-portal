@@ -739,8 +739,9 @@ public class FragmentEntryProcessorHelperImpl
 		Object object = null;
 
 		if (isMapped(editableValueJSONObject)) {
-			String className = _portal.getClassName(
-				editableValueJSONObject.getLong("classNameId"));
+			String className = _infoSearchClassMapperRegistry.getClassName(
+				_portal.getClassName(
+					editableValueJSONObject.getLong("classNameId")));
 			String externalReferenceCode = editableValueJSONObject.getString(
 				"externalReferenceCode");
 

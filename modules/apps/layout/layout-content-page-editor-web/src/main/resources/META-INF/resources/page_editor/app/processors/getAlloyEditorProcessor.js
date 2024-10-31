@@ -220,6 +220,8 @@ export default function getAlloyEditorProcessor(
 			if (_editor) {
 				const lastValue = _editor.get('nativeEditor').getData();
 
+				_callbacks.changeCallback(lastValue);
+
 				_editor.destroy();
 
 				_eventHandlers.forEach((handler) => {

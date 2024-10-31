@@ -1,5 +1,21 @@
 {
 	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {
+		"backgroundImage": {
+			"config": {
+				"alt": {
+					"en_US": ""
+				},
+				"imageConfiguration": {
+				}
+			},
+			"en_US": {
+				"classNameId": "${CLASS_NAME_ID}",
+				"classPK": "${CLASS_PK1}",
+				"fileEntryId": "${CLASS_PK1}",
+				"title": "liferay-logo.png",
+				"url": "/documents/20124/0/liferay-logo.png/29d7ea36-2ee0-059d-4bab-892f302b2924?version=1.0&t=1729611723562&download=true"
+			}
+		}
 	},
 	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
 		"link1": {

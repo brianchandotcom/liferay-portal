@@ -40,7 +40,7 @@
 										role="radio"
 										type="radio"
 									/>
-								<@/liferay_ui.csp>
+								</@liferay_ui.csp>
 
 								<span class="custom-control-label term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 									<span class="custom-control-label-text">
@@ -75,7 +75,7 @@
 								role="radio"
 								type="radio"
 							/>
-						<@/liferay_ui.csp>
+						</@liferay_ui.csp>
 
 						<span class="custom-control-label term-name ${(customRangeBucketDisplayContext.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 							<span class="custom-control-label-text">

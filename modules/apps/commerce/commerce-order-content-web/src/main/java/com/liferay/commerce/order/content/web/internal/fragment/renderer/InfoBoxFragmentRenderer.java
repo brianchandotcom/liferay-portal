@@ -280,14 +280,7 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 			return HashMapBuilder.<String, Object>put(
 				"termDescription",
-				() -> {
-					if (!commerceOrder.isOpen()) {
-						return commerceOrder.
-							getDeliveryCommerceTermEntryDescription();
-					}
-
-					return null;
-				}
+				commerceOrder.getDeliveryCommerceTermEntryDescription()
 			).put(
 				"value", deliveryCommerceTermEntryId
 			).build();
@@ -326,14 +319,7 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 			return HashMapBuilder.<String, Object>put(
 				"termDescription",
-				() -> {
-					if (!commerceOrder.isOpen()) {
-						return commerceOrder.
-							getPaymentCommerceTermEntryDescription();
-					}
-
-					return null;
-				}
+				commerceOrder.getPaymentCommerceTermEntryDescription()
 			).put(
 				"value", paymentCommerceTermEntryId
 			).build();

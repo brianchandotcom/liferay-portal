@@ -16,6 +16,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:account:account-api")
+	compileOnly project(":apps:asset:asset-display-page-api")
 	compileOnly project(":apps:change-tracking:change-tracking-spi")
 	compileOnly project(":apps:commerce:commerce-api")
 	compileOnly project(":apps:commerce:commerce-currency-api")
@@ -33,6 +34,9 @@ dependencies {
 	compileOnly project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-catalog-api")
 	compileOnly project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-order-api")
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
+	compileOnly project(":apps:friendly-url:friendly-url-api")
+	compileOnly project(":apps:info:info-api")
+	compileOnly project(":apps:layout:layout-display-page-api")
 	compileOnly project(":apps:list-type:list-type-api")
 	compileOnly project(":apps:notification:notification-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-spi")

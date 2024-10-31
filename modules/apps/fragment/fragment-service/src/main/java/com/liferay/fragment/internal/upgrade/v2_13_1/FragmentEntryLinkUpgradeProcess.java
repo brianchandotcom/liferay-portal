@@ -66,78 +66,76 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 
 					String editableValues = (String)values[2];
 
-					preparedStatement.setString(
-						1,
-						_replaceDLFileEntryClassNameIdWithFileEntryClassNameId(
-							editableValues, dlFileEntryClassNameId,
-							fileEntryClassNameId));
+					try {
+						JSONObject editableValuesJSONObject =
+							_jsonFactory.createJSONObject(editableValues);
 
-					preparedStatement.setLong(2, ctCollectionId);
-					preparedStatement.setLong(3, fragmentEntryLinkId);
+						JSONObject editableFragmentEntryProcessorJSONObject =
+							editableValuesJSONObject.getJSONObject(
+								FragmentEntryProcessorConstants.
+									KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-					preparedStatement.addBatch();
+						if (editableFragmentEntryProcessorJSONObject == null) {
+							return;
+						}
+
+						Iterator<String> iterator =
+							editableFragmentEntryProcessorJSONObject.keys();
+						boolean modified = false;
+
+						while (iterator.hasNext()) {
+							String editableElementId = iterator.next();
+
+							JSONObject editableElementJSONObject =
+								editableFragmentEntryProcessorJSONObject.
+									getJSONObject(editableElementId);
+
+							if (editableElementJSONObject == null) {
+								continue;
+							}
+
+							JSONObject configJSONObject =
+								editableElementJSONObject.getJSONObject(
+									"config");
+
+							if (configJSONObject == null) {
+								continue;
+							}
+
+							String classNameId = configJSONObject.getString(
+								"classNameId");
+
+							if (Objects.equals(
+									classNameId,
+									String.valueOf(dlFileEntryClassNameId))) {
+
+								configJSONObject.put(
+									"classNameId",
+									String.valueOf(fileEntryClassNameId));
+
+								modified = true;
+							}
+						}
+
+						if (!modified) {
+							return;
+						}
+
+						preparedStatement.setString(
+							1, editableValuesJSONObject.toString());
+						preparedStatement.setLong(2, ctCollectionId);
+						preparedStatement.setLong(3, fragmentEntryLinkId);
+
+						preparedStatement.addBatch();
+					}
+					catch (Exception exception) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(exception);
+						}
+					}
 				},
 				"Unable to update class name ID for fragment entry links");
 		}
-	}
-
-	private String _replaceDLFileEntryClassNameIdWithFileEntryClassNameId(
-		String editableValues, long dlFileEntryClassNameId,
-		long fileEntryClassNameId) {
-
-		try {
-			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-				editableValues);
-
-			JSONObject editableFragmentEntryProcessorJSONObject =
-				editableValuesJSONObject.getJSONObject(
-					FragmentEntryProcessorConstants.
-						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
-
-			if (editableFragmentEntryProcessorJSONObject == null) {
-				return editableValues;
-			}
-
-			Iterator<String> iterator =
-				editableFragmentEntryProcessorJSONObject.keys();
-
-			while (iterator.hasNext()) {
-				String editableElementId = iterator.next();
-
-				JSONObject editableElementJSONObject =
-					editableFragmentEntryProcessorJSONObject.getJSONObject(
-						editableElementId);
-
-				if (editableElementJSONObject == null) {
-					continue;
-				}
-
-				JSONObject configJSONObject =
-					editableElementJSONObject.getJSONObject("config");
-
-				if (configJSONObject == null) {
-					continue;
-				}
-
-				String classNameId = configJSONObject.getString("classNameId");
-
-				if (Objects.equals(
-						classNameId, String.valueOf(dlFileEntryClassNameId))) {
-
-					configJSONObject.put(
-						"classNameId", String.valueOf(fileEntryClassNameId));
-				}
-			}
-
-			return editableValuesJSONObject.toString();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return editableValues;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

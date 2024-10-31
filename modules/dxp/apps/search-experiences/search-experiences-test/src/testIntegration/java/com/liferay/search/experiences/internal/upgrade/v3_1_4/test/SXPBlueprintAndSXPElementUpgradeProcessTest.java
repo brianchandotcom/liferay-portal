@@ -104,13 +104,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		for (String elementExternalReferenceCode :
-				_ELEMENT_EXTERNAL_REFERENCE_CODES) {
-
+		for (String externalReferenceCode : _EXTERNAL_REFERENCE_CODES) {
 			SXPElement sxpElement =
 				_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
-					elementExternalReferenceCode,
-					TestPropsValues.getCompanyId());
+					externalReferenceCode, TestPropsValues.getCompanyId());
 
 			if (sxpElement != null) {
 				sxpElement.setElementDefinitionJSON(
@@ -120,7 +117,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			}
 			else {
 				_sxpElementLocalService.addSXPElement(
-					elementExternalReferenceCode, TestPropsValues.getUserId(),
+					externalReferenceCode, TestPropsValues.getUserId(),
 					Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					StringPool.BLANK, true, StringPool.BLANK,
@@ -168,16 +165,13 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				}),
 			sxpBlueprint.getElementInstancesJSON(), JSONCompareMode.STRICT);
 
-		for (String elementExternalReferenceCode :
-				_ELEMENT_EXTERNAL_REFERENCE_CODES) {
-
+		for (String externalReferenceCode : _EXTERNAL_REFERENCE_CODES) {
 			SXPElement sxpElement =
 				_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
-					elementExternalReferenceCode,
-					TestPropsValues.getCompanyId());
+					externalReferenceCode, TestPropsValues.getCompanyId());
 
 			JSONAssert.assertEquals(
-				_readJSON(StringUtil.toLowerCase(elementExternalReferenceCode)),
+				_readJSON(StringUtil.toLowerCase(externalReferenceCode)),
 				sxpElement.getElementDefinitionJSON(), JSONCompareMode.STRICT);
 		}
 	}
@@ -190,7 +184,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				name, ".json"));
 	}
 
-	private static final String[] _ELEMENT_EXTERNAL_REFERENCE_CODES = {
+	private static final String[] _EXTERNAL_REFERENCE_CODES = {
 		"BOOST_CONTENTS_IN_A_CATEGORY",
 		"BOOST_CONTENTS_IN_A_CATEGORY_BY_KEYWORD_MATCH",
 		"BOOST_CONTENTS_IN_A_CATEGORY_FOR_A_PERIOD_OF_TIME",

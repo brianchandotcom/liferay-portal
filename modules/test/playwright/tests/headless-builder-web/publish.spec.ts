@@ -5,13 +5,13 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
 export const test = mergeTests(
-	apiHelpersTest,
+	dataApiHelpersTest,
 	headlessBuilderPagesTest(),
 	headlessDiscoveryPagesTest,
 	loginTest()
@@ -42,6 +42,8 @@ test('can get updated title in response after publish', async ({
 		'headless-builder/applications'
 	);
 
+	apiHelpers.data.push({id: application.id, type: 'apiApplication'});
+
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.openApplicationActions(application.title);
 	await page.getByRole('menuitem', {name: 'Edit'}).click();
@@ -60,9 +62,4 @@ test('can get updated title in response after publish', async ({
 			)
 		).title
 	).toEqual(`${application.title} 1`);
-
-	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-		'headless-builder/applications',
-		application.externalReferenceCode
-	);
 });

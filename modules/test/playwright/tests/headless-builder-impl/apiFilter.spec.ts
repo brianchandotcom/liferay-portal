@@ -73,7 +73,7 @@ test('can GET with API Filter', async ({apiHelpers}) => {
 		title: 'title',
 	});
 
-	apiHelpers.data.unshift({id: apiApplication.id, type: 'apiApplication'});
+	apiHelpers.data.push({id: apiApplication.id, type: 'apiApplication'});
 
 	expect(apiApplication.status).toStrictEqual({
 		code: 0,

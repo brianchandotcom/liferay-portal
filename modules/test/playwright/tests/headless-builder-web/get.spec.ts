@@ -45,7 +45,7 @@ test('can associate and disassociate schema', async ({
 	headlessBuilderPage,
 	page,
 }) => {
-	await apiHelpers.objectEntry.postObjectEntry(
+	const apiApplication = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			...application,
 			apiApplicationToAPIEndpoints: [
@@ -64,6 +64,8 @@ test('can associate and disassociate schema', async ({
 		},
 		'headless-builder/applications'
 	);
+
+	apiHelpers.data.push({id: apiApplication.id, type: 'apiApplication'});
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.goToEditApplication(application.title);
@@ -118,6 +120,14 @@ test('can see available path parameter properties of a singleElement endpoint', 
 	await headlessBuilderPage.newApplicationTitleBox.fill('My-app');
 	await headlessBuilderPage.createApplicationButton.click();
 
+	const apiApplicationPage =
+		await apiHelpers.apiBuilder.getAPIApplicationsPage();
+
+	apiHelpers.data.push({
+		id: apiApplicationPage.items[0].id,
+		type: 'apiApplication',
+	});
+
 	await applicationPage.goToSchemasTab();
 	await applicationPage.addSchemaButton.click();
 	await applicationPage.schemaNameTextBox.fill('API Application schema');
@@ -139,9 +149,6 @@ test('can see available path parameter properties of a singleElement endpoint', 
 		page.getByRole('menuitem', {name: 'External Reference Code'})
 	).toBeVisible();
 	await expect(page.getByRole('menuitem', {name: 'ID'})).toBeVisible();
-
-	await headlessBuilderPage.goto();
-	await headlessBuilderPage.deleteApplication('My-app');
 });
 
 test('can see path parameter property with map details', async ({
@@ -162,6 +169,14 @@ test('can see path parameter property with map details', async ({
 	await headlessBuilderPage.addNewApplicationButton.click();
 	await headlessBuilderPage.newApplicationTitleBox.fill('My-app');
 	await headlessBuilderPage.createApplicationButton.click();
+
+	const apiApplicationPage =
+		await apiHelpers.apiBuilder.getAPIApplicationsPage();
+
+	apiHelpers.data.push({
+		id: apiApplicationPage.items[0].id,
+		type: 'apiApplication',
+	});
 
 	await applicationPage.goToSchemasTab();
 	await applicationPage.addSchemaButton.click();
@@ -190,9 +205,6 @@ test('can see path parameter property with map details', async ({
 			'This property from the schema will be mapped to path Parameter: {entryid}.'
 		)
 	).toBeVisible();
-
-	await headlessBuilderPage.goto();
-	await headlessBuilderPage.deleteApplication('My-app');
 });
 
 test('can see schema unique fields as path parameter properties', async ({
@@ -201,7 +213,7 @@ test('can see schema unique fields as path parameter properties', async ({
 	headlessBuilderPage,
 	page,
 }) => {
-	await apiHelpers.objectEntry.postObjectEntry(
+	const apiApplication = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			...application,
 			apiApplicationToAPIEndpoints: [
@@ -220,6 +232,8 @@ test('can see schema unique fields as path parameter properties', async ({
 		},
 		'headless-builder/applications'
 	);
+
+	apiHelpers.data.push({id: apiApplication.id, type: 'apiApplication'});
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.goToEditApplication(application.title);
@@ -318,6 +332,13 @@ test('can list site scoped endpoint', async ({
 		'headless-builder/applications'
 	);
 
+	apiHelpers.data.push({
+		id: studentSiteDefinition.id,
+		type: 'objectDefinition',
+	});
+
+	apiHelpers.data.push({id: studentApplication.id, type: 'apiApplication'});
+
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.goToEditApplication(studentApplication.title);
 	await applicationPage.createSingleElementEndpoint(
@@ -341,13 +362,4 @@ test('can list site scoped endpoint', async ({
 	await headlessBuilderPage.goToEditApplication(studentApplication.title);
 	await applicationPage.goToEndpointsTab();
 	await applicationPage.goToEditEndpoint('/gettest/{entryerc}/');
-
-	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-		'headless-builder/applications',
-		studentApplication.externalReferenceCode
-	);
-
-	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-		objectDefinitionId: studentSiteDefinition.id,
-	});
 });

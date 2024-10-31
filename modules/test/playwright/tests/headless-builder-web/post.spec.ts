@@ -6,13 +6,13 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
 export const test = mergeTests(
-	apiHelpersTest,
+	dataApiHelpersTest,
 	loginTest(),
 	headlessBuilderPagesTest(),
 	headlessDiscoveryPagesTest
@@ -78,10 +78,12 @@ test('can create post endpoint and can not disassociate request api schema', asy
 	headlessBuilderPage,
 	page,
 }) => {
-	await apiHelpers.objectEntry.postObjectEntry(
+	const apiApplication = await apiHelpers.objectEntry.postObjectEntry(
 		application,
 		'headless-builder/applications'
 	);
+
+	apiHelpers.data.push({id: apiApplication.id, type: 'apiApplication'});
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.goToEditApplication(application.title);
@@ -102,11 +104,6 @@ test('can create post endpoint and can not disassociate request api schema', asy
 	await expect(
 		page.getByText('Please select a request body schema.')
 	).toBeVisible();
-
-	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-		'headless-builder/applications',
-		application.externalReferenceCode
-	);
 });
 
 test('can create post endpoint and can not edit http method', async ({
@@ -114,10 +111,12 @@ test('can create post endpoint and can not edit http method', async ({
 	applicationPage,
 	headlessBuilderPage,
 }) => {
-	await apiHelpers.objectEntry.postObjectEntry(
+	const apiApplication = await apiHelpers.objectEntry.postObjectEntry(
 		application,
 		'headless-builder/applications'
 	);
+
+	apiHelpers.data.push({id: apiApplication.id, type: 'apiApplication'});
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.goToEditApplication(application.title);
@@ -131,18 +130,12 @@ test('can create post endpoint and can not edit http method', async ({
 	);
 
 	await expect(isDisabled).toBeTruthy();
-
-	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-		'headless-builder/applications',
-		application.externalReferenceCode
-	);
 });
 
 test('can create post endpoint with different request and response schema', async ({
 	apiExplorerPage,
 	apiHelpers,
 	applicationPage,
-
 	headlessBuilderPage,
 	page,
 }) => {
@@ -190,6 +183,8 @@ test('can create post endpoint with different request and response schema', asyn
 				},
 			},
 		});
+
+	apiHelpers.data.push({id: subjectResponse.id, type: 'objectDefinition'});
 
 	const studentResponse =
 		await objectAdminRestClient.objectDefinition.postObjectDefinition({
@@ -283,10 +278,19 @@ test('can create post endpoint with different request and response schema', asyn
 			},
 		});
 
-	await apiHelpers.objectEntry.postObjectEntry(
+	apiHelpers.data.push({id: studentResponse.id, type: 'objectDefinition'});
+
+	apiHelpers.data.push({
+		id: studentResponse.objectRelationships[0].id,
+		type: 'objectRelationship',
+	});
+
+	const apiApplication = await apiHelpers.objectEntry.postObjectEntry(
 		studentSubjectsApplication,
 		'headless-builder/applications'
 	);
+
+	apiHelpers.data.push({id: apiApplication.id, type: 'apiApplication'});
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.goToEditApplication(
@@ -318,23 +322,6 @@ test('can create post endpoint with different request and response schema', asyn
 	);
 
 	await expect(apiExplorerPage.getEndpointLocator('/student')).toBeVisible();
-
-	await page.goto('/');
-	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-		'headless-builder/applications',
-		studentSubjectsApplication.externalReferenceCode
-	);
-	await objectAdminRestClient.objectRelationship.deleteObjectRelationship({
-		objectRelationshipId: studentResponse.objectRelationships[0].id,
-	});
-
-	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-		objectDefinitionId: studentResponse.id,
-	});
-
-	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-		objectDefinitionId: subjectResponse.id,
-	});
 });
 
 test('can create post method endpoint with company scope', async ({
@@ -342,12 +329,13 @@ test('can create post method endpoint with company scope', async ({
 	apiHelpers,
 	applicationPage,
 	headlessBuilderPage,
-	page,
 }) => {
-	await apiHelpers.objectEntry.postObjectEntry(
+	const apiApplication = await apiHelpers.objectEntry.postObjectEntry(
 		application,
 		'headless-builder/applications'
 	);
+
+	apiHelpers.data.push({id: apiApplication.id, type: 'apiApplication'});
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.goToEditApplication(application.title);
@@ -369,10 +357,4 @@ test('can create post method endpoint with company scope', async ({
 	await expect(
 		apiExplorerPage.getEndpointLocator('/test-post-endpoint')
 	).toBeVisible();
-
-	await page.goto('/');
-	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-		'headless-builder/applications',
-		application.externalReferenceCode
-	);
 });

@@ -412,6 +412,16 @@ export class DataApiHelpers extends ApiHelpers {
 					objectFolderId: item.id,
 				});
 			}
+			else if (item.type === 'objectRelationship') {
+				const objectAdminRESTClient = await this.buildRestClient(
+					ObjectAdminRestClient
+				);
+				await objectAdminRESTClient.objectRelationship.deleteObjectRelationship(
+					{
+						objectRelationshipId: item.id,
+					}
+				);
+			}
 			else if (item.type === 'option') {
 				await this.headlessCommerceAdminCatalog.deleteOption(item.id);
 			}

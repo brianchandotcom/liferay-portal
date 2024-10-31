@@ -9,12 +9,12 @@ import {
 	ObjectAdminRestClient,
 	ObjectDefinition,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
 export const testFeatureFlagsEnabled = mergeTests(
-	apiHelpersTest,
+	dataApiHelpersTest,
 	headlessBuilderPagesTest({
 		'LPD-21414': true,
 	}),
@@ -22,7 +22,7 @@ export const testFeatureFlagsEnabled = mergeTests(
 );
 
 export const testFeatureFlagsDisabled = mergeTests(
-	apiHelpersTest,
+	dataApiHelpersTest,
 	headlessBuilderPagesTest({
 		'LPD-21414': false,
 	}),
@@ -236,6 +236,13 @@ testFeatureFlagsDisabled(
 			);
 		}
 
+		objectDefinitions.forEach((objectDefinition) => {
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+		});
+
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				apiApplicationToAPISchemas: [
@@ -255,6 +262,8 @@ testFeatureFlagsDisabled(
 			'headless-builder/applications'
 		);
 
+		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
+
 		await headlessBuilderPage.goto();
 		await headlessBuilderPage.goToEditApplication(application.title);
 		await applicationPage.goToSchemasTab();
@@ -269,21 +278,6 @@ testFeatureFlagsDisabled(
 				})
 			).toBeVisible();
 		});
-
-		for (const objectDefinition of objectDefinitions) {
-			expect(async () => {
-				await objectAdminRestClient.objectDefinition.deleteObjectDefinition(
-					{
-						objectDefinitionId: objectDefinition.id,
-					}
-				);
-			}).not.toThrow();
-		}
-
-		await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-			'headless-builder/applications',
-			application.externalReferenceCode
-		);
 	}
 );
 
@@ -299,10 +293,17 @@ testFeatureFlagsDisabled(
 				requestBody: objectDefinitionData,
 			});
 
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			applicationData,
 			'headless-builder/applications'
 		);
+
+		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
 
 		await headlessBuilderPage.goto();
 		await headlessBuilderPage.goToEditApplication(application.title);
@@ -319,15 +320,6 @@ testFeatureFlagsDisabled(
 		expect(
 			objectDefinitionDropdownOptions.includes('ObjectDefinition')
 		).toBeTruthy();
-
-		await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-			'headless-builder/applications',
-			application.externalReferenceCode
-		);
-
-		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-			objectDefinitionId: objectDefinition.id,
-		});
 	}
 );
 
@@ -343,10 +335,17 @@ testFeatureFlagsEnabled(
 				requestBody: objectDefinitionData,
 			});
 
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			applicationData,
 			'headless-builder/applications'
 		);
+
+		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
 
 		await headlessBuilderPage.goto();
 		await headlessBuilderPage.goToEditApplication(application.title);
@@ -371,15 +370,6 @@ testFeatureFlagsEnabled(
 				)
 			).toBeTruthy();
 		}
-
-		await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-			'headless-builder/applications',
-			application.externalReferenceCode
-		);
-
-		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-			objectDefinitionId: objectDefinition.id,
-		});
 	}
 );
 
@@ -395,10 +385,20 @@ testFeatureFlagsDisabled(
 				requestBody: objectDefinitionData,
 			});
 
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
 		const objectDefinition1 =
 			await objectAdminRestClient.objectDefinition.postObjectDefinition({
 				requestBody: objectDefinition1Data,
 			});
+
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
 
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			{
@@ -419,6 +419,17 @@ testFeatureFlagsDisabled(
 			},
 			'headless-builder/applications'
 		);
+
+		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
+
+		const customObjectDefinition =
+			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+				'customObjectDefinition'
+			);
+		apiHelpers.data.push({
+			id: customObjectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await headlessBuilderPage.goto();
 		await headlessBuilderPage.goToEditApplication(application.title);
@@ -493,29 +504,6 @@ testFeatureFlagsDisabled(
 				.getByLabel('Add Author Property')
 				.getByText('Author')
 		).not.toHaveClass(/disabled/);
-
-		await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-			'headless-builder/applications',
-			application.externalReferenceCode
-		);
-
-		objectDefinition1.objectRelationships.forEach(
-			async (objectRelationship) => {
-				await objectAdminRestClient.objectRelationship.deleteObjectRelationship(
-					{
-						objectRelationshipId: objectRelationship.id,
-					}
-				);
-			}
-		);
-
-		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-			objectDefinitionId: objectDefinition.id,
-		});
-
-		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-			objectDefinitionId: objectDefinition1.id,
-		});
 	}
 );
 
@@ -531,10 +519,20 @@ testFeatureFlagsEnabled(
 				requestBody: objectDefinitionData,
 			});
 
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
 		const objectDefinition1 =
 			await objectAdminRestClient.objectDefinition.postObjectDefinition({
 				requestBody: objectDefinition1Data,
 			});
+
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
 
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			{
@@ -555,6 +553,17 @@ testFeatureFlagsEnabled(
 			},
 			'headless-builder/applications'
 		);
+
+		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
+
+		const customObjectDefinition =
+			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+				'customObjectDefinition'
+			);
+		apiHelpers.data.push({
+			id: customObjectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		await headlessBuilderPage.goto();
 		await headlessBuilderPage.goToEditApplication(application.title);
@@ -638,22 +647,5 @@ testFeatureFlagsEnabled(
 			'headless-builder/applications',
 			application.externalReferenceCode
 		);
-
-		objectDefinition1.objectRelationships.forEach(
-			async (objectRelationship) => {
-				await objectAdminRestClient.objectRelationship.deleteObjectRelationship(
-					{
-						objectRelationshipId: objectRelationship.id,
-					}
-				);
-			}
-		);
-
-		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-			objectDefinitionId: objectDefinition.id,
-		});
-		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-			objectDefinitionId: objectDefinition1.id,
-		});
 	}
 );

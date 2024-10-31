@@ -27,7 +27,6 @@ export class ApiExplorerPage {
 					.getByText(parameter)
 			).toBeVisible();
 		}
-		await this.getEndpointLocator(endpointPath).click();
 	}
 
 	async expectEndpointWithoutParameters(

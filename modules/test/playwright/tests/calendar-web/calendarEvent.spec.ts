@@ -73,63 +73,6 @@ test('can create all-day calendar event with different time zone', async ({
 	await expect(endDate).toEqual(startDate);
 });
 
-test('can update an event with recurrence', async ({calendarWidgetPage}) => {
-	await calendarWidgetPage.fillEventWithRecurrenceUntilDate({daysFromNow: 5});
-
-	await expect(
-		calendarWidgetPage.page
-			.frameLocator('iframe')
-			.getByRole('textbox', {name: 'mm/dd/yyyy'})
-	).toBeEnabled();
-
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByRole('button', {name: 'Done'})
-		.click();
-
-	await calendarWidgetPage.publishEvent();
-
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByLabel('Title', {exact: true})
-		.click();
-
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByLabel('Title', {exact: true})
-		.fill(getRandomString());
-
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByRole('button', {exact: true, name: 'Publish'})
-		.click();
-
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByRole('button', {name: 'Following Events'})
-		.click();
-
-	await waitForAlert(
-		calendarWidgetPage.page.frameLocator('iframe'),
-		`Success:Your request completed successfully.`
-	);
-
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByRole('button', {exact: true, name: 'Publish'})
-		.click();
-
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByRole('button', {name: 'Entire Series'})
-		.click();
-
-	await waitForAlert(
-		calendarWidgetPage.page.frameLocator('iframe'),
-		`Success:Your request completed successfully.`
-	);
-});
-
 test('can create an all-day calendar event in a different time zone, ensuring that the recurrence link remains consistent', async ({
 	calendarWidgetPage,
 }) => {
@@ -286,4 +229,61 @@ test('can see calendar event inputs alerts', async ({
 				'This field will be automatically filled if it is empty or incomplete.'
 			)
 	).toBeHidden();
+});
+
+test('can update an event with recurrence', async ({calendarWidgetPage}) => {
+	await calendarWidgetPage.fillEventWithRecurrenceUntilDate({daysFromNow: 5});
+
+	await expect(
+		calendarWidgetPage.page
+			.frameLocator('iframe')
+			.getByRole('textbox', {name: 'mm/dd/yyyy'})
+	).toBeEnabled();
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByRole('button', {name: 'Done'})
+		.click();
+
+	await calendarWidgetPage.publishEvent();
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByLabel('Title', {exact: true})
+		.click();
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByLabel('Title', {exact: true})
+		.fill(getRandomString());
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByRole('button', {exact: true, name: 'Publish'})
+		.click();
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByRole('button', {name: 'Following Events'})
+		.click();
+
+	await waitForAlert(
+		calendarWidgetPage.page.frameLocator('iframe'),
+		`Success:Your request completed successfully.`
+	);
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByRole('button', {exact: true, name: 'Publish'})
+		.click();
+
+	await calendarWidgetPage.page
+		.frameLocator('iframe')
+		.getByRole('button', {name: 'Entire Series'})
+		.click();
+
+	await waitForAlert(
+		calendarWidgetPage.page.frameLocator('iframe'),
+		`Success:Your request completed successfully.`
+	);
 });

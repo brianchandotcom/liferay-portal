@@ -172,6 +172,10 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 		return "searchFm";
 	}
 
+	public Boolean isSelectable() {
+		return _showDeleteButton || _showRestoreButton;
+	}
+
 	@Override
 	public Boolean isShowCreationMenu() {
 		ThemeDisplay themeDisplay =

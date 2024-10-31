@@ -10,7 +10,10 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.exception.CPOptionKeyException;
 import com.liferay.commerce.product.exception.CPOptionSKUContributorException;
+import com.liferay.commerce.product.exception.ExistingCPDefinitionOptionRelException;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.service.base.CPOptionLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
@@ -21,6 +24,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -148,6 +152,20 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		_cpOptionValueLocalService.deleteCPOptionValues(
 			cpOption.getCPOptionId());
+
+		// Commerce product option rels
+
+		CPDefinitionOptionRelLocalService cpDefinitionOptionRelLocalService =
+			_cpDefinitionOptionRelLocalServiceSnapshot.get();
+
+		int cpOptionCPDefinitionOptionRelsCount =
+			cpDefinitionOptionRelLocalService.
+				getCPOptionCPDefinitionOptionRelsCount(
+					cpOption.getCPOptionId());
+
+		if (cpOptionCPDefinitionOptionRelsCount > 0) {
+			throw new ExistingCPDefinitionOptionRelException();
+		}
 
 		// Resources
 
@@ -402,6 +420,11 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 	private static final String[] _SELECTED_FIELD_NAMES = {
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.UID
 	};
+
+	private static final Snapshot<CPDefinitionOptionRelLocalService>
+		_cpDefinitionOptionRelLocalServiceSnapshot = new Snapshot<>(
+			CPOptionLocalService.class,
+			CPDefinitionOptionRelLocalService.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

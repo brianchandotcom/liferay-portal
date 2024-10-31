@@ -41,6 +41,7 @@ interface IOrderItemRowProps {
 	namespace?: string;
 	orderId: number;
 	orderItem: IOrderItem;
+	readonly?: boolean;
 	rowIndex?: number;
 	spritemap?: string;
 }
@@ -200,6 +201,7 @@ const OrderItemRow = ({
 	handleSubmit,
 	orderId,
 	orderItem: orderItemProp,
+	readonly = false,
 	rowIndex = 0,
 	spritemap = 'OrderItemRow',
 }: IOrderItemRowProps) => {
@@ -422,16 +424,18 @@ const OrderItemRow = ({
 			data-qa-id={`orderItem${orderItem.id}Row`}
 			key={orderItem.id}
 		>
-			<ClayTable.Cell>
-				<ClayCheckbox
-					checked={isChecked}
-					data-qa-id={`row${rowIndex}Select`}
-					disabled={disabled}
-					onChange={() => handleInternalSelection()}
-				/>
-			</ClayTable.Cell>
+			{!readonly && (
+				<ClayTable.Cell className="td-selection">
+					<ClayCheckbox
+						checked={isChecked}
+						data-qa-id={`row${rowIndex}Select`}
+						disabled={disabled}
+						onChange={() => handleInternalSelection()}
+					/>
+				</ClayTable.Cell>
+			)}
 
-			<ClayTable.Cell aria-label="sku-name">
+			<ClayTable.Cell aria-label="sku-name" className="td-sku-name">
 				<ClayTooltipProvider>
 					<div className="align-items-center d-flex flex-nowrap sku-name">
 						<ClayLink
@@ -452,206 +456,219 @@ const OrderItemRow = ({
 							<span>{orderItem.sku}</span>
 						</ClayLink>
 
-						<DropDown
-							trigger={
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get('actions')}
-									data-qa-id={`row${rowIndex}Actions`}
-									disabled={disabled}
-									displayType="unstyled"
-									size="xs"
-									symbol="ellipsis-v"
-								/>
-							}
-						>
-							<DropDown.ItemList>
-								<DropDown.Item
-									aria-label={Liferay.Language.get(
-										'split-quantity-evenly'
-									)}
-									data-qa-id={`row${rowIndex}SplitQuantity`}
-									data-tooltip-align="right"
-									disabled={
-										(deliveryGroups?.length || 0) <= 1 ||
-										!!orderItem.settings?.allowedQuantities
-											?.length ||
-										orderItem.quantity <
-											(orderItem.settings?.minQuantity ||
-												1) *
-												deliveryGroups?.length
-									}
-									key={orderItem.id + '_splitQuantity'}
-									onClick={() => {
-										openConfirmModal({
-											message: Liferay.Language.get(
-												'if-the-total-quantity-cannot-be-equally-distributed,-any-remaining-units-will-be-allocated-to-the-primary-delivery-group'
-											),
-											onConfirm: (isConfirmed) => {
-												if (isConfirmed) {
-													const internalOrderItem =
-														splitOrderItem(
-															deliveryGroups,
-															{
-																...orderItem,
-															}
+						{!readonly && (
+							<DropDown
+								trigger={
+									<ClayButtonWithIcon
+										aria-label={Liferay.Language.get(
+											'actions'
+										)}
+										data-qa-id={`row${rowIndex}Actions`}
+										disabled={disabled}
+										displayType="unstyled"
+										size="xs"
+										symbol="ellipsis-v"
+									/>
+								}
+							>
+								<DropDown.ItemList>
+									<DropDown.Item
+										aria-label={Liferay.Language.get(
+											'split-quantity-evenly'
+										)}
+										data-qa-id={`row${rowIndex}SplitQuantity`}
+										data-tooltip-align="right"
+										disabled={
+											(deliveryGroups?.length || 0) <=
+												1 ||
+											!!orderItem.settings
+												?.allowedQuantities?.length ||
+											orderItem.quantity <
+												(orderItem.settings
+													?.minQuantity || 1) *
+													deliveryGroups?.length
+										}
+										key={orderItem.id + '_splitQuantity'}
+										onClick={() => {
+											openConfirmModal({
+												message: Liferay.Language.get(
+													'if-the-total-quantity-cannot-be-equally-distributed,-any-remaining-units-will-be-allocated-to-the-primary-delivery-group'
+												),
+												onConfirm: (isConfirmed) => {
+													if (isConfirmed) {
+														const internalOrderItem =
+															splitOrderItem(
+																deliveryGroups,
+																{
+																	...orderItem,
+																}
+															);
+
+														setOrderItem(
+															internalOrderItem
 														);
 
-													setOrderItem(
-														internalOrderItem
-													);
+														handleSubmit(
+															internalOrderItem,
+															true
+														);
+													}
+												},
+											});
+										}}
+										title={
+											(deliveryGroups?.length || 0) <=
+												1 ||
+											!!orderItem.settings
+												?.allowedQuantities?.length ||
+											orderItem.quantity <
+												(orderItem.settings
+													?.minQuantity || 1) *
+													deliveryGroups?.length
+												? Liferay.Language.get(
+														'the-item-s-quantity-is-not-valid-for-the-number-of-delivery-groups'
+													)
+												: ''
+										}
+									>
+										{Liferay.Language.get(
+											'split-quantity-evenly'
+										)}
+									</DropDown.Item>
 
-													handleSubmit(
-														internalOrderItem,
-														true
-													);
-												}
-											},
-										});
-									}}
-									title={
-										(deliveryGroups?.length || 0) <= 1 ||
-										!!orderItem.settings?.allowedQuantities
-											?.length ||
-										orderItem.quantity <
-											(orderItem.settings?.minQuantity ||
-												1) *
-												deliveryGroups?.length
-											? Liferay.Language.get(
-													'the-item-s-quantity-is-not-valid-for-the-number-of-delivery-groups'
-												)
-											: ''
-									}
-								>
-									{Liferay.Language.get(
-										'split-quantity-evenly'
-									)}
-								</DropDown.Item>
+									<DropDown.Item
+										aria-label={Liferay.Language.get(
+											'reset-row'
+										)}
+										data-qa-id={`row${rowIndex}ResetRow`}
+										disabled={!deliveryGroups?.length}
+										key={orderItem.id + '_resetRow'}
+										onClick={() => {
+											openConfirmModal({
+												message: Liferay.Language.get(
+													'by-resetting-the-rows,-all-columns-will-be-set-to-zero,-except-the-first-one'
+												),
+												onConfirm: (isConfirmed) => {
+													if (isConfirmed) {
+														const internalOrderItem =
+															resetOrderItem(
+																deliveryGroups[0],
+																{
+																	...orderItem,
+																}
+															);
 
-								<DropDown.Item
-									aria-label={Liferay.Language.get(
-										'reset-row'
-									)}
-									data-qa-id={`row${rowIndex}ResetRow`}
-									disabled={!deliveryGroups?.length}
-									key={orderItem.id + '_resetRow'}
-									onClick={() => {
-										openConfirmModal({
-											message: Liferay.Language.get(
-												'by-resetting-the-rows,-all-columns-will-be-set-to-zero,-except-the-first-one'
-											),
-											onConfirm: (isConfirmed) => {
-												if (isConfirmed) {
-													const internalOrderItem =
-														resetOrderItem(
-															deliveryGroups[0],
-															{
-																...orderItem,
-															}
+														setOrderItem(
+															internalOrderItem
 														);
 
-													setOrderItem(
-														internalOrderItem
-													);
+														handleSubmit(
+															internalOrderItem,
+															true
+														);
+													}
+												},
+											});
+										}}
+									>
+										{Liferay.Language.get('reset-row')}
+									</DropDown.Item>
 
-													handleSubmit(
-														internalOrderItem,
-														true
-													);
-												}
-											},
-										});
-									}}
-								>
-									{Liferay.Language.get('reset-row')}
-								</DropDown.Item>
-
-								<DropDown.Item
-									aria-label={Liferay.Language.get(
-										'copy-column-1-to-all'
-									)}
-									data-qa-id={`row${rowIndex}CopyColumn`}
-									data-tooltip-align="right"
-									disabled={
-										(deliveryGroups?.length || 0) <= 1 ||
-										!(orderItem.deliveryGroups || {})[
-											deliveryGroups[0].id
-										] ||
-										(orderItem.settings?.maxQuantity || 1) <
-											(orderItem.deliveryGroups || {})[
+									<DropDown.Item
+										aria-label={Liferay.Language.get(
+											'copy-column-1-to-all'
+										)}
+										data-qa-id={`row${rowIndex}CopyColumn`}
+										data-tooltip-align="right"
+										disabled={
+											(deliveryGroups?.length || 0) <=
+												1 ||
+											!(orderItem.deliveryGroups || {})[
 												deliveryGroups[0].id
-											].quantity *
-												deliveryGroups?.length
-									}
-									key={orderItem.id + '_CopyColumn'}
-									onClick={() => {
-										const internalOrderItem =
-											copyColumnOrderItem(
-												deliveryGroups,
-												{
-													...orderItem,
-												}
+											] ||
+											(orderItem.settings?.maxQuantity ||
+												1) <
+												(orderItem.deliveryGroups ||
+													{})[deliveryGroups[0].id]
+													.quantity *
+													deliveryGroups?.length
+										}
+										key={orderItem.id + '_CopyColumn'}
+										onClick={() => {
+											const internalOrderItem =
+												copyColumnOrderItem(
+													deliveryGroups,
+													{
+														...orderItem,
+													}
+												);
+
+											setOrderItem(internalOrderItem);
+
+											handleSubmit(
+												internalOrderItem,
+												true
 											);
-
-										setOrderItem(internalOrderItem);
-
-										handleSubmit(internalOrderItem, true);
-									}}
-									title={
-										(deliveryGroups?.length || 0) <= 1 ||
-										!(orderItem.deliveryGroups || {})[
-											deliveryGroups[0].id
-										] ||
-										(orderItem.settings?.maxQuantity || 1) <
-											(orderItem.deliveryGroups || {})[
+										}}
+										title={
+											(deliveryGroups?.length || 0) <=
+												1 ||
+											!(orderItem.deliveryGroups || {})[
 												deliveryGroups[0].id
-											].quantity *
-												deliveryGroups?.length
-											? Liferay.Language.get(
-													'the-item-s-quantity-is-not-valid-for-the-number-of-delivery-groups'
-												)
-											: ''
-									}
-								>
-									{Liferay.Language.get(
-										'copy-column-1-to-all'
-									)}
-								</DropDown.Item>
+											] ||
+											(orderItem.settings?.maxQuantity ||
+												1) <
+												(orderItem.deliveryGroups ||
+													{})[deliveryGroups[0].id]
+													.quantity *
+													deliveryGroups?.length
+												? Liferay.Language.get(
+														'the-item-s-quantity-is-not-valid-for-the-number-of-delivery-groups'
+													)
+												: ''
+										}
+									>
+										{Liferay.Language.get(
+											'copy-column-1-to-all'
+										)}
+									</DropDown.Item>
 
-								<DropDown.Item
-									aria-label={Liferay.Language.get(
-										'remove-item'
-									)}
-									data-qa-id={`row${rowIndex}RemoveItem`}
-									key={orderItem.id + '_RemoveItem'}
-									onClick={() => {
-										openConfirmModal({
-											message: Liferay.Language.get(
-												'by-removing-the-item,-it-will-disappear-from-the-list-of-ordered-items'
-											),
-											onConfirm: (isConfirmed) => {
-												if (isConfirmed) {
-													const internalOrderItem =
-														removeOrderItem({
-															...orderItem,
-														});
+									<DropDown.Item
+										aria-label={Liferay.Language.get(
+											'remove-item'
+										)}
+										data-qa-id={`row${rowIndex}RemoveItem`}
+										key={orderItem.id + '_RemoveItem'}
+										onClick={() => {
+											openConfirmModal({
+												message: Liferay.Language.get(
+													'by-removing-the-item,-it-will-disappear-from-the-list-of-ordered-items'
+												),
+												onConfirm: (isConfirmed) => {
+													if (isConfirmed) {
+														const internalOrderItem =
+															removeOrderItem({
+																...orderItem,
+															});
 
-													setOrderItem(
-														internalOrderItem
-													);
+														setOrderItem(
+															internalOrderItem
+														);
 
-													handleSubmit(
-														internalOrderItem,
-														true
-													);
-												}
-											},
-										});
-									}}
-								>
-									{Liferay.Language.get('remove-item')}
-								</DropDown.Item>
-							</DropDown.ItemList>
-						</DropDown>
+														handleSubmit(
+															internalOrderItem,
+															true
+														);
+													}
+												},
+											});
+										}}
+									>
+										{Liferay.Language.get('remove-item')}
+									</DropDown.Item>
+								</DropDown.ItemList>
+							</DropDown>
+						)}
 					</div>
 				</ClayTooltipProvider>
 
@@ -666,6 +683,7 @@ const OrderItemRow = ({
 
 			<ClayTable.Cell
 				aria-label="quantity"
+				className="td-quantity"
 				data-qa-id={`orderItem${orderItem.id}Quantity`}
 			>
 				<span>{orderItem.quantity}</span>

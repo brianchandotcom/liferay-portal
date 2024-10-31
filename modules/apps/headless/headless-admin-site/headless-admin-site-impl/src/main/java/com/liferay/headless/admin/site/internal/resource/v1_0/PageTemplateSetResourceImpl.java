@@ -150,6 +150,22 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
+	public PageTemplateSet postSiteSiteByExternalReferenceCodePageTemplateSet(
+			String siteExternalReferenceCode, PageTemplateSet pageTemplateSet)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		return _toPageTemplateSet(
+			_addLayoutPageTemplateCollection(group, pageTemplateSet));
+	}
+
+	@Override
 	public PageTemplateSet putSiteSiteByExternalReferenceCodePageTemplateSet(
 			String siteExternalReferenceCode,
 			String pageTemplateSetExternalReferenceCode,
@@ -169,25 +185,8 @@ public class PageTemplateSetResourceImpl
 					pageTemplateSetExternalReferenceCode, group.getGroupId());
 
 		if (layoutPageTemplateCollection == null) {
-			ServiceContext serviceContext = ServiceContextBuilder.create(
-				group.getGroupId(), contextHttpServletRequest, null
-			).build();
-
-			serviceContext.setCreateDate(pageTemplateSet.getDateCreated());
-			serviceContext.setModifiedDate(pageTemplateSet.getDateModified());
-			serviceContext.setUuid(pageTemplateSet.getUuid());
-
 			return _toPageTemplateSet(
-				_layoutPageTemplateCollectionService.
-					addLayoutPageTemplateCollection(
-						pageTemplateSet.getExternalReferenceCode(),
-						group.getGroupId(),
-						LayoutPageTemplateConstants.
-							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-						pageTemplateSet.getName(),
-						pageTemplateSet.getDescription(),
-						LayoutPageTemplateCollectionTypeConstants.BASIC,
-						serviceContext));
+				_addLayoutPageTemplateCollection(group, pageTemplateSet));
 		}
 
 		return _toPageTemplateSet(
@@ -227,6 +226,28 @@ public class PageTemplateSetResourceImpl
 		if (Validator.isNotNull(pageTemplateSet.getName())) {
 			existingPageTemplateSet.setName(pageTemplateSet::getName);
 		}
+	}
+
+	private LayoutPageTemplateCollection _addLayoutPageTemplateCollection(
+			Group group, PageTemplateSet pageTemplateSet)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			group.getGroupId(), contextHttpServletRequest, null
+		).build();
+
+		serviceContext.setCreateDate(pageTemplateSet.getDateCreated());
+		serviceContext.setModifiedDate(pageTemplateSet.getDateModified());
+		serviceContext.setUuid(pageTemplateSet.getUuid());
+
+		return _layoutPageTemplateCollectionService.
+			addLayoutPageTemplateCollection(
+				pageTemplateSet.getExternalReferenceCode(), group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				pageTemplateSet.getName(), pageTemplateSet.getDescription(),
+				LayoutPageTemplateCollectionTypeConstants.BASIC,
+				serviceContext);
 	}
 
 	private PageTemplateSet _toPageTemplateSet(

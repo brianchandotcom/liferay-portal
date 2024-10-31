@@ -19,7 +19,7 @@ import getSelectOptionLabels from '../../utils/getSelectOptionLabels';
 import {
 	EAsyncActionMethod,
 	EConfirmationMessageType,
-	EItemActionType,
+	EItemActionTarget,
 	EModalActionVariant,
 } from '../../utils/types';
 import {actionsPageTest} from './fixtures/actionsPageTest';
@@ -332,7 +332,7 @@ test(
 		let method: EAsyncActionMethod = EAsyncActionMethod.GET;
 		const requestBody: string = '{"Async": "async"}';
 		let successStatusMessage: string = getRandomString();
-		const type: EItemActionType = EItemActionType.ASYNC;
+		const type: EItemActionTarget = EItemActionTarget.ASYNC;
 		let url: string = getRandomString();
 
 		await test.step('Go to item actions tab', async () => {
@@ -481,7 +481,7 @@ test(
 		let label: string = getRandomString();
 		const requestBody: string = '{"Headless": "sdfs"}';
 		let successStatusMessage: string = getRandomString();
-		const type: EItemActionType = EItemActionType.HEADLESS;
+		const type: EItemActionTarget = EItemActionTarget.HEADLESS;
 
 		await test.step('Go to item actions tab', async () => {
 			await actionsPage.gotoItemActionsTab({dataSetLabel});
@@ -617,7 +617,7 @@ test(
 		let headlessActionKey: string = getRandomString();
 		let icon: string = 'arrow-right-full';
 		let label: string = getRandomString();
-		const type: EItemActionType = EItemActionType.LINK;
+		const type: EItemActionTarget = EItemActionTarget.LINK;
 		let url: string = getRandomString();
 
 		await test.step('Go to item actions tab', async () => {
@@ -745,7 +745,7 @@ test(
 		let icon: string = 'check';
 		let label: string = getRandomString();
 		let title: string = getRandomString();
-		const type: EItemActionType = EItemActionType.MODAL;
+		const type: EItemActionTarget = EItemActionTarget.MODAL;
 		let url: string = getRandomString();
 		let variant: EModalActionVariant = EModalActionVariant.SMALL;
 
@@ -882,7 +882,7 @@ test(
 		let icon: string = 'book';
 		let label: string = getRandomString();
 		let title: string = getRandomString();
-		const type: EItemActionType = EItemActionType.SIDE_PANEL;
+		const type: EItemActionTarget = EItemActionTarget.SIDE_PANEL;
 		let url: string = getRandomString();
 
 		await test.step('Go to item actions tab', async () => {
@@ -1043,7 +1043,7 @@ test(
 				},
 				dataSetERC,
 				label_i18n: {en_US: actionLabel},
-				type: EItemActionType.LINK,
+				target: EItemActionTarget.LINK,
 			});
 		});
 
@@ -1112,17 +1112,17 @@ test(
 		const firstAction = {
 			icon: 'angle-left-double',
 			label: getRandomString(),
-			type: EItemActionType.LINK,
+			type: EItemActionTarget.LINK,
 		};
 		const secondAction = {
 			icon: 'angle-left-small',
 			label: getRandomString(),
-			type: EItemActionType.LINK,
+			type: EItemActionTarget.LINK,
 		};
 		const thirdAction = {
 			icon: 'angle-left',
 			label: getRandomString(),
-			type: EItemActionType.LINK,
+			type: EItemActionTarget.LINK,
 		};
 
 		await test.step('Create some item actions', async () => {
@@ -1130,21 +1130,21 @@ test(
 				dataSetERC,
 				icon: firstAction.icon,
 				label_i18n: {en_US: firstAction.label},
-				type: firstAction.type,
+				target: firstAction.type,
 			});
 
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
 				icon: secondAction.icon,
 				label_i18n: {en_US: secondAction.label},
-				type: secondAction.type,
+				target: secondAction.type,
 			});
 
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
 				icon: thirdAction.icon,
 				label_i18n: {en_US: thirdAction.label},
-				type: thirdAction.type,
+				target: thirdAction.type,
 			});
 		});
 

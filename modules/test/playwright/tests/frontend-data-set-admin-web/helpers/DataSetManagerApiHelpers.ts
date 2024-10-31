@@ -6,22 +6,22 @@
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
 import {
+	ACTION_DATA_SET_RELATIONSHIP,
 	API_ENDPOINT_PATH,
 	CARDS_SECTION_DATA_SET_RELATIONSHIP,
 	CLIENT_EXTENSION_FILTER_DATA_SET_RELATIONSHIP,
-	CREATION_ACTION_DATA_SET_RELATIONSHIP,
 	DATE_FILTER_DATA_SET_RELATIONSHIP,
 	DEFAULT_LABEL,
-	ITEM_ACTION_DATA_SET_RELATIONSHIP,
 	LIST_SECTION_DATA_SET_RELATIONSHIP,
 	SELECTION_FILTER_DATA_SET_RELATIONSHIP,
 	SORT_DATA_SET_RELATIONSHIP,
 	TABLE_SECTION_DATA_SET_RELATIONSHIP,
 } from '../utils/constants';
 import {
+	EActionType,
 	EAsyncActionMethod,
-	ECreationActionType,
-	EItemActionType,
+	ECreationActionTarget,
+	EItemActionTarget,
 	EModalActionVariant,
 } from '../utils/types';
 
@@ -118,7 +118,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		modalSize = EModalActionVariant.FULL_SCREEN,
 		permissionKey,
 		title_i18n,
-		type = ECreationActionType.LINK,
+		target = ECreationActionTarget.LINK,
 		url = liferayConfig.environment.baseUrl,
 	}: {
 		dataSetERC?: string;
@@ -126,20 +126,21 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		label_i18n?: {[key: string]: string};
 		modalSize?: EModalActionVariant;
 		permissionKey?;
+		target?: ECreationActionTarget;
 		title_i18n?: {[key: string]: string};
-		type?: ECreationActionType;
 		url?: string;
 	}) {
 		const endpointUrl = `${this.baseUrl}${API_ENDPOINT_PATH}/actions`;
 
 		const data = {
-			[CREATION_ACTION_DATA_SET_RELATIONSHIP]: dataSetERC,
+			[ACTION_DATA_SET_RELATIONSHIP]: dataSetERC,
 			icon,
 			label_i18n,
 			modalSize,
 			permissionKey,
+			target,
 			title_i18n,
-			type,
+			type: EActionType.CREATION,
 			url,
 		};
 
@@ -264,7 +265,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		requestBody = '{}',
 		successMessage_i18n,
 		title_i18n,
-		type = EItemActionType.LINK,
+		target = EItemActionTarget.LINK,
 		url = liferayConfig.environment.baseUrl,
 	}: {
 		confirmationMessageType?: string;
@@ -278,14 +279,14 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		permissionKey?: string;
 		requestBody?: string;
 		successMessage_i18n?: {[key: string]: string};
+		target?: EItemActionTarget;
 		title_i18n?: {[key: string]: string};
-		type?: EItemActionType;
 		url?: string;
 	}) {
 		const endpointUrl = `${this.baseUrl}${API_ENDPOINT_PATH}/actions`;
 
 		const data = {
-			[ITEM_ACTION_DATA_SET_RELATIONSHIP]: dataSetERC,
+			[ACTION_DATA_SET_RELATIONSHIP]: dataSetERC,
 			confirmationMessage_i18n,
 			confirmationMessageType,
 			errorMessage_i18n,
@@ -296,8 +297,9 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			permissionKey,
 			requestBody,
 			successMessage_i18n,
+			target,
 			title_i18n,
-			type,
+			type: EActionType.ITEM,
 			url,
 		};
 

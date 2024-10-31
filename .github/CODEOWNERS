@@ -251,6 +251,12 @@ modules/apps/site-initializer/
 modules/apps/site-navigation/
 modules/apps/site-navigation/site-navigation-language-web    @liferay-page-management
 modules/apps/site/
+modules/apps/site/site-teams-item-selector-api/    @liferay-commerce
+modules/apps/site/site-teams-item-selector-web/    @liferay-commerce
+modules/apps/site/site-teams-test/    @liferay-commerce
+modules/apps/site/site-teams-uad/    @liferay-commerce
+modules/apps/site/site-teams-uad-test/    @liferay-commerce
+modules/apps/site/site-teams-web/    @liferay-commerce
 modules/apps/social/    @liferay-content-management
 modules/apps/staging/    @liferay-headless
 modules/apps/static/

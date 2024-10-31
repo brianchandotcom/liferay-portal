@@ -203,11 +203,6 @@ public class UserLocalServiceTest {
 		passwordPolicy = _passwordPolicyLocalService.updatePasswordPolicy(
 			passwordPolicy);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		serviceContext.setAttribute("ldapServerId", 1);
-
 		try (SafeCloseable safeCloseable =
 				_setLDAPAuthConfigurationWithSafeCloseable(true)) {
 

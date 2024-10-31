@@ -530,7 +530,8 @@ public class JournalEditArticleDisplayContextTest {
 
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(
-				_httpServletRequest, _liferayPortletResponse, journalArticle);
+				_httpServletRequest, _liferayPortletResponse, journalArticle,
+				null, null, null);
 
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(expectedLocale),

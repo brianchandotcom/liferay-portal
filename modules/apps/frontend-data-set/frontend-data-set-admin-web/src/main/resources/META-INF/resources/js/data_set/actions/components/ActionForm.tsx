@@ -397,13 +397,19 @@ const ActionForm = ({
 										closeModal();
 									}}
 								>
-									<ClayIcon
-										className="mr-2"
-										spritemap={spritemap}
-										symbol={item.value}
-									/>
+									<ClayButton
+										borderless
+										displayType="secondary"
+										size="sm"
+									>
+										<ClayIcon
+											className="mr-2"
+											spritemap={spritemap}
+											symbol={item.value}
+										/>
 
-									<span>{item.label}</span>
+										{item.label}
+									</ClayButton>
 								</li>
 							);
 						})}

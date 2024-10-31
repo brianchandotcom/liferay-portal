@@ -1102,6 +1102,88 @@ test.describe('Page Contents Panel', () => {
 	);
 
 	test(
+		'Search localized inline text items',
+		{
+			tag: ['@LPS-106776', '@LPS-122148'],
+		},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a page with a Heading fragment
+
+			const headingId = getRandomString();
+
+			const headingDefinition = getFragmentDefinition({
+				id: headingId,
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const paragraphId = getRandomString();
+
+			const paragraphDefinition = getFragmentDefinition({
+				id: paragraphId,
+				key: 'BASIC_COMPONENT-paragraph',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					headingDefinition,
+					paragraphDefinition,
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Localize fragments
+
+			await pageEditorPage.editTextEditable(
+				headingId,
+				'element-text',
+				'Edited Text'
+			);
+
+			await pageEditorPage.editTextEditable(
+				paragraphId,
+				'element-text',
+				'Edited Title'
+			);
+
+			await pageEditorPage.switchLanguage('es-ES');
+
+			await pageEditorPage.editTextEditable(
+				headingId,
+				'element-text',
+				'Texto Editado'
+			);
+
+			await pageEditorPage.editTextEditable(
+				paragraphId,
+				'element-text',
+				'Título Editado'
+			);
+
+			// Search localized values
+
+			await pageEditorPage.goToSidebarTab('Page Content');
+
+			await expect(page.getByTitle('Texto Editado')).toBeVisible();
+
+			await expect(page.getByTitle('Título Editado')).toBeVisible();
+
+			await page.getByPlaceholder('Search...').fill('Texto Editado');
+
+			await expect(page.getByTitle('Texto Editado')).toBeVisible();
+
+			await expect(page.getByTitle('Título Editado')).not.toBeVisible();
+
+			await pageEditorPage.switchLanguage('en-US');
+
+			await expect(page.getByText('No Results Found')).toBeVisible();
+		}
+	);
+
+	test(
 		'View collection, mapped content and mapped content via content display in page content panel',
 		{
 			tag: '@LPS-125985',

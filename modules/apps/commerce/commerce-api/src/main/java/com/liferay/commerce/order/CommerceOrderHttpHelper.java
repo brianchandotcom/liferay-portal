@@ -32,15 +32,15 @@ public interface CommerceOrderHttpHelper {
 			String uuid, long groupId)
 		throws PortalException;
 
-	public PortletURL getCommerceCartPortletURL(
+	public String getCommerceCartPortletURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
-	public PortletURL getCommerceCartPortletURL(
+	public String getCommerceCartPortletURL(
 			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException;
 
-	public PortletURL getCommerceCartPortletURL(
+	public String getCommerceCartPortletURL(
 			long groupId, HttpServletRequest httpServletRequest,
 			CommerceOrder commerceOrder)
 		throws PortalException;

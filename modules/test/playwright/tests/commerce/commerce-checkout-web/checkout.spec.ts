@@ -11,6 +11,7 @@ import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
@@ -20,7 +21,8 @@ export const test = mergeTests(
 	commercePagesTest,
 	dataApiHelpersTest,
 	loginTest(),
-	notificationPagesTest
+	notificationPagesTest,
+	systemSettingsPageTest
 );
 
 test('LPD-25860 Checkout widget configuration to display full addresses and phone number', async ({
@@ -352,4 +354,125 @@ test('LPP-55128 Payment Term is reset correctly', async ({
 	await checkoutPage.continueButton.click();
 	await page.waitForURL((url) => url.href.includes('payment-terms'));
 	expect(page.getByLabel('MoneyB')).toBeChecked();
+});
+
+test('LPD-40425 Checkout order detail redirect works correctly when order DPT is enabled', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	checkoutPage,
+	commerceLayoutsPage,
+	page,
+	systemSettingsPage,
+}) => {
+	try {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (!(await page.getByLabel('COMMERCE-9410').isChecked())) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.goToDisplayPageTemplates();
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment('Heading');
+
+		await expect(page.getByText('Heading Example')).toBeVisible();
+
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.goToPages(false);
+		await commerceLayoutsPage.createWidgetPage(getRandomString());
+
+		await page.goto(`/web/${site.name}`);
+
+		await checkoutPage.addCheckoutWidget();
+		await checkoutPage.performCheckout({
+			shippingAddress: {
+				city: 'testCity',
+				countryLabel: 'United States',
+				name: 'John Doe',
+				regionLabel: 'Florida',
+				street: 'testStreet',
+				zip: '12345',
+			},
+		});
+		await checkoutPage.goToOrderDetailsButton.click();
+
+		await expect(page.getByText('Heading Example')).toBeVisible();
+	}
+	finally {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
 });

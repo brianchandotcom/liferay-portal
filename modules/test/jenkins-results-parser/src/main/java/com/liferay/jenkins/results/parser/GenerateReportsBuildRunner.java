@@ -117,8 +117,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		String[] dateStrings = JenkinsResultsParserUtil.getDateStrings(
 			durationDays, LocalDate.parse(startDateString, _dateTimeFormatter));
 
-		File baseDir = new File(
-			_buildProperties.getProperty("archive.ci.build.data.archive.dir"));
+		File archivedDataDir = new File(_ARCHIVE_BASE_DIR_PATH + "/data");
 
 		List<Callable<Void>> callables = new ArrayList<>();
 
@@ -129,7 +128,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 					@Override
 					public Void call() {
 						File archiveFile = new File(
-							baseDir, dateString + ".tar.gz");
+							archivedDataDir, dateString + ".tar.gz");
 
 						File unarchivedDir = new File(
 							_TMP_ARCHIVE_DIR_PATH, dateString);
@@ -523,6 +522,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		}
 	}
 
+	private static final String _ARCHIVE_BASE_DIR_PATH;
+
 	private static final String _CURRENT_DATE_STRING;
 
 	private static final String _REPORT_RSYNC_DESTINATION_DIR_PATH =
@@ -573,6 +574,9 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		Instant instant = Instant.now();
 
 		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+
+		_ARCHIVE_BASE_DIR_PATH = _buildProperties.getProperty(
+			"archive.ci.build.data.dir");
 
 		_CURRENT_DATE_STRING = zonedDateTime.format(_dateTimeFormatter);
 

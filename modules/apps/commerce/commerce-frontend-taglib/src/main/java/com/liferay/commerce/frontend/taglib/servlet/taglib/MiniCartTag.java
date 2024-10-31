@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -117,24 +118,24 @@ public class MiniCartTag extends IncludeTag {
 					commerceOrder, httpServletRequest);
 				_orderId = commerceOrder.getCommerceOrderId();
 
-				PortletURL commerceCartPortletURL =
+				String commerceCartPortletURL =
 					_commerceOrderHttpHelper.getCommerceCartPortletURL(
 						httpServletRequest, commerceOrder);
 
-				if (commerceCartPortletURL != null) {
-					_orderDetailURL = String.valueOf(commerceCartPortletURL);
+				if (Validator.isNotNull(commerceCartPortletURL)) {
+					_orderDetailURL = commerceCartPortletURL;
 				}
 			}
 			else {
-				PortletURL commerceCartPortletURL =
+				String commerceCartPortletURL =
 					_commerceOrderHttpHelper.getCommerceCartPortletURL(
 						httpServletRequest, null);
 
-				if (commerceCartPortletURL != null) {
-					_orderDetailURL = String.valueOf(commerceCartPortletURL);
+				if (Validator.isNull(commerceCartPortletURL)) {
+					_orderDetailURL = StringPool.BLANK;
 				}
 				else {
-					_orderDetailURL = StringPool.BLANK;
+					_orderDetailURL = commerceCartPortletURL;
 				}
 
 				_orderId = 0;

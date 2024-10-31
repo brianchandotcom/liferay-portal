@@ -24,57 +24,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-103104. Can add pages of different types via page tree panel."
-	@priority = 3
-	test AddAllTypesOfPages {
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-
-		task ("Add different types of pages via page tree") {
-			ApplicationsMenu.gotoSite(site = ${randomSiteName});
-
-			PagesFinder.goToPagesFinder();
-
-			for (var pageType : list "Widget Page,Panel,Page Set,Link to a Page of This Site,Full Page Application") {
-				PagesFinder.addPublicPage(
-					pageName = "Test ${pageType}",
-					sitePageType = ${pageType});
-			}
-
-			for (var pageType : list "Embedded,Link to URL") {
-				PagesFinder.addPublicPage(
-					pageName = "Test ${pageType}",
-					pageTypeURL = "https://www.google.com",
-					sitePageType = ${pageType});
-			}
-
-			PagesFinder.addPublicContentPage(pageName = "Test Content Page");
-
-			PageEditor.publish();
-
-			ProductMenuHelper.openProductMenu();
-
-			ProductMenu.gotoHomePage();
-
-			PagesFinder.addPrivatePage(
-				pageName = "Test Private Widget Page",
-				sitePageType = "Widget Page");
-		}
-
-		task ("View public page names in page tree") {
-			PagesFinder.selectPageType(optionValue = "Public Pages");
-
-			for (var pageType : list "Widget Page,Panel,Page Set,Link to a Page of This Site,Full Page Application,Embedded,Link to URL,Content Page") {
-				PagesFinder.viewPageNameInPagesFinder(pageName = "Test ${pageType}");
-			}
-		}
-
-		task ("View private page name in page tree") {
-			PagesFinder.selectPageType(optionValue = "Private Pages");
-
-			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Private Widget Page");
-		}
-	}
-
 	@description = "This is a test for LPS-103104, LPS-140253, and LPS-164377. The page creator can add pages of different types via page tree panel when the private page is disabled. The page creator could identify the page type according to icon in page tree."
 	@priority = 5
 	test AddAllTypesOfPagesWithoutPrivatePage {

@@ -125,6 +125,12 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		String elementInstancesJSON = _readJSON("elementInstances");
 
 		elementInstancesJSON = StringUtil.replace(
+			elementInstancesJSON, "[$SCOPE_GROUP_ID_1$]",
+			String.valueOf(_group1.getGroupId()));
+		elementInstancesJSON = StringUtil.replace(
+			elementInstancesJSON, "[$SCOPE_GROUP_ID_2$]",
+			String.valueOf(_group2.getGroupId()));
+		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_1$]",
 			StringBundler.concat(
 				_group1.getDescriptiveName(), " (ID: ", _group1.getGroupId(),
@@ -134,13 +140,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			StringBundler.concat(
 				_group2.getDescriptiveName(), " (ID: ", _group2.getGroupId(),
 				")"));
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "[$SCOPE_GROUP_ID_1$]",
-			String.valueOf(_group1.getGroupId()));
 
-		return StringUtil.replace(
-			elementInstancesJSON, "[$SCOPE_GROUP_ID_2$]",
-			String.valueOf(_group2.getGroupId()));
+		return elementInstancesJSON;
 	}
 
 	private String _getExpectedElementInstancesJSON() throws Exception {

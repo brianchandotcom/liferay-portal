@@ -380,6 +380,15 @@ export class DataApiHelpers extends ApiHelpers {
 			else if (item.type === 'notificationTemplate') {
 				await this.notification.deleteNotificationTemplate(item.id);
 			}
+			else if (item.type === 'objectAction') {
+				const objectAdminRESTClient = await this.buildRestClient(
+					ObjectAdminRestClient
+				);
+
+				await objectAdminRESTClient.objectAction.deleteObjectAction({
+					objectActionId: item.id,
+				});
+			}
 			else if (item.type === 'objectDefinition') {
 				const objectAdminRESTClient = await this.buildRestClient(
 					ObjectAdminRestClient

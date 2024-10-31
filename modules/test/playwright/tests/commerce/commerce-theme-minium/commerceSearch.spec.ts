@@ -189,9 +189,6 @@ test('LPD-3185 Search a catalog entry using global search, click on a suggested 
 	).toHaveCount(0);
 
 	await commerceThemeMiniumCatalogPage.search('ABS Sensor');
-	await commerceThemeMiniumCatalogPage
-		.globalSearchBarCommerceItemLink('Wear Sensors Product designed')
-		.waitFor({state: 'visible'});
 
 	await expect(
 		commerceThemeMiniumCatalogPage.globalSearchBarCommerceItemLink(
@@ -206,9 +203,6 @@ test('LPD-3185 Search a catalog entry using global search, click on a suggested 
 
 	await commerceThemeMiniumCatalogPage.clearSearchButton.click();
 	await commerceThemeMiniumCatalogPage.search(`"ABS Sensor"`);
-	await commerceThemeMiniumCatalogPage
-		.globalSearchBarCommerceItemLink('ABS Sensor Product designed')
-		.waitFor({state: 'visible'});
 
 	await expect(
 		commerceThemeMiniumCatalogPage.globalSearchBarCommerceItemLink(
@@ -339,9 +333,6 @@ test('COMMERCE-6326 As a buyer, I want to be able to search an entry in All Cont
 
 	await commerceThemeMiniumCatalogPage.focusGlobalSearchBarInput();
 	await commerceThemeMiniumCatalogPage.search('U-Joint');
-	await commerceThemeMiniumCatalogPage
-		.globalSearchBarCommerceItemLink('Search U-Joint in All Content')
-		.waitFor({state: 'visible'});
 
 	await expect(
 		commerceThemeMiniumCatalogPage.globalSearchBarCommerceItemLink(
@@ -363,7 +354,6 @@ test('COMMERCE-6326 As a buyer, I want to be able to search an entry in All Cont
 
 test('COMMERCE-6321 As a buyer, I want to be able to search an Orders entry using Global Search and I want to be able to click on a suggested entry and get redirected to that order details page', async ({
 	apiHelpers,
-	commerceLayoutsPage,
 	commerceThemeMiniumCatalogPage,
 	page,
 }) => {
@@ -407,62 +397,47 @@ test('COMMERCE-6321 As a buyer, I want to be able to search an Orders entry usin
 		user.id
 	);
 
+	const channel = (
+		await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(site.name)
+	).items[0];
+
+	const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
+		accountId: account.id,
+		channelId: channel.id,
+		name: 'order1',
+		orderStatus: '1',
+	});
+
 	await performLogout(page);
 	await performLogin(page, 'demo.unprivileged');
 
 	await page.goto(`/web/${site.name}`);
 
-	await commerceLayoutsPage.pendingOrdersLink.click();
-	await commerceLayoutsPage.addOrderButton.click();
-	await commerceLayoutsPage.catalogLink.click();
-	await page.mouse.move(100, 0);
-
-	const orders = await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
-
-	apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
-
 	await commerceThemeMiniumCatalogPage.focusGlobalSearchBarInput();
-	await commerceThemeMiniumCatalogPage.search(`${orders.items[0].id}`);
-	await commerceThemeMiniumCatalogPage
-		.globalSearchBarCommerceOrderLink(
-			`${orders.items[0].id}`,
-			`${account.name}`
-		)
-		.waitFor({state: 'visible'});
+	await commerceThemeMiniumCatalogPage.search(`${order.id}`);
 
 	await expect(
 		commerceThemeMiniumCatalogPage.globalSearchBarCommerceOrderLink(
-			`${orders.items[0].id}`,
+			`${order.id}`,
 			`${account.name}`
 		)
 	).toBeVisible();
 
 	await commerceThemeMiniumCatalogPage.clearSearchButton.click();
 	await commerceThemeMiniumCatalogPage.search(`${user.emailAddress}`);
-	await commerceThemeMiniumCatalogPage
-		.globalSearchBarCommerceOrderLink(
-			`${orders.items[0].id}`,
-			`${account.name}`
-		)
-		.waitFor({state: 'visible'});
 
 	await expect(
 		commerceThemeMiniumCatalogPage.globalSearchBarCommerceOrderLink(
-			`${orders.items[0].id}`,
+			`${order.id}`,
 			`${account.name}`
 		)
 	).toBeVisible();
 
 	await commerceThemeMiniumCatalogPage
-		.globalSearchBarCommerceOrderLink(
-			`${orders.items[0].id}`,
-			`${account.name}`
-		)
+		.globalSearchBarCommerceOrderLink(`${order.id}`, `${account.name}`)
 		.click();
 
-	await expect(
-		page.getByText(`Order Id ${orders.items[0].id}`)
-	).toBeVisible();
+	await expect(page.getByText(`Order Id ${order.id}`)).toBeVisible();
 });
 
 test('COMMERCE-6329 As a buyer, I want to search for products in Catalog by typing different Categories in Global Search and I want to see the products with that categories in the suggestions even with multiple categories', async ({

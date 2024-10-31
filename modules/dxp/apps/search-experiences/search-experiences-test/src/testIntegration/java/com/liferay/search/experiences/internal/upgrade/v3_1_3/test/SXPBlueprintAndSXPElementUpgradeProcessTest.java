@@ -67,7 +67,23 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			null, TestPropsValues.getUserId(), _readJSON("configuration"),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			_getElementInstancesJSON(), "1.1",
+			StringUtil.replace(
+				_readJSON("elementInstances"),
+				new String[] {
+					"[$SCOPE_GROUP_ID_1$]", "[$SCOPE_GROUP_ID_2$]",
+					"[$SCOPE_GROUP_LABEL_1$]", "[$SCOPE_GROUP_LABEL_2$]"
+				},
+				new String[] {
+					String.valueOf(_group1.getGroupId()),
+					String.valueOf(_group2.getGroupId()),
+					StringBundler.concat(
+						_group1.getDescriptiveName(), " (ID: ",
+						_group1.getGroupId(), ")"),
+					StringBundler.concat(
+						_group2.getDescriptiveName(), " (ID: ",
+						_group2.getGroupId(), ")")
+				}),
+			"1.1",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			ServiceContextTestUtil.getServiceContext(
@@ -109,7 +125,23 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			sxpBlueprint.getSXPBlueprintId());
 
 		JSONAssert.assertEquals(
-			_getExpectedElementInstancesJSON(),
+			StringUtil.replace(
+				_readJSON("elementInstancesUpdated"),
+				new String[] {
+					"[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_1$]",
+					"[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_2$]",
+					"[$SCOPE_GROUP_LABEL_1$]", "[$SCOPE_GROUP_LABEL_2$]"
+				},
+				new String[] {
+					String.valueOf(_group1.getExternalReferenceCode()),
+					String.valueOf(_group2.getExternalReferenceCode()),
+					StringBundler.concat(
+						_group1.getDescriptiveName(), " (ERC: ",
+						_group1.getExternalReferenceCode(), ")"),
+					StringBundler.concat(
+						_group2.getDescriptiveName(), " (ERC: ",
+						_group2.getExternalReferenceCode(), ")")
+				}),
 			sxpBlueprint.getElementInstancesJSON(), JSONCompareMode.STRICT);
 
 		sxpElement =
@@ -119,50 +151,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		Assert.assertEquals(
 			_readJSON("elementDefinition"),
 			sxpElement.getElementDefinitionJSON());
-	}
-
-	private String _getElementInstancesJSON() throws Exception {
-		String elementInstancesJSON = _readJSON("elementInstances");
-
-		return StringUtil.replace(
-			elementInstancesJSON,
-			new String[] {
-				"[$SCOPE_GROUP_ID_1$]", "[$SCOPE_GROUP_ID_2$]",
-				"[$SCOPE_GROUP_LABEL_1$]", "[$SCOPE_GROUP_LABEL_2$]"
-			},
-			new String[] {
-				String.valueOf(_group1.getGroupId()),
-				String.valueOf(_group2.getGroupId()),
-				StringBundler.concat(
-					_group1.getDescriptiveName(), " (ID: ",
-					_group1.getGroupId(), ")"),
-				StringBundler.concat(
-					_group2.getDescriptiveName(), " (ID: ",
-					_group2.getGroupId(), ")")
-			});
-	}
-
-	private String _getExpectedElementInstancesJSON() throws Exception {
-		String expectedElementInstancesJSON = _readJSON(
-			"elementInstancesUpdated");
-
-		return StringUtil.replace(
-			expectedElementInstancesJSON,
-			new String[] {
-				"[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_1$]",
-				"[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_2$]",
-				"[$SCOPE_GROUP_LABEL_1$]", "[$SCOPE_GROUP_LABEL_2$]"
-			},
-			new String[] {
-				String.valueOf(_group1.getExternalReferenceCode()),
-				String.valueOf(_group2.getExternalReferenceCode()),
-				StringBundler.concat(
-					_group1.getDescriptiveName(), " (ERC: ",
-					_group1.getExternalReferenceCode(), ")"),
-				StringBundler.concat(
-					_group2.getDescriptiveName(), " (ERC: ",
-					_group2.getExternalReferenceCode(), ")")
-			});
 	}
 
 	private String _readJSON(String name) {

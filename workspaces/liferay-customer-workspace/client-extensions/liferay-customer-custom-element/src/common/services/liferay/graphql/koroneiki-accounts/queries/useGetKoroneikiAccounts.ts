@@ -19,6 +19,7 @@ const GET_KORONEIKI_ACCOUNTS = gql`
 				filter: $filter
 				page: $page
 				pageSize: $pageSize
+				sort: "name:asc"
 			) {
 				items {
 					...CoreKoroneikiAccountFields

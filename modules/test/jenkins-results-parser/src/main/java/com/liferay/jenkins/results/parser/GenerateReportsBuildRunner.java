@@ -29,6 +29,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 
@@ -104,6 +106,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	}
 
 	private void _archiveReport(String filePath) {
+		_mergeHTMLFiles(filePath);
+
 		JenkinsResultsParserUtil.rsync(
 			"test-1-0",
 			_REPORT_RSYNC_DESTINATION_DIR_PATH + "archived-reports/" +
@@ -477,6 +481,91 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		return _getStartDateString(_getReportDurationDays(reportName));
 	}
 
+	private void _mergeHTMLFiles(String reportDirPath) {
+		File reportDir = new File(reportDirPath);
+
+		File reportFile = new File(reportDir, "index.html");
+
+		if (!reportFile.exists()) {
+			return;
+		}
+
+		try {
+			String reportFileContent = JenkinsResultsParserUtil.read(
+				reportFile);
+
+			String newReportFileContent = reportFileContent;
+
+			for (String line : reportFileContent.split("\n")) {
+				Matcher matcher = _scriptElementPattern.matcher(line);
+
+				if (matcher.find()) {
+					String srcValue = matcher.group("srcValue");
+
+					if (srcValue.startsWith("http://") ||
+						srcValue.startsWith("https://")) {
+
+						continue;
+					}
+
+					File javaScriptFile = new File(reportDir, srcValue);
+
+					if (!javaScriptFile.exists()) {
+						continue;
+					}
+
+					String scriptElementContent =
+						"<script>" +
+							JenkinsResultsParserUtil.read(javaScriptFile) +
+								"</script>";
+
+					newReportFileContent = newReportFileContent.replace(
+						line, scriptElementContent);
+
+					javaScriptFile.delete();
+
+					continue;
+				}
+
+				matcher = _linkElementPattern.matcher(line);
+
+				if (matcher.find()) {
+					String hrefValue = matcher.group("hrefValue");
+
+					if (hrefValue.startsWith("http://") ||
+						hrefValue.startsWith("https://")) {
+
+						continue;
+					}
+
+					File cssFile = new File(reportDir, hrefValue);
+
+					if (!cssFile.exists()) {
+						continue;
+					}
+
+					String styleElementContent =
+						"<style>" + JenkinsResultsParserUtil.read(cssFile) +
+							"</style>";
+
+					newReportFileContent = newReportFileContent.replace(
+						line, styleElementContent);
+
+					cssFile.delete();
+				}
+			}
+
+			if (!reportFileContent.equals(newReportFileContent)) {
+				JenkinsResultsParserUtil.write(
+					reportFile, newReportFileContent);
+			}
+		}
+		catch (IOException ioException) {
+			System.out.println("Unable to merge files in: " + reportDirPath);
+			ioException.printStackTrace();
+		}
+	}
+
 	private void _updateNodeDataFile(String filePath) throws IOException {
 		File dataArchiveDir = new File(
 			_buildProperties.getProperty("archive.ci.build.data.archive.dir"));
@@ -526,8 +615,14 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 	private static final String _CURRENT_DATE_STRING;
 
+	private static final String _LINK_ELEMENT_REGEX =
+		"(?<linkElement><link.*href=\\\"(?<hrefValue>.*?)\\\".*\\/>)";
+
 	private static final String _REPORT_RSYNC_DESTINATION_DIR_PATH =
 		"/opt/java/jenkins/userContent/reports/";
+
+	private static final String _SCRIPT_ELEMENT_REGEX =
+		"(?<scriptElement><script.*src=\\\"(?<srcValue>.*?)\\\".*<\\/script>)";
 
 	private static final String _TMP_ARCHIVE_DIR_PATH;
 
@@ -538,6 +633,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	private static final Properties _buildProperties;
 	private static final DateTimeFormatter _dateTimeFormatter =
 		DateTimeFormatter.ofPattern("yyyyMMdd");
+	private static final Pattern _linkElementPattern = Pattern.compile(
+		_LINK_ELEMENT_REGEX);
 	private static final Map<String, String> _reportDirNames =
 		new HashMap<String, String>() {
 			{
@@ -552,6 +649,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				put(Report.UTILIZATION.toString(), "utilization-report");
 			}
 		};
+	private static final Pattern _scriptElementPattern = Pattern.compile(
+		_SCRIPT_ELEMENT_REGEX);
 	private static final List<String> _validReportNames = Arrays.asList(
 		Report.BUILD_HISTORY.toString(), Report.CI_SYSTEM_HISTORY.toString(),
 		Report.CI_SYSTEM_STATUS.toString(),

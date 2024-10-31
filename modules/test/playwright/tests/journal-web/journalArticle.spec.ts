@@ -23,6 +23,7 @@ import getBasicWebContentStructureId from '../../utils/structured-content/getBas
 import {waitForAlert} from '../../utils/waitForAlert';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 import getDataStructureDefinition from './utils/getDataStructureDefinition';
+import {JournalPage} from "./pages/JournalPage";
 
 const translateNameAndMetadataFields = async (
 	page,
@@ -132,8 +133,7 @@ baseTest(
 
 		await journalEditArticlePage.fillTitle(title);
 		await journalEditArticlePage.fillFriendlyURL(title + '/' || 'test');
-		await journalEditArticlePage.publishButton.waitFor();
-		await journalEditArticlePage.publishButton.click();
+		await journalEditArticlePage.publishArticle();
 
 		await expect(
 			journalEditArticlePage.alertErrorMessage.getByText(
@@ -159,7 +159,7 @@ baseTest(
 
 		await journalEditArticlePage.fillTitle(title);
 
-		await journalEditArticlePage.publishButton.click();
+		await journalEditArticlePage.publishArticle();
 
 		await journalEditArticlePage.editArticle(title);
 
@@ -311,7 +311,7 @@ baseTest(
 
 		await journalEditArticlePage.fillTitle(getRandomString());
 
-		await page.getByRole('button', {name: 'Publish'}).click();
+		await journalEditArticlePage.publishArticle();
 
 		await page.getByLabel('Select View, Currently').click();
 
@@ -1167,7 +1167,7 @@ baseTest(
 
 		await journalEditArticlePage.fillContent(catalanContent);
 
-		await journalEditArticlePage.publishButton.click();
+		await journalEditArticlePage.publishArticle();
 
 		await waitForAlert(page, `Success:${title} was created successfully.`);
 
@@ -1583,7 +1583,7 @@ assetPublisherDeprecationTest(
 
 		await journalEditArticlePage.fillContent('page1 @page_break@ page2');
 
-		await journalEditArticlePage.publishButton.click();
+		await journalEditArticlePage.publishArticle();
 
 		await waitForAlert(page, `Success:${title} was created successfully.`);
 
@@ -1632,11 +1632,11 @@ assetPublisherDeprecationTest(
 );
 
 translationAndAutosaveTest(
-	'Web Content is published when Feature Flags LPD-11228 and LPD-15596 are active',
+	'Web Content is published when Feature Flags LPD-11228 is are active',
 	{
 		tag: '@LPD-33570',
 	},
-	async ({journalEditArticlePage, page, site}) => {
+	async ({journalEditArticlePage, journalPage, page, site}) => {
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
 		const articleTitle = 'Web Content Title';

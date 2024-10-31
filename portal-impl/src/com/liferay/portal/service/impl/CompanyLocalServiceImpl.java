@@ -16,6 +16,7 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
@@ -2422,16 +2423,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	private long _getNextCompanyId() {
 		if (PropsValues.COMPANY_STATIC_ID_ENABLED) {
-			if (_nextCompanyId == -1) {
-				_nextCompanyId = counterLocalService.increment(
+			if (StartupHelperUtil.isDBNew()) {
+				return counterLocalService.increment(
 					Company.class.getName(), 10000);
 			}
-			else {
-				_nextCompanyId = counterLocalService.increment(
-					Company.class.getName());
-			}
 
-			return _nextCompanyId;
+			return counterLocalService.increment(Company.class.getName());
 		}
 
 		long nextLong = 0;
@@ -2587,8 +2584,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	@BeanReference(type = LayoutSetPrototypeLocalService.class)
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
-
-	private long _nextCompanyId = -1;
 
 	@BeanReference(type = OrganizationLocalService.class)
 	private OrganizationLocalService _organizationLocalService;

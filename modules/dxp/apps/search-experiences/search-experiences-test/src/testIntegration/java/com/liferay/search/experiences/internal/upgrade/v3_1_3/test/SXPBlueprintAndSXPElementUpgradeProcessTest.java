@@ -124,24 +124,22 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	private String _getElementInstancesJSON() throws Exception {
 		String elementInstancesJSON = _readJSON("elementInstances");
 
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "[$SCOPE_GROUP_ID_1$]",
-			String.valueOf(_group1.getGroupId()));
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "[$SCOPE_GROUP_ID_2$]",
-			String.valueOf(_group2.getGroupId()));
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_1$]",
-			StringBundler.concat(
-				_group1.getDescriptiveName(), " (ID: ", _group1.getGroupId(),
-				")"));
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "[$SCOPE_GROUP_LABEL_2$]",
-			StringBundler.concat(
-				_group2.getDescriptiveName(), " (ID: ", _group2.getGroupId(),
-				")"));
-
-		return elementInstancesJSON;
+		return StringUtil.replace(
+			elementInstancesJSON,
+			new String[] {
+				"[$SCOPE_GROUP_ID_1$]", "[$SCOPE_GROUP_ID_2$]",
+				"[$SCOPE_GROUP_LABEL_1$]", "[$SCOPE_GROUP_LABEL_2$]"
+			},
+			new String[] {
+				String.valueOf(_group1.getGroupId()),
+				String.valueOf(_group2.getGroupId()),
+				StringBundler.concat(
+					_group1.getDescriptiveName(), " (ID: ",
+					_group1.getGroupId(), ")"),
+				StringBundler.concat(
+					_group2.getDescriptiveName(), " (ID: ",
+					_group2.getGroupId(), ")")
+			});
 	}
 
 	private String _getExpectedElementInstancesJSON() throws Exception {

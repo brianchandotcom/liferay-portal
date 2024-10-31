@@ -81,7 +81,7 @@ public class RESTClientTemplateContextContributorTest {
 
 		String basePath =
 			"com/liferay/portal/vulcan/internal/template/test/dependencies" +
-				"/site-initializer";
+				"/site-initializer/";
 
 		Bundle bundle = FrameworkUtil.getBundle(
 			RESTClientTemplateContextContributorTest.class);

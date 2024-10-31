@@ -262,7 +262,9 @@ public class JUnitTestClass extends BaseTestClass {
 	}
 
 	private File _getParentTestPropertiesFile(File currentDir) {
-		if (currentDir.compareTo(_modulesBaseDir) == 0) {
+		if ((currentDir == null) ||
+			(currentDir.compareTo(_modulesBaseDir) == 0)) {
+
 			return null;
 		}
 

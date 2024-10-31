@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
@@ -124,22 +125,25 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 				StringPool.PERIOD, fromTableName,
 				" including all excluding indexes);\n"));
 
-		sb.append("alter table ");
-		sb.append(toPartitionName + StringPool.PERIOD + toTableName);
-		sb.append(" add primary key (");
-
 		DB db = DBManagerUtil.getDB();
 
-		for (String columnName :
-				db.getPrimaryKeyColumnNames(connection, fromTableName)) {
+		String[] primaryKeyColumnNames = db.getPrimaryKeyColumnNames(
+			connection, fromTableName);
 
-			sb.append(columnName);
-			sb.append(StringPool.COMMA_AND_SPACE);
+		if (!ArrayUtil.isEmpty(primaryKeyColumnNames)) {
+			sb.append("alter table ");
+			sb.append(toPartitionName + StringPool.PERIOD + toTableName);
+			sb.append(" add primary key (");
+
+			for (String columnName : primaryKeyColumnNames) {
+				sb.append(columnName);
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			sb.append(");");
 		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(");");
 
 		for (IndexMetadata indexMetadata :
 				db.getIndexMetadatas(connection, fromTableName, null, false)) {

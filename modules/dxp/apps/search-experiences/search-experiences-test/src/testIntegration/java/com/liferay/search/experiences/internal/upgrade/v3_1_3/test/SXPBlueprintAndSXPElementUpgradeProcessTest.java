@@ -105,9 +105,12 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 		_multiVMPool.clear();
 
-		_assertSXPBlueprint(
-			_getExpectedElementInstancesJSON(),
+		sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
 			sxpBlueprint.getSXPBlueprintId());
+
+		JSONAssert.assertEquals(
+			_getExpectedElementInstancesJSON(),
+			sxpBlueprint.getElementInstancesJSON(), JSONCompareMode.STRICT);
 
 		sxpElement =
 			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
@@ -116,17 +119,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		Assert.assertEquals(
 			_readJSON("elementDefinition"),
 			sxpElement.getElementDefinitionJSON());
-	}
-
-	private void _assertSXPBlueprint(
-		String expectedElementInstancesJSON, long sxpBlueprintId) {
-
-		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
-			sxpBlueprintId);
-
-		JSONAssert.assertEquals(
-			expectedElementInstancesJSON,
-			sxpBlueprint.getElementInstancesJSON(), JSONCompareMode.STRICT);
 	}
 
 	private String _getElementInstancesJSON() throws Exception {

@@ -228,8 +228,8 @@ public class CPOptionDisplayContext {
 		fdsActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				null, "trash", "delete",
-				LanguageUtil.get(cpRequestHelper.getRequest(), "delete"),
-				"delete", "delete", "headless"));
+				LanguageUtil.get(cpRequestHelper.getRequest(), "delete"), null,
+				"delete", null));
 
 		return fdsActionDropdownItems;
 	}

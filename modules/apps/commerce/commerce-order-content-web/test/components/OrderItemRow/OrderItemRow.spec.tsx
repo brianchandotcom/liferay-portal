@@ -260,6 +260,63 @@ describe('OrderItemRow', () => {
 		expect(deliveryGroup2Input).toBeDisabled();
 	});
 
+	it('Must hide actions if readonly', async () => {
+		const deliveryGroups = [
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10000,
+				name: 'DeliveryGroup1',
+			},
+			{
+				addressId: 100,
+				deliveryDate: '',
+				id: 10001,
+				name: 'DeliveryGroup2',
+			},
+		];
+
+		const orderItem: IOrderItem = {
+			id: 100,
+			name: 'Product1',
+			options: '[]',
+			productId: 1000,
+			quantity: 8,
+			replacedSkuId: 0,
+			requestedDeliveryDate: '',
+			settings: {
+				maxQuantity: 10000,
+				minQuantity: 1,
+				multipleQuantity: 1,
+			},
+			shippingAddressId: 0,
+			sku: 'SKU1',
+			skuId: 1001,
+			skuUnitOfMeasure: {} as any,
+			thumbnail: '/o/commerce-media/default/?groupId=33472',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemRow
+				deliveryGroups={deliveryGroups}
+				handleSelection={jest.fn()}
+				handleSubmit={handleSubmit}
+				orderId={10}
+				orderItem={orderItem as any}
+				readonly={true}
+			/>
+		);
+
+		const {row0Actions, row0Select} = getLocators(
+			deliveryGroups,
+			orderItem.id,
+			renderedComponent
+		);
+
+		expect(row0Actions).not.toBeInTheDocument();
+		expect(row0Select).not.toBeInTheDocument();
+	});
+
 	it('Must display only first delivery group input field filled', async () => {
 		const deliveryGroups = [
 			{

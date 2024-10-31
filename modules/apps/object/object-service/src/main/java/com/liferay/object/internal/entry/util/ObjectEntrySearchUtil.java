@@ -13,6 +13,7 @@ import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
@@ -68,7 +70,9 @@ public class ObjectEntrySearchUtil {
 	}
 
 	public static Predicate getObjectFieldPredicate(
-		Column<?, Object> column, String dbType, String search) {
+		Column<?, ?> column, String dbType, String search) {
+
+		Column<?, Object> objectColumn = (Column<?, Object>)column;
 
 		if (column == null) {
 			return null;
@@ -81,13 +85,17 @@ public class ObjectEntrySearchUtil {
 				GetterUtil.getDouble(search));
 
 			if (searchBigDecimal.compareTo(BigDecimal.ZERO) != 0) {
-				return column.eq(searchBigDecimal);
+				return objectColumn.eq(searchBigDecimal);
 			}
 		}
 		else if (dbType.equals(ObjectFieldConstants.DB_TYPE_CLOB) ||
 				 dbType.equals(ObjectFieldConstants.DB_TYPE_STRING)) {
 
-			return column.like("%" + search + "%");
+			return DSLFunctionFactoryUtil.lower(
+				(Column<?, String>)column
+			).like(
+				StringUtil.quote(StringUtil.toLowerCase(search), "%")
+			);
 		}
 		else if (dbType.equals(ObjectFieldConstants.DB_TYPE_INTEGER) ||
 				 dbType.equals(ObjectFieldConstants.DB_TYPE_LONG)) {
@@ -95,7 +103,7 @@ public class ObjectEntrySearchUtil {
 			long searchLong = GetterUtil.getLong(search);
 
 			if (searchLong != 0L) {
-				return column.eq(searchLong);
+				return objectColumn.eq(searchLong);
 			}
 		}
 
@@ -135,7 +143,7 @@ public class ObjectEntrySearchUtil {
 		}
 
 		Predicate objectFieldPredicate = getObjectFieldPredicate(
-			(Column<?, Object>)objectFieldLocalService.getColumn(
+			objectFieldLocalService.getColumn(
 				objectDefinition.getObjectDefinitionId(),
 				titleObjectField.getName()),
 			titleObjectField.getDBType(), search);

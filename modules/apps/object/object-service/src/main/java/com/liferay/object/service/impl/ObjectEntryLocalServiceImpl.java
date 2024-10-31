@@ -2310,8 +2310,7 @@ public class ObjectEntryLocalServiceImpl
 			else {
 				objectFieldPredicate =
 					ObjectEntrySearchUtil.getObjectFieldPredicate(
-						(Column<?, Object>)column, objectField.getDBType(),
-						search);
+						column, objectField.getDBType(), search);
 			}
 
 			if (objectFieldPredicate == null) {
@@ -3230,7 +3229,7 @@ public class ObjectEntryLocalServiceImpl
 				ObjectEntryTable.INSTANCE.objectEntryId)) {
 
 			return ObjectEntrySearchUtil.getObjectFieldPredicate(
-				(Column<?, Object>)column, objectField.getDBType(), search);
+				column, objectField.getDBType(), search);
 		}
 
 		Predicate relatedModelsPredicate =

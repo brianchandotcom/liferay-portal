@@ -98,15 +98,16 @@ const MillerColumnsColumn = ({
 		0
 	);
 
-	const sizeProps = columnWidth
-		? {
-				style: {
-					'max-width': `${columnWidth}px`,
-					'min-width': `${columnWidth}px`,
-					'width': `${columnWidth}px`,
-				},
-			}
-		: {lg: '4', md: '6', size: '11'};
+	const sizeProps =
+		Liferay.FeatureFlags['LPD-35220'] && columnWidth
+			? {
+					style: {
+						'max-width': `${columnWidth}px`,
+						'min-width': `${columnWidth}px`,
+						'width': `${columnWidth}px`,
+					},
+				}
+			: {lg: '4', md: '6', size: '11'};
 
 	return (
 		<>
@@ -141,12 +142,14 @@ const MillerColumnsColumn = ({
 				))}
 			</ClayLayout.Col>
 
-			<MillerColumnsResizer
-				columnRef={ref}
-				columnWidth={columnWidth}
-				index={index}
-				setColumnWidth={setColumnWidth}
-			/>
+			{Liferay.FeatureFlags['LPD-35220'] && (
+				<MillerColumnsResizer
+					columnRef={ref}
+					columnWidth={columnWidth}
+					index={index}
+					setColumnWidth={setColumnWidth}
+				/>
+			)}
 		</>
 	);
 };

@@ -126,6 +126,10 @@ $resizerWidth: 2px;
 	.list-group-title > a {
 		z-index: 2;
 	}
+
+	.list-group-subtitle {
+		align-items: center;
+	}
 }
 
 .show-quick-actions-on-hover

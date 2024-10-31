@@ -1,4 +1,4 @@
-@component-name = "page-management"
+@component-name = "portal-content-management"
 definition {
 
 	property ci.retries.disabled = "true";

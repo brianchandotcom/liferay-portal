@@ -27,10 +27,18 @@ public class CapsNameCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if ((detailAST.getType() == TokenTypes.METHOD_DEF) &&
-			AnnotationUtil.containsAnnotation(detailAST, "Override")) {
+		if (detailAST.getType() == TokenTypes.METHOD_DEF) {
+			if (AnnotationUtil.containsAnnotation(detailAST, "Override")) {
+				return;
+			}
 
-			return;
+			String absolutePath = getAbsolutePath();
+
+			if (absolutePath.contains("/taglib/") &&
+				absolutePath.endsWith("Tag.java")) {
+
+				return;
+			}
 		}
 
 		String name = getName(detailAST);

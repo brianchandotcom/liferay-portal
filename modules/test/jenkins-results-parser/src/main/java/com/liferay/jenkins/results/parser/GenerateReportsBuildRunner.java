@@ -113,6 +113,10 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			_REPORT_RSYNC_DESTINATION_DIR_PATH + "archived-reports/" +
 				_CURRENT_DATE_STRING,
 			null, filePath);
+
+		CloudStorageSyncUtil.syncGCPFiles(
+			_ARCHIVE_BASE_DIR_PATH + "/reports",
+			CloudStorageSyncUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA + "/reports");
 	}
 
 	private void _copyArchivedBuildData(
@@ -323,6 +327,10 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		if (reportNames == null) {
 			return;
 		}
+
+		CloudStorageSyncUtil.syncGCPFiles(
+			CloudStorageSyncUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA + "/reports",
+			_ARCHIVE_BASE_DIR_PATH + "/reports");
 
 		StringBuilder sb = new StringBuilder();
 

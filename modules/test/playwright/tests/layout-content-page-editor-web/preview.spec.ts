@@ -89,3 +89,68 @@ test(
 		}).toPass();
 	}
 );
+
+test(
+	'The page creator could preview localized changes in a new tab',
+	{
+		tag: ['@LPS-139064', '@LPS-153367'],
+	},
+	async ({apiHelpers, context, page, pageEditorPage, site}) => {
+
+		// Create a page with a Heading fragment
+
+		const headingId = getRandomString();
+
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([headingDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Localize heading fragment
+
+		await pageEditorPage.switchLanguage('es-ES');
+
+		await pageEditorPage.editTextEditable(
+			headingId,
+			'element-text',
+			'Texto Editado'
+		);
+
+		await expect(page.getByText('Texto Editado')).toBeVisible();
+
+		// Preview in a new tab
+
+		const pagePromise = context.waitForEvent('page');
+
+		const previewButton = page.getByRole('menuitem', {
+			name: 'Preview in a New Tab',
+		});
+
+		await expect(async () => {
+			await clickAndExpectToBeVisible({
+				target: previewButton,
+				trigger: page
+					.locator('.control-menu-nav-item')
+					.getByLabel('Options', {exact: true}),
+			});
+
+			if (await previewButton.isVisible()) {
+				await previewButton.click();
+			}
+
+			const newPage = await pagePromise;
+
+			await expect(newPage.getByText('Texto')).toBeVisible({
+				timeout: 100,
+			});
+		}).toPass();
+	}
+);

@@ -2053,8 +2053,6 @@ test('LPD-37698 Payment and Delivery Terms order info box fragment configuration
 	page,
 	systemSettingsPage,
 }) => {
-	test.setTimeout(180000);
-
 	try {
 		await systemSettingsPage.goToSystemSetting(
 			'Feature Flags',
@@ -2220,6 +2218,10 @@ test('LPD-37698 Payment and Delivery Terms order info box fragment configuration
 			String(paymentTerm1.id)
 		);
 
+		await expect(
+			page.getByText(paymentTerm1.description.en_US)
+		).toBeVisible();
+
 		await commerceLayoutsPage.saveButton.click();
 
 		await expect(page.getByTestId('infoBoxValue')).toHaveText(
@@ -2231,6 +2233,10 @@ test('LPD-37698 Payment and Delivery Terms order info box fragment configuration
 		await commerceLayoutsPage.paymentTermsSelect.selectOption(
 			String(paymentTerm2.id)
 		);
+
+		await expect(
+			page.getByText(paymentTerm2.description.en_US)
+		).toBeVisible();
 
 		await commerceLayoutsPage.saveButton.click();
 

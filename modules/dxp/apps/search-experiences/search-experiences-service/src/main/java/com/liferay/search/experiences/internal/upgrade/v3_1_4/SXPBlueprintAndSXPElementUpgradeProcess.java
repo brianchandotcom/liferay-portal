@@ -70,7 +70,13 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 			for (String externalReferenceCode : _EXTERNAL_REFERENCE_CODES) {
 				preparedStatement.setString(
-					1, _getElementDefinitionJSON(externalReferenceCode));
+					1,
+					StringUtil.read(
+						getClass(),
+						"dependencies/" +
+							StringUtil.toLowerCase(externalReferenceCode) +
+								".json"));
+
 				preparedStatement.setString(2, externalReferenceCode);
 
 				preparedStatement.addBatch();
@@ -142,13 +148,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		}
 
 		return elementInstancesJSONArray.toString();
-	}
-
-	private String _getElementDefinitionJSON(String externalReferenceCode) {
-		return StringUtil.read(
-			getClass(),
-			"dependencies/" + StringUtil.toLowerCase(externalReferenceCode) +
-				".json");
 	}
 
 	private String _getExternalReferenceCode(long assetCategoryId)

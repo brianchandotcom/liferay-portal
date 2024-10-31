@@ -420,7 +420,7 @@ describe('Multishipping', () => {
 		expect(addDeliveryGroupButton).toBeDisabled();
 	});
 
-	it('Must disable everything if readonly', async () => {
+	it('Must disable and hide everything if readonly', async () => {
 		const orderItems = Array(2)
 			.fill(0)
 			.map((_, currentIndex) => {
@@ -456,24 +456,23 @@ describe('Multishipping', () => {
 			<Multishipping accountId={10} orderId={10} readonly={true} />
 		);
 
-		const {addDeliveryGroupButton, loadingSpinner} = getLocators(
-			orderItems,
-			renderedComponent
-		);
+		const {addDeliveryGroupButton, loadingSpinner, selectAllCheckbox} =
+			getLocators(orderItems, renderedComponent);
 
 		await waitFor(() => {
 			expect(loadingSpinner).not.toBeInTheDocument();
 		});
 
-		expect(addDeliveryGroupButton).toBeDisabled();
+		expect(addDeliveryGroupButton).not.toBeInTheDocument();
+		expect(selectAllCheckbox).not.toBeInTheDocument();
 
 		renderedComponent
 			.getAllByTestId(/orderItem.*Input/)
 			.forEach((input) => expect(input).toBeDisabled());
 
-		renderedComponent
-			.getAllByTestId(/deliveryGroup.*Actions/)
-			.forEach((input) => expect(input).toBeDisabled());
+		expect(
+			renderedComponent.queryAllByTestId(/deliveryGroup.*Actions/).length
+		).toBe(0);
 	});
 
 	it('Table should not display delivery group columns', async () => {

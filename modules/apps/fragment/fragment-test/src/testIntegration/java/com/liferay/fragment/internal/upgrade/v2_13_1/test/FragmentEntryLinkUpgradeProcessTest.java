@@ -228,6 +228,22 @@ public class FragmentEntryLinkUpgradeProcessTest
 				Assert.assertEquals(
 					String.valueOf(expectedClassNameId), classNameId);
 			}
+
+			JSONObject backgroundFragmentEntryProcessorJSONObject =
+				editableValuesJSONObject.getJSONObject(
+					FragmentEntryProcessorConstants.
+						KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR);
+
+			JSONObject backgroundImageJSONObject =
+				backgroundFragmentEntryProcessorJSONObject.getJSONObject(
+					"backgroundImage");
+
+			JSONObject jsonObject = backgroundImageJSONObject.getJSONObject(
+				"en_US");
+
+			Assert.assertEquals(
+				String.valueOf(expectedClassNameId),
+				jsonObject.getString("classNameId"));
 		}
 	}
 

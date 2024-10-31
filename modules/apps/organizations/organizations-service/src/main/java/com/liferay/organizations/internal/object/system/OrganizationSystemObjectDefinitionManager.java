@@ -8,6 +8,7 @@ package com.liferay.organizations.internal.object.system;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
@@ -122,6 +123,14 @@ public class OrganizationSystemObjectDefinitionManager
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
+			new LongIntegerObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("parentOrganizationId")
+			).name(
+				"parentOrganizationId"
+			).system(
+				true
+			).build(),
 			new TextObjectFieldBuilder(
 			).labelMap(
 				createLabelMap("comments")
@@ -177,7 +186,7 @@ public class OrganizationSystemObjectDefinitionManager
 
 	@Override
 	public int getVersion() {
-		return 2;
+		return 3;
 	}
 
 	@Override

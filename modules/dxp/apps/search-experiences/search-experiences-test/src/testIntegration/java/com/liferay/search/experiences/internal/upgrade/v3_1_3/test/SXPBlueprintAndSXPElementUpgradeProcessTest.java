@@ -36,7 +36,6 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -118,9 +117,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			_readJSON("elementDefinition"),
 			sxpElement.getElementDefinitionJSON());
 	}
-
-	@Rule
-	public TestName testName = new TestName();
 
 	private void _assertSXPBlueprint(
 		String expectedElementInstancesJSON, long sxpBlueprintId) {

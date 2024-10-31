@@ -24,7 +24,7 @@ test(
 	},
 	async ({layout, page, systemSettingsPage}) => {
 		await test.step('Navigate to an isolated page', async () => {
-			await page.goto(layout.friendlyURL);
+			await page.goto(`/web/guest/${layout.friendlyURL}`);
 		});
 
 		await test.step('Check if SPA is enabled', async () => {
@@ -96,6 +96,10 @@ test(
 			name: 'Update',
 		});
 
+		const saveButton = page.getByRole('button', {
+			name: 'Save',
+		});
+
 		await test.step('Check if SPA is enabled', async () => {
 			expect(await isSPAEnabled({page})).toBeTruthy();
 		});
@@ -107,8 +111,13 @@ test(
 			await userNotificationTimeoutLabel.click();
 			await userNotificationTimeoutLabel.fill('30');
 
-			await updateButton.isVisible();
-			await updateButton.click();
+			if (await saveButton.isVisible()) {
+				await saveButton.click();
+			}
+			else if (await updateButton.isVisible()) {
+				await updateButton.click();
+			}
+
 			await waitForAlert(page);
 		});
 
@@ -117,8 +126,13 @@ test(
 
 			await userNotificationTimeoutLabel.waitFor({state: 'visible'});
 
-			await updateButton.isVisible();
-			await updateButton.click();
+			if (await saveButton.isVisible()) {
+				await saveButton.click();
+			}
+			else if (await updateButton.isVisible()) {
+				await updateButton.click();
+			}
+
 			await waitForAlert(
 				page,
 				'Oops:It looks like this is taking longer than expected.',
@@ -133,8 +147,13 @@ test(
 			await userNotificationTimeoutLabel.click();
 			await userNotificationTimeoutLabel.fill('30000');
 
-			await updateButton.isVisible();
-			await updateButton.click();
+			if (await saveButton.isVisible()) {
+				await saveButton.click();
+			}
+			else if (await updateButton.isVisible()) {
+				await updateButton.click();
+			}
+
 			await waitForAlert(page);
 		});
 	}

@@ -38,11 +38,10 @@ import com.liferay.search.experiences.service.SXPElementLocalService;
 
 import java.util.Collections;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -61,8 +60,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 		User user = TestPropsValues.getUser();
 
@@ -71,7 +70,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	}
 
 	@Test
-	public void testSXPBlueprintUpgradeProcess() throws Exception {
+	public void testUpgrade() throws Exception {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
@@ -88,17 +87,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		_addSXPBlueprint(
 			_getElementInstancesJSON(assetCategory1, assetCategory2));
 
-		_runUpgrade();
-
-		_assertSXPBlueprint(
-			_getExpectedInstancesJSON(
-				assetCategory1, assetCategory2,
-				companyGroup.getExternalReferenceCode()),
-			_sxpBlueprint.getSXPBlueprintId());
-	}
-
-	@Test
-	public void testSXPElementUpgradeProcess() throws Exception {
 		for (String elementExternalReferenceCode :
 				_ELEMENT_EXTERNAL_REFERENCE_CODES) {
 
@@ -107,15 +95,18 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 		_runUpgrade();
 
+		_assertSXPBlueprint(
+			_getExpectedInstancesJSON(
+				assetCategory1, assetCategory2,
+				companyGroup.getExternalReferenceCode()),
+			_sxpBlueprint.getSXPBlueprintId());
+
 		for (String elementExternalReferenceCode :
 				_ELEMENT_EXTERNAL_REFERENCE_CODES) {
 
 			_assertElementUpgraded(elementExternalReferenceCode);
 		}
 	}
-
-	@Rule
-	public TestName testName = new TestName();
 
 	private void _addOldElement(String externalReferenceCode) throws Exception {
 		SXPElement sxpElement =
@@ -150,8 +141,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			StringUtil.read(
 				_clazz,
 				StringBundler.concat(
-					"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
-					testName.getMethodName(), ".configurationJSON.json")),
+					"dependencies/", _clazz.getSimpleName(),
+					".configurationJSON.json")),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			elementInstancesJSON, "1.1",
@@ -172,7 +163,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				_clazz,
 				StringBundler.concat(
 					"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
-					testName.getMethodName(), StringPool.PERIOD,
 					StringUtil.toLowerCase(externalReferenceCode), ".json")),
 			sxpElement.getElementDefinitionJSON(), JSONCompareMode.STRICT);
 	}
@@ -216,8 +206,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		String elementInstancesJSON = StringUtil.read(
 			_clazz,
 			StringBundler.concat(
-				"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
-				testName.getMethodName(), ".before.json"));
+				"dependencies/", _clazz.getSimpleName(),
+				".elementInstances.json"));
 
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON, "[$ASSET_CATEGORY_ID_1$]",
@@ -241,8 +231,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		String elementInstancesJSON = StringUtil.read(
 			_clazz,
 			StringBundler.concat(
-				"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
-				testName.getMethodName(), ".after.json"));
+				"dependencies/", _clazz.getSimpleName(),
+				".elementInstancesUpdated.json"));
 
 		elementInstancesJSON = StringUtil.replace(
 			elementInstancesJSON,
@@ -288,9 +278,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		"HIDE_CONTENTS_IN_A_CATEGORY_FOR_GUEST_USERS"
 	};
 
-	@DeleteAfterTestRun
-	private static Group _group;
-
 	private static ServiceContext _serviceContext;
 
 	@Inject(
@@ -302,6 +289,9 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject
 	private MultiVMPool _multiVMPool;

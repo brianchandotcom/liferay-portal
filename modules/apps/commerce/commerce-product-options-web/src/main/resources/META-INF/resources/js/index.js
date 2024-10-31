@@ -4,6 +4,7 @@
  */
 
 export {default as CPOptionCategoryManagementToolbarPropsTransformer} from './CPOptionCategoryManagementToolbarPropsTransformer';
+export {default as CPOptionFDSPropsTransformer} from './CPOptionFDSPropsTransformer';
 export {default as CPSpecificationOptionDetails} from './CPSpecificationOptionDetails';
 export {default as CPSpecificationOptionListTypeDefinitionPropsTransformer} from './CPSpecificationOptionListTypeDefinitionPropsTransformer';
 export {default as CPSpecificationOptionManagementToolbarPropsTransformer} from './CPSpecificationOptionManagementToolbarPropsTransformer';

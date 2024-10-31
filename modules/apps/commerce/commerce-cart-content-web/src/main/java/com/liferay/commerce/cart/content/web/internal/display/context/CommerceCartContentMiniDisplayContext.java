@@ -27,8 +27,6 @@ import java.math.BigDecimal;
 
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -71,11 +69,8 @@ public class CommerceCartContentMiniDisplayContext
 	}
 
 	public String getCommerceCartPortletURL() throws PortalException {
-		PortletURL portletURL =
-			_commerceOrderHttpHelper.getCommerceCartPortletURL(
-				commerceCartContentRequestHelper.getRequest());
-
-		return portletURL.toString();
+		return _commerceOrderHttpHelper.getCommerceCartPortletURL(
+			commerceCartContentRequestHelper.getRequest());
 	}
 
 	public int getCommerceOrderItemsQuantity() throws PortalException {

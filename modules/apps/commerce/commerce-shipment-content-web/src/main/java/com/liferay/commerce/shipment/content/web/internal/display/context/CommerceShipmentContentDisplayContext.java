@@ -263,12 +263,9 @@ public class CommerceShipmentContentDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		PortletURL portletURL =
-			_commerceOrderHttpHelper.getCommerceCartPortletURL(
-				_commerceShipmentContentRequestHelper.getRequest(),
-				commerceOrderItem.getCommerceOrder());
-
-		return portletURL.toString();
+		return _commerceOrderHttpHelper.getCommerceCartPortletURL(
+			_commerceShipmentContentRequestHelper.getRequest(),
+			commerceOrderItem.getCommerceOrder());
 	}
 
 	private final CommerceChannelLocalService _commerceChannelLocalService;

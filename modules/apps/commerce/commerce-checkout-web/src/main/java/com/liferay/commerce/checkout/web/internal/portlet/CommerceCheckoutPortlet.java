@@ -224,15 +224,15 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 			PortletRequest portletRequest, CommerceOrder commerceOrder)
 		throws PortalException {
 
-		PortletURL portletURL =
+		String commerceCartPortletURL =
 			_commerceOrderHttpHelper.getCommerceCartPortletURL(
 				_portal.getHttpServletRequest(portletRequest), commerceOrder);
 
-		if (portletURL == null) {
+		if (Validator.isNull(commerceCartPortletURL)) {
 			return StringPool.BLANK;
 		}
 
-		return portletURL.toString();
+		return commerceCartPortletURL;
 	}
 
 	private boolean _isOrderApproved(CommerceOrder commerceOrder)

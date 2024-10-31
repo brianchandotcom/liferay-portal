@@ -70,8 +70,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -90,15 +88,15 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException {
 
-		PortletURL portletURL =
+		String commerceCartPortletURL =
 			_commerceOrderHttpHelper.getCommerceCartPortletURL(
 				httpServletRequest, commerceOrder);
 
-		if (portletURL == null) {
+		if (Validator.isNull(commerceCartPortletURL)) {
 			return StringPool.BLANK;
 		}
 
-		return portletURL.toString();
+		return commerceCartPortletURL;
 	}
 
 	@Override

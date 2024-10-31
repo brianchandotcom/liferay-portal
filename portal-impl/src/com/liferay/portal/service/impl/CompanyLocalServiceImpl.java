@@ -2424,7 +2424,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		if (PropsValues.COMPANY_STATIC_ID_ENABLED) {
 			if (_nextCompanyId == -1) {
 				_nextCompanyId = counterLocalService.increment(
-					Company.class.getName(), _FIRST_COMPANY_ID_INCREMENT);
+					Company.class.getName(), 10000);
 			}
 			else {
 				_nextCompanyId = counterLocalService.increment(
@@ -2550,8 +2550,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	private static final String _DEFAULT_VIRTUAL_HOST = "localhost";
-
-	private static final int _FIRST_COMPANY_ID_INCREMENT = 10000;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyLocalServiceImpl.class);

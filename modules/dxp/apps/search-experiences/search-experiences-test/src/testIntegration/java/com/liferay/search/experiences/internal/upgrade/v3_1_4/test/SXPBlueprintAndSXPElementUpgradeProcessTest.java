@@ -78,8 +78,31 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
 			companyGroup.getGroupId(), assetVocabulary.getVocabularyId());
 
-		_addSXPBlueprint(
-			_getElementInstancesJSON(assetCategory1, assetCategory2));
+		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
+			null, TestPropsValues.getUserId(), _readJSON("configurationJSON"),
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			StringUtil.replace(
+				_readJSON("elementInstances"),
+				new String[] {
+					"[$ASSET_CATEGORY_ID_1$]", "[$ASSET_CATEGORY_ID_2$]",
+					"[$ASSET_CATEGORY_LABEL_1$]", "[$ASSET_CATEGORY_LABEL_2$]"
+				},
+				new String[] {
+					String.valueOf(assetCategory1.getCategoryId()),
+					String.valueOf(assetCategory2.getCategoryId()),
+					StringBundler.concat(
+						assetCategory1.getName(), " (ID: ",
+						assetCategory1.getCategoryId(), ")"),
+					StringBundler.concat(
+						assetCategory2.getName(), " (ID: ",
+						assetCategory2.getCategoryId(), ")")
+				}),
+			"1.1",
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
 
 		for (String elementExternalReferenceCode :
 				_ELEMENT_EXTERNAL_REFERENCE_CODES) {
@@ -90,9 +113,25 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		_runUpgrade();
 
 		_assertSXPBlueprint(
-			_getExpectedInstancesJSON(
-				assetCategory1, assetCategory2,
-				companyGroup.getExternalReferenceCode()),
+			StringUtil.replace(
+				_readJSON("elementInstancesUpdated"),
+				new String[] {
+					"[$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_1$]",
+					"[$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_2$]",
+					"[$ASSET_CATEGORY_LABEL_1$]", "[$ASSET_CATEGORY_LABEL_2$]"
+				},
+				new String[] {
+					companyGroup.getExternalReferenceCode() + "&&" +
+						assetCategory1.getExternalReferenceCode(),
+					companyGroup.getExternalReferenceCode() + "&&" +
+						assetCategory2.getExternalReferenceCode(),
+					StringBundler.concat(
+						assetCategory1.getName(), " (ERC: ",
+						assetCategory1.getExternalReferenceCode(), ")"),
+					StringBundler.concat(
+						assetCategory2.getName(), " (ERC: ",
+						assetCategory2.getExternalReferenceCode(), ")")
+				}),
 			_sxpBlueprint.getSXPBlueprintId());
 
 		for (String elementExternalReferenceCode :
@@ -127,20 +166,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		}
 	}
 
-	private void _addSXPBlueprint(String elementInstancesJSON)
-		throws Exception {
-
-		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			null, TestPropsValues.getUserId(), _readJSON("configurationJSON"),
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			elementInstancesJSON, "1.1",
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId()));
-	}
-
 	private void _assertElementUpgraded(String externalReferenceCode)
 		throws Exception {
 
@@ -162,75 +187,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		JSONAssert.assertEquals(
 			expectedInstancesJSON, sxpBlueprint.getElementInstancesJSON(),
 			JSONCompareMode.STRICT);
-	}
-
-	private String _createAssetCategoryExternalReferenceCode(
-		String assetCategoryExternalReferenceCode,
-		String companyGroupExternalReferenceCode) {
-
-		return companyGroupExternalReferenceCode + "&&" +
-			assetCategoryExternalReferenceCode;
-	}
-
-	private String _createAssetCategoryExternalReferenceCodeLabel(
-		AssetCategory assetCategory) {
-
-		return StringBundler.concat(
-			assetCategory.getName(), " (ERC: ",
-			assetCategory.getExternalReferenceCode(), ")");
-	}
-
-	private String _createAssetCategoryIDLabel(AssetCategory assetCategory) {
-		return StringBundler.concat(
-			assetCategory.getName(), " (ID: ", assetCategory.getCategoryId(),
-			")");
-	}
-
-	private String _getElementInstancesJSON(
-		AssetCategory assetCategory1, AssetCategory assetCategory2) {
-
-		String elementInstancesJSON = _readJSON("elementInstances");
-
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "[$ASSET_CATEGORY_ID_1$]",
-			String.valueOf(assetCategory1.getCategoryId()));
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "[$ASSET_CATEGORY_ID_2$]",
-			String.valueOf(assetCategory2.getCategoryId()));
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "[$ASSET_CATEGORY_LABEL_1$]",
-			_createAssetCategoryIDLabel(assetCategory1));
-
-		return StringUtil.replace(
-			elementInstancesJSON, "[$ASSET_CATEGORY_LABEL_2$]",
-			_createAssetCategoryIDLabel(assetCategory2));
-	}
-
-	private String _getExpectedInstancesJSON(
-		AssetCategory assetCategory1, AssetCategory assetCategory2,
-		String companyGroupExternalReferenceCode) {
-
-		String elementInstancesJSON = _readJSON("elementInstancesUpdated");
-
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON,
-			"[$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_1$]",
-			_createAssetCategoryExternalReferenceCode(
-				assetCategory1.getExternalReferenceCode(),
-				companyGroupExternalReferenceCode));
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON,
-			"[$ASSET_CATEGORY_EXTERNAL_REFERENCE_CODE_2$]",
-			_createAssetCategoryExternalReferenceCode(
-				assetCategory2.getExternalReferenceCode(),
-				companyGroupExternalReferenceCode));
-		elementInstancesJSON = StringUtil.replace(
-			elementInstancesJSON, "[$ASSET_CATEGORY_LABEL_1$]",
-			_createAssetCategoryExternalReferenceCodeLabel(assetCategory1));
-
-		return StringUtil.replace(
-			elementInstancesJSON, "[$ASSET_CATEGORY_LABEL_2$]",
-			_createAssetCategoryExternalReferenceCodeLabel(assetCategory2));
 	}
 
 	private String _readJSON(String name) {

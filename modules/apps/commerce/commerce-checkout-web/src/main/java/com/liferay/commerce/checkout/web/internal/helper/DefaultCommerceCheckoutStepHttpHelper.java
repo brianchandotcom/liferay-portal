@@ -88,15 +88,8 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException {
 
-		String commerceCartPortletURL =
-			_commerceOrderHttpHelper.getCommerceCartPortletURL(
-				httpServletRequest, commerceOrder);
-
-		if (Validator.isNull(commerceCartPortletURL)) {
-			return StringPool.BLANK;
-		}
-
-		return commerceCartPortletURL;
+		return _commerceOrderHttpHelper.getCommerceCartPortletURL(
+			httpServletRequest, commerceOrder);
 	}
 
 	@Override

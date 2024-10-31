@@ -117,29 +117,14 @@ public class MiniCartTag extends IncludeTag {
 				_itemsQuantity = _getItemsQuantity(
 					commerceOrder, httpServletRequest);
 				_orderId = commerceOrder.getCommerceOrderId();
-
-				String commerceCartPortletURL =
-					_commerceOrderHttpHelper.getCommerceCartPortletURL(
-						httpServletRequest, commerceOrder);
-
-				if (Validator.isNotNull(commerceCartPortletURL)) {
-					_orderDetailURL = commerceCartPortletURL;
-				}
 			}
 			else {
-				String commerceCartPortletURL =
-					_commerceOrderHttpHelper.getCommerceCartPortletURL(
-						httpServletRequest, null);
-
-				if (Validator.isNull(commerceCartPortletURL)) {
-					_orderDetailURL = StringPool.BLANK;
-				}
-				else {
-					_orderDetailURL = commerceCartPortletURL;
-				}
-
 				_orderId = 0;
 			}
+
+			_orderDetailURL =
+				_commerceOrderHttpHelper.getCommerceCartPortletURL(
+					httpServletRequest, commerceOrder);
 
 			_requestQuoteEnabled = _isRequestQuoteEnabled();
 		}

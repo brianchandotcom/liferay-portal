@@ -61,7 +61,7 @@
 													onChange="Liferay.Search.FacetUtil.changeSelection(event);"
 													type="checkbox"
 												/>
-											<@/liferay_ui.csp>
+											</@liferay_ui.csp>
 
 											<span class="custom-control-label">
 												<span class="custom-control-label-text">

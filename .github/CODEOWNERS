@@ -24,11 +24,11 @@ modules/apps/asset/asset-list-item-selector-web    @liferay-search
 modules/apps/asset/asset-list-service    @liferay-search
 modules/apps/asset/asset-list-test    @liferay-search
 modules/apps/asset/asset-list-web    @liferay-search
-modules/apps/asset/asset-publisher-web    @liferay-page-management
-modules/apps/asset/asset-publisher-api    @liferay-page-management
-modules/apps/asset/asset-publisher-layout-prototype    @liferay-page-management
-modules/apps/asset/asset-publisher-test    @liferay-page-management
-modules/apps/asset/asset-publisher-web    @liferay-page-management
+modules/apps/asset/asset-publisher-web    @liferay-content-management
+modules/apps/asset/asset-publisher-api    @liferay-content-management
+modules/apps/asset/asset-publisher-layout-prototype    @liferay-content-management
+modules/apps/asset/asset-publisher-test    @liferay-content-management
+modules/apps/asset/asset-publisher-web    @liferay-content-management
 modules/apps/batch-engine/    @liferay-headless
 modules/apps/batch-planner/    @liferay-headless
 modules/apps/bean-portlet/

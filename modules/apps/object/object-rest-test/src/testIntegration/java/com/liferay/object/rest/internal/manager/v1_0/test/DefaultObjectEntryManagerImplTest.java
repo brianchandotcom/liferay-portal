@@ -2183,8 +2183,7 @@ public class DefaultObjectEntryManagerImplTest
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		childObjectEntry1 = _decrementSystemDates(
-			_objectDefinition2, childObjectEntry1.getId());
+		Thread.sleep(1000);
 
 		assertEquals(
 			childObjectEntry1,
@@ -4982,26 +4981,6 @@ public class DefaultObjectEntryManagerImplTest
 		objectFieldSetting.setValue(value);
 
 		return objectFieldSetting;
-	}
-
-	private ObjectEntry _decrementSystemDates(
-			ObjectDefinition objectDefinition, long objectEntryId)
-		throws Exception {
-
-		com.liferay.object.model.ObjectEntry objectEntry =
-			_objectEntryLocalService.getObjectEntry(objectEntryId);
-
-		Date date = objectEntry.getCreateDate();
-
-		Date newDate = new Date(date.getTime() - 1000);
-
-		objectEntry.setCreateDate(newDate);
-		objectEntry.setModifiedDate(newDate);
-
-		_objectEntryLocalService.updateObjectEntry(objectEntry);
-
-		return _defaultObjectEntryManager.getObjectEntry(
-			_simpleDTOConverterContext, objectDefinition, objectEntryId);
 	}
 
 	private void _deleteAccountEntryOrganizationRel(

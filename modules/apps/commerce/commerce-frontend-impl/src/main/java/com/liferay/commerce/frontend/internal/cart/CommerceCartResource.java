@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.math.BigDecimal;
@@ -62,8 +63,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -320,15 +319,15 @@ public class CommerceCartResource {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL =
+		String commerceCartPortletURL =
 			_commerceOrderHttpHelper.getCommerceCartPortletURL(
 				siteGroupId, httpServletRequest, commerceOrder);
 
-		if (portletURL != null) {
-			return portletURL.toString();
+		if (Validator.isNull(commerceCartPortletURL)) {
+			return _portal.getHomeURL(httpServletRequest);
 		}
 
-		return _portal.getHomeURL(httpServletRequest);
+		return commerceCartPortletURL;
 	}
 
 	private String[] _getErrorMessages(

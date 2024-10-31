@@ -95,11 +95,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals(Constants.ADD)) {
 				CommerceOrder commerceOrder = _addCommerceOrder(actionRequest);
 
-				PortletURL redirect = _getOrderDetailRedirect(
-					commerceOrder, actionRequest);
-
 				sendRedirect(
-					actionRequest, actionResponse, redirect.toString());
+					actionRequest, actionResponse,
+					_getOrderDetailRedirect(commerceOrder, actionRequest));
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				_deleteCommerceOrders(actionRequest);
@@ -413,11 +411,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 			actionRequest.setAttribute(
 				WebKeys.REDIRECT,
-				PortletURLBuilder.create(
-					_commerceOrderHttpHelper.getCommerceCartPortletURL(
-						_portal.getHttpServletRequest(actionRequest),
-						commerceOrder)
-				).buildString());
+				_commerceOrderHttpHelper.getCommerceCartPortletURL(
+					_portal.getHttpServletRequest(actionRequest),
+					commerceOrder));
 
 			return;
 		}
@@ -509,28 +505,12 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrderId, workflowTaskId, transitionName, comment);
 	}
 
-	private PortletURL _getOrderDetailRedirect(
+	private String _getOrderDetailRedirect(
 			CommerceOrder commerceOrder, ActionRequest actionRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, CommerceOrder.class.getName(),
-			PortletProvider.Action.EDIT);
-
-		if (commerceOrder != null) {
-			portletURL.setParameter(
-				"mvcRenderCommandName",
-				"/commerce_open_order_content/edit_commerce_order");
-			portletURL.setParameter(
-				"commerceOrderId",
-				String.valueOf(commerceOrder.getCommerceOrderId()));
-
-			String backURL = ParamUtil.getString(actionRequest, "backURL");
-
-			portletURL.setParameter("backURL", backURL);
-		}
-
-		return portletURL;
+		return _commerceOrderHttpHelper.getCommerceCartPortletURL(
+			_portal.getHttpServletRequest(actionRequest), commerceOrder);
 	}
 
 	private void _processQuote(ActionRequest actionRequest) throws Exception {
@@ -605,10 +585,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		actionRequest.setAttribute(
 			WebKeys.REDIRECT,
-			PortletURLBuilder.create(
-				_commerceOrderHttpHelper.getCommerceCartPortletURL(
-					_portal.getHttpServletRequest(actionRequest), commerceOrder)
-			).buildString());
+			_commerceOrderHttpHelper.getCommerceCartPortletURL(
+				_portal.getHttpServletRequest(actionRequest), commerceOrder));
 	}
 
 	private void _selectBillingAddress(ActionRequest actionRequest)
@@ -638,43 +616,42 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			CommerceOrder commerceOrder)
 		throws Exception {
 
-		PortletURL portletURL = null;
+		String redirect = null;
 
-		long groupId = _portal.getScopeGroupId(
-			_portal.getLiferayPortletRequest(actionRequest));
+		String orderDetailRedirect = _getOrderDetailRedirect(
+			commerceOrder, actionRequest);
 
-		long plid = _portal.getPlidFromPortletId(
-			groupId, CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
-
-		if (plid > 0) {
-			portletURL = _getOrderDetailRedirect(commerceOrder, actionRequest);
+		if (Validator.isNotNull(orderDetailRedirect)) {
+			redirect = orderDetailRedirect;
 		}
 		else {
-			plid = _portal.getPlidFromPortletId(
-				groupId, CommercePortletKeys.COMMERCE_CART_CONTENT);
+			long plid = _portal.getPlidFromPortletId(
+				_portal.getScopeGroupId(
+					_portal.getLiferayPortletRequest(actionRequest)),
+				CommercePortletKeys.COMMERCE_CART_CONTENT);
 
 			LiferayPortletResponse liferayPortletResponse =
 				_portal.getLiferayPortletResponse(actionResponse);
 
 			if (plid > 0) {
-				portletURL = PortletURLBuilder.createLiferayPortletURL(
+				redirect = PortletURLBuilder.createLiferayPortletURL(
 					liferayPortletResponse, plid,
 					CommercePortletKeys.COMMERCE_CART_CONTENT,
 					PortletRequest.RENDER_PHASE
 				).setParameter(
 					"commerceOrderId", commerceOrder.getCommerceOrderId()
-				).buildPortletURL();
+				).buildString();
 			}
 			else {
-				portletURL = PortletURLBuilder.createLiferayPortletURL(
+				redirect = PortletURLBuilder.createLiferayPortletURL(
 					liferayPortletResponse,
 					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
 					PortletRequest.RENDER_PHASE
-				).buildPortletURL();
+				).buildString();
 			}
 		}
 
-		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	private void _updateBillingAddress(ActionRequest actionRequest)

@@ -416,11 +416,9 @@ public class CommerceSearchResource {
 			searchItemModel.setIcon("document");
 			searchItemModel.setSubtitle(order.getAccountName());
 			searchItemModel.setUrl(
-				String.valueOf(
-					_commerceOrderHttpHelper.getCommerceCartPortletURL(
-						themeDisplay.getScopeGroupId(),
-						themeDisplay.getRequest(),
-						_getCommerceOrder(order.getId()))));
+				_commerceOrderHttpHelper.getCommerceCartPortletURL(
+					themeDisplay.getScopeGroupId(), themeDisplay.getRequest(),
+					_getCommerceOrder(order.getId())));
 
 			searchItemModels.add(searchItemModel);
 		}

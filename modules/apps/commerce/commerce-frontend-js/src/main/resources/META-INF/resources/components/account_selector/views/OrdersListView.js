@@ -87,34 +87,30 @@ function OrdersListView({
 				<div ref={ordersListRef} />
 			</li>
 
-			{Liferay.FeatureFlags['LPD-20379'] ? null : (
-				<>
-					<ClayDropDown.Section>
-						<ClayButton
-							className="m-auto w-100"
-							displayType="primary"
-							onClick={() =>
-								showOrderTypeModal
-									? Liferay.fire(OPEN_MODAL, {
-											id: `${namespace}add-order-modal`,
-											size: MEDIUM_MODAL_SIZE,
-										})
-									: liferayNavigate(createOrderURL)
-							}
-						>
-							{Liferay.Language.get('create-new-order')}
-						</ClayButton>
-					</ClayDropDown.Section>
+			<ClayDropDown.Section>
+				<ClayButton
+					className="m-auto w-100"
+					displayType="primary"
+					onClick={() =>
+						showOrderTypeModal
+							? Liferay.fire(OPEN_MODAL, {
+									id: `${namespace}add-order-modal`,
+									size: MEDIUM_MODAL_SIZE,
+								})
+							: liferayNavigate(createOrderURL)
+					}
+				>
+					{Liferay.Language.get('create-new-order')}
+				</ClayButton>
+			</ClayDropDown.Section>
 
-					{showOrderTypeModal ? (
-						<Modal
-							id={`${namespace}add-order-modal`}
-							refreshPageOnClose={true}
-							url={createOrderURL}
-						/>
-					) : null}
-				</>
-			)}
+			{showOrderTypeModal ? (
+				<Modal
+					id={`${namespace}add-order-modal`}
+					refreshPageOnClose={true}
+					url={createOrderURL}
+				/>
+			) : null}
 		</ClayDropDown.ItemList>
 	);
 }

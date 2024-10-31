@@ -7,17 +7,6 @@ import {getRandomInt} from '../utils/getRandomInt';
 import getRandomString from '../utils/getRandomString';
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
-type TTerm = {
-	active?: boolean;
-	id?: number;
-	label?: {
-		[key: string]: string;
-	};
-	name?: string;
-	priority?: number;
-	type: string;
-};
-
 type TOrder = {
 	accountId?: number;
 	billingAddressId?: string;
@@ -62,6 +51,20 @@ type TOrderType = {
 	name?: {
 		[key: string]: string;
 	};
+};
+
+type TTerm = {
+	active?: boolean;
+	description?: {
+		[key: string]: string;
+	};
+	id?: number;
+	label?: {
+		[key: string]: string;
+	};
+	name?: string;
+	priority?: number;
+	type: string;
 };
 
 export class HeadlessCommerceAdminOrderApiHelper {
@@ -159,6 +162,9 @@ export class HeadlessCommerceAdminOrderApiHelper {
 	async postTerm(terms: TTerm) {
 		terms = {
 			active: true,
+			description: {
+				en_US: getRandomString(),
+			},
 			label: {
 				en_US: getRandomString(),
 			},

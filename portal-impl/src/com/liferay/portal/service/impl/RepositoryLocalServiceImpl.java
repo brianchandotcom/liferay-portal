@@ -52,10 +52,6 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		User user = _userPersistence.findByPrimaryKey(userId);
 
 		long repositoryId = counterLocalService.increment();

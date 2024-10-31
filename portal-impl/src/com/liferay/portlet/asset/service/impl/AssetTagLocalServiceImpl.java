@@ -94,10 +94,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		// Tag
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
 		User user = _userLocalService.getUser(userId);
 
 		long tagId = counterLocalService.increment();
@@ -741,10 +737,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		}
 
 		validate(name);
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
 
 		tag.setExternalReferenceCode(externalReferenceCode);
 		tag.setName(name);

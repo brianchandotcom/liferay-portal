@@ -593,17 +593,16 @@ public class CopyItemsMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		mockLiferayPortletActionRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG, null);
-		mockLiferayPortletActionRequest.setAttribute(WebKeys.LAYOUT, _layout);
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _themeDisplay);
-
 		mockLiferayPortletActionRequest.addParameter("itemIds", itemIds);
 		mockLiferayPortletActionRequest.addParameter(
 			"parentItemId", parentItemId);
 		mockLiferayPortletActionRequest.addParameter(
 			"segmentsExperienceId", String.valueOf(_segmentsExperienceId));
+		mockLiferayPortletActionRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, null);
+		mockLiferayPortletActionRequest.setAttribute(WebKeys.LAYOUT, _layout);
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
 
 		return mockLiferayPortletActionRequest;
 	}

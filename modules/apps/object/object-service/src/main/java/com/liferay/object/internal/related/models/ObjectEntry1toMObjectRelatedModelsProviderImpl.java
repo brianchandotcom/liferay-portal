@@ -6,6 +6,7 @@
 package com.liferay.object.internal.related.models;
 
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -87,12 +88,17 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 			String name = PrincipalThreadLocal.getName();
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
+			boolean skipObjectEntryResourcePermission =
+				ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission();
 
 			for (ObjectEntry objectEntry : relatedModels) {
 				futures.add(
 					executorService.submit(
 						() -> {
 							try {
+								ObjectEntryThreadLocal.
+									setSkipObjectEntryResourcePermission(
+										skipObjectEntryResourcePermission);
 								PermissionThreadLocal.setPermissionChecker(
 									permissionChecker);
 								PrincipalThreadLocal.setName(name);

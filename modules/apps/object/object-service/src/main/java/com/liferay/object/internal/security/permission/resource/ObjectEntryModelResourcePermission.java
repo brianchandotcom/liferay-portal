@@ -11,6 +11,7 @@ import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -130,7 +131,9 @@ public class ObjectEntryModelResourcePermission
 				_objectEntryLocalService.fetchObjectEntry(
 					objectEntry.getRootObjectEntryId());
 
-			if (rootObjectEntry == null) {
+			if ((rootObjectEntry == null) ||
+				ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission()) {
+
 				return true;
 			}
 

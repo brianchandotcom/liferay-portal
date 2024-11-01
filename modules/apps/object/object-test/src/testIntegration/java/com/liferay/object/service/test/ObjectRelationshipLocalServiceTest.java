@@ -52,6 +52,7 @@ import com.liferay.object.tree.Tree;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -65,6 +66,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -1865,17 +1867,21 @@ public class ObjectRelationshipLocalServiceTest {
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())));
 
-		Bundle bundle = FrameworkUtil.getBundle(
-			ObjectRelationshipLocalServiceTest.class);
+		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+				systemObjectDefinition.getCompanyId())) {
 
-		BundleContext bundleContext = bundle.getBundleContext();
+			Bundle bundle = FrameworkUtil.getBundle(
+				ObjectRelationshipLocalServiceTest.class);
 
-		bundleContext.registerService(
-			SystemObjectDefinitionManager.class,
-			new TestSystemObjectDefinitionManager(
-				systemObjectDefinition.getModelClass(),
-				systemObjectDefinition.getName(), restContextPath),
-			new HashMapDictionary<>());
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			bundleContext.registerService(
+				SystemObjectDefinitionManager.class,
+				new TestSystemObjectDefinitionManager(
+					systemObjectDefinition.getModelClass(),
+					systemObjectDefinition.getName(), restContextPath),
+				new HashMapDictionary<>());
+		}
 
 		return systemObjectDefinition;
 	}

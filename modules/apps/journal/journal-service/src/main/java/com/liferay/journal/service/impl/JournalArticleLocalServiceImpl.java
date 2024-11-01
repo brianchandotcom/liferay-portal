@@ -7431,18 +7431,17 @@ public class JournalArticleLocalServiceImpl
 		Locale defaultLocale, Map<Locale, String> friendlyURLMap,
 		Map<Locale, String> titleMap) {
 
-		if (!friendlyURLMap.containsKey(defaultLocale) ||
-			Validator.isNull(friendlyURLMap.get(defaultLocale))) {
+		if (friendlyURLMap.containsKey(defaultLocale) &&
+			Validator.isNotNull(friendlyURLMap.get(defaultLocale))) {
 
-			return HashMapBuilder.putAll(
-				friendlyURLMap
-			).put(
-				defaultLocale,
-				_removeTrailingSlashes(titleMap.get(defaultLocale))
-			).build();
+			return friendlyURLMap;
 		}
 
-		return friendlyURLMap;
+		return HashMapBuilder.putAll(
+			friendlyURLMap
+		).put(
+			defaultLocale, _removeTrailingSlashes(titleMap.get(defaultLocale))
+		).build();
 	}
 
 	private void _copyArticleImages(

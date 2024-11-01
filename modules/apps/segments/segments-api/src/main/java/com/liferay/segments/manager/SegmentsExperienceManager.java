@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -27,6 +28,15 @@ public class SegmentsExperienceManager {
 	}
 
 	public long getSegmentsExperienceId(HttpServletRequest httpServletRequest) {
+		long segmentsExperienceId = ParamUtil.getLong(
+			PortalUtil.getOriginalServletRequest(
+				httpServletRequest),
+			"segmentsExperienceId", -1);
+
+		if (segmentsExperienceId != -1) {
+			return segmentsExperienceId;
+		}
+
 		long[] segmentsExperienceIds = GetterUtil.getLongValues(
 			httpServletRequest.getAttribute(
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS));

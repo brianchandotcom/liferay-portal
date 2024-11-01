@@ -8,6 +8,7 @@ liferay-learn-etc-spring-boot-oauth-application-user-agent:
         - c_course.everything
         - c_lesson.everything
         - c_module.everything
+        - c_quiz.everything
     type: oAuthApplicationUserAgent
 liferay-learn-etc-spring-boot-object-action-course-duration:
     name: Liferay Learn Etc Spring Boot Object Action Course Duration

@@ -41,9 +41,10 @@ public class ObjectActionCourseDurationRestController
 				"Bearer " + jwt.getTokenValue(),
 				StringBundler.concat(
 					"/o/c/courses/scopes/", _siteGroupId,
-					"?fields=id,module.lessonDurationMinutes,module.",
-					"quizDurationMinutes&filter=module/id eq '",
-					_getModuleId(json), "'&nestedFields=module")));
+					"?fields=id,module.lessonDurationMinutes,module.lessons,",
+					"module.quizDurationMinutes,module.quizzes&filter=",
+					"module/id eq '", _getModuleId(json),
+					"'&nestedFields=module")));
 
 		JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
 
@@ -51,10 +52,8 @@ public class ObjectActionCourseDurationRestController
 
 		patch(
 			"Bearer " + jwt.getTokenValue(),
-			new JSONObject(
-			).put(
-				"durationMinutes",
-				_getDurationMinutes(itemJSONObject.getJSONArray("module"))
+			_getPayloadJSONObject(
+				itemJSONObject.getJSONArray("module")
 			).toString(),
 			"/o/c/courses/" + itemJSONObject.getLong("id"));
 
@@ -63,20 +62,6 @@ public class ObjectActionCourseDurationRestController
 		}
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
-	}
-
-	private long _getDurationMinutes(JSONArray moduleJSONArray) {
-		long durationMinutes = 0;
-
-		for (int i = 0; i < moduleJSONArray.length(); i++) {
-			JSONObject moduleJSONObject = moduleJSONArray.getJSONObject(i);
-
-			durationMinutes += moduleJSONObject.getLong(
-				"lessonDurationMinutes");
-			durationMinutes += moduleJSONObject.getLong("quizDurationMinutes");
-		}
-
-		return durationMinutes;
 	}
 
 	private long _getModuleId(String json) {
@@ -93,6 +78,34 @@ public class ObjectActionCourseDurationRestController
 		}
 
 		return valuesJSONObject.getLong("r_quiz_c_moduleId");
+	}
+
+	private JSONObject _getPayloadJSONObject(JSONArray moduleJSONArray) {
+		long durationMinutes = 0;
+		long totalAssets = 0;
+
+		for (int i = 0; i < moduleJSONArray.length(); i++) {
+			JSONObject moduleJSONObject = moduleJSONArray.getJSONObject(i);
+
+			if (moduleJSONObject.has("lessons")) {
+				totalAssets += moduleJSONObject.getInt("lessons");
+			}
+
+			if (moduleJSONObject.has("quizzes")) {
+				totalAssets += moduleJSONObject.getInt("quizzes");
+			}
+
+			durationMinutes += moduleJSONObject.getLong(
+				"lessonDurationMinutes");
+			durationMinutes += moduleJSONObject.getLong("quizDurationMinutes");
+		}
+
+		return new JSONObject(
+		).put(
+			"durationMinutes", durationMinutes
+		).put(
+			"totalAssets", totalAssets
+		);
 	}
 
 	private static final Log _log = LogFactory.getLog(

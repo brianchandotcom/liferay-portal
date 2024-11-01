@@ -284,14 +284,12 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			queryJSONObject, "JSONObject/bool", "JSONArray/must_not",
 			"JSONObject/0");
 
-		long[] assetCategoryIds = _getAssetCategoryIds(
-			mustNotJSONObject.getJSONObject("term"));
-
 		mustNotJSONObject.put(
 			"terms",
 			JSONUtil.put(
 				"groupAssetCategoryExternalReferenceCodes",
-				_translateIdsToExternalReferencesCodes(assetCategoryIds))
+				_translateIdsToExternalReferencesCodes(
+					_getAssetCategoryIds(mustNotJSONObject.getJSONObject("term"))))
 		).remove(
 			"term"
 		);

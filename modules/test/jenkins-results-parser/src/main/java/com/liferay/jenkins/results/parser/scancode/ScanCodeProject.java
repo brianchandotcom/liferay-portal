@@ -73,6 +73,46 @@ public class ScanCodeProject {
 		}
 	}
 
+	public void checkComplianceAlerts(String errorType)
+		throws IOException, TimeoutException {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("curl ");
+		sb.append(_projectAPIURL);
+		sb.append("compliance/?fail_level=");
+		sb.append(errorType);
+		sb.append(" --header ");
+		sb.append(_CONTENT_TYPE);
+		sb.append(" --header ");
+		sb.append("\"Authorization:Token " + _API_KEY + '\"');
+		sb.append(" --request GET ");
+
+		Process process = JenkinsResultsParserUtil.executeBashCommands(
+			new String[] {sb.toString()});
+
+		String output = JenkinsResultsParserUtil.readInputStream(
+			process.getInputStream());
+
+		output = output.trim();
+
+		JSONObject outputJSONObject = new JSONObject(output);
+
+		JSONObject complianceAlertJSONObject = outputJSONObject.getJSONObject(
+			"compliance_alerts");
+
+		if (complianceAlertJSONObject.isEmpty()) {
+			return;
+		}
+
+		JSONObject packagesJSONObject = complianceAlertJSONObject.getJSONObject(
+			"packages");
+
+		if (packagesJSONObject.has(errorType)) {
+			_complianceList.add(errorType);
+		}
+	}
+
 	public void downloadResultFiles() throws IOException {
 		String scanCodeResultsDir = JenkinsResultsParserUtil.getBuildProperty(
 			"scancode.results.dir");
@@ -278,6 +318,22 @@ public class ScanCodeProject {
 	public void sendSlackNotification(String s3URL) {
 		StringBuilder sb = new StringBuilder();
 
+		String subject = "ScanCode pipeline is complete";
+
+		if (_complianceList.contains("error")) {
+			subject = ":red-alert: Release blocker :red-alert:";
+		}
+
+		if (!_complianceList.isEmpty()) {
+			sb.append("*Compliance Alerts:* ");
+			sb.append(
+				_complianceList.toString(
+				).replaceAll(
+					"(^\\[|\\]$)", ""
+				));
+			sb.append("\n");
+		}
+
 		sb.append("*Project link:* ");
 		sb.append("<");
 		sb.append(_projectURL);
@@ -312,8 +368,8 @@ public class ScanCodeProject {
 		}
 
 		NotificationUtil.sendSlackNotification(
-			sb.toString(), "#scancode-io", ":liferay-ci:",
-			"ScanCode pipeline is complete", "Liferay CI");
+			sb.toString(), "#scancode-io", ":liferay-ci:", subject,
+			"Liferay CI");
 	}
 
 	public void setProjectURL(String uid, String name) {
@@ -445,6 +501,7 @@ public class ScanCodeProject {
 	}
 
 	private final String _buildURL;
+	private final List<String> _complianceList = new ArrayList<>();
 	private final String _pipelineName;
 	private String _projectAPIURL;
 	private String _projectID;

@@ -178,8 +178,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to external reference code for asset category ID " +
-						assetCategoryId,
+					"Unable to get external reference code for asset " +
+						"category ID " + assetCategoryId,
 					exception);
 			}
 

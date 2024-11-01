@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import getRandomString from '../../utils/getRandomString';
 import getContainerDefinition from './utils/getContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -388,6 +389,75 @@ test.describe('Container configuration', () => {
 		expect(styles.contentVisibility).toBe('auto');
 		expect(styles.height).toBe('200px');
 		expect(styles.width).toBe('100px');
+	});
+
+	test('Can configure a background image', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create a page with a container
+
+		const containerId = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getContainerDefinition({
+					id: containerId,
+				}),
+			]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Navigate to the page editor
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Map background image
+
+		await pageEditorPage.selectFragment(containerId);
+
+		await pageEditorPage.goToConfigurationTab('Styles');
+
+		await page.getByLabel('Select Image').click();
+
+		const card = page
+			.frameLocator('iframe[title="Select"]')
+			.locator('[data-title="liferay_logo.png"]');
+
+		await clickAndExpectToBeHidden({
+			target: page.locator('.modal-dialog'),
+			trigger: card,
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		// Check correct image is used for background
+
+		await page
+			.locator(
+				'.lfr-layout-structure-item-container[style*="liferay_logo-png"]'
+			)
+			.waitFor();
+
+		// Check that the background image have been applied in view mode
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		// Assert background image
+
+		await expect(
+			page.locator(
+				'.lfr-layout-structure-item-container[style*="liferay_logo-png"]'
+			)
+		).toBeAttached();
 	});
 
 	test('Can set a link to the container', async ({

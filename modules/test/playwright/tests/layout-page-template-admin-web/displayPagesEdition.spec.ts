@@ -11,7 +11,6 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
-import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {getWebContentStructureId} from '../../utils/structured-content/getBasicWebContentStructureId';
@@ -495,6 +494,123 @@ test.describe('General', () => {
 			await expect(
 				page.getByText(displayPageTemplateName, {exact: true})
 			).not.toBeVisible();
+		}
+	);
+});
+
+test.describe('Preview Item', () => {
+	test(
+		'View mapped content in page editor when select preview items',
+		{
+			tag: '@LPS-128904',
+		},
+		async ({
+			context,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
+
+			// Create DPT for Animal
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentSubtype: 'Animal',
+				contentType: 'Web Content Article',
+				name: displayPageTemplateName,
+			});
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			// Add heading fragment
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			const headingFragmentId =
+				await pageEditorPage.getFragmentId('Heading');
+
+			await pageEditorPage.selectEditable(
+				headingFragmentId,
+				'element-text'
+			);
+
+			await page.getByLabel('Field').selectOption('Title');
+
+			await pageEditorPage.waitForChangesSaved();
+
+			// Change preview with item
+
+			await displayPageTemplatesPage.changePreviewItem('Animal 01');
+
+			// Assert title
+
+			await expect(
+				page.locator('.component-heading').getByText('Animal 01')
+			).toBeVisible();
+
+			// Map author profile image
+
+			await pageEditorPage.addFragment('Basic Components', 'Image');
+
+			const imageFragmentId = await pageEditorPage.getFragmentId('Image');
+
+			await pageEditorPage.selectEditable(
+				imageFragmentId,
+				'image-square'
+			);
+
+			await page
+				.getByLabel('Source Selection', {exact: true})
+				.selectOption('Mapping');
+
+			await pageEditorPage.waitForChangesSaved();
+
+			await page.getByLabel('Field').selectOption('Species Image');
+
+			await pageEditorPage.waitForChangesSaved();
+
+			// Assert image
+
+			expect(
+				await page.locator('.component-image img').getAttribute('src')
+			).toContain('poodle.jpg');
+
+			// Preview in a new tab
+
+			const pagePromise = context.waitForEvent('page');
+
+			const previewButton = page.getByRole('menuitem', {
+				name: 'Preview in a New Tab',
+			});
+
+			await expect(async () => {
+				await clickAndExpectToBeVisible({
+					target: previewButton,
+					trigger: page
+						.locator('.control-menu-nav-item')
+						.getByLabel('Options', {exact: true}),
+				});
+
+				if (await previewButton.isVisible()) {
+					await previewButton.click();
+				}
+
+				const newPage = await pagePromise;
+
+				await expect(
+					newPage.locator('.component-heading').getByText('Animal 01')
+				).toBeVisible({
+					timeout: 100,
+				});
+			}).toPass();
 		}
 	);
 });

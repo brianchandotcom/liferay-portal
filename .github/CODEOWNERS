@@ -2,7 +2,7 @@ modules/apps/accessibility/    @liferay-platform-experience
 modules/apps/account/    @liferay-commerce
 modules/apps/adaptive-media/    @liferay-content-management
 modules/apps/address/    @liferay-commerce
-modules/apps/ai-creator/
+modules/apps/ai-creator/    @liferay-content-management
 modules/apps/analytics/
 modules/apps/announcements/    @liferay-content-management
 modules/apps/application-list/    @liferay-platform-experience
@@ -83,10 +83,10 @@ modules/apps/glowroot/
 modules/apps/gogo-shell/
 modules/apps/google-places/
 modules/apps/headless/headless-admin-address/    @liferay-commerce
-modules/apps/headless/headless-admin-content/
+modules/apps/headless/headless-admin-content/    @liferay-content-management
 modules/apps/headless/headless-admin-list-type/
 modules/apps/headless/headless-admin-site/    @liferay-page-management
-modules/apps/headless/headless-admin-taxonomy/
+modules/apps/headless/headless-admin-taxonomy/    @liferay-content-management
 modules/apps/headless/headless-admin-user/    @liferay-commerce
 modules/apps/headless/headless-admin-workflow/
 modules/apps/headless/headless-batch-engine/    @liferay-headless

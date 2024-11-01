@@ -100,7 +100,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 	}
 
 	private long[] _getAssetCategoryIds(JSONObject termJSONObject) {
-		long[] assetCategoryIds;
+		long[] assetCategoryIds = null;
 
 		Object object = JSONUtil.getValue(
 			termJSONObject, "Object/assetCategoryIds");

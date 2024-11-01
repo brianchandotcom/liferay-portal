@@ -85,6 +85,19 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	private JSONArray _createExternalReferencesCodesJSONArray(
+			long[] assetCategoryIds)
+		throws Exception {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (long assetCategoryId : assetCategoryIds) {
+			jsonArray.put(_getExternalReferenceCode(assetCategoryId));
+		}
+
+		return jsonArray;
+	}
+
 	private JSONObject
 			_createGroupAssetCategoryExternalReferenceCodesJSONObject(
 				JSONObject assetCategoryIdJSONObject)
@@ -97,25 +110,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		).put(
 			"value", _getExternalReferenceCode(assetCategoryId)
 		);
-	}
-
-	private long[] _getAssetCategoryIds(JSONObject termJSONObject) {
-		long[] assetCategoryIds = null;
-
-		Object object = JSONUtil.getValue(
-			termJSONObject, "Object/assetCategoryIds");
-
-		if (object instanceof JSONArray) {
-			assetCategoryIds = JSONUtil.toLongArray((JSONArray)object);
-		}
-		else {
-			assetCategoryIds = new long[1];
-
-			assetCategoryIds[0] = JSONUtil.getValueAsLong(
-				object, "Object/value");
-		}
-
-		return assetCategoryIds;
 	}
 
 	private String _fixElementInstancesJSON(String elementInstancesJSON)
@@ -147,6 +141,25 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		}
 
 		return elementInstancesJSONArray.toString();
+	}
+
+	private long[] _getAssetCategoryIds(JSONObject termJSONObject) {
+		long[] assetCategoryIds = null;
+
+		Object object = JSONUtil.getValue(
+			termJSONObject, "Object/assetCategoryIds");
+
+		if (object instanceof JSONArray) {
+			assetCategoryIds = JSONUtil.toLongArray((JSONArray)object);
+		}
+		else {
+			assetCategoryIds = new long[1];
+
+			assetCategoryIds[0] = JSONUtil.getValueAsLong(
+				object, "Object/value");
+		}
+
+		return assetCategoryIds;
 	}
 
 	private String _getExternalReferenceCode(long assetCategoryId)
@@ -207,19 +220,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		}
 
 		return false;
-	}
-
-	private JSONArray _createExternalReferencesCodesJSONArray(
-			long[] assetCategoryIds)
-		throws Exception {
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (long assetCategoryId : assetCategoryIds) {
-			jsonArray.put(_getExternalReferenceCode(assetCategoryId));
-		}
-
-		return jsonArray;
 	}
 
 	private void _upgradeConfigurationEntry(
@@ -290,7 +290,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			JSONUtil.put(
 				"groupAssetCategoryExternalReferenceCodes",
 				_createExternalReferencesCodesJSONArray(
-					_getAssetCategoryIds(mustNotJSONObject.getJSONObject("term"))))
+					_getAssetCategoryIds(
+						mustNotJSONObject.getJSONObject("term"))))
 		).remove(
 			"term"
 		);

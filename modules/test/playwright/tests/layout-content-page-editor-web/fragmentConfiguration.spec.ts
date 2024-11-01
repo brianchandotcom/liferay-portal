@@ -1202,7 +1202,7 @@ test.describe('General Configuration', () => {
 test.describe('Localizable Configuration', () => {
 	test(
 		'Can localize date format on date fragment',
-		{tag: '@LPS-147897'},
+		{tag: ['@LPS-147897', '@LPS-171383']},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
 			const basicWebContentTitle = getRandomString();
 
@@ -1257,6 +1257,21 @@ test.describe('Localizable Configuration', () => {
 			await pageEditorPage.switchLanguage('en-US');
 
 			await expect(page.getByText('1/1/24')).toBeVisible();
+
+			// Assert documentation link for custom date format
+
+			await page.getByLabel('Date Format').selectOption('custom');
+
+			const documentationLink = page.getByRole('link', {
+				name: 'Learn more about date formats.',
+			});
+
+			await expect(documentationLink).toBeVisible();
+
+			await expect(documentationLink).toHaveAttribute(
+				'href',
+				'https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html'
+			);
 		}
 	);
 

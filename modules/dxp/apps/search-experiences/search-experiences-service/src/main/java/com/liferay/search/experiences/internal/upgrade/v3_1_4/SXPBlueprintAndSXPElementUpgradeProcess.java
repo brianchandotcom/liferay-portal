@@ -76,7 +76,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 						"dependencies/" +
 							StringUtil.toLowerCase(externalReferenceCode) +
 								".json"));
-
 				preparedStatement.setString(2, externalReferenceCode);
 
 				preparedStatement.addBatch();
@@ -100,7 +99,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		);
 	}
 
-	private long[] _extractAssetCategoryIds(JSONObject termJSONObject) {
+	private long[] _getAssetCategoryIds(JSONObject termJSONObject) {
 		long[] assetCategoryIds;
 
 		Object object = JSONUtil.getValue(
@@ -257,13 +256,13 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			JSONObject assetCategoryIdsJSONObject =
 				termJSONObject.getJSONObject("assetCategoryIds");
 
-			assetCategoryIds = _extractAssetCategoryIds(termJSONObject);
+			assetCategoryIds = _getAssetCategoryIds(termJSONObject);
 			boost = assetCategoryIdsJSONObject.getDouble("boost");
 		}
 		else {
 			JSONObject termsJSONObject = queryJSONObject.getJSONObject("terms");
 
-			assetCategoryIds = _extractAssetCategoryIds(termsJSONObject);
+			assetCategoryIds = _getAssetCategoryIds(termsJSONObject);
 			boost = termsJSONObject.getDouble("boost");
 		}
 
@@ -285,7 +284,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			queryJSONObject, "JSONObject/bool", "JSONArray/must_not",
 			"JSONObject/0");
 
-		long[] assetCategoryIds = _extractAssetCategoryIds(
+		long[] assetCategoryIds = _getAssetCategoryIds(
 			mustNotJSONObject.getJSONObject("term"));
 
 		mustNotJSONObject.put(

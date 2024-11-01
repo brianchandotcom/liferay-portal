@@ -402,7 +402,7 @@ export default {
 	'the-cloud-app-is-client-extension-based-and-is-compatible-with-liferay-experience-cloud-lxc-it-fully-supports-and-deploys-on-extension-environments-in-lxc':
 		'The cloud app is client extension based and is compatible with Liferay SaaS. It fully supports and deploys on extension environments.',
 	'the-cloud-app-is-client-extension-based-and-is-compatible-with-liferay’s-self-managed-formerly-dxp-cloud-offering':
-		'The cloud app is client extension based and is compatible with Liferay’s Self-Hosted offering.',
+		'The cloud app is client extension based and is compatible with Liferay’s Self-Managed offering.',
 	'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp':
 		'The DXP app is module-based and is compatible with 7.4 builds of Liferay DXP.',
 	'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp-self-managed-liferay-cloud-formerly-dxp-cloud':

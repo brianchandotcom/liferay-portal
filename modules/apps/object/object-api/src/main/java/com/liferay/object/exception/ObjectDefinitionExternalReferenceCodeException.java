@@ -6,7 +6,6 @@
 package com.liferay.object.exception;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Arrays;
@@ -25,24 +24,6 @@ public class ObjectDefinitionExternalReferenceCodeException
 
 	public String getMessageKey() {
 		return _messageKey;
-	}
-
-	public static class
-		ForbiddenUnmodifiableSystemObjectDefinitionExternalReferenceCode
-			extends ObjectDefinitionExternalReferenceCodeException {
-
-		public ForbiddenUnmodifiableSystemObjectDefinitionExternalReferenceCode(
-			String externalReferenceCode) {
-
-			super(
-				Collections.singletonList(externalReferenceCode),
-				StringBundler.concat(
-					"Forbidden unmodifiable system object definition external ",
-					"reference code ", externalReferenceCode),
-				"the-external-reference-code-x-is-not-allowed-for-system-" +
-					"object-definitions");
-		}
-
 	}
 
 	public static class MustBeLessThan75Characters

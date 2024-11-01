@@ -1020,25 +1020,6 @@ public class ObjectDefinitionLocalServiceTest {
 	@Test
 	public void testAddSystemObjectDefinition() throws Exception {
 
-		// External reference code
-
-		AssertUtils.assertFailure(
-			ObjectDefinitionExternalReferenceCodeException.
-				ForbiddenUnmodifiableSystemObjectDefinitionExternalReferenceCode.class,
-			false,
-			"Forbidden unmodifiable system object definition external " +
-				"reference code INVALID_TEST",
-			() ->
-				ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-					"INVALID_TEST", TestPropsValues.getUserId(), "Test", null,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					"Test", null, null,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
-					Collections.<ObjectField>emptyList()));
-
 		// Label is null
 
 		AssertUtils.assertFailure(

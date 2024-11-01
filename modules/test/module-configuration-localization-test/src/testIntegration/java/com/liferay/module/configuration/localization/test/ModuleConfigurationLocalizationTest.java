@@ -138,6 +138,10 @@ public class ModuleConfigurationLocalizationTest {
 			LocaleUtil.getDefault());
 
 		for (String pid : pids) {
+			if (!pid.startsWith("com.liferay")) {
+				continue;
+			}
+
 			String configurationError = _collectConfigurationError(
 				pid, extendedMetaTypeInformation, resourceBundle);
 

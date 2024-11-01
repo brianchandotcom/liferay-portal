@@ -130,7 +130,7 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 		String[] primaryKeyColumnNames = db.getPrimaryKeyColumnNames(
 			connection, fromTableName);
 
-		if (!ArrayUtil.isEmpty(primaryKeyColumnNames)) {
+		if (ArrayUtil.isNotEmpty(primaryKeyColumnNames)) {
 			sb.append("alter table ");
 			sb.append(toPartitionName + StringPool.PERIOD + toTableName);
 			sb.append(" add primary key (");

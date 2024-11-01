@@ -59,17 +59,6 @@
 		{
 			"schemaVersion": {
 				"major": 1,
-				"micro": 0,
-				"minor": 0,
-				"qualifier": ""
-			},
-			"servletContextName": "com.liferay.hello.velocity.web",
-			"state": 0,
-			"verified": true
-		},
-		{
-			"schemaVersion": {
-				"major": 1,
 				"micro": 1,
 				"minor": 0,
 				"qualifier": ""

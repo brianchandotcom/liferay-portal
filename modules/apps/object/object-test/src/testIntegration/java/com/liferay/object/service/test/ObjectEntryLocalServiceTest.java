@@ -2828,12 +2828,12 @@ public class ObjectEntryLocalServiceTest {
 
 		// Predicate and search
 
-		String searchString = "John";
+		String search = "John";
 
 		valuesList = _objectEntryLocalService.getValuesList(
 			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, predicate,
-			searchString, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts);
+			_objectDefinition.getObjectDefinitionId(), null, predicate, search,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts);
 
 		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
 
@@ -2842,7 +2842,7 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = _objectEntryLocalService.getValuesList(
 			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), null, predicate,
-			StringUtil.toLowerCase(searchString), QueryUtil.ALL_POS,
+			StringUtil.toLowerCase(search), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, sorts);
 
 		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
@@ -2852,7 +2852,7 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = _objectEntryLocalService.getValuesList(
 			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), null, predicate,
-			StringUtil.toUpperCase(searchString), QueryUtil.ALL_POS,
+			StringUtil.toUpperCase(search), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, sorts);
 
 		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());

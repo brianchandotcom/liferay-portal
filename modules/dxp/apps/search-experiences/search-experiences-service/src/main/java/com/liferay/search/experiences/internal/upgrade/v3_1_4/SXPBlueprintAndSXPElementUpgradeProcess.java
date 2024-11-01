@@ -393,7 +393,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement2.setString(
 				1, _fixElementInstancesJSON(elementInstancesJSON));
-
 			preparedStatement2.setLong(2, resultSet.getLong("sxpBlueprintId"));
 
 			preparedStatement2.addBatch();

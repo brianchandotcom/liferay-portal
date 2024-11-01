@@ -9,6 +9,7 @@ import com.liferay.headless.admin.workflow.internal.graphql.mutation.v1_0.Mutati
 import com.liferay.headless.admin.workflow.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.admin.workflow.internal.resource.v1_0.AssigneeResourceImpl;
 import com.liferay.headless.admin.workflow.internal.resource.v1_0.TransitionResourceImpl;
+import com.liferay.headless.admin.workflow.internal.resource.v1_0.WorkflowDefinitionLinkResourceImpl;
 import com.liferay.headless.admin.workflow.internal.resource.v1_0.WorkflowDefinitionResourceImpl;
 import com.liferay.headless.admin.workflow.internal.resource.v1_0.WorkflowInstanceResourceImpl;
 import com.liferay.headless.admin.workflow.internal.resource.v1_0.WorkflowLogResourceImpl;
@@ -17,6 +18,7 @@ import com.liferay.headless.admin.workflow.internal.resource.v1_0.WorkflowTaskRe
 import com.liferay.headless.admin.workflow.internal.resource.v1_0.WorkflowTaskTransitionsResourceImpl;
 import com.liferay.headless.admin.workflow.resource.v1_0.AssigneeResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.TransitionResource;
+import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionLinkResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowInstanceResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowLogResource;
@@ -50,6 +52,8 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setWorkflowDefinitionResourceComponentServiceObjects(
 			_workflowDefinitionResourceComponentServiceObjects);
+		Mutation.setWorkflowDefinitionLinkResourceComponentServiceObjects(
+			_workflowDefinitionLinkResourceComponentServiceObjects);
 		Mutation.setWorkflowInstanceResourceComponentServiceObjects(
 			_workflowInstanceResourceComponentServiceObjects);
 		Mutation.setWorkflowLogResourceComponentServiceObjects(
@@ -67,6 +71,8 @@ public class ServletDataImpl implements ServletData {
 			_transitionResourceComponentServiceObjects);
 		Query.setWorkflowDefinitionResourceComponentServiceObjects(
 			_workflowDefinitionResourceComponentServiceObjects);
+		Query.setWorkflowDefinitionLinkResourceComponentServiceObjects(
+			_workflowDefinitionLinkResourceComponentServiceObjects);
 		Query.setWorkflowInstanceResourceComponentServiceObjects(
 			_workflowInstanceResourceComponentServiceObjects);
 		Query.setWorkflowLogResourceComponentServiceObjects(
@@ -164,6 +170,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WorkflowDefinitionResourceImpl.class,
 							"putWorkflowDefinitionBatch"));
+					put(
+						"mutation#createWorkflowDefinitionLinkByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WorkflowDefinitionLinkResourceImpl.class,
+							"postWorkflowDefinitionLinkByExternalReferenceCode"));
+					put(
+						"mutation#createWorkflowDefinitionLink",
+						new ObjectValuePair<>(
+							WorkflowDefinitionLinkResourceImpl.class,
+							"postWorkflowDefinitionLink"));
 					put(
 						"mutation#createWorkflowInstancesPageExportBatch",
 						new ObjectValuePair<>(
@@ -291,6 +307,16 @@ public class ServletDataImpl implements ServletData {
 							WorkflowDefinitionResourceImpl.class,
 							"getWorkflowDefinition"));
 					put(
+						"query#workflowDefinitionLinksByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WorkflowDefinitionLinkResourceImpl.class,
+							"getWorkflowDefinitionLinksByExternalReferenceCode"));
+					put(
+						"query#workflowDefinitionLinks",
+						new ObjectValuePair<>(
+							WorkflowDefinitionLinkResourceImpl.class,
+							"getWorkflowDefinitionLinks"));
+					put(
 						"query#workflowInstances",
 						new ObjectValuePair<>(
 							WorkflowInstanceResourceImpl.class,
@@ -375,30 +401,20 @@ public class ServletDataImpl implements ServletData {
 							WorkflowTaskResourceImpl.class,
 							"getWorkflowInstanceWorkflowTasksPage"));
 					put(
-						"query#WorkflowInstance.workflowLogs",
+						"query#WorkflowDefinition.links",
 						new ObjectValuePair<>(
-							WorkflowLogResourceImpl.class,
-							"getWorkflowInstanceWorkflowLogsPage"));
+							WorkflowDefinitionLinkResourceImpl.class,
+							"getWorkflowDefinitionLinks"));
 					put(
 						"query#WorkflowTask.hasAssignableUsers",
 						new ObjectValuePair<>(
 							WorkflowTaskResourceImpl.class,
 							"getWorkflowTaskHasAssignableUsers"));
 					put(
-						"query#WorkflowInstance.workflowTasksAssignedToMe",
-						new ObjectValuePair<>(
-							WorkflowTaskResourceImpl.class,
-							"getWorkflowInstanceWorkflowTasksAssignedToMePage"));
-					put(
 						"query#WorkflowTask.workflowInstance",
 						new ObjectValuePair<>(
 							WorkflowInstanceResourceImpl.class,
 							"getWorkflowInstance"));
-					put(
-						"query#WorkflowTasksBulkSelection.workflowDefinition",
-						new ObjectValuePair<>(
-							WorkflowDefinitionResourceImpl.class,
-							"getWorkflowDefinition"));
 					put(
 						"query#WorkflowTaskAssignToUser.workflowTask",
 						new ObjectValuePair<>(
@@ -424,6 +440,21 @@ public class ServletDataImpl implements ServletData {
 							TransitionResourceImpl.class,
 							"getWorkflowInstanceNextTransitionsPage"));
 					put(
+						"query#WorkflowInstance.workflowLogs",
+						new ObjectValuePair<>(
+							WorkflowLogResourceImpl.class,
+							"getWorkflowInstanceWorkflowLogsPage"));
+					put(
+						"query#WorkflowInstance.workflowTasksAssignedToMe",
+						new ObjectValuePair<>(
+							WorkflowTaskResourceImpl.class,
+							"getWorkflowInstanceWorkflowTasksAssignedToMePage"));
+					put(
+						"query#WorkflowTasksBulkSelection.workflowDefinition",
+						new ObjectValuePair<>(
+							WorkflowDefinitionResourceImpl.class,
+							"getWorkflowDefinition"));
+					put(
 						"query#WorkflowTask.workflowLogs",
 						new ObjectValuePair<>(
 							WorkflowLogResourceImpl.class,
@@ -434,6 +465,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<WorkflowDefinitionResource>
 		_workflowDefinitionResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<WorkflowDefinitionLinkResource>
+		_workflowDefinitionLinkResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<WorkflowInstanceResource>

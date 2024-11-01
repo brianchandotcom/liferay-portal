@@ -678,12 +678,12 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			}
 		};
 
+		_ARCHIVE_BASE_DIR_PATH = _buildProperties.getProperty(
+			"archive.ci.build.data.dir");
+
 		Instant instant = Instant.now();
 
 		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
-
-		_ARCHIVE_BASE_DIR_PATH = _buildProperties.getProperty(
-			"archive.ci.build.data.dir");
 
 		_CURRENT_DATE_STRING = zonedDateTime.format(_dateTimeFormatter);
 

@@ -35,6 +35,9 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			new FastDateFormatFactoryImpl());
+
+		_scimNotificationSchedulerJobConfiguration =
+			new ScimNotificationSchedulerJobConfiguration();
 	}
 
 	@Test
@@ -78,8 +81,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 				notificationDurationMillis));
 	}
 
-	private final ScimNotificationSchedulerJobConfiguration
-		_scimNotificationSchedulerJobConfiguration =
-			new ScimNotificationSchedulerJobConfiguration();
+	private ScimNotificationSchedulerJobConfiguration
+		_scimNotificationSchedulerJobConfiguration;
 
 }

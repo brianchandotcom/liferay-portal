@@ -100,18 +100,15 @@ export class ProductMenuPage {
 	}
 
 	async goToPages(siteUrl?: string) {
-
-		/**
-		 * Hard reload work around for
-		 * "Uncaught DOMException: Failed to execute 'removeChild'
-		 * on 'Node': The node to be removed is not a child of this
-		 * node." on Page Editor blocking playwright JS from running.
-		 * frontend-js-react-web/src/main/resources/META-INF/resources/js/render.tsx
-		 */
-
-		await this.page.goto(
-			`/group${siteUrl || '/guest'}${PORTLET_URLS.pages}`
-		);
+		if (siteUrl) {
+			await this.page.goto(
+				`/group${siteUrl || '/guest'}${PORTLET_URLS.pages}`
+			);
+		}
+		else {
+			await this.siteBuilderButton.click();
+			await this.pagesButton.click();
+		}
 	}
 
 	async goToPublishingExport() {

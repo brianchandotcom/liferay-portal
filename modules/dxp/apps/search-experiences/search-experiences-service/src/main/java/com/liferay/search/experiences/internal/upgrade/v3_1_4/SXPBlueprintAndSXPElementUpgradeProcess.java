@@ -208,7 +208,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		return false;
 	}
 
-	private JSONArray _translateIdsToExternalReferencesCodes(
+	private JSONArray _createExternalReferencesCodesJSONArray(
 			long[] assetCategoryIds)
 		throws Exception {
 
@@ -272,7 +272,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 				"boost", boost
 			).put(
 				"groupAssetCategoryExternalReferenceCodes",
-				_translateIdsToExternalReferencesCodes(assetCategoryIds)
+				_createExternalReferencesCodesJSONArray(assetCategoryIds)
 			));
 	}
 
@@ -288,7 +288,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			"terms",
 			JSONUtil.put(
 				"groupAssetCategoryExternalReferenceCodes",
-				_translateIdsToExternalReferencesCodes(
+				_createExternalReferencesCodesJSONArray(
 					_getAssetCategoryIds(mustNotJSONObject.getJSONObject("term"))))
 		).remove(
 			"term"

@@ -123,127 +123,131 @@ test.describe('Editable Configuration', () => {
 		}
 	);
 
-	test('Can set a link to a link editable', async ({
-		apiHelpers,
-		page,
-		pageEditorPage,
-		pageManagementSite,
-	}) => {
+	test(
+		'Can set a link to a link editable',
+		{
+			tag: ['@LPS-99686', '@LPS-184799'],
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 
-		// Create a page with a container
+			// Create a page with a container
 
-		const buttonId1 = getRandomString();
-		const buttonId2 = getRandomString();
-		const buttonId3 = getRandomString();
+			const buttonId1 = getRandomString();
+			const buttonId2 = getRandomString();
+			const buttonId3 = getRandomString();
 
-		const layoutTitle = getRandomString();
+			const layoutTitle = getRandomString();
 
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([
-				getFragmentDefinition({
-					id: buttonId1,
-					key: 'BASIC_COMPONENT-button',
-				}),
-				getFragmentDefinition({
-					id: buttonId2,
-					key: 'BASIC_COMPONENT-button',
-				}),
-				getFragmentDefinition({
-					id: buttonId3,
-					key: 'BASIC_COMPONENT-button',
-				}),
-			]),
-			siteId: pageManagementSite.id,
-			title: layoutTitle,
-		});
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: buttonId1,
+						key: 'BASIC_COMPONENT-button',
+					}),
+					getFragmentDefinition({
+						id: buttonId2,
+						key: 'BASIC_COMPONENT-button',
+					}),
+					getFragmentDefinition({
+						id: buttonId3,
+						key: 'BASIC_COMPONENT-button',
+					}),
+				]),
+				siteId: pageManagementSite.id,
+				title: layoutTitle,
+			});
 
-		// Navigate to the page editor
+			// Navigate to the page editor
 
-		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
 
-		// Change the link of the containers
+			// Change the link of the containers
 
-		await pageEditorPage.selectEditable(buttonId1, 'link');
+			await pageEditorPage.selectEditable(buttonId1, 'link');
 
-		await page.getByRole('tab', {exact: true, name: 'Link'}).click();
+			await page.getByRole('tab', {exact: true, name: 'Link'}).click();
 
-		await pageEditorPage.setLinkConfiguration({
-			type: 'URL',
-			url: 'https://liferay.com',
-		});
+			await pageEditorPage.setLinkConfiguration({
+				type: 'URL',
+				url: 'https://liferay.com',
+			});
 
-		await expect(
-			page.locator(`.lfr-layout-structure-item-${buttonId1} a`)
-		).toHaveAttribute('href', 'https://liferay.com');
+			await expect(
+				page.locator(`.lfr-layout-structure-item-${buttonId1} a`)
+			).toHaveAttribute('href', 'https://liferay.com');
 
-		await pageEditorPage.selectEditable(buttonId2, 'link');
+			await pageEditorPage.selectEditable(buttonId2, 'link');
 
-		await page.getByRole('tab', {exact: true, name: 'Link'}).click();
+			await page.getByRole('tab', {exact: true, name: 'Link'}).click();
 
-		await pageEditorPage.setLinkConfiguration({
-			layoutTitle,
-			type: 'Page',
-		});
+			await pageEditorPage.setLinkConfiguration({
+				layoutTitle,
+				type: 'Page',
+			});
 
-		await expect(
-			page.locator(`.lfr-layout-structure-item-${buttonId2} a`)
-		).toHaveAttribute(
-			'href',
-			`/web${pageManagementSite.friendlyUrlPath}/${layoutTitle}`
-		);
+			await expect(
+				page.locator(`.lfr-layout-structure-item-${buttonId2} a`)
+			).toHaveAttribute(
+				'href',
+				`/web${pageManagementSite.friendlyUrlPath}/${layoutTitle}`
+			);
 
-		await pageEditorPage.selectEditable(buttonId3, 'link');
+			await pageEditorPage.selectEditable(buttonId3, 'link');
 
-		await page.getByRole('tab', {exact: true, name: 'Link'}).click();
+			await page.getByRole('tab', {exact: true, name: 'Link'}).click();
 
-		await pageEditorPage.setLinkConfiguration({
-			mappingConfiguration: {
-				mapping: {
-					entity: 'Documents and Media',
-					entry: 'poodle.jpg',
-					entryLocator: page
-						.frameLocator('iframe[title="Select"]')
-						.getByText('poodle.jpg', {exact: false}),
-					field: 'Download URL',
+			await pageEditorPage.setLinkConfiguration({
+				mappingConfiguration: {
+					mapping: {
+						entity: 'Documents and Media',
+						entry: 'poodle.jpg',
+						entryLocator: page
+							.frameLocator('iframe[title="Select"]')
+							.getByText('poodle.jpg', {exact: false}),
+						field: 'Download URL',
+					},
 				},
-			},
-			type: 'Mapped URL',
-		});
+				type: 'Mapped URL',
+			});
 
-		await expect(
-			page.locator(`.lfr-layout-structure-item-${buttonId3} a`)
-		).toHaveAttribute('href', /poodle\.jpg/);
+			await expect(
+				page.locator(`.lfr-layout-structure-item-${buttonId3} a`)
+			).toHaveAttribute('href', /poodle\.jpg/);
 
-		await pageEditorPage.publishPage();
+			await pageEditorPage.publishPage();
 
-		// Check that the links are correct in view mode
+			// Check that the links are correct in view mode
 
-		await page.goto(
-			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-		);
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
-		const buttons = page.locator('.component-button a');
+			const buttons = page.locator('.component-button a');
 
-		const firstButtonHref = await buttons
-			.first()
-			.evaluate((element) => element.getAttribute('href'));
+			const firstButtonHref = await buttons
+				.first()
+				.evaluate((element) => element.getAttribute('href'));
 
-		expect(firstButtonHref).toContain('https://liferay.com');
+			expect(firstButtonHref).toContain('https://liferay.com');
 
-		const secondButtonHref = await buttons
-			.nth(1)
-			.evaluate((element) => element.getAttribute('href'));
+			const secondButtonHref = await buttons
+				.nth(1)
+				.evaluate((element) => element.getAttribute('href'));
 
-		expect(secondButtonHref).toContain(
-			`/web${pageManagementSite.friendlyUrlPath}/${layoutTitle}`
-		);
+			expect(secondButtonHref).toContain(
+				`/web${pageManagementSite.friendlyUrlPath}/${layoutTitle}`
+			);
 
-		const thirdButtonHref = await buttons
-			.last()
-			.evaluate((element) => element.getAttribute('href'));
+			const thirdButtonHref = await buttons
+				.last()
+				.evaluate((element) => element.getAttribute('href'));
 
-		expect(thirdButtonHref).toContain('poodle.jpg');
-	});
+			expect(thirdButtonHref).toContain('poodle.jpg');
+		}
+	);
 });
 
 test.describe('Advanced Configuration', () => {

@@ -2183,8 +2183,6 @@ public class DefaultObjectEntryManagerImplTest
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		Thread.sleep(1000);
-
 		assertEquals(
 			childObjectEntry1,
 			new ObjectEntry() {
@@ -2212,6 +2210,12 @@ public class DefaultObjectEntryManagerImplTest
 					).build();
 				}
 			});
+
+		// Sleep for 1 second to ensure that child object entry 1 and child
+		// object entry 2 are created 1 second apart to ensure that the
+		// tests with buildRangeExpression work
+
+		Thread.sleep(1000);
 
 		ObjectEntry parentObjectEntry2 =
 			_defaultObjectEntryManager.addObjectEntry(

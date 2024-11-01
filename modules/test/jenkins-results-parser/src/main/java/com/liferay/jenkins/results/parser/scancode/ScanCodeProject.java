@@ -59,7 +59,9 @@ public class ScanCodeProject {
 		sb.append(" --header ");
 		sb.append(_CONTENT_TYPE);
 		sb.append(" --header ");
-		sb.append("\"Authorization:Token " + _API_KEY + '\"');
+		sb.append("\"Authorization:Token ");
+		sb.append(_API_KEY);
+		sb.append("\"");
 		sb.append(" --request POST ");
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
@@ -85,7 +87,9 @@ public class ScanCodeProject {
 		sb.append(" --header ");
 		sb.append(_CONTENT_TYPE);
 		sb.append(" --header ");
-		sb.append("\"Authorization:Token " + _API_KEY + '\"');
+		sb.append("\"Authorization:Token ");
+		sb.append(_API_KEY);
+		sb.append("\"");
 		sb.append(" --request GET ");
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
@@ -290,7 +294,9 @@ public class ScanCodeProject {
 		sb.append(" --header ");
 		sb.append(_CONTENT_TYPE);
 		sb.append(" --header ");
-		sb.append("\"Authorization:Token " + _API_KEY + "\"");
+		sb.append("\"Authorization:Token ");
+		sb.append(_API_KEY);
+		sb.append("\"");
 		sb.append(" --request POST ");
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
@@ -411,7 +417,9 @@ public class ScanCodeProject {
 		sb.append(" --header ");
 		sb.append(_CONTENT_TYPE);
 		sb.append(" --header ");
-		sb.append("\"Authorization:Token " + _API_KEY + '\"');
+		sb.append("\"Authorization:Token ");
+		sb.append(_API_KEY);
+		sb.append("\"");
 		sb.append(" --request GET ");
 
 		while (true) {

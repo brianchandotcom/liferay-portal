@@ -40,19 +40,6 @@ public class ObjectDefinitionUtil {
 		return _allowedModifiableSystemObjectDefinitionNames.containsKey(name);
 	}
 
-	public static boolean
-		isAllowedUnmodifiableSystemObjectDefinitionExternalReferenceCode(
-			String externalReferenceCode, String name) {
-
-		if (PortalRunMode.isTestMode()) {
-			return true;
-		}
-
-		return StringUtil.equals(
-			_allowedUnmodifiableSystemObjectDefinitionNames.get(name),
-			externalReferenceCode);
-	}
-
 	public static boolean isInvokerBundleAllowed() {
 		if (PortalInstances.isCurrentCompanyInDeletionProcess() ||
 			PortalRunMode.isTestMode() || StartupHelperUtil.isUpgrading()) {
@@ -160,24 +147,6 @@ public class ObjectDefinitionUtil {
 			"PerformanceCookieEntry", "/performance-cookies-entries"
 		).put(
 			"PersonalizationCookieEntry", "/personalization-cookies-entries"
-		).build();
-	private static final Map<String, String>
-		_allowedUnmodifiableSystemObjectDefinitionNames = HashMapBuilder.put(
-			"AccountEntry", "L_ACCOUNT"
-		).put(
-			"Address", "L_POSTAL_ADDRESS"
-		).put(
-			"CommerceOrder", "L_COMMERCE_ORDER"
-		).put(
-			"CommerceOrderItem", "L_COMMERCE_ORDER_ITEM"
-		).put(
-			"CommercePricingClass", "L_COMMERCE_PRODUCT_GROUP"
-		).put(
-			"CPDefinition", "L_COMMERCE_PRODUCT_DEFINITION"
-		).put(
-			"Organization", "L_ORGANIZATION"
-		).put(
-			"User", "L_USER"
 		).build();
 
 }

@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
 
 export const test = mergeTests(formsPagesTest, changeTrackingPagesTest);
@@ -77,7 +78,7 @@ test('LPD-39428 Assert publication timeline history is enabled for data provider
 		.fill(dataProviderTitle);
 	await page
 		.getByPlaceholder('Enter the REST service URL')
-		.fill('http://liferay.com');
+		.fill('http://' + getRandomString() + '.com');
 	await page.getByRole('button', {name: 'Save'}).click();
 	await waitForAlert(page, 'Success:Your request completed successfully.');
 	await formsPage.goTo();

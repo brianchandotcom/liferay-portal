@@ -60,12 +60,10 @@ public class AccountRoleResourceUpgradeProcess extends UpgradeProcess {
 					connection.prepareStatement(
 						"delete from ResourceAction where actionId = ?")) {
 
-				preparedStatement.setString(1, oldName);
+				preparedStatement.setString(1, newName);
 
 				preparedStatement.executeUpdate();
 			}
-
-			return;
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(

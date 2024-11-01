@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
@@ -162,6 +163,34 @@ export class DisplayPageTemplatesPage {
 			this.page,
 			'Success:The page was updated successfully.'
 		);
+	}
+
+	async changePreviewItem(title: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: 'Select Other Item',
+			}),
+			trigger: this.page.getByLabel('Preview With'),
+		});
+
+		const folderCard = this.page
+			.frameLocator('iframe[title="Select"]')
+			.getByRole('link', {name: 'Animals'});
+
+		const articleCard = this.page
+			.frameLocator('iframe[title="Select"]')
+			.getByText(title, {exact: false});
+
+		await clickAndExpectToBeVisible({
+			target: articleCard,
+			trigger: folderCard,
+		});
+
+		await clickAndExpectToBeHidden({
+			target: this.page.locator('.modal-dialog'),
+			trigger: articleCard,
+		});
 	}
 
 	async createFolder(name: string, description?: string) {

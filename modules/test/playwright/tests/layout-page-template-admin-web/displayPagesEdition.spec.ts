@@ -118,31 +118,7 @@ test.describe('General', () => {
 
 		// Change preview with item
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'Select Other Item',
-			}),
-			trigger: page.getByLabel('Preview With'),
-		});
-
-		const folderCard = page
-			.frameLocator('iframe[title="Select"]')
-			.getByRole('link', {name: 'Animals'});
-
-		const articleCard = page
-			.frameLocator('iframe[title="Select"]')
-			.getByText('Animal 01', {exact: false});
-
-		await clickAndExpectToBeVisible({
-			target: articleCard,
-			trigger: folderCard,
-		});
-
-		await clickAndExpectToBeHidden({
-			target: page.locator('.modal-dialog'),
-			trigger: articleCard,
-		});
+		await displayPageTemplatesPage.changePreviewItem('Animal 01');
 
 		// Check src of images
 

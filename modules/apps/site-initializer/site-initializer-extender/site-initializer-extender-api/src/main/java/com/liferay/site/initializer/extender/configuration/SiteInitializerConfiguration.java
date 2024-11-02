@@ -7,9 +7,12 @@ package com.liferay.site.initializer.extender.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
 /**
  * @author José Abelenda
  */
+@ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.site.initializer.extender.configuration.SiteInitializerConfiguration"

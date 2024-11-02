@@ -32,8 +32,12 @@ export class StagingConfigurationPage {
 		);
 	}
 
-	async enableLocalStaging() {
+	async enableLocalStaging({versioning = false}: {versioning?: boolean}) {
 		await this.localLiveRadio.check();
+
+		if (versioning) {
+			await this.page.getByTitle('branching-public').check();
+		}
 
 		this.page.on('dialog', async (dialog) => {
 			await dialog.accept();

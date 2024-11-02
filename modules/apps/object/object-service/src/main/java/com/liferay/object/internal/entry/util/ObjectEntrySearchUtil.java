@@ -72,11 +72,11 @@ public class ObjectEntrySearchUtil {
 	public static Predicate getObjectFieldPredicate(
 		Column<?, ?> column, String dbType, String search) {
 
-		Column<?, Object> objectColumn = (Column<?, Object>)column;
-
 		if (column == null) {
 			return null;
 		}
+
+		Column<?, Object> objectColumn = (Column<?, Object>)column;
 
 		if (dbType.equals(ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
 			dbType.equals(ObjectFieldConstants.DB_TYPE_DOUBLE)) {

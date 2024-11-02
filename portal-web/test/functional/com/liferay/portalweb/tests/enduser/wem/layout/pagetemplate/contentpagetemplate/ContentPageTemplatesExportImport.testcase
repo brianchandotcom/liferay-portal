@@ -14,6 +14,44 @@ definition {
 		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
+	@description = "This is a use case for LPS-102207. Can not export a master page template when it doesn't has published version."
+	@priority = 5
+	test CannotExportMastersPageTemplateWithoutPublishedVersion {
+		property portal.acceptance = "true";
+
+		task ("Add a custom master but not publish") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Assert custom master has a Draft label") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			LexiconCard.viewCardLabel(
+				card = "Custom Masters Page Template",
+				cardLabel = "Draft");
+		}
+
+		task ("Assert Export action is disabled") {
+			Click.waitForMenuToggleJSClick(
+				key_card = "Custom Masters Page Template",
+				locator1 = "Card#CARD_ELLIPSIS");
+
+			AssertVisible(
+				key_menuItem = "Export",
+				locator1 = "MenuItem#DISABLED_MENU_ITEM");
+		}
+
+		task ("Assert Export button is disabled") {
+			MastersPageTemplatesAdmin.selectMasters(masterLayoutName = "Custom Masters Page Template");
+
+			AssertElementPresent(
+				key_text = "upload",
+				locator1 = "Icon#ANY_DISABLED");
+		}
+	}
+
 	@description = "This is a use case for LPS-106212. Can not export multiple selected page templates if one of them is widget page template."
 	@priority = 4
 	test CannotExportMultipleWhenOneOfSelectedIsWidgetPageTemplate {
@@ -151,6 +189,32 @@ definition {
 			AssertElementPresent(
 				key_text = "upload",
 				locator1 = "Icon#ANY_DISABLED");
+		}
+	}
+
+	@description = "This is a test case for LPS-173150. Assert new import display page template works when wrong file extension occurs."
+	@priority = 3
+	test CannotImportNonZip {
+		task ("Given a user accesses to the Page Templates import page") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Import");
+
+			WaitForPageLoad();
+		}
+
+		task ("When the user uploads an non-zip file") {
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "Document_1.doc");
+		}
+
+		task ("Then the user should see the validation error message") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "Only zip files are allowed.");
 		}
 	}
 
@@ -619,6 +683,750 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-86193. Can export display page template based on custom master and import."
+	@priority = 3
+	test ExportImportDisplayPageTemplateBasedOnCustomMaster {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a custom master with Header and Footer element") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Navigation Bars",
+				dropTarget = "Header",
+				fragmentName = "Header Dark",
+				scope = "Master");
+
+			PageEditor.addFragment(
+				collectionName = "Footers",
+				dropTarget = "Footer",
+				fragmentName = "Footer Nav Dark",
+				scope = "Master");
+
+			MastersPageTemplates.publishMaster();
+		}
+
+		task ("Add a display page template based on custom master") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				masterLayoutEntryName = "Custom Masters Page Template",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+
+			PageEditor.publish();
+		}
+
+		task ("Export display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Export");
+
+			DownloadTempFile();
+		}
+
+		task ("Export custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Export",
+				masterLayoutName = "Custom Masters Page Template");
+
+			DownloadTempFile();
+		}
+
+		task ("Import masters page template in new site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = ${siteURLKey});
+
+			MastersPageTemplatesAdmin.importMastersFromTempFolder();
+
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Custom Masters Page Template");
+		}
+
+		task ("Import display page template in a new site") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
+
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
+		}
+
+		task ("Assert display page template is based on custom master") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			AssertTextEquals(
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
+		}
+	}
+
+	@description = "This is a use case for LPS-86193. The Collection Display with mapping content should be exported and imported with display page template."
+	@priority = 4
+	test ExportImportDisplayPageTemplateWithCollectionDisplayContainingMappingContent {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add three Web Content Articles based on Basic Web Content") {
+			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = ${entryTitle});
+			}
+		}
+
+		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a display page template with Web Content Article type and Basic Web Content subtype") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Collection Display to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert the title of three Web Content Articles are respectively shown in each cell") {
+			var n = 1;
+
+			for (var title : list "Third,Second,First") {
+				AssertVisible(
+					key_colPosition = 1,
+					key_entryTitle = "${title} Web Content",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = ${n},
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+
+			PageEditor.publish();
+		}
+
+		task ("Export display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Export");
+
+			DownloadTempFile();
+		}
+
+		task ("Import display page template in a new site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
+
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
+		}
+
+		task ("Assert the Collection Display containing mapping content is imported") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+
+			PageEditor.gotoTab(tabName = "Browser");
+
+			var n = 1;
+
+			for (var title : list "Third,Second,First") {
+				AssertVisible(
+					key_colPosition = 1,
+					key_entryTitle = "${title} Web Content",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = ${n},
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-165556. The page designer should keep mapped standalone action from current object to Button fragment after import the display page template."
+	@priority = 4
+	test ExportImportDisplayPageTemplateWithMappedStandaloneActionFromCurrentObjectToFragment {
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+
+		task ("Given a page creator exports a display page template with a Button fragment mapped to a standalone action") {
+			for (var i : list "1,2") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "${labelName}${i}",
+					objectName = "${objectName}${i}",
+					pluralLabelName = "${labelName}${i}s");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Name",
+					fieldName = "name",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "${objectName}${i}");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "${objectName}${i}");
+			}
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "${labelName}2");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Vote",
+				active = "true",
+				errorMessage = "You don't have permissions.",
+				fieldName = "Name",
+				inputExpressionValue = "name",
+				inputMethod = "false",
+				objectLabel = "${labelName}1",
+				thenAction = "Add an Object Entry",
+				whenAction = "Standalone");
+
+			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "name",
+				objectName = "${objectName}2",
+				value = "Liferay");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "${labelName}2",
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditorAction.gotoEditableFieldAction(
+				className = "btn",
+				fragmentName = "Button",
+				id = "action");
+
+			PageEditor.configureFragment(
+				action = "Vote",
+				successInteraction = "Show Notification");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorEditableLink.mapURLToAsset(
+				entryTitle = ${objectEntryId},
+				field = "Default",
+				navItem = "${labelName}2s");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Export");
+
+			DownloadTempFile();
+
+			DisplayPageTemplatesAdmin.deleteDisplayPage(
+				defaultDisplayPageTemplate = "true",
+				displayPageName = "Display Page Name");
+		}
+
+		task ("When the page creator import the display page template") {
+			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Then the page creator could trigger the mapped standalone action") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(
+				key_text = "Heading Example",
+				locator1 = "Link#ANY");
+
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});
+
+			Button.click(button = "Go Somewhere");
+
+			Alert.viewSuccessMessage();
+
+			ObjectAdmin.goToCustomObject(objectName = "${objectName}1");
+
+			ObjectPortlet.viewEntry(entry = "Liferay");
+		}
+	}
+
+	@description = "This is a test for LPS-165556. The page designer should keep mapped standalone action from current object to Button fragment inside Collection Display after import the display page template."
+	@priority = 4
+	test ExportImportDisplayPageTemplateWithMappedStandaloneActionFromCurrentObjectToFragmentInsideCollectionDisplay {
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+
+		task ("Given a page creator exports a display page template with a Button fragment mapped to a standalone action inside Collection Display") {
+			for (var i : list "1,2") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "${labelName}${i}",
+					objectName = "${objectName}${i}",
+					pluralLabelName = "${labelName}${i}s");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Name",
+					fieldName = "name",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "${objectName}${i}");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "${objectName}${i}");
+			}
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "${labelName}2");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Vote",
+				active = "true",
+				errorMessage = "You don't have permissions.",
+				fieldName = "Name",
+				inputExpressionValue = "name",
+				inputMethod = "false",
+				objectLabel = "${labelName}1",
+				thenAction = "Add an Object Entry",
+				whenAction = "Standalone");
+
+			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "name",
+				objectName = "${objectName}2",
+				value = "Liferay");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "${labelName}2",
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "${labelName}2s");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Liferay",
+				fragmentName = "Button");
+
+			PageEditorAction.gotoEditableFieldAction(
+				className = "btn",
+				fragmentName = "Button",
+				id = "action");
+
+			PageEditor.configureFragment(
+				action = "Vote",
+				successInteraction = "Show Notification");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorEditableLink.mapURLToAsset(
+				entryTitle = ${objectEntryId},
+				field = "Default",
+				navItem = "${labelName}2s");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Export");
+
+			DownloadTempFile();
+
+			DisplayPageTemplatesAdmin.deleteDisplayPage(
+				defaultDisplayPageTemplate = "true",
+				displayPageName = "Display Page Name");
+		}
+
+		task ("When the page creator import the display page template") {
+			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Then the page creator could trigger the mapped standalone action") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(
+				key_text = "Heading Example",
+				locator1 = "Link#ANY");
+
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});
+
+			Button.click(button = "Go Somewhere");
+
+			Alert.viewSuccessMessage();
+
+			ObjectAdmin.goToCustomObject(objectName = "${objectName}1");
+
+			ObjectPortlet.viewEntry(entry = "Liferay");
+		}
+	}
+
+	@description = "This is a test for LPS-165556. The page designer should keep mapped standalone action from a specific object entry to Button fragment after import the display page template."
+	@priority = 4
+	test ExportImportDisplayPageTemplateWithMappedStandaloneActionFromSpecificObjectEntryToFragment {
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+
+		task ("Given a page creator exports a display page template with a Button fragment mapped to a standalone action from a specific object entry") {
+			for (var i : list "1,2") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "${labelName}${i}",
+					objectName = "${objectName}${i}",
+					pluralLabelName = "${labelName}${i}s");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Name",
+					fieldName = "name",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "${objectName}${i}");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "${objectName}${i}");
+			}
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "${labelName}2");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Vote",
+				active = "true",
+				errorMessage = "You don't have permissions.",
+				fieldName = "Name",
+				inputExpressionValue = "name",
+				inputMethod = "false",
+				objectLabel = "${labelName}1",
+				thenAction = "Add an Object Entry",
+				whenAction = "Standalone");
+
+			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "name",
+				objectName = "${objectName}2",
+				value = "Liferay");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "${labelName}2",
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditorAction.gotoEditableFieldAction(
+				className = "btn",
+				fragmentName = "Button",
+				id = "action");
+
+			Select(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Specific Content");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = ${objectEntryId},
+				navItem = "${labelName}2s",
+				rowItem = "//*[@data-qa-id='row'][contains(.,'${objectEntryId}')]");
+
+			PageEditor.configureFragment(
+				action = "Vote",
+				successInteraction = "Show Notification");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorEditableLink.mapURLToAsset(
+				entryTitle = ${objectEntryId},
+				field = "Default",
+				navItem = "${labelName}2s");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Export");
+
+			DownloadTempFile();
+
+			DisplayPageTemplatesAdmin.deleteDisplayPage(
+				defaultDisplayPageTemplate = "true",
+				displayPageName = "Display Page Name");
+		}
+
+		task ("When the page creator import the display page template") {
+			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Then the page creator could trigger the mapped standalone action") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(
+				key_text = "Heading Example",
+				locator1 = "Link#ANY");
+
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});
+
+			Button.click(button = "Go Somewhere");
+
+			Alert.viewSuccessMessage();
+
+			ObjectAdmin.goToCustomObject(objectName = "${objectName}1");
+
+			ObjectPortlet.viewEntry(entry = "Liferay");
+		}
+	}
+
+	@description = "This is a use case for LPS-106815. The Organization Role permission settings of widgets will be exported and imported with master page template."
+	@priority = 4
+	test ExportImportMastersPageTemplateWithOrganizationRolePermissionSettingsOfWidgets {
+		task ("Add a organization and organization site") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name 1",
+				organizationSite = "true");
+		}
+
+		task ("Add a custom master in organization site") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Organization Name 1 LFR_ORGANIZATION",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Add a Categories Navigation portlet to master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "organization-name-1");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addWidget(
+				dropTarget = "Header",
+				portletName = "Category Filter",
+				scope = "Master");
+		}
+
+		task ("Configure Organization Role permission settings of Categories Navigation") {
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "Category Filter",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			Click.waitForMenuToggleJSClick(
+				key_portletName = "Category Filter",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			MenuItem.click(menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			Check.checkNotVisible(
+				key_roleTitle = "account-manager",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			SelectFrameTop();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			MastersPageTemplates.publishMaster();
+		}
+
+		task ("Export custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "organization-name-1");
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Export",
+				masterLayoutName = "Custom Masters Page Template");
+
+			DownloadTempFile();
+		}
+
+		task ("Import masters page template in new organization site") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name 2",
+				organizationSite = "true");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "organization-name-2");
+
+			MastersPageTemplatesAdmin.importMastersFromTempFolder();
+		}
+
+		task ("Assert the Organization Role permission settings of Categories Navigation are imported") {
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.viewFragment(fragmentName = "Category Filter");
+
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "Category Filter",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			Click.waitForMenuToggleJSClick(
+				key_portletName = "Category Filter",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			MenuItem.click(menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertChecked.assertCheckedNotVisible(
+				key_roleTitle = "account-manager",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+		}
+	}
+
 	@description = "This is a test for LPS-128399. Selected Stylebook is exported when exporting a page template."
 	@priority = 4
 	test ExportImportPageTemplateWithStylebook {
@@ -1071,6 +1879,58 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-102207. The existing entry will be overwriten when import a master page template with thumbnail if check Overwrite Existing Entries."
+	@priority = 4
+	test OverwriteExistingEntryWithThumbnailIfCheckOverwriteExistingEntries {
+		task ("Add a custom master") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			MastersPageTemplates.publishMaster();
+		}
+
+		task ("Change thumbnail of custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Change Thumbnail",
+				masterLayoutName = "Custom Masters Page Template");
+
+			ItemSelector.uploadFile(uploadFileName = "Document_1.png");
+
+			LexiconCard.viewCardThumbnail(card = "Custom Masters Page Template");
+
+			SelectFrameTop(value1 = "relative=top");
+		}
+
+		task ("Export custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Export",
+				masterLayoutName = "Custom Masters Page Template");
+
+			DownloadTempFile();
+		}
+
+		task ("Import masters page template in the current site") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.importMastersFromTempFolder(importOption = "Overwrite Existing Items");
+		}
+
+		task ("Assert the thumbnail of custom master is imported") {
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Custom Masters Page Template");
+
+			LexiconCard.viewCardThumbnail(card = "Custom Masters Page Template");
+		}
+	}
+
 	@description = "This is a test for LPS-173150. Assert new import content page templates works when success and error occur."
 	@priority = 4
 	test ShowSpecificErrorMessageWhenImportPageTemplateSetWithInvalidValue {
@@ -1241,6 +2101,69 @@ definition {
 			AssertElementNotPresent(
 				key_roleName = "Account Manager",
 				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ROLE_NAME");
+		}
+	}
+
+	@description = "This is a test for LPS-173150. Assert new import master page templates works."
+	@priority = 5
+	test UploadAnotherFile {
+		property portal.acceptance = "true";
+
+		task ("Given a user accesses to the Page Templates import page") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Import");
+
+			WaitForPageLoad();
+		}
+
+		task ("When the user imports a master page") {
+			AssertVisible(
+				key_title = "Import File",
+				locator1 = "Header#H2_TITLE");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUBTITLE",
+				value1 = "Select a ZIP file containing one or multiple entries.Read more about exporting and importing page templates.");
+
+			AssertVisible(
+				key_href = "https://learn.liferay.com/en/w/dxp/site-building/creating-pages/adding-pages/exporting-and-importing-page-templates",
+				key_text = "Read more about exporting and importing page templates.",
+				locator1 = "Link#ANY_HREF");
+
+			UploadDependencyFile.uploadArchiveFile(fileName = "master-page-with-fragments.zip");
+
+			AssertVisible(
+				key_text = "Replace File",
+				locator1 = "Button#ANY");
+
+			Button.clickImport();
+		}
+
+		task ("Then the user could upload another file on the import results page") {
+			AssertVisible(locator1 = "Message#SUCCESS_IMPORT");
+
+			Button.click(button = "Upload Another File");
+
+			WaitForPageLoad();
+
+			UploadDependencyFile.uploadArchiveFile(fileName = "master-page-with-widgets.zip");
+
+			AssertVisible(
+				key_text = "Replace File",
+				locator1 = "Button#ANY");
+
+			Button.clickImport();
+
+			AssertVisible(locator1 = "Message#SUCCESS_IMPORT");
+
+			Button.clickDone();
+
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Master Page With Fragments");
+
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Master Page With Widgets");
 		}
 	}
 

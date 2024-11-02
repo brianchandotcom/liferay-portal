@@ -7,9 +7,12 @@ package com.liferay.object.rest.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
 /**
  * @author Feliphe Marinho
  */
+@ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.object.rest.internal.configuration.FunctionObjectEntryManagerConfiguration"

@@ -35,5 +35,5 @@ test('Check if local staging can be enabled', async ({
 		site.friendlyUrlPath
 	);
 
-	await stagingConfigurationPage.enableLocalStaging();
+	await stagingConfigurationPage.enableLocalStaging({});
 });

@@ -13,6 +13,9 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -156,6 +159,53 @@ public class CopyLayoutMVCActionCommandTest {
 			expectedResourcePermissions.toString(),
 			expectedResourcePermissions.size(),
 			actualResourcePermissions.size());
+	}
+
+	@Test
+	@TestInfo("LPS-131982")
+	public void testDoProcessActionCopyLayoutWithMasterLayout()
+		throws Exception {
+
+		Layout expectedLayout = LayoutTestUtil.addTypeContentPublishedLayout(
+			_group, RandomTestUtil.randomString(),
+			WorkflowConstants.STATUS_APPROVED);
+
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		expectedLayout = _layoutLocalService.updateMasterLayoutPlid(
+			_group.getGroupId(), expectedLayout.isPrivateLayout(),
+			expectedLayout.getLayoutId(),
+			masterLayoutPageTemplateEntry.getPlid());
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"groupId", String.valueOf(_group.getGroupId()));
+		mockLiferayPortletActionRequest.addParameter(
+			"privateLayout", String.valueOf(expectedLayout.isPrivateLayout()));
+		mockLiferayPortletActionRequest.addParameter(
+			"name", "Copy test layout");
+		mockLiferayPortletActionRequest.addParameter(
+			"sourcePlid", String.valueOf(expectedLayout.getPlid()));
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
+			"/copy-test-layout");
+
+		Assert.assertEquals(
+			masterLayoutPageTemplateEntry.getPlid(),
+			actualLayout.getMasterLayoutPlid());
 	}
 
 	@Test
@@ -474,6 +524,10 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Inject(filter = "mvc.command.name=/layout_admin/copy_layout")
 	private MVCActionCommand _mvcActionCommand;

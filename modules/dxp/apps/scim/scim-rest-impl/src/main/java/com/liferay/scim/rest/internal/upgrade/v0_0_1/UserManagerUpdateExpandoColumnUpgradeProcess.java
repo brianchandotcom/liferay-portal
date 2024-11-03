@@ -40,66 +40,37 @@ public class UserManagerUpdateExpandoColumnUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		_companyLocalService.forEachCompanyId(
-			companyId -> _updateExpandoColumns(companyId));
+			companyId -> {
+				try (LoggingTimer loggingTimer = new LoggingTimer(
+						String.valueOf(companyId))) {
+
+					_updateExpandoColumn(companyId, User.class.getName());
+					_updateExpandoColumn(companyId, UserGroup.class.getName());
+				}
+			});
 	}
 
-	private void _updateExpandoColumns(long companyId) {
-		try (LoggingTimer loggingTimer = new LoggingTimer(
-				String.valueOf(companyId))) {
+	private void _updateExpandoColumn(long companyId, String className) {
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+			companyId, _classNameLocalService.getClassNameId(className),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
-			ExpandoTable userExpandoTable =
-				_expandoTableLocalService.fetchTable(
-					companyId,
-					_classNameLocalService.getClassNameId(User.class.getName()),
-					ExpandoTableConstants.DEFAULT_TABLE_NAME);
+		if (expandoTable != null) {
+			ExpandoColumn expandoColumn =
+				_expandoColumnLocalService.fetchColumn(
+					expandoTable.getTableId(), "scimClientId");
 
-			if (userExpandoTable != null) {
-				ExpandoColumn userExpandoColumn =
-					_expandoColumnLocalService.fetchColumn(
-						userExpandoTable.getTableId(), "scimClientId");
+			if (expandoColumn != null) {
+				UnicodeProperties unicodeProperties =
+					expandoColumn.getTypeSettingsProperties();
 
-				if (userExpandoColumn != null) {
-					UnicodeProperties unicodeProperties =
-						userExpandoColumn.getTypeSettingsProperties();
+				unicodeProperties.setProperty(
+					ExpandoColumnConstants.PROPERTY_HIDDEN,
+					String.valueOf(Boolean.TRUE));
 
-					unicodeProperties.setProperty(
-						ExpandoColumnConstants.PROPERTY_HIDDEN,
-						String.valueOf(Boolean.TRUE));
+				expandoColumn.setTypeSettingsProperties(unicodeProperties);
 
-					userExpandoColumn.setTypeSettingsProperties(
-						unicodeProperties);
-
-					_expandoColumnLocalService.updateExpandoColumn(
-						userExpandoColumn);
-				}
-			}
-
-			ExpandoTable userGroupExpandoTable =
-				_expandoTableLocalService.fetchTable(
-					companyId,
-					_classNameLocalService.getClassNameId(
-						UserGroup.class.getName()),
-					ExpandoTableConstants.DEFAULT_TABLE_NAME);
-
-			if (userGroupExpandoTable != null) {
-				ExpandoColumn userGroupExpandoColumn =
-					_expandoColumnLocalService.fetchColumn(
-						userGroupExpandoTable.getTableId(), "scimClientId");
-
-				if (userGroupExpandoColumn != null) {
-					UnicodeProperties unicodeProperties =
-						userGroupExpandoColumn.getTypeSettingsProperties();
-
-					unicodeProperties.setProperty(
-						ExpandoColumnConstants.PROPERTY_HIDDEN,
-						String.valueOf(Boolean.TRUE));
-
-					userGroupExpandoColumn.setTypeSettingsProperties(
-						unicodeProperties);
-
-					_expandoColumnLocalService.updateExpandoColumn(
-						userGroupExpandoColumn);
-				}
+				_expandoColumnLocalService.updateExpandoColumn(expandoColumn);
 			}
 		}
 	}

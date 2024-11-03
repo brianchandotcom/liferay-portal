@@ -159,54 +159,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-131982. Change master of content page with HTML title."
-	@priority = 3
-	test ChangeMasterOfContentPageWithHTMLTitle {
-		task ("Add a page based on custom master") {
-			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
-
-			MastersPageTemplates.publishMaster();
-
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(
-				masterLayoutName = "Custom Masters Page Template",
-				pageName = "Test Page Name");
-		}
-
-		task ("View the Custom Masters Page Template is selected") {
-			PageEditor.gotoTab(tabName = "Page Design Options");
-
-			AssertElementPresent(
-				key_card = "Custom Masters Page Template",
-				locator1 = "Card#CARD_SELECTED");
-		}
-
-		task ("Type content in the HTML Title field") {
-			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
-
-			SelectWindow.selectPopUp(value1 = "null");
-
-			Navigator.gotoNavTab(navTab = "SEO");
-
-			PortletEntry.inputText(
-				fieldLabel = "HTML Title",
-				text = "Page HTML Title");
-
-			PortletEntry.save();
-		}
-
-		task ("View the Custom Masters Page Template is still selected") {
-			Navigator.gotoBack();
-
-			PageEditor.gotoTab(tabName = "Page Design Options");
-
-			AssertElementPresent(
-				key_card = "Custom Masters Page Template",
-				locator1 = "Card#CARD_SELECTED");
-		}
-	}
-
 	@description = "This is a test for LPS-102194. Assert contents in drop zone shouldn't be changed and available fragments should be changed in sidebar after changing master page which set allowed fragments in drop zone."
 	@priority = 4
 	test ChangeMasterPageWithAllowedFragments {

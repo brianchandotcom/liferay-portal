@@ -65,13 +65,19 @@ public class StaticBlockCheck extends BaseCheck {
 			return;
 		}
 
-		int statementEndLineNumber = getEndLineNumber(
-			_getTopLevelDetailAST(methodCallDetailAST));
-
 		List<DetailAST> variableDetailASTList = identDetailASTMap.get(
 			variableName);
 
 		DetailAST firstUseVariableDetailAST = variableDetailASTList.get(0);
+
+		DetailAST parentDetailAST = firstUseVariableDetailAST.getParent();
+
+		if (parentDetailAST.getType() == TokenTypes.ASSIGN) {
+			return;
+		}
+
+		int statementEndLineNumber = getEndLineNumber(
+			_getTopLevelDetailAST(methodCallDetailAST));
 
 		int statementStartLineNumber = getStartLineNumber(
 			_getTopLevelDetailAST(firstUseVariableDetailAST));

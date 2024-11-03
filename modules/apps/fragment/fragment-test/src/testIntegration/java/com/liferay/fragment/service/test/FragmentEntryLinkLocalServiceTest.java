@@ -32,8 +32,10 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -894,6 +896,73 @@ public class FragmentEntryLinkLocalServiceTest {
 			_objectMapper.readTree(fragmentEntryLink.getEditableValues()));
 	}
 
+	@Test
+	@TestInfo("LPS-128652")
+	public void testUpdateLatestChanges() throws Exception {
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), null,
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				_read("fragment-freemarker-with-configuration.html"),
+				StringPool.BLANK, false, _read("configuration-tabs.json"), null,
+				0, false, FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		FragmentEntryLink fragmentEntryLink1 =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_defaultSegmentsExperienceId, _layout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"title4",
+						JSONUtil.put(
+							"defaultValue", "title4"
+						).put(
+							"en_US", RandomTestUtil.randomString()
+						))
+				).put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put("numberOfTabs", "4")
+				).toString(),
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				_serviceContext);
+
+		FragmentEntryLink fragmentEntryLink2 =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_defaultSegmentsExperienceId, _layout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+				StringPool.BLANK, StringPool.BLANK, 0, null,
+				fragmentEntry.getType(), _serviceContext);
+
+		_fragmentEntryLinkLocalService.updateLatestChanges(
+			fragmentEntryLink1.getFragmentEntryLinkId());
+
+		fragmentEntryLink2 =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLink2.getFragmentEntryLinkId());
+
+		JSONObject configurationValuesJSONObject =
+			_jsonFactory.createJSONObject(
+				fragmentEntryLink2.getEditableValues());
+
+		JSONObject editableJSONObject =
+			configurationValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		Assert.assertNull(editableJSONObject.getJSONObject("title4"));
+	}
+
 	private FragmentEntryLink _addFragmentEntryLinkToLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -1011,6 +1080,9 @@ public class FragmentEntryLinkLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	private Layout _layout;
 

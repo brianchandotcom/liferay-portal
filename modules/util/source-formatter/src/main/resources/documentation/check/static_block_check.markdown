@@ -63,6 +63,7 @@ private static final List<Vegetable> _greenVegetablesList =
                         add(vegetable);
                     }
                 }
+            }
             catch (Exception e) {
                 _log.error(e, e);
             }

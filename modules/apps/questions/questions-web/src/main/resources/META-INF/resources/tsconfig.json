@@ -1,5 +1,5 @@
 {
-	"@generated": "7b93e6586a1ee09d4b93ad426e4de740cfe63681",
+	"@generated": "743ee51fe7ace282da6c5b183f94a64e3f4dd0c4",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 				"../../../../../../../asset/asset-taglib/src/main/resources/META-INF/resources/js/index.js"
 			],
 			"frontend-editor-ckeditor-web": [
-				"../../../../../../../frontend-editor/frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/index.d.ts"
+				"../../../../../../../frontend-editor/frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"frontend-js-web": [
 				"../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"

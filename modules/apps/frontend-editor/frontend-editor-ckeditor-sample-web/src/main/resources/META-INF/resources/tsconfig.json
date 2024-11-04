@@ -1,5 +1,5 @@
 {
-	"@generated": "ac07c7ba2a7e6993e1ffdd07fe0a595504925840",
+	"@generated": "06c9a089c19f6532371c00dbfe153283d81323df",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -13,7 +13,7 @@
 		"moduleResolution": "node",
 		"paths": {
 			"frontend-editor-ckeditor-web": [
-				"../../../../../../frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/index.d.ts"
+				"../../../../../../frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/js/index.ts"
 			]
 		},
 		"rootDir": "../../../../../../../..",

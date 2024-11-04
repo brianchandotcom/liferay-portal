@@ -509,7 +509,6 @@ interface ShowObjectDefinitionsModals {
 	addObjectDefinition: boolean;
 	addObjectField: boolean;
 	addObjectFolder: boolean;
-	bindToRootObjectDefinition: boolean;
 	deleteObjectDefinition: boolean;
 	deleteObjectFolder: boolean;
 	editObjectFolder: boolean;
@@ -517,5 +516,4 @@ interface ShowObjectDefinitionsModals {
 	moveObjectDefinition: boolean;
 	objectDefinitionOnRootModelDeletionNotAllowed: boolean;
 	objectFieldDeletionNotAllowed: boolean;
-	unbindFromRootObjectDefinition: boolean;
 }

@@ -410,6 +410,62 @@ public class DisplayPageTemplateFolder implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
+		description = "The parent display page template folder's external reference code."
+	)
+	public String getParentDisplayPageTemplateFolderExternalReferenceCode() {
+		if (_parentDisplayPageTemplateFolderExternalReferenceCodeSupplier !=
+				null) {
+
+			parentDisplayPageTemplateFolderExternalReferenceCode =
+				_parentDisplayPageTemplateFolderExternalReferenceCodeSupplier.
+					get();
+
+			_parentDisplayPageTemplateFolderExternalReferenceCodeSupplier =
+				null;
+		}
+
+		return parentDisplayPageTemplateFolderExternalReferenceCode;
+	}
+
+	public void setParentDisplayPageTemplateFolderExternalReferenceCode(
+		String parentDisplayPageTemplateFolderExternalReferenceCode) {
+
+		this.parentDisplayPageTemplateFolderExternalReferenceCode =
+			parentDisplayPageTemplateFolderExternalReferenceCode;
+
+		_parentDisplayPageTemplateFolderExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setParentDisplayPageTemplateFolderExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			parentDisplayPageTemplateFolderExternalReferenceCodeUnsafeSupplier) {
+
+		_parentDisplayPageTemplateFolderExternalReferenceCodeSupplier = () -> {
+			try {
+				return parentDisplayPageTemplateFolderExternalReferenceCodeUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The parent display page template folder's external reference code."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String parentDisplayPageTemplateFolderExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String>
+		_parentDisplayPageTemplateFolderExternalReferenceCodeSupplier;
+
+	@Schema(
 		description = "A valid external identifier to reference this page template folder."
 	)
 	public String getUuid() {
@@ -603,6 +659,25 @@ public class DisplayPageTemplateFolder implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		String parentDisplayPageTemplateFolderExternalReferenceCode =
+			getParentDisplayPageTemplateFolderExternalReferenceCode();
+
+		if (parentDisplayPageTemplateFolderExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(
+				"\"parentDisplayPageTemplateFolderExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(parentDisplayPageTemplateFolderExternalReferenceCode));
 
 			sb.append("\"");
 		}

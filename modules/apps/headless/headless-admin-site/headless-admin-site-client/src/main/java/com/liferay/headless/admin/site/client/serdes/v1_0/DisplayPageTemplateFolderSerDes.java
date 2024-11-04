@@ -174,6 +174,27 @@ public class DisplayPageTemplateFolderSerDes {
 			sb.append("\"");
 		}
 
+		if (displayPageTemplateFolder.
+				getParentDisplayPageTemplateFolderExternalReferenceCode() !=
+					null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(
+				"\"parentDisplayPageTemplateFolderExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					displayPageTemplateFolder.
+						getParentDisplayPageTemplateFolderExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (displayPageTemplateFolder.getUuid() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -289,6 +310,21 @@ public class DisplayPageTemplateFolderSerDes {
 				"name", String.valueOf(displayPageTemplateFolder.getName()));
 		}
 
+		if (displayPageTemplateFolder.
+				getParentDisplayPageTemplateFolderExternalReferenceCode() ==
+					null) {
+
+			map.put(
+				"parentDisplayPageTemplateFolderExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"parentDisplayPageTemplateFolderExternalReferenceCode",
+				String.valueOf(
+					displayPageTemplateFolder.
+						getParentDisplayPageTemplateFolderExternalReferenceCode()));
+		}
+
 		if (displayPageTemplateFolder.getUuid() == null) {
 			map.put("uuid", null);
 		}
@@ -341,6 +377,12 @@ public class DisplayPageTemplateFolderSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"parentDisplayPageTemplateFolderExternalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "uuid")) {
@@ -405,6 +447,16 @@ public class DisplayPageTemplateFolderSerDes {
 				if (jsonParserFieldValue != null) {
 					displayPageTemplateFolder.setName(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"parentDisplayPageTemplateFolderExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					displayPageTemplateFolder.
+						setParentDisplayPageTemplateFolderExternalReferenceCode(
+							(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "uuid")) {

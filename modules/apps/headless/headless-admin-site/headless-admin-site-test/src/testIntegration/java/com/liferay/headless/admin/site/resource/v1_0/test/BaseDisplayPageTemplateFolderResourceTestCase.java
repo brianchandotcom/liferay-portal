@@ -181,6 +181,8 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 		displayPageTemplateFolder.setExternalReferenceCode(regex);
 		displayPageTemplateFolder.setKey(regex);
 		displayPageTemplateFolder.setName(regex);
+		displayPageTemplateFolder.
+			setParentDisplayPageTemplateFolderExternalReferenceCode(regex);
 		displayPageTemplateFolder.setUuid(regex);
 
 		String json = DisplayPageTemplateFolderSerDes.toJSON(
@@ -197,6 +199,10 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 			regex, displayPageTemplateFolder.getExternalReferenceCode());
 		Assert.assertEquals(regex, displayPageTemplateFolder.getKey());
 		Assert.assertEquals(regex, displayPageTemplateFolder.getName());
+		Assert.assertEquals(
+			regex,
+			displayPageTemplateFolder.
+				getParentDisplayPageTemplateFolderExternalReferenceCode());
 		Assert.assertEquals(regex, displayPageTemplateFolder.getUuid());
 	}
 
@@ -1067,6 +1073,20 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"parentDisplayPageTemplateFolderExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (displayPageTemplateFolder.
+						getParentDisplayPageTemplateFolderExternalReferenceCode() ==
+							null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("uuid", additionalAssertFieldName)) {
 				if (displayPageTemplateFolder.getUuid() == null) {
 					valid = false;
@@ -1285,6 +1305,22 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 				if (!Objects.deepEquals(
 						displayPageTemplateFolder1.getName(),
 						displayPageTemplateFolder2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"parentDisplayPageTemplateFolderExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						displayPageTemplateFolder1.
+							getParentDisplayPageTemplateFolderExternalReferenceCode(),
+						displayPageTemplateFolder2.
+							getParentDisplayPageTemplateFolderExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1716,6 +1752,56 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals(
+				"parentDisplayPageTemplateFolderExternalReferenceCode")) {
+
+			Object object =
+				displayPageTemplateFolder.
+					getParentDisplayPageTemplateFolderExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("uuid")) {
 			Object object = displayPageTemplateFolder.getUuid();
 
@@ -1819,6 +1905,8 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 					RandomTestUtil.randomString());
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				parentDisplayPageTemplateFolderExternalReferenceCode =
+					StringUtil.toLowerCase(RandomTestUtil.randomString());
 				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};

@@ -194,6 +194,33 @@ public class DisplayPageTemplateFolder implements Cloneable, Serializable {
 
 	protected String name;
 
+	public String getParentDisplayPageTemplateFolderExternalReferenceCode() {
+		return parentDisplayPageTemplateFolderExternalReferenceCode;
+	}
+
+	public void setParentDisplayPageTemplateFolderExternalReferenceCode(
+		String parentDisplayPageTemplateFolderExternalReferenceCode) {
+
+		this.parentDisplayPageTemplateFolderExternalReferenceCode =
+			parentDisplayPageTemplateFolderExternalReferenceCode;
+	}
+
+	public void setParentDisplayPageTemplateFolderExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			parentDisplayPageTemplateFolderExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			parentDisplayPageTemplateFolderExternalReferenceCode =
+				parentDisplayPageTemplateFolderExternalReferenceCodeUnsafeSupplier.
+					get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String parentDisplayPageTemplateFolderExternalReferenceCode;
+
 	public String getUuid() {
 		return uuid;
 	}

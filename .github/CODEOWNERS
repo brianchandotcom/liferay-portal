@@ -99,16 +99,11 @@ modules/apps/headless/headless-portal-instances/
 modules/apps/headless/headless-site/
 modules/apps/headless/headless-user-notification/    @liferay-commerce
 modules/apps/hello-velocity/
-modules/apps/iframe/
-modules/apps/iframe/iframe-web    @liferay-page-management
+modules/apps/iframe/    @liferay-page-management
 modules/apps/image-uploader/
 modules/apps/image/
 modules/apps/imageio-plugins/
-modules/apps/info/
-modules/apps/info/info-api    @liferay-page-management
-modules/apps/info/info-test    @liferay-page-management
-modules/apps/info/info-test-util    @liferay-page-management
-modules/apps/info/info-impl    @liferay-page-management
+modules/apps/info/    @liferay-page-management
 modules/apps/invitation/
 modules/apps/ip-geocoder/
 modules/apps/item-selector/    @liferay-content-management
@@ -161,8 +156,7 @@ modules/apps/microsoft-translator/
 modules/apps/mobile-device-rules/
 modules/apps/monitoring/
 modules/apps/my-subscriptions/    @liferay-content-management
-modules/apps/nested-portlets/
-modules/apps/nested-portlets/nested-portlets-web    @liferay-page-management
+modules/apps/nested-portlets/    @liferay-page-management
 modules/apps/normalizer/
 modules/apps/notification/
 modules/apps/notifications/    @liferay-content-management
@@ -208,7 +202,7 @@ modules/apps/portal-settings/    @liferay-appsec
 modules/apps/portal-settings/portal-settings-api/    @liferay-platform-experience
 modules/apps/portal-settings/portal-settings-web/    @liferay-platform-experience
 modules/apps/portal-store/
-modules/apps/portal-template/
+modules/apps/portal-template/    @liferay-page-management
 modules/apps/portal-transaction/
 modules/apps/portal-url-builder/
 modules/apps/portal-validation/
@@ -221,10 +215,7 @@ modules/apps/portlet-configuration/
 modules/apps/portlet-configuration/portlet-configuration-web    @liferay-page-management
 modules/apps/portlet-configuration/portlet-configuration-css-web    @liferay-page-management
 modules/apps/portlet-dependency-factory/
-modules/apps/portlet-display-template/
-modules/apps/portlet-display-template/portlet-display-template-api    @liferay-page-management
-modules/apps/portlet-display-template/portlet-display-template-impl    @liferay-page-management
-modules/apps/portlet-display-template/portlet-display-template-web    @liferay-page-management
+modules/apps/portlet-display-template/    @liferay-page-management
 modules/apps/portlet-preferences/
 modules/apps/portlet/
 modules/apps/product-navigation/    @liferay-platform-experience
@@ -241,11 +232,7 @@ modules/apps/redirect/
 modules/apps/release-feature-flag/    @liferay-platform-experience
 modules/apps/repository/    @liferay-content-management
 modules/apps/roles/    @liferay-commerce
-modules/apps/rss/
-modules/apps/rss/rss-api    @liferay-page-management
-modules/apps/rss/rss-impl    @liferay-page-management
-modules/apps/rss/rss-taglib    @liferay-page-management
-modules/apps/rss/rss-web    @liferay-page-management
+modules/apps/rss/    @liferay-page-management
 modules/apps/saved-content/    @liferay-content-management
 modules/apps/segments/
 modules/apps/server/

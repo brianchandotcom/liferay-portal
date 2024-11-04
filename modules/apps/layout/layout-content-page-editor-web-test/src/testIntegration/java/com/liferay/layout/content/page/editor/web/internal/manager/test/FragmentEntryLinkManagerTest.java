@@ -6,6 +6,10 @@
 package com.liferay.layout.content.page.editor.web.internal.manager.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
+import com.liferay.client.extension.util.CETUtil;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
@@ -14,6 +18,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -25,6 +30,7 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -43,10 +49,13 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -89,6 +98,102 @@ public class FragmentEntryLinkManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testAssertActionsForNonexistingPortlet() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY,
+			_getThemeDisplay(mockHttpServletRequest, draftLayout));
+
+		ClientExtensionEntry clientExtensionEntry =
+			_clientExtensionEntryLocalService.addClientExtensionEntry(
+				null, TestPropsValues.getUserId(), StringPool.BLANK,
+				Collections.singletonMap(
+					LocaleUtil.fromLanguageId(
+						UpgradeProcessUtil.getDefaultLanguageId(
+							_group.getCompanyId())),
+					RandomTestUtil.randomString()),
+				StringPool.BLANK, StringPool.BLANK,
+				ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"htmlElementName", "valid-html-element-name"
+				).put(
+					"instanceable", false
+				).put(
+					"urls", "http://" + RandomTestUtil.randomString() + ".com"
+				).buildString());
+
+		JSONObject processAddPortletJSONObject =
+			ContentLayoutTestUtil.addPortletToLayout(
+				draftLayout,
+				StringBundler.concat(
+					"com_liferay_client_extension_web_internal_portlet_",
+					"ClientExtensionEntryPortlet_",
+					TestPropsValues.getCompanyId(), "_",
+					CETUtil.normalizeExternalReferenceCodeForPortletId(
+						clientExtensionEntry.getExternalReferenceCode())));
+
+		JSONObject fragmentEntryLinkJSONObject =
+			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLinkJSONObject.getLong("fragmentEntryLinkId"));
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					draftLayout.getGroupId(), draftLayout.getPlid());
+
+		Assert.assertNotNull(layoutPageTemplateStructure);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		fragmentEntryLinkJSONObject = ReflectionTestUtil.invoke(
+			_fragmentEntryLinkManager, "getFragmentEntryLinkJSONObject",
+			new Class<?>[] {
+				DefaultFragmentRendererContext.class, FragmentEntryLink.class,
+				HttpServletRequest.class, HttpServletResponse.class,
+				LayoutStructure.class
+			},
+			new DefaultFragmentRendererContext(fragmentEntryLink),
+			fragmentEntryLink, mockHttpServletRequest,
+			new MockHttpServletResponse(), layoutStructure);
+
+		JSONObject actionsJSONObject =
+			fragmentEntryLinkJSONObject.getJSONObject("actions");
+
+		Assert.assertFalse(SetUtil.isEmpty(actionsJSONObject.keySet()));
+
+		_clientExtensionEntryLocalService.deleteClientExtensionEntry(
+			clientExtensionEntry);
+
+		fragmentEntryLinkJSONObject = ReflectionTestUtil.invoke(
+			_fragmentEntryLinkManager, "getFragmentEntryLinkJSONObject",
+			new Class<?>[] {
+				DefaultFragmentRendererContext.class, FragmentEntryLink.class,
+				HttpServletRequest.class, HttpServletResponse.class,
+				LayoutStructure.class
+			},
+			new DefaultFragmentRendererContext(fragmentEntryLink),
+			fragmentEntryLink, mockHttpServletRequest,
+			new MockHttpServletResponse(), layoutStructure);
+
+		actionsJSONObject = fragmentEntryLinkJSONObject.getJSONObject(
+			"actions");
+
+		Assert.assertTrue(SetUtil.isEmpty(actionsJSONObject.keySet()));
 	}
 
 	@Test
@@ -228,6 +333,9 @@ public class FragmentEntryLinkManagerTest {
 
 		return themeDisplay;
 	}
+
+	@Inject
+	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

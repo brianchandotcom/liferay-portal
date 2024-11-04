@@ -78,7 +78,7 @@ public class EditableValuesExportImportContentProcessorTest {
 	}
 
 	@Test
-	@TestInfo("LPD-34189")
+	@TestInfo({"LPD-34189", "LPS-120198"})
 	public void testLinkedLayoutMapping() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 

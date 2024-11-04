@@ -122,10 +122,10 @@ public class SamlSpAuthRequestPersistenceTest {
 
 		newSamlSpAuthRequest.setSamlIdpEntityId(RandomTestUtil.randomString());
 
+		newSamlSpAuthRequest.setSamlRelayState(RandomTestUtil.randomString());
+
 		newSamlSpAuthRequest.setSamlSpAuthRequestKey(
 			RandomTestUtil.randomString());
-
-		newSamlSpAuthRequest.setRelayState(RandomTestUtil.randomString());
 
 		_samlSpAuthRequests.add(_persistence.update(newSamlSpAuthRequest));
 
@@ -145,11 +145,11 @@ public class SamlSpAuthRequestPersistenceTest {
 			existingSamlSpAuthRequest.getSamlIdpEntityId(),
 			newSamlSpAuthRequest.getSamlIdpEntityId());
 		Assert.assertEquals(
+			existingSamlSpAuthRequest.getSamlRelayState(),
+			newSamlSpAuthRequest.getSamlRelayState());
+		Assert.assertEquals(
 			existingSamlSpAuthRequest.getSamlSpAuthRequestKey(),
 			newSamlSpAuthRequest.getSamlSpAuthRequestKey());
-		Assert.assertEquals(
-			existingSamlSpAuthRequest.getRelayState(),
-			newSamlSpAuthRequest.getRelayState());
 	}
 
 	@Test
@@ -194,8 +194,8 @@ public class SamlSpAuthRequestPersistenceTest {
 	protected OrderByComparator<SamlSpAuthRequest> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"SamlSpAuthRequest", "samlSpAuthnRequestId", true, "companyId",
-			true, "createDate", true, "samlIdpEntityId", true,
-			"samlSpAuthRequestKey", true);
+			true, "createDate", true, "samlIdpEntityId", true, "samlRelayState",
+			true, "samlSpAuthRequestKey", true);
 	}
 
 	@Test
@@ -495,10 +495,10 @@ public class SamlSpAuthRequestPersistenceTest {
 
 		samlSpAuthRequest.setSamlIdpEntityId(RandomTestUtil.randomString());
 
+		samlSpAuthRequest.setSamlRelayState(RandomTestUtil.randomString());
+
 		samlSpAuthRequest.setSamlSpAuthRequestKey(
 			RandomTestUtil.randomString());
-
-		samlSpAuthRequest.setRelayState(RandomTestUtil.randomString());
 
 		_samlSpAuthRequests.add(_persistence.update(samlSpAuthRequest));
 

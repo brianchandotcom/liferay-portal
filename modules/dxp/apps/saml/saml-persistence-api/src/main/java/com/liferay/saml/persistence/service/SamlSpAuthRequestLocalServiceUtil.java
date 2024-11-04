@@ -54,11 +54,13 @@ public class SamlSpAuthRequestLocalServiceUtil {
 	}
 
 	public static SamlSpAuthRequest addSamlSpAuthRequest(
-		String samlIdpEntityId, String samlSpAuthRequestKey, String relayState,
+		String samlIdpEntityId, String samlRelayState,
+		String samlSpAuthRequestKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().addSamlSpAuthRequest(
-			samlIdpEntityId, samlSpAuthRequestKey, relayState, serviceContext);
+			samlIdpEntityId, samlRelayState, samlSpAuthRequestKey,
+			serviceContext);
 	}
 
 	/**

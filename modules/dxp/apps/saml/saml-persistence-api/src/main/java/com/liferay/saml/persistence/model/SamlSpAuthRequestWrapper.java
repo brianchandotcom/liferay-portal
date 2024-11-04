@@ -37,8 +37,8 @@ public class SamlSpAuthRequestWrapper
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("samlIdpEntityId", getSamlIdpEntityId());
+		attributes.put("samlRelayState", getSamlRelayState());
 		attributes.put("samlSpAuthRequestKey", getSamlSpAuthRequestKey());
-		attributes.put("relayState", getRelayState());
 
 		return attributes;
 	}
@@ -70,17 +70,17 @@ public class SamlSpAuthRequestWrapper
 			setSamlIdpEntityId(samlIdpEntityId);
 		}
 
+		String samlRelayState = (String)attributes.get("samlRelayState");
+
+		if (samlRelayState != null) {
+			setSamlRelayState(samlRelayState);
+		}
+
 		String samlSpAuthRequestKey = (String)attributes.get(
 			"samlSpAuthRequestKey");
 
 		if (samlSpAuthRequestKey != null) {
 			setSamlSpAuthRequestKey(samlSpAuthRequestKey);
-		}
-
-		String relayState = (String)attributes.get("relayState");
-
-		if (relayState != null) {
-			setRelayState(relayState);
 		}
 	}
 
@@ -120,16 +120,6 @@ public class SamlSpAuthRequestWrapper
 	}
 
 	/**
-	 * Returns the relay state of this saml sp auth request.
-	 *
-	 * @return the relay state of this saml sp auth request
-	 */
-	@Override
-	public String getRelayState() {
-		return model.getRelayState();
-	}
-
-	/**
 	 * Returns the saml idp entity ID of this saml sp auth request.
 	 *
 	 * @return the saml idp entity ID of this saml sp auth request
@@ -137,6 +127,16 @@ public class SamlSpAuthRequestWrapper
 	@Override
 	public String getSamlIdpEntityId() {
 		return model.getSamlIdpEntityId();
+	}
+
+	/**
+	 * Returns the saml relay state of this saml sp auth request.
+	 *
+	 * @return the saml relay state of this saml sp auth request
+	 */
+	@Override
+	public String getSamlRelayState() {
+		return model.getSamlRelayState();
 	}
 
 	/**
@@ -195,16 +195,6 @@ public class SamlSpAuthRequestWrapper
 	}
 
 	/**
-	 * Sets the relay state of this saml sp auth request.
-	 *
-	 * @param relayState the relay state of this saml sp auth request
-	 */
-	@Override
-	public void setRelayState(String relayState) {
-		model.setRelayState(relayState);
-	}
-
-	/**
 	 * Sets the saml idp entity ID of this saml sp auth request.
 	 *
 	 * @param samlIdpEntityId the saml idp entity ID of this saml sp auth request
@@ -212,6 +202,16 @@ public class SamlSpAuthRequestWrapper
 	@Override
 	public void setSamlIdpEntityId(String samlIdpEntityId) {
 		model.setSamlIdpEntityId(samlIdpEntityId);
+	}
+
+	/**
+	 * Sets the saml relay state of this saml sp auth request.
+	 *
+	 * @param samlRelayState the saml relay state of this saml sp auth request
+	 */
+	@Override
+	public void setSamlRelayState(String samlRelayState) {
+		model.setSamlRelayState(samlRelayState);
 	}
 
 	/**

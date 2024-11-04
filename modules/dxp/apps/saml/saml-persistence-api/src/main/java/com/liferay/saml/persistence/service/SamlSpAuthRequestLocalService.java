@@ -69,8 +69,8 @@ public interface SamlSpAuthRequestLocalService
 		SamlSpAuthRequest samlSpAuthRequest);
 
 	public SamlSpAuthRequest addSamlSpAuthRequest(
-		String samlIdpEntityId, String samlSpAuthRequestKey, String relayState,
-		ServiceContext serviceContext);
+		String samlIdpEntityId, String samlRelayState,
+		String samlSpAuthRequestKey, ServiceContext serviceContext);
 
 	/**
 	 * @throws PortalException

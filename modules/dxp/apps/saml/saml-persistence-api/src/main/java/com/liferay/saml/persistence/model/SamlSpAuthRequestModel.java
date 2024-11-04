@@ -108,6 +108,21 @@ public interface SamlSpAuthRequestModel
 	public void setSamlIdpEntityId(String samlIdpEntityId);
 
 	/**
+	 * Returns the saml relay state of this saml sp auth request.
+	 *
+	 * @return the saml relay state of this saml sp auth request
+	 */
+	@AutoEscape
+	public String getSamlRelayState();
+
+	/**
+	 * Sets the saml relay state of this saml sp auth request.
+	 *
+	 * @param samlRelayState the saml relay state of this saml sp auth request
+	 */
+	public void setSamlRelayState(String samlRelayState);
+
+	/**
 	 * Returns the saml sp auth request key of this saml sp auth request.
 	 *
 	 * @return the saml sp auth request key of this saml sp auth request
@@ -121,21 +136,6 @@ public interface SamlSpAuthRequestModel
 	 * @param samlSpAuthRequestKey the saml sp auth request key of this saml sp auth request
 	 */
 	public void setSamlSpAuthRequestKey(String samlSpAuthRequestKey);
-
-	/**
-	 * Returns the relay state of this saml sp auth request.
-	 *
-	 * @return the relay state of this saml sp auth request
-	 */
-	@AutoEscape
-	public String getRelayState();
-
-	/**
-	 * Sets the relay state of this saml sp auth request.
-	 *
-	 * @param relayState the relay state of this saml sp auth request
-	 */
-	public void setRelayState(String relayState);
 
 	@Override
 	public SamlSpAuthRequest cloneWithOriginalValues();

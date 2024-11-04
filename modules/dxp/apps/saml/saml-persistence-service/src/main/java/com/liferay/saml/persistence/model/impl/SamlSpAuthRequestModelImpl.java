@@ -58,7 +58,8 @@ public class SamlSpAuthRequestModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"samlSpAuthnRequestId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"samlIdpEntityId", Types.VARCHAR},
-		{"samlSpAuthRequestKey", Types.VARCHAR}, {"relayState", Types.CLOB}
+		{"samlRelayState", Types.VARCHAR},
+		{"samlSpAuthRequestKey", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -69,12 +70,12 @@ public class SamlSpAuthRequestModelImpl
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("samlIdpEntityId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("samlRelayState", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("samlSpAuthRequestKey", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("relayState", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SamlSpAuthRequest (samlSpAuthnRequestId LONG not null primary key,companyId LONG,createDate DATE null,samlIdpEntityId VARCHAR(1024) null,samlSpAuthRequestKey VARCHAR(75) null,relayState TEXT null)";
+		"create table SamlSpAuthRequest (samlSpAuthnRequestId LONG not null primary key,companyId LONG,createDate DATE null,samlIdpEntityId VARCHAR(1024) null,samlRelayState VARCHAR(2048) null,samlSpAuthRequestKey VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SamlSpAuthRequest";
 
@@ -235,10 +236,10 @@ public class SamlSpAuthRequestModelImpl
 			attributeGetterFunctions.put(
 				"samlIdpEntityId", SamlSpAuthRequest::getSamlIdpEntityId);
 			attributeGetterFunctions.put(
+				"samlRelayState", SamlSpAuthRequest::getSamlRelayState);
+			attributeGetterFunctions.put(
 				"samlSpAuthRequestKey",
 				SamlSpAuthRequest::getSamlSpAuthRequestKey);
-			attributeGetterFunctions.put(
-				"relayState", SamlSpAuthRequest::getRelayState);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -274,13 +275,13 @@ public class SamlSpAuthRequestModelImpl
 				(BiConsumer<SamlSpAuthRequest, String>)
 					SamlSpAuthRequest::setSamlIdpEntityId);
 			attributeSetterBiConsumers.put(
+				"samlRelayState",
+				(BiConsumer<SamlSpAuthRequest, String>)
+					SamlSpAuthRequest::setSamlRelayState);
+			attributeSetterBiConsumers.put(
 				"samlSpAuthRequestKey",
 				(BiConsumer<SamlSpAuthRequest, String>)
 					SamlSpAuthRequest::setSamlSpAuthRequestKey);
-			attributeSetterBiConsumers.put(
-				"relayState",
-				(BiConsumer<SamlSpAuthRequest, String>)
-					SamlSpAuthRequest::setRelayState);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -368,6 +369,25 @@ public class SamlSpAuthRequestModelImpl
 	}
 
 	@Override
+	public String getSamlRelayState() {
+		if (_samlRelayState == null) {
+			return "";
+		}
+		else {
+			return _samlRelayState;
+		}
+	}
+
+	@Override
+	public void setSamlRelayState(String samlRelayState) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_samlRelayState = samlRelayState;
+	}
+
+	@Override
 	public String getSamlSpAuthRequestKey() {
 		if (_samlSpAuthRequestKey == null) {
 			return "";
@@ -393,25 +413,6 @@ public class SamlSpAuthRequestModelImpl
 	@Deprecated
 	public String getOriginalSamlSpAuthRequestKey() {
 		return getColumnOriginalValue("samlSpAuthRequestKey");
-	}
-
-	@Override
-	public String getRelayState() {
-		if (_relayState == null) {
-			return "";
-		}
-		else {
-			return _relayState;
-		}
-	}
-
-	@Override
-	public void setRelayState(String relayState) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_relayState = relayState;
 	}
 
 	public long getColumnBitmask() {
@@ -476,9 +477,9 @@ public class SamlSpAuthRequestModelImpl
 		samlSpAuthRequestImpl.setCompanyId(getCompanyId());
 		samlSpAuthRequestImpl.setCreateDate(getCreateDate());
 		samlSpAuthRequestImpl.setSamlIdpEntityId(getSamlIdpEntityId());
+		samlSpAuthRequestImpl.setSamlRelayState(getSamlRelayState());
 		samlSpAuthRequestImpl.setSamlSpAuthRequestKey(
 			getSamlSpAuthRequestKey());
-		samlSpAuthRequestImpl.setRelayState(getRelayState());
 
 		samlSpAuthRequestImpl.resetOriginalValues();
 
@@ -498,10 +499,10 @@ public class SamlSpAuthRequestModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		samlSpAuthRequestImpl.setSamlIdpEntityId(
 			this.<String>getColumnOriginalValue("samlIdpEntityId"));
+		samlSpAuthRequestImpl.setSamlRelayState(
+			this.<String>getColumnOriginalValue("samlRelayState"));
 		samlSpAuthRequestImpl.setSamlSpAuthRequestKey(
 			this.<String>getColumnOriginalValue("samlSpAuthRequestKey"));
-		samlSpAuthRequestImpl.setRelayState(
-			this.<String>getColumnOriginalValue("relayState"));
 
 		return samlSpAuthRequestImpl;
 	}
@@ -600,6 +601,14 @@ public class SamlSpAuthRequestModelImpl
 			samlSpAuthRequestCacheModel.samlIdpEntityId = null;
 		}
 
+		samlSpAuthRequestCacheModel.samlRelayState = getSamlRelayState();
+
+		String samlRelayState = samlSpAuthRequestCacheModel.samlRelayState;
+
+		if ((samlRelayState != null) && (samlRelayState.length() == 0)) {
+			samlSpAuthRequestCacheModel.samlRelayState = null;
+		}
+
 		samlSpAuthRequestCacheModel.samlSpAuthRequestKey =
 			getSamlSpAuthRequestKey();
 
@@ -610,14 +619,6 @@ public class SamlSpAuthRequestModelImpl
 			(samlSpAuthRequestKey.length() == 0)) {
 
 			samlSpAuthRequestCacheModel.samlSpAuthRequestKey = null;
-		}
-
-		samlSpAuthRequestCacheModel.relayState = getRelayState();
-
-		String relayState = samlSpAuthRequestCacheModel.relayState;
-
-		if ((relayState != null) && (relayState.length() == 0)) {
-			samlSpAuthRequestCacheModel.relayState = null;
 		}
 
 		return samlSpAuthRequestCacheModel;
@@ -686,8 +687,8 @@ public class SamlSpAuthRequestModelImpl
 	private long _companyId;
 	private Date _createDate;
 	private String _samlIdpEntityId;
+	private String _samlRelayState;
 	private String _samlSpAuthRequestKey;
-	private String _relayState;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<SamlSpAuthRequest, Object> function =
@@ -722,9 +723,9 @@ public class SamlSpAuthRequestModelImpl
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("samlIdpEntityId", _samlIdpEntityId);
+		_columnOriginalValues.put("samlRelayState", _samlRelayState);
 		_columnOriginalValues.put(
 			"samlSpAuthRequestKey", _samlSpAuthRequestKey);
-		_columnOriginalValues.put("relayState", _relayState);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -746,9 +747,9 @@ public class SamlSpAuthRequestModelImpl
 
 		columnBitmasks.put("samlIdpEntityId", 8L);
 
-		columnBitmasks.put("samlSpAuthRequestKey", 16L);
+		columnBitmasks.put("samlRelayState", 16L);
 
-		columnBitmasks.put("relayState", 32L);
+		columnBitmasks.put("samlSpAuthRequestKey", 32L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

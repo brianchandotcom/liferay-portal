@@ -65,10 +65,10 @@ public class SamlSpAuthRequestCacheModel
 		sb.append(createDate);
 		sb.append(", samlIdpEntityId=");
 		sb.append(samlIdpEntityId);
+		sb.append(", samlRelayState=");
+		sb.append(samlRelayState);
 		sb.append(", samlSpAuthRequestKey=");
 		sb.append(samlSpAuthRequestKey);
-		sb.append(", relayState=");
-		sb.append(relayState);
 		sb.append("}");
 
 		return sb.toString();
@@ -96,18 +96,18 @@ public class SamlSpAuthRequestCacheModel
 			samlSpAuthRequestImpl.setSamlIdpEntityId(samlIdpEntityId);
 		}
 
+		if (samlRelayState == null) {
+			samlSpAuthRequestImpl.setSamlRelayState("");
+		}
+		else {
+			samlSpAuthRequestImpl.setSamlRelayState(samlRelayState);
+		}
+
 		if (samlSpAuthRequestKey == null) {
 			samlSpAuthRequestImpl.setSamlSpAuthRequestKey("");
 		}
 		else {
 			samlSpAuthRequestImpl.setSamlSpAuthRequestKey(samlSpAuthRequestKey);
-		}
-
-		if (relayState == null) {
-			samlSpAuthRequestImpl.setRelayState("");
-		}
-		else {
-			samlSpAuthRequestImpl.setRelayState(relayState);
 		}
 
 		samlSpAuthRequestImpl.resetOriginalValues();
@@ -116,16 +116,14 @@ public class SamlSpAuthRequestCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput)
-		throws ClassNotFoundException, IOException {
-
+	public void readExternal(ObjectInput objectInput) throws IOException {
 		samlSpAuthnRequestId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		samlIdpEntityId = objectInput.readUTF();
+		samlRelayState = objectInput.readUTF();
 		samlSpAuthRequestKey = objectInput.readUTF();
-		relayState = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -142,18 +140,18 @@ public class SamlSpAuthRequestCacheModel
 			objectOutput.writeUTF(samlIdpEntityId);
 		}
 
+		if (samlRelayState == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(samlRelayState);
+		}
+
 		if (samlSpAuthRequestKey == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(samlSpAuthRequestKey);
-		}
-
-		if (relayState == null) {
-			objectOutput.writeObject("");
-		}
-		else {
-			objectOutput.writeObject(relayState);
 		}
 	}
 
@@ -161,7 +159,7 @@ public class SamlSpAuthRequestCacheModel
 	public long companyId;
 	public long createDate;
 	public String samlIdpEntityId;
+	public String samlRelayState;
 	public String samlSpAuthRequestKey;
-	public String relayState;
 
 }

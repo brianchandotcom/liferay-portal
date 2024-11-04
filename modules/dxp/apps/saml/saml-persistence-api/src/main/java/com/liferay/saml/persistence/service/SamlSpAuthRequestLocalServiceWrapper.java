@@ -52,12 +52,13 @@ public class SamlSpAuthRequestLocalServiceWrapper
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpAuthRequest
 		addSamlSpAuthRequest(
-			String samlIdpEntityId, String samlSpAuthRequestKey,
-			String relayState,
+			String samlIdpEntityId, String samlRelayState,
+			String samlSpAuthRequestKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return _samlSpAuthRequestLocalService.addSamlSpAuthRequest(
-			samlIdpEntityId, samlSpAuthRequestKey, relayState, serviceContext);
+			samlIdpEntityId, samlRelayState, samlSpAuthRequestKey,
+			serviceContext);
 	}
 
 	/**

@@ -153,24 +153,21 @@ public class
 				}),
 			new MockLiferayPortletActionResponse());
 
-		targetLayoutPageTemplateCollection =
+		Assert.assertNotNull(
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
 					_group.getGroupId(),
 					_getName(layoutPageTemplateCollection.getName()),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE);
-		targetLayoutPageTemplateEntry =
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE));
+		Assert.assertNotNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				_getName(layoutPageTemplateEntryDisplayPage.getName()),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
-
-		Assert.assertNotNull(targetLayoutPageTemplateCollection);
-		Assert.assertNotNull(targetLayoutPageTemplateEntry);
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 	}
 
 	@Test

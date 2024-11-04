@@ -115,118 +115,10 @@ export default function ShortcutManager() {
 		(state) => state.selectedViewportSize
 	);
 
-	const copy = () => {
-		setClipboard(activeItemIds);
-	};
-
-	const cut = () => {
-		setClipboard(activeItemIds);
-
-		dispatch(
-			deleteItem({
-				itemIds: activeItemIds,
-				selectItems,
-			})
-		);
-	};
-
-	const duplicate = () => {
-		dispatch(
-			duplicateItem({
-				itemIds: activeItemIds,
-				selectItems,
-			})
-		);
-	};
-
 	const getParentItemId = () => {
 		const rootItem = layoutData.items[layoutData.rootItems.main];
 
 		return !activeItemIds?.length ? rootItem.itemId : activeItemIds[0];
-	};
-
-	const hideShow = () => {
-		updateItemStyle({
-			dispatch,
-			itemIds: activeItemIds,
-			selectedViewportSize,
-			styleName: 'display',
-			styleValue:
-				layoutData.items[activeItemIds[0]].config.styles.display ===
-				'none'
-					? 'block'
-					: 'none',
-		});
-	};
-
-	const hideSidebar = () => {
-		dispatch(switchSidebarPanel({hidden: !sidebarHidden}));
-	};
-
-	const paste = () => {
-		dispatch(
-			pasteItems({
-				clipboard,
-				parentItemId: getParentItemId(),
-				selectItems,
-			})
-		);
-	};
-
-	const remove = () => {
-		dispatch(
-			deleteItem({
-				itemIds: activeItemIds,
-				selectItems,
-			})
-		);
-	};
-
-	const save = () => {
-		setOpenSaveModal(true);
-	};
-
-	const undo = (event) => {
-		if (event.shiftKey) {
-			onRedo({selectItems});
-		}
-		else {
-			onUndo({selectItems});
-		}
-	};
-
-	const selectParent = () => {
-		const getSelectableParent = (layoutDataItem) => {
-			if (!layoutDataItem) {
-				return null;
-			}
-
-			const parentItem = state.layoutData.items[layoutDataItem.parentId];
-
-			if (!parentItem) {
-				return null;
-			}
-
-			if (
-				parentItem.type !== LAYOUT_DATA_ITEM_TYPES.column &&
-				parentItem.type !== LAYOUT_DATA_ITEM_TYPES.collectionItem &&
-				parentItem.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
-				parentItem.type !== LAYOUT_DATA_ITEM_TYPES.root
-			) {
-				return parentItem;
-			}
-
-			return getSelectableParent(parentItem);
-		};
-
-		const selectableParent = getSelectableParent(activeLayoutDataItem);
-
-		if (selectableParent) {
-			selectItem(selectableParent.itemId, {
-				itemType: ITEM_TYPES.layoutDataItem,
-				origin: ITEM_ACTIVATION_ORIGINS.layout,
-			});
-		}
 	};
 
 	function isOnlyOneParentSelected(activeItemIds) {
@@ -249,7 +141,7 @@ export default function ShortcutManager() {
 	keymapRef.current = {
 		...(Liferay.FeatureFlags['LPD-18221'] && {
 			copy: {
-				action: copy,
+				action: () => setClipboard(activeItemIds),
 				canBeExecuted: () =>
 					!isEditingEditableField() &&
 					!isTextSelected() &&
@@ -270,7 +162,16 @@ export default function ShortcutManager() {
 		}),
 		...(Liferay.FeatureFlags['LPD-18221'] && {
 			cut: {
-				action: cut,
+				action: () => {
+					setClipboard(activeItemIds);
+
+					dispatch(
+						deleteItem({
+							itemIds: activeItemIds,
+							selectItems,
+						})
+					);
+				},
 				canBeExecuted: (event) =>
 					!isEditingEditableField() &&
 					!isTextSelected() &&
@@ -289,7 +190,13 @@ export default function ShortcutManager() {
 			},
 		}),
 		duplicate: {
-			action: duplicate,
+			action: () =>
+				dispatch(
+					duplicateItem({
+						itemIds: activeItemIds,
+						selectItems,
+					})
+				),
 			canBeExecuted: () =>
 				canUpdatePageStructure &&
 				!!activeItemIds.length &&
@@ -310,7 +217,18 @@ export default function ShortcutManager() {
 				event.code === D_KEY_CODE,
 		},
 		hideShow: {
-			action: hideShow,
+			action: () =>
+				updateItemStyle({
+					dispatch,
+					itemIds: activeItemIds,
+					selectedViewportSize,
+					styleName: 'display',
+					styleValue:
+						layoutData.items[activeItemIds[0]].config.styles
+							.display === 'none'
+							? 'block'
+							: 'none',
+				}),
 			canBeExecuted: () =>
 				canUpdatePageStructure &&
 				!!activeItemIds.length &&
@@ -332,7 +250,8 @@ export default function ShortcutManager() {
 				event.code === H_KEY_CODE,
 		},
 		hideSidebar: {
-			action: hideSidebar,
+			action: () =>
+				dispatch(switchSidebarPanel({hidden: !sidebarHidden})),
 			canBeExecuted: (event) =>
 				!isInteractiveElement(event.target) &&
 				!isWithinIframe() &&
@@ -353,7 +272,14 @@ export default function ShortcutManager() {
 		},
 		...(Liferay.FeatureFlags['LPD-18221'] && {
 			paste: {
-				action: paste,
+				action: () =>
+					dispatch(
+						pasteItems({
+							clipboard,
+							parentItemId: getParentItemId(),
+							selectItems,
+						})
+					),
 				canBeExecuted: () =>
 					!isEditingEditableField() &&
 					!isInteractiveElement(document.activeElement) &&
@@ -387,7 +313,13 @@ export default function ShortcutManager() {
 			},
 		}),
 		remove: {
-			action: remove,
+			action: () =>
+				dispatch(
+					deleteItem({
+						itemIds: activeItemIds,
+						selectItems,
+					})
+				),
 			canBeExecuted: (event) =>
 				canUpdatePageStructure &&
 				!!activeItemIds.length &&
@@ -403,9 +335,7 @@ export default function ShortcutManager() {
 			isKeyCombination: (event) => event.code === BACKSPACE_KEY_CODE,
 		},
 		rename: {
-			action: () => {
-				setEditedNodeId(activeItemIds[0]);
-			},
+			action: () => setEditedNodeId(activeItemIds[0]),
 			canBeExecuted: () =>
 				!multiSelection &&
 				canUpdatePageStructure &&
@@ -417,7 +347,7 @@ export default function ShortcutManager() {
 				event.code === R_KEY_CODE,
 		},
 		save: {
-			action: save,
+			action: () => setOpenSaveModal(true),
 			canBeExecuted: () =>
 				!multiSelection &&
 				canUpdatePageStructure &&
@@ -427,7 +357,45 @@ export default function ShortcutManager() {
 				isCtrlOrMeta(event) && event.code === S_KEY_CODE,
 		},
 		selectParent: {
-			action: selectParent,
+			action: () => {
+				const getSelectableParent = (layoutDataItem) => {
+					if (!layoutDataItem) {
+						return null;
+					}
+
+					const parentItem =
+						layoutData.items[layoutDataItem.parentId];
+
+					if (!parentItem) {
+						return null;
+					}
+
+					if (
+						parentItem.type !== LAYOUT_DATA_ITEM_TYPES.column &&
+						parentItem.type !==
+							LAYOUT_DATA_ITEM_TYPES.collectionItem &&
+						parentItem.type !==
+							LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
+						parentItem.type !== LAYOUT_DATA_ITEM_TYPES.root
+					) {
+						return parentItem;
+					}
+
+					return getSelectableParent(parentItem);
+				};
+
+				const selectableParent = getSelectableParent(
+					layoutData,
+					activeLayoutDataItem
+				);
+
+				if (selectableParent) {
+					selectItem(selectableParent.itemId, {
+						itemType: ITEM_TYPES.layoutDataItem,
+						origin: ITEM_ACTIVATION_ORIGINS.layout,
+					});
+				}
+			},
 			canBeExecuted: (event) =>
 				!multiSelection &&
 				!isInteractiveElement(event.target) &&
@@ -436,7 +404,14 @@ export default function ShortcutManager() {
 				event.shiftKey && event.key === 'Enter',
 		},
 		undo: {
-			action: undo,
+			action: (event) => {
+				if (event.shiftKey) {
+					onRedo({selectItems});
+				}
+				else {
+					onUndo({selectItems});
+				}
+			},
 			canBeExecuted: (event) =>
 				(isEditableField(event.target) ||
 					!isInteractiveElement(event.target)) &&

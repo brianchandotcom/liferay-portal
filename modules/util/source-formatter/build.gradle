@@ -99,6 +99,10 @@ publishing {
 	}
 }
 
+test {
+	systemProperty "issue.key", System.getProperty("issue.key")
+}
+
 updateFileVersions {
 	match(/<artifactId>com\.liferay\.source\.formatter<\/artifactId>\s+<version>(.+)<\/version>/, "../../etl/talend/pom.xml")
 	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")

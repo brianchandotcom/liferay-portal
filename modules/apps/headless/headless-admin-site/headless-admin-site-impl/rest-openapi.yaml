@@ -425,6 +425,11 @@ components:
                     description:
                         The display page template folder's name.
                     type: string
+                parentDisplayPageTemplateFolderExternalReferenceCode:
+                    # @review
+                    description:
+                        The parent display page template folder's External Reference Code.
+                    type: string
                 uuid:
                     # @review
                     description:

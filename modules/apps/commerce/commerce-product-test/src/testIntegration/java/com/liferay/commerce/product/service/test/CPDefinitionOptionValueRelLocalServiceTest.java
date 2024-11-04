@@ -28,6 +28,7 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -92,9 +93,27 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_serviceContext = null;
+		List<CPOption> cpOptions =
+			_cpOptionLocalService.findCPOptionByCompanyId(
+				_serviceContext.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
-		_cpOptionLocalService.deleteCPOptions(_group.getCompanyId());
+		for (CPOption cpOption : cpOptions) {
+			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+				_cpDefinitionOptionRelLocalService.
+					getCPOptionCPDefinitionOptionRels(cpOption.getCPOptionId());
+
+			for (CPDefinitionOptionRel cpDefinitionOptionRel :
+					cpDefinitionOptionRels) {
+
+				_cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
+					cpDefinitionOptionRel);
+			}
+
+			_cpOptionLocalService.deleteCPOption(cpOption.getCPOptionId());
+		}
+
+		_serviceContext = null;
 	}
 
 	@Test

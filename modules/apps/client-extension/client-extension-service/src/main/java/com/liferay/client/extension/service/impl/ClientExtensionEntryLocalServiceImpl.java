@@ -137,7 +137,7 @@ public class ClientExtensionEntryLocalServiceImpl
 					externalReferenceCode, user.getCompanyId());
 
 		if (clientExtensionEntry != null) {
-			return clientExtensionEntryLocalService.updateClientExtensionEntry(
+			return updateClientExtensionEntry(
 				userId, clientExtensionEntry.getClientExtensionEntryId(),
 				description, nameMap, properties, sourceCodeURL, typeSettings);
 		}

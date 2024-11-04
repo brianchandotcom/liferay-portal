@@ -7,6 +7,8 @@ import {Header} from '../../../../../../components/Header/Header';
 import {Input} from '../../../../../../components/Input/Input';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../../../../../components/Section/Section';
+import {PRODUCT_LICENSE} from '../../../../../../enums/Product';
+import i18n from '../../../../../../i18n';
 import {
 	createAppSKU,
 	getOptions,
@@ -17,16 +19,14 @@ import {
 } from '../../../../../../utils/api';
 import {
 	createSkuName,
+	getCloudOptionBody,
+	getCloudProductOptionBody,
 	getDxpOptionBody,
 	getDxpProductOptionBody,
 	getLicenceTypesObject,
 	getOptionDeveloperBody,
-	getOptionNoBody,
 	getOptionStandardBody,
 	getOptionTrialBody,
-	getOptionYesBody,
-	getTrialOptionBody,
-	getTrialProductOptionBody,
 } from '../../../../../../utils/util';
 import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
@@ -63,6 +63,7 @@ export function ProvideVersionDetailsPage({
 		getOptions()
 	);
 
+	const isCloud = appType.value === 'cloud';
 	const isDXP = appType.value === 'dxp';
 
 	const createVersionDescription = async (skuId: number) => {
@@ -87,27 +88,28 @@ export function ProvideVersionDetailsPage({
 	};
 
 	const createProductOptions = async () => {
-		const trialOption = options.find(({key}) => key === 'trial');
-
-		const dxpOption = options.find(
-			({key}) => key === 'dxp-license-usage-type'
+		const cloudOption = options.find(
+			({key}) => key === PRODUCT_LICENSE.CLOUD
 		);
 
-		const targetOption = isDXP ? dxpOption : trialOption;
+		const dxpOption = options.find(({key}) => key === PRODUCT_LICENSE.DXP);
+
+		const targetOption = isCloud ? cloudOption : dxpOption;
+
 		let newOptionId: number;
 
 		if (!optionId && !targetOption) {
 			newOptionId = await postOption(
-				isDXP ? getDxpOptionBody() : getTrialOptionBody()
+				isCloud ? getCloudOptionBody() : getDxpOptionBody()
 			);
 		}
 		else {
 			newOptionId = optionId ?? targetOption!.id;
 		}
 
-		const productOption = isDXP
-			? getDxpProductOptionBody(newOptionId)
-			: getTrialProductOptionBody(newOptionId);
+		const productOption = isCloud
+			? getCloudProductOptionBody(newOptionId)
+			: getDxpProductOptionBody(newOptionId);
 
 		const newProductOptionId = await postProductOption(
 			appProductId,
@@ -124,46 +126,23 @@ export function ProvideVersionDetailsPage({
 			type: TYPES.UPDATE_PRODUCT_OPTION_ID,
 		});
 
-		if (isDXP) {
-			const [standardOptionId, developerOptionId, trialOptionId] =
-				await Promise.all([
-					postOptionValue(
-						getOptionStandardBody(),
-						newProductOptionId
-					),
-					postOptionValue(
-						getOptionDeveloperBody(),
-						newProductOptionId
-					),
-					postOptionValue(getOptionTrialBody(), newProductOptionId),
-				]);
-
-			return {
-				developerOptionId,
-				newProductOptionId,
-				standardOptionId,
-				trialOptionId,
-			};
-		}
-
-		const [noOptionId, yesOptionId] = await Promise.all([
-			postOptionValue(getOptionNoBody(), newProductOptionId),
-			postOptionValue(getOptionYesBody(), newProductOptionId),
-		]);
-
-		dispatch({
-			payload: {
-				newOptionId,
-				noOptionId,
-				yesOptionId,
-			},
-			type: TYPES.UPDATE_PRODUCT_OPTION_VALUES_ID,
-		});
+		const [developerOptionId, standardOptionId, trialOptionId] =
+			await Promise.all([
+				isDXP
+					? postOptionValue(
+							getOptionDeveloperBody(),
+							newProductOptionId
+						)
+					: {},
+				postOptionValue(getOptionStandardBody(), newProductOptionId),
+				postOptionValue(getOptionTrialBody(), newProductOptionId),
+			]);
 
 		return {
+			developerOptionId,
 			newProductOptionId,
-			noOptionId,
-			yesOptionId,
+			standardOptionId,
+			trialOptionId,
 		};
 	};
 
@@ -189,21 +168,16 @@ export function ProvideVersionDetailsPage({
 			},
 		};
 
-		if (isDXP) {
-			if (sku === 'DEVELOPER') {
-				value = skuProductOptions.developerOptionId;
-			}
-
-			if (sku === 'STANDARD') {
-				value = skuProductOptions.standardOptionId;
-			}
-
-			if (sku === 'TRIAL') {
-				value = skuProductOptions.trialOptionId;
-			}
+		if (sku === 'DEVELOPER') {
+			value = skuProductOptions.developerOptionId;
 		}
-		else {
-			value = skuProductOptions.noOptionId;
+
+		if (sku === 'STANDARD') {
+			value = skuProductOptions.standardOptionId;
+		}
+
+		if (sku === 'TRIAL') {
+			value = skuProductOptions.trialOptionId;
 		}
 
 		payload.body.skuOptions[0].value = value;
@@ -214,60 +188,49 @@ export function ProvideVersionDetailsPage({
 	const createSkus = async (
 		skuProductOptions: Awaited<ReturnType<typeof createProductOptions>>
 	) => {
-		if (isDXP) {
-			for (const sku of getLicenceTypesObject()) {
-				const response = await createAppSKU(
-					getSkuBody(
-						sku.name,
-						skuProductOptions,
-						createSkuName(appProductId, appVersion, sku.code)
-					)
-				);
+		for (const sku of getLicenceTypesObject()) {
+			const response = await createAppSKU(
+				getSkuBody(
+					sku.name,
+					skuProductOptions,
+					createSkuName(appProductId, appVersion, sku.code)
+				)
+			);
 
-				if (sku.name === 'TRIAL') {
-					dispatch({
-						payload: {value: response.id},
-						type: TYPES.UPDATE_SKU_TRIAL_ID,
-					});
-				}
-
-				createVersionDescription(response.id);
+			if (sku.name === 'TRIAL') {
+				dispatch({
+					payload: {value: response.id},
+					type: TYPES.UPDATE_SKU_TRIAL_ID,
+				});
 			}
 
-			return;
+			createVersionDescription(response.id);
 		}
-		const sku = getSkuBody(
-			createSkuName(appProductId, appVersion),
-			skuProductOptions
-		);
-
-		const response = await createAppSKU(sku);
-
-		createVersionDescription(response.id);
-
-		dispatch({
-			payload: {value: response.id},
-			type: TYPES.UPDATE_SKU_VERSION_ID,
-		});
 	};
 
 	return (
 		<div className="provide-version-details-page-container">
 			<div className="provide-version-details-page-header">
 				<Header
-					description="Define version information for your app. This will inform users about this version's updates on the storefront."
-					title="Provide version details"
+					description={i18n.translate(
+						'define-version-information-for-your-app-this-will-inform-users-about-this-versions-updates-on-the-storefront'
+					)}
+					title={i18n.translate('provide-version-details')}
 				/>
 			</div>
 
 			<Section
-				label="App Version"
-				tooltip="When adding app versions, you can use your own numbering system, but be sure it is consistent and understandable by the customer."
-				tooltipText="More Info"
+				label={i18n.translate('app-version')}
+				tooltip={i18n.translate(
+					'when-adding-app-versions-you-can-use-your-own-numbering-system-but-be-sure-it-is-consistent-and-understandable-by-the-customer'
+				)}
+				tooltipText={i18n.translate('more-info')}
 			>
 				<Input
-					helpMessage="This is the first version of the app to be published"
-					label="Version"
+					helpMessage={i18n.translate(
+						'this-is-the-first-version-of-the-app-to-be-published'
+					)}
+					label={i18n.translate('version')}
 					onChange={({target}) =>
 						dispatch({
 							payload: {value: target.value},
@@ -276,22 +239,26 @@ export function ProvideVersionDetailsPage({
 					}
 					placeholder="0.0.0"
 					required
-					tooltip={`Specify your app's version. This will help the user to understand the latest version of your app offered on the Marketplace.`}
+					tooltip={i18n.translate(
+						'specify-your-apps-version-this-will-help-the-user-to-understand-the-latest-version-of-your-app-offered-on-the-marketplace'
+					)}
 					value={appVersion}
 				/>
 
 				<Input
 					component="textarea"
-					label="Notes"
+					label={i18n.translate('notes')}
 					onChange={({target}) =>
 						dispatch({
 							payload: {value: target.value},
 							type: TYPES.UPDATE_APP_NOTES,
 						})
 					}
-					placeholder="Enter app description"
+					placeholder={i18n.translate('enter-app-description')}
 					required
-					tooltip="Notes pertaining to the release of the project. These will be displayed when the customer goes to purchase and/or update the app."
+					tooltip={i18n.translate(
+						'notes-pertaining-to-the-release-of-the-project-these-will-be-displayed-when-the-customer-goes-to-purchase-and-or-update-the-app'
+					)}
 					value={appNotes}
 				/>
 			</Section>

@@ -11,9 +11,14 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
+import com.liferay.headless.admin.user.client.dto.v1_0.CustomValue;
 import com.liferay.headless.admin.user.client.dto.v1_0.Organization;
-import com.liferay.headless.admin.user.client.pagination.Page;
-import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
@@ -23,6 +28,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -36,6 +42,8 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -116,9 +124,76 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress()
+		throws Exception {
+
+		Organization organization = _addOrganization(randomOrganization(), "0");
+		User user = UserTestUtil.addUser();
+
+		_organizationLocalService.addUserOrganization(
+			user.getUserId(), GetterUtil.getLong(organization.getId()));
+
+		Assert.assertTrue(
+			_organizationLocalService.hasUserOrganization(
+				user.getUserId(), GetterUtil.getLong(organization.getId())));
+
+		organizationResource.
+			deleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress(
+				organization.getExternalReferenceCode(),
+				user.getEmailAddress());
+
+		Assert.assertFalse(
+			_organizationLocalService.hasUserOrganization(
+				user.getUserId(), GetterUtil.getLong(organization.getId())));
+	}
+
+	@Override
+	@Test
+	public void testDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress()
+		throws Exception {
+
+		Organization organization = _addOrganization(randomOrganization(), "0");
+
+		long organizationId = GetterUtil.getLong(organization.getId());
+
+		List<User> users = Arrays.asList(
+			UserTestUtil.addUser(), UserTestUtil.addUser(),
+			UserTestUtil.addUser(), UserTestUtil.addUser());
+
+		_userLocalService.addOrganizationUsers(organizationId, users);
+
+		for (User user : users) {
+			Assert.assertTrue(
+				_userLocalService.hasOrganizationUser(
+					organizationId, user.getUserId()));
+		}
+
+		List<User> removeUsers = users.subList(0, 2);
+
+		organizationResource.
+			deleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress(
+				organization.getExternalReferenceCode(),
+				_toEmailAddresses(removeUsers));
+
+		for (User user : removeUsers) {
+			Assert.assertFalse(
+				_userLocalService.hasOrganizationUser(
+					organizationId, user.getUserId()));
+		}
+
+		List<User> keepUsers = users.subList(2, 4);
+
+		for (User user : keepUsers) {
+			Assert.assertTrue(
+				_userLocalService.hasOrganizationUser(
+					organizationId, user.getUserId()));
+		}
+	}
+
+	@Override
+	@Test
 	public void testDeleteUserAccountByEmailAddress() throws Exception {
-		Organization organization = _toOrganization(
-			_addOrganization(randomOrganization(), "0"));
+		Organization organization = _addOrganization(randomOrganization(), "0");
 		User user = UserTestUtil.addUser();
 
 		_organizationLocalService.addUserOrganization(
@@ -139,8 +214,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	@Override
 	@Test
 	public void testDeleteUserAccountsByEmailAddress() throws Exception {
-		Organization organization = _toOrganization(
-			_addOrganization(randomOrganization(), "0"));
+		Organization organization = _addOrganization(randomOrganization(), "0");
 
 		long organizationId = GetterUtil.getLong(organization.getId());
 
@@ -209,41 +283,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				fetchAccountEntryOrganizationRel(
 					_accountEntry.getAccountEntryId(),
 					organization.getOrganizationId()));
-	}
-
-	@Override
-	@Test
-	public void testGetOrganizationsPage() throws Exception {
-		Page<Organization> page = organizationResource.getOrganizationsPage(
-			null, RandomTestUtil.randomString(), null, Pagination.of(1, 2),
-			null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
-		Organization organization1 = testGetOrganizationsPage_addOrganization(
-			randomOrganization());
-		Organization organization2 = testGetOrganizationsPage_addOrganization(
-			randomOrganization());
-
-		page = organizationResource.getOrganizationsPage(
-			null, null, null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(organization1, organization2),
-			(List<Organization>)page.getItems());
-		assertValid(page);
-
-		_userLocalService.deleteOrganizationUser(
-			GetterUtil.getLong(organization1.getId()), _user.getUserId());
-
-		organizationResource.deleteOrganization(organization1.getId());
-
-		_userLocalService.deleteOrganizationUser(
-			GetterUtil.getLong(organization2.getId()), _user.getUserId());
-
-		organizationResource.deleteOrganization(organization2.getId());
 	}
 
 	@Ignore
@@ -334,15 +373,68 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	public void testPostOrganization() throws Exception {
 		super.testPostOrganization();
 
+		_testPostOrganizationWithCustomFields();
 		_testPostOrganizationWithNameOverMaximumLength();
 		_testPostOrganizationWithImageExternalReferenceCode();
 	}
 
 	@Override
 	@Test
+	public void testPostOrganizationByExternalReferenceCodeUserAccountByEmailAddress()
+		throws Exception {
+
+		Organization organization = _addOrganization(randomOrganization(), "0");
+		User user = UserTestUtil.addUser();
+
+		Assert.assertFalse(
+			_organizationLocalService.hasUserOrganization(
+				user.getUserId(), GetterUtil.getLong(organization.getId())));
+
+		organizationResource.
+			postOrganizationByExternalReferenceCodeUserAccountByEmailAddress(
+				organization.getExternalReferenceCode(),
+				user.getEmailAddress());
+
+		Assert.assertTrue(
+			_organizationLocalService.hasUserOrganization(
+				user.getUserId(), GetterUtil.getLong(organization.getId())));
+	}
+
+	@Override
+	@Test
+	public void testPostOrganizationByExternalReferenceCodeUserAccountsByEmailAddress()
+		throws Exception {
+
+		Organization organization = _addOrganization(randomOrganization(), "0");
+
+		long organizationId = GetterUtil.getLong(organization.getId());
+
+		List<User> users = Arrays.asList(
+			UserTestUtil.addUser(), UserTestUtil.addUser(),
+			UserTestUtil.addUser(), UserTestUtil.addUser());
+
+		for (User user : users) {
+			Assert.assertFalse(
+				_userLocalService.hasOrganizationUser(
+					organizationId, user.getUserId()));
+		}
+
+		organizationResource.
+			postOrganizationByExternalReferenceCodeUserAccountsByEmailAddress(
+				organization.getExternalReferenceCode(), null,
+				_toEmailAddresses(users));
+
+		for (User user : users) {
+			Assert.assertTrue(
+				_userLocalService.hasOrganizationUser(
+					organizationId, user.getUserId()));
+		}
+	}
+
+	@Override
+	@Test
 	public void testPostUserAccountByEmailAddress() throws Exception {
-		Organization organization = _toOrganization(
-			_addOrganization(randomOrganization(), "0"));
+		Organization organization = _addOrganization(randomOrganization(), "0");
 		User user = UserTestUtil.addUser();
 
 		Assert.assertFalse(
@@ -360,8 +452,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	@Override
 	@Test
 	public void testPostUserAccountsByEmailAddress() throws Exception {
-		Organization organization = _toOrganization(
-			_addOrganization(randomOrganization(), "0"));
+		Organization organization = _addOrganization(randomOrganization(), "0");
 
 		long organizationId = GetterUtil.getLong(organization.getId());
 
@@ -403,7 +494,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"name"};
+		return new String[] {"name", "externalReferenceCode"};
 	}
 
 	@Override
@@ -449,11 +540,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	protected Organization testDeleteOrganization_addOrganization()
 		throws Exception {
 
-		Organization organization = randomOrganization();
-
-		return _toOrganization(
-			_organizationLocalService.addOrganization(
-				_user.getUserId(), 0, organization.getName(), true));
+		return _addOrganization(randomOrganization(), "0");
 	}
 
 	@Override
@@ -512,7 +599,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	protected Organization testGetOrganization_addOrganization()
 		throws Exception {
 
-		return _addUserOrganization(_user.getUserId(), randomOrganization());
+		return _addOrganization(randomOrganization(), "0");
 	}
 
 	@Override
@@ -527,12 +614,35 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 	@Override
 	protected Organization
+			testGetOrganizationByExternalReferenceCodeChildOrganizationsPage_addOrganization(
+				String externalReferenceCode, Organization organization)
+		throws Exception {
+
+		Organization parentOrganization =
+			organizationResource.getOrganizationByExternalReferenceCode(
+				externalReferenceCode);
+
+		return _addOrganization(organization, parentOrganization.getId());
+	}
+
+	@Override
+	protected String
+			testGetOrganizationByExternalReferenceCodeChildOrganizationsPage_getExternalReferenceCode()
+		throws Exception {
+
+		Organization organization = organizationResource.postOrganization(
+			randomOrganization());
+
+		return organization.getExternalReferenceCode();
+	}
+
+	@Override
+	protected Organization
 			testGetOrganizationChildOrganizationsPage_addOrganization(
 				String parentOrganizationId, Organization organization)
 		throws Exception {
 
-		return _toOrganization(
-			_addOrganization(organization, parentOrganizationId));
+		return _addOrganization(organization, parentOrganizationId);
 	}
 
 	@Override
@@ -551,8 +661,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			String parentOrganizationId, Organization organization)
 		throws Exception {
 
-		return _toOrganization(
-			_addOrganization(organization, parentOrganizationId));
+		return _addOrganization(organization, parentOrganizationId);
 	}
 
 	@Override
@@ -560,10 +669,9 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			testGetOrganizationOrganizationsPage_getParentOrganizationId()
 		throws Exception {
 
-		com.liferay.portal.kernel.model.Organization organization =
-			_addOrganization(randomOrganization(), "0");
+		Organization organization = _addOrganization(randomOrganization(), "0");
 
-		return String.valueOf(organization.getOrganizationId());
+		return String.valueOf(organization.getId());
 	}
 
 	@Override
@@ -571,21 +679,21 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			Organization organization)
 		throws Exception {
 
-		return _addUserOrganization(_user.getUserId(), organization);
+		return _addOrganization(organization, "0");
 	}
 
 	@Override
 	protected Organization testGraphQLOrganization_addOrganization()
 		throws Exception {
 
-		return _toOrganization(_addOrganization(randomOrganization(), "0"));
+		return _addOrganization(randomOrganization(), "0");
 	}
 
 	@Override
 	protected Organization testPatchOrganization_addOrganization()
 		throws Exception {
 
-		return _addUserOrganization(_user.getUserId(), randomOrganization());
+		return _addOrganization(randomOrganization(), "0");
 	}
 
 	@Override
@@ -621,14 +729,14 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			Organization organization)
 		throws Exception {
 
-		return _addUserOrganization(_user.getUserId(), organization);
+		return _addOrganization(organization, "0");
 	}
 
 	@Override
 	protected Organization testPutOrganization_addOrganization()
 		throws Exception {
 
-		return _addUserOrganization(_user.getUserId(), randomOrganization());
+		return _addOrganization(randomOrganization(), "0");
 	}
 
 	@Override
@@ -664,36 +772,20 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
-	private com.liferay.portal.kernel.model.Organization _addOrganization(
+	private Organization _addOrganization(
 			Organization organization, String parentOrganizationId)
 		throws Exception {
 
-		com.liferay.portal.kernel.model.Organization
-			serviceBuilderOrganization =
-				_organizationLocalService.addOrganization(
-					_user.getUserId(), GetterUtil.getLong(parentOrganizationId),
-					organization.getName(), true);
-
-		serviceBuilderOrganization.setExternalReferenceCode(
-			organization.getExternalReferenceCode());
-
-		return _organizationLocalService.updateOrganization(
-			serviceBuilderOrganization);
-	}
-
-	private Organization _addUserOrganization(
-			Long userAccountId, Organization organization)
-		throws Exception {
-
-		Organization parentOrganization = _toOrganization(
-			_addOrganization(organization, "0"));
-
-		if (userAccountId != null) {
-			_userLocalService.addOrganizationUser(
-				GetterUtil.getLong(parentOrganization.getId()), userAccountId);
+		if (Validator.isNotNull(parentOrganizationId)) {
+			organization.setParentOrganization(
+				new Organization() {
+					{
+						id = parentOrganizationId;
+					}
+				});
 		}
 
-		return parentOrganization;
+		return organizationResource.postOrganization(organization);
 	}
 
 	private void _testPatchOrganizationByExternalReferenceCodeWithImageExternalReferenceCode()
@@ -737,6 +829,61 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			postOrganization.getId(), randomPatchOrganization);
 
 		Assert.assertTrue(patchOrganization.getImageId() > 0);
+	}
+
+	private void _testPostOrganizationWithCustomFields() throws Exception {
+		ExpandoTable expandoTable = _expandoTableLocalService.addTable(
+			testGroup.getCompanyId(),
+			_classNameLocalService.getClassNameId(
+				com.liferay.portal.kernel.model.Organization.class),
+			"CUSTOM_FIELDS");
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.addColumn(
+			expandoTable.getTableId(), "A" + RandomTestUtil.randomString(),
+			ExpandoColumnConstants.STRING);
+
+		UnicodeProperties unicodeProperties =
+			expandoColumn.getTypeSettingsProperties();
+
+		unicodeProperties.setProperty(
+			ExpandoColumnConstants.INDEX_TYPE,
+			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
+
+		expandoColumn.setTypeSettingsProperties(unicodeProperties);
+
+		_expandoColumnLocalService.updateExpandoColumn(expandoColumn);
+
+		Organization randomOrganization = randomOrganization();
+
+		String value = RandomTestUtil.randomString();
+
+		randomOrganization.setCustomFields(
+			() -> new CustomField[] {
+				new CustomField() {
+					{
+						customValue = new CustomValue() {
+							{
+								data = value;
+							}
+						};
+						dataType = "Text";
+						name = expandoColumn.getName();
+					}
+				}
+			});
+
+		Organization postOrganization = testPostOrganization_addOrganization(
+			randomOrganization);
+
+		assertEquals(randomOrganization, postOrganization);
+		assertValid(postOrganization);
+		Assert.assertNotNull(postOrganization.getCustomFields());
+
+		CustomField postOrganizationCustomField =
+			postOrganization.getCustomFields()[0];
+
+		Assert.assertEquals(
+			expandoColumn.getName(), postOrganizationCustomField.getName());
 	}
 
 	private void _testPostOrganizationWithImageExternalReferenceCode()
@@ -817,20 +964,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			users, User::getEmailAddress, String.class);
 	}
 
-	private Organization _toOrganization(
-		com.liferay.portal.kernel.model.Organization organization) {
-
-		return new Organization() {
-			{
-				dateCreated = organization.getCreateDate();
-				dateModified = organization.getModifiedDate();
-				externalReferenceCode = organization.getExternalReferenceCode();
-				id = String.valueOf(organization.getOrganizationId());
-				name = organization.getName();
-			}
-		};
-	}
-
 	private AccountEntry _accountEntry;
 
 	@Inject
@@ -841,7 +974,16 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		_accountEntryOrganizationRelLocalService;
 
 	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Inject
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;

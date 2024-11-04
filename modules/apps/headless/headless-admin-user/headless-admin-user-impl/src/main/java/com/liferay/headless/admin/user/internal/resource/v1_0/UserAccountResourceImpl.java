@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ContactLocalService;
+import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -335,6 +336,22 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		return _toUserAccount(
 			_userService.getUserById(permissionChecker.getUserId()));
+	}
+
+	@Override
+	public Page<UserAccount>
+			getOrganizationByExternalReferenceCodeUserAccountsPage(
+				String externalReferenceCode, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		Organization organization =
+			_organizationService.getOrganizationByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		return getOrganizationUserAccountsPage(
+			String.valueOf(organization.getOrganizationId()), search, filter,
+			pagination, sorts);
 	}
 
 	@NestedField(
@@ -1805,6 +1822,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	private DTOConverter
 		<Organization, com.liferay.headless.admin.user.dto.v1_0.Organization>
 			_organizationOrganizationDTOConverter;
+
+	@Reference
+	private OrganizationService _organizationService;
 
 	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;

@@ -186,6 +186,51 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteOrganizationByExternalReferenceCodeAccounts()
+		throws Exception {
+
+		List<AccountEntry> accountEntries = Arrays.asList(
+			_addAccountEntry(), _addAccountEntry(), _addAccountEntry());
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		for (AccountEntry accountEntry : accountEntries) {
+			_accountEntryOrganizationRelLocalService.
+				addAccountEntryOrganizationRel(
+					accountEntry.getAccountEntryId(),
+					organization.getOrganizationId());
+		}
+
+		Assert.assertEquals(
+			3,
+			_accountEntryOrganizationRelLocalService.
+				getAccountEntryOrganizationRelsCountByOrganizationId(
+					organization.getOrganizationId()));
+
+		Long[] accountEntryIds = ListUtil.toArray(
+			accountEntries.subList(1, accountEntries.size()),
+			AccountEntry.ACCOUNT_ENTRY_ID_ACCESSOR);
+
+		accountResource.deleteOrganizationByExternalReferenceCodeAccounts(
+			organization.getExternalReferenceCode(), accountEntryIds);
+
+		Assert.assertEquals(
+			1,
+			_accountEntryOrganizationRelLocalService.
+				getAccountEntryOrganizationRelsCountByOrganizationId(
+					organization.getOrganizationId()));
+
+		AccountEntry accountEntry = accountEntries.get(0);
+
+		Assert.assertTrue(
+			_accountEntryOrganizationRelLocalService.
+				hasAccountEntryOrganizationRel(
+					accountEntry.getAccountEntryId(),
+					organization.getOrganizationId()));
+	}
+
+	@Override
+	@Test
 	public void testDeleteOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountByExternalReferenceCode()
 		throws Exception {
 
@@ -451,6 +496,36 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 	@Override
 	@Test
+	public void testPostOrganizationByExternalReferenceCodeAccounts()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Assert.assertEquals(
+			0,
+			_accountEntryOrganizationRelLocalService.
+				getAccountEntryOrganizationRelsCountByOrganizationId(
+					organization.getOrganizationId()));
+
+		List<AccountEntry> accountEntries = Arrays.asList(
+			_addAccountEntry(), _addAccountEntry(), _addAccountEntry());
+
+		Long[] accountEntryIds = ListUtil.toArray(
+			accountEntries, AccountEntry.ACCOUNT_ENTRY_ID_ACCESSOR);
+
+		accountResource.postOrganizationByExternalReferenceCodeAccounts(
+			organization.getExternalReferenceCode(), accountEntryIds);
+
+		for (Long accountEntryId : accountEntryIds) {
+			Assert.assertTrue(
+				_accountEntryOrganizationRelLocalService.
+					hasAccountEntryOrganizationRel(
+						accountEntryId, organization.getOrganizationId()));
+		}
+	}
+
+	@Override
+	@Test
 	public void testPostOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountByExternalReferenceCode()
 		throws Exception {
 
@@ -628,6 +703,30 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
 		return String.valueOf(organization.getOrganizationId());
+	}
+
+	@Override
+	protected Account
+			testGetOrganizationByExternalReferenceCodeAccountsPage_addAccount(
+				String externalReferenceCode, Account account)
+		throws Exception {
+
+		Account postAccount = accountResource.postAccount(account);
+
+		accountResource.postOrganizationByExternalReferenceCodeAccounts(
+			externalReferenceCode, new Long[] {postAccount.getId()});
+
+		return postAccount;
+	}
+
+	@Override
+	protected String
+			testGetOrganizationByExternalReferenceCodeAccountsPage_getExternalReferenceCode()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		return organization.getExternalReferenceCode();
 	}
 
 	@Override

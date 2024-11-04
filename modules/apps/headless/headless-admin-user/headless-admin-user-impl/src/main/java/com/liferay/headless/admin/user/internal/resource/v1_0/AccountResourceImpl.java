@@ -145,6 +145,19 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	}
 
 	@Override
+	public void deleteOrganizationByExternalReferenceCodeAccounts(
+			String externalReferenceCode, Long[] accountIds)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.Organization organization =
+			_organizationService.getOrganizationByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		deleteOrganizationAccounts(
+			organization.getOrganizationId(), accountIds);
+	}
+
+	@Override
 	public void
 			deleteOrganizationByExternalReferenceCodeOrganizationExternalReferenceCodeAccountByExternalReferenceCode(
 				String organizationExternalReferenceCode,
@@ -309,6 +322,21 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 					BooleanClauseOccur.MUST);
 			},
 			search, filter, pagination, sorts);
+	}
+
+	@Override
+	public Page<Account> getOrganizationByExternalReferenceCodeAccountsPage(
+			String externalReferenceCode, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.Organization organization =
+			_organizationService.getOrganizationByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		return getOrganizationAccountsPage(
+			String.valueOf(organization.getOrganizationId()), search, filter,
+			pagination, sorts);
 	}
 
 	@Override
@@ -502,6 +530,18 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 						_accountResourceDTOConverter, externalReferenceCode),
 					organizationId);
 		}
+	}
+
+	@Override
+	public void postOrganizationByExternalReferenceCodeAccounts(
+			String externalReferenceCode, Long[] accountIds)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.Organization organization =
+			_organizationService.getOrganizationByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		postOrganizationAccounts(organization.getOrganizationId(), accountIds);
 	}
 
 	@Override

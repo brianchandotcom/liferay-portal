@@ -70,9 +70,9 @@ import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
 import {formIsUnavailable} from '../../../../../app/utils/formIsUnavailable';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
-import getNormalizedDragItems from '../../../../../app/utils/getNormalizedDragItems';
 import isItemWidget from '../../../../../app/utils/isItemWidget';
 import loadCollectionFields from '../../../../../app/utils/loadCollectionFields';
+import toMovementItem from '../../../../../app/utils/toMovementItem';
 
 const HOVER_EXPAND_DELAY = 1000;
 
@@ -214,13 +214,12 @@ function StructureTreeNodeContent({
 	);
 
 	const dragItems = useSelectorCallback(
-		(state) =>
-			getNormalizedDragItems(
-				item,
-				activeItemIds,
-				state.layoutData,
-				state.fragmentEntryLinks
+		(state) => [
+			...toMovementItem(item, state.layoutData, state.fragmentEntryLinks),
+			activeItemIds.map((id) =>
+				toMovementItem(id, state.layoutData, state.fragmentEntryLinks)
 			),
+		],
 		[item, activeItemIds],
 		deepEqual
 	);

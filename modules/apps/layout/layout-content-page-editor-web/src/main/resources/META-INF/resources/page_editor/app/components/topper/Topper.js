@@ -51,8 +51,8 @@ import {
 	useDropTarget,
 	useIsDroppable,
 } from '../../utils/drag_and_drop/useDragAndDrop';
-import getNormalizedDragItems from '../../utils/getNormalizedDragItems';
 import isStepper from '../../utils/isStepper';
+import toMovementItem from '../../utils/toMovementItem';
 import useDropContainerId from '../../utils/useDropContainerId';
 import TopperItemActions from './TopperItemActions';
 import {TopperLabel} from './TopperLabel';
@@ -147,13 +147,12 @@ function TopperContent({
 	);
 
 	const dragSources = useSelectorCallback(
-		(state) =>
-			getNormalizedDragItems(
-				item,
-				activeItemIds,
-				state.layoutData,
-				state.fragmentEntryLinks
+		(state) => [
+			...toMovementItem(item, state.layoutData, state.fragmentEntryLinks),
+			activeItemIds.map((id) =>
+				toMovementItem(id, state.layoutData, state.fragmentEntryLinks)
 			),
+		],
 		[item, activeItemIds],
 		deepEqual
 	);

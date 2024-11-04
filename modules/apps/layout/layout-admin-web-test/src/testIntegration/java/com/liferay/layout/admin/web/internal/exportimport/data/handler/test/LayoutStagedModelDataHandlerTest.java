@@ -324,14 +324,15 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	@Test
-	@TestInfo("LPS-198068")
+	@TestInfo({"LPS-125564", "LPS-198068", "LPS-98030"})
 	public void testExportImportWithFileEntryContentReference()
 		throws Exception {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
 
-		long segmentsExperienceId = _segmentsExperienceLocalService.
-			fetchDefaultSegmentsExperienceId(layout.getPlid());
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
 
 		ContentLayoutTestUtil.addItemToLayout(
 			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER,
@@ -350,43 +351,16 @@ public class LayoutStagedModelDataHandlerTest
 			importedLayout, _layoutServiceContextHelper,
 			_layoutStructureProvider, importedLayoutSegmentsExperienceId);
 
-		Locale locale = _portal.getSiteDefaultLocale(stagingGroup);
-
-		String languageId = LocaleUtil.toLanguageId(locale);
-
 		FileEntry fileEntry = _addFileEntry(
 			ServiceContextTestUtil.getServiceContext(
 				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
+		String languageId = LocaleUtil.toLanguageId(
+			_portal.getSiteDefaultLocale(stagingGroup));
+
 		FragmentEntryLink draftLayoutFragmentEntryLink =
 			_addFragmentEntryLinkToLayout(
-				JSONUtil.put(
-					"image-square",
-					JSONUtil.put(
-						languageId,
-						JSONUtil.put(
-							"classNameId",
-							_portal.getClassNameId(FileEntry.class)
-						).put(
-							"classPK", fileEntry.getFileEntryId()
-						).put(
-							"fileEntryId", fileEntry.getFileEntryId()
-						).put(
-							"url",
-							_dlURLHelper.getPreviewURL(
-								fileEntry, fileEntry.getFileVersion(), null,
-								StringPool.BLANK, false, false)
-						)
-					).put(
-						"config",
-						JSONUtil.put(
-							"href",
-							JSONUtil.put(languageId, "https://www.liferay.com/")
-						).put(
-							"mapperType", "link"
-						)
-					)),
-				"BASIC_COMPONENT-image", layout.fetchDraftLayout(),
+				fileEntry, languageId, layout.fetchDraftLayout(),
 				segmentsExperienceId);
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
@@ -396,6 +370,10 @@ public class LayoutStagedModelDataHandlerTest
 				stagingGroup.getGroupId(),
 				draftLayoutFragmentEntryLink.getFragmentEntryLinkId(),
 				layout.getPlid()));
+
+		_updateDraftLayout(
+			fileEntry, draftLayoutFragmentEntryLink.getFragmentEntryLinkId(),
+			languageId, layout, segmentsExperienceId);
 
 		Assert.assertEquals(
 			content,
@@ -430,6 +408,14 @@ public class LayoutStagedModelDataHandlerTest
 							StringPool.BLANK)),
 					"\" data-fileentryid=\"",
 					importedFileEntry.getFileEntryId(), "\"></a>"),
+				StringPool.BLANK));
+
+		Assert.assertFalse(
+			curContent,
+			StringUtil.contains(
+				curContent,
+				"style=\"--background-image-file-entry-id:" +
+					importedFileEntry.getFileEntryId(),
 				StringPool.BLANK));
 	}
 
@@ -1393,6 +1379,40 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(
+			FileEntry fileEntry, String languageId, Layout layout,
+			long segmentsExperienceId)
+		throws Exception {
+
+		return _addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				"image-square",
+				JSONUtil.put(
+					languageId,
+					JSONUtil.put(
+						"classNameId", _portal.getClassNameId(FileEntry.class)
+					).put(
+						"classPK", fileEntry.getFileEntryId()
+					).put(
+						"fileEntryId", fileEntry.getFileEntryId()
+					).put(
+						"url",
+						_dlURLHelper.getPreviewURL(
+							fileEntry, fileEntry.getFileVersion(), null,
+							StringPool.BLANK, false, false)
+					)
+				).put(
+					"config",
+					JSONUtil.put(
+						"href",
+						JSONUtil.put(languageId, "https://www.liferay.com/")
+					).put(
+						"mapperType", "link"
+					)
+				)),
+			"BASIC_COMPONENT-image", layout, segmentsExperienceId);
+	}
+
+	private FragmentEntryLink _addFragmentEntryLinkToLayout(
 			JSONObject editableJSONObject, Layout layout,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -1510,37 +1530,67 @@ public class LayoutStagedModelDataHandlerTest
 			FileEntry fileEntry, String languageId, Layout layout)
 		throws Exception {
 
-		JSONObject expectedEditableJSONObject = JSONUtil.put(
-			"image-square",
-			JSONUtil.put(
-				languageId,
-				JSONUtil.put(
-					"className", FileEntry.class.getName()
-				).put(
-					"classNameId",
-					String.valueOf(_portal.getClassNameId(FileEntry.class))
-				).put(
-					"classPK", fileEntry.getFileEntryId()
-				).put(
-					"fileEntryId", fileEntry.getFileEntryId()
-				).put(
-					"url",
-					_dlURLHelper.getPreviewURL(
-						fileEntry, fileEntry.getFileVersion(), null,
-						StringPool.BLANK, false, false)
-				)
-			).put(
-				"config",
-				JSONUtil.put(
-					"href", JSONUtil.put(languageId, "https://www.liferay.com/")
-				).put(
-					"mapperType", "link"
-				)
-			));
-
-		_assertLayoutContentReferences(expectedEditableJSONObject, layout);
 		_assertLayoutContentReferences(
-			expectedEditableJSONObject, layout.fetchDraftLayout());
+			JSONUtil.put(
+				"image-square",
+				JSONUtil.put(
+					languageId,
+					JSONUtil.put(
+						"className", FileEntry.class.getName()
+					).put(
+						"classNameId",
+						String.valueOf(_portal.getClassNameId(FileEntry.class))
+					).put(
+						"classPK", fileEntry.getFileEntryId()
+					).put(
+						"fileEntryId", fileEntry.getFileEntryId()
+					).put(
+						"url",
+						_dlURLHelper.getPreviewURL(
+							fileEntry, fileEntry.getFileVersion(), null,
+							StringPool.BLANK, false, false)
+					)
+				).put(
+					"config",
+					JSONUtil.put(
+						"href",
+						JSONUtil.put(languageId, "https://www.liferay.com/")
+					).put(
+						"mapperType", "link"
+					)
+				)),
+			layout);
+
+		_assertLayoutContentReferences(
+			JSONUtil.put(
+				"image-square",
+				JSONUtil.put(
+					languageId,
+					JSONUtil.put(
+						"className", FileEntry.class.getName()
+					).put(
+						"classNameId",
+						String.valueOf(_portal.getClassNameId(FileEntry.class))
+					).put(
+						"classPK", fileEntry.getFileEntryId()
+					).put(
+						"fileEntryId", fileEntry.getFileEntryId()
+					).put(
+						"url",
+						_dlURLHelper.getPreviewURL(
+							fileEntry, fileEntry.getFileVersion(), null,
+							StringPool.BLANK, false, false)
+					)
+				).put(
+					"config",
+					JSONUtil.put(
+						"href",
+						JSONUtil.put(languageId, "https://learn.liferay.com/")
+					).put(
+						"mapperType", "link"
+					)
+				)),
+			layout.fetchDraftLayout());
 	}
 
 	private void _assertExportImportContentReference(
@@ -1936,6 +1986,66 @@ public class LayoutStagedModelDataHandlerTest
 				getClientExtensionEntryRelsCount(
 					_portal.getClassNameId(Layout.class),
 					importedLayout.getPlid(), type));
+	}
+
+	private void _updateDraftLayout(
+			FileEntry fileEntry, long fragmentEntryLinkId, String languageId,
+			Layout layout, long segmentsExperienceId)
+		throws Exception {
+
+		String url = _dlURLHelper.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+			false, false);
+
+		ContentLayoutTestUtil.addItemToLayout(
+			JSONUtil.put(
+				"styles",
+				JSONUtil.put(
+					"backgroundImage",
+					JSONUtil.put(
+						"classNameId", _portal.getClassNameId(FileEntry.class)
+					).put(
+						"classPK", fileEntry.getFileEntryId()
+					).put(
+						"fileEntryId", fileEntry.getFileEntryId()
+					).put(
+						"url", url
+					))
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER,
+			layout.fetchDraftLayout(), _layoutStructureProvider,
+			segmentsExperienceId);
+
+		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+			TestPropsValues.getUserId(), fragmentEntryLinkId,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"image-square",
+					JSONUtil.put(
+						languageId,
+						JSONUtil.put(
+							"classNameId",
+							_portal.getClassNameId(FileEntry.class)
+						).put(
+							"classPK", fileEntry.getFileEntryId()
+						).put(
+							"fileEntryId", fileEntry.getFileEntryId()
+						).put(
+							"url", url
+						)
+					).put(
+						"config",
+						JSONUtil.put(
+							"href",
+							JSONUtil.put(
+								languageId, "https://learn.liferay.com/")
+						).put(
+							"mapperType", "link"
+						)
+					))
+			).toString());
 	}
 
 	private void _updateJournalArticle(

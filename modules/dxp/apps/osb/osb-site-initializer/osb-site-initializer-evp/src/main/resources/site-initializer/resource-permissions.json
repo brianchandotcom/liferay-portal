@@ -9,8 +9,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:EVPGrantRequest$]",
 		"roleName": "Employee",

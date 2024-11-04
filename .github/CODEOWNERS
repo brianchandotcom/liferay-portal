@@ -48,9 +48,9 @@ modules/apps/bookmarks/    @liferay-content-management
 modules/apps/bulk/    @liferay-content-management
 modules/apps/calendar/    @liferay-bpm
 modules/apps/captcha/    @liferay-appsec
-modules/apps/change-tracking/
+modules/apps/change-tracking/    @liferay-site-management
 modules/apps/change-set/
-modules/apps/click-to-chat/
+modules/apps/click-to-chat/    @liferay-site-management
 modules/apps/client-extension/
 modules/apps/comment/    @liferay-content-management
 modules/apps/commerce/    @liferay-commerce
@@ -80,7 +80,7 @@ modules/apps/external-reference/
 modules/apps/feature-flag/    @liferay-platform-experience
 modules/apps/flags/    @liferay-content-management
 modules/apps/fragment/    @liferay-page-management
-modules/apps/friendly-url/
+modules/apps/friendly-url/    @liferay-site-management
 modules/apps/frontend-css/    @liferay-platform-experience
 modules/apps/frontend-css/frontend-css-rtl-servlet/    @liferay-frontend
 modules/apps/frontend-data-set/    @liferay-frontend
@@ -108,7 +108,7 @@ modules/apps/headless/headless-delivery/    @liferay-page-management
 modules/apps/headless/headless-discovery/    @liferay-headless
 modules/apps/headless/headless-form/    @liferay-bpm
 modules/apps/headless/headless-portal-instances/    @liferay-database-infra
-modules/apps/headless/headless-site/
+modules/apps/headless/headless-site/    @liferay-site-management
 modules/apps/headless/headless-user-notification/    @liferay-commerce
 modules/apps/iframe/    @liferay-page-management
 modules/apps/image-uploader/
@@ -216,7 +216,7 @@ modules/apps/portal-settings/portal-settings-web/    @liferay-platform-experienc
 modules/apps/portal-store/    @liferay-core-infra
 modules/apps/portal-template/    @liferay-core-infra
 modules/apps/portal-transaction/    @liferay-core-infra
-modules/apps/portal-url-builder/
+modules/apps/portal-url-builder/    @liferay-site-management
 modules/apps/portal-validation/
 modules/apps/portal-vulcan/    @liferay-headless
 modules/apps/portal-workflow/    @liferay-bpm
@@ -296,7 +296,7 @@ modules/apps/push-notifications/
 modules/apps/questions/    @liferay-content-management
 modules/apps/ratings/    @liferay-content-management
 modules/apps/reading-time/    @liferay-content-management
-modules/apps/redirect/
+modules/apps/redirect/    @liferay-site-management
 modules/apps/release-feature-flag/    @liferay-platform-experience
 modules/apps/repository/    @liferay-content-management
 modules/apps/roles/    @liferay-commerce
@@ -308,15 +308,20 @@ modules/apps/service-component/
 modules/apps/shared-dependencies/
 modules/apps/sharing/    @liferay-content-management
 modules/apps/site-initializer/
-modules/apps/site-navigation/
+modules/apps/site-initializer/site-initializer-extender/    @liferay-site-management
+modules/apps/site-navigation/    @liferay-site-management
 modules/apps/site-navigation/site-navigation-language-web    @liferay-page-management
-modules/apps/site/
+modules/apps/site/    @liferay-site-management
+modules/apps/site/site-cms-site-initializer/
+modules/apps/site/site-demo-data-creator-api/
+modules/apps/site/site-demo-data-creator-impl/
 modules/apps/site/site-teams-item-selector-api/    @liferay-commerce
 modules/apps/site/site-teams-item-selector-web/    @liferay-commerce
 modules/apps/site/site-teams-test/    @liferay-commerce
 modules/apps/site/site-teams-uad-test/    @liferay-commerce
 modules/apps/site/site-teams-uad/    @liferay-commerce
 modules/apps/site/site-teams-web/    @liferay-commerce
+modules/apps/site/site-welcome-site-initializer/
 modules/apps/social/    @liferay-content-management
 modules/apps/staging/    @liferay-headless
 modules/apps/static/

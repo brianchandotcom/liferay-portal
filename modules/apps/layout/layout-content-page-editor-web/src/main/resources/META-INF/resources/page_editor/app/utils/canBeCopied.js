@@ -10,7 +10,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import checkAllowedChild from './drag_and_drop/checkAllowedChild';
 import {formIsMapped} from './formIsMapped';
 import {isUnmappedCollection} from './isUnmappedCollection';
-import normalizeSourceItem from './normalizeSourceItem';
+import toMovementItem from './toMovementItem';
 
 const PARENT_TYPES = [
 	LAYOUT_DATA_ITEM_TYPES.column,
@@ -52,13 +52,13 @@ export default function canBeCopied(
 	layoutData,
 	getWidgets
 ) {
-	const source = normalizeSourceItem(
+	const source = toMovementItem(
 		layoutData.items[copiedItemId],
 		layoutData,
 		fragmentEntryLinks
 	);
 
-	const target = normalizeSourceItem(
+	const target = toMovementItem(
 		layoutData.items[parentItemId],
 		layoutData,
 		fragmentEntryLinks

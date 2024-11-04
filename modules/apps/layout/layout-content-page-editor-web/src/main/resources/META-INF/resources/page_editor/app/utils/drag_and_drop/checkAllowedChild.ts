@@ -27,10 +27,11 @@ import {isMultistepForm} from '../isMultistepForm';
 import isStepper from '../isStepper';
 import {isUnmappedCollection} from '../isUnmappedCollection';
 
-type DragAndDropItem = LayoutDataItem & {
+export type MovementItem = LayoutDataItem & {
 	fieldTypes: FragmentEntryLink['fieldTypes'];
-	fragmentEntryType: FragmentEntryLink['fragmentEntryType'];
+	fragmentEntryType: FragmentEntryLink['fragmentEntryType'] | null;
 	isWidget: boolean;
+	name: string;
 	portletId?: string;
 };
 
@@ -113,8 +114,8 @@ const LAYOUT_DATA_CHECK_ALLOWED_CHILDREN = {
  * Checks if the given child can be nested inside given parent
  */
 export default function checkAllowedChild(
-	child: DragAndDropItem,
-	parent: DragAndDropItem,
+	child: MovementItem,
+	parent: MovementItem,
 	layoutData: LayoutData,
 	fragmentEntryLinks: FragmentEntryLinkMap,
 	getWidgets: () => WidgetSet[]

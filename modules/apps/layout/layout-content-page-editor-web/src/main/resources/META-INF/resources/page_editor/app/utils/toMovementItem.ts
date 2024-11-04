@@ -7,16 +7,18 @@ import {FragmentLayoutDataItem} from '../../types/layout_data/FragmentLayoutData
 import {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import selectLayoutDataItemLabel from '../selectors/selectLayoutDataItemLabel';
+import {MovementItem} from './drag_and_drop/checkAllowedChild';
 import isItemWidget from './isItemWidget';
 
 import type {LayoutData} from '../../types/layout_data/LayoutData';
 
-export default function normalizeSourceItem(
+export default function toMovementItem(
 	item: FragmentLayoutDataItem,
 	layoutData: LayoutData,
 	fragmentEntryLinks: FragmentEntryLinkMap
-) {
+): MovementItem {
 	const isWidget = isItemWidget(item, fragmentEntryLinks);
+
 	const name = selectLayoutDataItemLabel(
 		{
 			fragmentEntryLinks,

@@ -34,14 +34,7 @@ public class BrandNameCheck extends BaseCheck {
 		}
 
 		String name = getName(detailAST);
-
-		String tokenTypeName = StringUtil.toLowerCase(detailAST.getText());
-
-		int pos = tokenTypeName.indexOf("_");
-
-		if (pos != -1) {
-			tokenTypeName = tokenTypeName.substring(0, pos);
-		}
+		String tokenTypeName = getTokenTypeName(detailAST);
 
 		for (String brandName : _BRAND_NAMES) {
 			String lowerCaseBrandName = StringUtil.toLowerCase(brandName);

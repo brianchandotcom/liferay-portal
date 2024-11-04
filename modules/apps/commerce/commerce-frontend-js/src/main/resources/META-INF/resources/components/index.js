@@ -29,6 +29,7 @@ export {default as ItemFinder} from './item_finder/entry';
 export {default as MiniCartContext} from './mini_cart/MiniCartContext';
 export {default as MiniCart} from './mini_cart/entry';
 export {default as Modal} from './modal/entry';
+export {default as Multishipping} from './multishipping/Multishipping';
 export {default as Price} from './price/entry';
 export {default as ProductOptionCheckbox} from './product_options/ProductOptionCheckbox';
 export {default as ProductOptionCheckboxMultiple} from './product_options/ProductOptionCheckboxMultiple';

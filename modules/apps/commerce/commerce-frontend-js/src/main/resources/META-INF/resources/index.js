@@ -27,6 +27,7 @@ export {
 	MiniCart,
 	MiniCartContext,
 	Modal,
+	Multishipping,
 	Price,
 	ProductOptionCheckbox,
 	ProductOptionCheckboxMultiple,

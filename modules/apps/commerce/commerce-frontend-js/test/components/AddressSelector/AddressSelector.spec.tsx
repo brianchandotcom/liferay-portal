@@ -11,15 +11,15 @@ import {
 	ICountryAPIResponse,
 	IPostalAddress,
 	IPostalAddressAPIResponse,
-} from '../../../src/main/resources/META-INF/resources/js/multishipping/Types';
+} from '../../../src/main/resources/META-INF/resources/components/multishipping/Types';
 
 import '@testing-library/jest-dom/extend-expect';
 import {RenderResult, cleanup, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
-import AddressSelector from '../../../src/main/resources/META-INF/resources/js/multishipping/AddressSelector';
-import * as ErrorMessage from '../../../src/main/resources/META-INF/resources/js/multishipping/ErrorMessage';
-import {setFieldValue} from '../../utils/utils.spec';
+import AddressSelector from '../../../src/main/resources/META-INF/resources/components/multishipping/AddressSelector';
+import * as ErrorMessage from '../../../src/main/resources/META-INF/resources/components/multishipping/ErrorMessage';
+import {setFieldValue} from '../../tests_utilities/utils.spec';
 
 interface ILocators {
 	addressCountrySelect: HTMLSelectElement;

@@ -7,8 +7,8 @@ import '@testing-library/jest-dom/extend-expect';
 import {RenderResult, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import OrderItemDetailModal from '../../../src/main/resources/META-INF/resources/js/multishipping/OrderItemDetailModal';
-import {IOrderItem} from '../../../src/main/resources/META-INF/resources/js/multishipping/Types';
+import OrderItemDetailModal from '../../../src/main/resources/META-INF/resources/components/multishipping/OrderItemDetailModal';
+import {IOrderItem} from '../../../src/main/resources/META-INF/resources/components/multishipping/Types';
 
 interface ILocators {
 	orderItemName: HTMLElement;

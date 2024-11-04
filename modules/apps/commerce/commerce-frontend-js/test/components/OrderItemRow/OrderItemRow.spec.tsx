@@ -10,7 +10,7 @@ import fetchMock from 'fetch-mock';
 import {
 	IDeliveryGroup,
 	IOrderItem,
-} from '../../../src/main/resources/META-INF/resources/js/multishipping/Types';
+} from '../../../src/main/resources/META-INF/resources/components/multishipping/Types';
 
 import '@testing-library/jest-dom/extend-expect';
 import {RenderResult, cleanup, render, waitFor} from '@testing-library/react';
@@ -18,8 +18,8 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import OrderItemRow from '../../../src/main/resources/META-INF/resources/js/multishipping/OrderItemRow';
-import {setFieldValue} from '../../utils/utils.spec';
+import OrderItemRow from '../../../src/main/resources/META-INF/resources/components/multishipping/OrderItemRow';
+import {setFieldValue} from '../../tests_utilities/utils.spec';
 
 interface ILocators {
 	deliveryGroup1Cell: HTMLElement | null;

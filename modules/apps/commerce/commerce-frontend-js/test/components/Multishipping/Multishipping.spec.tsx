@@ -10,7 +10,7 @@ import fetchMock from 'fetch-mock';
 import {
 	IOrderItem,
 	IOrderItemAPIResponse,
-} from '../../../src/main/resources/META-INF/resources/js/multishipping/Types';
+} from '../../../src/main/resources/META-INF/resources/components/multishipping/Types';
 
 import '@testing-library/jest-dom/extend-expect';
 import {RenderResult, cleanup, render, waitFor} from '@testing-library/react';
@@ -18,9 +18,9 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import * as ErrorMessage from '../../../src/main/resources/META-INF/resources/js/multishipping/ErrorMessage';
-import Multishipping from '../../../src/main/resources/META-INF/resources/js/multishipping/Multishipping';
-import {isArrayEqual, setFieldValue} from '../../utils/utils.spec';
+import * as ErrorMessage from '../../../src/main/resources/META-INF/resources/components/multishipping/ErrorMessage';
+import Multishipping from '../../../src/main/resources/META-INF/resources/components/multishipping/Multishipping';
+import {isArrayEqual, setFieldValue} from '../../tests_utilities/utils.spec';
 
 interface ILocators {
 	addDeliveryGroupButton: HTMLButtonElement;

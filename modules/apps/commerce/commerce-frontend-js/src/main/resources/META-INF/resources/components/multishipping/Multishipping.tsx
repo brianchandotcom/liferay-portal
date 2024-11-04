@@ -11,11 +11,19 @@ import ClayManagementToolbar, {
 } from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
+import React, {useCallback, useEffect, useState} from 'react';
 
 // @ts-ignore
 
-import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
-import React, {useCallback, useEffect, useState} from 'react';
+import ServiceProvider from '../../ServiceProvider/index';
+import {
+	CART_UPDATED,
+	CURRENT_ORDER_UPDATED,
+	ORDER_INFORMATION_ALTERED,
+
+	// @ts-ignore
+
+} from '../../utilities/eventsDefinitions';
 
 import './Multishipping.scss';
 
@@ -309,7 +317,7 @@ const Multishipping = ({
 
 			setLoading(true);
 
-			CommerceServiceProvider.DeliveryCartAPI('v1')
+			ServiceProvider.DeliveryCartAPI('v1')
 				.getItemsByCartId(orderId, {pageSize: -1})
 				.then(async (response: IOrderItemAPIResponse) => {
 					await prepareData(response.items);
@@ -328,7 +336,7 @@ const Multishipping = ({
 		async (data) => {
 			setSaving(true);
 
-			await CommerceServiceProvider.DeliveryCartAPI('v1')
+			await ServiceProvider.DeliveryCartAPI('v1')
 				.updateCartById(
 					orderId,
 					{
@@ -339,11 +347,11 @@ const Multishipping = ({
 				.then(async (response: IOrderItemAPIResponse) => {
 					await prepareData(response.cartItems);
 
-					Liferay.fire(commerceEvents.CURRENT_ORDER_UPDATED, {
+					Liferay.fire(CURRENT_ORDER_UPDATED, {
 						order: response,
 						updatedFromCart: false,
 					});
-					Liferay.fire(commerceEvents.ORDER_INFORMATION_ALTERED, {
+					Liferay.fire(ORDER_INFORMATION_ALTERED, {
 						order: response,
 					});
 				})
@@ -610,13 +618,10 @@ const Multishipping = ({
 	useEffect(() => {
 		loadOrderItemData({updatedFromCart: true});
 
-		Liferay.on(commerceEvents.CART_UPDATED, loadOrderItemData);
+		Liferay.on(CART_UPDATED, loadOrderItemData);
 
 		return () => {
-			Liferay.detach(
-				commerceEvents.CART_UPDATED,
-				loadOrderItemData as any
-			);
+			Liferay.detach(CART_UPDATED, loadOrderItemData as any);
 		};
 	}, [loadOrderItemData]);
 

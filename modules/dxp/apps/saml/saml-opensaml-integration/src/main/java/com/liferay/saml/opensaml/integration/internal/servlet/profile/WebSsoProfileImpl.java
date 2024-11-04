@@ -509,15 +509,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		MessageContext<AuthnRequest> outboundMessageContext =
 			inOutOperationContext.getOutboundMessageContext();
 
-		SAMLBindingContext samlBindingContext =
-			outboundMessageContext.getSubcontext(
-				SAMLBindingContext.class, true);
-
-		String relayStateToken =
-			_relayStateHelper.getRelayStateTokenFromRedirect(relayState);
-
-		samlBindingContext.setRelayState(relayStateToken);
-
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);
 
@@ -597,6 +588,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		_samlSpAuthRequestLocalService.addSamlSpAuthRequest(
 			samlPeerEntityContext.getEntityId(), authnRequest.getID(),
 			relayState, serviceContext);
+
+		SAMLBindingContext samlBindingContext =
+			outboundMessageContext.getSubcontext(
+				SAMLBindingContext.class, true);
+
+		samlBindingContext.setRelayState(authnRequest.getID());
 
 		sendSamlMessage(messageContext, httpServletResponse);
 	}

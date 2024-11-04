@@ -170,6 +170,42 @@ test.describe('manage picklists inside the picklists portlet', () => {
 			);
 		}
 	});
+
+	test('can delete a picklist item', async ({
+		apiHelpers,
+		listTypeDefinitionPage,
+		page,
+	}) => {
+		const listTypeDefinition: ListTypeDefinition =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
+		await listTypeDefinitionPage.goto();
+
+		const listTypeDefinitionName: string = listTypeDefinition.name;
+
+		const listTypeDefinitionEntryName = 'ListTypeDefinitionEntryName';
+
+		const listTypeDefinitionEntryKey = 'ListTypeDefinitionEntryKey';
+
+		await listTypeDefinitionPage.addPicklistItem(
+			listTypeDefinitionName,
+			listTypeDefinitionEntryName,
+			listTypeDefinitionEntryKey
+		);
+
+		const frameElement = await page.$('iframe');
+		const frame = await frameElement.contentFrame();
+		await frame.waitForLoadState('load');
+
+		await listTypeDefinitionPage.deletePicklistItem();
+		await frame.waitForLoadState('load');
+		await expect(frame.getByText('No Results Found')).toBeVisible();
+	});
 });
 
 test.describe('ensure picklist translation', () => {

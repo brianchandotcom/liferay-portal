@@ -251,33 +251,6 @@ definition {
 		Picklist.assertPicklistNotPresent(picklistName = "Picklist Test");
 	}
 
-	@description = "LPS-136595 - Verify it is possible to delete a Picklist item"
-	@priority = 5
-	test CanDeletePicklistItem {
-		property portal.acceptance = "true";
-
-		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
-
-		Picklist.addPicklistItemViaAPI(
-			itemKey = "PicklistItemKeyTest",
-			itemName = "Picklist Item Name Test",
-			picklistName = "Picklist Test");
-
-		Picklist.gotoPicklists();
-
-		Picklist.optionsPicklist(
-			menuItem = "View",
-			picklistName = "Picklist Test");
-
-		Picklist.optionsPicklistItem(
-			itemKey = "PicklistItemKeyTest",
-			menuItem = "Delete");
-
-		Picklist.assertPicklistItemNotPresent(
-			picklistItemKey = "PicklistItemKeyTest",
-			picklistItemName = "Picklist Item Name Test");
-	}
-
 	@description = "LPS-152677 - Verify that it's possible to edit an object with a state added to the picklist"
 	@priority = 4
 	test CanEditObjectWithState {

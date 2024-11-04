@@ -201,7 +201,7 @@ modules/apps/portal-settings/    @liferay-appsec
 modules/apps/portal-settings/portal-settings-api/    @liferay-platform-experience
 modules/apps/portal-settings/portal-settings-web/    @liferay-platform-experience
 modules/apps/portal-store/
-modules/apps/portal-template/    @liferay-page-management
+modules/apps/portal-template/
 modules/apps/portal-transaction/
 modules/apps/portal-url-builder/
 modules/apps/portal-validation/
@@ -253,7 +253,7 @@ modules/apps/staging/    @liferay-headless
 modules/apps/static/
 modules/apps/style-book/    @liferay-platform-experience
 modules/apps/subscription/    @liferay-content-management
-modules/apps/template/
+modules/apps/template/    @liferay-page-management
 modules/apps/text-localizer/
 modules/apps/translation/    @liferay-content-management
 modules/apps/trash/    @liferay-content-management

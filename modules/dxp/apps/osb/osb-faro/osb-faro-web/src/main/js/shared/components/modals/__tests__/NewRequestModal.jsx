@@ -52,4 +52,25 @@ describe('NewRequestModal', () => {
 		expect(deleteCheckbox.checked).toBeTrue();
 		expect(suppressCheckbox.checked).toBeTrue();
 	});
+
+	it('checks if download sample CSV link is present', async () => {
+		const {container} = render(
+			<Provider store={mockStore()}>
+				<DndProvider backend={HTML5Backend}>
+					<NewRequestModal />
+				</DndProvider>
+			</Provider>
+		);
+
+		await waitForLoadingToBeRemoved(container, {
+			selector: '.loading-animation'
+		});
+
+		const anchor = container.querySelector('div.example-file-text a');
+
+		expect(anchor).toHaveAttribute(
+			'href',
+			'data:text/octet-stream;charset=utf-8,user@example.com\nuser1@example.com\nuser2@example.com'
+		);
+	});
 });

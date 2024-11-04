@@ -14,7 +14,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -32,6 +31,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -40,9 +40,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -78,54 +75,6 @@ public class
 		_serviceContext = _getServiceContext(
 			_group, TestPropsValues.getUserId());
 
-		_layoutPageTemplateCollection1 =
-			_layoutPageTemplateCollectionLocalService.
-				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					StringUtil.randomString(), StringPool.BLANK,
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
-					_serviceContext);
-
-		_layoutPageTemplateCollection2 =
-			_layoutPageTemplateCollectionLocalService.
-				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					StringUtil.randomString(), StringPool.BLANK,
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
-					_serviceContext);
-
-		_layoutPageTemplateCollectionTarget =
-			_layoutPageTemplateCollectionLocalService.
-				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					StringUtil.randomString(), StringPool.BLANK,
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
-					_serviceContext);
-
-		_layoutPageTemplateEntry1 =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				StringUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-				WorkflowConstants.STATUS_DRAFT, _serviceContext);
-
-		_layoutPageTemplateEntry2 =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				StringUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-				WorkflowConstants.STATUS_DRAFT, _serviceContext);
-
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
@@ -138,118 +87,123 @@ public class
 	public void testMoveLayoutPageTemplateEntriesAndLayoutPageTemplateCollectionsMVCActionCommand()
 		throws Exception {
 
-		LayoutPageTemplateCollection movedLayoutPageTemplateCollection1 =
+		LayoutPageTemplateCollection layoutPageTemplateCollection1 =
 			_layoutPageTemplateCollectionLocalService.
-				fetchLayoutPageTemplateCollection(
-					_group.getGroupId(),
-					_layoutPageTemplateCollection1.getName(),
-					_layoutPageTemplateCollectionTarget.
-						getLayoutPageTemplateCollectionId(),
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE);
-		LayoutPageTemplateCollection movedLayoutPageTemplateCollection2 =
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					StringUtil.randomString(), StringPool.BLANK,
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					_serviceContext);
+		LayoutPageTemplateCollection layoutPageTemplateCollection2 =
 			_layoutPageTemplateCollectionLocalService.
-				fetchLayoutPageTemplateCollection(
-					_group.getGroupId(),
-					_layoutPageTemplateCollection2.getName(),
-					_layoutPageTemplateCollectionTarget.
-						getLayoutPageTemplateCollectionId(),
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE);
-		LayoutPageTemplateEntry movedLayoutPageTemplateEntry1 =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(),
-				_layoutPageTemplateCollectionTarget.
-					getLayoutPageTemplateCollectionId(),
-				_layoutPageTemplateEntry1.getName(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
-		LayoutPageTemplateEntry movedLayoutPageTemplateEntry2 =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(),
-				_layoutPageTemplateCollectionTarget.
-					getLayoutPageTemplateCollectionId(),
-				_layoutPageTemplateEntry2.getName(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					StringUtil.randomString(), StringPool.BLANK,
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					_serviceContext);
 
-		Assert.assertNull(movedLayoutPageTemplateCollection1);
-		Assert.assertNull(movedLayoutPageTemplateCollection2);
-		Assert.assertNull(movedLayoutPageTemplateEntry1);
-		Assert.assertNull(movedLayoutPageTemplateEntry2);
+		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				StringUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				StringUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		LayoutPageTemplateCollection layoutParentPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					StringUtil.randomString(), StringPool.BLANK,
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					_serviceContext);
 
 		_mvcActionCommand.processAction(
-			_getMockLiferayPortletActionRequest(),
+			_getMockLiferayPortletActionRequest(
+				new long[] {
+					layoutPageTemplateCollection1.
+						getLayoutPageTemplateCollectionId(),
+					layoutPageTemplateCollection2.
+						getLayoutPageTemplateCollectionId()
+				},
+				new long[] {
+					layoutPageTemplateEntry1.getLayoutPageTemplateEntryId(),
+					layoutPageTemplateEntry2.getLayoutPageTemplateEntryId()
+				},
+				layoutParentPageTemplateCollection.
+					getLayoutPageTemplateCollectionId()),
 			new MockLiferayPortletActionResponse());
 
-		movedLayoutPageTemplateCollection1 =
+		Assert.assertNotNull(
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
 					_group.getGroupId(),
-					_layoutPageTemplateCollection1.getName(),
-					_layoutPageTemplateCollectionTarget.
+					layoutPageTemplateCollection1.getName(),
+					layoutParentPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE);
-		movedLayoutPageTemplateCollection2 =
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE));
+		Assert.assertNotNull(
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
 					_group.getGroupId(),
-					_layoutPageTemplateCollection2.getName(),
-					_layoutPageTemplateCollectionTarget.
+					layoutPageTemplateCollection2.getName(),
+					layoutParentPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE);
-		movedLayoutPageTemplateEntry1 =
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE));
+		Assert.assertNotNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(),
-				_layoutPageTemplateCollectionTarget.
+				layoutParentPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				_layoutPageTemplateEntry1.getName(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
-		movedLayoutPageTemplateEntry2 =
+				layoutPageTemplateEntry1.getName(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
+		Assert.assertNotNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(),
-				_layoutPageTemplateCollectionTarget.
+				layoutParentPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				_layoutPageTemplateEntry2.getName(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
-
-		Assert.assertNotNull(movedLayoutPageTemplateCollection1);
-		Assert.assertNotNull(movedLayoutPageTemplateCollection2);
-		Assert.assertNotNull(movedLayoutPageTemplateEntry1);
-		Assert.assertNotNull(movedLayoutPageTemplateEntry2);
+				layoutPageTemplateEntry2.getName(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 	}
 
-	private MockLiferayPortletActionRequest
-			_getMockLiferayPortletActionRequest()
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			long[] layoutPageTemplateCollectionsIds,
+			long[] layoutPageTemplateEntriesIds,
+			long layoutParentPageTemplateCollectionId)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
+		mockLiferayPortletActionRequest.setParameter(
+			"layoutPageTemplateCollectionsIds",
+			ArrayUtil.toStringArray(layoutPageTemplateCollectionsIds));
+		mockLiferayPortletActionRequest.setParameter(
+			"layoutPageTemplateEntriesIds",
+			ArrayUtil.toStringArray(layoutPageTemplateEntriesIds));
+		mockLiferayPortletActionRequest.setParameter(
+			"layoutParentPageTemplateCollectionId",
+			String.valueOf(layoutParentPageTemplateCollectionId));
 		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletActionResponse());
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-		mockLiferayPortletActionRequest.setParameter(
-			"layoutPageTemplateEntriesIds",
-			new String[] {
-				String.valueOf(
-					_layoutPageTemplateEntry1.getLayoutPageTemplateEntryId()),
-				String.valueOf(
-					_layoutPageTemplateEntry2.getLayoutPageTemplateEntryId())
-			});
-		mockLiferayPortletActionRequest.setParameter(
-			"layoutPageTemplateCollectionsIds",
-			new String[] {
-				String.valueOf(
-					_layoutPageTemplateCollection1.
-						getLayoutPageTemplateCollectionId()),
-				String.valueOf(
-					_layoutPageTemplateCollection2.
-						getLayoutPageTemplateCollectionId())
-			});
-		mockLiferayPortletActionRequest.setParameter(
-			"layoutParentPageTemplateCollectionId",
-			String.valueOf(
-				_layoutPageTemplateCollectionTarget.
-					getLayoutPageTemplateCollectionId()));
 
 		return mockLiferayPortletActionRequest;
 	}
@@ -302,16 +256,9 @@ public class
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
-	private LayoutPageTemplateCollection _layoutPageTemplateCollection1;
-	private LayoutPageTemplateCollection _layoutPageTemplateCollection2;
-
 	@Inject
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
-
-	private LayoutPageTemplateCollection _layoutPageTemplateCollectionTarget;
-	private LayoutPageTemplateEntry _layoutPageTemplateEntry1;
-	private LayoutPageTemplateEntry _layoutPageTemplateEntry2;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

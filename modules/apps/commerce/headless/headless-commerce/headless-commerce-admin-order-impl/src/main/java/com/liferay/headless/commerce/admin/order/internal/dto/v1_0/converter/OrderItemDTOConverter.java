@@ -148,6 +148,7 @@ public class OrderItemDTOConverter
 				setReplacedSkuId(commerceOrderItem::getReplacedCPInstanceId);
 				setRequestedDeliveryDate(
 					commerceOrderItem::getRequestedDeliveryDate);
+				setShippable(commerceOrder::isShippable);
 				setShippedQuantity(
 					() -> _commerceQuantityFormatter.format(
 						cpInstanceUnitOfMeasure,

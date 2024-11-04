@@ -150,8 +150,8 @@
 		<!-- Other fields -->
 
 		<column name="samlIdpEntityId" type="String" />
+		<column name="samlRelayState" type="String" />
 		<column name="samlSpAuthRequestKey" type="String" />
-		<column name="relayState" type="String" />
 
 		<!-- Finder methods -->
 

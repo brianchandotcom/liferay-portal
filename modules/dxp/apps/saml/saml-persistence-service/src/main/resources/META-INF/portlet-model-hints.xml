@@ -85,10 +85,10 @@
 		<field name="samlIdpEntityId" type="String">
 			<hint-collection name="ENTITY-ID" />
 		</field>
-		<field name="samlSpAuthRequestKey" type="String" />
-		<field name="relayState" type="String">
+		<field name="samlRelayState" type="String">
 			<hint name="max-length">2048</hint>
 		</field>
+		<field name="samlSpAuthRequestKey" type="String" />
 	</model>
 	<model name="com.liferay.saml.persistence.model.SamlSpIdpConnection">
 		<field name="samlSpIdpConnectionId" type="long" />

@@ -586,8 +586,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			httpServletRequest);
 
 		_samlSpAuthRequestLocalService.addSamlSpAuthRequest(
-			samlPeerEntityContext.getEntityId(), authnRequest.getID(),
-			relayState, serviceContext);
+			samlPeerEntityContext.getEntityId(), relayState,
+			authnRequest.getID(), serviceContext);
 
 		SAMLBindingContext samlBindingContext =
 			outboundMessageContext.getSubcontext(
@@ -830,7 +830,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			_samlSpAuthRequestLocalService.deleteSamlSpAuthRequest(
 				samlSpAuthRequest);
 
-			return samlSpAuthRequest.getRelayState();
+			return samlSpAuthRequest.getSamlRelayState();
 		}
 
 		throw new InResponseToException(

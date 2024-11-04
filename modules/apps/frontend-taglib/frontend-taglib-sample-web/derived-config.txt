@@ -16,12 +16,6 @@ org/apache/jsp/init_jsp.<clinit>()V
 org/apache/jsp/init_jsp.<init>()V
 org/apache/jsp/init_jsp._jspService(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V^0:0,UNKNOWN^1:1,UNKNOWN
 org/apache/jsp/init_jsp.getDependants()Ljava/util/List;:SAFE
-com/liferay/frontend/taglib/sample/web/internal/display/context/TabsDisplayContext.lambda$getDefaultTabsItems$0(Lcom/liferay/frontend/taglib/clay/servlet/taglib/util/TabsItem;)V
-com/liferay/frontend/taglib/sample/web/internal/display/context/TabsDisplayContext.lambda$getDefaultTabsItems$3(Lcom/liferay/frontend/taglib/clay/servlet/taglib/util/TabsItem;)V
-com/liferay/frontend/taglib/sample/web/internal/display/context/TabsDisplayContext.lambda$getDefaultTabsItems$1(Lcom/liferay/frontend/taglib/clay/servlet/taglib/util/TabsItem;)V
-com/liferay/frontend/taglib/sample/web/internal/display/context/TabsDisplayContext.lambda$getDefaultTabsItems$2(Lcom/liferay/frontend/taglib/clay/servlet/taglib/util/TabsItem;)V
-com/liferay/frontend/taglib/sample/web/internal/display/context/TabsDisplayContext.<init>()V
-com/liferay/frontend/taglib/sample/web/internal/display/context/TabsDisplayContext.getDefaultTabsItems()Ljava/util/List;:UNKNOWN
 com/liferay/frontend/taglib/sample/web/internal/display/context/SampleDisplayContext.lambda$getTabsItems$0(Lcom/liferay/frontend/taglib/clay/servlet/taglib/util/TabsItem;)V
 com/liferay/frontend/taglib/sample/web/internal/display/context/SampleDisplayContext.<init>()V
 com/liferay/frontend/taglib/sample/web/internal/display/context/SampleDisplayContext.getTabsItems()Ljava/util/List;:UNKNOWN

@@ -1051,7 +1051,7 @@ test.describe('HTML Fragment', () => {
 
 	test(
 		'Can edit custom html editable with lfr-editable',
-		{tag: '@LPS-98553'},
+		{tag: ['@LPS-98553', '@LPD-41105']},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
 
 			// Create a fragment with lfr-editable
@@ -1096,13 +1096,29 @@ test.describe('HTML Fragment', () => {
 
 			// Check html editable can be edited
 
+			const value =
+				'<div class="text-success"><h1>test html</h1></div><script data-test="test" class="testClass">console.log("test")</script>';
+
 			await pageEditorPage.editHTMLEditable({
 				editableId: 'element-html',
 				fragmentId: fragmentName,
-				value: '<div class="text-success"><h1>test html</h1></div>',
+				value,
 			});
 
+			// Check value is loaded in the page correctly
+
 			await expect(page.getByText('test html')).toBeAttached();
+
+			// Check value is loaded in the editor correctly
+
+			const editable = pageEditorPage.getEditable({
+				editableId: 'element-html',
+				fragmentId: fragmentName,
+			});
+
+			await editable.click();
+
+			await expect(page.getByText(value)).toBeAttached();
 
 			// Remove the page
 

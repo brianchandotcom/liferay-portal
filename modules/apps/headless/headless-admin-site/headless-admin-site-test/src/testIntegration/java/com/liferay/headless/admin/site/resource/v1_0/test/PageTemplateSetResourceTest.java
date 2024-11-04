@@ -116,9 +116,21 @@ public class PageTemplateSetResourceTest
 				testGroup.getExternalReferenceCode(),
 				pageTemplateSet.getExternalReferenceCode(), pageTemplateSet);
 
-		pageTemplateSet.setName(RandomTestUtil.randomString());
+		pageTemplateSet.setDescription(RandomTestUtil.randomString());
 
 		PageTemplateSet patchPageTemplateSet =
+			pageTemplateSetResource.
+				patchSiteSiteByExternalReferenceCodePageTemplateSet(
+					testGroup.getExternalReferenceCode(),
+					pageTemplateSet.getExternalReferenceCode(),
+					pageTemplateSet);
+
+		assertEquals(pageTemplateSet, patchPageTemplateSet);
+		assertValid(patchPageTemplateSet);
+
+		pageTemplateSet.setName(RandomTestUtil.randomString());
+
+		patchPageTemplateSet =
 			pageTemplateSetResource.
 				patchSiteSiteByExternalReferenceCodePageTemplateSet(
 					testGroup.getExternalReferenceCode(),

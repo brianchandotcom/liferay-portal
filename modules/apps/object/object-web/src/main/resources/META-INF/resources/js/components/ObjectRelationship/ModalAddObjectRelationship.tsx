@@ -147,21 +147,28 @@ export function ModalAddObjectRelationship({
 										true
 									),
 							}}
-						/>
-
-						{objectRelationshipParameterRequired &&
-							values.type === 'oneToMany' && (
+						>
+							{objectRelationshipParameterRequired &&
+							values.type === 'oneToMany' ? (
 								<SelectObjectRelationship
 									error={errors.parameterObjectFieldName}
 									objectDefinitionExternalReferenceCode1={
 										values.objectDefinitionExternalReferenceCode2 as string
 									}
-									onChange={(parameterObjectFieldName) =>
-										setValues({parameterObjectFieldName})
-									}
+									onChange={(parameterObjectFieldName) => {
+										setValues({parameterObjectFieldName});
+
+										if (onSubmit) {
+											onSubmit({
+												...values,
+												parameterObjectFieldName,
+											});
+										}											
+									}}
 									value={values.parameterObjectFieldName}
 								/>
-							)}
+							) : undefined}
+						</ObjectRelationshipFormBase>
 					</ClayModal.Body>
 
 					<ClayModal.Footer

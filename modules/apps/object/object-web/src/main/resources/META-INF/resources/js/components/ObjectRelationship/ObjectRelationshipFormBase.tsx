@@ -18,6 +18,7 @@ import SelectObjectDefinition from './SelectObjectDefinition';
 
 interface ObjectRelationshipFormBaseProps {
 	baseResourceURL: string;
+	children?: JSX.Element;
 	className?: string;
 	errors: FormError<ObjectRelationship>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -77,6 +78,7 @@ export const OBJECT_RELATIONSHIP_TYPES = [
 
 export function ObjectRelationshipFormBase({
 	baseResourceURL,
+	children,
 	className,
 	errors,
 	handleChange,
@@ -429,6 +431,8 @@ export function ObjectRelationshipFormBase({
 						/>
 					</>
 				))}
+
+			{children}
 		</>
 	);
 }

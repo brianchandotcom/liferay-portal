@@ -11,17 +11,14 @@ import ModalDeletionNotAllowed from '../ModalDeletionNotAllowed';
 import ModalImport from '../ModalImport/ModalImport';
 import {ModalAddObjectDefinition} from './ModalAddObjectDefinition';
 import {ModalAddObjectFolder} from './ModalAddObjectFolder';
-import {ModalBindToRootObjectDefinition} from './ModalBindToRootObjectDefinition';
 import {ModalDeleteObjectDefinition} from './ModalDeleteObjectDefinition';
 import {ModalDeleteObjectFolder} from './ModalDeleteObjectFolder';
 import {ModalEditObjectFolder} from './ModalEditObjectFolder';
 import {ModalMoveObjectDefinition} from './ModalMoveObjectDefinition';
-import {ModalUnbindObjectDefinition} from './ModalUnbindObjectDefinition';
 
 import type {ModalImportProperties} from './ViewObjectDefinitions';
 
 interface ViewObjectDefinitionsModalsProps {
-	baseResourceURL: string;
 	deletedObjectDefinition?: DeletedObjectDefinition | null;
 	learnResourceContext: any;
 	modalImportProperties: ModalImportProperties;
@@ -52,7 +49,6 @@ interface ViewObjectDefinitionsModalsProps {
 }
 
 export function ViewObjectDefinitionsModals({
-	baseResourceURL,
 	deletedObjectDefinition,
 	learnResourceContext,
 	modalImportProperties,
@@ -134,22 +130,6 @@ export function ViewObjectDefinitionsModals({
 					setSelectedObjectFolder={setSelectedObjectFolder}
 				/>
 			)}
-
-			{showModal.bindToRootObjectDefinition &&
-				Liferay.FeatureFlags['LPS-187142'] && (
-					<ModalBindToRootObjectDefinition
-						baseResourceURL={baseResourceURL}
-						onVisibilityChange={() => {
-							setShowModal((previousState) => ({
-								...previousState,
-								bindToRootObjectDefinition: false,
-							}));
-						}}
-						selectedObjectDefinitionToBind={
-							selectedObjectDefinition
-						}
-					/>
-				)}
 
 			{showModal.deleteObjectDefinition && (
 				<ModalDeleteObjectDefinition
@@ -284,22 +264,6 @@ export function ViewObjectDefinitionsModals({
 								...previousState,
 								objectFieldDeletionNotAllowed: false,
 							}))
-						}
-					/>
-				)}
-
-			{showModal.unbindFromRootObjectDefinition &&
-				Liferay.FeatureFlags['LPS-187142'] && (
-					<ModalUnbindObjectDefinition
-						baseResourceURL={baseResourceURL}
-						onVisibilityChange={() => {
-							setShowModal((previousState) => ({
-								...previousState,
-								unbindFromRootObjectDefinition: false,
-							}));
-						}}
-						selectedObjectDefinitionToUnbind={
-							selectedObjectDefinition
 						}
 					/>
 				)}

@@ -228,6 +228,8 @@ public class DisplayPageTemplateFolderResourceTest
 
 		super.
 			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder();
+
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithExistingParentExternalReferenceCode();
 	}
 
 	@Ignore
@@ -407,6 +409,37 @@ public class DisplayPageTemplateFolderResourceTest
 
 		return super.
 			testPutSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
+	}
+
+	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithExistingParentExternalReferenceCode()
+		throws Exception {
+
+		DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
+			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
+				randomDisplayPageTemplateFolder());
+
+		DisplayPageTemplateFolder randomDisplayPageTemplateFolder =
+			randomDisplayPageTemplateFolder();
+
+		randomDisplayPageTemplateFolder.
+			setParentDisplayPageTemplateFolderExternalReferenceCode(
+				parentDisplayPageTemplateFolder.getExternalReferenceCode());
+
+		DisplayPageTemplateFolder postDisplayPageTemplateFolder =
+			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
+				randomDisplayPageTemplateFolder);
+
+		assertEquals(
+			randomDisplayPageTemplateFolder, postDisplayPageTemplateFolder);
+		Assert.assertEquals(
+			randomDisplayPageTemplateFolder.
+				getParentDisplayPageTemplateFolderExternalReferenceCode(),
+			postDisplayPageTemplateFolder.
+				getParentDisplayPageTemplateFolderExternalReferenceCode());
+		assertValid(postDisplayPageTemplateFolder);
+		Assert.assertNotNull(
+			postDisplayPageTemplateFolder.
+				getParentDisplayPageTemplateFolderExternalReferenceCode());
 	}
 
 	@Inject

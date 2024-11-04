@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -116,10 +115,10 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 
 			company = PortalInstances.addCompany(
 				portalInstance.getSiteInitializerKey(),
-				() -> _companyLocalService.addCompany(
+				() -> _companyService.addCompany(
 					finalCompanyId, portalInstance.getPortalInstanceId(),
 					portalInstance.getVirtualHost(), portalInstance.getDomain(),
-					0, true, true, null, null, admin.getEmailAddress(),
+					0, true, null, null, admin.getEmailAddress(),
 					admin.getGivenName(), null, admin.getFamilyName()));
 		}
 		else {
@@ -184,9 +183,6 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 				admin.getEmailAddress(), emailAddressValidator);
 		}
 	}
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private CompanyService _companyService;

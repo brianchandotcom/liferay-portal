@@ -5,11 +5,16 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.headless.admin.site.resource.v1_0.DisplayPageTemplateFolderResource;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,6 +48,54 @@ public class DisplayPageTemplateFolderResourceImpl
 		_layoutPageTemplateCollectionService.deleteLayoutPageTemplateCollection(
 			displayPageTemplateFolderExternalReferenceCode, group.getGroupId());
 	}
+
+	@Override
+	public DisplayPageTemplateFolder
+			getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				String siteExternalReferenceCode,
+				String displayPageTemplateFolderExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionService.
+				fetchLayoutPageTemplateCollection(
+					displayPageTemplateFolderExternalReferenceCode,
+					group.getGroupId());
+
+		return _toDisplayPageTemplateFolder(layoutPageTemplateCollection);
+	}
+
+	private DisplayPageTemplateFolder _toDisplayPageTemplateFolder(
+			LayoutPageTemplateCollection layoutPageTemplateCollection)
+		throws Exception {
+
+		return _displayPageTemplateFolderDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry, contextHttpServletRequest,
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			layoutPageTemplateCollection);
+	}
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.DisplayPageTemplateFolderDTOConverter)"
+	)
+	private DTOConverter
+		<LayoutPageTemplateCollection, DisplayPageTemplateFolder>
+			_displayPageTemplateFolderDTOConverter;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

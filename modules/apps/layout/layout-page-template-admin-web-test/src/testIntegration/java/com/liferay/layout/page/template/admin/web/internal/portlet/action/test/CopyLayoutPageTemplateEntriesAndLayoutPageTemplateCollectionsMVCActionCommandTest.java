@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -122,19 +123,14 @@ public class
 		throws Exception {
 
 		ActionRequest actionRequest = _getMockLiferayPortletActionRequest(
-			new String[] {
-				String.valueOf(
-					_layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId())
+			new long[] {
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId()
 			},
-			new String[] {
-				String.valueOf(
-					_layoutPageTemplateEntryDisplayPage.
-						getLayoutPageTemplateEntryId())
-			},
-			String.valueOf(
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT));
+			new long[] {
+				_layoutPageTemplateEntryDisplayPage.
+					getLayoutPageTemplateEntryId()
+			});
 		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
 
 		LayoutPageTemplateCollection targetLayoutPageTemplateCollection =
@@ -182,14 +178,10 @@ public class
 	public void testCopyLayoutPageTemplateEntryMasterLayout() throws Exception {
 		ActionRequest actionRequest = _getMockLiferayPortletActionRequest(
 			null,
-			new String[] {
-				String.valueOf(
-					_layoutPageTemplateEntryMasterLayout.
-						getLayoutPageTemplateEntryId())
-			},
-			String.valueOf(
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT));
+			new long[] {
+				_layoutPageTemplateEntryMasterLayout.
+					getLayoutPageTemplateEntryId()
+			});
 		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
 
 		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
@@ -221,14 +213,10 @@ public class
 
 		ActionRequest actionRequest = _getMockLiferayPortletActionRequest(
 			null,
-			new String[] {
-				String.valueOf(
-					_layoutPageTemplateEntryMasterLayout.
-						getLayoutPageTemplateEntryId())
-			},
-			String.valueOf(
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT));
+			new long[] {
+				_layoutPageTemplateEntryMasterLayout.
+					getLayoutPageTemplateEntryId()
+			});
 		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
 
 		_layoutLocalService.deleteLayout(
@@ -261,14 +249,10 @@ public class
 
 		ActionRequest actionRequest = _getMockLiferayPortletActionRequest(
 			null,
-			new String[] {
-				String.valueOf(
-					_layoutPageTemplateEntryMasterLayout.
-						getLayoutPageTemplateEntryId())
-			},
-			String.valueOf(
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT));
+			new long[] {
+				_layoutPageTemplateEntryMasterLayout.
+					getLayoutPageTemplateEntryId()
+			});
 		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
 
 		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
@@ -309,36 +293,39 @@ public class
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			String[] layoutPageTemplateCollectionsIds,
-			String[] layoutPageTemplateEntriesIds,
-			String parentLayoutPageTemplateCollectionId)
+			long[] layoutPageTemplateCollectionsIds,
+			long[] layoutPageTemplateEntriesIds)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		mockLiferayPortletActionRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE,
-			new MockLiferayPortletActionResponse());
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 		mockLiferayPortletActionRequest.setParameter(
 			"copyPermissions", Boolean.TRUE.toString());
 
 		if (layoutPageTemplateCollectionsIds != null) {
 			mockLiferayPortletActionRequest.setParameter(
 				"layoutPageTemplateCollectionsIds",
-				layoutPageTemplateCollectionsIds);
+				ArrayUtil.toStringArray(layoutPageTemplateCollectionsIds));
 		}
 
 		if (layoutPageTemplateEntriesIds != null) {
 			mockLiferayPortletActionRequest.setParameter(
-				"layoutPageTemplateEntriesIds", layoutPageTemplateEntriesIds);
+				"layoutPageTemplateEntriesIds",
+				ArrayUtil.toStringArray(layoutPageTemplateEntriesIds));
 		}
 
 		mockLiferayPortletActionRequest.setParameter(
 			"layoutParentPageTemplateCollectionId",
-			parentLayoutPageTemplateCollectionId);
+			String.valueOf(
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT));
+
+		mockLiferayPortletActionRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			new MockLiferayPortletActionResponse());
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		return mockLiferayPortletActionRequest;
 	}

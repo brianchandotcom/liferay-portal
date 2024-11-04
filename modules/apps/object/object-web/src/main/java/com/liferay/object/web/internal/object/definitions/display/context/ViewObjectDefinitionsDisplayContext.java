@@ -94,14 +94,6 @@ public class ViewObjectDefinitionsDisplayContext {
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
 				"get", null, null),
 			new FDSActionDropdownItem(
-				null, "pages-tree", "bind",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "bind"),
-				"update", "bind", null),
-			new FDSActionDropdownItem(
-				null, "pages-tree", "unbind",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "unbind"),
-				"update", "unbind", null),
-			new FDSActionDropdownItem(
 				ResourceURLBuilder.createResourceURL(
 					_objectRequestHelper.getLiferayPortletResponse()
 				).setParameter(

@@ -13,8 +13,13 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {depotAdminPageTest} from '../../fixtures/depotAdminPageTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
+import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
+import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
 import {depotsPagesTest} from '../../tests/depot-web/fixtures/depotsPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {getTempDir} from '../../utils/temp';
@@ -31,7 +36,12 @@ export const test = mergeTests(
 	stagingPageTest,
 	depotsPagesTest,
 	depotAdminPageTest,
-	loginTest()
+	pagesAdminPagesTest,
+	pageEditorPagesTest,
+	pageTemplatesPagesTest,
+	wikiPagesTest,
+	loginTest(),
+	isolatedSiteTest
 );
 
 async function getSiteHomePageScreenshot(
@@ -60,6 +70,78 @@ async function getSiteHomePageScreenshot(
 
 	return screenshot;
 }
+
+test(
+	'make sure we do not export-import wikiNodes if they are not selected in the export configuration screen',
+	{tag: '@LPS-195766'},
+	async ({
+		exportImportPage,
+		page,
+		pageEditorPage,
+		pageTemplatesPage,
+		site,
+		wikiPage,
+	}) => {
+		await wikiPage.goto(site.friendlyUrlPath);
+
+		await wikiPage.createNewWikiNode('Wiki Node Title');
+
+		await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+		// Create page template collection
+
+		const pageTemplateCollectionName = getRandomString();
+
+		await pageTemplatesPage.addPageTemplateCollection(
+			pageTemplateCollectionName
+		);
+
+		await expect(
+			page.getByRole('menuitem', {
+				exact: true,
+				name: pageTemplateCollectionName,
+			})
+		).toBeVisible();
+
+		// Create widget page template
+
+		const pageTemplateName = getRandomString();
+
+		await pageTemplatesPage.addWidgetPageTemplate(pageTemplateName);
+
+		await pageTemplatesPage.page.getByLabel('Add', {exact: true}).click();
+
+		await pageEditorPage.addWidgetToWidgetPageTemplate(
+			'Content Management',
+			'Web Content Display'
+		);
+
+		await wikiPage.goto(site.friendlyUrlPath);
+
+		await exportImportPage.goToExport();
+
+		const exportName = 'MyExport-' + getRandomString();
+
+		await exportImportPage.createNewExportProcess(exportName);
+
+		await expect(
+			exportImportPage.page
+				.getByText(exportName)
+				.locator('../..')
+				.getByText('Successful')
+		).toBeVisible();
+
+		const exportFilePath =
+			await exportImportPage.downloadExportProcess(exportName);
+
+		await exportImportPage.goToImport();
+
+		await exportImportPage.checkItemInNewlyCreatedImportProcess(
+			exportFilePath,
+			'Wiki'
+		);
+	}
+);
 
 test(
 	'can XSS with `searchContainerId` in Asset Libraries import',

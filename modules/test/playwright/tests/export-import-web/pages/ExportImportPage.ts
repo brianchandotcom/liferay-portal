@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {getTempDir} from '../../../utils/temp';
@@ -43,6 +43,29 @@ export class ExportImportPage {
 		await this.title.fill(title);
 
 		await this.exportButton.click();
+	}
+
+	async checkItemInNewlyCreatedImportProcess(
+		folderPath: string,
+		itemToCheck: string
+	) {
+		await this.newImportButton.click();
+
+		const fileChooserPromise = this.page.waitForEvent('filechooser');
+
+		await this.fileSelector.click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(folderPath);
+
+		await this.continueButton.click();
+
+		await this.page.waitForLoadState('domcontentloaded');
+		await this.page.waitForTimeout(1000);
+
+		const wikiLabelCount = await this.page.getByLabel(itemToCheck).count();
+		expect(wikiLabelCount).toBe(0);
 	}
 
 	async createNewImportProcess(folderPath: string) {

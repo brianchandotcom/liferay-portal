@@ -25,6 +25,7 @@ type SidebarTab =
 	| 'Fragments and Widgets'
 	| 'Page Content'
 	| 'Page Design Options'
-	| 'Page Rules';
+	| 'Page Rules'
+	| 'Widgets';
 
 type Viewport = 'Desktop' | 'Landscape Phone' | 'Portrait Phone' | 'Tablet';

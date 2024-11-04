@@ -227,6 +227,27 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	@Override
+	public WorkflowDefinition getWorkflowDefinition(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		try {
+			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
+				_kaleoDefinitionService.getKaleoDefinition(
+					externalReferenceCode, companyId));
+		}
+		catch (NoSuchModelException noSuchModelException) {
+			throw new NoSuchWorkflowDefinitionException(noSuchModelException);
+		}
+		catch (WorkflowException workflowException) {
+			throw workflowException;
+		}
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
+		}
+	}
+
+	@Override
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, String name, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)

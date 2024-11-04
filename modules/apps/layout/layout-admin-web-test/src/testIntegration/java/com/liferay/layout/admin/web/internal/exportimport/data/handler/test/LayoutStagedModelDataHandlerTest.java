@@ -31,7 +31,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
-import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
+import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -351,9 +351,11 @@ public class LayoutStagedModelDataHandlerTest
 			importedLayout, _layoutServiceContextHelper,
 			_layoutStructureProvider, importedLayoutSegmentsExperienceId);
 
-		FileEntry fileEntry = _addFileEntry(
+		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		FileEntry fileEntry = _addFileEntry(serviceContext);
 
 		String languageId = LocaleUtil.toLanguageId(
 			_portal.getSiteDefaultLocale(stagingGroup));
@@ -411,6 +413,50 @@ public class LayoutStagedModelDataHandlerTest
 				StringPool.BLANK));
 
 		Assert.assertFalse(
+			curContent,
+			StringUtil.contains(
+				curContent,
+				"style=\"--background-image-file-entry-id:" +
+					importedFileEntry.getFileEntryId(),
+				StringPool.BLANK));
+
+		_stagingLocalService.disableStaging(liveGroup, serviceContext);
+
+		importedLayout = _layoutLocalService.getLayout(
+			importedLayout.getPlid());
+
+		Assert.assertEquals(
+			curContent,
+			ContentLayoutTestUtil.getRenderLayoutHTML(
+				importedLayout, _layoutServiceContextHelper,
+				_layoutStructureProvider, importedLayoutSegmentsExperienceId));
+
+		ContentLayoutTestUtil.publishLayout(
+			importedLayout.fetchDraftLayout(), importedLayout);
+
+		curContent = ContentLayoutTestUtil.getRenderLayoutHTML(
+			_layoutLocalService.getLayout(importedLayout.getPlid()),
+			_layoutServiceContextHelper, _layoutStructureProvider,
+			importedLayoutSegmentsExperienceId);
+
+		Assert.assertTrue(
+			curContent,
+			StringUtil.contains(
+				curContent,
+				StringBundler.concat(
+					"<a href=\"https://learn.liferay.com/\"><img alt=\"\" ",
+					"class=\"w-100\" data-lfr-editable-id=\"image-square\" ",
+					"data-lfr-editable-type=\"image\" src=\"",
+					HtmlUtil.escape(
+						_dlURLHelper.getPreviewURL(
+							importedFileEntry,
+							importedFileEntry.getFileVersion(), null,
+							StringPool.BLANK)),
+					"\" data-fileentryid=\"",
+					importedFileEntry.getFileEntryId(), "\"></a>"),
+				StringPool.BLANK));
+
+		Assert.assertTrue(
 			curContent,
 			StringUtil.contains(
 				curContent,
@@ -514,7 +560,7 @@ public class LayoutStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		StagingLocalServiceUtil.enableLocalStaging(
+		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), group, false, false, serviceContext);
 
 		Group stagingGroup = group.getStagingGroup();
@@ -594,7 +640,7 @@ public class LayoutStagedModelDataHandlerTest
 	public void testLocalStagingWithContentDisplay() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		StagingLocalServiceUtil.enableLocalStaging(
+		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), group, false, false,
 			ServiceContextTestUtil.getServiceContext(
 				group, TestPropsValues.getUserId()));
@@ -660,7 +706,7 @@ public class LayoutStagedModelDataHandlerTest
 
 		Layout masterLayout = _addMasterLayout(serviceContext);
 
-		StagingLocalServiceUtil.enableLocalStaging(
+		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), group, false, false, serviceContext);
 
 		Group stagingGroup = group.getStagingGroup();
@@ -765,7 +811,7 @@ public class LayoutStagedModelDataHandlerTest
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
-		StagingLocalServiceUtil.enableLocalStaging(
+		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), group, false, false,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
@@ -899,7 +945,7 @@ public class LayoutStagedModelDataHandlerTest
 			false, false, Collections.emptyMap(), 0,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
-		StagingLocalServiceUtil.enableLocalStaging(
+		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), group, true, false,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
@@ -2190,6 +2236,9 @@ public class LayoutStagedModelDataHandlerTest
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
+	private StagingLocalService _stagingLocalService;
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

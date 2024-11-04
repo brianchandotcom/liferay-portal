@@ -138,6 +138,32 @@ const createRequestData = (
 	return data;
 };
 
+const updateCartById = async function (
+	orderId: number,
+	data: Array<IOrderItem>,
+	callback: (response: IOrderItemAPIResponse) => void
+) {
+	return await ServiceProvider.DeliveryCartAPI('v1')
+		.updateCartById(
+			orderId,
+			{
+				cartItems: data,
+			},
+			{pageSize: -1}
+		)
+		.then(async (response: IOrderItemAPIResponse) => {
+			Liferay.fire(CURRENT_ORDER_UPDATED, {
+				order: response,
+				updatedFromCart: false,
+			});
+			Liferay.fire(ORDER_INFORMATION_ALTERED, {
+				order: response,
+			});
+
+			callback(response);
+		});
+};
+
 const Multishipping = ({
 	accountId,
 	defaultAddressId = 0,
@@ -166,102 +192,140 @@ const Multishipping = ({
 	const [saving, setSaving] = useState(false);
 	const [search, setSearch] = useState('');
 
-	const prepareData = useCallback(async (items: Array<IOrderItem>) => {
-		const formattedDeliveryGroups: Array<IDeliveryGroup> = [];
-		const formattedItems: Array<IOrderItem> = [];
+	const prepareData = useCallback(
+		async (items: Array<IOrderItem>) => {
+			const formattedDeliveryGroups: Array<IDeliveryGroup> = [];
+			const formattedItems: Array<IOrderItem> = [];
 
-		items.forEach((orderItem) => {
-			let deliveryGroup = formattedDeliveryGroups.find((item) => {
-				return (
-					item.name === (orderItem.deliveryGroup || '') &&
-					item.deliveryDate ===
-						(orderItem.requestedDeliveryDate || '') &&
-					item.addressId === orderItem.shippingAddressId
-				);
+			items.forEach((orderItem) => {
+				let deliveryGroup = formattedDeliveryGroups.find((item) => {
+					return (
+						item.name === (orderItem.deliveryGroup || '') &&
+						item.deliveryDate ===
+							(orderItem.requestedDeliveryDate || '') &&
+						item.addressId === orderItem.shippingAddressId
+					);
+				});
+
+				if (!deliveryGroup && orderItem.shippingAddressId > 0) {
+					deliveryGroup = {
+						addressId: orderItem.shippingAddressId,
+						deliveryDate: orderItem.requestedDeliveryDate || '',
+						id: Math.floor(Math.random() * 100000000),
+						name: orderItem.deliveryGroup || '',
+					};
+
+					formattedDeliveryGroups.push(deliveryGroup);
+				}
+
+				let formattedItem = formattedItems.find((item) => {
+					return (
+						item.skuId === orderItem.skuId &&
+						item.skuUnitOfMeasure?.key ===
+							orderItem.skuUnitOfMeasure?.key &&
+						item.options === orderItem.options &&
+						orderItem.deliveryGroup !== ''
+					);
+				});
+
+				if (
+					!formattedItem ||
+					(formattedItem &&
+						deliveryGroup &&
+						(formattedItem.deliveryGroups || {})[deliveryGroup.id])
+				) {
+					formattedItem = {
+						...orderItem,
+						deliveryGroups: {},
+						quantity: 0,
+					};
+
+					formattedItems.push(formattedItem);
+				}
+
+				if (deliveryGroup) {
+					formattedItem.deliveryGroups = {
+						...formattedItem.deliveryGroups,
+						[deliveryGroup.id]: {
+							options: orderItem.options,
+							orderItemId: orderItem.id,
+							originalQuantity: orderItem.quantity,
+							quantity: orderItem.quantity,
+							replacedSkuId: orderItem.replacedSkuId || 0,
+							skuId: orderItem.skuId,
+							skuUnitOfMeasure: orderItem.skuUnitOfMeasure,
+						} as IOrderItemDeliveryGroup,
+					};
+				}
+				else {
+					formattedItem.deliveryGroups = {
+						[0]: {
+							options: orderItem.options,
+							orderItemId: orderItem.id,
+							originalQuantity: orderItem.quantity,
+							quantity: orderItem.quantity,
+							replacedSkuId: orderItem.replacedSkuId || 0,
+							skuId: orderItem.skuId,
+							skuUnitOfMeasure: orderItem.skuUnitOfMeasure,
+						},
+					};
+				}
+
+				formattedItem.quantity =
+					formattedItem.quantity + orderItem.quantity;
 			});
 
-			if (!deliveryGroup && orderItem.shippingAddressId > 0) {
-				deliveryGroup = {
-					addressId: orderItem.shippingAddressId,
-					deliveryDate: orderItem.requestedDeliveryDate || '',
-					id: Math.floor(Math.random() * 100000000),
-					name: orderItem.deliveryGroup || '',
-				};
+			if (formattedDeliveryGroups.length) {
+				formattedDeliveryGroups.sort((item1, item2) => {
+					return item1.name.localeCompare(item2.name);
+				});
 
-				formattedDeliveryGroups.push(deliveryGroup);
+				if (formattedItems.find((item) => item.deliveryGroup === '')) {
+					try {
+						setSaving(true);
+
+						await updateCartById(
+							orderId,
+							createRequestData(
+								formattedDeliveryGroups,
+								formattedItems
+							),
+							async (response) => {
+								await prepareData(response.cartItems);
+							}
+						);
+
+						return;
+					}
+					catch (error) {
+						showError(error as IAPIResponseError);
+					}
+					finally {
+						setSaving(false);
+					}
+				}
 			}
-
-			let formattedItem = formattedItems.find((item) => {
-				return (
-					item.skuId === orderItem.skuId &&
-					item.skuUnitOfMeasure?.key ===
-						orderItem.skuUnitOfMeasure?.key &&
-					item.options === orderItem.options &&
-					orderItem.deliveryGroup !== ''
-				);
-			});
-
-			if (
-				!formattedItem ||
-				(formattedItem &&
-					deliveryGroup &&
-					(formattedItem.deliveryGroups || {})[deliveryGroup.id])
-			) {
-				formattedItem = {
-					...orderItem,
-					deliveryGroups: {},
-					quantity: 0,
-				};
-
-				formattedItems.push(formattedItem);
-			}
-
-			if (deliveryGroup) {
-				formattedItem.deliveryGroups = {
-					...formattedItem.deliveryGroups,
-					[deliveryGroup.id]: {
-						options: orderItem.options,
-						orderItemId: orderItem.id,
-						originalQuantity: orderItem.quantity,
-						quantity: orderItem.quantity,
-						replacedSkuId: orderItem.replacedSkuId || 0,
-						skuId: orderItem.skuId,
-						skuUnitOfMeasure: orderItem.skuUnitOfMeasure,
-					} as IOrderItemDeliveryGroup,
-				};
-			}
-			else {
-				formattedItem.deliveryGroups = {
-					[0]: {
-						options: orderItem.options,
-						orderItemId: orderItem.id,
-						originalQuantity: orderItem.quantity,
-						quantity: orderItem.quantity,
-						replacedSkuId: orderItem.replacedSkuId || 0,
-						skuId: orderItem.skuId,
-						skuUnitOfMeasure: orderItem.skuUnitOfMeasure,
-					},
-				};
-			}
-
-			formattedItem.quantity =
-				formattedItem.quantity + orderItem.quantity;
-		});
-
-		if (formattedDeliveryGroups.length) {
-			formattedDeliveryGroups.sort((item1, item2) => {
-				return item1.name.localeCompare(item2.name);
-			});
-
-			if (formattedItems.find((item) => item.deliveryGroup === '')) {
+			else if (defaultAddressId) {
 				try {
+					setSaving(true);
 
-					// eslint-disable-next-line @typescript-eslint/no-use-before-define
-					await updateFullCart(
-						createRequestData(
-							formattedDeliveryGroups,
-							formattedItems
-						)
+					await updateCartById(
+						orderId,
+						formattedItems.map((item) => {
+							return formatCartItem(
+								{
+									addressId: defaultAddressId,
+									deliveryDate: '',
+									id: 0,
+									name: defaultAddressName || 'Default',
+								},
+								item,
+								item.quantity
+							);
+						}) as Array<IOrderItem>,
+						async (response) => {
+							await prepareData(response.cartItems);
+						}
 					);
 
 					return;
@@ -269,45 +333,22 @@ const Multishipping = ({
 				catch (error) {
 					showError(error as IAPIResponseError);
 				}
+				finally {
+					setSaving(false);
+				}
 			}
-		}
-		else if (defaultAddressId) {
-			try {
 
-				// eslint-disable-next-line @typescript-eslint/no-use-before-define
-				await updateFullCart(
-					formattedItems.map((item) => {
-						return formatCartItem(
-							{
-								addressId: defaultAddressId,
-								deliveryDate: '',
-								id: 0,
-								name: defaultAddressName || 'Default',
-							},
-							item,
-							item.quantity
-						);
-					})
-				);
-
-				return;
-			}
-			catch (error) {
-				showError(error as IAPIResponseError);
-			}
-		}
-
-		setDeliveryGroups(formattedDeliveryGroups);
-		setFormattedOrderItems(
-			formattedItems.sort(
-				(item1, item2) =>
-					item1.sku?.localeCompare(item2.sku || '') ||
-					item1.id - item2.id
-			)
-		);
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+			setDeliveryGroups(formattedDeliveryGroups);
+			setFormattedOrderItems(
+				formattedItems.sort(
+					(item1, item2) =>
+						item1.sku?.localeCompare(item2.sku || '') ||
+						item1.id - item2.id
+				)
+			);
+		},
+		[defaultAddressId, defaultAddressName, orderId]
+	);
 
 	const loadOrderItemData = useCallback(
 		({updatedFromCart = false}: {updatedFromCart: boolean}) => {
@@ -336,28 +377,11 @@ const Multishipping = ({
 		async (data) => {
 			setSaving(true);
 
-			await ServiceProvider.DeliveryCartAPI('v1')
-				.updateCartById(
-					orderId,
-					{
-						cartItems: data,
-					},
-					{pageSize: -1}
-				)
-				.then(async (response: IOrderItemAPIResponse) => {
-					await prepareData(response.cartItems);
-
-					Liferay.fire(CURRENT_ORDER_UPDATED, {
-						order: response,
-						updatedFromCart: false,
-					});
-					Liferay.fire(ORDER_INFORMATION_ALTERED, {
-						order: response,
-					});
-				})
-				.finally(() => {
-					setSaving(false);
-				});
+			await updateCartById(orderId, data, async (response) => {
+				await prepareData(response.cartItems);
+			}).finally(() => {
+				setSaving(false);
+			});
 		},
 		[orderId, prepareData]
 	);
@@ -708,7 +732,8 @@ const Multishipping = ({
 											readonly ||
 											saving ||
 											deliveryGroups.length >=
-												MAX_DELIVERY_GROUPS
+												MAX_DELIVERY_GROUPS ||
+											formattedOrderItems.length < 1
 										}
 										handleSubmit={handleSubmitDeliveryGroup}
 										hasManageAddressesPermission={true}

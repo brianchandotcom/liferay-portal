@@ -12,7 +12,7 @@ import ClayTable from '@clayui/table';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {debounce, openConfirmModal} from 'frontend-js-web';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 // @ts-ignore
 
@@ -215,126 +215,144 @@ const OrderItemRow = ({
 	const [isChecked, setIsChecked] = useState(checked);
 	const [orderItem, setOrderItem] = useState<IOrderItem>(orderItemProp);
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const finalizeSave = useCallback(
-		debounce(
-			async (
-				currentDeliveryGroup: IDeliveryGroup,
-				deliveryGroupId: number,
-				orderId: number,
-				orderItem: IOrderItem,
-				orderItemDeliveryGroups: {
-					[key: string]: IOrderItemDeliveryGroup;
-				},
-				quantity: number
-			) => {
-				const existingOrderItemDeliveryGroup =
-					orderItemDeliveryGroups[deliveryGroupId];
+		async (
+			currentDeliveryGroup: IDeliveryGroup,
+			deliveryGroupId: number,
+			orderId: number,
+			orderItem: IOrderItem,
+			orderItemDeliveryGroups: {
+				[key: string]: IOrderItemDeliveryGroup;
+			},
+			quantity: number
+		) => {
+			const existingOrderItemDeliveryGroup =
+				orderItemDeliveryGroups[deliveryGroupId];
 
-				if (
-					existingOrderItemDeliveryGroup &&
-					existingOrderItemDeliveryGroup.orderItemId
-				) {
-					if (quantity <= 0) {
-						await ServiceProvider.DeliveryCartAPI('v1')
-							.deleteItemById(
-								existingOrderItemDeliveryGroup.orderItemId
-							)
-							.then(() => {
-								delete orderItemDeliveryGroups[deliveryGroupId];
+			if (
+				existingOrderItemDeliveryGroup &&
+				existingOrderItemDeliveryGroup.orderItemId
+			) {
+				if (quantity <= 0) {
+					await ServiceProvider.DeliveryCartAPI('v1')
+						.deleteItemById(
+							existingOrderItemDeliveryGroup.orderItemId
+						)
+						.then(() => {
+							delete orderItemDeliveryGroups[deliveryGroupId];
 
-								Liferay.fire(CURRENT_ORDER_UPDATED, {
-									order: {id: orderId},
-									updatedFromCart: false,
-								});
-								Liferay.fire(ORDER_INFORMATION_ALTERED);
-							})
-							.catch((error: IAPIResponseError) => {
-								showError(error);
-
-								existingOrderItemDeliveryGroup.quantity =
-									existingOrderItemDeliveryGroup.originalQuantity;
+							Liferay.fire(CURRENT_ORDER_UPDATED, {
+								order: {id: orderId},
+								updatedFromCart: false,
 							});
-					}
-					else {
-						await ServiceProvider.DeliveryCartAPI('v1')
-							.updateItemById(
-								existingOrderItemDeliveryGroup.orderItemId,
-								formatCartItem(
-									currentDeliveryGroup,
-									orderItem,
-									quantity
-								)
-							)
-							.then((response: IOrderItem) => {
-								existingOrderItemDeliveryGroup.originalQuantity =
-									response.quantity;
-								existingOrderItemDeliveryGroup.quantity =
-									response.quantity;
+							Liferay.fire(ORDER_INFORMATION_ALTERED);
+						})
+						.catch((error: IAPIResponseError) => {
+							showError(error);
 
-								Liferay.fire(CURRENT_ORDER_UPDATED, {
-									order: {id: orderId},
-									updatedFromCart: false,
-								});
-								Liferay.fire(ORDER_INFORMATION_ALTERED);
-							})
-							.catch((error: IAPIResponseError) => {
-								showError(error);
-
-								existingOrderItemDeliveryGroup.quantity =
-									existingOrderItemDeliveryGroup.originalQuantity;
-							});
-					}
+							existingOrderItemDeliveryGroup.quantity =
+								existingOrderItemDeliveryGroup.originalQuantity;
+						});
 				}
 				else {
-					if (quantity > 0) {
-						await ServiceProvider.DeliveryCartAPI('v1')
-							.createItemByCartId(
-								orderId,
-								formatCartItem(
-									currentDeliveryGroup,
-									orderItem,
-									quantity
-								)
+					await ServiceProvider.DeliveryCartAPI('v1')
+						.updateItemById(
+							existingOrderItemDeliveryGroup.orderItemId,
+							formatCartItem(
+								currentDeliveryGroup,
+								orderItem,
+								quantity
 							)
-							.then((response: IOrderItem) => {
-								orderItemDeliveryGroups[deliveryGroupId] = {
-									...orderItemDeliveryGroups[deliveryGroupId],
-									orderItemId: response.id,
-									originalQuantity: quantity,
-									quantity,
-								};
+						)
+						.then((response: IOrderItem) => {
+							existingOrderItemDeliveryGroup.originalQuantity =
+								response.quantity;
+							existingOrderItemDeliveryGroup.quantity =
+								response.quantity;
 
-								Liferay.fire(CURRENT_ORDER_UPDATED, {
-									order: {id: orderId},
-									updatedFromCart: false,
-								});
-								Liferay.fire(ORDER_INFORMATION_ALTERED);
-							})
-							.catch((error: IAPIResponseError) => {
-								showError(error);
-
-								existingOrderItemDeliveryGroup.quantity =
-									existingOrderItemDeliveryGroup.originalQuantity;
+							Liferay.fire(CURRENT_ORDER_UPDATED, {
+								order: {id: orderId},
+								updatedFromCart: false,
 							});
-					}
+							Liferay.fire(ORDER_INFORMATION_ALTERED);
+						})
+						.catch((error: IAPIResponseError) => {
+							showError(error);
+
+							existingOrderItemDeliveryGroup.quantity =
+								existingOrderItemDeliveryGroup.originalQuantity;
+						});
 				}
+			}
+			else {
+				if (quantity > 0) {
+					await ServiceProvider.DeliveryCartAPI('v1')
+						.createItemByCartId(
+							orderId,
+							formatCartItem(
+								currentDeliveryGroup,
+								orderItem,
+								quantity
+							)
+						)
+						.then((response: IOrderItem) => {
+							orderItemDeliveryGroups[deliveryGroupId] = {
+								...orderItemDeliveryGroups[deliveryGroupId],
+								orderItemId: response.id,
+								originalQuantity: quantity,
+								quantity,
+							};
 
-				const internalOrderItem = {
-					...orderItem,
-					deliveryGroups: orderItemDeliveryGroups,
-					quantity: calculateOrderItemQuantity(
-						orderItemDeliveryGroups
-					),
-				};
+							Liferay.fire(CURRENT_ORDER_UPDATED, {
+								order: {id: orderId},
+								updatedFromCart: false,
+							});
+							Liferay.fire(ORDER_INFORMATION_ALTERED);
+						})
+						.catch((error: IAPIResponseError) => {
+							showError(error);
 
-				setOrderItem(internalOrderItem);
+							existingOrderItemDeliveryGroup.quantity =
+								existingOrderItemDeliveryGroup.originalQuantity;
+						});
+				}
+			}
 
-				handleSubmit(internalOrderItem);
-			},
-			500
-		),
+			const internalOrderItem = {
+				...orderItem,
+				deliveryGroups: orderItemDeliveryGroups,
+				quantity: calculateOrderItemQuantity(orderItemDeliveryGroups),
+			};
+
+			setOrderItem(internalOrderItem);
+
+			handleSubmit(internalOrderItem);
+		},
 		[handleSubmit]
+	);
+
+	const debouncedFinalizeSave = useMemo(
+		() =>
+			debounce(
+				async (
+					currentDeliveryGroup,
+					deliveryGroupId,
+					orderId,
+					orderItem,
+					orderItemDeliveryGroups,
+					quantity
+				) =>
+					finalizeSave(
+						currentDeliveryGroup,
+						deliveryGroupId,
+						orderId,
+						orderItem,
+						orderItemDeliveryGroups,
+						quantity
+					),
+				500
+			),
+		[finalizeSave]
 	);
 
 	const handleInternalSelection = useCallback(() => {
@@ -387,7 +405,7 @@ const OrderItemRow = ({
 				};
 			});
 
-			finalizeSave(
+			debouncedFinalizeSave(
 				currentDeliveryGroup,
 				deliveryGroupId,
 				orderId,
@@ -396,7 +414,7 @@ const OrderItemRow = ({
 				quantity
 			);
 		},
-		[deliveryGroups, finalizeSave, orderId, orderItem]
+		[deliveryGroups, debouncedFinalizeSave, orderId, orderItem]
 	);
 
 	useEffect(() => {

@@ -34,6 +34,7 @@ import {
 } from './Types';
 
 interface IAddressSelectorProps {
+	setHandleNameChange(name: string): void;
 	setHandleSubmit(
 		callback: SetStateAction<(event: Event) => Promise<IPostalAddress>>
 	): void;
@@ -62,6 +63,7 @@ function AddressSelector({
 	hasManageAddressesPermission = true,
 	label = Liferay.Language.get('delivery-group'),
 	namespace = 'AddressSelector',
+	setHandleNameChange,
 	setHandleSubmit,
 	setIsFormValid,
 }: IAddressSelectorProps) {
@@ -82,16 +84,16 @@ function AddressSelector({
 	);
 	const [regions, setRegions] = useState<Array<IRegion>>([]);
 	const [currentAddress, setCurrentAddress] = useState<IPostalAddress>(
-		defaultAddressRef.current
+		defaultAddressRef?.current
 	);
 
 	const handleAddressIdChange = useCallback(
 		({target: {value}}) => {
-			setCurrentAddress(
-				() =>
-					addresses.find((address) => address.id === Number(value)) ||
-					defaultAddressRef.current
+			const address = addresses.find(
+				(address) => address.id === Number(value)
 			);
+
+			setCurrentAddress(() => address || defaultAddressRef.current);
 			if (Number(value) === 0) {
 				setErrors(
 					MANDATORY_FIELDS.reduce((map: IFieldError, field) => {
@@ -103,9 +105,11 @@ function AddressSelector({
 			}
 			else {
 				setErrors({});
+
+				setHandleNameChange(address?.name || '');
 			}
 		},
-		[addresses]
+		[addresses, setHandleNameChange]
 	);
 
 	const handleFieldChange = useCallback(

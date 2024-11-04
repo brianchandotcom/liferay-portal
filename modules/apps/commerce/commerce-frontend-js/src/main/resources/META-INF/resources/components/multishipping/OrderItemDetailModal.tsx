@@ -39,55 +39,67 @@ const OrderItemDetailModal = ({
 			<ClayModal.Body>
 				<div className="text-weight-bold">{orderItem.name}</div>
 
-				<div className="mt-3">
-					{`${Liferay.Language.get('uom')}: ${orderItem.skuUnitOfMeasure?.key || ''}`}
-				</div>
-
-				<div className="mt-3">
-					{`${Liferay.Language.get('options')}:`}
-
-					<div>
-						{(
-							JSON.parse(orderItem.options || '[]') as Array<any>
-						).map((option, index) => {
-							const {
-								skuId,
-								skuOptionName,
-								skuOptionValueNames,
-								value,
-							} = option;
-
-							const childItem = (orderItem.cartItems || []).find(
-								(childItem) =>
-									childItem.skuId === parseInt(skuId, 10)
-							);
-
-							const {name, quantity, skuUnitOfMeasure} =
-								childItem || {};
-
-							return (
-								<div className="pt-2" key={index}>
-									<div className="h6">{skuOptionName}</div>
-
-									<p>
-										<span>
-											{parseValue(skuOptionValueNames) ||
-												parseValue(value)}
-										</span>
-
-										{name && (
-											<span className="pl-2">
-												{`(${quantity} \u00D7 ${name} ${
-													skuUnitOfMeasure?.key || ''
-												})`}
-											</span>
-										)}
-									</p>
-								</div>
-							);
-						})}
+				{(orderItem.skuUnitOfMeasure?.key || '') !== '' && (
+					<div className="mt-3">
+						{`${Liferay.Language.get('uom')}: ${orderItem.skuUnitOfMeasure?.key || ''}`}
 					</div>
-				</div>
+				)}
+
+				{(orderItem.options || '[]') !== '[]' && (
+					<div className="mt-3">
+						{`${Liferay.Language.get('options')}:`}
+
+						<div>
+							{(
+								JSON.parse(
+									orderItem.options || '[]'
+								) as Array<any>
+							).map((option, index) => {
+								const {
+									skuId,
+									skuOptionName,
+									skuOptionValueNames,
+									value,
+								} = option;
+
+								const childItem = (
+									orderItem.cartItems || []
+								).find(
+									(childItem) =>
+										childItem.skuId === parseInt(skuId, 10)
+								);
+
+								const {name, quantity, skuUnitOfMeasure} =
+									childItem || {};
+
+								return (
+									<div className="pt-2" key={index}>
+										<div className="h6">
+											{skuOptionName}
+										</div>
+
+										<p>
+											<span>
+												{parseValue(
+													skuOptionValueNames
+												) || parseValue(value)}
+											</span>
+
+											{name && (
+												<span className="pl-2">
+													{`(${quantity} \u00D7 ${name} ${
+														skuUnitOfMeasure?.key ||
+														''
+													})`}
+												</span>
+											)}
+										</p>
+									</div>
+								);
+							})}
+						</div>
+					</div>
+				)}
 			</ClayModal.Body>
 		</ClayModal>
 	);

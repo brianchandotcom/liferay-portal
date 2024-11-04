@@ -23,7 +23,6 @@ import getBasicWebContentStructureId from '../../utils/structured-content/getBas
 import {waitForAlert} from '../../utils/waitForAlert';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 import getDataStructureDefinition from './utils/getDataStructureDefinition';
-import {JournalPage} from "./pages/JournalPage";
 
 const translateNameAndMetadataFields = async (
 	page,
@@ -1636,7 +1635,7 @@ translationAndAutosaveTest(
 	{
 		tag: '@LPD-33570',
 	},
-	async ({journalEditArticlePage, journalPage, page, site}) => {
+	async ({journalEditArticlePage, page, site}) => {
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
 		const articleTitle = 'Web Content Title';

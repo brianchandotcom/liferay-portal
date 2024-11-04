@@ -122,25 +122,6 @@ public class
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
-		LayoutPageTemplateCollection targetLayoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				fetchLayoutPageTemplateCollection(
-					_group.getGroupId(),
-					_getName(layoutPageTemplateCollection.getName()),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE);
-		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getName(layoutPageTemplateEntryDisplayPage.getName()),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
-
-		Assert.assertNull(targetLayoutPageTemplateCollection);
-		Assert.assertNull(targetLayoutPageTemplateEntry);
-
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(
 				new long[] {

@@ -10,11 +10,14 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPOptionSKUContributorException;
 import com.liferay.commerce.product.exception.ExistingCPDefinitionOptionRelException;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -30,6 +33,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
@@ -66,7 +70,25 @@ public class CPOptionLocalServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_cpOptionLocalService.deleteCPOptions(_serviceContext.getCompanyId());
+		List<CPOption> cpOptions =
+			_cpOptionLocalService.findCPOptionByCompanyId(
+				_serviceContext.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (CPOption cpOption : cpOptions) {
+			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+				_cpDefinitionOptionRelLocalService.
+					getCPOptionCPDefinitionOptionRels(cpOption.getCPOptionId());
+
+			for (CPDefinitionOptionRel cpDefinitionOptionRel :
+					cpDefinitionOptionRels) {
+
+				_cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
+					cpDefinitionOptionRel);
+			}
+
+			_cpOptionLocalService.deleteCPOption(cpOption.getCPOptionId());
+		}
 	}
 
 	@Test
@@ -247,6 +269,10 @@ public class CPOptionLocalServiceTest {
 
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	@Inject
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
 
 	@Inject
 	private CPOptionLocalService _cpOptionLocalService;

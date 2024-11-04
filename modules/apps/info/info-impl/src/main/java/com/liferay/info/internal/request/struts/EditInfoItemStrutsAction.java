@@ -306,9 +306,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 								getInfoFieldUniqueId())) {
 
 						SessionErrors.add(
-							httpServletRequest,
-							infoFormValidationExceptionCustomValidation.
-								getInfoFieldUniqueId(),
+							httpServletRequest, InfoFormException.class,
 							infoFormValidationExceptionCustomValidation);
 					}
 					else {
@@ -331,8 +329,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 					infoFormValidationException.getInfoFieldUniqueId())) {
 
 				SessionErrors.add(
-					httpServletRequest,
-					infoFormValidationException.getInfoFieldUniqueId(),
+					httpServletRequest, InfoFormException.class,
 					infoFormValidationException);
 			}
 		}

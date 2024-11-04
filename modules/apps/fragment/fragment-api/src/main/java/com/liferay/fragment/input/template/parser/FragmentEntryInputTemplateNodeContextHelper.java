@@ -117,28 +117,32 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			infoField = infoForm.getInfoField(fieldName);
 		}
 
-		if ((infoField != null) &&
-			SessionErrors.contains(
-				httpServletRequest, infoField.getUniqueId())) {
-
-			InfoFormValidationException infoFormValidationException =
-				(InfoFormValidationException)SessionErrors.get(
-					httpServletRequest, infoField.getUniqueId());
-
-			errorMessage = infoFormValidationException.getLocalizedMessage(
-				locale);
-
-			SessionErrors.remove(httpServletRequest, infoField.getUniqueId());
-		}
-		else if (SessionErrors.contains(
-					httpServletRequest, InfoFormException.class)) {
+		if (SessionErrors.contains(
+				httpServletRequest, InfoFormException.class)) {
 
 			InfoFormException infoFormException =
 				(InfoFormException)SessionErrors.get(
 					httpServletRequest, InfoFormException.class);
 
-			if (infoFormException instanceof
-					InfoFormValidationException.InvalidCaptcha) {
+			if ((infoField != null) &&
+				(infoFormException instanceof InfoFormValidationException)) {
+
+				InfoFormValidationException infoFormValidationException =
+					(InfoFormValidationException)infoFormException;
+
+				if (Objects.equals(
+						infoField.getUniqueId(),
+						infoFormValidationException.getInfoFieldUniqueId())) {
+
+					errorMessage =
+						infoFormValidationException.getLocalizedMessage(locale);
+
+					SessionErrors.remove(
+						httpServletRequest, InfoFormException.class);
+				}
+			}
+			else if (infoFormException instanceof
+						InfoFormValidationException.InvalidCaptcha) {
 
 				InfoFormValidationException.InvalidCaptcha
 					infoFormValidationExceptionInvalidCaptcha =

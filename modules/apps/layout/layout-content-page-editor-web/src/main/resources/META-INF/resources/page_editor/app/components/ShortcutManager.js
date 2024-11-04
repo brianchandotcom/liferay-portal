@@ -52,60 +52,28 @@ import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
 import ShortcutModal from './ShortcutModal';
 import useUndoRedoActions from './undo/useUndoRedoActions';
 
-const isEditableField = (element) =>
-	!!element.closest('.page-editor__editable');
-
-const isEditingEditableField = () =>
-	!!document.activeElement.getAttribute('contenteditable');
-
-const isInteractiveElement = (element) => {
-	return (
-		['INPUT', 'OPTION', 'SELECT', 'TEXTAREA'].includes(element.tagName) ||
-		!!element.closest('.alloy-editor-container') ||
-		!!element.closest('.cke_editable') ||
-		!!element.closest('.dropdown-menu') ||
-		!!element.closest('.page-editor__page-structure__item-configuration') ||
-		!!element.closest('.page-editor__allowed-fragment__tree')
-	);
-};
-
-const isTextSelected = () => window.getSelection().type === 'Range';
-
-const isWithinIframe = () => {
-	return window.top !== window.self;
-};
-
 export default function ShortcutManager() {
 	const activeItemIds = useActiveItemIds();
 	const activeItemType = useActiveItemType();
-	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
-	const dispatch = useDispatch();
-	const [openSaveModal, setOpenSaveModal] = useState(false);
-	const openShortcutModal = useOpenShortcutModal();
 	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
-	const setEditedNodeId = useSetEditedNodeId();
-	const setOpenShortcutModal = useSetOpenShortcutModal();
-	const state = useSelector((state) => state);
-	const sidebarHidden = state.sidebar.hidden;
-	const {onRedo, onUndo} = useUndoRedoActions();
-	const getWidgets = useGetWidgets();
 
 	const clipboard = useClipboard();
 	const setClipboard = useSetClipboard();
 
-	const selectItems = Liferay.FeatureFlags['LPD-18221']
-		? selectMultipleItems
-		: selectItem;
+	const dispatch = useDispatch();
+	const getWidgets = useGetWidgets();
+	const openShortcutModal = useOpenShortcutModal();
 
-	const {fragmentEntryLinks, layoutData} = state;
+	const setEditedNodeId = useSetEditedNodeId();
+	const setOpenShortcutModal = useSetOpenShortcutModal();
 
-	const multiSelection = activeItemIds.length > 1;
+	const {onRedo, onUndo} = useUndoRedoActions();
 
-	const activeLayoutDataItem =
-		activeItemType === ITEM_TYPES.layoutDataItem
-			? layoutData.items[activeItemIds[0]]
-			: null;
+	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const layoutData = useSelector((state) => state.layoutData);
+	const sidebarHidden = useSelector((state) => state.sidebar.hidden);
 
 	const masterLayoutData = useSelector(
 		(state) => state.masterLayout?.masterLayoutData
@@ -115,26 +83,24 @@ export default function ShortcutManager() {
 		(state) => state.selectedViewportSize
 	);
 
+	const [openSaveModal, setOpenSaveModal] = useState(false);
+
 	const getParentItemId = () => {
 		const rootItem = layoutData.items[layoutData.rootItems.main];
 
 		return !activeItemIds?.length ? rootItem.itemId : activeItemIds[0];
 	};
 
-	function isOnlyOneParentSelected(activeItemIds) {
-		if (activeItemIds?.length > 1) {
-			openToast({
-				message: Liferay.Language.get(
-					'it-is-not-possible-to-paste-on-two-destinations-at-the-same-time'
-				),
-				type: 'danger',
-			});
+	const selectItems = Liferay.FeatureFlags['LPD-18221']
+		? selectMultipleItems
+		: selectItem;
 
-			return false;
-		}
+	const multiSelection = activeItemIds.length > 1;
 
-		return true;
-	}
+	const activeLayoutDataItem =
+		activeItemType === ITEM_TYPES.layoutDataItem
+			? layoutData.items[activeItemIds[0]]
+			: null;
 
 	const keymapRef = useRef(null);
 
@@ -159,8 +125,6 @@ export default function ShortcutManager() {
 				isKeyCombination: (event) =>
 					isCtrlOrMeta(event) && event.code === C_KEY_CODE,
 			},
-		}),
-		...(Liferay.FeatureFlags['LPD-18221'] && {
 			cut: {
 				action: () => {
 					setClipboard(activeItemIds);
@@ -358,32 +322,6 @@ export default function ShortcutManager() {
 		},
 		selectParent: {
 			action: () => {
-				const getSelectableParent = (layoutDataItem) => {
-					if (!layoutDataItem) {
-						return null;
-					}
-
-					const parentItem =
-						layoutData.items[layoutDataItem.parentId];
-
-					if (!parentItem) {
-						return null;
-					}
-
-					if (
-						parentItem.type !== LAYOUT_DATA_ITEM_TYPES.column &&
-						parentItem.type !==
-							LAYOUT_DATA_ITEM_TYPES.collectionItem &&
-						parentItem.type !==
-							LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
-						parentItem.type !== LAYOUT_DATA_ITEM_TYPES.root
-					) {
-						return parentItem;
-					}
-
-					return getSelectableParent(parentItem);
-				};
-
 				const selectableParent = getSelectableParent(
 					layoutData,
 					activeLayoutDataItem
@@ -462,4 +400,69 @@ export default function ShortcutManager() {
 			)}
 		</>
 	);
+}
+
+function getSelectableParent(layoutData, item) {
+	if (!item) {
+		return null;
+	}
+
+	const parentItem = layoutData.items[item.parentId];
+
+	if (!parentItem) {
+		return null;
+	}
+
+	if (
+		parentItem.type !== LAYOUT_DATA_ITEM_TYPES.column &&
+		parentItem.type !== LAYOUT_DATA_ITEM_TYPES.collectionItem &&
+		parentItem.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
+		parentItem.type !== LAYOUT_DATA_ITEM_TYPES.root
+	) {
+		return parentItem;
+	}
+
+	return getSelectableParent(parentItem);
+}
+
+function isEditableField(element) {
+	return !!element.closest('.page-editor__editable');
+}
+
+function isEditingEditableField() {
+	return !!document.activeElement.getAttribute('contenteditable');
+}
+
+function isInteractiveElement(element) {
+	return (
+		['INPUT', 'OPTION', 'SELECT', 'TEXTAREA'].includes(element.tagName) ||
+		!!element.closest('.alloy-editor-container') ||
+		!!element.closest('.cke_editable') ||
+		!!element.closest('.dropdown-menu') ||
+		!!element.closest('.page-editor__page-structure__item-configuration') ||
+		!!element.closest('.page-editor__allowed-fragment__tree')
+	);
+}
+
+function isTextSelected() {
+	return window.getSelection().type === 'Range';
+}
+
+function isOnlyOneParentSelected(activeItemIds) {
+	if (activeItemIds?.length > 1) {
+		openToast({
+			message: Liferay.Language.get(
+				'it-is-not-possible-to-paste-on-two-destinations-at-the-same-time'
+			),
+			type: 'danger',
+		});
+
+		return false;
+	}
+
+	return true;
+}
+
+function isWithinIframe() {
+	return window.top !== window.self;
 }

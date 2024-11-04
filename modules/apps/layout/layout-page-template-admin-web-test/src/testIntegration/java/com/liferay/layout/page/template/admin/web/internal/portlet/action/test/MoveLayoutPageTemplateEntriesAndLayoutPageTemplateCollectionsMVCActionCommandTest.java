@@ -283,7 +283,6 @@ public class
 		themeDisplay.setLayout(controlPanelLayout);
 
 		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
-
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setRealUser(TestPropsValues.getUser());

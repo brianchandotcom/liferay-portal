@@ -5,6 +5,7 @@
 
 import accountPlaceholder from '../assets/images/account_placeholder.png';
 import appPlaceholder from '../assets/images/app_placeholder.png';
+import i18n from '../i18n';
 import {
 	createProductSpecification,
 	getProductSpecifications,
@@ -32,11 +33,34 @@ export function createSkuName(
 	}`;
 }
 
+export function getCloudOptionBody() {
+	return {
+		fieldType: 'radio',
+		key: 'cloud-license-usage-type',
+		name: {en_US: i18n.translate('cloud-license-usage-type')},
+	};
+}
+
+export function getCloudProductOptionBody(newOptionId: number) {
+	return {
+		facetable: false,
+		fieldType: 'radio',
+		key: 'cloud-license-usage-type',
+		name: {
+			en_US: i18n.translate('cloud-license-usage-type'),
+		},
+		optionId: newOptionId,
+		productOptionValues: [],
+		required: true,
+		skuContributor: true,
+	};
+}
+
 export function getDxpOptionBody() {
 	return {
 		fieldType: 'radio',
 		key: 'dxp-license-usage-type',
-		name: {en_US: 'DXP License Usage Type'},
+		name: {en_US: i18n.translate('dxp-license-usage-type')},
 	};
 }
 
@@ -46,7 +70,7 @@ export function getDxpProductOptionBody(newOptionId: number) {
 		fieldType: 'radio',
 		key: 'dxp-license-usage-type',
 		name: {
-			en_US: 'DXP License Usage Type',
+			en_US: i18n.translate('dxp-license-usage-type'),
 		},
 		optionId: newOptionId,
 		productOptionValues: [],

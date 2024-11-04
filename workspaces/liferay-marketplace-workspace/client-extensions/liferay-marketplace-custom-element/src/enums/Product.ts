@@ -5,16 +5,6 @@
 
 import i18n from '../i18n';
 
-export enum PRODUCT_TYPE_VOCABULARY {
-	APP = 'App',
-	SOLUTION = 'Solution',
-}
-
-export enum SOLUTION_TYPES {
-	ANALYTICS = 'analytics',
-	PRE_BUILT_TRIAL = 'pre-built-trial',
-}
-
 export enum PRODUCT_CATEGORIES {
 	MARKETPLACE_APP_CATEGORY = 'marketplace-app-category',
 	MARKETPLACE_APP_TAGS = 'marketplace-app-tags',
@@ -27,6 +17,11 @@ export enum PRODUCT_CATEGORIES {
 export enum PRODUCT_IMAGE_FALLBACK_CATEGORIES {
 	PRODUCT_ICON = 'productIcon',
 	PRODUCT_IMAGE = 'productImage',
+}
+
+export enum PRODUCT_LICENSE {
+	CLOUD = 'cloud-license-usage-type',
+	DXP = 'dxp-license-usage-type',
 }
 
 export enum PRODUCT_PRICE_MODEL {
@@ -79,6 +74,11 @@ export enum PRODUCT_TAGS {
 	SOLUTION_HEADER = 'solution-header',
 }
 
+export enum PRODUCT_TYPE_VOCABULARY {
+	APP = 'App',
+	SOLUTION = 'Solution',
+}
+
 export enum PRODUCT_WORKFLOW_STATUS_CODE {
 	APPROVED = 0,
 	PENDING = 1,
@@ -90,3 +90,8 @@ export const PRODUCT_WORKFLOW_STATUS_LABEL = {
 	[PRODUCT_WORKFLOW_STATUS_CODE.PENDING]: i18n.translate('under-review'),
 	[PRODUCT_WORKFLOW_STATUS_CODE.DRAFT]: i18n.translate('draft'),
 };
+
+export enum SOLUTION_TYPES {
+	ANALYTICS = 'analytics',
+	PRE_BUILT_TRIAL = 'pre-built-trial',
+}

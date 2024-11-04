@@ -56,6 +56,30 @@
 	},
 	{
 		"ddmFormFieldTypeName": "radio",
+		"description": "Specifies if a acquision of an app.",
+		"externalReferenceCode": "MKT-OPTION-CLOUD-USAGE",
+		"facetable": false,
+		"key": "cloud-license-usage-type",
+		"name": "Cloud License Usage Type",
+		"required": true,
+		"skuContributor": true,
+		"values": [
+			{
+				"externalReferenceCode": "STANDARD",
+				"key": "standard",
+				"name": "Standard",
+				"priority": 0
+			},
+			{
+				"externalReferenceCode": "TRIAL",
+				"key": "trial",
+				"name": "Trial",
+				"priority": 1
+			}
+		]
+	},
+	{
+		"ddmFormFieldTypeName": "radio",
 		"description": "Adds on support for DXP Licenses.",
 		"externalReferenceCode": "MKT-OPTION-DXP-SUPPORT",
 		"facetable": false,

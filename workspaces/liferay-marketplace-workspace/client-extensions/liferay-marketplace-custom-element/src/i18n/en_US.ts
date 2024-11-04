@@ -19,6 +19,7 @@ export default {
 	'accounts': 'Accounts',
 	'activation-status': 'Activation Status',
 	'active': 'Active',
+	'add-developer-licenses': 'Add Developer Licenses',
 	'add-packages': 'Add Package(s)',
 	'add-up-to-x-images': 'Add up to {0} images',
 	'additional-apps-requested': 'Additional Apps Requested',
@@ -80,6 +81,7 @@ export default {
 	'cloud-apps-must-state-resource-requirements-if-your-app-has-no-additional-cpu-or-ram-requirements-please-enter-0':
 		'Cloud apps must state resource requirements. If your app has no additional CPU or Ram requirements please enter 0',
 	'cloud-compatible': 'Cloud Compatible?',
+	'cloud-license-usage-type': 'Cloud License Usage Type',
 	'cloud-provisioning': 'Cloud Provisioning',
 	'cloud-upload': 'Cloud Upload',
 	'comments': 'Comments',
@@ -129,6 +131,8 @@ export default {
 		'Define contact us information for your solution. This will inform users about this version’s updates on the storefront.',
 	'define-profile-company-information-for-your-solution-this-will-inform-users-about-this-versions-updates-on-the-storefront':
 		'Define profile company information for your solution. This will inform users about this version’s updates on the storefront.',
+	'define-the-licensing-approach-for-your-app-this-will-impact-users-licensing-renew-experience':
+		'Define the licensing approach for your app. This will impact users’ licensing renew experience.',
 	'define-the-solution-profile': 'Define the solution profile',
 	'define-the-support-and-help-references-users-can-access-these-resources-pre-and-post-purchase-to-find-out-more-information-about-your-app-or-solution':
 		'Define the support and help references. Users can access these resources pre and post purchase to find out more information about your app or solution.',
@@ -142,6 +146,9 @@ export default {
 	'design-the-storefront-for-your-solution-this-will-set-the-information-displayed-on-the-solutions-page-this-section-is-dedicated-to-creating-the-solutions-header':
 		'Design the storefront for your solution. This will set the information displayed on the solution’s page. This section is dedicated to creating the solution’s header.',
 	'details': 'Details',
+	'developer-license-prices': 'Developer License prices',
+	'developer-licenses-are-limited-to-5-unique-addresses-and-should-not-be-used-for-full-scale-production-deployments':
+		'Developer licenses are limited to 5 unique addresses and should not be used for full scale production deployments.',
 	'discover-and-customize': 'Discover and customize',
 	'done': 'Done',
 	'download': 'Download',
@@ -149,6 +156,7 @@ export default {
 	'download-key': 'Download Key',
 	'draft': 'Draft',
 	'drag-and-drop-to-upload-or': 'Drag and drop to upload or',
+	'dxp-license-usage-type': 'DXP License Usage Type',
 	'dxp-module-based-apps-are-not-supported-on-liferay-experience-cloud-lxc':
 		'DXP module-based apps are not supported on Liferay SaaS.',
 	'each': 'each',
@@ -351,6 +359,7 @@ export default {
 	'select-a-local-file-to-upload': 'Select a local file to upload',
 	'select-categories': 'Select categories',
 	'select-compatible-versions': 'Select Compatible Versions',
+	'select-licensing-terms': 'Select licensing terms',
 	'select-tags': 'Select tags',
 	'select-the-offering-of-liferay-your-app-is-compatible-with-the-compatibility-selections-will-determine-on-what-platforms-your-app-is-tested':
 		'Select the offering of Liferay your app is compatible with. The compatibility selections will determine on what platforms your app is tested.',
@@ -368,6 +377,9 @@ export default {
 	'solutions': 'Solutions',
 	'solutions-info': 'Solutions Info',
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
+	'standard-license-prices': 'Standard License prices',
+	'standard-licenses-cover-the-following-dxp-environments-production-non-production-uat-and-backup-dr-for-both-standalone-and-virtual-cluster-servers':
+		'Standard licenses cover the following DXP environments: production, non-production (UAT) and backup (DR) for both standalone and virtual cluster servers.',
 	'start-date': 'Start Date',
 	'start-trial': 'Start Trial',
 	'status': 'Status',

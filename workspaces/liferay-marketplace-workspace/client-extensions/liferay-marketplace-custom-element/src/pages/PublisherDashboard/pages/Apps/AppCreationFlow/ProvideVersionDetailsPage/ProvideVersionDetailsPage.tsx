@@ -7,6 +7,7 @@ import {Header} from '../../../../../../components/Header/Header';
 import {Input} from '../../../../../../components/Input/Input';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../../../../../components/Section/Section';
+import {PRODUCT_LICENSE} from '../../../../../../enums/Product';
 import {
 	createAppSKU,
 	getOptions,
@@ -17,6 +18,8 @@ import {
 } from '../../../../../../utils/api';
 import {
 	createSkuName,
+	getCloudOptionBody,
+	getCloudProductOptionBody,
 	getDxpOptionBody,
 	getDxpProductOptionBody,
 	getLicenceTypesObject,
@@ -63,6 +66,7 @@ export function ProvideVersionDetailsPage({
 		getOptions()
 	);
 
+	const isCloud = appType.value === 'cloud';
 	const isDXP = appType.value === 'dxp';
 
 	const createVersionDescription = async (skuId: number) => {
@@ -87,18 +91,23 @@ export function ProvideVersionDetailsPage({
 	};
 
 	const createProductOptions = async () => {
-		const trialOption = options.find(({key}) => key === 'trial');
+		const dxpOption = options.find(({key}) => key === PRODUCT_LICENSE.DXP);
 
-		const dxpOption = options.find(
-			({key}) => key === 'dxp-license-usage-type'
+		const cloudOption = options.find(
+			({key}) => key === PRODUCT_LICENSE.CLOUD
 		);
 
-		const targetOption = isDXP ? dxpOption : trialOption;
+		const targetOption = isDXP ? dxpOption : cloudOption;
+
 		let newOptionId: number;
 
 		if (!optionId && !targetOption) {
 			newOptionId = await postOption(
-				isDXP ? getDxpOptionBody() : getTrialOptionBody()
+				isDXP
+					? getDxpOptionBody()
+					: isCloud
+						? getCloudOptionBody()
+						: getTrialOptionBody()
 			);
 		}
 		else {
@@ -107,7 +116,9 @@ export function ProvideVersionDetailsPage({
 
 		const productOption = isDXP
 			? getDxpProductOptionBody(newOptionId)
-			: getTrialProductOptionBody(newOptionId);
+			: isCloud
+				? getCloudProductOptionBody(newOptionId)
+				: getTrialProductOptionBody(newOptionId);
 
 		const newProductOptionId = await postProductOption(
 			appProductId,
@@ -124,18 +135,20 @@ export function ProvideVersionDetailsPage({
 			type: TYPES.UPDATE_PRODUCT_OPTION_ID,
 		});
 
-		if (isDXP) {
-			const [standardOptionId, developerOptionId, trialOptionId] =
+		if (isDXP || isCloud) {
+			const [standardOptionId, trialOptionId, developerOptionId] =
 				await Promise.all([
 					postOptionValue(
 						getOptionStandardBody(),
 						newProductOptionId
 					),
-					postOptionValue(
-						getOptionDeveloperBody(),
-						newProductOptionId
-					),
 					postOptionValue(getOptionTrialBody(), newProductOptionId),
+					isDXP
+						? postOptionValue(
+								getOptionDeveloperBody(),
+								newProductOptionId
+							)
+						: {},
 				]);
 
 			return {
@@ -189,7 +202,7 @@ export function ProvideVersionDetailsPage({
 			},
 		};
 
-		if (isDXP) {
+		if (isDXP || isCloud) {
 			if (sku === 'DEVELOPER') {
 				value = skuProductOptions.developerOptionId;
 			}
@@ -214,7 +227,7 @@ export function ProvideVersionDetailsPage({
 	const createSkus = async (
 		skuProductOptions: Awaited<ReturnType<typeof createProductOptions>>
 	) => {
-		if (isDXP) {
+		if (isDXP || isCloud) {
 			for (const sku of getLicenceTypesObject()) {
 				const response = await createAppSKU(
 					getSkuBody(

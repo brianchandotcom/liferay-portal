@@ -565,7 +565,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			authnRequest.setForceAuthn(false);
 		}
 
-		authnRequest.setID(relayStateToken);
+		authnRequest.setID(generateIdentifier(20));
 
 		outboundMessageContext.setMessage(authnRequest);
 

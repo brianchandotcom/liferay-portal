@@ -64,12 +64,12 @@ public class PortletCategoryManagerTest {
 	}
 
 	@Test
-	public void testAssertEmbeddedValue() throws Exception {
+	public void testEmbeddedValue() throws Exception {
 		_assertPortletJSONObject(false, false);
 	}
 
 	@Test
-	public void testAssertEmbeddedValueWithEmbeddedPortlet() throws Exception {
+	public void testEmbeddedValueWithEmbeddedPortlet() throws Exception {
 		_addPortletPreferences(
 			LayoutPortletKeys.LAYOUT_NONINSTANCEABLE_TEST_PORTLET,
 			LayoutPortletKeys.LAYOUT_TEST_PORTLET);
@@ -79,7 +79,7 @@ public class PortletCategoryManagerTest {
 
 	@Test
 	@TestInfo("LPD-37705")
-	public void testAssertEmbeddedValueWithPortletInDeletedFragmentEntryLink()
+	public void testEmbeddedValueWithPortletInDeletedFragmentEntryLink()
 		throws Exception {
 
 		_addPortletMarkedForDeletionToLayout(
@@ -90,7 +90,7 @@ public class PortletCategoryManagerTest {
 	}
 
 	@Test
-	public void testAssertEmbeddedValueWithPortletInWFragmentEntryLink()
+	public void testEmbeddedValueWithPortletInWFragmentEntryLink()
 		throws Exception {
 
 		ContentLayoutTestUtil.addPortletToLayout(

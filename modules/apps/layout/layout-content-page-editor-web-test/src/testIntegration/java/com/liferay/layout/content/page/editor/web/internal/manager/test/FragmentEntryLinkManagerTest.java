@@ -101,7 +101,7 @@ public class FragmentEntryLinkManagerTest {
 	}
 
 	@Test
-	public void testAssertActionsForNonexistentPortlet() throws Exception {
+	public void testActionsForNonexistentPortlet() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		Layout draftLayout = layout.fetchDraftLayout();
@@ -197,7 +197,7 @@ public class FragmentEntryLinkManagerTest {
 	}
 
 	@Test
-	public void testAssertInputLabelWithSiteDefaultLocaleDifferentFromUserLocale()
+	public void testInputLabelWithSiteDefaultLocaleDifferentFromUserLocale()
 		throws Exception {
 
 		ObjectDefinition objectDefinition =

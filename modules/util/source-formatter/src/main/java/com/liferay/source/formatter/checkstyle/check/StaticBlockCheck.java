@@ -78,7 +78,6 @@ public class StaticBlockCheck extends BaseCheck {
 
 		int statementEndLineNumber = getEndLineNumber(
 			_getTopLevelDetailAST(methodCallDetailAST));
-
 		int statementStartLineNumber = getStartLineNumber(
 			_getTopLevelDetailAST(firstUseVariableDetailAST));
 

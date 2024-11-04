@@ -26,6 +26,7 @@ import com.liferay.source.formatter.parser.JavaVariable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,6 +53,12 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				continue;
 			}
 
+			if ((_issueKey != null) &&
+				!Objects.equals(_issueKey, jsonObject.getString("issueKey"))) {
+
+				continue;
+			}
+
 			String from = jsonObject.getString("from");
 
 			Set<String> keys = jsonObject.keySet();
@@ -73,6 +80,10 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		}
 
 		return ArrayUtil.toStringArray(expectedMessages);
+	}
+
+	public static void setIssueKey(String issueKey) {
+		_issueKey = issueKey;
 	}
 
 	public static void setTestMode(boolean testMode) {
@@ -106,7 +117,11 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			if (!_hasValidExtension(fileName, jsonObject)) {
+			if (((_issueKey != null) &&
+				 !Objects.equals(
+					 _issueKey, jsonObject.getString("issueKey"))) ||
+				!_hasValidExtension(fileName, jsonObject)) {
+
 				continue;
 			}
 
@@ -670,6 +685,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 	private static final String _CONSTRUCTOR_REGEX =
 		"n?e?w? ?(:?[A-Z][a-z]*)+\\(.*\\)";
 
+	private static String _issueKey;
 	private static final Pattern _parameterNamePattern = Pattern.compile(
 		"\\w+#(\\d+)#");
 	private static boolean _testMode;

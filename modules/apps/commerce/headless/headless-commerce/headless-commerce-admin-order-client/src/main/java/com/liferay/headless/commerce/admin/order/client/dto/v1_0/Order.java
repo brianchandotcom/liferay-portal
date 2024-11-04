@@ -918,6 +918,27 @@ public class Order implements Cloneable, Serializable {
 
 	protected Date requestedDeliveryDate;
 
+	public Boolean getShippable() {
+		return shippable;
+	}
+
+	public void setShippable(Boolean shippable) {
+		this.shippable = shippable;
+	}
+
+	public void setShippable(
+		UnsafeSupplier<Boolean, Exception> shippableUnsafeSupplier) {
+
+		try {
+			shippable = shippableUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean shippable;
+
 	public ShippingAddress getShippingAddress() {
 		return shippingAddress;
 	}

@@ -1822,6 +1822,14 @@ public abstract class BaseOrderItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("shippable", additionalAssertFieldName)) {
+				if (orderItem.getShippable() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("shippedQuantity", additionalAssertFieldName)) {
 				if (orderItem.getShippedQuantity() == null) {
 					valid = false;
@@ -2458,6 +2466,16 @@ public abstract class BaseOrderItemResourceTestCase {
 				if (!Objects.deepEquals(
 						orderItem1.getRequestedDeliveryDate(),
 						orderItem2.getRequestedDeliveryDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("shippable", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						orderItem1.getShippable(), orderItem2.getShippable())) {
 
 					return false;
 				}
@@ -3252,6 +3270,11 @@ public abstract class BaseOrderItemResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("shippable")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("shippedQuantity")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3594,6 +3617,7 @@ public abstract class BaseOrderItemResourceTestCase {
 					RandomTestUtil.randomString());
 				replacedSkuId = RandomTestUtil.randomLong();
 				requestedDeliveryDate = RandomTestUtil.nextDate();
+				shippable = RandomTestUtil.randomBoolean();
 				shippingAddressExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				shippingAddressId = RandomTestUtil.randomLong();

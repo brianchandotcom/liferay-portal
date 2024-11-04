@@ -432,6 +432,16 @@ public class OrderItemSerDes {
 			sb.append("\"");
 		}
 
+		if (orderItem.getShippable() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippable\": ");
+
+			sb.append(orderItem.getShippable());
+		}
+
 		if (orderItem.getShippedQuantity() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -916,6 +926,13 @@ public class OrderItemSerDes {
 					orderItem.getRequestedDeliveryDate()));
 		}
 
+		if (orderItem.getShippable() == null) {
+			map.put("shippable", null);
+		}
+		else {
+			map.put("shippable", String.valueOf(orderItem.getShippable()));
+		}
+
 		if (orderItem.getShippedQuantity() == null) {
 			map.put("shippedQuantity", null);
 		}
@@ -1187,6 +1204,9 @@ public class OrderItemSerDes {
 			else if (Objects.equals(
 						jsonParserFieldName, "requestedDeliveryDate")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "shippable")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippedQuantity")) {
@@ -1487,6 +1507,11 @@ public class OrderItemSerDes {
 				if (jsonParserFieldValue != null) {
 					orderItem.setRequestedDeliveryDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "shippable")) {
+				if (jsonParserFieldValue != null) {
+					orderItem.setShippable((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippedQuantity")) {

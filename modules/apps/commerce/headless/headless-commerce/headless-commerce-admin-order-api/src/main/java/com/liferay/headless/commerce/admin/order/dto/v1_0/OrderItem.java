@@ -1497,6 +1497,47 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _requestedDeliveryDateSupplier;
 
+	@Schema(example = "true")
+	public Boolean getShippable() {
+		if (_shippableSupplier != null) {
+			shippable = _shippableSupplier.get();
+
+			_shippableSupplier = null;
+		}
+
+		return shippable;
+	}
+
+	public void setShippable(Boolean shippable) {
+		this.shippable = shippable;
+
+		_shippableSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setShippable(
+		UnsafeSupplier<Boolean, Exception> shippableUnsafeSupplier) {
+
+		_shippableSupplier = () -> {
+			try {
+				return shippableUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean shippable;
+
+	@JsonIgnore
+	private Supplier<Boolean> _shippableSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "1.1")
 	@Valid
@@ -2560,6 +2601,18 @@ public class OrderItem implements Serializable {
 			sb.append(liferayToJSONDateFormat.format(requestedDeliveryDate));
 
 			sb.append("\"");
+		}
+
+		Boolean shippable = getShippable();
+
+		if (shippable != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippable\": ");
+
+			sb.append(shippable);
 		}
 
 		BigDecimal shippedQuantity = getShippedQuantity();

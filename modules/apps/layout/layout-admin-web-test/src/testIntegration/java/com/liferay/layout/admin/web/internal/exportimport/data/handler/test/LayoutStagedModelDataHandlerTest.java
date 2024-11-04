@@ -69,6 +69,7 @@ import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutServiceContextHelper;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -327,6 +328,28 @@ public class LayoutStagedModelDataHandlerTest
 	public void testExportImportWithFileEntryContentReference()
 		throws Exception {
 
+		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
+
+		long segmentsExperienceId = _segmentsExperienceLocalService.
+			fetchDefaultSegmentsExperienceId(layout.getPlid());
+
+		ContentLayoutTestUtil.addItemToLayout(
+			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER,
+			layout.fetchDraftLayout(), _layoutStructureProvider,
+			segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		Layout importedLayout = _getExportImportLayout(layout);
+
+		long importedLayoutSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				importedLayout.getPlid());
+
+		String content = ContentLayoutTestUtil.getRenderLayoutHTML(
+			importedLayout, _layoutServiceContextHelper,
+			_layoutStructureProvider, importedLayoutSegmentsExperienceId);
+
 		Locale locale = _portal.getSiteDefaultLocale(stagingGroup);
 
 		String languageId = LocaleUtil.toLanguageId(locale);
@@ -335,15 +358,11 @@ public class LayoutStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
-
 		FragmentEntryLink draftLayoutFragmentEntryLink =
 			_addFragmentEntryLinkToLayout(
 				JSONUtil.put(
 					"image-square",
 					JSONUtil.put(
-						languageId, RandomTestUtil.randomString()
-					).put(
 						languageId,
 						JSONUtil.put(
 							"classNameId",
@@ -368,80 +387,38 @@ public class LayoutStagedModelDataHandlerTest
 						)
 					)),
 				"BASIC_COMPONENT-image", layout.fetchDraftLayout(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(layout.getPlid()));
+				segmentsExperienceId);
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
-		FragmentEntryLink publishedLayoutFragmentEntryLink =
+		Assert.assertNotNull(
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
 				stagingGroup.getGroupId(),
 				draftLayoutFragmentEntryLink.getFragmentEntryLinkId(),
-				layout.getPlid());
+				layout.getPlid()));
 
-		Assert.assertNotNull(publishedLayoutFragmentEntryLink);
+		Assert.assertEquals(
+			content,
+			ContentLayoutTestUtil.getRenderLayoutHTML(
+				importedLayout, _layoutServiceContextHelper,
+				_layoutStructureProvider, importedLayoutSegmentsExperienceId));
 
-		ExportImportThreadLocal.setPortletImportInProcess(true);
-
-		try {
-			exportImportStagedModel(layout);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
+		importedLayout = _getExportImportLayout(layout);
 
 		FileEntry importedFileEntry =
 			_dlAppLocalService.getFileEntryByUuidAndGroupId(
 				fileEntry.getUuid(), liveGroup.getGroupId());
 
-		JSONObject expectedEditableJSONObject = JSONUtil.put(
-			"image-square",
-			JSONUtil.put(
-				languageId, RandomTestUtil.randomString()
-			).put(
-				languageId,
-				JSONUtil.put(
-					"className", FileEntry.class.getName()
-				).put(
-					"classNameId",
-					String.valueOf(_portal.getClassNameId(FileEntry.class))
-				).put(
-					"classPK", importedFileEntry.getFileEntryId()
-				).put(
-					"fileEntryId", importedFileEntry.getFileEntryId()
-				).put(
-					"url",
-					_dlURLHelper.getPreviewURL(
-						importedFileEntry, importedFileEntry.getFileVersion(),
-						null, StringPool.BLANK, false, false)
-				)
-			).put(
-				"config",
-				JSONUtil.put(
-					"href", JSONUtil.put(languageId, "https://www.liferay.com/")
-				).put(
-					"mapperType", "link"
-				)
-			));
+		_assertContentReference(importedFileEntry, languageId, importedLayout);
 
-		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
-			layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
-
-		_assertLayoutContentReferences(
-			expectedEditableJSONObject, importedLayout);
-		_assertLayoutContentReferences(
-			expectedEditableJSONObject, importedLayout.fetchDraftLayout());
-
-		String content = ContentLayoutTestUtil.getRenderLayoutHTML(
+		String curContent = ContentLayoutTestUtil.getRenderLayoutHTML(
 			importedLayout, _layoutServiceContextHelper,
-			_layoutStructureProvider,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				importedLayout.getPlid()));
+			_layoutStructureProvider, importedLayoutSegmentsExperienceId);
 
 		Assert.assertTrue(
-			content,
+			curContent,
 			StringUtil.contains(
-				content,
+				curContent,
 				StringBundler.concat(
 					"<a href=\"https://www.liferay.com/\"><img alt=\"\" ",
 					"class=\"w-100\" data-lfr-editable-id=\"image-square\" ",
@@ -1529,6 +1506,43 @@ public class LayoutStagedModelDataHandlerTest
 			editableValuesJSONObject.getString("instanceId"));
 	}
 
+	private void _assertContentReference(
+			FileEntry fileEntry, String languageId, Layout layout)
+		throws Exception {
+
+		JSONObject expectedEditableJSONObject = JSONUtil.put(
+			"image-square",
+			JSONUtil.put(
+				languageId,
+				JSONUtil.put(
+					"className", FileEntry.class.getName()
+				).put(
+					"classNameId",
+					String.valueOf(_portal.getClassNameId(FileEntry.class))
+				).put(
+					"classPK", fileEntry.getFileEntryId()
+				).put(
+					"fileEntryId", fileEntry.getFileEntryId()
+				).put(
+					"url",
+					_dlURLHelper.getPreviewURL(
+						fileEntry, fileEntry.getFileVersion(), null,
+						StringPool.BLANK, false, false)
+				)
+			).put(
+				"config",
+				JSONUtil.put(
+					"href", JSONUtil.put(languageId, "https://www.liferay.com/")
+				).put(
+					"mapperType", "link"
+				)
+			));
+
+		_assertLayoutContentReferences(expectedEditableJSONObject, layout);
+		_assertLayoutContentReferences(
+			expectedEditableJSONObject, layout.fetchDraftLayout());
+	}
+
 	private void _assertExportImportContentReference(
 			long classPK, String fieldName, String infoItemClassName,
 			String infoItemFormVariationKey,
@@ -1670,6 +1684,20 @@ public class LayoutStagedModelDataHandlerTest
 		Assert.assertTrue(
 			html + " not contains " + content,
 			StringUtil.contains(html, content, StringPool.BLANK));
+	}
+
+	private Layout _getExportImportLayout(Layout layout) throws Exception {
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			exportImportStagedModel(layout);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+
+		return _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
 	}
 
 	private List<FriendlyURLEntry> _getFriendlyURLEntries(Layout layout) {

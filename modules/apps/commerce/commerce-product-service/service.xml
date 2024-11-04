@@ -303,6 +303,134 @@
 			<finder-column comparator="!=" name="status" />
 		</finder>
 	</entity>
+	<entity external-reference-code="company" local-service="true" name="CPConfigurationEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPConfigurationEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="CPConfigurationListId" type="long" />
+		<column name="CPTaxCategoryId" type="long" />
+		<column name="allowedOrderQuantities" type="String" />
+		<column name="backOrders" type="boolean" />
+		<column name="CPDefinitionInventoryEngine" type="String" />
+		<column name="depth" type="double" />
+		<column name="displayAvailability" type="boolean" />
+		<column name="displayStockQuantity" type="boolean" />
+		<column name="freeShipping" type="boolean" />
+		<column name="height" type="double" />
+		<column name="lowStockActivity" type="String" />
+		<column name="maxOrderQuantity" type="BigDecimal" />
+		<column name="minOrderQuantity" type="BigDecimal" />
+		<column name="minStockQuantity" type="BigDecimal" />
+		<column name="multipleOrderQuantity" type="BigDecimal" />
+		<column name="purchasable" type="boolean" />
+		<column name="shippable" type="boolean" />
+		<column name="shippingExtraPrice" type="double" />
+		<column name="shipSeparately" type="boolean" />
+		<column name="taxExempt" type="boolean" />
+		<column name="visible" type="boolean" />
+		<column name="weight" type="double" />
+		<column name="width" type="double" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="CPConfigurationListId" return-type="Collection">
+			<finder-column name="CPConfigurationListId" />
+		</finder>
+	</entity>
+	<entity external-reference-code="company" local-service="true" name="CPConfigurationList" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPConfigurationListId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="parentCPConfigurationListId" type="long" />
+		<column name="masterCPConfigurationList" type="boolean" />
+		<column name="name" type="String" />
+		<column name="priority" type="double" />
+		<column name="displayDate" type="Date" />
+		<column name="expirationDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+			<order-column name="displayDate" />
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="ParentCPConfigurationListId" return-type="CPConfigurationList">
+			<finder-column name="parentCPConfigurationListId" />
+		</finder>
+		<finder name="G_C" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="G_MasterCPConfigurationList" return-type="CPConfigurationList">
+			<finder-column name="groupId" />
+			<finder-column name="masterCPConfigurationList" />
+		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_C_S" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_C_NotS" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CPDefinition" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

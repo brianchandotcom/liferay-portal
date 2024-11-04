@@ -44,6 +44,7 @@ import getPortletCustomActions from '../../utils/getPortletCustomActions';
 import getPortletId from '../../utils/getPortletId';
 import hideFragment from '../../utils/hideFragment';
 import isInputFragment from '../../utils/isInputFragment';
+import isStepper from '../../utils/isStepper';
 import useHasRequiredChild from '../../utils/useHasRequiredChild';
 import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
 import hasDropZoneChild from '../layout_data_items/hasDropZoneChild';
@@ -188,7 +189,7 @@ export default function TopperItemActions({disabled, item}) {
 
 		if (
 			Liferay.FeatureFlags['LPD-18221'] &&
-			canBeDuplicated(fragmentEntryLinks, item, layoutData, getWidgets)
+			!isStepper(fragmentEntryLinks[item.config.fragmentEntryLinkId])
 		) {
 			items.push({
 				action: () => {

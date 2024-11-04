@@ -44,7 +44,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -153,48 +152,35 @@ public class
 
 	@Test
 	public void testCopyLayoutPageTemplateEntryMasterLayout() throws Exception {
-		ActionRequest actionRequest = _getMockLiferayPortletActionRequest(
-			null,
-			new long[] {
-				_layoutPageTemplateEntryMasterLayout.
-					getLayoutPageTemplateEntryId()
-			});
-		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
-
-		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
+		Assert.assertNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				_getName(_layoutPageTemplateEntryMasterLayout.getName()),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
 
-		Assert.assertNull(targetLayoutPageTemplateEntry);
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(
+				null,
+				new long[] {
+					_layoutPageTemplateEntryMasterLayout.
+						getLayoutPageTemplateEntryId()
+				}),
+			new MockLiferayPortletActionResponse());
 
-		_mvcActionCommand.processAction(actionRequest, actionResponse);
-
-		targetLayoutPageTemplateEntry =
+		Assert.assertNotNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				_getName(_layoutPageTemplateEntryMasterLayout.getName()),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
-
-		Assert.assertNotNull(targetLayoutPageTemplateEntry);
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
 	}
 
 	@Test
 	public void testCopyLayoutPageTemplateEntryRollbackMVCActionCommand()
 		throws Exception {
-
-		ActionRequest actionRequest = _getMockLiferayPortletActionRequest(
-			null,
-			new long[] {
-				_layoutPageTemplateEntryMasterLayout.
-					getLayoutPageTemplateEntryId()
-			});
-		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
 
 		_layoutLocalService.deleteLayout(
 			_layoutPageTemplateEntryMasterLayout.getPlid());
@@ -202,27 +188,39 @@ public class
 		long originalLayoutsCount = _layoutLocalService.getLayoutsCount(
 			_group.getGroupId());
 
-		_mvcActionCommand.processAction(actionRequest, actionResponse);
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(
+				null,
+				new long[] {
+					_layoutPageTemplateEntryMasterLayout.
+						getLayoutPageTemplateEntryId()
+				}),
+			new MockLiferayPortletActionResponse());
 
-		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
+		Assert.assertNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				_getName(_layoutPageTemplateEntryMasterLayout.getName()),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
 
-		Assert.assertNull(targetLayoutPageTemplateEntry);
-
-		long actualLayoutsCount = _layoutLocalService.getLayoutsCount(
-			_group.getGroupId());
-
-		Assert.assertEquals(originalLayoutsCount, actualLayoutsCount);
+		Assert.assertEquals(
+			originalLayoutsCount,
+			_layoutLocalService.getLayoutsCount(_group.getGroupId()));
 	}
 
 	@Test
 	public void testCopyLayoutPageTemplateEntryUniqueNameMVCActionCommand()
 		throws Exception {
+
+		Assert.assertNull(
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getName(_layoutPageTemplateEntryMasterLayout.getName()),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
 
 		ActionRequest actionRequest = _getMockLiferayPortletActionRequest(
 			null,
@@ -230,31 +228,20 @@ public class
 				_layoutPageTemplateEntryMasterLayout.
 					getLayoutPageTemplateEntryId()
 			});
-		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
 
-		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
+		_mvcActionCommand.processAction(
+			actionRequest, new MockLiferayPortletActionResponse());
+		_mvcActionCommand.processAction(
+			actionRequest, new MockLiferayPortletActionResponse());
+
+		Assert.assertNotNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				_getName(_layoutPageTemplateEntryMasterLayout.getName()),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
-
-		Assert.assertNull(targetLayoutPageTemplateEntry);
-
-		_mvcActionCommand.processAction(actionRequest, actionResponse);
-
-		_mvcActionCommand.processAction(actionRequest, actionResponse);
-
-		targetLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getName(_layoutPageTemplateEntryMasterLayout.getName()),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
-
-		LayoutPageTemplateEntry secondTargetLayoutPageTemplateEntry =
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
+		Assert.assertNotNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
@@ -263,10 +250,7 @@ public class
 					_layoutPageTemplateEntryMasterLayout.getName(),
 					LanguageUtil.get(LocaleUtil.getSiteDefault(), "copy") +
 						StringPool.SPACE + 1),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
-
-		Assert.assertNotNull(targetLayoutPageTemplateEntry);
-		Assert.assertNotNull(secondTargetLayoutPageTemplateEntry);
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(

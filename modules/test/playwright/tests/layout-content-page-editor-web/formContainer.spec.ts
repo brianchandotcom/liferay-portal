@@ -15,6 +15,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {
@@ -745,7 +746,10 @@ test.describe('Submit button', () => {
 			pageEditorPage,
 			pageManagementSite,
 		}) => {
-			const checkObjectEntry = async (value: string, status: string) => {
+			const checkObjectEntryStatus = async (
+				value: string,
+				status: string
+			) => {
 
 				// Go to entity
 
@@ -892,21 +896,17 @@ test.describe('Submit button', () => {
 				await pageEditorPage.publishPage();
 			});
 
-			let input = null;
-			let submitDraftButton = null;
+			const input = page.getByLabel('Lemon Weight');
+			const submitDraftButton = page.getByText('Submit as draft', {
+				exact: true,
+			});
 
 			await test.step('Go to view mode and save the Lemon Weight field value as draft', async () => {
 				await page.goto(
 					`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 				);
 
-				input = page.getByLabel('Lemon Weight');
-
-				submitDraftButton = page.getByText('Submit as draft', {
-					exact: true,
-				});
-
-				await input.fill('100');
+				await fillAndClickOutside(page, input, '100');
 
 				await submitDraftButton.click();
 
@@ -918,7 +918,7 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectEntry('100', 'Draft');
+				await checkObjectEntryStatus('100', 'Draft');
 			});
 
 			await test.step('Go to edit mode and map the Heading to the draft entry number and select the DPT created before as Field', async () => {
@@ -974,7 +974,7 @@ test.describe('Submit button', () => {
 
 				// Set new value and submit as draft
 
-				await input.fill('200');
+				await fillAndClickOutside(page, input, '200');
 
 				await submitDraftButton.click();
 
@@ -986,7 +986,7 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectEntry('200', 'Draft');
+				await checkObjectEntryStatus('200', 'Draft');
 			});
 
 			await test.step('Go to view mode, click in the Heading and save the field value as Approved', async () => {
@@ -1000,7 +1000,7 @@ test.describe('Submit button', () => {
 
 				// Set new value and submit as approved
 
-				await input.fill('300');
+				await fillAndClickOutside(page, input, '300');
 
 				await page.getByText('Submit', {exact: true}).click();
 
@@ -1012,7 +1012,7 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectEntry('300', 'Approved');
+				await checkObjectEntryStatus('300', 'Approved');
 			});
 
 			await test.step('Go to view mode, click in the Heading and try to save the field value as Draft again', async () => {
@@ -1026,7 +1026,7 @@ test.describe('Submit button', () => {
 
 				// Set new value and submit as draft
 
-				await input.fill('400');
+				await fillAndClickOutside(page, input, '400');
 
 				await submitDraftButton.click();
 
@@ -1038,7 +1038,7 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectEntry('300', 'Approved');
+				await checkObjectEntryStatus('300', 'Approved');
 			});
 
 			// Delete previously created object entries

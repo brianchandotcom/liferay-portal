@@ -57,7 +57,7 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
- * @author Pavel Savinov
+ * @author Barbara Cabrera
  */
 @RunWith(Arquillian.class)
 @Sync

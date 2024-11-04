@@ -91,25 +91,6 @@ public class
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
-		_layoutPageTemplateEntryDisplayPage =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				StringUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-				WorkflowConstants.STATUS_DRAFT, _serviceContext);
-
-		_layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					StringUtil.randomString(), StringPool.BLANK,
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
-					_serviceContext);
-
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
@@ -122,22 +103,41 @@ public class
 	public void testCopyLayoutPageTemplateEntriesAndCollections()
 		throws Exception {
 
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					StringUtil.randomString(), StringPool.BLANK,
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					_serviceContext);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntryDisplayPage =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				StringUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
 		ActionRequest actionRequest = _getMockLiferayPortletActionRequest(
 			new long[] {
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId()
+				layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
 			},
 			new long[] {
-				_layoutPageTemplateEntryDisplayPage.
+				layoutPageTemplateEntryDisplayPage.
 					getLayoutPageTemplateEntryId()
 			});
+
 		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
 
 		LayoutPageTemplateCollection targetLayoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
 					_group.getGroupId(),
-					_getName(_layoutPageTemplateCollection.getName()),
+					_getName(layoutPageTemplateCollection.getName()),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE);
@@ -146,7 +146,7 @@ public class
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getName(_layoutPageTemplateEntryDisplayPage.getName()),
+				_getName(layoutPageTemplateEntryDisplayPage.getName()),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 
 		Assert.assertNull(targetLayoutPageTemplateCollection);
@@ -158,7 +158,7 @@ public class
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
 					_group.getGroupId(),
-					_getName(_layoutPageTemplateCollection.getName()),
+					_getName(layoutPageTemplateCollection.getName()),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE);
@@ -167,7 +167,7 @@ public class
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getName(_layoutPageTemplateEntryDisplayPage.getName()),
+				_getName(layoutPageTemplateEntryDisplayPage.getName()),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 
 		Assert.assertNotNull(targetLayoutPageTemplateCollection);
@@ -382,13 +382,9 @@ public class
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
-	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
-
 	@Inject
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
-
-	private LayoutPageTemplateEntry _layoutPageTemplateEntryDisplayPage;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

@@ -7,7 +7,7 @@ package com.liferay.frontend.taglib.sample.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
-import com.liferay.frontend.taglib.sample.web.constants.SamplePortletKeys;
+import com.liferay.frontend.taglib.sample.web.internal.constants.SamplePortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -51,12 +51,12 @@ public class SearchPaginatorDisplayContext {
 		searchContainer.setId("DropdownItemSearchContainer");
 		searchContainer.setOrderByCol(
 			SearchOrderByUtil.getOrderByCol(
-				_renderRequest, SamplePortletKeys.SAMPLE_PORTLET, "order-by-col",
-				"name"));
+				_renderRequest, SamplePortletKeys.SAMPLE_PORTLET,
+				"order-by-col", "name"));
 		searchContainer.setOrderByType(
 			SearchOrderByUtil.getOrderByType(
-				_renderRequest, SamplePortletKeys.SAMPLE_PORTLET, "order-by-type",
-				"asc"));
+				_renderRequest, SamplePortletKeys.SAMPLE_PORTLET,
+				"order-by-type", "asc"));
 
 		List<DropdownItem> dropdownItems = new ArrayList<>();
 

@@ -1,5 +1,4 @@
 Bundle-Name: Liferay Frontend Taglib Sample Web
 Bundle-SymbolicName: com.liferay.frontend.taglib.sample.web
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.frontend.taglib.sample.web.constants
 Web-ContextPath: /frontend-taglib-sample-web

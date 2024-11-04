@@ -5,8 +5,7 @@
 
 package com.liferay.frontend.taglib.sample.web.internal.portlet;
 
-import com.liferay.frontend.taglib.sample.web.constants.SamplePortletKeys;
-import com.liferay.frontend.taglib.sample.web.internal.display.context.SampleDisplayContext;
+import com.liferay.frontend.taglib.sample.web.internal.constants.SamplePortletKeys;
 import com.liferay.frontend.taglib.sample.web.internal.display.context.SearchPaginatorDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
@@ -22,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Chema Balsas
+ * @author Miguel Arroyo
  */
 @Component(
 	property = {
@@ -52,9 +51,6 @@ public class SamplePortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		renderRequest.setAttribute(
-			SamplePortletKeys.SAMPLE_DISPLAY_CONTEXT,
-			new SampleDisplayContext());
 		renderRequest.setAttribute(
 			SamplePortletKeys.SEARCH_PAGINATOR_DISPLAY_CONTEXT,
 			new SearchPaginatorDisplayContext(

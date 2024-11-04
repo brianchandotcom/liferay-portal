@@ -7,6 +7,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+SearchPaginatorDisplayContext searchPaginatorDisplayContext = (SearchPaginatorDisplayContext)request.getAttribute(SamplePortletKeys.SEARCH_PAGINATOR_DISPLAY_CONTEXT);
+%>
+
 <clay:container-fluid>
 	<liferay-ui:search-paginator
 		markupView="lexicon"

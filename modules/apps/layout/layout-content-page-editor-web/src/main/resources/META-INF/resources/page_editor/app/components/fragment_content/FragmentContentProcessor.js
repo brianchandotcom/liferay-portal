@@ -145,7 +145,8 @@ export default function FragmentContentProcessor({
 					editableValue.config
 				);
 			},
-			editableProcessorClickPosition
+			editableProcessorClickPosition,
+			editableValue[languageId] || editableValue.defaultValue || ''
 		);
 	}, [
 		dispatch,

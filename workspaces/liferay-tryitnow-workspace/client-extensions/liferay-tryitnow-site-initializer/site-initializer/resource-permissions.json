@@ -10,10 +10,10 @@
 	},
 	{
 		"actionIds": [
+			"AssignTicketToMe",
 			"DELETE",
 			"UPDATE",
-			"VIEW",
-			"AssignTicketToMe"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:J3Y7Ticket$]",

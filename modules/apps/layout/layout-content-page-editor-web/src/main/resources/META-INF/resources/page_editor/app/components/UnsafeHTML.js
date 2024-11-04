@@ -58,7 +58,27 @@ export default class UnsafeHTML extends React.PureComponent {
 					nextScriptElement.setAttribute('nonce', Liferay.CSP.nonce);
 				}
 
-				nextScriptElement.type = prevScriptElement.type;
+				if (prevScriptElement.type) {
+					nextScriptElement.type = prevScriptElement.type;
+				}
+
+				if (prevScriptElement.className) {
+					nextScriptElement.className = prevScriptElement.className;
+				}
+
+				const dataset = prevScriptElement.dataset;
+
+				for (const key in dataset) {
+					nextScriptElement.dataset[key] = dataset[key];
+				}
+
+				if (prevScriptElement.async) {
+					nextScriptElement.setAttribute('async', '');
+				}
+
+				if (prevScriptElement.defer) {
+					nextScriptElement.setAttribute('defer', '');
+				}
 
 				if (prevScriptElement.src) {
 					nextScriptElement.src = prevScriptElement.src;

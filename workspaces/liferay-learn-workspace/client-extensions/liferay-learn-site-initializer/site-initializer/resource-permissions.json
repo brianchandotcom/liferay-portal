@@ -40,8 +40,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"ADD_ARTICLE"
+			"ADD_ARTICLE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.journal",

@@ -780,9 +780,9 @@
 	},
 	{
 		"actionIds": [
+			"DELETE",
 			"UPDATE",
-			"VIEW",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TasksUsers$]",

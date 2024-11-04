@@ -12,9 +12,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Activity$]",
@@ -59,9 +59,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Activity$]",
@@ -70,9 +70,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Activity$]",
@@ -90,9 +90,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Budget$]",
@@ -101,9 +101,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Budget$]",
@@ -148,9 +148,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Budget$]",
@@ -159,9 +159,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:Budget$]",
@@ -179,8 +179,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaim$]",
@@ -189,8 +189,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaim$]",
@@ -199,8 +199,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaim$]",
@@ -217,9 +217,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaim$]",
@@ -228,9 +228,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaim$]",
@@ -266,8 +266,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaim$]",
@@ -276,8 +276,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaim$]",
@@ -286,8 +286,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaim$]",
@@ -305,9 +305,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimActivity$]",
@@ -316,9 +316,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimActivity$]",
@@ -354,9 +354,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimActivity$]",
@@ -365,9 +365,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimActivity$]",
@@ -376,9 +376,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimActivity$]",
@@ -396,9 +396,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimActivityDocument$]",
@@ -407,9 +407,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimActivityDocument$]",
@@ -445,9 +445,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimActivityDocument$]",
@@ -456,9 +456,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimActivityDocument$]",
@@ -467,9 +467,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimActivityDocument$]",
@@ -487,9 +487,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimBudget$]",
@@ -498,9 +498,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimBudget$]",
@@ -536,9 +536,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimBudget$]",
@@ -547,9 +547,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimBudget$]",
@@ -558,9 +558,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
+			"DELETE",
 			"UPDATE",
-			"DELETE"
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFClaimBudget$]",
@@ -587,8 +587,8 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE",
-			"DELETE"
+			"DELETE",
+			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFRequest$]",
@@ -597,8 +597,8 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE",
-			"DELETE"
+			"DELETE",
+			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFRequest$]",
@@ -625,8 +625,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFRequest$]",
@@ -635,8 +635,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:MDFRequest$]",

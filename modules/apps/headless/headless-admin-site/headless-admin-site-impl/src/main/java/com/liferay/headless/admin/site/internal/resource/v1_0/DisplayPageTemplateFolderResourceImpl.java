@@ -7,6 +7,9 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.headless.admin.site.resource.v1_0.DisplayPageTemplateFolderResource;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -70,6 +73,53 @@ public class DisplayPageTemplateFolderResourceImpl
 					group.getGroupId());
 
 		return _toDisplayPageTemplateFolder(layoutPageTemplateCollection);
+	}
+
+	@Override
+	public DisplayPageTemplateFolder
+			postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				String siteExternalReferenceCode,
+				DisplayPageTemplateFolder displayPageTemplateFolder)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		String parentDisplayPageTemplateFolderExternalReferenceCode =
+			displayPageTemplateFolder.
+				getParentDisplayPageTemplateFolderExternalReferenceCode();
+
+		long parentDisplayPageTemplateFolderId =
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+
+		LayoutPageTemplateCollection parentLayoutPageTemplateCollection =
+			_layoutPageTemplateCollectionService.
+				fetchLayoutPageTemplateCollection(
+					parentDisplayPageTemplateFolderExternalReferenceCode,
+					group.getGroupId());
+
+		if (parentLayoutPageTemplateCollection != null) {
+			parentDisplayPageTemplateFolderId =
+				parentLayoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId();
+		}
+
+		return _toDisplayPageTemplateFolder(
+			_layoutPageTemplateCollectionService.
+				addLayoutPageTemplateCollection(
+					displayPageTemplateFolder.getExternalReferenceCode(),
+					group.getGroupId(), parentDisplayPageTemplateFolderId,
+					displayPageTemplateFolder.getName(),
+					displayPageTemplateFolder.getDescription(),
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					ServiceContextBuilder.create(
+						group.getGroupId(), contextHttpServletRequest, null
+					).build()));
 	}
 
 	private DisplayPageTemplateFolder _toDisplayPageTemplateFolder(

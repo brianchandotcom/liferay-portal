@@ -331,7 +331,7 @@ public class ScanCodeProject {
 		}
 
 		if (!_complianceList.isEmpty()) {
-			sb.append("*Compliance Alerts:* ");
+			sb.append("*Compliance alerts:* ");
 			sb.append(
 				_complianceList.toString(
 				).replaceAll(
@@ -365,7 +365,7 @@ public class ScanCodeProject {
 			));
 
 		if (_s3URL != null) {
-			sb.append("\n*S3 Tar.gz:* ");
+			sb.append("\n*S3 tar.gz:* ");
 			sb.append("<");
 			sb.append(_s3URL);
 			sb.append("|");

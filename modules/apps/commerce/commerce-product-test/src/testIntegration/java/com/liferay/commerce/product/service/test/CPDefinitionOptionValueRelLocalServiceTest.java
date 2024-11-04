@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -47,6 +48,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -92,9 +94,15 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_serviceContext = null;
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				_cpDefinitionOptionRels) {
 
-		_cpOptionLocalService.deleteCPOptions(_group.getCompanyId());
+			_cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
+				cpDefinitionOptionRel);
+		}
+
+		_cpOptionLocalService.deleteCPOptions(_serviceContext.getCompanyId());
+		_serviceContext = null;
 	}
 
 	@Test
@@ -525,6 +533,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 				_commerceCatalog.getGroupId(), cpDefinition.getCPDefinitionId(),
 				1, 5);
 
+		_cpDefinitionOptionRels.addAll(cpDefinitionOptionRels);
+
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionRels.get(0);
 
@@ -762,6 +772,10 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 				_commerceCatalog.getGroupId(), 1,
 				CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC);
 
+		_cpDefinitionOptionRels.addAll(
+			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+				cpDefinition.getCPDefinitionId()));
+
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			CPTestUtil.getRandomCPDefinitionOptionValueRel(
 				cpDefinition.getCPDefinitionId());
@@ -821,6 +835,10 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			CPTestUtil.addCPDefinitionWithChildCPDefinitions(
 				_commerceCatalog.getGroupId(), 1,
 				CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC);
+
+		_cpDefinitionOptionRels.addAll(
+			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+				cpDefinition.getCPDefinitionId()));
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			CPTestUtil.getRandomCPDefinitionOptionValueRel(
@@ -885,6 +903,10 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			CPTestUtil.addCPDefinitionWithChildCPDefinitions(
 				_commerceCatalog.getGroupId(), 1,
 				CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC);
+
+		_cpDefinitionOptionRels.addAll(
+			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+				cpDefinition.getCPDefinitionId()));
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			CPTestUtil.getRandomCPDefinitionOptionValueRel(
@@ -1019,6 +1041,10 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			CPTestUtil.addCPDefinitionWithChildCPDefinitions(
 				_commerceCatalog.getGroupId(), 1,
 				CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC);
+
+		_cpDefinitionOptionRels.addAll(
+			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+				cpDefinition.getCPDefinitionId()));
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			CPTestUtil.getRandomCPDefinitionOptionValueRel(
@@ -1159,6 +1185,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 				_commerceCatalog.getGroupId(), cpDefinition.getCPDefinitionId(),
 				1, 1);
 
+		_cpDefinitionOptionRels.addAll(cpDefinitionOptionRels);
+
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionRels.get(0);
 
@@ -1179,11 +1207,24 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			_commerceCatalog.getGroupId(),
 			CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY, false);
 
-		return CPTestUtil.addCPDefinitionOptionValueRel(
-			cpDefinition.getCPDefinitionId(), cpOption.getCPOptionId(), key,
-			RandomTestUtil.randomString(),
-			CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC, true, true,
-			_serviceContext);
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
+				cpDefinition.getCPDefinitionId(), cpOption.getCPOptionId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+				RandomTestUtil.randomDouble(), false, true, true, false,
+				CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC, _serviceContext);
+
+		_cpDefinitionOptionRels.add(cpDefinitionOptionRel);
+
+		return _cpDefinitionOptionValueRelLocalService.
+			addCPDefinitionOptionValueRel(
+				cpDefinitionOptionRel.getCPDefinitionOptionRelId(), key,
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()
+				).build(),
+				RandomTestUtil.randomDouble(), _serviceContext);
 	}
 
 	private void _assertValidateCPDefinitionOptionValueRelCPInstanceLinkFail(
@@ -1193,6 +1234,10 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		CPDefinition cpDefinition =
 			CPTestUtil.addCPDefinitionWithChildCPDefinitions(
 				_commerceCatalog.getGroupId(), 1, priceType);
+
+		_cpDefinitionOptionRels.addAll(
+			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+				cpDefinition.getCPDefinitionId()));
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			CPTestUtil.getRandomCPDefinitionOptionValueRel(
@@ -1273,6 +1318,9 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 	@Inject
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
+
+	private final List<CPDefinitionOptionRel> _cpDefinitionOptionRels =
+		new ArrayList<>();
 
 	@Inject
 	private CPDefinitionOptionValueRelLocalService

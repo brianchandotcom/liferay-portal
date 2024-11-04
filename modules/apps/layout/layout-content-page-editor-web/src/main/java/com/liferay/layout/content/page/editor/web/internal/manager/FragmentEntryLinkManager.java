@@ -160,10 +160,19 @@ public class FragmentEntryLinkManager {
 
 				return JSONUtil.put(
 					"actions",
-					_getActionsJSONObject(
-						httpServletRequest,
-						editableValuesJSONObject.getString("instanceId"),
-						portletId)
+					() -> {
+						Portlet portlet = _portletLocalService.fetchPortletById(
+							themeDisplay.getCompanyId(), portletId);
+
+						if (portlet == null) {
+							return _jsonFactory.createJSONObject();
+						}
+
+						return _getActionsJSONObject(
+							httpServletRequest,
+							editableValuesJSONObject.getString("instanceId"),
+							portletId);
+					}
 				).put(
 					"comments",
 					_getFragmentEntryLinkCommentsJSONArray(

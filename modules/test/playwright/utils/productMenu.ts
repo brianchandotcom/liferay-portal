@@ -6,35 +6,37 @@
 import {Page, expect} from '@playwright/test';
 
 export async function openProductMenu(page: Page) {
-	const button = page.getByLabel('Open Product Menu');
+	const productMenu = page.getByLabel('Product Menu', {exact: true});
 
-	try {
-		await expect(button).toBeVisible();
+	const isOpen = await productMenu.evaluate((element) =>
+		element.classList.contains('open')
+	);
 
-		await button.click();
+	if (!isOpen) {
+		const button = page.getByLabel('Open Product Menu');
 
-		await expect(
-			page.getByRole('navigation', {name: 'Product Menu'})
-		).toHaveClass(/open/);
-	}
-	catch (error) {
-		return;
+		await expect(async () => {
+			await button.click();
+
+			await expect(productMenu).toHaveClass(/open/, {timeout: 2000});
+		}).toPass();
 	}
 }
 
 export async function closeProductMenu(page: Page) {
-	const button = page.getByLabel('Close Product Menu');
+	const productMenu = page.getByLabel('Product Menu', {exact: true});
 
-	try {
-		await expect(button).toBeVisible();
+	const isClosed = await productMenu.evaluate((element) =>
+		element.classList.contains('closed')
+	);
 
-		await button.click();
+	if (!isClosed) {
+		const button = page.getByLabel('Close Product Menu');
 
-		await expect(
-			page.getByRole('navigation', {name: 'Product Menu'})
-		).toHaveClass(/closed/);
-	}
-	catch (error) {
-		return;
+		await expect(async () => {
+			await button.click();
+
+			await expect(productMenu).toHaveClass(/closed/, {timeout: 2000});
+		}).toPass();
 	}
 }

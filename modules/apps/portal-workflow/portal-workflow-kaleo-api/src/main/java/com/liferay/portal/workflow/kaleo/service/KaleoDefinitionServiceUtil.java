@@ -49,6 +49,14 @@ public class KaleoDefinitionServiceUtil {
 	}
 
 	public static KaleoDefinition getKaleoDefinition(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getKaleoDefinition(
+			externalReferenceCode, companyId);
+	}
+
+	public static KaleoDefinition getKaleoDefinition(
 			String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {

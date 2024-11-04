@@ -203,7 +203,8 @@ public class FragmentEntryLinkStagedModelDataHandler
 						fragmentEntryLink);
 
 				Group group = _fetchGroup(
-					fragmentEntryLink.getCompanyId(), fragmentEntryLinkElement);
+					portletDataContext.getCompanyId(),
+					fragmentEntryLinkElement);
 
 				if (group != null) {
 					String fragmentEntryKey = GetterUtil.getString(

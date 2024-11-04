@@ -348,6 +348,7 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 				quantity = commerceOrderItem.getQuantity();
 				requestedDeliveryDate =
 					commerceOrderItem.getRequestedDeliveryDate();
+				shippable = commerceOrderItem.isShippable();
 				shippedQuantity = commerceOrderItem.getShippedQuantity();
 				shippingAddressId = commerceOrderItem.getShippingAddressId();
 				sku = commerceOrderItem.getSku();
@@ -421,6 +422,7 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 				replacedSkuExternalReferenceCode =
 					RandomTestUtil.randomString();
 				requestedDeliveryDate = RandomTestUtil.nextDate();
+				shippable = RandomTestUtil.randomBoolean();
 				shippedQuantity = BigDecimal.valueOf(
 					RandomTestUtil.randomInt());
 				shippingAddressExternalReferenceCode =

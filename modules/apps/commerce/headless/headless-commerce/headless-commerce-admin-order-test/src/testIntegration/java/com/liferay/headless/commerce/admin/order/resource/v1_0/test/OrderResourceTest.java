@@ -367,6 +367,7 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 					RandomTestUtil.randomString());
 				purchaseOrderNumber = RandomTestUtil.randomString();
 				requestedDeliveryDate = RandomTestUtil.nextDate();
+				shippable = RandomTestUtil.randomBoolean();
 				shippingAddressId = _orderAddress.getAddressId();
 			}
 		};
@@ -452,6 +453,7 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 				quantity = BigDecimal.valueOf(RandomTestUtil.randomInt());
 				replacedSkuExternalReferenceCode =
 					RandomTestUtil.randomString();
+				shippable = RandomTestUtil.randomBoolean();
 				shippedQuantity = BigDecimal.valueOf(
 					RandomTestUtil.randomInt());
 				shippingAddressExternalReferenceCode =
@@ -520,6 +522,7 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		randomPatchOrder.setPaymentTermExternalReferenceCode(
 			_commerceTermEntry.getExternalReferenceCode());
 		randomPatchOrder.setPaymentTermId(0L);
+		randomPatchOrder.setShippable(true);
 		randomPatchOrder.setShippingAddressExternalReferenceCode(
 			randomAddress.getExternalReferenceCode());
 		randomPatchOrder.setShippingAddressId(0L);
@@ -589,6 +592,7 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		randomPatchOrder.setPaymentTermExternalReferenceCode(
 			_commerceTermEntry.getExternalReferenceCode());
 		randomPatchOrder.setPaymentTermId(0L);
+		randomPatchOrder.setShippable(true);
 		randomPatchOrder.setShippingAddressExternalReferenceCode(
 			randomAddress.getExternalReferenceCode());
 		randomPatchOrder.setShippingAddressId(0L);
@@ -644,6 +648,7 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		randomOrder.setPaymentTermExternalReferenceCode(
 			_commerceTermEntry.getExternalReferenceCode());
 		randomOrder.setPaymentTermId(0L);
+		randomOrder.setShippable(true);
 		randomOrder.setShippingAddressExternalReferenceCode(
 			_orderAddress.getExternalReferenceCode());
 		randomOrder.setShippingAddressId(0L);

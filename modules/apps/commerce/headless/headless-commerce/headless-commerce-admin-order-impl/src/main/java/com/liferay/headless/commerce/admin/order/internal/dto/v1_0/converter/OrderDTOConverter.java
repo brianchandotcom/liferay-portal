@@ -204,6 +204,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 				setPurchaseOrderNumber(commerceOrder::getPurchaseOrderNumber);
 				setRequestedDeliveryDate(
 					commerceOrder::getRequestedDeliveryDate);
+				setShippable(commerceOrder::isShippable);
 				setShippingAddressExternalReferenceCode(
 					() -> {
 						CommerceAddress shippingCommerceAddress =

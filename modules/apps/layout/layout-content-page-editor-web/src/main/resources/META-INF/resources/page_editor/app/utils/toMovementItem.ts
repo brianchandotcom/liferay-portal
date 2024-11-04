@@ -3,20 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FragmentLayoutDataItem} from '../../types/layout_data/FragmentLayoutDataItem';
 import {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import selectLayoutDataItemLabel from '../selectors/selectLayoutDataItemLabel';
 import {MovementItem} from './drag_and_drop/checkAllowedChild';
 import isItemWidget from './isItemWidget';
 
-import type {LayoutData} from '../../types/layout_data/LayoutData';
+import type {
+	LayoutData,
+	LayoutDataItem,
+} from '../../types/layout_data/LayoutData';
 
 export default function toMovementItem(
-	item: FragmentLayoutDataItem,
+	itemId: LayoutDataItem['itemId'],
 	layoutData: LayoutData,
 	fragmentEntryLinks: FragmentEntryLinkMap
 ): MovementItem {
+	const item = layoutData.items[itemId];
+
 	const isWidget = isItemWidget(item, fragmentEntryLinks);
 
 	const name = selectLayoutDataItemLabel(

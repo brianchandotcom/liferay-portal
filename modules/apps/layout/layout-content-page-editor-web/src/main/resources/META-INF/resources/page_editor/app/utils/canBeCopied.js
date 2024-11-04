@@ -52,17 +52,8 @@ export default function canBeCopied(
 	layoutData,
 	getWidgets
 ) {
-	const source = toMovementItem(
-		layoutData.items[copiedItemId],
-		layoutData,
-		fragmentEntryLinks
-	);
-
-	const target = toMovementItem(
-		layoutData.items[parentItemId],
-		layoutData,
-		fragmentEntryLinks
-	);
+	const source = toMovementItem(copiedItemId, layoutData, fragmentEntryLinks);
+	const target = toMovementItem(parentItemId, layoutData, fragmentEntryLinks);
 
 	const parent = getItemTargetToPaste(target, layoutData.items);
 

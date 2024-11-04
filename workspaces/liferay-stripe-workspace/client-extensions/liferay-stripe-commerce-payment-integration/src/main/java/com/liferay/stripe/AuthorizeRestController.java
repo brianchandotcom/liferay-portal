@@ -128,7 +128,7 @@ public class AuthorizeRestController extends BaseRestController {
 						String.class
 					).block()));
 
-			sessionCreateParams = SessionCreateParams.builder(
+			SessionCreateParams.Builder builder = SessionCreateParams.builder(
 			).addAllLineItem(
 				_getLineItems(
 					orderJSONObject.getString("currencyCode"),
@@ -136,11 +136,6 @@ public class AuthorizeRestController extends BaseRestController {
 					orderJSONObject.getJSONArray("orderItems"))
 			).addPaymentMethodType(
 				SessionCreateParams.PaymentMethodType.CARD
-			).addShippingOption(
-				_getShippingOption(
-					orderJSONObject.getString("currencyCode"),
-					orderJSONObject.getLong("shippingAmountValue"),
-					orderJSONObject.getString("shippingOption"))
 			).setCancelUrl(
 				commercePaymentEntryJSONObject.getString("cancelURL")
 			).setCurrency(
@@ -149,7 +144,17 @@ public class AuthorizeRestController extends BaseRestController {
 				SessionCreateParams.Mode.PAYMENT
 			).setSuccessUrl(
 				commercePaymentEntryJSONObject.getString("callbackURL")
-			).build();
+			);
+
+			if (orderJSONObject.getBoolean("shippable")) {
+				builder.addShippingOption(
+					_getShippingOption(
+						orderJSONObject.getString("currencyCode"),
+						orderJSONObject.getLong("shippingAmountValue"),
+						orderJSONObject.getString("shippingOption")));
+			}
+
+			sessionCreateParams = builder.build();
 		}
 		else {
 			sessionCreateParams = SessionCreateParams.builder(

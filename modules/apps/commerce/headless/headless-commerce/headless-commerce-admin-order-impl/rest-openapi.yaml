@@ -346,6 +346,10 @@ components:
                     example: 2017-07-21
                     format: date
                     type: string
+                shippable:
+                    example: true
+                    readOnly: true
+                    type: boolean
                 shippingAddress:
                     $ref: "#/components/schemas/ShippingAddress"
                 shippingAddressExternalReferenceCode:
@@ -778,6 +782,10 @@ components:
                     example: 2017-07-21
                     format: date
                     type: string
+                shippable:
+                    example: true
+                    readOnly: true
+                    type: boolean
                 shippedQuantity:
                     example: 1.1
                     format: bigdecimal

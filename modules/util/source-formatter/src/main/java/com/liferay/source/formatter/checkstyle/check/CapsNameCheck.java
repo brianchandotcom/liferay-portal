@@ -5,8 +5,6 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
-import com.liferay.portal.kernel.util.StringUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
@@ -42,14 +40,7 @@ public class CapsNameCheck extends BaseCheck {
 		}
 
 		String name = getName(detailAST);
-
-		String tokenTypeName = StringUtil.toLowerCase(detailAST.getText());
-
-		int pos = tokenTypeName.indexOf("_");
-
-		if (pos != -1) {
-			tokenTypeName = tokenTypeName.substring(0, pos);
-		}
+		String tokenTypeName = getTokenTypeName(detailAST);
 
 		for (String[] array : _ALL_CAPS_STRINGS) {
 			String s = array[1];

@@ -699,6 +699,18 @@ public abstract class BaseCheck extends AbstractCheck {
 		return startLineNumber;
 	}
 
+	protected String getTokenTypeName(DetailAST detailAST) {
+		String tokenTypeName = StringUtil.toLowerCase(detailAST.getText());
+
+		int pos = tokenTypeName.indexOf("_");
+
+		if (pos != -1) {
+			tokenTypeName = tokenTypeName.substring(0, pos);
+		}
+
+		return tokenTypeName;
+	}
+
 	protected DetailAST getTopLevelMethodCallDetailAST(DetailAST detailAST) {
 		if ((detailAST.getType() != TokenTypes.DOT) &&
 			(detailAST.getType() != TokenTypes.METHOD_CALL)) {

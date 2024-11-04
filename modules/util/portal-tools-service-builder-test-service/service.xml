@@ -155,6 +155,12 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+
+		<!-- Other fields -->
+
+		<column name="column1" type="int" />
 	</entity>
 	<entity external-reference-code="group" local-service="true" name="ERCGroupEntry" remote-service="false" uuid="true">
 

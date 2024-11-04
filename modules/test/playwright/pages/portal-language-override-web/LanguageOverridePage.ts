@@ -6,7 +6,6 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
 
@@ -44,12 +43,8 @@ export class LanguageOverridePage {
 		for (let i = 0; i < values.length; i++) {
 			const {languageId, value} = values[i];
 
-			await fillAndClickOutside(
-				this.page,
-				this.page.getByLabel(languageId),
-				value,
-				false
-			);
+			await this.page.getByLabel(languageId).click();
+			await this.page.getByLabel(languageId).fill(value);
 		}
 
 		await this.saveButton.click();
@@ -121,12 +116,8 @@ export class LanguageOverridePage {
 	}
 
 	async searchTranslation(key: string) {
-		await fillAndClickOutside(
-			this.page,
-			this.page.getByRole('searchbox'),
-			key,
-			false
-		);
+		await this.page.getByRole('searchbox').click();
+		await this.page.getByRole('searchbox').fill(key);
 
 		await this.page
 			.getByRole('button', {exact: true, name: 'Search for'})

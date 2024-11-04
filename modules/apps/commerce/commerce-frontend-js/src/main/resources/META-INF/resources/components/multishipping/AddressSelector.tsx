@@ -10,10 +10,6 @@ import ClayForm, {
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
-
-// @ts-ignore
-
-import {CommerceServiceProvider} from 'commerce-frontend-js';
 import {sub} from 'frontend-js-web';
 import React, {
 	SetStateAction,
@@ -23,6 +19,9 @@ import React, {
 	useState,
 } from 'react';
 
+// @ts-ignore
+
+import ServiceProvider from '../../ServiceProvider/index';
 import ErrorMessage, {showError} from './ErrorMessage';
 import {
 	IAPIResponseError,
@@ -199,7 +198,7 @@ function AddressSelector({
 	}, [countries, currentAddress.addressCountry, currentAddress.id]);
 
 	useEffect(() => {
-		CommerceServiceProvider.AdminUserAPI('v1')
+		ServiceProvider.AdminUserAPI('v1')
 			.getPostalAddresses(accountId)
 			.then(({items}: IPostalAddressAPIResponse) => {
 				const data = items.filter(
@@ -228,7 +227,7 @@ function AddressSelector({
 	}, [accountId, addressId, addressType]);
 
 	useEffect(() => {
-		CommerceServiceProvider.AdminAddressAPI('v1')
+		ServiceProvider.AdminAddressAPI('v1')
 			.getCountries({
 				pageSize: -1,
 			})
@@ -274,7 +273,7 @@ function AddressSelector({
 					return Promise.resolve({id: 0});
 				}
 
-				return CommerceServiceProvider.AdminUserAPI('v1')
+				return ServiceProvider.AdminUserAPI('v1')
 					.postPostalAddress(accountId, currentAddress)
 					.then((response: IPostalAddress) => {
 						return response;

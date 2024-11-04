@@ -14,7 +14,7 @@ CommerceOrder commerceOrder = orderSummaryCheckoutStepDisplayContext.getCommerce
 %>
 
 <react:component
-	module="{Multishipping} from commerce-order-content-web"
+	module="{Multishipping} from commerce-frontend-js"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"accountId", commerceOrder.getCommerceAccountId()

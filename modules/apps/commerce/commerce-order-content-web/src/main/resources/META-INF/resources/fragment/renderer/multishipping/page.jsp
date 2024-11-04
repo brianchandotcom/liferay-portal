@@ -8,7 +8,7 @@
 <%@ include file="/fragment/renderer/multishipping/init.jsp" %>
 
 <react:component
-	module="{Multishipping} from commerce-order-content-web"
+	module="{Multishipping} from commerce-frontend-js"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"accountId", commerceAccountId

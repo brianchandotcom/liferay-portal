@@ -4,10 +4,11 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {Input, SingleSelect} from '@liferay/object-js-components-web';
+import {Input} from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
 
+import {ObjectRelationshipDeletionTypeSelect} from './ObjectRelationshipDeletionTypeSelect';
 import {ObjectRelationshipFormBase} from './ObjectRelationshipFormBase';
 import {SelectObjectRelationship} from './SelectObjectRelationship';
 
@@ -84,59 +85,49 @@ export function EditObjectRelationshipContent({
 					readonly
 					setValues={setValues}
 					values={values}
-				/>
-
-				<SingleSelect
-					disabled={
-						readOnly ||
-						(Liferay.FeatureFlags['LPS-187142'] && values.edge)
-					}
-					id="lfr-objects__object-relationship-deletion-type"
-					items={objectRelationshipDeletionTypes}
-					label={Liferay.Language.get('deletion-type')}
-					onSelectionChange={(value) => {
-						setValues({deletionType: value as string});
-
-						if (onSubmit) {
-							onSubmit({
-								...values,
-								deletionType: value as string,
-							});
-						}
-					}}
-					required
-					selectedKey={values.deletionType}
-				/>
-			</ContainerWrapper>
-
-			{parameterRequired && values.type === 'oneToMany' && (
-				<ContainerWrapper title={Liferay.Language.get('parameters')}>
-					<Input
-						id="lfr-objects__object-relationship-api-endpoint"
-						label={Liferay.Language.get('api-endpoint')}
-						readOnly
-						value={restContextPath}
-					/>
-
-					<SelectObjectRelationship
-						error={errors.parameterObjectFieldName}
-						objectDefinitionExternalReferenceCode1={
-							values.objectDefinitionExternalReferenceCode2 as string
-						}
-						onChange={(parameterObjectFieldName) => {
-							setValues({parameterObjectFieldName});
-
-							if (onSubmit) {
-								onSubmit({
-									...values,
-									parameterObjectFieldName,
-								});
+				>
+					<>
+						<ObjectRelationshipDeletionTypeSelect
+							objectRelationshipDeletionTypes={
+								objectRelationshipDeletionTypes
 							}
-						}}
-						value={values.parameterObjectFieldName}
-					/>
-				</ContainerWrapper>
-			)}
+							onSubmit={onSubmit}
+							readOnly={readOnly}
+							setValues={setValues}
+							values={values}
+						/>
+
+						{parameterRequired && values.type === 'oneToMany' && (
+							<ContainerWrapper title={Liferay.Language.get('parameters')}>
+								<Input
+									id="lfr-objects__object-relationship-api-endpoint"
+									label={Liferay.Language.get('api-endpoint')}
+									readOnly
+									value={restContextPath}
+								/>
+
+								<SelectObjectRelationship
+									error={errors.parameterObjectFieldName}
+									objectDefinitionExternalReferenceCode1={
+										values.objectDefinitionExternalReferenceCode2 as string
+									}
+									onChange={(parameterObjectFieldName) => {
+										setValues({parameterObjectFieldName});
+
+										if (onSubmit) {
+											onSubmit({
+												...values,
+												parameterObjectFieldName,
+											});
+										}
+									}}
+									value={values.parameterObjectFieldName}
+								/>
+							</ContainerWrapper>
+						)}
+					</>
+				</ObjectRelationshipFormBase>
+			</ContainerWrapper>
 		</>
 	);
 }

@@ -16,6 +16,7 @@ import getRandomString from '../../utils/getRandomString';
 const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
+		'LPD-35220': true,
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,
@@ -351,5 +352,71 @@ test(
 		await expect(
 			page.getByLabel('Reverse Order Direction:')
 		).not.toBeAttached();
+	}
+);
+
+test(
+	'Can resize pages column, ',
+	{
+		tag: '@LPD-36861',
+	},
+	async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+		// Create a page
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to admin page
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		// Check the column have the default layout
+
+		await expect(page.locator('.miller-columns-col')).toHaveClass(
+			/col-lg-4 col-md-6 col-11/
+		);
+
+		// Check that we can resize the column
+
+		const resizeColumn = page.getByLabel('Resize column');
+
+		await resizeColumn.focus();
+
+		await expect(resizeColumn).toBeFocused();
+
+		await page.keyboard.press('Home');
+
+		await expect(page.locator('.miller-columns-col')).not.toHaveClass(
+			/col-lg-4 col-md-6 col-11/
+		);
+
+		await expect(page.locator('.miller-columns-col')).toHaveAttribute(
+			'style',
+			'max-width: 286px; min-width: 286px; width: 286px;'
+		);
+
+		await page.keyboard.press('ArrowRight');
+
+		await expect(page.locator('.miller-columns-col')).toHaveAttribute(
+			'style',
+			'max-width: 306px; min-width: 306px; width: 306px;'
+		);
+
+		await page.keyboard.press('End');
+
+		await expect(page.locator('.miller-columns-col')).toHaveAttribute(
+			'style',
+			'max-width: 672px; min-width: 672px; width: 672px;'
+		);
+
+		await page.keyboard.press('ArrowLeft');
+
+		await expect(page.locator('.miller-columns-col')).toHaveAttribute(
+			'style',
+			'max-width: 652px; min-width: 652px; width: 652px;'
+		);
 	}
 );

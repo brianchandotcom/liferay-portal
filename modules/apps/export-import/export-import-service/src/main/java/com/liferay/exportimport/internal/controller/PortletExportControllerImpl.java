@@ -1001,6 +1001,12 @@ public class PortletExportControllerImpl implements PortletExportController {
 			Set<String> oldScopedPrimaryKeys = new HashSet<>(
 				portletDataContext.getScopedPrimaryKeys());
 
+			Map<String, String[]> parameterMap =
+				portletDataContext.getParameterMap();
+
+			boolean portletDataAll = MapUtil.getBoolean(
+				parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
+
 			try {
 				portletDataContext.clearScopedPrimaryKeys();
 
@@ -1034,6 +1040,9 @@ public class PortletExportControllerImpl implements PortletExportController {
 				}
 			}
 			finally {
+				parameterMap.put(
+					PortletDataHandlerKeys.PORTLET_DATA_ALL,
+					new String[] {String.valueOf(portletDataAll)});
 				portletDataContext.addScopedPrimaryKeys(oldScopedPrimaryKeys);
 				portletDataContext.setExportDataRootElement(
 					exportDataRootElement);

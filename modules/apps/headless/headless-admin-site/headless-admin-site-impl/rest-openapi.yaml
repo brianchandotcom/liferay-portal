@@ -428,7 +428,7 @@ components:
                 parentDisplayPageTemplateFolderExternalReferenceCode:
                     # @review
                     description:
-                        The parent display page template folder's External Reference Code.
+                        The parent display page template folder's external reference code.
                     type: string
                 uuid:
                     # @review

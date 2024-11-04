@@ -26,7 +26,7 @@ export default function useAccountSubscriptions(
 
 		if (subscriptionStatuses.includes(SUBSCRIPTIONS_STATUS.active)) {
 			filters.push(
-				`(endDate gt ${getCurrentDate} and startDate lt ${getCurrentDate})`
+				`(endDate ge ${getCurrentDate} and startDate le ${getCurrentDate})`
 			);
 		}
 

@@ -161,8 +161,13 @@ export default function propsTransformer({items, portletNamespace, ...props}) {
 
 						if (action) {
 							event.preventDefault();
+							event.stopPropagation();
 
 							ACTIONS[action](child.data, portletNamespace);
+						}
+
+						if (child.href) {
+							event.stopPropagation();
 						}
 					},
 				})),

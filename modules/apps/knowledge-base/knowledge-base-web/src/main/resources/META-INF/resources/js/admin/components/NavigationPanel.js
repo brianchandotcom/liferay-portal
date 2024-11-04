@@ -44,10 +44,6 @@ export default function NavigationPanel({
 	const [searchActive, setSearchActive] = useState(false);
 
 	const handleClickItem = (event, item) => {
-		if (event.defaultPrevented) {
-			return;
-		}
-
 		event.stopPropagation();
 		event.preventDefault();
 

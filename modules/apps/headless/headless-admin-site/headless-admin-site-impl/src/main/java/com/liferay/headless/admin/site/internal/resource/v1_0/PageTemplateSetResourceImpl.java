@@ -6,8 +6,13 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.resource.v1_0.PageTemplateSetResource;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -19,4 +24,29 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class PageTemplateSetResourceImpl
 	extends BasePageTemplateSetResourceImpl {
+
+	@Override
+	public void deleteSiteSiteByExternalReferenceCodePageTemplateSet(
+			String siteExternalReferenceCode,
+			String pageTemplateSetExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		_layoutPageTemplateCollectionService.deleteLayoutPageTemplateCollection(
+			pageTemplateSetExternalReferenceCode, group.getGroupId());
+	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutPageTemplateCollectionService
+		_layoutPageTemplateCollectionService;
+
 }

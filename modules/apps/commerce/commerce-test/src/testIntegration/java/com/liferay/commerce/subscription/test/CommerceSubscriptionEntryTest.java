@@ -15,6 +15,7 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.test.util.CommercePriceEntryTestUtil;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
@@ -22,6 +23,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
@@ -90,7 +92,25 @@ public class CommerceSubscriptionEntryTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_cpOptionLocalService.deleteCPOptions(_group.getCompanyId());
+		List<CPOption> cpOptions =
+			_cpOptionLocalService.findCPOptionByCompanyId(
+				_group.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		for (CPOption cpOption : cpOptions) {
+			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+				_cpDefinitionOptionRelLocalService.
+					getCPOptionCPDefinitionOptionRels(cpOption.getCPOptionId());
+
+			for (CPDefinitionOptionRel cpDefinitionOptionRel :
+					cpDefinitionOptionRels) {
+
+				_cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
+					cpDefinitionOptionRel);
+			}
+
+			_cpOptionLocalService.deleteCPOption(cpOption.getCPOptionId());
+		}
 	}
 
 	@Test
@@ -400,6 +420,10 @@ public class CommerceSubscriptionEntryTest {
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Inject
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
 
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;

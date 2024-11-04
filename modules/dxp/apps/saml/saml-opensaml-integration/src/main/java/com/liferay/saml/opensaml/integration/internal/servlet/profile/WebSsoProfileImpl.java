@@ -1303,7 +1303,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	private String _getAuthRedirectURL(
 			MessageContext<?> messageContext,
-			HttpServletRequest httpServletRequest, String relayState)
+			HttpServletRequest httpServletRequest, String redirect)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(3);
@@ -1316,20 +1316,20 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		sb.append("/portal/saml/auth_redirect?redirect=");
 
-		if (Validator.isNull(relayState)) {
+		if (Validator.isNull(redirect)) {
 			SAMLBindingContext samlBindingContext =
 				messageContext.getSubcontext(SAMLBindingContext.class);
 
-			relayState = portal.escapeRedirect(
+			redirect = portal.escapeRedirect(
 				_relayStateHelper.getRedirectFromRelayStateToken(
 					samlBindingContext.getRelayState()));
 		}
 
-		if (Validator.isNull(relayState)) {
-			relayState = portal.getHomeURL(httpServletRequest);
+		if (Validator.isNull(redirect)) {
+			redirect = portal.getHomeURL(httpServletRequest);
 		}
 
-		sb.append(URLCodec.encodeURL(relayState));
+		sb.append(URLCodec.encodeURL(redirect));
 
 		return sb.toString();
 	}
@@ -1776,7 +1776,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			throw new StatusException(statusCodeURI);
 		}
 
-		String relayState = verifyInResponseTo(samlResponse);
+		String redirect = verifyInResponseTo(samlResponse);
 
 		verifyDestination(messageContext, samlResponse.getDestination());
 
@@ -1872,8 +1872,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlSpSession.getSamlSpSessionKey());
 
 		httpServletResponse.sendRedirect(
-			_getAuthRedirectURL(
-				messageContext, httpServletRequest, relayState));
+			_getAuthRedirectURL(messageContext, httpServletRequest, redirect));
 	}
 
 	private void _redirectToLogin(

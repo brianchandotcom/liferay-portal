@@ -249,9 +249,14 @@ public class EditInfoItemStrutsActionValidationTest {
 
 			Assert.assertTrue(
 				SessionErrors.contains(mockHttpServletRequest, formItemId));
-			Assert.assertTrue(
-				SessionErrors.contains(
-					mockHttpServletRequest, infoField.getUniqueId()));
+
+			InfoFormValidationException infoFormValidationException =
+				(InfoFormValidationException)SessionErrors.get(
+					mockHttpServletRequest, InfoFormException.class);
+
+			Assert.assertEquals(
+				infoField.getUniqueId(),
+				infoFormValidationException.getInfoFieldUniqueId());
 
 			Assert.assertTrue(
 				SessionErrors.get(mockHttpServletRequest, formItemId) instanceof
@@ -265,10 +270,7 @@ public class EditInfoItemStrutsActionValidationTest {
 				infoField.getUniqueId(),
 				requiredInfoField.getInfoFieldUniqueId());
 
-			Assert.assertEquals(
-				requiredInfoField,
-				SessionErrors.get(
-					mockHttpServletRequest, infoField.getUniqueId()));
+			Assert.assertEquals(requiredInfoField, infoFormValidationException);
 
 			Assert.assertFalse(
 				SessionMessages.contains(mockHttpServletRequest, formItemId));
@@ -455,16 +457,19 @@ public class EditInfoItemStrutsActionValidationTest {
 
 			Assert.assertTrue(
 				SessionErrors.contains(mockHttpServletRequest, formItemId));
-			Assert.assertTrue(
-				SessionErrors.contains(
-					mockHttpServletRequest, infoField.getUniqueId()));
+
+			InfoFormValidationException infoFormValidationException =
+				(InfoFormValidationException)SessionErrors.get(
+					mockHttpServletRequest, InfoFormException.class);
+
+			Assert.assertEquals(infoFormException, infoFormValidationException);
+			Assert.assertEquals(
+				infoField.getUniqueId(),
+				infoFormValidationException.getInfoFieldUniqueId());
+
 			Assert.assertEquals(
 				infoFormException,
 				SessionErrors.get(mockHttpServletRequest, formItemId));
-			Assert.assertEquals(
-				infoFormException,
-				SessionErrors.get(
-					mockHttpServletRequest, infoField.getUniqueId()));
 			Assert.assertFalse(
 				SessionMessages.contains(mockHttpServletRequest, formItemId));
 		}

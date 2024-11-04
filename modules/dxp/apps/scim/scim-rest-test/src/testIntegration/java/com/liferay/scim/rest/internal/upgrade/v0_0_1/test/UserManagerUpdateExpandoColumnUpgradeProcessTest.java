@@ -87,20 +87,18 @@ public class UserManagerUpdateExpandoColumnUpgradeProcessTest {
 				"userId", TestPropsValues.getUserId()
 			).build());
 
-		UserResource.Builder userBuilder = UserResource.builder();
-
 		GroupResource.Builder groupBuilder = GroupResource.builder();
+		UserResource.Builder userBuilder = UserResource.builder();
 
 		String languageId = UpgradeProcessUtil.getDefaultLanguageId(
 			TestPropsValues.getCompanyId());
 
-		_userResource = userBuilder.authentication(
+		_groupResource = groupBuilder.authentication(
 			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).locale(
 			LocaleUtil.fromLanguageId(languageId)
 		).build();
-
-		_groupResource = groupBuilder.authentication(
+		_userResource = userBuilder.authentication(
 			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).locale(
 			LocaleUtil.fromLanguageId(languageId)

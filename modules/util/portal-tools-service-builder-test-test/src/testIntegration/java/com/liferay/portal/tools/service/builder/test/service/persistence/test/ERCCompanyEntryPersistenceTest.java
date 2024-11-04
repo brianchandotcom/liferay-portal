@@ -123,6 +123,12 @@ public class ERCCompanyEntryPersistenceTest {
 
 		newERCCompanyEntry.setCompanyId(RandomTestUtil.nextLong());
 
+		newERCCompanyEntry.setUserId(RandomTestUtil.nextLong());
+
+		newERCCompanyEntry.setUserName(RandomTestUtil.randomString());
+
+		newERCCompanyEntry.setColumn1(RandomTestUtil.nextInt());
+
 		_ercCompanyEntries.add(_persistence.update(newERCCompanyEntry));
 
 		ERCCompanyEntry existingERCCompanyEntry = _persistence.findByPrimaryKey(
@@ -139,6 +145,15 @@ public class ERCCompanyEntryPersistenceTest {
 		Assert.assertEquals(
 			existingERCCompanyEntry.getCompanyId(),
 			newERCCompanyEntry.getCompanyId());
+		Assert.assertEquals(
+			existingERCCompanyEntry.getUserId(),
+			newERCCompanyEntry.getUserId());
+		Assert.assertEquals(
+			existingERCCompanyEntry.getUserName(),
+			newERCCompanyEntry.getUserName());
+		Assert.assertEquals(
+			existingERCCompanyEntry.getColumn1(),
+			newERCCompanyEntry.getColumn1());
 	}
 
 	@Test(
@@ -216,7 +231,8 @@ public class ERCCompanyEntryPersistenceTest {
 	protected OrderByComparator<ERCCompanyEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"ERCCompanyEntry", "uuid", true, "externalReferenceCode", true,
-			"ercCompanyEntryId", true, "companyId", true);
+			"ercCompanyEntryId", true, "companyId", true, "userId", true,
+			"userName", true, "column1", true);
 	}
 
 	@Test
@@ -508,6 +524,12 @@ public class ERCCompanyEntryPersistenceTest {
 		ercCompanyEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		ercCompanyEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		ercCompanyEntry.setUserId(RandomTestUtil.nextLong());
+
+		ercCompanyEntry.setUserName(RandomTestUtil.randomString());
+
+		ercCompanyEntry.setColumn1(RandomTestUtil.nextInt());
 
 		_ercCompanyEntries.add(_persistence.update(ercCompanyEntry));
 

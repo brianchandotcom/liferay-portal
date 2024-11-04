@@ -51,7 +51,7 @@ public class ERCCompanyEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -61,6 +61,12 @@ public class ERCCompanyEntryCacheModel
 		sb.append(ercCompanyEntryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
+		sb.append(", column1=");
+		sb.append(column1);
 		sb.append("}");
 
 		return sb.toString();
@@ -86,6 +92,16 @@ public class ERCCompanyEntryCacheModel
 
 		ercCompanyEntryImpl.setErcCompanyEntryId(ercCompanyEntryId);
 		ercCompanyEntryImpl.setCompanyId(companyId);
+		ercCompanyEntryImpl.setUserId(userId);
+
+		if (userName == null) {
+			ercCompanyEntryImpl.setUserName("");
+		}
+		else {
+			ercCompanyEntryImpl.setUserName(userName);
+		}
+
+		ercCompanyEntryImpl.setColumn1(column1);
 
 		ercCompanyEntryImpl.resetOriginalValues();
 
@@ -100,6 +116,11 @@ public class ERCCompanyEntryCacheModel
 		ercCompanyEntryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+
+		column1 = objectInput.readInt();
 	}
 
 	@Override
@@ -121,11 +142,25 @@ public class ERCCompanyEntryCacheModel
 		objectOutput.writeLong(ercCompanyEntryId);
 
 		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeInt(column1);
 	}
 
 	public String uuid;
 	public String externalReferenceCode;
 	public long ercCompanyEntryId;
 	public long companyId;
+	public long userId;
+	public String userName;
+	public int column1;
 
 }

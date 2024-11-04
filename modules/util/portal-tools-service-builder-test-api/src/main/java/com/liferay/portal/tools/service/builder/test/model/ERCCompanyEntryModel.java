@@ -110,6 +110,63 @@ public interface ERCCompanyEntryModel
 	@Override
 	public void setCompanyId(long companyId);
 
+	/**
+	 * Returns the user ID of this erc company entry.
+	 *
+	 * @return the user ID of this erc company entry
+	 */
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this erc company entry.
+	 *
+	 * @param userId the user ID of this erc company entry
+	 */
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this erc company entry.
+	 *
+	 * @return the user uuid of this erc company entry
+	 */
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this erc company entry.
+	 *
+	 * @param userUuid the user uuid of this erc company entry
+	 */
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this erc company entry.
+	 *
+	 * @return the user name of this erc company entry
+	 */
+	@AutoEscape
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this erc company entry.
+	 *
+	 * @param userName the user name of this erc company entry
+	 */
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the column1 of this erc company entry.
+	 *
+	 * @return the column1 of this erc company entry
+	 */
+	public int getColumn1();
+
+	/**
+	 * Sets the column1 of this erc company entry.
+	 *
+	 * @param column1 the column1 of this erc company entry
+	 */
+	public void setColumn1(int column1);
+
 	@Override
 	public ERCCompanyEntry cloneWithOriginalValues();
 

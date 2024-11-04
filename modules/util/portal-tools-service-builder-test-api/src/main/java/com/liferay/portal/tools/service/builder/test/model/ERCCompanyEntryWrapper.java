@@ -36,6 +36,9 @@ public class ERCCompanyEntryWrapper
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("ercCompanyEntryId", getErcCompanyEntryId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("column1", getColumn1());
 
 		return attributes;
 	}
@@ -66,11 +69,39 @@ public class ERCCompanyEntryWrapper
 		if (companyId != null) {
 			setCompanyId(companyId);
 		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Integer column1 = (Integer)attributes.get("column1");
+
+		if (column1 != null) {
+			setColumn1(column1);
+		}
 	}
 
 	@Override
 	public ERCCompanyEntry cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the column1 of this erc company entry.
+	 *
+	 * @return the column1 of this erc company entry
+	 */
+	@Override
+	public int getColumn1() {
+		return model.getColumn1();
 	}
 
 	/**
@@ -114,6 +145,36 @@ public class ERCCompanyEntryWrapper
 	}
 
 	/**
+	 * Returns the user ID of this erc company entry.
+	 *
+	 * @return the user ID of this erc company entry
+	 */
+	@Override
+	public long getUserId() {
+		return model.getUserId();
+	}
+
+	/**
+	 * Returns the user name of this erc company entry.
+	 *
+	 * @return the user name of this erc company entry
+	 */
+	@Override
+	public String getUserName() {
+		return model.getUserName();
+	}
+
+	/**
+	 * Returns the user uuid of this erc company entry.
+	 *
+	 * @return the user uuid of this erc company entry
+	 */
+	@Override
+	public String getUserUuid() {
+		return model.getUserUuid();
+	}
+
+	/**
 	 * Returns the uuid of this erc company entry.
 	 *
 	 * @return the uuid of this erc company entry
@@ -126,6 +187,16 @@ public class ERCCompanyEntryWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the column1 of this erc company entry.
+	 *
+	 * @param column1 the column1 of this erc company entry
+	 */
+	@Override
+	public void setColumn1(int column1) {
+		model.setColumn1(column1);
 	}
 
 	/**
@@ -166,6 +237,36 @@ public class ERCCompanyEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the user ID of this erc company entry.
+	 *
+	 * @param userId the user ID of this erc company entry
+	 */
+	@Override
+	public void setUserId(long userId) {
+		model.setUserId(userId);
+	}
+
+	/**
+	 * Sets the user name of this erc company entry.
+	 *
+	 * @param userName the user name of this erc company entry
+	 */
+	@Override
+	public void setUserName(String userName) {
+		model.setUserName(userName);
+	}
+
+	/**
+	 * Sets the user uuid of this erc company entry.
+	 *
+	 * @param userUuid the user uuid of this erc company entry
+	 */
+	@Override
+	public void setUserUuid(String userUuid) {
+		model.setUserUuid(userUuid);
 	}
 
 	/**

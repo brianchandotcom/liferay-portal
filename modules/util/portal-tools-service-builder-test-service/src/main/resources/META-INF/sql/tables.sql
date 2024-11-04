@@ -60,7 +60,10 @@ create table ERCCompanyEntry (
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	ercCompanyEntryId LONG not null primary key,
-	companyId LONG
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	column1 INTEGER
 );
 
 create table ERCGroupEntry (
@@ -301,4 +304,13 @@ create table VersionedEntryVersion (
 	version INTEGER,
 	versionedEntryId LONG,
 	groupId LONG
+);
+
+create table userId (
+	dataLimitEntryId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
 );

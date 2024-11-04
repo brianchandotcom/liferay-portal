@@ -9,10 +9,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -58,7 +61,9 @@ public class ERCCompanyEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
-		{"ercCompanyEntryId", Types.BIGINT}, {"companyId", Types.BIGINT}
+		{"ercCompanyEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"column1", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -69,10 +74,13 @@ public class ERCCompanyEntryModelImpl
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("ercCompanyEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("column1", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ERCCompanyEntry (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,ercCompanyEntryId LONG not null primary key,companyId LONG)";
+		"create table ERCCompanyEntry (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,ercCompanyEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,column1 INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ERCCompanyEntry";
 
@@ -240,6 +248,11 @@ public class ERCCompanyEntryModelImpl
 				"ercCompanyEntryId", ERCCompanyEntry::getErcCompanyEntryId);
 			attributeGetterFunctions.put(
 				"companyId", ERCCompanyEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", ERCCompanyEntry::getUserId);
+			attributeGetterFunctions.put(
+				"userName", ERCCompanyEntry::getUserName);
+			attributeGetterFunctions.put(
+				"column1", ERCCompanyEntry::getColumn1);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -272,6 +285,17 @@ public class ERCCompanyEntryModelImpl
 				"companyId",
 				(BiConsumer<ERCCompanyEntry, Long>)
 					ERCCompanyEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ERCCompanyEntry, Long>)ERCCompanyEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ERCCompanyEntry, String>)
+					ERCCompanyEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"column1",
+				(BiConsumer<ERCCompanyEntry, Integer>)
+					ERCCompanyEntry::setColumn1);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -373,6 +397,69 @@ public class ERCCompanyEntryModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@Override
+	public long getUserId() {
+		return _userId;
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_userId = userId;
+	}
+
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+	}
+
+	@Override
+	public String getUserName() {
+		if (_userName == null) {
+			return "";
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_userName = userName;
+	}
+
+	@Override
+	public int getColumn1() {
+		return _column1;
+	}
+
+	@Override
+	public void setColumn1(int column1) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_column1 = column1;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -434,6 +521,9 @@ public class ERCCompanyEntryModelImpl
 			getExternalReferenceCode());
 		ercCompanyEntryImpl.setErcCompanyEntryId(getErcCompanyEntryId());
 		ercCompanyEntryImpl.setCompanyId(getCompanyId());
+		ercCompanyEntryImpl.setUserId(getUserId());
+		ercCompanyEntryImpl.setUserName(getUserName());
+		ercCompanyEntryImpl.setColumn1(getColumn1());
 
 		ercCompanyEntryImpl.resetOriginalValues();
 
@@ -452,6 +542,12 @@ public class ERCCompanyEntryModelImpl
 			this.<Long>getColumnOriginalValue("ercCompanyEntryId"));
 		ercCompanyEntryImpl.setCompanyId(
 			this.<Long>getColumnOriginalValue("companyId"));
+		ercCompanyEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		ercCompanyEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ercCompanyEntryImpl.setColumn1(
+			this.<Integer>getColumnOriginalValue("column1"));
 
 		return ercCompanyEntryImpl;
 	}
@@ -552,6 +648,18 @@ public class ERCCompanyEntryModelImpl
 
 		ercCompanyEntryCacheModel.companyId = getCompanyId();
 
+		ercCompanyEntryCacheModel.userId = getUserId();
+
+		ercCompanyEntryCacheModel.userName = getUserName();
+
+		String userName = ercCompanyEntryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			ercCompanyEntryCacheModel.userName = null;
+		}
+
+		ercCompanyEntryCacheModel.column1 = getColumn1();
+
 		return ercCompanyEntryCacheModel;
 	}
 
@@ -617,6 +725,9 @@ public class ERCCompanyEntryModelImpl
 	private String _externalReferenceCode;
 	private long _ercCompanyEntryId;
 	private long _companyId;
+	private long _userId;
+	private String _userName;
+	private int _column1;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -653,6 +764,9 @@ public class ERCCompanyEntryModelImpl
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("ercCompanyEntryId", _ercCompanyEntryId);
 		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("column1", _column1);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -683,6 +797,12 @@ public class ERCCompanyEntryModelImpl
 		columnBitmasks.put("ercCompanyEntryId", 4L);
 
 		columnBitmasks.put("companyId", 8L);
+
+		columnBitmasks.put("userId", 16L);
+
+		columnBitmasks.put("userName", 32L);
+
+		columnBitmasks.put("column1", 64L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

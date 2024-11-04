@@ -33,6 +33,12 @@ public class ERCCompanyEntryTable extends BaseTable<ERCCompanyEntryTable> {
 			"ercCompanyEntryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<ERCCompanyEntryTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ERCCompanyEntryTable, Long> userId = createColumn(
+		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ERCCompanyEntryTable, String> userName = createColumn(
+		"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ERCCompanyEntryTable, Integer> column1 = createColumn(
+		"column1", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private ERCCompanyEntryTable() {
 		super("ERCCompanyEntry", ERCCompanyEntryTable::new);

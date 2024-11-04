@@ -56,6 +56,9 @@
 		<field name="externalReferenceCode" type="String" />
 		<field name="ercCompanyEntryId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="column1" type="int" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.ERCGroupEntry">
 		<field name="uuid" type="String" />

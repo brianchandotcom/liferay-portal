@@ -3,7 +3,7 @@ modules/apps/account/    @liferay-commerce
 modules/apps/adaptive-media/    @liferay-content-management
 modules/apps/address/    @liferay-commerce
 modules/apps/ai-creator/    @liferay-content-management
-modules/apps/analytics/
+modules/apps/analytics/    @liferay-ac
 modules/apps/announcements/    @liferay-content-management
 modules/apps/application-list/    @liferay-platform-experience
 modules/apps/archived/
@@ -247,7 +247,7 @@ modules/apps/rss/rss-impl    @liferay-page-management
 modules/apps/rss/rss-taglib    @liferay-page-management
 modules/apps/rss/rss-web    @liferay-page-management
 modules/apps/saved-content/    @liferay-content-management
-modules/apps/segments/
+modules/apps/segments/    @liferay-ac
 modules/apps/server/
 modules/apps/service-component/
 modules/apps/shared-dependencies/
@@ -283,7 +283,7 @@ modules/apps/wiki/    @liferay-content-management
 modules/apps/words/
 modules/apps/xstream/
 modules/dxp/apps/akismet/
-modules/dxp/apps/analytics/
+modules/dxp/apps/analytics/    @liferay-ac
 modules/dxp/apps/antivirus/
 modules/dxp/apps/commerce-avalara/    @liferay-commerce
 modules/dxp/apps/commerce-demo-pack/    @liferay-commerce
@@ -293,7 +293,10 @@ modules/dxp/apps/document-library-opener/    @liferay-content-management
 modules/dxp/apps/enterprise-product-notification/
 modules/dxp/apps/frontend-theme/    @liferay-platform-experience
 modules/dxp/apps/multi-factor-authentication/
-modules/dxp/apps/osb/
+modules/dxp/apps/osb/osb-faro/    @liferay-ac
+modules/dxp/apps/osb/osb-site-initializer/
+modules/dxp/apps/osb/osb-spring-boot/
+modules/dxp/apps/osb/osb-testray/
 modules/dxp/apps/portal-reports-engine-console/
 modules/dxp/apps/portal-rules-engine-drools/
 modules/dxp/apps/portal-search-elasticsearch-cross-cluster-replication/    @liferay-search
@@ -309,7 +312,7 @@ modules/dxp/apps/salesforce-connector/
 modules/dxp/apps/saml/
 modules/dxp/apps/scim/
 modules/dxp/apps/search-experiences/    @liferay-search
-modules/dxp/apps/segments/
+modules/dxp/apps/segments/    @liferay-ac
 modules/dxp/apps/sharepoint-rest/    @liferay-content-management
 modules/dxp/apps/sharepoint-soap/    @liferay-content-management
 modules/util/portal-tools-rest-builder/    @liferay-headless

@@ -16,6 +16,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -177,12 +179,46 @@ public class ClientExtensionEntryLocalServiceImpl
 			ClientExtensionEntry clientExtensionEntry)
 		throws PortalException {
 
-		undeployClientExtensionEntry(clientExtensionEntry);
+		try {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Deploying client extension entry " +
+						clientExtensionEntry.getName(LocaleUtil.getDefault()));
+			}
 
-		_serviceRegistrationsMap.put(
-			clientExtensionEntry.getClientExtensionEntryId(),
-			_cetDeployer.deploy(
-				_cetFactory.create(clientExtensionEntry, true)));
+			undeployClientExtensionEntry(clientExtensionEntry);
+
+			List<ServiceRegistration<?>> serviceRegistrations =
+				_cetDeployer.deploy(
+					_cetFactory.create(clientExtensionEntry, true));
+
+			if (_log.isInfoEnabled()) {
+				for (ServiceRegistration<?> serviceRegistration :
+						serviceRegistrations) {
+
+					_log.info("Registered " + serviceRegistration);
+				}
+			}
+
+			_serviceRegistrationsMap.put(
+				clientExtensionEntry.getClientExtensionEntryId(),
+				serviceRegistrations);
+		}
+		catch (PortalException | RuntimeException exception) {
+			_log.error(
+				"Unable to deploy client extension entry " +
+					clientExtensionEntry.getName(LocaleUtil.getDefault()),
+				exception);
+
+			throw exception;
+		}
+		finally {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Finished deploying client extension entry " +
+						clientExtensionEntry.getName(LocaleUtil.getDefault()));
+			}
+		}
 	}
 
 	@Override
@@ -278,15 +314,42 @@ public class ClientExtensionEntryLocalServiceImpl
 	public void undeployClientExtensionEntry(
 		ClientExtensionEntry clientExtensionEntry) {
 
-		List<ServiceRegistration<?>> serviceRegistrations =
-			_serviceRegistrationsMap.remove(
-				clientExtensionEntry.getClientExtensionEntryId());
+		try {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Undeploying client extension entry " +
+						clientExtensionEntry.getName(LocaleUtil.getDefault()));
+			}
 
-		if (serviceRegistrations != null) {
-			for (ServiceRegistration<?> serviceRegistration :
-					serviceRegistrations) {
+			List<ServiceRegistration<?>> serviceRegistrations =
+				_serviceRegistrationsMap.remove(
+					clientExtensionEntry.getClientExtensionEntryId());
 
-				serviceRegistration.unregister();
+			if (serviceRegistrations != null) {
+				for (ServiceRegistration<?> serviceRegistration :
+						serviceRegistrations) {
+
+					if (_log.isInfoEnabled()) {
+						_log.info("Unregistering " + serviceRegistration);
+					}
+
+					serviceRegistration.unregister();
+				}
+			}
+		}
+		catch (RuntimeException runtimeException) {
+			_log.error(
+				"Unable to undeploy client extension entry " +
+					clientExtensionEntry.getName(LocaleUtil.getDefault()),
+				runtimeException);
+
+			throw runtimeException;
+		}
+		finally {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Finished undeploying client extension entry " +
+						clientExtensionEntry.getName(LocaleUtil.getDefault()));
 			}
 		}
 	}
@@ -489,6 +552,9 @@ public class ClientExtensionEntryLocalServiceImpl
 			companyId, newTypeSettingsUnicodeProperties,
 			oldTypeSettingsUnicodeProperties, type);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClientExtensionEntryLocalServiceImpl.class);
 
 	@Reference
 	private CETDeployer _cetDeployer;

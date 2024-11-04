@@ -122,17 +122,6 @@ public class
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
-		ActionRequest actionRequest = _getMockLiferayPortletActionRequest(
-			new long[] {
-				layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
-			},
-			new long[] {
-				layoutPageTemplateEntryDisplayPage.
-					getLayoutPageTemplateEntryId()
-			});
-
-		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
-
 		LayoutPageTemplateCollection targetLayoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
@@ -152,7 +141,17 @@ public class
 		Assert.assertNull(targetLayoutPageTemplateCollection);
 		Assert.assertNull(targetLayoutPageTemplateEntry);
 
-		_mvcActionCommand.processAction(actionRequest, actionResponse);
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(
+				new long[] {
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId()
+				},
+				new long[] {
+					layoutPageTemplateEntryDisplayPage.
+						getLayoutPageTemplateEntryId()
+				}),
+			new MockLiferayPortletActionResponse());
 
 		targetLayoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.

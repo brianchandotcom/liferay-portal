@@ -19,6 +19,7 @@ export default {
 	'accounts': 'Accounts',
 	'activation-status': 'Activation Status',
 	'active': 'Active',
+	'add-developer-licenses': 'Add Developer Licenses',
 	'add-packages': 'Add Package(s)',
 	'add-up-to-x-images': 'Add up to {0} images',
 	'additional-apps-requested': 'Additional Apps Requested',
@@ -50,6 +51,7 @@ export default {
 	'app-storefront': 'App Storefront',
 	'app-support-and-help': 'App Support and Help',
 	'app-type': 'App Type',
+	'app-version': 'App Version',
 	'app-x-submitted': 'App <b>{0}</b> submitted',
 	'apply-to-your-use-of-this-service-the-name-on-your-liferay-account-will-be-used-in-this-liferay-marketplace-publisher-profile-it-may-appear-where-you-contribute-and-be-changed-at-any-time':
 		'apply to your use of this service. The name on your Liferay account will be used in this Liferay Marketplace Publisher Profile. It may appear where you contribute and be changed at any time',
@@ -80,6 +82,7 @@ export default {
 	'cloud-apps-must-state-resource-requirements-if-your-app-has-no-additional-cpu-or-ram-requirements-please-enter-0':
 		'Cloud apps must state resource requirements. If your app has no additional CPU or Ram requirements please enter 0',
 	'cloud-compatible': 'Cloud Compatible?',
+	'cloud-license-usage-type': 'Cloud License Usage Type',
 	'cloud-provisioning': 'Cloud Provisioning',
 	'cloud-upload': 'Cloud Upload',
 	'comments': 'Comments',
@@ -129,9 +132,13 @@ export default {
 		'Define contact us information for your solution. This will inform users about this version’s updates on the storefront.',
 	'define-profile-company-information-for-your-solution-this-will-inform-users-about-this-versions-updates-on-the-storefront':
 		'Define profile company information for your solution. This will inform users about this version’s updates on the storefront.',
+	'define-the-licensing-approach-for-your-app-this-will-impact-users-licensing-renew-experience':
+		'Define the licensing approach for your app. This will impact users’ licensing renew experience.',
 	'define-the-solution-profile': 'Define the solution profile',
 	'define-the-support-and-help-references-users-can-access-these-resources-pre-and-post-purchase-to-find-out-more-information-about-your-app-or-solution':
 		'Define the support and help references. Users can access these resources pre and post purchase to find out more information about your app or solution.',
+	'define-version-information-for-your-app-this-will-inform-users-about-this-versions-updates-on-the-storefront':
+		'Define version information for your app. This will inform users about this version’s updates on the storefront.',
 	'delete': 'Delete',
 	'deleting': 'Deleting',
 	'deleting-a-service-cannot-be-undone-confirm-the-deletion-before-proceeding':
@@ -142,6 +149,9 @@ export default {
 	'design-the-storefront-for-your-solution-this-will-set-the-information-displayed-on-the-solutions-page-this-section-is-dedicated-to-creating-the-solutions-header':
 		'Design the storefront for your solution. This will set the information displayed on the solution’s page. This section is dedicated to creating the solution’s header.',
 	'details': 'Details',
+	'developer-license-prices': 'Developer License prices',
+	'developer-licenses-are-limited-to-5-unique-addresses-and-should-not-be-used-for-full-scale-production-deployments':
+		'Developer licenses are limited to 5 unique addresses and should not be used for full scale production deployments.',
 	'discover-and-customize': 'Discover and customize',
 	'done': 'Done',
 	'download': 'Download',
@@ -149,12 +159,14 @@ export default {
 	'download-key': 'Download Key',
 	'draft': 'Draft',
 	'drag-and-drop-to-upload-or': 'Drag and drop to upload or',
+	'dxp-license-usage-type': 'DXP License Usage Type',
 	'dxp-module-based-apps-are-not-supported-on-liferay-experience-cloud-lxc':
 		'DXP module-based apps are not supported on Liferay SaaS.',
 	'each': 'each',
 	'edit': 'Edit',
 	'email': 'Email',
 	'end-user-license-agreement': 'End User License Agreement',
+	'enter-app-description': 'Enter app description',
 	'enter-email-address': 'Enter email address',
 	'enter-first-name': 'Enter first name',
 	'enter-last-name': 'Enter last name',
@@ -274,6 +286,9 @@ export default {
 	'no-results-found': 'No results found',
 	'not-installed': 'Not Installed',
 	'not-seeing-a-specific-project': 'Not seeing a specific Project?',
+	'notes': 'Notes',
+	'notes-pertaining-to-the-release-of-the-project-these-will-be-displayed-when-the-customer-goes-to-purchase-and-or-update-the-app':
+		'Notes pertaining to the release of the project. These will be displayed when the customer goes to purchase and/or update the app.',
 	'number-of-cpus': 'Number of CPUs',
 	'on-hold': 'On Hold',
 	'only-gif-jpg-png-are-allowed-ax-file-size-is-5mb':
@@ -304,6 +319,7 @@ export default {
 	'provide-app-build': 'Provide app build',
 	'provide-company-profile-details': 'Provide company profile details',
 	'provide-contact-us-details': 'Provide contact us details',
+	'provide-version-details': 'Provide version details',
 	'provisioning': 'Provisioning',
 	'provisioning-details': 'Provisioning Details',
 	'publish-apps-and-they-will-show-up-here':
@@ -351,6 +367,7 @@ export default {
 	'select-a-local-file-to-upload': 'Select a local file to upload',
 	'select-categories': 'Select categories',
 	'select-compatible-versions': 'Select Compatible Versions',
+	'select-licensing-terms': 'Select licensing terms',
 	'select-tags': 'Select tags',
 	'select-the-offering-of-liferay-your-app-is-compatible-with-the-compatibility-selections-will-determine-on-what-platforms-your-app-is-tested':
 		'Select the offering of Liferay your app is compatible with. The compatibility selections will determine on what platforms your app is tested.',
@@ -368,6 +385,11 @@ export default {
 	'solutions': 'Solutions',
 	'solutions-info': 'Solutions Info',
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
+	'specify-your-apps-version-this-will-help-the-user-to-understand-the-latest-version-of-your-app-offered-on-the-marketplace':
+		'Specify your app’s version. This will help the user to understand the latest version of your app offered on the Marketplace.',
+	'standard-license-prices': 'Standard License prices',
+	'standard-licenses-cover-the-following-dxp-environments-production-non-production-uat-and-backup-dr-for-both-standalone-and-virtual-cluster-servers':
+		'Standard licenses cover the following DXP environments: production, non-production (UAT) and backup (DR) for both standalone and virtual cluster servers.',
 	'start-date': 'Start Date',
 	'start-trial': 'Start Trial',
 	'status': 'Status',
@@ -424,6 +446,8 @@ export default {
 	'this-app-is-already-installed-in-this-environment':
 		'This app is already installed in this environment.',
 	'this-field-is-required': 'This field is required',
+	'this-is-the-first-version-of-the-app-to-be-published':
+		'This is the first version of the app to be published',
 	'this-key-is-expired-and-cannot-be-downloaded':
 		'This key is expired and cannot be downloaded.',
 	'this-order-must-be-completed-before-downloading-this-app.':
@@ -477,6 +501,8 @@ export default {
 	'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-publishers-in-the-marketplace-if-you-are-an-existing-liferay-developer-or-partner-you-can-choose-to-join-our-pilot-group-of-publishers-to-submit-apps-to-the-marketplace-continue-to-request-a-publisher-account':
 		'We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our publishers in the Marketplace.  If you are an existing Liferay developer or partner, you can choose to join our pilot group of publishers to submit apps to the Marketplace.  Continue to request a publisher account.',
 	'website': 'Website',
+	'when-adding-app-versions-you-can-use-your-own-numbering-system-but-be-sure-it-is-consistent-and-understandable-by-the-customer':
+		'When adding app versions, you can use your own numbering system, but be sure it is consistent and understandable by the customer.',
 	'workspace-friendly-url': 'Workspace Friendly URL',
 	'workspace-info': 'Workspace Info',
 	'workspace-name': 'Workspace Name',

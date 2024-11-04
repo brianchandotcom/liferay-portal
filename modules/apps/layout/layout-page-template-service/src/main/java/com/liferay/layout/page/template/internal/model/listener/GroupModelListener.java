@@ -42,6 +42,16 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			for (LayoutPageTemplateCollection layoutPageTemplateCollection :
 					layoutPageTemplateCollections) {
 
+				LayoutPageTemplateCollection fetchLayoutPageTemplateCollection =
+					_layoutPageTemplateCollectionLocalService.
+						fetchLayoutPageTemplateCollection(
+							layoutPageTemplateCollection.
+								getLayoutPageTemplateCollectionId());
+
+				if (fetchLayoutPageTemplateCollection == null) {
+					continue;
+				}
+
 				_layoutPageTemplateCollectionLocalService.
 					deleteLayoutPageTemplateCollection(
 						layoutPageTemplateCollection.

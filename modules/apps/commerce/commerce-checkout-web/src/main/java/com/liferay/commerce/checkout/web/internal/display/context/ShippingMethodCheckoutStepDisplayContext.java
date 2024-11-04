@@ -195,10 +195,6 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		return commerceShippingOptions;
 	}
 
-	public boolean isCommerceOrderMultishipping() {
-		return CommerceOrderUtil.isCommerceOrderMultishipping(_commerceOrder);
-	}
-
 	public boolean isHideShippingPriceZero() throws PortalException {
 		CommerceOrder commerceOrder = getCommerceOrder();
 

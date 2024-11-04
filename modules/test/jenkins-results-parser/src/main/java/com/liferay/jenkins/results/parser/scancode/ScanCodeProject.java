@@ -113,7 +113,7 @@ public class ScanCodeProject {
 			"packages");
 
 		if (packagesJSONObject.has(errorType)) {
-			_complianceList.add(errorType);
+			_errorTypes.add(errorType);
 		}
 	}
 
@@ -326,14 +326,14 @@ public class ScanCodeProject {
 
 		String subject = "ScanCode pipeline is complete";
 
-		if (_complianceList.contains("error")) {
+		if (_errorTypes.contains("error")) {
 			subject = ":red-alert: Release blocker :red-alert:";
 		}
 
-		if (!_complianceList.isEmpty()) {
+		if (!_errorTypes.isEmpty()) {
 			sb.append("*Compliance alerts:* ");
 			sb.append(
-				_complianceList.toString(
+				_errorTypes.toString(
 				).replaceAll(
 					"(^\\[|\\]$)", ""
 				));
@@ -509,7 +509,7 @@ public class ScanCodeProject {
 	}
 
 	private final String _buildURL;
-	private final List<String> _complianceList = new ArrayList<>();
+	private final List<String> _errorTypes = new ArrayList<>();
 	private final String _pipelineName;
 	private String _projectAPIURL;
 	private String _projectID;

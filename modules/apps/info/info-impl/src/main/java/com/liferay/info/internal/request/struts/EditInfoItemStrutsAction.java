@@ -397,7 +397,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 		String notificationText = ParamUtil.getString(
 			httpServletRequest, "notificationText");
 
-		if (Validator.isNotNull(notificationText)) {
+		if (success && Validator.isNotNull(notificationText)) {
 			SessionMessages.add(
 				httpServletRequest, "form_requestProcessedSuccess",
 				notificationText);

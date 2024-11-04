@@ -7,12 +7,16 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.resource.v1_0.PageTemplateSetResource;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateCollectionException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
 import org.osgi.service.component.annotations.Component;
@@ -69,6 +73,56 @@ public class PageTemplateSetResourceImpl
 		}
 
 		return _toPageTemplateSet(layoutPageTemplateCollection);
+	}
+
+	@Override
+	public PageTemplateSet putSiteSiteByExternalReferenceCodePageTemplateSet(
+			String siteExternalReferenceCode,
+			String pageTemplateSetExternalReferenceCode,
+			PageTemplateSet pageTemplateSet)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionService.
+				fetchLayoutPageTemplateCollection(
+					pageTemplateSetExternalReferenceCode, group.getGroupId());
+
+		if (layoutPageTemplateCollection == null) {
+			ServiceContext serviceContext = ServiceContextBuilder.create(
+				group.getGroupId(), contextHttpServletRequest, null
+			).build();
+
+			serviceContext.setCreateDate(pageTemplateSet.getDateCreated());
+			serviceContext.setModifiedDate(pageTemplateSet.getDateModified());
+			serviceContext.setUuid(pageTemplateSet.getUuid());
+
+			return _toPageTemplateSet(
+				_layoutPageTemplateCollectionService.
+					addLayoutPageTemplateCollection(
+						pageTemplateSet.getExternalReferenceCode(),
+						group.getGroupId(),
+						LayoutPageTemplateConstants.
+							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+						pageTemplateSet.getName(),
+						pageTemplateSet.getDescription(),
+						LayoutPageTemplateCollectionTypeConstants.BASIC,
+						serviceContext));
+		}
+
+		return _toPageTemplateSet(
+			_layoutPageTemplateCollectionService.
+				updateLayoutPageTemplateCollection(
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId(),
+					pageTemplateSet.getName(),
+					pageTemplateSet.getDescription()));
 	}
 
 	private PageTemplateSet _toPageTemplateSet(

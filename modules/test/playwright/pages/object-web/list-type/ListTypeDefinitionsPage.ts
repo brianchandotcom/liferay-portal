@@ -12,11 +12,14 @@ export class ListTypeDefinitionsPage {
 	readonly addPicklistItemButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly basicInfoHeading: Locator;
+	readonly deleteActionMenuOption: Locator;
+	readonly deleteButton: Locator;
 	readonly frameLocator: FrameLocator;
 	readonly modalNameInput: Locator;
 	readonly modalSaveButton: Locator;
 	readonly page: Page;
 	readonly picklistItemKey: Locator;
+	readonly picklistItemActionsButton: Locator;
 	readonly picklistItemTranslationButton: Locator;
 	readonly picklistTranslationButton: Locator;
 	readonly sidebarNameInput: Locator;
@@ -35,12 +38,19 @@ export class ListTypeDefinitionsPage {
 		this.basicInfoHeading = page
 			.frameLocator('iframe')
 			.getByRole('heading', {name: 'Basic Info'});
+		this.deleteActionMenuOption = page
+			.frameLocator('iframe')
+			.getByRole('menuitem', {name: 'Delete'});
+		this.deleteButton = page.getByRole('button', {name: 'Delete'});
 		this.frameLocator = page.frameLocator('iframe');
 		this.modalNameInput = page.getByLabel('Name');
 		this.modalSaveButton = page.getByRole('button', {
 			name: 'Save',
 		});
 		this.page = page;
+		this.picklistItemActionsButton = page
+			.frameLocator('iframe')
+			.getByRole('button', {name: 'Actions'});
 		this.picklistItemKey = page.getByLabel('Key');
 		this.picklistItemTranslationButton = page.getByRole('button', {
 			name: 'en_US',
@@ -75,6 +85,12 @@ export class ListTypeDefinitionsPage {
 		await this.modalNameInput.click();
 		await this.modalNameInput.fill(picklistName);
 		await this.modalSaveButton.click();
+	}
+
+	async deletePicklistItem() {
+		await this.picklistItemActionsButton.click();
+		await this.deleteActionMenuOption.click();
+		await this.deleteButton.click();
 	}
 
 	async goto() {

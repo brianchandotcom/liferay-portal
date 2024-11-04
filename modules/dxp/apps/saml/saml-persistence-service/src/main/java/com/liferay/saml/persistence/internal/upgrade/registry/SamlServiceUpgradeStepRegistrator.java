@@ -156,7 +156,7 @@ public class SamlServiceUpgradeStepRegistrator
 		registry.register(
 			"3.0.4", "3.1.0",
 			UpgradeProcessFactory.addColumns(
-				"SamlSpAuthRequest", "relayState VARCHAR(2048) null"));
+				"SamlSpAuthRequest", "samlRelayState VARCHAR(2048) null"));
 	}
 
 	@Reference

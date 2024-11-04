@@ -101,14 +101,17 @@ function getDataSetProps(
 		}
 
 		if (action.id === 'deleteListTypeEntry') {
-			const {listTypeEntries} = values;
-			const newListTypeEntries = listTypeEntries?.filter(
-				(listTypeEntry) => listTypeEntry.key !== itemData.key
-			);
+			const parentWindow = Liferay.Util.getOpener();
 
-			setValues({
-				...values,
-				listTypeEntries: newListTypeEntries as ListTypeEntry[],
+			parentWindow.Liferay.fire('openModalDeleteListType', {
+				header: Liferay.Language.get('delete-item'),
+				itemKey: itemData.key,
+				listTypeEntryId: itemData.id,
+				reloadIframeWindow: window.location.reload.bind(
+					window.location
+				),
+				setValues,
+				values,
 			});
 		}
 	};
@@ -162,11 +165,9 @@ function getDataSetProps(
 					method: 'delete',
 					permissionKey: 'delete',
 				},
-				href: '/o/headless-admin-list-type/v1.0/list-type-entries/{id}',
 				icon: 'trash',
 				id: 'deleteListTypeEntry',
 				label: 'Delete',
-				target: 'async',
 			},
 		],
 		namespace:

@@ -160,6 +160,12 @@ export async function deleteItem(url: string) {
 	}
 }
 
+export function deleteListTypeEntry(listTypeEntryId: number) {
+	return deleteItem(
+		`/o/headless-admin-list-type/v1.0/list-type-entries/${listTypeEntryId}`
+	);
+}
+
 export function deleteObjectDefinition(objectDefinitionId: number) {
 	return deleteItem(
 		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`

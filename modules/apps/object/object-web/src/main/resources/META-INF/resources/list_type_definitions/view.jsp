@@ -37,3 +37,9 @@ ViewListTypeDefinitionsDisplayContext viewListTypeDefinitionsDisplayContext = (V
 		module="{ListTypeEntriesModal} from object-web"
 	/>
 </div>
+
+<div>
+	<react:component
+		module="{ModalDeleteListType} from object-web"
+	/>
+</div>

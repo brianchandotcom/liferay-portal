@@ -11,6 +11,7 @@ export {default as Layouts} from './components/Layout/Layouts';
 export {default as Layout} from './components/Layout/index';
 export {default as EditListTypeDefinition} from './components/ListTypeDefinition/EditListTypeDefinition';
 export {default as ListTypeEntriesModal} from './components/ListTypeDefinition/ListTypeEntriesModal';
+export {default as ModalDeleteListType} from './components/ListTypeDefinition/ModalDeleteListType';
 export {default as ModalAddListTypeDefinition} from './components/ModalAddListTypeDefinition';
 export {default as ModalAddObjectCustomView} from './components/ModalAddObjectCustomView';
 export {default as ModalAddObjectLayout} from './components/ModalAddObjectLayout';

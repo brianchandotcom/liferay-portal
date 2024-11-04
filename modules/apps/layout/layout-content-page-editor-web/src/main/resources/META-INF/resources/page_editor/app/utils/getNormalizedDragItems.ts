@@ -5,7 +5,7 @@
 
 import {FragmentLayoutDataItem} from '../../types/layout_data/FragmentLayoutDataItem';
 import {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
-import normalizeSourceItem from './normalizeSourceItem';
+import toMovementItem from './toMovementItem';
 
 import type {LayoutData} from '../../types/layout_data/LayoutData';
 
@@ -33,13 +33,13 @@ export default function getNormalizedDragItems(
 
 		if (item) {
 			normalizedItems.push(
-				normalizeSourceItem(item, layoutData, fragmentEntryLinks)
+				toMovementItem(item, layoutData, fragmentEntryLinks)
 			);
 		}
 	}
 
 	return [
 		...normalizedItems,
-		normalizeSourceItem(sourceItem, layoutData, fragmentEntryLinks),
+		toMovementItem(sourceItem, layoutData, fragmentEntryLinks),
 	];
 }

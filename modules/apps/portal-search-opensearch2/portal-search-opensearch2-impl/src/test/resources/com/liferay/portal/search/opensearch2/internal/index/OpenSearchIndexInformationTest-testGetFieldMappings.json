@@ -1540,7 +1540,6 @@
 					"type": "keyword"
 				},
 				"hasLoginDate": {
-					"store": true,
 					"type": "keyword"
 				},
 				"head": {

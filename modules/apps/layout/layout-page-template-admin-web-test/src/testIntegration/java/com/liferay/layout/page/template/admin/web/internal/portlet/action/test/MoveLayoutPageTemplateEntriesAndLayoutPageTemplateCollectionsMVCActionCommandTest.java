@@ -75,8 +75,6 @@ public class
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
-
 		_serviceContext = _getServiceContext(
 			_group, TestPropsValues.getUserId());
 
@@ -140,9 +138,6 @@ public class
 	public void testMoveLayoutPageTemplateEntriesAndLayoutPageTemplateCollectionsMVCActionCommand()
 		throws Exception {
 
-		ActionRequest actionRequest = _getMockLiferayPortletActionRequest();
-		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
-
 		LayoutPageTemplateCollection movedLayoutPageTemplateCollection1 =
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
@@ -179,7 +174,9 @@ public class
 		Assert.assertNull(movedLayoutPageTemplateEntry1);
 		Assert.assertNull(movedLayoutPageTemplateEntry2);
 
-		_mvcActionCommand.processAction(actionRequest, actionResponse);
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(),
+			new MockLiferayPortletActionResponse());
 
 		movedLayoutPageTemplateCollection1 =
 			_layoutPageTemplateCollectionLocalService.
@@ -277,7 +274,8 @@ public class
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(_company);
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 
 		Layout controlPanelLayout = _layoutLocalService.getLayout(
 			_portal.getControlPanelPlid(TestPropsValues.getCompanyId()));
@@ -295,8 +293,6 @@ public class
 
 		return themeDisplay;
 	}
-
-	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

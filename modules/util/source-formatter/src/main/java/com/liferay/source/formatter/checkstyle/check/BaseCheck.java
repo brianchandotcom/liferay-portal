@@ -700,15 +700,12 @@ public abstract class BaseCheck extends AbstractCheck {
 	}
 
 	protected String getTokenTypeName(DetailAST detailAST) {
-		String tokenTypeName = StringUtil.toLowerCase(detailAST.getText());
+		String lowerCaseTokenTypeName = StringUtil.toLowerCase(
+			detailAST.getText());
 
-		int pos = tokenTypeName.indexOf("_");
+		String[] parts = lowerCaseTokenTypeName.split("_", 2);
 
-		if (pos != -1) {
-			tokenTypeName = tokenTypeName.substring(0, pos);
-		}
-
-		return tokenTypeName;
+		return parts[0];
 	}
 
 	protected DetailAST getTopLevelMethodCallDetailAST(DetailAST detailAST) {

@@ -1,5 +1,13 @@
 # Poshi Runner Change Log
 
+## 1.0.494
+
+### Other
+
+* [LRCI-3714](https://liferay.atlassian.net/browse/LRCI-3714) - When a test fails in the setUp block of a Poshi test, import into testray with BLOCKED status
+* [LRCI-4654](https://liferay.atlassian.net/browse/LRCI-4654) - Fix all Poshi unit tests in acceptance
+* [LRCI-4789](https://liferay.atlassian.net/browse/LRCI-4789) - Investigate and fix Poshi Unit test failing in acceptance
+
 ## 1.0.493
 
 ### Utils

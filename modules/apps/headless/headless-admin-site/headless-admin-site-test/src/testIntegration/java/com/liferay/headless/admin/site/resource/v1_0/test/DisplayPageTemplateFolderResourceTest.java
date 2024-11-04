@@ -271,7 +271,14 @@ public class DisplayPageTemplateFolderResourceTest
 	protected DisplayPageTemplateFolder randomDisplayPageTemplateFolder()
 		throws Exception {
 
-		return super.randomDisplayPageTemplateFolder();
+		DisplayPageTemplateFolder displayPageTemplateFolder =
+			super.randomDisplayPageTemplateFolder();
+
+		displayPageTemplateFolder.
+			setParentDisplayPageTemplateFolderExternalReferenceCode(
+				(String)null);
+
+		return displayPageTemplateFolder;
 	}
 
 	@Ignore

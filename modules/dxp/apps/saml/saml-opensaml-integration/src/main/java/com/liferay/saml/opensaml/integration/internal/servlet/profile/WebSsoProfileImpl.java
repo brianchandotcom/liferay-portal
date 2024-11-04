@@ -1302,8 +1302,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	private String _getAuthRedirectURL(
-			MessageContext<?> messageContext,
-			HttpServletRequest httpServletRequest, String redirect)
+			HttpServletRequest httpServletRequest,
+			MessageContext<?> messageContext, String redirect)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(3);
@@ -1872,7 +1872,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlSpSession.getSamlSpSessionKey());
 
 		httpServletResponse.sendRedirect(
-			_getAuthRedirectURL(messageContext, httpServletRequest, redirect));
+			_getAuthRedirectURL(httpServletRequest, messageContext, redirect));
 	}
 
 	private void _redirectToLogin(

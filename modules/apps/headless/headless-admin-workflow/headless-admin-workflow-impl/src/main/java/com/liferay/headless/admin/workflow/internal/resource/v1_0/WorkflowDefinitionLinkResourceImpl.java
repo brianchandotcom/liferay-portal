@@ -32,8 +32,35 @@ public class WorkflowDefinitionLinkResourceImpl
 	extends BaseWorkflowDefinitionLinkResourceImpl {
 
 	@Override
-	public Page<WorkflowDefinitionLink> getWorkflowDefinitionLinks(
-			Long workflowDefinitionId, Pagination pagination)
+	public Page<WorkflowDefinitionLink>
+			getWorkflowDefinitionByExternalReferenceCodeWorkflowDefinitionLinksPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception {
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.getWorkflowDefinition(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		List<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
+			workflowDefinitionLinks =
+				_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+					contextCompany.getCompanyId(), workflowDefinition.getName(),
+					workflowDefinition.getVersion());
+
+		return Page.of(
+			transform(
+				ListUtil.subList(
+					workflowDefinitionLinks, pagination.getStartPosition(),
+					pagination.getEndPosition()),
+				workflowDefinitionLink -> _toWorkflowDefinitionLink(
+					workflowDefinitionLink)),
+			pagination, workflowDefinitionLinks.size());
+	}
+
+	@Override
+	public Page<WorkflowDefinitionLink>
+			getWorkflowDefinitionWorkflowDefinitionLinksPage(
+				Long workflowDefinitionId, Pagination pagination)
 		throws Exception {
 
 		WorkflowDefinition workflowDefinition =
@@ -57,7 +84,26 @@ public class WorkflowDefinitionLinkResourceImpl
 	}
 
 	@Override
-	public WorkflowDefinitionLink postWorkflowDefinitionLink(
+	public WorkflowDefinitionLink
+			postWorkflowDefinitionByExternalReferenceCodeWorkflowDefinitionLink(
+				String externalReferenceCode,
+				WorkflowDefinitionLink workflowDefinitionLink)
+		throws Exception {
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.getWorkflowDefinition(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		return _toWorkflowDefinitionLink(
+			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+				contextUser.getUserId(), contextCompany.getCompanyId(),
+				workflowDefinitionLink.getGroupId(),
+				workflowDefinitionLink.getClassName(), 0, 0,
+				workflowDefinition.getName(), workflowDefinition.getVersion()));
+	}
+
+	@Override
+	public WorkflowDefinitionLink postWorkflowDefinitionWorkflowDefinitionLink(
 			Long workflowDefinitionId,
 			WorkflowDefinitionLink workflowDefinitionLink)
 		throws Exception {

@@ -324,6 +324,8 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 														[
 															<ClayLink
 																download='example_user_request.csv'
+																// @ts-ignore
+																externalLink
 																href={`data:text/octet-stream;charset=utf-8,${SAMPLE_CSV}`}
 																key='EXAMPLE_FILE'
 															>

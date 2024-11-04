@@ -28,8 +28,8 @@
 	},
 	{
 		"actionIds": [
-			"ADD_USER",
-			"ADD_ACCOUNT_ENTRY"
+			"ADD_ACCOUNT_ENTRY",
+			"ADD_USER"
 		],
 		"primKey": "0",
 		"resourceName": "90",

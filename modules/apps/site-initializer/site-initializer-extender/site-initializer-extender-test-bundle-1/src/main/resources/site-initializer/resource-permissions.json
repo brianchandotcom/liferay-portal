@@ -30,8 +30,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "[$LAYOUT_PAGE_TEMPLATE_ENTRY_ID:Test Display Page Template$]",
 		"resourceName": "com.liferay.layout.page.template.model.LayoutPageTemplateEntry",

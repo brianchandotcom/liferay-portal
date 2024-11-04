@@ -10,13 +10,21 @@ import com.liferay.feature.flag.web.internal.feature.flag.FeatureFlagsBagProvide
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
+import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portlet.PortalPreferencesWrapper;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -31,27 +39,63 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	public void onAfterCreate(Company company) throws ModelListenerException {
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				FeatureFlagsBag featureFlagsBag =
-					_featureFlagsBagProvider.getOrCreateFeatureFlagsBag(
-						company.getCompanyId());
-
-				List<FeatureFlag> deprecationFeatureFlags =
-					featureFlagsBag.getFeatureFlags(
-						FeatureFlagType.DEPRECATION.getPredicate());
-
-				for (FeatureFlag deprecationFeatureFlag :
-						deprecationFeatureFlags) {
-
-					_featureFlagsBagProvider.setEnabled(
-						company.getCompanyId(), deprecationFeatureFlag.getKey(),
-						false);
-				}
+				_processDeprecationFeatureFlags(company.getCompanyId());
 
 				return null;
 			});
 	}
 
+	@Activate
+	protected void activate() {
+		_companyLocalService.forEachCompanyId(
+			this::_processDeprecationFeatureFlags);
+	}
+
+	private void _processDeprecationFeatureFlags(long companyId) {
+		PortalPreferencesWrapper portalPreferencesWrapper =
+			(PortalPreferencesWrapper)
+				_portalPreferencesLocalService.getPreferences(
+					companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+		PortalPreferences portalPreferences =
+			portalPreferencesWrapper.getPortalPreferencesImpl();
+
+		boolean processed = GetterUtil.getBoolean(
+			portalPreferences.getValue(
+				FeatureFlagConstants.FEATURE_FLAG,
+				FeatureFlagConstants.PREFERENCE_KEY_DEPRECATION_PROCESSED));
+
+		if (processed) {
+			return;
+		}
+
+		FeatureFlagsBag featureFlagsBag =
+			_featureFlagsBagProvider.getOrCreateFeatureFlagsBag(companyId);
+
+		List<FeatureFlag> deprecationFeatureFlags =
+			featureFlagsBag.getFeatureFlags(
+				FeatureFlagType.DEPRECATION.getPredicate());
+
+		for (FeatureFlag deprecationFeatureFlag : deprecationFeatureFlags) {
+			_featureFlagsBagProvider.setEnabled(
+				companyId, deprecationFeatureFlag.getKey(), false);
+		}
+
+		portalPreferences.setValue(
+			FeatureFlagConstants.FEATURE_FLAG,
+			FeatureFlagConstants.PREFERENCE_KEY_DEPRECATION_PROCESSED, "true");
+
+		_portalPreferencesLocalService.updatePreferences(
+			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, portalPreferences);
+	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
 	@Reference
 	private FeatureFlagsBagProvider _featureFlagsBagProvider;
+
+	@Reference
+	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
 }

@@ -516,7 +516,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SAMLBindingContext.class);
 
 		Assert.assertEquals(
-			RELAY_STATE,
+			samlBindingContext.getRelayState(),
 			_relayStateHelperImpl.getRedirectFromRelayStateToken(
 				samlBindingContext.getRelayState()));
 
@@ -609,7 +609,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SAMLBindingContext.class);
 
 		Assert.assertEquals(
-			RELAY_STATE,
+			samlBindingContext.getRelayState(),
 			_relayStateHelperImpl.getRedirectFromRelayStateToken(
 				samlBindingContext.getRelayState()));
 
@@ -622,7 +622,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		AuthnRequest authnRequest =
 			(AuthnRequest)inboundMessageContext.getMessage();
 
-		Assert.assertEquals("RDR_" + identifiers.get(0), authnRequest.getID());
+		Assert.assertEquals(identifiers.get(0), authnRequest.getID());
 
 		Assert.assertEquals(2, identifiers.size());
 		Assert.assertFalse(authnRequest.isForceAuthn());

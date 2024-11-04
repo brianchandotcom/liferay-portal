@@ -308,9 +308,6 @@ public class ClientExtensionEntryLocalServiceImpl
 			clientExtensionEntry.getTypeSettings(),
 			clientExtensionEntry.getType());
 
-		clientExtensionEntryLocalService.undeployClientExtensionEntry(
-			clientExtensionEntry);
-
 		clientExtensionEntry.setDescription(description);
 		clientExtensionEntry.setNameMap(nameMap);
 		clientExtensionEntry.setProperties(properties);

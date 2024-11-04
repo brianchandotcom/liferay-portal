@@ -262,8 +262,8 @@ public class DisplayPageTemplateFolderResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"description", "externalReferenceCode", "key", "name",
-			"parentDisplayPageTemplateFolderExternalReferenceCode", "uuid"
+			"description", "externalReferenceCode", "name",
+			"parentDisplayPageTemplateFolderExternalReferenceCode"
 		};
 	}
 

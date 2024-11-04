@@ -32,7 +32,8 @@ public class FeatureFlagPreferencesManager {
 
 		PortalPreferences portalPreferences = _getPortalPreferences(companyId);
 
-		String value = portalPreferences.getValue(_NAMESPACE, key);
+		String value = portalPreferences.getValue(
+			FeatureFlagConstants.FEATURE_FLAG, key);
 
 		if (value == null) {
 			return null;
@@ -44,7 +45,8 @@ public class FeatureFlagPreferencesManager {
 	public void setEnabled(long companyId, String key, boolean enabled) {
 		PortalPreferences portalPreferences = _getPortalPreferences(companyId);
 
-		portalPreferences.setValue(_NAMESPACE, key, String.valueOf(enabled));
+		portalPreferences.setValue(
+			FeatureFlagConstants.FEATURE_FLAG, key, String.valueOf(enabled));
 
 		_portalPreferencesLocalService.updatePreferences(
 			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, portalPreferences);
@@ -58,8 +60,6 @@ public class FeatureFlagPreferencesManager {
 
 		return portalPreferencesWrapper.getPortalPreferencesImpl();
 	}
-
-	private static final String _NAMESPACE = FeatureFlagConstants.FEATURE_FLAG;
 
 	@Reference
 	private PortalPreferencesLocalService _portalPreferencesLocalService;

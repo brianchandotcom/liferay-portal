@@ -20,6 +20,8 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
@@ -33,6 +35,7 @@ import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -67,6 +70,7 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
@@ -106,6 +110,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -315,6 +320,140 @@ public class LayoutStagedModelDataHandlerTest
 
 				return importedAssetCategory.getCategoryId();
 			});
+	}
+
+	@Test
+	@TestInfo("LPS-198068")
+	public void testExportImportWithFileEntryContentReference()
+		throws Exception {
+
+		Locale locale = _portal.getSiteDefaultLocale(stagingGroup);
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		FileEntry fileEntry = _addFileEntry(
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
+
+		FragmentEntryLink draftLayoutFragmentEntryLink =
+			_addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					"image-square",
+					JSONUtil.put(
+						languageId, RandomTestUtil.randomString()
+					).put(
+						languageId,
+						JSONUtil.put(
+							"classNameId",
+							_portal.getClassNameId(FileEntry.class)
+						).put(
+							"classPK", fileEntry.getFileEntryId()
+						).put(
+							"fileEntryId", fileEntry.getFileEntryId()
+						).put(
+							"url",
+							_dlURLHelper.getPreviewURL(
+								fileEntry, fileEntry.getFileVersion(), null,
+								StringPool.BLANK, false, false)
+						)
+					).put(
+						"config",
+						JSONUtil.put(
+							"href",
+							JSONUtil.put(languageId, "https://www.liferay.com/")
+						).put(
+							"mapperType", "link"
+						)
+					)),
+				"BASIC_COMPONENT-image", layout.fetchDraftLayout(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(layout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		FragmentEntryLink publishedLayoutFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				stagingGroup.getGroupId(),
+				draftLayoutFragmentEntryLink.getFragmentEntryLinkId(),
+				layout.getPlid());
+
+		Assert.assertNotNull(publishedLayoutFragmentEntryLink);
+
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			exportImportStagedModel(layout);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+
+		FileEntry importedFileEntry =
+			_dlAppLocalService.getFileEntryByUuidAndGroupId(
+				fileEntry.getUuid(), liveGroup.getGroupId());
+
+		JSONObject expectedEditableJSONObject = JSONUtil.put(
+			"image-square",
+			JSONUtil.put(
+				languageId, RandomTestUtil.randomString()
+			).put(
+				languageId,
+				JSONUtil.put(
+					"className", FileEntry.class.getName()
+				).put(
+					"classNameId",
+					String.valueOf(_portal.getClassNameId(FileEntry.class))
+				).put(
+					"classPK", importedFileEntry.getFileEntryId()
+				).put(
+					"fileEntryId", importedFileEntry.getFileEntryId()
+				).put(
+					"url",
+					_dlURLHelper.getPreviewURL(
+						importedFileEntry, importedFileEntry.getFileVersion(),
+						null, StringPool.BLANK, false, false)
+				)
+			).put(
+				"config",
+				JSONUtil.put(
+					"href", JSONUtil.put(languageId, "https://www.liferay.com/")
+				).put(
+					"mapperType", "link"
+				)
+			));
+
+		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
+
+		_assertLayoutContentReferences(
+			expectedEditableJSONObject, importedLayout);
+		_assertLayoutContentReferences(
+			expectedEditableJSONObject, importedLayout.fetchDraftLayout());
+
+		String content = ContentLayoutTestUtil.getRenderLayoutHTML(
+			importedLayout, _layoutServiceContextHelper,
+			_layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				importedLayout.getPlid()));
+
+		Assert.assertTrue(
+			content,
+			StringUtil.contains(
+				content,
+				StringBundler.concat(
+					"<a href=\"https://www.liferay.com/\"><img alt=\"\" ",
+					"class=\"w-100\" data-lfr-editable-id=\"image-square\" ",
+					"data-lfr-editable-type=\"image\" src=\"",
+					HtmlUtil.escape(
+						_dlURLHelper.getPreviewURL(
+							importedFileEntry,
+							importedFileEntry.getFileVersion(), null,
+							StringPool.BLANK)),
+					"\" data-fileentryid=\"",
+					importedFileEntry.getFileEntryId(), "\"></a>"),
+				StringPool.BLANK));
 	}
 
 	@Test
@@ -1263,6 +1402,19 @@ public class LayoutStagedModelDataHandlerTest
 		}
 	}
 
+	private FileEntry _addFileEntry(ServiceContext serviceContext)
+		throws Exception {
+
+		return _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(
+				LayoutStagedModelDataHandlerTest.class,
+				"dependencies/liferay.jpg"),
+			null, null, null, serviceContext);
+	}
+
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(
 			JSONObject editableJSONObject, Layout layout,
 			ServiceContext serviceContext)
@@ -1305,6 +1457,27 @@ public class LayoutStagedModelDataHandlerTest
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
 		return fragmentEntryLink;
+	}
+
+	private FragmentEntryLink _addFragmentEntryLinkToLayout(
+			JSONObject editableFragmentEntryProcessorJSONObject,
+			String fragmentEntryKey, Layout layout, long segmentsExperienceId)
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				fragmentEntryKey);
+
+		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				editableFragmentEntryProcessorJSONObject
+			).toString(),
+			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), layout, fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getType(), null, 0, segmentsExperienceId);
 	}
 
 	private JournalArticle _addJournalArticle(String content, Group group)
@@ -1799,7 +1972,17 @@ public class LayoutStagedModelDataHandlerTest
 	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
+	private DLAppService _dlAppService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
 	private DLURLHelper _dlURLHelper;
+
+	@Inject
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

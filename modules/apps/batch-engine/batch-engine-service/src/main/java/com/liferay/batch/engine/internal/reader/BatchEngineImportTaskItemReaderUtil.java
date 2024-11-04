@@ -52,6 +52,18 @@ public class BatchEngineImportTaskItemReaderUtil {
 		Map<String, Serializable> extendedProperties = new HashMap<>();
 		T item = itemClass.newInstance();
 
+		boolean keepCreatorInfo = false;
+
+		Map<String, Serializable> parameters =
+			batchEngineImportTask.getParameters();
+
+		String importCreatorStrategy = (String)parameters.getOrDefault(
+			"importCreatorStrategy", "OVERWRITE_CREATOR");
+
+		if (importCreatorStrategy.equals("KEEP_CREATOR")) {
+			keepCreatorInfo = true;
+		}
+
 		for (Map.Entry<String, Object> entry : fieldNameValueMap.entrySet()) {
 			String name = entry.getKey();
 
@@ -71,14 +83,29 @@ public class BatchEngineImportTaskItemReaderUtil {
 			if (field != null) {
 				field.setAccessible(true);
 
-				ObjectMapper objectMapper = _getObjectMapper(field);
+				ObjectMapper objectMapper = null;
 
-				if (field.getName(
+				if (keepCreatorInfo &&
+					field.getName(
 					).equalsIgnoreCase(
 						"creator"
 					)) {
 
+					objectMapper = new ObjectMapper() {
+						{
+							SimpleModule simpleModule = new SimpleModule();
+
+							simpleModule.addDeserializer(
+								Map.class, new MapStdDeserializer());
+
+							registerModule(simpleModule);
+						}
+					};
+
 					objectMapper.addMixIn(Creator.class, CreatorMixin.class);
+				}
+				else {
+					objectMapper = _getObjectMapper(field);
 				}
 
 				field.set(

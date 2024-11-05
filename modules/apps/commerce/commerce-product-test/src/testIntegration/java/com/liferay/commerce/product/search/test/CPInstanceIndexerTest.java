@@ -68,6 +68,31 @@ public class CPInstanceIndexerTest {
 	}
 
 	@Test
+	public void testSearchSkuGTIN() throws Exception {
+		CommerceCatalog catalog =
+			_commerceCatalogLocalService.addCommerceCatalog(
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
+			catalog.getGroupId());
+
+		cpInstance.setPurchasable(true);
+
+		String sku = "Open4Life" + RandomTestUtil.randomString();
+		String gtin = RandomTestUtil.randomString();
+
+		cpInstance.setSku(sku);
+		cpInstance.setGtin(gtin);
+
+		cpInstance = _cpInstanceLocalService.updateCPInstance(cpInstance);
+
+		_assertSearch(gtin, cpInstance.getCPDefinitionId(), cpInstance);
+	}
+
+	@Test
 	public void testSkuPrefix() throws Exception {
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
@@ -82,8 +107,10 @@ public class CPInstanceIndexerTest {
 		cpInstance.setPurchasable(true);
 
 		String sku = "Open4Life" + RandomTestUtil.randomString();
+		String gtin = RandomTestUtil.randomString();
 
 		cpInstance.setSku(sku);
+		cpInstance.setGtin(gtin);
 
 		cpInstance = _cpInstanceLocalService.updateCPInstance(cpInstance);
 
@@ -91,6 +118,7 @@ public class CPInstanceIndexerTest {
 		_assertSearch("open4life", cpInstance.getCPDefinitionId(), cpInstance);
 		_assertSearch("OPE", cpInstance.getCPDefinitionId(), cpInstance);
 		_assertSearch("4lif", cpInstance.getCPDefinitionId(), cpInstance);
+		_assertSearch(gtin, cpInstance.getCPDefinitionId(), cpInstance);
 	}
 
 	protected Hits search(String keywords, long commerceOrderId)

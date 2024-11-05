@@ -65,6 +65,7 @@ public class CPInstanceModelDocumentContributor
 				CPField.PURCHASABLE, cpInstance.isPurchasable());
 			document.addTextSortable(CPField.SKU, cpInstance.getSku());
 			document.addKeyword(CPField.UNSPSC, cpInstance.getUnspsc());
+			document.addKeyword(CPField.GTIN, cpInstance.getGtin());
 			document.addText(Field.CONTENT, cpInstance.getSku());
 			document.addText(Field.NAME, cpDefinition.getName());
 

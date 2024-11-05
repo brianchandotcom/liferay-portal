@@ -997,7 +997,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA"));
 
 		TreeTestUtil.bind(
-			_objectDefinitionLocalService,
+			_objectRelationshipLocalService,
 			Collections.singletonList(objectRelationship));
 
 		ObjectField objectField2 = _objectFieldLocalService.getObjectField(

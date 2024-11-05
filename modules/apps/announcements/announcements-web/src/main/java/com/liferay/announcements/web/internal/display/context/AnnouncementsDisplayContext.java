@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -100,14 +101,18 @@ public class AnnouncementsDisplayContext {
 		_announcementScopes = new LinkedHashMap<>();
 
 		if (isCustomizeAnnouncementsDisplayed()) {
-			long[] selectedScopeGroupIdsArray = GetterUtil.getLongValues(
-				StringUtil.split(_getSelectedScopeGroupIds()));
-			long[] selectedScopeOrganizationIdsArray = GetterUtil.getLongValues(
-				StringUtil.split(_getSelectedScopeOrganizationIds()));
-			long[] selectedScopeRoleIdsArray = GetterUtil.getLongValues(
-				StringUtil.split(_getSelectedScopeRoleIds()));
-			long[] selectedScopeUserGroupIdsArray = GetterUtil.getLongValues(
-				StringUtil.split(_getSelectedScopeUserGroupIds()));
+			long[] selectedScopeGroupIdsArray =
+				ListUtil.toLongArray(
+					_getSelectedScopeGroups(), Group.GROUP_ID_ACCESSOR);
+			long[] selectedScopeOrganizationIdsArray =
+				ListUtil.toLongArray(
+					_getSelectedScopeOrganizations(), Organization.ORGANIZATION_ID_ACCESSOR);
+			long[] selectedScopeRoleIdsArray =
+				ListUtil.toLongArray(
+					_getSelectedScopeRoles(), Role.ROLE_ID_ACCESSOR);
+			long[] selectedScopeUserGroupIdsArray =
+				ListUtil.toLongArray(
+					_getSelectedScopeUserGroups(), UserGroup.USER_GROUP_ID_ACCESSOR);
 
 			if (selectedScopeGroupIdsArray.length != 0) {
 				_announcementScopes.put(
@@ -199,17 +204,13 @@ public class AnnouncementsDisplayContext {
 
 		List<Group> selectedGroups = new ArrayList<>();
 
-		String[] selectedScopeGroupIds = StringUtil.split(
-			_getSelectedScopeGroupIds());
-
-		for (String selectedScopeGroupId : selectedScopeGroupIds) {
-			long groupId = Long.valueOf(selectedScopeGroupId);
+		for (Group group : _getSelectedScopeGroups()) {
 
 			if (GroupPermissionUtil.contains(
-					_announcementsRequestHelper.getPermissionChecker(), groupId,
+					_announcementsRequestHelper.getPermissionChecker(), group,
 					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
-				selectedGroups.add(GroupLocalServiceUtil.getGroup(groupId));
+				selectedGroups.add(group);
 			}
 		}
 
@@ -228,21 +229,13 @@ public class AnnouncementsDisplayContext {
 
 		List<Organization> selectedOrganizations = new ArrayList<>();
 
-		String[] selectedScopeOrganizationIds = StringUtil.split(
-			_getSelectedScopeOrganizationIds());
-
-		for (String selectedScopeOrganizationId :
-				selectedScopeOrganizationIds) {
-
-			long organizationId = Long.valueOf(selectedScopeOrganizationId);
+		for (Organization organization : _getSelectedScopeOrganizations()) {
 
 			if (OrganizationPermissionUtil.contains(
 					_announcementsRequestHelper.getPermissionChecker(),
-					organizationId, ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+					organization, ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
-				selectedOrganizations.add(
-					OrganizationLocalServiceUtil.getOrganization(
-						organizationId));
+				selectedOrganizations.add(organization);
 			}
 		}
 
@@ -270,12 +263,7 @@ public class AnnouncementsDisplayContext {
 
 		List<Role> selectedRoles = new ArrayList<>();
 
-		String[] selectedScopeRoleIds = StringUtil.split(
-			_getSelectedScopeRoleIds());
-
-		for (String selectedScopeRoleId : selectedScopeRoleIds) {
-			Role role = RoleLocalServiceUtil.getRole(
-				Long.valueOf(selectedScopeRoleId));
+		for (Role role : _getSelectedScopeRoles()) {
 
 			if (AnnouncementsUtil.hasManageAnnouncementsPermission(
 					role, _announcementsRequestHelper.getPermissionChecker())) {
@@ -338,18 +326,12 @@ public class AnnouncementsDisplayContext {
 
 		List<UserGroup> selectedUserGroups = new ArrayList<>();
 
-		String[] selectedScopeUserGroupIds = StringUtil.split(
-			_getSelectedScopeUserGroupIds());
-
-		for (String selectedScopeUserGroupId : selectedScopeUserGroupIds) {
-			long userGroupId = Long.valueOf(selectedScopeUserGroupId);
-
+		for (UserGroup userGroup : _getSelectedScopeUserGroups()) {
 			if (UserGroupPermissionUtil.contains(
 					_announcementsRequestHelper.getPermissionChecker(),
-					userGroupId, ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+					userGroup.getUserGroupId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
-				selectedUserGroups.add(
-					UserGroupLocalServiceUtil.getUserGroup(userGroupId));
+				selectedUserGroups.add(userGroup);
 			}
 		}
 
@@ -399,31 +381,32 @@ public class AnnouncementsDisplayContext {
 	}
 
 	public boolean isScopeGroupSelected(Group scopeGroup) {
-		String selectedScopeGroupIds = _getSelectedScopeGroupIds();
+		String selectedScopeGroupExternalReferenceCodes =
+			_getSelectedScopeGroupExternalReferenceCodes();
 
-		return selectedScopeGroupIds.contains(
-			String.valueOf(scopeGroup.getGroupId()));
+		return selectedScopeGroupExternalReferenceCodes.contains(
+			scopeGroup.getExternalReferenceCode());
 	}
 
 	public boolean isScopeOrganizationSelected(Organization organization) {
-		String selectedScopeOrganizationIds =
-			_getSelectedScopeOrganizationIds();
+		String selectedScopeOrganizationExternalReferenceCodes =
+			_getSelectedScopeOrganizationExternalReferenceCodes();
 
-		return selectedScopeOrganizationIds.contains(
-			String.valueOf(organization.getOrganizationId()));
+		return selectedScopeOrganizationExternalReferenceCodes.contains(
+			organization.getExternalReferenceCode());
 	}
 
 	public boolean isScopeRoleSelected(Role role) {
-		String selectedScopeRoleIds = _getSelectedScopeRoleIds();
+		String selectedScopeRoleExternalReferenceCodes = _getSelectedScopeRoleExternalReferenceCodes();
 
-		return selectedScopeRoleIds.contains(String.valueOf(role.getRoleId()));
+		return selectedScopeRoleExternalReferenceCodes.contains(role.getExternalReferenceCode());
 	}
 
 	public boolean isScopeUserGroupSelected(UserGroup userGroup) {
-		String selectedScopeUserGroupIds = _getSelectedScopeUserGroupIds();
+		String selectedScopeUserGroupExternalReferenceCodes = _getSelectedScopeUserGroupExternalReferenceCodes();
 
-		return selectedScopeUserGroupIds.contains(
-			String.valueOf(userGroup.getUserGroupId()));
+		return selectedScopeUserGroupExternalReferenceCodes.contains(
+			userGroup.getExternalReferenceCode());
 	}
 
 	public boolean isShowReadEntries() {
@@ -490,34 +473,95 @@ public class AnnouncementsDisplayContext {
 		return _portletURL;
 	}
 
-	private String _getSelectedScopeGroupIds() {
-		Layout layout = _announcementsRequestHelper.getLayout();
+	private List<Group> _getSelectedScopeGroups() throws PortalException {
+		List<Group> groups = new ArrayList<>();
 
-		return PrefsParamUtil.getString(
-			_announcementsRequestHelper.getPortletPreferences(),
-			_announcementsRequestHelper.getRequest(), "selectedScopeGroupIds",
-			String.valueOf(layout.getGroupId()));
+		for (String externalReferenceCode :
+			StringUtil.split(_getSelectedScopeGroupExternalReferenceCodes())) {
+			groups.add(
+				GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+					externalReferenceCode,
+					_announcementsRequestHelper.getCompanyId()));
+		}
+
+		return groups;
 	}
 
-	private String _getSelectedScopeOrganizationIds() {
+	private String _getSelectedScopeGroupExternalReferenceCodes() {
+		Layout layout = _announcementsRequestHelper.getLayout();
+
+		Group group = layout.getGroup();
+
 		return PrefsParamUtil.getString(
 			_announcementsRequestHelper.getPortletPreferences(),
 			_announcementsRequestHelper.getRequest(),
-			"selectedScopeOrganizationIds", StringPool.BLANK);
+			"selectedScopeGroupExternalReferenceCodes",
+			group.getExternalReferenceCode());
 	}
 
-	private String _getSelectedScopeRoleIds() {
+	private List<Organization> _getSelectedScopeOrganizations()
+		throws PortalException {
+		List<Organization> organizations = new ArrayList<>();
+
+		for (String externalReferenceCode :
+			StringUtil.split(_getSelectedScopeOrganizationExternalReferenceCodes())) {
+			organizations.add(
+				OrganizationLocalServiceUtil.getOrganizationByExternalReferenceCode(
+					externalReferenceCode,
+					_announcementsRequestHelper.getCompanyId()));
+		}
+
+		return organizations;
+	}
+
+	private String _getSelectedScopeOrganizationExternalReferenceCodes() {
 		return PrefsParamUtil.getString(
 			_announcementsRequestHelper.getPortletPreferences(),
-			_announcementsRequestHelper.getRequest(), "selectedScopeRoleIds",
+			_announcementsRequestHelper.getRequest(),
+			"selectedScopeOrganizationExternalReferenceCodes", StringPool.BLANK);
+	}
+
+	private List<Role> _getSelectedScopeRoles() throws PortalException {
+		List<Role> roles = new ArrayList<>();
+
+		for (String externalReferenceCode :
+			StringUtil.split(_getSelectedScopeRoleExternalReferenceCodes())) {
+			roles.add(
+				RoleLocalServiceUtil.getRoleByExternalReferenceCode(
+					externalReferenceCode,
+					_announcementsRequestHelper.getCompanyId()));
+		}
+
+		return roles;
+	}
+
+	private String _getSelectedScopeRoleExternalReferenceCodes() {
+		return PrefsParamUtil.getString(
+			_announcementsRequestHelper.getPortletPreferences(),
+			_announcementsRequestHelper.getRequest(), "selectedScopeRoleExternalReferenceCodes",
 			StringPool.BLANK);
 	}
 
-	private String _getSelectedScopeUserGroupIds() {
+	private List<UserGroup> _getSelectedScopeUserGroups()
+		throws PortalException {
+		List<UserGroup> userGroups = new ArrayList<>();
+
+		for (String externalReferenceCode :
+			StringUtil.split(_getSelectedScopeUserGroupExternalReferenceCodes())) {
+			userGroups.add(
+				UserGroupLocalServiceUtil.getUserGroupByExternalReferenceCode(
+					externalReferenceCode,
+					_announcementsRequestHelper.getCompanyId()));
+		}
+
+		return userGroups;
+	}
+
+	private String _getSelectedScopeUserGroupExternalReferenceCodes() {
 		return PrefsParamUtil.getString(
 			_announcementsRequestHelper.getPortletPreferences(),
 			_announcementsRequestHelper.getRequest(),
-			"selectedScopeUserGroupIds", StringPool.BLANK);
+			"selectedScopeUserGroupExternalReferenceCodes", StringPool.BLANK);
 	}
 
 	private static final UUID _UUID = UUID.fromString(

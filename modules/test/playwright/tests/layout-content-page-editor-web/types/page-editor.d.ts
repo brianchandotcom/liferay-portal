@@ -13,7 +13,7 @@ type ConfigurationSection =
 	| 'Spacing'
 	| 'Text';
 
-type EditableConfigurationTab = 'Link' | 'Mapping';
+type EditableConfigurationTab = 'Image Source' | 'Link' | 'Mapping';
 
 type FragmentConfigurationTab = 'Advanced' | 'General' | 'Styles';
 

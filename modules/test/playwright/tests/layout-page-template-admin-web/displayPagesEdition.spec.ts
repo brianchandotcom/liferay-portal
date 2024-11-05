@@ -562,20 +562,21 @@ test.describe('Preview Item', () => {
 
 			const imageFragmentId = await pageEditorPage.getFragmentId('Image');
 
-			await pageEditorPage.selectEditable(
-				imageFragmentId,
-				'image-square'
-			);
+			await pageEditorPage.changeEditableConfiguration({
+				editableId: 'image-square',
+				fieldLabel: 'Source Selection',
+				fragmentId: imageFragmentId,
+				tab: 'Image Source',
+				value: 'Mapping',
+			});
 
-			await page
-				.getByLabel('Source Selection', {exact: true})
-				.selectOption('Mapping');
-
-			await pageEditorPage.waitForChangesSaved();
-
-			await page.getByLabel('Field').selectOption('Species Image');
-
-			await pageEditorPage.waitForChangesSaved();
+			await pageEditorPage.changeEditableConfiguration({
+				editableId: 'image-square',
+				fieldLabel: 'Field',
+				fragmentId: imageFragmentId,
+				tab: 'Image Source',
+				value: 'Species Image',
+			});
 
 			// Assert image
 

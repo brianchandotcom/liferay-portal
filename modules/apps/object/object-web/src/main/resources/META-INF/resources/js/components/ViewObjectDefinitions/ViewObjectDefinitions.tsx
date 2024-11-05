@@ -6,12 +6,19 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {API, Card, stringUtils} from '@liferay/object-js-components-web';
-import React, {SetStateAction, useCallback, useEffect, useState} from 'react';
+import React, {
+	SetStateAction,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 
 import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';
 import statusDataRenderer from '../FDSPropsTransformer/FDSDataRenderers/StatusDataRenderer';
 import {ModalImportKeys} from '../ModalImport/ModalImport';
 import ViewObjectDefinitionsLabelRenderer from '../ViewObjectDefinitionsLabelRenderer';
+import objectDefinitionInheritanceDataRenderer from './FDSDataRenderers/ObjectDefinitionInheritanceDataRenderer';
 import objectDefinitionModifiedDateDataRenderer from './FDSDataRenderers/ObjectDefinitionModifiedDateDataRenderer';
 import objectDefinitionSystemDataRenderer from './FDSDataRenderers/ObjectDefinitionSystemDataRenderer';
 import ObjectFolderCardHeader from './ObjectFolderCardHeader';
@@ -54,6 +61,48 @@ interface ViewObjectDefinitionsProps extends IFDSTableProps {
 	objectFolderPermissionsURL: string;
 	portletNamespace: string;
 }
+
+const tableFields = [
+	{
+		contentRenderer: 'objectDefinitionLabelDataRenderer',
+		expand: false,
+		fieldName: 'label',
+		label: Liferay.Language.get('label'),
+		localizeLabel: true,
+		sortable: true,
+	},
+	{
+		expand: false,
+		fieldName: 'scope',
+		label: Liferay.Language.get('scope'),
+		localizeLabel: true,
+		sortable: false,
+	},
+	{
+		contentRenderer: 'objectDefinitionSystemDataRenderer',
+		expand: false,
+		fieldName: 'system',
+		label: Liferay.Language.get('system'),
+		localizeLabel: true,
+		sortable: false,
+	},
+	{
+		contentRenderer: 'objectDefinitionModifiedDateDataRenderer',
+		expand: false,
+		fieldName: 'dateModified',
+		label: Liferay.Language.get('modified-date'),
+		localizeLabel: true,
+		sortable: true,
+	},
+	{
+		contentRenderer: 'statusDataRenderer',
+		expand: false,
+		fieldName: 'status',
+		label: Liferay.Language.get('status'),
+		localizeLabel: true,
+		sortable: false,
+	},
+];
 
 export default function ViewObjectDefinitions({
 	baseResourceURL,
@@ -313,6 +362,25 @@ export default function ViewObjectDefinitions({
 		}
 	}, [reloadFDS]);
 
+	const fields = useMemo(() => {
+		const updatedTableFields = [...tableFields];
+
+		if (Liferay.FeatureFlags['LPS-187142']) {
+			const inheritanceField = {
+				contentRenderer: 'objectDefinitionInheritanceDataRenderer',
+				expand: false,
+				fieldName: 'permissionInheritance',
+				label: Liferay.Language.get('permission-inheritance'),
+				localizeLabel: true,
+				sortable: false,
+			};
+
+			updatedTableFields.splice(1, 0, inheritanceField);
+		}
+
+		return updatedTableFields;
+	}, []);
+
 	return (
 		<>
 			<div className="lfr__object-web-view-object-definitions">
@@ -393,6 +461,7 @@ export default function ViewObjectDefinitions({
 												: undefined
 										}
 										customDataRenderers={{
+											objectDefinitionInheritanceDataRenderer,
 											objectDefinitionLabelDataRenderer,
 											objectDefinitionModifiedDateDataRenderer,
 											objectDefinitionSystemDataRenderer,
@@ -427,62 +496,7 @@ export default function ViewObjectDefinitions({
 												label: 'Table',
 												name: 'table',
 												schema: {
-													fields: [
-														{
-															contentRenderer:
-																'objectDefinitionLabelDataRenderer',
-															expand: false,
-															fieldName: 'label',
-															label: Liferay.Language.get(
-																'label'
-															),
-															localizeLabel: true,
-															sortable: true,
-														},
-														{
-															expand: false,
-															fieldName: 'scope',
-															label: Liferay.Language.get(
-																'scope'
-															),
-															localizeLabel: true,
-															sortable: false,
-														},
-														{
-															contentRenderer:
-																'objectDefinitionSystemDataRenderer',
-															expand: false,
-															fieldName: 'system',
-															label: Liferay.Language.get(
-																'system'
-															),
-															localizeLabel: true,
-															sortable: false,
-														},
-														{
-															contentRenderer:
-																'objectDefinitionModifiedDateDataRenderer',
-															expand: false,
-															fieldName:
-																'dateModified',
-															label: Liferay.Language.get(
-																'modified-date'
-															),
-															localizeLabel: true,
-															sortable: true,
-														},
-														{
-															contentRenderer:
-																'statusDataRenderer',
-															expand: false,
-															fieldName: 'status',
-															label: Liferay.Language.get(
-																'status'
-															),
-															localizeLabel: true,
-															sortable: false,
-														},
-													],
+													fields,
 												},
 												thumbnail: 'table',
 											},

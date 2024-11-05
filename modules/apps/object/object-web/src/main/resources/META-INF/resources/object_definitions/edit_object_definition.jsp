@@ -39,6 +39,10 @@ String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigat
 						).put(
 							"isApproved", objectDefinition.isApproved()
 						).put(
+							"isRootDescendantNode", objectDefinition.isRootDescendantNode()
+						).put(
+							"isRootNode", objectDefinition.isRootNode()
+						).put(
 							"label", objectDefinition.getLabel(locale, true)
 						).put(
 							"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()

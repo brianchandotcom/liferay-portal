@@ -64,17 +64,8 @@ public class InfoItemSelectorProductNavigationControlMenuEntryTest {
 	}
 
 	@Test
-	public void testIsShowForContentLayout() throws Exception {
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		Assert.assertFalse(
-			_productNavigationControlMenuEntry.isShow(
-				_getHttpServletRequest(layout)));
-	}
-
-	@Test
-	public void testIsShowForLayoutDisplayPage() throws Exception {
-		LayoutPageTemplateEntry displayPagelayoutPageTemplateEntry =
+	public void testIsShowForAssetDisplayLayout() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, _group.getCreatorUserId(), _group.getGroupId(), 0,
 				_portal.getClassNameId(FileEntry.class.getName()), 0,
@@ -87,12 +78,12 @@ public class InfoItemSelectorProductNavigationControlMenuEntryTest {
 			_productNavigationControlMenuEntry.isShow(
 				_getHttpServletRequest(
 					_layoutLocalService.fetchLayout(
-						displayPagelayoutPageTemplateEntry.getPlid()))));
+						layoutPageTemplateEntry.getPlid()))));
 	}
 
 	@Test
 	@TestInfo("LPS-133319")
-	public void testIsShowForLayoutDisplayPageWithMasterLayout()
+	public void testIsShowForAssetDisplayLayoutWithMasterLayout()
 		throws Exception {
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
@@ -103,7 +94,7 @@ public class InfoItemSelectorProductNavigationControlMenuEntryTest {
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		LayoutPageTemplateEntry displayPagelayoutPageTemplateEntry =
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, _group.getCreatorUserId(), _group.getGroupId(), 0,
 				_portal.getClassNameId(FileEntry.class.getName()), 0,
@@ -116,7 +107,16 @@ public class InfoItemSelectorProductNavigationControlMenuEntryTest {
 			_productNavigationControlMenuEntry.isShow(
 				_getHttpServletRequest(
 					_layoutLocalService.fetchLayout(
-						displayPagelayoutPageTemplateEntry.getPlid()))));
+						layoutPageTemplateEntry.getPlid()))));
+	}
+
+	@Test
+	public void testIsShowForContentLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Assert.assertFalse(
+			_productNavigationControlMenuEntry.isShow(
+				_getHttpServletRequest(layout)));
 	}
 
 	private HttpServletRequest _getHttpServletRequest(Layout layout)

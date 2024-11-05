@@ -47,9 +47,9 @@ modules/apps/blogs/    @liferay-content-management
 modules/apps/bookmarks/    @liferay-content-management
 modules/apps/bulk/    @liferay-content-management
 modules/apps/calendar/
-modules/apps/captcha/
+modules/apps/captcha/    @liferay-appsec
 modules/apps/change-tracking/
-modules/apps/changeset/
+modules/apps/change-set/
 modules/apps/click-to-chat/
 modules/apps/client-extension/
 modules/apps/comment/    @liferay-content-management
@@ -59,7 +59,7 @@ modules/apps/configuration-admin/    @liferay-platform-experience
 modules/apps/connected-app/    @liferay-content-management
 modules/apps/contacts/    @liferay-commerce
 modules/apps/content-dashboard/    @liferay-content-management
-modules/apps/cookies/
+modules/apps/cookies/    @liferay-appsec
 modules/apps/cookies/cookies-banner-web/    @liferay-frontend
 modules/apps/counter/
 modules/apps/counter/counter-test/    @liferay-core-infra
@@ -155,7 +155,7 @@ modules/apps/learn/
 modules/apps/license-manager/
 modules/apps/list-type/
 modules/apps/locked-items/    @liferay-content-management
-modules/apps/login/
+modules/apps/login/    @liferay-appsec
 modules/apps/mail/
 modules/apps/map/
 modules/apps/map/map-google-maps    @liferay-page-management
@@ -172,7 +172,7 @@ modules/apps/normalizer/
 modules/apps/notification/
 modules/apps/notifications/    @liferay-content-management
 modules/apps/oauth-client/
-modules/apps/oauth2-provider/
+modules/apps/oauth2-provider/    @liferay-appsec
 modules/apps/object/    @liferay-bpm
 modules/apps/object/object-rest-impl    @liferay-headless
 modules/apps/object/object-rest-test    @liferay-headless
@@ -207,9 +207,9 @@ modules/apps/portal-search-elasticsearch7/    @liferay-search
 modules/apps/portal-search-opensearch2/    @liferay-search
 modules/apps/portal-search-solr8/    @liferay-search
 modules/apps/portal-search/    @liferay-search
-modules/apps/portal-security-audit/
-modules/apps/portal-security-sso/
-modules/apps/portal-security/
+modules/apps/portal-security-audit/    @liferay-appsec
+modules/apps/portal-security-sso/    @liferay-appsec
+modules/apps/portal-security/    @liferay-appsec
 modules/apps/portal-settings/    @liferay-appsec
 modules/apps/portal-settings/portal-settings-api/    @liferay-platform-experience
 modules/apps/portal-settings/portal-settings-web/    @liferay-platform-experience
@@ -365,7 +365,7 @@ modules/core/shielded-container-api/    @liferay-core-infra
 modules/core/shielded-container-impl/    @liferay-core-infra
 modules/dxp/apps/akismet/
 modules/dxp/apps/analytics/    @liferay-ac
-modules/dxp/apps/antivirus/
+modules/dxp/apps/antivirus/    @liferay-appsec
 modules/dxp/apps/commerce-avalara/    @liferay-commerce
 modules/dxp/apps/commerce-demo-pack/    @liferay-commerce
 modules/dxp/apps/commerce-punchout/    @liferay-commerce
@@ -385,15 +385,15 @@ modules/dxp/apps/portal-search-elasticsearch-monitoring/    @liferay-search
 modules/dxp/apps/portal-search-learning-to-rank/    @liferay-search
 modules/dxp/apps/portal-search-similar-results/    @liferay-search
 modules/dxp/apps/portal-search-tuning/    @liferay-search
-modules/dxp/apps/portal-security-audit/
+modules/dxp/apps/portal-security-audit/    @liferay-appsec
 modules/dxp/apps/portal-workflow-kaleo-forms/    @liferay-bpm
 modules/dxp/apps/portal-workflow/    @liferay-bpm
 modules/dxp/apps/portal/
 modules/dxp/apps/portal/portal-dao-db    @liferay-database-infra
 modules/dxp/apps/portal/portal-properties-swapper/    @liferay-core-infra
 modules/dxp/apps/salesforce-connector/
-modules/dxp/apps/saml/
-modules/dxp/apps/scim/
+modules/dxp/apps/saml/    @liferay-appsec
+modules/dxp/apps/scim/    @liferay-appsec
 modules/dxp/apps/search-experiences/    @liferay-search
 modules/dxp/apps/segments/    @liferay-ac
 modules/dxp/apps/sharepoint-rest/    @liferay-content-management

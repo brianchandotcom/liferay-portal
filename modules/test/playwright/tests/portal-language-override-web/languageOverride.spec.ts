@@ -17,7 +17,7 @@ test('LPD-33373 assert that overriden translations can be exported', async ({
 	languageOverridePage,
 	page,
 }) => {
-	const translations: TLanguageKey[] = [
+	const languageKeys: TLanguageKey[] = [
 		{
 			key: getRandomString(),
 			translations: [
@@ -48,12 +48,12 @@ test('LPD-33373 assert that overriden translations can be exported', async ({
 
 	await languageOverridePage.goto();
 
-	await languageOverridePage.addLanguageKeys(translations);
+	await languageOverridePage.addLanguageKeys(languageKeys);
 
 	page.on('download', async (download) => {
-		for (const translation of translations) {
-			for (let i = 0; i < translation.translations.length; i++) {
-				const {languageId, value} = translation.translations[i];
+		for (const languageKey of languageKeys) {
+			for (let i = 0; i < languageKey.translations.length; i++) {
+				const {languageId, value} = languageKey.translations[i];
 
 				const fileContent = (await readFileFromZip(
 					`Language_${languageId.replace('-', '_')}.properties`,
@@ -61,7 +61,7 @@ test('LPD-33373 assert that overriden translations can be exported', async ({
 				)) as string;
 
 				expect(
-					fileContent.includes(`${translation.key}=${value}`)
+					fileContent.includes(`${languageKey.key}=${value}`)
 				).toBeTruthy();
 			}
 		}

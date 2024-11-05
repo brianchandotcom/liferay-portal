@@ -199,9 +199,7 @@ testFeatureFlagsDisabled(
 						requestBody: {
 							active: true,
 							externalReferenceCode: `objectDefinition${i}`,
-							label: {
-								en_US: `objectDefinition${i}`,
-							},
+							label: {en_US: `objectDefinition${i}`},
 							name: `ObjectDefinition${i}`,
 							objectFields: [
 								{
@@ -211,9 +209,7 @@ testFeatureFlagsDisabled(
 									indexed: true,
 									indexedAsKeyword: false,
 									indexedLanguageId: 'en_US',
-									label: {
-										en_US: 'Object Field',
-									},
+									label: {en_US: 'Object Field'},
 									listTypeDefinitionId: 0,
 									name: 'objectField',
 									required: false,
@@ -222,14 +218,10 @@ testFeatureFlagsDisabled(
 									type: 'String',
 								},
 							],
-							pluralLabel: {
-								en_US: `objectDefinitions${i}`,
-							},
+							pluralLabel: {en_US: `objectDefinitions${i}`},
 							portlet: true,
 							scope: 'company',
-							status: {
-								code: 0,
-							},
+							status: {code: 0},
 						},
 					}
 				)
@@ -244,21 +236,7 @@ testFeatureFlagsDisabled(
 		});
 
 		const application = await apiHelpers.objectEntry.postObjectEntry(
-			{
-				apiApplicationToAPISchemas: [
-					{
-						description: 'API Application Schema',
-						externalReferenceCode: 'api-application-schema',
-						mainObjectDefinitionERC: 'L_API_APPLICATION',
-						name: 'API Application Schema',
-					},
-				],
-				applicationStatus: 'published',
-				baseURL: 'basic-application',
-				description: 'Test API Application',
-				externalReferenceCode: 'basic-application',
-				title: 'Basic application',
-			},
+			applicationData,
 			'headless-builder/applications'
 		);
 
@@ -316,7 +294,6 @@ testFeatureFlagsDisabled(
 		)[0].split('\n');
 
 		expect(objectDefinitionDropdownOptions).not.toContain(['Organization']);
-
 		expect(
 			objectDefinitionDropdownOptions.includes('ObjectDefinition')
 		).toBeTruthy();
@@ -453,27 +430,35 @@ testFeatureFlagsDisabled(
 			.getByRole('button', {name: 'Organization'})
 			.click();
 
-		await expect(
-			await schemaPage.page
-				.getByRole('button', {name: 'Organization'})
-				.locator('..')
-				.getByLabel('Test Unmodifiable System Object')
-				.getByLabel('Add Author Property')
-				.getByText('Author')
-		).toHaveClass(/disabled/);
+		const systemObjectPropertiesFF = await schemaPage.page
+			.getByRole('button', {name: 'Organization'})
+			.locator('..')
+			.getByLabel('Test Unmodifiable System Object')
+			.getByLabel('Add Author Property')
+			.getByText('Author')
+			.all();
+
+		for (const property of systemObjectPropertiesFF) {
+			await property.waitFor({state: 'attached'});
+			await expect(property).toHaveClass(/disabled/);
+		}
 
 		// Assert that unmodifiable allowed system object properties are disabled without FF
 
 		await schemaPage.page.getByRole('button', {name: 'Account'}).click();
 
-		await expect(
-			await schemaPage.page
-				.getByRole('button', {name: 'Account'})
-				.locator('..')
-				.getByLabel('Test Unmodifiable Allowed System Object')
-				.getByLabel('Add Author Property')
-				.getByText('Author')
-		).toHaveClass(/disabled/);
+		const systemObjectProperties = await schemaPage.page
+			.getByRole('button', {name: 'Account'})
+			.locator('..')
+			.getByLabel('Test Unmodifiable Allowed System Object')
+			.getByLabel('Add Author Property')
+			.getByText('Author')
+			.all();
+
+		for (const element of systemObjectProperties) {
+			await element.waitFor({state: 'attached'});
+			await expect(element).toHaveClass(/disabled/);
+		}
 
 		// Assert that modifiable system object properties are enabled
 
@@ -481,14 +466,18 @@ testFeatureFlagsDisabled(
 			.getByRole('button', {name: 'API Application'})
 			.click();
 
-		await expect(
-			await schemaPage.page
-				.getByRole('button', {name: 'API Application'})
-				.locator('..')
-				.getByLabel('Test Modifiable System Object')
-				.getByLabel('Add Author Property')
-				.getByText('Author')
-		).not.toHaveClass(/disabled/);
+		const modifiableSystemProperties = await schemaPage.page
+			.getByRole('button', {name: 'API Application'})
+			.locator('..')
+			.getByLabel('Test Modifiable System Object')
+			.getByLabel('Add Author Property')
+			.getByText('Author')
+			.all();
+
+		for (const property of modifiableSystemProperties) {
+			await property.waitFor({state: 'attached'});
+			await expect(property).not.toHaveClass(/disabled/);
+		}
 
 		// Assert that custom object properties are enabled
 
@@ -496,14 +485,18 @@ testFeatureFlagsDisabled(
 			.getByRole('button', {name: 'ObjectDefinition'})
 			.click();
 
-		await expect(
-			await schemaPage.page
-				.getByRole('button', {name: 'ObjectDefinition'})
-				.locator('..')
-				.getByLabel('Test Custom Object')
-				.getByLabel('Add Author Property')
-				.getByText('Author')
-		).not.toHaveClass(/disabled/);
+		const customObjectProperties = await schemaPage.page
+			.getByRole('button', {name: 'ObjectDefinition'})
+			.locator('..')
+			.getByLabel('Test Custom Object')
+			.getByLabel('Add Author Property')
+			.getByText('Author')
+			.all();
+
+		for (const property of customObjectProperties) {
+			await property.waitFor({state: 'attached'});
+			await expect(property).not.toHaveClass(/disabled/);
+		}
 	}
 );
 
@@ -591,27 +584,35 @@ testFeatureFlagsEnabled(
 			.getByRole('button', {name: 'Organization'})
 			.click();
 
-		await expect(
-			await schemaPage.page
-				.getByRole('button', {name: 'Organization'})
-				.locator('..')
-				.getByLabel('Test Unmodifiable System Object')
-				.getByLabel('Add Author Property')
-				.getByText('Author')
-		).toHaveClass(/disabled/);
+		const unmodifiableSystemProperties = await schemaPage.page
+			.getByRole('button', {name: 'Organization'})
+			.locator('..')
+			.getByLabel('Test Unmodifiable System Object')
+			.getByLabel('Add Author Property')
+			.getByText('Author')
+			.all();
+
+		for (const property of unmodifiableSystemProperties) {
+			await property.waitFor({state: 'attached'});
+			await expect(property).toHaveClass(/disabled/);
+		}
 
 		// Assert that unmodifiable allowed system object properties are enabled with FF
 
 		await schemaPage.page.getByRole('button', {name: 'Account'}).click();
 
-		await expect(
-			await schemaPage.page
-				.getByRole('button', {name: 'Account'})
-				.locator('..')
-				.getByLabel('Test Unmodifiable Allowed System Object')
-				.getByLabel('Add Author Property')
-				.getByText('Author')
-		).not.toHaveClass(/disabled/);
+		const unmodifiableAllowedSystemProperties = await schemaPage.page
+			.getByRole('button', {name: 'Account'})
+			.locator('..')
+			.getByLabel('Test Unmodifiable Allowed System Object')
+			.getByLabel('Add Author Property')
+			.getByText('Author')
+			.all();
+
+		for (const property of unmodifiableAllowedSystemProperties) {
+			await property.waitFor({state: 'attached'});
+			await expect(property).not.toHaveClass(/disabled/);
+		}
 
 		// Assert that modifiable system object properties are enabled
 
@@ -619,33 +620,36 @@ testFeatureFlagsEnabled(
 			.getByRole('button', {name: 'API Application'})
 			.click();
 
-		await expect(
-			await schemaPage.page
-				.getByRole('button', {name: 'API Application'})
-				.locator('..')
-				.getByLabel('Test Modifiable System Object')
-				.getByLabel('Add Author Property')
-				.getByText('Author')
-		).not.toHaveClass(/disabled/);
+		const modifiableSystemProperties = await schemaPage.page
+			.getByRole('button', {name: 'API Application'})
+			.locator('..')
+			.getByLabel('Test Modifiable System Object')
+			.getByLabel('Add Author Property')
+			.getByText('Author')
+			.all();
 
-		// Assert that custom obejct properties are enabled
+		for (const property of modifiableSystemProperties) {
+			await property.waitFor({state: 'attached'});
+			await expect(property).not.toHaveClass(/disabled/);
+		}
+
+		// Assert that custom object properties are enabled
 
 		await schemaPage.page
 			.getByRole('button', {name: 'ObjectDefinition'})
 			.click();
 
-		await expect(
-			await schemaPage.page
-				.getByRole('button', {name: 'ObjectDefinition'})
-				.locator('..')
-				.getByLabel('Test Custom Object')
-				.getByLabel('Add Author Property')
-				.getByText('Author')
-		).not.toHaveClass(/disabled/);
+		const customObjectProperties = await schemaPage.page
+			.getByRole('button', {name: 'ObjectDefinition'})
+			.locator('..')
+			.getByLabel('Test Custom Object')
+			.getByLabel('Add Author Property')
+			.getByText('Author')
+			.all();
 
-		await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-			'headless-builder/applications',
-			application.externalReferenceCode
-		);
+		for (const property of customObjectProperties) {
+			await property.waitFor({state: 'attached'});
+			await expect(property).not.toHaveClass(/disabled/);
+		}
 	}
 );

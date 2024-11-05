@@ -17,7 +17,7 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test('can get updated title in response after publish', async ({
+test('can get  updated title in response after publish', async ({
 	apiHelpers,
 	applicationPage,
 	headlessBuilderPage,

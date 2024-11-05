@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="CompanyIterationCheck" files="frontend-js-test/src/testIntegration/java/com/liferay/frontend/js/importmaps/extender/internal/servlet/taglib/test/JSImportMapsExtenderTopHeadDynamicIncludeTest\.java" />
+	</checkstyle>
 	<source-check>
 		<suppress checks="JavaMetaAnnotationsCheck" files="frontend-js-minifier/src/main/java/com/liferay/frontend/js/minifier/internal/configuration/YahooJavaScriptMinifierConfiguration\.java" />
 		<suppress checks="JSLodashDependencyCheck" files="frontend-js-aui-web/src/main/resources/META-INF/resources/liferay/aui_sandbox\.js" />

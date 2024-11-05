@@ -86,6 +86,13 @@ function visit(itemId, layoutData, list, viewportSize) {
 
 function isSelectable(item) {
 	if (Liferay.FeatureFlags['LPD-18221']) {
+		if (
+			item.type === LAYOUT_DATA_ITEM_TYPES.root &&
+			!item.children.length
+		) {
+			return true;
+		}
+
 		return [
 			LAYOUT_DATA_ITEM_TYPES.column,
 			LAYOUT_DATA_ITEM_TYPES.collection,
@@ -95,7 +102,6 @@ function isSelectable(item) {
 			LAYOUT_DATA_ITEM_TYPES.formStep,
 			LAYOUT_DATA_ITEM_TYPES.formStepContainer,
 			LAYOUT_DATA_ITEM_TYPES.fragmentDropZone,
-			LAYOUT_DATA_ITEM_TYPES.root,
 			LAYOUT_DATA_ITEM_TYPES.row,
 		].includes(item.type);
 	}

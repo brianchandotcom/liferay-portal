@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, render, screen} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
@@ -141,50 +141,6 @@ describe('Topper', () => {
 		renderTopper({activeItemIds: ['item-1', 'item-2'], isActive: true});
 
 		expect(screen.getByLabelText('options')).toBeDisabled();
-
-		Liferay.FeatureFlags['LPD-18221'] = false;
-	});
-
-	it('has not-allowed state on multi-select when the same item is selected', () => {
-		Liferay.FeatureFlags['LPD-18221'] = true;
-
-		const {container} = renderTopper({
-			activeItemIds: ['fragmentCollection'],
-			fragmentEntryLinks: {
-				'01': {
-					editableValues: {},
-					fragmentEntryLinkId: '01',
-					name: 'Fragment',
-				},
-			},
-			isActive: false,
-			itemId: 'fragmentCollection',
-			layoutData: {
-				items: {
-					fragmentCollection: {
-						children: [],
-						config: {
-							fragmentEntryLinkId: '01',
-						},
-						itemId: 'fragmentCollection',
-						parentId: null,
-						type: LAYOUT_DATA_ITEM_TYPES.fragment,
-					},
-				},
-			},
-		});
-
-		act(() => {
-			document.body.dispatchEvent(
-				new KeyboardEvent('keydown', {
-					key: 'Control',
-				})
-			);
-		});
-
-		expect(
-			container.querySelector('.page-editor__topper.not-allowed')
-		).toBeInTheDocument();
 
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});

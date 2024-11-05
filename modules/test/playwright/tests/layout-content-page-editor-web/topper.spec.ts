@@ -6,22 +6,29 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import getRandomString from '../../utils/getRandomString';
+import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants';
+import getCollectionDefinition from './utils/getCollectionDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,
+	collectionsPagesTest,
 	featureFlagsTest({
+		'LPD-18221': true,
 		'LPD-32075': true,
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	pageManagementSiteTest,
 	pageEditorPagesTest
 );
 
@@ -75,5 +82,63 @@ test(
 		await expect(name).toBeVisible();
 		await expect(dragHandler).toBeVisible();
 		await expect(actionsButton).toBeVisible();
+	}
+);
+
+test(
+	'Shows not allowed cursor when trying to multiple select two equal collection items',
+	{tag: ['@LPD-33348']},
+	async ({
+		apiHelpers,
+		collectionsPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create definition for a heading fragment
+
+		const headingId = getRandomString();
+
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		// Create definition for a collection mapped to Animals collection
+
+		const animalsClassPK = await collectionsPage.getCollectionClassPK(
+			ANIMALS_COLLECTION_NAME,
+			pageManagementSite.friendlyUrlPath
+		);
+
+		const collectionDefinition = getCollectionDefinition({
+			classPK: animalsClassPK,
+			id: getRandomString(),
+			pageElements: [headingDefinition],
+			provider: 'Recent Content',
+		});
+
+		// Create a page with the collection
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([collectionDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Click on the heading fragment
+
+		await pageEditorPage.selectFragment(headingId);
+
+		// Check that when multiple selection is on the class is present
+
+		await page.keyboard.down('Control');
+
+		await expect(
+			page.locator('.page-editor__topper.not-allowed').first()
+		).toBeVisible();
 	}
 );

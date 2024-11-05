@@ -549,9 +549,10 @@ public class CPFileImporterImpl implements CPFileImporter {
 		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
 		return _ddmStructureLocalService.addStructure(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
-			classNameId, ddmStructureKey, nameMap, null, ddmForm, ddmFormLayout,
-			"json", DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			0, classNameId, ddmStructureKey, nameMap, null, ddmForm,
+			ddmFormLayout, "json", DDMStructureConstants.TYPE_DEFAULT,
+			serviceContext);
 	}
 
 	private DDMTemplate _fetchOrAddDDMTemplate(

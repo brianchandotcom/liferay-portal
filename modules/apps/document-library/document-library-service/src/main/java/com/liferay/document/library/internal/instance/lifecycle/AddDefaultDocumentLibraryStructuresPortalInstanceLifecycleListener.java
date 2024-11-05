@@ -108,7 +108,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 			DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
 			_ddmStructureLocalService.addStructure(
-				guestUserId, group.getGroupId(),
+				null, guestUserId, group.getGroupId(),
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 				_portal.getClassNameId(RawMetadataProcessor.class), name,
 				nameMap, descriptionMap, ddmForm, ddmFormLayout,

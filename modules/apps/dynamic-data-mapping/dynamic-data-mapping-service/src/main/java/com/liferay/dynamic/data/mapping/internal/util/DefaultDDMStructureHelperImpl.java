@@ -245,8 +245,9 @@ public class DefaultDDMStructureHelperImpl
 			"status", WorkflowConstants.STATUS_APPROVED);
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
-			userId, groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-			classNameId, name, nameMap, descriptionMap, ddmForm, ddmFormLayout,
+			null, userId, groupId,
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
+			name, nameMap, descriptionMap, ddmForm, ddmFormLayout,
 			StorageType.DEFAULT.toString(), DDMStructureConstants.TYPE_DEFAULT,
 			serviceContext);
 

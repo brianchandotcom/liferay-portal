@@ -291,7 +291,7 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
 		return _ddmStructureLocalService.addStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			_portal.getClassNameId(JournalArticle.class.getName()), null,
 			RandomTestUtil.randomLocaleStringMap(), null, ddmForm,
 			ddmFormLayout, StorageType.DEFAULT.toString(),

@@ -76,7 +76,7 @@ public class StorageLinksUpgradeProcessTest {
 				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
 
 			productionDDMStructure = _ddmStructureLocalService.addStructure(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 				_classNameLocalService.getClassNameId(JournalArticle.class),
 				StringUtil.randomString(),

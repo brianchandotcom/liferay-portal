@@ -62,7 +62,7 @@ public class DDMStructureLocalServiceUtil {
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().addStructure(
+		return getService().addStructure(null,
 			userId, groupId, parentStructureId, classNameId, structureKey,
 			nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType, type,
 			serviceContext);

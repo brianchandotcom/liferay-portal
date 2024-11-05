@@ -81,7 +81,7 @@ public class DisplayPageDisplayContextTest {
 		serviceContext.setAddGuestPermissions(false);
 
 		_ddmStructureLocalService.addStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			_portal.getClassNameId(JournalArticle.class), null,
 			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()

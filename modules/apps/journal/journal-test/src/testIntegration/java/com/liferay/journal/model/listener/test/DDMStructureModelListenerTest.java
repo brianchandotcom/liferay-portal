@@ -356,8 +356,10 @@ public class DDMStructureModelListenerTest {
 			"BASIC-WEB-CONTENT");
 
 		_ddmStructureLocalService.updateStructure(
+			ddmStructure.getExternalReferenceCode(),
 			TestPropsValues.getUserId(), ddmStructure.getStructureId(),
-			ddmStructure.getParentStructureId(), "BASIC-WEB-CONTENT-MODIFIED",
+			ddmStructure.getGroupId(), ddmStructure.getParentStructureId(),
+			ddmStructure.getClassNameId(), "BASIC-WEB-CONTENT-MODIFIED",
 			ddmStructure.getNameMap(), ddmStructure.getDescriptionMap(),
 			ddmStructure.getDefinition(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

@@ -264,7 +264,7 @@ public class DDMFormInstanceStagedModelDataHandlerTest
 					).toString())));
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.addStructure(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
+			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
 			PortalUtil.getClassNameId(DDMFormInstance.class.getName()), null,
 			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()

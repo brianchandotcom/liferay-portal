@@ -1059,17 +1059,23 @@ export class PageEditorPage {
 		editableId: string,
 		isDesktop = true
 	) {
-		await this.selectFragment(fragmentId, isDesktop);
-
 		const editable = this.getEditable({
 			editableId,
 			fragmentId,
 			isDesktop,
 		});
 
-		await editable.click();
+		const editableIsActive = await editable.evaluate((element) =>
+			element.classList.contains('page-editor__editable--active')
+		);
 
-		await expect(editable).toHaveClass(/page-editor__editable--active/);
+		if (!editableIsActive) {
+			await this.selectFragment(fragmentId, isDesktop);
+
+			await editable.click();
+
+			await expect(editable).toHaveClass(/page-editor__editable--active/);
+		}
 	}
 
 	async selectVideo({

@@ -52,7 +52,7 @@ public class JSONResourcePermissionsFileCheck extends BaseFileCheck {
 				jsonObject.put(
 					"actionIds",
 					JsonSourceUtil.sortJSONArray(
-						actionIdsJSONArray, new ActionIdsComparator()));
+						actionIdsJSONArray, new ActionIdComparator()));
 			}
 
 			jsonArray.put(jsonObject);
@@ -61,7 +61,7 @@ public class JSONResourcePermissionsFileCheck extends BaseFileCheck {
 		return JSONUtil.toString(jsonArray);
 	}
 
-	private class ActionIdsComparator implements Comparator<Object> {
+	private class ActionIdComparator implements Comparator<Object> {
 
 		@Override
 		public int compare(Object object1, Object object2) {

@@ -178,11 +178,15 @@ public class JspServlet extends HttpServlet {
 		_jspBundleClassloader = new JspBundleClassloader(
 			_allParticipatingBundles);
 
-		final Map<String, String> defaults = HashMapBuilder.put(
-			_INIT_PARAMETER_NAME_SCRATCH_DIR,
+		File scratchDir = new File(
 			StringBundler.concat(
 				_WORK_DIR, _bundle.getSymbolicName(), StringPool.DASH,
-				_bundle.getVersion())
+				_bundle.getVersion(), StringPool.SLASH));
+
+		scratchDir.mkdirs();
+
+		final Map<String, String> defaults = HashMapBuilder.put(
+			_INIT_PARAMETER_NAME_SCRATCH_DIR, scratchDir.getPath()
 		).put(
 			"compilerClassName",
 			"com.liferay.portal.osgi.web.servlet.jsp.compiler.internal." +

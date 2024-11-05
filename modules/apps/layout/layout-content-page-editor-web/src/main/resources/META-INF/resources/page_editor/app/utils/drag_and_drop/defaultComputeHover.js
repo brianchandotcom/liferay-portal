@@ -108,8 +108,8 @@ export default function defaultComputeHover({
 		!itemIsAncestor(sourceItem, targetItem, layoutDataRef)
 	) {
 		return dispatch({
-			dropItem: sourceItem,
-			dropTargetItem: targetItem,
+			dragSource: sourceItem,
+			dropTarget: targetItem,
 			droppable: checkAllowedChild(
 				sourceItem,
 				targetItem,
@@ -125,7 +125,7 @@ export default function defaultComputeHover({
 	}
 
 	// Try to elevate to some valid ancestor
-	// Using dropTargetItem parent as target and dropTargetItem as sibling
+	// Using dropTarget parent as target and dropTarget as sibling
 	// It will try elevate multiple levels if elevationDepth is enough and
 	// there are valid ancestors
 
@@ -193,7 +193,7 @@ export default function defaultComputeHover({
 		if (elevatedTargetItem && elevatedTargetItem !== targetItem) {
 
 			// Valid elevation:
-			// - sourceItem should be child of dropTargetItem
+			// - sourceItem should be child of dropTarget
 			// - sourceItem should be sibling of siblingItem
 			// - siblingItem should have flex parent for horizontal elevation
 			//   and no-flex parent for vertical elevation
@@ -212,8 +212,8 @@ export default function defaultComputeHover({
 				!itemIsAncestor(sourceItem, siblingItem, layoutDataRef)
 			) {
 				return dispatch({
-					dropItem: sourceItem,
-					dropTargetItem: siblingItem,
+					dragSource: sourceItem,
+					dropTarget: siblingItem,
 					droppable: checkAllowedChild(
 						sourceItem,
 						elevatedTargetItem,
@@ -337,9 +337,9 @@ function validElevation(siblingItem, orientation, layoutDataRef) {
 
 function stateHasChanged(state, sourceItem, targetItem, position) {
 	if (
-		state.dropItem?.itemId === sourceItem.itemId &&
-		state.dropTargetItem?.itemId === targetItem.itemId &&
-		state.dropTargetItem?.collectionItemIndex ===
+		state.dragSource?.itemId === sourceItem.itemId &&
+		state.dropTarget?.itemId === targetItem.itemId &&
+		state.dropTarget?.collectionItemIndex ===
 			targetItem.collectionItemIndex &&
 		state.targetPositionWithMiddle === position
 	) {

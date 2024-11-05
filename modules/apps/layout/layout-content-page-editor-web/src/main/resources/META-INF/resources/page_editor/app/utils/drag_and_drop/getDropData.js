@@ -15,7 +15,7 @@ export default function getDropData({
 	const targetItem = layoutDataRef.current.items[targetItemId];
 	const targetParentItem = layoutDataRef.current.items[targetItem.parentId];
 
-	let dropItemId;
+	let targetId;
 	let position;
 
 	if (isElevation) {
@@ -31,17 +31,17 @@ export default function getDropData({
 			)
 		);
 
-		dropItemId = targetParentItem.itemId;
+		targetId = targetParentItem.itemId;
 	}
 	else {
 		position = targetItem.children.includes(sourceItemId)
 			? targetItem.children.length - 1
 			: targetItem.children.length;
 
-		dropItemId = targetItem.itemId;
+		targetId = targetItem.itemId;
 	}
 
-	return {dropItemId, position};
+	return {position, targetId};
 }
 
 function getSiblingPosition(

@@ -96,7 +96,7 @@ export default function KeyboardMovementManager() {
 					? ACTION_TYPES.move
 					: ACTION_TYPES.add;
 
-				const {dropItemId, position} = getDropData({
+				const {position, targetId} = getDropData({
 					isElevation: target.position !== TARGET_POSITIONS.MIDDLE,
 					layoutDataRef,
 					sourceItemId: lastSource.itemId,
@@ -118,12 +118,12 @@ export default function KeyboardMovementManager() {
 					thunk = isStepper(lastSource)
 						? moveStepper({
 								itemId: lastSource.itemId,
-								parentItemId: dropItemId,
+								parentItemId: targetId,
 								position,
 							})
 						: moveItems({
 								itemIds: sources.map(({itemId}) => itemId),
-								parentItemIds: [dropItemId],
+								parentItemIds: [targetId],
 								positions: [position],
 							});
 				}
@@ -133,7 +133,7 @@ export default function KeyboardMovementManager() {
 					if (source.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 						if (source.isWidget) {
 							thunk = addWidget({
-								parentItemId: dropItemId,
+								parentItemId: targetId,
 								portletId: source.portletId,
 								portletItemId: source.portletItemId,
 								position,
@@ -144,7 +144,7 @@ export default function KeyboardMovementManager() {
 							thunk = addStepper({
 								fragmentEntryKey: source.fragmentEntryKey,
 								groupId: source.groupId,
-								parentItemId: dropItemId,
+								parentItemId: targetId,
 								position,
 								selectItems,
 								type: source.type,
@@ -154,7 +154,7 @@ export default function KeyboardMovementManager() {
 							thunk = addFragment({
 								fragmentEntryKey: source.fragmentEntryKey,
 								groupId: source.groupId,
-								parentItemId: dropItemId,
+								parentItemId: targetId,
 								position,
 								selectItems,
 								type: source.fragmentEntryType,
@@ -164,7 +164,7 @@ export default function KeyboardMovementManager() {
 					else {
 						thunk = addItem({
 							itemType: source.type,
-							parentItemId: dropItemId,
+							parentItemId: targetId,
 							position,
 							selectItems,
 						});

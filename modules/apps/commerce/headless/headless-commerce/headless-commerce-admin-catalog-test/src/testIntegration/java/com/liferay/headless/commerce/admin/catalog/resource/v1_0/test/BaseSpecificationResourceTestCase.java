@@ -1292,6 +1292,16 @@ public abstract class BaseSpecificationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"listTypeDefinitionIds", additionalAssertFieldName)) {
+
+				if (specification.getListTypeDefinitionIds() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("optionCategory", additionalAssertFieldName)) {
 				if (specification.getOptionCategory() == null) {
 					valid = false;
@@ -1496,6 +1506,19 @@ public abstract class BaseSpecificationResourceTestCase {
 				if (!Objects.deepEquals(
 						specification1.getListTypeDefinitionId(),
 						specification2.getListTypeDefinitionId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"listTypeDefinitionIds", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						specification1.getListTypeDefinitionIds(),
+						specification2.getListTypeDefinitionIds())) {
 
 					return false;
 				}
@@ -1751,6 +1774,11 @@ public abstract class BaseSpecificationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("listTypeDefinitionId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("listTypeDefinitionIds")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

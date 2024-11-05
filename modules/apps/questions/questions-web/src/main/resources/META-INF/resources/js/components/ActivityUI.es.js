@@ -55,13 +55,15 @@ const ActivityHeaderBadge = ({
 				/>
 			</li>
 
-			<li>
-				<QuestionBadge
-					className="badge-activity bg-light label-secondary text-uppercase"
-					isActivityBadge
-					value={getSectionTitle(question.messageBoardSection)}
-				/>
-			</li>
+			{question.messageBoardSection && (
+				<li>
+					<QuestionBadge
+						className="badge-activity bg-light label-secondary text-uppercase"
+						isActivityBadge
+						value={getSectionTitle(question.messageBoardSection)}
+					/>
+				</li>
+			)}
 		</ul>
 	</div>
 );

@@ -3117,7 +3117,7 @@
 			<finder-column name="primary" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="WorkflowDefinitionLink" remote-service="false" uad-application-name="Portal Workflow" uad-dir-path="../modules/apps/portal-workflow/portal-workflow-uad/src/main/java" uad-package-path="com.liferay.portal.workflow">
+	<entity change-tracking-enabled="true" local-service="true" name="WorkflowDefinitionLink" remote-service="true" uad-application-name="Portal Workflow" uad-dir-path="../modules/apps/portal-workflow/portal-workflow-uad/src/main/java" uad-package-path="com.liferay.portal.workflow">
 
 		<!-- PK fields -->
 

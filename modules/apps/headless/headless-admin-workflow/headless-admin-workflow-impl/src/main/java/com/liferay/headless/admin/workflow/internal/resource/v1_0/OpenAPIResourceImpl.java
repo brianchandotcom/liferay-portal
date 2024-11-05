@@ -91,6 +91,8 @@ public class OpenAPIResourceImpl {
 
 			add(WorkflowDefinitionResourceImpl.class);
 
+			add(WorkflowDefinitionLinkResourceImpl.class);
+
 			add(WorkflowInstanceResourceImpl.class);
 
 			add(WorkflowLogResourceImpl.class);

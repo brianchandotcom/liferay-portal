@@ -37,6 +37,7 @@ import {config as commerceProductDefinitionsWebConfig} from './tests/commerce/co
 import {config as commerceProductOptionsWebConfig} from './tests/commerce/commerce-product-options-web/config';
 import {config as commerceShippingEngineWebConfig} from './tests/commerce/commerce-shipping-engine-fixed-web/config';
 import {config as commerceSiteInitializerWebConfig} from './tests/commerce/commerce-site-initializer/config';
+import {config as commerceTaxEngineWebConfig} from './tests/commerce/commerce-tax-engine-web/config';
 import {config as commerceThemeMiniumWebConfig} from './tests/commerce/commerce-theme-minium/config';
 import {config as commerceWishListWebConfig} from './tests/commerce/commerce-wish-list-web/config';
 import {config as configurationAdminWebConfig} from './tests/configuration-admin-web/config';
@@ -157,6 +158,7 @@ export default defineConfig({
 		commerceProductOptionsWebConfig,
 		commerceShippingEngineWebConfig,
 		commerceSiteInitializerWebConfig,
+		commerceTaxEngineWebConfig,
 		commerceThemeMiniumWebConfig,
 		commerceWishListWebConfig,
 		commerceWorkspaceConfig,

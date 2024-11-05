@@ -59,26 +59,23 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 	}
 
 	private void _testIsSendNotification(
-		Date accessTokenExpirationDate, long notificationDurationMillis) {
+		Date accessTokenExpirationDate, long currentTimeMillis) {
 
 		Assert.assertTrue(
 			_scimNotificationSchedulerJobConfiguration.isSendNotification(
-				accessTokenExpirationDate, new Date(0),
-				notificationDurationMillis));
+				accessTokenExpirationDate, new Date(0), currentTimeMillis));
 		Assert.assertTrue(
 			_scimNotificationSchedulerJobConfiguration.isSendNotification(
-				accessTokenExpirationDate,
-				new Date(notificationDurationMillis - 1),
-				notificationDurationMillis));
+				accessTokenExpirationDate, new Date(currentTimeMillis - 1),
+				currentTimeMillis));
 		Assert.assertFalse(
 			_scimNotificationSchedulerJobConfiguration.isSendNotification(
-				accessTokenExpirationDate, new Date(notificationDurationMillis),
-				notificationDurationMillis));
+				accessTokenExpirationDate, new Date(currentTimeMillis),
+				currentTimeMillis));
 		Assert.assertFalse(
 			_scimNotificationSchedulerJobConfiguration.isSendNotification(
-				accessTokenExpirationDate,
-				new Date(notificationDurationMillis + 1),
-				notificationDurationMillis));
+				accessTokenExpirationDate, new Date(currentTimeMillis + 1),
+				currentTimeMillis));
 	}
 
 	private ScimNotificationSchedulerJobConfiguration

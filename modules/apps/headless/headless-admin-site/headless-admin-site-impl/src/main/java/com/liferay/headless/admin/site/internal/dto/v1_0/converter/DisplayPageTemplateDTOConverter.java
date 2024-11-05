@@ -7,10 +7,13 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.ClassSubtypeReference;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
+import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -69,6 +72,22 @@ public class DisplayPageTemplateDTOConverter
 				setKey(layoutPageTemplateEntry::getLayoutPageTemplateEntryKey);
 				setMarkedAsDefault(layoutPageTemplateEntry::isDefaultTemplate);
 				setName(layoutPageTemplateEntry::getName);
+				setParentFolder(
+					() -> {
+						LayoutPageTemplateCollection
+							layoutPageTemplateCollection =
+								_layoutPageTemplateCollectionLocalService.
+									fetchLayoutPageTemplateCollection(
+										layoutPageTemplateEntry.
+											getLayoutPageTemplateCollectionId());
+
+						if (layoutPageTemplateCollection == null) {
+							return null;
+						}
+
+						return _displayPageTemplateFolderDTOConverter.toDTO(
+							layoutPageTemplateCollection);
+					});
 				setUuid(layoutPageTemplateEntry::getUuid);
 			}
 		};
@@ -103,10 +122,21 @@ public class DisplayPageTemplateDTOConverter
 		};
 	}
 
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.DisplayPageTemplateFolderDTOConverter)"
+	)
+	private DTOConverter
+		<LayoutPageTemplateCollection, DisplayPageTemplateFolder>
+			_displayPageTemplateFolderDTOConverter;
+
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
 
 }

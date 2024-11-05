@@ -187,7 +187,8 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)actionRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");

@@ -76,10 +76,14 @@ public class FunctionalBatchBuildTestrayCaseResult
 	public Status getStatus() {
 		TestResult testResult = getTestResult();
 
-		String errorDetails = testResult.getErrorDetails();
+		if (testResult != null) {
+			String errorDetails = testResult.getErrorDetails();
 
-		if (errorDetails.contains("TEST_SETUP_ERROR:")) {
-			return Status.BLOCKED;
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(errorDetails) &&
+				errorDetails.contains("TEST_SETUP_ERROR:")) {
+
+				return Status.BLOCKED;
+			}
 		}
 
 		return getTestResultStatus();

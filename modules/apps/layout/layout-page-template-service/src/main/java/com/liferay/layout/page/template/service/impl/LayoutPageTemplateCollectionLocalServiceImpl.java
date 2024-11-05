@@ -507,7 +507,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 		if (name.length() > nameMaxLength) {
 			throw new LayoutPageTemplateCollectionNameException(
-				"Maximum length of name exceeded");
+				"Maximum length of name exceeded " + nameMaxLength);
 		}
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =

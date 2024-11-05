@@ -75,50 +75,29 @@ function default_tear_down {
 }
 
 function deploy_client_extensions {
+	echo "deploy_client_extensions"
+
 	local client_extensions_list_file=${1}
 
-	if [[ -n $(cat ${client_extensions_list_file}) ]]
-	then
-		echo "Deploying client extensions in ${client_extensions_list_file}."
+	local client_extension_dir
 
-		local client_extension_name
+	for client_extension_dir in $(get_client_extension_dirs ${client_extensions_list_file})
+	do
+		if [[ -d ${client_extension_dir} ]]
+		then
+			echo "Deploying ${client_extension_dir}."
 
-		for client_extension_name in $(cat ${client_extensions_list_file})
-		do
-			local client_extension_dir=$(find ${_PORTAL_PROJECT_DIR}/workspaces -type d | grep "${client_extension_name}$" | grep -v .releng | grep -v .npmscripts | grep -v node_modules)
+			cd ${client_extension_dir}
 
-			if [[ $(echo ${client_extension_dir} | wc -w | grep -o -E '[0-9]+') > 1 ]]
-			then
-				echo "Duplicate client extensions found for ${client_extension_name}:"
+			local gradlew=$(get_gradlew)
 
-				printf "%s\n" ${client_extension_dir}
+			${gradlew} deploy -Pliferay.workspace.home.dir=${LIFERAY_HOME}
 
-				echo "Replace \"${client_extension_name}\" in ${client_extensions_list_file} with one of the following:"
-
-				for dir in ${client_extension_dir}
-				do
-					echo "${dir/${_PORTAL_PROJECT_DIR}\/workspaces\/}"
-				done
-
-				client_extension_dir=$(echo ${client_extension_dir} | awk '{print $1}')
-			fi
-
-			if [[ -d ${client_extension_dir} ]]
-			then
-				echo "Deploying ${client_extension_dir}."
-
-				cd ${client_extension_dir}
-
-				local gradlew=$(get_gradlew)
-
-				${gradlew} deploy -Pliferay.workspace.home.dir=${LIFERAY_HOME}
-
-				wait_for_portal_log_inactivity
-			else
-				echo "Unable to find client extension in ${client_extension_dir}."
-			fi
-		done
-	fi
+			wait_for_portal_log_inactivity
+		else
+			echo "Unable to find client extension in ${client_extension_dir}."
+		fi
+	done
 }
 
 function deploy_deploy_folder {
@@ -256,6 +235,46 @@ function deploy_project_osgi_modules {
 
 function get_absolute_dir {
 	echo $(cd -- $(dirname -- $1) &> /dev/null && pwd)
+}
+
+function get_client_extension_dir {
+	local clients_extension_name=${1}
+
+	local client_extension_dir=$(find ${_PORTAL_PROJECT_DIR}/workspaces -type d | grep "${client_extension_name}$" | grep -v .releng | grep -v .npmscripts | grep -v dist | grep -v node_modules)
+
+	if [[ $(echo ${client_extension_dir} | wc -w | grep -o -E '[0-9]+') > 1 ]]
+	then
+		echo "Duplicate client extensions found for ${client_extension_name}:" >&2
+
+		echo "%s\n" ${client_extension_dir} >&2
+
+		echo "Replace \"${client_extension_name}\" in ${client_extensions_list_file} with one of the following:" >&2
+
+		for dir in ${client_extension_dir}
+		do
+			echo "${dir/${_PORTAL_PROJECT_DIR}\/workspaces\/}" >&2
+		done
+
+		client_extension_dir=$(echo ${client_extension_dir} | awk '{print $1}')
+	fi
+
+	echo ${client_extension_dir}
+}
+
+function get_client_extension_dirs {
+	local client_extensions_list_file=${1}
+
+	local client_extension_dirs=()
+
+	if [[ -f ${client_extensions_list_file} && -n $(cat ${client_extensions_list_file}) ]]
+	then
+		for client_extension_name in $(cat ${client_extensions_list_file})
+		do
+			client_extension_dirs+=($(get_client_extension_dir))
+		done
+	fi
+
+	echo ${client_extension_dirs[@]}
 }
 
 function get_gradlew {

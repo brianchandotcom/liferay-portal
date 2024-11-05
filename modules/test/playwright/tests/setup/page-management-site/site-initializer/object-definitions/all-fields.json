@@ -1,0 +1,69 @@
+{
+	"externalReferenceCode": "all-fields-object-erc",
+	"label": {
+		"en_US": "All Fields Object"
+	},
+	"name": "AllFieldsObject",
+	"objectFields": [
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "boolean-erc",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Boolean"
+			},
+			"name": "boolean",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "DateTime",
+			"externalReferenceCode": "date-time-erc",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Date And Time"
+			},
+			"name": "dateAndTime",
+			"objectFieldSettings": [
+				{
+					"name": "timeStorage",
+					"value": "convertToUTC"
+				}
+			],
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"type": "DateTime"
+		},
+		{
+			"DBType": "Date",
+			"externalReferenceCode": "date-erc",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Date"
+			},
+			"name": "date",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"externalReferenceCode": "text-erc",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Text"
+			},
+			"name": "text",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "All Fields Objet"
+	},
+	"scope": "site"
+}

@@ -7,18 +7,16 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.source.formatter.check.comparator.PropertyValueComparator;
+import com.liferay.source.formatter.check.util.JsonSourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -117,7 +115,10 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		JSONArray testMatchJSONArray = jestJSONObject.getJSONArray("testMatch");
 
 		if (testMatchJSONArray != null) {
-			jestJSONObject.put("testMatch", _sortTestMatch(testMatchJSONArray));
+			jestJSONObject.put(
+				"testMatch",
+				JsonSourceUtil.sortJSONArray(
+					testMatchJSONArray, new TestMatchComparator()));
 		}
 
 		jsonObject.put("jest", jestJSONObject);
@@ -178,20 +179,6 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		}
 
 		addMessage(fileName, sb.toString());
-	}
-
-	private JSONArray _sortTestMatch(JSONArray jsonArray) throws JSONException {
-		List<Object> objects = JSONUtil.toObjectList(jsonArray);
-
-		Collections.sort(objects, new TestMatchComparator());
-
-		jsonArray = new JSONArrayImpl();
-
-		for (Object object : objects) {
-			jsonArray.put(object);
-		}
-
-		return jsonArray;
 	}
 
 	private class TestMatchComparator implements Comparator<Object> {

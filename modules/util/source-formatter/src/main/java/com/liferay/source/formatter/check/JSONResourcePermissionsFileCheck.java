@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.source.formatter.check.util.JsonSourceUtil;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -48,27 +49,16 @@ public class JSONResourcePermissionsFileCheck extends BaseFileCheck {
 			JSONArray actionIdsJSONArray = jsonObject.getJSONArray("actionIds");
 
 			if (actionIdsJSONArray != null) {
-				jsonObject.put("actionIds", _sortActionIds(actionIdsJSONArray));
+				jsonObject.put(
+					"actionIds",
+					JsonSourceUtil.sortJSONArray(
+						actionIdsJSONArray, new ActionIdsComparator()));
 			}
 
 			jsonArray.put(jsonObject);
 		}
 
 		return JSONUtil.toString(jsonArray);
-	}
-
-	private JSONArray _sortActionIds(JSONArray jsonArray) throws JSONException {
-		List<Object> objects = JSONUtil.toObjectList(jsonArray);
-
-		Collections.sort(objects, new ActionIdsComparator());
-
-		jsonArray = new JSONArrayImpl();
-
-		for (Object object : objects) {
-			jsonArray.put(object);
-		}
-
-		return jsonArray;
 	}
 
 	private class ActionIdsComparator implements Comparator<Object> {

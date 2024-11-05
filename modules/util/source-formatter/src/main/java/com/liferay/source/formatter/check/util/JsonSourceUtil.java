@@ -6,7 +6,9 @@
 package com.liferay.source.formatter.check.util;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -14,6 +16,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author Alan Huang
@@ -53,6 +59,22 @@ public class JsonSourceUtil extends SourceUtil {
 
 			return null;
 		}
+	}
+
+	public static JSONArray sortJSONArray(
+		JSONArray jsonArray, Comparator<Object> comparator) {
+
+		List<Object> objects = JSONUtil.toObjectList(jsonArray);
+
+		Collections.sort(objects, comparator);
+
+		jsonArray = new JSONArrayImpl();
+
+		for (Object object : objects) {
+			jsonArray.put(object);
+		}
+
+		return jsonArray;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JsonSourceUtil.class);

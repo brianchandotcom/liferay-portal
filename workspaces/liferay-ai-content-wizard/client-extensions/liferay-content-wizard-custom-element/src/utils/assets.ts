@@ -1,0 +1,165 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+export const assets = [
+	{
+		bgColor: '#89FF97',
+		description: 'Create a set of blogs based on a prompt.',
+		hint: "I'd like to generate 2 blogs about vegan recipes. each with 800 words, friendly tone.",
+		icon: 'document',
+		iconColor: '#33CF27',
+		title: 'Blogs',
+	},
+	{
+		bgColor: '#48C9B0',
+		description:
+			'Create knowledge base folders and articles based on a topic.',
+		hint: 'Build a knowledge base that focuses on worker safety information for agricultural equipment manufacturing facilities.',
+		icon: 'books',
+		iconColor: '#16A085',
+		title: 'Knowledge Base',
+	},
+	{
+		bgColor: '#7389FF',
+		description:
+			'Create a taxonomy and category structure based on a theme.',
+		hint: 'Create categories that represent luxury vehicle brands in Italy.',
+		icon: 'categories',
+		iconColor: '#3357FF',
+		title: 'Categories',
+	},
+	{
+		bgColor: '#48C9B0',
+		description:
+			'Generate a page hierarchy from a description of the goal of a site.',
+		hint: 'Build a page based on an image of a page mockup.',
+		icon: 'page',
+		iconColor: '#1ABC9C',
+		title: 'Page',
+	},
+	{
+		bgColor: '#FF8973',
+		description: 'Create a set of wiki nodes and pages based on a prompt.',
+		hint: 'Build a wiki for a specific travel destination or region. Include information on attractions, transportation, local customs, and must-try experiences.',
+		icon: 'wiki-page',
+		iconColor: '#FF5733',
+		title: 'Wikis',
+	},
+	{
+		bgColor: '#F7DC6F',
+		description:
+			'Choose a topic to create message board sections and threads.',
+		hint: 'Organize a message board for a company that provides wellness and health information and services.',
+		icon: 'message-boards',
+		iconColor: '#D19403',
+		title: 'Message Boards',
+	},
+	{
+		bgColor: '#BE93D4',
+		description: 'Create a set of multilingual FAQs based on a topic.',
+		hint: 'Create an FAQ for a Travel & Hospitality company with answers for Booking & Reservations and Amenities & Services questions',
+		icon: 'book',
+		iconColor: '#8E44AD',
+		title: 'FAQs',
+	},
+	{
+		bgColor: '#F1948A',
+		description:
+			'Create a set of multilingual news articles based on a topic.',
+		hint: "I'd like to generate web content about vegan recipes. 2 articles, each with 800 words, friendly tone, in English and Spanish.",
+		icon: 'megaphone-full',
+		iconColor: '#E74C3C',
+		title: 'News',
+	},
+	{
+		bgColor: '#F7AC6F',
+		description: 'Populate a custom object with records based on a prompt.',
+		hint: 'Build a custom object and records for an object named Recipe. This object should should include a Recipe Name, Ingredients, Cook Time, Preparation Instructions, and Expected Calorie Count',
+		icon: 'plus-squares',
+		iconColor: '#D16403',
+		title: 'Objects',
+	},
+	{
+		bgColor: '#8D6D7E',
+		description: 'Create an organizational structure for a company.',
+		hint: 'Create an organizational department structure for a regional grocery store within the midwest United States.',
+		icon: 'organizations',
+		iconColor: '#5C3E50',
+		title: 'Organizations',
+	},
+	{
+		bgColor: '#85C1E9',
+		description:
+			'Generate images into a document library folder based on a prompt.',
+		hint: "I'd like to generate images for a travel site representing seasoned hikers exploring the beauty of nature. Each photo should have a single person",
+		icon: 'documents-and-media',
+		iconColor: '#3498DB',
+		title: 'Images',
+	},
+	{
+		bgColor: '#7389FF',
+		description: 'Make portal sites',
+		hint: 'Make a site structure for a student portal',
+		icon: 'community',
+		iconColor: '#3357FF',
+		title: 'Sites',
+	},
+	{
+		bgColor: '#48C9B0',
+		description:
+			'Create display fragments that could be used within the portal.',
+		hint: 'Create a display fragment that shows events',
+		icon: 'community',
+		iconColor: '#16A085',
+		title: 'Fragments',
+	},
+	{
+		bgColor: '#BE93D4',
+		description: 'Create stylebooks that could be used within the portal.',
+		hint: 'Create a stylebooks that show a traditional color scheme for a bank.',
+		icon: 'community',
+		iconColor: '#8E44AD',
+		title: 'Stylebooks',
+	},
+	{
+		bgColor: '#E74C3C',
+		description: 'Use a company theme to generate products and categories.',
+		hint: 'Create products for clothing store. Focus on clothing for summer outdoor activities',
+		icon: 'shopping-cart',
+		iconColor: '#C0392B',
+		title: 'Products',
+	},
+	{
+		bgColor: '#5499C7',
+		description: 'Create example users for a portal instance.',
+		hint: 'Generate example users for my site. Use names that are generally used in Brazil',
+		icon: 'user',
+		iconColor: '#2980B9',
+		title: 'Users',
+	},
+	{
+		bgColor: '#E59866',
+		description: 'Create example user groups for a portal instance.',
+		hint: 'Add a list a user groups which represent groups of employees and customers within a large airline company.',
+		icon: 'users',
+		iconColor: '#D35400',
+		title: 'User Groups',
+	},
+	{
+		bgColor: '#CCD1D1',
+		description: 'Create a set of warehouses in a given region.',
+		hint: 'Suggest eight warehouse locations in small cities across Australia and create them within Liferay.',
+		icon: 'truck',
+		iconColor: '#8C8788',
+		title: 'Warehouses',
+	},
+	{
+		bgColor: '#FF8973',
+		description: 'Create a list of accounts based on a company type.',
+		hint: 'Create accounts for the seven most popular banks in south east Asia.',
+		icon: 'community',
+		iconColor: '#FF5733',
+		title: 'Accounts',
+	},
+];

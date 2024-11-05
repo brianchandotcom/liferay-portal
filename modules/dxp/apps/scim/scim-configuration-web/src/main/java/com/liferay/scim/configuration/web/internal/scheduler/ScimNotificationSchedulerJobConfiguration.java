@@ -75,8 +75,8 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	protected boolean isSendNotification(
-		Date accessTokenExpirationDate, Date lastNotificationDate,
-		long currentTimeMillis) {
+		Date accessTokenExpirationDate, long currentTimeMillis,
+		Date lastNotificationDate) {
 
 		long remainingAccessTokenTimeMillis =
 			accessTokenExpirationDate.getTime() - currentTimeMillis;
@@ -85,17 +85,17 @@ public class ScimNotificationSchedulerJobConfiguration
 				lastNotificationDate.getTime();
 
 		if (_isSendNotification(
-				remainingAccessTokenTimeMillis,
-				lastNotificationValidThresholdMillis, 30 * Time.DAY) ||
+				lastNotificationValidThresholdMillis, 30 * Time.DAY,
+				remainingAccessTokenTimeMillis) ||
 			_isSendNotification(
-				remainingAccessTokenTimeMillis,
-				lastNotificationValidThresholdMillis, 10 * Time.DAY) ||
+				lastNotificationValidThresholdMillis, 10 * Time.DAY,
+				remainingAccessTokenTimeMillis) ||
 			_isSendNotification(
-				remainingAccessTokenTimeMillis,
-				lastNotificationValidThresholdMillis, Time.DAY) ||
+				lastNotificationValidThresholdMillis, Time.DAY,
+				remainingAccessTokenTimeMillis) ||
 			_isSendNotification(
-				remainingAccessTokenTimeMillis,
-				lastNotificationValidThresholdMillis, 0)) {
+				lastNotificationValidThresholdMillis, 0,
+				remainingAccessTokenTimeMillis)) {
 
 			return true;
 		}
@@ -104,9 +104,9 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	private boolean _isSendNotification(
-		long remainingAccessTokenTimeMillis,
 		long lastNotificationThresholdMillis,
-		long notificationValidThresholdMillis) {
+		long notificationValidThresholdMillis,
+		long remainingAccessTokenTimeMillis) {
 
 		if ((notificationValidThresholdMillis >=
 				remainingAccessTokenTimeMillis) &&
@@ -187,9 +187,9 @@ public class ScimNotificationSchedulerJobConfiguration
 		ExpandoBridge expandoBridge = oAuth2Authorization.getExpandoBridge();
 
 		if (!isSendNotification(
-				accessTokenExpirationDate,
-				(Date)expandoBridge.getAttribute("lastNotificationDate", false),
-				System.currentTimeMillis())) {
+				accessTokenExpirationDate, System.currentTimeMillis(),
+				(Date)expandoBridge.getAttribute(
+					"lastNotificationDate", false))) {
 
 			return;
 		}

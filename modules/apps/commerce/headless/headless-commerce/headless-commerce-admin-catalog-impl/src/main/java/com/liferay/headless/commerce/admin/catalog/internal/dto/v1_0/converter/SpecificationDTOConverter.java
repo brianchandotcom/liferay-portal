@@ -54,6 +54,17 @@ public class SpecificationDTOConverter
 				setFacetable(cpSpecificationOption::isFacetable);
 				setId(cpSpecificationOption::getCPSpecificationOptionId);
 				setKey(cpSpecificationOption::getKey);
+				setListTypeDefinitionId(
+					() -> {
+						for (ListTypeDefinition listTypeDefinition :
+								cpSpecificationOption.
+									getListTypeDefinitions()) {
+
+							return listTypeDefinition.getListTypeDefinitionId();
+						}
+
+						return null;
+					});
 				setListTypeDefinitionIds(
 					() -> TransformUtil.transformToArray(
 						cpSpecificationOption.getListTypeDefinitions(),

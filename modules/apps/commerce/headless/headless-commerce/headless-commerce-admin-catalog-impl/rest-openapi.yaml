@@ -2239,6 +2239,11 @@ components:
                 key:
                     example: specification-key
                     type: string
+                listTypeDefinitionId:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    type: integer
                 listTypeDefinitionIds:
                     items:
                         format: int64

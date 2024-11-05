@@ -892,7 +892,7 @@ public class JournalTestUtil {
 			journalConverter);
 	}
 
-	public static Tuple addStructureWithPredefinedValues(
+	public static JournalArticle addArticleDefaultValues(
 			long userId, long groupId, String title)
 		throws Exception {
 
@@ -919,7 +919,7 @@ public class JournalTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId, userId);
 
-		JournalArticle journalArticle =
+		return
 			JournalArticleLocalServiceUtil.addArticleDefaultValues(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				PortalUtil.getClassNameId(DDMStructure.class),
@@ -931,8 +931,6 @@ public class JournalTestUtil {
 				ddmTemplate.getTemplateKey(), null, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
 				serviceContext);
-
-		return new Tuple(ddmStructure, journalArticle);
 	}
 
 	public static void expireArticle(long groupId, JournalArticle article)

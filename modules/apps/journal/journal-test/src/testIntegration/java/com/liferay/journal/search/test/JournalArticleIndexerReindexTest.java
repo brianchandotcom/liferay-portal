@@ -75,12 +75,12 @@ public class JournalArticleIndexerReindexTest {
 	}
 
 	@Test
-	public void testReindexingWithPredefinedValues() throws Exception {
+	public void testReindexingWithDefaultValues() throws Exception {
 		SearchContext searchContext = _getSearchContext("Architectural");
 
 		_assertSearchCount(0, searchContext);
 
-		JournalTestUtil.addStructureWithPredefinedValues(
+		JournalTestUtil.addArticleDefaultValues(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			"Liferay Architectural Approach");
 

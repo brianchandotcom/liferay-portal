@@ -4341,7 +4341,8 @@ public class ObjectEntryLocalServiceImpl
 				}
 
 				_validateExternalReferenceCode(
-					externalReferenceCode, objectEntry.getCompanyId(),
+					externalReferenceCode, objectEntry.getGroupId(),
+					objectEntry.getCompanyId(),
 					objectEntry.getObjectDefinitionId(),
 					objectEntry.getObjectEntryId());
 
@@ -4782,11 +4783,11 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _validateExternalReferenceCode(
-		String externalReferenceCode, long companyId, long objectDefinitionId,
-		long objectEntryId) {
+		String externalReferenceCode, long groupId, long companyId,
+		long objectDefinitionId, long objectEntryId) {
 
-		ObjectEntry objectEntry = objectEntryPersistence.fetchByERC_C_ODI(
-			externalReferenceCode, companyId, objectDefinitionId);
+		ObjectEntry objectEntry = objectEntryPersistence.fetchByERC_G_C_ODI(
+			externalReferenceCode, groupId, companyId, objectDefinitionId);
 
 		if ((objectEntry != null) &&
 			(objectEntry.getObjectEntryId() != objectEntryId)) {

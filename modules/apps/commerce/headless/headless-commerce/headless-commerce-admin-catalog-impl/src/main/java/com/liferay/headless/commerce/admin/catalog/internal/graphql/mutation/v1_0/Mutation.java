@@ -1018,6 +1018,39 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteSpecificationListTypeDefinition(
+			@GraphQLName("specificationId") Long specificationId,
+			@GraphQLName("listTypeDefinitionId") Long listTypeDefinitionId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_listTypeDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeDefinitionResource ->
+				listTypeDefinitionResource.
+					deleteSpecificationListTypeDefinition(
+						specificationId, listTypeDefinitionId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean createSpecificationListTypeDefinition(
+			@GraphQLName("specificationId") Long specificationId,
+			@GraphQLName("listTypeDefinitionId") Long listTypeDefinitionId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_listTypeDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeDefinitionResource ->
+				listTypeDefinitionResource.postSpecificationListTypeDefinition(
+					specificationId, listTypeDefinitionId));
+
+		return true;
+	}
+
+	@GraphQLField
 	public Response createLowStockActionsPageExportBatch(
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("contentType") String contentType,

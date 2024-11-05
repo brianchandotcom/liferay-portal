@@ -507,6 +507,16 @@ public class ServletDataImpl implements ServletData {
 							ListTypeDefinitionResourceImpl.class,
 							"postSpecificationIdListTypeDefinitionBatch"));
 					put(
+						"mutation#deleteSpecificationListTypeDefinition",
+						new ObjectValuePair<>(
+							ListTypeDefinitionResourceImpl.class,
+							"deleteSpecificationListTypeDefinition"));
+					put(
+						"mutation#createSpecificationListTypeDefinition",
+						new ObjectValuePair<>(
+							ListTypeDefinitionResourceImpl.class,
+							"postSpecificationListTypeDefinition"));
+					put(
 						"mutation#createLowStockActionsPageExportBatch",
 						new ObjectValuePair<>(
 							LowStockActionResourceImpl.class,

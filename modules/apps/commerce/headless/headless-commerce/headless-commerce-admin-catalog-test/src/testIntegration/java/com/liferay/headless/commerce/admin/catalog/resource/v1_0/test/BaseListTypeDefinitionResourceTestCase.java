@@ -296,6 +296,62 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testDeleteSpecificationListTypeDefinition() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ListTypeDefinition listTypeDefinition =
+			testDeleteSpecificationListTypeDefinition_addListTypeDefinition();
+
+		assertHttpResponseStatusCode(
+			204,
+			listTypeDefinitionResource.
+				deleteSpecificationListTypeDefinitionHttpResponse(
+					testDeleteSpecificationListTypeDefinition_getSpecificationId(),
+					listTypeDefinition.getId()));
+	}
+
+	protected Long
+			testDeleteSpecificationListTypeDefinition_getSpecificationId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ListTypeDefinition
+			testDeleteSpecificationListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostSpecificationListTypeDefinition() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ListTypeDefinition listTypeDefinition =
+			testPostSpecificationListTypeDefinition_addListTypeDefinition();
+
+		assertHttpResponseStatusCode(
+			204,
+			listTypeDefinitionResource.
+				postSpecificationListTypeDefinitionHttpResponse(
+					null, listTypeDefinition.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			listTypeDefinitionResource.
+				postSpecificationListTypeDefinitionHttpResponse(null, 0L));
+	}
+
+	protected ListTypeDefinition
+			testPostSpecificationListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected ListTypeDefinition
 			testGraphQLListTypeDefinition_addListTypeDefinition()
 		throws Exception {

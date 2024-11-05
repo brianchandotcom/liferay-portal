@@ -260,7 +260,7 @@ public class Specification implements Serializable {
 	private Supplier<String> _keySupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@Schema(deprecated = true, example = "31130")
 	public Long getListTypeDefinitionId() {
 		if (_listTypeDefinitionIdSupplier != null) {
 			listTypeDefinitionId = _listTypeDefinitionIdSupplier.get();
@@ -294,12 +294,54 @@ public class Specification implements Serializable {
 		};
 	}
 
+	@Deprecated
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long listTypeDefinitionId;
 
 	@JsonIgnore
 	private Supplier<Long> _listTypeDefinitionIdSupplier;
+
+	@Schema
+	public Long[] getListTypeDefinitionIds() {
+		if (_listTypeDefinitionIdsSupplier != null) {
+			listTypeDefinitionIds = _listTypeDefinitionIdsSupplier.get();
+
+			_listTypeDefinitionIdsSupplier = null;
+		}
+
+		return listTypeDefinitionIds;
+	}
+
+	public void setListTypeDefinitionIds(Long[] listTypeDefinitionIds) {
+		this.listTypeDefinitionIds = listTypeDefinitionIds;
+
+		_listTypeDefinitionIdsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setListTypeDefinitionIds(
+		UnsafeSupplier<Long[], Exception> listTypeDefinitionIdsUnsafeSupplier) {
+
+		_listTypeDefinitionIdsSupplier = () -> {
+			try {
+				return listTypeDefinitionIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long[] listTypeDefinitionIds;
+
+	@JsonIgnore
+	private Supplier<Long[]> _listTypeDefinitionIdsSupplier;
 
 	@Schema
 	@Valid
@@ -533,6 +575,28 @@ public class Specification implements Serializable {
 			sb.append("\"listTypeDefinitionId\": ");
 
 			sb.append(listTypeDefinitionId);
+		}
+
+		Long[] listTypeDefinitionIds = getListTypeDefinitionIds();
+
+		if (listTypeDefinitionIds != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"listTypeDefinitionIds\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < listTypeDefinitionIds.length; i++) {
+				sb.append(listTypeDefinitionIds[i]);
+
+				if ((i + 1) < listTypeDefinitionIds.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		OptionCategory optionCategory = getOptionCategory();

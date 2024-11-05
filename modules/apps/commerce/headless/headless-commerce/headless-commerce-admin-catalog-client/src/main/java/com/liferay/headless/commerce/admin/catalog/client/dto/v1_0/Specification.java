@@ -149,6 +149,27 @@ public class Specification implements Cloneable, Serializable {
 
 	protected Long listTypeDefinitionId;
 
+	public Long[] getListTypeDefinitionIds() {
+		return listTypeDefinitionIds;
+	}
+
+	public void setListTypeDefinitionIds(Long[] listTypeDefinitionIds) {
+		this.listTypeDefinitionIds = listTypeDefinitionIds;
+	}
+
+	public void setListTypeDefinitionIds(
+		UnsafeSupplier<Long[], Exception> listTypeDefinitionIdsUnsafeSupplier) {
+
+		try {
+			listTypeDefinitionIds = listTypeDefinitionIdsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long[] listTypeDefinitionIds;
+
 	public OptionCategory getOptionCategory() {
 		return optionCategory;
 	}

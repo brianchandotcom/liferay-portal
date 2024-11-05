@@ -34,7 +34,7 @@
 		"typescript": "^5.2.2",
 		"vite": "^4.0.0"
 	},
-	"name": "@liferay/ai-content-wizard-custom-element",
+	"name": "@liferay/aicontentwizard-custom-element",
 	"private": true,
 	"scripts": {
 		"build": "vite build",

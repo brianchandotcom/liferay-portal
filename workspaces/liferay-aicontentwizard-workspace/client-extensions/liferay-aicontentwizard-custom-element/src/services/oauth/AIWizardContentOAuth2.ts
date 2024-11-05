@@ -8,7 +8,7 @@ import OAuth2Client from './OAuth2Client';
 
 export default class AIWizardContentOAuth2 extends OAuth2Client {
 	constructor() {
-		super('liferay-content-wizard-oauth-application-user-agent');
+		super('liferay-aicontentwizard-oauth-application-user-agent');
 	}
 
 	async deleteSetting(id: number) {

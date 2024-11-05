@@ -1,13 +1,13 @@
 assemble:
     - from: build/vite
       into: static
-liferay-content-wizard-custom-element:
+liferay-aicontentwizard-custom-element:
     cssURLs:
         - "**/index*.css"
-    friendlyURLMapping: liferay-content-wizard-custom-element
-    htmlElementName: liferay-content-wizard-custom-element
+    friendlyURLMapping: liferay-aicontentwizard-custom-element
+    htmlElementName: liferay-aicontentwizard-custom-element
     instanceable: false
-    name: Liferay Content Wizard
+    name: Liferay AI Content Wizard
     portletCategoryName: category.client-extensions
     properties:
         route: app
@@ -15,13 +15,13 @@ liferay-content-wizard-custom-element:
     urls:
         - "main.js"
     useESM: true
-liferay-content-wizard-settings-custom-element:
+liferay-aicontentwizard-settings-custom-element:
     cssURLs:
         - "**/index*.css"
-    friendlyURLMapping: liferay-content-wizard-custom-element
-    htmlElementName: liferay-content-wizard-custom-element
+    friendlyURLMapping: liferay-aicontentwizard-custom-element
+    htmlElementName: liferay-aicontentwizard-custom-element
     instanceable: false
-    name: Liferay Content Wizard Settings
+    name: Liferay AI Content Wizard Settings
     panelAppOrder: 700
     panelCategoryKey: applications_menu.applications.custom.apps
     portletCategoryName: category.client-extensions

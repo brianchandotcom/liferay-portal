@@ -1,9 +1,9 @@
-liferay-content-wizard-custom-element:
+liferay-aicontentwizard-custom-element:
     urls:
         - http://localhost:5173/@vite/client
         - http://localhost:5173/@vite/refresh.ts
         - http://localhost:5173/src/main.tsx
-liferay-content-wizard-settings-custom-element:
+liferay-aicontentwizard-settings-custom-element:
     urls:
         - http://localhost:5173/@vite/client
         - http://localhost:5173/@vite/refresh.ts

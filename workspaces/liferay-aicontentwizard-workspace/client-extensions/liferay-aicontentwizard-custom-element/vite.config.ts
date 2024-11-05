@@ -20,7 +20,7 @@ export default defineConfig({
 	},
 	experimental: {
 		renderBuiltUrl(filename: string) {
-			return `/o/liferay-content-wizard-custom-element/${filename}`;
+			return `/o/liferay-aicontentwizard-custom-element/${filename}`;
 		},
 	},
 	plugins: [react(), splitVendorChunkPlugin()],

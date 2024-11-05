@@ -15,11 +15,11 @@ import AppContextProvider from './context/AppContext';
 import SettingRouter from './routes/settings/SettingRouter';
 import {getIconSpriteMap} from './utils/iconSpritemap';
 
-const customElementId = 'liferay-content-wizard-custom-element';
+const customElementId = 'liferay-aicontentwizard-custom-element';
 
 type Route = 'app' | 'settings';
 
-class ContentWizard extends HTMLElement {
+class AIContentWizard extends HTMLElement {
 	private root?: Root;
 
 	connectedCallback() {
@@ -51,5 +51,5 @@ class ContentWizard extends HTMLElement {
 }
 
 if (!customElements.get(customElementId)) {
-	customElements.define(customElementId, ContentWizard);
+	customElements.define(customElementId, AIContentWizard);
 }

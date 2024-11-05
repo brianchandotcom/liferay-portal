@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const STORAGE_KEY = '@liferay-ai-content-wizard/swr';
+const STORAGE_KEY = '@liferay-aicontentwizard/swr';
 
 /**
  * @description When initializing, we restore the data from `STORAGE` into a map.

@@ -277,6 +277,26 @@ function get_client_extension_dirs {
 	echo ${client_extension_dirs[@]}
 }
 
+function get_client_extension_workspace_portal_ext_properties_files {
+	local client_extensions_list_file=${1}
+
+	local workspace_dirs=()
+
+	if [[ -f ${client_extensions_list_file} ]]
+	then
+		local workspace_dir
+
+		for workspace_dir in $(get_workspace_dirs ${client_extensions_list_file})
+		do
+			local portal_ext_properties_file="${workspace_dir}configs/local/portal-ext.properties"
+
+			workspace_dirs+=(${portal_ext_properties_file})
+		done
+	fi
+
+	echo ${workspace_dirs[@]}
+}
+
 function get_gradlew {
 	if [[ -e ./gradlew ]]
 	then
@@ -289,6 +309,16 @@ function get_gradlew {
 	else
 		echo $(cd .. ; get_gradlew)
 	fi
+}
+
+function get_parent_client_extension_workspace_portal_ext_properties_files {
+	for parent_playwright_project_dir in $(get_parent_playwright_project_dirs)
+	do
+		if [[ -f ${parent_playwright_project_dir}/env/client-extensions.list ]]
+		then
+			get_client_extension_workspace_portal_ext_properties_files ${parent_playwright_project_dir}/env/client-extensions.list
+		fi
+	done
 }
 
 function get_parent_playwright_project_dirs {
@@ -335,12 +365,43 @@ function get_portal_project_dir {
 	echo ${_PORTAL_PROJECT_DIR}
 }
 
+function get_project_client_extension_workspace_portal_ext_properties_files {
+	local playwright_project_dir=$(get_playwright_project_dir)
+
+	if [[ -f ${playwright_project_dir}/env/client-extensions.list ]]
+	then
+		get_client_extension_workspace_portal_ext_properties_files ${playwright_project_dir}/env/client-extensions.list
+	fi
+}
+
 function get_tomcat_dir {
 	find ${LIFERAY_HOME} -type d -name "tomcat*"
 }
 
 function get_tomcat_portal_ext_properties_file {
 	find ${LIFERAY_HOME} -type f -name "portal-ext.properties"
+}
+
+function get_workspace_dirs {
+	local client_extensions_list_file=${1}
+
+	local workspace_dirs=()
+
+	local client_extension_dir
+
+	if [[ -f ${client_extensions_list_file} ]]
+	then
+		for client_extension_dir in $(get_client_extension_dirs ${client_extensions_list_file})
+		do
+			local workspace_dir=$(echo ${client_extension_dir} | sed 's/\(.*-workspace\/\).*$/\1/')
+
+			if ! [[ "${workspace_dirs[@]}" =~ "${workspace_dir}" ]]; then
+			    workspace_dirs+=(${workspace_dir})
+			fi
+		done
+	fi
+
+	echo ${workspace_dirs[@]}
 }
 
 function main {
@@ -492,6 +553,10 @@ function stop_client_extension_spring_boot_application {
 function update_portal_ext_properties {
 	combine_properties_files \
 		$(get_tomcat_portal_ext_properties_file) \
+		\
+		$(get_parent_client_extension_workspace_portal_ext_properties_files) \
+		\
+		$(get_project_client_extension_workspace_portal_ext_properties_files) \
 		\
 		$(get_parent_portal_ext_properties_files) \
 		\

@@ -42,6 +42,10 @@ public interface FragmentEntryProcessorHelper {
 
 	public long getFileEntryId(WebImage webImage);
 
+	public InfoItemFieldMapped getInfoItemFieldMapped(
+		JSONObject editableValueJSONObject,
+		FragmentEntryProcessorContext fragmentEntryProcessorContext);
+
 	public Object getMappedInfoItemFieldValue(
 		JSONObject editableValueJSONObject, String fieldName,
 		FragmentEntryProcessorContext fragmentEntryProcessorContext,

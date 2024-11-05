@@ -99,10 +99,10 @@ export class ProductMenuPage {
 		await this.membershipsButton.click();
 	}
 
-	async goToPages(siteUrl?: string) {
-		if (siteUrl) {
+	async goToPages(siteURL?: string) {
+		if (siteURL) {
 			await this.page.goto(
-				`/group${siteUrl || '/guest'}${PORTLET_URLS.pages}`
+				`/group${siteURL || '/guest'}${PORTLET_URLS.pages}`
 			);
 		}
 		else {
@@ -126,9 +126,9 @@ export class ProductMenuPage {
 		await this.siteSettingsButton.click();
 	}
 
-	async goToTeams(siteUrl?: string) {
+	async goToTeams(siteURL?: string) {
 		await this.page.goto(
-			`/group${siteUrl || '/guest'}${PORTLET_URLS.teams}`
+			`/group${siteURL || '/guest'}${PORTLET_URLS.teams}`
 		);
 	}
 

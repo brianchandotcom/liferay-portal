@@ -132,7 +132,7 @@ export default function StructureTreeNode({node}) {
 	]);
 
 	return (
-		<MemoizedStructureTreeNodeContent
+		<MemoizedNodeContent
 			activationOrigin={isSelected ? activationOrigin : null}
 			activeItemIds={activeItemIds}
 			isActive={node.activable && isSelected}
@@ -142,7 +142,7 @@ export default function StructureTreeNode({node}) {
 	);
 }
 
-StructureTreeNodeContent.propTypes = {
+NodeContent.propTypes = {
 	node: PropTypes.shape({
 		id: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
@@ -150,12 +150,11 @@ StructureTreeNodeContent.propTypes = {
 	}).isRequired,
 };
 
-const MemoizedStructureTreeNodeContent = React.memo(
-	StructureTreeNodeContent,
-	(prevProps, nextProps) => deepEqual(prevProps, nextProps)
+const MemoizedNodeContent = React.memo(NodeContent, (prevProps, nextProps) =>
+	deepEqual(prevProps, nextProps)
 );
 
-function StructureTreeNodeContent({
+function NodeContent({
 	activationOrigin,
 	activeItemIds,
 	isActive,

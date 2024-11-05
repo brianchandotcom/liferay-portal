@@ -46,7 +46,7 @@ modules/apps/bean-portlet/    @liferay-core-infra
 modules/apps/blogs/    @liferay-content-management
 modules/apps/bookmarks/    @liferay-content-management
 modules/apps/bulk/    @liferay-content-management
-modules/apps/calendar/
+modules/apps/calendar/    @liferay-bpm
 modules/apps/captcha/    @liferay-appsec
 modules/apps/change-tracking/
 modules/apps/change-set/
@@ -67,7 +67,7 @@ modules/apps/data-cleanup/    @liferay-database-infra
 modules/apps/data-engine/    @liferay-bpm
 modules/apps/depot/    @liferay-content-management
 modules/apps/diff/
-modules/apps/digital-signature/
+modules/apps/digital-signature/    @liferay-bpm
 modules/apps/dispatch/    @liferay-headless
 modules/apps/document-library-google-docs/    @liferay-content-management
 modules/apps/document-library-opener/    @liferay-content-management
@@ -96,17 +96,17 @@ modules/apps/gogo-shell/    @liferay-core-infra
 modules/apps/google-places/
 modules/apps/headless/headless-admin-address/    @liferay-commerce
 modules/apps/headless/headless-admin-content/    @liferay-content-management
-modules/apps/headless/headless-admin-list-type/
+modules/apps/headless/headless-admin-list-type/    @liferay-bpm
 modules/apps/headless/headless-admin-site/    @liferay-page-management
 modules/apps/headless/headless-admin-taxonomy/    @liferay-content-management
 modules/apps/headless/headless-admin-user/    @liferay-commerce
-modules/apps/headless/headless-admin-workflow/
+modules/apps/headless/headless-admin-workflow/    @liferay-bpm
 modules/apps/headless/headless-batch-engine/    @liferay-headless
 modules/apps/headless/headless-builder/    @liferay-headless
 modules/apps/headless/headless-common-spi/
 modules/apps/headless/headless-delivery/    @liferay-page-management
 modules/apps/headless/headless-discovery/    @liferay-headless
-modules/apps/headless/headless-form/
+modules/apps/headless/headless-form/    @liferay-bpm
 modules/apps/headless/headless-portal-instances/    @liferay-database-infra
 modules/apps/headless/headless-site/
 modules/apps/headless/headless-user-notification/    @liferay-commerce
@@ -169,7 +169,7 @@ modules/apps/monitoring/
 modules/apps/my-subscriptions/    @liferay-content-management
 modules/apps/nested-portlets/    @liferay-page-management
 modules/apps/normalizer/
-modules/apps/notification/
+modules/apps/notification/    @liferay-bpm
 modules/apps/notifications/    @liferay-content-management
 modules/apps/oauth-client/
 modules/apps/oauth2-provider/    @liferay-appsec
@@ -199,7 +199,7 @@ modules/apps/portal-portlet-bridge/
 modules/apps/portal-portlet-bridge/portal-portlet-bridge-mvc-test/    @liferay-core-infra
 modules/apps/portal-relationship/
 modules/apps/portal-remote/
-modules/apps/portal-reports-engine/
+modules/apps/portal-reports-engine/    @liferay-bpm
 modules/apps/portal-rules-engine/
 modules/apps/portal-scheduler/    @liferay-core-infra
 modules/apps/portal-scripting/
@@ -378,8 +378,8 @@ modules/dxp/apps/osb/osb-faro/    @liferay-ac
 modules/dxp/apps/osb/osb-site-initializer/
 modules/dxp/apps/osb/osb-spring-boot/
 modules/dxp/apps/osb/osb-testray/
-modules/dxp/apps/portal-reports-engine-console/
-modules/dxp/apps/portal-rules-engine-drools/
+modules/dxp/apps/portal-reports-engine-console/    @liferay-bpm
+modules/dxp/apps/portal-rules-engine-drools/    @liferay-bpm
 modules/dxp/apps/portal-search-elasticsearch-cross-cluster-replication/    @liferay-search
 modules/dxp/apps/portal-search-elasticsearch-monitoring/    @liferay-search
 modules/dxp/apps/portal-search-learning-to-rank/    @liferay-search

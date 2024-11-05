@@ -1,26 +1,29 @@
 {
 	"compilerOptions": {
-		"composite": true,
-		"target": "ES2020",
-		"useDefineForClassFields": true,
-		"lib": ["ES2020", "DOM", "DOM.Iterable"],
-		"module": "ESNext",
-		"skipLibCheck": true,
-
-		/* Bundler mode */
-		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
-		"resolveJsonModule": true,
+		"composite": true,
 		"isolatedModules": true,
-		"moduleDetection": "force",
-		"noEmit": true,
 		"jsx": "react-jsx",
-
-		/* Linting */
-		"strict": true,
+		"lib": [
+			"ES2020",
+			"DOM",
+			"DOM.Iterable"
+		],
+		"module": "ESNext",
+		"moduleDetection": "force",
+		"moduleResolution": "bundler",
+		"noEmit": true,
+		"noFallthroughCasesInSwitch": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "ES2020",
+		"useDefineForClassFields": true
 	},
-	"include": ["src", "@vite"]
+	"include": [
+		"src",
+		"@vite"
+	]
 }

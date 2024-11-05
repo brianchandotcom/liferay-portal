@@ -1,0 +1,41 @@
+{
+    "pageElement": {
+        "pageElements": [
+            {
+                "pageElements": [
+                    {
+                        "definition": {
+                            "widgetInstance": {
+                                "widgetConfig": {
+                                    "properties": ""
+                                },
+                                "widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_content_wizard_custom_element"
+                            }
+                        },
+                        "type": "Widget"
+                    }
+                ],
+                "type": "FragmentDropZone"
+            },
+            {
+                "definition": {
+                    "fragmentSettings": {
+                        "unallowedFragments": []
+                    }
+                },
+                "type": "DropZone"
+            }
+        ],
+        "type": "Root"
+    },
+    "settings": {
+        "themeName": "Classic",
+        "themeSettings": {
+            "lfr-theme:regular:show-footer": "true",
+            "lfr-theme:regular:show-header": "true",
+            "lfr-theme:regular:show-header-search": "true",
+            "lfr-theme:regular:wrap-widget-page-content": "true"
+        }
+    },
+    "version": 1.0
+}

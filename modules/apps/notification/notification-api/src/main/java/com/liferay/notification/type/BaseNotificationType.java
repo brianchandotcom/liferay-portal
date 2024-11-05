@@ -122,11 +122,20 @@ public abstract class BaseNotificationType implements NotificationType {
 					continue;
 				}
 
+				List<Map<String, String>> roles = new ArrayList<>();
+
+				if (entry.getValue() instanceof Object[]) {
+					for (Object object : (Object[])entry.getValue()) {
+						roles.add((Map<String, String>)object);
+					}
+				}
+				else {
+					roles = (List<Map<String, String>>)entry.getValue();
+				}
+
 				Set<String> roleNames = new HashSet<>();
 
-				for (Map<String, String> roleMap :
-						(List<Map<String, String>>)entry.getValue()) {
-
+				for (Map<String, String> roleMap : roles) {
 					String roleName = roleMap.get(
 						NotificationRecipientSettingConstants.NAME_ROLE_NAME);
 

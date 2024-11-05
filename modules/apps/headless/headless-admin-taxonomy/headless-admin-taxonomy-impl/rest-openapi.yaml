@@ -99,6 +99,10 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    description:
+                        The keyword's external reference code
+                    type: string
                 id:
                     description:
                         The keyword's ID.

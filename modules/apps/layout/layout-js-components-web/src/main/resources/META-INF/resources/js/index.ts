@@ -15,6 +15,7 @@ export {default as ImportResults} from './components/import/ImportResults';
 export {default as LengthInput} from './components/length_input/LengthInput';
 export {default as openCreationModal} from './components/modals/openCreationModal';
 export {default as PageTemplateModal} from './components/page_template_modal/PageTemplateModal';
+export {default as Resizer} from './components/resizer/Resizer';
 export {default as ScreenReaderAnnouncer} from './components/screen_reader_announcer/ScreenReaderAnnouncer';
 export {default as SearchForm} from './components/search_form/SearchForm';
 export {default as SearchResultsMessage} from './components/search_results_message/SearchResultsMessage';

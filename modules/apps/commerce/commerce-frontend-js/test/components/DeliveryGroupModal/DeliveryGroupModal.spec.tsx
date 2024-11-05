@@ -469,4 +469,64 @@ describe('DeliveryGroupModal', () => {
 		expect(handlerCallbackResult.deliveryDate).toBe('2024-12-12');
 		expect(handlerCallbackResult.name).toBe('deliveryGroupName');
 	});
+
+	it('Must fill delivery group name using existing address if empty', async () => {
+		const renderedComponent = render(
+			<DeliveryGroupModal
+				accountId={10}
+				handleSubmit={handleSubmit}
+				observerModal={{
+					dispatch: jest.fn(),
+					mutation: [true, true],
+				}}
+				onOpenModal={jest.fn()}
+			/>
+		);
+
+		const {addressCountrySelect, addressIdSelect, deliveryGroupNameInput} =
+			getLocators(renderedComponent);
+
+		await waitFor(() => {
+			expect(addressCountrySelect?.options?.length).toBe(2);
+			expect(addressIdSelect?.options?.length).toBe(2);
+		});
+
+		await setFieldValue(deliveryGroupNameInput, '');
+		await setFieldValue(addressIdSelect, String(101));
+
+		expect(deliveryGroupNameInput).toHaveValue('name1');
+
+		await setFieldValue(deliveryGroupNameInput, '');
+		await setFieldValue(addressIdSelect, String(0));
+		await setFieldValue(addressIdSelect, String(101));
+
+		expect(deliveryGroupNameInput).toHaveValue('name1');
+	});
+
+	it('Must not change delivery group name using existing address if filled', async () => {
+		const renderedComponent = render(
+			<DeliveryGroupModal
+				accountId={10}
+				handleSubmit={handleSubmit}
+				observerModal={{
+					dispatch: jest.fn(),
+					mutation: [true, true],
+				}}
+				onOpenModal={jest.fn()}
+			/>
+		);
+
+		const {addressCountrySelect, addressIdSelect, deliveryGroupNameInput} =
+			getLocators(renderedComponent);
+
+		await waitFor(() => {
+			expect(addressCountrySelect?.options?.length).toBe(2);
+			expect(addressIdSelect?.options?.length).toBe(2);
+		});
+
+		await setFieldValue(deliveryGroupNameInput, 'groupName');
+		await setFieldValue(addressIdSelect, String(101));
+
+		expect(deliveryGroupNameInput).toHaveValue('groupName');
+	});
 });

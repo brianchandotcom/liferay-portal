@@ -201,6 +201,7 @@ describe('AddressSelector', () => {
 		const renderedComponent = render(
 			<AddressSelector
 				accountId={10}
+				setHandleNameChange={jest.fn()}
 				setHandleSubmit={handleSubmit}
 				setIsFormValid={isFormValid}
 			/>
@@ -217,6 +218,7 @@ describe('AddressSelector', () => {
 		let renderedComponent = render(
 			<AddressSelector
 				accountId={10}
+				setHandleNameChange={jest.fn()}
 				setHandleSubmit={handleSubmit}
 				setIsFormValid={isFormValid}
 			/>
@@ -234,6 +236,7 @@ describe('AddressSelector', () => {
 			<AddressSelector
 				accountId={10}
 				addressType="billing"
+				setHandleNameChange={jest.fn()}
 				setHandleSubmit={handleSubmit}
 				setIsFormValid={isFormValid}
 			/>
@@ -250,6 +253,7 @@ describe('AddressSelector', () => {
 		const renderedComponent = render(
 			<AddressSelector
 				accountId={10}
+				setHandleNameChange={jest.fn()}
 				setHandleSubmit={handleSubmit}
 				setIsFormValid={isFormValid}
 			/>
@@ -295,6 +299,7 @@ describe('AddressSelector', () => {
 		const renderedComponent = render(
 			<AddressSelector
 				accountId={10}
+				setHandleNameChange={jest.fn()}
 				setHandleSubmit={handleSubmit}
 				setIsFormValid={isFormValid}
 			/>
@@ -348,6 +353,7 @@ describe('AddressSelector', () => {
 		const renderedComponent = render(
 			<AddressSelector
 				accountId={10}
+				setHandleNameChange={jest.fn()}
 				setHandleSubmit={handleSubmit}
 				setIsFormValid={isFormValid}
 			/>
@@ -471,6 +477,7 @@ describe('AddressSelector', () => {
 			<AddressSelector
 				accountId={10}
 				addressId={selectedAddress.id}
+				setHandleNameChange={jest.fn()}
 				setHandleSubmit={handleSubmit}
 				setIsFormValid={isFormValid}
 			/>
@@ -551,6 +558,7 @@ describe('AddressSelector', () => {
 		const renderedComponent = render(
 			<AddressSelector
 				accountId={10}
+				setHandleNameChange={jest.fn()}
 				setHandleSubmit={handleSubmit}
 				setIsFormValid={isFormValid}
 			/>
@@ -604,6 +612,7 @@ describe('AddressSelector', () => {
 			<AddressSelector
 				accountId={10}
 				addressId={selectedAddress.id}
+				setHandleNameChange={jest.fn()}
 				setHandleSubmit={handleSubmit}
 				setIsFormValid={isFormValid}
 			/>
@@ -637,6 +646,7 @@ describe('AddressSelector', () => {
 		const renderedComponent = render(
 			<AddressSelector
 				accountId={10}
+				setHandleNameChange={jest.fn()}
 				setHandleSubmit={handleSubmit}
 				setIsFormValid={isFormValid}
 			/>
@@ -712,6 +722,7 @@ describe('AddressSelector API errors', () => {
 		render(
 			<AddressSelector
 				accountId={10}
+				setHandleNameChange={jest.fn()}
 				setHandleSubmit={jest.fn()}
 				setIsFormValid={jest.fn()}
 			/>

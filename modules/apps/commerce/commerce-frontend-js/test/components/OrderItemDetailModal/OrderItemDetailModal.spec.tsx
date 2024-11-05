@@ -58,6 +58,54 @@ describe('OrderItemDetailModal', () => {
 		expect(uom).toBeVisible();
 	});
 
+	it('Must show modal without uom', async () => {
+		const orderItem = {
+			name: 'ABS Sensor',
+			options: JSON.stringify([]),
+			sku: 'MIN93015',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemDetailModal
+				observer={{
+					dispatch: jest.fn(),
+					mutation: [true, true],
+				}}
+				orderItem={orderItem}
+			/>
+		);
+
+		const {orderItemName, uom} = getLocators(orderItem, renderedComponent);
+
+		expect(orderItemName).toBeVisible();
+		expect(uom).not.toBeInTheDocument();
+	});
+
+	it('Must show modal without options', async () => {
+		const orderItem = {
+			name: 'ABS Sensor',
+			options: JSON.stringify([]),
+			sku: 'MIN93015',
+		} as IOrderItem;
+
+		const renderedComponent = render(
+			<OrderItemDetailModal
+				observer={{
+					dispatch: jest.fn(),
+					mutation: [true, true],
+				}}
+				orderItem={orderItem}
+			/>
+		);
+
+		const {orderItemName} = getLocators(orderItem, renderedComponent);
+
+		expect(orderItemName).toBeVisible();
+		expect(
+			renderedComponent.queryByText('Options')
+		).not.toBeInTheDocument();
+	});
+
 	it('Must show modal with complex order item data', async () => {
 		const orderItem = {
 			cartItems: [

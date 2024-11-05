@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.InputStream;
+
 import java.nio.charset.StandardCharsets;
 
 import java.util.Map;
@@ -43,6 +45,16 @@ public class HTTPTestUtil {
 		Http.Response response = options.getResponse();
 
 		return response.getResponseCode();
+	}
+
+	public static InputStream invokeToInputStream(
+			String body, String endpoint, Http.Method httpMethod)
+		throws Exception {
+
+		Http.Options options = _getHttpOptions(
+			body, endpoint, null, httpMethod);
+
+		return HttpUtil.URLtoInputStream(options);
 	}
 
 	public static JSONObject invokeToJSONObject(

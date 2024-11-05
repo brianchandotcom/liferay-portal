@@ -3,7 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useCallback, useContext, useReducer} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useReducer,
+	useRef,
+	useState,
+} from 'react';
 
 import {fromControlsId} from '../components/layout_data_items/Collection';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
@@ -16,7 +23,6 @@ const ACTIVE_INITIAL_STATE = {
 	activationOrigin: null,
 	activeItemIds: [],
 	activeItemType: null,
-	multiSelect: null,
 	rangeLimitIds: [],
 };
 
@@ -33,6 +39,15 @@ const ActiveDispatchContext = React.createContext(() => {});
 
 const HoverStateContext = React.createContext(HOVER_INITIAL_STATE);
 const HoverDispatchContext = React.createContext(() => {});
+
+const MultiSelectStateContext = React.createContext({
+	multiSelectType: null,
+});
+
+const MultiSelectStateRefContext = React.createContext({
+	multiSelectionTypeRef: React.createRef(),
+});
+const MultiSelectDispatchContext = React.createContext(() => {});
 
 /**
  * This method includes a new item in the active items. If this item is already
@@ -140,18 +155,18 @@ const reducer = (state, action) => {
 		else if (!itemId) {
 			nextActiveItemIds = [];
 		}
-		else if (state.multiSelect === MULTI_SELECT_TYPES.simple) {
+		else if (multiSelect === MULTI_SELECT_TYPES.simple) {
 			nextActiveItemIds = getActiveItemIds(
 				nextState.activeItemIds,
 				itemId
 			);
 		}
-		else if (state.multiSelect === MULTI_SELECT_TYPES.range) {
+		else if (multiSelect === MULTI_SELECT_TYPES.range) {
 
 			// Avoid selection in range when directly selecting an item that
 			// is not a layout data item, such as editables.
 
-			if (!state.layoutData.items[itemId]) {
+			if (!layoutData.items[itemId]) {
 				return nextState;
 			}
 
@@ -193,12 +208,11 @@ const reducer = (state, action) => {
 				nextActiveItemIds = [itemId];
 			}
 			else {
-				const root =
-					state.layoutData.items[state.layoutData.rootItems.main];
+				const root = layoutData.items[layoutData.rootItems.main];
 
 				nextActiveItemIds = getItemsWithinRange({
 					itemIds: root.children,
-					layoutDataItems: state.layoutData.items,
+					layoutDataItems: layoutData.items,
 					rangeLimitIds,
 				});
 
@@ -220,8 +234,6 @@ const reducer = (state, action) => {
 		nextState = {
 			...state,
 			activeItemIds: activeItemIds || state.activeItemIds,
-			layoutData,
-			multiSelect,
 		};
 	}
 
@@ -252,6 +264,25 @@ const HoverProvider = ({children, initialState}) => {
 	);
 };
 
+const MultiSelectProvider = ({children}) => {
+	const [multiSelectType, setMultiSelectType] = useState(null);
+	const multiSelectionTypeRef = useRef(multiSelectType);
+
+	useEffect(() => {
+		multiSelectionTypeRef.current = multiSelectType;
+	}, [multiSelectType]);
+
+	return (
+		<MultiSelectDispatchContext.Provider value={setMultiSelectType}>
+			<MultiSelectStateRefContext.Provider value={multiSelectionTypeRef}>
+				<MultiSelectStateContext.Provider value={multiSelectType}>
+					{children}
+				</MultiSelectStateContext.Provider>
+			</MultiSelectStateRefContext.Provider>
+		</MultiSelectDispatchContext.Provider>
+	);
+};
+
 const ControlsProvider = ({
 	activeInitialState = ACTIVE_INITIAL_STATE,
 	hoverInitialState = HOVER_INITIAL_STATE,
@@ -260,7 +291,7 @@ const ControlsProvider = ({
 	return (
 		<ActiveProvider initialState={activeInitialState}>
 			<HoverProvider initialState={hoverInitialState}>
-				{children}
+				<MultiSelectProvider>{children}</MultiSelectProvider>
 			</HoverProvider>
 		</ActiveProvider>
 	);
@@ -324,6 +355,8 @@ const useIsHovered = () => {
 
 const useSelectItem = () => {
 	const activeDispatch = useContext(ActiveDispatchContext);
+	const layoutDataRef = useSelectorRef((state) => state.layoutData);
+	const multiSelectTypeRef = useContext(MultiSelectStateRefContext);
 	const toControlsId = useToControlsId();
 
 	return useCallback(
@@ -336,29 +369,24 @@ const useSelectItem = () => {
 			activeDispatch({
 				itemId: toControlsId(itemId),
 				itemType,
+				layoutData: layoutDataRef.current,
+				multiSelect: multiSelectTypeRef.current,
 				origin,
 				type: SELECT_ITEM,
 			});
 		},
-		[activeDispatch, toControlsId]
+		[activeDispatch, layoutDataRef, multiSelectTypeRef, toControlsId]
 	);
 };
 
 const useActivateMultiSelect = () => {
-	const activeDispatch = useContext(ActiveDispatchContext);
-	const layoutDataRef = useSelectorRef((state) => state.layoutData);
+	const setMultiSelectType = useContext(MultiSelectDispatchContext);
 
 	return useCallback(
 		(multiSelect = null) => {
-			activeDispatch({
-				layoutData: layoutDataRef.current,
-				multiSelect,
-				type: MULTI_SELECT,
-			});
+			setMultiSelectType(multiSelect);
 		},
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[activeDispatch]
+		[setMultiSelectType]
 	);
 };
 
@@ -377,7 +405,9 @@ const useSelectMultipleItems = () => {
 	);
 };
 
-const useMultiSelectType = () => useContext(ActiveStateContext).multiSelect;
+const useMultiSelectType = () => useContext(MultiSelectStateContext);
+
+const useMultiSelectTypeRef = () => useContext(MultiSelectStateRefContext);
 
 export {
 	ControlsProvider,
@@ -393,6 +423,7 @@ export {
 	useIsActive,
 	useIsHovered,
 	useMultiSelectType,
+	useMultiSelectTypeRef,
 	useSelectItem,
 	useSelectMultipleItems,
 };

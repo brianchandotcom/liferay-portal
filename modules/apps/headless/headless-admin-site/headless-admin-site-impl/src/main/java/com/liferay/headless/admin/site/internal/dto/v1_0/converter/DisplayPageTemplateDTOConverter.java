@@ -11,8 +11,11 @@ import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,8 +55,17 @@ public class DisplayPageTemplateDTOConverter
 
 				setDateCreated(layoutPageTemplateEntry::getCreateDate);
 				setDateModified(layoutPageTemplateEntry::getModifiedDate);
+
+				Layout layout = _layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid());
+
+				setDatePublished(layout::getPublishDate);
+
 				setExternalReferenceCode(
 					layoutPageTemplateEntry::getExternalReferenceCode);
+				setFriendlyUrlPath_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						true, layout.getFriendlyURLMap()));
 				setKey(layoutPageTemplateEntry::getLayoutPageTemplateEntryKey);
 				setMarkedAsDefault(layoutPageTemplateEntry::isDefaultTemplate);
 				setName(layoutPageTemplateEntry::getName);
@@ -93,5 +105,8 @@ public class DisplayPageTemplateDTOConverter
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }

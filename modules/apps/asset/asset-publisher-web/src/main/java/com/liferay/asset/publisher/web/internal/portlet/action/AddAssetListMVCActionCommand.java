@@ -72,8 +72,9 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 			String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");
 
-			PortletPreferences portletPreferences = _getPortletPreferences(
-				portletResource, themeDisplay);
+			PortletPreferences portletPreferences =
+				PortletPreferencesFactoryUtil.getExistingPortletSetup(
+					themeDisplay.getLayout(), portletResource)
 
 			AssetListEntry assetListEntry = _getAssetListEntry(
 				actionRequest, portletPreferences, themeDisplay);
@@ -196,14 +197,6 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return null;
-	}
-
-	private PortletPreferences _getPortletPreferences(
-			String portletResource, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		return PortletPreferencesFactoryUtil.getExistingPortletSetup(
-			themeDisplay.getLayout(), portletResource);
 	}
 
 	private void _handlePortalException(

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -23,11 +23,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Zoltan Csaszi
- * @author Gergely Mathe
+ * @author Mikel Lorza
  */
 @RunWith(Arquillian.class)
-public class WikiDisplayPortletDataHandlerTest
+public class WikiAdminPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
@@ -66,17 +65,17 @@ public class WikiDisplayPortletDataHandlerTest
 
 	@Override
 	protected DataLevel getDataLevel() {
-		return DataLevel.PORTLET_INSTANCE;
+		return DataLevel.SITE;
 	}
 
 	@Override
 	protected String[] getDataPortletPreferences() {
-		return new String[] {"title", "nodeId"};
+		return new String[0];
 	}
 
 	@Override
 	protected String getPortletId() {
-		return WikiPortletKeys.WIKI_DISPLAY;
+		return WikiPortletKeys.WIKI_ADMIN;
 	}
 
 	@Override
@@ -86,12 +85,12 @@ public class WikiDisplayPortletDataHandlerTest
 
 	@Override
 	protected boolean isDataPortletInstanceLevel() {
-		return true;
+		return false;
 	}
 
 	@Override
 	protected boolean isDataSiteLevel() {
-		return false;
+		return true;
 	}
 
 }

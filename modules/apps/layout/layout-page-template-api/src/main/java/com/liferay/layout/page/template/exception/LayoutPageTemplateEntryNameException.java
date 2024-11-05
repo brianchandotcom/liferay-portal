@@ -46,8 +46,8 @@ public class LayoutPageTemplateEntryNameException extends PortalException {
 	public static class MustNotBeNull
 		extends LayoutPageTemplateEntryNameException {
 
-		public MustNotBeNull(long groupId) {
-			super("Name must not be null for group " + groupId);
+		public MustNotBeNull() {
+			super("Name must not be null");
 		}
 
 	}

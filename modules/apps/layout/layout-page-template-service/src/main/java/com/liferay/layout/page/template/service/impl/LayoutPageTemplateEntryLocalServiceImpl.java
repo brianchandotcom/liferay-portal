@@ -1098,8 +1098,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
-			throw new LayoutPageTemplateEntryNameException.MustNotBeNull(
-				groupId);
+			throw new LayoutPageTemplateEntryNameException.MustNotBeNull();
 		}
 
 		LayoutPageTemplateEntryValidator.validateNameCharacters(name);

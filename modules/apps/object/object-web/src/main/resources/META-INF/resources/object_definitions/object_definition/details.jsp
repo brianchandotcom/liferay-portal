@@ -44,6 +44,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 			).put(
 				"isRootDescendantNode", objectDefinition.isRootDescendantNode()
 			).put(
+				"isRootNode", objectDefinition.isRootNode()
+			).put(
 				"label", LocalizationUtil.getLocalizationMap(objectDefinition.getLabel())
 			).put(
 				"learnResourceContext", LearnMessageUtil.getReactDataJSONObject("frontend-js-components-web")

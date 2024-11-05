@@ -33,6 +33,7 @@ interface EditObjectDetailsProps {
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
 	isRootDescendantNode: boolean;
+	isRootNode: boolean;
 	label: LocalizedValue<string>;
 	learnResourceContext: any;
 	nonRelationshipObjectFieldsInfo: {
@@ -78,6 +79,7 @@ export default function EditObjectDetails({
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
 	isRootDescendantNode,
+	isRootNode,
 	label,
 	learnResourceContext,
 	nonRelationshipObjectFieldsInfo,
@@ -206,6 +208,7 @@ export default function EditObjectDetails({
 					}
 					isApproved={isApproved}
 					isRootDescendantNode={isRootDescendantNode}
+					isRootNode={isRootNode}
 					label={stringUtils.getLocalizableLabel(
 						values.defaultLanguageId as Liferay.Language.Locale,
 						values.label,

@@ -12,6 +12,7 @@ interface ObjectManagementToolbarProps {
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
 	isRootDescendantNode: boolean;
+	isRootNode: boolean;
 	label: string;
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
@@ -27,6 +28,7 @@ export default function ObjectManagementToolbar({
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
 	isRootDescendantNode,
+	isRootNode,
 	label,
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
@@ -35,6 +37,12 @@ export default function ObjectManagementToolbar({
 	screenNavigationCategoryKey,
 	system,
 }: ObjectManagementToolbarProps) {
+	const inheritanceLabel = isRootDescendantNode
+		? Liferay.Language.get('inherited')
+		: isRootNode
+			? Liferay.Language.get('root-object')
+			: Liferay.Language.get('standard');
+
 	return (
 		<ManagementToolbar
 			backURL={backURL}
@@ -52,6 +60,12 @@ export default function ObjectManagementToolbar({
 			helpMessage={Liferay.Language.get(
 				'unique-key-for-referencing-the-object-definition'
 			)}
+			inheritanceClassName={
+				isRootDescendantNode || isRootNode
+					? 'label-inverse-info'
+					: 'label-inverse-secondary'
+			}
+			inheritanceLabel={inheritanceLabel}
 			isApproved={isApproved}
 			isRootDescendantNode={isRootDescendantNode}
 			label={label}

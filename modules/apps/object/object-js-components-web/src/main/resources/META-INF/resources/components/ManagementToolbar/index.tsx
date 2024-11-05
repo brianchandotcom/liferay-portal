@@ -26,6 +26,8 @@ interface ManagementToolbarProps {
 	hasPublishPermission: boolean;
 	hasUpdatePermission: boolean;
 	helpMessage: string;
+	inheritanceClassName?: string;
+	inheritanceLabel?: string;
 	isApproved?: boolean;
 	isRootDescendantNode?: boolean;
 	label: string;
@@ -49,6 +51,8 @@ export function ManagementToolbar({
 	hasPublishPermission,
 	hasUpdatePermission,
 	helpMessage,
+	inheritanceClassName,
+	inheritanceLabel,
 	isApproved,
 	isRootDescendantNode,
 	label,
@@ -91,6 +95,15 @@ export function ManagementToolbar({
 				<ClayManagementToolbar.ItemList>
 					<div className="border-right ml-sm-2 mr-3 pr-3">
 						<h3 className="mb-0 text-truncate">{label}</h3>
+
+						{Liferay.FeatureFlags['LPS-187142'] &&
+							inheritanceLabel && (
+								<strong
+									className={`${inheritanceClassName} label`}
+								>
+									{inheritanceLabel}
+								</strong>
+							)}
 
 						{badgeLabel && (
 							<strong className={`${badgeClassName} label`}>

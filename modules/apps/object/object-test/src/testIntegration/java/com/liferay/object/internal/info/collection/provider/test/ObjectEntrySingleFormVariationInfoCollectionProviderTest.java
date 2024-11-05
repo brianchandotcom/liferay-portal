@@ -147,6 +147,10 @@ public class ObjectEntrySingleFormVariationInfoCollectionProviderTest {
 					InfoCollectionProvider.class,
 					objectDefinition.getClassName());
 
+			Assert.assertEquals(
+				objectDefinition.getClassName(),
+				infoCollectionProvider.getKey());
+
 			CollectionQuery collectionQuery = new CollectionQuery();
 
 			collectionQuery.setPagination(Pagination.of(-1, -1));

@@ -10,6 +10,11 @@ modules/apps/archived/
 modules/apps/archived/youtube-web    @liferay-page-management
 modules/apps/asset-tags-validator/    @liferay-content-management
 modules/apps/asset/
+modules/apps/asset/asset-auto-tagger-google-cloud-natural-language-test    @liferay-content-management
+modules/apps/asset/asset-auto-tagger-opennlp-test    @liferay-content-management
+modules/apps/asset/asset-auto-tagger-test    @liferay-content-management
+modules/apps/asset/asset-categories-test    @liferay-content-management
+modules/apps/asset/asset-category-property-test    @liferay-content-management
 modules/apps/asset/asset-entry-query-processor-custom-user-attributes    @liferay-page-management
 modules/apps/asset/asset-display-page-api    @liferay-page-management
 modules/apps/asset/asset-display-page-item-selector-api    @liferay-page-management
@@ -17,8 +22,10 @@ modules/apps/asset/asset-display-page-item-selector-web    @liferay-page-managem
 modules/apps/asset/asset-display-page-service    @liferay-page-management
 modules/apps/asset/asset-display-page-test    @liferay-page-management
 modules/apps/asset/asset-display-web    @liferay-page-management
+modules/apps/asset/asset-entry-rel-test    @liferay-content-management
 modules/apps/asset/asset-info-display-api    @liferay-page-management
 modules/apps/asset/asset-info-display-impl    @liferay-page-management
+modules/apps/asset/asset-link-test    @liferay-content-management
 modules/apps/asset/asset-list-api    @liferay-search
 modules/apps/asset/asset-list-item-selector-web    @liferay-search
 modules/apps/asset/asset-list-service    @liferay-search
@@ -29,6 +36,10 @@ modules/apps/asset/asset-publisher-api    @liferay-content-management
 modules/apps/asset/asset-publisher-layout-prototype    @liferay-content-management
 modules/apps/asset/asset-publisher-test    @liferay-content-management
 modules/apps/asset/asset-publisher-web    @liferay-content-management
+modules/apps/asset/asset-taglib-test    @liferay-content-management
+modules/apps/asset/asset-tags-test    @liferay-content-management
+modules/apps/asset/asset-test    @liferay-content-management
+modules/apps/asset/asset-test-util    @liferay-content-management
 modules/apps/batch-engine/    @liferay-headless
 modules/apps/batch-planner/    @liferay-headless
 modules/apps/bean-portlet/

@@ -9,5 +9,6 @@ export const MENU_TYPES = {
 	liferaySaaS: 'Liferay SaaS',
 	overview: 'Overview',
 	productActivation: 'Product Activation',
+	projectUsage: 'Project Usage',
 	teamMembers: 'Team Members',
 };

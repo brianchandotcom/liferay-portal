@@ -42,10 +42,14 @@ const navigationIcons = {
 		NavigationMenuIcons.PortalIconGray,
 	],
 	productActivation: [NavigationMenuIcons.ProductActivationIconGray],
+	projectUsage: [
+		NavigationMenuIcons.ProjectUsageIcon,
+		NavigationMenuIcons.ProjectUsageIconGray,
+	],
 	teamMembers: [
 		NavigationMenuIcons.TeamMembersIcon,
 		NavigationMenuIcons.TeamMembersIconGray,
 	],
 };
 
-export {navigationIcons};
+export { navigationIcons };

@@ -22,6 +22,8 @@ export * from './partnership_icon';
 export * from './partnership_icon_gray';
 export * from './portal_icon';
 export * from './portal_icon_gray';
+export * from './project_usage_icon';
+export * from './project_usage_icon_gray';
 export * from './product_activation_icon_gray';
 export * from './team_members_icon';
 export * from './team_members_icon_gray';

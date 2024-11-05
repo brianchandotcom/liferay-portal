@@ -183,7 +183,7 @@ describe('Quantity Selector', () => {
 		});
 
 		expect(onUpdate).toHaveBeenLastCalledWith({
-			errors: ['multiple'],
+			errors: ['min', 'multiple'],
 			value: 7,
 		});
 	});

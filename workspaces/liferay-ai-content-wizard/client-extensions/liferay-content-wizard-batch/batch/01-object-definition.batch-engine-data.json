@@ -1,0 +1,166 @@
+{
+    "configuration": {
+        "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+        "parameters": {
+            "containsHeaders": "true",
+            "createStrategy": "UPSERT",
+            "onErrorFail": "false",
+            "updateStrategy": "UPDATE"
+        },
+        "taskItemDelegateName": "DEFAULT"
+    },
+    "items": [
+        {
+            "accountEntryRestricted": false,
+            "active": true,
+            "defaultLanguageId": "en_US",
+            "enableCategorization": true,
+            "enableComments": true,
+            "enableObjectEntryHistory": true,
+            "externalReferenceCode": "AIWIZARDSETTINGS",
+            "label": {
+                "en_US": "AI Content Wizard Settings"
+            },
+            "name": "ContentWizardSettings",
+            "objectFields": [
+                {
+                    "DBType": "Boolean",
+                    "indexed": false,
+                    "indexedAsKeyword": false,
+                    "indexedLanguageId": "",
+                    "label": {
+                        "en_US": "Active"
+                    },
+                    "name": "active",
+                    "objectFieldSettings": [],
+                    "readOnly": "false",
+                    "readOnlyConditionExpression": "",
+                    "required": false,
+                    "state": false,
+                    "system": false,
+                    "type": "Boolean"
+                },
+                {
+                    "DBType": "String",
+                    "businessType": "Text",
+                    "indexed": false,
+                    "indexedAsKeyword": false,
+                    "indexedLanguageId": "",
+                    "label": {
+                        "en_US": "API Key"
+                    },
+                    "name": "apiKey",
+                    "objectFieldSettings": [],
+                    "readOnly": "false",
+                    "readOnlyConditionExpression": "",
+                    "required": false,
+                    "state": false,
+                    "system": false,
+                    "type": "String"
+                },
+                {
+                    "DBType": "String",
+                    "businessType": "Picklist",
+                    "indexed": true,
+                    "indexedAsKeyword": false,
+                    "indexedLanguageId": "en_US",
+                    "label": {
+                        "en_US": "Provider"
+                    },
+                    "listTypeDefinitionExternalReferenceCode": "AIWIZARD_PROVIDERS",
+                    "name": "provider",
+                    "readOnly": "false",
+                    "required": false,
+                    "state": false,
+                    "system": false,
+                    "type": "String"
+                },
+                {
+                    "DBType": "String",
+                    "businessType": "Picklist",
+                    "indexed": true,
+                    "indexedAsKeyword": false,
+                    "indexedLanguageId": "en_US",
+                    "label": {
+                        "en_US": "Model"
+                    },
+                    "listTypeDefinitionExternalReferenceCode": "AIWIZARD_MODELS",
+                    "name": "model",
+                    "readOnly": "false",
+                    "required": false,
+                    "state": false,
+                    "system": false,
+                    "type": "String"
+                },
+                {
+                    "DBType": "String",
+                    "businessType": "Picklist",
+                    "indexed": true,
+                    "indexedAsKeyword": false,
+                    "indexedLanguageId": "en_US",
+                    "label": {
+                        "en_US": "Image Model"
+                    },
+                    "listTypeDefinitionExternalReferenceCode": "AIWIZARD_MODELS",
+                    "name": "imageModel",
+                    "readOnly": "false",
+                    "required": false,
+                    "state": false,
+                    "system": false,
+                    "type": "String"
+                },
+                {
+                    "DBType": "String",
+                    "businessType": "Text",
+                    "indexed": false,
+                    "indexedAsKeyword": false,
+                    "indexedLanguageId": "",
+                    "label": {
+                        "en_US": "Description"
+                    },
+                    "name": "description",
+                    "objectFieldSettings": [],
+                    "readOnly": "false",
+                    "readOnlyConditionExpression": "",
+                    "required": false,
+                    "state": false,
+                    "system": false,
+                    "type": "String"
+                },
+                {
+                    "DBType": "String",
+                    "businessType": "Text",
+                    "indexed": false,
+                    "indexedAsKeyword": false,
+                    "indexedLanguageId": "",
+                    "label": {
+                        "en_US": "Settings"
+                    },
+                    "name": "settings",
+                    "objectFieldSettings": [],
+                    "readOnly": "false",
+                    "readOnlyConditionExpression": "",
+                    "required": false,
+                    "state": false,
+                    "system": false,
+                    "type": "String"
+                }
+            ],
+            "panelCategoryKey": "applications_menu.applications.content",
+            "parameterRequired": false,
+            "pluralLabel": {
+                "en_US": "AI Wizard Config"
+            },
+            "portlet": true,
+            "restContextPath": "/o/c/aiwizardconfig",
+            "scope": "company",
+            "status": {
+                "code": 0,
+                "label": "approved",
+                "label_i18n": "Approved"
+            },
+            "system": false,
+            "titleObjectFieldName": "provider"
+        }
+    ]
+}

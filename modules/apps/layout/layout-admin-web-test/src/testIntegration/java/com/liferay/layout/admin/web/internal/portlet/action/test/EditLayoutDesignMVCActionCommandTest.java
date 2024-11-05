@@ -110,9 +110,9 @@ public class EditLayoutDesignMVCActionCommandTest {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			FileUtil.getBytes(getClass(), "dependencies/dxp.ico"), null, null,
-			null, serviceContext);
+			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_PNG,
+			FileUtil.getBytes(getClass(), "dependencies/dxp_logo.png"), null,
+			null, null, serviceContext);
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(

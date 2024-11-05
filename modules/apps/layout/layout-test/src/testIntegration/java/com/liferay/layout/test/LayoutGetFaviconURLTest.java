@@ -169,14 +169,14 @@ public class LayoutGetFaviconURLTest {
 		LayoutSet layoutSet = _layout.getLayoutSet();
 
 		FileEntry layoutSetFaviconFileEntry = _addFileEntry(
-			_getExpectedBytes("classic.ico"));
+			_getExpectedBytes("classic_logo.png"));
 
 		layoutSet.setFaviconFileEntryId(
 			layoutSetFaviconFileEntry.getFileEntryId());
 
 		_layoutSetLocalService.updateLayoutSet(layoutSet);
 
-		byte[] layoutFaviconBytes = _getExpectedBytes("dxp.ico");
+		byte[] layoutFaviconBytes = _getExpectedBytes("dxp_logo.png");
 
 		FileEntry layoutFaviconFileEntry = _addFileEntry(layoutFaviconBytes);
 
@@ -200,7 +200,7 @@ public class LayoutGetFaviconURLTest {
 			masterLayoutPageTemplateEntry.getPlid());
 
 		FileEntry masterLayoutFaviconFileEntry = _addFileEntry(
-			_getExpectedBytes("classic.ico"));
+			_getExpectedBytes("classic_logo.png"));
 
 		masterLayout.setFaviconFileEntryId(
 			masterLayoutFaviconFileEntry.getFileEntryId());
@@ -209,7 +209,7 @@ public class LayoutGetFaviconURLTest {
 
 		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
 
-		byte[] layoutFaviconBytes = _getExpectedBytes("dxp.ico");
+		byte[] layoutFaviconBytes = _getExpectedBytes("dxp_logo.png");
 
 		FileEntry layoutFaviconFileEntry = _addFileEntry(layoutFaviconBytes);
 
@@ -223,7 +223,7 @@ public class LayoutGetFaviconURLTest {
 		return _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.IMAGE_JPEG, bytes, null,
+			StringUtil.randomString(), ContentTypes.IMAGE_PNG, bytes, null,
 			null, null, _serviceContext);
 	}
 
@@ -242,7 +242,7 @@ public class LayoutGetFaviconURLTest {
 	}
 
 	private byte[] _getExpectedBytes() throws Exception {
-		return _getExpectedBytes("dxp.ico");
+		return _getExpectedBytes("dxp_logo.png");
 	}
 
 	private byte[] _getExpectedBytes(String fileName) throws Exception {

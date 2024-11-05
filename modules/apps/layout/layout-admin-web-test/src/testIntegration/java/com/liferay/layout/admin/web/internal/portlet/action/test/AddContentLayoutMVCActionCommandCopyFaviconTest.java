@@ -116,8 +116,8 @@ public class AddContentLayoutMVCActionCommandCopyFaviconTest {
 		return _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.APPLICATION_TEXT, bytes,
-			null, null, null,
+			StringUtil.randomString(), ContentTypes.IMAGE_PNG, bytes, null,
+			null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
@@ -136,7 +136,7 @@ public class AddContentLayoutMVCActionCommandCopyFaviconTest {
 	}
 
 	private byte[] _getExpectedBytes() throws Exception {
-		return FileUtil.getBytes(getClass(), "dependencies/dxp.ico");
+		return FileUtil.getBytes(getClass(), "dependencies/dxp_logo.png");
 	}
 
 	private MockLiferayPortletActionRequest

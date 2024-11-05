@@ -213,14 +213,16 @@ function StructureTreeNodeContent({
 		computeHover
 	);
 
-	const dragItems = useSelectorCallback(
-		(state) => [
-			...toMovementItem(item, state.layoutData, state.fragmentEntryLinks),
-			activeItemIds.map((id) =>
-				toMovementItem(id, state.layoutData, state.fragmentEntryLinks)
+	const dragItem = useSelectorCallback(
+		(state) => ({
+			...toMovementItem(
+				item.itemId,
+				state.layoutData,
+				state.fragmentEntryLinks
 			),
-		],
-		[item, activeItemIds],
+			origin: ITEM_ACTIVATION_ORIGINS.sidebar,
+		}),
+		[item],
 		deepEqual
 	);
 
@@ -232,7 +234,7 @@ function StructureTreeNodeContent({
 					position,
 				})
 			: moveItems({
-					itemIds: dragItems.map((item) => item.itemId),
+					itemIds: activeItemIds,
 					parentItemIds: [parentItemId],
 					positions: [position],
 				});
@@ -249,7 +251,7 @@ function StructureTreeNodeContent({
 	};
 
 	const {handlerRef, isDraggingSource: itemIsDraggingSource} = useDragItem(
-		dragItems,
+		dragItem,
 		onDragEnd,
 		onDragBegin
 	);

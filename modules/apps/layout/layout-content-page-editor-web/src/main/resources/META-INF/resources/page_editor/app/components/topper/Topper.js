@@ -146,18 +146,16 @@ function TopperContent({
 		[item]
 	);
 
-	const dragSources = useSelectorCallback(
-		(state) => [
-			...toMovementItem(item, state.layoutData, state.fragmentEntryLinks),
-			activeItemIds.map((id) =>
-				toMovementItem(id, state.layoutData, state.fragmentEntryLinks)
+	const dragItem = useSelectorCallback(
+		(state) =>
+			toMovementItem(
+				item.itemId,
+				state.layoutData,
+				state.fragmentEntryLinks
 			),
-		],
-		[item, activeItemIds],
+		[item],
 		deepEqual
 	);
-
-	const lastDragSource = dragSources[dragSources.length - 1];
 
 	const onDragBegin = () => {
 		if (!isActive) {
@@ -168,14 +166,14 @@ function TopperContent({
 	};
 
 	const onDragEnd = (parentItemId, position) => {
-		const thunk = isStepper(lastDragSource)
+		const thunk = isStepper(dragItem)
 			? moveStepper({
 					itemId: item.itemId,
 					parentItemId,
 					position,
 				})
 			: moveItems({
-					itemIds: dragSources.map((item) => item.itemId),
+					itemIds: activeItemIds,
 					parentItemIds: [parentItemId],
 					positions: [position],
 				});
@@ -184,13 +182,13 @@ function TopperContent({
 	};
 
 	const {handlerRef: itemRef, isDraggingSource: draggingItem} = useDragItem(
-		dragSources,
+		dragItem,
 		onDragEnd,
 		onDragBegin
 	);
 
 	const {handlerRef: topperRef, isDraggingSource: draggingTopper} =
-		useDragItem(dragSources, onDragEnd, onDragBegin);
+		useDragItem(dragItem, onDragEnd, onDragBegin);
 
 	const keyboardMovementSources = useMovementSources();
 	const lastSource =

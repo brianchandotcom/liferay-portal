@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.model.adapter.StagedGroup;
@@ -209,6 +210,22 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
 			externalReferenceCode, portletDataContext.getCompanyId());
+
+		if (group == null) {
+			return externalReferenceCode;
+		}
+
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			group.isStagedRemotely()) {
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
+
+			externalReferenceCode = GetterUtil.get(
+				typeSettingsUnicodeProperties.get(
+					"remoteGroupExternalReferenceCode"),
+				externalReferenceCode);
+		}
 
 		if (!group.isStagingGroup()) {
 			return externalReferenceCode;

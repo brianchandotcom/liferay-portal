@@ -1,0 +1,13 @@
+liferay-content-wizard-site-initializer:
+    name: Liferay Content Wizard Site Initializer
+    oAuthApplicationHeadlessServer: liferay-content-wizard-site-initializer-oauth-application-headless-server
+    siteExternalReferenceCode: LIFERAY_AI_CONTENT_WIZARD
+    siteName: Liferay AI Content Wizard
+    type: siteInitializer
+liferay-content-wizard-site-initializer-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Content Wizard OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Site.everything
+    type: oAuthApplicationHeadlessServer

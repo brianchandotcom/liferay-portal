@@ -8,6 +8,7 @@ package com.liferay.asset.publisher.web.internal.portlet.action;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
+import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -81,18 +82,33 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 		String selectionStyle = portletPreferences.getValue(
 			"selectionStyle", "dynamic");
 
+		AssetListEntry assetListEntry = null;
+
 		try {
 			if (Objects.equals(
 					selectionStyle,
 					AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
 
-				_saveDynamicAssetList(actionRequest, title, portletPreferences);
+				assetListEntry = _saveDynamicAssetList(
+					actionRequest, title, portletPreferences);
 			}
 			else if (Objects.equals(
 						selectionStyle,
 						AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
 
-				_saveManualAssetList(actionRequest, title, portletPreferences);
+				assetListEntry = _saveManualAssetList(
+					actionRequest, title, portletPreferences);
+			}
+
+			if (assetListEntry != null) {
+				portletPreferences.setValue(
+					"selectionStyle",
+					AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST);
+				portletPreferences.setValue(
+					"assetListEntryExternalReferenceCode",
+					assetListEntry.getExternalReferenceCode());
+
+				portletPreferences.store();
 			}
 
 			JSONPortletResponseUtil.writeJSON(
@@ -145,7 +161,7 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private void _saveDynamicAssetList(
+	private AssetListEntry _saveDynamicAssetList(
 			ActionRequest actionRequest, String title,
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -202,12 +218,12 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 			unicodeProperties.put(name, value);
 		}
 
-		_assetListEntryService.addDynamicAssetListEntry(
+		return _assetListEntryService.addDynamicAssetListEntry(
 			null, themeDisplay.getScopeGroupId(), title,
 			unicodeProperties.toString(), serviceContext);
 	}
 
-	private void _saveManualAssetList(
+	private AssetListEntry _saveManualAssetList(
 			ActionRequest actionRequest, String title,
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -228,7 +244,7 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getPermissionChecker(), groupIds, true, true),
 			AssetEntry::getEntryId);
 
-		_assetListEntryService.addManualAssetListEntry(
+		return _assetListEntryService.addManualAssetListEntry(
 			null, themeDisplay.getScopeGroupId(), title, assetEntryIds,
 			serviceContext);
 	}

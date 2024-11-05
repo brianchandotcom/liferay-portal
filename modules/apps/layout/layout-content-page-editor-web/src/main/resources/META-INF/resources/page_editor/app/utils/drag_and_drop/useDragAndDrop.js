@@ -23,7 +23,7 @@ import {
 	useParentToControlsId,
 	useToControlsId,
 } from '../../contexts/CollectionItemContext';
-import {useSelectItem} from '../../contexts/ControlsContext';
+import {useActiveItemIds, useSelectItem} from '../../contexts/ControlsContext';
 import {useSelectorRef} from '../../contexts/StoreContext';
 import {useGetWidgets} from '../../contexts/WidgetsContext';
 import {isMultistepForm} from '../../utils/isMultistepForm';
@@ -31,6 +31,7 @@ import {openFormConversionModal} from '../../utils/openFormConversionModal';
 import {getFormParent} from '../getFormParent';
 import {isMovementValid} from '../isMovementValid';
 import isStepper from '../isStepper';
+import toMovementItem from '../toMovementItem';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import defaultComputeHover from './defaultComputeHover';
 import getDropData from './getDropData';
@@ -134,22 +135,40 @@ export function NotDraggableArea({children}) {
 	);
 }
 
-export function useDragItem(sources, onDragEnd, onBegin = () => {}) {
+export function useDragItem(source, onDragEnd, onBegin = () => {}) {
 	const {canDrag, dispatch, fragmentEntryLinksRef, layoutDataRef, state} =
 		useContext(DragAndDropContext);
+
+	const activeItemIds = useActiveItemIds();
+
 	const sourceRef = useRef(null);
-	const lastSourceItem = sources[sources.length - 1];
 
 	const getWidgets = useGetWidgets();
 
 	const item = {
-		...lastSourceItem,
-		id: lastSourceItem.itemId,
+		...source,
+		id: source.itemId,
 		namespace: config.portletNamespace,
 	};
 
-	if (!lastSourceItem.origin) {
+	if (!item.origin) {
 		delete item.origin;
+	}
+
+	// Calculate sources array, take items from activeItemIds if it's multiSelection
+
+	let sources = [item];
+
+	if (activeItemIds.length > 1) {
+		sources = [
+			...activeItemIds.map((id) =>
+				toMovementItem(
+					id,
+					layoutDataRef.current,
+					fragmentEntryLinksRef.current
+				)
+			),
+		];
 	}
 
 	const [{isDraggingSource}, handlerRef, previewRef] = useDrag({
@@ -195,25 +214,18 @@ export function useDragSymbol(
 ) {
 	const selectItem = useSelectItem();
 
-	const sourceItems = useMemo(
-		() => [
-			{
-				fieldTypes,
-				fragmentEntryType,
-				icon,
-				isSymbol: true,
-				isWidget,
-				itemId: label,
-				name: label,
-				portletId,
-				type,
-			},
-		],
-		[fieldTypes, fragmentEntryType, icon, isWidget, label, portletId, type]
-	);
-
 	const {handlerRef, isDraggingSource, sourceRef} = useDragItem(
-		sourceItems,
+		{
+			fieldTypes,
+			fragmentEntryType,
+			icon,
+			isSymbol: true,
+			isWidget,
+			itemId: label,
+			name: label,
+			portletId,
+			type,
+		},
 		onDragEnd,
 		() => selectItem(null)
 	);

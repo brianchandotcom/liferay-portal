@@ -194,13 +194,7 @@ public class JspServlet extends HttpServlet {
 		).put(
 			"development", String.valueOf(PropsValues.WORK_DIR_OVERRIDE_ENABLED)
 		).put(
-			"httpMethods", "GET,POST,HEAD"
-		).put(
 			"keepgenerated", "false"
-		).put(
-			"logVerbosityLevel", "NONE"
-		).put(
-			"saveBytecode", "true"
 		).put(
 			"strictQuoteEscaping", "false"
 		).build();

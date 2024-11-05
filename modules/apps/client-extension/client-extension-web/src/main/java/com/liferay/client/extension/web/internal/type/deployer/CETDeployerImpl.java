@@ -221,7 +221,8 @@ public class CETDeployerImpl implements CETDeployer {
 			_register(
 				JSImportMapsContributor.class,
 				new ClientExtensionJSImportMapsContributor(
-					jsImportMapsEntryCET.getBareSpecifier(), _jsonFactory,
+					jsImportMapsEntryCET.getBareSpecifier(),
+					jsImportMapsEntryCET.getCompanyId(), _jsonFactory,
 					jsImportMapsEntryCET.getURL())));
 	}
 

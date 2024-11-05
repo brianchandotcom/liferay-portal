@@ -1417,6 +1417,55 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
+	public void testAddObjectActionWithMoreThanOneObjectEntryWithSystemObjectDefinition()
+		throws Exception {
+
+		ObjectDefinition organizationObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), Organization.class.getName());
+
+		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			organizationObjectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			new UnicodeProperties(), false);
+
+		String organizationName1 = RandomTestUtil.randomString();
+		String organizationName2 = RandomTestUtil.randomString();
+
+		OrganizationTestUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			organizationName1, false);
+		OrganizationTestUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			organizationName2, false);
+
+		Assert.assertEquals(2, _argumentsList.size());
+
+		Set<String> organizationNames = SetUtil.fromArray(
+			organizationName1, organizationName2);
+
+		Object[] arguments = _argumentsList.poll();
+
+		Map<String, Object> inputObjects = (Map<String, Object>)arguments[0];
+
+		Assert.assertTrue(organizationNames.remove(inputObjects.get("name")));
+
+		arguments = _argumentsList.poll();
+
+		inputObjects = (Map<String, Object>)arguments[0];
+
+		Assert.assertTrue(organizationNames.remove(inputObjects.get("name")));
+
+		_objectActionLocalService.deleteObjectAction(objectAction);
+	}
+
+	@Test
 	public void testAddObjectActionWithSystemObjectDefinition()
 		throws Exception {
 

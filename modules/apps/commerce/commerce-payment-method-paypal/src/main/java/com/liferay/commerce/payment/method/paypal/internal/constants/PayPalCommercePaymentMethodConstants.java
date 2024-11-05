@@ -78,6 +78,8 @@ public class PayPalCommercePaymentMethodConstants {
 		REQUEST_DETAILS_FULL, REQUEST_DETAILS_MINIMAL
 	};
 
+	public static final String SHIPPING_PREFERENCE_NO_SHIPPING = "NO_SHIPPING";
+
 	public static final String SHIPPING_PREFERENCE_PROVIDED =
 		"SET_PROVIDED_ADDRESS";
 

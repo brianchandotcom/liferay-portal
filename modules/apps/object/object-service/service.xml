@@ -229,12 +229,12 @@
 			<finder-column name="objectDefinitionId" />
 			<finder-column comparator="!=" name="status" />
 		</finder>
-		<finder name="ERC_G_C" return-type="ObjectEntry" unique="true">
+		<finder name="ERC_G_C" return-type="ObjectEntry">
 			<finder-column name="externalReferenceCode" />
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="ERC_C_ODI" return-type="ObjectEntry" unique="true">
+		<finder name="ERC_C_ODI" return-type="ObjectEntry">
 			<finder-column name="externalReferenceCode" />
 			<finder-column name="companyId" />
 			<finder-column name="objectDefinitionId" />
@@ -247,6 +247,12 @@
 		<finder name="U_GtCD_ODI" return-type="Collection">
 			<finder-column name="userId" />
 			<finder-column comparator="&gt;" name="createDate" />
+			<finder-column name="objectDefinitionId" />
+		</finder>
+		<finder name="ERC_G_C_ODI" return-type="ObjectEntry" unique="true">
+			<finder-column name="externalReferenceCode" />
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
 			<finder-column name="objectDefinitionId" />
 		</finder>
 	</entity>

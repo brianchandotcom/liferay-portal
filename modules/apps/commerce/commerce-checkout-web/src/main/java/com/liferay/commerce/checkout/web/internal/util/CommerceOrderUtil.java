@@ -7,9 +7,10 @@ package com.liferay.commerce.checkout.web.internal.util;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -20,15 +21,10 @@ public class CommerceOrderUtil {
 	public static int getCommerceOrderDeliveryGroupCount(
 		CommerceOrder commerceOrder) {
 
-		Set<String> deliveryGroupStrings = new HashSet<>();
-
-		for (CommerceOrderItem commerceOrderItem :
-				commerceOrder.getCommerceOrderItems()) {
-
-			if (Validator.isNotNull(commerceOrderItem.getDeliveryGroup())) {
-				deliveryGroupStrings.add(commerceOrderItem.getDeliveryGroup());
-			}
-		}
+		Set<String> deliveryGroupStrings = SetUtil.fromArray(
+			TransformUtil.transformToArray(
+				commerceOrder.getCommerceOrderItems(),
+				CommerceOrderItem::getDeliveryGroup, String.class));
 
 		return deliveryGroupStrings.size();
 	}

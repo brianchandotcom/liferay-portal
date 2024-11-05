@@ -37,7 +37,9 @@ public class DeliveryGroupInfoDisplayContext {
 			GetterUtil.getLong(commerceAddressIdString));
 	}
 
-	public Date getDeliveryGroupInfoDate(HttpServletRequest httpServletRequest) {
+	public Date getDeliveryGroupInfoDate(
+		HttpServletRequest httpServletRequest) {
+
 		return new Date(ParamUtil.getLong(httpServletRequest, "deliveryDate"));
 	}
 

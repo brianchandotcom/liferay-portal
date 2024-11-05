@@ -70,7 +70,7 @@ public class CommerceCheckoutDeliveryGroupInfoFDSDataProvider
 			CommerceAddress commerceAddress =
 				_commerceAddressLocalService.getCommerceAddress(
 					commerceOrderItem.getShippingAddressId());
-	
+
 			Country country = commerceAddress.getCountry();
 
 			DeliveryGroupInfo deliveryGroupInfo = new DeliveryGroupInfo(
@@ -82,7 +82,8 @@ public class CommerceCheckoutDeliveryGroupInfoFDSDataProvider
 				commerceOrderItem.getRequestedDeliveryDate(),
 				commerceOrderItem.getDeliveryGroup());
 
-			deliveryGroupInfoMap.put(deliveryGroupInfo.getName(), deliveryGroupInfo);
+			deliveryGroupInfoMap.put(
+				deliveryGroupInfo.getName(), deliveryGroupInfo);
 		}
 
 		return new ArrayList<>(deliveryGroupInfoMap.values());

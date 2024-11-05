@@ -8,8 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DeliveryGroupInfoDisplayContext
-	deliveryGroupInfoDisplayContext = (DeliveryGroupInfoDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+DeliveryGroupInfoDisplayContext deliveryGroupInfoDisplayContext = (DeliveryGroupInfoDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <div>
@@ -80,7 +79,8 @@ DeliveryGroupInfoDisplayContext
 		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d, yyyy", locale, timeZone);
 		%>
 
-		<div class="commerce-value"><%= format.format(
-			deliveryGroupInfoDisplayContext.getDeliveryGroupInfoDate(request)) %></div>
+		<div class="commerce-value">
+			<%= format.format(deliveryGroupInfoDisplayContext.getDeliveryGroupInfoDate(request)) %>
+		</div>
 	</div>
 </div>

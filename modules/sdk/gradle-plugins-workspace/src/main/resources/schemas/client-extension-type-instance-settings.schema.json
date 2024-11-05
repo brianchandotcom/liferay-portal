@@ -549,6 +549,23 @@
 		},
 		{
 			"properties": {
+				"modificationDeletionConflictCheckEnabled": {
+					"default": true,
+					"title": "Modification Deletion Conflict Check Enabled",
+					"type": "boolean"
+				},
+				"pid": {
+					"const": "com.liferay.change.tracking.configuration.CTConflictConfiguration",
+					"title": "Publications Conflicts"
+				}
+			},
+			"required": [
+				"pid"
+			],
+			"title": "Publications Conflicts"
+		},
+		{
+			"properties": {
 				"defaultCTCollectionTemplateId": {
 					"default": 0,
 					"title": "Default Publication Template ID",
@@ -3998,6 +4015,7 @@
 				"com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration",
 				"com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration",
 				"com.liferay.change.tracking.configuration.CTCollectionEmailConfiguration",
+				"com.liferay.change.tracking.configuration.CTConflictConfiguration",
 				"com.liferay.change.tracking.configuration.CTSettingsConfiguration",
 				"com.liferay.change.tracking.web.internal.configuration.CTConfiguration",
 				"com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration",

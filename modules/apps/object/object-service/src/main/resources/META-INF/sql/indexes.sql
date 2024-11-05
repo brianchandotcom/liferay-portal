@@ -18,9 +18,9 @@ create index IX_8D232754 on ObjectDefinition (objectFolderId);
 create index IX_55C39BCE on ObjectDefinition (system_, status);
 create index IX_7B61F95C on ObjectDefinition (uuid_[$COLUMN_LENGTH:75$]);
 
-create unique index IX_E60FE3FC on ObjectEntry (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], companyId);
+create index IX_C24831C4 on ObjectEntry (externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_28B2B723 on ObjectEntry (groupId, uuid_[$COLUMN_LENGTH:75$]);
-create unique index IX_5979B105 on ObjectEntry (objectDefinitionId, externalReferenceCode[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_F9F6B7FB on ObjectEntry (objectDefinitionId, groupId, externalReferenceCode[$COLUMN_LENGTH:75$], companyId);
 create index IX_622DB416 on ObjectEntry (objectDefinitionId, groupId, status);
 create index IX_A388E5A0 on ObjectEntry (objectDefinitionId, status);
 create index IX_68B7FB2 on ObjectEntry (objectDefinitionId, userId, createDate);

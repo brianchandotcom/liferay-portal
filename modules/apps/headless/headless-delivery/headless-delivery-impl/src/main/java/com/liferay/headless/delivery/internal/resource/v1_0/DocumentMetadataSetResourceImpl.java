@@ -74,6 +74,17 @@ public class DocumentMetadataSetResourceImpl
 
 		return _getPage(
 			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.UPDATE, "postAssetLibraryDocumentMetadataSet",
+					DLConstants.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.UPDATE,
+					"postAssetLibraryDocumentMetadataSetBatch",
+					DLConstants.RESOURCE_NAME, assetLibraryId)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getAssetLibraryDocumentMetadataSetsPage",
@@ -106,6 +117,16 @@ public class DocumentMetadataSetResourceImpl
 
 		return _getPage(
 			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.UPDATE, "postSiteDocumentMetadataSet",
+					DLConstants.RESOURCE_NAME, siteId)
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.UPDATE, "postSiteDocumentMetadataSetBatch",
+					DLConstants.RESOURCE_NAME, siteId)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getSiteDocumentMetadataSetsPage",

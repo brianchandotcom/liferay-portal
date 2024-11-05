@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -112,119 +113,69 @@ public class UserManagerUpdateExpandoColumnUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeExpandoFields() throws Exception {
-		Group group = new Group() {
-			{
-				displayName = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				externalId = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				id = StringUtil.toLowerCase(RandomTestUtil.randomString());
-			}
-		};
+		HttpInvoker.HttpResponse httpResponse =
+			_groupResource.postV2GroupHttpResponse(
+				new Group() {
+					{
+						displayName = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						externalId = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						id = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+					}
+				});
 
-		HttpInvoker.HttpResponse groupHttpResponse =
-			_groupResource.postV2GroupHttpResponse(group);
+		Assert.assertEquals(2, httpResponse.getStatusCode() / 100);
 
-		Assert.assertEquals(2, groupHttpResponse.getStatusCode() / 100);
+		httpResponse = _userResource.postV2UserHttpResponse(_randomUser());
 
-		com.liferay.scim.rest.client.dto.v1_0.User user = _randomUser();
+		Assert.assertEquals(2, httpResponse.getStatusCode() / 100);
 
-		HttpInvoker.HttpResponse userHttpResponse =
-			_userResource.postV2UserHttpResponse(user);
-
-		Assert.assertEquals(2, userHttpResponse.getStatusCode() / 100);
-
-		ExpandoTable userExpandoTable = _expandoTableLocalService.fetchTable(
-			TestPropsValues.getCompanyId(),
-			_classNameLocalService.getClassNameId(User.class.getName()),
-			ExpandoTableConstants.DEFAULT_TABLE_NAME);
-
-		ExpandoColumn userExpandoColumn =
-			_expandoColumnLocalService.fetchColumn(
-				userExpandoTable.getTableId(), "scimClientId");
-
-		UnicodeProperties userUnicodeProperties =
-			userExpandoColumn.getTypeSettingsProperties();
-
-		Assert.assertTrue(
-			Boolean.parseBoolean(
-				userUnicodeProperties.getProperty(
-					ExpandoColumnConstants.PROPERTY_HIDDEN)));
-
-		userUnicodeProperties.setProperty(
-			ExpandoColumnConstants.PROPERTY_HIDDEN,
-			String.valueOf(Boolean.FALSE));
-
-		userExpandoColumn.setTypeSettingsProperties(userUnicodeProperties);
-
-		userExpandoColumn = _expandoColumnLocalService.updateExpandoColumn(
-			userExpandoColumn);
-
-		userUnicodeProperties = userExpandoColumn.getTypeSettingsProperties();
-
-		Assert.assertFalse(
-			Boolean.parseBoolean(
-				userUnicodeProperties.getProperty(
-					ExpandoColumnConstants.PROPERTY_HIDDEN)));
-
-		ExpandoTable userGroupExpandoTable =
-			_expandoTableLocalService.fetchTable(
-				TestPropsValues.getCompanyId(),
-				_classNameLocalService.getClassNameId(
-					UserGroup.class.getName()),
-				ExpandoTableConstants.DEFAULT_TABLE_NAME);
-
-		ExpandoColumn userGroupExpandoColumn =
-			_expandoColumnLocalService.fetchColumn(
-				userGroupExpandoTable.getTableId(), "scimClientId");
-
-		UnicodeProperties userGroupUnicodeProperties =
-			userGroupExpandoColumn.getTypeSettingsProperties();
-
-		Assert.assertTrue(
-			Boolean.parseBoolean(
-				userGroupUnicodeProperties.getProperty(
-					ExpandoColumnConstants.PROPERTY_HIDDEN)));
-
-		userGroupUnicodeProperties.setProperty(
-			ExpandoColumnConstants.PROPERTY_HIDDEN,
-			String.valueOf(Boolean.FALSE));
-
-		userGroupExpandoColumn.setTypeSettingsProperties(
-			userGroupUnicodeProperties);
-
-		userGroupExpandoColumn = _expandoColumnLocalService.updateExpandoColumn(
-			userGroupExpandoColumn);
-
-		userGroupUnicodeProperties =
-			userGroupExpandoColumn.getTypeSettingsProperties();
-
-		Assert.assertFalse(
-			Boolean.parseBoolean(
-				userGroupUnicodeProperties.getProperty(
-					ExpandoColumnConstants.PROPERTY_HIDDEN)));
+		_assertScimClientIdExpandoColumn(User.class.getName(), false);
+		_assertScimClientIdExpandoColumn(UserGroup.class.getName(), false);
 
 		_runUpgrade();
 
-		userExpandoColumn = _expandoColumnLocalService.fetchColumn(
-			userExpandoTable.getTableId(), "scimClientId");
+		_assertScimClientIdExpandoColumn(User.class.getName(), true);
+		_assertScimClientIdExpandoColumn(UserGroup.class.getName(), true);
+	}
 
-		userUnicodeProperties = userExpandoColumn.getTypeSettingsProperties();
+	private void _assertScimClientIdExpandoColumn(
+			String className, boolean hidden)
+		throws Exception {
 
-		userGroupExpandoColumn = _expandoColumnLocalService.fetchColumn(
-			userGroupExpandoTable.getTableId(), "scimClientId");
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+			TestPropsValues.getCompanyId(),
+			_classNameLocalService.getClassNameId(className),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
-		userGroupUnicodeProperties =
-			userGroupExpandoColumn.getTypeSettingsProperties();
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.fetchColumn(
+			expandoTable.getTableId(), "scimClientId");
+
+		UnicodeProperties unicodeProperties =
+			expandoColumn.getTypeSettingsProperties();
 
 		Assert.assertTrue(
-			Boolean.parseBoolean(
-				userUnicodeProperties.getProperty(
+			GetterUtil.getBoolean(
+				unicodeProperties.getProperty(
 					ExpandoColumnConstants.PROPERTY_HIDDEN)));
 
-		Assert.assertTrue(
-			Boolean.parseBoolean(
-				userGroupUnicodeProperties.getProperty(
+		unicodeProperties.setProperty(
+			ExpandoColumnConstants.PROPERTY_HIDDEN,
+			String.valueOf(Boolean.FALSE));
+
+		expandoColumn.setTypeSettingsProperties(unicodeProperties);
+
+		expandoColumn = _expandoColumnLocalService.updateExpandoColumn(
+			expandoColumn);
+
+		unicodeProperties = expandoColumn.getTypeSettingsProperties();
+
+		Assert.assertEquals(
+			hidden,
+			GetterUtil.getBoolean(
+				unicodeProperties.getProperty(
 					ExpandoColumnConstants.PROPERTY_HIDDEN)));
 	}
 

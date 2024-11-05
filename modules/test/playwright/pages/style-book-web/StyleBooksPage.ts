@@ -90,8 +90,10 @@ export class StyleBooksPage {
 		).toBeVisible();
 	}
 
-	async selectFrontendTokenCategory(buttonText: string, category: string) {
-		await this.page.getByRole('button', {name: buttonText}).click();
+	async selectFrontendTokenCategory(category: string) {
+		await this.page
+			.locator('.style-book-editor__sidebar-content .form-control-select')
+			.click();
 
 		await this.page.getByText(category).click();
 	}
@@ -105,6 +107,10 @@ export class StyleBooksPage {
 			.locator('.form-group')
 			.filter({hasText: label})
 			.locator('input');
+
+		if (section && input.isHidden()) {
+			await this.page.getByRole('button', {name: section}).click();
+		}
 
 		await fillAndClickOutside(this.page, input, value);
 	}

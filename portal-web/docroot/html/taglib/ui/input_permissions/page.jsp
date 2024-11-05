@@ -207,6 +207,11 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 
 					<%= uniqueNamespace %>doUpdateViewValue('<%= uniqueNamespace %>guestPermissions_VIEW', checkGuestViewPermissions);
 					<%= uniqueNamespace %>doUpdateViewValue('<%= uniqueNamespace %>groupPermissions_VIEW', checkGroupViewPermissions);
+
+					<c:if test='<%= supportedActions.contains(ActionKeys.DOWNLOAD) && FeatureFlagManagerUtil.isEnabled("LPD-19787") %>'>
+						<%= uniqueNamespace %>doUpdateViewValue('<%= uniqueNamespace %>guestPermissions_DOWNLOAD', checkGuestViewPermissions);
+						<%= uniqueNamespace %>doUpdateViewValue('<%= uniqueNamespace %>groupPermissions_DOWNLOAD', checkGroupViewPermissions);
+					</c:if>
 				}
 			}
 

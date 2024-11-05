@@ -59,6 +59,14 @@ public interface ListTypeDefinitionResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteSpecificationListTypeDefinition(
+			Long specificationId, Long listTypeDefinitionId)
+		throws Exception;
+
+	public void postSpecificationListTypeDefinition(
+			Long specificationId, Long listTypeDefinitionId)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

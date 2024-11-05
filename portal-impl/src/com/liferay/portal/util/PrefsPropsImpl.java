@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.PortalPreferenceValue;
 import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PortalPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -485,7 +486,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	private PortletPreferences _fetchPreferences() {
-		return _fetchPreferences(PortletKeys.PREFS_OWNER_ID_DEFAULT);
+		return _fetchPreferences(CompanyThreadLocal.getCompanyId());
 	}
 
 	private PortletPreferences _fetchPreferences(long companyId) {

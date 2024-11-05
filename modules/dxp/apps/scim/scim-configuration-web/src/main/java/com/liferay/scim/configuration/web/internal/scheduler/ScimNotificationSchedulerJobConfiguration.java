@@ -76,26 +76,26 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	protected boolean isSendNotification(
 		Date accessTokenExpirationDate, Date lastNotificationDate,
-		long notificationValidForMillis) {
+		long currentTimeMillis) {
 
-		long accessTokenExpirationValidForMillis =
-			accessTokenExpirationDate.getTime() - notificationValidForMillis;
-		long lastNotificationValidForMillis =
+		long remainingAccessTokenTimeMillis =
+			accessTokenExpirationDate.getTime() - currentTimeMillis;
+		long lastNotificationValidThresholdMillis =
 			accessTokenExpirationDate.getTime() -
 				lastNotificationDate.getTime();
 
 		if (_isSendNotification(
-				accessTokenExpirationValidForMillis,
-				lastNotificationValidForMillis, 30 * Time.DAY) ||
+				remainingAccessTokenTimeMillis,
+				lastNotificationValidThresholdMillis, 30 * Time.DAY) ||
 			_isSendNotification(
-				accessTokenExpirationValidForMillis,
-				lastNotificationValidForMillis, 10 * Time.DAY) ||
+				remainingAccessTokenTimeMillis,
+				lastNotificationValidThresholdMillis, 10 * Time.DAY) ||
 			_isSendNotification(
-				accessTokenExpirationValidForMillis,
-				lastNotificationValidForMillis, Time.DAY) ||
+				remainingAccessTokenTimeMillis,
+				lastNotificationValidThresholdMillis, Time.DAY) ||
 			_isSendNotification(
-				accessTokenExpirationValidForMillis,
-				lastNotificationValidForMillis, 0)) {
+				remainingAccessTokenTimeMillis,
+				lastNotificationValidThresholdMillis, 0)) {
 
 			return true;
 		}
@@ -104,12 +104,14 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	private boolean _isSendNotification(
-		long accessTokenExpirationValidForMillis,
-		long lastNotificationValidForMillis, long notificationValidForMillis) {
+		long remainingAccessTokenTimeMillis,
+		long lastNotificationThresholdMillis,
+		long notificationValidThresholdMillis) {
 
-		if ((notificationValidForMillis >=
-				accessTokenExpirationValidForMillis) &&
-			(lastNotificationValidForMillis > notificationValidForMillis)) {
+		if ((notificationValidThresholdMillis >=
+				remainingAccessTokenTimeMillis) &&
+			(lastNotificationThresholdMillis >
+				notificationValidThresholdMillis)) {
 
 			return true;
 		}

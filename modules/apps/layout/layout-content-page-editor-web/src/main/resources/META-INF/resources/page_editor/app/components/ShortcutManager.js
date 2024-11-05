@@ -40,13 +40,14 @@ import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
 import pasteItems from '../thunks/pasteItems';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
-import canBeCopied from '../utils/canBeCopied';
 import canBeDuplicated from '../utils/canBeDuplicated';
 import canBeHidden from '../utils/canBeHidden';
 import canBeRemoved from '../utils/canBeRemoved';
 import canBeRenamed from '../utils/canBeRenamed';
 import canBeSaved from '../utils/canBeSaved';
 import isCtrlOrMeta from '../utils/isCtrlOrMeta';
+import {isMovementValid} from '../utils/isMovementValid';
+import toMovementItem from '../utils/toMovementItem';
 import updateItemStyle from '../utils/updateItemStyle';
 import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
 import ShortcutModal from './ShortcutModal';
@@ -249,19 +250,16 @@ export default function ShortcutManager() {
 					!isInteractiveElement(document.activeElement) &&
 					canUpdatePageStructure &&
 					isOnlyOneParentSelected(activeItemIds) &&
-					!!clipboard.length &&
-					clipboard.every(
-						(itemId) =>
-							!!layoutData.items[itemId] &&
-							!!layoutData.items[getParentItemId()] &&
-							canBeCopied(
-								itemId,
-								fragmentEntryLinks,
-								getParentItemId(),
-								layoutData,
-								getWidgets
-							)
-					),
+					clipboard.length &&
+					isMovementValid({
+						fragmentEntryLinks,
+						getWidgets,
+						layoutData,
+						sources: clipboard.map((id) =>
+							toMovementItem(id, layoutData, fragmentEntryLinks)
+						),
+						targetId: getParentItemId(),
+					}),
 				isKeyCombination: (event) =>
 					isCtrlOrMeta(event) && event.code === V_KEY_CODE,
 			},

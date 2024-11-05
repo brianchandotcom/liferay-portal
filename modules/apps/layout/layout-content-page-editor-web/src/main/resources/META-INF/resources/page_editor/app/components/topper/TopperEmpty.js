@@ -35,12 +35,13 @@ import {useLayoutKeyboardNavigation} from '../../hooks/app_hooks/useLayoutKeyboa
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
 import pasteItems from '../../thunks/pasteItems';
-import canBeCopied from '../../utils/canBeCopied';
 import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
 import {
 	useDropTarget,
 	useIsDroppable,
 } from '../../utils/drag_and_drop/useDragAndDrop';
+import {isMovementValid} from '../../utils/isMovementValid';
+import toMovementItem from '../../utils/toMovementItem';
 import useDropContainerId from '../../utils/useDropContainerId';
 import {TopperLabel} from './TopperLabel';
 
@@ -320,20 +321,19 @@ const TopperEmptyLabel = ({isActive, isHovered, item, itemElement}) => {
 										event.stopPropagation();
 
 										if (
-											clipboard.every(
-												(itemId) =>
-													!!layoutData.items[
-														itemId
-													] &&
-													!!item &&
-													canBeCopied(
-														itemId,
-														fragmentEntryLinks,
-														item.itemId,
+											isMovementValid({
+												fragmentEntryLinks,
+												getWidgets,
+												layoutData,
+												sources: clipboard.map((id) =>
+													toMovementItem(
+														id,
 														layoutData,
-														getWidgets
+														fragmentEntryLinks
 													)
-											)
+												),
+												targetId: item.itemId,
+											})
 										) {
 											dispatch(
 												pasteItems({

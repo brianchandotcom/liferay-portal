@@ -29,7 +29,6 @@ import {useGetWidgets} from '../../contexts/WidgetsContext';
 import deleteItem from '../../thunks/deleteItem';
 import duplicateItem from '../../thunks/duplicateItem';
 import pasteItems from '../../thunks/pasteItems';
-import canBeCopied from '../../utils/canBeCopied';
 import canBeDuplicated from '../../utils/canBeDuplicated';
 import canBeRemoved from '../../utils/canBeRemoved';
 import canBeSaved from '../../utils/canBeSaved';
@@ -41,7 +40,9 @@ import getPortletCustomActions from '../../utils/getPortletCustomActions';
 import getPortletId from '../../utils/getPortletId';
 import hideFragment from '../../utils/hideFragment';
 import isInputFragment from '../../utils/isInputFragment';
+import {isMovementValid} from '../../utils/isMovementValid';
 import isStepper from '../../utils/isStepper';
+import toMovementItem from '../../utils/toMovementItem';
 import useHasRequiredChild from '../../utils/useHasRequiredChild';
 import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
 import hasDropZoneChild from '../layout_data_items/hasDropZoneChild';
@@ -192,18 +193,19 @@ export default function TopperItemActions({disabled, item}) {
 			items.push({
 				action: () => {
 					if (
-						clipboard.every(
-							(itemId) =>
-								!!layoutData.items[itemId] &&
-								!!item &&
-								canBeCopied(
-									itemId,
-									fragmentEntryLinks,
-									item.itemId,
+						isMovementValid({
+							fragmentEntryLinks,
+							getWidgets,
+							layoutData,
+							sources: clipboard.map((id) =>
+								toMovementItem(
+									id,
 									layoutData,
-									getWidgets
+									fragmentEntryLinks
 								)
-						)
+							),
+							targetId: item.itemId,
+						})
 					) {
 						dispatch(
 							pasteItems({

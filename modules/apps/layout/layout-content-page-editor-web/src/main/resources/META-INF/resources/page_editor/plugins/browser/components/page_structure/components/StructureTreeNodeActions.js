@@ -35,7 +35,6 @@ import {useGetWidgets} from '../../../../../app/contexts/WidgetsContext';
 import deleteItem from '../../../../../app/thunks/deleteItem';
 import duplicateItem from '../../../../../app/thunks/duplicateItem';
 import pasteItems from '../../../../../app/thunks/pasteItems';
-import canBeCopied from '../../../../../app/utils/canBeCopied';
 import canBeDuplicated from '../../../../../app/utils/canBeDuplicated';
 import canBeRemoved from '../../../../../app/utils/canBeRemoved';
 import canBeRenamed from '../../../../../app/utils/canBeRenamed';
@@ -45,7 +44,9 @@ import {
 	getFormErrorDescription,
 } from '../../../../../app/utils/getFormErrorDescription';
 import isInputFragment from '../../../../../app/utils/isInputFragment';
+import {isMovementValid} from '../../../../../app/utils/isMovementValid';
 import isStepper from '../../../../../app/utils/isStepper';
+import toMovementItem from '../../../../../app/utils/toMovementItem';
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
@@ -306,18 +307,19 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 			items.push({
 				action: () => {
 					if (
-						clipboard.every(
-							(itemId) =>
-								!!layoutData.items[itemId] &&
-								!!item &&
-								canBeCopied(
-									itemId,
-									fragmentEntryLinks,
-									item.id,
+						isMovementValid({
+							fragmentEntryLinks,
+							getWidgets,
+							layoutData,
+							sources: clipboard.map((id) =>
+								toMovementItem(
+									id,
 									layoutData,
-									getWidgets
+									fragmentEntryLinks
 								)
-						)
+							),
+							targetId: item.id,
+						})
 					) {
 						dispatch(
 							pasteItems({

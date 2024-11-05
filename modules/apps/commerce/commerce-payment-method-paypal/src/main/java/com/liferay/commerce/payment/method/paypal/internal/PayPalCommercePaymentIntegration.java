@@ -348,8 +348,7 @@ public class PayPalCommercePaymentIntegration
 						"&orderType=normal",
 						commercePaymentEntry.getCallbackURL())
 				).shippingPreference(
-					PayPalCommercePaymentMethodConstants.
-						SHIPPING_PREFERENCE_PROVIDED
+					_getShippingPreference(commercePaymentEntry.getClassPK())
 				).userAction(
 					PayPalCommercePaymentMethodConstants.USER_ACTION_PAY_NOW
 				)
@@ -508,7 +507,7 @@ public class PayPalCommercePaymentIntegration
 		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
 			_getPayPalGroupServiceConfiguration(commerceOrder.getGroupId());
 
-		return new PurchaseUnitRequest(
+		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest(
 		).amountWithBreakdown(
 			new AmountWithBreakdown(
 			).amountBreakdown(
@@ -556,9 +555,14 @@ public class PayPalCommercePaymentIntegration
 			)
 		).referenceId(
 			String.valueOf(commercePaymentEntry.getCommercePaymentEntryId())
-		).shippingDetail(
-			_toShippingDetail(commerceOrder.getShippingAddress())
 		);
+
+		if (commerceOrder.isShippable()) {
+			purchaseUnitRequest.shippingDetail(
+				_toShippingDetail(commerceOrder.getShippingAddress()));
+		}
+
+		return purchaseUnitRequest;
 	}
 
 	private PurchaseUnitRequest _getDefaultPurchaseUnitRequest(
@@ -683,6 +687,14 @@ public class PayPalCommercePaymentIntegration
 				payPalGroupServiceConfiguration.clientSecret()));
 	}
 
+	private String _getRegionCode(Region region) {
+		if (region == null) {
+			return null;
+		}
+
+		return region.getRegionCode();
+	}
+
 	private String _getResource(Locale locale, String key) {
 		if (locale == null) {
 			locale = LocaleUtil.getSiteDefault();
@@ -694,6 +706,19 @@ public class PayPalCommercePaymentIntegration
 	private ResourceBundle _getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
+	}
+
+	private String _getShippingPreference(long commerceOrderId) {
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.fetchCommerceOrder(commerceOrderId);
+
+		if ((commerceOrder != null) && commerceOrder.isShippable()) {
+			return PayPalCommercePaymentMethodConstants.
+				SHIPPING_PREFERENCE_PROVIDED;
+		}
+
+		return PayPalCommercePaymentMethodConstants.
+			SHIPPING_PREFERENCE_NO_SHIPPING;
 	}
 
 	private Money _toMoney(
@@ -726,9 +751,8 @@ public class PayPalCommercePaymentIntegration
 		}
 
 		Country country = shippingCommerceAddress.getCountry();
-		Region region = shippingCommerceAddress.getRegion();
 
-		if ((country == null) || (region == null)) {
+		if (country == null) {
 			return null;
 		}
 
@@ -740,7 +764,7 @@ public class PayPalCommercePaymentIntegration
 			).addressLine2(
 				shippingCommerceAddress.getStreet2()
 			).adminArea1(
-				region.getRegionCode()
+				_getRegionCode(shippingCommerceAddress.getRegion())
 			).adminArea2(
 				shippingCommerceAddress.getCity()
 			).countryCode(

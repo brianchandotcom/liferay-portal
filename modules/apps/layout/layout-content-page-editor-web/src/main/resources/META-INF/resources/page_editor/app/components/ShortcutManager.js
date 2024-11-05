@@ -261,16 +261,6 @@ export default function ShortcutManager() {
 								layoutData,
 								getWidgets
 							)
-					) &&
-					clipboard.every(
-						(itemId) =>
-							!!layoutData.items[itemId] &&
-							canBeDuplicated(
-								fragmentEntryLinks,
-								layoutData.items[itemId],
-								layoutData,
-								getWidgets
-							)
 					),
 				isKeyCombination: (event) =>
 					isCtrlOrMeta(event) && event.code === V_KEY_CODE,

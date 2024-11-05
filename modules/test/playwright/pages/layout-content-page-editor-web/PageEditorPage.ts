@@ -676,7 +676,7 @@ export class PageEditorPage {
 
 		// Clear current content and fill with new one
 
-		await this.page.keyboard.press('Control+KeyA');
+		await this.page.keyboard.press('ControlOrMeta+KeyA');
 		await this.page.keyboard.press('Backspace');
 
 		await this.page.keyboard.type(value);

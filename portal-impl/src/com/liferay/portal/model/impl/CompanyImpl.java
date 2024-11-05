@@ -6,6 +6,7 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.AutoEscape;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.cache.CacheField;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyInfoLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -418,27 +420,33 @@ public class CompanyImpl extends CompanyBaseImpl {
 	public static class CompanySecurityBag implements Serializable {
 
 		private CompanySecurityBag(Company company) {
-			_authType = _getPrefsPropsString(
-				company, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
-				PropsValues.COMPANY_SECURITY_AUTH_TYPE);
-			_autoLogin = _getPrefsPropsBoolean(
-				company, PropsKeys.COMPANY_SECURITY_AUTO_LOGIN,
-				PropsValues.COMPANY_SECURITY_AUTO_LOGIN);
-			_siteLogo = _getPrefsPropsBoolean(
-				company, PropsKeys.COMPANY_SECURITY_SITE_LOGO,
-				PropsValues.COMPANY_SECURITY_SITE_LOGO);
-			_strangers = _getPrefsPropsBoolean(
-				company, PropsKeys.COMPANY_SECURITY_STRANGERS,
-				PropsValues.COMPANY_SECURITY_STRANGERS);
-			_strangersVerify = _getPrefsPropsBoolean(
-				company, PropsKeys.COMPANY_SECURITY_STRANGERS_VERIFY,
-				PropsValues.COMPANY_SECURITY_STRANGERS_VERIFY);
-			_strangersWithMx = _getPrefsPropsBoolean(
-				company, PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
-				PropsValues.COMPANY_SECURITY_STRANGERS_WITH_MX);
-			_updatePasswordRequired = _getPrefsPropsBoolean(
-				company, PropsKeys.COMPANY_SECURITY_UPDATE_PASSWORD_REQUIRED,
-				PropsValues.COMPANY_SECURITY_UPDATE_PASSWORD_REQUIRED);
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						company.getCompanyId())) {
+
+				_authType = _getPrefsPropsString(
+					company, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
+					PropsValues.COMPANY_SECURITY_AUTH_TYPE);
+				_autoLogin = _getPrefsPropsBoolean(
+					company, PropsKeys.COMPANY_SECURITY_AUTO_LOGIN,
+					PropsValues.COMPANY_SECURITY_AUTO_LOGIN);
+				_siteLogo = _getPrefsPropsBoolean(
+					company, PropsKeys.COMPANY_SECURITY_SITE_LOGO,
+					PropsValues.COMPANY_SECURITY_SITE_LOGO);
+				_strangers = _getPrefsPropsBoolean(
+					company, PropsKeys.COMPANY_SECURITY_STRANGERS,
+					PropsValues.COMPANY_SECURITY_STRANGERS);
+				_strangersVerify = _getPrefsPropsBoolean(
+					company, PropsKeys.COMPANY_SECURITY_STRANGERS_VERIFY,
+					PropsValues.COMPANY_SECURITY_STRANGERS_VERIFY);
+				_strangersWithMx = _getPrefsPropsBoolean(
+					company, PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
+					PropsValues.COMPANY_SECURITY_STRANGERS_WITH_MX);
+				_updatePasswordRequired = _getPrefsPropsBoolean(
+					company,
+					PropsKeys.COMPANY_SECURITY_UPDATE_PASSWORD_REQUIRED,
+					PropsValues.COMPANY_SECURITY_UPDATE_PASSWORD_REQUIRED);
+			}
 		}
 
 		private final String _authType;

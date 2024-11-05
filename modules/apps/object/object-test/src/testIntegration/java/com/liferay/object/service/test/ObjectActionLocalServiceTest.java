@@ -882,7 +882,7 @@ public class ObjectActionLocalServiceTest {
 					objectDefinitionAAA);
 
 			TreeTestUtil.bind(
-				_objectDefinitionLocalService,
+				_objectRelationshipLocalService,
 				Arrays.asList(
 					objectRelationshipAA_AAA, objectRelationshipA_AA));
 

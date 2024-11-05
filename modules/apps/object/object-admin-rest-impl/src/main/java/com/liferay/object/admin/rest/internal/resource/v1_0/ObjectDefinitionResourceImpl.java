@@ -1171,8 +1171,6 @@ public class ObjectDefinitionResourceImpl
 
 		String permissionName =
 			com.liferay.object.model.ObjectDefinition.class.getName();
-		long rootObjectDefinitionId =
-			serviceBuilderObjectDefinition.getRootObjectDefinitionId();
 
 		ObjectDefinition objectDefinition =
 			com.liferay.object.admin.rest.internal.dto.v1_0.util.
@@ -1190,23 +1188,6 @@ public class ObjectDefinitionResourceImpl
 
 		objectDefinition.setActions(
 			() -> HashMapBuilder.put(
-				"bind",
-				() -> {
-					if (!FeatureFlagManagerUtil.isEnabled(
-							contextCompany.getCompanyId(), "LPS-187142") ||
-						(rootObjectDefinitionId != 0) ||
-						serviceBuilderObjectDefinition.isApproved() ||
-						serviceBuilderObjectDefinition.isSystem()) {
-
-						return null;
-					}
-
-					return addAction(
-						ActionKeys.UPDATE, "putObjectDefinition",
-						permissionName,
-						serviceBuilderObjectDefinition.getObjectDefinitionId());
-				}
-			).put(
 				"delete",
 				() -> {
 					if (serviceBuilderObjectDefinition.isSystem()) {
@@ -1266,20 +1247,6 @@ public class ObjectDefinitionResourceImpl
 
 					return addAction(
 						ActionKeys.UPDATE, "postObjectDefinitionPublish",
-						permissionName,
-						serviceBuilderObjectDefinition.getObjectDefinitionId());
-				}
-			).put(
-				"unbind",
-				() -> {
-					if ((rootObjectDefinitionId == 0) ||
-						serviceBuilderObjectDefinition.isApproved()) {
-
-						return null;
-					}
-
-					return addAction(
-						ActionKeys.UPDATE, "putObjectDefinition",
 						permissionName,
 						serviceBuilderObjectDefinition.getObjectDefinitionId());
 				}

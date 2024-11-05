@@ -1741,7 +1741,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
 
 		TreeTestUtil.bind(
-			_objectDefinitionLocalService,
+			_objectRelationshipLocalService,
 			Collections.singletonList(objectRelationship2));
 
 		AssertUtils.assertFailure(

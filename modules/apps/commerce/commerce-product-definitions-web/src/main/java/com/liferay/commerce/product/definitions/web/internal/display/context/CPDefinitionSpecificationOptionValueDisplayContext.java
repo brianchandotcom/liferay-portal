@@ -17,6 +17,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryService;
 import com.liferay.petra.string.StringPool;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
@@ -40,7 +40,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 import javax.portlet.PortletURL;
 
@@ -158,33 +160,41 @@ public class CPDefinitionSpecificationOptionValueDisplayContext
 		).buildPortletURL();
 	}
 
-	public List<SelectOption> getSelectOptions() throws Exception {
-		List<SelectOption> selectOptions = new ArrayList<>();
+	public Map<String, List<SelectOption>> getSelectOptionsMap()
+		throws Exception {
+
+		Map<String, List<SelectOption>> selectOptionsMap = new TreeMap<>();
 
 		CPSpecificationOption cpSpecificationOption =
 			_cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
 
-		if (ListUtil.isEmpty(cpSpecificationOption.getListTypeEntries())) {
-			return selectOptions;
-		}
-
-		selectOptions.add(new SelectOption(StringPool.BLANK, StringPool.BLANK));
-
 		Locale locale = LocaleUtil.fromLanguageId(
 			LanguageUtil.getLanguageId(httpServletRequest));
 
-		for (ListTypeEntry listTypeEntry :
-				cpSpecificationOption.getListTypeEntries()) {
+		for (ListTypeDefinition listTypeDefinition :
+				cpSpecificationOption.getListTypeDefinitions()) {
 
-			selectOptions.add(
-				new SelectOption(
-					listTypeEntry.getName(locale), listTypeEntry.getKey(),
-					Objects.equals(
-						_cpDefinitionSpecificationOptionValue.getValue(locale),
-						listTypeEntry.getName(locale))));
+			List<SelectOption> selectOptions = new ArrayList<>();
+
+			for (ListTypeEntry listTypeEntry :
+					_listTypeEntryService.getListTypeEntries(
+						listTypeDefinition.getListTypeDefinitionId(),
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+				selectOptions.add(
+					new SelectOption(
+						listTypeEntry.getName(locale), listTypeEntry.getKey(),
+						Objects.equals(
+							_cpDefinitionSpecificationOptionValue.getValue(
+								locale),
+							listTypeEntry.getName(locale))));
+			}
+
+			selectOptionsMap.put(
+				listTypeDefinition.getName(locale), selectOptions);
 		}
 
-		return selectOptions;
+		return selectOptionsMap;
 	}
 
 	public boolean hasCustomAttributesAvailable() throws Exception {

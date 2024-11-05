@@ -19,6 +19,7 @@ import com.liferay.gradle.plugins.node.task.PackageRunTask;
 import com.liferay.gradle.plugins.node.task.PackageRunTestTask;
 import com.liferay.gradle.plugins.node.task.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.node.task.YarnInstallTask;
+import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.OSGiUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -242,6 +243,23 @@ public class NodePlugin implements Plugin<Project> {
 
 		downloadNodeTask.setDescription(
 			"Downloads Node.js in the project build directory.");
+
+		if (!OSDetector.isWindows()) {
+
+			// https://github.com/gradle/gradle/issues/3525
+
+			TaskOutputs taskOutputs = downloadNodeTask.getOutputs();
+
+			taskOutputs.upToDateWhen(
+				new Spec<Task>() {
+
+					@Override
+					public boolean isSatisfiedBy(Task task) {
+						return false;
+					}
+
+				});
+		}
 
 		return downloadNodeTask;
 	}

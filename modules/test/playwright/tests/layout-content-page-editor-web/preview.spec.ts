@@ -136,15 +136,12 @@ test(
 
 		await expect(async () => {
 			await clickAndExpectToBeVisible({
+				autoClick: true,
 				target: previewButton,
 				trigger: page
 					.locator('.control-menu-nav-item')
 					.getByLabel('Options', {exact: true}),
 			});
-
-			if (await previewButton.isVisible()) {
-				await previewButton.click();
-			}
 
 			const newPage = await pagePromise;
 

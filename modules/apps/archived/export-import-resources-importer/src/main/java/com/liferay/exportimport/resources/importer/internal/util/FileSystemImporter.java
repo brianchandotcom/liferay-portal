@@ -385,7 +385,7 @@ public class FileSystemImporter extends BaseImporter {
 
 			if (!updateModeEnabled || (ddmStructure == null)) {
 				ddmStructure = ddmStructureLocalService.addStructure(
-					userId, groupId,
+					null, userId, groupId,
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 					portal.getClassNameId(DDLRecordSet.class),
 					_getKey(fileName), getMap(name), null, ddmForm,

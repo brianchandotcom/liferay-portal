@@ -405,7 +405,7 @@ public class DDMStructureStagedModelDataHandler
 				}
 
 				importedStructure = _ddmStructureLocalService.addStructure(
-					userId, groupId, parentStructureId,
+					null, userId, groupId, parentStructureId,
 					structure.getClassNameId(), structureKey,
 					structure.getNameMap(), structure.getDescriptionMap(),
 					ddmForm, null, structure.getStorageType(),
@@ -439,10 +439,11 @@ public class DDMStructureStagedModelDataHandler
 		}
 		else {
 			importedStructure = _ddmStructureLocalService.addStructure(
-				userId, groupId, parentStructureId, structure.getClassNameId(),
-				null, structure.getNameMap(), structure.getDescriptionMap(),
-				ddmForm, ddmFormLayout, structure.getStorageType(),
-				structure.getType(), serviceContext);
+				null, userId, groupId, parentStructureId,
+				structure.getClassNameId(), null, structure.getNameMap(),
+				structure.getDescriptionMap(), ddmForm, ddmFormLayout,
+				structure.getStorageType(), structure.getType(),
+				serviceContext);
 		}
 
 		structureIds.put(

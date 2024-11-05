@@ -76,7 +76,7 @@ public class DDMFieldCTUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 			RandomTestUtil.randomString());
 
 		_ddmStructure = DDMStructureLocalServiceUtil.addStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			PortalUtil.getClassNameId(DDLRecordSet.class.getName()),
 			"CUSTOM-META-TAGS", RandomTestUtil.randomLocaleStringMap(), null,
 			ddmForm, _ddm.getDefaultDDMFormLayout(ddmForm),

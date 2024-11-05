@@ -71,9 +71,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
-			getUserId(), groupId, parentStructureId, classNameId, structureKey,
-			nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType, type,
-			serviceContext);
+			null, getUserId(), groupId, parentStructureId, classNameId,
+			structureKey, nameMap, descriptionMap, ddmForm, ddmFormLayout,
+			storageType, type, serviceContext);
 	}
 
 	@Override

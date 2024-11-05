@@ -69,7 +69,7 @@ public class DDMStructureLayoutCTUpgradeProcessTest
 			RandomTestUtil.randomString());
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			PortalUtil.getClassNameId(DDMFormInstance.class.getName()), null,
 			RandomTestUtil.randomLocaleStringMap(), null, ddmForm,
 			_createDDMFormLayout(ddmForm), StorageType.DEFAULT.toString(),

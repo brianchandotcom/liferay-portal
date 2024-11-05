@@ -117,7 +117,7 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 		serviceContext.setModelPermissions(oldDDMStructureModelPermissions);
 
 		DDMStructure newDDMStructure = _ddmStructureLocalService.addStructure(
-			oldDDMStructure.getUserId(), oldDDMStructure.getGroupId(),
+			null, oldDDMStructure.getUserId(), oldDDMStructure.getGroupId(),
 			oldDDMStructure.getParentStructureId(),
 			PortalUtil.getClassNameId(KaleoProcess.class),
 			oldDDMStructure.getStructureKey(), oldDDMStructure.getNameMap(),

@@ -245,7 +245,8 @@ public class DDMFormImporter {
 		long groupId = serviceContext.getScopeGroupId();
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
-			userId, groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			null, userId, groupId,
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			_classNameLocalService.getClassNameId(DDLRecordSet.class),
 			StringPool.BLANK, nameMap, descriptionMap, ddmForm,
 			defaultDDMFormLayout, StorageType.DEFAULT.toString(),

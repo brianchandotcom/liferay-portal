@@ -52,7 +52,7 @@ public class DDMStructureDemoDataCreatorImpl
 		ddmFormLayout.setPaginationMode(DDMFormLayout.WIZARD_MODE);
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
-			userId, groupId, 0,
+			null, userId, groupId, 0,
 			_portal.getClassNameId(DDMFormInstance.class.getName()), null,
 			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(), "Test Structure"

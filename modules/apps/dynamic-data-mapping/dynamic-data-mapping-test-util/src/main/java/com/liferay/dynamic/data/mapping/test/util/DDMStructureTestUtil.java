@@ -101,7 +101,7 @@ public class DDMStructureTestUtil {
 		serviceContext.setAddGuestPermissions(true);
 
 		return DDMStructureLocalServiceUtil.addStructure(
-			TestPropsValues.getUserId(), groupId, parentStructureId,
+			null, TestPropsValues.getUserId(), groupId, parentStructureId,
 			PortalUtil.getClassNameId(className), null, nameMap, null, ddmForm,
 			ddmFormLayout, StorageType.DEFAULT.toString(),
 			DDMStructureConstants.TYPE_DEFAULT, serviceContext);

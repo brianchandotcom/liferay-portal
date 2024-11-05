@@ -1983,18 +1983,31 @@ public class RESTBuilder {
 	}
 
 	private String _getNPMPathString() {
-		String absolutePathString = _configDir.getAbsolutePath();
+		File portalDir = _getPortalDir(_configDir);
 
-		int index = absolutePathString.indexOf("/liferay-portal/");
-
-		if (index == -1) {
+		if (portalDir == null) {
 			return "npm";
 		}
 
 		return String.valueOf(
 			Paths.get(
-				absolutePathString.substring(0, index), "liferay-portal",
-				"build", "node", "bin", "npm"));
+				portalDir.getAbsolutePath(), "build", "node", "bin", "npm"));
+	}
+
+	private File _getPortalDir(File dir) {
+		while (true) {
+			File markerFile = new File(dir, "portal-impl");
+
+			if (markerFile.exists()) {
+				return dir;
+			}
+
+			dir = dir.getParentFile();
+
+			if (dir == null) {
+				return null;
+			}
+		}
 	}
 
 	private Set<String> _getRelatedSchemaNames(

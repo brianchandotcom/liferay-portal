@@ -5,7 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
@@ -13,17 +13,34 @@ import {LayoutBreadcrumbs} from '../../../../src/main/resources/META-INF/resourc
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {
 	ControlsProvider,
+	useActivateMultiSelect,
 	useSelectItem,
+	useSelectMultipleItems,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
-const AutoSelect = ({itemId}) => {
-	useSelectItem()(itemId);
+const AutoSelect = ({itemId, multiSelect = null}) => {
+	useActivateMultiSelect()(multiSelect);
+
+	const selectMultipleItems = useSelectMultipleItems();
+	const selectItem = useSelectItem();
+
+	const select = multiSelect ? selectMultipleItems : selectItem;
+
+	useEffect(() => {
+		if (itemId) {
+			select(itemId);
+		}
+	}, [itemId, select]);
 
 	return null;
 };
 
-const renderComponent = ({multiSelect, activeItemIds = []}) => {
+const renderComponent = ({
+	multiSelect = null,
+	initialActiveItemIds = [],
+	activeItemId,
+}) => {
 	return render(
 		<StoreMother.Component
 			getState={() => ({
@@ -99,11 +116,13 @@ const renderComponent = ({multiSelect, activeItemIds = []}) => {
 			<DndProvider backend={HTML5Backend}>
 				<ControlsProvider
 					activeInitialState={{
-						activeItemIds,
-						multiSelect,
+						activeItemIds: initialActiveItemIds,
 					}}
 				>
-					<AutoSelect itemId={activeItemIds[0]} />
+					<AutoSelect
+						itemId={activeItemId || initialActiveItemIds[0]}
+						multiSelect={multiSelect}
+					/>
 
 					<LayoutBreadcrumbs />
 				</ControlsProvider>
@@ -129,13 +148,13 @@ describe('LayoutBreadcrumbs', () => {
 	});
 
 	it('renders item in breadcrumbs when selecting it', () => {
-		renderComponent({activeItemIds: ['item-1']});
+		renderComponent({initialActiveItemIds: ['item-1']});
 
 		expect(screen.getByText('Item 1')).toBeInTheDocument();
 	});
 
 	it('renders ancestors in breadcrumbs when selecting an item', () => {
-		renderComponent({activeItemIds: ['item-3']});
+		renderComponent({initialActiveItemIds: ['item-3']});
 
 		expect(screen.getByText('Item 3')).toBeInTheDocument();
 		expect(screen.getByText('Item 2')).toBeInTheDocument();
@@ -143,22 +162,23 @@ describe('LayoutBreadcrumbs', () => {
 	});
 
 	it('does not render children in breadcrumbs when selecting an item', () => {
-		renderComponent({activeItemIds: ['item-2']});
+		renderComponent({initialActiveItemIds: ['item-2']});
 
 		expect(screen.queryByText('Item 3')).not.toBeInTheDocument();
 	});
 
 	it('renders column as Module in breadcrumbs even if they are in the path', () => {
-		renderComponent({activeItemIds: ['item-4']});
+		renderComponent({initialActiveItemIds: ['item-4']});
 
 		expect(screen.getByText('Item 4')).toBeInTheDocument();
 		expect(screen.getByText('grid')).toBeInTheDocument();
 		expect(screen.getByText('module')).toBeInTheDocument();
 	});
 
-	it('does not render anything when multiple elements are selected', () => {
+	it('does not render anything when multiple elements are selected', async () => {
 		renderComponent({
-			activeItemIds: ['item-1'],
+			activeItemId: 'item-4',
+			initialActiveItemIds: ['item-1'],
 			multiSelect: 'simple',
 		});
 

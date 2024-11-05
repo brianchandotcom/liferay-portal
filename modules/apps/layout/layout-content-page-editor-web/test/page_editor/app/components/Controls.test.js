@@ -334,12 +334,12 @@ describe('Reducer', () => {
 				const action = {
 					...ACTION,
 					itemId: 'fragment01',
+					multiSelect: 'simple',
 					type: SELECT_ITEM,
 				};
 				const state = {
 					...STATE,
 					activeItemIds: ['fragment04', 'fragment02'],
-					multiSelect: 'simple',
 				};
 
 				expect(reducer(state, action)).toEqual(
@@ -361,12 +361,12 @@ describe('Reducer', () => {
 				const action = {
 					...ACTION,
 					itemId: 'fragment02',
+					multiSelect: 'simple',
 					type: SELECT_ITEM,
 				};
 				const state = {
 					...STATE,
 					activeItemIds: ['fragment04', 'fragment02'],
-					multiSelect: 'simple',
 				};
 
 				expect(reducer(state, action)).toEqual(
@@ -386,13 +386,13 @@ describe('Reducer', () => {
 				const action = {
 					...ACTION,
 					itemId: 'fragment01',
+					layoutData: LAYOUT_DATA,
+					multiSelect: 'range',
 					type: SELECT_ITEM,
 				};
 				const state = {
 					...STATE,
 					activeItemIds: ['fragment03', 'fragment04', 'fragment02'],
-					layoutData: LAYOUT_DATA,
-					multiSelect: 'range',
 					rangeLimitIds: {start: 'fragment02'},
 				};
 
@@ -416,6 +416,8 @@ describe('Reducer', () => {
 				const action = {
 					...ACTION,
 					itemId: 'container02',
+					layoutData: LAYOUT_DATA,
+					multiSelect: 'range',
 					type: SELECT_ITEM,
 				};
 				const state = {
@@ -426,8 +428,6 @@ describe('Reducer', () => {
 						'fragment02',
 						'fragment01',
 					],
-					layoutData: LAYOUT_DATA,
-					multiSelect: 'range',
 					rangeLimitIds: {end: 'fragment01', start: 'fragment02'},
 				};
 
@@ -451,13 +451,13 @@ describe('Reducer', () => {
 				const action = {
 					...ACTION,
 					itemId: 'fragment01',
+					layoutData: LAYOUT_DATA,
+					multiSelect: 'range',
 					type: SELECT_ITEM,
 				};
 				const state = {
 					...STATE,
 					activeItemIds: [],
-					layoutData: LAYOUT_DATA,
-					multiSelect: 'range',
 				};
 
 				expect(reducer(state, action)).toEqual(
@@ -475,13 +475,13 @@ describe('Reducer', () => {
 				const action = {
 					...ACTION,
 					itemId: 'fragment01',
+					layoutData: LAYOUT_DATA,
+					multiSelect: 'range',
 					type: SELECT_ITEM,
 				};
 				const state = {
 					...STATE,
 					activeItemIds: ['fragment01', 'fragment02'],
-					layoutData: LAYOUT_DATA,
-					multiSelect: 'range',
 					rangeLimitIds: {end: 'fragment01', start: 'fragment01'},
 				};
 
@@ -561,22 +561,6 @@ describe('Reducer', () => {
 	});
 
 	describe('Multiselect action', () => {
-		it('activates multiselect', () => {
-			const state = {...STATE, multiSelect: null};
-			const action = {
-				...ACTION,
-				...{
-					multiSelect: 'simple',
-					type: MULTI_SELECT,
-				},
-			};
-
-			expect(reducer(state, action)).toEqual({
-				...state,
-				multiSelect: 'simple',
-			});
-		});
-
 		it('selects multiple fragments', () => {
 			const state = {...STATE, activeItemIds: []};
 			const action = {

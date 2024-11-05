@@ -1355,6 +1355,57 @@ test.describe('Paragraph Fragment', () => {
 			).toBeAttached();
 		}
 	);
+
+	test(
+		'Can use CKEditor options when editing a rich text editable',
+		{tag: ['@LPS-127732']},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create page with a paragraph fragment and go to edit mode
+
+			const fragmentId = getRandomString();
+
+			const fragment = getFragmentDefinition({
+				id: fragmentId,
+				key: 'BASIC_COMPONENT-paragraph',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([fragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Open editor options
+
+			await pageEditorPage.selectEditable(fragmentId, 'element-text');
+
+			const editable = pageEditorPage.getEditable({
+				editableId: 'element-text',
+				fragmentId,
+			});
+
+			await editable.click();
+
+			await editable.locator('.cke_editable_inline').click();
+
+			await page.keyboard.press('ControlOrMeta+KeyA');
+
+			// Check that the button is visible and works
+
+			await expect(page.getByTitle('Right')).toBeVisible();
+
+			await page.getByTitle('Right').click();
+
+			expect(
+				await page
+					.locator('.ae-editable p')
+					.evaluate((element) => element.style.textAlign)
+			).toBe('right');
+		}
+	);
 });
 
 test.describe('Slider Fragment', () => {

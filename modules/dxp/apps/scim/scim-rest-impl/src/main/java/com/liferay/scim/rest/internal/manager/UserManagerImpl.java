@@ -264,13 +264,6 @@ public class UserManagerImpl implements UserManager {
 				_getScimClientOAuth2ApplicationConfiguration(
 					serviceContext.getCompanyId());
 
-		if (scimClientOAuth2ApplicationConfiguration == null) {
-			return ReflectionUtil.throwException(
-				new NotFoundException(
-					"SCIM not configured for company " +
-						serviceContext.getCompanyId()));
-		}
-
 		String scimClientId = ScimClientUtil.generateScimClientId(
 			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
 
@@ -348,13 +341,6 @@ public class UserManagerImpl implements UserManager {
 			scimClientOAuth2ApplicationConfiguration =
 				_getScimClientOAuth2ApplicationConfiguration(
 					serviceContext.getCompanyId());
-
-		if (scimClientOAuth2ApplicationConfiguration == null) {
-			return ReflectionUtil.throwException(
-				new NotFoundException(
-					"SCIM not configured for company " +
-						serviceContext.getCompanyId()));
-		}
 
 		String scimClientId = ScimClientUtil.generateScimClientId(
 			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
@@ -476,11 +462,6 @@ public class UserManagerImpl implements UserManager {
 				_getScimClientOAuth2ApplicationConfiguration(
 					company.getCompanyId());
 
-		if (scimClientOAuth2ApplicationConfiguration == null) {
-			throw new NotFoundException(
-				"SCIM not configured for company " + company.getCompanyId());
-		}
-
 		com.liferay.portal.kernel.model.User portalUser = _fetchPortalUser(
 			scimClientOAuth2ApplicationConfiguration, scimUser);
 
@@ -543,11 +524,6 @@ public class UserManagerImpl implements UserManager {
 			scimClientOAuth2ApplicationConfiguration =
 				_getScimClientOAuth2ApplicationConfiguration(
 					company.getCompanyId());
-
-		if (scimClientOAuth2ApplicationConfiguration == null) {
-			throw new NotFoundException(
-				"SCIM not configured for company " + company.getCompanyId());
-		}
 
 		UserGroup userGroup = _fetchUserGroup(
 			company.getCompanyId(), group.getExternalId(),
@@ -752,7 +728,9 @@ public class UserManagerImpl implements UserManager {
 						companyId, "))"));
 
 			if (ArrayUtil.isEmpty(configurations)) {
-				return null;
+				return ReflectionUtil.throwException(
+					new NotFoundException(
+						"SCIM not configured for company " + companyId));
 			}
 
 			Configuration configuration = configurations[0];

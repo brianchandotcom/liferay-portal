@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {
 	ReactDOMServer,
 	ReactPortal,
 	useStateSafe,
 } from '@liferay/frontend-js-react-web';
+import {Resizer} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {useId, useSessionState} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
@@ -69,9 +70,7 @@ export default function Sidebar() {
 	const dropClearRef = useDropClear();
 	const [hasError, setHasError] = useStateSafe(false);
 	const dispatch = useDispatch();
-	const [resizing, setResizing] = useStateSafe(false);
 	const selectItem = useSelectItem();
-	const separatorRef = useRef();
 	const setOpenShortcutModal = useSetOpenShortcutModal();
 	const shortcutButtonTitleId = useId();
 	const sidebarContentId = useId();
@@ -82,9 +81,6 @@ export default function Sidebar() {
 		`${config.portletNamespace}_sidebar-width`,
 		MIN_SIDEBAR_WIDTH
 	);
-
-	const sidebarWidthRef = useRef(sidebarWidth);
-	sidebarWidthRef.current = sidebarWidth;
 
 	const sidebarContentRef = useRef();
 	const tabListRef = useRef();
@@ -133,74 +129,6 @@ export default function Sidebar() {
 		};
 	}, [sidebarHidden, sidebarOpen, itemConfigurationOpen]);
 
-	useEffect(() => {
-		const separatorElement = separatorRef.current;
-
-		if (!separatorElement) {
-			return;
-		}
-
-		let initialSidebarWidth;
-		let initialCursorPosition;
-
-		const handleMouseMove = (event) => {
-			const cursorDelta = event.clientX - initialCursorPosition;
-
-			if (
-				Liferay.Language.direction?.[themeDisplay?.getLanguageId()] ===
-				'rtl'
-			) {
-				setSidebarWidth(
-					Math.min(
-						MAX_SIDEBAR_WIDTH,
-						Math.max(
-							MIN_SIDEBAR_WIDTH,
-							initialSidebarWidth - cursorDelta
-						)
-					)
-				);
-			}
-			else {
-				setSidebarWidth(
-					Math.min(
-						MAX_SIDEBAR_WIDTH,
-						Math.max(
-							MIN_SIDEBAR_WIDTH,
-							initialSidebarWidth + cursorDelta
-						)
-					)
-				);
-			}
-		};
-
-		const stopResizing = () => {
-			setResizing(false);
-			document.body.removeEventListener('mousemove', handleMouseMove);
-			document.body.removeEventListener('mouseleave', stopResizing);
-			document.body.removeEventListener('mouseup', stopResizing);
-		};
-
-		const handleMouseDown = (event) => {
-			setResizing(true);
-
-			event.preventDefault();
-
-			initialSidebarWidth = sidebarWidthRef.current;
-			initialCursorPosition = event.clientX;
-
-			document.body.addEventListener('mousemove', handleMouseMove);
-			document.body.addEventListener('mouseleave', stopResizing);
-			document.body.addEventListener('mouseup', stopResizing);
-		};
-
-		separatorElement.addEventListener('mousedown', handleMouseDown);
-
-		return () => {
-			stopResizing();
-			separatorElement.removeEventListener('mousedown', handleMouseDown);
-		};
-	}, [separatorRef, setResizing, setSidebarWidth, sidebarWidthRef]);
-
 	const deselectItem = (event) => {
 		if (event.target === event.currentTarget) {
 			selectItem(null);
@@ -246,60 +174,6 @@ export default function Sidebar() {
 
 			if (activeTab) {
 				activeTab.focus();
-			}
-		}
-	};
-
-	const handleSeparatorKeyDown = (event) => {
-		if (
-			Liferay.Language.direction?.[themeDisplay?.getLanguageId()] ===
-			'rtl'
-		) {
-			if (event.key === 'ArrowLeft') {
-				setSidebarWidth(
-					Math.min(
-						MAX_SIDEBAR_WIDTH,
-						sidebarWidth + SIDEBAR_WIDTH_RESIZE_STEP
-					)
-				);
-			}
-			else if (event.key === 'ArrowRight') {
-				setSidebarWidth(
-					Math.max(
-						MIN_SIDEBAR_WIDTH,
-						sidebarWidth - SIDEBAR_WIDTH_RESIZE_STEP
-					)
-				);
-			}
-			else if (event.key === 'Home') {
-				setSidebarWidth(MIN_SIDEBAR_WIDTH);
-			}
-			else if (event.key === 'End') {
-				setSidebarWidth(MAX_SIDEBAR_WIDTH);
-			}
-		}
-		else {
-			if (event.key === 'ArrowLeft') {
-				setSidebarWidth(
-					Math.max(
-						MIN_SIDEBAR_WIDTH,
-						sidebarWidth - SIDEBAR_WIDTH_RESIZE_STEP
-					)
-				);
-			}
-			else if (event.key === 'ArrowRight') {
-				setSidebarWidth(
-					Math.min(
-						MAX_SIDEBAR_WIDTH,
-						sidebarWidth + SIDEBAR_WIDTH_RESIZE_STEP
-					)
-				);
-			}
-			else if (event.key === 'Home') {
-				setSidebarWidth(MIN_SIDEBAR_WIDTH);
-			}
-			else if (event.key === 'End') {
-				setSidebarWidth(MAX_SIDEBAR_WIDTH);
 			}
 		}
 	};
@@ -429,20 +303,16 @@ export default function Sidebar() {
 						</ErrorBoundary>
 					)}
 
-					<div
-						aria-controls={sidebarContentId}
-						aria-label={Liferay.Language.get('resize-sidebar')}
-						aria-orientation="vertical"
-						aria-valuemax={MAX_SIDEBAR_WIDTH}
-						aria-valuemin={MIN_SIDEBAR_WIDTH}
-						aria-valuenow={sidebarWidth}
-						className={classNames('page-editor__sidebar__resizer', {
-							'page-editor__sidebar__resizer--resizing': resizing,
-						})}
-						onKeyDown={handleSeparatorKeyDown}
-						ref={separatorRef}
-						role="separator"
-						tabIndex={0}
+					<Resizer
+						ariaControls={sidebarContentId}
+						ariaLabel={Liferay.Language.get('resize-sidebar')}
+						cssClassName="page-editor__sidebar"
+						maxWidth={MAX_SIDEBAR_WIDTH}
+						minWidth={MIN_SIDEBAR_WIDTH}
+						resizeStep={SIDEBAR_WIDTH_RESIZE_STEP}
+						setWidth={setSidebarWidth}
+						targetRef={sidebarContentRef}
+						width={sidebarWidth}
 					/>
 				</div>
 			</div>

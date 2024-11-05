@@ -1,0 +1,33 @@
+assemble:
+    - from: build/vite
+      into: static
+liferay-aicontentwizard-custom-element:
+    cssURLs:
+        - "**/index*.css"
+    friendlyURLMapping: liferay-aicontentwizard-custom-element
+    htmlElementName: liferay-aicontentwizard-custom-element
+    instanceable: false
+    name: Liferay AI Content Wizard
+    portletCategoryName: category.client-extensions
+    properties:
+        route: app
+    type: customElement
+    urls:
+        - "main.js"
+    useESM: true
+liferay-aicontentwizard-settings-custom-element:
+    cssURLs:
+        - "**/index*.css"
+    friendlyURLMapping: liferay-aicontentwizard-custom-element
+    htmlElementName: liferay-aicontentwizard-custom-element
+    instanceable: false
+    name: Liferay AI Content Wizard Settings
+    panelAppOrder: 700
+    panelCategoryKey: applications_menu.applications.custom.apps
+    portletCategoryName: category.client-extensions
+    properties:
+        route: settings
+    type: customElement
+    urls:
+        - "main.js"
+    useESM: true

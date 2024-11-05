@@ -1,8 +1,0 @@
-.DS_Store
-/.idea
-/bundles
-bin
-build
-dist
-node_modules
-node_modules_cache

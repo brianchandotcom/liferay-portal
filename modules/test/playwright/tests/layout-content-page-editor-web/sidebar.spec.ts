@@ -1149,6 +1149,10 @@ test.describe('Page Contents Panel', () => {
 				'Edited Title'
 			);
 
+			// Deselect the editable before changing the translation language
+
+			await page.locator('#banner.page-editor__disabled-area').click();
+
 			await pageEditorPage.switchLanguage('es-ES');
 
 			await pageEditorPage.editTextEditable(

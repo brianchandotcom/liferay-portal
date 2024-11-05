@@ -86,9 +86,24 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 	public void onAfterCreate(T baseModel) throws ModelListenerException {
 		ObjectActionThreadLocal.setSkipObjectActionExecution(true);
 
-		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
-			(T)baseModel.clone());
+		boolean clearObjectEntryIdsMap =
+			ObjectActionThreadLocal.isClearObjectEntryIdsMap();
+
+		try {
+			if (clearObjectEntryIdsMap) {
+				ObjectActionThreadLocal.clearObjectEntryIdsMap();
+			}
+
+			ObjectActionThreadLocal.setClearObjectEntryIdsMap(false);
+
+			_executeObjectActions(
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
+				(T)baseModel.clone());
+		}
+		finally {
+			ObjectActionThreadLocal.setClearObjectEntryIdsMap(
+				clearObjectEntryIdsMap);
+		}
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {

@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>DROPDOWN_ITEM_BUTTON</td>
-	<td>//*[contains(@class,'dropdown')]//*[contains(@class,'dropdown') and contains(.,'${key_text}')]</td>
+	<td>//*[contains(@class,'dropdown')]//*[contains(@class,'dropdown') and not(@icon) and contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -247,7 +247,7 @@
 </tr>
 <tr>
 	<td>QUESTIONS_TITLE</td>
-	<td>//a[contains(@class,'questions-title')]/h2[contains(.,'${key_questionTitle}')]</td>
+	<td>//a[contains(@class,'questions-title')]/h2[contains(.,'${key_questionTitle}')] | //a[contains(@class,'questions-title')]/span[contains(.,'${key_questionTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -603,8 +603,6 @@ definition {
 	@description = "LPS-137639 - Validate if the user can delete a thread through Activity, it also covers LPS-137639."
 	@priority = 4
 	test CanDeleteThreadThroughMyActivity {
-		property portal.release = "quarantine";
-
 		task ("Given there is a message created") {
 			JSONMBMessage.addMessage(
 				groupName = "Guest",
@@ -621,7 +619,9 @@ definition {
 		task ("Then the user can deletes the question") {
 			Questions.gotoDetails(questionTitle = "MB Thread Message Subject");
 
-			Questions.deleteQuestion(deleteInActivity = "true");
+			Questions.deleteQuestion(
+				deleteInActivity = "true",
+				questionTitle = "MB Thread Message Subject");
 		}
 	}
 

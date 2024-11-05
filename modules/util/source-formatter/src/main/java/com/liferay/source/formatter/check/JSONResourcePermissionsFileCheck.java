@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -46,10 +45,10 @@ public class JSONResourcePermissionsFileCheck extends BaseFileCheck {
 		for (Object object : objects) {
 			JSONObject jsonObject = (JSONObject)object;
 
-			String actionIds = jsonObject.getString("actionIds");
+			JSONArray actionIdsJSONArray = jsonObject.getJSONArray("actionIds");
 
-			if (Validator.isNotNull(actionIds)) {
-				jsonObject.put("actionIds", _sortActionIds(actionIds));
+			if (actionIdsJSONArray != null) {
+				jsonObject.put("actionIds", _sortActionIds(actionIdsJSONArray));
 			}
 
 			jsonArray.put(jsonObject);
@@ -58,20 +57,18 @@ public class JSONResourcePermissionsFileCheck extends BaseFileCheck {
 		return JSONUtil.toString(jsonArray);
 	}
 
-	private JSONArray _sortActionIds(String actionIds) throws JSONException {
-		JSONArray actionIdsJSONArray = new JSONArrayImpl(actionIds);
-
-		List<Object> objects = JSONUtil.toObjectList(actionIdsJSONArray);
+	private JSONArray _sortActionIds(JSONArray jsonArray) throws JSONException {
+		List<Object> objects = JSONUtil.toObjectList(jsonArray);
 
 		Collections.sort(objects, new ActionIdsComparator());
 
-		actionIdsJSONArray = new JSONArrayImpl();
+		jsonArray = new JSONArrayImpl();
 
 		for (Object object : objects) {
-			actionIdsJSONArray.put(object);
+			jsonArray.put(object);
 		}
 
-		return actionIdsJSONArray;
+		return jsonArray;
 	}
 
 	private class ActionIdsComparator implements Comparator<Object> {

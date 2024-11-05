@@ -813,8 +813,25 @@ public class LayoutStructureRenderer {
 			}
 		}
 		else {
+			JspWriter jspWriter = _pageContext.getOut();
+
+			if (Objects.equals(
+					_renderLayoutStructureDisplayContext.getLayoutMode(),
+					Constants.VIEW)) {
+
+				jspWriter.write("<div class=\"layout-content portlet-layout\"");
+				jspWriter.write("id=\"main-content\" role=\"main\">");
+			}
+
 			_renderLayoutStructure(
 				layoutStructureItem.getChildrenItemIds(), infoForm);
+
+			if (Objects.equals(
+					_renderLayoutStructureDisplayContext.getLayoutMode(),
+					Constants.VIEW)) {
+
+				jspWriter.write("</div>");
+			}
 		}
 	}
 

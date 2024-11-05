@@ -55,6 +55,13 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 					</clay:container-fluid>
 				</div>
 			</c:when>
+			<c:when test="<%= layout.getMasterLayoutPlid() > 0 %>">
+				<div>
+					<liferay-layout:render-fragment-layout
+						showPreview="<%= true %>"
+					/>
+				</div>
+			</c:when>
 			<c:otherwise>
 				<div class="layout-content portlet-layout" id="main-content" role="main">
 					<liferay-layout:render-fragment-layout />

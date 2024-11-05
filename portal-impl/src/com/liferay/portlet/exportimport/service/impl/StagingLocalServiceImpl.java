@@ -451,6 +451,9 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		typeSettingsUnicodeProperties.setProperty(
 			"remoteAddress", remoteAddress);
 		typeSettingsUnicodeProperties.setProperty(
+			"remoteGroupExternalReferenceCode",
+			remoteGroup.getExternalReferenceCode());
+		typeSettingsUnicodeProperties.setProperty(
 			"remoteGroupId", String.valueOf(remoteGroupId));
 		typeSettingsUnicodeProperties.setProperty(
 			"remoteGroupUUID", remoteGroup.getUuid());

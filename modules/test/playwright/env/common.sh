@@ -396,7 +396,7 @@ function get_workspace_dirs {
 			local workspace_dir=$(echo ${client_extension_dir} | sed 's/\(.*-workspace\/\).*$/\1/')
 
 			if ! [[ "${workspace_dirs[@]}" =~ "${workspace_dir}" ]]; then
-			    workspace_dirs+=(${workspace_dir})
+				workspace_dirs+=(${workspace_dir})
 			fi
 		done
 	fi

@@ -22,10 +22,9 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 /**
  * @author Christian Moura
  */
-public class UserManagerUpdateExpandoColumnUpgradeProcess
-	extends UpgradeProcess {
+public class ExpandoColumnUpgradeProcess extends UpgradeProcess {
 
-	public UserManagerUpdateExpandoColumnUpgradeProcess(
+	public ExpandoColumnUpgradeProcess(
 		ClassNameLocalService classNameLocalService,
 		CompanyLocalService companyLocalService,
 		ExpandoColumnLocalService expandoColumnLocalService,

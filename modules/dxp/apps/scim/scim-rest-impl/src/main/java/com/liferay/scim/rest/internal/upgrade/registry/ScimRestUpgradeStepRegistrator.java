@@ -10,7 +10,7 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.scim.rest.internal.upgrade.v0_0_1.UserManagerUpdateExpandoColumnUpgradeProcess;
+import com.liferay.scim.rest.internal.upgrade.v0_0_1.ExpandoColumnUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,7 +27,7 @@ public class ScimRestUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 		registry.register(
 			"0.0.1", "0.0.2",
-			new UserManagerUpdateExpandoColumnUpgradeProcess(
+			new ExpandoColumnUpgradeProcess(
 				_classNameLocalService, _companyLocalService,
 				_expandoColumnLocalService, _expandoTableLocalService));
 	}

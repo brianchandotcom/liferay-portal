@@ -62,7 +62,7 @@ import org.junit.runner.RunWith;
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @FeatureFlags("LPS-96845")
 @RunWith(Arquillian.class)
-public class UserManagerUpdateExpandoColumnUpgradeProcessTest {
+public class ExpandoColumnUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -257,7 +257,7 @@ public class UserManagerUpdateExpandoColumnUpgradeProcessTest {
 
 	private static final String _CLASS_NAME =
 		"com.liferay.scim.rest.internal.upgrade.v0_0_1." +
-			"UserManagerUpdateExpandoColumnUpgradeProcess";
+			"ExpandoColumnUpgradeProcess";
 
 	private static GroupResource _groupResource;
 	private static String _pid;

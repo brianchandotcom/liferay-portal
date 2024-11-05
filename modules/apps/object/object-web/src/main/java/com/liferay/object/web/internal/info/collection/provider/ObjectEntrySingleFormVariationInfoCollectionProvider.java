@@ -227,11 +227,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 
 	@Override
 	public String getKey() {
-		return StringBundler.concat(
-			ObjectEntrySingleFormVariationInfoCollectionProvider.class.
-				getName(),
-			StringPool.UNDERLINE, _objectDefinition.getCompanyId(),
-			StringPool.UNDERLINE, _objectDefinition.getName());
+		return _objectDefinition.getClassName();
 	}
 
 	@Override

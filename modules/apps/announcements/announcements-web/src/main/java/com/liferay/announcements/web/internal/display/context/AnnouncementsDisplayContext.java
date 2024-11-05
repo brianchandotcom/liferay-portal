@@ -101,18 +101,16 @@ public class AnnouncementsDisplayContext {
 		_announcementScopes = new LinkedHashMap<>();
 
 		if (isCustomizeAnnouncementsDisplayed()) {
-			long[] selectedScopeGroupIdsArray =
-				ListUtil.toLongArray(
-					_getSelectedScopeGroups(), Group.GROUP_ID_ACCESSOR);
-			long[] selectedScopeOrganizationIdsArray =
-				ListUtil.toLongArray(
-					_getSelectedScopeOrganizations(), Organization.ORGANIZATION_ID_ACCESSOR);
-			long[] selectedScopeRoleIdsArray =
-				ListUtil.toLongArray(
-					_getSelectedScopeRoles(), Role.ROLE_ID_ACCESSOR);
-			long[] selectedScopeUserGroupIdsArray =
-				ListUtil.toLongArray(
-					_getSelectedScopeUserGroups(), UserGroup.USER_GROUP_ID_ACCESSOR);
+			long[] selectedScopeGroupIdsArray = ListUtil.toLongArray(
+				_getSelectedScopeGroups(), Group.GROUP_ID_ACCESSOR);
+			long[] selectedScopeOrganizationIdsArray = ListUtil.toLongArray(
+				_getSelectedScopeOrganizations(),
+				Organization.ORGANIZATION_ID_ACCESSOR);
+			long[] selectedScopeRoleIdsArray = ListUtil.toLongArray(
+				_getSelectedScopeRoles(), Role.ROLE_ID_ACCESSOR);
+			long[] selectedScopeUserGroupIdsArray = ListUtil.toLongArray(
+				_getSelectedScopeUserGroups(),
+				UserGroup.USER_GROUP_ID_ACCESSOR);
 
 			if (selectedScopeGroupIdsArray.length != 0) {
 				_announcementScopes.put(
@@ -205,7 +203,6 @@ public class AnnouncementsDisplayContext {
 		List<Group> selectedGroups = new ArrayList<>();
 
 		for (Group group : _getSelectedScopeGroups()) {
-
 			if (GroupPermissionUtil.contains(
 					_announcementsRequestHelper.getPermissionChecker(), group,
 					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
@@ -230,7 +227,6 @@ public class AnnouncementsDisplayContext {
 		List<Organization> selectedOrganizations = new ArrayList<>();
 
 		for (Organization organization : _getSelectedScopeOrganizations()) {
-
 			if (OrganizationPermissionUtil.contains(
 					_announcementsRequestHelper.getPermissionChecker(),
 					organization, ActionKeys.MANAGE_ANNOUNCEMENTS)) {
@@ -264,7 +260,6 @@ public class AnnouncementsDisplayContext {
 		List<Role> selectedRoles = new ArrayList<>();
 
 		for (Role role : _getSelectedScopeRoles()) {
-
 			if (AnnouncementsUtil.hasManageAnnouncementsPermission(
 					role, _announcementsRequestHelper.getPermissionChecker())) {
 
@@ -329,7 +324,8 @@ public class AnnouncementsDisplayContext {
 		for (UserGroup userGroup : _getSelectedScopeUserGroups()) {
 			if (UserGroupPermissionUtil.contains(
 					_announcementsRequestHelper.getPermissionChecker(),
-					userGroup.getUserGroupId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+					userGroup.getUserGroupId(),
+					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
 				selectedUserGroups.add(userGroup);
 			}
@@ -397,13 +393,16 @@ public class AnnouncementsDisplayContext {
 	}
 
 	public boolean isScopeRoleSelected(Role role) {
-		String selectedScopeRoleExternalReferenceCodes = _getSelectedScopeRoleExternalReferenceCodes();
+		String selectedScopeRoleExternalReferenceCodes =
+			_getSelectedScopeRoleExternalReferenceCodes();
 
-		return selectedScopeRoleExternalReferenceCodes.contains(role.getExternalReferenceCode());
+		return selectedScopeRoleExternalReferenceCodes.contains(
+			role.getExternalReferenceCode());
 	}
 
 	public boolean isScopeUserGroupSelected(UserGroup userGroup) {
-		String selectedScopeUserGroupExternalReferenceCodes = _getSelectedScopeUserGroupExternalReferenceCodes();
+		String selectedScopeUserGroupExternalReferenceCodes =
+			_getSelectedScopeUserGroupExternalReferenceCodes();
 
 		return selectedScopeUserGroupExternalReferenceCodes.contains(
 			userGroup.getExternalReferenceCode());
@@ -473,20 +472,6 @@ public class AnnouncementsDisplayContext {
 		return _portletURL;
 	}
 
-	private List<Group> _getSelectedScopeGroups() throws PortalException {
-		List<Group> groups = new ArrayList<>();
-
-		for (String externalReferenceCode :
-			StringUtil.split(_getSelectedScopeGroupExternalReferenceCodes())) {
-			groups.add(
-				GroupLocalServiceUtil.getGroupByExternalReferenceCode(
-					externalReferenceCode,
-					_announcementsRequestHelper.getCompanyId()));
-		}
-
-		return groups;
-	}
-
 	private String _getSelectedScopeGroupExternalReferenceCodes() {
 		Layout layout = _announcementsRequestHelper.getLayout();
 
@@ -499,33 +484,63 @@ public class AnnouncementsDisplayContext {
 			group.getExternalReferenceCode());
 	}
 
-	private List<Organization> _getSelectedScopeOrganizations()
-		throws PortalException {
-		List<Organization> organizations = new ArrayList<>();
+	private List<Group> _getSelectedScopeGroups() throws PortalException {
+		List<Group> groups = new ArrayList<>();
 
 		for (String externalReferenceCode :
-			StringUtil.split(_getSelectedScopeOrganizationExternalReferenceCodes())) {
-			organizations.add(
-				OrganizationLocalServiceUtil.getOrganizationByExternalReferenceCode(
+				StringUtil.split(
+					_getSelectedScopeGroupExternalReferenceCodes())) {
+
+			groups.add(
+				GroupLocalServiceUtil.getGroupByExternalReferenceCode(
 					externalReferenceCode,
 					_announcementsRequestHelper.getCompanyId()));
 		}
 
-		return organizations;
+		return groups;
 	}
 
 	private String _getSelectedScopeOrganizationExternalReferenceCodes() {
 		return PrefsParamUtil.getString(
 			_announcementsRequestHelper.getPortletPreferences(),
 			_announcementsRequestHelper.getRequest(),
-			"selectedScopeOrganizationExternalReferenceCodes", StringPool.BLANK);
+			"selectedScopeOrganizationExternalReferenceCodes",
+			StringPool.BLANK);
+	}
+
+	private List<Organization> _getSelectedScopeOrganizations()
+		throws PortalException {
+
+		List<Organization> organizations = new ArrayList<>();
+
+		for (String externalReferenceCode :
+				StringUtil.split(
+					_getSelectedScopeOrganizationExternalReferenceCodes())) {
+
+			organizations.add(
+				OrganizationLocalServiceUtil.
+					getOrganizationByExternalReferenceCode(
+						externalReferenceCode,
+						_announcementsRequestHelper.getCompanyId()));
+		}
+
+		return organizations;
+	}
+
+	private String _getSelectedScopeRoleExternalReferenceCodes() {
+		return PrefsParamUtil.getString(
+			_announcementsRequestHelper.getPortletPreferences(),
+			_announcementsRequestHelper.getRequest(),
+			"selectedScopeRoleExternalReferenceCodes", StringPool.BLANK);
 	}
 
 	private List<Role> _getSelectedScopeRoles() throws PortalException {
 		List<Role> roles = new ArrayList<>();
 
 		for (String externalReferenceCode :
-			StringUtil.split(_getSelectedScopeRoleExternalReferenceCodes())) {
+				StringUtil.split(
+					_getSelectedScopeRoleExternalReferenceCodes())) {
+
 			roles.add(
 				RoleLocalServiceUtil.getRoleByExternalReferenceCode(
 					externalReferenceCode,
@@ -535,19 +550,22 @@ public class AnnouncementsDisplayContext {
 		return roles;
 	}
 
-	private String _getSelectedScopeRoleExternalReferenceCodes() {
+	private String _getSelectedScopeUserGroupExternalReferenceCodes() {
 		return PrefsParamUtil.getString(
 			_announcementsRequestHelper.getPortletPreferences(),
-			_announcementsRequestHelper.getRequest(), "selectedScopeRoleExternalReferenceCodes",
-			StringPool.BLANK);
+			_announcementsRequestHelper.getRequest(),
+			"selectedScopeUserGroupExternalReferenceCodes", StringPool.BLANK);
 	}
 
 	private List<UserGroup> _getSelectedScopeUserGroups()
 		throws PortalException {
+
 		List<UserGroup> userGroups = new ArrayList<>();
 
 		for (String externalReferenceCode :
-			StringUtil.split(_getSelectedScopeUserGroupExternalReferenceCodes())) {
+				StringUtil.split(
+					_getSelectedScopeUserGroupExternalReferenceCodes())) {
+
 			userGroups.add(
 				UserGroupLocalServiceUtil.getUserGroupByExternalReferenceCode(
 					externalReferenceCode,
@@ -555,13 +573,6 @@ public class AnnouncementsDisplayContext {
 		}
 
 		return userGroups;
-	}
-
-	private String _getSelectedScopeUserGroupExternalReferenceCodes() {
-		return PrefsParamUtil.getString(
-			_announcementsRequestHelper.getPortletPreferences(),
-			_announcementsRequestHelper.getRequest(),
-			"selectedScopeUserGroupExternalReferenceCodes", StringPool.BLANK);
 	}
 
 	private static final UUID _UUID = UUID.fromString(

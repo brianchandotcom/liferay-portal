@@ -348,17 +348,24 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 		}
 
 		function <portlet:namespace />saveConfigurations() {
-			var currentScopeGroupExternalReferenceCodes = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />currentScopeGroupExternalReferenceCodes'
-			);
-			var selectedScopeGroupExternalReferenceCodes = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />selectedScopeGroupExternalReferenceCodes'
-			);
+			var currentScopeGroupExternalReferenceCodes =
+				<portlet:namespace />form.querySelector(
+					'#<portlet:namespace />currentScopeGroupExternalReferenceCodes'
+				);
+			var selectedScopeGroupExternalReferenceCodes =
+				<portlet:namespace />form.querySelector(
+					'#<portlet:namespace />selectedScopeGroupExternalReferenceCodes'
+				);
 
-			if (currentScopeGroupExternalReferenceCodes && selectedScopeGroupExternalReferenceCodes) {
+			if (
+				currentScopeGroupExternalReferenceCodes &&
+				selectedScopeGroupExternalReferenceCodes
+			) {
 				selectedScopeGroupExternalReferenceCodes.setAttribute(
 					'value',
-					Liferay.Util.getSelectedOptionValues(currentScopeGroupExternalReferenceCodes)
+					Liferay.Util.getSelectedOptionValues(
+						currentScopeGroupExternalReferenceCodes
+					)
 				);
 			}
 
@@ -371,7 +378,10 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 					'#<portlet:namespace />selectedScopeOrganizationExternalReferenceCodes'
 				);
 
-			if (currentScopeOrganizationExternalReferenceCodes && selectedScopeOrganizationExternalReferenceCodes) {
+			if (
+				currentScopeOrganizationExternalReferenceCodes &&
+				selectedScopeOrganizationExternalReferenceCodes
+			) {
 				selectedScopeOrganizationExternalReferenceCodes.setAttribute(
 					'value',
 					Liferay.Util.getSelectedOptionValues(
@@ -380,31 +390,45 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 				);
 			}
 
-			var currentScopeRoleExternalReferenceCodes = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />currentScopeRoleExternalReferenceCodes'
-			);
-			var selectedScopeRoleExternalReferenceCodes = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />selectedScopeRoleExternalReferenceCodes'
-			);
+			var currentScopeRoleExternalReferenceCodes =
+				<portlet:namespace />form.querySelector(
+					'#<portlet:namespace />currentScopeRoleExternalReferenceCodes'
+				);
+			var selectedScopeRoleExternalReferenceCodes =
+				<portlet:namespace />form.querySelector(
+					'#<portlet:namespace />selectedScopeRoleExternalReferenceCodes'
+				);
 
-			if (currentScopeRoleExternalReferenceCodes && selectedScopeRoleExternalReferenceCodes) {
+			if (
+				currentScopeRoleExternalReferenceCodes &&
+				selectedScopeRoleExternalReferenceCodes
+			) {
 				selectedScopeRoleExternalReferenceCodes.setAttribute(
 					'value',
-					Liferay.Util.getSelectedOptionValues(currentScopeRoleExternalReferenceCodes)
+					Liferay.Util.getSelectedOptionValues(
+						currentScopeRoleExternalReferenceCodes
+					)
 				);
 			}
 
-			var currentScopeUserGroupExternalReferenceCodes = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />currentScopeUserGroupExternalReferenceCodes'
-			);
-			var selectedScopeUserGroupExternalReferenceCodes = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />selectedScopeUserGroupExternalReferenceCodes'
-			);
+			var currentScopeUserGroupExternalReferenceCodes =
+				<portlet:namespace />form.querySelector(
+					'#<portlet:namespace />currentScopeUserGroupExternalReferenceCodes'
+				);
+			var selectedScopeUserGroupExternalReferenceCodes =
+				<portlet:namespace />form.querySelector(
+					'#<portlet:namespace />selectedScopeUserGroupExternalReferenceCodes'
+				);
 
-			if (currentScopeUserGroupExternalReferenceCodes && selectedScopeUserGroupExternalReferenceCodes) {
+			if (
+				currentScopeUserGroupExternalReferenceCodes &&
+				selectedScopeUserGroupExternalReferenceCodes
+			) {
 				selectedScopeUserGroupExternalReferenceCodes.setAttribute(
 					'value',
-					Liferay.Util.getSelectedOptionValues(currentScopeUserGroupExternalReferenceCodes)
+					Liferay.Util.getSelectedOptionValues(
+						currentScopeUserGroupExternalReferenceCodes
+					)
 				);
 			}
 

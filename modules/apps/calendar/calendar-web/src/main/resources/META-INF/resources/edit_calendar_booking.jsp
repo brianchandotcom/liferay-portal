@@ -501,132 +501,14 @@ while (manageableCalendarsIterator.hasNext()) {
 	</aui:button-row>
 </aui:form>
 
-<aui:script>
-	for (const container of ['startDateContainer', 'endDateContainer']
-		.map((id) => document.getElementById('<portlet:namespace />' + id))
-		.filter(Boolean)) {
-		const callback = (mutationList, observer) => {
-			for (const mutation of mutationList) {
-				const classMutation =
-					mutation.type === 'attributes' &&
-					mutation.attributeName === 'class';
-
-				if (
-					classMutation &&
-					mutation.target.classList.contains('has-success')
-				) {
-					wrapper.classList.remove('has-success');
-				}
-
-				if (
-					classMutation &&
-					mutation.target.classList.contains('has-error')
-				) {
-					const inputDate = wrapper.querySelector('.lfr-input-date');
-					const formGroupItem = inputDate.closest('.form-group-item');
-
-					formGroupItem.classList.add('has-error');
-					formGroupItem.classList.remove('has-success');
-					formGroupItem.classList.remove('has-warning');
-
-					wrapper.classList.remove('has-error');
-				}
-			}
-		};
-
-		const config = {attributes: true, childList: false, subtree: false};
-		const observer = new MutationObserver(callback);
-		const wrapper = container.querySelector('.input-long-wrapper');
-
-		observer.observe(wrapper, config);
-	}
-
-	for (const dateInput of ['startTime', 'endTime']
-		.map((id) => document.getElementById('<portlet:namespace />' + id))
-		.filter(Boolean)) {
-		dateInput.closest('.form-group-item').classList.add('has-success');
-
-		dateInput.onblur = () => {
-			const {value} = dateInput;
-
-			if (value.length < dateInput.maxLength) {
-				showAlert(
-					dateInput,
-					'<%= LanguageUtil.get(request, "this-field-will-be-automatically-filled-if-it-is-empty-or-incomplete") %>',
-					'warning'
-				);
-			}
-			else {
-				clearAlert(dateInput);
-			}
-		};
-	}
-
-	for (const timeInput of ['startTimeTime', 'endTimeTime']
-		.map((id) => document.getElementById('<portlet:namespace />' + id))
-		.filter(Boolean)) {
-		timeInput.closest('.form-group-item').classList.add('has-success');
-
-		timeInput.onblur = () => {
-			const {value, validity} = timeInput;
-
-			if (validity.valid && value.trim() === '') {
-				showAlert(
-					timeInput,
-					'<%= LanguageUtil.get(request, "this-field-will-be-automatically-filled-if-it-is-empty-or-incomplete") %>',
-					'warning'
-				);
-			}
-			else if (!validity.valid) {
-				showAlert(
-					timeInput,
-					'<%= LanguageUtil.get(request, "please-enter-a-valid-time") %>',
-					'error'
-				);
-			}
-			else {
-				clearAlert(timeInput);
-			}
-		};
-	}
-
-	function showAlert(field, message, type) {
-		clearAlert(field);
-
-		if (!field.parentElement.querySelector('.form-feedback-item')) {
-			field.insertAdjacentHTML(
-				'afterend',
-				'<div aria-live="polite" class="form-feedback-item" role="alert">' +
-					'<span class="form-feedback-indicator">' +
-					message +
-					'</span>' +
-					'</div>'
-			);
-		}
-
-		const formGroupItem = field.closest('.form-group-item');
-
-		if (formGroupItem) {
-			formGroupItem.classList.remove('has-success');
-			formGroupItem.classList.toggle('has-warning', type === 'warning');
-			formGroupItem.classList.toggle('has-error', type === 'error');
-		}
-	}
-
-	function clearAlert(field) {
-		const feedback = field.parentElement.querySelector('.form-feedback-item');
-		const formGroupItem = field.closest('.form-group-item');
-
-		if (formGroupItem) {
-			formGroupItem.classList.add('has-success');
-			formGroupItem.classList.remove('has-warning', 'has-error');
-		}
-
-		if (feedback) {
-			feedback.remove();
-		}
-	}
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"namespace", "<portlet:namespace />"
+		).build()
+	%>'
+	module="{schedulerEventValidator} from calendar-web"
+/>
 
 <aui:script>
 	function <portlet:namespace />filterCalendarBookings(calendarBooking) {

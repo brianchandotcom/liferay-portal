@@ -84,9 +84,6 @@ public class AddAssetListMVCActionCommandTest {
 			PortletPreferencesFactoryUtil.getExistingPortletSetup(
 				_layout, portletId);
 
-		Assert.assertEquals(
-			"asset-list", portletPreferences.getValue("selectionStyle", null));
-
 		String externalReferenceCode = portletPreferences.getValue(
 			"assetListEntryExternalReferenceCode", null);
 
@@ -94,6 +91,9 @@ public class AddAssetListMVCActionCommandTest {
 			_assetListEntryLocalService.
 				fetchAssetListEntryByExternalReferenceCode(
 					externalReferenceCode, _group.getGroupId()));
+
+		Assert.assertEquals(
+			"asset-list", portletPreferences.getValue("selectionStyle", null));
 	}
 
 	@Test
@@ -110,7 +110,6 @@ public class AddAssetListMVCActionCommandTest {
 			"title", RandomTestUtil.randomString());
 		mockLiferayPortletActionRequest.addParameter(
 			"portletResource", portletId);
-
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
@@ -122,9 +121,6 @@ public class AddAssetListMVCActionCommandTest {
 			PortletPreferencesFactoryUtil.getExistingPortletSetup(
 				_layout, portletId);
 
-		Assert.assertEquals(
-			"asset-list", portletPreferences.getValue("selectionStyle", null));
-
 		String externalReferenceCode = portletPreferences.getValue(
 			"assetListEntryExternalReferenceCode", null);
 
@@ -132,6 +128,9 @@ public class AddAssetListMVCActionCommandTest {
 			_assetListEntryLocalService.
 				fetchAssetListEntryByExternalReferenceCode(
 					externalReferenceCode, _group.getGroupId()));
+
+		Assert.assertEquals(
+			"asset-list", portletPreferences.getValue("selectionStyle", null));
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

@@ -68,52 +68,32 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String title = ParamUtil.getString(actionRequest, "title");
-
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getExistingPortletSetup(
-				themeDisplay.getLayout(), portletResource);
-
-		String selectionStyle = portletPreferences.getValue(
-			"selectionStyle", "dynamic");
-
-		AssetListEntry assetListEntry = null;
-
 		try {
-			if (Objects.equals(
-					selectionStyle,
-					AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
+			String portletResource = ParamUtil.getString(
+				actionRequest, "portletResource");
 
-				assetListEntry = _saveDynamicAssetList(
-					actionRequest, title, portletPreferences);
-			}
-			else if (Objects.equals(
-						selectionStyle,
-						AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
+			PortletPreferences portletPreferences = _getPortletPreferences(
+				portletResource, themeDisplay);
 
-				assetListEntry = _saveManualAssetList(
-					actionRequest, title, portletPreferences);
-			}
+			AssetListEntry assetListEntry = _getAssetListEntry(
+				actionRequest, portletPreferences, themeDisplay);
 
 			if (assetListEntry != null) {
 				portletPreferences.setValue(
-					"selectionStyle",
-					AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST);
-				portletPreferences.setValue(
 					"assetListEntryExternalReferenceCode",
 					assetListEntry.getExternalReferenceCode());
+				portletPreferences.setValue(
+					"selectionStyle",
+					AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST);
 
 				portletPreferences.store();
 			}
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
-				JSONUtil.put("redirectURL", redirect));
+				JSONUtil.put(
+					"redirectURL",
+					ParamUtil.getString(actionRequest, "redirect")));
 
 			hideDefaultSuccessMessage(actionRequest);
 
@@ -124,21 +104,116 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 			hideDefaultErrorMessage(actionRequest);
 
 			_handlePortalException(
-				actionRequest, actionResponse, portalException);
+				actionRequest, actionResponse, portalException, themeDisplay);
 		}
+	}
+
+	private AssetListEntry _getAssetListEntry(
+			ActionRequest actionRequest, PortletPreferences portletPreferences,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		String selectionStyle = portletPreferences.getValue(
+			"selectionStyle", "dynamic");
+		String title = ParamUtil.getString(actionRequest, "title");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		if (Objects.equals(
+				selectionStyle,
+				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
+
+			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+			Enumeration<String> enumeration = portletPreferences.getNames();
+
+			while (enumeration.hasMoreElements()) {
+				String name = enumeration.nextElement();
+
+				String value = StringUtil.merge(
+					portletPreferences.getValues(name, null));
+
+				if (Validator.isNull(value)) {
+					continue;
+				}
+
+				if (!name.equals("scopeIds")) {
+					unicodeProperties.put(name, value);
+
+					continue;
+				}
+
+				List<Long> groupIds = new ArrayList<>();
+
+				String[] parts = value.split(StringPool.COMMA);
+
+				for (String part : parts) {
+					if (part.equals("Group_default")) {
+						groupIds.add(serviceContext.getScopeGroupId());
+					}
+					else if (part.startsWith("Group_")) {
+						long groupId = GetterUtil.getLong(
+							StringUtil.removeSubstring(part, "Group_"), -1);
+
+						if (groupId != -1) {
+							groupIds.add(groupId);
+						}
+					}
+				}
+
+				if (groupIds.isEmpty()) {
+					continue;
+				}
+
+				name = "groupIds";
+				value = ListUtil.toString(groupIds, StringPool.BLANK);
+
+				unicodeProperties.put(name, value);
+			}
+
+			return _assetListEntryService.addDynamicAssetListEntry(
+				null, themeDisplay.getScopeGroupId(), title,
+				unicodeProperties.toString(), serviceContext);
+		}
+
+		if (Objects.equals(
+				selectionStyle,
+				AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
+
+			return _assetListEntryService.addManualAssetListEntry(
+				null, themeDisplay.getScopeGroupId(), title,
+				ListUtil.toLongArray(
+					_assetPublisherHelper.getAssetEntries(
+						actionRequest, portletPreferences,
+						themeDisplay.getPermissionChecker(),
+						_assetPublisherHelper.getGroupIds(
+							portletPreferences, themeDisplay.getScopeGroupId(),
+							themeDisplay.getLayout()),
+						true, true),
+					AssetEntry::getEntryId),
+				serviceContext);
+		}
+
+		return null;
+	}
+
+	private PortletPreferences _getPortletPreferences(
+			String portletResource, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return PortletPreferencesFactoryUtil.getExistingPortletSetup(
+			themeDisplay.getLayout(), portletResource);
 	}
 
 	private void _handlePortalException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			PortalException portalException)
+			PortalException portalException, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(portalException);
 		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		String errorMessage = "an-unexpected-error-occurred";
 
@@ -159,94 +234,6 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
-	}
-
-	private AssetListEntry _saveDynamicAssetList(
-			ActionRequest actionRequest, String title,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-		Enumeration<String> enumeration = portletPreferences.getNames();
-
-		while (enumeration.hasMoreElements()) {
-			String name = enumeration.nextElement();
-
-			String value = StringUtil.merge(
-				portletPreferences.getValues(name, null));
-
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
-			if (name.equals("scopeIds")) {
-				List<Long> groupIds = new ArrayList<>();
-
-				String[] parts = value.split(StringPool.COMMA);
-
-				for (String part : parts) {
-					if (part.equals("Group_default")) {
-						groupIds.add(serviceContext.getScopeGroupId());
-					}
-					else {
-						if (part.startsWith("Group_")) {
-							long groupId = GetterUtil.getLong(
-								StringUtil.removeSubstring(part, "Group_"), -1);
-
-							if (groupId != -1) {
-								groupIds.add(groupId);
-							}
-						}
-					}
-				}
-
-				if (groupIds.isEmpty()) {
-					continue;
-				}
-
-				name = "groupIds";
-				value = ListUtil.toString(groupIds, StringPool.BLANK);
-			}
-
-			unicodeProperties.put(name, value);
-		}
-
-		return _assetListEntryService.addDynamicAssetListEntry(
-			null, themeDisplay.getScopeGroupId(), title,
-			unicodeProperties.toString(), serviceContext);
-	}
-
-	private AssetListEntry _saveManualAssetList(
-			ActionRequest actionRequest, String title,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		long[] groupIds = _assetPublisherHelper.getGroupIds(
-			portletPreferences, themeDisplay.getScopeGroupId(),
-			themeDisplay.getLayout());
-
-		long[] assetEntryIds = ListUtil.toLongArray(
-			_assetPublisherHelper.getAssetEntries(
-				actionRequest, portletPreferences,
-				themeDisplay.getPermissionChecker(), groupIds, true, true),
-			AssetEntry::getEntryId);
-
-		return _assetListEntryService.addManualAssetListEntry(
-			null, themeDisplay.getScopeGroupId(), title, assetEntryIds,
-			serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

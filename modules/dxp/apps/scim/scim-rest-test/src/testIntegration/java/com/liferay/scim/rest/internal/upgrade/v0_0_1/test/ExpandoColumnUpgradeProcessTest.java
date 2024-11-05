@@ -250,14 +250,12 @@ public class ExpandoColumnUpgradeProcessTest {
 
 	private void _runUpgrade() throws Exception {
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator, _CLASS_NAME);
+			_upgradeStepRegistrator,
+			"com.liferay.scim.rest.internal.upgrade.v0_0_1." +
+				"ExpandoColumnUpgradeProcess");
 
 		upgradeProcess.upgrade();
 	}
-
-	private static final String _CLASS_NAME =
-		"com.liferay.scim.rest.internal.upgrade.v0_0_1." +
-			"ExpandoColumnUpgradeProcess";
 
 	private static GroupResource _groupResource;
 	private static String _pid;

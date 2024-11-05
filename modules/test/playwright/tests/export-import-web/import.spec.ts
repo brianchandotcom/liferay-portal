@@ -72,8 +72,8 @@ async function getSiteHomePageScreenshot(
 }
 
 test(
-	'make sure we do not export-import wikiNodes if they are not selected in the export configuration screen',
-	{tag: '@LPS-195766'},
+	'Make sure we do not export-import wikiNodes if they are not selected in the export configuration screen',
+	{tag: '@LPD-40988'},
 	async ({
 		exportImportPage,
 		page,

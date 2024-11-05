@@ -112,7 +112,7 @@ public class UserManagerUpdateExpandoColumnUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeExpandoFields() throws Exception {
+	public void testUpgradeExpandoColumns() throws Exception {
 		HttpInvoker.HttpResponse httpResponse =
 			_groupResource.postV2GroupHttpResponse(
 				new Group() {

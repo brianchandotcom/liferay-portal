@@ -96,6 +96,12 @@ export function isMovementValid({
 			if (isStepper(source)) {
 				const form = getFormParent(target, layoutData);
 
+				if (sources.length > 1) {
+					message = Liferay.Language.get(
+						'steppers-cannot-be-moved-along-with-other-elements'
+					);
+				}
+
 				if (
 					form &&
 					getStepperChild(form, layoutData, fragmentEntryLinks)

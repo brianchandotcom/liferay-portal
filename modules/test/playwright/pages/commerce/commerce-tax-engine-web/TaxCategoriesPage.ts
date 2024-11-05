@@ -1,0 +1,45 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Locator, Page} from '@playwright/test';
+
+import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {CommerceDNDTablePage} from '../commerceDNDTablePage';
+
+export class TaxCategoriesPage extends CommerceDNDTablePage {
+	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly deleteMenuItem: Locator;
+	readonly newButton: Locator;
+	readonly page: Page;
+	readonly taxCategoriesTableRowActions: (
+		screenName: string
+	) => Promise<Locator>;
+
+	constructor(page: Page) {
+		super(
+			page,
+			'#_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_cpTaxCategoriesSearchContainer'
+		);
+		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.deleteMenuItem = page.getByRole('link', {
+			name: 'Delete',
+		});
+		this.newButton = page.getByRole('link', {name: 'Add Tax Category'});
+		this.page = page;
+		this.taxCategoriesTableRowActions = async (name: string) => {
+			const usersTableRow = await this.tableRow(1, name);
+
+			if (usersTableRow && usersTableRow.column) {
+				return usersTableRow.row.getByRole('button');
+			}
+
+			throw new Error(`Cannot locate tax category row with name ${name}`);
+		};
+	}
+
+	async goto() {
+		await this.applicationsMenuPage.goToCommerceTaxCategories();
+	}
+}

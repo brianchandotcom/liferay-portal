@@ -183,10 +183,12 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 			cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
 
 		if (ListUtil.isEmpty(cpSpecificationOption.getListTypeEntries())) {
-			return _localization.getLocalizationMap(actionRequest, "value");
+			return _localization.getLocalizationMap(
+				actionRequest, "listTypeEntriesSelect");
 		}
 
-		String value = ParamUtil.getString(actionRequest, "value");
+		String value = ParamUtil.getString(
+			actionRequest, "listTypeEntriesSelect");
 
 		for (ListTypeEntry listTypeEntry :
 				cpSpecificationOption.getListTypeEntries()) {

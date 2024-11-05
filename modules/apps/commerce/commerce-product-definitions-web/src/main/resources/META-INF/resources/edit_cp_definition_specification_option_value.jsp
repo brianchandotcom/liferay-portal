@@ -17,7 +17,7 @@ CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionVal
 
 long cpOptionCategoryId = BeanParamUtil.getLong(cpDefinitionSpecificationOptionValue, request, "CPOptionCategoryId");
 
-List<SelectOption> selectOptions = cpDefinitionSpecificationOptionValueDisplayContext.getSelectOptions();
+Map<String, List<SelectOption>> selectOptionsMap = cpDefinitionSpecificationOptionValueDisplayContext.getSelectOptionsMap();
 %>
 
 <portlet:actionURL name="/cp_definitions/edit_cp_definition_specification_option_value" var="editProductDefinitionSpecificationOptionValueActionURL" />
@@ -36,7 +36,7 @@ List<SelectOption> selectOptions = cpDefinitionSpecificationOptionValueDisplayCo
 			<liferay-ui:error exception="<%= CPDefinitionSpecificationOptionValueKeyException.class %>" message="please-enter-a-valid-key" />
 
 			<c:choose>
-				<c:when test="<%= selectOptions.isEmpty() %>">
+				<c:when test="<%= selectOptionsMap.isEmpty() %>">
 					<aui:field-wrapper label='<%= LanguageUtil.get(resourceBundle, "value") %>' name="valueFieldWrapper">
 						<liferay-ui:input-localized
 							name="value"
@@ -45,11 +45,16 @@ List<SelectOption> selectOptions = cpDefinitionSpecificationOptionValueDisplayCo
 					</aui:field-wrapper>
 				</c:when>
 				<c:otherwise>
-					<clay:select
-						label='<%= LanguageUtil.get(resourceBundle, "value") %>'
-						name="value"
-						options="<%= selectOptions %>"
-					/>
+					<div>
+						<react:component
+							module="{CPDefinitionSpecificationOptionValueGroupOption} from commerce-product-definitions-web"
+							props='<%=
+								HashMapBuilder.<String, Object>put(
+									"selectOptionsMap", selectOptionsMap
+								).build()
+							%>'
+						/>
+					</div>
 				</c:otherwise>
 			</c:choose>
 

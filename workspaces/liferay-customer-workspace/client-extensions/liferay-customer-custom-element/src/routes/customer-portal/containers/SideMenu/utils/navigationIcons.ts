@@ -52,4 +52,4 @@ const navigationIcons = {
 	],
 };
 
-export { navigationIcons };
+export {navigationIcons};

@@ -46,10 +46,14 @@ export default function MultiSelectManager() {
 				activateMultiSelect(MULTI_SELECT_TYPES.simple);
 			},
 			disableKeyCombination: (event) =>
-				event.key === CONTROL_KEY_CODE || event.key === META_KEY_CODE,
+				event.key === CONTROL_KEY_CODE ||
+				event.key === META_KEY_CODE ||
+				isCtrlOrMeta(event),
 			keyCombination: (event) => isCtrlOrMeta(event),
 			keyboardActivation: (event) =>
-				event.key === ENTER_KEY_CODE || event.key === SPACE_KEY_CODE,
+				event.key === ENTER_KEY_CODE ||
+				event.key === SPACE_KEY_CODE ||
+				isCtrlOrMeta(event),
 		},
 	};
 

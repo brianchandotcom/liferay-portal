@@ -1892,7 +1892,7 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA");
 
 		TreeTestUtil.bind(
-			_objectDefinitionLocalService,
+			_objectRelationshipLocalService,
 			Arrays.asList(
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					_objectRelationshipLocalService, objectDefinitionA,
@@ -3046,7 +3046,7 @@ public class ObjectDefinitionLocalServiceTest {
 			long rootObjectDefinitionId)
 		throws Exception {
 
-		TreeTestUtil.bind(_objectDefinitionLocalService, objectRelationships);
+		TreeTestUtil.bind(_objectRelationshipLocalService, objectRelationships);
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			ObjectField objectField2 = _objectFieldLocalService.getObjectField(

@@ -68,17 +68,6 @@ public class TreeTestUtil {
 	}
 
 	public static void bind(
-			ObjectDefinitionLocalService objectDefinitionLocalService,
-			List<ObjectRelationship> objectRelationships)
-		throws PortalException {
-
-		objectDefinitionLocalService.bindObjectDefinitions(
-			TransformUtil.transformToLongArray(
-				objectRelationships,
-				ObjectRelationship::getObjectRelationshipId));
-	}
-
-	public static void bind(
 			ObjectRelationshipLocalService objectRelationshipLocalService,
 			List<ObjectRelationship> objectRelationships)
 		throws PortalException {

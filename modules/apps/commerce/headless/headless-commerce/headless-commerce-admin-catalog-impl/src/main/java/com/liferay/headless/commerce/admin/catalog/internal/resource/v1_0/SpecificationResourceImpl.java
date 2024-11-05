@@ -32,6 +32,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -169,13 +170,18 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 				fetchCPSpecificationOptionByExternalReferenceCode(
 					externalReferenceCode, contextCompany.getCompanyId());
 
+		long[] listTypeDefinitionIds = GetterUtil.getLongValues(
+			specification.getListTypeDefinitionIds(),
+			new long[] {
+				GetterUtil.getLong(specification.getListTypeDefinitionId())
+			});
+
 		if (cpSpecificationOption == null) {
 			cpSpecificationOption =
 				_cpSpecificationOptionService.addCPSpecificationOption(
 					specification.getExternalReferenceCode(),
 					_getCPOptionCategoryId(specification),
-					GetterUtil.getLongValues(
-						specification.getListTypeDefinitionIds()),
+					listTypeDefinitionIds,
 					LanguageUtils.getLocalizedMap(specification.getTitle()),
 					LanguageUtils.getLocalizedMap(
 						specification.getDescription()),
@@ -195,8 +201,7 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			GetterUtil.getString(specification.getExternalReferenceCode()),
 			cpSpecificationOption.getCPSpecificationOptionId(),
 			GetterUtil.getLong(_getCPOptionCategoryId(specification)),
-			GetterUtil.getLongValues(specification.getListTypeDefinitionIds()),
-			LanguageUtils.getLocalizedMap(titleMap),
+			listTypeDefinitionIds, LanguageUtils.getLocalizedMap(titleMap),
 			LanguageUtils.getLocalizedMap(descriptionMap),
 			GetterUtil.getBoolean(specification.getFacetable()),
 			GetterUtil.getString(specification.getKey()),
@@ -298,7 +303,11 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 				specification.getExternalReferenceCode(),
 				_getCPOptionCategoryId(specification),
 				GetterUtil.getLongValues(
-					specification.getListTypeDefinitionIds()),
+					specification.getListTypeDefinitionIds(),
+					new long[] {
+						GetterUtil.getLong(
+							specification.getListTypeDefinitionId())
+					}),
 				LanguageUtils.getLocalizedMap(specification.getTitle()),
 				LanguageUtils.getLocalizedMap(specification.getDescription()),
 				GetterUtil.getBoolean(specification.getFacetable()),
@@ -341,6 +350,31 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 				cpSpecificationOption.getDescriptionMap());
 		}
 
+		long[] listTypeDefinitionIds = GetterUtil.getLongValues(
+			specification.getListTypeDefinitionIds(),
+			transformToLongArray(
+				cpSpecificationOption.getListTypeDefinitions(),
+				ListTypeDefinition::getListTypeDefinitionId));
+
+		if (specification.getListTypeDefinitionIds() == null) {
+			long listTypeDefinitionId = GetterUtil.getLong(
+				specification.getListTypeDefinitionId());
+
+			List<ListTypeDefinition> listTypeDefinitions =
+				cpSpecificationOption.getListTypeDefinitions();
+
+			if (!listTypeDefinitions.isEmpty()) {
+				ListTypeDefinition listTypeDefinition = listTypeDefinitions.get(
+					0);
+
+				listTypeDefinitionId = GetterUtil.getLong(
+					specification.getListTypeDefinitionId(),
+					listTypeDefinition.getListTypeDefinitionId());
+			}
+
+			listTypeDefinitionIds = new long[] {listTypeDefinitionId};
+		}
+
 		Map<String, String> titleMap = specification.getTitle();
 
 		if (titleMap == null) {
@@ -356,12 +390,7 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			GetterUtil.getLong(
 				cpSpecificationOption.getCPOptionCategoryId(),
 				_getCPOptionCategoryId(specification)),
-			GetterUtil.getLongValues(
-				specification.getListTypeDefinitionIds(),
-				transformToLongArray(
-					cpSpecificationOption.getListTypeDefinitions(),
-					ListTypeDefinition::getListTypeDefinitionId)),
-			LanguageUtils.getLocalizedMap(titleMap),
+			listTypeDefinitionIds, LanguageUtils.getLocalizedMap(titleMap),
 			LanguageUtils.getLocalizedMap(descriptionMap),
 			GetterUtil.getBoolean(
 				specification.getFacetable(),

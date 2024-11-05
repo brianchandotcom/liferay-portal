@@ -345,7 +345,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		return this.apiHelpers.patch(
 			`${this.apiHelpers.baseUrl}${this.basePath}/specifications/${specificationId}`,
 			{
-				listTypeDefinitionIds: [listTypeDefinitionId],
+				listTypeDefinitionId,
 			}
 		);
 	}

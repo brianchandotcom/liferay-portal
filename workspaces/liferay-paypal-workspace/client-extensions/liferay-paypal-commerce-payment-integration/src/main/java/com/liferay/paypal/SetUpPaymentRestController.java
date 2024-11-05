@@ -177,6 +177,9 @@ public class SetUpPaymentRestController extends BaseRestController {
 				httpServletRequestParameterMapJSONObject.getJSONArray(
 					"fundingSource");
 
+			JSONObject orderJSONObject = _getOrderJSONObject(
+				jwt, commercePaymentEntryJSONObject.getLong("classPK"));
+
 			JSONObject ordersResponseJSONObject = new JSONObject(
 				WebClient.create(
 					getPayPalURL(typeSettingsJSONObject.getString("mode"))
@@ -205,13 +208,15 @@ public class SetUpPaymentRestController extends BaseRestController {
 					).put(
 						"payment_source",
 						_getPaymentSourceJSONObject(
-							jwt, commercePaymentEntryJSONObject,
-							String.valueOf(fundingSourceJSONArray.get(0)))
+							commercePaymentEntryJSONObject,
+							String.valueOf(fundingSourceJSONArray.get(0)),
+							orderJSONObject)
 					).put(
 						"purchase_units",
 						_getPurchaseUnitJSONArray(
-							commercePaymentEntryJSONObject, jwt,
-							typeSettingsJSONObject.getString("merchantId"))
+							commercePaymentEntryJSONObject,
+							typeSettingsJSONObject.getString("merchantId"),
+							orderJSONObject)
 					).toString()
 				).retrieve(
 				).bodyToMono(
@@ -328,15 +333,22 @@ public class SetUpPaymentRestController extends BaseRestController {
 	}
 
 	private JSONObject _getExperienceContextJSONObject(
-		String callbackURL, String cancelURL, String fundingSource) {
+		String callbackURL, String cancelURL, String fundingSource,
+		boolean shippable) {
 
 		JSONObject experienceContextJSONObject = new JSONObject();
 
 		if (!Objects.equals(fundingSource, "apple_pay") &&
 			!Objects.equals(fundingSource, "google_pay")) {
 
-			experienceContextJSONObject.put(
-				"shipping_preference", "SET_PROVIDED_ADDRESS");
+			if (shippable) {
+				experienceContextJSONObject.put(
+					"shipping_preference", "SET_PROVIDED_ADDRESS");
+			}
+			else {
+				experienceContextJSONObject.put(
+					"shipping_preference", "NO_SHIPPING");
+			}
 		}
 
 		if (ArrayUtils.contains(_FUNDING_SOURCES, fundingSource)) {
@@ -414,38 +426,50 @@ public class SetUpPaymentRestController extends BaseRestController {
 				"Bearer " + jwt.getTokenValue(),
 				StringBundler.concat(
 					"/o/headless-commerce-admin-order/v1.0/orders/", orderId,
-					"?nestedFields=orderItems,shippingAddress")));
+					"?nestedFields=billingAddress,orderItems,",
+					"shippingAddress")));
 	}
 
 	private JSONObject _getPaymentSourceJSONObject(
-		Jwt jwt, JSONObject commercePaymentEntryJSONObject,
-		String fundingSource) {
+		JSONObject commercePaymentEntryJSONObject, String fundingSource,
+		JSONObject orderJSONObject) {
 
 		return new JSONObject(
 		).put(
 			fundingSource,
 			_getPayPalPaymentSourceJSONObject(
-				commercePaymentEntryJSONObject, fundingSource,
-				_getOrderJSONObject(
-					jwt, commercePaymentEntryJSONObject.getLong("classPK")
-				).getJSONObject(
-					"shippingAddress"
-				))
+				commercePaymentEntryJSONObject, fundingSource, orderJSONObject)
 		);
 	}
 
 	private JSONObject _getPayPalPaymentSourceJSONObject(
 		JSONObject commercePaymentEntryJSONObject, String fundingSource,
-		JSONObject shippingAddressJSONObject) {
+		JSONObject orderJSONObject) {
+
+		JSONObject billingAddressJSONObject = orderJSONObject.getJSONObject(
+			"billingAddress");
+
+		String countryCode = billingAddressJSONObject.getString(
+			"countryISOCode");
+		String name = billingAddressJSONObject.getString("name");
+
+		boolean shippable = orderJSONObject.getBoolean("shippable");
+
+		if (shippable) {
+			JSONObject shippingAddressJSONObject =
+				orderJSONObject.getJSONObject("shippingAddress");
+
+			countryCode = shippingAddressJSONObject.getString("countryISOCode");
+			name = shippingAddressJSONObject.getString("name");
+		}
 
 		JSONObject paymentSourceJSONObject = new JSONObject();
 
 		if (ArrayUtils.contains(_FUNDING_SOURCES, fundingSource)) {
 			paymentSourceJSONObject.put(
-				"country_code",
-				shippingAddressJSONObject.getString("countryISOCode")
+				"country_code", countryCode
 			).put(
-				"name", shippingAddressJSONObject.getString("name")
+				"name", name
 			);
 		}
 
@@ -454,20 +478,18 @@ public class SetUpPaymentRestController extends BaseRestController {
 			_getExperienceContextJSONObject(
 				commercePaymentEntryJSONObject.getString("callbackURL"),
 				commercePaymentEntryJSONObject.getString("cancelURL"),
-				fundingSource));
+				fundingSource, shippable));
 	}
 
 	private JSONArray _getPurchaseUnitJSONArray(
-		JSONObject commercePaymentEntryJSONObject, Jwt jwt, String merchantId) {
+		JSONObject commercePaymentEntryJSONObject, String merchantId,
+		JSONObject orderJSONObject) {
 
 		JSONObject purchaseUnitJSONObject = new JSONObject();
 
 		if (Objects.equals(
 				commercePaymentEntryJSONObject.getString("className"),
 				"com.liferay.commerce.model.CommerceOrder")) {
-
-			JSONObject orderJSONObject = _getOrderJSONObject(
-				jwt, commercePaymentEntryJSONObject.getLong("classPK"));
 
 			purchaseUnitJSONObject.put(
 				"amount",
@@ -480,11 +502,14 @@ public class SetUpPaymentRestController extends BaseRestController {
 					commercePaymentEntryJSONObject.getString("currencyCode"),
 					commercePaymentEntryJSONObject.getString("languageId"),
 					orderJSONObject)
-			).put(
-				"shipping",
-				_getShippingJSONObject(
-					orderJSONObject.getJSONObject("shippingAddress"))
 			);
+
+			if (orderJSONObject.getBoolean("shippable")) {
+				purchaseUnitJSONObject.put(
+					"shipping",
+					_getShippingJSONObject(
+						orderJSONObject.getJSONObject("shippingAddress")));
+			}
 		}
 
 		long commercePaymentEntryId = commercePaymentEntryJSONObject.getLong(

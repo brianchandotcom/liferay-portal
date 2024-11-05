@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openToast, throttle} from 'frontend-js-web';
+import {throttle} from 'frontend-js-web';
 import React, {
 	useCallback,
 	useContext,
@@ -16,7 +16,6 @@ import React, {
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {config} from '../../config/index';
 import {
@@ -29,14 +28,9 @@ import {useSelectorRef} from '../../contexts/StoreContext';
 import {useGetWidgets} from '../../contexts/WidgetsContext';
 import {isMultistepForm} from '../../utils/isMultistepForm';
 import {openFormConversionModal} from '../../utils/openFormConversionModal';
-import {formIsMapped} from '../formIsMapped';
 import {getFormParent} from '../getFormParent';
-import getItemWidget from '../getItemWidget';
-import {getStepperChild} from '../getStepperChild';
-import getWidget from '../getWidget';
-import {hasCollectionParent} from '../hasCollectionParent';
+import {isMovementValid} from '../isMovementValid';
 import isStepper from '../isStepper';
-import checkAllowedChild from './checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import defaultComputeHover from './defaultComputeHover';
 import getDropData from './getDropData';
@@ -401,12 +395,7 @@ function computeDrop({
 	sourceItems,
 	state,
 }) {
-	const {
-		dropItem,
-		dropTargetItem,
-		droppable: dropItemIsDroppable,
-		targetPositionWithoutMiddle,
-	} = state;
+	const {dropItem, dropTargetItem, targetPositionWithoutMiddle} = state;
 
 	if (!dropItem) {
 		return;
@@ -422,126 +411,16 @@ function computeDrop({
 		targetPosition: targetPositionWithoutMiddle,
 	});
 
-	let sourceItemsAreDroppable = dropItemIsDroppable;
-
-	if (sourceItems.length > 1) {
-
-		// Check that all items being dragged can be dropped
-
-		sourceItemsAreDroppable = sourceItems.every((item) =>
-			checkAllowedChild(
-				item,
-				layoutDataRef.current.items[dropItemId],
-				layoutDataRef.current,
-				fragmentEntryLinksRef.current,
-				getWidgets
-			)
-		);
-	}
-
-	if (!sourceItemsAreDroppable) {
-		let message = '';
-
-		if (dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
-			message = Liferay.Language.get(
-				'fragments-and-widgets-cannot-be-placed-inside-this-area'
-			);
-		}
-		else if (dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.collection) {
-			message = Liferay.Language.get(
-				'fragments-cannot-be-placed-inside-an-unmapped-collection-display-fragment'
-			);
-		}
-		else if (
-			dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
-			!formIsMapped(state.dropTargetItem)
-		) {
-			message = Liferay.Language.get(
-				'fragments-cannot-be-placed-inside-an-unmapped-form-container'
-			);
-		}
-		else if (
-			sourceItems.some(
-				(item) => item.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input
-			)
-		) {
-			message = Liferay.Language.get(
-				'form-components-can-only-be-placed-inside-a-mapped-form-container'
-			);
-
-			if (sourceItems.some((item) => isStepper(item))) {
-				const form = getFormParent(
-					dropTargetItem,
-					layoutDataRef.current
-				);
-
-				if (
-					form &&
-					getStepperChild(
-						form,
-						layoutDataRef.current,
-						fragmentEntryLinksRef.current
-					)
-				) {
-					message = Liferay.Language.get(
-						'forms-can-only-contain-one-stepper'
-					);
-				}
-			}
-		}
-		else if (
-			sourceItems.some((item) => item.isWidget) &&
-			getFormParent(dropTargetItem, layoutDataRef.current)
-		) {
-			message = Liferay.Language.get(
-				'widgets-cannot-be-placed-inside-a-form-container'
-			);
-		}
-		else if (
-			sourceItems.some((item) => {
-				if (!item.isWidget) {
-					return false;
-				}
-
-				const widgets = getWidgets();
-
-				const widget = item.portletId
-					? getWidget(widgets, item.portletId)
-					: getItemWidget(
-							layoutDataRef.current.items[item.itemId],
-							fragmentEntryLinksRef.current,
-							widgets
-						);
-
-				if (!widget.instanceable) {
-					return true;
-				}
-			}) &&
-			hasCollectionParent(dropTargetItem, layoutDataRef.current)
-		) {
-			message = Liferay.Language.get(
-				'noninstanceable-widgets-cannot-be-placed-inside-a-collection-display'
-			);
-		}
-		else if (
-			sourceItems.some((item) => item.parentId !== dropTargetItem.itemId)
-		) {
-			message = Liferay.Language.get('an-unexpected-error-occurred');
-		}
-
-		if (sourceItems.length > 1) {
-			message = `${Liferay.Language.get('no-element-was-moved')} ${message}`;
-		}
-
-		if (message) {
-			openToast({
-				message,
-				type: 'danger',
-			});
-		}
-
-		dispatch(initialDragDrop.state);
-
+	if (
+		!isMovementValid({
+			fragmentEntryLinks: fragmentEntryLinksRef.current,
+			getWidgets,
+			layoutData: layoutDataRef.current,
+			onInvalid: () => dispatch(initialDragDrop.state),
+			sources: sourceItems,
+			targetId: dropItemId,
+		})
+	) {
 		return;
 	}
 

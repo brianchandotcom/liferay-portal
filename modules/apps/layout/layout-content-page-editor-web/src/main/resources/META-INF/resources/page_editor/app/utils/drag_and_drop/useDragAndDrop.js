@@ -57,14 +57,14 @@ export const initialDragDrop = {
 		/**
 		 * Item that is being dragged
 		 */
-		dropItem: null,
+		dragSource: null,
 
 		/**
 		 * Target item where the item is being dragged true.
-		 * If elevate is true, dropTargetItem is the sibling
+		 * If elevate is true, dropTarget is the sibling
 		 * of drop item, otherwise is it's parent.
 		 */
-		dropTargetItem: null,
+		dropTarget: null,
 
 		/**
 		 * When false, an "invalid drop" advise should be shown
@@ -73,19 +73,19 @@ export const initialDragDrop = {
 		droppable: true,
 
 		/**
-		 * If true, dropTargetItem is the sibling of dropItem
+		 * If true, dropTarget is the sibling of dragSource
 		 * and targetPosition determines the item index.
 		 */
 		elevate: false,
 
 		/**
-		 * Vertical position relative to dropTargetItem
+		 * Vertical position relative to dropTarget
 		 * (bottom, middle, top)
 		 */
 		targetPositionWithMiddle: null,
 
 		/**
-		 * Vertical position relative to dropTargetItem
+		 * Vertical position relative to dropTarget
 		 * (bottom, top)
 		 */
 		targetPositionWithoutMiddle: null,
@@ -103,11 +103,11 @@ export const initialDragDrop = {
 const DragAndDropContext = React.createContext(initialDragDrop);
 
 export function useDropTargetData() {
-	const {dropTargetItem, targetPositionWithMiddle} =
+	const {dropTarget, targetPositionWithMiddle} =
 		useContext(DragAndDropContext).state;
 
 	return {
-		item: dropTargetItem,
+		item: dropTarget,
 		position: targetPositionWithMiddle,
 	};
 }
@@ -134,11 +134,11 @@ export function NotDraggableArea({children}) {
 	);
 }
 
-export function useDragItem(sourceItems, onDragEnd, onBegin = () => {}) {
+export function useDragItem(sources, onDragEnd, onBegin = () => {}) {
 	const {canDrag, dispatch, fragmentEntryLinksRef, layoutDataRef, state} =
 		useContext(DragAndDropContext);
 	const sourceRef = useRef(null);
-	const lastSourceItem = sourceItems[sourceItems.length - 1];
+	const lastSourceItem = sources[sources.length - 1];
 
 	const getWidgets = useGetWidgets();
 
@@ -170,7 +170,7 @@ export function useDragItem(sourceItems, onDragEnd, onBegin = () => {}) {
 				getWidgets,
 				layoutDataRef,
 				onDragEnd,
-				sourceItems,
+				sources,
 				state,
 			});
 		},
@@ -265,9 +265,9 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 	);
 
 	const isOverTarget =
-		state.dropTargetItem &&
+		state.dropTarget &&
 		targetItem &&
-		state.dropTargetItem.toControlsId?.(state.dropTargetItem.itemId) ===
+		state.dropTarget.toControlsId?.(state.dropTarget.itemId) ===
 			targetItem.toControlsId(targetItem.itemId);
 
 	const coordsRef = useRef({x: 0, y: 0});
@@ -326,10 +326,8 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 
 	return {
 		isOverTarget,
-		sourceItem: state.dropItem,
-		targetItemId: state.dropTargetItem?.toControlsId?.(
-			state.dropTargetItem.itemId
-		),
+		sourceItem: state.dragSource,
+		targetItemId: state.dropTarget?.toControlsId?.(state.dropTarget.itemId),
 		targetPosition: state.targetPositionWithMiddle,
 		targetRef: setTargetRef,
 	};
@@ -392,22 +390,22 @@ function computeDrop({
 	getWidgets,
 	layoutDataRef,
 	onDragEnd,
-	sourceItems,
+	sources,
 	state,
 }) {
-	const {dropItem, dropTargetItem, targetPositionWithoutMiddle} = state;
+	const {dragSource, dropTarget, targetPositionWithoutMiddle} = state;
 
-	if (!dropItem) {
+	if (!dragSource) {
 		return;
 	}
 
-	// Get the definitive parent id (dropItemId) where the dragged item drops
+	// Get the definitive target id where the drag source item drops
 
-	const {dropItemId, position} = getDropData({
+	const {position, targetId} = getDropData({
 		isElevation: state.elevate,
 		layoutDataRef,
-		sourceItemId: dropItem.itemId,
-		targetItemId: dropTargetItem.itemId,
+		sourceItemId: dragSource.itemId,
+		targetItemId: dropTarget.itemId,
 		targetPosition: targetPositionWithoutMiddle,
 	});
 
@@ -417,28 +415,28 @@ function computeDrop({
 			getWidgets,
 			layoutData: layoutDataRef.current,
 			onInvalid: () => dispatch(initialDragDrop.state),
-			sources: sourceItems,
-			targetId: dropItemId,
+			sources,
+			targetId,
 		})
 	) {
 		return;
 	}
 
-	if (dropItem && dropTargetItem) {
-		const targetItem = layoutDataRef.current.items[dropTargetItem.itemId];
+	if (dragSource && dropTarget) {
+		const targetItem = layoutDataRef.current.items[targetId];
 		const formParent = getFormParent(targetItem, layoutDataRef.current);
 
 		if (
 			formParent &&
-			sourceItems.some((item) => isStepper(item)) &&
+			sources.some((item) => isStepper(item)) &&
 			!isMultistepForm(formParent)
 		) {
 			openFormConversionModal({
-				onContinue: () => onDragEnd(dropItemId, position),
+				onContinue: () => onDragEnd(targetId, position),
 			});
 		}
 		else {
-			onDragEnd(dropItemId, position);
+			onDragEnd(targetId, position);
 		}
 	}
 

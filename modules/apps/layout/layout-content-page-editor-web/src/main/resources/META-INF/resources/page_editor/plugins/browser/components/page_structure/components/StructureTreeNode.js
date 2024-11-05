@@ -737,8 +737,8 @@ function computeHover({
 		validDropInsideTarget
 	) {
 		return dispatch({
-			dropItem: sourceItem,
-			dropTargetItem: targetItem,
+			dragSource: sourceItem,
+			dropTarget: targetItem,
 			droppable: checkAllowedChild(
 				sourceItem,
 				targetItem,
@@ -794,8 +794,8 @@ function computeHover({
 		if (elevatedTargetItem && elevatedTargetItem !== targetItem) {
 
 			// Valid elevation:
-			// - dropItem should be child of dropTargetItem
-			// - dropItem should be sibling of siblingItem
+			// - dragSource should be child of dropTarget
+			// - dragSource should be sibling of siblingItem
 
 			if (
 				siblingItem &&
@@ -807,8 +807,8 @@ function computeHover({
 				)
 			) {
 				return dispatch({
-					dropItem: sourceItem,
-					dropTargetItem: siblingItem,
+					dragSource: sourceItem,
+					dropTarget: siblingItem,
 					droppable: checkAllowedChild(
 						sourceItem,
 						elevatedTargetItem,
@@ -868,8 +868,8 @@ function isRestricted(item, node, restrictedItemIds) {
 
 function stateHasChanged(state, sourceItem, targetItem, position) {
 	if (
-		state.dropItem?.itemId === sourceItem.itemId &&
-		state.dropTargetItem?.itemId === targetItem.itemId &&
+		state.dragSource?.itemId === sourceItem.itemId &&
+		state.dropTarget?.itemId === targetItem.itemId &&
 		state.targetPositionWithMiddle === position
 	) {
 		return false;

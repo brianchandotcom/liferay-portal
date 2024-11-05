@@ -99,7 +99,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 								String descriptiveName = curGroup.isOrganization() ? String.format("%s (%s)", curGroup.getDescriptiveName(locale), LanguageUtil.get(request, OrganizationConstants.TYPE_ORGANIZATION)) : curGroup.getDescriptiveName(locale);
 
-								KeyValuePair keyValuePair = new KeyValuePair(String.valueOf(curGroup.getGroupId()), descriptiveName);
+								KeyValuePair keyValuePair = new KeyValuePair(curGroup.getExternalReferenceCode(), descriptiveName);
 
 								if (announcementsDisplayContext.isScopeGroupSelected(curGroup)) {
 									leftList.add(keyValuePair);
@@ -110,15 +110,15 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 							}
 							%>
 
-							<aui:input name="preferences--selectedScopeGroupIds--" type="hidden" />
+							<aui:input name="preferences--selectedScopeGroupExternalReferenceCodes--" type="hidden" />
 
-							<div id="<portlet:namespace />scopeGroupIdsBoxes">
+							<div id="<portlet:namespace />ScopeGroupExternalReferenceCodesBoxes">
 								<liferay-ui:input-move-boxes
-									leftBoxName="currentScopeGroupIds"
+									leftBoxName="currentScopeGroupExternalReferenceCodes"
 									leftList="<%= leftList %>"
 									leftReorder="<%= Boolean.TRUE.toString() %>"
 									leftTitle="current"
-									rightBoxName="availableScopeGroupIds"
+									rightBoxName="availableScopeGroupExternalReferenceCodes"
 									rightList="<%= rightList %>"
 									rightTitle="available"
 								/>
@@ -134,14 +134,14 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							for (Organization organization : organizations) {
 								if (announcementsDisplayContext.isScopeOrganizationSelected(organization)) {
-									leftList.add(new KeyValuePair(String.valueOf(organization.getOrganizationId()), organization.getName()));
+									leftList.add(new KeyValuePair(organization.getExternalReferenceCode(), organization.getName()));
 								}
 							}
 
 							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
 							for (Organization organization : organizations) {
-								KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(organization.getOrganizationId()), organization.getName());
+								KeyValuePair tempKeyValuePair = new KeyValuePair(organization.getExternalReferenceCode(), organization.getName());
 
 								if (!leftList.contains(tempKeyValuePair)) {
 									rightList.add(tempKeyValuePair);
@@ -149,15 +149,15 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 							}
 							%>
 
-							<aui:input name="preferences--selectedScopeOrganizationIds--" type="hidden" />
+							<aui:input name="preferences--selectedScopeOrganizationExternalReferenceCodes--" type="hidden" />
 
-							<div id="<portlet:namespace />scopeOrganizationIdsBoxes">
+							<div id="<portlet:namespace />ScopeOrganizationExternalReferenceCodesBoxes">
 								<liferay-ui:input-move-boxes
-									leftBoxName="currentScopeOrganizationIds"
+									leftBoxName="currentScopeOrganizationExternalReferenceCodes"
 									leftList="<%= leftList %>"
 									leftReorder="<%= Boolean.TRUE.toString() %>"
 									leftTitle="current"
-									rightBoxName="availableScopeOrganizationIds"
+									rightBoxName="availableScopeOrganizationExternalReferenceCodes"
 									rightList="<%= rightList %>"
 									rightTitle="available"
 								/>
@@ -173,14 +173,14 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							for (UserGroup userGroup : userGroups) {
 								if (announcementsDisplayContext.isScopeUserGroupSelected(userGroup)) {
-									leftList.add(new KeyValuePair(String.valueOf(userGroup.getUserGroupId()), userGroup.getName()));
+									leftList.add(new KeyValuePair(userGroup.getExternalReferenceCode(), userGroup.getName()));
 								}
 							}
 
 							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
 							for (UserGroup userGroup : userGroups) {
-								KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(userGroup.getUserGroupId()), userGroup.getName());
+								KeyValuePair tempKeyValuePair = new KeyValuePair(userGroup.getExternalReferenceCode(), userGroup.getName());
 
 								if (!leftList.contains(tempKeyValuePair)) {
 									rightList.add(tempKeyValuePair);
@@ -188,15 +188,15 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 							}
 							%>
 
-							<aui:input name="preferences--selectedScopeUserGroupIds--" type="hidden" />
+							<aui:input name="preferences--selectedScopeUserGroupExternalReferenceCodes--" type="hidden" />
 
-							<div id="<portlet:namespace />scopeUserGroupIdsBoxes">
+							<div id="<portlet:namespace />ScopeUserGroupExternalReferenceCodesBoxes">
 								<liferay-ui:input-move-boxes
-									leftBoxName="currentScopeUserGroupIds"
+									leftBoxName="currentScopeUserGroupExternalReferenceCodes"
 									leftList="<%= leftList %>"
 									leftReorder="<%= Boolean.TRUE.toString() %>"
 									leftTitle="current"
-									rightBoxName="availableScopeUserGroupIds"
+									rightBoxName="availableScopeUserGroupExternalReferenceCodes"
 									rightList="<%= rightList %>"
 									rightTitle="available"
 								/>
@@ -212,14 +212,14 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							for (Role role : roles) {
 								if (announcementsDisplayContext.isScopeRoleSelected(role)) {
-									leftList.add(new KeyValuePair(String.valueOf(role.getRoleId()), role.getTitle(locale)));
+									leftList.add(new KeyValuePair(role.getExternalReferenceCode(), role.getTitle(locale)));
 								}
 							}
 
 							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
 							for (Role role : roles) {
-								KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(role.getRoleId()), role.getTitle(locale));
+								KeyValuePair tempKeyValuePair = new KeyValuePair(role.getExternalReferenceCode(), role.getTitle(locale));
 
 								if (!leftList.contains(tempKeyValuePair)) {
 									rightList.add(tempKeyValuePair);
@@ -227,15 +227,15 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 							}
 							%>
 
-							<aui:input name="preferences--selectedScopeRoleIds--" type="hidden" />
+							<aui:input name="preferences--selectedScopeRoleExternalReferenceCodes--" type="hidden" />
 
-							<div id="<portlet:namespace />scopeRoleIdsBoxes">
+							<div id="<portlet:namespace />ScopeRoleExternalReferenceCodesBoxes">
 								<liferay-ui:input-move-boxes
-									leftBoxName="currentScopeRoleIds"
+									leftBoxName="currentScopeRoleExternalReferenceCodes"
 									leftList="<%= leftList %>"
 									leftReorder="<%= Boolean.TRUE.toString() %>"
 									leftTitle="current"
-									rightBoxName="availableScopeRoleIds"
+									rightBoxName="availableScopeRoleExternalReferenceCodes"
 									rightList="<%= rightList %>"
 									rightTitle="available"
 								/>
@@ -348,63 +348,63 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 		}
 
 		function <portlet:namespace />saveConfigurations() {
-			var currentScopeGroupIds = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />currentScopeGroupIds'
+			var currentScopeGroupExternalReferenceCodes = <portlet:namespace />form.querySelector(
+				'#<portlet:namespace />currentScopeGroupExternalReferenceCodes'
 			);
-			var selectedScopeGroupIds = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />selectedScopeGroupIds'
+			var selectedScopeGroupExternalReferenceCodes = <portlet:namespace />form.querySelector(
+				'#<portlet:namespace />selectedScopeGroupExternalReferenceCodes'
 			);
 
-			if (currentScopeGroupIds && selectedScopeGroupIds) {
-				selectedScopeGroupIds.setAttribute(
+			if (currentScopeGroupExternalReferenceCodes && selectedScopeGroupExternalReferenceCodes) {
+				selectedScopeGroupExternalReferenceCodes.setAttribute(
 					'value',
-					Liferay.Util.getSelectedOptionValues(currentScopeGroupIds)
+					Liferay.Util.getSelectedOptionValues(currentScopeGroupExternalReferenceCodes)
 				);
 			}
 
-			var currentScopeOrganizationIds =
+			var currentScopeOrganizationExternalReferenceCodes =
 				<portlet:namespace />form.querySelector(
-					'#<portlet:namespace />currentScopeOrganizationIds'
+					'#<portlet:namespace />currentScopeOrganizationExternalReferenceCodes'
 				);
-			var selectedScopeOrganizationIds =
+			var selectedScopeOrganizationExternalReferenceCodes =
 				<portlet:namespace />form.querySelector(
-					'#<portlet:namespace />selectedScopeOrganizationIds'
+					'#<portlet:namespace />selectedScopeOrganizationExternalReferenceCodes'
 				);
 
-			if (currentScopeOrganizationIds && selectedScopeOrganizationIds) {
-				selectedScopeOrganizationIds.setAttribute(
+			if (currentScopeOrganizationExternalReferenceCodes && selectedScopeOrganizationExternalReferenceCodes) {
+				selectedScopeOrganizationExternalReferenceCodes.setAttribute(
 					'value',
 					Liferay.Util.getSelectedOptionValues(
-						currentScopeOrganizationIds
+						currentScopeOrganizationExternalReferenceCodes
 					)
 				);
 			}
 
-			var currentScopeRoleIds = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />currentScopeRoleIds'
+			var currentScopeRoleExternalReferenceCodes = <portlet:namespace />form.querySelector(
+				'#<portlet:namespace />currentScopeRoleExternalReferenceCodes'
 			);
-			var selectedScopeRoleIds = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />selectedScopeRoleIds'
+			var selectedScopeRoleExternalReferenceCodes = <portlet:namespace />form.querySelector(
+				'#<portlet:namespace />selectedScopeRoleExternalReferenceCodes'
 			);
 
-			if (currentScopeRoleIds && selectedScopeRoleIds) {
-				selectedScopeRoleIds.setAttribute(
+			if (currentScopeRoleExternalReferenceCodes && selectedScopeRoleExternalReferenceCodes) {
+				selectedScopeRoleExternalReferenceCodes.setAttribute(
 					'value',
-					Liferay.Util.getSelectedOptionValues(currentScopeRoleIds)
+					Liferay.Util.getSelectedOptionValues(currentScopeRoleExternalReferenceCodes)
 				);
 			}
 
-			var currentScopeUserGroupIds = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />currentScopeUserGroupIds'
+			var currentScopeUserGroupExternalReferenceCodes = <portlet:namespace />form.querySelector(
+				'#<portlet:namespace />currentScopeUserGroupExternalReferenceCodes'
 			);
-			var selectedScopeUserGroupIds = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />selectedScopeUserGroupIds'
+			var selectedScopeUserGroupExternalReferenceCodes = <portlet:namespace />form.querySelector(
+				'#<portlet:namespace />selectedScopeUserGroupExternalReferenceCodes'
 			);
 
-			if (currentScopeUserGroupIds && selectedScopeUserGroupIds) {
-				selectedScopeUserGroupIds.setAttribute(
+			if (currentScopeUserGroupExternalReferenceCodes && selectedScopeUserGroupExternalReferenceCodes) {
+				selectedScopeUserGroupExternalReferenceCodes.setAttribute(
 					'value',
-					Liferay.Util.getSelectedOptionValues(currentScopeUserGroupIds)
+					Liferay.Util.getSelectedOptionValues(currentScopeUserGroupExternalReferenceCodes)
 				);
 			}
 

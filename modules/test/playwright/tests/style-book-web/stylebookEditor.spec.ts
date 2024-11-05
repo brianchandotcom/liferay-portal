@@ -141,10 +141,7 @@ test('LPD-35561 Preview StyleBook when edit StyleBook', async ({
 	});
 
 	await test.step('Edit Background Color in Button Primary section', async () => {
-		await styleBooksPage.selectFrontendTokenCategory(
-			'Color System',
-			'Buttons'
-		);
+		await styleBooksPage.selectFrontendTokenCategory('Buttons');
 
 		await styleBooksPage.updateTokenInputColor(
 			'Background Color',
@@ -156,37 +153,29 @@ test('LPD-35561 Preview StyleBook when edit StyleBook', async ({
 	});
 
 	await test.step('Select Typography in sidebar', async () => {
-		await styleBooksPage.selectFrontendTokenCategory(
-			'Buttons',
-			'Typography'
-		);
+		await styleBooksPage.selectFrontendTokenCategory('Typography');
 	});
 
 	await test.step('Edit Heading 1 Font Size in Headings section', async () => {
-		await page.getByRole('button', {name: 'Headings'}).click();
-
-		const heading1FontSizeInput = page
-			.getByLabel('Heading 1 Font Size')
-			.locator('[aria-label="Heading 1 Font Size"]');
-
-		await heading1FontSizeInput.fill('2');
-
-		await heading1FontSizeInput.blur();
+		await styleBooksPage.updateTokenInput(
+			'Heading 1 Font Size',
+			'2',
+			'Headings'
+		);
 
 		await styleBooksPage.waitForAutoSave();
 	});
 
 	await test.step('Select Color System in sidebar', async () => {
-		await styleBooksPage.selectFrontendTokenCategory(
-			'Typography',
-			'Color System'
-		);
+		await styleBooksPage.selectFrontendTokenCategory('Color System');
 	});
 
 	await test.step('Edit the Danger in Theme Colors section', async () => {
-		await page.getByRole('button', {name: 'Brand Colors'}).click();
-
-		await styleBooksPage.updateTokenInputColor('Brand Color 1', 'danger');
+		await styleBooksPage.updateTokenInputColor(
+			'Brand Color 1',
+			'danger',
+			'Brand Colors'
+		);
 
 		await styleBooksPage.waitForAutoSave();
 	});
@@ -344,10 +333,7 @@ test('LPD-35560 PreviewStyleBookOnPages', async ({
 	});
 
 	await test.step('Change Body Color in the General frontend token category', async () => {
-		await styleBooksPage.selectFrontendTokenCategory(
-			'Color System',
-			'General'
-		);
+		await styleBooksPage.selectFrontendTokenCategory('General');
 
 		await styleBooksPage.updateTokenInputColor(
 			'Body Color',
@@ -370,7 +356,7 @@ test('LPD-35560 PreviewStyleBookOnPages', async ({
 	});
 
 	await test.step('Change color of Button Primary in the Buttons frontend token category', async () => {
-		await styleBooksPage.selectFrontendTokenCategory('General', 'Buttons');
+		await styleBooksPage.selectFrontendTokenCategory('Buttons');
 
 		await styleBooksPage.updateTokenInputColor(
 			'Color',
@@ -391,7 +377,7 @@ test('LPD-35560 PreviewStyleBookOnPages', async ({
 	});
 
 	await test.step('Change Body Color in the General frontend token category', async () => {
-		await styleBooksPage.selectFrontendTokenCategory('Buttons', 'General');
+		await styleBooksPage.selectFrontendTokenCategory('General');
 
 		await styleBooksPage.updateTokenInputColor(
 			'Body Color',
@@ -414,10 +400,7 @@ test('LPD-35560 PreviewStyleBookOnPages', async ({
 	});
 
 	await test.step('Change Font Family Base in the Typography frontend token category', async () => {
-		await styleBooksPage.selectFrontendTokenCategory(
-			'General',
-			'Typography'
-		);
+		await styleBooksPage.selectFrontendTokenCategory('Typography');
 
 		await styleBooksPage.updateTokenInput(
 			'Font Family Base',

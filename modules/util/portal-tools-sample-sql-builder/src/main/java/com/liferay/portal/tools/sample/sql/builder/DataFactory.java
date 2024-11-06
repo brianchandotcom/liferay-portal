@@ -688,7 +688,8 @@ public class DataFactory {
 		long fileEntryId, String dbTableName, long objectEntryId,
 		List<ObjectFieldModel> objectFieldModels, long relatedObjectEntryId) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(
+			5 + (3 * objectFieldModels.size()));
 
 		sb.append("insert into ");
 		sb.append(dbTableName);

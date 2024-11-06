@@ -66,6 +66,8 @@ public class CompilerWrapper extends Compiler {
 
 		super.init(jspCompilationContext, jspServletWrapper);
 
+		ctxt.checkOutputDir();
+
 		_jspCompiler = new JspCompiler();
 
 		_jspCompiler.init(jspCompilationContext);

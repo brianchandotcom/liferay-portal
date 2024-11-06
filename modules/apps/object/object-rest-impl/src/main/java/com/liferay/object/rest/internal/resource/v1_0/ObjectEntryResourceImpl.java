@@ -542,18 +542,18 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	private String _getFilterString() {
-		if (contextHttpServletRequest == null) {
-			if (contextUriInfo != null) {
-				MultivaluedMap<String, String> queryParameters =
-					contextUriInfo.getQueryParameters();
-
-				return queryParameters.getFirst("filter");
-			}
-
-			return null;
+		if (contextHttpServletRequest != null) {
+			return ParamUtil.getString(contextHttpServletRequest, "filter");
 		}
 
-		return ParamUtil.getString(contextHttpServletRequest, "filter");
+		if (contextUriInfo != null) {
+			MultivaluedMap<String, String> queryParameters =
+				contextUriInfo.getQueryParameters();
+
+			return queryParameters.getFirst("filter");
+		}
+
+		return null;
 	}
 
 	private long _getPrimaryKey(

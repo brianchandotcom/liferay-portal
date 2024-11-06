@@ -20,7 +20,8 @@ import java.util.Objects;
  */
 public enum SharingEntryAction {
 
-	ADD_DISCUSSION("ADD_DISCUSSION", 4), UPDATE("UPDATE", 2), VIEW("VIEW", 1);
+	ADD_DISCUSSION("ADD_DISCUSSION", 4), DOWNLOAD("DOWNLOAD", 8),
+	UPDATE("UPDATE", 2), VIEW("VIEW", 1);
 
 	/**
 	 * Returns the sharing entry actions from the bitwise value.
@@ -70,6 +71,9 @@ public enum SharingEntryAction {
 		else if (Objects.equals(UPDATE.getActionId(), actionId)) {
 			return UPDATE;
 		}
+		else if (Objects.equals(DOWNLOAD.getActionId(), actionId)) {
+			return DOWNLOAD;
+		}
 		else if (Objects.equals(VIEW.getActionId(), actionId)) {
 			return VIEW;
 		}
@@ -86,6 +90,9 @@ public enum SharingEntryAction {
 	public static SharingEntryAction parseFromBitwiseValue(long bitwiseValue) {
 		if (Objects.equals(ADD_DISCUSSION.getBitwiseValue(), bitwiseValue)) {
 			return ADD_DISCUSSION;
+		}
+		else if (Objects.equals(DOWNLOAD.getBitwiseValue(), bitwiseValue)) {
+			return DOWNLOAD;
 		}
 		else if (Objects.equals(UPDATE.getBitwiseValue(), bitwiseValue)) {
 			return UPDATE;

@@ -20,8 +20,6 @@ import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -39,15 +37,11 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipInputStream;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,10 +57,6 @@ public class ExportImportTaskResourceCreatorInfoTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -90,9 +80,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
 			RandomTestUtil.randomString(), _user);
 
-		_json = _executeExportTask(
-			"com.liferay.object.rest.dto.v1_0.ObjectEntry#" +
-				_objectDefinition1.getName());
+		_executeExportTask();
 
 		ObjectEntryLocalServiceUtil.deleteObjectEntry(_objectEntry1);
 		ObjectEntryLocalServiceUtil.deleteObjectEntry(_objectEntry2);
@@ -100,10 +88,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 
 	@Test
 	public void testImportWithInsertAndKeepCreator() throws Exception {
-		_executeImportTask(
-			"com.liferay.object.rest.dto.v1_0.ObjectEntry#" +
-				_objectDefinition1.getName(),
-			_json, "INSERT", "KEEP_CREATOR");
+		_executeImportTask("INSERT", "KEEP_CREATOR");
 
 		_objectEntry1 = ObjectEntryLocalServiceUtil.getObjectEntry(
 			_objectEntry1.getExternalReferenceCode(),
@@ -123,10 +108,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 
 		UserLocalServiceUtil.deleteUser(_user);
 
-		_executeImportTask(
-			"com.liferay.object.rest.dto.v1_0.ObjectEntry#" +
-				_objectDefinition1.getName(),
-			_json, "INSERT", "KEEP_CREATOR");
+		_executeImportTask("INSERT", "KEEP_CREATOR");
 
 		_objectEntry1 = ObjectEntryLocalServiceUtil.getObjectEntry(
 			_objectEntry1.getExternalReferenceCode(),
@@ -155,10 +137,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 
 		_user = UserLocalServiceUtil.updateUser(_user);
 
-		_executeImportTask(
-			"com.liferay.object.rest.dto.v1_0.ObjectEntry#" +
-				_objectDefinition1.getName(),
-			_json, "INSERT", "KEEP_CREATOR");
+		_executeImportTask("INSERT", "KEEP_CREATOR");
 
 		_objectEntry1 = ObjectEntryLocalServiceUtil.getObjectEntry(
 			_objectEntry1.getExternalReferenceCode(),
@@ -174,10 +153,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 
 	@Test
 	public void testImportWithInsertAndOverwriteCreator() throws Exception {
-		_executeImportTask(
-			"com.liferay.object.rest.dto.v1_0.ObjectEntry#" +
-				_objectDefinition1.getName(),
-			_json, "INSERT", "OVERWRITE_CREATOR");
+		_executeImportTask("INSERT", "OVERWRITE_CREATOR");
 
 		_objectEntry1 = ObjectEntryLocalServiceUtil.getObjectEntry(
 			_objectEntry1.getExternalReferenceCode(),
@@ -204,10 +180,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 			_OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString(),
 			TestPropsValues.getUser());
 
-		_executeImportTask(
-			"com.liferay.object.rest.dto.v1_0.ObjectEntry#" +
-				_objectDefinition1.getName(),
-			_json, "UPSERT", "KEEP_CREATOR");
+		_executeImportTask("UPSERT", "KEEP_CREATOR");
 
 		_objectEntry1 = ObjectEntryLocalServiceUtil.getObjectEntry(
 			_objectEntry1.getExternalReferenceCode(),
@@ -234,10 +207,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 			_OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString(),
 			TestPropsValues.getUser());
 
-		_executeImportTask(
-			"com.liferay.object.rest.dto.v1_0.ObjectEntry#" +
-				_objectDefinition1.getName(),
-			_json, "UPSERT", "OVERWRITE_CREATOR");
+		_executeImportTask("UPSERT", "OVERWRITE_CREATOR");
 
 		_objectEntry1 = ObjectEntryLocalServiceUtil.getObjectEntry(
 			_objectEntry1.getExternalReferenceCode(),
@@ -280,33 +250,16 @@ public class ExportImportTaskResourceCreatorInfoTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private String _executeExportTask(String className) throws Exception {
-		if (_log.isInfoEnabled()) {
-			_log.info("Class name: " + className);
-		}
-
-		Map<String, String> classNamePartsMap = _splitClassName(className);
-
+	private void _executeExportTask() throws Exception {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.header(HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON);
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		StringBundler sb = new StringBundler(
-			classNamePartsMap.containsKey("taskItemDelegateName") ? 6 : 4);
-
-		sb.append("http://localhost:8080/o/headless-batch-engine/v1.0");
-		sb.append("/export-task/");
-		sb.append(classNamePartsMap.get("className"));
-		sb.append("/JSON");
-
-		if (classNamePartsMap.containsKey("taskItemDelegateName")) {
-			sb.append("?taskItemDelegateName=");
-			sb.append(classNamePartsMap.get("taskItemDelegateName"));
-		}
-
-		httpInvoker.path(sb.toString());
-
+		httpInvoker.path(
+			StringBundler.concat(
+				"http://localhost:8080/o/headless-batch-engine/v1.0",
+				"/export-task/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				"/JSON?taskItemDelegateName=", _objectDefinition1.getName()));
 		httpInvoker.userNameAndPassword(
 			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 
@@ -358,43 +311,26 @@ public class ExportImportTaskResourceCreatorInfoTest {
 
 			zipInputStream.getNextEntry();
 
-			return StringUtil.read(zipInputStream);
+			_json = StringUtil.read(zipInputStream);
 		}
 	}
 
 	private void _executeImportTask(
-			String className, String json, String createStrategy,
-			String importCreatorStrategy)
+			String createStrategy, String importCreatorStrategy)
 		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Class name: " + className);
-		}
-
-		Map<String, String> classNamePartsMap = _splitClassName(className);
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(json, "application/json");
+		httpInvoker.body(_json, "application/json");
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
-		StringBundler sb = new StringBundler(
-			classNamePartsMap.containsKey("taskItemDelegateName") ? 6 : 4);
-
-		sb.append("http://localhost:8080/o/headless-batch-engine/v1.0");
-		sb.append("/import-task/");
-		sb.append(classNamePartsMap.get("className"));
-		sb.append("?createStrategy=");
-		sb.append(createStrategy);
-		sb.append("&importCreatorStrategy=");
-		sb.append(importCreatorStrategy);
-
-		if (classNamePartsMap.containsKey("taskItemDelegateName")) {
-			sb.append("&taskItemDelegateName=");
-			sb.append(classNamePartsMap.get("taskItemDelegateName"));
-		}
-
-		httpInvoker.path(sb.toString());
+		httpInvoker.path(
+			StringBundler.concat(
+				"http://localhost:8080/o/headless-batch-engine/v1.0",
+				"/import-task/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				"?createStrategy=", createStrategy, "&importCreatorStrategy=",
+				importCreatorStrategy, "&taskItemDelegateName=",
+				_objectDefinition1.getName()));
 
 		httpInvoker.userNameAndPassword(
 			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
@@ -424,13 +360,6 @@ public class ExportImportTaskResourceCreatorInfoTest {
 				throw new AssertionError(importTask.getErrorMessage());
 			}
 		}
-
-		Date endDate = importTask.getEndTime();
-		Date startDate = importTask.getStartTime();
-
-		_log.info(
-			"Import task duration: " +
-				(endDate.getTime() - startDate.getTime()) + " ms");
 	}
 
 	private String _invoke(String url) throws Exception {
@@ -448,26 +377,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 		return httpResponse.getContent();
 	}
 
-	private Map<String, String> _splitClassName(String className) {
-		Map<String, String> classNamePartsMap = new HashMap<>();
-
-		if (className.contains("#")) {
-			String[] classNameParts = className.split("#");
-
-			classNamePartsMap.put("className", classNameParts[0]);
-			classNamePartsMap.put("taskItemDelegateName", classNameParts[1]);
-		}
-		else {
-			classNamePartsMap.put("className", className);
-		}
-
-		return classNamePartsMap;
-	}
-
 	private static final String _OBJECT_FIELD_NAME_TEXT = "testFieldName";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ExportImportTaskResourceCreatorInfoTest.class);
 
 	private String _json;
 	private ObjectDefinition _objectDefinition1;

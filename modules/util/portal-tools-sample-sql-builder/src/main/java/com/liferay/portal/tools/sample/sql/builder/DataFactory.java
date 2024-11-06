@@ -5373,8 +5373,7 @@ public class DataFactory {
 		return layoutPageTemplateStructureRelModel;
 	}
 
-	public ObjectDefinitionModel newObjectDefinitionModel(
-		String name, long objectFolderId) {
+	public ObjectDefinitionModel newObjectDefinitionModel(long objectFolderId) {
 
 		ObjectDefinitionModel objectDefinitionModel =
 			new ObjectDefinitionImpl();
@@ -5395,6 +5394,9 @@ public class DataFactory {
 
 		objectDefinitionModel.setObjectFolderId(objectFolderId);
 		objectDefinitionModel.setActive(true);
+
+		String name = "Ticket";
+
 		objectDefinitionModel.setDBTableName(
 			StringBundler.concat("O_", _companyId, StringPool.UNDERLINE, name));
 		objectDefinitionModel.setLabel(_getLabel(name));

@@ -428,6 +428,12 @@ public class DDMFormInstanceLocalServiceUtil {
 		return getService().getFormInstance(uuid, ddmFormInstanceId);
 	}
 
+	public static DDMFormInstance getFormInstanceByStructureId(long structureId)
+		throws PortalException {
+
+		return getService().getFormInstanceByStructureId(structureId);
+	}
+
 	public static List<DDMFormInstance> getFormInstances(long groupId) {
 		return getService().getFormInstances(groupId);
 	}

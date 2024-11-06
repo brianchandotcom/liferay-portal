@@ -61,6 +61,16 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		JobProperty jobProperty = getJobProperty(
 			PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME, testSuiteName, batchName);
 
+		if (jobProperty == null) {
+			jobProperty = getJobProperty(
+				PLAYWRIGHT_PROJECTS_INCLUDES_PROPERTY_NAME, testSuiteName,
+				batchName);
+		}
+
+		List<JobProperty> jobProperties = new ArrayList<>();
+
+		jobProperties.add(jobProperty);
+
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
@@ -68,12 +78,29 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
-			jobPropertyValue = _getProjectNames();
+			jobPropertyValue = _getDefaultProjectNames();
 		}
 
 		_addProjectNames(jobPropertyValue);
 
-		recordJobProperty(jobProperty);
+		JobProperty excludesJobProperty = getJobProperty(
+			PLAYWRIGHT_PROJECTS_EXCLUDES_PROPERTY_NAME, testSuiteName,
+			batchName);
+
+		String excludesJobPropertyValue = excludesJobProperty.getValue();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(excludesJobPropertyValue)) {
+			String[] excludesProjectNames = excludesJobPropertyValue.split(
+				"\\s*,\\s*");
+
+			for (String excludeProjectName : excludesProjectNames) {
+				_projectNames.remove(excludeProjectName);
+			}
+
+			jobProperties.add(excludesJobProperty);
+		}
+
+		recordJobProperties(jobProperties);
 	}
 
 	protected PlaywrightBatchTestClassGroup(
@@ -289,6 +316,12 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				JenkinsResultsParserUtil.toDurationString(duration)));
 	}
 
+	protected static final String PLAYWRIGHT_PROJECTS_EXCLUDES_PROPERTY_NAME =
+		"playwright.projects.excludes";
+
+	protected static final String PLAYWRIGHT_PROJECTS_INCLUDES_PROPERTY_NAME =
+		"playwright.projects.includes";
+
 	protected static final String PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME =
 		"playwright.test.project";
 
@@ -344,24 +377,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
-	private String _getPortalProperty(String propertyName) {
-		File workingDirectory = JenkinsResultsParserUtil.getCanonicalFile(
-			portalGitWorkingDirectory.getWorkingDirectory());
-
-		Properties portalProperties = JenkinsResultsParserUtil.getProperties(
-			new File(workingDirectory, "build.properties"),
-			new File(workingDirectory, "app.server.properties"),
-			new File(workingDirectory, "release.properties"),
-			new File(workingDirectory, "test.properties"));
-
-		portalProperties.setProperty(
-			"project.dir", workingDirectory.toString());
-
-		return JenkinsResultsParserUtil.getProperty(
-			portalProperties, propertyName);
-	}
-
-	private String _getProjectNames() {
+	private String _getDefaultProjectNames() {
 		_loadPlaywrightJSONObjects();
 
 		JSONObject configJSONObject = _playwrightJSONObject.getJSONObject(
@@ -382,6 +398,23 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		sb.setLength(sb.length() - 1);
 
 		return sb.toString();
+	}
+
+	private String _getPortalProperty(String propertyName) {
+		File workingDirectory = JenkinsResultsParserUtil.getCanonicalFile(
+			portalGitWorkingDirectory.getWorkingDirectory());
+
+		Properties portalProperties = JenkinsResultsParserUtil.getProperties(
+			new File(workingDirectory, "build.properties"),
+			new File(workingDirectory, "app.server.properties"),
+			new File(workingDirectory, "release.properties"),
+			new File(workingDirectory, "test.properties"));
+
+		portalProperties.setProperty(
+			"project.dir", workingDirectory.toString());
+
+		return JenkinsResultsParserUtil.getProperty(
+			portalProperties, propertyName);
 	}
 
 	private List<JSONObject> _getSpecJSONObjects(JSONObject jsonObject) {

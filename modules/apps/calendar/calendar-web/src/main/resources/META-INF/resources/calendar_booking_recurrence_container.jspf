@@ -371,10 +371,18 @@ if (recurrence != null) {
 		);
 
 		var destroyRecurrenceDialog = function (event) {
-			if (event.portletId === '<%= portletDisplay.getId() %>') {
-				window.<portlet:namespace />recurrenceDialog.destroy();
+			var recurrenceDialogPortletName =
+				'<portlet:namespace />recurrenceDialog';
 
-				delete window['<portlet:namespace />recurrenceDialog'];
+			var recurrenceDialogGlobalObject = window[recurrenceDialogPortletName];
+
+			if (
+				recurrenceDialogGlobalObject &&
+				event.portletId === '<%= portletDisplay.getId() %>'
+			) {
+				recurrenceDialogGlobalObject.destroy();
+
+				delete window[recurrenceDialogPortletName];
 
 				Liferay.detach('destroyPortlet', destroyRecurrenceDialog);
 			}

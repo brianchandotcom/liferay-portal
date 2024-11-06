@@ -619,7 +619,7 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	protected boolean isDisplayPortlet() {
 		if (isDataPortletInstanceLevel() &&
-			!ArrayUtil.isEmpty(
+			ArrayUtil.isNotEmpty(
 				portletDataHandler.getDataPortletPreferences())) {
 
 			return true;

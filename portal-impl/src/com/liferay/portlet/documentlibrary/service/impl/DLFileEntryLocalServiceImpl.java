@@ -2923,7 +2923,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private Long _getActiveUser(long[] userIds) {
-		if (!ArrayUtil.isEmpty(userIds)) {
+		if (ArrayUtil.isNotEmpty(userIds)) {
 			for (long userId : userIds) {
 				User user = _userLocalService.fetchUser(userId);
 

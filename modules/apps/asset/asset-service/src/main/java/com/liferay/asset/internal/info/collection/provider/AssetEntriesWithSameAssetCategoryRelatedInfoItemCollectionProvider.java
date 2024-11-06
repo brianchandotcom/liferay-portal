@@ -382,7 +382,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		String assetCategoryRule = assetCategoryRules[0];
 
 		if (Objects.equals(assetCategoryRule, "specificAssetCategory") &&
-			!ArrayUtil.isEmpty(
+			ArrayUtil.isNotEmpty(
 				configuration.get("specificAssetCategoryJSONObject"))) {
 
 			String[] specificAssetCategoryJSONObjects = configuration.get(

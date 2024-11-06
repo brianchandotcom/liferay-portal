@@ -91,7 +91,8 @@ public abstract class SXPBlueprintInfoCollectionProvider<T>
 					collectionQuery.getInfoFilter(CategoriesInfoFilter.class);
 
 				if ((categoriesInfoFilter != null) &&
-					!ArrayUtil.isEmpty(categoriesInfoFilter.getCategoryIds())) {
+					ArrayUtil.isNotEmpty(
+						categoriesInfoFilter.getCategoryIds())) {
 
 					long[] categoryIds = ArrayUtil.append(
 						categoriesInfoFilter.getCategoryIds());
@@ -105,7 +106,7 @@ public abstract class SXPBlueprintInfoCollectionProvider<T>
 					TagsInfoFilter.class);
 
 				if ((tagsInfoFilter != null) &&
-					!ArrayUtil.isEmpty(tagsInfoFilter.getTagNames())) {
+					ArrayUtil.isNotEmpty(tagsInfoFilter.getTagNames())) {
 
 					String[] tagNames = ArrayUtil.append(
 						tagsInfoFilter.getTagNames());

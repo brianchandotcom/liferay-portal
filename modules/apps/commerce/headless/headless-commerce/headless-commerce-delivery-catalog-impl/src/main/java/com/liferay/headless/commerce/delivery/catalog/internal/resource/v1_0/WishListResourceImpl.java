@@ -104,7 +104,7 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 
 		WishListItem[] wishListItems = wishList.getWishListItems();
 
-		if (!ArrayUtil.isEmpty(wishListItems)) {
+		if (ArrayUtil.isNotEmpty(wishListItems)) {
 			_commerceWishListItemService.deleteCommerceWishListItems(
 				commerceWishList.getCommerceWishListId());
 

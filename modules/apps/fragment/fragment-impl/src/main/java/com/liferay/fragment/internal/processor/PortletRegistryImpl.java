@@ -238,7 +238,7 @@ public class PortletRegistryImpl implements PortletRegistry {
 
 		String[] strings = s.split("\\s+");
 
-		if (!ArrayUtil.isEmpty(strings)) {
+		if (ArrayUtil.isNotEmpty(strings)) {
 			return strings[0];
 		}
 

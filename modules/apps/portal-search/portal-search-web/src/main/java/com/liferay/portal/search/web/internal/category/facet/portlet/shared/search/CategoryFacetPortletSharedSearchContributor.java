@@ -59,7 +59,7 @@ public class CategoryFacetPortletSharedSearchContributor
 	protected CategoryFacetSearchContributor categoryFacetSearchContributor;
 
 	private long[] _toLongArray(String[] parameterValues) {
-		if (!ArrayUtil.isEmpty(parameterValues)) {
+		if (ArrayUtil.isNotEmpty(parameterValues)) {
 			return ListUtil.toLongArray(
 				Arrays.asList(parameterValues), GetterUtil::getLong);
 		}

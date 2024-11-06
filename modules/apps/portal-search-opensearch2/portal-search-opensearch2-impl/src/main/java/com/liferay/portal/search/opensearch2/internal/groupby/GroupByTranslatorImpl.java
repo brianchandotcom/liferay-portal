@@ -173,7 +173,7 @@ public class GroupByTranslatorImpl implements GroupByTranslator {
 			builder.size(docsSize);
 		}
 
-		if (!ArrayUtil.isEmpty(groupByRequest.getDocsSorts())) {
+		if (ArrayUtil.isNotEmpty(groupByRequest.getDocsSorts())) {
 			builder.sort(
 				_sortTranslator.translateSorts(groupByRequest.getDocsSorts()));
 		}

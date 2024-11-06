@@ -50,7 +50,7 @@ public class DefaultSelectedFieldNamesQueryConfigContributor
 		String[] defaultSelectedFieldNames =
 			queryConfigContributorHelper.getDefaultSelectedFieldNames();
 
-		if (!ArrayUtil.isEmpty(defaultSelectedFieldNames)) {
+		if (ArrayUtil.isNotEmpty(defaultSelectedFieldNames)) {
 			selectedFieldNames = SetUtil.fromArray(defaultSelectedFieldNames);
 
 			if (searchContext.isIncludeAttachments() ||
@@ -61,7 +61,7 @@ public class DefaultSelectedFieldNamesQueryConfigContributor
 			}
 		}
 
-		if (!ArrayUtil.isEmpty(
+		if (ArrayUtil.isNotEmpty(
 				queryConfigContributorHelper.
 					getDefaultSelectedLocalizedFieldNames())) {
 

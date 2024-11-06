@@ -917,11 +917,11 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			return null;
 		}
 
-		if (!ArrayUtil.isEmpty(organizationIds)) {
+		if (ArrayUtil.isNotEmpty(organizationIds)) {
 			return ArrayUtil.toArray(organizationIds);
 		}
 
-		if (!ArrayUtil.isEmpty(organizationExternalReferenceCodes)) {
+		if (ArrayUtil.isNotEmpty(organizationExternalReferenceCodes)) {
 			organizationIds = transformToArray(
 				Arrays.asList(organizationExternalReferenceCodes),
 				externalReferenceCode -> {

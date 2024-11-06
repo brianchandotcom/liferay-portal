@@ -448,7 +448,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	@Override
 	public boolean isDisplayPortlet() {
 		if (isDataPortletInstanceLevel() &&
-			!ArrayUtil.isEmpty(getDataPortletPreferences())) {
+			ArrayUtil.isNotEmpty(getDataPortletPreferences())) {
 
 			return true;
 		}

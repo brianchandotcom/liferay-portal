@@ -34,7 +34,7 @@ public class VerifyUUID extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		if (!ArrayUtil.isEmpty(_verifiableUUIDModels)) {
+		if (ArrayUtil.isNotEmpty(_verifiableUUIDModels)) {
 			doVerify(_verifiableUUIDModels);
 		}
 	}

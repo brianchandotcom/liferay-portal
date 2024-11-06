@@ -560,7 +560,7 @@ public class BlogsEditEntryDisplayContext {
 				_httpServletRequest, "assetCategoryIds");
 		}
 
-		if (!ArrayUtil.isEmpty(_assetCategoryIds)) {
+		if (ArrayUtil.isNotEmpty(_assetCategoryIds)) {
 			return _assetCategoryIds;
 		}
 
@@ -589,7 +589,7 @@ public class BlogsEditEntryDisplayContext {
 				_httpServletRequest, "friendlyURLAssetCategoryIds");
 		}
 
-		if (!ArrayUtil.isEmpty(_friendlyURLAssetCategoryIds)) {
+		if (ArrayUtil.isNotEmpty(_friendlyURLAssetCategoryIds)) {
 			return _friendlyURLAssetCategoryIds;
 		}
 

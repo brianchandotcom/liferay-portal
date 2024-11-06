@@ -274,7 +274,7 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 	private void _addAll(
 		List<String> filterQueries, String[] facetPostFilterQueries) {
 
-		if (!ArrayUtil.isEmpty(facetPostFilterQueries)) {
+		if (ArrayUtil.isNotEmpty(facetPostFilterQueries)) {
 			Collections.addAll(filterQueries, facetPostFilterQueries);
 		}
 	}

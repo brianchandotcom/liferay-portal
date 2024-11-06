@@ -127,7 +127,7 @@ public class SXPBlueprintSearchResultTestUtil {
 
 				FieldSet[] fieldSets = uiConfiguration.getFieldSets();
 
-				if (!ArrayUtil.isEmpty(fieldSets)) {
+				if (ArrayUtil.isNotEmpty(fieldSets)) {
 					for (FieldSet fieldSet : fieldSets) {
 						Field[] fields = fieldSet.getFields();
 

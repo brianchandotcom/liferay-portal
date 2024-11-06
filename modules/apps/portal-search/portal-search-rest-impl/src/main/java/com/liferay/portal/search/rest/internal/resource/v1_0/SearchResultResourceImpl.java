@@ -373,7 +373,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		searchContext.setKeywords(search);
 		searchContext.setLocale(contextAcceptLanguage.getPreferredLocale());
 
-		if (!ArrayUtil.isEmpty(sorts)) {
+		if (ArrayUtil.isNotEmpty(sorts)) {
 			searchContext.setSorts(sorts);
 		}
 
@@ -413,7 +413,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 		String[] entryClassNamesArray = ValueUtil.toArray(entryClassNames);
 
-		if (!ArrayUtil.isEmpty(entryClassNamesArray)) {
+		if (ArrayUtil.isNotEmpty(entryClassNamesArray)) {
 			searchRequestBuilder.entryClassNames(entryClassNamesArray);
 			searchRequestBuilder.modelIndexerClassNames(entryClassNamesArray);
 		}

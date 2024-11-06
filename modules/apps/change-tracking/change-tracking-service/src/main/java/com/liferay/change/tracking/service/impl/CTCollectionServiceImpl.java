@@ -234,7 +234,7 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 			companyId
 		).and(
 			() -> {
-				if (!ArrayUtil.isEmpty(statuses)) {
+				if (ArrayUtil.isNotEmpty(statuses)) {
 					return CTCollectionTable.INSTANCE.status.in(
 						ArrayUtil.toArray(statuses));
 				}

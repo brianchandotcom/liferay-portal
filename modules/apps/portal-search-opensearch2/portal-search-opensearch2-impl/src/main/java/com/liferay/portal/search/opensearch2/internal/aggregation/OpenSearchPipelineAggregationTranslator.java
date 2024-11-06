@@ -290,7 +290,7 @@ public class OpenSearchPipelineAggregationTranslator
 			builder::gapPolicy,
 			percentilesBucketPipelineAggregation.getGapPolicy());
 
-		if (!ArrayUtil.isEmpty(
+		if (ArrayUtil.isNotEmpty(
 				percentilesBucketPipelineAggregation.getPercents())) {
 
 			builder.percents(

@@ -33,7 +33,7 @@ public class GeneralSXPSearchRequestBodyContributor
 			return;
 		}
 
-		if (!ArrayUtil.isEmpty(
+		if (ArrayUtil.isNotEmpty(
 				generalConfiguration.getClauseContributorsExcludes())) {
 
 			searchRequestBuilder.withSearchContext(
@@ -43,7 +43,7 @@ public class GeneralSXPSearchRequestBodyContributor
 						generalConfiguration.getClauseContributorsExcludes())));
 		}
 
-		if (!ArrayUtil.isEmpty(
+		if (ArrayUtil.isNotEmpty(
 				generalConfiguration.getClauseContributorsIncludes())) {
 
 			searchRequestBuilder.withSearchContext(
@@ -72,7 +72,7 @@ public class GeneralSXPSearchRequestBodyContributor
 				generalConfiguration.getQueryString());
 		}
 
-		if (!ArrayUtil.isEmpty(
+		if (ArrayUtil.isNotEmpty(
 				generalConfiguration.getSearchableAssetTypes())) {
 
 			searchRequestBuilder.entryClassNames(

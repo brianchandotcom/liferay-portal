@@ -565,7 +565,7 @@ public class FacetRequestContributor {
 	}
 
 	private long[] _toLongArray(Object[] values) {
-		if (!ArrayUtil.isEmpty(values)) {
+		if (ArrayUtil.isNotEmpty(values)) {
 			return ListUtil.toLongArray(
 				Arrays.asList(values), GetterUtil::getLong);
 		}
@@ -574,7 +574,7 @@ public class FacetRequestContributor {
 	}
 
 	private String[] _toStringArray(Object[] values) {
-		if (!ArrayUtil.isEmpty(values)) {
+		if (ArrayUtil.isNotEmpty(values)) {
 			return ArrayUtil.toStringArray(values);
 		}
 

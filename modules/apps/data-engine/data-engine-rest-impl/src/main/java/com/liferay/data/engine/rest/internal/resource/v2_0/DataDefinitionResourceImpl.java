@@ -1315,7 +1315,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			dataLayoutPage.setDataLayoutRows(
 				() -> ArrayUtil.filter(
 					dataLayoutRows,
-					row -> !ArrayUtil.isEmpty(row.getDataLayoutColumns())));
+					row -> ArrayUtil.isNotEmpty(row.getDataLayoutColumns())));
 		}
 	}
 

@@ -292,7 +292,7 @@ public class ElasticsearchPipelineAggregationTranslator
 							bucketMetricsPipelineAggregation.getBucketsPath()),
 					percentilesBucketPipelineAggregation);
 
-		if (!ArrayUtil.isEmpty(
+		if (ArrayUtil.isNotEmpty(
 				percentilesBucketPipelineAggregation.getPercents())) {
 
 			percentilesBucketPipelineAggregationBuilder.setPercents(

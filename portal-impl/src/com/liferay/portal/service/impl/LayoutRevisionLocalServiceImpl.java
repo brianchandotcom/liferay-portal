@@ -515,7 +515,7 @@ public class LayoutRevisionLocalServiceImpl
 				String[] removePortletIdsArray =
 					(String[])serviceContext.getAttribute("removePortletIds");
 
-				if (!ArrayUtil.isEmpty(removePortletIdsArray)) {
+				if (ArrayUtil.isNotEmpty(removePortletIdsArray)) {
 					Set<String> removePortletIds = SetUtil.fromArray(
 						removePortletIdsArray);
 

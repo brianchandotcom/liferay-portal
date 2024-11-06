@@ -90,7 +90,7 @@ public class FileExtensionGroupsProvider {
 		}
 
 		public boolean containsExtension(String extension) {
-			if (!ArrayUtil.isEmpty(_extensions)) {
+			if (ArrayUtil.isNotEmpty(_extensions)) {
 				return ArrayUtil.contains(_extensions, extension);
 			}
 

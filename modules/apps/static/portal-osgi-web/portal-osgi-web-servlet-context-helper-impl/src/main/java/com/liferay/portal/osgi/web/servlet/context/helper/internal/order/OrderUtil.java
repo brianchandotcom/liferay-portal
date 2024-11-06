@@ -277,7 +277,7 @@ public class OrderUtil {
 		if (order1.isOrdered() && !order2.isOrdered()) {
 			EnumMap<Order.Path, String[]> routes = order1.getRoutes();
 
-			if (!ArrayUtil.isEmpty(routes.get(Order.Path.AFTER)) &&
+			if (ArrayUtil.isNotEmpty(routes.get(Order.Path.AFTER)) &&
 				!order1.isBeforeOthers()) {
 
 				return true;

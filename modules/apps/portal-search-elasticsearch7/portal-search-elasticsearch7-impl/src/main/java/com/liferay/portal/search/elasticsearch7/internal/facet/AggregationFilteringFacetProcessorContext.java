@@ -157,7 +157,7 @@ public class AggregationFilteringFacetProcessorContext
 				com.liferay.portal.search.facet.Facet osgiFacet =
 					(com.liferay.portal.search.facet.Facet)facet;
 
-				if (!ArrayUtil.isEmpty(osgiFacet.getSelections())) {
+				if (ArrayUtil.isNotEmpty(osgiFacet.getSelections())) {
 					map.put(
 						osgiFacet.getAggregationName(),
 						_getSelectionFilters(osgiFacet));

@@ -51,7 +51,7 @@ public class HttpHelperUtil {
 
 			String[] parameterValues = parameterMap.get(parameterName);
 
-			if (!ArrayUtil.isEmpty(parameterValues)) {
+			if (ArrayUtil.isNotEmpty(parameterValues)) {
 				return parameterValues[0];
 			}
 

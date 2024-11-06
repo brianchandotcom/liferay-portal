@@ -407,7 +407,7 @@ public class OpenSearchIndexSearcher extends BaseIndexSearcher {
 				searchSearchRequest.setSorts(searchRequest.getSorts());
 			}
 		}
-		else if (!ArrayUtil.isEmpty(searchContext.getSorts())) {
+		else if (ArrayUtil.isNotEmpty(searchContext.getSorts())) {
 			if (start > 0) {
 				searchSearchRequest.setSorts(
 					ArrayUtil.append(

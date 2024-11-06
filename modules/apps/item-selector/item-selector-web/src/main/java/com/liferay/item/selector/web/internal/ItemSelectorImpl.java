@@ -97,7 +97,7 @@ public class ItemSelectorImpl implements ItemSelector {
 		for (int i = 0; i < itemSelectorCriterionClasses.size(); i++) {
 			String[] values = parameters.get(i + JSON);
 
-			if (!ArrayUtil.isEmpty(values)) {
+			if (ArrayUtil.isNotEmpty(values)) {
 				itemSelectorCriteria.add(
 					_itemSelectionCriterionSerializer.deserialize(
 						itemSelectorCriterionClasses.get(i), values[0]));

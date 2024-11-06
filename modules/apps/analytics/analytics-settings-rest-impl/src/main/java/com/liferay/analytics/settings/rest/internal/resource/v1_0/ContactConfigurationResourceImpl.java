@@ -62,7 +62,7 @@ public class ContactConfigurationResourceImpl
 		boolean accountsSelected = false;
 
 		if (contactConfiguration.getSyncAllAccounts() ||
-			!ArrayUtil.isEmpty(
+			ArrayUtil.isNotEmpty(
 				contactConfiguration.getSyncedAccountGroupIds())) {
 
 			accountsSelected = true;
@@ -71,9 +71,10 @@ public class ContactConfigurationResourceImpl
 		boolean contactsSelected = false;
 
 		if (contactConfiguration.getSyncAllContacts() ||
-			!ArrayUtil.isEmpty(
+			ArrayUtil.isNotEmpty(
 				contactConfiguration.getSyncedOrganizationIds()) ||
-			!ArrayUtil.isEmpty(contactConfiguration.getSyncedUserGroupIds())) {
+			ArrayUtil.isNotEmpty(
+				contactConfiguration.getSyncedUserGroupIds())) {
 
 			contactsSelected = true;
 		}

@@ -30,7 +30,7 @@ public class OSBAccountEntry {
 
 		ExternalLink[] externalLinks = account.getExternalLinks();
 
-		if (!ArrayUtil.isEmpty(externalLinks)) {
+		if (ArrayUtil.isNotEmpty(externalLinks)) {
 			for (ExternalLink externalLink : externalLinks) {
 				if (StringUtil.equals(
 						externalLink.getDomain(),

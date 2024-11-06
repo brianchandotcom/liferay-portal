@@ -93,7 +93,7 @@ public class ObjectFieldUtil {
 				objectFieldSetting.getName(),
 				ObjectFieldSettingConstants.NAME_STATE_FLOW));
 
-		if (!ArrayUtil.isEmpty(stateFlowObjectFieldSettings)) {
+		if (ArrayUtil.isNotEmpty(stateFlowObjectFieldSettings)) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerializeDeep(
 					stateFlowObjectFieldSettings[0].getValue()));

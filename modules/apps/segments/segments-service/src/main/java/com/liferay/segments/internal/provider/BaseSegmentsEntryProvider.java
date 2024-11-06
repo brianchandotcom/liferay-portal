@@ -119,7 +119,7 @@ public abstract class BaseSegmentsEntryProvider
 		return TransformUtil.transformToLongArray(
 			segmentsEntries,
 			segmentsEntry -> {
-				if ((!ArrayUtil.isEmpty(filterSegmentsEntryIds) &&
+				if ((ArrayUtil.isNotEmpty(filterSegmentsEntryIds) &&
 					 !ArrayUtil.contains(
 						 filterSegmentsEntryIds,
 						 segmentsEntry.getSegmentsEntryId())) ||

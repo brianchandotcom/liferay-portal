@@ -65,7 +65,7 @@ public class CommerceServicePortalInstanceLifecycleListener
 							getName(),
 						"*))"));
 
-			if (!ArrayUtil.isEmpty(configurations)) {
+			if (ArrayUtil.isNotEmpty(configurations)) {
 				return;
 			}
 

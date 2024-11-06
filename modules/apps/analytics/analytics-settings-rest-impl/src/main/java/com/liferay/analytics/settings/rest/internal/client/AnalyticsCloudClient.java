@@ -199,7 +199,7 @@ public class AnalyticsCloudClient {
 			url = HttpComponentsUtil.addParameter(url, "page", page);
 			url = HttpComponentsUtil.addParameter(url, "size", size);
 
-			if (!ArrayUtil.isEmpty(sorts)) {
+			if (ArrayUtil.isNotEmpty(sorts)) {
 				StringBundler sb = new StringBundler(sorts.length * 3);
 
 				for (Sort sort : sorts) {

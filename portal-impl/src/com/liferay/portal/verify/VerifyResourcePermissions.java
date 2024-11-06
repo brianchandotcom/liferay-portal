@@ -46,7 +46,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		if (!ArrayUtil.isEmpty(_verifiableResourcedModels)) {
+		if (ArrayUtil.isNotEmpty(_verifiableResourcedModels)) {
 			doVerify(_verifiableResourcedModels);
 
 			return;

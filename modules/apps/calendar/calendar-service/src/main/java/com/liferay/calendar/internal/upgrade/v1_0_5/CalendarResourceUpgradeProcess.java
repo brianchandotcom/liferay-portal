@@ -58,7 +58,7 @@ public class CalendarResourceUpgradeProcess extends UpgradeProcess {
 
 		long[] userIds = UserLocalServiceUtil.getRoleUserIds(role.getRoleId());
 
-		if (!ArrayUtil.isEmpty(userIds)) {
+		if (ArrayUtil.isNotEmpty(userIds)) {
 			return userIds[0];
 		}
 
@@ -70,7 +70,7 @@ public class CalendarResourceUpgradeProcess extends UpgradeProcess {
 				userIds = OrganizationLocalServiceUtil.getUserPrimaryKeys(
 					group.getClassPK());
 
-				if (!ArrayUtil.isEmpty(userIds)) {
+				if (ArrayUtil.isNotEmpty(userIds)) {
 					return userIds[0];
 				}
 			}
@@ -78,7 +78,7 @@ public class CalendarResourceUpgradeProcess extends UpgradeProcess {
 				userIds = GroupLocalServiceUtil.getUserPrimaryKeys(
 					group.getGroupId());
 
-				if (!ArrayUtil.isEmpty(userIds)) {
+				if (ArrayUtil.isNotEmpty(userIds)) {
 					return userIds[0];
 				}
 			}
@@ -86,7 +86,7 @@ public class CalendarResourceUpgradeProcess extends UpgradeProcess {
 				userIds = UserGroupLocalServiceUtil.getUserPrimaryKeys(
 					group.getClassPK());
 
-				if (!ArrayUtil.isEmpty(userIds)) {
+				if (ArrayUtil.isNotEmpty(userIds)) {
 					return userIds[0];
 				}
 			}

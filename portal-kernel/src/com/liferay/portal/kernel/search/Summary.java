@@ -43,7 +43,7 @@ public class Summary {
 			return _content;
 		}
 
-		if (!ArrayUtil.isEmpty(_queryTerms)) {
+		if (ArrayUtil.isNotEmpty(_queryTerms)) {
 			int index = StringUtil.indexOfAny(_content, _queryTerms);
 
 			if (index > _maxContentLength) {

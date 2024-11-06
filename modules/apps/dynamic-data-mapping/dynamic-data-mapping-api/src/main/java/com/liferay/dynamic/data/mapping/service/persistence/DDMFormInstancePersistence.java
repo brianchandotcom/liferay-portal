@@ -711,6 +711,51 @@ public interface DDMFormInstancePersistence
 	public int filterCountByGroupId(long[] groupIds);
 
 	/**
+	 * Returns the ddm form instance where structureId = &#63; or throws a <code>NoSuchFormInstanceException</code> if it could not be found.
+	 *
+	 * @param structureId the structure ID
+	 * @return the matching ddm form instance
+	 * @throws NoSuchFormInstanceException if a matching ddm form instance could not be found
+	 */
+	public DDMFormInstance findByStructureId(long structureId)
+		throws NoSuchFormInstanceException;
+
+	/**
+	 * Returns the ddm form instance where structureId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param structureId the structure ID
+	 * @return the matching ddm form instance, or <code>null</code> if a matching ddm form instance could not be found
+	 */
+	public DDMFormInstance fetchByStructureId(long structureId);
+
+	/**
+	 * Returns the ddm form instance where structureId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param structureId the structure ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching ddm form instance, or <code>null</code> if a matching ddm form instance could not be found
+	 */
+	public DDMFormInstance fetchByStructureId(
+		long structureId, boolean useFinderCache);
+
+	/**
+	 * Removes the ddm form instance where structureId = &#63; from the database.
+	 *
+	 * @param structureId the structure ID
+	 * @return the ddm form instance that was removed
+	 */
+	public DDMFormInstance removeByStructureId(long structureId)
+		throws NoSuchFormInstanceException;
+
+	/**
+	 * Returns the number of ddm form instances where structureId = &#63;.
+	 *
+	 * @param structureId the structure ID
+	 * @return the number of matching ddm form instances
+	 */
+	public int countByStructureId(long structureId);
+
+	/**
 	 * Caches the ddm form instance in the entity cache if it is enabled.
 	 *
 	 * @param ddmFormInstance the ddm form instance

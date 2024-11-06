@@ -924,6 +924,66 @@ public class DDMFormInstanceUtil {
 	}
 
 	/**
+	 * Returns the ddm form instance where structureId = &#63; or throws a <code>NoSuchFormInstanceException</code> if it could not be found.
+	 *
+	 * @param structureId the structure ID
+	 * @return the matching ddm form instance
+	 * @throws NoSuchFormInstanceException if a matching ddm form instance could not be found
+	 */
+	public static DDMFormInstance findByStructureId(long structureId)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchFormInstanceException {
+
+		return getPersistence().findByStructureId(structureId);
+	}
+
+	/**
+	 * Returns the ddm form instance where structureId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param structureId the structure ID
+	 * @return the matching ddm form instance, or <code>null</code> if a matching ddm form instance could not be found
+	 */
+	public static DDMFormInstance fetchByStructureId(long structureId) {
+		return getPersistence().fetchByStructureId(structureId);
+	}
+
+	/**
+	 * Returns the ddm form instance where structureId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param structureId the structure ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching ddm form instance, or <code>null</code> if a matching ddm form instance could not be found
+	 */
+	public static DDMFormInstance fetchByStructureId(
+		long structureId, boolean useFinderCache) {
+
+		return getPersistence().fetchByStructureId(structureId, useFinderCache);
+	}
+
+	/**
+	 * Removes the ddm form instance where structureId = &#63; from the database.
+	 *
+	 * @param structureId the structure ID
+	 * @return the ddm form instance that was removed
+	 */
+	public static DDMFormInstance removeByStructureId(long structureId)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchFormInstanceException {
+
+		return getPersistence().removeByStructureId(structureId);
+	}
+
+	/**
+	 * Returns the number of ddm form instances where structureId = &#63;.
+	 *
+	 * @param structureId the structure ID
+	 * @return the number of matching ddm form instances
+	 */
+	public static int countByStructureId(long structureId) {
+		return getPersistence().countByStructureId(structureId);
+	}
+
+	/**
 	 * Caches the ddm form instance in the entity cache if it is enabled.
 	 *
 	 * @param ddmFormInstance the ddm form instance

@@ -19,6 +19,7 @@ create index IX_167E6FEA on DDMFieldAttribute (attributeName[$COLUMN_LENGTH:255$
 create index IX_D3B57A06 on DDMFieldAttribute (storageId, attributeName[$COLUMN_LENGTH:255$]);
 create index IX_FECE9ED8 on DDMFieldAttribute (storageId, languageId[$COLUMN_LENGTH:75$]);
 
+create unique index IX_EEBBA054 on DDMFormInstance (ctCollectionId, structureId);
 create index IX_9E1C31FE on DDMFormInstance (groupId);
 create unique index IX_EAB7A400 on DDMFormInstance (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 

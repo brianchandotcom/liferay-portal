@@ -254,6 +254,13 @@ public class DDMFormInstancePersistenceTest {
 	}
 
 	@Test
+	public void testCountByStructureId() throws Exception {
+		_persistence.countByStructureId(RandomTestUtil.nextLong());
+
+		_persistence.countByStructureId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDMFormInstance newDDMFormInstance = addDDMFormInstance();
 
@@ -585,6 +592,12 @@ public class DDMFormInstancePersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				ddmFormInstance, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
+			Long.valueOf(ddmFormInstance.getStructureId()),
+			ReflectionTestUtil.<Long>invoke(
+				ddmFormInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "structureId"));
 	}
 
 	protected DDMFormInstance addDDMFormInstance() throws Exception {

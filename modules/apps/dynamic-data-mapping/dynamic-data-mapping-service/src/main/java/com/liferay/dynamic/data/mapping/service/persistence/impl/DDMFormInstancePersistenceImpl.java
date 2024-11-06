@@ -2799,6 +2799,177 @@ public class DDMFormInstancePersistenceImpl
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_7 =
 		"ddmFormInstance.groupId IN (";
 
+	private FinderPath _finderPathFetchByStructureId;
+
+	/**
+	 * Returns the ddm form instance where structureId = &#63; or throws a <code>NoSuchFormInstanceException</code> if it could not be found.
+	 *
+	 * @param structureId the structure ID
+	 * @return the matching ddm form instance
+	 * @throws NoSuchFormInstanceException if a matching ddm form instance could not be found
+	 */
+	@Override
+	public DDMFormInstance findByStructureId(long structureId)
+		throws NoSuchFormInstanceException {
+
+		DDMFormInstance ddmFormInstance = fetchByStructureId(structureId);
+
+		if (ddmFormInstance == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("structureId=");
+			sb.append(structureId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchFormInstanceException(sb.toString());
+		}
+
+		return ddmFormInstance;
+	}
+
+	/**
+	 * Returns the ddm form instance where structureId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param structureId the structure ID
+	 * @return the matching ddm form instance, or <code>null</code> if a matching ddm form instance could not be found
+	 */
+	@Override
+	public DDMFormInstance fetchByStructureId(long structureId) {
+		return fetchByStructureId(structureId, true);
+	}
+
+	/**
+	 * Returns the ddm form instance where structureId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param structureId the structure ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching ddm form instance, or <code>null</code> if a matching ddm form instance could not be found
+	 */
+	@Override
+	public DDMFormInstance fetchByStructureId(
+		long structureId, boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFormInstance.class)) {
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {structureId};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByStructureId, finderArgs, this);
+			}
+
+			if (result instanceof DDMFormInstance) {
+				DDMFormInstance ddmFormInstance = (DDMFormInstance)result;
+
+				if (structureId != ddmFormInstance.getStructureId()) {
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_SELECT_DDMFORMINSTANCE_WHERE);
+
+				sb.append(_FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(structureId);
+
+					List<DDMFormInstance> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByStructureId, finderArgs,
+								list);
+						}
+					}
+					else {
+						DDMFormInstance ddmFormInstance = list.get(0);
+
+						result = ddmFormInstance;
+
+						cacheResult(ddmFormInstance);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (DDMFormInstance)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the ddm form instance where structureId = &#63; from the database.
+	 *
+	 * @param structureId the structure ID
+	 * @return the ddm form instance that was removed
+	 */
+	@Override
+	public DDMFormInstance removeByStructureId(long structureId)
+		throws NoSuchFormInstanceException {
+
+		DDMFormInstance ddmFormInstance = findByStructureId(structureId);
+
+		return remove(ddmFormInstance);
+	}
+
+	/**
+	 * Returns the number of ddm form instances where structureId = &#63;.
+	 *
+	 * @param structureId the structure ID
+	 * @return the number of matching ddm form instances
+	 */
+	@Override
+	public int countByStructureId(long structureId) {
+		DDMFormInstance ddmFormInstance = fetchByStructureId(structureId);
+
+		if (ddmFormInstance == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2 =
+		"ddmFormInstance.structureId = ?";
+
 	public DDMFormInstancePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2835,6 +3006,11 @@ public class DDMFormInstancePersistenceImpl
 				new Object[] {
 					ddmFormInstance.getUuid(), ddmFormInstance.getGroupId()
 				},
+				ddmFormInstance);
+
+			finderCache.putResult(
+				_finderPathFetchByStructureId,
+				new Object[] {ddmFormInstance.getStructureId()},
 				ddmFormInstance);
 		}
 	}
@@ -2939,6 +3115,11 @@ public class DDMFormInstancePersistenceImpl
 
 			finderCache.putResult(
 				_finderPathFetchByUUID_G, args, ddmFormInstanceModelImpl);
+
+			args = new Object[] {ddmFormInstanceModelImpl.getStructureId()};
+
+			finderCache.putResult(
+				_finderPathFetchByStructureId, args, ddmFormInstanceModelImpl);
 		}
 	}
 
@@ -3655,6 +3836,8 @@ public class DDMFormInstancePersistenceImpl
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
+
+		_uniqueIndexColumnNames.add(new String[] {"structureId"});
 	}
 
 	/**
@@ -3741,6 +3924,11 @@ public class DDMFormInstancePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
+
+		_finderPathFetchByStructureId = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByStructureId",
+			new String[] {Long.class.getName()}, new String[] {"structureId"},
+			true);
 
 		DDMFormInstanceUtil.setPersistence(this);
 	}

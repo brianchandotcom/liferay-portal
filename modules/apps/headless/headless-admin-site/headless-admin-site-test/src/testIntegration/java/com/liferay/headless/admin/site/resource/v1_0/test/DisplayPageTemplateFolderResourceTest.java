@@ -8,12 +8,8 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
-import com.liferay.petra.function.UnsafeTriConsumer;
-import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
-
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -280,17 +276,6 @@ public class DisplayPageTemplateFolderResourceTest
 		return displayPageTemplateFolder;
 	}
 
-	@Ignore
-	@Override
-	@Test
-	protected DisplayPageTemplateFolder
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
-		throws Exception {
-
-		return super.
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
-	}
-
 	@Override
 	protected DisplayPageTemplateFolder
 			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
@@ -300,81 +285,6 @@ public class DisplayPageTemplateFolderResourceTest
 
 		return testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
 			displayPageTemplateFolder);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected Map<String, Map<String, String>>
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_getExpectedActions(
-				String siteExternalReferenceCode)
-		throws Exception {
-
-		return super.
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_getExpectedActions(
-				siteExternalReferenceCode);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected String
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_getIrrelevantSiteExternalReferenceCode()
-		throws Exception {
-
-		return super.
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_getIrrelevantSiteExternalReferenceCode();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected String
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_getSiteExternalReferenceCode()
-		throws Exception {
-
-		return super.
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_getSiteExternalReferenceCode();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected void
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPageWithFilter(
-				String operator, EntityField.Type type)
-		throws Exception {
-
-		super.
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPageWithFilter(
-				operator, type);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected void
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPageWithSort(
-				EntityField.Type type,
-				UnsafeTriConsumer
-					<EntityField, DisplayPageTemplateFolder,
-					 DisplayPageTemplateFolder, Exception> unsafeTriConsumer)
-		throws Exception {
-
-		super.
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPageWithSort(
-				type, unsafeTriConsumer);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected DisplayPageTemplateFolder
-			testGetSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
-		throws Exception {
-
-		return super.
-			testGetSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
 	}
 
 	@Override
@@ -387,28 +297,6 @@ public class DisplayPageTemplateFolderResourceTest
 			postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
 				testGroup.getExternalReferenceCode(),
 				displayPageTemplateFolder);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected DisplayPageTemplateFolder
-			testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
-		throws Exception {
-
-		return super.
-			testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	protected DisplayPageTemplateFolder
-			testPutSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
-		throws Exception {
-
-		return super.
-			testPutSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
 	}
 
 	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithExistingParentExternalReferenceCode()

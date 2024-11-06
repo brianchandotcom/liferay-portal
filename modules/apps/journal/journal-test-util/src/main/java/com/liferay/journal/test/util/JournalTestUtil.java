@@ -508,14 +508,6 @@ public class JournalTestUtil {
 			TemplateConstants.LANG_TYPE_FTL, getSampleTemplateFTL(),
 			LocaleUtil.US);
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent(
-			HashMapBuilder.put(
-				LocaleUtil.SPAIN, "Valor Predefinido"
-			).put(
-				LocaleUtil.US, "Predefined Value"
-			).build(),
-			LocaleUtil.US.toString());
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId, userId);
 
@@ -526,10 +518,17 @@ public class JournalTestUtil {
 			HashMapBuilder.put(
 				LocaleUtil.US, title
 			).build(),
-			null, content, ddmStructure.getStructureId(),
-			ddmTemplate.getTemplateKey(), null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
-			serviceContext);
+			null,
+			DDMStructureTestUtil.getSampleStructuredContent(
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN, "Valor Predefinido"
+				).put(
+					LocaleUtil.US, "Predefined Value"
+				).build(),
+				LocaleUtil.US.toString()),
+			ddmStructure.getStructureId(), ddmTemplate.getTemplateKey(), null,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true,
+			false, 0, 0, null, null, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithWorkflow(

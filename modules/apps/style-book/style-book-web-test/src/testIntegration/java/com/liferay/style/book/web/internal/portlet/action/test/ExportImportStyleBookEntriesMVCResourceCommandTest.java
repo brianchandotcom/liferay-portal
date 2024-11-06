@@ -124,13 +124,15 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 
 		String name = RandomTestUtil.randomString();
 
+		String themeId = RandomTestUtil.randomString();
+
 		String styleBookEntryKey = RandomTestUtil.randomString();
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _sourceGroup.getGroupId(),
 				false, _read("frontend-tokens-values.json"), name,
-				styleBookEntryKey, RandomTestUtil.randomString(), serviceContext);
+				styleBookEntryKey, themeId, serviceContext);
 
 		File file = ReflectionTestUtil.invoke(
 			_exportStyleBookEntriesMVCResourceCommand,
@@ -155,6 +157,7 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 		Assert.assertNotNull(targetGroupStyleBookEntry);
 
 		Assert.assertEquals(name, targetGroupStyleBookEntry.getName());
+		Assert.assertEquals(themeId, targetGroupStyleBookEntry.getThemeId());
 
 		JSONObject expectedFrontendTokensValuesJSONObject =
 			JSONFactoryUtil.createJSONObject(

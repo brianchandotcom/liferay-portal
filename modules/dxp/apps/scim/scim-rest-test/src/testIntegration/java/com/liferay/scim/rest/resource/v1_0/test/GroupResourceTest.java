@@ -38,7 +38,6 @@ import com.liferay.scim.rest.resource.v1_0.test.util.ScimTestUtil;
 
 import java.util.Arrays;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -72,11 +71,6 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		ConfigurationTestUtil.deleteConfiguration(_pid);
 	}
 
 	@Before

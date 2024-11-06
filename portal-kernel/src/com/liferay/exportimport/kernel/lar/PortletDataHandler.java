@@ -276,7 +276,7 @@ public interface PortletDataHandler {
 
 	public boolean isDisplayPortlet();
 
-	public default boolean isEnabled() {
+	public default boolean isEnabled(long companyId) {
 		return true;
 	}
 

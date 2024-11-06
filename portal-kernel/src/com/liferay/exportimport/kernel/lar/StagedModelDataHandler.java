@@ -191,7 +191,7 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;
 
-	public default boolean isEnabled() {
+	public default boolean isEnabled(long companyId) {
 		return true;
 	}
 

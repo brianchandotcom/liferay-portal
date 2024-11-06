@@ -151,4 +151,16 @@ public interface TemplateHandler {
 	 */
 	public boolean isDisplayTemplateHandler();
 
+	/**
+	 * Returns <code>true</code> if the template handler is enabled for the
+	 * companyId.
+	 *
+	 * @return <code>true</code> if the template handler is enabled for the
+	 * companyId;
+	 *         <code>false</code> otherwise
+	 */
+	public default boolean isEnabled(long companyId) {
+		return true;
+	}
+
 }

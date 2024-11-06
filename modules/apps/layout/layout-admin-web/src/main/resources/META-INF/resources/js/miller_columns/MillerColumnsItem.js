@@ -518,6 +518,9 @@ const MillerColumnsItem = ({
 						renderMenuOnClick
 						trigger={
 							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'add-child-page'
+								)}
 								borderless
 								displayType="secondary"
 								size="sm"
@@ -573,6 +576,9 @@ const MillerColumnsItem = ({
 						items={dropdownActions}
 						trigger={
 							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'open-page-options-menu'
+								)}
 								borderless
 								displayType="secondary"
 								onClick={loadDropdownActions}

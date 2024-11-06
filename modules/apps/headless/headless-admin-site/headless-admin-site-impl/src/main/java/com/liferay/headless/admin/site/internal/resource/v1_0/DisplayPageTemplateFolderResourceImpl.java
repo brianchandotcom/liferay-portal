@@ -90,6 +90,41 @@ public class DisplayPageTemplateFolderResourceImpl
 		return _addDisplayPageTemplateFolder(displayPageTemplateFolder, group);
 	}
 
+	@Override
+	public DisplayPageTemplateFolder
+			putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				String siteExternalReferenceCode,
+				String displayPageTemplateFolderExternalReferenceCode,
+				DisplayPageTemplateFolder displayPageTemplateFolder)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionService.
+				fetchLayoutPageTemplateCollection(
+					displayPageTemplateFolderExternalReferenceCode,
+					group.getGroupId());
+
+		if (layoutPageTemplateCollection == null) {
+			return _addDisplayPageTemplateFolder(
+				displayPageTemplateFolder, group);
+		}
+
+		return _toDisplayPageTemplateFolder(
+			_layoutPageTemplateCollectionService.
+				updateLayoutPageTemplateCollection(
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId(),
+					displayPageTemplateFolder.getName(),
+					displayPageTemplateFolder.getDescription()));
+	}
+
 	private DisplayPageTemplateFolder _addDisplayPageTemplateFolder(
 			DisplayPageTemplateFolder displayPageTemplateFolder, Group group)
 		throws Exception {

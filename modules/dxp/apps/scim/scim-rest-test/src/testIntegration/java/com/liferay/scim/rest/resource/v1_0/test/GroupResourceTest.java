@@ -40,6 +40,7 @@ import java.util.Arrays;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -78,14 +79,17 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 	}
 
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_pid = _createScimClientOAuth2ApplicationConfiguration();
+	}
+
 	@Override
 	@Test
 	public void testDeleteV2Group() throws Exception {
-		assertHttpResponseStatusCode(
-			404, groupResource.deleteV2GroupHttpResponse("12345"));
-
-		_pid = _createScimClientOAuth2ApplicationConfiguration();
-
 		Group group = testDeleteV2Group_addGroup();
 
 		assertHttpResponseStatusCode(
@@ -121,16 +125,14 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 				String.valueOf(userGroup.getUserGroupId())));
 
 		ConfigurationTestUtil.deleteConfiguration(_pid);
+
+		assertHttpResponseStatusCode(
+			404, groupResource.deleteV2GroupHttpResponse("12345"));
 	}
 
 	@Override
 	@Test
 	public void testGetV2GroupById() throws Exception {
-		assertHttpResponseStatusCode(
-			404, groupResource.getV2GroupByIdHttpResponse("12345"));
-
-		_pid = _createScimClientOAuth2ApplicationConfiguration();
-
 		assertHttpResponseStatusCode(
 			404, groupResource.getV2GroupByIdHttpResponse("12345"));
 
@@ -143,16 +145,14 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		assertValid(Group.toDTO(httpResponse.getContent()));
 
 		ConfigurationTestUtil.deleteConfiguration(_pid);
+
+		assertHttpResponseStatusCode(
+			404, groupResource.getV2GroupByIdHttpResponse("12345"));
 	}
 
 	@Override
 	@Test
 	public void testGetV2Groups() throws Exception {
-		assertHttpResponseStatusCode(
-			404, groupResource.getV2GroupsHttpResponse(5, 0));
-
-		_pid = _createScimClientOAuth2ApplicationConfiguration();
-
 		_userGroupLocalService.addUserGroup(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			RandomTestUtil.randomString(), null, new ServiceContext());
@@ -170,16 +170,14 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		_assertListResponse(groupResource.getV2Groups(5, 3), 3, 1, group3);
 
 		ConfigurationTestUtil.deleteConfiguration(_pid);
+
+		assertHttpResponseStatusCode(
+			404, groupResource.getV2GroupsHttpResponse(5, 0));
 	}
 
 	@Override
 	@Test
 	public void testPostV2Group() throws Exception {
-		assertHttpResponseStatusCode(
-			404, groupResource.postV2GroupHttpResponse(randomGroup()));
-
-		_pid = _createScimClientOAuth2ApplicationConfiguration();
-
 		Group postGroup1 = randomGroup();
 
 		User user = _addUser();
@@ -242,6 +240,9 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 			postGroup2.getExternalId(), userGroup2.getExternalReferenceCode());
 
 		ConfigurationTestUtil.deleteConfiguration(_pid);
+
+		assertHttpResponseStatusCode(
+			404, groupResource.postV2GroupHttpResponse(randomGroup()));
 	}
 
 	@Ignore
@@ -253,11 +254,6 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 	@Override
 	@Test
 	public void testPutV2Group() throws Exception {
-		assertHttpResponseStatusCode(
-			404, groupResource.putV2GroupHttpResponse("12345", randomGroup()));
-
-		_pid = _createScimClientOAuth2ApplicationConfiguration();
-
 		Group group = testDeleteV2Group_addGroup();
 
 		User user1 = _addUser();
@@ -298,6 +294,9 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		assertEquals(group, Group.toDTO(httpResponse.getContent()));
 
 		ConfigurationTestUtil.deleteConfiguration(_pid);
+
+		assertHttpResponseStatusCode(
+			404, groupResource.putV2GroupHttpResponse("12345", randomGroup()));
 	}
 
 	@Override

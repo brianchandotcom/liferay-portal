@@ -302,19 +302,19 @@ export default function Sidebar() {
 							/>
 						</ErrorBoundary>
 					)}
-
-					<Resizer
-						ariaControls={sidebarContentId}
-						ariaLabel={Liferay.Language.get('resize-sidebar')}
-						className="page-editor__sidebar__resizer"
-						maxWidth={MAX_SIDEBAR_WIDTH}
-						minWidth={MIN_SIDEBAR_WIDTH}
-						resizeStep={SIDEBAR_WIDTH_RESIZE_STEP}
-						setWidth={setSidebarWidth}
-						targetRef={sidebarContentRef}
-						width={sidebarWidth}
-					/>
 				</div>
+
+				<Resizer
+					ariaControls={sidebarContentId}
+					ariaLabel={Liferay.Language.get('resize-sidebar')}
+					className="page-editor__sidebar__resizer"
+					maxWidth={MAX_SIDEBAR_WIDTH}
+					minWidth={MIN_SIDEBAR_WIDTH}
+					resizeStep={SIDEBAR_WIDTH_RESIZE_STEP}
+					setWidth={setSidebarWidth}
+					targetRef={sidebarContentRef}
+					width={sidebarWidth}
+				/>
 			</div>
 		</ReactPortal>
 	);

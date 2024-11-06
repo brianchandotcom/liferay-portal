@@ -7,7 +7,9 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder;
+import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
@@ -108,14 +110,45 @@ public class DisplayPageTemplateFolderResourceTest
 			testGetSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
 		throws Exception {
 
-		super.
-			testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder();
+		DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
+			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
+				randomDisplayPageTemplateFolder());
+
+		DisplayPageTemplateFolder displayPageTemplateFolder =
+			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
+				randomDisplayPageTemplateFolder());
+
+		Assert.assertNull(
+			displayPageTemplateFolder.
+				getParentDisplayPageTemplateFolderExternalReferenceCode());
+
+		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+			displayPageTemplateFolder.getExternalReferenceCode(),
+			parentDisplayPageTemplateFolder.getExternalReferenceCode());
+
+		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+			displayPageTemplateFolder.getExternalReferenceCode(), null);
+
+		try {
+			displayPageTemplateFolderResource.
+				patchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					testGroup.getExternalReferenceCode(),
+					RandomTestUtil.randomString(),
+					randomDisplayPageTemplateFolder());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
 	}
 
 	@Override
@@ -198,6 +231,50 @@ public class DisplayPageTemplateFolderResourceTest
 			postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
 				testGroup.getExternalReferenceCode(),
 				displayPageTemplateFolder);
+	}
+
+	private void
+			_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				String displayPageTemplateFolderExternalReferenceCode,
+				String parentDisplayPageTemplateFolderExternalReferenceCode)
+		throws Exception {
+
+		DisplayPageTemplateFolder getDisplayPageTemplateFolder =
+			displayPageTemplateFolderResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplateFolderExternalReferenceCode);
+
+		DisplayPageTemplateFolder randomDisplayPageTemplateFolder =
+			randomDisplayPageTemplateFolder();
+
+		randomDisplayPageTemplateFolder.setExternalReferenceCode(
+			displayPageTemplateFolderExternalReferenceCode);
+		randomDisplayPageTemplateFolder.
+			setParentDisplayPageTemplateFolderExternalReferenceCode(
+				parentDisplayPageTemplateFolderExternalReferenceCode);
+
+		DisplayPageTemplateFolder patchDisplayPageTemplateFolder =
+			displayPageTemplateFolderResource.
+				patchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplateFolderExternalReferenceCode,
+					randomDisplayPageTemplateFolder);
+
+		assertEquals(
+			randomDisplayPageTemplateFolder, patchDisplayPageTemplateFolder);
+		assertValid(patchDisplayPageTemplateFolder);
+
+		if (parentDisplayPageTemplateFolderExternalReferenceCode == null) {
+			parentDisplayPageTemplateFolderExternalReferenceCode =
+				getDisplayPageTemplateFolder.
+					getParentDisplayPageTemplateFolderExternalReferenceCode();
+		}
+
+		Assert.assertEquals(
+			parentDisplayPageTemplateFolderExternalReferenceCode,
+			patchDisplayPageTemplateFolder.
+				getParentDisplayPageTemplateFolderExternalReferenceCode());
 	}
 
 	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithExistingParentExternalReferenceCode()

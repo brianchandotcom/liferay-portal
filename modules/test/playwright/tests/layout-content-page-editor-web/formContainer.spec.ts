@@ -19,6 +19,7 @@ import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {
+	ALL_FIELDS_OBJECT_ERC,
 	LEMON_OBJECT_ERC,
 	POTATO_OBJECT_ERC,
 } from '../setup/page-management-site/constants';
@@ -212,6 +213,143 @@ test.describe('Captcha Fragment', () => {
 			await expect(
 				page.getByText('CAPTCHA verification failed. Please try again.')
 			).toBeVisible();
+		}
+	);
+});
+
+test.describe('Date and Time Fragment', () => {
+	test(
+		'The page designer could map date and time field to date and time fragment',
+		{
+			tag: '@PS-191312',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a form fragment with a date and time fragment
+
+			const {className: objectDefinitionClassName} =
+				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+					ALL_FIELDS_OBJECT_ERC
+				);
+
+			const dateId = getRandomString();
+
+			const dateDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_date',
+				},
+				id: dateId,
+				key: 'INPUTS-date-input',
+			});
+
+			const dateTimeId = getRandomString();
+
+			const dateTimeDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_dateAndTime',
+				},
+				id: dateTimeId,
+				key: 'INPUTS-date-time-input',
+			});
+
+			const textDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_text',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-text-input',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [
+					dateDefinition,
+					dateTimeDefinition,
+					textDefinition,
+					submitFragmentDefinition,
+				],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode and change label
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Label',
+				fragmentId: dateTimeId,
+				tab: 'General',
+				value: 'Clock',
+			});
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Edit date
+
+			await page.locator('input[name="date"]').click();
+
+			await page.keyboard.type('01/07/2023');
+
+			// Edit date and time
+
+			await page.locator('input[name="dateAndTime"]').click();
+
+			await page.keyboard.type('10/10/2022');
+			await page.keyboard.press('ArrowRight');
+			await page.keyboard.type('10:10');
+
+			await fillAndClickOutside(
+				page,
+				page.getByLabel('Text'),
+				'Date And Time'
+			);
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			// Assert success message
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
+
+			// Go to custom object admin
+
+			await gotoObjectEntries({
+				entityName: 'All Fields',
+				page,
+				siteUrl: pageManagementSite.friendlyUrlPath,
+			});
+
+			// Check the date and time of the object entry
+
+			const row = page
+				.locator('.dnd-tr')
+				.filter({hasText: 'Date And Time'})
+				.last();
+
+			await expect(row).toContainText('Oct 10, 2022, 10:10 AM');
 		}
 	);
 });

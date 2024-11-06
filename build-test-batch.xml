@@ -7259,45 +7259,68 @@ information. Make sure to commit in all format-javadoc results.
 
 				<antcall inheritAll="false" target="install-portal-snapshots" />
 
-				<for keepgoing="true" param="gradle.plugin.dir">
-					<path>
-						<dirset
-							dir="modules/sdk"
-							excludes="${gradle.plugins.test.excludes}"
-							includes="${gradle.plugins.test.includes}"
-						/>
-					</path>
-					<sequential>
+				<if>
+					<isset property="gradle.plugins.directory.name" />
+					<then>
 						<if>
-							<resourcecontains
-								resource="@{gradle.plugin.dir}/build.gradle"
-								substring="gradleTest"
-							/>
+							<isset property="gradle.plugins.test.excludes.globs[${gradle.plugins.directory.name}]" />
 							<then>
-								<var name="gradle.plugin.dir.name" unset="true" />
+								<propertycopy from="gradle.plugins.test.excludes.globs[${gradle.plugins.directory.name}]" name="gradle.plugins.test.excludes.globs" override="true" />
 
-								<basename file="@{gradle.plugin.dir}" property="gradle.plugin.dir.name" />
-
-								<if>
-									<isset property="gradle.plugins.test.excludes.globs[${gradle.plugin.dir.name}]" />
-									<then>
-										<propertycopy from="gradle.plugins.test.excludes.globs[${gradle.plugin.dir.name}]" name="gradle.plugins.test.excludes.globs" override="true" />
-
-										<gradle-execute dir="@{gradle.plugin.dir}" forcedcacheenabled="false" task="gradleTest">
-											<arg value="-Dgradle.test.enabled=true" />
-											<arg value="-PtestExcludes=${gradle.plugins.test.excludes.globs}" />
-										</gradle-execute>
-									</then>
-									<else>
-										<gradle-execute dir="@{gradle.plugin.dir}" forcedcacheenabled="false" task="gradleTest">
-											<arg value="-Dgradle.test.enabled=true" />
-										</gradle-execute>
-									</else>
-								</if>
+								<gradle-execute dir="modules/sdk/${gradle.plugins.directory.name}" forcedcacheenabled="false" task="gradleTest">
+									<arg value="-Dgradle.test.enabled=true" />
+									<arg value="-PtestExcludes=${gradle.plugins.test.excludes.globs}" />
+								</gradle-execute>
 							</then>
+							<else>
+								<gradle-execute dir="modules/sdk/${gradle.plugins.directory.name}" forcedcacheenabled="false" task="gradleTest">
+									<arg value="-Dgradle.test.enabled=true" />
+								</gradle-execute>
+							</else>
 						</if>
-					</sequential>
-				</for>
+					</then>
+					<else>
+						<for keepgoing="true" param="gradle.plugin.dir">
+							<path>
+								<dirset
+									dir="modules/sdk"
+									excludes="${gradle.plugins.test.excludes}"
+									includes="${gradle.plugins.test.includes}"
+								/>
+							</path>
+							<sequential>
+								<if>
+									<resourcecontains
+										resource="@{gradle.plugin.dir}/test.gradle"
+										substring="gradleTest"
+									/>
+									<then>
+										<var name="gradle.plugin.dir.name" unset="true" />
+
+										<basename file="@{gradle.plugin.dir}" property="gradle.plugin.dir.name" />
+
+										<if>
+											<isset property="gradle.plugins.test.excludes.globs[${gradle.plugin.dir.name}]" />
+											<then>
+												<propertycopy from="gradle.plugins.test.excludes.globs[${gradle.plugin.dir.name}]" name="gradle.plugins.test.excludes.globs" override="true" />
+
+												<gradle-execute dir="@{gradle.plugin.dir}" forcedcacheenabled="false" task="gradleTest">
+													<arg value="-Dgradle.test.enabled=true" />
+													<arg value="-PtestExcludes=${gradle.plugins.test.excludes.globs}" />
+												</gradle-execute>
+											</then>
+											<else>
+												<gradle-execute dir="@{gradle.plugin.dir}" forcedcacheenabled="false" task="gradleTest">
+													<arg value="-Dgradle.test.enabled=true" />
+												</gradle-execute>
+											</else>
+										</if>
+									</then>
+								</if>
+							</sequential>
+						</for>
+					</else>
+				</if>
 			</test-action>
 			<test-tear-down>
 				<tar destfile="${project.dir}/tmp/gradle_plugins.tar">

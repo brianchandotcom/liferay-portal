@@ -9,13 +9,14 @@ import {InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
 
 import {ObjectRelationshipDeletionTypeSelect} from './ObjectRelationshipDeletionTypeSelect';
-import {ObjectRelationshipFormBase} from './ObjectRelationshipFormBase';
+import {Alert, ObjectRelationshipFormBase} from './ObjectRelationshipFormBase';
 import {SelectObjectRelationship} from './SelectObjectRelationship';
 
 import type {FormError} from '@liferay/object-js-components-web';
 import type {ChangeEventHandler, ElementType} from 'react';
 
 interface EditObjectRelationshipContentProps {
+	alert?: Alert;
 	baseResourceURL: string;
 	containerWrapper: ElementType;
 	errors: FormError<ObjectRelationship>;
@@ -31,6 +32,7 @@ interface EditObjectRelationshipContentProps {
 }
 
 export function EditObjectRelationshipContent({
+	alert,
 	baseResourceURL,
 	containerWrapper: ContainerWrapper,
 	errors,
@@ -76,6 +78,7 @@ export function EditObjectRelationshipContent({
 				/>
 
 				<ObjectRelationshipFormBase
+					alert={alert}
 					baseResourceURL={baseResourceURL}
 					errors={errors}
 					handleChange={handleChange}
@@ -98,7 +101,9 @@ export function EditObjectRelationshipContent({
 						/>
 
 						{parameterRequired && values.type === 'oneToMany' && (
-							<ContainerWrapper title={Liferay.Language.get('parameters')}>
+							<ContainerWrapper
+								title={Liferay.Language.get('parameters')}
+							>
 								<Input
 									id="lfr-objects__object-relationship-api-endpoint"
 									label={Liferay.Language.get('api-endpoint')}

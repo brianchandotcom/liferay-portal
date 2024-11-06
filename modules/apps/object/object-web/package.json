@@ -14,6 +14,7 @@
 		"@clayui/loading-indicator": "3.111.0",
 		"@clayui/modal": "3.119.0",
 		"@clayui/panel": "3.119.0",
+		"@clayui/popover": "3.119.0",
 		"@clayui/tabs": "3.119.0",
 		"@clayui/tooltip": "3.119.0",
 		"@liferay/frontend-data-set-web": "*",

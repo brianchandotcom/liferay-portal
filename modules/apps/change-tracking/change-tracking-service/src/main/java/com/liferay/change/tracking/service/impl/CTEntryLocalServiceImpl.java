@@ -102,6 +102,14 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	public CTEntry fetchCTEntry(
 		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 
+		return ctEntryPersistence.fetchByC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
+	@Override
+	public CTEntry fetchTimelineCTEntry(
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+
 		CTEntry ctEntry = ctEntryPersistence.fetchByC_MCNI_MCPK(
 			ctCollectionId, modelClassNameId, modelClassPK);
 

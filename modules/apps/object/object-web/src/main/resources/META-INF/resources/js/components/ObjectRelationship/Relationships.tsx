@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayLabel from '@clayui/label';
 import {
 	FrontendDataSet,
 
@@ -12,7 +13,7 @@ import {
 import {API, stringUtils} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';
 import LabelRenderer from '../LabelRenderer';
@@ -24,6 +25,7 @@ import {ModalDeleteObjectRelationship} from './ModalDeleteObjectRelationship';
 import type {FDSItem, IFDSTableProps} from '../../utils/fds';
 
 interface ItemData {
+	edge?: boolean;
 	id: number;
 	reverse: boolean;
 	system?: boolean;
@@ -37,6 +39,47 @@ interface RelationshipsProps extends IFDSTableProps {
 	parameterRequired: boolean;
 }
 
+const tableFields = [
+	{
+		contentRenderer: 'ObjectFieldLabelDataRenderer',
+		expand: false,
+		fieldName: 'label',
+		label: Liferay.Language.get('label'),
+		localizeLabel: true,
+		sortable: true,
+	},
+	{
+		expand: false,
+		fieldName: 'type',
+		label: Liferay.Language.get('type'),
+		localizeLabel: true,
+		sortable: false,
+	},
+	{
+		contentRenderer: 'ObjectFieldHierarchyDataRenderer',
+		expand: false,
+		fieldName: 'hierarchy',
+		label: Liferay.Language.get('hierarchy'),
+		localizeLabel: true,
+		sortable: false,
+	},
+	{
+		expand: false,
+		fieldName: 'objectDefinitionName2',
+		label: Liferay.Language.get('related-object'),
+		localizeLabel: true,
+		sortable: false,
+	},
+	{
+		contentRenderer: 'ObjectRelationshipSourceDataRenderer',
+		expand: false,
+		fieldName: 'source',
+		label: Liferay.Language.get('source'),
+		localizeLabel: true,
+		sortable: false,
+	},
+];
+
 function ObjectFieldHierarchyDataRenderer({itemData}: {itemData: ItemData}) {
 	return (
 		<strong
@@ -49,6 +92,24 @@ function ObjectFieldHierarchyDataRenderer({itemData}: {itemData: ItemData}) {
 				? Liferay.Language.get('child')
 				: Liferay.Language.get('parent')}
 		</strong>
+	);
+}
+
+function ObjectRelationshipInheritanceDataRenderer({
+	itemData,
+}: {
+	itemData: ItemData;
+}) {
+	return (
+		<ClayLabel
+			className={classNames('label-inverse-secondary', {
+				'label-inverse-info': itemData.edge,
+			})}
+		>
+			{itemData.edge
+				? Liferay.Language.get('inherited')
+				: Liferay.Language.get('standard')}
+		</ClayLabel>
 	);
 }
 
@@ -98,6 +159,25 @@ export default function Relationships({
 	const [showDeletionNotAllowedModal, setShowDeletionNotAllowedModal] =
 		useState(false);
 
+	const fields = useMemo(() => {
+		const updatedTableFields = [...tableFields];
+
+		if (Liferay.FeatureFlags['LPS-187142']) {
+			const inheritanceField = {
+				contentRenderer: 'ObjectRelationshipInheritanceDataRenderer',
+				expand: false,
+				fieldName: 'relationshipInheritance',
+				label: Liferay.Language.get('permission-inheritance'),
+				localizeLabel: true,
+				sortable: false,
+			};
+
+			updatedTableFields.splice(4, 0, inheritanceField);
+		}
+
+		return updatedTableFields;
+	}, []);
+
 	useEffect(() => {
 		const makeFetch = async () => {
 			const objectDefinition =
@@ -135,6 +215,7 @@ export default function Relationships({
 		customDataRenderers: {
 			ObjectFieldHierarchyDataRenderer,
 			ObjectFieldLabelDataRenderer,
+			ObjectRelationshipInheritanceDataRenderer,
 			ObjectRelationshipSourceDataRenderer,
 		},
 		formName,
@@ -175,47 +256,7 @@ export default function Relationships({
 				label: 'Table',
 				name: 'table',
 				schema: {
-					fields: [
-						{
-							contentRenderer: 'ObjectFieldLabelDataRenderer',
-							expand: false,
-							fieldName: 'label',
-							label: Liferay.Language.get('label'),
-							localizeLabel: true,
-							sortable: true,
-						},
-						{
-							expand: false,
-							fieldName: 'objectDefinitionName2',
-							label: Liferay.Language.get('related-object'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							expand: false,
-							fieldName: 'type',
-							label: Liferay.Language.get('type'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							contentRenderer: 'ObjectFieldHierarchyDataRenderer',
-							expand: false,
-							fieldName: 'hierarchy',
-							label: Liferay.Language.get('hierarchy'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							contentRenderer:
-								'ObjectRelationshipSourceDataRenderer',
-							expand: false,
-							fieldName: 'source',
-							label: Liferay.Language.get('source'),
-							localizeLabel: true,
-							sortable: false,
-						},
-					],
+					fields,
 				},
 				thumbnail: 'table',
 			},

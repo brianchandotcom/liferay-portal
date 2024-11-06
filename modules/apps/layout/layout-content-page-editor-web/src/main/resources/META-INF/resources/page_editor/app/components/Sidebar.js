@@ -306,7 +306,7 @@ export default function Sidebar() {
 					<Resizer
 						ariaControls={sidebarContentId}
 						ariaLabel={Liferay.Language.get('resize-sidebar')}
-						className="page-editor__sidebar"
+						className="page-editor__sidebar__resizer"
 						maxWidth={MAX_SIDEBAR_WIDTH}
 						minWidth={MIN_SIDEBAR_WIDTH}
 						resizeStep={SIDEBAR_WIDTH_RESIZE_STEP}

@@ -1,7 +1,5 @@
 @import 'atlas-variables';
 
-$resizerWidth: 2px;
-
 .miller-columns-row {
 	box-shadow: 0 0 0 1px $gray-400;
 	display: flex;
@@ -26,18 +24,6 @@ $resizerWidth: 2px;
 		height: calc(100vh - 284px);
 		min-height: 10rem;
 		overflow-y: scroll;
-	}
-
-	&__resizer {
-		background-color: $gray-100;
-		cursor: ew-resize;
-		width: $resizerWidth;
-
-		&:hover,
-		&:focus-visible,
-		&--resizing {
-			background-color: $primary-l1;
-		}
 	}
 }
 

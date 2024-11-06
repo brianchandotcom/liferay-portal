@@ -1,0 +1,33 @@
+@import 'atlas-variables';
+@import 'cadmin-variables';
+
+.layout__resizer {
+	background-color: $gray-100;
+	cursor: ew-resize;
+	flex-shrink: 0;
+	width: 2px;
+	z-index: 1;
+
+	&:hover,
+	&:focus-visible,
+	&--resizing {
+		background-color: $primary-l1;
+		outline: none;
+	}
+}
+
+html#{$cadmin-selector} {
+	.cadmin {
+		.layout__resizer {
+			@extend .layout__resizer;
+
+			background-color: $cadmin-gray-100;
+
+			&:hover,
+			&:focus-visible,
+			&--resizing {
+				background-color: $cadmin-primary-l1;
+			}
+		}
+	}
+}

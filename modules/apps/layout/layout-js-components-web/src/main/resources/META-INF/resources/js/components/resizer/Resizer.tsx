@@ -7,6 +7,8 @@ import {useStateSafe} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import React, {KeyboardEvent, useCallback, useEffect, useRef} from 'react';
 
+import './Resizer.scss';
+
 interface ResizerProps {
 	ariaControls: string;
 	ariaLabel: string;
@@ -15,6 +17,7 @@ interface ResizerProps {
 	minWidth: number;
 	resizeStep: number;
 	setWidth: Function;
+	style: React.CSSProperties;
 	targetRef: React.RefObject<HTMLDivElement>;
 	width: number;
 }
@@ -154,8 +157,8 @@ export default function Resizer({
 			aria-valuemax={maxWidth}
 			aria-valuemin={minWidth}
 			aria-valuenow={width}
-			className={classNames(`${className}__resizer`, {
-				[`${className}__resizer--resizing`]: resizing,
+			className={classNames('layout__resizer', className, {
+				['layout__resizer--resizing']: resizing,
 			})}
 			onKeyDown={handleKeyDown}
 			ref={resizerRef}

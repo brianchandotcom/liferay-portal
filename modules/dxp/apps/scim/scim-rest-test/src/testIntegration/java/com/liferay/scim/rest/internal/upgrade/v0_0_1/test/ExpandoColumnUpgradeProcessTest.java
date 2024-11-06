@@ -48,9 +48,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.time.DateUtils;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -71,11 +69,11 @@ public class ExpandoColumnUpgradeProcessTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Test
+	public void testUpgradeExpandoColumns() throws Exception {
 		BaseUserResourceTestCase.setUpClass();
 
-		_pid = ConfigurationTestUtil.createFactoryConfiguration(
+		String pid = ConfigurationTestUtil.createFactoryConfiguration(
 			"com.liferay.scim.rest.internal.configuration." +
 				"ScimClientOAuth2ApplicationConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -88,57 +86,54 @@ public class ExpandoColumnUpgradeProcessTest {
 				"userId", TestPropsValues.getUserId()
 			).build());
 
-		GroupResource.Builder groupBuilder = GroupResource.builder();
-		UserResource.Builder userBuilder = UserResource.builder();
+		try {
+			GroupResource.Builder groupBuilder = GroupResource.builder();
+			UserResource.Builder userBuilder = UserResource.builder();
 
-		String languageId = UpgradeProcessUtil.getDefaultLanguageId(
-			TestPropsValues.getCompanyId());
+			String languageId = UpgradeProcessUtil.getDefaultLanguageId(
+				TestPropsValues.getCompanyId());
 
-		_groupResource = groupBuilder.authentication(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-		).locale(
-			LocaleUtil.fromLanguageId(languageId)
-		).build();
-		_userResource = userBuilder.authentication(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-		).locale(
-			LocaleUtil.fromLanguageId(languageId)
-		).build();
-	}
+			GroupResource groupResource = groupBuilder.authentication(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).locale(
+				LocaleUtil.fromLanguageId(languageId)
+			).build();
+			UserResource userResource = userBuilder.authentication(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).locale(
+				LocaleUtil.fromLanguageId(languageId)
+			).build();
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		ConfigurationTestUtil.deleteConfiguration(_pid);
-	}
+			HttpInvoker.HttpResponse httpResponse =
+				groupResource.postV2GroupHttpResponse(
+					new Group() {
+						{
+							displayName = StringUtil.toLowerCase(
+								RandomTestUtil.randomString());
+							externalId = StringUtil.toLowerCase(
+								RandomTestUtil.randomString());
+							id = StringUtil.toLowerCase(
+								RandomTestUtil.randomString());
+						}
+					});
 
-	@Test
-	public void testUpgradeExpandoColumns() throws Exception {
-		HttpInvoker.HttpResponse httpResponse =
-			_groupResource.postV2GroupHttpResponse(
-				new Group() {
-					{
-						displayName = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						externalId = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						id = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-					}
-				});
+			Assert.assertEquals(2, httpResponse.getStatusCode() / 100);
 
-		Assert.assertEquals(2, httpResponse.getStatusCode() / 100);
+			httpResponse = userResource.postV2UserHttpResponse(_randomUser());
 
-		httpResponse = _userResource.postV2UserHttpResponse(_randomUser());
+			Assert.assertEquals(2, httpResponse.getStatusCode() / 100);
 
-		Assert.assertEquals(2, httpResponse.getStatusCode() / 100);
+			_assertScimClientIdExpandoColumn(User.class.getName(), false);
+			_assertScimClientIdExpandoColumn(UserGroup.class.getName(), false);
 
-		_assertScimClientIdExpandoColumn(User.class.getName(), false);
-		_assertScimClientIdExpandoColumn(UserGroup.class.getName(), false);
+			_runUpgrade();
 
-		_runUpgrade();
-
-		_assertScimClientIdExpandoColumn(User.class.getName(), true);
-		_assertScimClientIdExpandoColumn(UserGroup.class.getName(), true);
+			_assertScimClientIdExpandoColumn(User.class.getName(), true);
+			_assertScimClientIdExpandoColumn(UserGroup.class.getName(), true);
+		}
+		finally {
+			ConfigurationTestUtil.deleteConfiguration(pid);
+		}
 	}
 
 	private void _assertScimClientIdExpandoColumn(
@@ -257,15 +252,10 @@ public class ExpandoColumnUpgradeProcessTest {
 		upgradeProcess.upgrade();
 	}
 
-	private static GroupResource _groupResource;
-	private static String _pid;
-
 	@Inject(
 		filter = "(&(component.name=com.liferay.scim.rest.internal.upgrade.registry.ScimRestUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	private static UserResource _userResource;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

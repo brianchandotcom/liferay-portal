@@ -14,6 +14,7 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.ParallelExecutor;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +28,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -249,6 +253,58 @@ public class TestrayS3Bucket {
 		for (TestrayS3Object testrayS3Object : testrayS3Objects) {
 			deleteTestrayS3Object(testrayS3Object);
 		}
+	}
+
+	public void downloadTestrayS3Objects(File baseDir, List<String> keys)
+		throws TimeoutException {
+
+		List<Callable<File>> callables = new ArrayList<>();
+
+		for (final String key : keys) {
+			Callable<File> callable = new Callable<File>() {
+
+				@Override
+				public File call() {
+					File file = new File(baseDir, key);
+
+					if (file.exists()) {
+						return null;
+					}
+
+					TestrayS3Object testrayS3Object = getTestrayS3Object(key);
+
+					if ((testrayS3Object == null) ||
+						!testrayS3Object.exists()) {
+
+						return null;
+					}
+
+					try {
+						testrayS3Object.downloadTo(file);
+
+						return file;
+					}
+					catch (Exception exception) {
+						System.out.println(
+							"Unable to download: " +
+								testrayS3Object.getURLString());
+					}
+
+					return null;
+				}
+
+			};
+
+			callables.add(callable);
+		}
+
+		ThreadPoolExecutor threadPoolExecutor =
+			JenkinsResultsParserUtil.getNewThreadPoolExecutor(16, true);
+
+		ParallelExecutor<File> parallelExecutor = new ParallelExecutor<>(
+			callables, threadPoolExecutor, "downloadTestrayS3Objects");
+
+		parallelExecutor.execute();
 	}
 
 	public String getName() {

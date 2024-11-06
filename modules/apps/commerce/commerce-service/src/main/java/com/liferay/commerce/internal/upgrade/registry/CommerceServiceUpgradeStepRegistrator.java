@@ -727,6 +727,12 @@ public class CommerceServiceUpgradeStepRegistrator
 					_companyLocalService, _resourceActionLocalService,
 					_resourcePermissionLocalService, _roleLocalService));
 
+		registry.register(
+			"11.5.3", "12.0.0",
+			UpgradeProcessFactory.alterColumnName(
+				CommerceOrderItemModelImpl.TABLE_NAME, "deliveryGroup",
+				"deliveryGroupName VARCHAR(75) null"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

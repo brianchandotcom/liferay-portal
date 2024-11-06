@@ -4,17 +4,17 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import { useEffect, useState } from 'react';
-import { HashRouter, Route, Routes } from 'react-router-dom';
-import { useAppPropertiesContext } from '~/common/contexts/AppPropertiesContext';
+import {useEffect, useState} from 'react';
+import {HashRouter, Route, Routes} from 'react-router-dom';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import getKebabCase from '../../../../../common/utils/getKebabCase';
 import DeactivateKeysTable from '../../../containers/DeactivateKeysTable';
 import GenerateNewKey from '../../../containers/GenerateNewKey';
-import { useCustomerPortal } from '../../../context';
-import { actionTypes } from '../../../context/reducer';
+import {useCustomerPortal} from '../../../context';
+import {actionTypes} from '../../../context/reducer';
 import Layout from '../../../layouts/BaseLayout';
-import { PRODUCT_TYPES } from '../../../utils/constants';
-import { getWebContents } from '../../../utils/getWebContents';
+import {PRODUCT_TYPES} from '../../../utils/constants';
+import {getWebContents} from '../../../utils/getWebContents';
 import Commerce from '../ActivationKeys/Commerce';
 import EnterpriseSearch from '../ActivationKeys/EnterpriseSearch';
 import AnalyticsCloud from '../AnalyticsCloud';
@@ -35,13 +35,13 @@ import useMyUserAccountByAccountExternalReferenceCode from '../TeamMembers/compo
 const ProjectRoutes = () => {
 	const [hasComplimentaryKey, setHasComplimentaryKey] = useState(false);
 
-	const [{ project, subscriptionGroups }, dispatch] = useCustomerPortal();
-	const { featureFlags } = useAppPropertiesContext();
+	const [{project, subscriptionGroups}, dispatch] = useCustomerPortal();
+	const {featureFlags} = useAppPropertiesContext();
 
-	const { data: koroneikiData, loading: koroneikiAccountLoading } = useCurrentKoroneikiAccount();
+	const {data: koroneikiData, loading: koroneikiAccountLoading} = useCurrentKoroneikiAccount();
 	const koroneikiAccount = koroneikiData?.koroneikiAccountByExternalReferenceCode;
 
-	const { data: myUserAccountData } =
+	const {data: myUserAccountData} =
 		useMyUserAccountByAccountExternalReferenceCode(
 			koroneikiAccountLoading,
 			koroneikiAccount?.accountKey

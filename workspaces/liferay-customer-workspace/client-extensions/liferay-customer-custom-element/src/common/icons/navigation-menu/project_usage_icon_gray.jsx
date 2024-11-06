@@ -36,4 +36,4 @@ const ProjectUsageIconGray = (props) => (
 )
 
 
-export { ProjectUsageIconGray };
+export {ProjectUsageIconGray};

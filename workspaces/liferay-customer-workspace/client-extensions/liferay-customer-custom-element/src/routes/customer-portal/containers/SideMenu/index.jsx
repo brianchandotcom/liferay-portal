@@ -19,16 +19,16 @@ import useMyUserAccountByAccountExternalReferenceCode from '../../pages/Project/
 const ACTIVATION_PATH = 'activation';
 
 const SideMenu = () => {
-	const [{ subscriptionGroups }] = useCustomerPortal();
+	const [{subscriptionGroups}] = useCustomerPortal();
 	const [isOpenedProductsMenu, setIsOpenedProductsMenu] = useState(false);
 	const [menuItemActiveStatus, setMenuItemActiveStatus] = useState([]);
 	const [hasLiferayPaasActivation, setHasLiferayPaasActivation] = useState(false);
-	const { featureFlags } = useAppPropertiesContext();
+	const {featureFlags} = useAppPropertiesContext();
 
-	const { data: koroneikiData, loading: koroneikiAccountLoading } = useCurrentKoroneikiAccount();
+	const {data: koroneikiData, loading: koroneikiAccountLoading} = useCurrentKoroneikiAccount();
 	const koroneikiAccount = koroneikiData?.koroneikiAccountByExternalReferenceCode;
 
-	const { data: myUserAccountData, loading: myUserAccountLoading } =
+	const {data: myUserAccountData} =
 		useMyUserAccountByAccountExternalReferenceCode(
 			koroneikiAccountLoading,
 			koroneikiAccount?.accountKey
@@ -73,7 +73,7 @@ const SideMenu = () => {
 	const hasProductSubscription = useMemo(
 		() => (productType) =>
 			subscriptionGroups?.some(
-				({ name }) => name === productType
+				({name}) => name === productType
 			),
 		[subscriptionGroups]
 	);

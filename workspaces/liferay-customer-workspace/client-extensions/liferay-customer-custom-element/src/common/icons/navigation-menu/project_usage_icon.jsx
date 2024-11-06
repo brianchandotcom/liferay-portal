@@ -36,4 +36,4 @@ const ProjectUsageIcon = (props) => (
 )
 
 
-export { ProjectUsageIcon };
+export {ProjectUsageIcon};

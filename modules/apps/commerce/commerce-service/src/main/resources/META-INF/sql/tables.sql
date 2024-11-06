@@ -180,7 +180,7 @@ create table CommerceOrderItem (
 	customerCommerceOrderItemId LONG,
 	parentCommerceOrderItemId LONG,
 	shippingAddressId LONG,
-	deliveryGroup VARCHAR(75) null,
+	deliveryGroupName VARCHAR(75) null,
 	deliveryMaxSubscriptionCycles LONG,
 	deliverySubscriptionLength INTEGER,
 	deliverySubscriptionType VARCHAR(75) null,

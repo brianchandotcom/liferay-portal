@@ -160,7 +160,8 @@ public class CommerceOrderItemPersistenceTest {
 
 		newCommerceOrderItem.setShippingAddressId(RandomTestUtil.nextLong());
 
-		newCommerceOrderItem.setDeliveryGroup(RandomTestUtil.randomString());
+		newCommerceOrderItem.setDeliveryGroupName(
+			RandomTestUtil.randomString());
 
 		newCommerceOrderItem.setDeliveryMaxSubscriptionCycles(
 			RandomTestUtil.nextLong());
@@ -351,8 +352,8 @@ public class CommerceOrderItemPersistenceTest {
 			existingCommerceOrderItem.getShippingAddressId(),
 			newCommerceOrderItem.getShippingAddressId());
 		Assert.assertEquals(
-			existingCommerceOrderItem.getDeliveryGroup(),
-			newCommerceOrderItem.getDeliveryGroup());
+			existingCommerceOrderItem.getDeliveryGroupName(),
+			newCommerceOrderItem.getDeliveryGroupName());
 		Assert.assertEquals(
 			existingCommerceOrderItem.getDeliveryMaxSubscriptionCycles(),
 			newCommerceOrderItem.getDeliveryMaxSubscriptionCycles());
@@ -659,7 +660,7 @@ public class CommerceOrderItemPersistenceTest {
 			"commercePriceListId", true, "CPInstanceId", true,
 			"CPMeasurementUnitId", true, "CProductId", true,
 			"customerCommerceOrderItemId", true, "parentCommerceOrderItemId",
-			true, "shippingAddressId", true, "deliveryGroup", true,
+			true, "shippingAddressId", true, "deliveryGroupName", true,
 			"deliveryMaxSubscriptionCycles", true, "deliverySubscriptionLength",
 			true, "deliverySubscriptionType", true,
 			"deliverySubscriptionTypeSettings", true, "depth", true,
@@ -1034,7 +1035,7 @@ public class CommerceOrderItemPersistenceTest {
 
 		commerceOrderItem.setShippingAddressId(RandomTestUtil.nextLong());
 
-		commerceOrderItem.setDeliveryGroup(RandomTestUtil.randomString());
+		commerceOrderItem.setDeliveryGroupName(RandomTestUtil.randomString());
 
 		commerceOrderItem.setDeliveryMaxSubscriptionCycles(
 			RandomTestUtil.nextLong());

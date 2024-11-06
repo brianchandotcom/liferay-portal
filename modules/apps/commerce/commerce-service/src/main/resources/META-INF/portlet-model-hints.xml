@@ -187,7 +187,7 @@
 		<field name="customerCommerceOrderItemId" type="long" />
 		<field name="parentCommerceOrderItemId" type="long" />
 		<field name="shippingAddressId" type="long" />
-		<field name="deliveryGroup" type="String" />
+		<field name="deliveryGroupName" type="String" />
 		<field name="deliveryMaxSubscriptionCycles" type="long" />
 		<field name="deliverySubscriptionLength" type="int" />
 		<field name="deliverySubscriptionType" type="String" />

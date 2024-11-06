@@ -366,19 +366,19 @@ public interface CommerceOrderItemModel
 	public void setShippingAddressId(long shippingAddressId);
 
 	/**
-	 * Returns the delivery group of this commerce order item.
+	 * Returns the delivery group name of this commerce order item.
 	 *
-	 * @return the delivery group of this commerce order item
+	 * @return the delivery group name of this commerce order item
 	 */
 	@AutoEscape
-	public String getDeliveryGroup();
+	public String getDeliveryGroupName();
 
 	/**
-	 * Sets the delivery group of this commerce order item.
+	 * Sets the delivery group name of this commerce order item.
 	 *
-	 * @param deliveryGroup the delivery group of this commerce order item
+	 * @param deliveryGroupName the delivery group name of this commerce order item
 	 */
-	public void setDeliveryGroup(String deliveryGroup);
+	public void setDeliveryGroupName(String deliveryGroupName);
 
 	/**
 	 * Returns the delivery max subscription cycles of this commerce order item.

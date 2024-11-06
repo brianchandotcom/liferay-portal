@@ -87,7 +87,33 @@ public class DisplayPageTemplateFolderResourceImpl
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
 
-		long parentDisplayPageTemplateFolderId =
+		return _addDisplayPageTemplateFolder(displayPageTemplateFolder, group);
+	}
+
+	private DisplayPageTemplateFolder _addDisplayPageTemplateFolder(
+			DisplayPageTemplateFolder displayPageTemplateFolder, Group group)
+		throws Exception {
+
+		return _toDisplayPageTemplateFolder(
+			_layoutPageTemplateCollectionService.
+				addLayoutPageTemplateCollection(
+					displayPageTemplateFolder.getExternalReferenceCode(),
+					group.getGroupId(),
+					_getParentLayoutPageTemplateCollectionId(
+						displayPageTemplateFolder, group),
+					displayPageTemplateFolder.getName(),
+					displayPageTemplateFolder.getDescription(),
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					ServiceContextBuilder.create(
+						group.getGroupId(), contextHttpServletRequest, null
+					).build()));
+	}
+
+	private long _getParentLayoutPageTemplateCollectionId(
+			DisplayPageTemplateFolder displayPageTemplateFolder, Group group)
+		throws Exception {
+
+		long parentLayoutPageTemplateCollectionId =
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
 
@@ -99,22 +125,12 @@ public class DisplayPageTemplateFolderResourceImpl
 					group.getGroupId());
 
 		if (parentLayoutPageTemplateCollection != null) {
-			parentDisplayPageTemplateFolderId =
+			parentLayoutPageTemplateCollectionId =
 				parentLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId();
 		}
 
-		return _toDisplayPageTemplateFolder(
-			_layoutPageTemplateCollectionService.
-				addLayoutPageTemplateCollection(
-					displayPageTemplateFolder.getExternalReferenceCode(),
-					group.getGroupId(), parentDisplayPageTemplateFolderId,
-					displayPageTemplateFolder.getName(),
-					displayPageTemplateFolder.getDescription(),
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
-					ServiceContextBuilder.create(
-						group.getGroupId(), contextHttpServletRequest, null
-					).build()));
+		return parentLayoutPageTemplateCollectionId;
 	}
 
 	private DisplayPageTemplateFolder _toDisplayPageTemplateFolder(

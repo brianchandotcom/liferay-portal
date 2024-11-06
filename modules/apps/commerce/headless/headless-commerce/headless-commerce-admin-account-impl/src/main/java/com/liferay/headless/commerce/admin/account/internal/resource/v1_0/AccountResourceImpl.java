@@ -77,11 +77,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/account.properties",
 	scope = ServiceScope.PROTOTYPE, service = AccountResource.class
 )
+@Deprecated
 public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Override

@@ -40,11 +40,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/admin-account-group.properties",
 	scope = ServiceScope.PROTOTYPE, service = AdminAccountGroupResource.class
 )
+@Deprecated
 public class AdminAccountGroupResourceImpl
 	extends BaseAdminAccountGroupResourceImpl {
 

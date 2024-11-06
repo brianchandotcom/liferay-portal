@@ -42,12 +42,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/account-member.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
 	service = AccountMemberResource.class
 )
+@Deprecated
 public class AccountMemberResourceImpl extends BaseAccountMemberResourceImpl {
 
 	@Override

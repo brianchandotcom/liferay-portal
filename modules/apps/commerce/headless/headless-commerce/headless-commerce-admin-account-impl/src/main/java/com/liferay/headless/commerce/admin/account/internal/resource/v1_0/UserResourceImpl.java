@@ -34,11 +34,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/user.properties",
 	scope = ServiceScope.PROTOTYPE, service = UserResource.class
 )
+@Deprecated
 public class UserResourceImpl extends BaseUserResourceImpl {
 
 	@Override

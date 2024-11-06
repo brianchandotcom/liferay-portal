@@ -384,8 +384,8 @@ public class CISystemHistoryReportUtil {
 		};
 
 		_TESTRAY_LOGS_DIR = new File(
-			_buildProperties.getProperty("jenkins.testray.results.dir"),
-			"production/logs");
+			_buildProperties.getProperty(
+				"google.cloud.bucket.local.dir[testray]"));
 	}
 
 	private static class DurationReport implements Comparable<DurationReport> {

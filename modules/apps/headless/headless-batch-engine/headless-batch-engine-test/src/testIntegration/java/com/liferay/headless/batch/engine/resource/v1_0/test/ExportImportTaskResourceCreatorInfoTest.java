@@ -16,12 +16,12 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -82,18 +83,18 @@ public class ExportImportTaskResourceCreatorInfoTest {
 
 		_executeExportTask();
 
-		ObjectEntryLocalServiceUtil.deleteObjectEntry(_objectEntry1);
-		ObjectEntryLocalServiceUtil.deleteObjectEntry(_objectEntry2);
+		_objectEntryLocalService.deleteObjectEntry(_objectEntry1);
+		_objectEntryLocalService.deleteObjectEntry(_objectEntry2);
 	}
 
 	@Test
 	public void testImportWithInsertAndKeepCreator() throws Exception {
 		_executeImportTask("INSERT", "KEEP_CREATOR");
 
-		_objectEntry1 = ObjectEntryLocalServiceUtil.getObjectEntry(
+		_objectEntry1 = _objectEntryLocalService.getObjectEntry(
 			_objectEntry1.getExternalReferenceCode(),
 			_objectDefinition1.getObjectDefinitionId());
-		_objectEntry2 = ObjectEntryLocalServiceUtil.getObjectEntry(
+		_objectEntry2 = _objectEntryLocalService.getObjectEntry(
 			_objectEntry2.getExternalReferenceCode(),
 			_objectDefinition1.getObjectDefinitionId());
 
@@ -106,14 +107,14 @@ public class ExportImportTaskResourceCreatorInfoTest {
 	public void testImportWithInsertAndKeepCreatorUserDoesNotExist()
 		throws Exception {
 
-		UserLocalServiceUtil.deleteUser(_user);
+		_userLocalService.deleteUser(_user);
 
 		_executeImportTask("INSERT", "KEEP_CREATOR");
 
-		_objectEntry1 = ObjectEntryLocalServiceUtil.getObjectEntry(
+		_objectEntry1 = _objectEntryLocalService.getObjectEntry(
 			_objectEntry1.getExternalReferenceCode(),
 			_objectDefinition1.getObjectDefinitionId());
-		_objectEntry2 = ObjectEntryLocalServiceUtil.getObjectEntry(
+		_objectEntry2 = _objectEntryLocalService.getObjectEntry(
 			_objectEntry2.getExternalReferenceCode(),
 			_objectDefinition1.getObjectDefinitionId());
 
@@ -129,20 +130,20 @@ public class ExportImportTaskResourceCreatorInfoTest {
 
 		String userERC = _user.getExternalReferenceCode();
 
-		UserLocalServiceUtil.deleteUser(_user);
+		_userLocalService.deleteUser(_user);
 
 		_user = UserTestUtil.addUser();
 
 		_user.setExternalReferenceCode(userERC);
 
-		_user = UserLocalServiceUtil.updateUser(_user);
+		_user = _userLocalService.updateUser(_user);
 
 		_executeImportTask("INSERT", "KEEP_CREATOR");
 
-		_objectEntry1 = ObjectEntryLocalServiceUtil.getObjectEntry(
+		_objectEntry1 = _objectEntryLocalService.getObjectEntry(
 			_objectEntry1.getExternalReferenceCode(),
 			_objectDefinition1.getObjectDefinitionId());
-		_objectEntry2 = ObjectEntryLocalServiceUtil.getObjectEntry(
+		_objectEntry2 = _objectEntryLocalService.getObjectEntry(
 			_objectEntry2.getExternalReferenceCode(),
 			_objectDefinition1.getObjectDefinitionId());
 
@@ -155,10 +156,10 @@ public class ExportImportTaskResourceCreatorInfoTest {
 	public void testImportWithInsertAndOverwriteCreator() throws Exception {
 		_executeImportTask("INSERT", "OVERWRITE_CREATOR");
 
-		_objectEntry1 = ObjectEntryLocalServiceUtil.getObjectEntry(
+		_objectEntry1 = _objectEntryLocalService.getObjectEntry(
 			_objectEntry1.getExternalReferenceCode(),
 			_objectDefinition1.getObjectDefinitionId());
-		_objectEntry2 = ObjectEntryLocalServiceUtil.getObjectEntry(
+		_objectEntry2 = _objectEntryLocalService.getObjectEntry(
 			_objectEntry2.getExternalReferenceCode(),
 			_objectDefinition1.getObjectDefinitionId());
 
@@ -182,10 +183,10 @@ public class ExportImportTaskResourceCreatorInfoTest {
 
 		_executeImportTask("UPSERT", "KEEP_CREATOR");
 
-		_objectEntry1 = ObjectEntryLocalServiceUtil.getObjectEntry(
+		_objectEntry1 = _objectEntryLocalService.getObjectEntry(
 			_objectEntry1.getExternalReferenceCode(),
 			_objectDefinition1.getObjectDefinitionId());
-		_objectEntry2 = ObjectEntryLocalServiceUtil.getObjectEntry(
+		_objectEntry2 = _objectEntryLocalService.getObjectEntry(
 			_objectEntry2.getExternalReferenceCode(),
 			_objectDefinition1.getObjectDefinitionId());
 
@@ -209,10 +210,10 @@ public class ExportImportTaskResourceCreatorInfoTest {
 
 		_executeImportTask("UPSERT", "OVERWRITE_CREATOR");
 
-		_objectEntry1 = ObjectEntryLocalServiceUtil.getObjectEntry(
+		_objectEntry1 = _objectEntryLocalService.getObjectEntry(
 			_objectEntry1.getExternalReferenceCode(),
 			_objectDefinition1.getObjectDefinitionId());
-		_objectEntry2 = ObjectEntryLocalServiceUtil.getObjectEntry(
+		_objectEntry2 = _objectEntryLocalService.getObjectEntry(
 			_objectEntry2.getExternalReferenceCode(),
 			_objectDefinition1.getObjectDefinitionId());
 
@@ -227,7 +228,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 			Serializable objectFieldValue, User user)
 		throws Exception {
 
-		return ObjectEntryLocalServiceUtil.addObjectEntry(
+		return _objectEntryLocalService.addObjectEntry(
 			user.getUserId(), 0L, objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				objectFieldName, objectFieldValue
@@ -240,7 +241,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 			String objectFieldName, Serializable objectFieldValue, User user)
 		throws Exception {
 
-		return ObjectEntryLocalServiceUtil.addObjectEntry(
+		return _objectEntryLocalService.addObjectEntry(
 			user.getUserId(), 0L, objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				objectFieldName, objectFieldValue
@@ -383,6 +384,13 @@ public class ExportImportTaskResourceCreatorInfoTest {
 	private ObjectDefinition _objectDefinition1;
 	private ObjectEntry _objectEntry1;
 	private ObjectEntry _objectEntry2;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

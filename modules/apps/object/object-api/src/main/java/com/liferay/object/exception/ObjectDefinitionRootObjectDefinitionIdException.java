@@ -21,6 +21,14 @@ public class ObjectDefinitionRootObjectDefinitionIdException
 	}
 
 	public ObjectDefinitionRootObjectDefinitionIdException(
+		String message, String messageKey) {
+
+		super(message);
+
+		_messageKey = messageKey;
+	}
+
+	public ObjectDefinitionRootObjectDefinitionIdException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
@@ -31,5 +39,11 @@ public class ObjectDefinitionRootObjectDefinitionIdException
 
 		super(throwable);
 	}
+
+	public String getMessageKey() {
+		return _messageKey;
+	}
+
+	private String _messageKey;
 
 }

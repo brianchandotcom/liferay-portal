@@ -498,8 +498,10 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (objectDefinition.getRootObjectDefinitionId() != 0) {
 			throw new ObjectDefinitionRootObjectDefinitionIdException(
-				"Object definitions that belong to a hierarchical structure " +
-					"cannot be deleted");
+				"To delete this object, you must first disable inheritance " +
+					"and delete its relationships",
+				"to-delete-this-object-you-must-first-disable-inheritance-" +
+					"and-delete-its-relationships");
 		}
 
 		if (objectDefinition.isSystem() &&

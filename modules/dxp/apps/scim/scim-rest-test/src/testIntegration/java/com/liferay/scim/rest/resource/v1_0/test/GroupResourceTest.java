@@ -158,7 +158,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
 		assertHttpResponseStatusCode(
-			404, groupResource.getV2GroupByIdHttpResponse("12345"));
+			404, groupResource.getV2GroupByIdHttpResponse(group.getId()));
 	}
 
 	@Override

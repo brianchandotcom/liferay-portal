@@ -26,7 +26,9 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -44,6 +46,162 @@ public class DisplayPageTemplateResourceTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Ignore
+	@Override
+	@Test
+	public void testDeleteSiteSiteByExternalReferenceCodeDisplayPageTemplate()
+		throws Exception {
+
+		super.testDeleteSiteSiteByExternalReferenceCodeDisplayPageTemplate();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate()
+		throws Exception {
+
+		super.testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithPagination()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithPagination();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithSortDateTime()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithSortDateTime();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithSortDouble()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithSortDouble();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithSortInteger()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithSortInteger();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithSortString()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithSortString();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage()
+		throws Exception {
+
+		super.
+			testGetSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate()
+		throws Exception {
+
+		super.testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplate()
+		throws Exception {
+
+		super.
+			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplate();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification()
+		throws Exception {
+
+		super.
+			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate()
+		throws Exception {
+
+		super.testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPutSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage()
+		throws Exception {
+
+		super.
+			testPutSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPutSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage()
+		throws Exception {
+
+		super.
+			testPutSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage();
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

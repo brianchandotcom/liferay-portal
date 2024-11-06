@@ -165,6 +165,7 @@ public abstract class BaseCartItemResourceTestCase {
 
 		cartItem.setAdaptiveMediaImageHTMLTag(regex);
 		cartItem.setDeliveryGroup(regex);
+		cartItem.setDeliveryGroupName(regex);
 		cartItem.setExternalReferenceCode(regex);
 		cartItem.setName(regex);
 		cartItem.setOptions(regex);
@@ -183,6 +184,7 @@ public abstract class BaseCartItemResourceTestCase {
 
 		Assert.assertEquals(regex, cartItem.getAdaptiveMediaImageHTMLTag());
 		Assert.assertEquals(regex, cartItem.getDeliveryGroup());
+		Assert.assertEquals(regex, cartItem.getDeliveryGroupName());
 		Assert.assertEquals(regex, cartItem.getExternalReferenceCode());
 		Assert.assertEquals(regex, cartItem.getName());
 		Assert.assertEquals(regex, cartItem.getOptions());
@@ -1244,6 +1246,16 @@ public abstract class BaseCartItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"deliveryGroupName", additionalAssertFieldName)) {
+
+				if (cartItem.getDeliveryGroupName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("errorMessages", additionalAssertFieldName)) {
 				if (cartItem.getErrorMessages() == null) {
 					valid = false;
@@ -1604,6 +1616,19 @@ public abstract class BaseCartItemResourceTestCase {
 				if (!Objects.deepEquals(
 						cartItem1.getDeliveryGroup(),
 						cartItem2.getDeliveryGroup())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"deliveryGroupName", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						cartItem1.getDeliveryGroupName(),
+						cartItem2.getDeliveryGroupName())) {
 
 					return false;
 				}
@@ -2050,6 +2075,52 @@ public abstract class BaseCartItemResourceTestCase {
 
 		if (entityFieldName.equals("deliveryGroup")) {
 			Object object = cartItem.getDeliveryGroup();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("deliveryGroupName")) {
+			Object object = cartItem.getDeliveryGroupName();
 
 			String value = String.valueOf(object);
 
@@ -2663,6 +2734,8 @@ public abstract class BaseCartItemResourceTestCase {
 				adaptiveMediaImageHTMLTag = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				deliveryGroup = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				deliveryGroupName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

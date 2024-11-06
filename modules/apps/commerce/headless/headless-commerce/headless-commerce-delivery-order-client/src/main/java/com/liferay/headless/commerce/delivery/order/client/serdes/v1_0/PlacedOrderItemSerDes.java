@@ -94,6 +94,20 @@ public class PlacedOrderItemSerDes {
 			sb.append("\"");
 		}
 
+		if (placedOrderItem.getDeliveryGroupName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryGroupName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(placedOrderItem.getDeliveryGroupName()));
+
+			sb.append("\"");
+		}
+
 		if (placedOrderItem.getErrorMessages() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -511,6 +525,15 @@ public class PlacedOrderItemSerDes {
 				String.valueOf(placedOrderItem.getDeliveryGroup()));
 		}
 
+		if (placedOrderItem.getDeliveryGroupName() == null) {
+			map.put("deliveryGroupName", null);
+		}
+		else {
+			map.put(
+				"deliveryGroupName",
+				String.valueOf(placedOrderItem.getDeliveryGroupName()));
+		}
+
 		if (placedOrderItem.getErrorMessages() == null) {
 			map.put("errorMessages", null);
 		}
@@ -756,6 +779,9 @@ public class PlacedOrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "deliveryGroup")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "deliveryGroupName")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "errorMessages")) {
 				return false;
 			}
@@ -869,6 +895,12 @@ public class PlacedOrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "deliveryGroup")) {
 				if (jsonParserFieldValue != null) {
 					placedOrderItem.setDeliveryGroup(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "deliveryGroupName")) {
+				if (jsonParserFieldValue != null) {
+					placedOrderItem.setDeliveryGroupName(
 						(String)jsonParserFieldValue);
 				}
 			}

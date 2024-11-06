@@ -651,6 +651,10 @@ components:
                     minimum: 0
                     type: number
                 deliveryGroup:
+                    deprecated: true
+                    example: separate package
+                    type: string
+                deliveryGroupName:
                     example: separate package
                     type: string
                 discountAmount:

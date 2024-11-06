@@ -5,39 +5,41 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {announcementsPagesTest} from './fixtures/announcementsPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {announcementsPagesTest} from './fixtures/announcementsPagesTest';
 
 export const test = mergeTests(announcementsPagesTest, loginTest());
 
-test('Do not have a blank option for distribution scope', {	tag: '@LPD-18804' }, async ({
-	announcementsPage,
-	page,
-}) => {
-	await announcementsPage.goToCreateNewAnnouncement();
+test(
+	'Do not have a blank option for distribution scope',
+	{tag: '@LPD-18804'},
+	async ({announcementsPage, page}) => {
+		await announcementsPage.goToCreateNewAnnouncement();
 
-	await page.getByRole('button', {name: 'Configuration'}).click();
-	await page.getByLabel('Distribution Scope').selectOption({index: 0});
+		await page.getByRole('button', {name: 'Configuration'}).click();
+		await page.getByLabel('Distribution Scope').selectOption({index: 0});
 
-	expect(
-		await page
-			.getByLabel('Distribution Scope')
-			.evaluate(
-				(select: HTMLSelectElement) =>
-					select.options[select.selectedIndex].label
-			)
-	).toBe('General');
-});
+		expect(
+			await page
+				.getByLabel('Distribution Scope')
+				.evaluate(
+					(select: HTMLSelectElement) =>
+						select.options[select.selectedIndex].label
+				)
+		).toBe('General');
+	}
+);
 
-test('Content field is required', { tag: '@LPD-27067' }, async ({
-	announcementsPage,
-	page,
-}) => {
-	await announcementsPage.goToCreateNewAnnouncement();
+test(
+	'Content field is required',
+	{tag: '@LPD-27067'},
+	async ({announcementsPage, page}) => {
+		await announcementsPage.goToCreateNewAnnouncement();
 
-	const requiredField = page.locator(
-		'#_com_liferay_announcements_web_portlet_AnnouncementsAdminPortlet_contentEditorContainer svg.lexicon-icon-asterisk'
-	);
+		const requiredField = page.locator(
+			'#_com_liferay_announcements_web_portlet_AnnouncementsAdminPortlet_contentEditorContainer svg.lexicon-icon-asterisk'
+		);
 
-	await expect(requiredField).toBeVisible();
-});
+		await expect(requiredField).toBeVisible();
+	}
+);

@@ -88,7 +88,8 @@ public class OrderItemDTOConverter
 						commerceOrderItem.getCompanyId(),
 						dtoConverterContext.getLocale()));
 				setDecimalQuantity(commerceOrderItem::getQuantity);
-				setDeliveryGroup(commerceOrderItem::getDeliveryGroup);
+				setDeliveryGroup(commerceOrderItem::getDeliveryGroupName);
+				setDeliveryGroupName(commerceOrderItem::getDeliveryGroupName);
 				setDiscountAmount(commerceOrderItem::getDiscountAmount);
 				setDiscountManuallyAdjusted(
 					commerceOrderItem::isDiscountManuallyAdjusted);

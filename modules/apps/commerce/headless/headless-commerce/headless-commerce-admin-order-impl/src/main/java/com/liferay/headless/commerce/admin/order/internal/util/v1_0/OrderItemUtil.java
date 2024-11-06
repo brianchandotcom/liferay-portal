@@ -127,10 +127,18 @@ public class OrderItemUtil {
 			}
 		}
 
+		String deliveryGroupName = GetterUtil.getString(
+			orderItem.getDeliveryGroupName());
+
+		if (Validator.isNull(deliveryGroupName)) {
+			deliveryGroupName = GetterUtil.getString(
+				orderItem.getDeliveryGroup());
+		}
+
 		commerceOrderItem =
 			commerceOrderItemService.updateCommerceOrderItemInfo(
 				commerceOrderItem.getCommerceOrderItemId(), shippingAddressId,
-				GetterUtil.get(orderItem.getDeliveryGroup(), StringPool.BLANK),
+				deliveryGroupName,
 				GetterUtil.get(orderItem.getPrintedNote(), StringPool.BLANK));
 
 		Date requestedDeliveryDate = orderItem.getRequestedDeliveryDate();
@@ -246,7 +254,7 @@ public class OrderItemUtil {
 			throw new CPInstanceSkuException();
 		}
 
-		String deliveryGroup = StringPool.BLANK;
+		String currentDeliveryGroupName = StringPool.BLANK;
 		String json = null;
 		String printedNote = StringPool.BLANK;
 		BigDecimal quantity = BigDecimal.ZERO;
@@ -267,7 +275,7 @@ public class OrderItemUtil {
 		}
 
 		if (commerceOrderItem != null) {
-			deliveryGroup = commerceOrderItem.getDeliveryGroup();
+			currentDeliveryGroupName = commerceOrderItem.getDeliveryGroupName();
 			json = commerceOrderItem.getJson();
 			printedNote = commerceOrderItem.getPrintedNote();
 			quantity = commerceOrderItem.getQuantity();
@@ -355,12 +363,20 @@ public class OrderItemUtil {
 			}
 		}
 
+		String deliveryGroupName = GetterUtil.getString(
+			orderItem.getDeliveryGroupName());
+
+		if (Validator.isNull(deliveryGroupName)) {
+			deliveryGroupName = GetterUtil.getString(
+				orderItem.getDeliveryGroup(), currentDeliveryGroupName);
+		}
+
 		commerceOrderItem =
 			commerceOrderItemService.updateCommerceOrderItemInfo(
 				commerceOrderItem.getCommerceOrderItemId(),
 				GetterUtil.get(
 					orderItem.getShippingAddressId(), shippingAddressId),
-				GetterUtil.get(orderItem.getDeliveryGroup(), deliveryGroup),
+				deliveryGroupName,
 				GetterUtil.get(orderItem.getPrintedNote(), printedNote));
 
 		Date requestedDeliveryDate = orderItem.getRequestedDeliveryDate();

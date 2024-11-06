@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -303,6 +304,14 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 			}
 		}
 
+		String deliveryGroupName = GetterUtil.getString(
+			cartItem.getDeliveryGroupName());
+
+		if (Validator.isNull(deliveryGroupName)) {
+			deliveryGroupName = GetterUtil.getString(
+				cartItem.getDeliveryGroup());
+		}
+
 		Date requestedDeliveryDate = cartItem.getRequestedDeliveryDate();
 
 		if (requestedDeliveryDate != null) {
@@ -316,7 +325,7 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItemInfo(
 					commerceOrderItem.getCommerceOrderItemId(),
-					shippingAddressId, cartItem.getDeliveryGroup(),
+					shippingAddressId, deliveryGroupName,
 					commerceOrderItem.getPrintedNote(),
 					requestedDeliveryDateConfig.getMonth(),
 					requestedDeliveryDateConfig.getDay(),
@@ -326,7 +335,7 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItemInfo(
 					commerceOrderItem.getCommerceOrderItemId(),
-					shippingAddressId, cartItem.getDeliveryGroup(),
+					shippingAddressId, deliveryGroupName,
 					commerceOrderItem.getPrintedNote());
 		}
 
@@ -483,6 +492,14 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 			}
 		}
 
+		String deliveryGroupName = GetterUtil.getString(
+			cartItem.getDeliveryGroupName());
+
+		if (Validator.isNull(deliveryGroupName)) {
+			deliveryGroupName = GetterUtil.getString(
+				cartItem.getDeliveryGroup());
+		}
+
 		Date requestedDeliveryDate = cartItem.getRequestedDeliveryDate();
 
 		if (requestedDeliveryDate != null) {
@@ -495,7 +512,7 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 
 			return _commerceOrderItemService.updateCommerceOrderItemInfo(
 				commerceOrderItem.getCommerceOrderItemId(), shippingAddressId,
-				cartItem.getDeliveryGroup(), commerceOrderItem.getPrintedNote(),
+				deliveryGroupName, commerceOrderItem.getPrintedNote(),
 				requestedDeliveryDateConfig.getMonth(),
 				requestedDeliveryDateConfig.getDay(),
 				requestedDeliveryDateConfig.getYear());
@@ -503,7 +520,7 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 
 		return _commerceOrderItemService.updateCommerceOrderItemInfo(
 			commerceOrderItem.getCommerceOrderItemId(), shippingAddressId,
-			cartItem.getDeliveryGroup(), commerceOrderItem.getPrintedNote());
+			deliveryGroupName, commerceOrderItem.getPrintedNote());
 	}
 
 	private static final EntityModel _entityModel = new CartItemEntityModel();

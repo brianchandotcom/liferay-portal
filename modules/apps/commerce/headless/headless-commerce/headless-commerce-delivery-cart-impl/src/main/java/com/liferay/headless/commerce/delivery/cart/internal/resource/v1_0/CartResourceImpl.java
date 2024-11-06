@@ -629,6 +629,14 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			}
 		}
 
+		String deliveryGroupName = GetterUtil.getString(
+			cartItem.getDeliveryGroupName());
+
+		if (Validator.isNull(deliveryGroupName)) {
+			deliveryGroupName = GetterUtil.getString(
+				cartItem.getDeliveryGroup());
+		}
+
 		Date requestedDeliveryDate = cartItem.getRequestedDeliveryDate();
 
 		if (requestedDeliveryDate != null) {
@@ -641,7 +649,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 			_commerceOrderItemService.updateCommerceOrderItemInfo(
 				commerceOrderItem.getCommerceOrderItemId(), shippingAddressId,
-				cartItem.getDeliveryGroup(), commerceOrderItem.getPrintedNote(),
+				deliveryGroupName, commerceOrderItem.getPrintedNote(),
 				requestedDeliveryDateConfig.getMonth(),
 				requestedDeliveryDateConfig.getDay(),
 				requestedDeliveryDateConfig.getYear());
@@ -649,8 +657,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		else {
 			_commerceOrderItemService.updateCommerceOrderItemInfo(
 				commerceOrderItem.getCommerceOrderItemId(), shippingAddressId,
-				cartItem.getDeliveryGroup(),
-				commerceOrderItem.getPrintedNote());
+				deliveryGroupName, commerceOrderItem.getPrintedNote());
 		}
 	}
 

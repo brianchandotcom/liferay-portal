@@ -100,7 +100,8 @@ public class PlacedOrderItemDTOConverter
 
 						return expandoBridge.getAttributes();
 					});
-				setDeliveryGroup(commerceOrderItem::getDeliveryGroup);
+				setDeliveryGroup(commerceOrderItem::getDeliveryGroupName);
+				setDeliveryGroupName(commerceOrderItem::getDeliveryGroupName);
 				setErrorMessages(
 					() -> _getErrorMessages(commerceOrderItem, locale));
 				setExternalReferenceCode(

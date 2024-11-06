@@ -7,6 +7,8 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.metrics.BuildHistoryProcessor;
 import com.liferay.jenkins.results.parser.metrics.BuildHistoryReport;
+import com.liferay.jenkins.results.parser.testray.TestrayS3Bucket;
+import com.liferay.jenkins.results.parser.testray.TestrayS3Object;
 
 import java.io.File;
 import java.io.IOException;
@@ -193,6 +195,54 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		}
 	}
 
+	private void _downloadTestrayBuildReportJSONFiles() {
+		LocalDate currentLocalDate = LocalDate.now();
+
+		String currentMonthString = currentLocalDate.format(
+			DateTimeFormatter.ofPattern("yyyy-MM"));
+
+		String previousMonthString = null;
+
+		if (currentLocalDate.getDayOfMonth() < 15) {
+			LocalDate previousMonthLocalDate = currentLocalDate.minusMonths(1);
+
+			previousMonthString = previousMonthLocalDate.format(
+				DateTimeFormatter.ofPattern("yyyy-MM"));
+		}
+
+		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+
+		List<String> keys = new ArrayList<>();
+
+		String jobName = "test-portal-acceptance-pullrequest(master)";
+
+		for (int i = 1; i <= 40; i++) {
+			String jenkinsMasterName = "test-1-" + i;
+
+			keys.addAll(
+				_getTestrayBucketBuildReportJSONFilePaths(
+					currentMonthString, jenkinsMasterName, jobName));
+
+			if (previousMonthString != null) {
+				keys.addAll(
+					_getTestrayBucketBuildReportJSONFilePaths(
+						previousMonthString, jenkinsMasterName, jobName));
+			}
+		}
+
+		try {
+			File testrayResultsBucketLocalDir = new File(
+				_buildProperties.getProperty(
+					"google.cloud.bucket.local.dir[testray]"));
+
+			testrayS3Bucket.downloadTestrayS3Objects(
+				testrayResultsBucketLocalDir, keys);
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
+	}
+
 	private void _generateBuildHistoryReport(String reportName)
 		throws IOException {
 
@@ -218,6 +268,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		throws IOException {
 
 		String filePath = _getReportFilePath(reportName);
+
+		_downloadTestrayBuildReportJSONFiles();
 
 		CISystemHistoryReportUtil.generateCISystemHistoryReport(
 			filePath,
@@ -265,6 +317,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 		if ((testrayDataFilepath != null) &&
 			testrayDataFilepath.contains("testray-data.js")) {
+
+			_downloadTestrayBuildReportJSONFiles();
 
 			CISystemStatusReportUtil.writeTestrayDataJavaScriptFile(
 				filePath + "/js/testray-data.js",
@@ -487,6 +541,33 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 	private String _getStartDateString(String reportName) {
 		return _getStartDateString(_getReportDurationDays(reportName));
+	}
+
+	private List<String> _getTestrayBucketBuildReportJSONFilePaths(
+		String monthString, String jenkinsMasterName, String jobName) {
+
+		List<String> filePaths = new ArrayList<>();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(monthString);
+		sb.append("/");
+		sb.append(jenkinsMasterName);
+		sb.append("/");
+		sb.append(jobName);
+		sb.append("/");
+
+		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+
+		for (TestrayS3Object testrayS3Object :
+				testrayS3Bucket.getTestrayS3Objects(sb.toString())) {
+
+			String filePath = testrayS3Object.getKey() + "build-report.json.gz";
+
+			filePaths.add(filePath);
+		}
+
+		return filePaths;
 	}
 
 	private void _mergeHTMLFiles(String reportDirPath) {

@@ -84,7 +84,18 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_pid = _createScimClientOAuth2ApplicationConfiguration();
+		_pid = ConfigurationTestUtil.createFactoryConfiguration(
+			"com.liferay.scim.rest.internal.configuration." +
+				"ScimClientOAuth2ApplicationConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"matcherField", "email"
+			).put(
+				"oAuth2ApplicationName", "scim-client-test"
+			).put(
+				"userId", TestPropsValues.getUserId()
+			).build());
 	}
 
 	@Override
@@ -440,23 +451,6 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 				Group.toDTO(groupJSONObject.toString()),
 				Arrays.asList(expectedGroups));
 		}
-	}
-
-	private String _createScimClientOAuth2ApplicationConfiguration()
-		throws Exception {
-
-		return ConfigurationTestUtil.createFactoryConfiguration(
-			"com.liferay.scim.rest.internal.configuration." +
-				"ScimClientOAuth2ApplicationConfiguration",
-			HashMapDictionaryBuilder.<String, Object>put(
-				"companyId", TestPropsValues.getCompanyId()
-			).put(
-				"matcherField", "email"
-			).put(
-				"oAuth2ApplicationName", "scim-client-test"
-			).put(
-				"userId", TestPropsValues.getUserId()
-			).build());
 	}
 
 	private Group _getGroup(String userId) throws Exception {

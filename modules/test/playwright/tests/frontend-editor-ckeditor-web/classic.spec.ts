@@ -141,3 +141,103 @@ test(
 		});
 	}
 );
+
+test(
+	'Able to drag and drop images',
+	{tag: '@LPD-41443'},
+	async ({apiHelpers, page, site}) => {
+		let layout: Layout;
+
+		await test.step('Create a content site and the ckeditor sample widget', async () => {
+			const widgetDefinition = getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_editor_ckeditor_sample_web_internal_portlet_CKEditorSamplePortlet',
+			});
+
+			layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([widgetDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+		});
+
+		await test.step('Drag and drop image', async () => {
+			await page.goto(
+				`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			const ckeditorSampleWidgetClassicTab = page.getByRole('tab', {
+				name: 'Classic',
+			});
+
+			await ckeditorSampleWidgetClassicTab.waitFor({state: 'visible'});
+			await ckeditorSampleWidgetClassicTab.click();
+
+			const ckeditorEditorBody = page
+				.getByRole('tabpanel', {name: 'Classic'})
+				.frameLocator('iframe[title="editor"]')
+				.getByRole('heading', {name: 'Classic Editor'});
+
+			await ckeditorEditorBody.click();
+
+			await page.keyboard.press('Enter');
+
+			const imageButton = page.getByLabel('Image', {exact: true});
+
+			await imageButton.waitFor({state: 'visible'});
+			await imageButton.click();
+
+			const siteAndLibrariesLink = page
+				.frameLocator('iframe[title="Select Item"]')
+				.getByRole('link', {name: 'Sites and Libraries'});
+
+			await siteAndLibrariesLink.waitFor({state: 'visible'});
+			await siteAndLibrariesLink.click();
+
+			const liferayLink = page
+				.frameLocator('iframe[title="Select Item"]')
+				.getByRole('link', {name: 'Liferay'});
+
+			await liferayLink.waitFor({state: 'visible'});
+			await liferayLink.click();
+
+			const liferayImagesLink = page
+				.frameLocator('iframe[title="Select Item"]')
+				.getByRole('link', {name: 'Provided by Liferay'});
+
+			await liferayImagesLink.waitFor({state: 'visible'});
+			await liferayImagesLink.click();
+
+			const astronautImage = page
+				.frameLocator('iframe[title="Select Item"]')
+				.getByText('astronaut.png');
+
+			await astronautImage.waitFor({state: 'visible'});
+			await astronautImage.click();
+
+			const astronautEditorImage = page
+				.getByRole('application', {name: 'Rich Text Editor,'})
+				.frameLocator('iframe[title="editor"]')
+				.locator('img')
+				.first();
+
+			await astronautEditorImage.waitFor({state: 'visible'});
+			await astronautEditorImage.hover();
+
+			const dragAndDropButton = page
+				.getByRole('application', {name: 'Rich Text Editor,'})
+				.frameLocator('iframe[title="editor"]')
+				.getByTitle('Click and drag to move');
+
+			await dragAndDropButton.dragTo(ckeditorEditorBody);
+
+			const astronautImageElement = page
+				.getByRole('application', {name: 'Rich Text Editor,'})
+				.frameLocator('iframe[title="editor"]')
+				.locator('h1 > * > img.cke_widget_element');
+
+			await expect(astronautImageElement).toBeVisible();
+		});
+	}
+);

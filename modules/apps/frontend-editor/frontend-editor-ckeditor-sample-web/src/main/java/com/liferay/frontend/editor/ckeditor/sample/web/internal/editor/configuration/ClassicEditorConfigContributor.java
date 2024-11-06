@@ -37,7 +37,7 @@ public class ClassicEditorConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		jsonObject.put(
-			"extraPlugins", "maximize, stylescombo"
+			"extraPlugins", "itemselector, maximize, stylescombo"
 		).put(
 			"toolbar_liferay",
 			JSONUtil.putAll(
@@ -45,7 +45,7 @@ public class ClassicEditorConfigContributor
 				toJSONArray("['Styles', 'Bold', 'Italic', 'Underline']"),
 				toJSONArray("['NumberedList', 'BulletedList']"),
 				toJSONArray("['Maximize']"), toJSONArray("['Link', Unlink]"),
-				toJSONArray("['Table']"))
+				toJSONArray("['Table', 'ImageSelector']"))
 		);
 	}
 

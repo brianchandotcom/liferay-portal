@@ -33,15 +33,13 @@ import {
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 import {IDataSetSectionProps} from '../../DataSet';
+import AddCustomFieldModalContent from '../components/AddCustomFieldModalContent';
 
 import '../../../../css/TableVisualizationMode.scss';
 
 import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
 
-import RequiredMark from '../../../components/RequiredMark';
-import ValidationFeedback from '../../../components/ValidationFeedback';
 import sortItems from '../../../utils/sortItems';
 import {
 	EFieldType,
@@ -83,98 +81,6 @@ const getRendererLabel = ({
 
 		return rendererName;
 	}
-};
-
-const NewFieldModalContent = ({
-	closeModal,
-	namespace,
-	onSaveButtonClick,
-}: {
-	closeModal: Function;
-	namespace: string;
-	onSaveButtonClick: Function;
-}) => {
-	const [fieldName, setFieldName] = useState<string>();
-	const [
-		requiredFieldNameValidationError,
-		setRequiredFieldNameValidationError,
-	] = useState<boolean>(false);
-
-	return (
-		<>
-			<ClayModal.Header>
-				{Liferay.Language.get('add-field-manually')}
-			</ClayModal.Header>
-
-			<ClayModal.Body>
-				<ClayForm.Group
-					className={classNames({
-						'has-error': requiredFieldNameValidationError,
-					})}
-				>
-					<label htmlFor={`${namespace}FieldNameInput`}>
-						{Liferay.Language.get('field-name')}
-
-						<RequiredMark />
-
-						<span
-							className="label-icon lfr-portal-tooltip ml-2"
-							title={Liferay.Language.get(
-								'you-can-add-a-field-that-is-in-the-API-response-but-not-declared-in-the-schema'
-							)}
-						>
-							<ClayIcon symbol="question-circle-full" />
-						</span>
-					</label>
-
-					<ClayInput
-						id={`${namespace}FieldNameInput`}
-						onChange={(event) => {
-							setRequiredFieldNameValidationError(false);
-							setFieldName(event.target.value);
-						}}
-						placeholder={Liferay.Language.get('type-field-here')}
-						type="text"
-					/>
-
-					{requiredFieldNameValidationError && (
-						<ValidationFeedback
-							message={Liferay.Language.get(
-								'alert-you-must-enter-a-field-name'
-							)}
-						/>
-					)}
-				</ClayForm.Group>
-			</ClayModal.Body>
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group spaced>
-						<ClayButton
-							displayType="secondary"
-							onClick={() => closeModal()}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-
-						<ClayButton
-							onClick={() => {
-								if (!fieldName) {
-									setRequiredFieldNameValidationError(true);
-								}
-								else {
-									onSaveButtonClick({
-										fieldName,
-									});
-								}
-							}}
-						>
-							{Liferay.Language.get('add')}
-						</ClayButton>
-					</ClayButton.Group>
-				}
-			/>
-		</>
-	);
 };
 
 interface IRendererLabelCellRendererComponentProps {
@@ -695,15 +601,13 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 	const onCreationFieldButtonClick = () => {
 		openModal({
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<NewFieldModalContent
+				<AddCustomFieldModalContent
 					{...props}
 					closeModal={closeModal}
-					onSaveButtonClick={({fieldName}: {fieldName: string}) => {
+					onSaveButtonClick={({name}: {name: string}) => {
 						saveDataSetTableColumns({
 							closeModal,
-							fields: [
-								{name: fieldName, sortable: true},
-							] as IField[],
+							fields: [{name, sortable: true}] as IField[],
 						});
 					}}
 				/>

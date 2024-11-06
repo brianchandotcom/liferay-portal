@@ -162,13 +162,42 @@ public class DisplayPageTemplateFolderResourceTest
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithExistingParentExternalReferenceCode();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
 		throws Exception {
 
-		super.testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder();
+		DisplayPageTemplateFolder displayPageTemplateFolder =
+			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				randomDisplayPageTemplateFolder(),
+				RandomTestUtil.randomString());
+
+		Assert.assertNull(
+			displayPageTemplateFolder.
+				getParentDisplayPageTemplateFolderExternalReferenceCode());
+
+		DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
+			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
+				randomDisplayPageTemplateFolder());
+
+		displayPageTemplateFolder =
+			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				randomDisplayPageTemplateFolder(),
+				parentDisplayPageTemplateFolder.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			parentDisplayPageTemplateFolder.getExternalReferenceCode(),
+			displayPageTemplateFolder.
+				getParentDisplayPageTemplateFolderExternalReferenceCode());
+
+		displayPageTemplateFolder =
+			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				displayPageTemplateFolder, null);
+
+		Assert.assertEquals(
+			parentDisplayPageTemplateFolder.getExternalReferenceCode(),
+			displayPageTemplateFolder.
+				getParentDisplayPageTemplateFolderExternalReferenceCode());
 	}
 
 	@Ignore
@@ -306,6 +335,29 @@ public class DisplayPageTemplateFolderResourceTest
 		Assert.assertNotNull(
 			postDisplayPageTemplateFolder.
 				getParentDisplayPageTemplateFolderExternalReferenceCode());
+	}
+
+	private DisplayPageTemplateFolder
+			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				DisplayPageTemplateFolder displayPageTemplateFolder,
+				String parentDisplayPageTemplateFolderExternalReferenceCode)
+		throws Exception {
+
+		displayPageTemplateFolder.
+			setParentDisplayPageTemplateFolderExternalReferenceCode(
+				parentDisplayPageTemplateFolderExternalReferenceCode);
+
+		DisplayPageTemplateFolder putDisplayPageTemplateFolder =
+			displayPageTemplateFolderResource.
+				putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplateFolder.getExternalReferenceCode(),
+					displayPageTemplateFolder);
+
+		assertEquals(displayPageTemplateFolder, putDisplayPageTemplateFolder);
+		assertValid(putDisplayPageTemplateFolder);
+
+		return putDisplayPageTemplateFolder;
 	}
 
 	@Inject

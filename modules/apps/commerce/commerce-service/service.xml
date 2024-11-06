@@ -336,7 +336,7 @@
 		<column name="customerCommerceOrderItemId" type="long" />
 		<column name="parentCommerceOrderItemId" type="long" />
 		<column name="shippingAddressId" type="long" />
-		<column name="deliveryGroup" type="String" />
+		<column name="deliveryGroupName" type="String" />
 		<column name="deliveryMaxSubscriptionCycles" type="long" />
 		<column name="deliverySubscriptionLength" type="int" />
 		<column name="deliverySubscriptionType" type="String" />

@@ -236,6 +236,29 @@ export function ViewObjectDefinitionsModals({
 				/>
 			)}
 
+			{showModal.objectDefinitionOnRootModelDeletionNotAllowed &&
+				selectedObjectDefinition &&
+				Liferay.FeatureFlags['LPS-187142'] && (
+					<ModalObjectFieldDeletionNotAllowed
+						content={
+							<span
+								dangerouslySetInnerHTML={{
+									__html: Liferay.Language.get(
+										'to-delete-this-object-you-must-first-disable-inheritance-and-delete-its-relationships'
+									),
+								}}
+							/>
+						}
+						onVisibilityChange={() =>
+							setShowModal((previousState) => ({
+								...previousState,
+								objectDefinitionOnRootModelDeletionNotAllowed:
+									false,
+							}))
+						}
+					/>
+				)}
+
 			{showModal.objectFieldDeletionNotAllowed &&
 				selectedObjectDefinition &&
 				Liferay.FeatureFlags['LPS-187142'] && (

@@ -172,6 +172,7 @@ export default function ViewObjectDefinitions({
 		editObjectFolder: false,
 		importModal: false,
 		moveObjectDefinition: false,
+		objectDefinitionOnRootModelDeletionNotAllowed: false,
 		objectFieldDeletionNotAllowed: false,
 		unbindFromRootObjectDefinition: false,
 	});
@@ -232,14 +233,28 @@ export default function ViewObjectDefinitions({
 			}
 
 			if (action.data.id === 'deleteObjectDefinition') {
-				deleteObjectDefinition({
-					baseResourceURL,
-					handleDeleteObjectDefinition: setDeletedObjectDefinition,
-					handleShowDeleteObjectDefinitionModal,
-					objectDefinitionId: itemData.id,
-					objectDefinitionName: itemData.name,
-					onAfterDeleteObjectDefinition: () => setReloadFDS(true),
-				});
+				if (
+					itemData.rootObjectDefinitionExternalReferenceCode &&
+					Liferay.FeatureFlags['LPS-187142']
+				) {
+					setSelectedObjectDefinition(itemData);
+
+					setShowModal((previousState) => ({
+						...previousState,
+						objectDefinitionOnRootModelDeletionNotAllowed: true,
+					}));
+				}
+				else {
+					deleteObjectDefinition({
+						baseResourceURL,
+						handleDeleteObjectDefinition:
+							setDeletedObjectDefinition,
+						handleShowDeleteObjectDefinitionModal,
+						objectDefinitionId: itemData.id,
+						objectDefinitionName: itemData.name,
+						onAfterDeleteObjectDefinition: () => setReloadFDS(true),
+					});
+				}
 			}
 
 			if (action.data.id === 'moveObjectDefinition') {

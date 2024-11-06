@@ -515,6 +515,7 @@ interface ShowObjectDefinitionsModals {
 	editObjectFolder: boolean;
 	importModal: boolean;
 	moveObjectDefinition: boolean;
+	objectDefinitionOnRootModelDeletionNotAllowed: boolean;
 	objectFieldDeletionNotAllowed: boolean;
 	unbindFromRootObjectDefinition: boolean;
 }

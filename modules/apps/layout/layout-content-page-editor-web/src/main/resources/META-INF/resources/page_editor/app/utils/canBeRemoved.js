@@ -8,11 +8,12 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
 export default function canBeRemoved(item, layoutData) {
 	switch (item.type) {
+		case LAYOUT_DATA_ITEM_TYPES.collectionItem:
 		case LAYOUT_DATA_ITEM_TYPES.column:
+		case LAYOUT_DATA_ITEM_TYPES.dropZone:
 		case LAYOUT_DATA_ITEM_TYPES.formStep:
 		case LAYOUT_DATA_ITEM_TYPES.formStepContainer:
-		case LAYOUT_DATA_ITEM_TYPES.dropZone:
-		case LAYOUT_DATA_ITEM_TYPES.collectionItem:
+		case LAYOUT_DATA_ITEM_TYPES.root:
 			return false;
 
 		default:

@@ -9,6 +9,7 @@ import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorCons
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.fragment.entry.processor.util.AnalyticsAttributesUtil;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DocumentFragmentEntryProcessor;
@@ -16,9 +17,11 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -199,6 +202,16 @@ public class EditableDocumentFragmentEntryProcessor
 
 				element.removeAttr("view-tag-name");
 			}
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-39437") &&
+				fragmentEntryProcessorContext.isViewMode()) {
+
+				AnalyticsAttributesUtil.addAnalyticsAttributes(
+					editableValueJSONObject, element,
+					fragmentEntryProcessorContext,
+					_fragmentEntryProcessorHelper, infoDisplaysFieldValues,
+					_infoItemServiceRegistry);
+			}
 		}
 
 		if ((fragmentEntryProcessorContext.getPreviewClassNameId() > 0) &&
@@ -280,6 +293,9 @@ public class EditableDocumentFragmentEntryProcessor
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

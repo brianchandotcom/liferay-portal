@@ -8,7 +8,6 @@ import {collectionIsMapped} from '../collectionIsMapped';
 import {formIsMapped} from '../formIsMapped';
 import isItemContainerFlex from '../isItemContainerFlex';
 import isItemEmpty from '../isItemEmpty';
-import checkAllowedChild from './checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import {ORIENTATIONS} from './constants/orientations';
 import {TARGET_POSITIONS} from './constants/targetPositions';
@@ -23,8 +22,6 @@ const ORIENTATION_BORDER_SIZE = 80;
 
 export default function defaultComputeHover({
 	dispatch,
-	fragmentEntryLinksRef,
-	getWidgets,
 	layoutDataRef,
 	monitor,
 	sourceItem,
@@ -110,13 +107,6 @@ export default function defaultComputeHover({
 		return dispatch({
 			dragSource: sourceItem,
 			dropTarget: targetItem,
-			droppable: checkAllowedChild(
-				sourceItem,
-				targetItem,
-				layoutDataRef.current,
-				fragmentEntryLinksRef.current,
-				getWidgets
-			),
 			elevate: null,
 			targetPositionWithMiddle,
 			targetPositionWithoutMiddle,
@@ -214,13 +204,6 @@ export default function defaultComputeHover({
 				return dispatch({
 					dragSource: sourceItem,
 					dropTarget: siblingItem,
-					droppable: checkAllowedChild(
-						sourceItem,
-						elevatedTargetItem,
-						layoutDataRef.current,
-						fragmentEntryLinksRef.current,
-						getWidgets
-					),
 					elevate: true,
 					targetPositionWithMiddle,
 					targetPositionWithoutMiddle,
@@ -319,7 +302,6 @@ function shouldBeIgnoredInElevation(item) {
 	// Dropping inside a collection or inside a row is illegal
 	// but in those cases we don't want to inform the user about it,
 	// we just want to ignore those cases and try to elevate in the direct parent.
-	// This is why this case is handled separately in the checkAllowedChild function
 
 	return (
 		item.type === LAYOUT_DATA_ITEM_TYPES.collection ||

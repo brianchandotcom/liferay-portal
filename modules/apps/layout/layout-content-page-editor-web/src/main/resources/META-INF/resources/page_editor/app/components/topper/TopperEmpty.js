@@ -36,10 +36,7 @@ import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStr
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
 import pasteItems from '../../thunks/pasteItems';
 import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
-import {
-	useDropTarget,
-	useIsDroppable,
-} from '../../utils/drag_and_drop/useDragAndDrop';
+import {useDropTarget} from '../../utils/drag_and_drop/useDragAndDrop';
 import {isMovementValid} from '../../utils/isMovementValid';
 import toMovementItem from '../../utils/toMovementItem';
 import useDropContainerId from '../../utils/useDropContainerId';
@@ -92,10 +89,8 @@ const TopperEmpty = ({children, className, item}) => {
 	const realChildren = isFragment ? children.props.children : children;
 
 	const dropContainerId = useDropContainerId();
-	const isDroppable = useIsDroppable();
 
-	const isValidDrop =
-		(isDroppable && isOverTarget) || movementTargetItemId === item.itemId;
+	const isValidDrop = isOverTarget || movementTargetItemId === item.itemId;
 
 	return React.Children.map(realChildren, (child) => {
 		if (!child) {
@@ -162,10 +157,8 @@ const ActivableTopperEmpty = ({
 	const realChildren = isFragment ? children.props.children : children;
 
 	const dropContainerId = useDropContainerId();
-	const isDroppable = useIsDroppable();
 
-	const isValidDrop =
-		(isDroppable && isOverTarget) || movementTargetItemId === item.itemId;
+	const isValidDrop = isOverTarget || movementTargetItemId === item.itemId;
 
 	const hoverItem = useHoverItem();
 	const selectItem = useSelectItem();

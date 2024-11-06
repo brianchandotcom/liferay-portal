@@ -51,7 +51,6 @@ import updateItemConfig from '../../../../../app/thunks/updateItemConfig';
 import canBeRenamed from '../../../../../app/utils/canBeRenamed';
 import {deepEqual} from '../../../../../app/utils/checkDeepEqual';
 import {collectionIsMapped} from '../../../../../app/utils/collectionIsMapped';
-import checkAllowedChild from '../../../../../app/utils/drag_and_drop/checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from '../../../../../app/utils/drag_and_drop/constants/dragDropTargetType';
 import {ORIENTATIONS} from '../../../../../app/utils/drag_and_drop/constants/orientations';
 import {TARGET_POSITIONS} from '../../../../../app/utils/drag_and_drop/constants/targetPositions';
@@ -63,7 +62,6 @@ import {
 	initialDragDrop,
 	useDragItem,
 	useDropTarget,
-	useIsDroppable,
 } from '../../../../../app/utils/drag_and_drop/useDragAndDrop';
 import {formIsMapped} from '../../../../../app/utils/formIsMapped';
 import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
@@ -383,11 +381,8 @@ function NodeContent({
 	const isDraggingSource =
 		itemIsDraggingSource || lastSource?.itemId === item.itemId;
 
-	const isDroppable = useIsDroppable();
-
 	const isValidDrop =
-		(isDroppable && isOverTarget) ||
-		keyboardMovementTargetId === item.itemId;
+		isOverTarget || keyboardMovementTargetId === item.itemId;
 
 	const onEditName = (nextName) => {
 		const trimmedName = nextName?.trim();
@@ -765,8 +760,6 @@ const MoveButton = ({
 
 function computeHover({
 	dispatch,
-	fragmentEntryLinksRef,
-	getWidgets,
 	layoutDataRef,
 	monitor,
 	sourceItem,
@@ -854,13 +847,6 @@ function computeHover({
 		return dispatch({
 			dragSource: sourceItem,
 			dropTarget: targetItem,
-			droppable: checkAllowedChild(
-				sourceItem,
-				targetItem,
-				layoutDataRef.current,
-				fragmentEntryLinksRef.current,
-				getWidgets
-			),
 			elevate: null,
 			targetPositionWithMiddle,
 			targetPositionWithoutMiddle,
@@ -924,13 +910,6 @@ function computeHover({
 				return dispatch({
 					dragSource: sourceItem,
 					dropTarget: siblingItem,
-					droppable: checkAllowedChild(
-						sourceItem,
-						elevatedTargetItem,
-						layoutDataRef.current,
-						fragmentEntryLinksRef.current,
-						getWidgets
-					),
 					elevate: true,
 					targetPositionWithMiddle,
 					targetPositionWithoutMiddle,

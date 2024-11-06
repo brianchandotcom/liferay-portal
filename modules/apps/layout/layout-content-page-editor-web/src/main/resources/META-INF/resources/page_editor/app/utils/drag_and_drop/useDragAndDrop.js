@@ -68,12 +68,6 @@ export const initialDragDrop = {
 		dropTarget: null,
 
 		/**
-		 * When false, an "invalid drop" advise should be shown
-		 * to users.
-		 */
-		droppable: true,
-
-		/**
 		 * If true, dropTarget is the sibling of dragSource
 		 * and targetPosition determines the item index.
 		 */
@@ -111,10 +105,6 @@ export function useDropTargetData() {
 		item: dropTarget,
 		position: targetPositionWithMiddle,
 	};
-}
-
-export function useIsDroppable() {
-	return useContext(DragAndDropContext).state.droppable;
 }
 
 export function useSetCanDrag() {
@@ -259,10 +249,8 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 	const toControlsId = useToControlsId();
 	const parentToControlsId = useParentToControlsId();
 
-	const {dispatch, fragmentEntryLinksRef, layoutDataRef, state, targetRefs} =
+	const {dispatch, layoutDataRef, state, targetRefs} =
 		useContext(DragAndDropContext);
-
-	const getWidgets = useGetWidgets();
 
 	const targetRef = useRef(null);
 
@@ -304,8 +292,6 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 
 			computeHover({
 				dispatch,
-				fragmentEntryLinksRef,
-				getWidgets,
 				layoutDataRef,
 				monitor,
 				sourceItem: source,

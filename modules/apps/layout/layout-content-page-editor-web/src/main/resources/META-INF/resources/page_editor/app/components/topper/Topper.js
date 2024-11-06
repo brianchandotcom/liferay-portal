@@ -49,9 +49,10 @@ import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositi
 import {
 	useDragItem,
 	useDropTarget,
-	useIsDroppable,
 } from '../../utils/drag_and_drop/useDragAndDrop';
 import isStepper from '../../utils/isStepper';
+import {isUnmappedCollection} from '../../utils/isUnmappedCollection';
+import {isUnmappedForm} from '../../utils/isUnmappedForm';
 import toMovementItem from '../../utils/toMovementItem';
 import useDropContainerId from '../../utils/useDropContainerId';
 import TopperItemActions from './TopperItemActions';
@@ -116,19 +117,21 @@ function TopperContent({
 	const topperLabelId = useId();
 
 	const dropContainerId = useDropContainerId();
-	const isDroppable = useIsDroppable();
 	const dropTargetPosition = targetPosition || keyboardMovementPosition;
 
 	const isDropContainer = dropContainerId === item.itemId;
 	const isValidDrop =
-		(isDroppable && isOverTarget) ||
-		keyboardMovementTargetId === item.itemId;
+		!(
+			targetPosition === TARGET_POSITIONS.MIDDLE &&
+			(isUnmappedCollection(item) || isUnmappedForm(item))
+		) &&
+		(isOverTarget || keyboardMovementTargetId === item.itemId);
 
 	const isHighlighted =
-		(item.type === LAYOUT_DATA_ITEM_TYPES.row ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.row ||
 		item.type === LAYOUT_DATA_ITEM_TYPES.collection
 			? item.children.includes(dropContainerId)
-			: isDropContainer) && isDroppable;
+			: isDropContainer & isValidDrop;
 
 	const selectable =
 		!multiSelectType ||

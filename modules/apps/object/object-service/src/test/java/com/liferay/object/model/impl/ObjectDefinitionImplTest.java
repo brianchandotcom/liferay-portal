@@ -5,9 +5,12 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,6 +35,22 @@ public class ObjectDefinitionImplTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Test
+	public void testGetPortletId() {
+		ObjectDefinition objectDefinition = new ObjectDefinitionImpl();
+
+		String classNameSuffix = RandomTestUtil.randomString();
+
+		objectDefinition.setClassName(
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION + classNameSuffix);
+
+		Assert.assertEquals(
+			ObjectPortletKeys.OBJECT_DEFINITIONS + StringPool.UNDERLINE +
+				classNameSuffix,
+			objectDefinition.getPortletId());
+	}
 
 	@Test
 	public void testGetRESTContextPath() {

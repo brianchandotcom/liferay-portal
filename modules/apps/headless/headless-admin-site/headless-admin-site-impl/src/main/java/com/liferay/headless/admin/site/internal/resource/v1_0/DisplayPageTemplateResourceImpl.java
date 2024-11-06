@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.ClassSubtypeReference;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
+import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.resource.v1_0.DisplayPageTemplateResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
@@ -15,7 +16,9 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -93,8 +96,7 @@ public class DisplayPageTemplateResourceImpl
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				displayPageTemplate.getExternalReferenceCode(),
 				group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getLayoutPageTemplateCollectionId(displayPageTemplate, group),
 				_portal.getClassNameId(contentTypeReference.getClassName()),
 				_getClassTypeId(contentTypeReference, group.getGroupId()),
 				displayPageTemplate.getName(), 0L,
@@ -135,6 +137,32 @@ public class DisplayPageTemplateResourceImpl
 		return -1;
 	}
 
+	private long _getLayoutPageTemplateCollectionId(
+			DisplayPageTemplate displayPageTemplate, Group group)
+		throws Exception {
+
+		DisplayPageTemplateFolder displayPageTemplateFolder =
+			displayPageTemplate.getParentFolder();
+
+		if (displayPageTemplateFolder == null) {
+			return LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+		}
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionService.
+				fetchLayoutPageTemplateCollection(
+					displayPageTemplateFolder.getExternalReferenceCode(),
+					group.getGroupId());
+
+		if (layoutPageTemplateCollection == null) {
+			return LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+		}
+
+		return layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
+	}
+
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.DisplayPageTemplateDTOConverter)"
 	)
@@ -146,6 +174,10 @@ public class DisplayPageTemplateResourceImpl
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private LayoutPageTemplateCollectionService
+		_layoutPageTemplateCollectionService;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;

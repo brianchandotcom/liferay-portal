@@ -108,6 +108,20 @@ public class OrderItemSerDes {
 			sb.append("\"");
 		}
 
+		if (orderItem.getDeliveryGroupName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryGroupName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(orderItem.getDeliveryGroupName()));
+
+			sb.append("\"");
+		}
+
 		if (orderItem.getDiscountAmount() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -678,6 +692,15 @@ public class OrderItemSerDes {
 				"deliveryGroup", String.valueOf(orderItem.getDeliveryGroup()));
 		}
 
+		if (orderItem.getDeliveryGroupName() == null) {
+			map.put("deliveryGroupName", null);
+		}
+		else {
+			map.put(
+				"deliveryGroupName",
+				String.valueOf(orderItem.getDeliveryGroupName()));
+		}
+
 		if (orderItem.getDiscountAmount() == null) {
 			map.put("discountAmount", null);
 		}
@@ -1080,6 +1103,9 @@ public class OrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "deliveryGroup")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "deliveryGroupName")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "discountAmount")) {
 				return false;
 			}
@@ -1298,6 +1324,12 @@ public class OrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "deliveryGroup")) {
 				if (jsonParserFieldValue != null) {
 					orderItem.setDeliveryGroup((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "deliveryGroupName")) {
+				if (jsonParserFieldValue != null) {
+					orderItem.setDeliveryGroupName(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "discountAmount")) {

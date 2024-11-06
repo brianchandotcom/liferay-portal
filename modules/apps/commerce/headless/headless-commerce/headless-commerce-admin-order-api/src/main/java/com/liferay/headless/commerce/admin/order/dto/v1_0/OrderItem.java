@@ -184,7 +184,7 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _decimalQuantitySupplier;
 
-	@Schema(example = "separate package")
+	@Schema(deprecated = true, example = "separate package")
 	public String getDeliveryGroup() {
 		if (_deliveryGroupSupplier != null) {
 			deliveryGroup = _deliveryGroupSupplier.get();
@@ -218,12 +218,54 @@ public class OrderItem implements Serializable {
 		};
 	}
 
+	@Deprecated
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String deliveryGroup;
 
 	@JsonIgnore
 	private Supplier<String> _deliveryGroupSupplier;
+
+	@Schema(example = "separate package")
+	public String getDeliveryGroupName() {
+		if (_deliveryGroupNameSupplier != null) {
+			deliveryGroupName = _deliveryGroupNameSupplier.get();
+
+			_deliveryGroupNameSupplier = null;
+		}
+
+		return deliveryGroupName;
+	}
+
+	public void setDeliveryGroupName(String deliveryGroupName) {
+		this.deliveryGroupName = deliveryGroupName;
+
+		_deliveryGroupNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDeliveryGroupName(
+		UnsafeSupplier<String, Exception> deliveryGroupNameUnsafeSupplier) {
+
+		_deliveryGroupNameSupplier = () -> {
+			try {
+				return deliveryGroupNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String deliveryGroupName;
+
+	@JsonIgnore
+	private Supplier<String> _deliveryGroupNameSupplier;
 
 	@DecimalMin("0")
 	@Schema(example = "2")
@@ -2214,6 +2256,22 @@ public class OrderItem implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(deliveryGroup));
+
+			sb.append("\"");
+		}
+
+		String deliveryGroupName = getDeliveryGroupName();
+
+		if (deliveryGroupName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryGroupName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(deliveryGroupName));
 
 			sb.append("\"");
 		}

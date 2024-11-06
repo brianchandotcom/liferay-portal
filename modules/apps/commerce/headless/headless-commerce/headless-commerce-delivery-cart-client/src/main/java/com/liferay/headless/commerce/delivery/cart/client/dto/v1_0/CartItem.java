@@ -115,6 +115,27 @@ public class CartItem implements Cloneable, Serializable {
 
 	protected String deliveryGroup;
 
+	public String getDeliveryGroupName() {
+		return deliveryGroupName;
+	}
+
+	public void setDeliveryGroupName(String deliveryGroupName) {
+		this.deliveryGroupName = deliveryGroupName;
+	}
+
+	public void setDeliveryGroupName(
+		UnsafeSupplier<String, Exception> deliveryGroupNameUnsafeSupplier) {
+
+		try {
+			deliveryGroupName = deliveryGroupNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String deliveryGroupName;
+
 	public String[] getErrorMessages() {
 		return errorMessages;
 	}

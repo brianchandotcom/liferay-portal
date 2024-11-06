@@ -166,6 +166,7 @@ public abstract class BaseOrderItemResourceTestCase {
 		OrderItem orderItem = randomOrderItem();
 
 		orderItem.setDeliveryGroup(regex);
+		orderItem.setDeliveryGroupName(regex);
 		orderItem.setExternalReferenceCode(regex);
 		orderItem.setFormattedQuantity(regex);
 		orderItem.setOptions(regex);
@@ -186,6 +187,7 @@ public abstract class BaseOrderItemResourceTestCase {
 		orderItem = OrderItemSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, orderItem.getDeliveryGroup());
+		Assert.assertEquals(regex, orderItem.getDeliveryGroupName());
 		Assert.assertEquals(regex, orderItem.getExternalReferenceCode());
 		Assert.assertEquals(regex, orderItem.getFormattedQuantity());
 		Assert.assertEquals(regex, orderItem.getOptions());
@@ -1549,6 +1551,16 @@ public abstract class BaseOrderItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"deliveryGroupName", additionalAssertFieldName)) {
+
+				if (orderItem.getDeliveryGroupName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("discountAmount", additionalAssertFieldName)) {
 				if (orderItem.getDiscountAmount() == null) {
 					valid = false;
@@ -2107,6 +2119,19 @@ public abstract class BaseOrderItemResourceTestCase {
 				if (!Objects.deepEquals(
 						orderItem1.getDeliveryGroup(),
 						orderItem2.getDeliveryGroup())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"deliveryGroupName", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						orderItem1.getDeliveryGroupName(),
+						orderItem2.getDeliveryGroupName())) {
 
 					return false;
 				}
@@ -2767,6 +2792,52 @@ public abstract class BaseOrderItemResourceTestCase {
 
 		if (entityFieldName.equals("deliveryGroup")) {
 			Object object = orderItem.getDeliveryGroup();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("deliveryGroupName")) {
+			Object object = orderItem.getDeliveryGroupName();
 
 			String value = String.valueOf(object);
 
@@ -3597,6 +3668,8 @@ public abstract class BaseOrderItemResourceTestCase {
 			{
 				bookedQuantityId = RandomTestUtil.randomLong();
 				deliveryGroup = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				deliveryGroupName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				discountManuallyAdjusted = RandomTestUtil.randomBoolean();
 				externalReferenceCode = StringUtil.toLowerCase(

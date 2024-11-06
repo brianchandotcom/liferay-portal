@@ -1102,7 +1102,10 @@ public class CompanyLocalServiceTest {
 			Assert.assertNotEquals(counterCompanyId, company.getCompanyId());
 		}
 		else {
-			_verifyRandomCompanyId(company.getCompanyId(), counterCompanyId);
+			Assert.assertTrue(
+				(company.getCompanyId() >= (long)Math.pow(10, 13)) &&
+				(company.getCompanyId() < (long)Math.pow(10, 14)));
+			Assert.assertNotEquals(counterCompanyId, company.getCompanyId());
 		}
 
 		return company;
@@ -1310,13 +1313,6 @@ public class CompanyLocalServiceTest {
 				new HashMapDictionary<>()));
 
 		return list;
-	}
-
-	private void _verifyRandomCompanyId(long companyId, long counterCompanyId) {
-		Assert.assertTrue(
-			(companyId >= (long)Math.pow(10, 13)) &&
-			(companyId < (long)Math.pow(10, 14)));
-		Assert.assertNotEquals(counterCompanyId, companyId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

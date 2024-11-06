@@ -232,6 +232,19 @@ public class PageTemplateSetResourceImpl
 			Group group, PageTemplateSet pageTemplateSet)
 		throws Exception {
 
+		return _layoutPageTemplateCollectionService.
+			addLayoutPageTemplateCollection(
+				pageTemplateSet.getExternalReferenceCode(), group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				pageTemplateSet.getName(), pageTemplateSet.getDescription(),
+				LayoutPageTemplateCollectionTypeConstants.BASIC,
+				_getServiceContext(group, pageTemplateSet));
+	}
+
+	private ServiceContext _getServiceContext(
+		Group group, PageTemplateSet pageTemplateSet) {
+
 		ServiceContext serviceContext = ServiceContextBuilder.create(
 			group.getGroupId(), contextHttpServletRequest, null
 		).build();
@@ -240,14 +253,7 @@ public class PageTemplateSetResourceImpl
 		serviceContext.setModifiedDate(pageTemplateSet.getDateModified());
 		serviceContext.setUuid(pageTemplateSet.getUuid());
 
-		return _layoutPageTemplateCollectionService.
-			addLayoutPageTemplateCollection(
-				pageTemplateSet.getExternalReferenceCode(), group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				pageTemplateSet.getName(), pageTemplateSet.getDescription(),
-				LayoutPageTemplateCollectionTypeConstants.BASIC,
-				serviceContext);
+		return serviceContext;
 	}
 
 	private PageTemplateSet _toPageTemplateSet(

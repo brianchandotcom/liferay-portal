@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -101,9 +102,7 @@ public class DisplayPageTemplateResourceImpl
 				_getClassTypeId(contentTypeReference, group.getGroupId()),
 				displayPageTemplate.getName(), 0L,
 				WorkflowConstants.STATUS_DRAFT,
-				ServiceContextBuilder.create(
-					group.getGroupId(), contextHttpServletRequest, null
-				).build()));
+				_getServiceContext(displayPageTemplate, group)));
 	}
 
 	private long _getClassTypeId(
@@ -161,6 +160,20 @@ public class DisplayPageTemplateResourceImpl
 		}
 
 		return layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
+	}
+
+	private ServiceContext _getServiceContext(
+		DisplayPageTemplate displayPageTemplate, Group group) {
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			group.getGroupId(), contextHttpServletRequest, null
+		).build();
+
+		serviceContext.setCreateDate(displayPageTemplate.getDateCreated());
+		serviceContext.setModifiedDate(displayPageTemplate.getDateModified());
+		serviceContext.setUuid(displayPageTemplate.getUuid());
+
+		return serviceContext;
 	}
 
 	@Reference(

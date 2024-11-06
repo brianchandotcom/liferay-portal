@@ -16,6 +16,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServ
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
@@ -167,9 +168,7 @@ public class DisplayPageTemplateFolderResourceImpl
 					displayPageTemplateFolder.getName(),
 					displayPageTemplateFolder.getDescription(),
 					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
-					ServiceContextBuilder.create(
-						group.getGroupId(), contextHttpServletRequest, null
-					).build()));
+					_getServiceContext(displayPageTemplateFolder, group)));
 	}
 
 	private long _getParentLayoutPageTemplateCollectionId(
@@ -201,6 +200,22 @@ public class DisplayPageTemplateFolderResourceImpl
 		}
 
 		return parentLayoutPageTemplateCollectionId;
+	}
+
+	private ServiceContext _getServiceContext(
+		DisplayPageTemplateFolder displayPageTemplateFolder, Group group) {
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			group.getGroupId(), contextHttpServletRequest, null
+		).build();
+
+		serviceContext.setCreateDate(
+			displayPageTemplateFolder.getDateCreated());
+		serviceContext.setModifiedDate(
+			displayPageTemplateFolder.getDateModified());
+		serviceContext.setUuid(displayPageTemplateFolder.getUuid());
+
+		return serviceContext;
 	}
 
 	private DisplayPageTemplateFolder _toDisplayPageTemplateFolder(

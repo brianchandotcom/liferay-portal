@@ -22,12 +22,12 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Admin.Site)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Admin.Site.DuplicateLayoutPageTemplateCollectionExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Admin.Site.PageTemplateSetExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class DuplicateLayoutPageTemplateCollectionExceptionMapper
+public class PageTemplateSetExceptionMapper
 	extends BaseExceptionMapper
 		<DuplicateLayoutPageTemplateCollectionException> {
 

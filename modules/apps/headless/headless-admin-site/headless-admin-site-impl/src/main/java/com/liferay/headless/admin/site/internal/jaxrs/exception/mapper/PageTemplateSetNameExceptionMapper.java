@@ -21,12 +21,12 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Admin.Site)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Admin.Site.LayoutPageTemplateCollectionNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Admin.Site.PageTemplateSetNameExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class LayoutPageTemplateCollectionNameExceptionMapper
+public class PageTemplateSetNameExceptionMapper
 	extends BaseExceptionMapper<LayoutPageTemplateCollectionNameException> {
 
 	@Override

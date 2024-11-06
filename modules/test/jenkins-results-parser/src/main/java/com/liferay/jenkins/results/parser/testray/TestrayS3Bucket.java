@@ -273,18 +273,16 @@ public class TestrayS3Bucket {
 	}
 
 	public List<TestrayS3Object> getTestrayS3Objects() {
-		List<TestrayS3Object> testrayS3Objects = new ArrayList<>();
+		return _getTestrayS3Objects(new Storage.BlobListOption[0]);
+	}
 
-		Storage storage = _getStorage();
+	public List<TestrayS3Object> getTestrayS3Objects(String directoryPrefix) {
+		Storage.BlobListOption[] blobListOptions = {
+			Storage.BlobListOption.prefix(directoryPrefix),
+			Storage.BlobListOption.currentDirectory()
+		};
 
-		Page<Blob> blobPage = storage.list(getName());
-
-		for (Blob blob : blobPage.iterateAll()) {
-			testrayS3Objects.add(
-				TestrayS3ObjectFactory.newTestrayS3Object(this, blob));
-		}
-
-		return testrayS3Objects;
+		return _getTestrayS3Objects(blobListOptions);
 	}
 
 	public URL getURL() {
@@ -315,6 +313,23 @@ public class TestrayS3Bucket {
 		StorageOptions storageOptions = StorageOptions.getDefaultInstance();
 
 		return storageOptions.getService();
+	}
+
+	private List<TestrayS3Object> _getTestrayS3Objects(
+		Storage.BlobListOption[] blobListOptions) {
+
+		List<TestrayS3Object> testrayS3Objects = new ArrayList<>();
+
+		Storage storage = _getStorage();
+
+		Page<Blob> blobPage = storage.list(getName(), blobListOptions);
+
+		for (Blob blob : blobPage.iterateAll()) {
+			testrayS3Objects.add(
+				TestrayS3ObjectFactory.newTestrayS3Object(this, blob));
+		}
+
+		return testrayS3Objects;
 	}
 
 	private static final Pattern _fileNamePattern = Pattern.compile(

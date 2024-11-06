@@ -72,17 +72,22 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 			ServiceContextTestUtil.getServiceContext(
 				_sourceGroup, TestPropsValues.getUserId());
 
+		String styleBookEntryKey1 = RandomTestUtil.randomString();
+
 		StyleBookEntry styleBookEntry1 =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _sourceGroup.getGroupId(),
 				false, _read("frontend-tokens-values.json"),
-				RandomTestUtil.randomString(), "STYLE_BOOK_ENTRY_KEY_1",
+				RandomTestUtil.randomString(), styleBookEntryKey1,
 				RandomTestUtil.randomString(), serviceContext);
+
+		String styleBookEntryKey2 = RandomTestUtil.randomString();
+
 		StyleBookEntry styleBookEntry2 =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _sourceGroup.getGroupId(),
 				false, _read("frontend-tokens-values.json"),
-				RandomTestUtil.randomString(), "STYLE_BOOK_ENTRY_KEY_2",
+				RandomTestUtil.randomString(), styleBookEntryKey2,
 				RandomTestUtil.randomString(), serviceContext);
 
 		File file = ReflectionTestUtil.invoke(
@@ -105,10 +110,10 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 				_targetGroup.getGroupId()));
 		Assert.assertNotNull(
 			_styleBookEntryLocalService.fetchStyleBookEntry(
-				_targetGroup.getGroupId(), "STYLE_BOOK_ENTRY_KEY_1"));
+				_targetGroup.getGroupId(), styleBookEntryKey1));
 		Assert.assertNotNull(
 			_styleBookEntryLocalService.fetchStyleBookEntry(
-				_targetGroup.getGroupId(), "STYLE_BOOK_ENTRY_KEY_2"));
+				_targetGroup.getGroupId(), styleBookEntryKey2));
 	}
 
 	@Test
@@ -117,12 +122,15 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 			ServiceContextTestUtil.getServiceContext(
 				_sourceGroup, TestPropsValues.getUserId());
 
+		String name = RandomTestUtil.randomString();
+
+		String styleBookEntryKey = RandomTestUtil.randomString();
+
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _sourceGroup.getGroupId(),
-				false, _read("frontend-tokens-values.json"),
-				"Style Book Entry Name", "STYLE_BOOK_ENTRY_KEY",
-				RandomTestUtil.randomString(), serviceContext);
+				false, _read("frontend-tokens-values.json"), name,
+				styleBookEntryKey, RandomTestUtil.randomString(), serviceContext);
 
 		File file = ReflectionTestUtil.invoke(
 			_exportStyleBookEntriesMVCResourceCommand,
@@ -142,12 +150,11 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 
 		StyleBookEntry targetGroupStyleBookEntry =
 			_styleBookEntryLocalService.fetchStyleBookEntry(
-				_targetGroup.getGroupId(), "STYLE_BOOK_ENTRY_KEY");
+				_targetGroup.getGroupId(), styleBookEntryKey);
 
 		Assert.assertNotNull(targetGroupStyleBookEntry);
 
-		Assert.assertEquals(
-			"Style Book Entry Name", targetGroupStyleBookEntry.getName());
+		Assert.assertEquals(name, targetGroupStyleBookEntry.getName());
 
 		JSONObject expectedFrontendTokensValuesJSONObject =
 			JSONFactoryUtil.createJSONObject(
@@ -173,7 +180,7 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _sourceGroup.getGroupId(),
 				false, _read("frontend-tokens-values.json"),
-				"Style Book Entry Name", "STYLE_BOOK_ENTRY_KEY",
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), serviceContext);
 
 		File file = ReflectionTestUtil.invoke(
@@ -191,7 +198,7 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 			_styleBookEntryLocalService.updateStyleBookEntry(
 				styleBookEntry.getStyleBookEntryId(),
 				_read("updated-frontend-tokens-values.json"),
-				"Updated Style Book Entry Name");
+				RandomTestUtil.randomString());
 
 		ReflectionTestUtil.invoke(
 			_exportStyleBookEntriesMVCResourceCommand,
@@ -213,11 +220,15 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 			ServiceContextTestUtil.getServiceContext(
 				_sourceGroup, TestPropsValues.getUserId());
 
+		String name = RandomTestUtil.randomString();
+
+		String styleBookEntryKey = RandomTestUtil.randomString();
+
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _sourceGroup.getGroupId(),
 				false, _read("frontend-tokens-values.json"),
-				"Style Book Entry Name", "STYLE_BOOK_ENTRY_KEY",
+				RandomTestUtil.randomString(), styleBookEntryKey,
 				RandomTestUtil.randomString(), serviceContext);
 
 		File file = ReflectionTestUtil.invoke(
@@ -234,8 +245,7 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 		StyleBookEntry updatedStyleBookEntry =
 			_styleBookEntryLocalService.updateStyleBookEntry(
 				styleBookEntry.getStyleBookEntryId(),
-				_read("updated-frontend-tokens-values.json"),
-				"Updated Style Book Entry Name");
+				_read("updated-frontend-tokens-values.json"), name);
 
 		file = ReflectionTestUtil.invoke(
 			_exportStyleBookEntriesMVCResourceCommand,
@@ -254,11 +264,9 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 
 		StyleBookEntry updatedTargetGroupStyleBookEntry =
 			_styleBookEntryLocalService.fetchStyleBookEntry(
-				_targetGroup.getGroupId(), "STYLE_BOOK_ENTRY_KEY");
+				_targetGroup.getGroupId(), styleBookEntryKey);
 
-		Assert.assertEquals(
-			"Updated Style Book Entry Name",
-			updatedTargetGroupStyleBookEntry.getName());
+		Assert.assertEquals(name, updatedTargetGroupStyleBookEntry.getName());
 
 		JSONObject expectedFrontendTokensValuesJSONObject =
 			JSONFactoryUtil.createJSONObject(
@@ -282,7 +290,7 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _sourceGroup.getGroupId(),
 				false, _read("frontend-tokens-values.json"),
-				RandomTestUtil.randomString(), "STYLE_BOOK_ENTRY_KEY",
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), serviceContext);
 
 		FileEntry fileEntry = _addFileEntry(styleBookEntry);

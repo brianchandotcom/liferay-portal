@@ -18,6 +18,7 @@ export class DocumentLibraryPage {
 	readonly optionsMenu: Locator;
 	readonly orderMenu: Locator;
 	readonly page: Page;
+	readonly permissionsFrameLocator: FrameLocator;
 	readonly searchButton: Locator;
 	readonly searchInput: Locator;
 
@@ -30,6 +31,9 @@ export class DocumentLibraryPage {
 			.getByLabel('Options');
 		this.orderMenu = page.getByLabel('Order');
 		this.page = page;
+		this.permissionsFrameLocator = page.frameLocator(
+			'iframe[title="Permissions"]'
+		);
 		this.searchButton = page.getByRole('button', {
 			name: 'Search for',
 		});
@@ -158,6 +162,19 @@ export class DocumentLibraryPage {
 		});
 	}
 
+	async goToFileEntryAction(action: string, entryTitle: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: action,
+			}),
+			trigger: this.page
+				.locator(`.card-body:has-text('${entryTitle}')`)
+				.getByLabel('Actions'),
+		});
+	}
+
 	async openBulkEditCategoriesModal(titles: string[]) {
 		await this.selectFileEntries(titles);
 		await this.page.getByRole('button', {name: 'Edit Categories'}).click();
@@ -249,5 +266,33 @@ export class DocumentLibraryPage {
 		}
 
 		await fileEntryCheckbox.check();
+	}
+
+	async assertFileEntryPermissions(
+		permissions: {enabled: boolean; locator: string}[],
+		title: string
+	) {
+		await this.goToFileEntryAction('Permissions', title);
+
+		await this.permissionsFrameLocator
+			.locator(permissions[0].locator)
+			.waitFor();
+
+		for (const permission of permissions) {
+			const permissionCheckbox = this.permissionsFrameLocator.locator(
+				permission.locator
+			);
+
+			if (permission.enabled) {
+				await expect(permissionCheckbox).toBeChecked();
+			}
+			else {
+				await expect(permissionCheckbox).not.toBeChecked();
+			}
+		}
+
+		await this.permissionsFrameLocator
+			.getByRole('button', {name: 'Cancel'})
+			.click();
 	}
 }

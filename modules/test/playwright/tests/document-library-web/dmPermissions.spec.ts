@@ -9,6 +9,7 @@ import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixt
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import getRandomString from '../../utils/getRandomString';
 
 const test = mergeTests(
 	documentLibraryPagesTest,
@@ -33,5 +34,30 @@ test(
 		await expect(
 			page.getByRole('cell', {exact: true, name: 'Role'})
 		).toBeVisible();
+	}
+);
+
+test(
+	'View and Download permissions are linked in DM',
+	{tag: '@LPD-39724'},
+	async ({documentLibraryEditFilePage, documentLibraryPage, site}) => {
+		const title = getRandomString();
+
+		await documentLibraryEditFilePage.publishNewFileWithOwnerViewPermission(
+			title,
+			site.friendlyUrlPath
+		);
+
+		await documentLibraryPage.assertFileEntryPermissions(
+			[
+				{enabled: false, locator: '#guest_ACTION_DOWNLOAD'},
+				{enabled: false, locator: '#guest_ACTION_VIEW'},
+				{enabled: false, locator: '#site-member_ACTION_DOWNLOAD'},
+				{enabled: false, locator: '#site-member_ACTION_VIEW'},
+				{enabled: true, locator: '#owner_ACTION_DOWNLOAD'},
+				{enabled: true, locator: '#owner_ACTION_VIEW'},
+			],
+			title
+		);
 	}
 );

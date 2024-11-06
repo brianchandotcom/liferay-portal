@@ -5,20 +5,29 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.servlet.JspFactorySwapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,6 +45,8 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.naming.NamingException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterRegistration;
@@ -143,7 +154,53 @@ public class JspServlet extends HttpServlet {
 		final ServletContext servletContext = servletConfig.getServletContext();
 
 		servletContext.setAttribute(
-			InstanceManager.class.getName(), new SimpleInstanceManager());
+			InstanceManager.class.getName(),
+			new SimpleInstanceManager() {
+
+				@Override
+				public Object newInstance(
+						String className, ClassLoader classLoader)
+					throws ClassNotFoundException, IllegalAccessException,
+						   InstantiationException, InvocationTargetException,
+						   NamingException, NoSuchMethodException {
+
+					Class<?> clazz = null;
+
+					try {
+						clazz = classLoader.loadClass(className);
+					}
+					catch (ClassNotFoundException classNotFoundException) {
+						ClassLoader parentClassLoader = classLoader.getParent();
+
+						try {
+							byte[] bytes = StreamUtil.toByteArray(
+								parentClassLoader.getResourceAsStream(
+									StringUtil.replace(className, '.', '/') +
+										".class"));
+
+							if (bytes != null) {
+								clazz =
+									(Class<?>)
+										_defineClassMethodHandle.invokeExact(
+											classLoader, className, bytes, 0,
+											bytes.length);
+							}
+						}
+						catch (Throwable throwable) {
+							classNotFoundException.addSuppressed(throwable);
+						}
+
+						if (clazz == null) {
+							throw classNotFoundException;
+						}
+					}
+
+					Constructor<?> constructor = clazz.getConstructor();
+
+					return constructor.newInstance();
+				}
+
+			});
 
 		ClassLoader classLoader = servletContext.getClassLoader();
 
@@ -360,6 +417,7 @@ public class JspServlet extends HttpServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(JspServlet.class);
 
+	private static final MethodHandle _defineClassMethodHandle;
 	private static final Properties _initParams = PropsUtil.getProperties(
 		"jsp.servlet.init.param.", true);
 	private static final Bundle _jspBundle = FrameworkUtil.getBundle(
@@ -368,6 +426,21 @@ public class JspServlet extends HttpServlet {
 		"^(?<file>.*)(\\.(portal|original))(?<extension>\\.(jsp|jspf))$");
 	private static final Bundle _utilTaglibBundle = FrameworkUtil.getBundle(
 		JspFactorySwapper.class);
+
+	static {
+		try {
+			MethodHandles.Lookup lookup = ReflectionUtil.getImplLookup();
+
+			_defineClassMethodHandle = lookup.findVirtual(
+				ClassLoader.class, "defineClass",
+				MethodType.methodType(
+					Class.class, String.class, byte[].class, int.class,
+					int.class));
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new ExceptionInInitializerError(reflectiveOperationException);
+		}
+	}
 
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;

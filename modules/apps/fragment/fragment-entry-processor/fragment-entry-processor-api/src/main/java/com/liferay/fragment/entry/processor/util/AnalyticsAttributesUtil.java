@@ -31,6 +31,10 @@ import org.jsoup.nodes.Element;
  */
 public class AnalyticsAttributesUtil {
 
+	public static final String ACTION_IMPRESSION = "impression";
+
+	public static final String ACTION_VIEW = "view";
+
 	public static void addAnalyticsAttributes(
 		JSONObject editableValueJSONObject, Element element,
 		FragmentEntryProcessorContext fragmentEntryProcessorContext,
@@ -84,7 +88,7 @@ public class AnalyticsAttributesUtil {
 			infoItemFieldMapped.getInfoItemReference());
 
 		if (infoItemFieldValues == null) {
-			return "impression";
+			return ACTION_IMPRESSION;
 		}
 
 		InfoFieldValue<?> infoFieldValue =
@@ -92,7 +96,7 @@ public class AnalyticsAttributesUtil {
 				infoItemFieldMapped.getFieldName());
 
 		if (infoFieldValue == null) {
-			return "impression";
+			return ACTION_IMPRESSION;
 		}
 
 		InfoField<?> infoField = infoFieldValue.getInfoField();
@@ -100,10 +104,10 @@ public class AnalyticsAttributesUtil {
 		if (infoField.getInfoFieldType() instanceof HTMLInfoFieldType ||
 			infoField.getInfoFieldType() instanceof TextInfoFieldType) {
 
-			return "view";
+			return ACTION_VIEW;
 		}
 
-		return "impression";
+		return ACTION_IMPRESSION;
 	}
 
 	private static String _getAnalyticsSubtype(

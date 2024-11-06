@@ -5,8 +5,15 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.headless.admin.site.dto.v1_0.ClassSubtypeReference;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
+import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.resource.v1_0.DisplayPageTemplateResource;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.info.item.InfoItemFormVariation;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
@@ -15,6 +22,10 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -61,6 +72,69 @@ public class DisplayPageTemplateResourceImpl
 						layoutPageTemplateEntry)));
 	}
 
+	@Override
+	public DisplayPageTemplate
+			postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+				String siteExternalReferenceCode,
+				DisplayPageTemplate displayPageTemplate)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		ClassSubtypeReference contentTypeReference =
+			displayPageTemplate.getContentTypeReference();
+
+		return _displayPageTemplateDTOConverter.toDTO(
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				displayPageTemplate.getExternalReferenceCode(),
+				group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_portal.getClassNameId(contentTypeReference.getClassName()),
+				_getClassTypeId(contentTypeReference, group.getGroupId()),
+				displayPageTemplate.getName(), 0L,
+				WorkflowConstants.STATUS_DRAFT,
+				ServiceContextBuilder.create(
+					group.getGroupId(), contextHttpServletRequest, null
+				).build()));
+	}
+
+	private long _getClassTypeId(
+		ClassSubtypeReference contentTypeReference, long groupId) {
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				contentTypeReference.getClassName());
+
+		if (infoItemFormVariationsProvider == null) {
+			return 0;
+		}
+
+		ItemExternalReference itemExternalReference =
+			contentTypeReference.getSubTypeExternalReference();
+
+		if (itemExternalReference == null) {
+			return -1;
+		}
+
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.
+				getInfoItemFormVariationByExternalReferenceCode(
+					itemExternalReference.getExternalReferenceCode(), groupId);
+
+		if (infoItemFormVariation != null) {
+			return GetterUtil.getLong(infoItemFormVariation.getKey());
+		}
+
+		return -1;
+	}
+
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.DisplayPageTemplateDTOConverter)"
 	)
@@ -68,6 +142,15 @@ public class DisplayPageTemplateResourceImpl
 		_displayPageTemplateDTOConverter;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private Portal _portal;
 
 }

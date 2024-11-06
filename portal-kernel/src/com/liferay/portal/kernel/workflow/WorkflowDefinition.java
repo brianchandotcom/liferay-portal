@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.workflow;
 
-import com.liferay.portal.kernel.model.ClassedModel;
 
 import java.io.InputStream;
 
@@ -19,7 +18,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  */
-public interface WorkflowDefinition extends ClassedModel, WorkflowModel {
+public interface WorkflowDefinition extends WorkflowModel {
 
 	public default long getCompanyId() {
 		return 0;

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
@@ -291,5 +292,8 @@ public class KaleoDefinitionServiceImplTest {
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private WorkflowDefinitionLinkService _workflowDefinitionLinkService;
 
 }

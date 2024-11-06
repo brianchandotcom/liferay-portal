@@ -7,14 +7,20 @@ package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinitionLink;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionLinkResource;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.logging.Level;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +49,7 @@ public class WorkflowDefinitionLinkResourceImpl
 
 		List<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
 			workflowDefinitionLinks =
-				_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+				_workflowDefinitionLinkService.getWorkflowDefinitionLinks(
 					contextCompany.getCompanyId(), workflowDefinition.getName(),
 					workflowDefinition.getVersion());
 
@@ -69,11 +75,25 @@ public class WorkflowDefinitionLinkResourceImpl
 
 		List<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
 			workflowDefinitionLinks =
-				_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+				_workflowDefinitionLinkService.getWorkflowDefinitionLinks(
 					contextCompany.getCompanyId(), workflowDefinition.getName(),
 					workflowDefinition.getVersion());
+		
+		ModelResourcePermission<KaleoDefinition>
+			modelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				"com.liferay.portal.workflow.kaleo.model.KaleoDefinition");
 
 		return Page.of(
+			HashMapBuilder.put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_DEFINITION, workflowDefinitionId,
+					"postWorkflowDefinitionWorkflowDefinitionLinkBatch",
+					ModelResourcePermissionRegistryUtil.
+						getModelResourcePermission(
+							"com.liferay.portal.workflow.kaleo.model.KaleoDefinition"))
+			).build(),
 			transform(
 				ListUtil.subList(
 					workflowDefinitionLinks, pagination.getStartPosition(),
@@ -95,7 +115,7 @@ public class WorkflowDefinitionLinkResourceImpl
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		return _toWorkflowDefinitionLink(
-			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+			_workflowDefinitionLinkService.addWorkflowDefinitionLink(
 				contextUser.getUserId(), contextCompany.getCompanyId(),
 				workflowDefinitionLink.getGroupId(),
 				workflowDefinitionLink.getClassName(), 0, 0,
@@ -113,7 +133,7 @@ public class WorkflowDefinitionLinkResourceImpl
 				workflowDefinitionId);
 
 		return _toWorkflowDefinitionLink(
-			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+			_workflowDefinitionLinkService.addWorkflowDefinitionLink(
 				contextUser.getUserId(), contextCompany.getCompanyId(),
 				workflowDefinitionLink.getGroupId(),
 				workflowDefinitionLink.getClassName(), 0, 0,
@@ -139,8 +159,7 @@ public class WorkflowDefinitionLinkResourceImpl
 	}
 
 	@Reference
-	private WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService;
+	private WorkflowDefinitionLinkService _workflowDefinitionLinkService;
 
 	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;

@@ -1288,7 +1288,7 @@ public class CommerceOrderItemServiceHttp {
 	public static com.liferay.commerce.model.CommerceOrderItem
 			updateCommerceOrderItemInfo(
 				HttpPrincipal httpPrincipal, long commerceOrderItemId,
-				long shippingAddressId, String deliveryGroup,
+				long shippingAddressId, String deliveryGroupName,
 				String printedNote)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1300,7 +1300,7 @@ public class CommerceOrderItemServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderItemId, shippingAddressId,
-				deliveryGroup, printedNote);
+				deliveryGroupName, printedNote);
 
 			Object returnObj = null;
 
@@ -1333,7 +1333,7 @@ public class CommerceOrderItemServiceHttp {
 	public static com.liferay.commerce.model.CommerceOrderItem
 			updateCommerceOrderItemInfo(
 				HttpPrincipal httpPrincipal, long commerceOrderItemId,
-				long shippingAddressId, String deliveryGroup,
+				long shippingAddressId, String deliveryGroupName,
 				String printedNote, int requestedDeliveryDateMonth,
 				int requestedDeliveryDateDay, int requestedDeliveryDateYear)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1346,7 +1346,7 @@ public class CommerceOrderItemServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderItemId, shippingAddressId,
-				deliveryGroup, printedNote, requestedDeliveryDateMonth,
+				deliveryGroupName, printedNote, requestedDeliveryDateMonth,
 				requestedDeliveryDateDay, requestedDeliveryDateYear);
 
 			Object returnObj = null;
@@ -1380,7 +1380,7 @@ public class CommerceOrderItemServiceHttp {
 	public static com.liferay.commerce.model.CommerceOrderItem
 			updateCommerceOrderItemInfo(
 				HttpPrincipal httpPrincipal, long commerceOrderItemId,
-				String deliveryGroup, long shippingAddressId,
+				String deliveryGroupName, long shippingAddressId,
 				String printedNote, int requestedDeliveryDateMonth,
 				int requestedDeliveryDateDay, int requestedDeliveryDateYear,
 				int requestedDeliveryDateHour, int requestedDeliveryDateMinute,
@@ -1394,7 +1394,7 @@ public class CommerceOrderItemServiceHttp {
 				_updateCommerceOrderItemInfoParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceOrderItemId, deliveryGroup,
+				methodKey, commerceOrderItemId, deliveryGroupName,
 				shippingAddressId, printedNote, requestedDeliveryDateMonth,
 				requestedDeliveryDateDay, requestedDeliveryDateYear,
 				requestedDeliveryDateHour, requestedDeliveryDateMinute,

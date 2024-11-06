@@ -84,7 +84,8 @@ public class CommerceOrderItemModelImpl
 		{"CPMeasurementUnitId", Types.BIGINT}, {"CProductId", Types.BIGINT},
 		{"customerCommerceOrderItemId", Types.BIGINT},
 		{"parentCommerceOrderItemId", Types.BIGINT},
-		{"shippingAddressId", Types.BIGINT}, {"deliveryGroup", Types.VARCHAR},
+		{"shippingAddressId", Types.BIGINT},
+		{"deliveryGroupName", Types.VARCHAR},
 		{"deliveryMaxSubscriptionCycles", Types.BIGINT},
 		{"deliverySubscriptionLength", Types.INTEGER},
 		{"deliverySubscriptionType", Types.VARCHAR},
@@ -145,7 +146,7 @@ public class CommerceOrderItemModelImpl
 		TABLE_COLUMNS_MAP.put("customerCommerceOrderItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentCommerceOrderItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("shippingAddressId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("deliveryGroup", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("deliveryGroupName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("deliveryMaxSubscriptionCycles", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("deliverySubscriptionLength", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("deliverySubscriptionType", Types.VARCHAR);
@@ -197,7 +198,7 @@ public class CommerceOrderItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CIBookedQuantityId LONG,commerceOrderId LONG,commercePriceListId LONG,CPInstanceId LONG,CPMeasurementUnitId LONG,CProductId LONG,customerCommerceOrderItemId LONG,parentCommerceOrderItemId LONG,shippingAddressId LONG,deliveryGroup VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,depth DOUBLE,discountAmount BIGDECIMAL null,discountManuallyAdjusted BOOLEAN,discountPercentageLevel1 BIGDECIMAL null,discountPercentageLevel2 BIGDECIMAL null,discountPercentageLevel3 BIGDECIMAL null,discountPercentageLevel4 BIGDECIMAL null,discountPctLevel1WithTaxAmount BIGDECIMAL null,discountPctLevel2WithTaxAmount BIGDECIMAL null,discountPctLevel3WithTaxAmount BIGDECIMAL null,discountPctLevel4WithTaxAmount BIGDECIMAL null,discountWithTaxAmount BIGDECIMAL null,finalPrice BIGDECIMAL null,finalPriceWithTaxAmount BIGDECIMAL null,freeShipping BOOLEAN,height DOUBLE,json TEXT null,manuallyAdjusted BOOLEAN,maxSubscriptionCycles LONG,name STRING null,priceManuallyAdjusted BOOLEAN,priceOnApplication BOOLEAN,printedNote STRING null,promoPrice BIGDECIMAL null,promoPriceWithTaxAmount BIGDECIMAL null,quantity BIGDECIMAL null,replacedCPInstanceId LONG,replacedSku VARCHAR(75) null,requestedDeliveryDate DATE null,shipSeparately BOOLEAN,shippable BOOLEAN,shippedQuantity BIGDECIMAL null,shippingExtraPrice DOUBLE,sku VARCHAR(75) null,subscription BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,UOMIncrementalOrderQuantity BIGDECIMAL null,unitOfMeasureKey VARCHAR(75) null,unitPrice BIGDECIMAL null,unitPriceWithTaxAmount BIGDECIMAL null,weight DOUBLE,width DOUBLE)";
+		"create table CommerceOrderItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CIBookedQuantityId LONG,commerceOrderId LONG,commercePriceListId LONG,CPInstanceId LONG,CPMeasurementUnitId LONG,CProductId LONG,customerCommerceOrderItemId LONG,parentCommerceOrderItemId LONG,shippingAddressId LONG,deliveryGroupName VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,depth DOUBLE,discountAmount BIGDECIMAL null,discountManuallyAdjusted BOOLEAN,discountPercentageLevel1 BIGDECIMAL null,discountPercentageLevel2 BIGDECIMAL null,discountPercentageLevel3 BIGDECIMAL null,discountPercentageLevel4 BIGDECIMAL null,discountPctLevel1WithTaxAmount BIGDECIMAL null,discountPctLevel2WithTaxAmount BIGDECIMAL null,discountPctLevel3WithTaxAmount BIGDECIMAL null,discountPctLevel4WithTaxAmount BIGDECIMAL null,discountWithTaxAmount BIGDECIMAL null,finalPrice BIGDECIMAL null,finalPriceWithTaxAmount BIGDECIMAL null,freeShipping BOOLEAN,height DOUBLE,json TEXT null,manuallyAdjusted BOOLEAN,maxSubscriptionCycles LONG,name STRING null,priceManuallyAdjusted BOOLEAN,priceOnApplication BOOLEAN,printedNote STRING null,promoPrice BIGDECIMAL null,promoPriceWithTaxAmount BIGDECIMAL null,quantity BIGDECIMAL null,replacedCPInstanceId LONG,replacedSku VARCHAR(75) null,requestedDeliveryDate DATE null,shipSeparately BOOLEAN,shippable BOOLEAN,shippedQuantity BIGDECIMAL null,shippingExtraPrice DOUBLE,sku VARCHAR(75) null,subscription BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,UOMIncrementalOrderQuantity BIGDECIMAL null,unitOfMeasureKey VARCHAR(75) null,unitPrice BIGDECIMAL null,unitPriceWithTaxAmount BIGDECIMAL null,weight DOUBLE,width DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 
@@ -368,7 +369,7 @@ public class CommerceOrderItemModelImpl
 			attributeGetterFunctions.put(
 				"shippingAddressId", CommerceOrderItem::getShippingAddressId);
 			attributeGetterFunctions.put(
-				"deliveryGroup", CommerceOrderItem::getDeliveryGroup);
+				"deliveryGroupName", CommerceOrderItem::getDeliveryGroupName);
 			attributeGetterFunctions.put(
 				"deliveryMaxSubscriptionCycles",
 				CommerceOrderItem::getDeliveryMaxSubscriptionCycles);
@@ -578,9 +579,9 @@ public class CommerceOrderItemModelImpl
 				(BiConsumer<CommerceOrderItem, Long>)
 					CommerceOrderItem::setShippingAddressId);
 			attributeSetterBiConsumers.put(
-				"deliveryGroup",
+				"deliveryGroupName",
 				(BiConsumer<CommerceOrderItem, String>)
-					CommerceOrderItem::setDeliveryGroup);
+					CommerceOrderItem::setDeliveryGroupName);
 			attributeSetterBiConsumers.put(
 				"deliveryMaxSubscriptionCycles",
 				(BiConsumer<CommerceOrderItem, Long>)
@@ -1210,22 +1211,22 @@ public class CommerceOrderItemModelImpl
 
 	@JSON
 	@Override
-	public String getDeliveryGroup() {
-		if (_deliveryGroup == null) {
+	public String getDeliveryGroupName() {
+		if (_deliveryGroupName == null) {
 			return "";
 		}
 		else {
-			return _deliveryGroup;
+			return _deliveryGroupName;
 		}
 	}
 
 	@Override
-	public void setDeliveryGroup(String deliveryGroup) {
+	public void setDeliveryGroupName(String deliveryGroupName) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_deliveryGroup = deliveryGroup;
+		_deliveryGroupName = deliveryGroupName;
 	}
 
 	@JSON
@@ -2298,7 +2299,7 @@ public class CommerceOrderItemModelImpl
 		commerceOrderItemImpl.setParentCommerceOrderItemId(
 			getParentCommerceOrderItemId());
 		commerceOrderItemImpl.setShippingAddressId(getShippingAddressId());
-		commerceOrderItemImpl.setDeliveryGroup(getDeliveryGroup());
+		commerceOrderItemImpl.setDeliveryGroupName(getDeliveryGroupName());
 		commerceOrderItemImpl.setDeliveryMaxSubscriptionCycles(
 			getDeliveryMaxSubscriptionCycles());
 		commerceOrderItemImpl.setDeliverySubscriptionLength(
@@ -2419,8 +2420,8 @@ public class CommerceOrderItemModelImpl
 			this.<Long>getColumnOriginalValue("parentCommerceOrderItemId"));
 		commerceOrderItemImpl.setShippingAddressId(
 			this.<Long>getColumnOriginalValue("shippingAddressId"));
-		commerceOrderItemImpl.setDeliveryGroup(
-			this.<String>getColumnOriginalValue("deliveryGroup"));
+		commerceOrderItemImpl.setDeliveryGroupName(
+			this.<String>getColumnOriginalValue("deliveryGroupName"));
 		commerceOrderItemImpl.setDeliveryMaxSubscriptionCycles(
 			this.<Long>getColumnOriginalValue("deliveryMaxSubscriptionCycles"));
 		commerceOrderItemImpl.setDeliverySubscriptionLength(
@@ -2681,12 +2682,13 @@ public class CommerceOrderItemModelImpl
 
 		commerceOrderItemCacheModel.shippingAddressId = getShippingAddressId();
 
-		commerceOrderItemCacheModel.deliveryGroup = getDeliveryGroup();
+		commerceOrderItemCacheModel.deliveryGroupName = getDeliveryGroupName();
 
-		String deliveryGroup = commerceOrderItemCacheModel.deliveryGroup;
+		String deliveryGroupName =
+			commerceOrderItemCacheModel.deliveryGroupName;
 
-		if ((deliveryGroup != null) && (deliveryGroup.length() == 0)) {
-			commerceOrderItemCacheModel.deliveryGroup = null;
+		if ((deliveryGroupName != null) && (deliveryGroupName.length() == 0)) {
+			commerceOrderItemCacheModel.deliveryGroupName = null;
 		}
 
 		commerceOrderItemCacheModel.deliveryMaxSubscriptionCycles =
@@ -2968,7 +2970,7 @@ public class CommerceOrderItemModelImpl
 	private long _customerCommerceOrderItemId;
 	private long _parentCommerceOrderItemId;
 	private long _shippingAddressId;
-	private String _deliveryGroup;
+	private String _deliveryGroupName;
 	private long _deliveryMaxSubscriptionCycles;
 	private int _deliverySubscriptionLength;
 	private String _deliverySubscriptionType;
@@ -3072,7 +3074,7 @@ public class CommerceOrderItemModelImpl
 		_columnOriginalValues.put(
 			"parentCommerceOrderItemId", _parentCommerceOrderItemId);
 		_columnOriginalValues.put("shippingAddressId", _shippingAddressId);
-		_columnOriginalValues.put("deliveryGroup", _deliveryGroup);
+		_columnOriginalValues.put("deliveryGroupName", _deliveryGroupName);
 		_columnOriginalValues.put(
 			"deliveryMaxSubscriptionCycles", _deliveryMaxSubscriptionCycles);
 		_columnOriginalValues.put(

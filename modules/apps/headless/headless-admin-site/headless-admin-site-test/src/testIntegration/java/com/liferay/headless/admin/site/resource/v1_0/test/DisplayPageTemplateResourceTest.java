@@ -131,6 +131,7 @@ public class DisplayPageTemplateResourceTest
 				setSubTypeExternalReference(
 					() -> new ItemExternalReference() {
 						{
+							setCollectionType(CollectionType.COLLECTION);
 							setExternalReferenceCode(
 								infoItemFormVariation::
 									getExternalReferenceCode);

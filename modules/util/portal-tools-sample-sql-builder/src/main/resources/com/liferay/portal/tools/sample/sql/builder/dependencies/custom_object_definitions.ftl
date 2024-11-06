@@ -84,6 +84,6 @@ ${dataFactory.getExtensionDynamicObjectDefinitionTableCreateSQL(objectDefinition
 
 	<@insertAssetEntry _entry = objectEntryModel />
 
-	${dataFactory.getInsertIntoDynamicObjectDefinitionTable(dlFileEntryModel.getFileEntryId(), objectDefinitionModel, objectEntryModel, objectFieldModels, objectEntryModel.getUserId())}
-	${dataFactory.getInsertIntoDynamicExtensionObjectDefinitionTable(objectDefinitionModel, objectEntryModel)}
+	${dataFactory.getInsertIntoDynamicObjectDefinitionTable(dlFileEntryModel.getFileEntryId(), objectDefinitionModel.getDBTableName(), objectEntryModel.getObjectEntryId(), objectFieldModels, objectEntryModel.getUserId())}
+	${dataFactory.getInsertIntoDynamicExtensionObjectDefinitionTable(objectDefinitionModel.getDBTableName(), objectEntryModel.getObjectEntryId())}
 </#list>

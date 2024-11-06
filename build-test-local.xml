@@ -324,23 +324,6 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		<replaceregexp
 			file="${project.dir}/test.properties"
 			flags="g"
-			match="(test\.batch\.names\[portal-release-acceptance\]=)functional-tomcat-mysql57-jdk21_zulu"
-			replace="\1{temp.batches}"
-		/>
-
-		<replace
-			file="${project.dir}/test.properties"
-		>
-			<replacetoken><![CDATA[{temp.batches}]]></replacetoken>
-			<replacevalue><![CDATA[\
-        functional-tomcat-mysql57-jdk21_zulu,\
-        modules-integration-mysql57-jdk21_zulu,\
-        playwright-js-tomcat90-mysql57-jdk21_zulu]]></replacevalue>
-		</replace>
-
-		<replaceregexp
-			file="${project.dir}/test.properties"
-			flags="g"
 			match="(test\.batch\.dist\.app\.servers=)\\(\n*.*?)*wildfly"
 			replace="\1tomcat"
 		/>

@@ -151,12 +151,36 @@ export class DocumentLibraryEditFilePage {
 		await this.goto(siteUrl);
 
 		await this.titleSelector.fill(title);
+
 		if (await this.permissionViewSelector.isVisible()) {
 			await this.permissionViewSelector.selectOption('Site Member');
 		}
 		else {
 			await this.page.getByRole('button', {name: 'Permissions'}).click();
 			await this.permissionViewSelector.selectOption('Site Member');
+		}
+
+		await this.publishButton.click();
+	}
+
+	async publishNewFileWithOwnerViewPermission(
+		title: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
+		await this.goto(siteUrl);
+
+		await this.titleSelector.fill(title);
+
+		const permissionsRoleSelector = this.page.getByLabel(
+			'Viewable and Downloadable By'
+		);
+
+		if (await permissionsRoleSelector.isVisible()) {
+			await permissionsRoleSelector.selectOption('Owner');
+		}
+		else {
+			await this.page.getByRole('button', {name: 'Permissions'}).click();
+			await permissionsRoleSelector.selectOption('Owner');
 		}
 
 		await this.publishButton.click();

@@ -540,7 +540,6 @@ public class ObjectEntryLocalServiceUtil {
 
 	public static List<Long> getPrimaryKeyList(
 			long groupId, long companyId, long userId, long objectDefinitionId,
-			String[] selectedObjectFieldNames,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
 			String search, int start, int end,
 			com.liferay.portal.kernel.search.Sort[] sorts)
@@ -548,7 +547,7 @@ public class ObjectEntryLocalServiceUtil {
 
 		return getService().getPrimaryKeyList(
 			groupId, companyId, userId, objectDefinitionId,
-			selectedObjectFieldNames, predicate, search, start, end, sorts);
+			predicate, search, start, end, sorts);
 	}
 
 	public static Map<String, Object> getSystemModelAttributes(

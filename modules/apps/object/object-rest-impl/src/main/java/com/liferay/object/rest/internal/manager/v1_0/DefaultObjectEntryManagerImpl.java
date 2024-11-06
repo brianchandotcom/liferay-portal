@@ -400,22 +400,6 @@ public class DefaultObjectEntryManagerImpl
 			}
 		}
 
-		String[] selectedObjectFieldNames = null;
-
-		UriInfo uriInfo = dtoConverterContext.getUriInfo();
-
-		if (uriInfo != null) {
-			MultivaluedMap<String, String> queryParameters =
-				uriInfo.getQueryParameters();
-
-			String fields = queryParameters.getFirst("fields");
-
-			if (fields != null) {
-				selectedObjectFieldNames = StringUtil.split(
-					fields, StringPool.COMMA);
-			}
-		}
-
 		return Page.of(
 			HashMapBuilder.put(
 				"create",
@@ -458,9 +442,8 @@ public class DefaultObjectEntryManagerImpl
 			TransformUtil.transform(
 				objectEntryLocalService.getPrimaryKeyList(
 					groupId, companyId, dtoConverterContext.getUserId(),
-					objectDefinition.getObjectDefinitionId(),
-					selectedObjectFieldNames, predicate, search, start, end,
-					sorts),
+					objectDefinition.getObjectDefinitionId(), predicate, search,
+					start, end, sorts),
 				primaryKey -> _getObjectEntry(
 					dtoConverterContext, objectDefinition,
 					objectEntryLocalService.getValues(primaryKey))),

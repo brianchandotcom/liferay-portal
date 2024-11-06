@@ -2674,13 +2674,13 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetValuesList() throws Exception {
+	public void testGetValues() throws Exception {
 		Sort[] sorts = {new Sort("id", false)};
 
 		List<Map<String, Serializable>> valuesList = TransformUtil.transform(
 			_objectEntryLocalService.getPrimaryKeyList(
 				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), null, null, null,
+				_objectDefinition.getObjectDefinitionId(), null, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
@@ -2704,7 +2704,7 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = TransformUtil.transform(
 			_objectEntryLocalService.getPrimaryKeyList(
 				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), null, null, null,
+				_objectDefinition.getObjectDefinitionId(), null, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
@@ -2730,7 +2730,7 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = TransformUtil.transform(
 			_objectEntryLocalService.getPrimaryKeyList(
 				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), null, null, null,
+				_objectDefinition.getObjectDefinitionId(), null, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
@@ -2757,7 +2757,7 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = TransformUtil.transform(
 			_objectEntryLocalService.getPrimaryKeyList(
 				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), null, null, null,
+				_objectDefinition.getObjectDefinitionId(), null, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
@@ -2775,7 +2775,7 @@ public class ObjectEntryLocalServiceTest {
 			_objectEntryLocalService.getPrimaryKeyList(
 				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				_irrelevantObjectDefinition.getObjectDefinitionId(), null, null,
-				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 0, valuesList.size());
@@ -2805,7 +2805,7 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = TransformUtil.transform(
 			_objectEntryLocalService.getPrimaryKeyList(
 				0, TestPropsValues.getCompanyId(), user.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), null, null, null,
+				_objectDefinition.getObjectDefinitionId(), null, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
@@ -2831,8 +2831,8 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = TransformUtil.transform(
 			_objectEntryLocalService.getPrimaryKeyList(
 				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), null, predicate,
-				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+				_objectDefinition.getObjectDefinitionId(), predicate, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 2, valuesList.size());
@@ -2847,8 +2847,8 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = TransformUtil.transform(
 			_objectEntryLocalService.getPrimaryKeyList(
 				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), null, predicate,
-				search, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+				_objectDefinition.getObjectDefinitionId(), predicate, search,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
@@ -2858,7 +2858,7 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = TransformUtil.transform(
 			_objectEntryLocalService.getPrimaryKeyList(
 				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), null, predicate,
+				_objectDefinition.getObjectDefinitionId(), predicate,
 				StringUtil.toLowerCase(search), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, sorts),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
@@ -2870,7 +2870,7 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = TransformUtil.transform(
 			_objectEntryLocalService.getPrimaryKeyList(
 				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), null, predicate,
+				_objectDefinition.getObjectDefinitionId(), predicate,
 				StringUtil.toUpperCase(search), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, sorts),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
@@ -2882,7 +2882,7 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = TransformUtil.transform(
 			_objectEntryLocalService.getPrimaryKeyList(
 				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), null, predicate,
+				_objectDefinition.getObjectDefinitionId(), predicate,
 				RandomTestUtil.randomString(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, sorts),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
@@ -2898,8 +2898,8 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = TransformUtil.transform(
 			_objectEntryLocalService.getPrimaryKeyList(
 				0, TestPropsValues.getCompanyId(), user.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), null, predicate,
-				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
+				_objectDefinition.getObjectDefinitionId(), predicate, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
@@ -2918,9 +2918,8 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = TransformUtil.transform(
 			_objectEntryLocalService.getPrimaryKeyList(
 				0, TestPropsValues.getCompanyId(), user.getUserId(),
-				_objectDefinition.getObjectDefinitionId(),
-				selectedObjectFieldNames, null, null, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, sorts),
+				_objectDefinition.getObjectDefinitionId(), null, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));
 
 		Assert.assertEquals(valuesList.toString(), 3, valuesList.size());

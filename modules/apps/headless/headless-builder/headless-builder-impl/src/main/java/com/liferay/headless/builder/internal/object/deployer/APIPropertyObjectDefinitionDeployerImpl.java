@@ -134,7 +134,7 @@ public class APIPropertyObjectDefinitionDeployerImpl
 			_objectEntryLocalService.getPrimaryKeyList(
 				GroupThreadLocal.getGroupId(), objectDefinition.getCompanyId(),
 				objectDefinition.getUserId(),
-				objectDefinition.getObjectDefinitionId(), null,
+				objectDefinition.getObjectDefinitionId(),
 				_filterFactory.create("type eq null", objectDefinition), null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 			primaryKey -> _objectEntryLocalService.getValues(primaryKey));

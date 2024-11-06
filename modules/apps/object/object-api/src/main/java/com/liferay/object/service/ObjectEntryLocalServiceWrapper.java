@@ -619,7 +619,6 @@ public class ObjectEntryLocalServiceWrapper
 	@Override
 	public java.util.List<Long> getPrimaryKeyList(
 			long groupId, long companyId, long userId, long objectDefinitionId,
-			String[] selectedObjectFieldNames,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
 			String search, int start, int end,
 			com.liferay.portal.kernel.search.Sort[] sorts)
@@ -627,7 +626,7 @@ public class ObjectEntryLocalServiceWrapper
 
 		return _objectEntryLocalService.getPrimaryKeyList(
 			groupId, companyId, userId, objectDefinitionId,
-			selectedObjectFieldNames, predicate, search, start, end, sorts);
+			predicate, search, start, end, sorts);
 	}
 
 	@Override

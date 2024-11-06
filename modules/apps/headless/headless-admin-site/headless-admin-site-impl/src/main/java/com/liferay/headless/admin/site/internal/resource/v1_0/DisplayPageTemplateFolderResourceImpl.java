@@ -16,8 +16,6 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -124,13 +122,6 @@ public class DisplayPageTemplateFolderResourceImpl
 		throws Exception {
 
 		return _displayPageTemplateFolderDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), null,
-				_dtoConverterRegistry, contextHttpServletRequest,
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser),
 			layoutPageTemplateCollection);
 	}
 
@@ -140,9 +131,6 @@ public class DisplayPageTemplateFolderResourceImpl
 	private DTOConverter
 		<LayoutPageTemplateCollection, DisplayPageTemplateFolder>
 			_displayPageTemplateFolderDTOConverter;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

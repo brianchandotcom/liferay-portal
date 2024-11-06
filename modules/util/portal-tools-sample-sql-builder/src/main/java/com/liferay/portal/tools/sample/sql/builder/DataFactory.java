@@ -671,40 +671,36 @@ public class DataFactory {
 	}
 
 	public String getInsertIntoDynamicExtensionObjectDefinitionTable(
-		ObjectDefinitionModel objectDefinition,
-		ObjectEntryModel objectEntryModel) {
+		String dbTableName, long objectEntryId) {
 
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("insert into ");
-		sb.append(objectDefinition.getDBTableName());
+		sb.append(dbTableName);
 		sb.append("_x values (");
-		sb.append(objectEntryModel.getObjectEntryId());
+		sb.append(objectEntryId);
 		sb.append(");");
 
 		return sb.toString();
 	}
 
 	public String getInsertIntoDynamicObjectDefinitionTable(
-		long fileEntryId, ObjectDefinitionModel objectDefinition,
-		ObjectEntryModel objectEntryModel,
+		long fileEntryId, String dbTableName, long objectEntryId,
 		List<ObjectFieldModel> objectFieldModels, long relatedObjectEntryId) {
 
 		StringBundler sb = new StringBundler();
 
 		sb.append("insert into ");
-		sb.append(objectDefinition.getDBTableName());
+		sb.append(dbTableName);
 		sb.append(" values (");
-		sb.append(objectEntryModel.getObjectEntryId());
+		sb.append(objectEntryId);
 
 		for (ObjectFieldModel objectFieldModel : objectFieldModels) {
 			if (objectFieldModel.isSystem()) {
 				continue;
 			}
 
-			Object value =
-				objectFieldModel.getName() +
-					objectEntryModel.getObjectEntryId();
+			Object value = objectFieldModel.getName() + objectEntryId;
 
 			if (StringUtil.equals(
 					objectFieldModel.getBusinessType(),

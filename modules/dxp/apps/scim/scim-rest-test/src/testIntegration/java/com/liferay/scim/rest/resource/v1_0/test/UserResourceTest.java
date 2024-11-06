@@ -159,7 +159,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
 		assertHttpResponseStatusCode(
-			404, userResource.getV2UserByIdHttpResponse("12345"));
+			404, userResource.getV2UserByIdHttpResponse(user.getId()));
 	}
 
 	@Override
@@ -304,7 +304,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
 		assertHttpResponseStatusCode(
-			404, userResource.putV2UserHttpResponse("12345", randomUser()));
+			404, userResource.putV2UserHttpResponse(user2.getId(), user2));
 	}
 
 	@Override

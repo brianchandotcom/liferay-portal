@@ -41,7 +41,7 @@ const ProjectRoutes = () => {
 	const { data: koroneikiData, loading: koroneikiAccountLoading } = useCurrentKoroneikiAccount();
 	const koroneikiAccount = koroneikiData?.koroneikiAccountByExternalReferenceCode;
 
-	const { data: myUserAccountData, loading: myUserAccountLoading } =
+	const { data: myUserAccountData } =
 		useMyUserAccountByAccountExternalReferenceCode(
 			koroneikiAccountLoading,
 			koroneikiAccount?.accountKey

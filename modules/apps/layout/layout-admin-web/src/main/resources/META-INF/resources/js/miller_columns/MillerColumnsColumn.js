@@ -149,7 +149,7 @@ const MillerColumnsColumn = ({
 			{Liferay.FeatureFlags['LPD-35220'] && (
 				<Resizer
 					ariaLabel={Liferay.Language.get('resize-column')}
-					cssClassName="miller-columns-col"
+					className="miller-columns-col"
 					maxWidth={COLUMN_MAX_WIDTH}
 					minWidth={COLUMN_MIN_WIDTH}
 					resizeStep={COLUMN_WIDTH_RESIZE_STEP}

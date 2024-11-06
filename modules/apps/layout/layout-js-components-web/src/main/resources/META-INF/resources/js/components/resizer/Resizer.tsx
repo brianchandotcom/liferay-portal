@@ -10,7 +10,7 @@ import React, {KeyboardEvent, useCallback, useEffect, useRef} from 'react';
 interface ResizerProps {
 	ariaControls: string;
 	ariaLabel: string;
-	cssClassName: string;
+	className: string;
 	maxWidth: number;
 	minWidth: number;
 	resizeStep: number;
@@ -22,7 +22,7 @@ interface ResizerProps {
 export default function Resizer({
 	ariaControls,
 	ariaLabel,
-	cssClassName,
+	className,
 	maxWidth,
 	minWidth,
 	resizeStep,
@@ -111,6 +111,7 @@ export default function Resizer({
 
 		const stopResizing = () => {
 			setResizing(false);
+
 			document.body.removeEventListener('mousemove', handleMouseMove);
 			document.body.removeEventListener('mouseleave', stopResizing);
 			document.body.removeEventListener('mouseup', stopResizing);
@@ -153,8 +154,8 @@ export default function Resizer({
 			aria-valuemax={maxWidth}
 			aria-valuemin={minWidth}
 			aria-valuenow={width}
-			className={classNames(`${cssClassName}__resizer`, {
-				[`${cssClassName}__resizer--resizing`]: resizing,
+			className={classNames(`${className}__resizer`, {
+				[`${className}__resizer--resizing`]: resizing,
 			})}
 			onKeyDown={handleKeyDown}
 			ref={resizerRef}

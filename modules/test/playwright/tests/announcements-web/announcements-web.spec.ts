@@ -10,7 +10,7 @@ import {loginTest} from '../../fixtures/loginTest';
 
 export const test = mergeTests(announcementsPagesTest, loginTest());
 
-test('LPD-18804: Do not have a blank option for distribution scope', async ({
+test('Do not have a blank option for distribution scope', {	tag: '@LPD-18804' }, async ({
 	announcementsPage,
 	page,
 }) => {
@@ -29,7 +29,7 @@ test('LPD-18804: Do not have a blank option for distribution scope', async ({
 	).toBe('General');
 });
 
-test('LPD-27067 Content field is required', async ({
+test('Content field is required', { tag: '@LPD-27067' }, async ({
 	announcementsPage,
 	page,
 }) => {

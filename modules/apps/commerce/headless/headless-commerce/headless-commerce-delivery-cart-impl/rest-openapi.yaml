@@ -343,6 +343,9 @@ components:
                     additionalProperties: true
                     type: object
                 deliveryGroup:
+                    deprecated: true
+                    type: string
+                deliveryGroupName:
                     type: string
                 errorMessages:
                     items:

@@ -323,6 +323,10 @@ components:
                     readOnly: true
                     type: object
                 deliveryGroup:
+                    deprecated: true
+                    readOnly: true
+                    type: string
+                deliveryGroupName:
                     readOnly: true
                     type: string
                 errorMessages:

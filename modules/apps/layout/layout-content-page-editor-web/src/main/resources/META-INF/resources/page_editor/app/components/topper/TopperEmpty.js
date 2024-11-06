@@ -224,6 +224,9 @@ const ActivableTopperEmpty = ({
 					},
 					ref: (node) => {
 						containerRef.current = node;
+
+						// False positive - react-compiler/react-compiler
+						// eslint-disable-next-line react-compiler/react-compiler
 						elementRef.current = node;
 
 						targetRef(node);

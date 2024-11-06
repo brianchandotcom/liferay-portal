@@ -6,18 +6,21 @@
 package com.liferay.portal.workflow.kaleo.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
@@ -46,6 +49,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServ
 import java.io.InputStream;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -134,6 +138,46 @@ public class KaleoDefinitionServiceImplTest {
 	}
 
 	@Test
+	public void testAddWorkflowDefinitionLink() throws Exception {
+		KaleoDefinition kaleoDefinition =
+			_kaleoDefinitionLocalService.addKaleoDefinition(
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				_read(), StringPool.BLANK, 1, _serviceContext);
+
+		_kaleoDefinitionLocalService.activateKaleoDefinition(
+			kaleoDefinition.getKaleoDefinitionId(), _serviceContext);
+
+		User user = _addUser();
+
+		_setUpPermissionThreadLocal(user);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustBeCompanyAdmin.class,
+			StringBundler.concat(
+				"User ", user.getUserId(), " must be the company ",
+				"administrator to perform the action"),
+			() -> _workflowDefinitionLinkService.addWorkflowDefinitionLink(
+				user.getUserId(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getGroupId(), BlogsEntry.class.getName(), 0, 0,
+				kaleoDefinition.getName(), 1));
+
+		_setUpPermissionThreadLocal(_companyAdminUser);
+
+		ConfigurationTestUtil.saveConfiguration(
+			_configuration,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"company.administrator.can.publish", true
+			).build());
+
+		Assert.assertNotNull(
+			_workflowDefinitionLinkService.addWorkflowDefinitionLink(
+				_companyAdminUser.getUserId(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getGroupId(), BlogsEntry.class.getName(), 0, 0,
+				kaleoDefinition.getName(), 1));
+	}
+
+	@Test
 	public void testGetKaleoDefinition() throws Exception {
 		KaleoDefinition kaleoDefinition = _addKaleoDefinition();
 
@@ -196,6 +240,52 @@ public class KaleoDefinitionServiceImplTest {
 			_kaleoDefinitionService.getScopeKaleoDefinitions(
 				WorkflowDefinitionConstants.SCOPE_ALL, true, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null, _serviceContext));
+	}
+
+	@Test
+	public void testGetWorkflowDefinitionLinks() throws Exception {
+		_setUpPermissionThreadLocal(_companyAdminUser);
+
+		ConfigurationTestUtil.saveConfiguration(
+			_configuration,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"company.administrator.can.publish", true
+			).build());
+
+		WorkflowDefinitionLink workflowDefinitionLink1 =
+			_workflowDefinitionLinkService.addWorkflowDefinitionLink(
+				_companyAdminUser.getUserId(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getGroupId(), BlogsEntry.class.getName(), 0, 0,
+				"Single Approver", 1);
+
+		User user = _addUser();
+
+		_setUpPermissionThreadLocal(user);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustBeCompanyAdmin.class,
+			StringBundler.concat(
+				"User ", user.getUserId(), " must be the company ",
+				"administrator to perform the action"),
+			() -> _workflowDefinitionLinkService.getWorkflowDefinitionLinks(
+				TestPropsValues.getCompanyId(), "Single Approver", 1));
+
+		_setUpPermissionThreadLocal(_companyAdminUser);
+
+		List<WorkflowDefinitionLink> workflowDefinitionLinks =
+			_workflowDefinitionLinkService.getWorkflowDefinitionLinks(
+				TestPropsValues.getCompanyId(), "Single Approver", 1);
+
+		WorkflowDefinitionLink workflowDefinitionLink2 =
+			workflowDefinitionLinks.get(0);
+
+		Assert.assertEquals(
+			workflowDefinitionLink1.getClassName(),
+			workflowDefinitionLink2.getClassName());
+
+		Assert.assertEquals(
+			workflowDefinitionLink1.getWorkflowDefinitionName(),
+			workflowDefinitionLink2.getWorkflowDefinitionName());
 	}
 
 	@Test
@@ -291,5 +381,8 @@ public class KaleoDefinitionServiceImplTest {
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private WorkflowDefinitionLinkService _workflowDefinitionLinkService;
 
 }

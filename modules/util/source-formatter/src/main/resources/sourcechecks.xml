@@ -852,6 +852,10 @@
 			<category name="Naming Conventions" />
 			<description name="Checks if methods with test annotations follow the naming conventions." />
 		</check>
+		<check name="JavaToJSONArrayCheck">
+			<category name="Styling" />
+			<description name="Finds missing and unnecessary whitespace on `toJSONArray` calls." />
+		</check>
 		<check name="JavaTransactionBoundaryCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds direct `add*` or `get*` calls in `*ServiceImpl` (those should use the `*service` global variable instead)." />

@@ -200,6 +200,50 @@ test('Checks sidebar accessibility', async ({
 	});
 });
 
+test.describe('Browser Panel', () => {
+	test('Deleting an fragment while its editable is selected', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create a page with a Heading fragment
+
+		const headingId = getRandomString();
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([headingDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode of page
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.selectEditable(headingId, 'element-text');
+
+		await pageEditorPage.goToSidebarTab('Browser');
+
+		const treeNode = page.getByLabel('Select Heading');
+
+		await treeNode.hover();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Delete'}),
+			trigger: page.locator('.treeview-item').getByLabel('Options'),
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+	});
+});
+
 test.describe('Fragments Panel', () => {
 	test('Only published fragments are shown in the Fragments Sidebar', async ({
 		apiHelpers,

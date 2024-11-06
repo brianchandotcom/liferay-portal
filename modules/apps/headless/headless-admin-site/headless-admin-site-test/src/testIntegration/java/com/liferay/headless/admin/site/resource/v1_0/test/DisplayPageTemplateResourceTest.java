@@ -9,12 +9,19 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassSubtypeReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplate;
+import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -152,6 +159,16 @@ public class DisplayPageTemplateResourceTest
 		throws Exception {
 
 		super.testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate();
+	}
+
+	@Override
+	@Test
+	public void testPostSiteSiteByExternalReferenceCodeDisplayPageTemplate()
+		throws Exception {
+
+		super.testPostSiteSiteByExternalReferenceCodeDisplayPageTemplate();
+
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithParentFolder();
 	}
 
 	@Ignore
@@ -299,7 +316,53 @@ public class DisplayPageTemplateResourceTest
 		};
 	}
 
+	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithParentFolder()
+		throws Exception {
+
+		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), testGroup.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					ServiceContextTestUtil.getServiceContext(
+						testGroup, TestPropsValues.getUserId()));
+
+		displayPageTemplate.setParentFolder(
+			() -> new DisplayPageTemplateFolder() {
+				{
+					setExternalReferenceCode(
+						layoutPageTemplateCollection.
+							getExternalReferenceCode());
+				}
+			});
+
+		DisplayPageTemplate postDisplayPageTemplate =
+			displayPageTemplateResource.
+				postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(), displayPageTemplate);
+
+		assertEquals(displayPageTemplate, postDisplayPageTemplate);
+		assertValid(postDisplayPageTemplate);
+
+		DisplayPageTemplateFolder displayPageTemplateFolder =
+			postDisplayPageTemplate.getParentFolder();
+
+		Assert.assertEquals(
+			layoutPageTemplateCollection.getExternalReferenceCode(),
+			displayPageTemplateFolder.getExternalReferenceCode());
+	}
+
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Inject
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
 
 }

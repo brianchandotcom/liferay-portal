@@ -14,12 +14,14 @@ import com.liferay.portal.db.partition.db.DBPartitionDB;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -31,8 +33,11 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
 import com.liferay.portal.service.impl.ResourceActionLocalServiceImpl;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
@@ -54,6 +59,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletPreferences;
 
 import org.apache.felix.cm.PersistenceManager;
 
@@ -665,6 +671,48 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
+	@Test
+	public void testPrefsPropsImplCache() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		try {
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						company.getCompanyId())) {
+
+				_portalPreferencesLocalService.updatePreferences(
+					company.getCompanyId(),
+					PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+					"<portlet-preferences><preference><name>testName</name>" +
+						"<value>testValue</value></preference>" +
+							"</portlet-preferences>");
+			}
+
+			EntityCacheUtil.clearCache(CompanyImpl.class);
+
+			Map<Long, PortletPreferences> portletPreferencesMap =
+				(Map<Long, PortletPreferences>)ReflectionTestUtil.getFieldValue(
+					PrefsPropsUtil.getPrefsProps(), "_portletPreferences");
+
+			portletPreferencesMap.clear();
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(0L)) {
+
+				companyLocalService.getCompanies();
+			}
+
+			PortletPreferences portletPreferences = portletPreferencesMap.get(
+				company.getCompanyId());
+
+			Assert.assertEquals(
+				"testValue", portletPreferences.getValue("testName", null));
+		}
+		finally {
+			companyLocalService.deleteCompany(company);
+		}
+	}
+
 	private static void _regenerateResourceActions() throws Exception {
 		_resourceActions.clear();
 
@@ -866,6 +914,9 @@ public class CompanyLocalServiceDBPartitionTest
 	private static CounterLocalService _counterLocalService;
 
 	private static long _defaultCompanyId;
+
+	@Inject
+	private static PortalPreferencesLocalService _portalPreferencesLocalService;
 
 	@Inject
 	private static ResourceActionLocalService _resourceActionLocalService;

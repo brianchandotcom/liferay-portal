@@ -36,5 +36,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 		displayType="primary"
 		label="create-collection"
 		propsTransformer="{CreateAssetListActionButtonPropsTransformer} from asset-publisher-web"
+		small="<%= true %>"
 	/>
 </clay:alert>

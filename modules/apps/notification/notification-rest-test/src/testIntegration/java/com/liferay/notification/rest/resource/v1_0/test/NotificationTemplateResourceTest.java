@@ -12,6 +12,7 @@ import com.liferay.notification.constants.NotificationRecipientConstants;
 import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
+import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -20,12 +21,14 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -188,6 +191,56 @@ public class NotificationTemplateResourceTest
 			Http.Method.POST);
 	}
 
+	@Test
+	public void testPostNotificationTemplateViaRestNotificationTemplateResource()
+		throws Exception {
+
+		NotificationTemplateResource.Builder
+			notificationTemplateResourceBuilder =
+				_notificationTemplateResourceFactory.create();
+
+		NotificationTemplateResource restNotificationTemplateResource =
+			notificationTemplateResourceBuilder.user(
+				TestPropsValues.getUser()
+			).build();
+
+		Assert.assertNotNull(
+			restNotificationTemplateResource.postNotificationTemplate(
+				com.liferay.notification.rest.dto.v1_0.NotificationTemplate.
+					toDTO(
+						JSONUtil.put(
+							"editorType",
+							NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT
+						).put(
+							"name", RandomTestUtil.randomString()
+						).put(
+							"recipients",
+							JSONUtil.putAll(
+								JSONUtil.put(
+									"from", RandomTestUtil.randomString()
+								).put(
+									"fromName",
+									JSONUtil.put(
+										"en_US", RandomTestUtil.randomString())
+								).put(
+									"to",
+									() -> JSONUtil.putAll(
+										JSONUtil.put(
+											"roleName", "Administrator"))
+								).put(
+									"toType", "role"
+								))
+						).put(
+							"recipientType",
+							NotificationRecipientConstants.TYPE_EMAIL
+						).put(
+							"subject",
+							JSONUtil.put("en_US", RandomTestUtil.randomString())
+						).put(
+							"type", NotificationConstants.TYPE_EMAIL
+						).toString())));
+	}
+
 	@Override
 	protected NotificationTemplate randomNotificationTemplate()
 		throws Exception {
@@ -308,5 +361,9 @@ public class NotificationTemplateResourceTest
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private NotificationTemplateResource.Factory
+		_notificationTemplateResourceFactory;
 
 }

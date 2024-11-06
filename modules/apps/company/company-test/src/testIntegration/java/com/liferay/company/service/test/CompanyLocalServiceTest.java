@@ -1099,7 +1099,7 @@ public class CompanyLocalServiceTest {
 			RandomTestUtil.randomString() + "test.com");
 
 		if (PropsValues.COMPANY_STATIC_ID_ENABLED) {
-			Assert.assertNotEquals(counterCompanyId, company.getCompanyId());
+			Assert.assertEquals(counterCompanyId, company.getCompanyId());
 		}
 		else {
 			Assert.assertTrue(

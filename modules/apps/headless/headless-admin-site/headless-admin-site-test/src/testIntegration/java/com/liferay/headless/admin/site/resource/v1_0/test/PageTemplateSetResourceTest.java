@@ -26,12 +26,6 @@ public class PageTemplateSetResourceTest
 	extends BasePageTemplateSetResourceTestCase {
 
 	@Override
-	protected String testGetSiteSiteByExternalReferenceCodePageTemplateSetsPage_getSiteExternalReferenceCode()
-		throws Exception {
-		return testGroup.getExternalReferenceCode();
-	}
-
-	@Override
 	@Test
 	public void testDeleteSiteSiteByExternalReferenceCodePageTemplateSet()
 		throws Exception {
@@ -192,6 +186,14 @@ public class PageTemplateSetResourceTest
 			putSiteSiteByExternalReferenceCodePageTemplateSet(
 				siteExternalReferenceCode,
 				pageTemplateSet.getExternalReferenceCode(), pageTemplateSet);
+	}
+
+	@Override
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageTemplateSetsPage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Override

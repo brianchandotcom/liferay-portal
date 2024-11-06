@@ -131,7 +131,15 @@ export default function StructureTreeNode({node}) {
 		fragmentEntryLinks,
 	]);
 
-	return (
+	return node.itemType === ITEM_TYPES.editable || node.isMasterItem ? (
+		<NodeContentWithoutDND
+			activationOrigin={isSelected ? activationOrigin : null}
+			activeItemIds={activeItemIds}
+			isActive={node.activable && isSelected}
+			isMapped={node.mapped}
+			node={node}
+		></NodeContentWithoutDND>
+	) : (
 		<MemoizedNodeContent
 			activationOrigin={isSelected ? activationOrigin : null}
 			activeItemIds={activeItemIds}
@@ -153,6 +161,112 @@ NodeContent.propTypes = {
 const MemoizedNodeContent = React.memo(NodeContent, (prevProps, nextProps) =>
 	deepEqual(prevProps, nextProps)
 );
+
+function NodeContentWithoutDND({isActive, isMapped, node}) {
+	const layoutDataRef = useSelectorRef((store) => store.layoutData);
+	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
+	const selectItem = useSelectItem();
+
+	const nodeRef = useRef();
+
+	const item = useMemo(
+		() => ({
+			children:
+				node.itemType === ITEM_TYPES.editable ? [] : node.children,
+			config: layoutDataRef.current.items[node.id]?.config,
+			icon: node.icon,
+			itemId: node.id,
+			name: node.name,
+			origin: ITEM_ACTIVATION_ORIGINS.sidebar,
+			parentId: node.parentItemId,
+			type: node.type || node.itemType,
+		}),
+		[layoutDataRef, node]
+	);
+
+	const {fieldTypes, fragmentEntryType} = useSelectorCallback(
+		(state) => {
+			if (!node.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+				return null;
+			}
+
+			const fragmentEntryLink =
+				state.fragmentEntryLinks[item.config?.fragmentEntryLinkId];
+
+			return {
+				fieldTypes: fragmentEntryLink?.fieldTypes ?? [],
+				fragmentEntryType: fragmentEntryLink?.fragmentEntryType ?? null,
+			};
+		},
+		[item],
+		deepEqual
+	);
+
+	return (
+		<div
+			aria-disabled={node.isMasterItem || !node.activable}
+			aria-selected={isActive}
+			className="page-editor__page-structure__tree-node"
+		>
+			<div
+				aria-label={sub(Liferay.Language.get('select-x'), [node.name])}
+				className="lfr-portal-tooltip page-editor__page-structure__tree-node__mask"
+				data-item-id={node.id}
+				onClick={(event) => {
+					event.stopPropagation();
+
+					const itemId = getFirstControlsId({
+						item: node,
+						layoutData: layoutDataRef.current,
+					});
+
+					if (node.activable) {
+						selectItem(itemId, {
+							itemType: node.itemType,
+							origin: ITEM_ACTIVATION_ORIGINS.sidebar,
+						});
+					}
+				}}
+				role="button"
+			/>
+
+			<MoveButton
+				canUpdate={canUpdatePageStructure}
+				fieldTypes={fieldTypes}
+				fragmentEntryType={fragmentEntryType}
+				item={item}
+				node={node}
+				nodeRef={nodeRef}
+				selectedViewportSize={selectedViewportSize}
+			/>
+
+			<NameLabel
+				hidden={node.hidden || node.hiddenAncestor}
+				icon={node.icon}
+				isMapped={isMapped}
+				isMasterItem={node.isMasterItem}
+				itemId={node.id}
+				name={node.name}
+				nameInfo={node.nameInfo}
+				ref={nodeRef}
+				showUnavailableWarning={
+					node.type === LAYOUT_DATA_ITEM_TYPES.form &&
+					formIsUnavailable(item)
+				}
+			/>
+
+			{node.hidden ? (
+				<span className="sr-only">
+					{Liferay.Language.get('hidden-item')}
+				</span>
+			) : null}
+		</div>
+	);
+}
 
 function NodeContent({
 	activationOrigin,

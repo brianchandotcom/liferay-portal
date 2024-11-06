@@ -579,6 +579,7 @@ openapi: 3.0.0
 paths:
     /account-channel-billing-addresses/{id}:
         delete:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -616,6 +617,7 @@ paths:
             tags:
                 - AccountChannelEntry
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -682,6 +684,7 @@ paths:
             tags:
                 - AccountChannelEntry
         patch:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -758,6 +761,7 @@ paths:
                 - AccountChannelEntry
     /account-channel-currencies/{id}:
         delete:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -795,6 +799,7 @@ paths:
             tags:
                 - AccountChannelEntry
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -861,6 +866,7 @@ paths:
             tags:
                 - AccountChannelEntry
         patch:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -937,6 +943,7 @@ paths:
                 - AccountChannelEntry
     /account-channel-delivery-terms/{id}:
         delete:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -974,6 +981,7 @@ paths:
             tags:
                 - AccountChannelEntry
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1040,6 +1048,7 @@ paths:
             tags:
                 - AccountChannelEntry
         patch:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1116,6 +1125,7 @@ paths:
                 - AccountChannelEntry
     /account-channel-discounts/{id}:
         delete:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1153,6 +1163,7 @@ paths:
             tags:
                 - AccountChannelEntry
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1219,6 +1230,7 @@ paths:
             tags:
                 - AccountChannelEntry
         patch:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1295,6 +1307,7 @@ paths:
                 - AccountChannelEntry
     /account-channel-payment-methods/{id}:
         delete:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1332,6 +1345,7 @@ paths:
             tags:
                 - AccountChannelEntry
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1398,6 +1412,7 @@ paths:
             tags:
                 - AccountChannelEntry
         patch:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1474,6 +1489,7 @@ paths:
                 - AccountChannelEntry
     /account-channel-payment-terms/{id}:
         delete:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1511,6 +1527,7 @@ paths:
             tags:
                 - AccountChannelEntry
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1577,6 +1594,7 @@ paths:
             tags:
                 - AccountChannelEntry
         patch:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1653,6 +1671,7 @@ paths:
                 - AccountChannelEntry
     /account-channel-price-list/{id}:
         delete:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1690,6 +1709,7 @@ paths:
             tags:
                 - AccountChannelEntry
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1756,6 +1776,7 @@ paths:
             tags:
                 - AccountChannelEntry
         patch:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1832,6 +1853,7 @@ paths:
                 - AccountChannelEntry
     /account-channel-shipping-addresses/{id}:
         delete:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1869,6 +1891,7 @@ paths:
             tags:
                 - AccountChannelEntry
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -1935,6 +1958,7 @@ paths:
             tags:
                 - AccountChannelEntry
         patch:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -2190,6 +2214,7 @@ paths:
                 - AccountChannelShippingOption
     /account-channel-users/{id}:
         delete:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -2227,6 +2252,7 @@ paths:
             tags:
                 - AccountChannelEntry
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -2293,6 +2319,7 @@ paths:
             tags:
                 - AccountChannelEntry
         patch:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -2369,6 +2396,7 @@ paths:
                 - AccountChannelEntry
     /accountAddresses/by-externalReferenceCode/{externalReferenceCode}:
         delete:
+            deprecated: true
             operationId: deleteAccountAddressByExternalReferenceCode
             parameters:
                 - in: path
@@ -2405,6 +2433,7 @@ paths:
             tags:
                 - AccountAddress
         get:
+            deprecated: true
             operationId: getAccountAddressByExternalReferenceCode
             parameters:
                 - in: path
@@ -2471,6 +2500,7 @@ paths:
             tags:
                 - AccountAddress
         patch:
+            deprecated: true
             operationId: patchAccountAddressByExternalReferenceCode
             parameters:
                 - in: path
@@ -2543,6 +2573,7 @@ paths:
                 - AccountAddress
     /accountAddresses/{id}:
         delete:
+            deprecated: true
             operationId: deleteAccountAddress
             parameters:
                 - in: path
@@ -2580,6 +2611,7 @@ paths:
             tags:
                 - AccountAddress
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -2646,6 +2678,7 @@ paths:
             tags:
                 - AccountAddress
         patch:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -2721,6 +2754,7 @@ paths:
             tags:
                 - AccountAddress
         put:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -2797,6 +2831,7 @@ paths:
                 - AccountAddress
     /accountGroups:
         get:
+            deprecated: true
             operationId: getAccountGroupsPage
             parameters:
                 - in: query
@@ -2877,6 +2912,7 @@ paths:
             tags:
                 - AdminAccountGroup
         post:
+            deprecated: true
             operationId: postAccountGroup
             requestBody:
                 content:
@@ -2947,6 +2983,7 @@ paths:
                 - AdminAccountGroup
     /accountGroups/by-externalReferenceCode/{externalReferenceCode}:
         delete:
+            deprecated: true
             operationId: deleteAccountGroupByExternalReferenceCode
             parameters:
                 - in: path
@@ -2983,6 +3020,7 @@ paths:
             tags:
                 - AdminAccountGroup
         get:
+            deprecated: true
             operationId: getAccountGroupByExternalReferenceCode
             parameters:
                 - in: path
@@ -3049,6 +3087,7 @@ paths:
             tags:
                 - AdminAccountGroup
         patch:
+            deprecated: true
             operationId: patchAccountGroupByExternalReferenceCode
             parameters:
                 - in: path
@@ -3121,6 +3160,7 @@ paths:
                 - AdminAccountGroup
     /accountGroups/by-externalReferenceCode/{externalReferenceCode}/accounts:
         post:
+            deprecated: true
             operationId: postAccountGroupByExternalReferenceCodeAccount
             parameters:
                 - in: path
@@ -3196,6 +3236,7 @@ paths:
                 - Account
     /accountGroups/by-externalReferenceCode/{externalReferenceCode}/accounts/{accountExternalReferenceCode}:
         delete:
+            deprecated: true
             operationId: deleteAccountGroupByExternalReferenceCodeAccount
             parameters:
                 - in: path
@@ -3273,6 +3314,7 @@ paths:
                 - Account
     /accountGroups/{id}:
         delete:
+            deprecated: true
             operationId: deleteAccountGroup
             parameters:
                 - in: path
@@ -3310,6 +3352,7 @@ paths:
             tags:
                 - AdminAccountGroup
         get:
+            deprecated: true
             operationId: getAccountGroup
             parameters:
                 - in: path
@@ -3377,6 +3420,7 @@ paths:
             tags:
                 - AdminAccountGroup
         patch:
+            deprecated: true
             operationId: patchAccountGroup
             parameters:
                 - in: path
@@ -3450,6 +3494,7 @@ paths:
                 - AdminAccountGroup
     /accounts:
         get:
+            deprecated: true
             operationId: getAccountsPage
             parameters:
                 - in: query
@@ -3533,6 +3578,7 @@ paths:
             tags:
                 - Account
         post:
+            deprecated: true
             operationId: postAccount
             requestBody:
                 content:
@@ -3603,6 +3649,7 @@ paths:
                 - Account
     /accounts/by-externalReferenceCode/{externalReferenceCode}:
         delete:
+            deprecated: true
             operationId: deleteAccountByExternalReferenceCode
             parameters:
                 - in: path
@@ -3639,6 +3686,7 @@ paths:
             tags:
                 - Account
         get:
+            deprecated: true
             operationId: getAccountByExternalReferenceCode
             parameters:
                 - in: path
@@ -3705,6 +3753,7 @@ paths:
             tags:
                 - Account
         patch:
+            deprecated: true
             operationId: patchAccountByExternalReferenceCode
             parameters:
                 - in: path
@@ -3777,6 +3826,7 @@ paths:
                 - Account
     /accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-billing-addresses:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -3860,6 +3910,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -3941,6 +3992,7 @@ paths:
                 - AccountChannelEntry
     /accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-currencies:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -4024,6 +4076,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -4105,6 +4158,7 @@ paths:
                 - AccountChannelEntry
     /accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-delivery-terms:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -4188,6 +4242,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -4269,6 +4324,7 @@ paths:
                 - AccountChannelEntry
     /accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-discounts:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -4352,6 +4408,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -4433,6 +4490,7 @@ paths:
                 - AccountChannelEntry
     /accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-payment-methods:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -4516,6 +4574,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -4597,6 +4656,7 @@ paths:
                 - AccountChannelEntry
     /accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-payment-terms:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -4680,6 +4740,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -4761,6 +4822,7 @@ paths:
                 - AccountChannelEntry
     /accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-price-lists:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -4844,6 +4906,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -4925,6 +4988,7 @@ paths:
                 - AccountChannelEntry
     /accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-shipping-addresses:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -5008,6 +5072,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -5253,6 +5318,7 @@ paths:
                 - AccountChannelShippingOption
     /accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-users:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -5336,6 +5402,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -5417,6 +5484,7 @@ paths:
                 - AccountChannelEntry
     /accounts/by-externalReferenceCode/{externalReferenceCode}/accountAddresses:
         get:
+            deprecated: true
             operationId: getAccountByExternalReferenceCodeAccountAddressesPage
             parameters:
                 - in: path
@@ -5501,6 +5569,7 @@ paths:
             tags:
                 - AccountAddress
         post:
+            deprecated: true
             operationId: postAccountByExternalReferenceCodeAccountAddress
             parameters:
                 - in: path
@@ -5583,6 +5652,7 @@ paths:
                 - AccountAddress
     /accounts/by-externalReferenceCode/{externalReferenceCode}/accountGroups:
         get:
+            deprecated: true
             operationId: getAccountByExternalReferenceCodeAccountGroupsPage
             parameters:
                 - in: path
@@ -5660,6 +5730,7 @@ paths:
                 - AdminAccountGroup
     /accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers:
         get:
+            deprecated: true
             operationId: getAccountByExternalReferenceCodeAccountMembersPage
             parameters:
                 - in: path
@@ -5744,6 +5815,7 @@ paths:
             tags:
                 - AccountMember
         post:
+            deprecated: true
             operationId: postAccountByExternalReferenceCodeAccountMember
             parameters:
                 - in: path
@@ -5826,6 +5898,7 @@ paths:
                 - AccountMember
     /accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/createUser:
         post:
+            deprecated: true
             operationId: postAccountByExternalReferenceCodeAccountMemberCreateUser
             parameters:
                 - in: path
@@ -5908,6 +5981,7 @@ paths:
                 - User
     /accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/{userId}:
         delete:
+            deprecated: true
             operationId: deleteAccountByExternalReferenceCodeAccountMember
             parameters:
                 - in: path
@@ -5957,6 +6031,7 @@ paths:
             tags:
                 - AccountMember
         get:
+            deprecated: true
             operationId: getAccountByExternalReferenceCodeAccountMember
             parameters:
                 - in: path
@@ -6036,6 +6111,7 @@ paths:
             tags:
                 - AccountMember
         patch:
+            deprecated: true
             operationId: patchAccountByExternalReferenceCodeAccountMember
             parameters:
                 - in: path
@@ -6121,6 +6197,7 @@ paths:
                 - AccountMember
     /accounts/by-externalReferenceCode/{externalReferenceCode}/accountOrganizations:
         get:
+            deprecated: true
             operationId: getAccountByExternalReferenceCodeAccountOrganizationsPage
             parameters:
                 - in: path
@@ -6205,6 +6282,7 @@ paths:
             tags:
                 - AccountOrganization
         post:
+            deprecated: true
             operationId: postAccountByExternalReferenceCodeAccountOrganization
             parameters:
                 - in: path
@@ -6287,6 +6365,7 @@ paths:
                 - AccountOrganization
     /accounts/by-externalReferenceCode/{externalReferenceCode}/accountOrganizations/{organizationId}:
         delete:
+            deprecated: true
             operationId: deleteAccountByExternalReferenceCodeAccountOrganization
             parameters:
                 - in: path
@@ -6336,6 +6415,7 @@ paths:
             tags:
                 - AccountOrganization
         get:
+            deprecated: true
             operationId: getAccountByExternalReferenceCodeAccountOrganization
             parameters:
                 - in: path
@@ -6416,6 +6496,7 @@ paths:
                 - AccountOrganization
     /accounts/by-externalReferenceCode/{externalReferenceCode}/logo:
         post:
+            deprecated: true
             operationId: postAccountByExternalReferenceCodeLogo
             parameters:
                 - in: path
@@ -6488,6 +6569,7 @@ paths:
                 - Account
     /accounts/{id}:
         delete:
+            deprecated: true
             operationId: deleteAccount
             parameters:
                 - in: path
@@ -6525,6 +6607,7 @@ paths:
             tags:
                 - Account
         get:
+            deprecated: true
             operationId: getAccount
             parameters:
                 - in: path
@@ -6592,6 +6675,7 @@ paths:
             tags:
                 - Account
         patch:
+            deprecated: true
             operationId: patchAccount
             parameters:
                 - in: path
@@ -6665,6 +6749,7 @@ paths:
                 - Account
     /accounts/{id}/account-channel-billing-addresses:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -6749,6 +6834,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -6831,6 +6917,7 @@ paths:
                 - AccountChannelEntry
     /accounts/{id}/account-channel-currencies:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -6915,6 +7002,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -6997,6 +7085,7 @@ paths:
                 - AccountChannelEntry
     /accounts/{id}/account-channel-delivery-terms:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -7081,6 +7170,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -7163,6 +7253,7 @@ paths:
                 - AccountChannelEntry
     /accounts/{id}/account-channel-discounts:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -7247,6 +7338,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -7329,6 +7421,7 @@ paths:
                 - AccountChannelEntry
     /accounts/{id}/account-channel-payment-methods:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -7413,6 +7506,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -7495,6 +7589,7 @@ paths:
                 - AccountChannelEntry
     /accounts/{id}/account-channel-payment-terms:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -7579,6 +7674,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -7661,6 +7757,7 @@ paths:
                 - AccountChannelEntry
     /accounts/{id}/account-channel-price-lists:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -7745,6 +7842,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -7827,6 +7925,7 @@ paths:
                 - AccountChannelEntry
     /accounts/{id}/account-channel-shipping-addresses:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -7911,6 +8010,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -8155,6 +8255,7 @@ paths:
                 - AccountChannelShippingOption
     /accounts/{id}/account-channel-users:
         get:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -8239,6 +8340,7 @@ paths:
             tags:
                 - AccountChannelEntry
         post:
+            deprecated: true
             parameters:
                 - in: path
                   explode: false
@@ -8321,6 +8423,7 @@ paths:
                 - AccountChannelEntry
     /accounts/{id}/accountAddresses:
         get:
+            deprecated: true
             operationId: getAccountIdAccountAddressesPage
             parameters:
                 - in: path
@@ -8406,6 +8509,7 @@ paths:
             tags:
                 - AccountAddress
         post:
+            deprecated: true
             operationId: postAccountIdAccountAddress
             parameters:
                 - in: path
@@ -8489,6 +8593,7 @@ paths:
                 - AccountAddress
     /accounts/{id}/accountGroups:
         get:
+            deprecated: true
             operationId: getAccountIdAccountGroupsPage
             parameters:
                 - in: path
@@ -8568,6 +8673,7 @@ paths:
                 - AdminAccountGroup
     /accounts/{id}/accountMembers:
         get:
+            deprecated: true
             operationId: getAccountIdAccountMembersPage
             parameters:
                 - in: path
@@ -8653,6 +8759,7 @@ paths:
             tags:
                 - AccountMember
         post:
+            deprecated: true
             operationId: postAccountIdAccountMember
             parameters:
                 - in: path
@@ -8736,6 +8843,7 @@ paths:
                 - AccountMember
     /accounts/{id}/accountMembers/{userId}:
         delete:
+            deprecated: true
             operationId: deleteAccountIdAccountMember
             parameters:
                 - in: path
@@ -8785,6 +8893,7 @@ paths:
             tags:
                 - AccountMember
         get:
+            deprecated: true
             operationId: getAccountIdAccountMember
             parameters:
                 - in: path
@@ -8864,6 +8973,7 @@ paths:
             tags:
                 - AccountMember
         patch:
+            deprecated: true
             operationId: patchAccountIdAccountMember
             parameters:
                 - in: path
@@ -8949,6 +9059,7 @@ paths:
                 - AccountMember
     /accounts/{id}/accountOrganizations:
         get:
+            deprecated: true
             operationId: getAccountIdAccountOrganizationsPage
             parameters:
                 - in: path
@@ -9034,6 +9145,7 @@ paths:
             tags:
                 - AccountOrganization
         post:
+            deprecated: true
             operationId: postAccountIdAccountOrganization
             parameters:
                 - in: path
@@ -9117,6 +9229,7 @@ paths:
                 - AccountOrganization
     /accounts/{id}/accountOrganizations/{organizationId}:
         delete:
+            deprecated: true
             operationId: deleteAccountIdAccountOrganization
             parameters:
                 - in: path
@@ -9166,6 +9279,7 @@ paths:
             tags:
                 - AccountOrganization
         get:
+            deprecated: true
             operationId: getAccountIdAccountOrganization
             parameters:
                 - in: path
@@ -9246,6 +9360,7 @@ paths:
                 - AccountOrganization
     /accounts/{id}/logo:
         post:
+            deprecated: true
             operationId: postAccountLogo
             parameters:
                 - in: path

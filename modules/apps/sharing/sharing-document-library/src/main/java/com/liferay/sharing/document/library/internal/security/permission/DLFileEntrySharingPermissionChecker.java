@@ -51,8 +51,8 @@ public class DLFileEntrySharingPermissionChecker
 
 	private static final Set<SharingEntryAction> _actionKeysSet = new HashSet<>(
 		Arrays.asList(
-			SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.UPDATE,
-			SharingEntryAction.VIEW));
+			SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.DOWNLOAD,
+			SharingEntryAction.UPDATE, SharingEntryAction.VIEW));
 
 	@Reference(
 		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"

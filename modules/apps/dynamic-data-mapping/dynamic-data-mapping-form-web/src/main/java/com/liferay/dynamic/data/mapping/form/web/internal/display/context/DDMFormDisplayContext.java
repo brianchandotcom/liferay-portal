@@ -36,6 +36,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
@@ -126,6 +127,7 @@ public class DDMFormDisplayContext {
 		DDMFormValuesMerger ddmFormValuesMerger,
 		DDMFormWebConfiguration ddmFormWebConfiguration,
 		DDMStorageAdapterRegistry ddmStorageAdapterRegistry,
+		DDMStructureLocalService ddmStructureLocalService,
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		NPMResolver npmResolver,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
@@ -151,6 +153,7 @@ public class DDMFormDisplayContext {
 		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_ddmFormWebConfiguration = ddmFormWebConfiguration;
 		_ddmStorageAdapterRegistry = ddmStorageAdapterRegistry;
+		_ddmStructureLocalService = ddmStructureLocalService;
 		_groupLocalService = groupLocalService;
 		_jsonFactory = jsonFactory;
 		_npmResolver = npmResolver;
@@ -389,6 +392,42 @@ public class DDMFormDisplayContext {
 	public long getFormInstanceId() {
 		if (_ddmFormInstanceId != 0) {
 			return _ddmFormInstanceId;
+		}
+
+		String ddmStructureExternalReferenceCode = PrefsParamUtil.getString(
+			_renderRequest.getPreferences(), _renderRequest,
+			"ddmStructureExternalReferenceCode");
+
+		if (!Validator.isBlank(ddmStructureExternalReferenceCode)) {
+			ThemeDisplay themeDisplay = getThemeDisplay();
+
+			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				PrefsParamUtil.getString(
+					_renderRequest.getPreferences(), _renderRequest,
+					"groupExternalReferenceCode"),
+				themeDisplay.getCompanyId());
+
+			try {
+				DDMStructure ddmStructure =
+					_ddmStructureLocalService.
+						getStructureByExternalReferenceCode(
+							ddmStructureExternalReferenceCode,
+							group.getGroupId(),
+							_portal.getClassNameId(DDMFormInstance.class));
+
+				DDMFormInstance ddmFormInstance =
+					_ddmFormInstanceLocalService.getFormInstanceByStructureId(
+						ddmStructure.getStructureId());
+
+				_ddmFormInstanceId = ddmFormInstance.getFormInstanceId();
+
+				return _ddmFormInstanceId;
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
 		}
 
 		_ddmFormInstanceId = PrefsParamUtil.getLong(
@@ -1200,6 +1239,7 @@ public class DDMFormDisplayContext {
 	private final DDMFormValuesMerger _ddmFormValuesMerger;
 	private final DDMFormWebConfiguration _ddmFormWebConfiguration;
 	private final DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
+	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final GroupLocalService _groupLocalService;
 	private Boolean _hasAddFormInstanceRecordPermission;
 	private Boolean _hasViewPermission;

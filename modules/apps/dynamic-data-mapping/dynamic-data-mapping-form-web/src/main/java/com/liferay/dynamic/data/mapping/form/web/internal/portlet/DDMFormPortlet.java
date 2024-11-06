@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
@@ -225,12 +226,12 @@ public class DDMFormPortlet extends MVCPortlet {
 			_configurationProvider.getCompanyConfiguration(
 				DDMFormWebConfiguration.class,
 				CompanyThreadLocal.getCompanyId()),
-			_ddmStorageAdapterRegistry, _groupLocalService, _jsonFactory,
-			_npmResolver, _objectDefinitionLocalService,
-			_objectFieldLocalService, _objectFieldSettingLocalService,
-			_objectRelationshipLocalService, _portal, renderRequest,
-			renderResponse, _roleLocalService, _userLocalService,
-			_workflowDefinitionLinkLocalService);
+			_ddmStorageAdapterRegistry, _ddmStructureLocalService,
+			_groupLocalService, _jsonFactory, _npmResolver,
+			_objectDefinitionLocalService, _objectFieldLocalService,
+			_objectFieldSettingLocalService, _objectRelationshipLocalService,
+			_portal, renderRequest, renderResponse, _roleLocalService,
+			_userLocalService, _workflowDefinitionLinkLocalService);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmFormDisplayContext);
@@ -310,6 +311,9 @@ public class DDMFormPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

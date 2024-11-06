@@ -23,9 +23,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalServiceUtil;
 
-import java.util.Collections;
-import java.util.Map;
-
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
@@ -89,15 +86,6 @@ public class WorkflowDefinitionLinkResourceTest
 		throws Exception {
 
 		return _kaleoDefinition.getExternalReferenceCode();
-	}
-
-	@Override
-	protected Map<String, Map<String, String>>
-			testGetWorkflowDefinitionWorkflowDefinitionLinksPage_getExpectedActions(
-				Long workflowDefinitionId)
-		throws Exception {
-
-		return Collections.emptyMap();
 	}
 
 	@Override

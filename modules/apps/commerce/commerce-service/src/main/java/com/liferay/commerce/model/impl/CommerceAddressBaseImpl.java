@@ -17,8 +17,10 @@ import com.liferay.commerce.model.CommerceAddress;
  * @author Alessio Antonio Rendina
  * @see CommerceAddressImpl
  * @see CommerceAddress
+ * @deprecated As of Cavanaugh (7.4.x)
  * @generated
  */
+@Deprecated
 public abstract class CommerceAddressBaseImpl
 	extends CommerceAddressModelImpl implements CommerceAddress {
 

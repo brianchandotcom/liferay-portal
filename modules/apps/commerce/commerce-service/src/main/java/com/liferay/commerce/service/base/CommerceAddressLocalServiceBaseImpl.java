@@ -25,8 +25,10 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Alessio Antonio Rendina
  * @see com.liferay.commerce.service.impl.CommerceAddressLocalServiceImpl
+ * @deprecated As of Cavanaugh (7.4.x)
  * @generated
  */
+@Deprecated
 public abstract class CommerceAddressLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements AopService, CommerceAddressLocalService,

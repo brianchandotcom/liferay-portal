@@ -20,8 +20,10 @@ import java.util.Map;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceAddress
+ * @deprecated As of Cavanaugh (7.4.x)
  * @generated
  */
+@Deprecated
 public class CommerceAddressWrapper
 	extends BaseModelWrapper<CommerceAddress>
 	implements CommerceAddress, ModelWrapper<CommerceAddress> {

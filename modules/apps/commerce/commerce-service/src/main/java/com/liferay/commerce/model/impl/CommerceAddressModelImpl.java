@@ -51,8 +51,10 @@ import java.util.function.Function;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceAddressImpl
+ * @deprecated As of Cavanaugh (7.4.x)
  * @generated
  */
+@Deprecated
 @JSON(strict = true)
 public class CommerceAddressModelImpl
 	extends BaseModelImpl<CommerceAddress> implements CommerceAddressModel {

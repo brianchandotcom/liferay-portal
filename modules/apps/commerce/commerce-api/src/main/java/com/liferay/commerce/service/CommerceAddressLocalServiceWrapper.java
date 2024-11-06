@@ -12,8 +12,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceAddressLocalService
+ * @deprecated As of Cavanaugh (7.4.x)
  * @generated
  */
+@Deprecated
 public class CommerceAddressLocalServiceWrapper
 	implements CommerceAddressLocalService,
 			   ServiceWrapper<CommerceAddressLocalService> {

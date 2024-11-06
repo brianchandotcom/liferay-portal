@@ -31,8 +31,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceAddressLocalServiceUtil
+ * @deprecated As of Cavanaugh (7.4.x)
  * @generated
  */
+@Deprecated
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,

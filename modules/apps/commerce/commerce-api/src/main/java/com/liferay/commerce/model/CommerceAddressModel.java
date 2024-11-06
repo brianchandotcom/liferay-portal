@@ -26,8 +26,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceAddress
+ * @deprecated As of Cavanaugh (7.4.x)
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface CommerceAddressModel
 	extends AttachedModel, BaseModel<CommerceAddress>,

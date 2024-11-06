@@ -15,8 +15,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceAddressModel
+ * @deprecated As of Cavanaugh (7.4.x)
  * @generated
  */
+@Deprecated
 @ImplementationClassName("com.liferay.commerce.model.impl.CommerceAddressImpl")
 @ProviderType
 public interface CommerceAddress extends CommerceAddressModel {

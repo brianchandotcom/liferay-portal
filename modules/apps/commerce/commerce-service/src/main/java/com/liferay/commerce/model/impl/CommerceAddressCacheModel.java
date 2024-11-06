@@ -22,8 +22,10 @@ import java.util.Date;
  * The cache model class for representing CommerceAddress in entity cache.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated As of Cavanaugh (7.4.x)
  * @generated
  */
+@Deprecated
 public class CommerceAddressCacheModel
 	implements CacheModel<CommerceAddress>, Externalizable, MVCCModel {
 

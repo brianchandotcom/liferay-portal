@@ -83,6 +83,12 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 								sb.append("javascript:");
 								sb.append(liferayPortletResponse.getNamespace());
 								sb.append("selectFormInstance('");
+
+								DDMStructure ddmStructure = formInstance.getStructure();
+
+								sb.append(ddmStructure.getExternalReferenceCode());
+
+								sb.append("','");
 								sb.append(formInstance.getFormInstanceId());
 								sb.append("','");
 								sb.append(HtmlUtil.escapeJS(HtmlUtil.escape(formInstance.getName(locale))));
@@ -135,7 +141,9 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL.toString() + StringPool.AMPERSAND + liferayPortletResponse.getNamespace() + "cur" + cur %>' />
+	<aui:input name="preferences--ddmStructureExternalReferenceCode--" type="hidden" value="" />
 	<aui:input name="preferences--formInstanceId--" type="hidden" value="<%= formInstanceId %>" />
+	<aui:input name="preferences--groupExternalReferenceCode--" type="hidden" value="<%= scopeGroup.getExternalReferenceCode() %>" />
 	<aui:input name="preferences--groupId--" type="hidden" value="<%= scopeGroupId %>" />
 
 	<aui:button-row>
@@ -147,7 +155,11 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectFormInstance',
-		(formInstanceId, formInstanceName) => {
+		(ddmStructureExternalReferenceCode, formInstanceId, formInstanceName) => {
+			document.getElementById(
+				'<portlet:namespace />ddmStructureExternalReferenceCode'
+			).value = ddmStructureExternalReferenceCode;
+
 			document.getElementById('<portlet:namespace />formInstanceId').value =
 				formInstanceId;
 

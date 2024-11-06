@@ -44,7 +44,7 @@ public class DummyFolderPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	public boolean isEnabled() {
+	public boolean isEnabled(long companyId) {
 		return _enabled;
 	}
 

@@ -36,7 +36,7 @@ public class DummyFolderStagedModelDataHandler
 	}
 
 	@Override
-	public boolean isEnabled() {
+	public boolean isEnabled(long companyId) {
 		return _enabled;
 	}
 

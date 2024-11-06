@@ -25,7 +25,7 @@
 
 		PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-		if (!portletDataHandler.isEnabled()) {
+		if (!portletDataHandler.isEnabled(company.getCompanyId())) {
 			continue;
 		}
 

@@ -13,11 +13,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ObjectDefinitionRootObjectDefinitionIdException
 	extends PortalException {
 
-	public ObjectDefinitionRootObjectDefinitionIdException() {
-	}
-
-	public ObjectDefinitionRootObjectDefinitionIdException(String msg) {
-		super(msg);
+	public ObjectDefinitionRootObjectDefinitionIdException(String message) {
+		super(message);
 	}
 
 	public ObjectDefinitionRootObjectDefinitionIdException(
@@ -26,18 +23,6 @@ public class ObjectDefinitionRootObjectDefinitionIdException
 		super(message);
 
 		_messageKey = messageKey;
-	}
-
-	public ObjectDefinitionRootObjectDefinitionIdException(
-		String msg, Throwable throwable) {
-
-		super(msg, throwable);
-	}
-
-	public ObjectDefinitionRootObjectDefinitionIdException(
-		Throwable throwable) {
-
-		super(throwable);
 	}
 
 	public String getMessageKey() {

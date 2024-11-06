@@ -8,7 +8,7 @@ import React from 'react';
 
 interface ObjectRelationshipDeletionTypeSelect {
 	objectRelationshipDeletionTypes: LabelValueObject[];
-	onSubmit: (values?: Partial<ObjectRelationship>) => void;
+	onSubmit?: (values?: Partial<ObjectRelationship>) => void;
 	readOnly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 	values: Partial<ObjectRelationship>;

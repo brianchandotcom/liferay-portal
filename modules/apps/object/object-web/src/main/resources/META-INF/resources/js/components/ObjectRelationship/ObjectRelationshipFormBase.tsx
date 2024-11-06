@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import {
 	API,
 	FormError,
@@ -14,9 +15,16 @@ import {createResourceURL} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import CurrentObjectDefinition from './CurrentObjectDefinition';
+import {ObjectRelationshipInheritanceCheckbox} from './ObjectRelationshipInheritanceCheckbox';
 import SelectObjectDefinition from './SelectObjectDefinition';
 
+export type Alert = {
+	displayType: 'info' | 'warning';
+	message: string;
+};
+
 interface ObjectRelationshipFormBaseProps {
+	alert?: Alert;
 	baseResourceURL: string;
 	children?: JSX.Element;
 	className?: string;
@@ -77,6 +85,7 @@ export const OBJECT_RELATIONSHIP_TYPES = [
 ];
 
 export function ObjectRelationshipFormBase({
+	alert,
 	baseResourceURL,
 	children,
 	className,
@@ -433,6 +442,24 @@ export function ObjectRelationshipFormBase({
 				))}
 
 			{children}
+
+			{alert &&
+				values.type === 'oneToMany' &&
+				Liferay.FeatureFlags['LPS-187142'] && (
+					<>
+						<ObjectRelationshipInheritanceCheckbox
+							setValues={setValues}
+							values={values}
+						/>
+
+						<ClayAlert
+							displayType={alert.displayType}
+							title={`${alert.displayType === 'info' ? Liferay.Language.get('info') : Liferay.Language.get('warning')}:`}
+						>
+							{alert.message}
+						</ClayAlert>
+					</>
+				)}
 		</>
 	);
 }

@@ -56,27 +56,6 @@ const ClassicEditor = forwardRef(
 								: Liferay.zIndex.WINDOW + 10;
 						};
 					}}
-					onDrop={(event) => {
-						const data =
-							event.data.dataTransfer.getData('text/html');
-
-						if (!data) {
-							return;
-						}
-
-						const fragment =
-							CKEDITOR.htmlParser.fragment.fromHtml(data);
-
-						let element = fragment.children[0];
-
-						if (element.hasClass('cke_widget_image')) {
-							element = element.children[0];
-						}
-
-						if (event.editor.pasteFilter && element.name) {
-							return event.editor.pasteFilter.check(element.name);
-						}
-					}}
 					onInstanceReady={({editor}) => {
 						editor.setData(contents, {
 							callback: () => {

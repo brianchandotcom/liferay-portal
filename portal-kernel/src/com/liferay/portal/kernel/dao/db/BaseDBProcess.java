@@ -600,7 +600,7 @@ public abstract class BaseDBProcess implements DBProcess {
 			boolean notificationEnabled = NotificationThreadLocal.isEnabled();
 			boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
-			long companyId = CompanyThreadLocal.getCompanyId();
+			long companyId = CompanyThreadLocal.getNonsystemCompanyId();
 
 			T next = null;
 

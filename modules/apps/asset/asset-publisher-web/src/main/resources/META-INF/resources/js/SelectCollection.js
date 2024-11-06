@@ -103,15 +103,18 @@ export default function SelectCollection({
 						title={Liferay.Language.get('select-collection')}
 					/>
 
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('clear-collection')}
-						className="flex-shrink-0"
-						disabled={!values.clearButtonEnabled}
-						displayType="secondary"
-						onClick={onClearCollectionButtonClick}
-						symbol="times-circle"
-						title={Liferay.Language.get('clear-collection')}
-					/>
+					{values.clearButtonEnabled ? (
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get(
+								'clear-collection'
+							)}
+							className="flex-shrink-0"
+							displayType="secondary"
+							onClick={onClearCollectionButtonClick}
+							symbol="times-circle"
+							title={Liferay.Language.get('clear-collection')}
+						/>
+					) : null}
 				</div>
 			</ClayForm.Group>
 		</>

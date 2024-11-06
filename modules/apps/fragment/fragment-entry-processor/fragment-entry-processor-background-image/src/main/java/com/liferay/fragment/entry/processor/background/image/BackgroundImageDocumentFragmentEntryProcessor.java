@@ -7,15 +7,18 @@ package com.liferay.fragment.entry.processor.background.image;
 
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.fragment.entry.processor.util.AnalyticsAttributesUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DocumentFragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -155,6 +158,16 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 
 				element.removeAttr("data-lfr-background-image-id");
 			}
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-39437") &&
+				fragmentEntryProcessorContext.isViewMode()) {
+
+				AnalyticsAttributesUtil.addAnalyticsAttributes(
+					editableValueJSONObject, element,
+					fragmentEntryProcessorContext,
+					_fragmentEntryProcessorHelper, infoDisplaysFieldValues,
+					_infoItemServiceRegistry);
+			}
 		}
 	}
 
@@ -176,6 +189,9 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

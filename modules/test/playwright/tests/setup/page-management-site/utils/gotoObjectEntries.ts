@@ -12,7 +12,7 @@ export async function gotoObjectEntries({
 	page,
 	siteUrl,
 }: {
-	entityName: 'Lemons' | 'Lemon Baskets' | 'Potatoes';
+	entityName: 'All Fields' | 'Lemons' | 'Lemon Baskets' | 'Potatoes';
 	page: Page;
 	siteUrl: Site['friendlyUrlPath'];
 }) {

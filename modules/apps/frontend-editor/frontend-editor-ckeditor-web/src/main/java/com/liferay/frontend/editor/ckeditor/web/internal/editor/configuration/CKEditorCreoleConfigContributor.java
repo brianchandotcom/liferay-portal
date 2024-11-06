@@ -95,7 +95,7 @@ public class CKEditorCreoleConfigContributor
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		return JSONUtil.putAll(
-			toJSONArray("['Bold', 'Italic', '-' ,'RemoveFormat']"),
+			toJSONArray("['Bold', 'Italic', '-', 'RemoveFormat']"),
 			toJSONArray("['NumberedList', 'BulletedList', '-']"),
 			toJSONArray("['Format']"), toJSONArray("['Link', 'Unlink']"),
 			toJSONArray("['Table', '-','ImageSelector', '-', 'HorizontalRule']")

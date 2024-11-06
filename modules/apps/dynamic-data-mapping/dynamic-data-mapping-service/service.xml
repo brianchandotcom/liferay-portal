@@ -223,6 +223,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
+		<finder name="StructureId" return-type="DDMFormInstance" unique="true">
+			<finder-column name="structureId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="DDMFormInstanceRecord" remote-service="true" uuid="true">
 

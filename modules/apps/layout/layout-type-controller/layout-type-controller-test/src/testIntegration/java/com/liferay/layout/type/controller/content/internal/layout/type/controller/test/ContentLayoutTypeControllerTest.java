@@ -175,6 +175,87 @@ public class ContentLayoutTypeControllerTest {
 				LayoutTestUtil.addTypeContentLayout(_group), Constants.VIEW));
 	}
 
+	@Test
+	public void testContentLayoutTypeControllerMainContentDiv()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), layout.fetchDraftLayout(),
+			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
+			0,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		layout = _layoutLocalService.getLayout(layout.getPlid());
+
+		String html = ContentLayoutTestUtil.getRenderLayoutHTML(
+			layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
+
+		Assert.assertFalse(html.contains("main-content"));
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				StringUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_DRAFT,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		layout = _layoutLocalService.updateMasterLayoutPlid(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layoutPageTemplateEntry.getPlid());
+
+		html = ContentLayoutTestUtil.getRenderLayoutHTML(
+			layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
+
+		Assert.assertTrue(
+			html.startsWith(
+				"<div class=\"layout-content portlet-layout\"" +
+					"id=\"main-content\" role=\"main\">"));
+
+		Layout masterLayout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), masterLayout.fetchDraftLayout(),
+			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
+			0,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				masterLayout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(
+			masterLayout.fetchDraftLayout(), masterLayout);
+
+		html = ContentLayoutTestUtil.getRenderLayoutHTML(
+			layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
+
+		Assert.assertTrue(html.contains("main-content"));
+		Assert.assertFalse(
+			html.startsWith(
+				"<div class=\"layout-content portlet-layout\"" +
+					"id=\"main-content\" role=\"main\">"));
+	}
+
 	@Test(expected = NoSuchLayoutException.class)
 	public void testContentLayoutTypeControllerNoPublishedLayoutGuestUser()
 		throws Exception {
@@ -343,87 +424,6 @@ public class ContentLayoutTypeControllerTest {
 		Assert.assertEquals(
 			_layoutLockManager.getLockedLayoutURL(httpServletRequest),
 			mockHttpServletResponse.getRedirectedUrl());
-	}
-
-	@Test
-	public void testContentLayoutTypeControllerMainContentDiv()
-		throws Exception {
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorRegistry.getFragmentEntry(
-				"BASIC_COMPONENT-heading");
-
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), layout.fetchDraftLayout(),
-			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
-			0,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
-
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
-
-		layout = _layoutLocalService.getLayout(layout.getPlid());
-
-		String html = ContentLayoutTestUtil.getRenderLayoutHTML(
-			layout, _layoutServiceContextHelper, _layoutStructureProvider,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
-
-		Assert.assertFalse(html.contains("main-content"));
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				StringUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_DRAFT,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		layout = _layoutLocalService.updateMasterLayoutPlid(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layoutPageTemplateEntry.getPlid());
-
-		html = ContentLayoutTestUtil.getRenderLayoutHTML(
-			layout, _layoutServiceContextHelper, _layoutStructureProvider,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
-
-		Assert.assertTrue(
-			html.startsWith(
-				"<div class=\"layout-content portlet-layout\"" +
-					"id=\"main-content\" role=\"main\">"));
-
-		Layout masterLayout = _layoutLocalService.fetchLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), masterLayout.fetchDraftLayout(),
-			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
-			0,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				masterLayout.getPlid()));
-
-		ContentLayoutTestUtil.publishLayout(
-			masterLayout.fetchDraftLayout(), masterLayout);
-
-		html = ContentLayoutTestUtil.getRenderLayoutHTML(
-			layout, _layoutServiceContextHelper, _layoutStructureProvider,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
-
-		Assert.assertTrue(html.contains("main-content"));
-		Assert.assertFalse(
-			html.startsWith(
-				"<div class=\"layout-content portlet-layout\"" +
-					"id=\"main-content\" role=\"main\">"));
 	}
 
 	private Layout _addTypePageTemplateEntryLayout() throws Exception {

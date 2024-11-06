@@ -5592,33 +5592,34 @@ public class DataFactory {
 		List<ObjectFieldSettingModel> objectFieldSettingModels =
 			new ArrayList<>();
 
+		long objectFieldId = objectFieldModel.getObjectFieldId();
+
 		if (StringUtil.equals(
 				objectFieldModel.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
 			objectFieldSettingModels.add(
 				newObjectFieldSettingModel(
-					objectFieldModel.getObjectFieldId(),
+					objectFieldId,
 					ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS,
 					"jpeg, jpg, pdf, png, txt"));
 			objectFieldSettingModels.add(
 				newObjectFieldSettingModel(
-					objectFieldModel.getObjectFieldId(),
-					ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+					objectFieldId, ObjectFieldSettingConstants.NAME_FILE_SOURCE,
 					ObjectFieldSettingConstants.VALUE_USER_COMPUTER));
 			objectFieldSettingModels.add(
 				newObjectFieldSettingModel(
-					objectFieldModel.getObjectFieldId(),
+					objectFieldId,
 					ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "100"));
 			objectFieldSettingModels.add(
 				newObjectFieldSettingModel(
-					objectFieldModel.getObjectFieldId(),
+					objectFieldId,
 					ObjectFieldSettingConstants.
 						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
 					Boolean.TRUE.toString()));
 			objectFieldSettingModels.add(
 				newObjectFieldSettingModel(
-					objectFieldModel.getObjectFieldId(),
+					objectFieldId,
 					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
 					String.valueOf(objectFieldModel.getObjectDefinitionId())));
 		}
@@ -5629,12 +5630,12 @@ public class DataFactory {
 
 			objectFieldSettingModels.add(
 				newObjectFieldSettingModel(
-					objectFieldModel.getObjectFieldId(),
+					objectFieldId,
 					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
 					_defaultListTypeEntryKey));
 			objectFieldSettingModels.add(
 				newObjectFieldSettingModel(
-					objectFieldModel.getObjectFieldId(),
+					objectFieldId,
 					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 					ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE));
 		}

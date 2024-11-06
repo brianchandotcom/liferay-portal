@@ -1,4 +1,16 @@
-<#assign objectDefinitionModel = dataFactory.newObjectDefinitionModel(objectFolderModel.getObjectFolderId()) />
+<#assign
+	objectDefinitionModel = dataFactory.newObjectDefinitionModel(objectFolderModel.getObjectFolderId())
+
+	relationshipObjectFieldModel = dataFactory.newObjectFieldModel(0, objectDefinitionModel.getObjectDefinitionId(), "Relationship", "r_userTicket_userId", objectDefinitionModel.getDBTableName(), "Long", "Assignee", "r_userTicket_userId", false, false, false)
+
+	objectFieldSettingModel = dataFactory.newObjectFieldSettingModel(relationshipObjectFieldModel.getObjectFieldId(), "objectRelationshipERCObjectFieldName", "r_userTicket_userERC")
+
+	listTypeDefinitionModel = dataFactory.newListTypeDefinitionModel()
+
+	listTypeEntryModels = dataFactory.newListTypeEntryModels(listTypeDefinitionModel.getListTypeDefinitionId())
+
+	objectFieldModels = dataFactory.newObjectFieldModels(listTypeDefinitionModel.getListTypeDefinitionId(), objectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getDBTableName())
+/>
 
 ${dataFactory.toInsertSQL(objectDefinitionModel)}
 
@@ -6,31 +18,17 @@ ${dataFactory.toInsertSQL(objectDefinitionModel)}
 	${dataFactory.toInsertSQL(resourcePermissionModel)}
 </#list>
 
-<#assign relationshipObjectFieldModel = dataFactory.newObjectFieldModel(0, objectDefinitionModel.getObjectDefinitionId(), "Relationship", "r_userTicket_userId", objectDefinitionModel.getDBTableName(), "Long", "Assignee", "r_userTicket_userId", false, false, false) />
-
 ${dataFactory.toInsertSQL(relationshipObjectFieldModel)}
-
-<#assign objectFieldSettingModel = dataFactory.newObjectFieldSettingModel(relationshipObjectFieldModel.getObjectFieldId(), "objectRelationshipERCObjectFieldName", "r_userTicket_userERC") />
 
 ${dataFactory.toInsertSQL(objectFieldSettingModel)}
 
-<#assign
-	objectRelationshipModel = dataFactory.newObjectRelationshipModel(userObjectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getObjectDefinitionId(), relationshipObjectFieldModel.getObjectFieldId())
-/>
-
-${dataFactory.toInsertSQL(objectRelationshipModel)}
-
-<#assign listTypeDefinitionModel = dataFactory.newListTypeDefinitionModel() />
+${dataFactory.toInsertSQL(dataFactory.newObjectRelationshipModel(userObjectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getObjectDefinitionId(), relationshipObjectFieldModel.getObjectFieldId()))}
 
 ${dataFactory.toInsertSQL(listTypeDefinitionModel)}
-
-<#assign listTypeEntryModels = dataFactory.newListTypeEntryModels(listTypeDefinitionModel.getListTypeDefinitionId()) />
 
 <#list listTypeEntryModels as listTypeEntryModel>
 	${dataFactory.toInsertSQL(listTypeEntryModel)}
 </#list>
-
-<#assign objectFieldModels = dataFactory.newObjectFieldModels(listTypeDefinitionModel.getListTypeDefinitionId(), objectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getDBTableName()) />
 
 <#list objectFieldModels as objectFieldModel>
 	${dataFactory.toInsertSQL(objectFieldModel)}

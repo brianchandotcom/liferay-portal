@@ -1914,21 +1914,20 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 				password = regExpToolkit.generate(null);
 			}
-			else {
-				password = PwdToolkitUtil.generate(
-					_passwordPolicyLocalService.getPasswordPolicy(
-						user.getCompanyId(), user.getOrganizationIds()));
+
+			if (Validator.isNotNull(password)) {
+				serviceContext.setAttribute("passwordUnencrypted", password);
+
+				PasswordModificationThreadLocal.setPasswordModified(true);
+				PasswordModificationThreadLocal.setPasswordUnencrypted(
+					password);
+
+				user.setPassword(PasswordEncryptorUtil.encrypt(password));
+				user.setPasswordEncrypted(true);
+				user.setPasswordUnencrypted(password);
 			}
 
-			serviceContext.setAttribute("passwordUnencrypted", password);
-
-			PasswordModificationThreadLocal.setPasswordModified(true);
-			PasswordModificationThreadLocal.setPasswordUnencrypted(password);
-
-			user.setPassword(PasswordEncryptorUtil.encrypt(password));
-			user.setPasswordEncrypted(true);
 			user.setPasswordModifiedDate(new Date());
-			user.setPasswordUnencrypted(password);
 			user.setPasswordModified(true);
 
 			user = userPersistence.update(user);

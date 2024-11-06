@@ -5,18 +5,21 @@
 
 package com.liferay.saml.web.internal.struts;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException.MustNotUseCompanyMx;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
+import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
-import com.liferay.saml.helper.RelayStateHelper;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.exception.AuthnAgeException;
 import com.liferay.saml.runtime.exception.EntityInteractionException;
@@ -103,13 +106,19 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 
 			httpSession.setAttribute(SamlWebKeys.SAML_SSO_ERROR, error);
 
-			String redirect = _relayStateHelper.getRedirectFromRelayStateToken(
-				ParamUtil.getString(httpServletRequest, "RelayState"));
+			String redirect = _portal.getHomeURL(httpServletRequest);
 
-			redirect = _portal.escapeRedirect(redirect);
+			LastPath lastPath = (LastPath)httpSession.getAttribute(
+				WebKeys.LAST_PATH);
 
-			if (Validator.isNull(redirect)) {
-				redirect = _portal.getHomeURL(httpServletRequest);
+			if (GetterUtil.getBoolean(
+					_props.get(PropsKeys.AUTH_FORWARD_BY_LAST_PATH)) &&
+				(lastPath != null)) {
+
+				redirect = StringBundler.concat(
+					_portal.getPortalURL(httpServletRequest),
+					lastPath.getContextPath(), lastPath.getPath(),
+					lastPath.getParameters());
 			}
 
 			try {
@@ -129,7 +138,7 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 	private Portal _portal;
 
 	@Reference
-	private RelayStateHelper _relayStateHelper;
+	private Props _props;
 
 	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;

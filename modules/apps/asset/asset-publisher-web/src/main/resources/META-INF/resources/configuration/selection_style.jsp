@@ -40,6 +40,7 @@
 			displayType="warning"
 			label="create-collection"
 			propsTransformer="{CreateAssetListActionButtonPropsTransformer} from asset-publisher-web"
+			small="<%= true %>"
 		/>
 	</clay:alert>
 </c:if>

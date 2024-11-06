@@ -438,6 +438,13 @@ modules/sdk/gradle-plugins-xsd-builder/    @liferay-devtools
 modules/sdk/gradle-plugins/    @liferay-devtools
 modules/sdk/gradle-util/    @liferay-devtools
 modules/sdk/project-templates/    @liferay-devtools
+modules/test/playwright/tests/batch-planner    @liferay-headless
+modules/test/playwright/tests/dispatch-web    @liferay-headless
+modules/test/playwright/tests/export-import-web    @liferay-headless
+modules/test/playwright/tests/headless-builder-impl    @liferay-headless
+modules/test/playwright/tests/headless-builder-web    @liferay-headless
+modules/test/playwright/tests/portal-tools-rest-builder-test-impl    @liferay-headless
+modules/test/playwright/tests/staging-configuration-web    @liferay-headless
 modules/third-party/
 modules/util/pmd/    @liferay-core-infra
 modules/util/portal-tools-benchmarks/    @liferay-core-infra

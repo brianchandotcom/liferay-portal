@@ -5490,9 +5490,7 @@ public class DataFactory {
 		objectFieldModel.setIndexedAsKeyword(name.equals("id"));
 		objectFieldModel.setLabel(_getLabel(label));
 		objectFieldModel.setName(name);
-		objectFieldModel.setReadOnly(
-			system ? ObjectFieldConstants.READ_ONLY_TRUE :
-				ObjectFieldConstants.READ_ONLY_FALSE);
+		objectFieldModel.setReadOnly(String.valueOf(system));
 
 		if (businessType.equals(
 				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {

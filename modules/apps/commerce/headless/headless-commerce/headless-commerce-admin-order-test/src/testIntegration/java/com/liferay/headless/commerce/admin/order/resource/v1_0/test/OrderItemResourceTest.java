@@ -333,7 +333,7 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 			{
 				bookedQuantityId =
 					commerceOrderItem.getCommerceInventoryBookedQuantityId();
-				deliveryGroup = commerceOrderItem.getDeliveryGroup();
+				deliveryGroup = commerceOrderItem.getDeliveryGroupName();
 				discountManuallyAdjusted =
 					commerceOrderItem.isDiscountManuallyAdjusted();
 				externalReferenceCode =

@@ -119,7 +119,7 @@ Date requestedDeliveryDate = commerceOrderItem.getRequestedDeliveryDate();
 			/>
 		</div>
 
-		<aui:input bean="<%= commerceOrderItem %>" model="<%= CommerceOrderItem.class %>" name="deliveryGroup" />
+		<aui:input bean="<%= commerceOrderItem %>" model="<%= CommerceOrderItem.class %>" name="deliveryGroupName" />
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" type="submit" />

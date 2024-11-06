@@ -1831,7 +1831,7 @@ public class DataFactory {
 		commerceOrderItemModel.setUnitPrice(BigDecimal.valueOf(0));
 		commerceOrderItemModel.setUnitPriceWithTaxAmount(BigDecimal.valueOf(0));
 		commerceOrderItemModel.setSku(cpInstanceModel.getSku());
-		commerceOrderItemModel.setDeliveryGroup(null);
+		commerceOrderItemModel.setDeliveryGroupName(null);
 		commerceOrderItemModel.setShippingAddressId(0);
 		commerceOrderItemModel.setPrintedNote(null);
 		commerceOrderItemModel.setRequestedDeliveryDate(null);

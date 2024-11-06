@@ -47,7 +47,7 @@ public class CommerceOrderItemTableFDSView extends BaseTableFDSView {
 		).add(
 			"requestedDeliveryDate", "delivery-date"
 		).add(
-			"deliveryGroup", "delivery-group"
+			"deliveryGroupName", "delivery-group"
 		).add(
 			"price", "list-price"
 		).add(

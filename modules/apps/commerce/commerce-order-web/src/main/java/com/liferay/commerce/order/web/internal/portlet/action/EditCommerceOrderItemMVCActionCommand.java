@@ -222,8 +222,8 @@ public class EditCommerceOrderItemMVCActionCommand
 					commerceOrderItem.getUnitPrice());
 		}
 
-		String deliveryGroup = ParamUtil.getString(
-			actionRequest, "deliveryGroup");
+		String deliveryGroupName = ParamUtil.getString(
+			actionRequest, "deliveryGroupName");
 		int requestedDeliveryDateMonth = ParamUtil.getInteger(
 			actionRequest, "requestedDeliveryDateMonth");
 		int requestedDeliveryDateDay = ParamUtil.getInteger(
@@ -233,7 +233,7 @@ public class EditCommerceOrderItemMVCActionCommand
 
 		_commerceOrderItemService.updateCommerceOrderItemInfo(
 			commerceOrderItem.getCommerceOrderItemId(),
-			commerceOrderItem.getShippingAddressId(), deliveryGroup,
+			commerceOrderItem.getShippingAddressId(), deliveryGroupName,
 			commerceOrderItem.getPrintedNote(), requestedDeliveryDateMonth,
 			requestedDeliveryDateDay, requestedDeliveryDateYear);
 	}

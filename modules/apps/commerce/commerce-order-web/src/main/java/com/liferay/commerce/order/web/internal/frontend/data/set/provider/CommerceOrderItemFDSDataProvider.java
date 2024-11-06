@@ -204,7 +204,7 @@ public class CommerceOrderItemFDSDataProvider
 
 			orderItems.add(
 				new OrderItem(
-					commerceOrderItem.getDeliveryGroup(),
+					commerceOrderItem.getDeliveryGroupName(),
 					_getDiscount(commerceOrderItemPrice, locale),
 					_commerceOrderItemQuantityFormatter.format(
 						commerceOrderItem,

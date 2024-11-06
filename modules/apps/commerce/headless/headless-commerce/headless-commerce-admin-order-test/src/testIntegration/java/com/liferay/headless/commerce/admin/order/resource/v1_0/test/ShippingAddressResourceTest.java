@@ -148,7 +148,7 @@ public class ShippingAddressResourceTest
 
 		_commerceOrderItemLocalService.updateCommerceOrderItemInfo(
 			commerceOrderItem.getCommerceOrderItemId(), address.getAddressId(),
-			commerceOrderItem.getDeliveryGroup(),
+			commerceOrderItem.getDeliveryGroupName(),
 			commerceOrderItem.getPrintedNote());
 
 		_commerceOrder = _commerceOrderLocalService.getCommerceOrder(

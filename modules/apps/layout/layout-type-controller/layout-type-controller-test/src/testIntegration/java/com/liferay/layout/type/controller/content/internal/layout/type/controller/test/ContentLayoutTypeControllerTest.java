@@ -346,7 +346,9 @@ public class ContentLayoutTypeControllerTest {
 	}
 
 	@Test
-	public void testMainContent() throws Exception {
+	public void testContentLayoutTypeControllerMainContentDiv()
+		throws Exception {
+
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		FragmentEntry fragmentEntry =

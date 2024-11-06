@@ -15,7 +15,10 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServ
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -116,6 +119,26 @@ public class DisplayPageTemplateFolderResourceImpl
 				displayPageTemplateFolder, group);
 		}
 
+		long parentLayoutPageTemplateCollectionId =
+			_getParentLayoutPageTemplateCollectionId(
+				displayPageTemplateFolder, group);
+
+		if (Validator.isNotNull(
+				displayPageTemplateFolder.
+					getParentDisplayPageTemplateFolderExternalReferenceCode()) &&
+			!Objects.equals(
+				layoutPageTemplateCollection.
+					getParentLayoutPageTemplateCollectionId(),
+				parentLayoutPageTemplateCollectionId)) {
+
+			layoutPageTemplateCollection =
+				_layoutPageTemplateCollectionService.
+					moveLayoutPageTemplateCollection(
+						layoutPageTemplateCollection.
+							getLayoutPageTemplateCollectionId(),
+						parentLayoutPageTemplateCollectionId);
+		}
+
 		return _toDisplayPageTemplateFolder(
 			_layoutPageTemplateCollectionService.
 				updateLayoutPageTemplateCollection(
@@ -151,6 +174,13 @@ public class DisplayPageTemplateFolderResourceImpl
 		long parentLayoutPageTemplateCollectionId =
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+
+		if (Validator.isNull(
+				displayPageTemplateFolder.
+					getParentDisplayPageTemplateFolderExternalReferenceCode())) {
+
+			return parentLayoutPageTemplateCollectionId;
+		}
 
 		LayoutPageTemplateCollection parentLayoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.

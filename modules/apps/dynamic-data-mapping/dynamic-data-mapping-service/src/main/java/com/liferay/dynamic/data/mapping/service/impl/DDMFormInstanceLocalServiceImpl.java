@@ -299,6 +299,13 @@ public class DDMFormInstanceLocalServiceImpl
 	}
 
 	@Override
+	public DDMFormInstance getFormInstanceByStructureId(long structureId)
+		throws PortalException {
+
+		return ddmFormInstancePersistence.findByStructureId(structureId);
+	}
+
+	@Override
 	public List<DDMFormInstance> getFormInstances(long groupId) {
 		return ddmFormInstancePersistence.findByGroupId(groupId);
 	}

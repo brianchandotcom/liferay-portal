@@ -59,7 +59,7 @@ ${dataFactory.toInsertSQL(listTypeDefinitionModel)}
 <#assign
 	objectFieldModels = objectFieldModels + [relationshipObjectFieldModel]
 
-	dlFolderModel = dataFactory.newDLFolderModel("Objects")
+	dlFolderModel = dataFactory.newDLFolderModel()
 />
 
 ${dataFactory.toInsertSQL(dlFolderModel)}

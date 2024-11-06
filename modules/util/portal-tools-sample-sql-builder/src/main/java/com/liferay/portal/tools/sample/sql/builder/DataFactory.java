@@ -4046,15 +4046,16 @@ public class DataFactory {
 		return dlFileVersionModel;
 	}
 
+	public DLFolderModel newDLFolderModel() {
+		return newDLFolderModel(
+			_counter.get(), _globalGroupId, 0, "", "Objects");
+	}
+
 	public DLFolderModel newDLFolderModel(
 		long groupId, long parentFolderId, String name) {
 
 		return newDLFolderModel(
 			_counter.get(), groupId, parentFolderId, "", name);
-	}
-
-	public DLFolderModel newDLFolderModel(String name) {
-		return newDLFolderModel(_counter.get(), _globalGroupId, 0, "", name);
 	}
 
 	public List<DLFolderModel> newDLFolderModels(

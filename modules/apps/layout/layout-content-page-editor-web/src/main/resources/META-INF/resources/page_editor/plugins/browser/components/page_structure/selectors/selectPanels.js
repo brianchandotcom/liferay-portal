@@ -212,6 +212,10 @@ export function selectPanels(activeItemId, activeItemType, state) {
 	let activeItem = null;
 	let panelsIds = {};
 
+	if (!activeItemId) {
+		return {activeItem, panelsIds};
+	}
+
 	if (activeItemType === ITEM_TYPES.layoutDataItem) {
 		activeItem = state.layoutData.items[activeItemId];
 	}

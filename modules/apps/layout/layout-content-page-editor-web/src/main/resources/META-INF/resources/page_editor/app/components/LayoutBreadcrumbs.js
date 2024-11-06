@@ -108,6 +108,10 @@ function useBreadcrumbItems() {
 		(state) => {
 			const items = [];
 
+			if (!activeItemId) {
+				return items;
+			}
+
 			const addLayoutDataItems = (layoutDataItem) => {
 				if (
 					!layoutDataItem ||

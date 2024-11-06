@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -113,43 +112,6 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public PageTemplateSet patchSiteSiteByExternalReferenceCodePageTemplateSet(
-			String siteExternalReferenceCode,
-			String pageTemplateSetExternalReferenceCode,
-			PageTemplateSet pageTemplateSet)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
-
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionService.
-				fetchLayoutPageTemplateCollection(
-					pageTemplateSetExternalReferenceCode, group.getGroupId());
-
-		if (layoutPageTemplateCollection == null) {
-			throw new NoSuchPageTemplateCollectionException();
-		}
-
-		PageTemplateSet existingPageTemplateSet = _toPageTemplateSet(
-			layoutPageTemplateCollection);
-
-		preparePatch(pageTemplateSet, existingPageTemplateSet);
-
-		return _toPageTemplateSet(
-			_layoutPageTemplateCollectionService.
-				updateLayoutPageTemplateCollection(
-					layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId(),
-					existingPageTemplateSet.getName(),
-					existingPageTemplateSet.getDescription()));
-	}
-
-	@Override
 	public PageTemplateSet postSiteSiteByExternalReferenceCodePageTemplateSet(
 			String siteExternalReferenceCode, PageTemplateSet pageTemplateSet)
 		throws Exception {
@@ -196,36 +158,6 @@ public class PageTemplateSetResourceImpl
 						getLayoutPageTemplateCollectionId(),
 					pageTemplateSet.getName(),
 					pageTemplateSet.getDescription()));
-	}
-
-	@Override
-	protected void preparePatch(
-		PageTemplateSet pageTemplateSet,
-		PageTemplateSet existingPageTemplateSet) {
-
-		if (pageTemplateSet.getDateCreated() != null) {
-			existingPageTemplateSet.setDateCreated(
-				pageTemplateSet::getDateCreated);
-		}
-
-		if (pageTemplateSet.getDateModified() != null) {
-			existingPageTemplateSet.setDateModified(
-				pageTemplateSet::getDateModified);
-		}
-
-		if (Validator.isNotNull(pageTemplateSet.getDescription())) {
-			existingPageTemplateSet.setDescription(
-				pageTemplateSet::getDescription);
-		}
-
-		if (Validator.isNotNull(pageTemplateSet.getExternalReferenceCode())) {
-			existingPageTemplateSet.setExternalReferenceCode(
-				pageTemplateSet::getExternalReferenceCode);
-		}
-
-		if (Validator.isNotNull(pageTemplateSet.getName())) {
-			existingPageTemplateSet.setName(pageTemplateSet::getName);
-		}
 	}
 
 	private LayoutPageTemplateCollection _addLayoutPageTemplateCollection(

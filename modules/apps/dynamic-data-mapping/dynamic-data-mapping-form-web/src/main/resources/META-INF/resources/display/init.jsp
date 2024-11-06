@@ -30,6 +30,7 @@ page import="com.liferay.dynamic.data.mapping.form.web.internal.display.context.
 page import="com.liferay.dynamic.data.mapping.model.DDMFormInstance" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion" %><%@
+page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMFormInstanceServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException" %><%@
 page import="com.liferay.object.exception.ObjectEntryCountException" %><%@

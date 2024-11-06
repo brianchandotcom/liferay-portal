@@ -54,7 +54,7 @@ public class JournalArticleIndexerReindexTest {
 	}
 
 	@Test
-	public void testReindexing() throws Exception {
+	public void testReindex() throws Exception {
 		SearchContext searchContext = _getSearchContext("Architectural");
 
 		_assertSearchCount(0, searchContext);
@@ -75,7 +75,7 @@ public class JournalArticleIndexerReindexTest {
 	}
 
 	@Test
-	public void testReindexingWithDefaultValues() throws Exception {
+	public void testReindexWithDefaultValues() throws Exception {
 		SearchContext searchContext = _getSearchContext("Architectural");
 
 		_assertSearchCount(0, searchContext);

@@ -38,6 +38,7 @@ import com.liferay.scim.rest.resource.v1_0.test.util.ScimTestUtil;
 
 import java.util.Arrays;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -90,6 +91,11 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 			).put(
 				"userId", TestPropsValues.getUserId()
 			).build());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(_pid);
 	}
 
 	@Override

@@ -45,8 +45,6 @@
 	}
 }
 
-html#{$cadmin-selector} {
-	.cadmin {
-		@extend .liferay-modal;
-	}
+html#{$cadmin-selector} .cadmin .liferay-modal {
+	@extend .liferay-modal;
 }

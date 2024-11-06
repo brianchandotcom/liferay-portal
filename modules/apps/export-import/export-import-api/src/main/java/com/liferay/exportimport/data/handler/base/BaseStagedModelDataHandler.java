@@ -19,8 +19,11 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Collections;
@@ -40,7 +43,18 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		if (!isEnabled()) {
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		long companyId;
+
+		if (group != null) {
+			companyId = group.getCompanyId();
+		}
+		else {
+			companyId = CompanyThreadLocal.getCompanyId();
+		}
+
+		if (!isEnabled(companyId)) {
 			return;
 		}
 
@@ -57,7 +71,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 	@Override
 	public void deleteStagedModel(T stagedModel) throws PortalException {
-		if (!isEnabled()) {
+		if (!isEnabled(_getCompanyId(stagedModel))) {
 			return;
 		}
 
@@ -76,7 +90,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
-		if (!isEnabled()) {
+		if (!isEnabled(_getCompanyId(stagedModel))) {
 			return;
 		}
 
@@ -171,7 +185,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
-		if (!isEnabled()) {
+		if (!isEnabled(_getCompanyId(stagedModel))) {
 			return;
 		}
 
@@ -197,6 +211,14 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 	protected StagedModelRepository<T> getStagedModelRepository() {
 		return null;
+	}
+
+	private long _getCompanyId(T stagedModel) {
+		if (stagedModel != null) {
+			return stagedModel.getCompanyId();
+		}
+
+		return CompanyThreadLocal.getCompanyId();
 	}
 
 }

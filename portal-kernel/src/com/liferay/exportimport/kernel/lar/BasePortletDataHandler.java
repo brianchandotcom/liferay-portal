@@ -46,7 +46,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		if (!isEnabled()) {
+		if (!isEnabled(_getCompanyId(portletDataContext))) {
 			return null;
 		}
 
@@ -85,7 +85,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		if (!isEnabled()) {
+		if (!isEnabled(_getCompanyId(portletDataContext))) {
 			return null;
 		}
 
@@ -120,7 +120,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		if (!isEnabled()) {
+		if (!isEnabled(_getCompanyId(portletDataContext))) {
 			return null;
 		}
 
@@ -375,7 +375,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws PortletDataException {
 
-		if (!isEnabled()) {
+		if (!isEnabled(_getCompanyId(portletDataContext))) {
 			return null;
 		}
 
@@ -486,7 +486,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		if (!isEnabled()) {
+		if (!isEnabled(_getCompanyId(portletDataContext))) {
 			return;
 		}
 
@@ -512,7 +512,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	@Override
 	public boolean validateSchemaVersion(String schemaVersion) {
-		if (!isEnabled()) {
+		if (!isEnabled(CompanyThreadLocal.getCompanyId())) {
 			return true;
 		}
 
@@ -830,6 +830,14 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		PortletDataHandlerControl... stagingControls) {
 
 		_stagingControls = stagingControls;
+	}
+
+	private long _getCompanyId(PortletDataContext portletDataContext) {
+		if (portletDataContext != null) {
+			return portletDataContext.getCompanyId();
+		}
+
+		return CompanyThreadLocal.getCompanyId();
 	}
 
 	private PortletDataException _handleException(

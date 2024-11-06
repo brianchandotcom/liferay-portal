@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -67,7 +68,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
-		if (!isEnabled()) {
+		if (!isEnabled(_getCompanyId(stagedModel))) {
 			return;
 		}
 
@@ -274,7 +275,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, Element referenceElement)
 		throws PortletDataException {
 
-		if (!isEnabled()) {
+		if (!isEnabled(_getCompanyId(portletDataContext))) {
 			return;
 		}
 
@@ -297,7 +298,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			long classPK)
 		throws PortletDataException {
 
-		if (!isEnabled()) {
+		if (!isEnabled(_getCompanyId(portletDataContext))) {
 			return;
 		}
 
@@ -318,7 +319,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
-		if (!isEnabled()) {
+		if (!isEnabled(stagedModel.getCompanyId())) {
 			return;
 		}
 
@@ -439,7 +440,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
-		if (!isEnabled()) {
+		if (!isEnabled(_getCompanyId(stagedModel))) {
 			return;
 		}
 
@@ -956,6 +957,22 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		}
 
 		return true;
+	}
+
+	private long _getCompanyId(PortletDataContext portletDataContext) {
+		if (portletDataContext != null) {
+			return portletDataContext.getCompanyId();
+		}
+
+		return CompanyThreadLocal.getCompanyId();
+	}
+
+	private long _getCompanyId(T stagedModel) {
+		if (stagedModel != null) {
+			return stagedModel.getCompanyId();
+		}
+
+		return CompanyThreadLocal.getCompanyId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

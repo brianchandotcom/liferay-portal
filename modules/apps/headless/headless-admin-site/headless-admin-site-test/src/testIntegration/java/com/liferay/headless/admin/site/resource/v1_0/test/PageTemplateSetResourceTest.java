@@ -172,7 +172,7 @@ public class PageTemplateSetResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"externalReferenceCode", "description", "name"};
+		return new String[] {"description", "externalReferenceCode", "name"};
 	}
 
 	@Override

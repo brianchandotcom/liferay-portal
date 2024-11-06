@@ -31,7 +31,9 @@ import java.util.function.BiConsumer;
 
 /**
  * @author Andrea Di Giorgi
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 
 	public static CommerceAddress fromAddress(Address address) {

@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 export const PORTLET_URLS = {
+	announcements:
+		'/~/control_panel/manage?p_p_id=com_liferay_announcements_web_portlet_AnnouncementsAdminPortlet',
 	blogs: '/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet',
 	collections:
 		'/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet',

@@ -26,6 +26,7 @@ import {hasFormStepParent} from '../hasFormStepParent';
 import {isMultistepForm} from '../isMultistepForm';
 import isStepper from '../isStepper';
 import {isUnmappedCollection} from '../isUnmappedCollection';
+import {isUnmappedForm} from '../isUnmappedForm';
 
 export type MovementItem = LayoutDataItem & {
 	fieldTypes: FragmentEntryLink['fieldTypes'];
@@ -181,8 +182,4 @@ export default function checkAllowedChild(
 	}
 
 	return LAYOUT_DATA_CHECK_ALLOWED_CHILDREN[parent.type](child, parent);
-}
-
-function isUnmappedForm(item: LayoutDataItem) {
-	return item.type === LAYOUT_DATA_ITEM_TYPES.form && !formIsMapped(item);
 }

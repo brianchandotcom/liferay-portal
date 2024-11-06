@@ -24,6 +24,7 @@ import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
@@ -484,13 +485,21 @@ public class CompanyLocalServiceTest {
 		Company company = null;
 
 		try {
-			company = addCompany();
+			StartupHelperUtil.setDBNew(true);
+
+			String webId = RandomTestUtil.randomString() + "test.com";
+
+			company = _companyLocalService.addCompany(
+				null, webId, webId, "test.com", 0, true, true, null, null, null,
+				null, null, null);
 
 			if (!originalCompanyStaticIdEnabled) {
 				Assert.assertEquals(10000, company.getCompanyId());
 			}
 		}
 		finally {
+			StartupHelperUtil.setDBNew(false);
+
 			if (company != null) {
 				_companyLocalService.deleteCompany(company);
 			}

@@ -47,6 +47,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.time.DateUtils;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -91,6 +92,11 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 			).put(
 				"userId", TestPropsValues.getUserId()
 			).build());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(_pid);
 	}
 
 	@Override

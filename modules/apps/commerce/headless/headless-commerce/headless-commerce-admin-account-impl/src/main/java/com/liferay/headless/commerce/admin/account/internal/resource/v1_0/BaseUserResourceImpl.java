@@ -46,6 +46,8 @@ public abstract class BaseUserResourceImpl implements UserResource {
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/createUser' -d $'{"email": ___, "externalReferenceCode": ___, "firstName": ___, "id": ___, "jobTitle": ___, "lastName": ___, "male": ___, "middleName": ___, "roles": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@Deprecated
+	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(

@@ -65,7 +65,7 @@ const renderRow = ({
 	};
 
 	const layoutData = {
-		items: {child, row, ...childrenItems},
+		items: {[child.itemId]: child, [row.itemId]: row, ...childrenItems},
 	};
 
 	const AutoSelect = () => {

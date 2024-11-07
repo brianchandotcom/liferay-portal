@@ -144,11 +144,13 @@ describe('checkAllowedChild', () => {
 			const grid = getGrid();
 			const form = getForm({formType: 'multistep'});
 
-			expect(checkAllowedChild(container, form, {}, {}, () => [])).toBe(
+			expect(
+				checkAllowedChild(container, form, {}, {}, () => []).valid
+			).toBe(false);
+
+			expect(checkAllowedChild(grid, form, {}, {}, () => []).valid).toBe(
 				false
 			);
-
-			expect(checkAllowedChild(grid, form, {}, {}, () => [])).toBe(false);
 		});
 
 		it('it is not possible to add standard fragments and inputs to a form if it is multistep', () => {
@@ -156,11 +158,11 @@ describe('checkAllowedChild', () => {
 			const input = getFragment({fragmentEntryType: 'input'});
 			const form = getForm({formType: 'multistep'});
 
-			expect(checkAllowedChild(fragment, form, {}, {}, () => [])).toBe(
-				false
-			);
+			expect(
+				checkAllowedChild(fragment, form, {}, {}, () => []).valid
+			).toBe(false);
 
-			expect(checkAllowedChild(input, form, {}, {}, () => [])).toBe(
+			expect(checkAllowedChild(input, form, {}, {}, () => []).valid).toBe(
 				false
 			);
 		});
@@ -180,10 +182,12 @@ describe('checkAllowedChild', () => {
 
 			expect(
 				checkAllowedChild(fragment, formStep, layoutData, {}, () => [])
+					.valid
 			).toBe(true);
 
 			expect(
 				checkAllowedChild(input, formStep, layoutData, {}, () => [])
+					.valid
 			).toBe(true);
 		});
 
@@ -191,18 +195,18 @@ describe('checkAllowedChild', () => {
 			const fragment = getFragment();
 			const form = getForm();
 
-			expect(checkAllowedChild(fragment, form, {}, {}, () => [])).toBe(
-				true
-			);
+			expect(
+				checkAllowedChild(fragment, form, {}, {}, () => []).valid
+			).toBe(true);
 		});
 
 		it('it is not possible to add widgets to a form', () => {
 			const widget = getFragment({isWidget: true});
 			const form = getForm();
 
-			expect(checkAllowedChild(widget, form, {}, {}, () => [])).toBe(
-				false
-			);
+			expect(
+				checkAllowedChild(widget, form, {}, {}, () => []).valid
+			).toBe(false);
 		});
 	});
 
@@ -214,9 +218,9 @@ describe('checkAllowedChild', () => {
 
 			const container = getContainer();
 
-			expect(checkAllowedChild(input, container, {}, {}, () => [])).toBe(
-				false
-			);
+			expect(
+				checkAllowedChild(input, container, {}, {}, () => []).valid
+			).toBe(false);
 		});
 
 		it('it is possible to add inputs inside a form', () => {
@@ -226,7 +230,9 @@ describe('checkAllowedChild', () => {
 
 			const form = getForm();
 
-			expect(checkAllowedChild(input, form, {}, {}, () => [])).toBe(true);
+			expect(checkAllowedChild(input, form, {}, {}, () => []).valid).toBe(
+				true
+			);
 		});
 	});
 
@@ -257,7 +263,7 @@ describe('checkAllowedChild', () => {
 			};
 
 			expect(
-				checkAllowedChild(stepper, form, layoutData, {}, () => [])
+				checkAllowedChild(stepper, form, layoutData, {}, () => []).valid
 			).toBe(true);
 
 			expect(
@@ -267,7 +273,7 @@ describe('checkAllowedChild', () => {
 					layoutDataWithMultistep,
 					{},
 					[]
-				)
+				).valid
 			).toBe(true);
 		});
 
@@ -289,6 +295,7 @@ describe('checkAllowedChild', () => {
 
 			expect(
 				checkAllowedChild(stepper, formStep, layoutData, {}, () => [])
+					.valid
 			).toBe(false);
 		});
 
@@ -301,7 +308,7 @@ describe('checkAllowedChild', () => {
 			const container = getContainer();
 
 			expect(
-				checkAllowedChild(stepper, container, {}, {}, () => [])
+				checkAllowedChild(stepper, container, {}, {}, () => []).valid
 			).toBe(false);
 		});
 
@@ -346,7 +353,7 @@ describe('checkAllowedChild', () => {
 					layoutData,
 					fragmentEntryLinks,
 					() => []
-				)
+				).valid
 			).toBe(false);
 		});
 	});
@@ -385,7 +392,7 @@ describe('checkAllowedChild', () => {
 					layoutData,
 					{},
 					() => widgets
-				)
+				).valid
 			).toBe(false);
 		});
 	});

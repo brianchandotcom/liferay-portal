@@ -12,7 +12,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../src/main/resources
 import {VIEWPORT_SIZES} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {
 	ClipboardContextProvider,
-	useSetCopiedItemIds,
+	useSetClipboard,
 } from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext';
 import {useSetMovementSources} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/KeyboardMovementContext';
 import deleteItem from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteItem';
@@ -24,13 +24,13 @@ import StoreMother from '../../../../../../../../src/main/resources/META-INF/res
 jest.mock(
 	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext',
 	() => {
-		const setCopiedItemIds = jest.fn();
+		const setClipboard = jest.fn();
 
 		return {
 			...jest.requireActual(
 				'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext'
 			),
-			useSetCopiedItemIds: () => setCopiedItemIds,
+			useSetClipboard: () => setClipboard,
 		};
 	}
 );
@@ -238,8 +238,8 @@ describe('PageStructureSidebarToolbar', () => {
 		);
 	});
 
-	it('calls setCopiedItemIds and deleteItem when Cut action is pressed', () => {
-		const setCopiedItemIds = useSetCopiedItemIds();
+	it('calls setClipboard and deleteItem when Cut action is pressed', () => {
+		const setClipboard = useSetClipboard();
 
 		renderComponent({
 			activeItemIds: ['fragment01', 'fragment02'],
@@ -253,13 +253,13 @@ describe('PageStructureSidebarToolbar', () => {
 			})
 		);
 
-		expect(setCopiedItemIds).toBeCalledWith(
+		expect(setClipboard).toBeCalledWith(
 			expect.objectContaining(['fragment01', 'fragment02'])
 		);
 	});
 
-	it('calls setCopiedItemIds when Copy action is pressed', () => {
-		const setCopiedItemIds = useSetCopiedItemIds();
+	it('calls setClipboard when Copy action is pressed', () => {
+		const setClipboard = useSetClipboard();
 
 		renderComponent({
 			activeItemIds: ['fragment01', 'fragment02'],
@@ -267,7 +267,7 @@ describe('PageStructureSidebarToolbar', () => {
 
 		userEvent.click(screen.getByText('copy'));
 
-		expect(setCopiedItemIds).toBeCalledWith(
+		expect(setClipboard).toBeCalledWith(
 			expect.objectContaining(['fragment01', 'fragment02'])
 		);
 	});

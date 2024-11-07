@@ -304,7 +304,7 @@ definition {
 		}
 
 		task ("View the content page template shown in Page Templates admin") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 

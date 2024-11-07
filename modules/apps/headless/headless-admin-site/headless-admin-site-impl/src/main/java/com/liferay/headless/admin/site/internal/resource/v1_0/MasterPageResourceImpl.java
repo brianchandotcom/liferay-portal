@@ -34,6 +34,25 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 	@Override
+	public MasterPage getSiteSiteByExternalReferenceCodeMasterPage(
+			String siteExternalReferenceCode,
+			String masterPageExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		return _masterPageDTOConverter.toDTO(
+			_layoutPageTemplateEntryService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					masterPageExternalReferenceCode, group.getGroupId()));
+	}
+
+	@Override
 	public Page<MasterPage> getSiteSiteByExternalReferenceCodeMasterPagesPage(
 			String siteExternalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,

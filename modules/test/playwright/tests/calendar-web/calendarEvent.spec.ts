@@ -13,7 +13,6 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
-import {waitForAlert} from '../../utils/waitForAlert';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {toLocalDateTimeFormatted} from './utils/toLocalDateTimeFormatted';
@@ -231,59 +230,27 @@ test('can see calendar event inputs alerts', async ({
 	).toBeHidden();
 });
 
-test('can update an event with recurrence', async ({calendarWidgetPage}) => {
+test('can update an event with recurrence', async ({
+	calendarWidgetPage,
+	modalRecurrencePage,
+}) => {
 	await calendarWidgetPage.fillEventWithRecurrenceUntilDate({daysFromNow: 5});
 
-	await expect(
-		calendarWidgetPage.page
-			.frameLocator('iframe')
-			.getByRole('textbox', {name: 'mm/dd/yyyy'})
-	).toBeEnabled();
+	await expect(modalRecurrencePage.inputDate).toBeEnabled();
 
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByRole('button', {name: 'Done'})
-		.click();
+	await modalRecurrencePage.doneButton.click();
 
 	await calendarWidgetPage.publishEvent();
 
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByLabel('Title', {exact: true})
-		.click();
+	await expect(calendarWidgetPage.successAlert).toBeVisible();
 
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByLabel('Title', {exact: true})
-		.fill(getRandomString());
+	await calendarWidgetPage.publishEvent({
+		recurrenceOption: 'Following Events',
+	});
 
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByRole('button', {exact: true, name: 'Publish'})
-		.click();
+	await expect(calendarWidgetPage.successAlert).toBeVisible();
 
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByRole('button', {name: 'Following Events'})
-		.click();
+	await calendarWidgetPage.publishEvent({recurrenceOption: 'Entire Series'});
 
-	await waitForAlert(
-		calendarWidgetPage.page.frameLocator('iframe'),
-		`Success:Your request completed successfully.`
-	);
-
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByRole('button', {exact: true, name: 'Publish'})
-		.click();
-
-	await calendarWidgetPage.page
-		.frameLocator('iframe')
-		.getByRole('button', {name: 'Entire Series'})
-		.click();
-
-	await waitForAlert(
-		calendarWidgetPage.page.frameLocator('iframe'),
-		`Success:Your request completed successfully.`
-	);
+	await expect(calendarWidgetPage.successAlert).toBeVisible();
 });

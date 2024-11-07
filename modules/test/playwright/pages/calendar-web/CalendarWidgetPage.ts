@@ -29,6 +29,7 @@ export class CalendarWidgetPage {
 	readonly saveConfigurationButton: Locator;
 	readonly startDate: Locator;
 	readonly startTime: Locator;
+	readonly successAlert: Locator;
 	readonly timeZoneDropdown: Locator;
 	readonly title: Locator;
 	readonly useGlobalTimeZoneCheckBox: Locator;
@@ -88,6 +89,11 @@ export class CalendarWidgetPage {
 			.frameLocator('iframe')
 			.locator('input[type="time"]')
 			.first();
+		this.successAlert = page
+			.frameLocator('iframe')
+			.locator('.alert-success', {
+				hasText: 'Success:Your request completed successfully.',
+			});
 		this.timeZoneDropdown = page
 			.frameLocator('iframe')
 			.getByLabel('Time Zone', {exact: true});

@@ -6,12 +6,17 @@
 import {test} from '@playwright/test';
 
 import {CalendarWidgetPage} from '../pages/calendar-web/CalendarWidgetPage';
+import {ModalRecurrencePage} from '../pages/calendar-web/ModalRecurrencePage';
 
 const calendarPagesTest = test.extend<{
 	calendarWidgetPage: CalendarWidgetPage;
+	modalRecurrencePage: ModalRecurrencePage;
 }>({
 	calendarWidgetPage: async ({page}, use) => {
 		await use(new CalendarWidgetPage(page));
+	},
+	modalRecurrencePage: async ({page}, use) => {
+		await use(new ModalRecurrencePage(page));
 	},
 });
 

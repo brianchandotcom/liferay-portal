@@ -11,6 +11,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ClassSubtypeReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
@@ -63,13 +64,38 @@ public class DisplayPageTemplateResourceTest
 		super.testDeleteSiteSiteByExternalReferenceCodeDisplayPageTemplate();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate()
 		throws Exception {
 
-		super.testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate();
+		DisplayPageTemplate postDisplayPageTemplate =
+			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplate_addDisplayPageTemplate(
+				randomDisplayPageTemplate());
+
+		DisplayPageTemplate getDisplayPageTemplate =
+			displayPageTemplateResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					postDisplayPageTemplate.getExternalReferenceCode());
+
+		assertEquals(postDisplayPageTemplate, getDisplayPageTemplate);
+		assertValid(getDisplayPageTemplate);
+
+		try {
+			displayPageTemplateResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					RandomTestUtil.randomString());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
 	}
 
 	@Ignore

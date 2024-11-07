@@ -178,7 +178,9 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			durationDays, LocalDate.parse(startDateString, _dateTimeFormatter));
 
 		File dataArchiveDir = new File(
-			_buildProperties.getProperty("archive.ci.build.data.archive.dir"));
+			_buildProperties.getProperty(
+				"google.cloud.bucket.local.dir[jenkins]"),
+			"data");
 
 		File baseArchiveDir = dataArchiveDir.getParentFile();
 
@@ -657,7 +659,9 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 	private void _updateNodeDataFile(String filePath) throws IOException {
 		File dataArchiveDir = new File(
-			_buildProperties.getProperty("archive.ci.build.data.archive.dir"));
+			_buildProperties.getProperty(
+				"google.cloud.bucket.local.dir[jenkins]"),
+			"data");
 
 		File baseArchiveDir = dataArchiveDir.getParentFile();
 
@@ -760,7 +764,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		};
 
 		_ARCHIVE_BASE_DIR_PATH = _buildProperties.getProperty(
-			"archive.ci.build.data.dir");
+			"google.cloud.bucket.local.dir[jenkins]");
 
 		Instant instant = Instant.now();
 

@@ -10,14 +10,15 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +31,6 @@ import javax.portlet.ReadOnlyException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -56,6 +56,10 @@ public class AssetCategoriesNavigationConfigurationAction
 		throws PortalException {
 
 		super.postProcess(companyId, portletRequest, portletPreferences);
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-27566")) {
+			return;
+		}
 
 		boolean allAssetVocabularies = GetterUtil.getBoolean(
 			portletPreferences.getValue("allAssetVocabularies", null));

@@ -14,6 +14,7 @@ import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -195,7 +196,10 @@ public class AssetCategoriesNavigationDisplayContext {
 
 		Map<String, String[]> map = portletPreferences.getMap();
 
-		if (map.containsKey("displayStyleGroupExternalReferenceCode")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-27566") &&
+			map.containsKey("displayStyleGroupExternalReferenceCode")) {
+
 			String displayStyleGroupExternalReferenceCode =
 				portletPreferences.getValue(
 					"displayStyleGroupExternalReferenceCode", null);
@@ -230,7 +234,10 @@ public class AssetCategoriesNavigationDisplayContext {
 
 		Map<String, String[]> map = portletPreferences.getMap();
 
-		if (!map.containsKey("assetVocabularyGroupExternalReferenceCodes")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-27566") ||
+			!map.containsKey("assetVocabularyGroupExternalReferenceCodes")) {
+
 			return _assetCategoriesNavigationPortletInstanceConfiguration.
 				assetVocabularyIds();
 		}

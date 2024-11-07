@@ -85,6 +85,7 @@ public class AssetCategoriesNavigationConfigurationAction
 				portletPreferences, groupAssetVocabularyIdsMap);
 
 			portletPreferences.reset("assetVocabularyIds");
+			portletPreferences.reset("displayStyleGroupId");
 		}
 		catch (ReadOnlyException readOnlyException) {
 			throw new SystemException(readOnlyException);

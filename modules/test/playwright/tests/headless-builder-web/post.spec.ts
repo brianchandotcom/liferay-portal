@@ -18,7 +18,7 @@ export const test = mergeTests(
 	headlessDiscoveryPagesTest
 );
 
-const application = {
+const applicationData = {
 	apiApplicationToAPISchemas: [
 		{
 			description: 'API Application Schema',
@@ -34,7 +34,7 @@ const application = {
 	title: 'Basic application',
 };
 
-const studentSubjectsApplication = {
+const studentSubjectsApplicationData = {
 	apiApplicationToAPISchemas: [
 		{
 			apiSchemaToAPIProperties: [
@@ -78,15 +78,15 @@ test('can create post endpoint and can not disassociate request api schema', asy
 	headlessBuilderPage,
 	page,
 }) => {
-	const apiApplication = await apiHelpers.objectEntry.postObjectEntry(
-		application,
+	const application = await apiHelpers.objectEntry.postObjectEntry(
+		applicationData,
 		'headless-builder/applications'
 	);
 
-	apiHelpers.data.push({id: apiApplication.id, type: 'apiApplication'});
+	apiHelpers.data.push({id: application.id, type: 'apiApplication'});
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.goToEditApplication(application.title);
+	await headlessBuilderPage.goToEditApplication(applicationData.title);
 
 	await applicationPage.createEndpoint('POST', 'Company', 'student');
 
@@ -111,15 +111,15 @@ test('can create post endpoint and can not edit http method', async ({
 	applicationPage,
 	headlessBuilderPage,
 }) => {
-	const apiApplication = await apiHelpers.objectEntry.postObjectEntry(
-		application,
+	const application = await apiHelpers.objectEntry.postObjectEntry(
+		applicationData,
 		'headless-builder/applications'
 	);
 
-	apiHelpers.data.push({id: apiApplication.id, type: 'apiApplication'});
+	apiHelpers.data.push({id: application.id, type: 'apiApplication'});
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.goToEditApplication(application.title);
+	await headlessBuilderPage.goToEditApplication(applicationData.title);
 
 	await applicationPage.createEndpoint('POST', 'Company', 'student');
 
@@ -285,23 +285,23 @@ test('can create post endpoint with different request and response schema', asyn
 		type: 'objectRelationship',
 	});
 
-	const apiApplication = await apiHelpers.objectEntry.postObjectEntry(
-		studentSubjectsApplication,
+	const application = await apiHelpers.objectEntry.postObjectEntry(
+		studentSubjectsApplicationData,
 		'headless-builder/applications'
 	);
 
-	apiHelpers.data.push({id: apiApplication.id, type: 'apiApplication'});
+	apiHelpers.data.push({id: application.id, type: 'apiApplication'});
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.goToEditApplication(
-		studentSubjectsApplication.title
+		studentSubjectsApplicationData.title
 	);
 
 	await applicationPage.createEndpoint('POST', 'Company', 'student');
 
 	await applicationPage.goToEndpointConfigurationTab();
 	await applicationPage.selectEndpointRequestSchema(
-		studentSubjectsApplication.apiApplicationToAPISchemas[0].name
+		studentSubjectsApplicationData.apiApplicationToAPISchemas[0].name
 	);
 
 	// TODO Change to:
@@ -311,14 +311,15 @@ test('can create post endpoint with different request and response schema', asyn
 	await page.getByRole('button', {name: 'Select a Schema'}).click();
 	await page
 		.getByRole('menuitem', {
-			name: studentSubjectsApplication.apiApplicationToAPISchemas[1].name,
+			name: studentSubjectsApplicationData.apiApplicationToAPISchemas[1]
+				.name,
 		})
 		.click();
 
 	await applicationPage.publishButton.click();
 
 	await apiExplorerPage.goToApplication(
-		`c/${studentSubjectsApplication.baseURL}`
+		`c/${studentSubjectsApplicationData.baseURL}`
 	);
 
 	await expect(apiExplorerPage.getEndpointLocator('/student')).toBeVisible();
@@ -330,15 +331,15 @@ test('can create post method endpoint with company scope', async ({
 	applicationPage,
 	headlessBuilderPage,
 }) => {
-	const apiApplication = await apiHelpers.objectEntry.postObjectEntry(
-		application,
+	const application = await apiHelpers.objectEntry.postObjectEntry(
+		applicationData,
 		'headless-builder/applications'
 	);
 
-	apiHelpers.data.push({id: apiApplication.id, type: 'apiApplication'});
+	apiHelpers.data.push({id: application.id, type: 'apiApplication'});
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.goToEditApplication(application.title);
+	await headlessBuilderPage.goToEditApplication(applicationData.title);
 
 	await applicationPage.createEndpoint(
 		'POST',
@@ -348,11 +349,11 @@ test('can create post method endpoint with company scope', async ({
 
 	await applicationPage.goToEndpointConfigurationTab();
 	await applicationPage.selectEndpointRequestSchema(
-		application.apiApplicationToAPISchemas[0].name
+		applicationData.apiApplicationToAPISchemas[0].name
 	);
 	await applicationPage.publishButton.click();
 
-	await apiExplorerPage.goToApplication(`c/${application.baseURL}`);
+	await apiExplorerPage.goToApplication(`c/${applicationData.baseURL}`);
 
 	await expect(
 		apiExplorerPage.getEndpointLocator('/test-post-endpoint')

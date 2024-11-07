@@ -53,9 +53,9 @@ function renderComponent(
 
 describe('ContainerAdvancedPanel', () => {
 	it('renders stored html tag', () => {
-		renderComponent({htmlTag: 'main'});
+		renderComponent({htmlTag: 'div'});
 
-		expect(screen.getByLabelText('html-tag')).toHaveValue('main');
+		expect(screen.getByLabelText('html-tag')).toHaveValue('div');
 	});
 
 	it('calls dispatch method with selected html tag', async () => {

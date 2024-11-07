@@ -11,7 +11,7 @@ import ShortcutManager from '../../../../src/main/resources/META-INF/resources/p
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {
 	ClipboardContextProvider,
-	useSetCopiedItemIds,
+	useSetClipboard,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext';
 import {
 	ControlsProvider,
@@ -23,21 +23,21 @@ import {
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext';
 import deleteItem from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteItem';
 import duplicateItem from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/duplicateItem';
-import pasteItem from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/pasteItem';
+import pasteItems from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/pasteItems';
 import updateItemStyle from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/updateItemStyle';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext',
 	() => {
-		const setCopiedItemIds = jest.fn();
+		const setClipboard = jest.fn();
 
 		return {
 			...jest.requireActual(
 				'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext'
 			),
-			useCopiedItemIds: () => ['fragment02'],
-			useSetCopiedItemIds: () => setCopiedItemIds,
+			useClipboard: () => ['fragment02'],
+			useSetClipboard: () => setClipboard,
 		};
 	}
 );
@@ -77,8 +77,10 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/utils/canBeCopied',
-	() => jest.fn(() => true)
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/utils/isMovementValid',
+	() => ({
+		isMovementValid: jest.fn(() => true),
+	})
 );
 
 jest.mock(
@@ -97,7 +99,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/pasteItem',
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/pasteItems',
 	() => jest.fn()
 );
 
@@ -113,6 +115,8 @@ const DEFAULT_STATE = {
 				type: LAYOUT_DATA_ITEM_TYPES.container,
 			},
 			fragment01: {
+				children: [],
+				config: {},
 				itemId: 'fragment01',
 				parentId: 'container01',
 				type: LAYOUT_DATA_ITEM_TYPES.fragment,
@@ -325,10 +329,10 @@ describe('ShortcutManager', () => {
 		);
 	});
 
-	it('sets the item Id and calls deleteItem to be cut when pressing shift + ctrl + X', () => {
+	it('sets the item Id and calls deleteItem to be cut when pressing ctrl + X', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
-		const setCopiedItemIds = useSetCopiedItemIds();
+		const setClipboard = useSetClipboard();
 
 		renderComponent({
 			activeItemIds: ['fragment01'],
@@ -338,7 +342,6 @@ describe('ShortcutManager', () => {
 			new KeyboardEvent('keydown', {
 				code: 'KeyX',
 				ctrlKey: true,
-				shiftKey: true,
 			})
 		);
 
@@ -348,7 +351,7 @@ describe('ShortcutManager', () => {
 			})
 		);
 
-		expect(setCopiedItemIds).toBeCalledWith(['fragment01']);
+		expect(setClipboard).toBeCalledWith(['fragment01']);
 
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
@@ -356,7 +359,7 @@ describe('ShortcutManager', () => {
 	it('sets the item id to be copied when pressing ctrl + C', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
-		const setCopiedItemIds = useSetCopiedItemIds();
+		const setClipboard = useSetClipboard();
 
 		renderComponent({
 			activeItemIds: ['fragment01'],
@@ -370,12 +373,12 @@ describe('ShortcutManager', () => {
 			})
 		);
 
-		expect(setCopiedItemIds).toBeCalledWith(['fragment01']);
+		expect(setClipboard).toBeCalledWith(['fragment01']);
 
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
-	it('calls pasteItem when pressing ctrl + V', () => {
+	it('calls pasteItems when pressing ctrl + V', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
 		renderComponent({
@@ -389,9 +392,9 @@ describe('ShortcutManager', () => {
 			})
 		);
 
-		expect(pasteItem).toBeCalledWith(
+		expect(pasteItems).toBeCalledWith(
 			expect.objectContaining({
-				copiedItemIds: ['fragment02'],
+				clipboard: ['fragment02'],
 				parentItemId: 'fragment01',
 			})
 		);
@@ -414,9 +417,9 @@ describe('ShortcutManager', () => {
 			})
 		);
 
-		expect(pasteItem).toBeCalledWith(
+		expect(pasteItems).toBeCalledWith(
 			expect.objectContaining({
-				copiedItemIds: ['fragment02'],
+				clipboard: ['fragment02'],
 				parentItemId: 'root01',
 			})
 		);
@@ -439,7 +442,7 @@ describe('ShortcutManager', () => {
 			})
 		);
 
-		expect(pasteItem).toBeCalledTimes(0);
+		expect(pasteItems).toBeCalledTimes(0);
 
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});

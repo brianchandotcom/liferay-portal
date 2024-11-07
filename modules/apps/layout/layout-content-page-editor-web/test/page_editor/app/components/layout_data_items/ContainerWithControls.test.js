@@ -38,7 +38,7 @@ const renderContainer = ({
 	};
 
 	const layoutData = {
-		items: {container},
+		items: {[container.itemId]: container},
 	};
 
 	const AutoSelect = () => {

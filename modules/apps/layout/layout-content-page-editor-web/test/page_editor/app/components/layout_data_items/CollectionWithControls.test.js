@@ -39,7 +39,7 @@ const renderCollection = ({
 	};
 
 	const layoutData = {
-		items: {collection},
+		items: {[collection.itemId]: collection},
 	};
 
 	const AutoSelector = () => {

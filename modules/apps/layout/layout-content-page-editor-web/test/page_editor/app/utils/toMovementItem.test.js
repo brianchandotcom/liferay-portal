@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import normalizeSourceItem from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/normalizeSourceItem';
+import toMovementItem from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/toMovementItem';
 
 const layoutData = {
 	items: {
@@ -40,11 +40,11 @@ const fragmentEntryLinks = {
 	},
 };
 
-describe('normalizeSourceItem', () => {
-	it('normalizes source item', () => {
+describe('toMovementItem', () => {
+	it('convert source item to movement item', () => {
 		expect(
-			normalizeSourceItem(
-				layoutData.items['item01'],
+			toMovementItem(
+				layoutData.items['item01'].itemId,
 				layoutData,
 				fragmentEntryLinks
 			)
@@ -59,10 +59,10 @@ describe('normalizeSourceItem', () => {
 		});
 	});
 
-	it('normalizes source item if the item is a widget', () => {
+	it('convert to movement item if the item is a widget', () => {
 		expect(
-			normalizeSourceItem(
-				layoutData.items['item02'],
+			toMovementItem(
+				layoutData.items['item02'].itemId,
 				layoutData,
 				fragmentEntryLinks
 			)
@@ -76,10 +76,10 @@ describe('normalizeSourceItem', () => {
 		);
 	});
 
-	it('normalizes source item if the item has field types', () => {
+	it('convert to movement item if the item has field types', () => {
 		expect(
-			normalizeSourceItem(
-				layoutData.items['item03'],
+			toMovementItem(
+				layoutData.items['item03'].itemId,
 				layoutData,
 				fragmentEntryLinks
 			)

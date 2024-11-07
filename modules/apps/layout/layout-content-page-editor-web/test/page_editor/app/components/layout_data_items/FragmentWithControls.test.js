@@ -55,7 +55,7 @@ const renderFragment = ({
 	};
 
 	const layoutData = {
-		items: {fragment},
+		items: {[fragment.itemId]: fragment},
 	};
 
 	const AutoSelect = () => {

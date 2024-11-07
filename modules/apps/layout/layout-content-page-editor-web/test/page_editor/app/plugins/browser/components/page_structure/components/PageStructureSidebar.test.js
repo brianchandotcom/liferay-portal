@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import '@testing-library/jest-dom/extend-expect';
 import {State} from '@liferay/frontend-js-state-web';
+
+import '@testing-library/jest-dom/extend-expect';
 import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -276,6 +277,7 @@ describe('PageStructureSidebar', () => {
 			masterRootItemChildren: [],
 			rootItemChildren: [],
 		});
+
 		expect(
 			screen.getByText('there-is-no-content-on-this-page')
 		).toBeInTheDocument();
@@ -285,6 +287,7 @@ describe('PageStructureSidebar', () => {
 		renderComponent({
 			activeItemIds: ['04-fragment'],
 		});
+
 		expect(
 			screen.getByText('Fragment 1', {selector: 'span'})
 		).toBeInTheDocument();
@@ -421,9 +424,11 @@ describe('PageStructureSidebar', () => {
 				activeItemIds: ['04-fragment'],
 				rootItemChildren: ['06-form'],
 			});
+
 			expect(
 				screen.getByText('form-container', {selector: 'span'})
 			).toBeInTheDocument();
+
 			expect(
 				screen.queryByText(
 					'this-content-cannot-be-displayed-due-to-permission-restrictions'

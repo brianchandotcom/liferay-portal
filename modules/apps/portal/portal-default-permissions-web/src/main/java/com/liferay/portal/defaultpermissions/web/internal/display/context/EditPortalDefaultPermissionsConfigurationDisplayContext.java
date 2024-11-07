@@ -6,12 +6,12 @@
 package com.liferay.portal.defaultpermissions.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.defaultpermissions.kernel.configuration.manager.PortalDefaultPermissionsConfigurationManager;
-import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResource;
-import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResourceRegistry;
-import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResourceRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.defaultpermissions.configuration.manager.PortalDefaultPermissionsConfigurationManager;
+import com.liferay.portal.kernel.defaultpermissions.resource.PortalDefaultPermissionsModelResource;
+import com.liferay.portal.kernel.defaultpermissions.resource.PortalDefaultPermissionsModelResourceRegistry;
+import com.liferay.portal.kernel.defaultpermissions.resource.PortalDefaultPermissionsModelResourceRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;

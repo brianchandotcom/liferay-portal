@@ -814,6 +814,150 @@ public interface CPDefinitionOptionRelPersistence
 	public int countByCPDefinitionId(long CPDefinitionId);
 
 	/**
+	 * Returns all the cp definition option rels where CPOptionId = &#63;.
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @return the matching cp definition option rels
+	 */
+	public java.util.List<CPDefinitionOptionRel> findByCPOptionId(
+		long CPOptionId);
+
+	/**
+	 * Returns a range of all the cp definition option rels where CPOptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @param start the lower bound of the range of cp definition option rels
+	 * @param end the upper bound of the range of cp definition option rels (not inclusive)
+	 * @return the range of matching cp definition option rels
+	 */
+	public java.util.List<CPDefinitionOptionRel> findByCPOptionId(
+		long CPOptionId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the cp definition option rels where CPOptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @param start the lower bound of the range of cp definition option rels
+	 * @param end the upper bound of the range of cp definition option rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp definition option rels
+	 */
+	public java.util.List<CPDefinitionOptionRel> findByCPOptionId(
+		long CPOptionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionOptionRel>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the cp definition option rels where CPOptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @param start the lower bound of the range of cp definition option rels
+	 * @param end the upper bound of the range of cp definition option rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cp definition option rels
+	 */
+	public java.util.List<CPDefinitionOptionRel> findByCPOptionId(
+		long CPOptionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionOptionRel>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first cp definition option rel in the ordered set where CPOptionId = &#63;.
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition option rel
+	 * @throws NoSuchCPDefinitionOptionRelException if a matching cp definition option rel could not be found
+	 */
+	public CPDefinitionOptionRel findByCPOptionId_First(
+			long CPOptionId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPDefinitionOptionRel> orderByComparator)
+		throws NoSuchCPDefinitionOptionRelException;
+
+	/**
+	 * Returns the first cp definition option rel in the ordered set where CPOptionId = &#63;.
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition option rel, or <code>null</code> if a matching cp definition option rel could not be found
+	 */
+	public CPDefinitionOptionRel fetchByCPOptionId_First(
+		long CPOptionId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionOptionRel>
+			orderByComparator);
+
+	/**
+	 * Returns the last cp definition option rel in the ordered set where CPOptionId = &#63;.
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition option rel
+	 * @throws NoSuchCPDefinitionOptionRelException if a matching cp definition option rel could not be found
+	 */
+	public CPDefinitionOptionRel findByCPOptionId_Last(
+			long CPOptionId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPDefinitionOptionRel> orderByComparator)
+		throws NoSuchCPDefinitionOptionRelException;
+
+	/**
+	 * Returns the last cp definition option rel in the ordered set where CPOptionId = &#63;.
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition option rel, or <code>null</code> if a matching cp definition option rel could not be found
+	 */
+	public CPDefinitionOptionRel fetchByCPOptionId_Last(
+		long CPOptionId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionOptionRel>
+			orderByComparator);
+
+	/**
+	 * Returns the cp definition option rels before and after the current cp definition option rel in the ordered set where CPOptionId = &#63;.
+	 *
+	 * @param CPDefinitionOptionRelId the primary key of the current cp definition option rel
+	 * @param CPOptionId the cp option ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp definition option rel
+	 * @throws NoSuchCPDefinitionOptionRelException if a cp definition option rel with the primary key could not be found
+	 */
+	public CPDefinitionOptionRel[] findByCPOptionId_PrevAndNext(
+			long CPDefinitionOptionRelId, long CPOptionId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPDefinitionOptionRel> orderByComparator)
+		throws NoSuchCPDefinitionOptionRelException;
+
+	/**
+	 * Removes all the cp definition option rels where CPOptionId = &#63; from the database.
+	 *
+	 * @param CPOptionId the cp option ID
+	 */
+	public void removeByCPOptionId(long CPOptionId);
+
+	/**
+	 * Returns the number of cp definition option rels where CPOptionId = &#63;.
+	 *
+	 * @param CPOptionId the cp option ID
+	 * @return the number of matching cp definition option rels
+	 */
+	public int countByCPOptionId(long CPOptionId);
+
+	/**
 	 * Returns the cp definition option rel where CPDefinitionId = &#63; and CPOptionId = &#63; or throws a <code>NoSuchCPDefinitionOptionRelException</code> if it could not be found.
 	 *
 	 * @param CPDefinitionId the cp definition ID

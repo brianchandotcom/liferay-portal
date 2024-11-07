@@ -31,6 +31,12 @@ import org.osgi.service.component.annotations.Reference;
 public class CTSchemaVersionHelper {
 
 	public void expireCTCollection(CTCollection ctCollection) {
+		if (_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
+				ctCollection.getSchemaVersionId())) {
+
+			return;
+		}
+
 		try {
 			Map<Long, List<ConflictInfo>> conflictMap =
 				_ctCollectionLocalService.checkConflicts(ctCollection);

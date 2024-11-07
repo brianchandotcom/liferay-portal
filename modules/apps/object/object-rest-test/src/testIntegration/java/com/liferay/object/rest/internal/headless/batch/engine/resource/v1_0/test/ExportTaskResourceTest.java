@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -94,9 +95,13 @@ public class ExportTaskResourceTest {
 					"BatchEngineExportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
-			_testPostExportTask("COMPLETED", _objectDefinition1);
+			JSONObject exportTaskJSONObject1 = _testPostExportTask(
+				_objectDefinition1, null);
 
-			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			Assert.assertEquals(
+				"COMPLETED", exportTaskJSONObject1.get("executeStatus"));
+
+			JSONObject companyJSONObject = HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
 					"domain", "able.com"
 				).put(
@@ -108,7 +113,7 @@ public class ExportTaskResourceTest {
 				Http.Method.POST);
 
 			User user = UserTestUtil.getAdminUser(
-				jsonObject.getLong("companyId"));
+				companyJSONObject.getLong("companyId"));
 
 			ObjectDefinition objectDefinition2 =
 				ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -119,7 +124,11 @@ public class ExportTaskResourceTest {
 							_OBJECT_FIELD_NAME_TEXT)),
 					ObjectDefinitionConstants.SCOPE_COMPANY, user.getUserId());
 
-			_testPostExportTask("FAILED", objectDefinition2);
+			exportTaskJSONObject1 = _testPostExportTask(
+				objectDefinition2, null);
+
+			Assert.assertEquals(
+				"FAILED", exportTaskJSONObject1.get("executeStatus"));
 
 			HTTPTestUtil.customize(
 			).withBaseURL(
@@ -128,12 +137,23 @@ public class ExportTaskResourceTest {
 				"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 			).apply(
 				() -> {
-					_testPostExportTask("COMPLETED", objectDefinition2);
-					_testPostExportTask("FAILED", _objectDefinition1);
+					JSONObject exportTaskJSONObject2 = _testPostExportTask(
+						objectDefinition2, null);
+
+					Assert.assertEquals(
+						"COMPLETED",
+						exportTaskJSONObject2.get("executeStatus"));
+
+					exportTaskJSONObject2 = _testPostExportTask(
+						_objectDefinition1, null);
+
+					Assert.assertEquals(
+						"FAILED", exportTaskJSONObject2.get("executeStatus"));
 				}
 			);
 
-			_companyLocalService.deleteCompany(jsonObject.getLong("companyId"));
+			_companyLocalService.deleteCompany(
+				companyJSONObject.getLong("companyId"));
 		}
 	}
 
@@ -154,38 +174,15 @@ public class ExportTaskResourceTest {
 			ObjectEntryTestUtil.addObjectEntry(
 				_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "Object3");
 
-			String queryParametersString = StringBundler.concat(
-				"restrictFields=actions&filter=contains%28",
-				_OBJECT_FIELD_NAME_TEXT, "%2C%20%27Test%27%29");
-
-			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-				null,
+			String encodedFilterString = URLCodec.encodeURL(
 				StringBundler.concat(
-					"headless-batch-engine/v1.0/export-task",
-					"/com.liferay.object.rest.dto.v1_0.ObjectEntry/JSON?",
-					"taskItemDelegateName=", _objectDefinition1.getName(), "&",
-					queryParametersString),
-				Http.Method.POST);
+					"contains(", _OBJECT_FIELD_NAME_TEXT, ", 'Test')"));
 
-			String actualExecuteStatus = null;
+			String queryParametersString =
+				"restrictFields=actions&filter=" + encodedFilterString;
 
-			while (true) {
-				jsonObject = HTTPTestUtil.invokeToJSONObject(
-					null,
-					StringBundler.concat(
-						"headless-batch-engine/v1.0/export-task",
-						"/by-external-reference-code/",
-						jsonObject.getString("externalReferenceCode")),
-					Http.Method.GET);
-
-				actualExecuteStatus = jsonObject.getString("executeStatus");
-
-				if (StringUtil.equals(actualExecuteStatus, "COMPLETED") ||
-					StringUtil.equals(actualExecuteStatus, "FAILED")) {
-
-					break;
-				}
-			}
+			JSONObject jsonObject = _testPostExportTask(
+				_objectDefinition1, queryParametersString);
 
 			InputStream inputStream = HTTPTestUtil.invokeToInputStream(
 				null,
@@ -217,17 +214,22 @@ public class ExportTaskResourceTest {
 		}
 	}
 
-	private void _testPostExportTask(
-			String expectedExecuteStatus, ObjectDefinition objectDefinition)
+	private JSONObject _testPostExportTask(
+			ObjectDefinition objectDefinition, String queryParameters)
 		throws Exception {
 
+		String endpointString = StringBundler.concat(
+			"headless-batch-engine/v1.0/export-task",
+			"/com.liferay.object.rest.dto.v1_0.ObjectEntry/json?",
+			"taskItemDelegateName=", objectDefinition.getName());
+
+		if (queryParameters != null) {
+			endpointString = StringBundler.concat(
+				endpointString, "&", queryParameters);
+		}
+
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				"headless-batch-engine/v1.0/export-task",
-				"/com.liferay.object.rest.dto.v1_0.ObjectEntry/json?",
-				"taskItemDelegateName=", objectDefinition.getName()),
-			Http.Method.POST);
+			null, endpointString, Http.Method.POST);
 
 		String actualExecuteStatus = null;
 
@@ -249,7 +251,7 @@ public class ExportTaskResourceTest {
 			}
 		}
 
-		Assert.assertEquals(expectedExecuteStatus, actualExecuteStatus);
+		return jsonObject;
 	}
 
 	private static final String _OBJECT_FIELD_NAME_TEXT =

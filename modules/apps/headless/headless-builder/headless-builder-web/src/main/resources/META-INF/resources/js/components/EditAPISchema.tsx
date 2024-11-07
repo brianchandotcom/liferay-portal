@@ -257,6 +257,8 @@ export default function EditAPISchema({
 											property.externalReferenceCode,
 										name: property.name,
 										objectFieldERC: property.objectFieldERC,
+										r_apiPropertyToAPIProperties_l_apiPropertyId:
+											property.r_apiPropertyToAPIProperties_l_apiPropertyId,
 										r_apiSchemaToAPIProperties_l_apiSchemaId:
 											property.r_apiSchemaToAPIProperties_l_apiSchemaId,
 										...(property.objectRelationshipNames && {

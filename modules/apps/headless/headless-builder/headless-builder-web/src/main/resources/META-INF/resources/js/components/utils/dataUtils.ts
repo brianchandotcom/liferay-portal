@@ -26,6 +26,7 @@ export function AddObjectFieldsDataToProperties({
 			name,
 			objectFieldERC,
 			objectRelationshipNames,
+			r_apiPropertyToAPIProperties_l_apiPropertyId,
 			type,
 		}) => {
 			if (type.key === 'record') {
@@ -95,6 +96,7 @@ export function AddObjectFieldsDataToProperties({
 					...(objectRelationshipNames && {
 						objectRelationshipNames,
 					}),
+					r_apiPropertyToAPIProperties_l_apiPropertyId,
 					r_apiSchemaToAPIProperties_l_apiSchemaId: apiSchema.id,
 					type: 'trewViewItem',
 				};

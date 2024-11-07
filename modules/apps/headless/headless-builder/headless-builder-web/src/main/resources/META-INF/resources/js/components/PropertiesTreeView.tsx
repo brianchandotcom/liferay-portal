@@ -132,6 +132,7 @@ export default function PropertiesTreeView({
 						objectDefinitionName,
 						objectFieldId,
 						objectFieldName,
+						r_apiPropertyToAPIProperties_l_apiPropertyId,
 					}) => (
 						<TreeView.Item
 							actions={
@@ -179,7 +180,9 @@ export default function PropertiesTreeView({
 
 							<span className="treeview-item-label">{name}</span>
 
-							{!ALLOWED_BUSINESS_TYPES.includes(businessType) && (
+							{(!ALLOWED_BUSINESS_TYPES.includes(businessType) ||
+								r_apiPropertyToAPIProperties_l_apiPropertyId !==
+									0) && (
 								<ClayTooltipProvider>
 									<span
 										className="inline-item-after"

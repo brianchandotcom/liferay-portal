@@ -57,6 +57,7 @@ export default function BaseAPISchemaProperty({
 					objectFieldERC: objectField.externalReferenceCode,
 					objectFieldId: objectField.id,
 					objectFieldName: objectField.name,
+					r_apiPropertyToAPIProperties_l_apiPropertyId: 0,
 					r_apiSchemaToAPIProperties_l_apiSchemaId: apiSchemaId,
 					type: 'treeViewItem',
 					...(objectRelationshipName && {

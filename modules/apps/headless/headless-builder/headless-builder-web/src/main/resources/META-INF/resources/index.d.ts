@@ -68,6 +68,7 @@ interface APISchemaPropertyItem {
 	objectFieldERC: string;
 	objectFieldId: number;
 	objectRelationshipNames: string;
+	r_apiPropertyToAPIProperties_l_apiPropertyId: number;
 	r_apiSchemaToAPIProperties_l_apiSchemaERC: string;
 	r_apiSchemaToAPIProperties_l_apiSchemaId: number;
 	type: schemaPropertyItem;
@@ -271,6 +272,7 @@ interface TreeViewItemData {
 	objectFieldId: number;
 	objectFieldName: string;
 	objectRelationshipNames?: string;
+	r_apiPropertyToAPIProperties_l_apiPropertyId: number;
 	r_apiSchemaToAPIProperties_l_apiSchemaId: number;
 	type: string;
 }

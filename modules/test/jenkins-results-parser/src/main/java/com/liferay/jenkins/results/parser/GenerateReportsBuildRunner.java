@@ -704,7 +704,9 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		}
 	}
 
-	private static final String _ARCHIVE_BASE_DIR_PATH;
+	private static final String _ARCHIVE_BASE_DIR_PATH =
+		GenerateReportsBuildRunner._buildProperties.getProperty(
+			"google.cloud.bucket.local.dir[jenkins]");
 
 	private static final String _CURRENT_DATE_STRING;
 
@@ -717,13 +719,26 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	private static final String _SCRIPT_ELEMENT_REGEX =
 		"(?<scriptElement><script.*src=\\\"(?<srcValue>.*?)\\\".*<\\/script>)";
 
-	private static final String _TMP_ARCHIVE_DIR_PATH;
+	private static final String _TMP_ARCHIVE_DIR_PATH =
+		GenerateReportsBuildRunner._TMP_BASE_DIR_PATH + "/builds/";
 
-	private static final String _TMP_BASE_DIR_PATH;
+	private static final String _TMP_BASE_DIR_PATH =
+		GenerateReportsBuildRunner._buildProperties.getProperty(
+			"archive.ci.build.data.tmp.dir");
 
-	private static final String _TMP_REPORT_DIR_PATH;
+	private static final String _TMP_REPORT_DIR_PATH =
+		_TMP_BASE_DIR_PATH + "/reports/";
 
-	private static final Properties _buildProperties;
+	private static final Properties _buildProperties = new Properties() {
+		{
+			try {
+				putAll(JenkinsResultsParserUtil.getBuildProperties());
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+	};
 	private static final DateTimeFormatter _dateTimeFormatter =
 		DateTimeFormatter.ofPattern("yyyyMMdd");
 	private static final Pattern _linkElementPattern = Pattern.compile(
@@ -752,31 +767,11 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		Report.UTILIZATION.toString());
 
 	static {
-		_buildProperties = new Properties() {
-			{
-				try {
-					putAll(JenkinsResultsParserUtil.getBuildProperties());
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
-			}
-		};
-
-		_ARCHIVE_BASE_DIR_PATH = _buildProperties.getProperty(
-			"google.cloud.bucket.local.dir[jenkins]");
-
 		Instant instant = Instant.now();
 
 		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
 
 		_CURRENT_DATE_STRING = zonedDateTime.format(_dateTimeFormatter);
-
-		_TMP_BASE_DIR_PATH = _buildProperties.getProperty(
-			"archive.ci.build.data.tmp.dir");
-
-		_TMP_ARCHIVE_DIR_PATH = _TMP_BASE_DIR_PATH + "/builds/";
-		_TMP_REPORT_DIR_PATH = _TMP_BASE_DIR_PATH + "/reports/";
 	}
 
 	private Workspace _workspace;

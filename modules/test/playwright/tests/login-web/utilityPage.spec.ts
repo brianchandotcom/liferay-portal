@@ -6,21 +6,12 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import {getRandomInt} from '../../utils/getRandomInt';
 import performLogin, {performLogout} from '../../utils/performLogin';
 import {utilityPagesPage} from './fixtures/utilityPageTest';
 
 export const test = mergeTests(
-	featureFlagsTest({
-		'LPD-6378': true,
-	}),
-	loginTest(),
-	utilityPagesPage
-);
-
-export const testAsGuest = mergeTests(
 	featureFlagsTest({
 		'LPD-6378': true,
 	}),
@@ -35,6 +26,8 @@ test('LPD-6869 Render the default "Create Account" utility page if exists', asyn
 	page,
 	utilityPagesPage,
 }) => {
+	await performLogin(page, 'test');
+
 	await utilityPagesPage.goto();
 
 	const title = getRandomTitle();
@@ -54,23 +47,26 @@ test('LPD-6869 Render the default "Create Account" utility page if exists', asyn
 
 	await utilityPagesPage.goto();
 	await utilityPagesPage.deletePage(title);
+
+	await performLogout(page);
 });
 
-testAsGuest(
-	'LPD-6869 Render the original "Create Account" view if no default utility page exists',
-	async ({page}) => {
-		await page.goto(liferayConfig.environment.baseUrl);
-		await page.getByRole('button', {name: 'Sign In'}).click();
-		await page.getByText('Create Account').click();
-		await expect(page).toHaveTitle('Home - Liferay DXP');
-	}
-);
+test('LPD-6869 Render the original "Create Account" view if no default utility page exists', async ({
+	page,
+}) => {
+	await page.goto(liferayConfig.environment.baseUrl);
+	await page.getByRole('button', {name: 'Sign In'}).click();
+	await page.getByText('Create Account').click();
+	await expect(page).toHaveTitle('Home - Liferay DXP');
+});
 
 test('LPD-6870 Render the default "Sign In" utility page if exists', async ({
 	loginInstanceSettingsPage,
 	page,
 	utilityPagesPage,
 }) => {
+	await performLogin(page, 'test');
+
 	await loginInstanceSettingsPage.goto();
 	await loginInstanceSettingsPage.enableLoginPrompt();
 
@@ -93,6 +89,8 @@ test('LPD-6870 Render the default "Sign In" utility page if exists', async ({
 
 	await loginInstanceSettingsPage.goto();
 	await loginInstanceSettingsPage.resetLoginPrompt();
+
+	await performLogout(page);
 });
 
 test('LPD-6870 Render the original "Sign In" view if no default utility page exists', async ({
@@ -100,6 +98,8 @@ test('LPD-6870 Render the original "Sign In" view if no default utility page exi
 	page,
 	utilityPagesPage,
 }) => {
+	await performLogin(page, 'test');
+
 	await loginInstanceSettingsPage.goto();
 	await loginInstanceSettingsPage.enableLoginPrompt();
 
@@ -114,12 +114,16 @@ test('LPD-6870 Render the original "Sign In" view if no default utility page exi
 
 	await loginInstanceSettingsPage.goto();
 	await loginInstanceSettingsPage.resetLoginPrompt();
+
+	await performLogout(page);
 });
 
 test('LPD-6871 Render the default "Forgot Password" utility page if exists', async ({
 	page,
 	utilityPagesPage,
 }) => {
+	await performLogin(page, 'test');
+
 	await utilityPagesPage.goto();
 
 	const title = getRandomTitle();
@@ -139,14 +143,15 @@ test('LPD-6871 Render the default "Forgot Password" utility page if exists', asy
 
 	await utilityPagesPage.goto();
 	await utilityPagesPage.deletePage(title);
+
+	await performLogout(page);
 });
 
-testAsGuest(
-	'LPD-6871 Render the original "Forgot Password" view if no default utility page exists',
-	async ({page}) => {
-		await page.goto(liferayConfig.environment.baseUrl);
-		await page.getByRole('button', {name: 'Sign In'}).click();
-		await page.getByText('Forgot Password').click();
-		await expect(page).toHaveTitle('Home - Liferay DXP');
-	}
-);
+test('LPD-6871 Render the original "Forgot Password" view if no default utility page exists', async ({
+	page,
+}) => {
+	await page.goto(liferayConfig.environment.baseUrl);
+	await page.getByRole('button', {name: 'Sign In'}).click();
+	await page.getByText('Forgot Password').click();
+	await expect(page).toHaveTitle('Home - Liferay DXP');
+});

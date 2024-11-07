@@ -31,7 +31,7 @@ Company rowObjectCompany = (Company)row.getObject();
 		url="<%= editURL %>"
 	/>
 
-	<c:if test="<%= rowObjectCompany.getCompanyId() != PortalInstancesLocalServiceUtil.getDefaultCompanyId() %>">
+	<c:if test="<%= rowObjectCompany.getCompanyId() != PortalInstancePool.getDefaultCompanyId() %>">
 		<portlet:actionURL name="/portal_instances/delete_instance" var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="companyId" value="<%= String.valueOf(rowObjectCompany.getCompanyId()) %>" />

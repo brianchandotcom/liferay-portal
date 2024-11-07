@@ -16,7 +16,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil" %><%@
 page import="com.liferay.portal.instances.web.internal.constants.PortalInstancesWebKeys" %><%@
 page import="com.liferay.portal.instances.web.internal.display.context.PortalInstancesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.portal.instances.web.internal.taglib.util.CompanyActionDropdownItems" %><%@
@@ -26,6 +25,7 @@ page import="com.liferay.portal.kernel.exception.CompanyMxException" %><%@
 page import="com.liferay.portal.kernel.exception.CompanyVirtualHostException" %><%@
 page import="com.liferay.portal.kernel.exception.CompanyWebIdException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredCompanyException" %><%@
+page import="com.liferay.portal.kernel.instance.PortalInstancePool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Company" %><%@
 page import="com.liferay.portal.kernel.model.VirtualHost" %><%@

@@ -7,7 +7,7 @@ package com.liferay.portal.instances.web.internal.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -29,8 +29,7 @@ public class CompanyActionDropdownItems {
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_defaultCompanyId =
-			PortalInstancesLocalServiceUtil.getDefaultCompanyId();
+		_defaultCompanyId = PortalInstancePool.getDefaultCompanyId();
 	}
 
 	public DropdownItemList getActionDropdownItems() {

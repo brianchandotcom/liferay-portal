@@ -55,7 +55,7 @@ renderResponse.setTitle(HtmlUtil.escape(selCompany.getWebId()));
 
 		<aui:input name="maxUsers" />
 
-		<c:if test="<%= selCompany.getCompanyId() != PortalInstancesLocalServiceUtil.getDefaultCompanyId() %>">
+		<c:if test="<%= selCompany.getCompanyId() != PortalInstancePool.getDefaultCompanyId() %>">
 			<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" value="<%= selCompany.isActive() %>" />
 		</c:if>
 

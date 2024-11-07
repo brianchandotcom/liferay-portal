@@ -93,4 +93,7 @@
 			<finder-column name="ddmStructureId" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>NoSuchDataDefinition</exception>
+	</exceptions>
 </service-builder>

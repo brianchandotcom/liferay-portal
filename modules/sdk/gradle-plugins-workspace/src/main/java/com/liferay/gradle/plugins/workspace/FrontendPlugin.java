@@ -97,7 +97,7 @@ public class FrontendPlugin implements Plugin<Project> {
 					if (GradleUtil.hasTask(
 							project, NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME)) {
 
-						buildTask.finalizedBy(
+						buildTask.dependsOn(
 							NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME);
 					}
 				}

@@ -17,7 +17,7 @@ export async function clickAndExpectToBeVisible({
 	trigger: Locator;
 }) {
 	await expect(async () => {
-		if (await trigger.isVisible()) {
+		if (!(await target.isVisible()) && (await trigger.isVisible())) {
 			await trigger.click();
 		}
 

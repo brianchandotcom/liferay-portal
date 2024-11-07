@@ -23,18 +23,22 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.TrashHelper;
 
 import javax.portlet.ActionRequest;
@@ -107,7 +111,20 @@ public class JournalContentConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		setPreference(actionRequest, "articleId", _getArticleId(actionRequest));
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-27566")) {
+
+			setPreference(
+				actionRequest, "articleExternalReferenceCode",
+				_getArticleExternalReferenceCode(actionRequest));
+		}
+		else {
+			setPreference(
+				actionRequest, "articleId", _getArticleId(actionRequest));
+		}
 
 		String[] contentMetadataAssetAddonEntryKeys =
 			ParamUtil.getParameterValues(
@@ -128,18 +145,32 @@ public class JournalContentConfigurationAction
 			actionRequest, "userToolAssetAddonEntryKeys",
 			StringUtil.merge(userToolAssetAddonEntryKeys));
 
-		_addDDMTemplateLinks(actionRequest);
+		_addDDMTemplateLinks(actionRequest, themeDisplay);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	private void _addDDMTemplateLinks(ActionRequest actionRequest)
+	private void _addDDMTemplateLinks(
+			ActionRequest actionRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		JournalArticle journalArticle =
-			_journalArticleLocalService.fetchArticle(
+		JournalArticle journalArticle = null;
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-27566")) {
+
+			journalArticle =
+				_journalArticleLocalService.
+					fetchLatestArticleByExternalReferenceCode(
+						_getArticleGroupId(actionRequest),
+						_getArticleExternalReferenceCode(actionRequest),
+						WorkflowConstants.STATUS_APPROVED, true);
+		}
+		else {
+			journalArticle = _journalArticleLocalService.fetchArticle(
 				_getArticleGroupId(actionRequest),
 				_getArticleId(actionRequest));
+		}
 
 		if (journalArticle == null) {
 			return;
@@ -160,6 +191,41 @@ public class JournalContentConfigurationAction
 		_ddmTemplateLinkLocalService.addTemplateLink(
 			_portal.getClassNameId(compositeClassName), journalArticle.getId(),
 			ddmTemplateId);
+	}
+
+	private String _getArticleExternalReferenceCode(
+			PortletRequest portletRequest)
+		throws Exception {
+
+		long assetEntryId = GetterUtil.getLong(
+			getParameter(portletRequest, "assetEntryId"));
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			assetEntryId);
+
+		if (assetEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		AssetRendererFactory<JournalArticle> articleAssetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		if (articleAssetRendererFactory == null) {
+			return StringPool.BLANK;
+		}
+
+		AssetRenderer<JournalArticle> articleAssetRenderer =
+			articleAssetRendererFactory.getAssetRenderer(
+				assetEntry.getClassPK());
+
+		if (articleAssetRenderer == null) {
+			return StringPool.BLANK;
+		}
+
+		JournalArticle article = articleAssetRenderer.getAssetObject();
+
+		return article.getExternalReferenceCode();
 	}
 
 	private long _getArticleGroupId(PortletRequest portletRequest) {

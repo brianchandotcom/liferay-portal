@@ -150,6 +150,30 @@ public class FriendlyURLResolverRegistryUtilTest {
 	}
 
 	@Test
+	public void testGetFriendlyURLResolverWithNegativeServiceRanking() {
+		FriendlyURLResolver sampleFriendlyURLResolver =
+			new SampleFriendlyURLResolver();
+
+		FriendlyURLResolver defaultCanonicalURLSeparatorFriendlyURLResolver =
+			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+				_CANONICAL_URL_SEPARATOR);
+
+		ServiceRegistration<FriendlyURLResolver> serviceRegistration =
+			_bundleContext.registerService(
+				FriendlyURLResolver.class, sampleFriendlyURLResolver,
+				MapUtil.singletonDictionary("service.ranking", -1000));
+
+		try {
+			_assertFriendlyURLResolver(
+				defaultCanonicalURLSeparatorFriendlyURLResolver,
+				sampleFriendlyURLResolver);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
+
+	@Test
 	public void testOverride() {
 		Bundle bundle = FrameworkUtil.getBundle(
 			FriendlyURLResolverRegistryUtilTest.class);

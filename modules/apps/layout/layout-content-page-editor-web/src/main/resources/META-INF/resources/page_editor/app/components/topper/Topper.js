@@ -15,7 +15,6 @@ import React, {useEffect} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {MULTI_SELECT_TYPES} from '../../config/constants/multiSelectTypes';
 import {config} from '../../config/index';
 import {useSetCollectionActiveItemContext} from '../../contexts/CollectionActiveItemContext';
 import {
@@ -131,7 +130,7 @@ function TopperContent({
 			: isDropContainer) && isDroppable;
 
 	const selectable =
-		multiSelectType !== MULTI_SELECT_TYPES.simple ||
+		!multiSelectType ||
 		!activeItemIds.some((activeItemId) => item.itemId === activeItemId) ||
 		isActive;
 

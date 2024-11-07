@@ -1976,9 +1976,8 @@ public class ObjectActionLocalServiceTest {
 	public void testExecuteObjectActionMultipleTimesInTheSameThread()
 		throws Exception {
 
-		// Custom object definition
-
 		_testExecuteObjectActionMultipleTimesInTheSameThread();
+		_testExecuteObjectActionMultipleTimesInTheSameThreadWithSystemObjectDefinition();
 	}
 
 	@Test
@@ -2546,6 +2545,22 @@ public class ObjectActionLocalServiceTest {
 			false);
 	}
 
+	private ObjectAction _addObjectAction(
+			long objectDefinitionId, String objectActionExecutorKey,
+			String objectActionTriggerKey,
+			UnicodeProperties parametersUnicodeProperties)
+		throws PortalException {
+
+		return _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinitionId, true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(), objectActionExecutorKey,
+			objectActionTriggerKey, parametersUnicodeProperties, false);
+	}
+
 	private void _addObjectAction(
 			String errorMessage, String externalReferenceCode, String label,
 			String name, String objectActionTriggerKey, boolean system)
@@ -2606,6 +2621,19 @@ public class ObjectActionLocalServiceTest {
 
 		Assert.assertEquals(Collections.emptySet(), arguments[1]);
 		Assert.assertEquals("println \"Hello World\"", arguments[2]);
+	}
+
+	private void _assertGroovyObjectActionExecutorArguments(
+		String expectedObjectFieldValue, String objectFieldName) {
+
+		Assert.assertEquals(1, _argumentsList.size());
+
+		Object[] arguments = _argumentsList.poll();
+
+		Map<String, Object> inputObjects = (Map<String, Object>)arguments[0];
+
+		Assert.assertEquals(
+			expectedObjectFieldValue, inputObjects.get(objectFieldName));
 	}
 
 	private void _assertNotificationQueueEntrySubject(String expectedSubject)
@@ -3059,6 +3087,86 @@ public class ObjectActionLocalServiceTest {
 		_objectEntryLocalService.deleteObjectEntry(objectEntry6);
 
 		_objectActionLocalService.deleteObjectAction(objectAction3);
+	}
+
+	private void _testExecuteObjectActionMultipleTimesInTheSameThreadWithSystemObjectDefinition()
+		throws Exception {
+
+		// On after add
+
+		ObjectDefinition organizationObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), Organization.class.getName());
+
+		ObjectAction objectAction = _addObjectAction(
+			organizationObjectDefinition.getObjectDefinitionId(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			new UnicodeProperties());
+
+		Organization organization1 = OrganizationTestUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(), false);
+
+		_assertGroovyObjectActionExecutorArguments(
+			organization1.getName(), "name");
+
+		Organization organization2 = OrganizationTestUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(), false);
+
+		_assertGroovyObjectActionExecutorArguments(
+			organization2.getName(), "name");
+
+		_objectActionLocalService.deleteObjectAction(objectAction);
+
+		// On after delete
+
+		objectAction = _addObjectAction(
+			organizationObjectDefinition.getObjectDefinitionId(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
+			new UnicodeProperties());
+
+		_organizationLocalService.deleteOrganization(
+			organization1.getOrganizationId());
+
+		_assertGroovyObjectActionExecutorArguments(
+			organization1.getName(), "name");
+
+		_organizationLocalService.deleteOrganization(
+			organization2.getOrganizationId());
+
+		_assertGroovyObjectActionExecutorArguments(
+			organization2.getName(), "name");
+
+		_objectActionLocalService.deleteObjectAction(objectAction);
+
+		// On after update
+
+		objectAction = _addObjectAction(
+			organizationObjectDefinition.getObjectDefinitionId(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			new UnicodeProperties());
+
+		organization1.setName(RandomTestUtil.randomString());
+
+		organization1 = _organizationLocalService.updateOrganization(
+			organization1);
+
+		_assertGroovyObjectActionExecutorArguments(
+			organization1.getName(), "name");
+
+		organization2.setName(RandomTestUtil.randomString());
+
+		organization2 = _organizationLocalService.updateOrganization(
+			organization2);
+
+		_assertGroovyObjectActionExecutorArguments(
+			organization2.getName(), "name");
+
+		_objectActionLocalService.deleteObjectAction(objectAction);
 	}
 
 	private AccountEntry _accountEntry;

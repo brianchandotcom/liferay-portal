@@ -209,7 +209,12 @@ test.describe('Browser Panel', () => {
 		site,
 	}) => {
 
-		// Create a page with a Heading fragment
+		// Create a page with a Dropdown and a Heading fragment
+
+		const dropdownDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-dropdown',
+		});
 
 		const headingId = getRandomString();
 		const headingDefinition = getFragmentDefinition({
@@ -218,7 +223,10 @@ test.describe('Browser Panel', () => {
 		});
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([headingDefinition]),
+			pageDefinition: getPageDefinition([
+				dropdownDefinition,
+				headingDefinition,
+			]),
 			siteId: site.id,
 			title: getRandomString(),
 		});
@@ -231,9 +239,11 @@ test.describe('Browser Panel', () => {
 
 		await pageEditorPage.goToSidebarTab('Browser');
 
-		const treeNode = page.getByLabel('Select Heading');
-
-		await treeNode.hover();
+		await hoverAndExpectToBeVisible({
+			autoClick: true,
+			target: page.locator('.treeview-item').getByLabel('Options'),
+			trigger: page.getByLabel('Select Heading'),
+		});
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,

@@ -46,15 +46,13 @@ public class WorkflowDefinitionLinkResourceTest
 			PermissionCheckerFactoryUtil.create(
 				UserLocalServiceUtil.getUser(TestPropsValues.getUserId())));
 
-		String name = StringUtil.toLowerCase(
-			RandomTestUtil.randomString());
+		String name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 		_kaleoDefinition = KaleoDefinitionLocalServiceUtil.addKaleoDefinition(
-			RandomTestUtil.randomString(), name,
-			RandomTestUtil.randomString(), StringPool.BLANK,
+			RandomTestUtil.randomString(), name, RandomTestUtil.randomString(),
+			StringPool.BLANK,
 			WorkflowDefinitionTestUtil.getContent(
-				RandomTestUtil.randomString(), "workflow-definition.xml",
-				name),
+				RandomTestUtil.randomString(), "workflow-definition.xml", name),
 			StringPool.BLANK, 1, ServiceContextTestUtil.getServiceContext());
 
 		_objectDefinition =

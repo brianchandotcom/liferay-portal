@@ -512,11 +512,13 @@ public class DisplayPageTemplateResourceTest
 		assertValid(postDisplayPageTemplate);
 
 		DisplayPageTemplateFolder displayPageTemplateFolder =
+			displayPageTemplate.getParentFolder();
+		DisplayPageTemplateFolder postDisplayPageTemplateFolder =
 			postDisplayPageTemplate.getParentFolder();
 
 		Assert.assertEquals(
-			layoutPageTemplateCollection.getExternalReferenceCode(),
-			displayPageTemplateFolder.getExternalReferenceCode());
+			displayPageTemplateFolder.getExternalReferenceCode(),
+			postDisplayPageTemplateFolder.getExternalReferenceCode());
 	}
 
 	private void _testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate(

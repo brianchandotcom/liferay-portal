@@ -1,0 +1,10 @@
+{
+	"friendlyURL": "/knowledge-base",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Knowledge Base"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

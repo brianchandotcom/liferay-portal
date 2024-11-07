@@ -1,0 +1,43 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"paddingBottom": "5",
+						"paddingLeft": "3",
+						"paddingRight": "3",
+						"paddingTop": "5"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 4,
+						"paddingLeft": 1,
+						"paddingRight": 1,
+						"paddingTop": 4,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {},
+								"widgetName": "com_liferay_blogs_web_portlet_BlogsPortlet"
+							}
+						},
+						"id": "4627bb67-0947-04fa-afe1-33c30ec21780",
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main"
+		}
+	}
+}

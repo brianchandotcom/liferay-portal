@@ -1,0 +1,43 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"paddingBottom": "5",
+						"paddingLeft": "3",
+						"paddingRight": "3",
+						"paddingTop": "5"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 4,
+						"paddingLeft": 1,
+						"paddingRight": 1,
+						"paddingTop": 4,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {},
+								"widgetName": "com_liferay_knowledge_base_web_portlet_DisplayPortlet"
+							}
+						},
+						"id": "e1e01929-fa58-ba98-56c9-121e7c86d7fd",
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main"
+		}
+	}
+}

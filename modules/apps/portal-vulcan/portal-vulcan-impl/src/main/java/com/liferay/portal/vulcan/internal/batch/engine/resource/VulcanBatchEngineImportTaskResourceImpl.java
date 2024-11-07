@@ -53,7 +53,7 @@ public class VulcanBatchEngineImportTaskResourceImpl
 
 		return importTaskResource.postImportTask(
 			name, callbackURL, _getQueryParameterValue("createStrategy"),
-			_getExternalReferenceCode(), fields, _getImportStrategy(),
+			_getExternalReferenceCode(), fields, _getImportStrategy(), null,
 			_getTaskItemDelegateName(), _getItemsArray(object));
 	}
 

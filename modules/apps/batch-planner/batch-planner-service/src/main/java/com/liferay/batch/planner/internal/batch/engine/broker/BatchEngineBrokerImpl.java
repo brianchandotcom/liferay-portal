@@ -229,7 +229,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 						_batchPlannerMappingLocalService.
 							getBatchPlannerMappings(
 								batchPlannerPlan.getBatchPlannerPlanId())),
-					_getImportErrorStrategy(batchPlannerPlan),
+					_getImportErrorStrategy(batchPlannerPlan), null,
 					batchPlannerPlan.getTaskItemDelegateName(),
 					MultipartBody.of(
 						Collections.singletonMap(

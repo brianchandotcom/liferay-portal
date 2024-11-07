@@ -38,11 +38,7 @@ export interface IDataSet {
 	tableSectionsOrder?: string;
 }
 
-const SystemDataSets = ({
-	namespace,
-}: {
-	namespace: string;
-}) => {
+const SystemDataSets = ({namespace}: {namespace: string}) => {
 	const views = [
 		{
 			contentRenderer: 'table',
@@ -88,7 +84,7 @@ const SystemDataSets = ({
 	];
 
 	return (
-		<div className="system-data-sets data-sets">
+		<div className="data-sets system-data-sets">
 			<FrontendDataSet
 				{...FDS_DEFAULT_PROPS}
 				emptyState={{

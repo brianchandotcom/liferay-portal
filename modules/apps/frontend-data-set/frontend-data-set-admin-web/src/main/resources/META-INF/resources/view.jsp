@@ -9,16 +9,14 @@
 
 <%
 portletDisplay.setBeta(true);
-%>
 
-<%
 final String datasets = ParamUtil.getString(request, "datasets", "custom");
 %>
 
 <c:choose>
 	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-37531") %>'>
 		<clay:navigation-bar
-			navigationItems='<%= 
+			navigationItems='<%=
 				new JSPNavigationItemList(pageContext) {
 					{
 						add(

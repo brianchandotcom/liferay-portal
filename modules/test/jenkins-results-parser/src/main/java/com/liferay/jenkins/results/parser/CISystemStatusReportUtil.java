@@ -114,7 +114,7 @@ public class CISystemStatusReportUtil {
 
 		List<File> buildReportJSONGzFiles = _getBuildReportJSONGzFiles(jobName);
 
-		for (final File buildReportJSONGzFile : buildReportJSONGzFiles) {
+		for (final File buildReportJSONFile : buildReportJSONGzFiles) {
 			callables.add(
 				new Callable<File>() {
 
@@ -122,14 +122,6 @@ public class CISystemStatusReportUtil {
 					public File call() throws Exception {
 						long start =
 							JenkinsResultsParserUtil.getCurrentTimeMillis();
-
-						File parentFile = buildReportJSONGzFile.getParentFile();
-
-						File buildReportJSONFile = new File(
-							parentFile, "build-report.json");
-
-						JenkinsResultsParserUtil.unGzip(
-							buildReportJSONGzFile, buildReportJSONFile);
 
 						JSONObject buildReportJSONObject =
 							JenkinsResultsParserUtil.toJSONObject(
@@ -160,13 +152,13 @@ public class CISystemStatusReportUtil {
 
 							results.add(new Result(topLevelBuildReport));
 
-							return buildReportJSONGzFile;
+							return buildReportJSONFile;
 						}
 						catch (Exception exception) {
 							RuntimeException runtimeException =
 								new RuntimeException(
 									JenkinsResultsParserUtil.getCanonicalPath(
-										buildReportJSONGzFile),
+										buildReportJSONFile),
 									exception);
 
 							runtimeException.printStackTrace();
@@ -180,7 +172,7 @@ public class CISystemStatusReportUtil {
 							System.out.println(
 								JenkinsResultsParserUtil.combine(
 									JenkinsResultsParserUtil.getCanonicalPath(
-										buildReportJSONGzFile),
+										buildReportJSONFile),
 									" processed in ",
 									JenkinsResultsParserUtil.toDurationString(
 										end - start)));
@@ -255,7 +247,7 @@ public class CISystemStatusReportUtil {
 					JenkinsResultsParserUtil.combine(
 						"find ", dateString, "/*/",
 						JenkinsResultsParserUtil.escapeForBash(jobName),
-						"/*/build-report.json.gz -mtime -15"));
+						"/*/build-report.json -mtime -15"));
 			}
 			catch (IOException | TimeoutException exception) {
 				continue;

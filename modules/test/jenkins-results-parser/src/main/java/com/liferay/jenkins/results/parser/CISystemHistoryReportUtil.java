@@ -95,7 +95,7 @@ public class CISystemHistoryReportUtil {
 		System.out.println(
 			"Processing " + buildReportJSONGzFiles.size() + " files");
 
-		for (final File buildReportJSONGzFile : buildReportJSONGzFiles) {
+		for (final File buildReportJSONFile : buildReportJSONGzFiles) {
 			callables.add(
 				new Callable<File>() {
 
@@ -103,14 +103,6 @@ public class CISystemHistoryReportUtil {
 					public File call() throws Exception {
 						long start =
 							JenkinsResultsParserUtil.getCurrentTimeMillis();
-
-						File parentFile = buildReportJSONGzFile.getParentFile();
-
-						File buildReportJSONFile = new File(
-							parentFile, "build-report.json");
-
-						JenkinsResultsParserUtil.unGzip(
-							buildReportJSONGzFile, buildReportJSONFile);
 
 						JSONObject buildReportJSONObject =
 							JenkinsResultsParserUtil.toJSONObject(
@@ -136,13 +128,13 @@ public class CISystemHistoryReportUtil {
 									topLevelBuildReport);
 							}
 
-							return buildReportJSONGzFile;
+							return buildReportJSONFile;
 						}
 						catch (Exception exception) {
 							RuntimeException runtimeException =
 								new RuntimeException(
 									JenkinsResultsParserUtil.getCanonicalPath(
-										buildReportJSONGzFile),
+										buildReportJSONFile),
 									exception);
 
 							runtimeException.printStackTrace();
@@ -156,7 +148,7 @@ public class CISystemHistoryReportUtil {
 							System.out.println(
 								JenkinsResultsParserUtil.combine(
 									JenkinsResultsParserUtil.getCanonicalPath(
-										buildReportJSONGzFile),
+										buildReportJSONFile),
 									" processed in ",
 									JenkinsResultsParserUtil.toDurationString(
 										end - start)));
@@ -270,7 +262,7 @@ public class CISystemHistoryReportUtil {
 				JenkinsResultsParserUtil.combine(
 					"find ", dateString, "/*/",
 					JenkinsResultsParserUtil.escapeForBash(jobName),
-					"/*/build-report.json.gz"));
+					"/*/build-report.json"));
 		}
 		catch (IOException | TimeoutException exception) {
 			return buildReportJSONGzFiles;

@@ -265,7 +265,8 @@ public class TestrayS3Bucket {
 
 				@Override
 				public File call() {
-					File file = new File(baseDir, key);
+					File file = TestrayS3Object.getDecompressedFile(
+						new File(baseDir, key));
 
 					if (file.exists()) {
 						return null;

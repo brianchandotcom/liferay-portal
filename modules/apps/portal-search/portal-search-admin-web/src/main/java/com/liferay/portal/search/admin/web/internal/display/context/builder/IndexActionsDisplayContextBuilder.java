@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.admin.web.internal.display.context.builder;
 
-import com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -267,7 +267,7 @@ public class IndexActionsDisplayContextBuilder {
 	private JSONArray _getVirtualInstancesJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		long[] companyIds = PortalInstancesLocalServiceUtil.getCompanyIds();
+		long[] companyIds = PortalInstancePool.getCompanyIds();
 
 		if (!ArrayUtil.contains(companyIds, CompanyConstants.SYSTEM)) {
 			jsonArray.put(

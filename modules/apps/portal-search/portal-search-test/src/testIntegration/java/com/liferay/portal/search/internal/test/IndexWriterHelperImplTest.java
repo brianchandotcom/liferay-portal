@@ -9,7 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.instances.service.PortalInstancesLocalService;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.Field;
@@ -148,7 +148,7 @@ public class IndexWriterHelperImplTest {
 	}
 
 	private long[] _getCompanyIds() {
-		long[] companyIds = _portalInstancesLocalService.getCompanyIds();
+		long[] companyIds = PortalInstancePool.getCompanyIds();
 
 		if (!ArrayUtil.contains(companyIds, CompanyConstants.SYSTEM)) {
 			companyIds = ArrayUtil.append(
@@ -241,9 +241,6 @@ public class IndexWriterHelperImplTest {
 
 	@Inject
 	private IndexWriterHelper _indexWriterHelper;
-
-	@Inject
-	private PortalInstancesLocalService _portalInstancesLocalService;
 
 	@Inject
 	private Queries _queries;

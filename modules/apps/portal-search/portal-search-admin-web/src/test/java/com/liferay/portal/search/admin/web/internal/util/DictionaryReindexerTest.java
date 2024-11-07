@@ -5,10 +5,11 @@
 
 package com.liferay.portal.search.admin.web.internal.util;
 
-import com.liferay.portal.instances.service.PortalInstancesLocalService;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Before;
@@ -30,17 +31,32 @@ public class DictionaryReindexerTest {
 
 	@Before
 	public void setUp() {
-		Mockito.when(
-			_portalInstancesLocalService.getCompanyIds()
-		).thenReturn(
-			_COMPANY_IDS
-		);
+		PortalInstancePool.enableCache();
+
+		PortalInstancePool.add(
+			new CompanyImpl() {
+
+				@Override
+				public long getCompanyId() {
+					return _COMPANY_IDS[0];
+				}
+
+			});
+		PortalInstancePool.add(
+			new CompanyImpl() {
+
+				@Override
+				public long getCompanyId() {
+					return _COMPANY_IDS[1];
+				}
+
+			});
 	}
 
 	@Test
 	public void testReindexAllCompaniesDictionaries() throws SearchException {
 		DictionaryReindexer dictionaryReindexer = new DictionaryReindexer(
-			_indexWriterHelper, _portalInstancesLocalService);
+			_indexWriterHelper);
 
 		dictionaryReindexer.reindexDictionaries();
 
@@ -52,7 +68,7 @@ public class DictionaryReindexerTest {
 	@Test
 	public void testReindexSystemCompanyDictionaries() throws SearchException {
 		DictionaryReindexer dictionaryReindexer = new DictionaryReindexer(
-			_indexWriterHelper, _portalInstancesLocalService);
+			_indexWriterHelper);
 
 		dictionaryReindexer.reindexDictionaries();
 
@@ -81,7 +97,5 @@ public class DictionaryReindexerTest {
 
 	private final IndexWriterHelper _indexWriterHelper = Mockito.mock(
 		IndexWriterHelper.class);
-	private final PortalInstancesLocalService _portalInstancesLocalService =
-		Mockito.mock(PortalInstancesLocalService.class);
 
 }

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.admin.web.internal.portlet.action;
 
-import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskContextMapConstants;
@@ -205,7 +204,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _reindexDictionaries(long[] companyIds) throws Exception {
 		DictionaryReindexer dictionaryReindexer = new DictionaryReindexer(
-			_indexWriterHelper, _portalInstancesLocalService);
+			_indexWriterHelper);
 
 		dictionaryReindexer.reindexDictionaries(companyIds);
 	}
@@ -243,8 +242,5 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
-
-	@Reference
-	private PortalInstancesLocalService _portalInstancesLocalService;
 
 }

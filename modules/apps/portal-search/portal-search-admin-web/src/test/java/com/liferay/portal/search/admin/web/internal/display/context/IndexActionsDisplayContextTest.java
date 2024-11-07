@@ -6,14 +6,11 @@
 package com.liferay.portal.search.admin.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.instances.service.PortalInstancesLocalService;
-import com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -53,10 +50,11 @@ public class IndexActionsDisplayContextTest {
 
 	@Before
 	public void setUp() {
+		PortalInstancePool.enableCache();
+
 		_setUpHttpServletRequest();
 		_setUpIndexInformation();
 		_setUpLanguage();
-		_setUpPortalInstancesLocalServiceUtil();
 		_setUpPortalUtil();
 		_setUpThemeDisplay();
 
@@ -178,30 +176,6 @@ public class IndexActionsDisplayContextTest {
 		).get(
 			Mockito.any(HttpServletRequest.class), Mockito.anyString()
 		);
-	}
-
-	private void _setUpPortalInstancesLocalServiceUtil() {
-		PortalInstancesLocalService portalInstancesLocalService = Mockito.mock(
-			PortalInstancesLocalService.class);
-
-		Mockito.doReturn(
-			new long[0]
-		).when(
-			portalInstancesLocalService
-		).getCompanyIds();
-
-		ReflectionTestUtil.setFieldValue(
-			PortalInstancesLocalServiceUtil.class, "_serviceSnapshot",
-			new Snapshot<PortalInstancesLocalService>(
-				PortalInstancesLocalServiceUtil.class,
-				PortalInstancesLocalService.class) {
-
-				@Override
-				public PortalInstancesLocalService get() {
-					return portalInstancesLocalService;
-				}
-
-			});
 	}
 
 	private void _setUpPortalUtil() {

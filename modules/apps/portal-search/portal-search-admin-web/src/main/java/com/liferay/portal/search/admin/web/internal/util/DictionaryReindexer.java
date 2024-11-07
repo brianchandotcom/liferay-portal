@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.admin.web.internal.util;
 
-import com.liferay.portal.instances.service.PortalInstancesLocalService;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchException;
@@ -15,18 +15,14 @@ import com.liferay.portal.kernel.search.SearchException;
  */
 public class DictionaryReindexer {
 
-	public DictionaryReindexer(
-		IndexWriterHelper indexWriterHelper,
-		PortalInstancesLocalService portalInstancesLocalService) {
-
+	public DictionaryReindexer(IndexWriterHelper indexWriterHelper) {
 		_indexWriterHelper = indexWriterHelper;
-		_portalInstancesLocalService = portalInstancesLocalService;
 	}
 
 	public void reindexDictionaries() throws SearchException {
 		reindexDictionaries(CompanyConstants.SYSTEM);
 
-		long[] companyIds = _portalInstancesLocalService.getCompanyIds();
+		long[] companyIds = PortalInstancePool.getCompanyIds();
 
 		for (long companyId : companyIds) {
 			reindexDictionaries(companyId);
@@ -45,6 +41,5 @@ public class DictionaryReindexer {
 	}
 
 	private final IndexWriterHelper _indexWriterHelper;
-	private final PortalInstancesLocalService _portalInstancesLocalService;
 
 }

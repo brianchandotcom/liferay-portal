@@ -7,7 +7,7 @@ liferay-learn-site-initializer:
 liferay-learn-site-initializer-oauth-application-headless-server:
     .serviceAddress: localhost:8080
     .serviceScheme: http
-    name: Liferay Learn OAuth Application Headless Server
+    name: Liferay Learn Site Initializer OAuth Application Headless Server
     scopes:
         - Liferay.Headless.Site.everything
     type: oAuthApplicationHeadlessServer

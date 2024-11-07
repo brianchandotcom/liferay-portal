@@ -1,7 +1,7 @@
 assemble:
     - from: build/vite
       into: static
-liferay-aicontentwizard-custom-element:
+liferay-aicontentwizard-custom-element-app:
     cssURLs:
         - "**/index*.css"
     friendlyURLMapping: liferay-aicontentwizard-custom-element
@@ -15,7 +15,7 @@ liferay-aicontentwizard-custom-element:
     urls:
         - "main.js"
     useESM: true
-liferay-aicontentwizard-settings-custom-element:
+liferay-aicontentwizard-custom-element-settings:
     cssURLs:
         - "**/index*.css"
     friendlyURLMapping: liferay-aicontentwizard-custom-element

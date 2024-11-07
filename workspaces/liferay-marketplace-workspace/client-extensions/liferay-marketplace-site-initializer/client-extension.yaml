@@ -7,7 +7,7 @@ liferay-marketplace-site-initializer:
 liferay-marketplace-site-initializer-oauth-application-headless-server:
     .serviceAddress: localhost:8080
     .serviceScheme: http
-    name: Liferay Marketplace OAuth Application Headless Server
+    name: Liferay Marketplace Site Initializer OAuth Application Headless Server
     scopes:
         - Liferay.Headless.Site.everything
     type: oAuthApplicationHeadlessServer

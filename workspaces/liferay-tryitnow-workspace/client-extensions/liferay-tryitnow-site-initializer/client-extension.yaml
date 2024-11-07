@@ -7,7 +7,7 @@ liferay-tryitnow-site-initializer:
 liferay-tryitnow-site-initializer-oauth-application-headless-server:
     .serviceAddress: localhost:8080
     .serviceScheme: http
-    name: Liferay Try It Now OAuth Application Headless Server
+    name: Liferay Try It Now Site Initializer OAuth Application Headless Server
     scopes:
         - Liferay.Headless.Site.everything
     type: oAuthApplicationHeadlessServer

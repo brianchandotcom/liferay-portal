@@ -217,6 +217,96 @@ test.describe('Captcha Fragment', () => {
 	);
 });
 
+test.describe('Date Fragment', () => {
+	test(
+		'The page designer could map date field to date fragment',
+		{
+			tag: ['@LPS-151158', '@LPS-155502'],
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a form fragment with a date fragment
+
+			const {className: objectDefinitionClassName} =
+				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+					ALL_FIELDS_OBJECT_ERC
+				);
+
+			const dateId = getRandomString();
+
+			const dateDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_date',
+				},
+				id: dateId,
+				key: 'INPUTS-date-input',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [dateDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Change label
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Label',
+				fragmentId: dateId,
+				tab: 'General',
+				value: 'Expiration Date',
+			});
+
+			const dateInput = page.locator('.date-input');
+
+			await expect(
+				dateInput.getByText('Expiration Date')
+			).not.toHaveClass('sr-only');
+
+			// Hide label
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Label',
+				fragmentId: dateId,
+				tab: 'General',
+				value: false,
+			});
+
+			await expect(dateInput.getByText('Expiration Date')).toHaveClass(
+				'sr-only'
+			);
+
+			// Show help text
+
+			await expect(dateInput).not.toContainText(
+				/Add your help text here./
+			);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Help Text',
+				fragmentId: dateId,
+				tab: 'General',
+				value: true,
+			});
+
+			await expect(dateInput).toContainText(/Add your help text here./);
+		}
+	);
+});
+
 test.describe('Date and Time Fragment', () => {
 	test(
 		'The page designer could map date and time field to date and time fragment',

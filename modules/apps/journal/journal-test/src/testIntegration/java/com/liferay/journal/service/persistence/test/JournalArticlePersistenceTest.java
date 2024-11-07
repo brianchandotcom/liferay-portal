@@ -574,6 +574,23 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_ERC_ST() throws Exception {
+		_persistence.countByG_ERC_ST(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
+
+		_persistence.countByG_ERC_ST(0L, "null", 0);
+
+		_persistence.countByG_ERC_ST(0L, (String)null, 0);
+	}
+
+	@Test
+	public void testCountByG_ERC_STArrayable() throws Exception {
+		_persistence.countByG_ERC_ST(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomString(),
+			new int[] {RandomTestUtil.nextInt(), 0});
+	}
+
+	@Test
 	public void testCountByG_F_ST() throws Exception {
 		_persistence.countByG_F_ST(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

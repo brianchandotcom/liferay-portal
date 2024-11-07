@@ -12,7 +12,7 @@ portletDisplay.setBeta(true);
 %>
 
 <%
-final String navigation = ParamUtil.getString(request, "datasets", "custom");
+final String datasets = ParamUtil.getString(request, "datasets", "custom");
 %>
 
 <c:choose>
@@ -23,15 +23,15 @@ final String navigation = ParamUtil.getString(request, "datasets", "custom");
 					{
 						add(
 							navigationItem -> {
-								navigationItem.setActive(navigation.equals("custom"));
+								navigationItem.setActive(datasets.equals("custom"));
 								navigationItem.setHref(renderResponse.createRenderURL());
 								navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "custom-data-sets"));
 							});
 
 						add(
 							navigationItem -> {
-								navigationItem.setActive(navigation.equals("system"));
-								navigationItem.setHref(renderResponse.createRenderURL(), "datasets", "system-data-sets");
+								navigationItem.setActive(datasets.equals("system"));
+								navigationItem.setHref(renderResponse.createRenderURL(), "datasets", "system");
 								navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "system-data-sets"));
 							});
 					}

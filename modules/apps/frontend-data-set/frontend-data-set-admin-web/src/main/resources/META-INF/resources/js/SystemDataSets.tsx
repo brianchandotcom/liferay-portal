@@ -88,7 +88,7 @@ const SystemDataSets = ({
 	];
 
 	return (
-		<div className="data-sets">
+		<div className="system-data-sets data-sets">
 			<FrontendDataSet
 				{...FDS_DEFAULT_PROPS}
 				emptyState={{

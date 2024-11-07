@@ -675,7 +675,7 @@ const DataSets = ({
 	];
 
 	return (
-		<div className="data-sets">
+		<div className="custom-data-sets data-sets">
 			<FrontendDataSet
 				{...FDS_DEFAULT_PROPS}
 				apiURL={API_URL.DATA_SETS}

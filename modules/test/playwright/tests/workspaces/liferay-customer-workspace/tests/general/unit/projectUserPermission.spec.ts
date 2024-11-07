@@ -69,9 +69,11 @@ test.beforeEach(async ({apiHelpers, page}) => {
 		account.id
 	);
 
-	const accountAdministratorRole = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Account Administrator';
-	});
+	const accountAdministratorRole = await rolesResponse?.items?.filter(
+		(role) => {
+			return role.name === 'Account Administrator';
+		}
+	);
 
 	await apiHelpers.headlessAdminUser.assignAccountRoles(
 		accountExternalReferenceCode,
@@ -111,7 +113,7 @@ test.describe('Project User Permission', () => {
 
 		await projectTeamMembersPage.lastNameField.fill('testlast');
 
-		userEmailAddress = getRandomInt() + '@liferay.com';
+		userEmailAddress = getRandomInt().toString() + '@liferay.com';
 
 		await projectTeamMembersPage.emailField.fill(userEmailAddress);
 
@@ -121,7 +123,7 @@ test.describe('Project User Permission', () => {
 
 		await projectTeamMembersPage.applyButton.click({force: true});
 
-		await projectTeamMembersPage.sendInvitationsButton.click();
+		await projectTeamMembersPage.sendInvitationsButton.click({force: true});
 
 		await projectTeamMembersPage.goto(accountExternalReferenceCode);
 

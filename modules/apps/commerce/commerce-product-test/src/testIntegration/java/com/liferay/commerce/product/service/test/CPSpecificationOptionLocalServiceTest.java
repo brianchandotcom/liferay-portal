@@ -110,7 +110,7 @@ public class CPSpecificationOptionLocalServiceTest {
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				RandomTestUtil.randomString(), _user.getUserId(), false);
 
-		CPSpecificationOption cpSpecificationOption1 =
+		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionLocalService.addCPSpecificationOption(
 				RandomTestUtil.randomString(), _serviceContext.getUserId(), 0L,
 				new long[] {
@@ -123,7 +123,7 @@ public class CPSpecificationOptionLocalServiceTest {
 				RandomTestUtil.randomDouble(), _serviceContext);
 
 		List<ListTypeDefinition> listTypeDefinitions =
-			cpSpecificationOption1.getListTypeDefinitions();
+			cpSpecificationOption.getListTypeDefinitions();
 
 		Assert.assertEquals(
 			listTypeDefinition1.toString(), 2, listTypeDefinitions.size());

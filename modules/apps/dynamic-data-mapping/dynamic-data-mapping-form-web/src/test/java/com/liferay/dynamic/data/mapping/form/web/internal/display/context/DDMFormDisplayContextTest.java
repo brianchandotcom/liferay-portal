@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -59,6 +60,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -83,6 +85,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.hamcrest.CoreMatchers;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -111,11 +114,19 @@ public class DDMFormDisplayContextTest {
 	}
 
 	@Before
-	public void setUp() {
+	public void setUp() throws PortalException {
+		_setUpDDMStructureLocalService();
+		_setUpGroupLocalService();
 		_setUpJSONFactoryUtil();
 		_setUpLanguageUtil();
 		_setUpPortalUtil();
+		_setUpPrefsParamUtilMockedStatic();
 		_setUpResourceBundleUtil();
+	}
+
+	@After
+	public void tearDown() {
+		_prefsParamUtilMockedStatic.close();
 	}
 
 	@Test
@@ -391,6 +402,63 @@ public class DDMFormDisplayContextTest {
 
 		Assert.assertEquals(
 			expectedDDMFormFieldOptions, actualDDMFormFieldOptions);
+	}
+
+	@Test
+	public void testGetFormInstanceId() throws Exception {
+		DDMFormInstance ddmFormInstance = Mockito.mock(DDMFormInstance.class);
+
+		long ddmFormInstanceId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			ddmFormInstance.getFormInstanceId()
+		).thenReturn(
+			ddmFormInstanceId
+		);
+
+		Mockito.when(
+			_ddmFormInstanceLocalService.getFormInstanceByStructureId(
+				Mockito.anyLong())
+		).thenReturn(
+			ddmFormInstance
+		);
+
+		_prefsParamUtilMockedStatic.when(
+			() -> PrefsParamUtil.getString(
+				_renderRequest.getPreferences(), _renderRequest,
+				"ddmStructureExternalReferenceCode")
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		DDMFormDisplayContext ddmFormDisplayContext =
+			_createDDMFormDisplayContext(_renderRequest);
+
+		Assert.assertEquals(
+			ddmFormInstanceId, ddmFormDisplayContext.getFormInstanceId());
+
+		_prefsParamUtilMockedStatic.when(
+			() -> PrefsParamUtil.getString(
+				_renderRequest.getPreferences(), _renderRequest,
+				"ddmStructureExternalReferenceCode")
+		).thenReturn(
+			StringPool.BLANK
+		);
+
+		ddmFormInstanceId = RandomTestUtil.randomLong();
+
+		_prefsParamUtilMockedStatic.when(
+			() -> PrefsParamUtil.getLong(
+				_renderRequest.getPreferences(), _renderRequest,
+				"formInstanceId")
+		).thenReturn(
+			ddmFormInstanceId
+		);
+
+		ddmFormDisplayContext = _createDDMFormDisplayContext(_renderRequest);
+
+		Assert.assertEquals(
+			ddmFormInstanceId, ddmFormDisplayContext.getFormInstanceId());
 	}
 
 	@Test
@@ -827,10 +895,10 @@ public class DDMFormDisplayContextTest {
 			Mockito.mock(DDMFormValuesFactory.class),
 			Mockito.mock(DDMFormValuesMerger.class), _ddmFormWebConfiguration,
 			Mockito.mock(DDMStorageAdapterRegistry.class),
-			Mockito.mock(DDMStructureLocalService.class),
-			Mockito.mock(GroupLocalService.class), new JSONFactoryImpl(), null,
-			null, null, null, null, Mockito.mock(Portal.class), renderRequest,
-			new MockRenderResponse(), Mockito.mock(RoleLocalService.class),
+			_ddmStructureLocalService, _groupLocalService,
+			new JSONFactoryImpl(), null, null, null, null, null,
+			Mockito.mock(Portal.class), renderRequest, new MockRenderResponse(),
+			Mockito.mock(RoleLocalService.class),
 			Mockito.mock(UserLocalService.class),
 			_workflowDefinitionLinkLocalService);
 	}
@@ -1066,6 +1134,32 @@ public class DDMFormDisplayContextTest {
 		);
 	}
 
+	private void _setUpDDMStructureLocalService() throws PortalException {
+		Mockito.when(
+			_ddmStructureLocalService.getStructureByExternalReferenceCode(
+				Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong())
+		).thenReturn(
+			Mockito.mock(DDMStructure.class)
+		);
+	}
+
+	private void _setUpGroupLocalService() {
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.when(
+			group.getGroupId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		Mockito.when(
+			_groupLocalService.fetchGroupByExternalReferenceCode(
+				Mockito.anyString(), Mockito.anyLong())
+		).thenReturn(
+			group
+		);
+	}
+
 	private void _setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
@@ -1120,6 +1214,16 @@ public class DDMFormDisplayContextTest {
 		);
 	}
 
+	private void _setUpPrefsParamUtilMockedStatic() {
+		_prefsParamUtilMockedStatic.when(
+			() -> PrefsParamUtil.getString(
+				_renderRequest.getPreferences(), _renderRequest,
+				"groupExternalReferenceCode")
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+	}
+
 	private void _setUpResourceBundleUtil() {
 		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
 			ResourceBundleLoader.class);
@@ -1164,6 +1268,10 @@ public class DDMFormDisplayContextTest {
 			DDMFormInstanceVersionLocalService.class);
 	private final DDMFormWebConfiguration _ddmFormWebConfiguration =
 		Mockito.mock(DDMFormWebConfiguration.class);
+	private final DDMStructureLocalService _ddmStructureLocalService =
+		Mockito.mock(DDMStructureLocalService.class);
+	private final GroupLocalService _groupLocalService = Mockito.mock(
+		GroupLocalService.class);
 	private final Language _language = Mockito.mock(Language.class);
 	private final MockHttpServletRequest _mockHttpServletRequest1 =
 		new MockHttpServletRequest();
@@ -1171,6 +1279,9 @@ public class DDMFormDisplayContextTest {
 		new MockHttpServletRequest();
 	private MockedStatic<PortletPermissionUtil>
 		_portletPermissionUtilMockedStatic;
+	private final MockedStatic<PrefsParamUtil> _prefsParamUtilMockedStatic =
+		Mockito.mockStatic(PrefsParamUtil.class);
+	private final RenderRequest _renderRequest = _mockRenderRequest();
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService = Mockito.mock(
 			WorkflowDefinitionLinkLocalService.class);

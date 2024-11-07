@@ -53,35 +53,6 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	public static DDMStructure addStructure(
-			long userId, long groupId, long parentStructureId, long classNameId,
-			String structureKey, Map<java.util.Locale, String> nameMap,
-			Map<java.util.Locale, String> descriptionMap,
-			com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
-			com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
-			String storageType, int type,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addStructure(null,
-			userId, groupId, parentStructureId, classNameId, structureKey,
-			nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType, type,
-			serviceContext);
-	}
-
-	public static DDMStructure addStructure(
-			long userId, long groupId, long parentStructureId, long classNameId,
-			String structureKey, Map<java.util.Locale, String> nameMap,
-			Map<java.util.Locale, String> descriptionMap, String definition,
-			String storageType,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addStructure(
-			userId, groupId, parentStructureId, classNameId, structureKey,
-			nameMap, descriptionMap, definition, storageType, serviceContext);
-	}
-
-	public static DDMStructure addStructure(
 			long userId, long groupId, long classNameId,
 			Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap,
@@ -111,6 +82,38 @@ public class DDMStructureLocalServiceUtil {
 			userId, groupId, parentStructureKey, classNameId, structureKey,
 			nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType, type,
 			serviceContext);
+	}
+
+	public static DDMStructure addStructure(
+			String externalReferenceCode, long userId, long groupId,
+			long parentStructureId, long classNameId, String structureKey,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap,
+			com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+			com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
+			String storageType, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addStructure(
+			externalReferenceCode, userId, groupId, parentStructureId,
+			classNameId, structureKey, nameMap, descriptionMap, ddmForm,
+			ddmFormLayout, storageType, type, serviceContext);
+	}
+
+	public static DDMStructure addStructure(
+			String externalReferenceCode, long userId, long groupId,
+			long parentStructureId, long classNameId, String structureKey,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, String definition,
+			String storageType,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addStructure(
+			externalReferenceCode, userId, groupId, parentStructureId,
+			classNameId, structureKey, nameMap, descriptionMap, definition,
+			storageType, serviceContext);
 	}
 
 	/**
@@ -473,6 +476,13 @@ public class DDMStructureLocalServiceUtil {
 			groupId, classNameId, structureKey, includeAncestorStructures);
 	}
 
+	public static DDMStructure fetchStructureByExternalReferenceCode(
+		String externalReferenceCode, long groupId, long classNameId) {
+
+		return getService().fetchStructureByExternalReferenceCode(
+			externalReferenceCode, groupId, classNameId);
+	}
+
 	public static DDMStructure fetchStructureByUuidAndGroupId(
 		String uuid, long groupId, boolean includeAncestorStructures) {
 
@@ -739,6 +749,14 @@ public class DDMStructureLocalServiceUtil {
 		long groupId, String name, String description) {
 
 		return getService().getStructure(groupId, name, description);
+	}
+
+	public static DDMStructure getStructureByExternalReferenceCode(
+			String externalReferenceCode, long groupId, long classNameId)
+		throws PortalException {
+
+		return getService().getStructureByExternalReferenceCode(
+			externalReferenceCode, groupId, classNameId);
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMForm
@@ -1247,14 +1265,16 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	public static DDMStructure updateStructure(
-			long userId, long structureId, long parentStructureId,
+			String externalReferenceCode, long userId, long structureId,
+			long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap, String definition,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateStructure(
-			userId, structureId, parentStructureId, structureKey, nameMap,
+			externalReferenceCode, userId, structureId, groupId,
+			parentStructureId, classNameId, structureKey, nameMap,
 			descriptionMap, definition, serviceContext);
 	}
 

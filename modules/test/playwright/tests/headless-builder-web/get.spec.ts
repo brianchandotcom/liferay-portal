@@ -23,7 +23,7 @@ export const test = mergeTests(
 	headlessDiscoveryPagesTest
 );
 
-const application = {
+const applicationData = {
 	apiApplicationToAPISchemas: [
 		{
 			description: 'API Application Schema',
@@ -47,7 +47,7 @@ test('can associate and disassociate schema', async ({
 }) => {
 	const apiApplication = await apiHelpers.objectEntry.postObjectEntry(
 		{
-			...application,
+			...applicationData,
 			apiApplicationToAPIEndpoints: [
 				{
 					description: 'Test API Endpoint',
@@ -68,7 +68,7 @@ test('can associate and disassociate schema', async ({
 	apiHelpers.data.push({id: apiApplication.id, type: 'apiApplication'});
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.goToEditApplication(application.title);
+	await headlessBuilderPage.goToEditApplication(applicationData.title);
 	await applicationPage.goToEndpointsTab();
 	await applicationPage.goToEditEndpoint('/endpoint/');
 	await applicationPage.goToEndpointConfigurationTab();
@@ -97,7 +97,7 @@ test('can associate and disassociate schema', async ({
 
 	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
-		application.externalReferenceCode
+		applicationData.externalReferenceCode
 	);
 });
 
@@ -215,7 +215,7 @@ test('can see schema unique fields as path parameter properties', async ({
 }) => {
 	const apiApplication = await apiHelpers.objectEntry.postObjectEntry(
 		{
-			...application,
+			...applicationData,
 			apiApplicationToAPIEndpoints: [
 				{
 					description: 'Test API Endpoint',
@@ -236,7 +236,7 @@ test('can see schema unique fields as path parameter properties', async ({
 	apiHelpers.data.push({id: apiApplication.id, type: 'apiApplication'});
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.goToEditApplication(application.title);
+	await headlessBuilderPage.goToEditApplication(applicationData.title);
 	await applicationPage.goToEndpointsTab();
 	await applicationPage.goToEditEndpoint('/endpoint/{pathParam}');
 	await applicationPage.goToEndpointConfigurationTab();
@@ -251,7 +251,7 @@ test('can see schema unique fields as path parameter properties', async ({
 
 	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
-		application.externalReferenceCode
+		applicationData.externalReferenceCode
 	);
 });
 

@@ -19,7 +19,7 @@ export const test = mergeTests(
 	loginTest()
 );
 
-const application = {
+const applicationData = {
 	apiApplicationToAPISchemas: [
 		{
 			description: 'API Application Schema',
@@ -35,7 +35,7 @@ const application = {
 	title: 'Basic application',
 };
 
-const singleElementIdEndpoint = {
+const singleElementIdEndpointData = {
 	description: 'Test Single Element API Endpoint',
 	externalReferenceCode: 'basic-singleElement-endpoint',
 	httpMethod: 'get',
@@ -52,27 +52,31 @@ test('can see filter and sort parameters for collection endpoints', async ({
 	apiExplorerPage,
 	apiHelpers,
 }) => {
-	const collectionEndpoint = await apiHelpers.objectEntry.postObjectEntry(
-		{
-			...application,
-			apiApplicationToAPIEndpoints: [
-				{
-					description: 'Test collection API Endpoint',
-					externalReferenceCode: 'basic-collection-endpoint',
-					httpMethod: 'get',
-					name: 'Basic collection API Endpoint',
-					path: '/collection-endpoint',
-					retrieveType: 'collection',
-					scope: 'company',
-				},
-			],
-		},
-		'headless-builder/applications'
-	);
+	const collectionEndpointApplication =
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				...applicationData,
+				apiApplicationToAPIEndpoints: [
+					{
+						description: 'Test collection API Endpoint',
+						externalReferenceCode: 'basic-collection-endpoint',
+						httpMethod: 'get',
+						name: 'Basic collection API Endpoint',
+						path: '/collection-endpoint',
+						retrieveType: 'collection',
+						scope: 'company',
+					},
+				],
+			},
+			'headless-builder/applications'
+		);
 
-	apiHelpers.data.push({id: collectionEndpoint.id, type: 'apiApplication'});
+	apiHelpers.data.push({
+		id: collectionEndpointApplication.id,
+		type: 'apiApplication',
+	});
 
-	await apiExplorerPage.goToApplication(`c/${application.baseURL}`);
+	await apiExplorerPage.goToApplication(`c/${applicationData.baseURL}`);
 
 	await apiExplorerPage.expectEndpointWithParameters('/collection-endpoint', [
 		'filter',
@@ -84,33 +88,34 @@ test('can see get endpoint path with erc parameter', async ({
 	apiExplorerPage,
 	apiHelpers,
 }) => {
-	const singleElementEndpoint = await apiHelpers.objectEntry.postObjectEntry(
-		{
-			...application,
-			apiApplicationToAPIEndpoints: [
-				{
-					description: 'Test Single Element API Endpoint',
-					externalReferenceCode: 'basic-singleElement-endpoint',
-					httpMethod: 'get',
-					name: 'Basic Single Element API Endpoint',
-					path: '/single-element-endpoint/{erc}',
-					pathParameter: 'externalReferenceCode',
-					r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC:
-						'api-application-schema',
-					retrieveType: 'singleElement',
-					scope: 'company',
-				},
-			],
-		},
-		'headless-builder/applications'
-	);
+	const singleElementEndpointApplication =
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				...applicationData,
+				apiApplicationToAPIEndpoints: [
+					{
+						description: 'Test Single Element API Endpoint',
+						externalReferenceCode: 'basic-singleElement-endpoint',
+						httpMethod: 'get',
+						name: 'Basic Single Element API Endpoint',
+						path: '/single-element-endpoint/{erc}',
+						pathParameter: 'externalReferenceCode',
+						r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC:
+							'api-application-schema',
+						retrieveType: 'singleElement',
+						scope: 'company',
+					},
+				],
+			},
+			'headless-builder/applications'
+		);
 
 	apiHelpers.data.push({
-		id: singleElementEndpoint.id,
+		id: singleElementEndpointApplication.id,
 		type: 'apiApplication',
 	});
 
-	await apiExplorerPage.goToApplication(`c/${application.baseURL}`);
+	await apiExplorerPage.goToApplication(`c/${applicationData.baseURL}`);
 
 	await apiExplorerPage.expectEndpointWithParameters(
 		'/single-element-endpoint/{erc}',
@@ -126,26 +131,26 @@ test('can see get endpoint path with id parameter', async ({
 	apiExplorerPage,
 	apiHelpers,
 }) => {
-	const applicationEntry = await apiHelpers.objectEntry.postObjectEntry(
-		application,
+	const application = await apiHelpers.objectEntry.postObjectEntry(
+		applicationData,
 		'headless-builder/applications'
 	);
 
-	apiHelpers.data.push({id: applicationEntry.id, type: 'apiApplication'});
+	apiHelpers.data.push({id: application.id, type: 'apiApplication'});
 
 	await apiHelpers.objectEntry.postObjectEntry(
-		singleElementIdEndpoint,
+		singleElementIdEndpointData,
 		'headless-builder/endpoints'
 	);
 
-	await apiExplorerPage.goToApplication(`c/${application.baseURL}`);
+	await apiExplorerPage.goToApplication(`c/${applicationData.baseURL}`);
 
 	await apiExplorerPage.expectEndpointWithParameters(
-		singleElementIdEndpoint.path,
+		singleElementIdEndpointData.path,
 		['id']
 	);
 
-	await apiExplorerPage.getEndpointLocator(singleElementIdEndpoint.path, {
+	await apiExplorerPage.getEndpointLocator(singleElementIdEndpointData.path, {
 		hasText: '{id}',
 	});
 });
@@ -154,22 +159,22 @@ test('cannot see filter and sort parameters for singleElement endpoints', async 
 	apiExplorerPage,
 	apiHelpers,
 }) => {
-	const applicationEntry = await apiHelpers.objectEntry.postObjectEntry(
-		application,
+	const application = await apiHelpers.objectEntry.postObjectEntry(
+		applicationData,
 		'headless-builder/applications'
 	);
 
-	apiHelpers.data.push({id: applicationEntry.id, type: 'apiApplication'});
+	apiHelpers.data.push({id: application.id, type: 'apiApplication'});
 
 	await apiHelpers.objectEntry.postObjectEntry(
-		singleElementIdEndpoint,
+		singleElementIdEndpointData,
 		'headless-builder/endpoints'
 	);
 
-	await apiExplorerPage.goToApplication(`c/${application.baseURL}`);
+	await apiExplorerPage.goToApplication(`c/${applicationData.baseURL}`);
 
 	await apiExplorerPage.expectEndpointWithoutParameters(
-		singleElementIdEndpoint.path,
+		singleElementIdEndpointData.path,
 		['filter', 'sort']
 	);
 });

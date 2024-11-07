@@ -61,6 +61,29 @@
 			"type": "String"
 		}
 	],
+	"objectValidationRules": [
+		{
+			"active": true,
+			"engine": "ddm",
+			"engineLabel": "Expression Builder",
+			"errorLabel": {
+				"en_US": "Please enter a valid date."
+			},
+			"name": {
+				"en_US": "Date Validation"
+			},
+			"objectDefinitionExternalReferenceCode": "all-fields-object-erc",
+			"objectValidationRuleSettings": [
+				{
+					"name": "outputObjectFieldExternalReferenceCode",
+					"value": "date-erc"
+				}
+			],
+			"outputType": "partialValidation",
+			"script": "futureDates(date, '2022-06-01')",
+			"system": false
+		}
+	],
 	"panelCategoryKey": "site_administration.content",
 	"pluralLabel": {
 		"en_US": "All Fields Objet"

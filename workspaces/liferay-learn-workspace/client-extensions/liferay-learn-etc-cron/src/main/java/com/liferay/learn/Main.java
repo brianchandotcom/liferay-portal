@@ -189,8 +189,7 @@ public class Main {
 			new Date(), " *", System.getenv("LCP_PROJECT_ID"), "*->*",
 			System.getenv("LCP_SERVICE_ID"), "* <https://console.",
 			System.getenv("LCP_INFRASTRUCTURE_DOMAIN"), "/projects/",
-			System.getenv("LCP_PROJECT_ID"), "/services/",
-			System.getenv("LCP_SERVICE_ID"), "/logs?instanceId=",
+			System.getenv("LCP_PROJECT_ID"), "/logs?instanceId=",
 			System.getenv("HOSTNAME"), "&logServiceId=",
 			System.getenv("LCP_SERVICE_ID"), "|", System.getenv("HOSTNAME"),
 			"> \n>");

@@ -13,8 +13,10 @@ export class DataSetsPage {
 	readonly apiHelpers: ApiHelpers;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly basePath: string;
+	readonly customDataSetsTab: Locator;
 	readonly dataSetsEmptyState: Locator;
 	readonly dataSetsTable: Locator;
+	readonly dataSetsTabs: Locator;
 	readonly newDataSetButton: Locator;
 	readonly newDataSetModal: {
 		readonly cancel: Locator;
@@ -30,13 +32,16 @@ export class DataSetsPage {
 	};
 	readonly page: Page;
 	private readonly pageContainer: Locator;
+	readonly systemDataSetsTab: Locator;
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.basePath = 'data-set-admin/entries';
+		this.customDataSetsTab = page.locator('.nav-item').filter({hasText: 'Custom Data Sets'});
 		this.dataSetsEmptyState = page.locator('.c-empty-state');
 		this.dataSetsTable = page.locator('.data-set > div:nth-child(2)');
+		this.dataSetsTabs = page.locator('.navbar-nav').filter({hasText: 'Custom Data SetsSystem Data Sets'});
 		this.newDataSetButton = page.getByLabel('New Data Set').first();
 		this.newDataSetModal = {
 			cancel: page.getByRole('button', {name: 'Cancel'}),
@@ -58,6 +63,7 @@ export class DataSetsPage {
 		};
 		this.page = page;
 		this.pageContainer = page.locator('.data-sets');
+		this.systemDataSetsTab = page.locator('.nav-item').filter({hasText: 'System Data Sets'});
 	}
 
 	async createDataSet({
@@ -108,10 +114,16 @@ export class DataSetsPage {
 		await this.newDataSetModal.heading.isHidden();
 	}
 
-	async goto() {
+	async goto(dataSetsType: string = 'Custom Data Sets') {
 		await this.applicationsMenuPage.goToDataSetManager();
 
-		await this.pageContainer.waitFor();
+		if (await this.dataSetsTabs.isVisible() && dataSetsType === 'System Data Sets') {
+			await this.systemDataSetsTab.click();
+			await this.page.locator('.system-data-sets').waitFor();			
+		}
+		else {
+			await this.pageContainer.waitFor();
+		}
 	}
 
 	async openDataSet(name = DEFAULT_LABEL.DATA_SET) {

@@ -7,6 +7,8 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.resource.v1_0.MasterPageResource;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
@@ -15,6 +17,8 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -91,6 +95,49 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 				layoutPageTemplateEntry -> _masterPageDTOConverter.toDTO(
 					layoutPageTemplateEntry)));
+	}
+
+	@Override
+	public MasterPage postSiteSiteByExternalReferenceCodeMasterPage(
+			String siteExternalReferenceCode, MasterPage masterPage)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		return _addMasterPage(group, masterPage);
+	}
+
+	private MasterPage _addMasterPage(Group group, MasterPage masterPage)
+		throws Exception {
+
+		return _masterPageDTOConverter.toDTO(
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				masterPage.getExternalReferenceCode(), group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				masterPage.getName(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_DRAFT,
+				_getServiceContext(group, masterPage)));
+	}
+
+	private ServiceContext _getServiceContext(
+		Group group, MasterPage masterPage) {
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			group.getGroupId(), contextHttpServletRequest, null
+		).build();
+
+		serviceContext.setCreateDate(masterPage.getDateCreated());
+		serviceContext.setModifiedDate(masterPage.getDateModified());
+		serviceContext.setUuid(masterPage.getUuid());
+
+		return serviceContext;
 	}
 
 	@Reference

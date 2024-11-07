@@ -305,6 +305,71 @@ test.describe('Date Fragment', () => {
 			await expect(dateInput).toContainText(/Add your help text here./);
 		}
 	);
+
+	test(
+		'User should see error message below date fragment',
+		{
+			tag: '@LPS-182728',
+		},
+		async ({apiHelpers, page, pageManagementSite}) => {
+
+			// Create a page with a form fragment with a date fragment
+
+			const {className: objectDefinitionClassName} =
+				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+					ALL_FIELDS_OBJECT_ERC
+				);
+
+			const dateId = getRandomString();
+
+			const dateDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_date',
+				},
+				id: dateId,
+				key: 'INPUTS-date-input',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [dateDefinition, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Edit date
+
+			await page.locator('input[name="date"]').click();
+
+			await page.keyboard.type('07/11/2020');
+
+			await page.locator('body').click();
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			// Assert error message
+
+			await expect(page.locator('.date-input')).toContainText(
+				'Please enter a valid date.'
+			);
+		}
+	);
 });
 
 test.describe('Date and Time Fragment', () => {

@@ -45,8 +45,8 @@ test('LPD-6869 Render the default "Create Account" utility page if exists', asyn
 
 	await performLogout(page);
 
+	await expect(page.getByPlaceholder('Search')).toBeVisible();
 	await page.getByRole('button', {name: 'Sign In'}).click();
-	await page.waitForLoadState('networkidle');
 	await page.getByRole('link', {name: 'Create Account'}).click();
 	await expect(page).toHaveTitle(title + ' - Liferay DXP');
 
@@ -92,7 +92,7 @@ test('LPD-6870 Render the default "Sign In" utility page if exists', async ({
 	await utilityPagesPage.deletePage(title);
 
 	await loginInstanceSettingsPage.goto();
-	await loginInstanceSettingsPage.disableLoginPrompt();
+	await loginInstanceSettingsPage.resetLoginPrompt();
 });
 
 test('LPD-6870 Render the original "Sign In" view if no default utility page exists', async ({
@@ -113,7 +113,7 @@ test('LPD-6870 Render the original "Sign In" view if no default utility page exi
 	await performLogin(page, 'test');
 
 	await loginInstanceSettingsPage.goto();
-	await loginInstanceSettingsPage.disableLoginPrompt();
+	await loginInstanceSettingsPage.resetLoginPrompt();
 });
 
 test('LPD-6871 Render the default "Forgot Password" utility page if exists', async ({
@@ -130,8 +130,8 @@ test('LPD-6871 Render the default "Forgot Password" utility page if exists', asy
 
 	await performLogout(page);
 
+	await expect(page.getByPlaceholder('Search')).toBeVisible();
 	await page.getByRole('button', {name: 'Sign In'}).click();
-	await page.waitForLoadState('networkidle');
 	await page.getByRole('link', {name: 'Forgot Password'}).click();
 	await expect(page).toHaveTitle(title + ' - Liferay DXP');
 

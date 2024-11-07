@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,6 +29,7 @@ public class PageTemplateSetDTOConverter
 
 	@Override
 	public PageTemplateSet toDTO(
+			DTOConverterContext dtoConverterContext,
 			LayoutPageTemplateCollection layoutPageTemplateCollection)
 		throws Exception {
 

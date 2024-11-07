@@ -28,11 +28,14 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -126,6 +129,70 @@ public class DisplayPageTemplateResourceImpl
 
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		return _addDisplayPageTemplate(displayPageTemplate, group);
+	}
+
+	@Override
+	public DisplayPageTemplate
+			putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+				String siteExternalReferenceCode,
+				String displayPageTemplateExternalReferenceCode,
+				DisplayPageTemplate displayPageTemplate)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					displayPageTemplateExternalReferenceCode,
+					group.getGroupId());
+
+		if (layoutPageTemplateEntry == null) {
+			return _addDisplayPageTemplate(displayPageTemplate, group);
+		}
+
+		long layoutPageTemplateCollectionId =
+			_getLayoutPageTemplateCollectionId(displayPageTemplate, group);
+
+		if (Validator.isNotNull(displayPageTemplate.getParentFolder()) &&
+			!Objects.equals(
+				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
+				layoutPageTemplateCollectionId)) {
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.moveLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					layoutPageTemplateCollectionId);
+		}
+
+		if (Validator.isNotNull(displayPageTemplate.getMarkedAsDefault()) &&
+			!Objects.equals(
+				GetterUtil.getBoolean(displayPageTemplate.getMarkedAsDefault()),
+				layoutPageTemplateEntry.isDefaultTemplate())) {
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					GetterUtil.getBoolean(
+						displayPageTemplate.getMarkedAsDefault()));
+		}
+
+		return _displayPageTemplateDTOConverter.toDTO(
+			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				displayPageTemplate.getName()));
+	}
+
+	private DisplayPageTemplate _addDisplayPageTemplate(
+			DisplayPageTemplate displayPageTemplate, Group group)
+		throws Exception {
 
 		ClassSubtypeReference contentTypeReference =
 			displayPageTemplate.getContentTypeReference();

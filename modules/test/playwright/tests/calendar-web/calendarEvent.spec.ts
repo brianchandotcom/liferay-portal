@@ -94,7 +94,7 @@ test('can create an all-day calendar event in a different time zone, ensuring th
 		})
 	).toBeVisible();
 
-	await calendarWidgetPage.publishEvent();
+	await calendarWidgetPage.publishEvent({waitForSuccessAlert: true});
 
 	await expect(
 		calendarWidgetPage.page.frameLocator('iframe').getByRole('link', {

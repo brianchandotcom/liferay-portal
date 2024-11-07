@@ -8,6 +8,8 @@ import {Locator, Page} from '@playwright/test';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {ModalRecurrencePage} from './ModalRecurrencePage';
 
+type RecurrenceOption = 'Entire Series' | 'Following Events' | 'Single Event';
+
 export class CalendarWidgetPage {
 	readonly addEventButton: Locator;
 	readonly allDayCheckbox: Locator;
@@ -114,15 +116,31 @@ export class CalendarWidgetPage {
 			await this.title.fill(title);
 		}
 
-		await this.publishEvent();
+		await this.publishEvent({waitForSuccessAlert: true});
 	}
 
-	async publishEvent() {
+	async publishEvent({
+		recurrenceOption,
+		waitForSuccessAlert,
+	}: {
+		recurrenceOption?: RecurrenceOption;
+		waitForSuccessAlert?: boolean;
+	} = {}) {
 		await this.publishEventButton.click();
-		await waitForAlert(
-			this.page.frameLocator('iframe'),
-			`Success:Your request completed successfully.`
-		);
+
+		if (recurrenceOption) {
+			await this.page
+				.frameLocator('iframe')
+				.getByRole('button', {name: recurrenceOption})
+				.click();
+		}
+
+		if (waitForSuccessAlert) {
+			await waitForAlert(
+				this.page.frameLocator('iframe'),
+				`Success:Your request completed successfully.`
+			);
+		}
 	}
 
 	async closeModalEvent() {

@@ -478,9 +478,10 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testAddAndDeleteCompanyWithStaticCompanyId() throws Exception {
-		boolean originalCompanyStaticIdEnabled =
+		boolean originalCompanyPredictableCompanyIdsEnabled =
 			ReflectionTestUtil.getAndSetFieldValue(
-				PropsValues.class, "COMPANY_STATIC_ID_ENABLED", true);
+				PropsValues.class, "COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED",
+				true);
 
 		Company company = null;
 
@@ -493,7 +494,7 @@ public class CompanyLocalServiceTest {
 				null, webId, webId, "test.com", 0, true, true, null, null, null,
 				null, null, null);
 
-			if (!originalCompanyStaticIdEnabled) {
+			if (!originalCompanyPredictableCompanyIdsEnabled) {
 				Assert.assertEquals(10000, company.getCompanyId());
 			}
 		}
@@ -505,8 +506,8 @@ public class CompanyLocalServiceTest {
 			}
 
 			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "COMPANY_STATIC_ID_ENABLED",
-				originalCompanyStaticIdEnabled);
+				PropsValues.class, "COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED",
+				originalCompanyPredictableCompanyIdsEnabled);
 		}
 	}
 
@@ -1107,7 +1108,7 @@ public class CompanyLocalServiceTest {
 		Company company = addCompany(
 			RandomTestUtil.randomString() + "test.com");
 
-		if (PropsValues.COMPANY_STATIC_ID_ENABLED) {
+		if (PropsValues.COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED) {
 			Assert.assertEquals(counterCompanyId, company.getCompanyId());
 		}
 		else {

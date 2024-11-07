@@ -729,7 +729,7 @@ public class UserManagerImpl implements UserManager {
 
 			if (ArrayUtil.isEmpty(configurations)) {
 				throw new NotFoundException(
-					"SCIM not configured for company " + companyId);
+					"SCIM is not configured for company " + companyId);
 			}
 
 			Configuration configuration = configurations[0];

@@ -446,6 +446,10 @@ paths:
                       enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
                       type: string
                 - in: query
+                  name: restrictedFieldNames
+                  schema:
+                      type: string
+                - in: query
                   name: taskItemDelegateName
                   schema:
                       type: string

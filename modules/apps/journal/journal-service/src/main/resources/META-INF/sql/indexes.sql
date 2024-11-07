@@ -19,7 +19,7 @@ create index IX_CF8F8F68 on JournalArticle (groupId, status, urlTitle[$COLUMN_LE
 create index IX_22882D02 on JournalArticle (groupId, urlTitle[$COLUMN_LENGTH:255$]);
 create index IX_D19C1B9F on JournalArticle (groupId, userId);
 create unique index IX_F73C7E0D on JournalArticle (groupId, uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
-create unique index IX_4D29D87C on JournalArticle (groupId, version, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create unique index IX_FE3DB4F8 on JournalArticle (groupId, version, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_3F1EA19E on JournalArticle (layoutUuid[$COLUMN_LENGTH:75$]);
 create index IX_89FF8B06 on JournalArticle (resourcePrimKey, indexable);
 create index IX_EF9B7028 on JournalArticle (smallImageId);

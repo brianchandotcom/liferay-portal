@@ -133,12 +133,32 @@ test(
 
 		await pageEditorPage.selectFragment(headingId);
 
-		// Check that when multiple selection is on the class is present
+		// Check that when simple multiple selection is on the class is present
 
 		await page.keyboard.down('Control');
 
 		await expect(
 			page.locator('.page-editor__topper.not-allowed').first()
 		).toBeVisible();
+
+		await page.keyboard.up('Control');
+
+		await expect(
+			page.locator('.page-editor__topper.not-allowed').first()
+		).not.toBeVisible();
+
+		// Check that when range multiple selection is on the class is present
+
+		await page.keyboard.down('Shift');
+
+		await expect(
+			page.locator('.page-editor__topper.not-allowed').first()
+		).toBeVisible();
+
+		await page.keyboard.up('Shift');
+
+		await expect(
+			page.locator('.page-editor__topper.not-allowed').first()
+		).not.toBeVisible();
 	}
 );

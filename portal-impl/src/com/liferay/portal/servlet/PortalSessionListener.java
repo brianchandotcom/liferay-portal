@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
-import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -49,34 +48,25 @@ public class PortalSessionListener implements HttpSessionListener {
 				httpSessionEvent.getSession());
 		}
 
-		HttpSession finalHttpSession = httpSession;
+		try {
+			PortalSessionContext.put(httpSession.getId(), httpSession);
+		}
+		catch (IllegalStateException illegalStateException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(illegalStateException);
+			}
+		}
 
-		DependencyManagerSyncUtil.registerSyncCallable(
-			() -> {
-				try {
-					PortalSessionContext.put(
-						finalHttpSession.getId(), finalHttpSession);
-				}
-				catch (IllegalStateException illegalStateException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(illegalStateException);
-					}
-				}
+		// Process session created events
 
-				// Process session created events
-
-				try {
-					EventsProcessorUtil.process(
-						PropsKeys.SERVLET_SESSION_CREATE_EVENTS,
-						PropsValues.SERVLET_SESSION_CREATE_EVENTS,
-						finalHttpSession);
-				}
-				catch (ActionException actionException) {
-					_log.error(actionException);
-				}
-
-				return null;
-			});
+		try {
+			EventsProcessorUtil.process(
+				PropsKeys.SERVLET_SESSION_CREATE_EVENTS,
+				PropsValues.SERVLET_SESSION_CREATE_EVENTS, httpSession);
+		}
+		catch (ActionException actionException) {
+			_log.error(actionException);
+		}
 
 		if ((PropsValues.SESSION_MAX_ALLOWED > 0) &&
 			(_counter.incrementAndGet() > PropsValues.SESSION_MAX_ALLOWED)) {
@@ -105,77 +95,65 @@ public class PortalSessionListener implements HttpSessionListener {
 				httpSessionEvent.getSession());
 		}
 
-		HttpSession finalHttpSession = httpSession;
+		PortalSessionContext.remove(httpSession.getId());
 
-		DependencyManagerSyncUtil.registerSyncCallable(
-			() -> {
-				PortalSessionContext.remove(finalHttpSession.getId());
+		Long userIdObj = (Long)httpSession.getAttribute(WebKeys.USER_ID);
 
-				try {
-					Long userIdObj = (Long)finalHttpSession.getAttribute(
-						WebKeys.USER_ID);
+		if (userIdObj == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("User id is not in the session");
+			}
+		}
+		else {
+			try {
 
-					if (userIdObj == null) {
-						if (_log.isWarnEnabled()) {
-							_log.warn("User id is not in the session");
-						}
+				// Live users
 
-						return null;
-					}
+				if (PropsValues.LIVE_USERS_ENABLED) {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-					// Live users
+					ClusterNode clusterNode =
+						ClusterExecutorUtil.getLocalClusterNode();
 
-					if (PropsValues.LIVE_USERS_ENABLED) {
-						JSONObject jsonObject =
-							JSONFactoryUtil.createJSONObject();
-
-						ClusterNode clusterNode =
-							ClusterExecutorUtil.getLocalClusterNode();
-
-						if (clusterNode != null) {
-							jsonObject.put(
-								"clusterNodeId",
-								clusterNode.getClusterNodeId());
-						}
-
-						jsonObject.put("command", "signOut");
-
-						long userId = userIdObj.longValue();
-
-						long companyId =
-							CompanyLocalServiceUtil.getCompanyIdByUserId(
-								userId);
-
+					if (clusterNode != null) {
 						jsonObject.put(
-							"companyId", companyId
-						).put(
-							"sessionId", finalHttpSession.getId()
-						).put(
-							"userId", userId
-						);
-
-						MessageBusUtil.sendMessage(
-							DestinationNames.LIVE_USERS, jsonObject.toString());
+							"clusterNodeId", clusterNode.getClusterNodeId());
 					}
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
 
-				// Process session destroyed events
+					jsonObject.put("command", "signOut");
 
-				try {
-					EventsProcessorUtil.process(
-						PropsKeys.SERVLET_SESSION_DESTROY_EVENTS,
-						PropsValues.SERVLET_SESSION_DESTROY_EVENTS,
-						finalHttpSession);
-				}
-				catch (ActionException actionException) {
-					_log.error(actionException);
-				}
+					long userId = userIdObj.longValue();
 
-				return null;
-			});
+					long companyId =
+						CompanyLocalServiceUtil.getCompanyIdByUserId(userId);
+
+					jsonObject.put(
+						"companyId", companyId
+					).put(
+						"sessionId", httpSession.getId()
+					).put(
+						"userId", userId
+					);
+
+					MessageBusUtil.sendMessage(
+						DestinationNames.LIVE_USERS, jsonObject.toString());
+				}
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
+
+			// Process session destroyed events
+
+			try {
+				EventsProcessorUtil.process(
+					PropsKeys.SERVLET_SESSION_DESTROY_EVENTS,
+					PropsValues.SERVLET_SESSION_DESTROY_EVENTS, httpSession);
+			}
+			catch (ActionException actionException) {
+				_log.error(actionException);
+			}
+		}
 
 		if (PropsValues.SESSION_MAX_ALLOWED > 0) {
 			_counter.decrementAndGet();

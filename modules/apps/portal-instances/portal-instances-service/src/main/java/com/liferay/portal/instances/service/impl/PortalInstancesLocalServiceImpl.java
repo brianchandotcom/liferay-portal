@@ -13,10 +13,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.util.PortalInstances;
 
-import java.util.List;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,18 +45,12 @@ public class PortalInstancesLocalServiceImpl
 	@Override
 	public void synchronizePortalInstances() {
 		try {
-			long[] initializedCompanyIds = PortalInstancePool.getCompanyIds();
-
-			List<Long> removeableCompanyIds = ListUtil.fromArray(
-				initializedCompanyIds);
+			Set<Long> companyIds = SetUtil.fromArray(
+				PortalInstancePool.getCompanyIds());
 
 			_companyLocalService.forEachCompany(
 				company -> {
-					removeableCompanyIds.remove(company.getCompanyId());
-
-					if (ArrayUtil.contains(
-							initializedCompanyIds, company.getCompanyId())) {
-
+					if (companyIds.remove(company.getCompanyId())) {
 						return;
 					}
 
@@ -65,7 +59,7 @@ public class PortalInstancesLocalServiceImpl
 
 			_companyLocalService.forEachCompanyId(
 				companyId -> PortalInstances.removeCompany(companyId),
-				ArrayUtil.toLongArray(removeableCompanyIds));
+				ArrayUtil.toLongArray(companyIds));
 		}
 		catch (Exception exception) {
 			_log.error(exception);

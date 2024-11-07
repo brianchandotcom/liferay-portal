@@ -18,6 +18,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.ExportArticleHelper;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -103,6 +104,9 @@ public class JournalContentPortlet extends MVCPortlet {
 			portletPreferences, renderRequest, "groupId",
 			themeDisplay.getScopeGroupId());
 
+		String articleExternalReferenceCode = PrefsParamUtil.getString(
+			portletPreferences, renderRequest, "articleExternalReferenceCode");
+
 		String articleId = PrefsParamUtil.getString(
 			portletPreferences, renderRequest, "articleId");
 
@@ -126,19 +130,50 @@ public class JournalContentPortlet extends MVCPortlet {
 				_log.error("Unable to get journal article", portalException);
 			}
 		}
-		else if ((articleGroupId > 0) && Validator.isNotNull(articleId)) {
+		else if ((articleGroupId > 0) &&
+				 ((Validator.isNotNull(articleExternalReferenceCode) &&
+				   FeatureFlagManagerUtil.isEnabled(
+					   themeDisplay.getCompanyId(), "LPD-27566")) ||
+				  (Validator.isNotNull(articleId) &&
+				   !FeatureFlagManagerUtil.isEnabled(
+					   themeDisplay.getCompanyId(), "LPD-27566")))) {
+
 			String viewMode = ParamUtil.getString(renderRequest, "viewMode");
 			String languageId = _language.getLanguageId(renderRequest);
 			int page = ParamUtil.getInteger(renderRequest, "page", 1);
 
-			article = _journalArticleLocalService.fetchLatestArticle(
-				articleGroupId, articleId, WorkflowConstants.STATUS_APPROVED);
+			if (FeatureFlagManagerUtil.isEnabled(
+					themeDisplay.getCompanyId(), "LPD-27566")) {
+
+				article =
+					_journalArticleLocalService.
+						fetchLatestArticleByExternalReferenceCode(
+							articleGroupId, articleExternalReferenceCode,
+							WorkflowConstants.STATUS_APPROVED, false);
+			}
+			else {
+				article = _journalArticleLocalService.fetchLatestArticle(
+					articleGroupId, articleId,
+					WorkflowConstants.STATUS_APPROVED);
+			}
 
 			try {
 				if (article == null) {
-					article = _journalArticleLocalService.getLatestArticle(
-						articleGroupId, articleId,
-						WorkflowConstants.STATUS_ANY);
+					if (FeatureFlagManagerUtil.isEnabled(
+							themeDisplay.getCompanyId(), "LPD-27566")) {
+
+						article =
+							_journalArticleLocalService.
+								getLatestArticleByExternalReferenceCode(
+									articleGroupId,
+									articleExternalReferenceCode,
+									WorkflowConstants.STATUS_ANY, false);
+					}
+					else {
+						article = _journalArticleLocalService.getLatestArticle(
+							articleGroupId, articleId,
+							WorkflowConstants.STATUS_ANY);
+					}
 				}
 
 				String ddmTemplateKey = PrefsParamUtil.getString(

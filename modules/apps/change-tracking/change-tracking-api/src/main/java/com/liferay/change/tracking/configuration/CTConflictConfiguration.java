@@ -29,4 +29,11 @@ public interface CTConflictConfiguration {
 	)
 	public boolean modificationDeletionConflictCheckEnabled();
 
+	@Meta.AD(
+		deflt = "false",
+		description = "schema-version-check-enabled-description",
+		name = "schema-version-check-enabled", required = false
+	)
+	public boolean schemaVersionCheckEnabled();
+
 }

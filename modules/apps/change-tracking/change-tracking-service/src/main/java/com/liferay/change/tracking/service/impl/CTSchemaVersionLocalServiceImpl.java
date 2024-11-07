@@ -5,11 +5,16 @@
 
 package com.liferay.change.tracking.service.impl;
 
+import com.liferay.change.tracking.configuration.CTConflictConfiguration;
 import com.liferay.change.tracking.model.CTSchemaVersion;
 import com.liferay.change.tracking.service.base.CTSchemaVersionLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.version.Version;
 
@@ -27,6 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
+	configurationPid = "com.liferay.change.tracking.configuration.CTConflictConfiguration",
 	property = "model.class.name=com.liferay.change.tracking.model.CTSchemaVersion",
 	service = AopService.class
 )
@@ -73,6 +79,20 @@ public class CTSchemaVersionLocalServiceImpl
 	@Override
 	public boolean isLatestCTSchemaVersion(
 		CTSchemaVersion ctSchemaVersion, boolean strict) {
+
+		try {
+			CTConflictConfiguration ctConflictConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					CTConflictConfiguration.class,
+					ctSchemaVersion.getCompanyId());
+
+			if (!ctConflictConfiguration.schemaVersionCheckEnabled()) {
+				return true;
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
+		}
 
 		Map<String, Serializable> schemaContext =
 			ctSchemaVersion.getSchemaContext();
@@ -125,6 +145,12 @@ public class CTSchemaVersionLocalServiceImpl
 
 		return isLatestCTSchemaVersion(ctSchemaVersion, false);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTSchemaVersionLocalServiceImpl.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;

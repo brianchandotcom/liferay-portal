@@ -3,8 +3,6 @@ dependencies {
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
 	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationImplementation project(":apps:portal-instances:portal-instances-api")
-	testIntegrationImplementation project(":apps:portal-instances:portal-instances-service")
 	testIntegrationImplementation project(":core:osgi-service-tracker-collections")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

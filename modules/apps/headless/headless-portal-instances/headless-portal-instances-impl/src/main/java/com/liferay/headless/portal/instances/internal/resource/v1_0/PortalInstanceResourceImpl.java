@@ -11,6 +11,7 @@ import com.liferay.headless.portal.instances.resource.v1_0.PortalInstanceResourc
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
@@ -70,7 +71,7 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		_companyService.forEachCompany(
 			company -> {
 				if (!finalSkipDefault ||
-					(_portalInstancesLocalService.getDefaultCompanyId() !=
+					(PortalInstancePool.getDefaultCompanyId() !=
 						company.getCompanyId())) {
 
 					portalInstances.add(_toPortalInstance(company));

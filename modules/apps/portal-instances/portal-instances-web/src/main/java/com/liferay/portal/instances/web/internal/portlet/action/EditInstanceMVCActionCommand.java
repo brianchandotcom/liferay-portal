@@ -5,13 +5,13 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.exception.RequiredCompanyException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -111,7 +111,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
-		if (companyId == _portalInstancesLocalService.getDefaultCompanyId()) {
+		if (companyId == PortalInstancePool.getDefaultCompanyId()) {
 			active = true;
 		}
 
@@ -130,8 +130,5 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalInstancesLocalService _portalInstancesLocalService;
 
 }

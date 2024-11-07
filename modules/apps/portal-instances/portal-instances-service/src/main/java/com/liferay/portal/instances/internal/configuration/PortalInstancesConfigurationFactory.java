@@ -10,6 +10,7 @@ import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -81,8 +82,7 @@ public class PortalInstancesConfigurationFactory {
 				}
 				else {
 					if (company.getCompanyId() ==
-							_portalInstancesLocalService.
-								getDefaultCompanyId()) {
+							PortalInstancePool.getDefaultCompanyId()) {
 
 						active = true;
 					}

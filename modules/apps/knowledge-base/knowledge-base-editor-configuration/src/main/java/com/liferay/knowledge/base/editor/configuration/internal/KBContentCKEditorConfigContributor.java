@@ -72,7 +72,7 @@ public class KBContentCKEditorConfigContributor
 			super.toJSONArray("['Styles']"),
 			super.toJSONArray("['Link', 'Unlink']"),
 			super.toJSONArray(
-				"['Table','ImageSelector','VideoSelector', 'HorizontalRule']")
+				"['Table', 'ImageSelector', 'VideoSelector', 'HorizontalRule']")
 		).put(
 			() -> {
 				if (_isShowSource(inputEditorTaglibAttributes)) {

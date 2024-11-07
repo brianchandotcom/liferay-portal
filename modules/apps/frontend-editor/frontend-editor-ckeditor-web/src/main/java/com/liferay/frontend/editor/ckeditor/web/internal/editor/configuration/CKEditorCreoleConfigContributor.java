@@ -98,7 +98,8 @@ public class CKEditorCreoleConfigContributor
 			toJSONArray("['Bold', 'Italic', '-', 'RemoveFormat']"),
 			toJSONArray("['NumberedList', 'BulletedList', '-']"),
 			toJSONArray("['Format']"), toJSONArray("['Link', 'Unlink']"),
-			toJSONArray("['Table', '-','ImageSelector', '-', 'HorizontalRule']")
+			toJSONArray(
+				"['Table', '-', 'ImageSelector', '-', 'HorizontalRule']")
 		).put(
 			() -> {
 				if (isShowSource(inputEditorTaglibAttributes)) {

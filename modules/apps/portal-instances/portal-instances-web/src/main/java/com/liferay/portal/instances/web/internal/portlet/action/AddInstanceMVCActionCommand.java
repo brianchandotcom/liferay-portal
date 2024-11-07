@@ -5,7 +5,6 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
@@ -139,12 +138,6 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 				defaultAdminPassword, defaultAdminScreenName,
 				defaultAdminEmailAddress, defaultAdminFirstName,
 				defaultAdminMiddleName, defaultAdminLastName));
-
-		_synchronizePortalInstances();
-	}
-
-	private void _synchronizePortalInstances() {
-		_portalInstancesLocalService.synchronizePortalInstances();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -158,8 +151,5 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private PortalInstancesLocalService _portalInstancesLocalService;
 
 }

@@ -6,7 +6,6 @@
 package com.liferay.portal.instances.internal.configuration;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -77,8 +76,6 @@ public class PortalInstancesConfigurationFactory {
 							portalInstancesConfiguration.adminFirstName(),
 							portalInstancesConfiguration.adminMiddleName(),
 							portalInstancesConfiguration.adminLastName()));
-
-					_portalInstancesLocalService.synchronizePortalInstances();
 				}
 				else {
 					if (company.getCompanyId() ==
@@ -117,8 +114,5 @@ public class PortalInstancesConfigurationFactory {
 
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
-	@Reference
-	private PortalInstancesLocalService _portalInstancesLocalService;
 
 }

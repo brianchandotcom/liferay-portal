@@ -5,7 +5,6 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -48,8 +47,6 @@ public class DeleteInstanceMVCActionCommand extends BaseMVCActionCommand {
 			long companyId = ParamUtil.getLong(actionRequest, "companyId");
 
 			_companyService.deleteCompany(companyId);
-
-			_portalInstancesLocalService.synchronizePortalInstances();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -79,8 +76,5 @@ public class DeleteInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private PortalInstancesLocalService _portalInstancesLocalService;
 
 }

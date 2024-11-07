@@ -10,7 +10,6 @@ import com.liferay.headless.portal.instances.client.dto.v1_0.Admin;
 import com.liferay.headless.portal.instances.client.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.client.pagination.Page;
 import com.liferay.headless.portal.instances.client.problem.Problem;
-import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -43,8 +42,6 @@ public class PortalInstanceResourceTest
 		_company = CompanyTestUtil.addCompany();
 
 		_portalInstance = _toPortalInstance(_company);
-
-		_portalInstancesLocalService.synchronizePortalInstances();
 	}
 
 	@AfterClass
@@ -196,8 +193,6 @@ public class PortalInstanceResourceTest
 
 		try {
 			_companyLocalService.deleteCompany(portalInstance.getCompanyId());
-
-			_portalInstancesLocalService.synchronizePortalInstances();
 		}
 		finally {
 			PrincipalThreadLocal.setName(name);
@@ -431,9 +426,6 @@ public class PortalInstanceResourceTest
 	private static CompanyLocalService _companyLocalService;
 
 	private static PortalInstance _portalInstance;
-
-	@Inject
-	private static PortalInstancesLocalService _portalInstancesLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

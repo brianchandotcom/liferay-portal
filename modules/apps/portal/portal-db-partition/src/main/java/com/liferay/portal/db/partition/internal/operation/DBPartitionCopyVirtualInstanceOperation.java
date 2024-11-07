@@ -8,7 +8,6 @@ package com.liferay.portal.db.partition.internal.operation;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.partition.internal.configuration.DBPartitionCopyVirtualInstanceConfiguration;
-import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -92,16 +91,12 @@ public class DBPartitionCopyVirtualInstanceOperation
 					return null;
 				}
 
-				Company company = _companyLocalService.copyDBPartitionCompany(
+				return _companyLocalService.copyDBPartitionCompany(
 					sourcePartitionCompanyId, destinationPartitionCompanyId,
 					dBPartitionCopyVirtualInstanceConfiguration.name(),
 					dBPartitionCopyVirtualInstanceConfiguration.
 						virtualHostname(),
 					dBPartitionCopyVirtualInstanceConfiguration.webId());
-
-				_portalInstancesLocalService.synchronizePortalInstances();
-
-				return company;
 			},
 			properties);
 	}
@@ -111,8 +106,5 @@ public class DBPartitionCopyVirtualInstanceOperation
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private PortalInstancesLocalService _portalInstancesLocalService;
 
 }

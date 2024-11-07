@@ -20,14 +20,14 @@ import java.util.ResourceBundle;
 public enum SharingEntryPermissionDisplayAction {
 
 	COMMENTS(
-		"COMMENTS", "comment", "collaborators-can-comment-on-the-item",
+		"COMMENTS", "comment", "collaborators-can-comment-on-the-item[",
 		"comment", SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.VIEW),
 	UPDATE(
-		"UPDATE", "update", "collaborators-can-view-comment-update-the-item",
+		"UPDATE", "update", "collaborators-can-view-comment-update-the-item[",
 		"update", SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.UPDATE,
 		SharingEntryAction.VIEW),
 	VIEW(
-		"VIEW", "view", "collaborators-can-only-view-the-item", "view",
+		"VIEW", "view", "collaborators-can-only-view-the-item[", "view",
 		SharingEntryAction.VIEW);
 
 	public static SharingEntryPermissionDisplayAction parseFromActionId(
@@ -55,8 +55,7 @@ public enum SharingEntryPermissionDisplayAction {
 
 		return LanguageUtil.get(
 			resourceBundle,
-			StringBundler.concat(_descriptionKey, "[", className, "]"),
-			LanguageUtil.get(resourceBundle, _descriptionKey));
+			StringBundler.concat(_descriptionKey, className, "]"));
 	}
 
 	public List<SharingEntryAction> getSharingEntryActions() {
@@ -72,8 +71,8 @@ public enum SharingEntryPermissionDisplayAction {
 	}
 
 	private SharingEntryPermissionDisplayAction(
-		String actionId, String titleKey, String descriptionKey,
-		String verbKey,	SharingEntryAction... sharingEntryActions) {
+		String actionId, String titleKey, String descriptionKey, String verbKey,
+		SharingEntryAction... sharingEntryActions) {
 
 		_actionId = actionId;
 		_titleKey = titleKey;

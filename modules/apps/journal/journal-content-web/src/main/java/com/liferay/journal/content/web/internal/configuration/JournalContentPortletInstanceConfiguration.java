@@ -23,6 +23,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface JournalContentPortletInstanceConfiguration {
 
+	@Meta.AD(name = "article-external-reference-code", required = false)
+	public String articleExternalReferenceCode();
+
 	@Meta.AD(name = "article-id", required = false)
 	public String articleId();
 

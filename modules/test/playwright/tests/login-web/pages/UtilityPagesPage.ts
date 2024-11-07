@@ -50,6 +50,7 @@ export class UtilityPagesPage {
 		const actionsPath = '//p[@title="' + title + '"]/../..';
 
 		await this.page.locator(actionsPath).getByLabel('More actions').click();
+		await this.page.getByRole('menuitem', {name: 'Edit'}).waitFor();
 		await this.page
 			.getByRole('menuitem', {name: 'Mark as Default'})
 			.click();

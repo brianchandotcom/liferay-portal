@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -128,7 +127,7 @@ public class DisplayPageTemplateResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
 
 		return _addDisplayPageTemplate(displayPageTemplate, group);
@@ -297,9 +296,6 @@ public class DisplayPageTemplateResourceImpl
 	)
 	private DTOConverter<LayoutPageTemplateEntry, DisplayPageTemplate>
 		_displayPageTemplateDTOConverter;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

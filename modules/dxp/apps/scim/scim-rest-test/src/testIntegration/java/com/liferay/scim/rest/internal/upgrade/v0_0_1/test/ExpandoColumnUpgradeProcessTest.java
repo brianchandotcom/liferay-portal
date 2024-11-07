@@ -123,8 +123,8 @@ public class ExpandoColumnUpgradeProcessTest {
 
 			Assert.assertEquals(2, httpResponse.getStatusCode() / 100);
 
-			_setScimClientIdExpandoColumn(User.class.getName(), false);
-			_setScimClientIdExpandoColumn(UserGroup.class.getName(), false);
+			_setScimClientIdExpandoColumn(User.class.getName());
+			_setScimClientIdExpandoColumn(UserGroup.class.getName());
 
 			_assertScimClientIdExpandoColumn(User.class.getName(), false);
 			_assertScimClientIdExpandoColumn(UserGroup.class.getName(), false);
@@ -239,7 +239,7 @@ public class ExpandoColumnUpgradeProcessTest {
 		upgradeProcess.upgrade();
 	}
 
-	private void _setScimClientIdExpandoColumn(String className, boolean hidden)
+	private void _setScimClientIdExpandoColumn(String className)
 		throws Exception {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
@@ -254,7 +254,7 @@ public class ExpandoColumnUpgradeProcessTest {
 			expandoColumn.getTypeSettingsProperties();
 
 		unicodeProperties.setProperty(
-			ExpandoColumnConstants.PROPERTY_HIDDEN, String.valueOf(hidden));
+			ExpandoColumnConstants.PROPERTY_HIDDEN, "false");
 
 		expandoColumn.setTypeSettingsProperties(unicodeProperties);
 

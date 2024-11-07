@@ -1,4 +1,4 @@
-<#assign objectDefinitionModel = dataFactory.newObjectDefinitionModel("Ticket", dataFactory.getDefaultObjectFolderId()) />
+<#assign objectDefinitionModel = dataFactory.newObjectDefinitionModel("Ticket", objectFolderModel.getObjectFolderId()) />
 
 ${dataFactory.toInsertSQL(objectDefinitionModel)}
 

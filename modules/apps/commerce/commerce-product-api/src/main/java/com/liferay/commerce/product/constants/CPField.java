@@ -46,6 +46,9 @@ public class CPField {
 	public static final String COMMERCE_OPTION_TYPE_KEY =
 		"commerceOptionTypeKey";
 
+	public static final String CP_CONFIGURATION_LIST_ID =
+		"cpConfigurationListId";
+
 	public static final String CP_DEFINITION_ID = "CPDefinitionId";
 
 	public static final String CP_DEFINITION_OPTION_REL_ID =

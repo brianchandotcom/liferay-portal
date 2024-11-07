@@ -62,9 +62,8 @@ type TDataApiHelpersData = {
 	type: string;
 };
 
-interface HeadlessClientConfig {
-	BASE: string;
-	HEADERS: Record<string, string>;
+interface HeadlessClientWithHeaders {
+	defaultHeaders: Record<string, string>;
 }
 
 interface PostOptions<T> {
@@ -222,15 +221,20 @@ export class ApiHelpers {
 	}
 
 	async buildRestClient<
-		T extends new (config: HeadlessClientConfig) => InstanceType<T>,
-	>(HeadlessClientClass: T): Promise<InstanceType<T>> {
-		return new HeadlessClientClass({
-			BASE: liferayConfig.environment.baseUrl + '/o',
-			HEADERS: {
-				Cookie: `JSESSIONID=${await this.getJSessionId()};`,
-				...(await getCSRFTokenHeader(this.page)),
-			},
-		});
+		T extends new (
+			baseUrl: string
+		) => InstanceType<T> & HeadlessClientWithHeaders,
+	>(ApiClientClass: T): Promise<InstanceType<T>> {
+		const apiInstance = new ApiClientClass(
+			liferayConfig.environment.baseUrl + '/o'
+		);
+
+		apiInstance.defaultHeaders = {
+			Cookie: `JSESSIONID=${await this.getJSessionId()};`,
+			...(await getCSRFTokenHeader(this.page)),
+		};
+
+		return apiInstance;
 	}
 
 	async postResponse<T>(

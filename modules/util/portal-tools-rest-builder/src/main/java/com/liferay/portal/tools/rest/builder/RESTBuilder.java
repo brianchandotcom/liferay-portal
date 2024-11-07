@@ -2045,8 +2045,7 @@ public class RESTBuilder {
 	}
 
 	private void _invokeClientJSGenerator(
-			File baseClientJSDir, String clientName, File openAPIYAMLFile,
-			String targetClientType)
+			File baseClientJSDir, File openAPIYAMLFile, String targetClientType)
 		throws Exception {
 
 		String outputPathString = StringBundler.concat(
@@ -2056,10 +2055,10 @@ public class RESTBuilder {
 		ProcessBuilder processBuilder = new ProcessBuilder(
 			Arrays.asList(
 				_getNPMPathString(), "exec", "--prefix", _getNodePrefix(),
-				"--yes", "openapi-typescript-codegen@0.27.0", "--", "--client",
-				targetClientType, "--input", openAPIYAMLFile.getPath(),
-				"--name", clientName, "--output", outputPathString,
-				"--useOptions", "--useUnionTypes"));
+				"--yes", "@openapitools/openapi-generator-cli", "--",
+				"generate", "--input-spec", openAPIYAMLFile.getPath(),
+				"--generator-name", "typescript-" + targetClientType,
+				"--output", outputPathString, "--skip-validate-spec"));
 
 		Process process = processBuilder.start();
 
@@ -2098,28 +2097,13 @@ public class RESTBuilder {
 					"clientName", baseClientJSDir.getName()
 				).build()));
 
-		StringBundler sb = new StringBundler();
-
-		String apiPackagePath = _configYAML.getApiPackagePath();
-
-		String[] parts = apiPackagePath.split("\\.");
-
-		for (int i = 2; i < parts.length; i++) {
-			sb.append(StringUtil.upperCaseFirstLetter(parts[i]));
-		}
-
-		sb.append("Client");
-
-		String clientName = sb.toString();
-
 		File openAPIYAMLFile = _prepareForClientJSGenerator(openAPIYAMLString);
 
-		_invokeClientJSGenerator(
-			baseClientJSDir, clientName, openAPIYAMLFile, "fetch");
-		_invokeClientJSGenerator(
-			baseClientJSDir, clientName, openAPIYAMLFile, "node");
+		_invokeClientJSGenerator(baseClientJSDir, openAPIYAMLFile, "node");
 
 		Files.delete(openAPIYAMLFile.toPath());
+
+		Files.delete(Paths.get("./openapitools.json"));
 	}
 
 	private OpenAPIYAML _loadOpenAPIYAML(String yamlString) {

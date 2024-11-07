@@ -479,6 +479,9 @@ public interface PropsKeys {
 	public static final String COMPANY_LOGIN_PREPOPULATE_DOMAIN =
 		"company.login.prepopulate.domain";
 
+	public static final String COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED =
+		"company.predictable.company.ids.enabled";
+
 	public static final String COMPANY_SECURITY_AUTH_TYPE =
 		"company.security.auth.type";
 
@@ -530,9 +533,6 @@ public interface PropsKeys {
 
 	public static final String COMPANY_SETTINGS_FORM_SOCIAL =
 		"company.settings.form.social";
-
-	public static final String COMPANY_STATIC_ID_ENABLED =
-		"company.static.id.enabled";
 
 	public static final String CONTROL_PANEL_DEFAULT_ENTRY_CLASS =
 		"control.panel.default.entry.class";

@@ -116,12 +116,17 @@ export class CalendarWidgetPage {
 			});
 	}
 
-	async addEvent(
-		allDay: boolean,
-		dateEnd: string,
-		publishEvent: boolean,
-		title: string
-	) {
+	async addEvent({
+		allDay,
+		dateEnd,
+		publishEvent,
+		title,
+	}: {
+		allDay: boolean;
+		dateEnd?: string;
+		publishEvent?: boolean;
+		title?: string;
+	}) {
 		await this.clickAddEventButton();
 
 		await this.allDayCheckbox.hover();

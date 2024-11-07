@@ -64,7 +64,7 @@ test.beforeEach(
 test('can create all-day calendar event with different time zone', async ({
 	calendarWidgetPage,
 }) => {
-	await calendarWidgetPage.addEvent(true, null, true, null);
+	await calendarWidgetPage.addEvent({allDay: true, publishEvent: true});
 
 	const endDate = await calendarWidgetPage.endDate.inputValue();
 	const startDate = await calendarWidgetPage.startDate.inputValue();
@@ -121,7 +121,12 @@ test('can create calendar event different start/end dates ensuring that the end 
 
 	const title = getRandomInt().toString();
 
-	await calendarWidgetPage.addEvent(false, endDateFormatted, true, title);
+	await calendarWidgetPage.addEvent({
+		allDay: false,
+		dateEnd: endDateFormatted,
+		publishEvent: true,
+		title,
+	});
 
 	await calendarWidgetPage.closeModalEvent();
 
@@ -158,7 +163,7 @@ test('can create calendar event with invitation', async ({
 
 		// As user 2, add an event and send an invitation to user 1
 
-		await calendarWidgetPage.addEvent(true, null, false, null);
+		await calendarWidgetPage.addEvent({allDay: true, publishEvent: false});
 
 		await calendarWidgetPage.addInvitation(user1.name);
 

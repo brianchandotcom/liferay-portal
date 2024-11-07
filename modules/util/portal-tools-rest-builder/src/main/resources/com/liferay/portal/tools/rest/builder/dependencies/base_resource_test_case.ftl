@@ -150,12 +150,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		_${schemaVarName}Resource.setContextCompany(testCompany);
 
+		com.liferay.portal.kernel.model.User testCompanyAdminUser = UserTestUtil.getAdminUser(testCompany.getCompanyId());
+
 		${schemaName}Resource.Builder builder = ${schemaName}Resource.builder();
 
-		com.liferay.portal.kernel.model.User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
-
 		${schemaVarName}Resource = builder.authentication(
-			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+			testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(

@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.util.PortalInstances;
 
 import java.util.List;
@@ -46,7 +45,7 @@ public class PortalInstancesLocalServiceImpl
 	@Override
 	public void synchronizePortalInstances() {
 		try {
-			long[] initializedCompanyIds = _portal.getCompanyIds();
+			long[] initializedCompanyIds = PortalInstancePool.getCompanyIds();
 
 			List<Long> removeableCompanyIds = ListUtil.fromArray(
 				initializedCompanyIds);
@@ -78,8 +77,5 @@ public class PortalInstancesLocalServiceImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

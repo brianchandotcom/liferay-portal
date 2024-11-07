@@ -48,6 +48,9 @@ public class DisplayPageTemplateDTOConverter
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
 		return new DisplayPageTemplate() {
 			{
 				setContentTypeReference(
@@ -59,15 +62,9 @@ public class DisplayPageTemplateDTOConverter
 									layoutPageTemplateEntry));
 						}
 					});
-
 				setDateCreated(layoutPageTemplateEntry::getCreateDate);
 				setDateModified(layoutPageTemplateEntry::getModifiedDate);
-
-				Layout layout = _layoutLocalService.getLayout(
-					layoutPageTemplateEntry.getPlid());
-
 				setDatePublished(layout::getPublishDate);
-
 				setExternalReferenceCode(
 					layoutPageTemplateEntry::getExternalReferenceCode);
 				setFriendlyUrlPath_i18n(

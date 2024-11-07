@@ -6,7 +6,7 @@
 package com.liferay.portal.defaultpermissions.web.internal.resource;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResource;
+import com.liferay.portal.kernel.defaultpermissions.resource.PortalDefaultPermissionsModelResource;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -5,10 +5,10 @@
 
 package com.liferay.portal.defaultpermissions.util;
 
-import com.liferay.portal.defaultpermissions.kernel.configuration.manager.PortalDefaultPermissionsConfigurationManagerUtil;
-import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResource;
-import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResourceRegistry;
-import com.liferay.portal.defaultpermissions.kernel.resource.PortalDefaultPermissionsModelResourceRegistryUtil;
+import com.liferay.portal.kernel.defaultpermissions.configuration.manager.PortalDefaultPermissionsConfigurationManagerUtil;
+import com.liferay.portal.kernel.defaultpermissions.resource.PortalDefaultPermissionsModelResource;
+import com.liferay.portal.kernel.defaultpermissions.resource.PortalDefaultPermissionsModelResourceRegistry;
+import com.liferay.portal.kernel.defaultpermissions.resource.PortalDefaultPermissionsModelResourceRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.ResourceConstants;

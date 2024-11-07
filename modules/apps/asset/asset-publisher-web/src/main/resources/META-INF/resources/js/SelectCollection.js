@@ -99,7 +99,7 @@ export default function SelectCollection({
 						className="c-mr-2 flex-shrink-0"
 						displayType="secondary"
 						onClick={onChangeCollectionButtonClick}
-						symbol="change"
+						symbol={values.clearButtonEnabled ? 'change' : 'plus'}
 						title={Liferay.Language.get('select-collection')}
 					/>
 

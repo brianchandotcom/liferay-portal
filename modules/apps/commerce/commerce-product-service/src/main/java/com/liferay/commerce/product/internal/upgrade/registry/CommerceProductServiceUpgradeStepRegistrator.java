@@ -576,6 +576,37 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"CPConfigurationEntry", "commerceAvailabilityEstimateId LONG"));
 
+		registry.register(
+			"5.23.0", "5.23.1",
+			new BaseUpgradePortletPreferences() {
+
+				@Override
+				protected String[] getPortletIds() {
+					return new String[] {CPPortletKeys.CP_CATEGORY_CONTENT_WEB};
+				}
+
+				@Override
+				protected void upgradePreferences(
+						long companyId, long ownerId, int ownerType, long plid,
+						String portletId, PortletPreferences portletPreferences)
+					throws Exception {
+
+					long assetCategoryId = GetterUtil.getLong(
+						portletPreferences.getValue("assetCategoryId", null));
+
+					AssetCategory assetCategory =
+						_assetCategoryLocalService.fetchAssetCategory(
+							assetCategoryId);
+
+					if (assetCategory != null) {
+						portletPreferences.setValue(
+							"assetCategoryExternalReferenceCode",
+							assetCategory.getExternalReferenceCode());
+					}
+				}
+
+			});
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

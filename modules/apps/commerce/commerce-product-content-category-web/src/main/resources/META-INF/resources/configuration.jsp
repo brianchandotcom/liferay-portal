@@ -10,12 +10,18 @@
 <%
 CPCategoryContentDisplayContext cpCategoryContentDisplayContext = (CPCategoryContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-long assetCategoryId = 0;
+String useAssetCategoryContentCssClass = "lfr-use-asset-category-content ";
+
+if (!cpCategoryContentDisplayContext.useAssetCategory()) {
+	useAssetCategoryContentCssClass += "hide";
+}
+
+String assetCategoryExternalReferenceCode = "";
 
 AssetCategory assetCategory = cpCategoryContentDisplayContext.getAssetCategory();
 
 if (assetCategory != null) {
-	assetCategoryId = assetCategory.getCategoryId();
+	assetCategoryExternalReferenceCode = assetCategory.getExternalReferenceCode();
 }
 %>
 
@@ -36,7 +42,7 @@ if (assetCategory != null) {
 							<liferay-template:template-selector
 								className="<%= CPCategoryContentPortlet.class.getName() %>"
 								displayStyle="<%= cpCategoryContentDisplayContext.getDisplayStyle() %>"
-								displayStyleGroupId="<%= cpCategoryContentDisplayContext.getDisplayStyleGroupId() %>"
+								displayStyleGroupKey="<%= cpCategoryContentDisplayContext.getDisplayStyleGroupKey() %>"
 								refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
 								showEmptyOption="<%= true %>"
 							/>
@@ -47,8 +53,8 @@ if (assetCategory != null) {
 								<aui:input checked="<%= cpCategoryContentDisplayContext.useAssetCategory() %>" id="useAssetCategory" label="use-asset-category" name="preferences--useAssetCategory--" type="checkbox" />
 							</div>
 
-							<div class="lfr-use-asset-category-content toggler-content-collapsed">
-								<aui:input id="preferencesAssetCategoryId" name="preferences--assetCategoryId--" type="number" value="<%= assetCategoryId %>" />
+							<div class="<%= useAssetCategoryContentCssClass %>" id="<portlet:namespace />assetCategoryContent">
+								<aui:input id="preferencesAssetCategoryExternalReferenceCode" name="preferences--assetCategoryExternalReferenceCode--" type="text" value="<%= assetCategoryExternalReferenceCode %>" />
 							</div>
 						</div>
 					</aui:fieldset>
@@ -62,37 +68,6 @@ if (assetCategory != null) {
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-toggler">
-	new A.Toggler({
-		animated: true,
-		content:
-			'#<portlet:namespace />assetCategoryContainer .lfr-use-asset-category-content',
-		expanded: <%= cpCategoryContentDisplayContext.useAssetCategory() %>,
-		header: '#<portlet:namespace />assetCategoryContainer .lfr-use-asset-category-header',
-		on: {
-			animatingChange: function (event) {
-				var instance = this;
-
-				var expanded = !instance.get('expanded');
-
-				A.one('#<portlet:namespace />useAssetCategory').attr(
-					'checked',
-					expanded
-				);
-
-				if (expanded) {
-					A.one('#<portlet:namespace />preferencesAssetCategoryId').attr(
-						'disabled',
-						false
-					);
-				}
-				else {
-					A.one('#<portlet:namespace />preferencesAssetCategoryId').attr(
-						'disabled',
-						true
-					);
-				}
-			},
-		},
-	});
-</aui:script>
+<liferay-frontend:component
+	module="{configuration} from commerce-product-content-category-web"
+/>

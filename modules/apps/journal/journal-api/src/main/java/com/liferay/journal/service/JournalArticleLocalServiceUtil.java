@@ -906,6 +906,25 @@ public class JournalArticleLocalServiceUtil {
 			groupId, externalReferenceCode, status, preferApproved);
 	}
 
+	/**
+	 * Returns the latest web content article matching the group, article ID,
+	 * and workflow status.
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param articleId the primary key of the web content article
+	 * @param statuses the web content article's workflow statuses. For more
+	 information see {@link WorkflowConstants} for constants starting
+	 with the "STATUS_" prefix.
+	 * @return the latest matching web content article, or <code>null</code> if
+	 no matching web content article could be found
+	 */
+	public static JournalArticle fetchLatestArticleByExternalReferenceCode(
+		long groupId, String externalReferenceCode, int[] statuses) {
+
+		return getService().fetchLatestArticleByExternalReferenceCode(
+			groupId, externalReferenceCode, statuses);
+	}
+
 	public static JournalArticle fetchLatestArticleByUrlTitle(
 		long groupId, String urlTitle, int status) {
 

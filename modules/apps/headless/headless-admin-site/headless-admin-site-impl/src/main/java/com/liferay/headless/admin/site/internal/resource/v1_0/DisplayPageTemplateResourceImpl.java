@@ -51,6 +51,23 @@ public class DisplayPageTemplateResourceImpl
 	extends BaseDisplayPageTemplateResourceImpl {
 
 	@Override
+	public void deleteSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+			String siteExternalReferenceCode,
+			String displayPageTemplateExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntry(
+			displayPageTemplateExternalReferenceCode, group.getGroupId());
+	}
+
+	@Override
 	public DisplayPageTemplate
 			getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 				String siteExternalReferenceCode,

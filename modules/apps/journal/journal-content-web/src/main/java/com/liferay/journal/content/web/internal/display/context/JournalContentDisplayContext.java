@@ -37,6 +37,7 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -165,6 +166,23 @@ public class JournalContentDisplayContext {
 		}
 
 		if (articleResourcePrimKey == 0) {
+			if (FeatureFlagManagerUtil.isEnabled(
+					_themeDisplay.getCompanyId(), "LPD-27566")) {
+
+				if (Validator.isBlank(getArticleExternalReferenceCode())) {
+					return null;
+				}
+
+				_article =
+					JournalArticleLocalServiceUtil.
+						fetchLatestArticleByExternalReferenceCode(
+							getArticleGroupId(),
+							getArticleExternalReferenceCode(),
+							WorkflowConstants.STATUS_ANY, true);
+
+				return _article;
+			}
+
 			if (Validator.isBlank(getArticleId())) {
 				return null;
 			}
@@ -233,6 +251,19 @@ public class JournalContentDisplayContext {
 		}
 
 		return _articleDisplay;
+	}
+
+	public String getArticleExternalReferenceCode() {
+		if (_articleExternalReferenceCode != null) {
+			return _articleExternalReferenceCode;
+		}
+
+		_articleExternalReferenceCode = ParamUtil.getString(
+			_portletRequest, "articleExternalReferenceCode",
+			_journalContentPortletInstanceConfiguration.
+				articleExternalReferenceCode());
+
+		return _articleExternalReferenceCode;
 	}
 
 	public long getArticleGroupId() {
@@ -395,6 +426,16 @@ public class JournalContentDisplayContext {
 
 		return stagingGroupHelper.getStagedPortletGroupId(
 			_themeDisplay.getScopeGroupId(), JournalPortletKeys.JOURNAL);
+	}
+
+	public String getId() {
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-27566")) {
+
+			return getArticleExternalReferenceCode();
+		}
+
+		return getArticleId();
 	}
 
 	public PortletURL getItemSelectorURL() {
@@ -1041,6 +1082,7 @@ public class JournalContentDisplayContext {
 
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
+	private String _articleExternalReferenceCode;
 	private Long _articleGroupId;
 	private String _articleId;
 	private final long _ddmStructureClassNameId;

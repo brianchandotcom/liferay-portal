@@ -25,7 +25,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 <c:choose>
 	<c:when test="<%= article == null %>">
 		<c:choose>
-			<c:when test="<%= Validator.isNull(journalContentDisplayContext.getArticleId()) %>">
+			<c:when test="<%= Validator.isNull(journalContentDisplayContext.getId()) %>">
 				<clay:alert
 					displayType="info"
 				>
@@ -110,7 +110,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 					message="you-do-not-have-the-roles-required-to-access-this-web-content-entry"
 				/>
 			</c:when>
-			<c:when test="<%= Validator.isNotNull(journalContentDisplayContext.getArticleId()) %>">
+			<c:when test="<%= Validator.isNotNull(journalContentDisplayContext.getId()) %>">
 				<c:choose>
 					<c:when test="<%= journalContentDisplayContext.isExpired() %>">
 						<clay:alert

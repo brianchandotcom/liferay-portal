@@ -62,6 +62,7 @@ create unique index IX_64314388 on CPDefinitionOptionRel (CPDefinitionId, ctColl
 create unique index IX_78CCF36B on CPDefinitionOptionRel (CPDefinitionId, ctCollectionId, key_[$COLUMN_LENGTH:75$]);
 create index IX_BDB8420C on CPDefinitionOptionRel (CPDefinitionId, required);
 create index IX_749E99EB on CPDefinitionOptionRel (CPDefinitionId, skuContributor);
+create index IX_4E86C11B on CPDefinitionOptionRel (CPOptionId);
 create index IX_449BFCFE on CPDefinitionOptionRel (companyId);
 create index IX_A65BAB00 on CPDefinitionOptionRel (groupId);
 create unique index IX_44B059C2 on CPDefinitionOptionRel (uuid_[$COLUMN_LENGTH:75$], ctCollectionId, groupId);

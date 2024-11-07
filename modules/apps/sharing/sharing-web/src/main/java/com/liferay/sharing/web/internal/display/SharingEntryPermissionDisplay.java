@@ -19,7 +19,7 @@ public class SharingEntryPermissionDisplay {
 
 	public static List<SharingEntryPermissionDisplay>
 		getSharingEntryPermissionDisplays(
-			List<SharingEntryAction> sharingEntryActions,
+			String className, List<SharingEntryAction> sharingEntryActions,
 			ResourceBundle resourceBundle) {
 
 		List<SharingEntryPermissionDisplay> sharingEntryPermissionDisplays =
@@ -31,14 +31,14 @@ public class SharingEntryPermissionDisplay {
 
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayAction.UPDATE, true,
+					className, SharingEntryPermissionDisplayAction.UPDATE, true,
 					resourceBundle));
 		}
 		else {
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayAction.UPDATE, false,
-					resourceBundle));
+					className, SharingEntryPermissionDisplayAction.UPDATE,
+					false, resourceBundle));
 		}
 
 		if (sharingEntryActions.contains(SharingEntryAction.ADD_DISCUSSION) &&
@@ -46,26 +46,26 @@ public class SharingEntryPermissionDisplay {
 
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayAction.COMMENTS, true,
-					resourceBundle));
+					className, SharingEntryPermissionDisplayAction.COMMENTS,
+					true, resourceBundle));
 		}
 		else {
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayAction.COMMENTS, false,
-					resourceBundle));
+					className, SharingEntryPermissionDisplayAction.COMMENTS,
+					false, resourceBundle));
 		}
 
 		if (sharingEntryActions.contains(SharingEntryAction.VIEW)) {
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayAction.VIEW, true,
+					className, SharingEntryPermissionDisplayAction.VIEW, true,
 					resourceBundle));
 		}
 		else {
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayAction.VIEW, false,
+					className, SharingEntryPermissionDisplayAction.VIEW, false,
 					resourceBundle));
 		}
 
@@ -93,6 +93,7 @@ public class SharingEntryPermissionDisplay {
 	}
 
 	private SharingEntryPermissionDisplay(
+		String className,
 		SharingEntryPermissionDisplayAction sharingEntryPermissionDisplayAction,
 		boolean enabled, ResourceBundle resourceBundle) {
 

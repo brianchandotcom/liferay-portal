@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
@@ -78,10 +79,14 @@ public class SharingHelper {
 			locale, SharingHelper.class);
 
 		return SharingEntryPermissionDisplay.getSharingEntryPermissionDisplays(
-			sharingEntryActions, resourceBundle);
+			_portal.getClassName(classNameId), sharingEntryActions,
+			resourceBundle);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SharingHelper.class);
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SharingPermission _sharingPermission;

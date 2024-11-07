@@ -625,10 +625,6 @@ public class DataFactory {
 		return _defaultDLDDMStructureId;
 	}
 
-	public long getDefaultObjectFolderId() {
-		return _defaultObjectFolderId;
-	}
-
 	public long getDLFileEntryClassNameId() {
 		return getClassNameId(DLFileEntry.class);
 	}
@@ -5743,8 +5739,6 @@ public class DataFactory {
 
 		objectFolderModel.setObjectFolderId(_counter.get());
 
-		_defaultObjectFolderId = objectFolderModel.getObjectFolderId();
-
 		// Audit fields
 
 		objectFolderModel.setCompanyId(_companyId);
@@ -8891,7 +8885,6 @@ public class DataFactory {
 	private long _defaultJournalDDMStructureVersionId;
 	private long _defaultJournalDDMTemplateId;
 	private String _defaultListTypeEntryKey;
-	private long _defaultObjectFolderId;
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;
 	private final SimpleCounter _dlFileEntryIdCounter;

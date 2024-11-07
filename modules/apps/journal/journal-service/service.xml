@@ -159,6 +159,11 @@
 			<finder-column name="externalReferenceCode" />
 			<finder-column name="version" />
 		</finder>
+		<finder name="G_ERC_ST" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="externalReferenceCode" />
+			<finder-column arrayable-operator="OR" name="status" />
+		</finder>
 		<finder name="G_F_ST" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="folderId" />

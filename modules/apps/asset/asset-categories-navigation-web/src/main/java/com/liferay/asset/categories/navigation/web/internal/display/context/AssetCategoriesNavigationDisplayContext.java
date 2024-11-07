@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -186,17 +187,40 @@ public class AssetCategoriesNavigationDisplayContext {
 			return _displayStyleGroupId;
 		}
 
-		_displayStyleGroupId =
+		long displayStyleGroupId =
 			_assetCategoriesNavigationPortletInstanceConfiguration.
 				displayStyleGroupId();
 
-		if (_displayStyleGroupId <= 0) {
+		PortletPreferences portletPreferences = _renderRequest.getPreferences();
+
+		Map<String, String[]> map = portletPreferences.getMap();
+
+		if (map.containsKey("displayStyleGroupExternalReferenceCode")) {
+			String displayStyleGroupExternalReferenceCode =
+				portletPreferences.getValue(
+					"displayStyleGroupExternalReferenceCode", null);
+
+			if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+				Group group =
+					GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+						displayStyleGroupExternalReferenceCode,
+						_themeDisplay.getCompanyId());
+
+				if (group != null) {
+					displayStyleGroupId = group.getGroupId();
+				}
+			}
+		}
+
+		if (displayStyleGroupId <= 0) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)_httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+			displayStyleGroupId = themeDisplay.getScopeGroupId();
 		}
+
+		_displayStyleGroupId = displayStyleGroupId;
 
 		return _displayStyleGroupId;
 	}

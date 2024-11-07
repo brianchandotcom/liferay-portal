@@ -9,6 +9,7 @@ import ClayIcon from '@clayui/icon';
 import LoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React, {useState} from 'react';
+import ReactMarkdown from 'react-markdown';
 
 import {useAppContext} from '../context/AppContext';
 import {Liferay} from '../services/liferay';
@@ -162,9 +163,7 @@ export default function ModalContent({
 					{React.isValidElement(message.text) ? (
 						message.text
 					) : (
-						<span
-							dangerouslySetInnerHTML={{__html: message.text}}
-						/>
+						<ReactMarkdown>{message.text}</ReactMarkdown>
 					)}
 				</Message>
 			))}

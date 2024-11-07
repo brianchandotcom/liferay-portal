@@ -516,7 +516,7 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 		}
 
 		com.liferay.change.tracking.model.CTEntry serviceBuilderCTEntry =
-			_ctEntryLocalService.fetchCTEntry(
+			_ctEntryLocalService.fetchTimelineCTEntry(
 				ctCollectionId, _journalArticleClassNameId,
 				journalArticle.getId());
 

@@ -79,7 +79,7 @@ public class CTEntryLocalServiceTest {
 				journalArticle, RandomTestUtil.randomString());
 		}
 
-		CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
+		CTEntry ctEntry = _ctEntryLocalService.fetchTimelineCTEntry(
 			ctCollection.getCtCollectionId(),
 			_classNameLocalService.getClassNameId(JournalArticle.class),
 			journalArticle.getId());

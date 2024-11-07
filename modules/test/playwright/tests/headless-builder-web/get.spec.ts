@@ -94,11 +94,6 @@ test('can associate and disassociate schema', async ({
 		.textContent();
 
 	await expect(responseBodySchemaContent).toEqual('Select a Schema');
-
-	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-		'headless-builder/applications',
-		applicationData.externalReferenceCode
-	);
 });
 
 test('can see available path parameter properties of a singleElement endpoint', async ({
@@ -248,11 +243,6 @@ test('can see schema unique fields as path parameter properties', async ({
 	).toBeVisible();
 	await expect(page.getByRole('menuitem', {name: 'ID'})).toBeVisible();
 	await expect(page.getByRole('menuitem', {name: 'Title'})).toBeVisible();
-
-	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-		'headless-builder/applications',
-		applicationData.externalReferenceCode
-	);
 });
 
 test('can list site scoped endpoint', async ({

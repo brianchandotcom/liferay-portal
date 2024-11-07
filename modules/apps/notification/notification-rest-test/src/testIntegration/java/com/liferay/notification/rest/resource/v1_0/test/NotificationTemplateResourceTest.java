@@ -224,7 +224,7 @@ public class NotificationTemplateResourceTest
 										"en_US", RandomTestUtil.randomString())
 								).put(
 									"to",
-									() -> JSONUtil.putAll(
+									JSONUtil.putAll(
 										JSONUtil.put(
 											"roleName", "Administrator"))
 								).put(

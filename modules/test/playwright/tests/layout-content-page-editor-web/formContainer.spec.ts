@@ -376,7 +376,7 @@ test.describe('Date and Time Fragment', () => {
 	test(
 		'The page designer could map date and time field to date and time fragment',
 		{
-			tag: '@PS-191312',
+			tag: '@LPS-191312',
 		},
 		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 

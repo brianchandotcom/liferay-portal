@@ -6,5 +6,5 @@ Export-Package:\
 	com.liferay.portal.remote.cors.configuration
 Require-Capability:\
 	osgi.extender;\
-		filter := "(&(osgi.extender=osgi.configurator)(version>=1.0)(!(version>=2.0)))"
+		filter:="(&(osgi.extender=osgi.configurator)(version>=1.0)(!(version>=2.0)))"
 -includeresource: OSGI-INF/configurator=configurator

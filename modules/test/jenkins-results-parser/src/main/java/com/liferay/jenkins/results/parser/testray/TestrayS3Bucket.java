@@ -299,11 +299,8 @@ public class TestrayS3Bucket {
 			callables.add(callable);
 		}
 
-		ThreadPoolExecutor threadPoolExecutor =
-			JenkinsResultsParserUtil.getNewThreadPoolExecutor(16, true);
-
 		ParallelExecutor<File> parallelExecutor = new ParallelExecutor<>(
-			callables, threadPoolExecutor, "downloadTestrayS3Objects");
+			callables, _threadPoolExecutor, "downloadTestrayS3Objects");
 
 		parallelExecutor.execute();
 	}
@@ -394,6 +391,8 @@ public class TestrayS3Bucket {
 	private static Boolean _hasGoogleApplicationCredentials;
 	private static final Map<String, TestrayS3Bucket> _testrayS3Buckets =
 		new HashMap<>();
+	private static final ThreadPoolExecutor _threadPoolExecutor =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(16, true);
 
 	private final String _name;
 

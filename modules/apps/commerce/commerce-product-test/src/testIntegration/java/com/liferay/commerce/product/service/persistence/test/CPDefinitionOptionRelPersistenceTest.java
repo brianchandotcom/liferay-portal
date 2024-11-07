@@ -302,6 +302,13 @@ public class CPDefinitionOptionRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCPOptionId() throws Exception {
+		_persistence.countByCPOptionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCPOptionId(0L);
+	}
+
+	@Test
 	public void testCountByC_C() throws Exception {
 		_persistence.countByC_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

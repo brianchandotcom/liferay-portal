@@ -71,8 +71,10 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.UserLastLoginDateComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
@@ -146,6 +148,37 @@ public class UserLocalServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		_bundleActivator.stop(_bundleContext);
+	}
+
+	@Test
+	public void testAddUserWithEmptyPassword() throws Exception {
+		User user = _userLocalService.addUser(
+			0, TestPropsValues.getCompanyId(), true, StringPool.BLANK,
+			StringPool.BLANK, false, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "@liferay.com", LocaleUtil.US,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), 0, 0, true, 1, 1, 1970,
+			StringPool.BLANK, UserConstants.TYPE_REGULAR, new long[0],
+			new long[0], new long[0], new long[0], false,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+				TestPropsValues.getUserId()));
+
+		Assert.assertTrue(Validator.isNull(user.getPassword()));
+
+		user = _userLocalService.addUser(
+			0, TestPropsValues.getCompanyId(), true, "test", "test", false,
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "@liferay.com", LocaleUtil.US,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), 0, 0, true, 1, 1, 1970,
+			StringPool.BLANK, UserConstants.TYPE_REGULAR, new long[0],
+			new long[0], new long[0], new long[0], false,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+				TestPropsValues.getUserId()));
+
+		Assert.assertTrue(Validator.isNotNull(user.getPassword()));
 	}
 
 	@Test
@@ -1035,7 +1068,20 @@ public class UserLocalServiceTest {
 					"_PASSWORDS_ENCRYPTION_ALGORITHM",
 					"PBKDF2WithHmacSHA1/160/720000")) {
 
-			User user = UserTestUtil.addUser();
+			String password = RandomTestUtil.randomString(
+				UniqueStringRandomizerBumper.INSTANCE);
+
+			User user = _userLocalService.addUser(
+				0, TestPropsValues.getCompanyId(), true, password, password,
+				false, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + "@liferay.com", LocaleUtil.US,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), 0, 0, true, 1, 1, 1970,
+				StringPool.BLANK, UserConstants.TYPE_REGULAR, new long[0],
+				new long[0], new long[0], new long[0], false,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getCompanyId(),
+					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 
 			String encryptedPassword = user.getPassword();
 
@@ -1046,7 +1092,7 @@ public class UserLocalServiceTest {
 				PasswordEncryptorUtil.class, "_PASSWORDS_ENCRYPTION_ALGORITHM",
 				"MD5");
 
-			String password = RandomTestUtil.randomString(
+			password = RandomTestUtil.randomString(
 				UniqueStringRandomizerBumper.INSTANCE);
 
 			user = _userLocalService.updatePassword(

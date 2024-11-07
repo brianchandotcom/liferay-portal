@@ -2036,6 +2036,37 @@ public class JournalArticleLocalServiceImpl
 		return article;
 	}
 
+	/**
+	 * Returns the latest web content article matching the group, article ID,
+	 * and workflow status.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  articleId the primary key of the web content article
+	 * @param  statuses the web content article's workflow statuses. For more
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
+	 * @return the latest matching web content article, or <code>null</code> if
+	 *         no matching web content article could be found
+	 */
+	@Override
+	public JournalArticle fetchLatestArticleByExternalReferenceCode(
+		long groupId, String externalReferenceCode, int[] statuses) {
+
+		OrderByComparator<JournalArticle> orderByComparator =
+			ArticleVersionComparator.getInstance(false);
+
+		List<JournalArticle> articles =
+			journalArticlePersistence.findByG_ERC_ST(
+				groupId, externalReferenceCode, statuses, 0, 1,
+				orderByComparator);
+
+		if (!articles.isEmpty()) {
+			return articles.get(0);
+		}
+
+		return null;
+	}
+
 	@Override
 	public JournalArticle fetchLatestArticleByUrlTitle(
 		long groupId, String urlTitle, int status) {

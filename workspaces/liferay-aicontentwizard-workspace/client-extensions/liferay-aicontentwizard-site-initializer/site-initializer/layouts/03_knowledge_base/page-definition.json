@@ -22,7 +22,8 @@
 					{
 						"definition": {
 							"widgetInstance": {
-								"widgetConfig": {},
+								"widgetConfig": {
+								},
 								"widgetName": "com_liferay_knowledge_base_web_portlet_DisplayPortlet"
 							}
 						},

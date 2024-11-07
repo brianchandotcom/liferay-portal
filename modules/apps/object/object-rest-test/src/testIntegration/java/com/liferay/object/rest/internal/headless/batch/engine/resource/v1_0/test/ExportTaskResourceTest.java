@@ -36,10 +36,14 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.zip.ZipInputStream;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,6 +65,28 @@ public class ExportTaskResourceTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Before
+	public void setUp() throws Exception {
+		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING,
+					_OBJECT_FIELD_NAME_TEXT)),
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			TestPropsValues.getUserId());
+
+		_objectDefinitions.add(_objectDefinition1);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		for (ObjectDefinition objectDefinition : _objectDefinitions) {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+	}
+
 	@Test
 	public void testPostExportTask() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -68,17 +94,7 @@ public class ExportTaskResourceTest {
 					"BatchEngineExportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
-			ObjectDefinition objectDefinition1 =
-				ObjectDefinitionTestUtil.publishObjectDefinition(
-					Collections.singletonList(
-						ObjectFieldUtil.createObjectField(
-							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-							ObjectFieldConstants.DB_TYPE_STRING,
-							_OBJECT_FIELD_NAME_TEXT)),
-					ObjectDefinitionConstants.SCOPE_COMPANY,
-					TestPropsValues.getUserId());
-
-			_testPostExportTask("COMPLETED", objectDefinition1);
+			_testPostExportTask("COMPLETED", _objectDefinition1);
 
 			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -113,14 +129,9 @@ public class ExportTaskResourceTest {
 			).apply(
 				() -> {
 					_testPostExportTask("COMPLETED", objectDefinition2);
-					_testPostExportTask("FAILED", objectDefinition1);
+					_testPostExportTask("FAILED", _objectDefinition1);
 				}
 			);
-
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition1);
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition2);
 
 			_companyLocalService.deleteCompany(jsonObject.getLong("companyId"));
 		}
@@ -133,25 +144,15 @@ public class ExportTaskResourceTest {
 					"BatchEngineExportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
-			ObjectDefinition objectDefinition =
-				ObjectDefinitionTestUtil.publishObjectDefinition(
-					Collections.singletonList(
-						ObjectFieldUtil.createObjectField(
-							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-							ObjectFieldConstants.DB_TYPE_STRING,
-							_OBJECT_FIELD_NAME_TEXT)),
-					ObjectDefinitionConstants.SCOPE_COMPANY,
-					TestPropsValues.getUserId());
-
 			String objectDefinitionRESTContextPath =
-				objectDefinition.getRESTContextPath();
+				_objectDefinition1.getRESTContextPath();
 
 			ObjectEntryTestUtil.addObjectEntry(
-				objectDefinition, _OBJECT_FIELD_NAME_TEXT, "TestObject1");
+				_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "TestObject1");
 			ObjectEntryTestUtil.addObjectEntry(
-				objectDefinition, _OBJECT_FIELD_NAME_TEXT, "TestObject2");
+				_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "TestObject2");
 			ObjectEntryTestUtil.addObjectEntry(
-				objectDefinition, _OBJECT_FIELD_NAME_TEXT, "Object3");
+				_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "Object3");
 
 			String queryParametersString = StringBundler.concat(
 				"restrictFields=actions&filter=contains%28",
@@ -162,7 +163,7 @@ public class ExportTaskResourceTest {
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/export-task",
 					"/com.liferay.object.rest.dto.v1_0.ObjectEntry/JSON?",
-					"taskItemDelegateName=", objectDefinition.getName(), "&",
+					"taskItemDelegateName=", _objectDefinition1.getName(), "&",
 					queryParametersString),
 				Http.Method.POST);
 
@@ -213,9 +214,6 @@ public class ExportTaskResourceTest {
 			JSONAssert.assertEquals(
 				itemsJSONArray.toString(), responseString,
 				JSONCompareMode.LENIENT);
-
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition);
 		}
 	}
 
@@ -260,10 +258,14 @@ public class ExportTaskResourceTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	private ObjectDefinition _objectDefinition1;
+
 	@Inject
 	private JSONFactory _jsonFactory;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private final List<ObjectDefinition> _objectDefinitions = new ArrayList<>();
 
 }

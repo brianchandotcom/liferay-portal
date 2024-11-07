@@ -240,6 +240,11 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"5.7.0", "5.7.1",
+			new com.liferay.layout.page.template.internal.upgrade.v5_7_1.
+				LayoutPageTemplateStructureRelUpgradeProcess());
 	}
 
 	@Reference

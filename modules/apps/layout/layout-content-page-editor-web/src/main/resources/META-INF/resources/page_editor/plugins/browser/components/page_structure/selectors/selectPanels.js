@@ -227,6 +227,10 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			activeItemId.length
 		);
 
+		if (!state.fragmentEntryLinks[fragmentEntryLinkId]) {
+			return {activeItem, panelsIds};
+		}
+
 		const editableType =
 			state.fragmentEntryLinks[fragmentEntryLinkId].editableTypes[
 				editableId

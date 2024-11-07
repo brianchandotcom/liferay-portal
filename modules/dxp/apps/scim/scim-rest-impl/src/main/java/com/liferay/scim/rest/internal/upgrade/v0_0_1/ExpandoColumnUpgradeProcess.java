@@ -58,9 +58,8 @@ public class ExpandoColumnUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		ExpandoColumn expandoColumn =
-			_expandoColumnLocalService.fetchColumn(
-				expandoTable.getTableId(), "scimClientId");
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.fetchColumn(
+			expandoTable.getTableId(), "scimClientId");
 
 		if (expandoColumn == null) {
 			return;

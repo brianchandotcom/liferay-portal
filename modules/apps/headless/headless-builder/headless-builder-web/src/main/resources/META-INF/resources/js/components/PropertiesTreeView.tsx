@@ -177,9 +177,7 @@ export default function PropertiesTreeView({
 						>
 							<ClayIcon symbol={getIconName(businessType)} />
 
-							<span className="treeview-item-label">
-								{objectFieldName ? objectFieldName : name}
-							</span>
+							<span className="treeview-item-label">{objectFieldName}</span>
 
 							{!ALLOWED_BUSINESS_TYPES.includes(businessType) && (
 								<ClayTooltipProvider>

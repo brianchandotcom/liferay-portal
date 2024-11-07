@@ -9,9 +9,8 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import {getRandomInt} from '../../utils/getRandomInt';
-import performLogin from '../../utils/performLogin';
+import performLogin, {performLogout} from '../../utils/performLogin';
 import {utilityPagesPage} from './fixtures/utilityPageTest';
-import {UtilityPagesPage} from './pages/UtilityPagesPage';
 
 export const test = mergeTests(
 	featureFlagsTest({
@@ -27,16 +26,6 @@ export const testAsGuest = mergeTests(
 	}),
 	utilityPagesPage
 );
-
-async function performLogout(page) {
-	await page.goto(liferayConfig.environment.baseUrl);
-	await page.getByLabel('Test Test User Profile').click();
-	await page.getByRole('menuitem', {name: 'Sign Out'}).click();
-}
-
-async function visitRestrictedPage(utilityPagesPage: UtilityPagesPage) {
-	await utilityPagesPage.goto();
-}
 
 const getRandomTitle = () => {
 	return 'test-up-' + getRandomInt();
@@ -95,7 +84,7 @@ test('LPD-6870 Render the default "Sign In" utility page if exists', async ({
 
 	await performLogout(page);
 
-	await visitRestrictedPage(utilityPagesPage);
+	await utilityPagesPage.goto();
 
 	await performLogin(page, 'test');
 
@@ -116,7 +105,7 @@ test('LPD-6870 Render the original "Sign In" view if no default utility page exi
 
 	await performLogout(page);
 
-	await visitRestrictedPage(utilityPagesPage);
+	await utilityPagesPage.goto();
 
 	await expect(page).toHaveTitle('Home - Liferay DXP');
 	await expect(page.getByLabel('Sign In')).toBeVisible();

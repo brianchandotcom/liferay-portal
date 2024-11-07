@@ -9,6 +9,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Iván Zaera Avellón
  */
@@ -21,7 +23,7 @@ public class ContentSecurityPolicyHTMLRewriterUtil {
 	}
 
 	public static String rewriteInlineEventHandlers(
-		String html, String nonce, boolean recursive) {
+		String html, HttpServletRequest httpServletRequest, boolean recursive) {
 
 		ContentSecurityPolicyHTMLRewriter contentSecurityPolicyHTMLRewriter =
 			getContentSecurityPolicyHTMLRewriter();
@@ -33,7 +35,7 @@ public class ContentSecurityPolicyHTMLRewriterUtil {
 		}
 
 		return contentSecurityPolicyHTMLRewriter.rewriteInlineEventHandlers(
-			html, nonce, recursive);
+			html, httpServletRequest, recursive);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

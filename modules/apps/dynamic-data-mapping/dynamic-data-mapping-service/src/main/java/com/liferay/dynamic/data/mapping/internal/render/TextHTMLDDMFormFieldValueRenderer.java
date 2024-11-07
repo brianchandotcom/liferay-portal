@@ -10,7 +10,6 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.ValueAccessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyHTMLRewriterUtil;
-import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,8 +46,7 @@ public class TextHTMLDDMFormFieldValueRenderer
 								HtmlUtil.escapeJS(value.getString(locale)),
 								LanguageUtil.get(locale, "preview")
 							}),
-						ContentSecurityPolicyNonceProviderUtil.getNonce(null),
-						false);
+						null, false);
 			}
 
 		};

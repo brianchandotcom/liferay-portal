@@ -7,6 +7,7 @@ package com.liferay.portal.security.content.security.policy.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyHTMLRewriter;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProvider;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -14,12 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera Avellón
@@ -30,7 +34,14 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 
 	@Override
 	public String rewriteInlineEventHandlers(
-		String html, String nonce, boolean recursive) {
+		String html, HttpServletRequest httpServletRequest, boolean recursive) {
+
+		String nonce = _contentSecurityPolicyNonceProvider.getNonce(
+			httpServletRequest);
+
+		if (Validator.isBlank(nonce)) {
+			return html;
+		}
 
 		StringBundler sb = new StringBundler();
 
@@ -123,5 +134,9 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 			}
 		}
 	}
+
+	@Reference
+	private ContentSecurityPolicyNonceProvider
+		_contentSecurityPolicyNonceProvider;
 
 }

@@ -505,6 +505,14 @@ test.describe('Date and Time Fragment', () => {
 				.last();
 
 			await expect(row).toContainText('Oct 10, 2022, 10:10 AM');
+
+			// Delete entries
+
+			await deleteObjectEntries({
+				entityName: 'All Fields',
+				page,
+				siteUrl: pageManagementSite.friendlyUrlPath,
+			});
 		}
 	);
 });

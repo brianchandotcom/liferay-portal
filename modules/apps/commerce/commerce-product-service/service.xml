@@ -412,7 +412,7 @@
 			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="G_MasterCPConfigurationList" return-type="CPConfigurationList">
+		<finder name="G_M" return-type="CPConfigurationList">
 			<finder-column name="groupId" />
 			<finder-column name="masterCPConfigurationList" />
 		</finder>
@@ -1400,6 +1400,8 @@
 		<exception>CPAttachmentFileEntryName</exception>
 		<exception>CPAttachmentFileEntryProtocol</exception>
 		<exception>CPAttachmentFileEntrySize</exception>
+		<exception>CPConfigurationListCannotDelete</exception>
+		<exception>CPConfigurationListParentCPConfigurationListGroupId</exception>
 		<exception>CPDefinitionDeliveryMaxSubscriptionCycles</exception>
 		<exception>CPDefinitionDeliverySubscriptionLength</exception>
 		<exception>CPDefinitionDisplayDate</exception>
@@ -1459,6 +1461,7 @@
 		<exception>DuplicateCommerceChannelAccountEntryRel</exception>
 		<exception>DuplicateCommerceChannelRel</exception>
 		<exception>DuplicateCPAttachmentFileEntry</exception>
+		<exception>DuplicateCPConfigurationList</exception>
 		<exception>DuplicateCPDefinitionOptionRelKey</exception>
 		<exception>DuplicateCPDefinitionOptionValueRelKey</exception>
 		<exception>DuplicateCPInstance</exception>

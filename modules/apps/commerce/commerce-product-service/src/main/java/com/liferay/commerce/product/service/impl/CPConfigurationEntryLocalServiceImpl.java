@@ -5,10 +5,21 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.service.base.CPConfigurationEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.UserLocalService;
+
+import java.math.BigDecimal;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -19,4 +30,71 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CPConfigurationEntryLocalServiceImpl
 	extends CPConfigurationEntryLocalServiceBaseImpl {
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CPConfigurationEntry addCPConfigurationEntry(
+			String externalReferenceCode, long userId,
+			long cpConfigurationListId, long classNameId, long classPK,
+			String cpDefinitionInventoryEngine, String lowStockActivity,
+			boolean displayAvailability, boolean displayStockQuantity,
+			BigDecimal minStockQuantity, boolean backOrders,
+			BigDecimal minOrderQuantity, BigDecimal maxOrderQuantity,
+			String allowedOrderQuantities, BigDecimal multipleOrderQuantity)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
+		long cpConfigurationEntryId = counterLocalService.increment();
+
+		CPConfigurationEntry cpConfigurationEntry =
+			cpConfigurationEntryPersistence.create(cpConfigurationEntryId);
+
+		cpConfigurationEntry.setExternalReferenceCode(externalReferenceCode);
+		cpConfigurationEntry.setCompanyId(user.getCompanyId());
+		cpConfigurationEntry.setUserId(user.getUserId());
+		cpConfigurationEntry.setUserName(user.getFullName());
+		cpConfigurationEntry.setClassNameId(classNameId);
+		cpConfigurationEntry.setClassPK(classPK);
+		cpConfigurationEntry.setCPConfigurationListId(cpConfigurationListId);
+		cpConfigurationEntry.setAllowedOrderQuantities(allowedOrderQuantities);
+		cpConfigurationEntry.setBackOrders(backOrders);
+		cpConfigurationEntry.setCPDefinitionInventoryEngine(
+			cpDefinitionInventoryEngine);
+		cpConfigurationEntry.setDisplayAvailability(displayAvailability);
+		cpConfigurationEntry.setDisplayStockQuantity(displayStockQuantity);
+		cpConfigurationEntry.setLowStockActivity(lowStockActivity);
+		cpConfigurationEntry.setMaxOrderQuantity(maxOrderQuantity);
+		cpConfigurationEntry.setMinOrderQuantity(minOrderQuantity);
+		cpConfigurationEntry.setMinStockQuantity(minStockQuantity);
+		cpConfigurationEntry.setMultipleOrderQuantity(multipleOrderQuantity);
+
+		return cpConfigurationEntryPersistence.update(cpConfigurationEntry);
+	}
+
+	@Override
+	public void deleteCPConfigurationEntries(long cpConfigurationListId) {
+		List<CPConfigurationEntry> cpConfigurationEntries =
+			cpConfigurationEntryLocalService.getCPConfigurationEntries(
+				cpConfigurationListId);
+
+		for (CPConfigurationEntry cpConfigurationEntry :
+				cpConfigurationEntries) {
+
+			cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
+				cpConfigurationEntry);
+		}
+	}
+
+	@Override
+	public List<CPConfigurationEntry> getCPConfigurationEntries(
+		long cpConfigurationListId) {
+
+		return cpConfigurationEntryPersistence.findByCPConfigurationListId(
+			cpConfigurationListId);
+	}
+
+	@Reference
+	private UserLocalService _userLocalService;
+
 }

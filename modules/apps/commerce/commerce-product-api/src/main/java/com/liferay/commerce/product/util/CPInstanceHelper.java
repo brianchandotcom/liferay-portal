@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.KeyValuePair;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -37,6 +39,10 @@ public interface CPInstanceHelper {
 	public CPInstance fetchCPInstance(
 			long cpDefinitionId, String serializedFormFieldValues)
 		throws PortalException;
+
+	public BigDecimal fetchCPInstanceUnitPrice(CPInstance cpInstance);
+
+	public BigDecimal fetchCPInstanceUnitPromoPrice(CPInstance cpInstance);
 
 	public CPInstance fetchFirstAvailableReplacementCPInstance(
 			long commerceChannelGroupId, long cpInstanceId)

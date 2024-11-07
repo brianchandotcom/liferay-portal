@@ -21,6 +21,14 @@ public class CPSkuImpl implements CPSku {
 		_cpInstance = cpInstance;
 	}
 
+	public CPSkuImpl(
+		CPInstance cpInstance, BigDecimal price, BigDecimal promoPrice) {
+
+		_cpInstance = cpInstance;
+		_price = price;
+		_promoPrice = promoPrice;
+	}
+
 	@Override
 	public long getCPInstanceId() {
 		return _cpInstance.getCPInstanceId();
@@ -53,11 +61,19 @@ public class CPSkuImpl implements CPSku {
 
 	@Override
 	public BigDecimal getPrice() {
+		if (_price != null) {
+			return _price;
+		}
+
 		return _cpInstance.getPrice();
 	}
 
 	@Override
 	public BigDecimal getPromoPrice() {
+		if (_promoPrice != null) {
+			return _promoPrice;
+		}
+
 		return _cpInstance.getPromoPrice();
 	}
 
@@ -92,5 +108,7 @@ public class CPSkuImpl implements CPSku {
 	}
 
 	private final CPInstance _cpInstance;
+	private BigDecimal _price;
+	private BigDecimal _promoPrice;
 
 }

@@ -6,9 +6,15 @@
 package com.liferay.commerce.product.internal.util;
 
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
+import com.liferay.commerce.context.CommerceContextThreadLocal;
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.media.CommerceMediaProvider;
 import com.liferay.commerce.media.CommerceMediaResolver;
+import com.liferay.commerce.price.CommerceProductPrice;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.availability.CPAvailabilityChecker;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
@@ -40,11 +46,15 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -101,6 +111,49 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		}
 
 		return _fetchCPInstance(cpDefinitionId, serializedFormFieldValues);
+	}
+
+	@Override
+	public BigDecimal fetchCPInstanceUnitPrice(CPInstance cpInstance) {
+		try {
+			CommerceProductPrice commerceProductPrice =
+				_commerceProductPriceCalculation.getCommerceProductPrice(
+					cpInstance.getCPInstanceId(), BigDecimal.ONE,
+					StringPool.BLANK, CommerceContextThreadLocal.get());
+
+			CommerceMoney unitPrice = commerceProductPrice.getUnitPrice();
+
+			if (!unitPrice.isEmpty()) {
+				return unitPrice.getPrice();
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return null;
+	}
+
+	@Override
+	public BigDecimal fetchCPInstanceUnitPromoPrice(CPInstance cpInstance) {
+		try {
+			CommerceProductPrice commerceProductPrice =
+				_commerceProductPriceCalculation.getCommerceProductPrice(
+					cpInstance.getCPInstanceId(), BigDecimal.ONE,
+					StringPool.BLANK, CommerceContextThreadLocal.get());
+
+			CommerceMoney unitPromoPrice =
+				commerceProductPrice.getUnitPromoPrice();
+
+			if (!unitPromoPrice.isEmpty()) {
+				return unitPromoPrice.getPrice();
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -607,7 +660,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			return null;
 		}
 
-		return new CPSkuImpl(cpInstance);
+		return new CPSkuImpl(
+			cpInstance, fetchCPInstanceUnitPrice(cpInstance),
+			fetchCPInstanceUnitPromoPrice(cpInstance));
 	}
 
 	@Override
@@ -892,6 +947,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		return true;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPInstanceHelperImpl.class);
+
 	@Reference
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
 
@@ -900,6 +958,15 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Reference
 	private CommerceMediaResolver _commerceMediaResolver;
+
+	@Reference
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
+
+	@Reference
+	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Reference
+	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
 	@Reference
 	private CommerceProductViewPermission _commerceProductViewPermission;

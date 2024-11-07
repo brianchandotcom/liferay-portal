@@ -143,9 +143,7 @@ test('can see calendar event inputs alerts', async ({
 	calendarWidgetPage,
 	page,
 }) => {
-	await calendarWidgetPage.addEventButton.click();
-
-	await page.waitForLoadState('networkidle');
+	await calendarWidgetPage.clickAddEventButton();
 
 	await calendarWidgetPage.startDate.fill('');
 

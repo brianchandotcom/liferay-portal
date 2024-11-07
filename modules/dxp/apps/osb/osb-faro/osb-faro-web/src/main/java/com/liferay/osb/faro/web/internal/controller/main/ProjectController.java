@@ -580,6 +580,8 @@ public class ProjectController extends BaseFaroController {
 	@Path("/{groupId}")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
 	public void patch(
+			@DefaultValue(StringPool.BLANK) @FormParam("corpProjectName") String
+				corpProjectName,
 			@DefaultValue(StringPool.BLANK) @FormParam("corpProjectUuid") String
 				corpProjectUuid,
 			@PathParam("groupId") long groupId,
@@ -589,6 +591,10 @@ public class ProjectController extends BaseFaroController {
 
 		FaroProject faroProject =
 			faroProjectLocalService.getFaroProjectByGroupId(groupId);
+
+		if (!Validator.isBlank(corpProjectName)) {
+			faroProject.setCorpProjectName(corpProjectName);
+		}
 
 		if (!Validator.isBlank(corpProjectUuid)) {
 			faroProject.setCorpProjectUuid(corpProjectUuid);

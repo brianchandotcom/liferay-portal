@@ -1,0 +1,206 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.layout.page.template.internal.upgrade.v5_7_1.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.provider.LayoutStructureProvider;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Igor Costa
+ */
+@RunWith(Arquillian.class)
+public class LayoutPageTemplateStructureRelUpgradeProcessTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+		_group = GroupTestUtil.addGroup();
+
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_objectDefinitionLocalService.deleteObjectDefinition(_objectDefinition);
+
+		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testUpgrade() throws Exception {
+		String key = StringBundler.concat(
+			"com.liferay.object.web.internal.info.collection.provider.",
+			"ObjectEntrySingleFormVariationInfoCollectionProvider_",
+			TestPropsValues.getCompanyId(), "_", _objectDefinition.getName());
+
+		ContentLayoutTestUtil.addCollectionDisplayToLayout(
+			JSONUtil.put(
+				"itemSubtype",
+				String.valueOf(_objectDefinition.getObjectDefinitionId())
+			).put(
+				"itemType", _objectDefinition.getClassName()
+			).put(
+				"key", key
+			).put(
+				"type", InfoListProviderItemSelectorReturnType.class.getName()
+			),
+			_layout, _layoutStructureProvider, null, null, 0,
+			_segmentsExperienceId);
+
+		Assert.assertEquals(key, _getLayoutPageTemplateStructureDataKey());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.OFF)) {
+
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator, _CLASS_NAME);
+
+			upgradeProcess.upgrade();
+
+			_entityCache.clearCache();
+			_multiVMPool.clear();
+		}
+
+		Assert.assertEquals(
+			_objectDefinition.getClassName(),
+			_getLayoutPageTemplateStructureDataKey());
+	}
+
+	private String _getLayoutPageTemplateStructureDataKey() throws Exception {
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_layout.getGroupId(), _layout.getPlid());
+
+		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(
+			layoutPageTemplateStructure.getData(_segmentsExperienceId));
+
+		JSONObject itemsJSONObject = dataJSONObject.getJSONObject("items");
+
+		for (String key : itemsJSONObject.keySet()) {
+			JSONObject itemJSONObject = itemsJSONObject.getJSONObject(key);
+
+			if (!StringUtil.equals(
+					itemJSONObject.getString("type"),
+					LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
+
+				continue;
+			}
+
+			JSONObject configJSONObject = itemJSONObject.getJSONObject(
+				"config");
+
+			JSONObject collectionJSONObject = configJSONObject.getJSONObject(
+				"collection");
+
+			if (StringUtil.equals(
+					collectionJSONObject.getString("itemSubtype"),
+					String.valueOf(
+						_objectDefinition.getObjectDefinitionId()))) {
+
+				return collectionJSONObject.getString("key");
+			}
+		}
+
+		return null;
+	}
+
+	private static final String _CLASS_NAME =
+		"com.liferay.layout.page.template.internal.upgrade.v5_7_1." +
+			"LayoutPageTemplateStructureRelUpgradeProcess";
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
+	)
+	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private EntityCache _entityCache;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	private Layout _layout;
+
+	@Inject
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
+
+	private ObjectDefinition _objectDefinition;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private long _segmentsExperienceId;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+}

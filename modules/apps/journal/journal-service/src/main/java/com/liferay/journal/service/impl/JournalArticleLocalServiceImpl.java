@@ -1989,6 +1989,53 @@ public class JournalArticleLocalServiceImpl
 			groupId, externalReferenceCode, orderByComparator);
 	}
 
+	/**
+	 * Returns the latest web content article matching the group, the
+	 * external reference code and the status.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  externalReferenceCode the web content article's external
+	 *         reference code
+	 * @param  status the web content article's workflow status. For more
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
+	 * @param  preferApproved whether to prefer returning the latest matching
+	 *         article that has workflow status {@link
+	 *         WorkflowConstants#STATUS_APPROVED} over returning one that has a
+	 *         different status
+	 * @return the latest matching web content article, or <code>null</code> if
+	 *         no matching web content article could be found
+	 */
+	@Override
+	public JournalArticle fetchLatestArticleByExternalReferenceCode(
+		long groupId, String externalReferenceCode, int status,
+		boolean preferApproved) {
+
+		JournalArticle article = null;
+
+		OrderByComparator<JournalArticle> orderByComparator =
+			ArticleVersionComparator.getInstance(false);
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			if (preferApproved) {
+				article = journalArticlePersistence.fetchByG_ERC_ST_First(
+					groupId, externalReferenceCode,
+					WorkflowConstants.STATUS_APPROVED, orderByComparator);
+			}
+
+			if (article == null) {
+				article = journalArticlePersistence.fetchByG_ERC_First(
+					groupId, externalReferenceCode, orderByComparator);
+			}
+		}
+		else {
+			article = journalArticlePersistence.fetchByG_ERC_ST_First(
+				groupId, externalReferenceCode, status, orderByComparator);
+		}
+
+		return article;
+	}
+
 	@Override
 	public JournalArticle fetchLatestArticleByUrlTitle(
 		long groupId, String urlTitle, int status) {
@@ -3513,6 +3560,74 @@ public class JournalArticleLocalServiceImpl
 
 		return journalArticlePersistence.findByG_ERC_First(
 			groupId, externalReferenceCode, orderByComparator);
+	}
+
+	/**
+	 * Returns the latest web content article matching the group, the
+	 * external reference code and the status.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  externalReferenceCode the web content article's external
+	 *         reference code
+	 * @param  status the web content article's workflow status. For more
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
+	 * @param  preferApproved whether to prefer returning the latest matching
+	 *         article that has workflow status {@link
+	 *         WorkflowConstants#STATUS_APPROVED} over returning one that has a
+	 *         different status
+	 * @return the latest matching web content article
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public JournalArticle getLatestArticleByExternalReferenceCode(
+			long groupId, String externalReferenceCode, int status,
+			boolean preferApproved)
+		throws PortalException {
+
+		List<JournalArticle> articles = null;
+
+		OrderByComparator<JournalArticle> orderByComparator =
+			ArticleVersionComparator.getInstance(false);
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			if (preferApproved) {
+				articles = journalArticlePersistence.findByG_ERC_ST(
+					groupId, externalReferenceCode,
+					WorkflowConstants.STATUS_APPROVED, 0, 1, orderByComparator);
+			}
+
+			if (ListUtil.isEmpty(articles)) {
+				articles = journalArticlePersistence.findByG_ERC(
+					groupId, externalReferenceCode, 0, 1, orderByComparator);
+			}
+		}
+		else {
+			articles = journalArticlePersistence.findByG_ERC_ST(
+				groupId, externalReferenceCode, status, 0, 1,
+				orderByComparator);
+		}
+
+		if (articles.isEmpty()) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("No JournalArticle exists with the key {");
+
+			sb.append("groupId=");
+			sb.append(groupId);
+
+			sb.append(", externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", status=");
+			sb.append(status);
+
+			sb.append("}");
+
+			throw new NoSuchArticleException(sb.toString());
+		}
+
+		return articles.get(0);
 	}
 
 	/**

@@ -955,43 +955,45 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		StringBundler sb = new StringBundler(
 			(2 * resolvedPrimaryKeys.size()) + 9);
 
-		sb.append("update ");
-		sb.append(ctPersistence.getTableName());
-		sb.append(" set ctCollectionId = ");
-		sb.append(tempCTCollectionId);
-		sb.append(" where ctCollectionId = ");
-		sb.append(_sourceCTCollectionId);
-		sb.append(" and ");
-		sb.append(primaryKeyName);
-		sb.append(" in (");
-
 		int i = 0;
 
-		for (long primaryKey : resolvedPrimaryKeys) {
-			if (i == _BATCH_SIZE) {
-				sb.setStringAt(")", sb.index() - 1);
-				sb.append(" or ");
-				sb.append(primaryKeyName);
-				sb.append(" in (");
+		while (i < resolvedPrimaryKeys.size()) {
+			int batchSize = _BATCH_SIZE;
 
-				i = 0;
+			if ((i + batchSize) > resolvedPrimaryKeys.size()) {
+				batchSize = resolvedPrimaryKeys.size() - i;
 			}
 
-			sb.append(primaryKey);
-			sb.append(", ");
+			List<Long> batchPrimaryKeys = resolvedPrimaryKeys.subList(
+				i, i + batchSize);
 
-			i++;
-		}
+			sb.append("update ");
+			sb.append(ctPersistence.getTableName());
+			sb.append(" set ctCollectionId = ");
+			sb.append(tempCTCollectionId);
+			sb.append(" where ctCollectionId = ");
+			sb.append(_sourceCTCollectionId);
+			sb.append(" and ");
+			sb.append(primaryKeyName);
+			sb.append(" in (");
 
-		sb.setStringAt(")", sb.index() - 1);
+			for (Long primaryKey : batchPrimaryKeys) {
+				sb.append(primaryKey);
+				sb.append(", ");
+			}
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
+			sb.setStringAt(")", sb.index() - 1);
 
-			preparedStatement.executeUpdate();
-		}
-		catch (SQLException sqlException) {
-			throw new ORMException(sqlException);
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(sb.toString())) {
+
+				preparedStatement.executeUpdate();
+			}
+			catch (SQLException sqlException) {
+				throw new ORMException(sqlException);
+			}
+
+			i += batchSize;
 		}
 
 		for (long primaryKey : resolvedPrimaryKeys) {
@@ -1002,43 +1004,45 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		ctPersistence.clearCache(new HashSet<>(resolvedPrimaryKeys));
 
-		sb = new StringBundler();
-
-		sb.append("delete from ");
-		sb.append(ctPersistence.getTableName());
-		sb.append(" where ctCollectionId = ");
-		sb.append(tempCTCollectionId);
-		sb.append(" and ");
-		sb.append(primaryKeyName);
-		sb.append(" in (");
-
 		i = 0;
 
-		for (long primaryKey : resolvedPrimaryKeys) {
-			if (i == _BATCH_SIZE) {
-				sb.setStringAt(")", sb.index() - 1);
-				sb.append(" or ");
-				sb.append(primaryKeyName);
-				sb.append(" in (");
+		while (i < resolvedPrimaryKeys.size()) {
+			int batchSize = _BATCH_SIZE;
 
-				i = 0;
+			if ((i + batchSize) > resolvedPrimaryKeys.size()) {
+				batchSize = resolvedPrimaryKeys.size() - i;
 			}
 
-			sb.append(primaryKey);
-			sb.append(", ");
+			List<Long> batchPrimaryKeys = resolvedPrimaryKeys.subList(
+				i, i + batchSize);
 
-			i++;
-		}
+			sb = new StringBundler();
 
-		sb.setStringAt(")", sb.index() - 1);
+			sb.append("delete from ");
+			sb.append(ctPersistence.getTableName());
+			sb.append(" where ctCollectionId = ");
+			sb.append(tempCTCollectionId);
+			sb.append(" and ");
+			sb.append(primaryKeyName);
+			sb.append(" in (");
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
+			for (Long primaryKey : batchPrimaryKeys) {
+				sb.append(primaryKey);
+				sb.append(", ");
+			}
 
-			preparedStatement.executeUpdate();
-		}
-		catch (SQLException sqlException) {
-			throw new ORMException(sqlException);
+			sb.setStringAt(")", sb.index() - 1);
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(sb.toString())) {
+
+				preparedStatement.executeUpdate();
+			}
+			catch (SQLException sqlException) {
+				throw new ORMException(sqlException);
+			}
+
+			i += batchSize;
 		}
 	}
 

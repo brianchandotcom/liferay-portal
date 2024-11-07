@@ -5,6 +5,8 @@
 
 package com.liferay.segments.manager;
 
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,11 +31,19 @@ public class SegmentsExperienceManager {
 
 	public long getSegmentsExperienceId(HttpServletRequest httpServletRequest) {
 		long segmentsExperienceId = ParamUtil.getLong(
-			PortalUtil.getOriginalServletRequest(
-				httpServletRequest),
+			PortalUtil.getOriginalServletRequest(httpServletRequest),
 			"segmentsExperienceId", -1);
 
-		if (segmentsExperienceId != -1) {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if ((segmentsExperienceId != -1) &&
+			permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId())) {
+
 			return segmentsExperienceId;
 		}
 
@@ -44,10 +54,6 @@ public class SegmentsExperienceManager {
 		if (ArrayUtil.isNotEmpty(segmentsExperienceIds)) {
 			return segmentsExperienceIds[0];
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
 			return _segmentsExperienceLocalService.

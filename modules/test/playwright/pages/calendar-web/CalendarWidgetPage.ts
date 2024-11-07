@@ -101,7 +101,7 @@ export class CalendarWidgetPage {
 	}
 
 	async addEvent(allDay: boolean, dateEnd: string, title: string) {
-		await this.addEventButton.click();
+		await this.clickAddEventButton();
 
 		await this.allDayCheckbox.hover();
 		await this.allDayCheckbox.setChecked(allDay);
@@ -128,6 +128,13 @@ export class CalendarWidgetPage {
 	async closeModalEvent() {
 		await this.page.getByRole('button', {name: 'Close'}).click();
 	}
+
+	async clickAddEventButton() {
+		await this.addEventButton.click();
+
+		await this.page.waitForLoadState('networkidle');
+	}
+
 	async clickEvent(title: string) {
 		await this.page.getByText(title).click();
 	}
@@ -136,7 +143,7 @@ export class CalendarWidgetPage {
 		allDay: boolean,
 		recurrence: Recurrence
 	) {
-		await this.addEventButton.click();
+		await this.clickAddEventButton();
 
 		await this.allDayCheckbox.hover();
 		await this.allDayCheckbox.setChecked(allDay);
@@ -151,7 +158,7 @@ export class CalendarWidgetPage {
 	}: {
 		daysFromNow: number;
 	}) {
-		await this.addEventButton.click();
+		await this.clickAddEventButton();
 
 		await this.repeatCheckbox.setChecked(true);
 

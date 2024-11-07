@@ -112,9 +112,9 @@ public class CISystemStatusReportUtil {
 
 		List<Callable<File>> callables = new ArrayList<>();
 
-		List<File> buildReportJSONGzFiles = _getBuildReportJSONGzFiles(jobName);
+		List<File> buildReportJSONFiles = _getBuildReportJSONFiles(jobName);
 
-		for (final File buildReportJSONFile : buildReportJSONGzFiles) {
+		for (final File buildReportJSONFile : buildReportJSONFiles) {
 			callables.add(
 				new Callable<File>() {
 
@@ -229,8 +229,8 @@ public class CISystemStatusReportUtil {
 		return decimalFormat.format(quotient);
 	}
 
-	private static List<File> _getBuildReportJSONGzFiles(String jobName) {
-		List<File> buildReportJSONGzFiles = new ArrayList<>();
+	private static List<File> _getBuildReportJSONFiles(String jobName) {
+		List<File> buildReportJSONFiles = new ArrayList<>();
 
 		for (String dateString : _dateStrings) {
 			File testrayLogsDateDir = new File(_TESTRAY_LOGS_DIR, dateString);
@@ -278,13 +278,13 @@ public class CISystemStatusReportUtil {
 				continue;
 			}
 
-			for (String buildReportJSONGzFilePath : output.split("\n")) {
-				buildReportJSONGzFiles.add(
-					new File(_TESTRAY_LOGS_DIR, buildReportJSONGzFilePath));
+			for (String buildReportJSONFilePath : output.split("\n")) {
+				buildReportJSONFiles.add(
+					new File(_TESTRAY_LOGS_DIR, buildReportJSONFilePath));
 			}
 		}
 
-		return buildReportJSONGzFiles;
+		return buildReportJSONFiles;
 	}
 
 	private static JSONObject _getDownstreamBuildDurationJSONObject() {

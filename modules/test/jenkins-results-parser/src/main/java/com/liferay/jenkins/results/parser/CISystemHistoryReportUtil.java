@@ -87,15 +87,15 @@ public class CISystemHistoryReportUtil {
 
 		final List<DurationReport> durationReports = _getDurationReports();
 
-		List<File> buildReportJSONGzFiles = _getBuildReportJSONGzFiles(
+		List<File> buildReportJSONFiles = _getBuildReportJSONFiles(
 			jobName, dateString);
 
 		List<Callable<File>> callables = new ArrayList<>();
 
 		System.out.println(
-			"Processing " + buildReportJSONGzFiles.size() + " files");
+			"Processing " + buildReportJSONFiles.size() + " files");
 
-		for (final File buildReportJSONFile : buildReportJSONGzFiles) {
+		for (final File buildReportJSONFile : buildReportJSONFiles) {
 			callables.add(
 				new Callable<File>() {
 
@@ -162,15 +162,12 @@ public class CISystemHistoryReportUtil {
 			callables, _executorService, "WriteDateDurationsJavaScript");
 
 		try {
-			List<File> completedJenkinsConsoleGzFiles =
-				parallelExecutor.execute();
+			List<File> completedBuildReportFiles = parallelExecutor.execute();
 
-			completedJenkinsConsoleGzFiles.removeAll(
-				Collections.singleton(null));
+			completedBuildReportFiles.removeAll(Collections.singleton(null));
 
 			System.out.println(
-				"Processed " + completedJenkinsConsoleGzFiles.size() +
-					" files");
+				"Processed " + completedBuildReportFiles.size() + " files");
 		}
 		catch (TimeoutException timeoutException) {
 			throw new RuntimeException(timeoutException);
@@ -243,15 +240,15 @@ public class CISystemHistoryReportUtil {
 		}
 	}
 
-	private static List<File> _getBuildReportJSONGzFiles(
+	private static List<File> _getBuildReportJSONFiles(
 		String jobName, String dateString) {
 
-		List<File> buildReportJSONGzFiles = new ArrayList<>();
+		List<File> buildReportJSONFiles = new ArrayList<>();
 
 		File testrayLogsDateDir = new File(_TESTRAY_LOGS_DIR, dateString);
 
 		if (!testrayLogsDateDir.exists()) {
-			return buildReportJSONGzFiles;
+			return buildReportJSONFiles;
 		}
 
 		Process process;
@@ -265,13 +262,13 @@ public class CISystemHistoryReportUtil {
 					"/*/build-report.json"));
 		}
 		catch (IOException | TimeoutException exception) {
-			return buildReportJSONGzFiles;
+			return buildReportJSONFiles;
 		}
 
 		int exitValue = process.exitValue();
 
 		if (exitValue != 0) {
-			return buildReportJSONGzFiles;
+			return buildReportJSONFiles;
 		}
 
 		String output = null;
@@ -285,19 +282,19 @@ public class CISystemHistoryReportUtil {
 			output = output.trim();
 		}
 		catch (IOException ioException) {
-			return buildReportJSONGzFiles;
+			return buildReportJSONFiles;
 		}
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(output)) {
-			return buildReportJSONGzFiles;
+			return buildReportJSONFiles;
 		}
 
-		for (String buildReportJSONGzFilePath : output.split("\n")) {
-			buildReportJSONGzFiles.add(
-				new File(_TESTRAY_LOGS_DIR, buildReportJSONGzFilePath));
+		for (String buildReportJSONFilePath : output.split("\n")) {
+			buildReportJSONFiles.add(
+				new File(_TESTRAY_LOGS_DIR, buildReportJSONFilePath));
 		}
 
-		return buildReportJSONGzFiles;
+		return buildReportJSONFiles;
 	}
 
 	private static List<DurationReport> _getDurationReports() {

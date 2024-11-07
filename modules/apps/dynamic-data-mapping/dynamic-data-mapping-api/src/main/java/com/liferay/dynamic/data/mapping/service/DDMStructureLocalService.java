@@ -82,23 +82,6 @@ public interface DDMStructureLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure addDDMStructure(DDMStructure ddmStructure);
 
-	@Indexable(type = IndexableType.REINDEX)
-	public DDMStructure addStructure(
-			long userId, long groupId, long parentStructureId, long classNameId,
-			String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, DDMForm ddmForm,
-			DDMFormLayout ddmFormLayout, String storageType, int type,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public DDMStructure addStructure(
-			long userId, long groupId, long parentStructureId, long classNameId,
-			String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String definition,
-			String storageType, ServiceContext serviceContext)
-		throws PortalException;
-
 	public DDMStructure addStructure(
 			long userId, long groupId, long classNameId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -111,6 +94,24 @@ public interface DDMStructureLocalService
 			long classNameId, String structureKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, DDMForm ddmForm,
 			DDMFormLayout ddmFormLayout, String storageType, int type,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public DDMStructure addStructure(
+			String externalReferenceCode, long userId, long groupId,
+			long parentStructureId, long classNameId, String structureKey,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			DDMForm ddmForm, DDMFormLayout ddmFormLayout, String storageType,
+			int type, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public DDMStructure addStructure(
+			String externalReferenceCode, long userId, long groupId,
+			long parentStructureId, long classNameId, String structureKey,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String definition, String storageType,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -411,6 +412,10 @@ public interface DDMStructureLocalService
 		boolean includeAncestorStructures);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMStructure fetchStructureByExternalReferenceCode(
+		String externalReferenceCode, long groupId, long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructure fetchStructureByUuidAndGroupId(
 		String uuid, long groupId, boolean includeAncestorStructures);
 
@@ -628,6 +633,11 @@ public interface DDMStructureLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructure> getStructure(
 		long groupId, String name, String description);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMStructure getStructureByExternalReferenceCode(
+			String externalReferenceCode, long groupId, long classNameId)
+		throws PortalException;
 
 	@Transactional(enabled = false)
 	public DDMForm getStructureDDMForm(DDMStructure structure)
@@ -1042,7 +1052,8 @@ public interface DDMStructureLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure updateStructure(
-			long userId, long structureId, long parentStructureId,
+			String externalReferenceCode, long userId, long structureId,
+			long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String definition,
 			ServiceContext serviceContext)

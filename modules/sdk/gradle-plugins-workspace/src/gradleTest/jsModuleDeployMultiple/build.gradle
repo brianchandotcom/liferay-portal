@@ -1,0 +1,10 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn project.getTasksByName("deploy", true)
+
+	doLast {
+		assert project.file("bundles/deploy/testWidget1-1.0.0.jar").exists()
+		assert project.file("bundles/deploy/testWidget2-1.0.0.jar").exists()
+	}
+}

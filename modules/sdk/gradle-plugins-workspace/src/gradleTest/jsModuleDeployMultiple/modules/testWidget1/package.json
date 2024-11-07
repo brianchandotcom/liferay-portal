@@ -1,0 +1,19 @@
+{
+	"dependencies": {
+		"react": "16.8.6",
+		"react-dom": "16.8.6"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.0.0",
+		"@babel/core": "^7.0.0",
+		"@babel/preset-env": "^7.0.0",
+		"@babel/preset-react": "^7.0.0",
+		"liferay-npm-bundler": "2.30.0"
+	},
+	"main": "index.es.js",
+	"name": "testWidget1",
+	"scripts": {
+		"build": "babel --source-maps -d build src && liferay-npm-bundler"
+	},
+	"version": "1.0.0"
+}

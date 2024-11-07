@@ -88,6 +88,66 @@
 	},
 	{
 		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:RaylifeApplication$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:RaylifeApplication$]",
+		"roleName": "Underwriter",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:RaylifeClaim$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:RaylifePolicy$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:RaylifeQuote$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:RaylifeSalesGoal$]",
+		"roleName": "Producer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"MANAGE_ORGANIZATIONS"
 		],
 		"primKey": "0",
@@ -398,66 +458,6 @@
 		"primKey": "0",
 		"resourceName": "com_liferay_commerce_subscription_web_internal_portlet_CommerceSubscriptionEntryPortlet",
 		"roleName": "Operations Manager",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:RaylifeApplication$]",
-		"roleName": "Producer",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:RaylifeApplication$]",
-		"roleName": "Underwriter",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:RaylifeClaim$]",
-		"roleName": "Producer",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:RaylifePolicy$]",
-		"roleName": "Producer",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:RaylifeQuote$]",
-		"roleName": "Producer",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:RaylifeSalesGoal$]",
-		"roleName": "Producer",
 		"scope": "1"
 	}
 ]

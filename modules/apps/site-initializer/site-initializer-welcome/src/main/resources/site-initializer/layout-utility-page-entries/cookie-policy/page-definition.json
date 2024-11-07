@@ -258,7 +258,7 @@
 															"widgetInstance": {
 																"widgetConfig": {
 																},
-																"widgetName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:NecessaryCookieEntry$]"
+																"widgetName": "[$OBJECT_DEFINITION_PORTLET_ID:NecessaryCookieEntry$]"
 															}
 														},
 														"type": "Widget"
@@ -376,7 +376,7 @@
 															"widgetInstance": {
 																"widgetConfig": {
 																},
-																"widgetName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:FunctionalCookieEntry$]"
+																"widgetName": "[$OBJECT_DEFINITION_PORTLET_ID:FunctionalCookieEntry$]"
 															}
 														},
 														"type": "Widget"
@@ -494,7 +494,7 @@
 															"widgetInstance": {
 																"widgetConfig": {
 																},
-																"widgetName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:PerformanceCookieEntry$]"
+																"widgetName": "[$OBJECT_DEFINITION_PORTLET_ID:PerformanceCookieEntry$]"
 															}
 														},
 														"type": "Widget"
@@ -613,7 +613,7 @@
 															"widgetInstance": {
 																"widgetConfig": {
 																},
-																"widgetName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:PersonalizationCookieEntry$]"
+																"widgetName": "[$OBJECT_DEFINITION_PORTLET_ID:PersonalizationCookieEntry$]"
 															}
 														},
 														"type": "Widget"

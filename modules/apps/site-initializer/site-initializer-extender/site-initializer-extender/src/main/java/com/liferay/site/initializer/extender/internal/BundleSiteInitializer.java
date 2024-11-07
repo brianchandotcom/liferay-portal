@@ -115,6 +115,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFolderResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -1173,15 +1174,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceBuilderObjectDefinition :
 					serviceBuilderObjectDefinitions) {
 
-			stringUtilReplaceValues.put(
-				"OBJECT_DEFINITION_CLASS_NAME:" +
-					serviceBuilderObjectDefinition.getShortName(),
-				serviceBuilderObjectDefinition.getClassName());
-			stringUtilReplaceValues.put(
-				"OBJECT_DEFINITION_ID:" +
-					serviceBuilderObjectDefinition.getShortName(),
-				String.valueOf(
-					serviceBuilderObjectDefinition.getObjectDefinitionId()));
+			_replaceObjectDefinitionValues(
+				serviceBuilderObjectDefinition.getClassName(),
+				serviceBuilderObjectDefinition.getObjectDefinitionId(),
+				serviceBuilderObjectDefinition.getName(),
+				stringUtilReplaceValues);
 		}
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -1245,12 +1242,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 						existingObjectDefinition.getId(), objectDefinition);
 			}
 
-			stringUtilReplaceValues.put(
-				"OBJECT_DEFINITION_CLASS_NAME:" + objectDefinition.getName(),
-				objectDefinition.getClassName());
-			stringUtilReplaceValues.put(
-				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
-				String.valueOf(objectDefinition.getId()));
+			_replaceObjectDefinitionValues(
+				objectDefinition.getClassName(), objectDefinition.getId(),
+				objectDefinition.getName(), stringUtilReplaceValues);
 		}
 	}
 
@@ -5686,6 +5680,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private String _replace(String s, String oldSub, String newSub) {
 		return StringUtil.replace(s, oldSub, newSub);
+	}
+
+	private void _replaceObjectDefinitionValues(
+		String objectDefinitionClassName, long objectDefinitionId,
+		String objectDefinitionName,
+		Map<String, String> stringUtilReplaceValues) {
+
+		stringUtilReplaceValues.put(
+			"OBJECT_DEFINITION_CLASS_NAME:" + objectDefinitionName,
+			objectDefinitionClassName);
+		stringUtilReplaceValues.put(
+			"OBJECT_DEFINITION_ID:" + objectDefinitionName,
+			String.valueOf(objectDefinitionId));
+
+		if (!objectDefinitionName.contains(StringPool.POUND)) {
+			return;
+		}
+
+		stringUtilReplaceValues.put(
+			"OBJECT_DEFINITION_PORTLET_ID:" + objectDefinitionName,
+			ObjectPortletKeys.OBJECT_DEFINITIONS +
+				StringUtil.split(objectDefinitionClassName, StringPool.POUND)
+					[1]);
 	}
 
 	private void _setDefaultLayoutUtilityPageEntries(

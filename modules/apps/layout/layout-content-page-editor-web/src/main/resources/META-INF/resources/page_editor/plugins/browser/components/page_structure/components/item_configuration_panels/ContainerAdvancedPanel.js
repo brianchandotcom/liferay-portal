@@ -23,7 +23,6 @@ const HTML_TAGS = [
 	'nav',
 	'section',
 	'article',
-	'main',
 	'aside',
 	'footer',
 ];

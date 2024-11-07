@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.util.ArrayList;
@@ -75,7 +74,6 @@ public class FriendlyURLResolverRegistryUtil {
 		SystemBundleUtil.getBundleContext();
 	private static final ServiceTrackerList<FriendlyURLResolver>
 		_serviceTrackerList = ServiceTrackerListFactory.open(
-			_bundleContext, FriendlyURLResolver.class,
-			new PropertyServiceReferenceComparator<>("service.ranking"));
+			_bundleContext, FriendlyURLResolver.class);
 
 }

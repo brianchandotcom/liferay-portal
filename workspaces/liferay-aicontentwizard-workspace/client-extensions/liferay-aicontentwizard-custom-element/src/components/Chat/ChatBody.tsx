@@ -46,7 +46,7 @@ export default function ChatBody({
 			buttonProps={{
 				onClick: () => {
 					Liferay.Util.navigate(
-						`/group/liferay-aicontentwizard/~/control_panel/manage?p_p_id=com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_${Liferay.ThemeDisplay.getCompanyId()}_LXC_liferay_content_wizard_settings_custom_element#/create`
+						`/group/guest/~/control_panel/manage?p_p_id=com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_${Liferay.ThemeDisplay.getCompanyId()}_LXC_liferay_aicontentwizard_custom_element_settings#/create`
 					);
 
 					onClose();

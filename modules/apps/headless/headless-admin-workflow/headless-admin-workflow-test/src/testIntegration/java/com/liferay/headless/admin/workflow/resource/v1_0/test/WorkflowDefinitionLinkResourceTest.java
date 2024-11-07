@@ -46,9 +46,6 @@ public class WorkflowDefinitionLinkResourceTest
 			PermissionCheckerFactoryUtil.create(
 				UserLocalServiceUtil.getUser(TestPropsValues.getUserId())));
 
-		_objectDefinition =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition();
-
 		String name = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
 
@@ -59,6 +56,9 @@ public class WorkflowDefinitionLinkResourceTest
 				RandomTestUtil.randomString(), "workflow-definition.xml",
 				name),
 			StringPool.BLANK, 1, ServiceContextTestUtil.getServiceContext());
+
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 	}
 
 	@Override

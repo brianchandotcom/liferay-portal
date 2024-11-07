@@ -10,6 +10,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -49,9 +50,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Carolina Barbosa
@@ -164,13 +162,12 @@ public class ExportTaskResourceTest {
 					"BatchEngineExportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
-			String objectDefinitionRESTContextPath =
-				_objectDefinition1.getRESTContextPath();
-
-			ObjectEntryTestUtil.addObjectEntry(
+			ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 				_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "TestObject1");
-			ObjectEntryTestUtil.addObjectEntry(
+
+			ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 				_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "TestObject2");
+
 			ObjectEntryTestUtil.addObjectEntry(
 				_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "Object3");
 
@@ -178,11 +175,12 @@ public class ExportTaskResourceTest {
 				StringBundler.concat(
 					"contains(", _OBJECT_FIELD_NAME_TEXT, ", 'Test')"));
 
-			String queryParametersString =
-				"restrictFields=actions&filter=" + encodedFilterString;
+			String queryParametersString = "filter=" + encodedFilterString;
 
 			JSONObject jsonObject = _testPostExportTask(
 				_objectDefinition1, queryParametersString);
+
+			Assert.assertEquals(2, jsonObject.getInt("processedItemsCount"));
 
 			InputStream inputStream = HTTPTestUtil.invokeToInputStream(
 				null,
@@ -196,21 +194,22 @@ public class ExportTaskResourceTest {
 
 			zipInputStream.getNextEntry();
 
-			String responseString = StringUtil.read(zipInputStream);
+			JSONArray responseJSONArray = _jsonFactory.createJSONArray(
+				StringUtil.read(zipInputStream));
 
-			JSONObject filteredPageJSONObject = HTTPTestUtil.invokeToJSONObject(
-				null,
-				StringBundler.concat(
-					objectDefinitionRESTContextPath, "/?",
-					queryParametersString),
-				Http.Method.GET);
+			JSONObject objectEntry1JSONObject =
+				(JSONObject)responseJSONArray.get(0);
 
-			JSONArray itemsJSONArray = filteredPageJSONObject.getJSONArray(
-				"items");
+			Assert.assertEquals(
+				objectEntry1.getExternalReferenceCode(),
+				objectEntry1JSONObject.get("externalReferenceCode"));
 
-			JSONAssert.assertEquals(
-				itemsJSONArray.toString(), responseString,
-				JSONCompareMode.LENIENT);
+			JSONObject objectEntry2JSONObject =
+				(JSONObject)responseJSONArray.get(1);
+
+			Assert.assertEquals(
+				objectEntry2.getExternalReferenceCode(),
+				objectEntry2JSONObject.get("externalReferenceCode"));
 		}
 	}
 
@@ -260,10 +259,10 @@ public class ExportTaskResourceTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	private ObjectDefinition _objectDefinition1;
-
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	private ObjectDefinition _objectDefinition1;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

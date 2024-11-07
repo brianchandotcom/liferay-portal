@@ -30,7 +30,7 @@
 					).claim(
 						"external_id", String.valueOf(user.getUserId())
 					).claim(
-						"name", user.getScreenName()
+						"name", user.getFullName()
 					).claim(
 						"scope", "user"
 					).signWith(

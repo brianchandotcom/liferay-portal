@@ -49,6 +49,8 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 <liferay-frontend:fieldset
 	collapsed="<%= false %>"
 	collapsible="<%= true %>"
+	cssClass='<%= (selLayout.getMasterLayoutPlid() > 0) ? "hide" : StringPool.BLANK %>'
+	id='<%= liferayPortletResponse.getNamespace() + "customCSS" %>'
 	label="custom-css"
 >
 	<clay:alert

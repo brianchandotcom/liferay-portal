@@ -31,10 +31,12 @@ import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,9 +64,33 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 			keepCreatorInfo = true;
 		}
+		Map<String, Serializable> parameters =
+			batchEngineImportTask.getParameters();
+
+		Serializable restrictedFieldNamesParam = parameters.get(
+			"restrictedFieldNames");
+
+		Set<String> restrictedFieldNames = new HashSet<>();
+
+		if (restrictedFieldNamesParam instanceof String) {
+			String restrictedFieldNamesStr = (String)restrictedFieldNamesParam;
+
+			String[] restrictedFieldNamesArray = restrictedFieldNamesStr.split(
+				",");
+
+			for (String fieldName : restrictedFieldNamesArray) {
+				restrictedFieldNames.add(fieldName.trim());
+			}
+		}
 
 		for (Map.Entry<String, Object> entry : fieldNameValueMap.entrySet()) {
 			String name = entry.getKey();
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-35944") &&
+				restrictedFieldNames.contains(name)) {
+
+				continue;
+			}
 
 			Field field = null;
 

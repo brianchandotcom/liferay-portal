@@ -8,11 +8,13 @@ package com.liferay.journal.content.web.internal.portlet.listener;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletConfigurationListener;
 import com.liferay.portal.kernel.portlet.PortletConfigurationListenerException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -51,8 +53,16 @@ public class JournalContentPortletConfigurationListener
 			portletPreferences.reset("portletSetupUseCustomTitle");
 
 			if (_resetValues(portletPreferences)) {
-				portletPreferences.reset("articleId");
-				portletPreferences.reset("assetEntryId");
+				if (FeatureFlagManagerUtil.isEnabled(
+						CompanyThreadLocal.getCompanyId(), "LPD-27566")) {
+
+					portletPreferences.reset("articleExternalReferenceCode");
+				}
+				else {
+					portletPreferences.reset("articleId");
+					portletPreferences.reset("assetEntryId");
+				}
+
 				portletPreferences.reset("ddmTemplateKey");
 				portletPreferences.reset("groupId");
 			}

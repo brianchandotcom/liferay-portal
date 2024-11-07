@@ -15,6 +15,7 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -202,7 +203,27 @@ public class JournalContentPortletLayoutListener
 
 		long groupId = GetterUtil.getLong(
 			portletPreferences.getValue("groupId", null));
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				layout.getCompanyId(), "LPD-27566")) {
+
+			String articleExternalReferenceCode = portletPreferences.getValue(
+				"articleExternalReferenceCode", null);
+
+			if (articleExternalReferenceCode == null) {
+				return null;
+			}
+
+			return _journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					groupId, articleExternalReferenceCode);
+		}
+
 		String articleId = portletPreferences.getValue("articleId", null);
+
+		if (articleId == null) {
+			return null;
+		}
 
 		return _journalArticleLocalService.fetchArticle(groupId, articleId);
 	}

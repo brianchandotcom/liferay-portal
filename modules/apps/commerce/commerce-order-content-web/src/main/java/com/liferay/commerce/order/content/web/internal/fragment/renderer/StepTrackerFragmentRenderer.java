@@ -53,7 +53,7 @@ public class StepTrackerFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		return FeatureFlagManagerUtil.isEnabled("LPD-20379");
+		return FeatureFlagManagerUtil.isEnabled("COMMERCE-9410");
 	}
 
 	@Override

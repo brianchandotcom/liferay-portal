@@ -10,7 +10,6 @@ import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
 
@@ -28,9 +27,7 @@ public class CommerceOrderInfoItemCapabilitiesProvider
 
 	@Override
 	public List<InfoItemCapability> getInfoItemCapabilities() {
-		if ((CompanyThreadLocal.getCompanyId() > 0) &&
-			FeatureFlagManagerUtil.isEnabled("LPD-20379")) {
-
+		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-9410")) {
 			return ListUtil.fromArray(
 				_displayPageInfoItemCapability, _templateInfoItemCapability);
 		}

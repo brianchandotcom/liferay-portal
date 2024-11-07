@@ -71,14 +71,15 @@ public interface ImportTaskResource {
 	public ImportTask postImportTask(
 			String className, String callbackURL, String createStrategy,
 			String externalReferenceCode, String fieldNameMapping,
-			String importStrategy, String taskItemDelegateName, Object object)
+			String importStrategy, String restrictedFieldNames,
+			String taskItemDelegateName, Object object)
 		throws Exception;
 
 	public ImportTask postImportTask(
 			String className, String callbackURL, String createStrategy,
 			String externalReferenceCode, String fieldNameMapping,
-			String importStrategy, String taskItemDelegateName,
-			MultipartBody multipartBody)
+			String importStrategy, String restrictedFieldNames,
+			String taskItemDelegateName, MultipartBody multipartBody)
 		throws Exception;
 
 	public ImportTask putImportTask(

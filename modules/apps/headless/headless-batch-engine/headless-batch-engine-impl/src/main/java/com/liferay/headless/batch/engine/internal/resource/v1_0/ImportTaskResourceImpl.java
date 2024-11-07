@@ -169,8 +169,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	public ImportTask postImportTask(
 			String className, String callbackURL, String createStrategy,
 			String externalReferenceCode, String fieldNameMapping,
-			String importStrategy, String taskItemDelegateName,
-			MultipartBody multipartBody)
+			String restrictedFieldNames, String importStrategy,
+			String taskItemDelegateName, MultipartBody multipartBody)
 		throws Exception {
 
 		return _importFile(
@@ -184,7 +184,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	public ImportTask postImportTask(
 			String className, String callbackURL, String createStrategy,
 			String externalReferenceCode, String fieldNameMapping,
-			String importStrategy, String taskItemDelegateName, Object object)
+			String importStrategy, String restrictedFieldNames,
+			String taskItemDelegateName, Object object)
 		throws Exception {
 
 		String contentType = contextHttpServletRequest.getHeader(

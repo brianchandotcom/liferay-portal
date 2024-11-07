@@ -20,16 +20,16 @@ export default class AIWizardContentOAuth2 extends OAuth2Client {
 			...options,
 			headers: {
 				'Content-Type': 'application/json',
-				'Language-Id': Liferay.ThemeDisplay.getLanguageId(),
-				'Scope-Group-Id':
-					Liferay.ThemeDisplay.getScopeGroupId().toString(),
 			},
 		});
 	}
 
-	async generate(data: unknown) {
+	async generate(data: any) {
 		return this.fetch('/ai/generate', {
-			body: JSON.stringify(data),
+			body: JSON.stringify({
+				...data,
+				siteId: Liferay.ThemeDisplay.getScopeGroupId(),
+			}),
 			method: 'POST',
 		}) as unknown as Promise<{output: string}>;
 	}

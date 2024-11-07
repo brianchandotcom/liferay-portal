@@ -169,12 +169,11 @@ public class ExpandoColumnUpgradeProcessTest {
 		com.liferay.scim.rest.client.dto.v1_0.User user =
 			new com.liferay.scim.rest.client.dto.v1_0.User() {
 				{
-					active = RandomTestUtil.randomBoolean();
+					active = true;
 					displayName = StringUtil.toLowerCase(
 						RandomTestUtil.randomString());
 					externalId = StringUtil.toLowerCase(
 						RandomTestUtil.randomString());
-					id = StringUtil.toLowerCase(RandomTestUtil.randomString());
 					locale = StringUtil.toLowerCase(
 						RandomTestUtil.randomString());
 					nickName = StringUtil.toLowerCase(
@@ -196,7 +195,6 @@ public class ExpandoColumnUpgradeProcessTest {
 				}
 			};
 
-		user.setActive(true);
 		user.setEmails(
 			new MultiValuedAttribute[] {
 				new MultiValuedAttribute() {
@@ -207,7 +205,6 @@ public class ExpandoColumnUpgradeProcessTest {
 					}
 				}
 			});
-		user.setId((String)null);
 		user.setName(
 			new Name() {
 				{

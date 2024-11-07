@@ -212,13 +212,60 @@ public class DisplayPageTemplateResourceTest
 			testGetSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate()
 		throws Exception {
 
-		super.testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate();
+		DisplayPageTemplate postDisplayPageTemplate =
+			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplate_addDisplayPageTemplate(
+				randomDisplayPageTemplate());
+
+		Assert.assertNull(postDisplayPageTemplate.getParentFolder());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), testGroup.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					ServiceContextTestUtil.getServiceContext(
+						testGroup, TestPropsValues.getUserId()));
+
+		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+			postDisplayPageTemplate.getExternalReferenceCode(),
+			new DisplayPageTemplateFolder() {
+				{
+					setExternalReferenceCode(
+						layoutPageTemplateCollection.
+							getExternalReferenceCode());
+				}
+			},
+			Boolean.FALSE);
+		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+			postDisplayPageTemplate.getExternalReferenceCode(), null,
+			Boolean.FALSE);
+		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+			postDisplayPageTemplate.getExternalReferenceCode(), null,
+			Boolean.TRUE);
+
+		try {
+			displayPageTemplateResource.
+				patchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					RandomTestUtil.randomString(), randomDisplayPageTemplate());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
 	}
 
 	@Override
@@ -374,6 +421,56 @@ public class DisplayPageTemplateResourceTest
 					});
 			}
 		};
+	}
+
+	private void _testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+			String displayPageTemplateExternalReferenceCode,
+			DisplayPageTemplateFolder displayPageTemplateFolder,
+			Boolean markedAsDefault)
+		throws Exception {
+
+		DisplayPageTemplate getDisplayPageTemplate =
+			displayPageTemplateResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplateExternalReferenceCode);
+
+		DisplayPageTemplate randomDisplayPageTemplate =
+			randomDisplayPageTemplate();
+
+		randomDisplayPageTemplate.setExternalReferenceCode(
+			displayPageTemplateExternalReferenceCode);
+		randomDisplayPageTemplate.setMarkedAsDefault(markedAsDefault);
+		randomDisplayPageTemplate.setParentFolder(displayPageTemplateFolder);
+
+		DisplayPageTemplate patchDisplayPageTemplate =
+			displayPageTemplateResource.
+				patchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplateExternalReferenceCode,
+					randomDisplayPageTemplate);
+
+		assertEquals(randomDisplayPageTemplate, patchDisplayPageTemplate);
+		assertValid(patchDisplayPageTemplate);
+
+		if (displayPageTemplateFolder == null) {
+			displayPageTemplateFolder =
+				getDisplayPageTemplate.getParentFolder();
+		}
+
+		DisplayPageTemplateFolder curDisplayPageTemplateFolder =
+			patchDisplayPageTemplate.getParentFolder();
+
+		Assert.assertEquals(
+			displayPageTemplateFolder.getExternalReferenceCode(),
+			curDisplayPageTemplateFolder.getExternalReferenceCode());
+
+		if (markedAsDefault == null) {
+			markedAsDefault = getDisplayPageTemplate.getMarkedAsDefault();
+		}
+
+		Assert.assertEquals(
+			markedAsDefault, patchDisplayPageTemplate.getMarkedAsDefault());
 	}
 
 	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithParentFolder()

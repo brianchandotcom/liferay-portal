@@ -76,6 +76,8 @@ public class PortalInstancesConfigurationFactory {
 							portalInstancesConfiguration.adminFirstName(),
 							portalInstancesConfiguration.adminMiddleName(),
 							portalInstancesConfiguration.adminLastName()));
+
+					_portalInstancesLocalService.synchronizePortalInstances();
 				}
 				else {
 					if (company.getCompanyId() ==
@@ -89,8 +91,6 @@ public class PortalInstancesConfigurationFactory {
 						company.getCompanyId(), virtualHostname, mx, maxUsers,
 						active);
 				}
-
-				_portalInstancesLocalService.synchronizePortalInstances();
 
 				return null;
 			});

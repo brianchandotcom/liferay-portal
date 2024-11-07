@@ -117,8 +117,6 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		_companyService.updateCompany(
 			companyId, virtualHostname, mx, maxUsers, active);
-
-		_portalInstancesLocalService.synchronizePortalInstances();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

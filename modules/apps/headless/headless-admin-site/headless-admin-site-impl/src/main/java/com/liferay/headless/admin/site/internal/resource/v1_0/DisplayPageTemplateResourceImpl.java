@@ -191,6 +191,17 @@ public class DisplayPageTemplateResourceImpl
 				displayPageTemplate.getName()));
 	}
 
+	@Override
+	protected void preparePatch(
+		DisplayPageTemplate displayPageTemplate,
+		DisplayPageTemplate existingDisplayPageTemplate) {
+
+		if (displayPageTemplate.getParentFolder() != null) {
+			existingDisplayPageTemplate.setParentFolder(
+				displayPageTemplate::getParentFolder);
+		}
+	}
+
 	private DisplayPageTemplate _addDisplayPageTemplate(
 			DisplayPageTemplate displayPageTemplate, Group group)
 		throws Exception {

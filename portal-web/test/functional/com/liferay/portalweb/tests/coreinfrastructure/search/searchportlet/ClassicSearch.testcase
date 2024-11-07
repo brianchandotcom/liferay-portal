@@ -6,7 +6,7 @@ definition {
 	property osgi.module.configurations = "classicSearchPortletInFrontPage=\"true\"";
 	property osgi.modules.includes = "wiki";
 	property portal.release = "false";
-	property portal.suite.search.engine = "elasticsearch7,solr";
+	property portal.suite.search.engine = "elasticsearch7,opensearch2,solr";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Web Search";
 

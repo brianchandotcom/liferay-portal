@@ -5,7 +5,7 @@ definition {
 	property elasticsearch.multiple.connections = "true";
 	property minimum.slave.ram = "24";
 	property portal.release = "true";
-	property portal.suite.search.engine = "elasticsearch7";
+	property portal.suite.search.engine = "elasticsearch7,opensearch2";
 	property portal.upstream = "true";
 	property remote.elasticsearch.enabled = "true";
 	property search.environment.suite.exclude = "true";

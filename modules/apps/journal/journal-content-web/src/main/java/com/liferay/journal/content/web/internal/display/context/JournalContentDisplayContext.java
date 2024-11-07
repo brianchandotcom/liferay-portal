@@ -180,6 +180,18 @@ public class JournalContentDisplayContext {
 							getArticleExternalReferenceCode(),
 							WorkflowConstants.STATUS_ANY, true);
 
+				if (_article == null) {
+					return _article;
+				}
+
+				JournalArticleResource articleResource =
+					JournalArticleResourceLocalServiceUtil.fetchArticleResource(
+						_article.getGroupId(), _article.getArticleId());
+
+				if (articleResource == null) {
+					_article = null;
+				}
+
 				return _article;
 			}
 
@@ -583,18 +595,35 @@ public class JournalContentDisplayContext {
 		PortletPreferences portletPreferences =
 			_portletRequest.getPreferences();
 
-		long assetEntryId = GetterUtil.getLong(
-			portletPreferences.getValue("assetEntryId", StringPool.BLANK));
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-27566")) {
+			long assetEntryId = GetterUtil.getLong(
+				portletPreferences.getValue("assetEntryId", StringPool.BLANK));
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
-			assetEntryId);
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
+				assetEntryId);
 
-		if (assetEntry == null) {
+			if (assetEntry == null) {
+				return null;
+			}
+
+			return JournalArticleLocalServiceUtil.fetchLatestArticle(
+				assetEntry.getClassPK());
+		}
+
+		String articleExternalReferenceCode = portletPreferences.getValue(
+			"articleExternalReferenceCode", null);
+
+		long groupId = GetterUtil.getLong(
+			portletPreferences.getValue("groupId", null));
+
+		if ((articleExternalReferenceCode == null) || (groupId == 0)) {
 			return null;
 		}
 
-		return JournalArticleLocalServiceUtil.fetchLatestArticle(
-			assetEntry.getClassPK());
+		return JournalArticleLocalServiceUtil.
+			fetchLatestArticleByExternalReferenceCode(
+				groupId, articleExternalReferenceCode,
+				WorkflowConstants.STATUS_ANY, true);
 	}
 
 	public String getURLEdit() {

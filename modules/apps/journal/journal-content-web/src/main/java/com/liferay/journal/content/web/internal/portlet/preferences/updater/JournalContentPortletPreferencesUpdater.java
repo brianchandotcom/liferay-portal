@@ -15,6 +15,7 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.portlet.preferences.updater.PortletPreferencesUpdater;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -57,10 +58,19 @@ public class JournalContentPortletPreferencesUpdater
 
 		portletPreferences.setValue(
 			"groupId", String.valueOf(article.getGroupId()));
-		portletPreferences.setValue("articleId", article.getArticleId());
 
-		portletPreferences.setValue(
-			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-27566")) {
+
+			portletPreferences.setValue(
+				"articleExternalReferenceCode",
+				article.getExternalReferenceCode());
+		}
+		else {
+			portletPreferences.setValue("articleId", article.getArticleId());
+			portletPreferences.setValue(
+				"assetEntryId", String.valueOf(assetEntry.getEntryId()));
+		}
 
 		_addLayoutClassedModelUsage(
 			themeDisplay.getLayout(), portletId, article);

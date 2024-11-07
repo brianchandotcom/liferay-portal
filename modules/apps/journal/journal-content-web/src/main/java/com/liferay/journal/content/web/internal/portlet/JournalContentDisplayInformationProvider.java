@@ -7,12 +7,18 @@ package com.liferay.journal.content.web.internal.portlet;
 
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.DisplayInformationProvider;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -31,7 +37,39 @@ public class JournalContentDisplayInformationProvider
 
 	@Override
 	public String getClassPK(PortletPreferences portletPreferences) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-27566")) {
+
+			String articleExternalReferenceCode = portletPreferences.getValue(
+				"articleExternalReferenceCode", StringPool.BLANK);
+
+			if (Validator.isNull(articleExternalReferenceCode)) {
+				return StringPool.BLANK;
+			}
+
+			long groupId = GetterUtil.getLong(
+				portletPreferences.getValue("groupId", null));
+
+			if (groupId == 0) {
+				return StringPool.BLANK;
+			}
+
+			JournalArticle article =
+				_journalArticleLocalService.
+					fetchLatestArticleByExternalReferenceCode(
+						groupId, articleExternalReferenceCode);
+
+			if (article == null) {
+				return StringPool.BLANK;
+			}
+
+			return article.getArticleId();
+		}
+
 		return portletPreferences.getValue("articleId", StringPool.BLANK);
 	}
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

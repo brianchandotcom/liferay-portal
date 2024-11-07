@@ -153,6 +153,66 @@ test.describe('General configuration', () => {
 
 		await expect(modal.getByText('Sites and Libraries')).not.toBeVisible();
 	});
+
+	test(
+		'Custom CSS should be hide if a master page is selected',
+		{
+			tag: '@LPD-41497',
+		},
+		async ({
+			apiHelpers,
+			page,
+			pageConfigurationPage,
+			pagesAdminPage,
+			site,
+		}) => {
+
+			// Add master page
+
+			const layoutPageTemplateEntryName = getRandomString();
+
+			const masterPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+					{
+						groupId: site.id,
+						name: layoutPageTemplateEntryName,
+						type: 'master-layout',
+					}
+				);
+
+			// Create a layout
+
+			const layoutTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				masterLayoutPlid: masterPage.plid,
+				title: layoutTitle,
+			});
+
+			// Assert custom css is hide
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
+
+			await expect(
+				page.getByRole('textbox', {exact: true, name: 'CSS'})
+			).not.toBeVisible();
+
+			// Change master to blank and assert custom css is show
+
+			await pageConfigurationPage.selectMasterLayout('Blank');
+
+			await expect(page.getByLabel('Master', {exact: true})).toHaveValue(
+				'Blank'
+			);
+
+			await expect(
+				page.getByRole('textbox', {exact: true, name: 'CSS'})
+			).toBeVisible();
+		}
+	);
 });
 
 test.describe('Page types configuration', () => {

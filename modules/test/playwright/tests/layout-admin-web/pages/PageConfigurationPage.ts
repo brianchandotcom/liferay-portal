@@ -6,6 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -58,6 +59,17 @@ export class PageConfigurationPage {
 			this.page,
 			'Success:The page was updated successfully.'
 		);
+	}
+
+	async selectMasterLayout(name: string) {
+		await this.page.getByLabel('Change Master').click();
+
+		const iframe = this.page.frameLocator('iframe[title="Select Master"]');
+
+		await clickAndExpectToBeHidden({
+			target: this.page.locator('.modal-dialog'),
+			trigger: iframe.getByRole('button', {name: `Select ${name}`}),
+		});
 	}
 
 	async setCanonicalURL(canonicalURL: string) {

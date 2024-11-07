@@ -7,7 +7,6 @@ package com.liferay.commerce.order.content.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceReturnConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -772,10 +771,9 @@ public class CommerceReturnContentDisplayContext {
 		}
 
 		return PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				_cpRequestHelper.getRequest(),
-				CommercePortletKeys.COMMERCE_ORDER_CONTENT,
-				PortletRequest.RENDER_PHASE)
+			PortletProviderUtil.getPortletURL(
+				_cpRequestHelper.getRequest(), CommerceOrder.class.getName(),
+				PortletProvider.Action.VIEW)
 		).setMVCRenderCommandName(
 			"/commerce_order_content/view_returnable_commerce_order_items"
 		).setParameter(

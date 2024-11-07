@@ -5,11 +5,14 @@
 
 package com.liferay.sharing.web.internal.display;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 /**
  * @author Sergio González
@@ -47,8 +50,13 @@ public enum SharingEntryPermissionDisplayAction {
 		return _actionId;
 	}
 
-	public String getDescriptionKey() {
-		return _descriptionKey;
+	public String getDescription(
+		String className, ResourceBundle resourceBundle) {
+
+		return LanguageUtil.get(
+			resourceBundle,
+			StringBundler.concat(_descriptionKey, "[", className, "]"),
+			LanguageUtil.get(resourceBundle, _descriptionKey));
 	}
 
 	public List<SharingEntryAction> getSharingEntryActions() {
@@ -64,8 +72,8 @@ public enum SharingEntryPermissionDisplayAction {
 	}
 
 	private SharingEntryPermissionDisplayAction(
-		String actionId, String titleKey, String descriptionKey, String verbKey,
-		SharingEntryAction... sharingEntryActions) {
+		String actionId, String titleKey, String descriptionKey,
+		String verbKey,	SharingEntryAction... sharingEntryActions) {
 
 		_actionId = actionId;
 		_titleKey = titleKey;

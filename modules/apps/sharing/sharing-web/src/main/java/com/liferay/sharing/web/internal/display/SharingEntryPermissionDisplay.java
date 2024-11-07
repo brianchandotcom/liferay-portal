@@ -99,9 +99,8 @@ public class SharingEntryPermissionDisplay {
 
 		_enabled = enabled;
 
-		_description = LanguageUtil.get(
-			resourceBundle,
-			sharingEntryPermissionDisplayAction.getDescriptionKey());
+		_description = sharingEntryPermissionDisplayAction.getDescription(
+			className, resourceBundle);
 		_phrase = LanguageUtil.format(
 			resourceBundle, "can-x",
 			sharingEntryPermissionDisplayAction.getVerbKey());

@@ -38,10 +38,14 @@ export class DataSetsPage {
 		this.apiHelpers = new ApiHelpers(page);
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.basePath = 'data-set-admin/entries';
-		this.customDataSetsTab = page.locator('.nav-item').filter({hasText: 'Custom Data Sets'});
+		this.customDataSetsTab = page
+			.locator('.nav-item')
+			.filter({hasText: 'Custom Data Sets'});
 		this.dataSetsEmptyState = page.locator('.c-empty-state');
 		this.dataSetsTable = page.locator('.data-set > div:nth-child(2)');
-		this.dataSetsTabs = page.locator('.navbar-nav').filter({hasText: 'Custom Data SetsSystem Data Sets'});
+		this.dataSetsTabs = page
+			.locator('.navbar-nav')
+			.filter({hasText: 'Custom Data SetsSystem Data Sets'});
 		this.newDataSetButton = page.getByLabel('New Data Set').first();
 		this.newDataSetModal = {
 			cancel: page.getByRole('button', {name: 'Cancel'}),
@@ -63,7 +67,9 @@ export class DataSetsPage {
 		};
 		this.page = page;
 		this.pageContainer = page.locator('.data-sets');
-		this.systemDataSetsTab = page.locator('.nav-item').filter({hasText: 'System Data Sets'});
+		this.systemDataSetsTab = page
+			.locator('.nav-item')
+			.filter({hasText: 'System Data Sets'});
 	}
 
 	async createDataSet({
@@ -117,9 +123,12 @@ export class DataSetsPage {
 	async goto(dataSetsType: string = 'Custom Data Sets') {
 		await this.applicationsMenuPage.goToDataSetManager();
 
-		if (await this.dataSetsTabs.isVisible() && dataSetsType === 'System Data Sets') {
+		if (
+			(await this.dataSetsTabs.isVisible()) &&
+			dataSetsType === 'System Data Sets'
+		) {
 			await this.systemDataSetsTab.click();
-			await this.page.locator('.system-data-sets').waitFor();			
+			await this.page.locator('.system-data-sets').waitFor();
 		}
 		else {
 			await this.pageContainer.waitFor();

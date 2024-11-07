@@ -130,7 +130,8 @@ export default function TopperItemActions({disabled, item}) {
 
 		if (
 			Liferay.FeatureFlags['LPD-18221'] &&
-			canBeRemoved(item, layoutData)
+			canBeRemoved(item, layoutData) &&
+			!isStepper(fragmentEntryLinks[item.config.fragmentEntryLinkId])
 		) {
 			items.push({
 				action: () => {

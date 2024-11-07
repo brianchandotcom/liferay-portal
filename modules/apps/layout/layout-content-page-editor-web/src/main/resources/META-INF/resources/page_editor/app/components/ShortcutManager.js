@@ -47,6 +47,7 @@ import canBeRenamed from '../utils/canBeRenamed';
 import canBeSaved from '../utils/canBeSaved';
 import isCtrlOrMeta from '../utils/isCtrlOrMeta';
 import {isMovementValid} from '../utils/isMovementValid';
+import isStepper from '../utils/isStepper';
 import toMovementItem from '../utils/toMovementItem';
 import updateItemStyle from '../utils/updateItemStyle';
 import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
@@ -141,14 +142,11 @@ export default function ShortcutManager() {
 					!isEditingEditableField() &&
 					!isTextSelected() &&
 					canUpdatePageStructure &&
-					activeItemIds.every(
-						(activeItemId) =>
-							!!layoutData.items[activeItemId] &&
-							canBeRemoved(
-								layoutData.items[activeItemId],
-								layoutData
-							) &&
-							!isInteractiveElement(event.target)
+					!isInteractiveElement(event.target) &&
+					itemsAreCuttable(
+						activeItemIds,
+						fragmentEntryLinks,
+						layoutData
 					),
 				isKeyCombination: (event) =>
 					isCtrlOrMeta(event) && event.code === X_KEY_CODE,
@@ -411,6 +409,24 @@ function getSelectableParent(layoutData, item) {
 	}
 
 	return getSelectableParent(parentItem);
+}
+
+function itemsAreCuttable(itemIds, fragmentEntryLinks, layoutData) {
+	for (const itemId of itemIds) {
+		const item = layoutData.items[itemId];
+
+		if (!item || !canBeRemoved(item, layoutData)) {
+			return false;
+		}
+
+		const fragment = fragmentEntryLinks[item.config.fragmentEntryLinkId];
+
+		if (fragment && isStepper(fragment)) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 function isEditableField(element) {

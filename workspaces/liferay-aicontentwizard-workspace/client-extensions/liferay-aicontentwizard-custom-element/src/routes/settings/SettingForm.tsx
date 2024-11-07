@@ -53,8 +53,12 @@ export default function SettingsBody() {
 
 	const navigate = useNavigate();
 	const aiWizardOAuth2 = useAIWizardContentOAuth2();
-	const {data: models = []} = useListTypeDefinition('AIWIZARD_MODELS');
-	const {data: providers = []} = useListTypeDefinition('AIWIZARD_PROVIDERS');
+	const {data: models = []} = useListTypeDefinition(
+		'K9L6_AI_CONTENT_WIZARD_MODELS'
+	);
+	const {data: providers = []} = useListTypeDefinition(
+		'K9L6_AI_CONTENT_WIZARD_PROVIDERS'
+	);
 
 	const active = form.watch('active');
 	const imageModel = form.watch('imageModel') || '';

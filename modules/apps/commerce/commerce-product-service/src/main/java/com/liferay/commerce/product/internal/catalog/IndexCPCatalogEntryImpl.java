@@ -14,6 +14,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -33,11 +34,13 @@ public class IndexCPCatalogEntryImpl implements CPCatalogEntry {
 	public IndexCPCatalogEntryImpl(
 		Document document, CPDefinitionLocalService cpDefinitionLocalService,
 		CPDefinitionOptionRelLocalService cpDefinitionOptionRelLocalService,
+		CPInstanceHelper cpInstanceHelper,
 		CPInstanceLocalService cpInstanceLocalService, Locale locale) {
 
 		_document = document;
 		_cpDefinitionLocalService = cpDefinitionLocalService;
 		_cpDefinitionOptionRelLocalService = cpDefinitionOptionRelLocalService;
+		_cpInstanceHelper = cpInstanceHelper;
 		_cpInstanceLocalService = cpInstanceLocalService;
 		_locale = locale;
 	}
@@ -76,7 +79,12 @@ public class IndexCPCatalogEntryImpl implements CPCatalogEntry {
 				QueryUtil.ALL_POS, null);
 
 		for (CPInstance cpInstance : cpInstances) {
-			cpSkus.add(new CPSkuImpl(cpInstance));
+			cpSkus.add(
+				new CPSkuImpl(
+					cpInstance,
+					_cpInstanceHelper.fetchCPInstanceUnitPrice(cpInstance),
+					_cpInstanceHelper.fetchCPInstanceUnitPromoPrice(
+						cpInstance)));
 		}
 
 		return cpSkus;
@@ -146,6 +154,7 @@ public class IndexCPCatalogEntryImpl implements CPCatalogEntry {
 	private final CPDefinitionLocalService _cpDefinitionLocalService;
 	private final CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
+	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPInstanceLocalService _cpInstanceLocalService;
 	private final Document _document;
 	private final Locale _locale;

@@ -253,4 +253,14 @@ test('can update an event with recurrence', async ({
 	await calendarWidgetPage.publishEvent({recurrenceOption: 'Entire Series'});
 
 	await expect(calendarWidgetPage.successAlert).toBeVisible();
+
+	await calendarWidgetPage.repeatCheckbox.setChecked(false);
+
+	await calendarWidgetPage.repeatCheckbox.setChecked(true);
+
+	await modalRecurrencePage.doneButton.nth(1).click();
+
+	await calendarWidgetPage.publishEvent({recurrenceOption: 'Single Event'});
+
+	await expect(calendarWidgetPage.successAlert).toBeVisible();
 });

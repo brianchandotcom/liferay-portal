@@ -19,16 +19,16 @@ public class AccountRoleResourceUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_updatePermission(
+		_updateResourceAction(
 			AccountActionKeys.UPDATE_ORGANIZATIONS, "EDIT_ORGANIZATIONS");
-		_updatePermission(
+		_updateResourceAction(
 			ActionKeys.UPDATE_SUBORGANIZATIONS, "EDIT_SUBORGANIZATIONS");
-		_updatePermission(
+		_updateResourceAction(
 			AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS,
 			"EDIT_SUBORGANIZATIONS_ACCOUNTS");
 	}
 
-	private boolean _hasPermission(String name) throws Exception {
+	private boolean _hasResourceAction(String name) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(*) from ResourceAction where actionId = ?")) {
 
@@ -48,14 +48,14 @@ public class AccountRoleResourceUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _updatePermission(String newName, String oldName)
+	private void _updateResourceAction(String newName, String oldName)
 		throws Exception {
 
-		if (!_hasPermission(oldName)) {
+		if (!_hasResourceAction(oldName)) {
 			return;
 		}
 
-		if (_hasPermission(newName)) {
+		if (_hasResourceAction(newName)) {
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"delete from ResourceAction where actionId = ?")) {

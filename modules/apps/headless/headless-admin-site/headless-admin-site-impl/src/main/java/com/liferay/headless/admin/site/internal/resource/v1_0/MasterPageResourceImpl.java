@@ -18,11 +18,15 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -110,6 +114,45 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			siteExternalReferenceCode, contextCompany.getCompanyId());
 
 		return _addMasterPage(group, masterPage);
+	}
+
+	@Override
+	public MasterPage putSiteSiteByExternalReferenceCodeMasterPage(
+			String siteExternalReferenceCode,
+			String masterPageExternalReferenceCode, MasterPage masterPage)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					masterPageExternalReferenceCode, group.getGroupId());
+
+		if (layoutPageTemplateEntry == null) {
+			return _addMasterPage(group, masterPage);
+		}
+
+		if (Validator.isNotNull(masterPage.getMarkedAsDefault()) &&
+			!Objects.equals(
+				GetterUtil.getBoolean(masterPage.getMarkedAsDefault()),
+				layoutPageTemplateEntry.isDefaultTemplate())) {
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					GetterUtil.getBoolean(masterPage.getMarkedAsDefault()));
+		}
+
+		return _masterPageDTOConverter.toDTO(
+			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				masterPage.getName()));
 	}
 
 	private MasterPage _addMasterPage(Group group, MasterPage masterPage)

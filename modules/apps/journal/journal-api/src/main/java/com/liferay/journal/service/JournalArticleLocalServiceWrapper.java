@@ -941,6 +941,33 @@ public class JournalArticleLocalServiceWrapper
 				groupId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the latest web content article matching the group, the
+	 * external reference code and the status.
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param externalReferenceCode the web content article's external
+	 reference code
+	 * @param status the web content article's workflow status. For more
+	 information see {@link WorkflowConstants} for constants starting
+	 with the "STATUS_" prefix.
+	 * @param preferApproved whether to prefer returning the latest matching
+	 article that has workflow status {@link
+	 WorkflowConstants#STATUS_APPROVED} over returning one that has a
+	 different status
+	 * @return the latest matching web content article, or <code>null</code> if
+	 no matching web content article could be found
+	 */
+	@Override
+	public JournalArticle fetchLatestArticleByExternalReferenceCode(
+		long groupId, String externalReferenceCode, int status,
+		boolean preferApproved) {
+
+		return _journalArticleLocalService.
+			fetchLatestArticleByExternalReferenceCode(
+				groupId, externalReferenceCode, status, preferApproved);
+	}
+
 	@Override
 	public JournalArticle fetchLatestArticleByUrlTitle(
 		long groupId, String urlTitle, int status) {
@@ -2208,6 +2235,34 @@ public class JournalArticleLocalServiceWrapper
 		return _journalArticleLocalService.
 			getLatestArticleByExternalReferenceCode(
 				groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the latest web content article matching the group, the
+	 * external reference code and the status.
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param externalReferenceCode the web content article's external
+	 reference code
+	 * @param status the web content article's workflow status. For more
+	 information see {@link WorkflowConstants} for constants starting
+	 with the "STATUS_" prefix.
+	 * @param preferApproved whether to prefer returning the latest matching
+	 article that has workflow status {@link
+	 WorkflowConstants#STATUS_APPROVED} over returning one that has a
+	 different status
+	 * @return the latest matching web content article
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public JournalArticle getLatestArticleByExternalReferenceCode(
+			long groupId, String externalReferenceCode, int status,
+			boolean preferApproved)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _journalArticleLocalService.
+			getLatestArticleByExternalReferenceCode(
+				groupId, externalReferenceCode, status, preferApproved);
 	}
 
 	/**

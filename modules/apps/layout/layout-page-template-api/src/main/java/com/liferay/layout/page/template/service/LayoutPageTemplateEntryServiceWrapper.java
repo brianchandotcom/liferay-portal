@@ -146,6 +146,17 @@ public class LayoutPageTemplateEntryServiceWrapper
 	}
 
 	@Override
+	public LayoutPageTemplateEntry
+			fetchLayoutPageTemplateEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateEntryService.
+			fetchLayoutPageTemplateEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
+	@Override
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByUuidAndGroupId(
 		String uuid, long groupId) {
 

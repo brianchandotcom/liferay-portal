@@ -21,19 +21,6 @@ import java.nio.charset.StandardCharsets;
  */
 public class TestrayS3Object {
 
-	public static File getDecompressedFile(File file) {
-		File parentDir = file.getParentFile();
-
-		String fileName = file.getName();
-
-		if (fileName.endsWith(".gz")) {
-			return new File(
-				parentDir, fileName.substring(0, fileName.length() - 3));
-		}
-
-		return file;
-	}
-
 	public void delete() {
 		_blob.delete();
 	}
@@ -43,8 +30,6 @@ public class TestrayS3Object {
 	}
 
 	public void downloadTo(File file, boolean replaceExisting) {
-		file = getDecompressedFile(file);
-
 		if (replaceExisting || !file.exists()) {
 			File parentDir = file.getParentFile();
 

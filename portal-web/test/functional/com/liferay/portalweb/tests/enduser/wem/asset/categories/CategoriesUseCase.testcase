@@ -661,6 +661,8 @@ definition {
 	@description = "This is a test for LPS-187080. Changing the category filter 'Vocabulary' setting from 'All' to 'Filter' may not work properly."
 	@priority = 3
 	test FilterCategoryFilterByVocabularies {
+		property custom.properties = "feature.flag.LPD-27566=true";
+
 		task ("Given a user has a Category Filter widget on a content page") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

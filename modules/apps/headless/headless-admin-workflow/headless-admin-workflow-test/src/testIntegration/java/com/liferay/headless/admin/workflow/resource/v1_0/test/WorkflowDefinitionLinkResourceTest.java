@@ -49,15 +49,15 @@ public class WorkflowDefinitionLinkResourceTest
 		_objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
-		String workflowDefinitionName = StringUtil.toLowerCase(
+		String name = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
 
 		_kaleoDefinition = KaleoDefinitionLocalServiceUtil.addKaleoDefinition(
-			RandomTestUtil.randomString(), workflowDefinitionName,
+			RandomTestUtil.randomString(), name,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			WorkflowDefinitionTestUtil.getContent(
 				RandomTestUtil.randomString(), "workflow-definition.xml",
-				workflowDefinitionName),
+				name),
 			StringPool.BLANK, 1, ServiceContextTestUtil.getServiceContext());
 	}
 

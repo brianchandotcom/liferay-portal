@@ -6,24 +6,26 @@
 package com.liferay.headless.admin.workflow.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinitionLink;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowDefinitionTestUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalServiceUtil;
 
 import java.util.Collections;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
@@ -47,24 +49,16 @@ public class WorkflowDefinitionLinkResourceTest
 		_objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
-		_workflowDefinition =
-			WorkflowDefinitionTestUtil.addWorkflowDefinition();
-	}
+		String workflowDefinitionName = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
 
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		if (_objectDefinition != null) {
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				_objectDefinition.getObjectDefinitionId());
-		}
-
-		if (_workflowDefinition != null) {
-			_kaleoDefinitionLocalService.deleteKaleoDefinition(
-				_workflowDefinition.getId());
-		}
+		_kaleoDefinition = KaleoDefinitionLocalServiceUtil.addKaleoDefinition(
+			RandomTestUtil.randomString(), workflowDefinitionName,
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			WorkflowDefinitionTestUtil.getContent(
+				RandomTestUtil.randomString(), "workflow-definition.xml",
+				workflowDefinitionName),
+			StringPool.BLANK, 1, ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Override
@@ -96,7 +90,7 @@ public class WorkflowDefinitionLinkResourceTest
 			testGetWorkflowDefinitionByExternalReferenceCodeWorkflowDefinitionLinksPage_getExternalReferenceCode()
 		throws Exception {
 
-		return _workflowDefinition.getExternalReferenceCode();
+		return _kaleoDefinition.getExternalReferenceCode();
 	}
 
 	@Override
@@ -113,7 +107,7 @@ public class WorkflowDefinitionLinkResourceTest
 			testGetWorkflowDefinitionWorkflowDefinitionLinksPage_getWorkflowDefinitionId()
 		throws Exception {
 
-		return _workflowDefinition.getId();
+		return _kaleoDefinition.getKaleoDefinitionId();
 	}
 
 	@Override
@@ -124,16 +118,14 @@ public class WorkflowDefinitionLinkResourceTest
 
 		return workflowDefinitionLinkResource.
 			postWorkflowDefinitionWorkflowDefinitionLink(
-				_workflowDefinition.getId(), workflowDefinitionLink);
+				_kaleoDefinition.getKaleoDefinitionId(),
+				workflowDefinitionLink);
 	}
 
-	private static ObjectDefinition _objectDefinition;
-	private static WorkflowDefinition _workflowDefinition;
+	@DeleteAfterTestRun
+	private KaleoDefinition _kaleoDefinition;
 
-	@Inject
-	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
-
-	@Inject
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition;
 
 }

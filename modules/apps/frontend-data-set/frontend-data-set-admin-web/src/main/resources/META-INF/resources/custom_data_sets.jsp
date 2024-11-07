@@ -13,7 +13,7 @@ portletDisplay.setBeta(true);
 
 <div>
 	<react:component
-		module="{DataSets} from frontend-data-set-admin-web"
+		module="{CustomDataSets} from frontend-data-set-admin-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"editDataSetURL", fdsAdminDisplayContext.getEditDataSetURL()

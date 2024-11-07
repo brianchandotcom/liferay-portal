@@ -9,35 +9,6 @@ import React from 'react';
 import '../css/DataSets.scss';
 import {FDS_DEFAULT_PROPS} from './utils/constants';
 
-export interface IDataSet {
-	actions: {
-		delete: {
-			href: string;
-			method: string;
-		};
-		update: {
-			href: string;
-			method: string;
-		};
-	};
-	additionalAPIURLParameters?: string;
-	creationActionsOrder?: string;
-	defaultItemsPerPage: number;
-	defaultVisualizationMode?: string;
-	description?: string;
-	externalReferenceCode: string;
-	filtersOrder?: string;
-	id: string;
-	itemActionsOrder?: string;
-	label: string;
-	listOfItemsPerPage: string;
-	restApplication: string;
-	restEndpoint: string;
-	restSchema: string;
-	sortsOrder?: string;
-	tableSectionsOrder?: string;
-}
-
 const SystemDataSets = ({namespace}: {namespace: string}) => {
 	const views = [
 		{

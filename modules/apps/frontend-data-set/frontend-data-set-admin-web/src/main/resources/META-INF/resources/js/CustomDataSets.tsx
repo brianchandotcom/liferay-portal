@@ -27,37 +27,10 @@ import {
 } from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
+import {IDataSet} from './utils/types';
 
 const LIST_OF_ITEMS_PER_PAGE = '4, 8, 20, 40, 60';
 const DEFAULT_ITEMS_PER_PAGE = 20;
-export interface IDataSet {
-	actions: {
-		delete: {
-			href: string;
-			method: string;
-		};
-		update: {
-			href: string;
-			method: string;
-		};
-	};
-	additionalAPIURLParameters?: string;
-	creationActionsOrder?: string;
-	defaultItemsPerPage: number;
-	defaultVisualizationMode?: string;
-	description?: string;
-	externalReferenceCode: string;
-	filtersOrder?: string;
-	id: string;
-	itemActionsOrder?: string;
-	label: string;
-	listOfItemsPerPage: string;
-	restApplication: string;
-	restEndpoint: string;
-	restSchema: string;
-	sortsOrder?: string;
-	tableSectionsOrder?: string;
-}
 
 const LabelInput = ({
 	labelValidationError,
@@ -539,7 +512,7 @@ const NewDataSetModalContent = ({
 	);
 };
 
-const DataSets = ({
+const CustomDataSets = ({
 	editDataSetURL,
 	namespace,
 	permissionsURL,
@@ -733,4 +706,4 @@ const DataSets = ({
 	);
 };
 
-export default DataSets;
+export default CustomDataSets;

@@ -123,7 +123,7 @@ function ItemConfigurationContent({
 
 	return (
 		<div className="page-editor__page-structure__item-configuration">
-			{activeItemType === ITEM_TYPES.editable && (
+			{activeItemType === ITEM_TYPES.editable && !!activeItem && (
 				<SidebarPanelHeader
 					iconLeft={
 						canUpdateItemConfiguration && (

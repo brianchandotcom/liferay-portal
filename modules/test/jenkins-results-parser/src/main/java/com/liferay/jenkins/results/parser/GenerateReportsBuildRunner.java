@@ -203,12 +203,12 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		String currentMonthString = currentLocalDate.format(
 			DateTimeFormatter.ofPattern("yyyy-MM"));
 
-		String previousMonthString = null;
+		String startMonthString = null;
 
-		if (currentLocalDate.getDayOfMonth() < 15) {
-			LocalDate previousMonthLocalDate = currentLocalDate.minusMonths(1);
+		LocalDate startLocalDate = currentLocalDate.minusDays(15);
 
-			previousMonthString = previousMonthLocalDate.format(
+		if (currentLocalDate.getMonth() != startLocalDate.getMonth()) {
+			startMonthString = startLocalDate.format(
 				DateTimeFormatter.ofPattern("yyyy-MM"));
 		}
 
@@ -225,10 +225,10 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				_getTestrayBucketBuildReportJSONFilePaths(
 					currentMonthString, jenkinsMasterName, jobName));
 
-			if (previousMonthString != null) {
+			if (startMonthString != null) {
 				keys.addAll(
 					_getTestrayBucketBuildReportJSONFilePaths(
-						previousMonthString, jenkinsMasterName, jobName));
+						startMonthString, jenkinsMasterName, jobName));
 			}
 		}
 

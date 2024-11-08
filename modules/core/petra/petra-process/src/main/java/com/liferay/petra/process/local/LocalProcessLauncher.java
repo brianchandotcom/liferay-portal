@@ -456,7 +456,7 @@ public class LocalProcessLauncher {
 					System.arraycopy(
 						bytes, 0, logData, _logPrefix.length, bytes.length);
 
-					String message = new String(bytes, StringPool.UTF8);
+					String message = new String(logData, StringPool.UTF8);
 
 					_objectOutputStream.writeObject(
 						new LoggingProcessCallable(message, _error));

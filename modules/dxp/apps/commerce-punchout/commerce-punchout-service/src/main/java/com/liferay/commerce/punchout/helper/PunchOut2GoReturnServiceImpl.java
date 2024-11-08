@@ -127,6 +127,9 @@ public class PunchOut2GoReturnServiceImpl implements PunchOutReturnService {
 				).put(
 					"deliveryGroup", commerceOrderItem.getDeliveryGroupName()
 				).put(
+					"deliveryGroupName",
+					commerceOrderItem.getDeliveryGroupName()
+				).put(
 					"discountAmount", commerceOrderItem.getDiscountAmount()
 				).put(
 					"externalReferenceCode",

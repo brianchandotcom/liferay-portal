@@ -6,8 +6,8 @@
 package com.liferay.commerce.currency.service.impl;
 
 import com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys;
+import com.liferay.commerce.currency.constants.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.model.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.service.base.CommerceCurrencyServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;

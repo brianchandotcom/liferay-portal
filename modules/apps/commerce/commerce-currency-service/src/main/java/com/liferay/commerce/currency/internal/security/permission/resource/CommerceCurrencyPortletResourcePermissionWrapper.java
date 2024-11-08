@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.currency.internal.security.permission.resource;
 
-import com.liferay.commerce.currency.model.CommerceCurrencyConstants;
+import com.liferay.commerce.currency.constants.CommerceCurrencyConstants;
 import com.liferay.portal.kernel.security.permission.resource.BasePortletResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;

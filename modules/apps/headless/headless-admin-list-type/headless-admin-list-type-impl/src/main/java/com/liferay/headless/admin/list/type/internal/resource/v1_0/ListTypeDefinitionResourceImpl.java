@@ -136,7 +136,8 @@ public class ListTypeDefinitionResourceImpl
 				LocalizedMapUtil.getLocalizedMap(
 					LocalizedMapUtil.populateI18nMap(
 						listTypeDefinition.getDefaultLanguageId(),
-						listTypeDefinition.getName_i18n(), null)),
+						listTypeDefinition.getName_i18n(),
+						listTypeDefinition.getName())),
 				GetterUtil.getBoolean(listTypeDefinition.getSystem()),
 				transformToList(
 					listTypeDefinition.getListTypeEntries(),
@@ -156,7 +157,8 @@ public class ListTypeDefinitionResourceImpl
 				LocalizedMapUtil.getLocalizedMap(
 					LocalizedMapUtil.populateI18nMap(
 						listTypeDefinition.getDefaultLanguageId(),
-						listTypeDefinition.getName_i18n(), null)),
+						listTypeDefinition.getName_i18n(),
+						listTypeDefinition.getName())),
 				transformToList(
 					listTypeDefinition.getListTypeEntries(),
 					listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(

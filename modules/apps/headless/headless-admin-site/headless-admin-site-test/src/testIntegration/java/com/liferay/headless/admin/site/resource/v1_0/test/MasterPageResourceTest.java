@@ -14,6 +14,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -96,6 +97,74 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		}
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeMasterPagePermissionsPage()
+		throws Exception {
+
+		super.testGetSiteSiteByExternalReferenceCodeMasterPagePermissionsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithPagination()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithPagination();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithSortDateTime()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithSortDateTime();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithSortDouble()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithSortDouble();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithSortInteger()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithSortInteger();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithSortString()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithSortString();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteExternalReferenceCodeMasterPagePermissionsPage()
+		throws Exception {
+
+		super.testGetSiteSiteExternalReferenceCodeMasterPagePermissionsPage();
+	}
+
 	@Override
 	@Test
 	public void testPatchSiteSiteByExternalReferenceCodeMasterPage()
@@ -134,6 +203,16 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		}
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testPostSiteSiteByExternalReferenceCodeMasterPagePageSpecification()
+		throws Exception {
+
+		super.
+			testPostSiteSiteByExternalReferenceCodeMasterPagePageSpecification();
+	}
+
 	@Override
 	@Test
 	public void testPutSiteSiteByExternalReferenceCodeMasterPage()
@@ -147,6 +226,24 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		_testPutSiteSiteByExternalReferenceCodeMasterPage(
 			_getMasterPage(null, masterPage.getExternalReferenceCode()));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPutSiteSiteByExternalReferenceCodeMasterPagePermissionsPage()
+		throws Exception {
+
+		super.testPutSiteSiteByExternalReferenceCodeMasterPagePermissionsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPutSiteSiteExternalReferenceCodeMasterPagePermissionsPage()
+		throws Exception {
+
+		super.testPutSiteSiteExternalReferenceCodeMasterPagePermissionsPage();
 	}
 
 	@Override

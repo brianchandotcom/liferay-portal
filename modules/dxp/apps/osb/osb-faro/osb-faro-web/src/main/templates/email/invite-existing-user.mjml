@@ -1,25 +1,11 @@
 <mjml>
-  <mj-head>
-    <mj-include path="partials/head.mjml" />
-  </mj-head>
+	<mj-head>
+		<mj-include path="partials/onboarding/config.mjml" />
+	</mj-head>
 
-  <mj-body background-color="#ffffff">
-    <mj-section padding-bottom="0" padding-top="10px">
-      <mj-column width="15%">
-        <mj-include path="partials/logo.mjml" />
-      </mj-column>
+	<mj-body>
+		<mj-include path="partials/onboarding/header.mjml" />
 
-      <mj-column width="85%">
-        <mj-include path="partials/header.mjml" />
-
-        <mj-include path="partials/invite/body-existing.mjml" />
-      </mj-column>
-    </mj-section>
-
-    <mj-section padding="0">
-      <mj-column>
-        <mj-include path="partials/footer.mjml" />
-      </mj-column>
-    </mj-section>
-  </mj-body>
+		<mj-include path="partials/onboarding/invite-user.mjml" />
+	</mj-body>
 </mjml>

@@ -1,25 +1,29 @@
 <mjml>
-  <mj-head>
-    <mj-include path="partials/head.mjml" />
-  </mj-head>
+	<mj-head>
+		<mj-include path="partials/onboarding/config.mjml" />
+	</mj-head>
 
-  <mj-body background-color="#ffffff">
-    <mj-section padding-bottom="0" padding-top="10px">
-      <mj-column width="15%">
-        <mj-include path="partials/logo.mjml" />
-      </mj-column>
+	<mj-body>
+		<mj-include path="partials/onboarding/header.mjml" />
 
-      <mj-column width="85%">
-        <mj-include path="partials/header.mjml" />
+		<mj-section>
+			<mj-column width="556px">
+				<mj-text align="center" color="#6B6C7E" line-height="21px">
+					[$USER_NAME$] ([$USER_EMAIL$]) has requested to join the [$WORKSPACE_NAME$] workspace.
+				</mj-text>
 
-        <mj-include path="partials/body-join-request.mjml" />
-      </mj-column>
-    </mj-section>
+				<mj-text align="center" color="#6B6C7E" line-height="21px">
+					Sign in to approve or deny this request under User Management in settings.
+				</mj-text>
+			</mj-column>
+		</mj-section>
 
-    <mj-section padding="0">
-      <mj-column>
-        <mj-include path="partials/footer.mjml" />
-      </mj-column>
-    </mj-section>
-  </mj-body>
+		<mj-section padding="0 0 128px">
+			<mj-column>
+				<mj-include path="partials/onboarding/go-to-analytics-cloud-button.mjml" />
+			</mj-column>
+		</mj-section>
+
+		<mj-include path="partials/onboarding/footer.mjml" />
+	</mj-body>
 </mjml>

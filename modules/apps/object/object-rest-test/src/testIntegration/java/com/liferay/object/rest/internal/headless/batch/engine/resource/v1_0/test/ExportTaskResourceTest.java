@@ -88,6 +88,8 @@ public class ExportTaskResourceTest {
 
 	@Test
 	public void testPostExportTask() throws Exception {
+		long companyId = 0;
+
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal." +
 					"BatchEngineExportTaskExecutorImpl",
@@ -110,8 +112,9 @@ public class ExportTaskResourceTest {
 				"headless-portal-instances/v1.0/portal-instances",
 				Http.Method.POST);
 
-			User user = UserTestUtil.getAdminUser(
-				companyJSONObject.getLong("companyId"));
+			companyId = companyJSONObject.getLong("companyId");
+
+			User user = UserTestUtil.getAdminUser(companyId);
 
 			ObjectDefinition objectDefinition2 =
 				ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -149,9 +152,11 @@ public class ExportTaskResourceTest {
 						"FAILED", exportTaskJSONObject2.get("executeStatus"));
 				}
 			);
-
-			_companyLocalService.deleteCompany(
-				companyJSONObject.getLong("companyId"));
+		}
+		finally {
+			if (companyId != 0) {
+				_companyLocalService.deleteCompany(companyId);
+			}
 		}
 	}
 

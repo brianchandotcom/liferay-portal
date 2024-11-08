@@ -59,7 +59,8 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.addCommerceCurrency(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				null, TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomString(), BigDecimal.ONE, new HashMap<>(),
 				2, 2, "HALF_EVEN", false, RandomTestUtil.nextDouble(), true);

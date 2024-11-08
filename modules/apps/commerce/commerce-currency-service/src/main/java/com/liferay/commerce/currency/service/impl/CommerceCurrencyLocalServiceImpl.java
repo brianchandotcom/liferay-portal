@@ -260,6 +260,8 @@ public class CommerceCurrencyLocalServiceImpl
 					serviceContext.getCompanyId(), code);
 
 			if (commerceCurrency == null) {
+				String externalReferenceCode = jsonObject.getString(
+					"externalReferenceCode");
 				boolean primary = jsonObject.getBoolean("primary");
 				double priority = jsonObject.getDouble("priority");
 				double rate = jsonObject.getDouble("rate");
@@ -286,8 +288,8 @@ public class CommerceCurrencyLocalServiceImpl
 					roundingTypeConfiguration.roundingMode();
 
 				commerceCurrencyLocalService.addCommerceCurrency(
-					serviceContext.getUserId(), code, nameMap, symbol,
-					BigDecimal.valueOf(rate), formatPatternMap,
+					externalReferenceCode, serviceContext.getUserId(), code,
+					nameMap, symbol, BigDecimal.valueOf(rate), formatPatternMap,
 					roundingTypeConfiguration.maximumFractionDigits(),
 					roundingTypeConfiguration.minimumFractionDigits(),
 					roundingMode.name(), primary, priority, true);

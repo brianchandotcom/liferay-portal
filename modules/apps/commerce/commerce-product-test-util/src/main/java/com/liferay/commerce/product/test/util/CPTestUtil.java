@@ -106,7 +106,7 @@ public class CPTestUtil {
 			catch (NoSuchCurrencyException noSuchCurrencyException) {
 				commerceCurrency =
 					CommerceCurrencyLocalServiceUtil.addCommerceCurrency(
-						serviceContext.getUserId(), currencyCode,
+						null, serviceContext.getUserId(), currencyCode,
 						RandomTestUtil.randomLocaleStringMap(),
 						RandomTestUtil.randomString(), BigDecimal.ONE,
 						new HashMap<>(), 2, 2, "HALF_EVEN", false, 0, true);

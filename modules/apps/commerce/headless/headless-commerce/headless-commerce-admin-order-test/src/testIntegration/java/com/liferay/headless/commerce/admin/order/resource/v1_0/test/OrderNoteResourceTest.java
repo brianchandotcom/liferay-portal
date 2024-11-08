@@ -58,7 +58,7 @@ public class OrderNoteResourceTest extends BaseOrderNoteResourceTestCase {
 				_user.getUserId()));
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.addCommerceCurrency(
-				_user.getUserId(), RandomTestUtil.randomString(),
+				null, _user.getUserId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomString(), BigDecimal.ONE,
 				RandomTestUtil.randomLocaleStringMap(), 2, 2, "HALF_EVEN",

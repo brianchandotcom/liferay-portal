@@ -134,7 +134,7 @@ public class CurrencyResourceTest extends BaseCurrencyResourceTestCase {
 	private Currency _addCommerceCurrency(Currency currency) throws Exception {
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.addCommerceCurrency(
-				TestPropsValues.getUserId(), currency.getCode(),
+				null, TestPropsValues.getUserId(), currency.getCode(),
 				LanguageUtils.getLocalizedMap(currency.getName()),
 				currency.getSymbol(), currency.getRate(),
 				LanguageUtils.getLocalizedMap(currency.getFormatPattern()),
@@ -147,6 +147,8 @@ public class CurrencyResourceTest extends BaseCurrencyResourceTestCase {
 			{
 				active = commerceCurrency.isActive();
 				code = commerceCurrency.getCode();
+				externalReferenceCode =
+					commerceCurrency.getExternalReferenceCode();
 				formatPattern = LanguageUtils.getLanguageIdMap(
 					commerceCurrency.getFormatPatternMap());
 				id = commerceCurrency.getCommerceCurrencyId();

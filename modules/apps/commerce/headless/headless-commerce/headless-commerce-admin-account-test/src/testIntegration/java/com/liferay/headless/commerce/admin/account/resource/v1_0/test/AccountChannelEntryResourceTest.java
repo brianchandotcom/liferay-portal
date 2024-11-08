@@ -103,7 +103,7 @@ public class AccountChannelEntryResourceTest
 
 		_commerceCurrency =
 			CommerceCurrencyLocalServiceUtil.addCommerceCurrency(
-				_user.getUserId(), RandomTestUtil.randomString(),
+				null, _user.getUserId(), RandomTestUtil.randomString(),
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()),
 				RandomTestUtil.randomString(), BigDecimal.ONE, new HashMap<>(),

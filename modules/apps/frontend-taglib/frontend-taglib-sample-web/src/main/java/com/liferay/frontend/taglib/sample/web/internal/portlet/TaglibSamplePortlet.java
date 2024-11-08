@@ -6,6 +6,7 @@
 package com.liferay.frontend.taglib.sample.web.internal.portlet;
 
 import com.liferay.frontend.taglib.sample.web.internal.constants.TaglibSamplePortletKeys;
+import com.liferay.frontend.taglib.sample.web.internal.display.context.FrontendSampleDisplayContext;
 import com.liferay.frontend.taglib.sample.web.internal.display.context.SearchPaginatorDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
@@ -55,6 +56,10 @@ public class TaglibSamplePortlet extends MVCPortlet {
 			TaglibSamplePortletKeys.SEARCH_PAGINATOR_DISPLAY_CONTEXT,
 			new SearchPaginatorDisplayContext(
 				_portal, renderRequest, renderResponse));
+
+		renderRequest.setAttribute(
+			TaglibSamplePortletKeys.FRONTEND_SAMPLE_DISPLAY_CONTEXT,
+			new FrontendSampleDisplayContext());
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

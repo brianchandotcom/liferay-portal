@@ -79,6 +79,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
@@ -180,15 +181,11 @@ public class JournalContentDisplayContext {
 							getArticleExternalReferenceCode(),
 							WorkflowConstants.STATUS_ANY, true);
 
-				if (_article == null) {
-					return _article;
-				}
+				if ((_article != null) &&
+					Objects.equals(
+						_article.getStatus(),
+						WorkflowConstants.STATUS_IN_TRASH)) {
 
-				JournalArticleResource articleResource =
-					JournalArticleResourceLocalServiceUtil.fetchArticleResource(
-						_article.getGroupId(), _article.getArticleId());
-
-				if (articleResource == null) {
 					_article = null;
 				}
 
@@ -595,7 +592,9 @@ public class JournalContentDisplayContext {
 		PortletPreferences portletPreferences =
 			_portletRequest.getPreferences();
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-27566")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-27566")) {
+
 			long assetEntryId = GetterUtil.getLong(
 				portletPreferences.getValue("assetEntryId", StringPool.BLANK));
 

@@ -72,6 +72,20 @@ public class CommerceCurrencyServiceImpl
 	}
 
 	@Override
+	public CommerceCurrency fetchCommerceCurrencyByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
+
+		return commerceCurrencyLocalService.
+			fetchCommerceCurrencyByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	@Override
 	public CommerceCurrency fetchPrimaryCommerceCurrency(long companyId)
 		throws PortalException {
 

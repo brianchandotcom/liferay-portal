@@ -34,6 +34,7 @@
 	"memory": 50,
 	"scale": 1,
 	"volumes": {
+		"homeLiferay": "/home/liferay",
 		"publicHtml": "/public_html"
 	}
 }

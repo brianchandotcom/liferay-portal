@@ -202,7 +202,7 @@ test('Checks sidebar accessibility', async ({
 });
 
 test.describe('Browser Panel', () => {
-	test('Deleting an fragment while its editable is selected', async ({
+	test('Deleting a fragment while its editable is selected', async ({
 		apiHelpers,
 		page,
 		pageEditorPage,
@@ -235,20 +235,28 @@ test.describe('Browser Panel', () => {
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
+		// Select editable
+
 		await pageEditorPage.selectEditable(headingId, 'element-text');
+
+		// Go to Browser an delete the fragment
 
 		await pageEditorPage.goToSidebarTab('Browser');
 
 		await hoverAndExpectToBeVisible({
 			autoClick: true,
-			target: page.locator('.treeview-item').getByLabel('Options'),
+			target: page
+				.locator('.treeview-item', {hasText: 'Heading'})
+				.getByLabel('Options'),
 			trigger: page.getByLabel('Select Heading'),
 		});
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Delete'}),
-			trigger: page.locator('.treeview-item').getByLabel('Options'),
+			trigger: page
+				.locator('.treeview-item', {hasText: 'Heading'})
+				.getByLabel('Options'),
 		});
 
 		await pageEditorPage.waitForChangesSaved();

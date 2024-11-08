@@ -32,6 +32,9 @@ public class UserConstants {
 
 	public static final String LIST_VIEW_TREE = "tree";
 
+	public static final String SCREEN_NAME_DEFAULT_SERVICE_ACCOUNT =
+		"default-service-account";
+
 	public static final int TYPE_DEFAULT_SERVICE_ACCOUNT = 2;
 
 	public static final int TYPE_GUEST = 0;

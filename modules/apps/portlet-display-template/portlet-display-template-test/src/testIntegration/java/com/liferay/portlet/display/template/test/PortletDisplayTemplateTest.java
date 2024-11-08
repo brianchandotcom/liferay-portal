@@ -6,6 +6,7 @@
 package com.liferay.portlet.display.template.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -61,12 +62,6 @@ public class PortletDisplayTemplateTest {
 					MapUtil.singletonDictionary(
 						"javax.portlet.name", RandomTestUtil.randomString())));
 
-			Assert.assertFalse(
-				_contains(
-					className1,
-					_portletDisplayTemplate.
-						getPortletDisplayTemplateHandlers()));
-
 			String className2 = RandomTestUtil.randomString();
 
 			serviceRegistrations.add(
@@ -76,11 +71,24 @@ public class PortletDisplayTemplateTest {
 					MapUtil.singletonDictionary(
 						"javax.portlet.name", RandomTestUtil.randomString())));
 
-			Assert.assertTrue(
-				_contains(
-					className2,
-					_portletDisplayTemplate.
-						getPortletDisplayTemplateHandlers()));
+			String[] clasNames = TransformUtil.transformToArray(
+				_portletDisplayTemplate.getPortletDisplayTemplateHandlers(),
+				templateHandler -> {
+					Assert.assertNotEquals(
+						templateHandler.getClassName(), className1);
+
+					if (Objects.equals(
+							templateHandler.getClassName(), className2)) {
+
+						return templateHandler.getClassName();
+					}
+
+					return null;
+				},
+				String.class);
+
+			Assert.assertEquals(clasNames.toString(), 1, clasNames.length);
+			Assert.assertEquals(className2, clasNames[0]);
 		}
 		finally {
 			for (ServiceRegistration<?> serviceRegistration :
@@ -89,18 +97,6 @@ public class PortletDisplayTemplateTest {
 				serviceRegistration.unregister();
 			}
 		}
-	}
-
-	private boolean _contains(
-		String className, List<TemplateHandler> templateHandlers) {
-
-		for (TemplateHandler templateHandler : templateHandlers) {
-			if (Objects.equals(templateHandler.getClassName(), className)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	@Inject

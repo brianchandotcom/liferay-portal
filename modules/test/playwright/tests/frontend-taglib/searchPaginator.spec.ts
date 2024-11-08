@@ -5,13 +5,14 @@
 
 import {Locator, expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import getRandomString from '../../../utils/getRandomString';
-import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import {liferayConfig} from '../../liferay.config';
+import {loginTest} from '../../fixtures/loginTest';
+import getRandomString from '../../utils/getRandomString';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -31,7 +32,7 @@ test(
 		await test.step('Create a content site and the frontend taglib sample widget', async () => {
 			const widgetDefinition = getWidgetDefinition({
 				id: getRandomString(),
-				widgetName: 'com_liferay_sample_web_portlet_SamplePortlet',
+				widgetName: 'com_liferay_sample_web_portlet_TaglibSamplePortlet',
 			});
 
 			await apiHelpers.headlessDelivery.createSitePage({
@@ -39,6 +40,10 @@ test(
 				siteId: site.id,
 				title: getRandomString(),
 			});
+
+			await page.goto(
+				`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}`
+			);
 		});
 
 		await test.step('Open navigator dropdown', async () => {

@@ -53,10 +53,6 @@ export default function EditObjectRelationship({
 		objectRelationship: Partial<ObjectRelationship> = values
 	) => {
 		try {
-			if (!Liferay.FeatureFlags['LPS-187142']) {
-				delete objectRelationship.edge;
-			}
-
 			await API.putObjectRelationship(objectRelationship);
 			saveAndReload();
 

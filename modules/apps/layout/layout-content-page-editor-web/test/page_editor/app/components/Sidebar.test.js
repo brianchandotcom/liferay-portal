@@ -45,6 +45,10 @@ const renderSidebar = () =>
 	);
 
 describe('Sidebar', () => {
+	beforeAll(() => {
+		Liferay.Language.direction = {en_US: 'ltr'};
+	});
+
 	describe('resize', () => {
 		afterEach(() => {
 			sessionStorage.clear();

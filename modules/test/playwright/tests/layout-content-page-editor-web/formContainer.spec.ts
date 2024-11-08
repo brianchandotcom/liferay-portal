@@ -511,6 +511,8 @@ test.describe('Date and Time Fragment', () => {
 			await page.keyboard.type('10/10/2022');
 			await page.keyboard.press('ArrowRight');
 			await page.keyboard.type('10:10');
+			await page.keyboard.press('ArrowRight');
+			await page.keyboard.type('AM');
 
 			await fillAndClickOutside(
 				page,

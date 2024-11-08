@@ -121,8 +121,7 @@ public class LoginMVCActionCommandTest {
 
 				MockLiferayPortletActionRequest
 					mockLiferayPortletActionRequest1 =
-						_getMockLiferayPortletActionRequest(
-							user, password, "true");
+						_getMockLiferayPortletActionRequest(user, password);
 
 				_mvcActionCommand.processAction(
 					mockLiferayPortletActionRequest1,
@@ -241,7 +240,7 @@ public class LoginMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			User user, String password, String resetPassword)
+			User user, String password)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -253,8 +252,6 @@ public class LoginMVCActionCommandTest {
 		mockLiferayPortletActionRequest.setParameter(
 			"login", user.getEmailAddress());
 		mockLiferayPortletActionRequest.setParameter("password", password);
-		mockLiferayPortletActionRequest.setParameter(
-			"RESET_PASSWORD", resetPassword);
 
 		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG, _getLiferayPortletConfig());

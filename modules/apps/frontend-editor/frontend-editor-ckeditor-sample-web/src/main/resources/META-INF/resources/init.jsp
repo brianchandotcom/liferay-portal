@@ -5,6 +5,8 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
@@ -15,18 +17,14 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.frontend.editor.ckeditor.sample.web.internal.constants.CKEditorSampleWebKeys" %><%@
 page import="com.liferay.frontend.editor.ckeditor.sample.web.internal.display.context.CKEditorSampleDisplayContext" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
-page import="com.liferay.portal.kernel.util.JavaConstants" %>
-
-<%@ page import="java.util.List" %>
+page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %>
 
 <%@ page import="javax.portlet.PortletRequest" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-CKEditorSampleDisplayContext ckEditorSampleDisplayContext = (CKEditorSampleDisplayContext)request.getAttribute(CKEditorSampleWebKeys.CKEDITOR_SAMPLE_DISPLAY_CONTEXT);
-%>

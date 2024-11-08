@@ -8,8 +8,6 @@ package com.liferay.frontend.editor.ckeditor.sample.web.internal.display.context
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.EditorConfigContributorCET;
 import com.liferay.client.extension.type.manager.CETManager;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -17,8 +15,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.util.List;
 
 import javax.portlet.RenderRequest;
 
@@ -58,45 +54,8 @@ public class CKEditorSampleDisplayContext {
 			});
 	}
 
-	public List<TabsItem> getTabsItems() {
-		if (_tabsItems != null) {
-			return _tabsItems;
-		}
-
-		_tabsItems = TabsItemListBuilder.add(
-			tabsItem -> {
-				tabsItem.setActive(true);
-				tabsItem.setLabel("Balloon");
-				tabsItem.setPanelId("balloon");
-			}
-		).add(
-			tabsItem -> {
-				tabsItem.setLabel("Classic");
-				tabsItem.setPanelId("classic");
-			}
-		).add(
-			tabsItem -> {
-				tabsItem.setLabel("Legacy");
-				tabsItem.setPanelId("legacy");
-			}
-		).add(
-			tabsItem -> {
-				tabsItem.setLabel("Alloy");
-				tabsItem.setPanelId("alloy");
-			}
-		).add(
-			tabsItem -> {
-				tabsItem.setLabel("React");
-				tabsItem.setPanelId("react");
-			}
-		).build();
-
-		return _tabsItems;
-	}
-
 	private final CETManager _cetManager;
 	private final RenderRequest _renderRequest;
-	private List<TabsItem> _tabsItems;
 	private final ThemeDisplay _themeDisplay;
 
 }

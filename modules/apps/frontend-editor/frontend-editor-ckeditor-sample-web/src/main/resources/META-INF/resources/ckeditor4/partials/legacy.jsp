@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <portlet:renderURL var="viewXSSURL">
-	<portlet:param name="mvcPath" value="/view_xss.jsp" />
+	<portlet:param name="mvcPath" value="/ckeditor4/view_xss.jsp" />
 </portlet:renderURL>
 
 <liferay-util:buffer

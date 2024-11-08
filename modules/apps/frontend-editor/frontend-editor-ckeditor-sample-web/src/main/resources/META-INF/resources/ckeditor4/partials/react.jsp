@@ -7,8 +7,12 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+CKEditorSampleDisplayContext ckEditorSampleDisplayContext = (CKEditorSampleDisplayContext)request.getAttribute(CKEditorSampleWebKeys.CKEDITOR_SAMPLE_DISPLAY_CONTEXT);
+%>
+
 <react:component
-	module="{ReactClassicEditor} from frontend-editor-ckeditor-sample-web"
+	module="{CKEditor4ReactClassicEditor} from frontend-editor-ckeditor-sample-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"editorTransformerURLs", ckEditorSampleDisplayContext.getEditorTransformerURLsJSONArray()

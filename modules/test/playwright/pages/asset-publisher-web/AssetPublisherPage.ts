@@ -48,4 +48,20 @@ export class AssetPublisherPage {
 			'Success:The collection was created successfully.'
 		);
 	}
+
+	async addFileFromAssetPublisher(fileName: string) {
+		await this.page.getByLabel('Title Required').fill(fileName);
+
+		await this.page.getByRole('button', {name: 'Publish'}).click();
+
+		// Using first() locator instance of this one until LPD-41787 is fixed
+		// await waitForAlert(this.page);
+
+		await this.page
+			.locator('.alert-success', {
+				hasText: 'Success:Your request completed successfully.',
+			})
+			.first()
+			.waitFor();
+	}
 }

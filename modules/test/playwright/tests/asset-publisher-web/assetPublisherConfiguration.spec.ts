@@ -7,17 +7,20 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {assetPublisherPagesTest} from '../../fixtures/assetPublisherPagesTest';
+import {assetPublisherWidgetPagesTest} from '../../fixtures/assetPublisherWidgetPagesTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../utils/getRandomString';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 const test = mergeTests(
 	assetPublisherPagesTest,
+	assetPublisherWidgetPagesTest,
 	apiHelpersTest,
 	collectionsPagesTest,
 	featureFlagsTest({
@@ -26,6 +29,7 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	pageViewModePagesTest,
 	pageEditorPagesTest
 );
 
@@ -80,6 +84,53 @@ test(
 		await collectionsPage.goto(site.friendlyUrlPath);
 
 		await expect(page.getByText(collectionName)).toBeVisible();
+	}
+);
+
+test(
+	'Add file to documents and media through asset publisher',
+	{
+		tag: '@LPD-33784',
+	},
+	async ({
+		assetPublisherPage,
+		assetPublisherWidgetPage,
+		page,
+		site,
+		widgetPagePage,
+	}) => {
+
+		// Create a page with an Asset Publisher Widget
+
+		const layout =
+			await assetPublisherWidgetPage.addAssetPublisherPortlet(site);
+
+		// Access to the configuration of the widget from the page editor
+
+		await widgetPagePage.clickOnAction('Asset Publisher', 'Configuration');
+
+		// Set asset selection and create a manual collection
+
+		const fileName = getRandomString();
+
+		await assetPublisherPage.changeAssetSelection('Dynamic');
+
+		await page.getByLabel('close', {exact: true}).click();
+
+		await page
+			.locator('.portlet-topper', {hasText: 'Asset Publisher'})
+			.getByTitle('Add')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Basic Document'}).click();
+
+		await assetPublisherPage.addFileFromAssetPublisher(fileName);
+
+		// Check that the file has been created correctly and we have been redirected.
+
+		await expect(page).toHaveURL(new RegExp(layout.friendlyURL + '$'));
+
+		await expect(page.getByText(fileName)).toBeVisible();
 	}
 );
 

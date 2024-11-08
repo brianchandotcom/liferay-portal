@@ -134,7 +134,7 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		PortalInstances.addCompany(
 			ParamUtil.getString(actionRequest, "siteInitializerKey"),
 			() -> _companyService.addCompany(
-				webId, virtualHostname, mx, maxUsers, active,
+				null, webId, virtualHostname, mx, maxUsers, active,
 				defaultAdminPassword, defaultAdminScreenName,
 				defaultAdminEmailAddress, defaultAdminFirstName,
 				defaultAdminMiddleName, defaultAdminLastName));

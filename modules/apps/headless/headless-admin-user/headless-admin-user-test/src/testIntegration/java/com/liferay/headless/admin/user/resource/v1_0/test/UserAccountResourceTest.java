@@ -102,6 +102,8 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -125,6 +127,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
+
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -426,6 +430,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				originalPermissionChecker);
 		}
 
+		_testGetUserAccountWithGender();
 		_testGetUserAccountWithMoreExternalReferenceCodes();
 	}
 
@@ -744,6 +749,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				}
 			});
 
+		_testPatchUserAccountWithGender();
 		_testPatchUserAccountWithImageExternalReferenceCode();
 	}
 
@@ -894,6 +900,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		super.testPostUserAccount();
 
 		_testPostUserAccountWithApprovalWorkflow();
+		_testPostUserAccountWithGender();
 		_testPostUserAccountWithImageExternalReferenceCode();
 		_testPostUserAccountWithSAPEntry();
 	}
@@ -1107,6 +1114,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 				return calendar.getTime();
 			});
+
 		userAccount.setImageId(0L);
 		userAccount.setUserAccountContactInformation(
 			_randomUserAccountContactInformation());
@@ -1860,6 +1868,51 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			userAccount);
 	}
 
+	private void _testGetUserAccountWithGender() throws Exception {
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			testCompany.getCompanyId());
+
+		try {
+			UserAccount randomUserAccount = randomUserAccount();
+
+			randomUserAccount.setGender(UserAccount.Gender.FEMALE);
+
+			UserAccount postUserAccount = _addUserAccount(
+				testGroup.getGroupId(), randomUserAccount);
+
+			UserAccount getUserAccount = userAccountResource.getUserAccount(
+				postUserAccount.getId());
+
+			assertEquals(postUserAccount, getUserAccount);
+			assertValid(getUserAccount);
+			Assert.assertNull(getUserAccount.getGender());
+
+			portletPreferences.setValue(
+				PropsKeys.
+					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE,
+				Boolean.TRUE.toString());
+
+			randomUserAccount = randomUserAccount();
+
+			randomUserAccount.setGender(UserAccount.Gender.FEMALE);
+
+			postUserAccount = _addUserAccount(
+				testGroup.getGroupId(), randomUserAccount);
+
+			getUserAccount = userAccountResource.getUserAccount(
+				postUserAccount.getId());
+
+			Assert.assertEquals(
+				getUserAccount.getGender(), UserAccount.Gender.FEMALE);
+		}
+		finally {
+			portletPreferences.setValue(
+				PropsKeys.
+					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE,
+				Boolean.FALSE.toString());
+		}
+	}
+
 	private void _testGetUserAccountWithMoreExternalReferenceCodes()
 		throws Exception {
 
@@ -1953,6 +2006,54 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		for (Role role : roles) {
 			Assert.assertFalse(_hasRole(role, roleBriefs));
+		}
+	}
+
+	private void _testPatchUserAccountWithGender() throws Exception {
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			testCompany.getCompanyId());
+
+		try {
+			UserAccount randomUserAccount = randomUserAccount();
+
+			UserAccount postUserAccount = testPostUserAccount_addUserAccount(
+				randomUserAccount);
+
+			Assert.assertNull(postUserAccount.getGender());
+
+			UserAccount userAccount = new UserAccount();
+
+			userAccount.setGender(UserAccount.Gender.FEMALE);
+
+			UserAccount patchUserAccount = userAccountResource.patchUserAccount(
+				postUserAccount.getId(), userAccount);
+
+			assertEquals(randomUserAccount, patchUserAccount);
+			assertValid(patchUserAccount);
+			Assert.assertNull(patchUserAccount.getGender());
+
+			User user = _userLocalService.getUser(patchUserAccount.getId());
+
+			Assert.assertFalse(user.getFemale());
+
+			portletPreferences.setValue(
+				PropsKeys.
+					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE,
+				Boolean.TRUE.toString());
+
+			patchUserAccount = userAccountResource.patchUserAccount(
+				postUserAccount.getId(), userAccount);
+
+			assertEquals(randomUserAccount, patchUserAccount);
+			assertValid(patchUserAccount);
+			Assert.assertEquals(
+				patchUserAccount.getGender(), UserAccount.Gender.FEMALE);
+		}
+		finally {
+			portletPreferences.setValue(
+				PropsKeys.
+					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE,
+				Boolean.FALSE.toString());
 		}
 	}
 
@@ -2088,6 +2189,51 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
 			workflowDefinitionLink);
+	}
+
+	private void _testPostUserAccountWithGender() throws Exception {
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			testCompany.getCompanyId());
+
+		try {
+			UserAccount randomUserAccount = randomUserAccount();
+
+			randomUserAccount.setGender(UserAccount.Gender.FEMALE);
+
+			UserAccount postUserAccount = testPostUserAccount_addUserAccount(
+				randomUserAccount);
+
+			assertEquals(randomUserAccount, postUserAccount);
+			assertValid(postUserAccount);
+			Assert.assertNull(postUserAccount.getGender());
+
+			User user = _userLocalService.getUser(postUserAccount.getId());
+
+			Assert.assertFalse(user.getFemale());
+
+			portletPreferences.setValue(
+				PropsKeys.
+					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE,
+				Boolean.TRUE.toString());
+
+			randomUserAccount = randomUserAccount();
+
+			randomUserAccount.setGender(UserAccount.Gender.FEMALE);
+
+			postUserAccount = testPostUserAccount_addUserAccount(
+				randomUserAccount);
+
+			assertEquals(randomUserAccount, postUserAccount);
+			assertValid(postUserAccount);
+			Assert.assertEquals(
+				postUserAccount.getGender(), UserAccount.Gender.FEMALE);
+		}
+		finally {
+			portletPreferences.setValue(
+				PropsKeys.
+					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE,
+				Boolean.FALSE.toString());
+		}
 	}
 
 	private void _testPostUserAccountWithImageExternalReferenceCode()

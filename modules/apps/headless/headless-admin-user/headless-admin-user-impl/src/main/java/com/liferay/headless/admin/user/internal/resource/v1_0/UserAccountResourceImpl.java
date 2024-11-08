@@ -86,6 +86,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -622,7 +624,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			GetterUtil.getString(
 				userAccount.getFamilyName(), user.getLastName()),
 			_getPrefixId(contact, userAccount),
-			_getSuffixId(contact, userAccount), true,
+			_getSuffixId(contact, userAccount),
+			_isMale(contact.isMale(), userAccount.getGender()),
 			_getBirthdayMonth(
 				_getCalendarFieldValue(Calendar.MONTH, Calendar.JANUARY, user),
 				userAccount),
@@ -906,7 +909,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				userAccount.getEmailAddress(), _getLocale(userAccount),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(null, userAccount),
-				_getSuffixId(null, userAccount), true,
+				_getSuffixId(null, userAccount),
+				_isMale(true, userAccount.getGender()),
 				_getBirthdayMonth(Calendar.JANUARY, userAccount),
 				_getBirthdayDay(1, userAccount),
 				_getBirthdayYear(1977, userAccount), userAccount.getJobTitle(),
@@ -936,7 +940,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				userAccount.getEmailAddress(), _getLocale(userAccount),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(null, userAccount),
-				_getSuffixId(null, userAccount), true,
+				_getSuffixId(null, userAccount),
+				_isMale(true, userAccount.getGender()),
 				_getBirthdayMonth(Calendar.JANUARY, userAccount),
 				_getBirthdayDay(1, userAccount),
 				_getBirthdayYear(1977, userAccount), userAccount.getJobTitle(),
@@ -1040,7 +1045,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			user.getTimeZoneId(), user.getGreeting(), user.getComments(),
 			userAccount.getGivenName(), userAccount.getAdditionalName(),
 			userAccount.getFamilyName(), _getPrefixId(null, userAccount),
-			_getSuffixId(null, userAccount), true,
+			_getSuffixId(null, userAccount),
+			_isMale(true, userAccount.getGender()),
 			_getBirthdayMonth(Calendar.JANUARY, userAccount),
 			_getBirthdayDay(1, userAccount),
 			_getBirthdayYear(1977, userAccount), sms, facebook, jabber, skype,
@@ -1604,6 +1610,19 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		}
 
 		return true;
+	}
+
+	private boolean _isMale(boolean defaultValue, UserAccount.Gender gender) {
+		if ((gender == null) ||
+			!PrefsPropsUtil.getBoolean(
+				contextCompany.getCompanyId(),
+				PropsKeys.
+					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE)) {
+
+			return defaultValue;
+		}
+
+		return Objects.equals(UserAccount.Gender.MALE, gender);
 	}
 
 	private boolean _isPasswordResetRequired(User user) throws Exception {

@@ -267,3 +267,8 @@ d9e9adf360c8b52c8ca4530478adef1f1163c6de^..f264c8565bf53abe2a45b44fcdf0c9cfffb73
 # Bundle Version 6.0.47
 #
 f264c8565bf53abe2a45b44fcdf0c9cfffb73ae1^..c563655307f1ba02cdab645d7d03eaaff2ac82c0=LPD-37253
+
+#
+# Bundle Version 6.0.48
+#
+c563655307f1ba02cdab645d7d03eaaff2ac82c0^..917d92ebe9b635de9f2e262997eb7bf27e282330=LPD-40223 LPD-40714 LRCI-4023

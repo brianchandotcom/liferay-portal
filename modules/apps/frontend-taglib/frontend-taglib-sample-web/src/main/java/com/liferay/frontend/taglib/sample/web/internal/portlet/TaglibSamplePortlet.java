@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.taglib.sample.web.internal.portlet;
 
-import com.liferay.frontend.taglib.sample.web.internal.constants.SamplePortletKeys;
+import com.liferay.frontend.taglib.sample.web.internal.constants.TaglibSamplePortletKeys;
 import com.liferay.frontend.taglib.sample.web.internal.display.context.SearchPaginatorDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
@@ -37,14 +37,14 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + SamplePortletKeys.SAMPLE_PORTLET,
+		"javax.portlet.name=" + TaglibSamplePortletKeys.TAGLIB_SAMPLE_PORTLET,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )
-public class SamplePortlet extends MVCPortlet {
+public class TaglibSamplePortlet extends MVCPortlet {
 
 	@Override
 	public void doDispatch(
@@ -52,7 +52,7 @@ public class SamplePortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			SamplePortletKeys.SEARCH_PAGINATOR_DISPLAY_CONTEXT,
+			TaglibSamplePortletKeys.SEARCH_PAGINATOR_DISPLAY_CONTEXT,
 			new SearchPaginatorDisplayContext(
 				_portal, renderRequest, renderResponse));
 

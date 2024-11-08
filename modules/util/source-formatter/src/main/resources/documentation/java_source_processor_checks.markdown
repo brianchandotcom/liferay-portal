@@ -172,6 +172,7 @@ JavaTermOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Checks 
 JavaTermStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consistency in code style. |
 JavaTestInfoAnnotationCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts the values in `@TestInfo` annotation. |
 [JavaTestMethodAnnotationsCheck](check/java_test_method_annotations_check.markdown#javatestmethodannotationscheck) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks if methods with test annotations follow the naming conventions. |
+JavaToJSONArrayCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary whitespace on `toJSONArray` calls. |
 JavaTransactionBoundaryCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds direct `add*` or `get*` calls in `*ServiceImpl` (those should use the `*service` global variable instead). |
 [JavaUnsafeCastingCheck](check/java_unsafe_casting_check.markdown#javaunsafecastingcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for potential ClassCastException. |
 [JavaUnusedSourceFormatterChecksCheck](check/java_unused_source_formatter_checks_check.markdown#javaunusedsourceformattercheckscheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | Finds `*Check` classes that are not configured. |

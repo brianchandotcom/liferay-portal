@@ -118,6 +118,15 @@ public class LayoutPageTemplateCollectionServiceWrapper
 	}
 
 	@Override
+	public LayoutPageTemplateCollection getLayoutPageTemplateCollection(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateCollectionService.
+			getLayoutPageTemplateCollection(externalReferenceCode, groupId);
+	}
+
+	@Override
 	public java.util.List<LayoutPageTemplateCollection>
 		getLayoutPageTemplateCollections(long groupId, int type) {
 

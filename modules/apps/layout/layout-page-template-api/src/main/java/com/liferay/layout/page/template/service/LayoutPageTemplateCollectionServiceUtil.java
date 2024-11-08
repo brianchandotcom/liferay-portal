@@ -110,6 +110,14 @@ public class LayoutPageTemplateCollectionServiceUtil {
 			externalReferenceCode, groupId);
 	}
 
+	public static LayoutPageTemplateCollection getLayoutPageTemplateCollection(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getLayoutPageTemplateCollection(
+			externalReferenceCode, groupId);
+	}
+
 	public static List<LayoutPageTemplateCollection>
 		getLayoutPageTemplateCollections(long groupId, int type) {
 

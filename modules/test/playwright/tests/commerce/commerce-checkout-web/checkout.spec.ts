@@ -370,8 +370,6 @@ test('LPD-35329 Delivery group multishipping checkout summary', async ({
 	checkoutPage,
 	commerceAdminChannelDetailsPage,
 	commerceAdminChannelsPage,
-	commerceCartSummaryPage,
-	commerceLayoutsPage,
 	page,
 }) => {
 	test.setTimeout(180000);

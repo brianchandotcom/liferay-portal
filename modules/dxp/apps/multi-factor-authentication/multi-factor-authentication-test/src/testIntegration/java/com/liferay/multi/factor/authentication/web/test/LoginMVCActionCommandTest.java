@@ -96,18 +96,18 @@ public class LoginMVCActionCommandTest {
 							"enabled", true
 						).build())) {
 
-			User user = UserTestUtil.addUser(_company);
+			User user1 = UserTestUtil.addUser(_company);
 
 			try {
 				ServiceContextThreadLocal.pushServiceContext(
 					ServiceContextTestUtil.getServiceContext(
-						user.getGroupId(), user.getUserId()));
+						user1.getGroupId(), user1.getUserId()));
 
 				String password = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 
-				user = _userLocalService.updatePassword(
-					user.getUserId(), password, password, true, false);
+				user1 = _userLocalService.updatePassword(
+					user1.getUserId(), password, password, true, false);
 
 				Bundle bundle = FrameworkUtil.getBundle(
 					LoginMVCActionCommandTest.class);
@@ -121,17 +121,17 @@ public class LoginMVCActionCommandTest {
 
 				MockLiferayPortletActionRequest
 					mockLiferayPortletActionRequest1 =
-						_getMockLiferayPortletActionRequest(user, password);
+						_getMockLiferayPortletActionRequest(user1, password);
 
 				_mvcActionCommand.processAction(
 					mockLiferayPortletActionRequest1,
 					new MockLiferayPortletActionResponse());
 
-				User user1 = _userLocalService.getUser(user.getUserId());
+				User user2 = _userLocalService.getUser(user1.getUserId());
 
 				Assert.assertEquals(
-					user.isPasswordReset(), user1.isPasswordReset());
-				Assert.assertTrue(user1.isPasswordReset());
+					user1.isPasswordReset(), user2.isPasswordReset());
+				Assert.assertTrue(user2.isPasswordReset());
 
 				bundleContext.registerService(
 					HeadlessMFAChecker.class, new HeadlessMFATestCheckerTrue(),
@@ -185,11 +185,11 @@ public class LoginMVCActionCommandTest {
 					liferayActionRequest,
 					new MockLiferayPortletActionResponse());
 
-				user1 = _userLocalService.getUser(user.getUserId());
+				user2 = _userLocalService.getUser(user1.getUserId());
 
 				Assert.assertEquals(
-					user.isPasswordReset(), user1.isPasswordReset());
-				Assert.assertTrue(user1.isPasswordReset());
+					user1.isPasswordReset(), user2.isPasswordReset());
+				Assert.assertTrue(user2.isPasswordReset());
 			}
 			catch (Exception exception) {
 				_log.error("Pushing Service Context ", exception);

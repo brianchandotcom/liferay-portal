@@ -91,7 +91,6 @@ public class SegmentsExperienceManagerTest {
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
 				new long[] {segmentsExperience1.getSegmentsExperienceId()});
 
-
 			SegmentsExperience segmentsExperience2 =
 				SegmentsTestUtil.addSegmentsExperience(
 					_group.getGroupId(), _layout.getPlid());

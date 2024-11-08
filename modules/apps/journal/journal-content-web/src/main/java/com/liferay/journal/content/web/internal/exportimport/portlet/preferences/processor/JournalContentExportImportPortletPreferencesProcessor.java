@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
@@ -184,14 +185,11 @@ public class JournalContentExportImportPortletPreferencesProcessor
 							WorkflowConstants.STATUS_SCHEDULED
 						});
 
-			if (article != null) {
-				JournalArticleResource articleResource =
-					_journalArticleResourceLocalService.fetchArticleResource(
-						article.getGroupId(), article.getArticleId());
+			if ((article != null) &&
+				Objects.equals(
+					article.getStatus(), WorkflowConstants.STATUS_IN_TRASH)) {
 
-				if (articleResource == null) {
-					article = null;
-				}
+				article = null;
 			}
 		}
 		else {

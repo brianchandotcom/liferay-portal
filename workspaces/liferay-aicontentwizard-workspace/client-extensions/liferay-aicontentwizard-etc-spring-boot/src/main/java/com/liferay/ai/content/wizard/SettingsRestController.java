@@ -14,7 +14,6 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,12 +36,12 @@ public class SettingsRestController extends BaseRestController {
 			_getAuthorization(), "", "/o/c/k9l6aicontentwizardsettings" + id);
 	}
 
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping
 	public ResponseEntity<String> get() {
 		return new ResponseEntity<>(_get(), HttpStatus.OK);
 	}
 
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/status")
+	@GetMapping("/status")
 	public ResponseEntity<String> getStatus() {
 		JSONObject jsonObject = new JSONObject(_get());
 
@@ -76,7 +75,7 @@ public class SettingsRestController extends BaseRestController {
 			HttpStatus.OK);
 	}
 
-	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping
 	public ResponseEntity<String> post(@RequestBody String json) {
 		return new ResponseEntity<>(
 			post(_getAuthorization(), json, "/o/c/k9l6aicontentwizardsettings"),

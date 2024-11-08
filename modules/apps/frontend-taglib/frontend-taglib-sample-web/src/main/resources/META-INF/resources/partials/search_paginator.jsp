@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchPaginatorDisplayContext searchPaginatorDisplayContext = (SearchPaginatorDisplayContext)request.getAttribute(SamplePortletKeys.SEARCH_PAGINATOR_DISPLAY_CONTEXT);
+SearchPaginatorDisplayContext searchPaginatorDisplayContext = (SearchPaginatorDisplayContext)request.getAttribute(TaglibSamplePortletKeys.SEARCH_PAGINATOR_DISPLAY_CONTEXT);
 %>
 
 <clay:container-fluid>

@@ -8,12 +8,12 @@ package com.liferay.frontend.taglib.sample.web.internal.constants;
 /**
  * @author Miguel Arroyo
  */
-public class SamplePortletKeys {
-
-	public static final String SAMPLE_PORTLET =
-		"com_liferay_sample_web_portlet_SamplePortlet";
+public class TaglibSamplePortletKeys {
 
 	public static final String SEARCH_PAGINATOR_DISPLAY_CONTEXT =
 		"SEARCH_PAGINATOR_DISPLAY_CONTEXT";
+
+	public static final String TAGLIB_SAMPLE_PORTLET =
+		"com_liferay_sample_web_portlet_TaglibSamplePortlet";
 
 }

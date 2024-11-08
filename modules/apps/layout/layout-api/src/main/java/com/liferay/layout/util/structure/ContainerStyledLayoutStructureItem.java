@@ -262,7 +262,11 @@ public class ContainerStyledLayoutStructureItem
 		}
 
 		if (itemConfigJSONObject.has("htmlTag")) {
-			setHtmlTag(itemConfigJSONObject.getString("htmlTag"));
+			String htmlTag = itemConfigJSONObject.getString("htmlTag");
+
+			if (!Objects.equals(htmlTag, "main")) {
+				setHtmlTag(htmlTag);
+			}
 		}
 
 		if (itemConfigJSONObject.has("justify")) {

@@ -7,8 +7,8 @@ import {stringUtils} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
+import ModalDeletionNotAllowed from '../ModalDeletionNotAllowed';
 import ModalImport from '../ModalImport/ModalImport';
-import ModalObjectFieldDeletionNotAllowed from '../ModalObjectFieldDeletionNotAllowed';
 import {ModalAddObjectDefinition} from './ModalAddObjectDefinition';
 import {ModalAddObjectFolder} from './ModalAddObjectFolder';
 import {ModalBindToRootObjectDefinition} from './ModalBindToRootObjectDefinition';
@@ -239,7 +239,7 @@ export function ViewObjectDefinitionsModals({
 			{showModal.objectDefinitionOnRootModelDeletionNotAllowed &&
 				selectedObjectDefinition &&
 				Liferay.FeatureFlags['LPS-187142'] && (
-					<ModalObjectFieldDeletionNotAllowed
+					<ModalDeletionNotAllowed
 						content={
 							<span
 								dangerouslySetInnerHTML={{
@@ -249,7 +249,7 @@ export function ViewObjectDefinitionsModals({
 								}}
 							/>
 						}
-						onVisibilityChange={() =>
+						onModalClose={() =>
 							setShowModal((previousState) => ({
 								...previousState,
 								objectDefinitionOnRootModelDeletionNotAllowed:
@@ -262,7 +262,7 @@ export function ViewObjectDefinitionsModals({
 			{showModal.objectFieldDeletionNotAllowed &&
 				selectedObjectDefinition &&
 				Liferay.FeatureFlags['LPS-187142'] && (
-					<ModalObjectFieldDeletionNotAllowed
+					<ModalDeletionNotAllowed
 						content={
 							<span
 								dangerouslySetInnerHTML={{
@@ -279,7 +279,7 @@ export function ViewObjectDefinitionsModals({
 								}}
 							/>
 						}
-						onVisibilityChange={() =>
+						onModalClose={() =>
 							setShowModal((previousState) => ({
 								...previousState,
 								objectFieldDeletionNotAllowed: false,

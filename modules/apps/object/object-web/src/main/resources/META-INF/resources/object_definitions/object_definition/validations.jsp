@@ -64,6 +64,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div>
 	<react:component
-		module="{ModalObjectFieldDeletionNotAllowed} from object-web"
+		module="{ModalDeletionNotAllowed} from object-web"
 	/>
 </div>

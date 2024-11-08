@@ -13,7 +13,7 @@ import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';
 import {getObjectFieldBusinessTypeLabel} from '../../utils/getObjectFieldBusinessTypeLabel';
 import FDSSourceDataRenderer from '../FDSPropsTransformer/FDSSourceDataRenderer';
 import LabelRenderer from '../LabelRenderer';
-import ModalObjectFieldDeletionNotAllowed from '../ModalObjectFieldDeletionNotAllowed';
+import ModalDeletionNotAllowed from '../ModalDeletionNotAllowed';
 import {ModalAddObjectField} from './ModalAddObjectField';
 import {ModalDeleteObjectField} from './ModalDeleteObjectField';
 import {handleTriggerDeleteObjectField} from './deleteObjectFieldUtil';
@@ -239,7 +239,7 @@ export default function Fields({
 
 			{!!deletedObjectField &&
 				objectFieldDeleteInfo.showObjectFieldDeletionNotAllowedModal && (
-					<ModalObjectFieldDeletionNotAllowed
+					<ModalDeletionNotAllowed
 						content={
 							objectFieldDeleteInfo.deleteObjectFieldObjectValidationRuleSetting ? (
 								<Text>
@@ -269,7 +269,7 @@ export default function Fields({
 								</Text>
 							)
 						}
-						onVisibilityChange={() =>
+						onModalClose={() =>
 							setObjectFieldDeleteInfo({
 								...objectFieldDeleteInfo,
 								showObjectFieldDeletionNotAllowedModal: false,

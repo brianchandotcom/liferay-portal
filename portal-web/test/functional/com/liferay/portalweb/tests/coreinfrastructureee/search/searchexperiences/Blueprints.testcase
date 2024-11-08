@@ -13,9 +13,9 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		WikiPortlet.enableWiki();
-
 		User.firstLoginPG();
+
+		WikiPortlet.enableWiki();
 	}
 
 	tearDown {

@@ -135,16 +135,6 @@ public class DisplayPageTemplateResourceTest
 	@Ignore
 	@Override
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage()
-		throws Exception {
-
-		super.
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage()
 		throws Exception {
 
@@ -223,25 +213,13 @@ public class DisplayPageTemplateResourceTest
 
 		Assert.assertNull(postDisplayPageTemplate.getParentFolder());
 
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), testGroup.getGroupId(),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(),
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
-					ServiceContextTestUtil.getServiceContext(
-						testGroup, TestPropsValues.getUserId()));
-
 		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			postDisplayPageTemplate.getExternalReferenceCode(),
 			new DisplayPageTemplateFolder() {
 				{
 					setExternalReferenceCode(
-						layoutPageTemplateCollection.
-							getExternalReferenceCode());
+						_getLayoutPageTemplateCollectionExternalReferenceCode(
+							testGroup.getGroupId()));
 				}
 			},
 			Boolean.FALSE);
@@ -349,6 +327,55 @@ public class DisplayPageTemplateResourceTest
 
 	@Override
 	protected DisplayPageTemplate
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage_addDisplayPageTemplate(
+				String siteExternalReferenceCode,
+				String displayPageTemplateFolderExternalReferenceCode,
+				DisplayPageTemplate displayPageTemplate)
+		throws Exception {
+
+		return displayPageTemplateResource.
+			postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplate(
+				siteExternalReferenceCode,
+				displayPageTemplateFolderExternalReferenceCode,
+				displayPageTemplate);
+	}
+
+	@Override
+	protected String
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage_getDisplayPageTemplateFolderExternalReferenceCode()
+		throws Exception {
+
+		return _getLayoutPageTemplateCollectionExternalReferenceCode(
+			testGroup.getGroupId());
+	}
+
+	@Override
+	protected String
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage_getIrrelevantDisplayPageTemplateFolderExternalReferenceCode()
+		throws Exception {
+
+		return _getLayoutPageTemplateCollectionExternalReferenceCode(
+			irrelevantGroup.getGroupId());
+	}
+
+	@Override
+	protected String
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage_getIrrelevantSiteExternalReferenceCode()
+		throws Exception {
+
+		return irrelevantGroup.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		return testGroup.getExternalReferenceCode();
+	}
+
+	@Override
+	protected DisplayPageTemplate
 			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage_addDisplayPageTemplate(
 				String siteExternalReferenceCode,
 				DisplayPageTemplate displayPageTemplate)
@@ -383,6 +410,25 @@ public class DisplayPageTemplateResourceTest
 
 		return testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage_addDisplayPageTemplate(
 			testGroup.getExternalReferenceCode(), displayPageTemplate);
+	}
+
+	private String _getLayoutPageTemplateCollectionExternalReferenceCode(
+			long groupId)
+		throws Exception {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), groupId,
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					ServiceContextTestUtil.getServiceContext(
+						groupId, TestPropsValues.getUserId()));
+
+		return layoutPageTemplateCollection.getExternalReferenceCode();
 	}
 
 	private ClassSubtypeReference _getRandomClassSubtypeReference() {

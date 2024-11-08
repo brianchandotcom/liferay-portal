@@ -112,7 +112,7 @@ export default function updatePriorities(defaultLanguageId, namespace) {
 				});
 			}
 
-			prioritiesChanged.value = false;
+			window[`${namespace}prioritiesChanged`] = false;
 		}
 
 		const selLanguageInput = getFormElement(form, 'prioritiesLanguageId');
@@ -137,7 +137,7 @@ export default function updatePriorities(defaultLanguageId, namespace) {
 				}
 			}
 
-			prioritiesLastLanguageId.value = selLanguageId;
+			window[`${namespace}prioritiesLastLanguageId`] = selLanguageId;
 		}
 	}
 }

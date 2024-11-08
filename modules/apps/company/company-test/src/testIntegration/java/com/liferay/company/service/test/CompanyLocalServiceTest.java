@@ -443,41 +443,9 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testAddAndDeleteCompanyWithStagedOrganizationSite()
+	public void testAddAndDeleteCompanyWithPredictableCompanyIdsEnabled()
 		throws Exception {
 
-		Company company = addCompany();
-
-		Organization companyOrganization = null;
-		Group companyOrganizationGroup = null;
-
-		try {
-			User companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
-
-			companyOrganization = _organizationLocalService.addOrganization(
-				companyAdminUser.getUserId(),
-				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-				RandomTestUtil.randomString(), true);
-
-			companyOrganizationGroup = companyOrganization.getGroup();
-
-			GroupTestUtil.enableLocalStaging(
-				companyOrganizationGroup, companyAdminUser.getUserId());
-		}
-		finally {
-			_companyLocalService.deleteCompany(company);
-		}
-
-		Assert.assertNull(
-			_organizationLocalService.fetchOrganization(
-				companyOrganization.getOrganizationId()));
-		Assert.assertNull(
-			_groupLocalService.fetchGroup(
-				companyOrganizationGroup.getGroupId()));
-	}
-
-	@Test
-	public void testAddAndDeleteCompanyWithStaticCompanyId() throws Exception {
 		boolean originalCompanyPredictableCompanyIdsEnabled =
 			ReflectionTestUtil.getAndSetFieldValue(
 				PropsValues.class, "COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED",
@@ -509,6 +477,40 @@ public class CompanyLocalServiceTest {
 				PropsValues.class, "COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED",
 				originalCompanyPredictableCompanyIdsEnabled);
 		}
+	}
+
+	@Test
+	public void testAddAndDeleteCompanyWithStagedOrganizationSite()
+		throws Exception {
+
+		Company company = addCompany();
+
+		Organization companyOrganization = null;
+		Group companyOrganizationGroup = null;
+
+		try {
+			User companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
+
+			companyOrganization = _organizationLocalService.addOrganization(
+				companyAdminUser.getUserId(),
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+				RandomTestUtil.randomString(), true);
+
+			companyOrganizationGroup = companyOrganization.getGroup();
+
+			GroupTestUtil.enableLocalStaging(
+				companyOrganizationGroup, companyAdminUser.getUserId());
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
+
+		Assert.assertNull(
+			_organizationLocalService.fetchOrganization(
+				companyOrganization.getOrganizationId()));
+		Assert.assertNull(
+			_groupLocalService.fetchGroup(
+				companyOrganizationGroup.getGroupId()));
 	}
 
 	@Test

@@ -135,6 +135,21 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutSiteSiteByExternalReferenceCodeMasterPage()
+		throws Exception {
+
+		_testPutSiteSiteByExternalReferenceCodeMasterPage(randomMasterPage());
+
+		MasterPage masterPage =
+			testPostSiteSiteByExternalReferenceCodeMasterPage_addMasterPage(
+				randomMasterPage());
+
+		_testPutSiteSiteByExternalReferenceCodeMasterPage(
+			_getMasterPage(null, masterPage.getExternalReferenceCode()));
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"externalReferenceCode", "name"};
 	}
@@ -201,6 +216,19 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		Assert.assertEquals(
 			expectedMarkedAsDefault, patchMasterPage.getMarkedAsDefault());
+	}
+
+	private void _testPutSiteSiteByExternalReferenceCodeMasterPage(
+			MasterPage masterPage)
+		throws Exception {
+
+		MasterPage putMasterPage =
+			masterPageResource.putSiteSiteByExternalReferenceCodeMasterPage(
+				testGroup.getExternalReferenceCode(),
+				masterPage.getExternalReferenceCode(), masterPage);
+
+		assertEquals(masterPage, putMasterPage);
+		assertValid(putMasterPage);
 	}
 
 	@Inject

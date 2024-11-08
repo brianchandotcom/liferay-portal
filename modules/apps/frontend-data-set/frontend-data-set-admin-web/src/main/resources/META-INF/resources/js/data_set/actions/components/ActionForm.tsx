@@ -14,7 +14,6 @@ import {InputLocalized} from 'frontend-js-components-web';
 import {fetch, openModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {IDataSet} from '../../../DataSets';
 import RequiredMark from '../../../components/RequiredMark';
 import Search from '../../../components/Search';
 import ValidationFeedback from '../../../components/ValidationFeedback';
@@ -25,6 +24,7 @@ import {
 } from '../../../utils/constants';
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
+import {IDataSet} from '../../../utils/types';
 import {EActionTarget, EActionType, IAction} from '../Actions';
 
 enum EAsyncActionMethod {

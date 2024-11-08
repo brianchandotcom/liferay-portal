@@ -13,7 +13,7 @@ import {LearnMessage} from 'frontend-js-components-web';
 import {fetch, navigate, sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
-import {IDataSet} from '../../DataSets';
+import {IDataSet} from '../..//utils/types';
 import RequiredMark from '../../components/RequiredMark';
 import {API_URL, DEFAULT_FETCH_HEADERS} from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';

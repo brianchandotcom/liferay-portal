@@ -12,4 +12,6 @@ public class CommerceCurrencyConstants {
 
 	public static final String DECIMAL_FORMAT_PATTERN = "###,##0.00";
 
+	public static final String RESOURCE_NAME = "com.liferay.commerce.currency";
+
 }

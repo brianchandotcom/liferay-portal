@@ -132,8 +132,8 @@ public abstract class BaseBuildRunner<T extends BuildData>
 				String command = JenkinsResultsParserUtil.combine(
 					"time timeout 1200 rsync -Ipqrs --chmod=go=rx ",
 					JenkinsResultsParserUtil.getCanonicalPath(file), " ",
-					_buildData.getTopLevelMasterHostname(), "::usercontent/",
-					userContentRelativePath);
+					_buildData.getTopLevelMasterHostname(),
+					":/opt/java/jenkins/userContent/", userContentRelativePath);
 
 				JenkinsResultsParserUtil.executeBashCommands(command);
 

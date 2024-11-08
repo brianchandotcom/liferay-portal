@@ -236,8 +236,9 @@ public class DisplayPageTemplateFolderResourceTest
 				DisplayPageTemplateFolder displayPageTemplateFolder)
 		throws Exception {
 
-		return testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
-			displayPageTemplateFolder);
+		return displayPageTemplateFolderResource.
+			postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				siteExternalReferenceCode, displayPageTemplateFolder);
 	}
 
 	@Override
@@ -262,10 +263,8 @@ public class DisplayPageTemplateFolderResourceTest
 				DisplayPageTemplateFolder displayPageTemplateFolder)
 		throws Exception {
 
-		return displayPageTemplateFolderResource.
-			postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				testGroup.getExternalReferenceCode(),
-				displayPageTemplateFolder);
+		return testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
+			testGroup.getExternalReferenceCode(), displayPageTemplateFolder);
 	}
 
 	private void

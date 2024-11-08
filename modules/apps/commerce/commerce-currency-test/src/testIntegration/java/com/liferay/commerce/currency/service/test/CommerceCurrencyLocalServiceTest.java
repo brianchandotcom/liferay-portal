@@ -51,7 +51,7 @@ public class CommerceCurrencyLocalServiceTest {
 	@Test(expected = DuplicateCommerceCurrencyException.class)
 	public void testAddCommerceCurrency() throws Exception {
 		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(
-			_user.getUserId(), RandomTestUtil.randomString(3),
+			null, _user.getUserId(), RandomTestUtil.randomString(3),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomString(3), BigDecimal.ZERO,
 			LocalizationUtil.getLocalizationMap(
@@ -59,7 +59,7 @@ public class CommerceCurrencyLocalServiceTest {
 			2, 2, "HALF_EVEN", false, 0.0, false);
 
 		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(
-			_user.getUserId(), _commerceCurrency.getCode(),
+			null, _user.getUserId(), _commerceCurrency.getCode(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomString(3), BigDecimal.ZERO,
 			LocalizationUtil.getLocalizationMap(

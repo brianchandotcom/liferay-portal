@@ -23,6 +23,7 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
@@ -96,7 +97,9 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		String importCreatorStrategy = (String)parameters.getOrDefault(
 			"importCreatorStrategy", "OVERWRITE_CREATOR");
 
-		if (importCreatorStrategy.equals("KEEP_CREATOR")) {
+		if (importCreatorStrategy.equals("KEEP_CREATOR") &&
+			FeatureFlagManagerUtil.isEnabled("LPD-19953")) {
+
 			UnsafeFunction<ObjectEntry, ObjectEntry, Exception>
 				objectEntryUnsafeFunction = null;
 

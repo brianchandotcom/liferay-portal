@@ -18,6 +18,7 @@ import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -60,7 +61,9 @@ public class BatchEngineImportTaskItemReaderUtil {
 		String importCreatorStrategy = (String)parameters.getOrDefault(
 			"importCreatorStrategy", "OVERWRITE_CREATOR");
 
-		if (importCreatorStrategy.equals("KEEP_CREATOR")) {
+		if (importCreatorStrategy.equals("KEEP_CREATOR") &&
+			FeatureFlagManagerUtil.isEnabled("LPD-19953")) {
+
 			keepCreatorInfo = true;
 		}
 

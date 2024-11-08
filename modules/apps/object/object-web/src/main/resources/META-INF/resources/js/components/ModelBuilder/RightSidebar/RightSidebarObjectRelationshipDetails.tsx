@@ -120,13 +120,11 @@ export function RightSidebarObjectRelationshipDetails({
 	}, [selectedObjectRelationship?.id]);
 
 	const onSubmit = async (
-		editedObjectRelationship?: Partial<ObjectRelationship>
+		objectRelationship: Partial<ObjectRelationship> = values
 	) => {
 		const validationErrors = handleValidate();
 
 		if (!Object.keys(validationErrors).length) {
-			const objectRelationship = editedObjectRelationship ?? values;
-
 			try {
 				await API.putObjectRelationship(objectRelationship);
 
@@ -230,6 +228,7 @@ export function RightSidebarObjectRelationshipDetails({
 			<div className="lfr-objects__model-builder-right-sidebar-object-relationship-content">
 				{!loading && values.objectDefinitionExternalReferenceCode1 ? (
 					<EditObjectRelationshipContent
+						autoSave
 						baseResourceURL={baseResourceURL}
 						containerWrapper={ClayPanel}
 						errors={errors}

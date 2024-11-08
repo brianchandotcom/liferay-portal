@@ -28,6 +28,7 @@ export {default as EditObjectField} from './components/ObjectField/EditObjectFie
 export {default as Fields} from './components/ObjectField/Fields';
 export {default as ObjectManagementToolbar} from './components/ObjectManagementToolbar';
 export {default as EditObjectRelationship} from './components/ObjectRelationship/EditObjectRelationship';
+export {default as ModalDisableInheritance} from './components/ObjectRelationship/ModalDisableInheritance';
 export {default as Relationships} from './components/ObjectRelationship/Relationships';
 export {default as EditObjectValidation} from './components/ObjectValidation/EditObjectValidation';
 export {default as Validations} from './components/ObjectValidation/Validations';

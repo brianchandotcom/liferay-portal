@@ -83,16 +83,6 @@ public class DisplayPageTemplateFolderResourceTest
 	@Ignore
 	@Override
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage()
-		throws Exception {
-
-		super.
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPageWithPagination()
 		throws Exception {
 
@@ -248,6 +238,22 @@ public class DisplayPageTemplateFolderResourceTest
 
 		return testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
 			displayPageTemplateFolder);
+	}
+
+	@Override
+	protected String
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_getIrrelevantSiteExternalReferenceCode()
+		throws Exception {
+
+		return irrelevantGroup.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Override

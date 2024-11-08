@@ -7,21 +7,21 @@ import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
-interface ModalObjectFieldDeletionNotAllowedProps {
+interface ModalDeletionNotAllowedProps {
 	content: React.ReactNode;
-	onVisibilityChange: () => void;
+	onModalClose: () => void;
 }
 
-function ModalObjectFieldDeletionNotAllowed({
+function ModalDeletionNotAllowed({
 	content,
-	onVisibilityChange,
-}: ModalObjectFieldDeletionNotAllowedProps) {
+	onModalClose,
+}: ModalDeletionNotAllowedProps) {
 	const [bodyContent, setBodyContent] = useState<React.ReactNode>(content);
 	const [visibility, setVisibility] = useState(false);
 
 	const {observer, onClose} = useModal({
 		onClose: () => {
-			onVisibilityChange ? onVisibilityChange() : setVisibility(false);
+			onModalClose ? onModalClose() : setVisibility(false);
 		},
 	});
 
@@ -31,11 +31,11 @@ function ModalObjectFieldDeletionNotAllowed({
 			setBodyContent(contentLiferayFire);
 		};
 
-		Liferay.on('openModalObjectFieldDeletionNotAllowed', openModal);
+		Liferay.on('openModalDeletionNotAllowed', openModal);
 
 		return () =>
 			Liferay.detach(
-				'openModalObjectFieldDeletionNotAllowed',
+				'openModalDeletionNotAllowed',
 				openModal as () => void
 			);
 	}, []);
@@ -68,4 +68,4 @@ function ModalObjectFieldDeletionNotAllowed({
 	);
 }
 
-export default ModalObjectFieldDeletionNotAllowed;
+export default ModalDeletionNotAllowed;

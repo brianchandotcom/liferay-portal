@@ -5,20 +5,24 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {membershipsPagesTest} from '../site-admin-web/fixtures/membershipsPagesTest';
 
-export const test = mergeTests(loginTest(), productMenuPageTest);
+export const test = mergeTests(
+	apiHelpersTest,
+	loginTest(),
+	membershipsPagesTest
+);
 
 test(
 	'Confirm search bar does not display for membership requests',
 	{
 		tag: '@LPD-36275',
 	},
-	async ({page, productMenuPage}) => {
-		await productMenuPage.openProductMenuIfClosed();
-		await productMenuPage.goToMemberships();
+	async ({membershipsPage, page}) => {
+		await membershipsPage.goto();
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -29,5 +33,93 @@ test(
 		});
 
 		await expect(page.getByPlaceholder('Search for')).not.toBeVisible();
+	}
+);
+
+test(
+	'Bulk removal of roles from users',
+	{
+		tag: '@LPD-41737',
+	},
+	async ({apiHelpers, membershipsPage, page}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		const siteId = await page.evaluate(() => {
+			return String(Liferay.ThemeDisplay.getSiteGroupId());
+		});
+
+		const siteRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			siteId,
+			user.id
+		);
+
+		await membershipsPage.goto();
+		await membershipsPage.assignSiteAdministratorRole();
+		await membershipsPage.filterBySiteAdministratorRole();
+		await membershipsPage.removeSiteAdministratorRole();
+
+		await expect(
+			page.getByText(
+				'No user was found that is a direct member of this site.'
+			)
+		).toBeVisible();
+
+		await page.getByLabel('Remove Site Administrator').click();
+
+		await expect(page.getByText(user.name)).toBeVisible();
+
+		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+	}
+);
+
+test(
+	'Bulk removal of roles from user groups',
+	{
+		tag: '@LPD-41737',
+	},
+	async ({apiHelpers, membershipsPage, page}) => {
+		const userGroup1 = await apiHelpers.headlessAdminUser.postUserGroup();
+		const userGroup2 = await apiHelpers.headlessAdminUser.postUserGroup();
+
+		await membershipsPage.goto();
+
+		await page.getByRole('link', {name: 'User Groups'}).click();
+
+		await page.getByRole('button', {name: 'Add'}).click();
+
+		await page
+			.frameLocator('iframe[title="Assign User Groups to This Site"]')
+			.getByLabel('Select All Items on the Page')
+			.click();
+
+		await page.getByRole('button', {name: 'Done'}).click();
+
+		await page.waitForTimeout(500);
+
+		await membershipsPage.assignSiteAdministratorRole();
+		await membershipsPage.filterBySiteAdministratorRole();
+		await membershipsPage.removeSiteAdministratorRole();
+
+		await expect(
+			page.getByText(
+				' No user group was found that is a member of this site.'
+			)
+		).toBeVisible();
+
+		await page.getByLabel('Remove Site Administrator').click();
+
+		await expect(page.getByText(userGroup1.name)).toBeVisible();
+		await expect(page.getByText(userGroup2.name)).toBeVisible();
+
+		await apiHelpers.headlessAdminUser.deleteUserGroup(
+			Number(userGroup1.id)
+		);
+		await apiHelpers.headlessAdminUser.deleteUserGroup(
+			Number(userGroup2.id)
+		);
 	}
 );

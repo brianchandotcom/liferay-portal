@@ -1,25 +1,79 @@
 <mjml>
-  <mj-head>
-    <mj-include path="partials/head.mjml" />
-  </mj-head>
+	<mj-head>
+		<mj-include path="partials/onboarding/config.mjml" />
+	</mj-head>
 
-  <mj-body background-color="#ffffff">
-    <mj-section padding-bottom="0" padding-top="10px">
-      <mj-column width="15%">
-        <mj-include path="partials/logo.mjml" />
-      </mj-column>
+	<mj-body>
+		<mj-include path="partials/onboarding/header.mjml" />
 
-      <mj-column width="85%">
-        <mj-include path="partials/header.mjml" />
+		<mj-section>
+			<mj-column>
+				<mj-text align="center" color="#272833" font-size="32px" font-weight="700">Welcome to Analytics Cloud!</mj-text>
+			</mj-column>
+		</mj-section>
 
-        <mj-include path="partials/body-workspace.mjml" />
-      </mj-column>
-    </mj-section>
+		<mj-section>
+			<mj-column width="556px">
+				<mj-text align="center" color="#6B6C7E" line-height="21px">
+					Your workspace, [$WORKSPACE_NAME$], is ready. You are moments away from serving your customers better with data driven insights.	
+				</mj-text>
 
-    <mj-section>
-      <mj-column>
-        <mj-include path="partials/footer.mjml" />
-      </mj-column>
-    </mj-section>
-  </mj-body>
+				<mj-text align="center" color="#6B6C7E" line-height="21px">
+					Sign in with your existing Liferay username and password, or <a style="color: #0b5fff; text-decoration: none;" href="https://login.liferay.com/signin/register" target="_blank">create an account</a> using [$OWNER_EMAIL$].
+				</mj-text>
+			</mj-column>
+		</mj-section>
+
+		<mj-section padding-bottom="50px">
+			<mj-column width="506px" padding="30px" background-color="#F0F5FF">
+				<mj-text color="#272833" font-size="18px" font-weight="600">
+					Getting Started
+				</mj-text>
+
+				<mj-text color="#272833" font-size="16px" padding="25px 25px 20px 25px" font-weight="400">
+					Get up and running in three steps:
+				</mj-text>
+
+				<mj-text>
+					<table role="presentation" cellpadding="0" cellspacing="0" style="display: inline-table; vertical-align: middle;">
+						<tr>
+							<td style="padding-right: 15px;">
+								<img src="[$ICON_CHECK_URL$]" width="14px" style="display: block;" />
+							</td>
+
+							<td style="line-height: 35px; font-size: 16px; color: #272833;">
+								Connect your Liferay DXP sites to a property.
+							</td>
+						</tr>
+
+						<tr>
+							<td style="padding-right: 15px;">
+								<img src="[$ICON_CHECK_URL$]" width="14px" style="display: block;" />
+							</td>
+
+							<td style="line-height: 35px; font-size: 16px; color: #272833;">
+								Invite teammates to collaborate.
+							</td>
+						</tr>
+
+						<tr>
+							<td style="padding-right: 15px;">
+								<img src="[$ICON_CHECK_URL$]" width="14px" style="display: block;" />
+							</td>
+
+							<td style="line-height: 35px; font-size: 16px; color: #272833;">
+								Connect and map user data.
+							</td>
+						</tr>
+					</table>
+				</mj-text>
+
+				<mj-divider border-width="0" />
+
+				<mj-include path="partials/onboarding/go-to-analytics-cloud-button.mjml" />
+			</mj-column>
+		</mj-section>
+
+		<mj-include path="partials/onboarding/footer.mjml" />
+	</mj-body>
 </mjml>

@@ -78,6 +78,7 @@
 				"enabled": {
 					"default": false,
 					"description": "Enable postprocessing of all legacy markup in fragments, web content, and blogs so that Adaptive Media is able to work with it. Enabling this option may impact the performance of your sites.",
+					"title": "Enabled",
 					"type": "boolean"
 				},
 				"pid": {

@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -22,6 +24,8 @@ import java.util.function.Consumer;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 
@@ -39,6 +43,18 @@ public class CompanyThreadLocalTest {
 			ProxyFactory.newDummyInstance(CTCollectionIdSupplier.class), null);
 
 		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = Mockito.mock(Portal.class);
+
+		Mockito.when(
+			portal.isUpgrading()
+		).thenReturn(
+			true
+		);
+
+		portalUtil.setPortal(portal);
 	}
 
 	@Test

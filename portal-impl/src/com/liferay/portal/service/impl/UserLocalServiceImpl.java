@@ -490,9 +490,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		defaultServiceAccountUser = addUser(
 			UserConstants.USER_ID_DEFAULT, company.getCompanyId(), true, null,
-			null, false, screenName, screenName + StringPool.AT +
-				company.getMx(), LocaleUtil.fromLanguageId(
-				PropsValues.COMPANY_DEFAULT_LOCALE),
+			null, false, screenName,
+			screenName + StringPool.AT + company.getMx(),
+			LocaleUtil.fromLanguageId(PropsValues.COMPANY_DEFAULT_LOCALE),
 			screenName, StringPool.BLANK, screenName, 0, 0, true,
 			Calendar.JANUARY, 1, 1970, StringPool.BLANK,
 			UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT, null, null,

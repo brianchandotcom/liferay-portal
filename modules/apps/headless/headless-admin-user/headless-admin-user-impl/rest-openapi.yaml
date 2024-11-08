@@ -1121,6 +1121,11 @@ components:
                     description:
                         The user's surname (last name).
                     type: string
+                gender:
+                    description:
+                        The user's gender.
+                    enum: [Male, Female]
+                    type: string
                 givenName:
                     description:
                         The user's first name.

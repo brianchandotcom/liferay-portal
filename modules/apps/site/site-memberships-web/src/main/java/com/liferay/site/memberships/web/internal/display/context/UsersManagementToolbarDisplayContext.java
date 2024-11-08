@@ -177,6 +177,12 @@ public class UsersManagementToolbarDisplayContext
 				ActionKeys.ASSIGN_USER_ROLES)) {
 
 			availableActions.add("selectRole");
+
+			Role role = _usersDisplayContext.getRole();
+
+			if (role != null) {
+				availableActions.add("removeUserRole");
+			}
 		}
 
 		return StringUtil.merge(availableActions, StringPool.COMMA);

@@ -30,6 +30,23 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		});
 	};
 
+	const removeUserRole = (itemData) => {
+		openConfirmModal({
+			message: Liferay.Language.get(itemData?.message),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					const form = document.getElementById(
+						`${portletNamespace}fm`
+					);
+
+					if (form) {
+						submitForm(form, itemData?.removeUserRoleURL);
+					}
+				}
+			},
+		});
+	};
+
 	const selectRole = (itemData) => {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
@@ -134,6 +151,9 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 			if (action === 'deleteSelectedUsers') {
 				deleteSelectedUsers();
+			}
+			else if (action === 'removeUserRole') {
+				removeUserRole(data);
 			}
 			else if (action === 'selectRole') {
 				selectRole(data);

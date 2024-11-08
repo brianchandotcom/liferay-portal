@@ -546,8 +546,8 @@ public class ObjectEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPrimaryKeyList(
-			groupId, companyId, userId, objectDefinitionId,
-			predicate, search, start, end, sorts);
+			groupId, companyId, userId, objectDefinitionId, predicate, search,
+			start, end, sorts);
 	}
 
 	public static Map<String, Object> getSystemModelAttributes(

@@ -148,6 +148,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -333,7 +334,7 @@ public class CPDefinitionLocalServiceImpl
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			cpDefinition.getCompanyId());
 
-		Map<String, String> newURLTitleMap = new HashMap<>();
+		Map<Locale, String> newURLTitleMap = new HashMap<>();
 
 		if (MapUtil.isEmpty(urlTitleMap)) {
 			newURLTitleMap = _getUniqueUrlTitles(cpDefinition, nameMap);
@@ -345,7 +346,8 @@ public class CPDefinitionLocalServiceImpl
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
 			companyGroup.getGroupId(),
 			_classNameLocalService.getClassNameId(CProduct.class),
-			cProduct.getCProductId(), newURLTitleMap, serviceContext);
+			cProduct.getCProductId(), _toLanguageIdMap(newURLTitleMap),
+			serviceContext);
 
 		// Asset
 
@@ -641,13 +643,14 @@ public class CPDefinitionLocalServiceImpl
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			newCPDefinition.getCompanyId());
 
-		Map<String, String> newURLTitleMap = _getUniqueUrlTitles(
+		Map<Locale, String> newURLTitleMap = _getUniqueUrlTitles(
 			newCPDefinition, newNameMap);
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
 			companyGroup.getGroupId(),
 			_classNameLocalService.getClassNameId(CProduct.class),
-			newCProduct.getCProductId(), newURLTitleMap, serviceContext);
+			newCProduct.getCProductId(), _toLanguageIdMap(newURLTitleMap),
+			serviceContext);
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			_cpAttachmentFileEntryPersistence.findByC_C(
@@ -2252,15 +2255,6 @@ public class CPDefinitionLocalServiceImpl
 
 		cpDefinition = cpDefinitionPersistence.update(cpDefinition);
 
-		Map<String, String> newUrlTitleMap = new HashMap<>();
-
-		if (MapUtil.isEmpty(urlTitleMap)) {
-			newUrlTitleMap = _getUniqueUrlTitles(cpDefinition, nameMap);
-		}
-		else {
-			newUrlTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
-		}
-
 		// Commerce product definition localization
 
 		_updateCPDefinitionLocalizedFields(
@@ -2270,34 +2264,8 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product friendly URL entries
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			CProduct.class);
-
-		long classPK = cpDefinition.getCProductId();
-
-		try {
-			FriendlyURLEntry friendlyURLEntry =
-				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					classNameId, classPK);
-
-			_friendlyURLEntryLocalService.updateFriendlyURLEntry(
-				friendlyURLEntry.getFriendlyURLEntryId(),
-				friendlyURLEntry.getClassNameId(),
-				friendlyURLEntry.getClassPK(),
-				friendlyURLEntry.getDefaultLanguageId(), newUrlTitleMap);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			Group companyGroup = _groupLocalService.getCompanyGroup(
-				cpDefinition.getCompanyId());
-
-			_friendlyURLEntryLocalService.addFriendlyURLEntry(
-				companyGroup.getGroupId(), classNameId, classPK, newUrlTitleMap,
-				serviceContext);
-		}
+		_addFriendlyURLEntries(
+			cpDefinition, nameMap, urlTitleMap, serviceContext);
 
 		// Asset
 
@@ -2809,6 +2777,36 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinitionLocalization);
 	}
 
+	private void _addFriendlyURLEntries(
+			CPDefinition cpDefinition, Map<Locale, String> nameMap,
+			Map<Locale, String> urlTitleMap, ServiceContext serviceContext)
+		throws PortalException {
+
+		if ((cpDefinition != null) &&
+			Objects.equals(urlTitleMap, cpDefinition.getUrlTitleMap())) {
+
+			return;
+		}
+
+		Map<Locale, String> newUrlTitleMap = new HashMap<>();
+
+		if (MapUtil.isEmpty(urlTitleMap)) {
+			newUrlTitleMap = _getUniqueUrlTitles(cpDefinition, nameMap);
+		}
+		else {
+			newUrlTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
+		}
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			cpDefinition.getCompanyId());
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			companyGroup.getGroupId(),
+			_classNameLocalService.getClassNameId(CProduct.class),
+			cpDefinition.getCProductId(), _toLanguageIdMap(newUrlTitleMap),
+			serviceContext);
+	}
+
 	private SearchContext _buildSearchContext(
 		long companyId, long[] groupIds, String keywords, int status, int start,
 		int end, Sort sort) {
@@ -2995,17 +2993,14 @@ public class CPDefinitionLocalServiceImpl
 			languageId, "_ATTRIBUTE_", optionKey, "_VALUES_NAMES");
 	}
 
-	private Map<String, String> _getUniqueUrlTitles(
+	private Map<Locale, String> _getUniqueUrlTitles(
 			CPDefinition cpDefinition, Map<Locale, String> urlTitleMap)
 		throws PortalException {
 
-		Map<String, String> newURLTitleMap = new HashMap<>();
+		Map<Locale, String> newURLTitleMap = new HashMap<>();
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			cpDefinition.getCompanyId());
-
-		long classNameId = _classNameLocalService.getClassNameId(
-			CProduct.class);
 
 		for (Map.Entry<Locale, String> titleEntry : urlTitleMap.entrySet()) {
 			String urlTitle = urlTitleMap.get(titleEntry.getKey());
@@ -3014,11 +3009,11 @@ public class CPDefinitionLocalServiceImpl
 				((urlTitle != null) && urlTitle.equals(StringPool.BLANK))) {
 
 				urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
-					companyGroup.getGroupId(), classNameId,
+					companyGroup.getGroupId(),
+					_classNameLocalService.getClassNameId(CProduct.class),
 					cpDefinition.getCProductId(), titleEntry.getValue(), null);
 
-				newURLTitleMap.put(
-					LocaleUtil.toLanguageId(titleEntry.getKey()), urlTitle);
+				newURLTitleMap.put(titleEntry.getKey(), urlTitle);
 			}
 		}
 
@@ -3106,6 +3101,16 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinition.getCompanyId(), cpDefinition.getGroupId(), userId,
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
 			cpDefinition, serviceContext, workflowContext);
+	}
+
+	private Map<String, String> _toLanguageIdMap(Map<Locale, String> map) {
+		Map<String, String> localizedMap = new HashMap<>();
+
+		map.forEach(
+			(locale, value) -> localizedMap.put(
+				LocaleUtil.toLanguageId(locale), value));
+
+		return Collections.unmodifiableMap(localizedMap);
 	}
 
 	private List<CPDefinitionLocalization> _updateCPDefinitionLocalizedFields(

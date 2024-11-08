@@ -93,6 +93,39 @@ public class DisplayPageTemplateResourceImpl
 
 	@Override
 	public Page<DisplayPageTemplate>
+			getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage(
+				String siteExternalReferenceCode,
+				String displayPageTemplateFolderExternalReferenceCode,
+				Boolean flatten)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionService.
+				getLayoutPageTemplateCollection(
+					displayPageTemplateFolderExternalReferenceCode,
+					group.getGroupId());
+
+		return Page.of(
+			transform(
+				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
+					group.getGroupId(),
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				layoutPageTemplateEntry ->
+					_displayPageTemplateDTOConverter.toDTO(
+						layoutPageTemplateEntry)));
+	}
+
+	@Override
+	public Page<DisplayPageTemplate>
 			getSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage(
 				String siteExternalReferenceCode, String search,
 				Aggregation aggregation, Filter filter, Pagination pagination,

@@ -59,6 +59,19 @@
 			"name": "text",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "RichText",
+			"externalReferenceCode": "rich-text-erc",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Rich Text"
+			},
+			"name": "richText",
+			"required": false,
+			"type": "Clob"
 		}
 	],
 	"panelCategoryKey": "site_administration.content",

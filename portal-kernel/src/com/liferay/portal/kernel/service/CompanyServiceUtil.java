@@ -54,6 +54,21 @@ public class CompanyServiceUtil {
 			companyId, webId, virtualHost, mx, maxUsers, active);
 	}
 
+	public static Company addCompany(
+			long companyId, String webId, String virtualHost, String mx,
+			int maxUsers, boolean active, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
+		throws PortalException {
+
+		return getService().addCompany(
+			companyId, webId, virtualHost, mx, maxUsers, active,
+			defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName);
+	}
+
 	/**
 	 * Adds a company.
 	 *

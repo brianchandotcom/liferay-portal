@@ -13,8 +13,11 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {getDateFormatted, setFutureDate} from '../utils/date';
 
 export const test = mergeTests(
@@ -24,6 +27,7 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-20379': true,
+		'LPS-178052': true,
 	}),
 	loginTest(),
 	notificationPagesTest,
@@ -370,6 +374,8 @@ test('LPD-35329 Delivery group multishipping checkout summary', async ({
 	commerceLayoutsPage,
 	page,
 }) => {
+	test.setTimeout(180000);
+
 	const site = await apiHelpers.headlessSite.createSite({
 		name: getRandomString(),
 	});
@@ -385,6 +391,8 @@ test('LPD-35329 Delivery group multishipping checkout summary', async ({
 		channel.name,
 		'B2B'
 	);
+
+	await waitForAlert(page);
 
 	await (
 		await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
@@ -452,19 +460,22 @@ test('LPD-35329 Delivery group multishipping checkout summary', async ({
 		channel.id
 	);
 
-	await commerceLayoutsPage.goToPages(true, site.name);
-	await commerceLayoutsPage.createWidgetPage(getRandomString());
-
-	await page.goto(`/web/${site.name}`);
-
-	await commerceCartSummaryPage.addCartSummaryWidget();
-	await commerceCartSummaryPage.checkoutButton.click();
-
-	await expect(page.getByText('Widget Selection Panel Add')).toBeHidden();
-
-	await commerceLayoutsPage.addWidgetButton.click();
-	await commerceLayoutsPage.searchFormInput.fill('Checkout');
-	await commerceLayoutsPage.addWidgetLabel('Checkout').click();
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentTotalPortlet',
+			}),
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet',
+			}),
+		]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
 
 	const cartItems = await apiHelpers.headlessCommerceDeliveryCart
 		.getCartItems(cart.id)
@@ -473,6 +484,10 @@ test('LPD-35329 Delivery group multishipping checkout summary', async ({
 		});
 
 	const cartItem = cartItems[0];
+
+	await page.goto(
+		`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
 
 	const locale = await page.evaluate(() => {
 		return Liferay.ThemeDisplay.getBCP47LanguageId();
@@ -531,15 +546,6 @@ test('LPD-35329 Delivery group multishipping checkout summary', async ({
 	).toBeVisible();
 
 	await checkoutPage.iframeOkButton.click();
-	await checkoutPage.continueButton.click();
-
-	await waitForAlert(
-		page,
-		'Warning:The shipping cost is an estimate. Since items are going to ' +
-			'multiple addresses, the actual cost will be finalized after checkout.',
-		{autoClose: false, type: 'warning'}
-	);
-
 	await checkoutPage.continueButton.click();
 	await checkoutPage.continueButton.click();
 

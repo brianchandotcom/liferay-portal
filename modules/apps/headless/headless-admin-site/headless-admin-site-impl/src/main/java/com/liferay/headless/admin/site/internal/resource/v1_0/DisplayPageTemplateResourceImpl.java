@@ -164,7 +164,35 @@ public class DisplayPageTemplateResourceImpl
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
 
-		return _addDisplayPageTemplate(displayPageTemplate, group);
+		return _addDisplayPageTemplate(
+			displayPageTemplate, group,
+			_getLayoutPageTemplateCollectionId(displayPageTemplate, group));
+	}
+
+	@Override
+	public DisplayPageTemplate
+			postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplate(
+				String siteExternalReferenceCode,
+				String displayPageTemplateFolderExternalReferenceCode,
+				DisplayPageTemplate displayPageTemplate)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionService.
+				getLayoutPageTemplateCollection(
+					displayPageTemplateFolderExternalReferenceCode,
+					group.getGroupId());
+
+		return _addDisplayPageTemplate(
+			displayPageTemplate, group,
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
 	}
 
 	@Override
@@ -189,7 +217,9 @@ public class DisplayPageTemplateResourceImpl
 					group.getGroupId());
 
 		if (layoutPageTemplateEntry == null) {
-			return _addDisplayPageTemplate(displayPageTemplate, group);
+			return _addDisplayPageTemplate(
+				displayPageTemplate, group,
+				_getLayoutPageTemplateCollectionId(displayPageTemplate, group));
 		}
 
 		long layoutPageTemplateCollectionId =
@@ -236,7 +266,8 @@ public class DisplayPageTemplateResourceImpl
 	}
 
 	private DisplayPageTemplate _addDisplayPageTemplate(
-			DisplayPageTemplate displayPageTemplate, Group group)
+			DisplayPageTemplate displayPageTemplate, Group group,
+			long layoutPageTemplateCollectionId)
 		throws Exception {
 
 		ClassSubtypeReference contentTypeReference =
@@ -245,8 +276,7 @@ public class DisplayPageTemplateResourceImpl
 		return _displayPageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				displayPageTemplate.getExternalReferenceCode(),
-				group.getGroupId(),
-				_getLayoutPageTemplateCollectionId(displayPageTemplate, group),
+				group.getGroupId(), layoutPageTemplateCollectionId,
 				_portal.getClassNameId(contentTypeReference.getClassName()),
 				_getClassTypeId(contentTypeReference, group.getGroupId()),
 				displayPageTemplate.getName(), 0L,

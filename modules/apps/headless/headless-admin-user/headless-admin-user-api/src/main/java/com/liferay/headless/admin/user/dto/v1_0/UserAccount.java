@@ -606,6 +606,60 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _familyNameSupplier;
 
+	@JsonGetter("gender")
+	@Schema(description = "The user's gender.")
+	@Valid
+	public Gender getGender() {
+		if (_genderSupplier != null) {
+			gender = _genderSupplier.get();
+
+			_genderSupplier = null;
+		}
+
+		return gender;
+	}
+
+	@JsonIgnore
+	public String getGenderAsString() {
+		Gender gender = getGender();
+
+		if (gender == null) {
+			return null;
+		}
+
+		return gender.toString();
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+
+		_genderSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setGender(
+		UnsafeSupplier<Gender, Exception> genderUnsafeSupplier) {
+
+		_genderSupplier = () -> {
+			try {
+				return genderUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The user's gender.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Gender gender;
+
+	@JsonIgnore
+	private Supplier<Gender> _genderSupplier;
+
 	@Schema(description = "The user's first name.")
 	public String getGivenName() {
 		if (_givenNameSupplier != null) {
@@ -1787,6 +1841,22 @@ public class UserAccount implements Serializable {
 			sb.append("\"");
 		}
 
+		Gender gender = getGender();
+
+		if (gender != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"gender\": ");
+
+			sb.append("\"");
+
+			sb.append(gender);
+
+			sb.append("\"");
+		}
+
 		String givenName = getGivenName();
 
 		if (givenName != null) {
@@ -2169,6 +2239,44 @@ public class UserAccount implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Gender")
+	public static enum Gender {
+
+		MALE("Male"), FEMALE("Female");
+
+		@JsonCreator
+		public static Gender create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Gender gender : values()) {
+				if (Objects.equals(gender.getValue(), value)) {
+					return gender;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Gender(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	@GraphQLName("Status")
 	public static enum Status {

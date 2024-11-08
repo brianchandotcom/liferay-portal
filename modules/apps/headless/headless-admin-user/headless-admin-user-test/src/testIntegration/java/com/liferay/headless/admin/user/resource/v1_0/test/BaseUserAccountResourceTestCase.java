@@ -5216,6 +5216,14 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("gender", additionalAssertFieldName)) {
+				if (userAccount.getGender() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("givenName", additionalAssertFieldName)) {
 				if (userAccount.getGivenName() == null) {
 					valid = false;
@@ -5650,6 +5658,16 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getFamilyName(),
 						userAccount2.getFamilyName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("gender", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getGender(), userAccount2.getGender())) {
 
 					return false;
 				}
@@ -6438,6 +6456,11 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("gender")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("givenName")) {

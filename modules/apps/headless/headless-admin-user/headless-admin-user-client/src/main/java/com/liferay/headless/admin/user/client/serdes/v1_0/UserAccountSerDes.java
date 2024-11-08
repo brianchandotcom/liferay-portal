@@ -251,6 +251,20 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
+		if (userAccount.getGender() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"gender\": ");
+
+			sb.append("\"");
+
+			sb.append(userAccount.getGender());
+
+			sb.append("\"");
+		}
+
 		if (userAccount.getGivenName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -710,6 +724,13 @@ public class UserAccountSerDes {
 			map.put("familyName", String.valueOf(userAccount.getFamilyName()));
 		}
 
+		if (userAccount.getGender() == null) {
+			map.put("gender", null);
+		}
+		else {
+			map.put("gender", String.valueOf(userAccount.getGender()));
+		}
+
 		if (userAccount.getGivenName() == null) {
 			map.put("givenName", null);
 		}
@@ -940,6 +961,9 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "familyName")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "gender")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "givenName")) {
 				return false;
 			}
@@ -1116,6 +1140,13 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "familyName")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setFamilyName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "gender")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setGender(
+						UserAccount.Gender.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "givenName")) {

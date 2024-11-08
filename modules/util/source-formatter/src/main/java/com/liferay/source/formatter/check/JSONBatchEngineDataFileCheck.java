@@ -5,10 +5,15 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+
+import java.util.List;
 
 /**
  * @author Qi Zhang
@@ -53,7 +58,36 @@ public class JSONBatchEngineDataFileCheck extends BaseFileCheck {
 			jsonObject.put("configuration", configurationJSONObject);
 		}
 
+		jsonObject = _checkItems(jsonObject);
+
 		return JSONUtil.toString(jsonObject);
+	}
+
+	private JSONObject _checkItems(JSONObject jsonObject) {
+		JSONArray jsonArray = jsonObject.getJSONArray("items");
+
+		if (jsonArray != null) {
+			List<Object> objects = JSONUtil.toObjectList(jsonArray);
+
+			jsonArray = new JSONArrayImpl();
+
+			for (Object object : objects) {
+				JSONObject itemJSONObject = (JSONObject)object;
+
+				String defaultLanguageId = itemJSONObject.getString(
+					"defaultLanguageId");
+
+				if (defaultLanguageId.equals(StringPool.BLANK)) {
+					itemJSONObject.put("defaultLanguageId", "en_US");
+				}
+
+				jsonArray.put(itemJSONObject);
+			}
+
+			jsonObject.put("items", jsonArray);
+		}
+
+		return jsonObject;
 	}
 
 }

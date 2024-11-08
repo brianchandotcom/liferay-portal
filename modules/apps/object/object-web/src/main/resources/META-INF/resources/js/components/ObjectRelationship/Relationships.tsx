@@ -15,7 +15,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';
 import LabelRenderer from '../LabelRenderer';
-import ModalObjectFieldDeletionNotAllowed from '../ModalObjectFieldDeletionNotAllowed';
+import ModalDeletionNotAllowed from '../ModalDeletionNotAllowed';
 import {deleteRelationship} from '../ViewObjectDefinitions/objectDefinitionUtil';
 import {ModalAddObjectRelationship} from './ModalAddObjectRelationship';
 import {ModalDeleteObjectRelationship} from './ModalDeleteObjectRelationship';
@@ -275,7 +275,7 @@ export default function Relationships({
 
 			{showDeletionNotAllowedModal &&
 				Liferay.FeatureFlags['LPS-187142'] && (
-					<ModalObjectFieldDeletionNotAllowed
+					<ModalDeletionNotAllowed
 						content={
 							<span
 								dangerouslySetInnerHTML={{
@@ -285,7 +285,7 @@ export default function Relationships({
 								}}
 							/>
 						}
-						onVisibilityChange={() =>
+						onModalClose={() =>
 							setShowDeletionNotAllowedModal(false)
 						}
 					/>

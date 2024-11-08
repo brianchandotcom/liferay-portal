@@ -5,36 +5,57 @@
 
 package com.liferay.commerce.product.util.test;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
+import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.context.CommerceContextThreadLocal;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
+import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,10 +96,31 @@ public class CPInstanceHelperTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		_group = GroupTestUtil.addGroup(
+			_user.getCompanyId(), _user.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_user.getCompanyId());
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_user.getCompanyId(), _group.getGroupId(), _user.getUserId());
+
+		_commerceChannel = CommerceChannelLocalServiceUtil.addCommerceChannel(
+			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			_group.getGroupId(), "Test Channel",
+			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
+			_commerceCurrency.getCode(), _serviceContext);
+
 		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(
 			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			LocaleUtil.US.getDisplayLanguage(),
-			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
+			LocaleUtil.US.getDisplayLanguage(), _serviceContext);
+
+		CommercePriceListTestUtil.addCommercePriceList(
+			_commerceCatalog.getGroupId(), true,
+			CommercePriceListConstants.TYPE_PRICE_LIST, 1.0);
 	}
 
 	@After
@@ -254,6 +296,37 @@ public class CPInstanceHelperTest {
 
 		Assert.assertNull(
 			"Fetched CP instance does not exist", fetchCPInstance);
+	}
+
+	@Test
+	public void testFetchCPInstanceUnitPrice() throws Exception {
+		frutillaRule.scenario(
+			"Fetch unit price for cpInstance"
+		).given(
+			"a price entry is added for the cpInstance"
+		).when(
+			"the unit price for cpInstance is fetched"
+		).then(
+			"price is returned"
+		);
+
+		AccountEntry accountEntry =
+			CommerceAccountTestUtil.addBusinessAccountEntry(
+				_user.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + "@liferay.com",
+				RandomTestUtil.randomString(), new long[] {_user.getUserId()},
+				null, _serviceContext);
+
+		CommerceContextThreadLocal.set(
+			_commerceContextFactory.create(
+				_company.getCompanyId(), _commerceChannel.getGroupId(),
+				_user.getUserId(), 0, accountEntry.getAccountEntryId()));
+
+		BigDecimal unitPrice = _cpInstanceHelper.fetchCPInstanceUnitPrice(
+			CPTestUtil.addCPInstanceFromCatalog(
+				_commerceCatalog.getGroupId(), BigDecimal.TEN));
+
+		Assert.assertEquals(unitPrice, BigDecimal.TEN);
 	}
 
 	@Test
@@ -553,6 +626,15 @@ public class CPInstanceHelperTest {
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
+	@DeleteAfterTestRun
+	private CommerceChannel _commerceChannel;
+
+	@Inject
+	private CommerceContextFactory _commerceContextFactory;
+
+	@DeleteAfterTestRun
+	private CommerceCurrency _commerceCurrency;
+
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
@@ -568,5 +650,13 @@ public class CPInstanceHelperTest {
 
 	@Inject
 	private CPOptionLocalService _cpOptionLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	private ServiceContext _serviceContext;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

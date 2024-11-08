@@ -11,12 +11,12 @@ import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
 import com.liferay.oauth.client.persistence.service.persistence.OAuthClientEntryUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -26,17 +26,11 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import java.util.Dictionary;
-
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Istvan Sajtos
@@ -49,60 +43,51 @@ public class OAuthClientEntryUpgradeProcessTest {
 	public static final LiferayIntegrationTestRule integrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format(
-				"(&(providerName=%s*)(service.factoryPid=%s*))",
-				_PROVIDER_NAME_PREFIX, _PID));
-
-		for (Configuration configuration : configurations) {
-			configuration.delete();
-		}
-	}
-
 	@Test
 	public void testUpgradeOAuthClientEntriesWithOIDCProviderConfiguration()
 		throws Exception {
 
-		Configuration configuration =
-			_configurationAdmin.createFactoryConfiguration(
-				_PID, StringPool.QUESTION);
+		long discoveryEndpointCacheInMillis = RandomTestUtil.randomLong();
+		String openIdConnectClientId = RandomTestUtil.randomString();
 
-		Dictionary<String, Object> properties =
+		String pid = ConfigurationTestUtil.createFactoryConfiguration(
+			"com.liferay.portal.security.sso.openid.connect.internal." +
+				"configuration.OpenIdConnectProviderConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
 				"discoveryEndPoint", _AUTH_SERVER_WELL_KNOWN_URI
 			).put(
-				"discoveryEndpointCacheInMillis", RandomTestUtil.randomLong()
+				"discoveryEndpointCacheInMillis", discoveryEndpointCacheInMillis
 			).put(
-				"openIdConnectClientId", RandomTestUtil.randomString()
+				"openIdConnectClientId", openIdConnectClientId
 			).put(
 				"openIdConnectClientSecret", RandomTestUtil.randomString()
 			).put(
 				"providerName",
-				_PROVIDER_NAME_PREFIX + RandomTestUtil.randomString()
-			).build();
+				"OAuthClientEntryUpgradeProcessTest_" +
+					RandomTestUtil.randomString()
+			).build());
 
-		configuration.update(properties);
+		try {
+			OAuthClientEntry oAuthClientEntry =
+				_oAuthClientEntryLocalService.getOAuthClientEntry(
+					TestPropsValues.getCompanyId(), _AUTH_SERVER_WELL_KNOWN_URI,
+					openIdConnectClientId);
 
-		Thread.sleep(500);
+			_setUpgradePreCondition(oAuthClientEntry);
 
-		OAuthClientEntry oAuthClientEntry =
-			_oAuthClientEntryLocalService.getOAuthClientEntry(
-				TestPropsValues.getCompanyId(), _AUTH_SERVER_WELL_KNOWN_URI,
-				GetterUtil.getString(properties.get("openIdConnectClientId")));
+			_runUpgrade();
 
-		_setUpgradePreCondition(oAuthClientEntry);
+			oAuthClientEntry =
+				_oAuthClientEntryLocalService.getOAuthClientEntry(
+					oAuthClientEntry.getOAuthClientEntryId());
 
-		_runUpgrade();
-
-		oAuthClientEntry = _oAuthClientEntryLocalService.getOAuthClientEntry(
-			oAuthClientEntry.getOAuthClientEntryId());
-
-		Assert.assertEquals(
-			GetterUtil.getLong(
-				properties.get("discoveryEndpointCacheInMillis")),
-			oAuthClientEntry.getMetadataCacheInMillis());
+			Assert.assertEquals(
+				discoveryEndpointCacheInMillis,
+				oAuthClientEntry.getMetadataCacheInMillis());
+		}
+		finally {
+			ConfigurationTestUtil.deleteConfiguration(pid);
+		}
 	}
 
 	@Test
@@ -143,7 +128,9 @@ public class OAuthClientEntryUpgradeProcessTest {
 
 	private void _runUpgrade() throws Exception {
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator, _CLASS_NAME);
+			_upgradeStepRegistrator,
+			"com.liferay.oauth.client.persistence.internal.upgrade.v1_2_0." +
+				"OAuthClientEntryUpgradeProcess");
 
 		upgradeProcess.upgrade();
 	}
@@ -167,20 +154,6 @@ public class OAuthClientEntryUpgradeProcessTest {
 
 	private static final String _AUTH_SERVER_WELL_KNOWN_URI =
 		"https://accounts.google.com/.well-known/openid-configuration";
-
-	private static final String _CLASS_NAME =
-		"com.liferay.oauth.client.persistence.internal.upgrade.v1_2_0." +
-			"OAuthClientEntryUpgradeProcess";
-
-	private static final String _PID =
-		"com.liferay.portal.security.sso.openid.connect.internal." +
-			"configuration.OpenIdConnectProviderConfiguration";
-
-	private static final String _PROVIDER_NAME_PREFIX =
-		"OAuthClientEntryUpgradeProcessTest_";
-
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;

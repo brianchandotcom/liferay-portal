@@ -55,7 +55,7 @@ test.beforeEach(
 		await journalEditArticlePage.goto();
 		await journalEditArticlePage.submitArticleForWorkflow(journalName);
 
-		date = moment().format('M/D/YY h:mm A');
+		date = moment().format('M/D/YY, h:mm A');
 	}
 );
 
@@ -278,13 +278,17 @@ test('LPD-23969 Activities tab is added to workflow info display', async ({
 	).toBeVisible();
 
 	await expect(
+		page.getByRole('cell', {
+			exact: true,
+			name: 'Task initially assigned to the Administrator role. Assigned initial task.',
+		})
+	).toBeVisible();
+
+	await expect(
 		page
-			.getByRole('row', {
-				exact: true,
-				name: `Task initially assigned to the Administrator role. Assigned initial task. ${date}`,
-			})
-			.getByRole('cell')
-			.nth(1)
+			.getByLabel('Activity DescriptionDateTask')
+			.getByRole('cell', {name: `${date}`})
+			.nth(4)
 	).toBeVisible();
 
 	await expect(

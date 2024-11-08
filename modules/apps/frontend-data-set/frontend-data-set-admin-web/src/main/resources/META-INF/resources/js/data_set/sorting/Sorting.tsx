@@ -15,7 +15,6 @@ import {fetch, openModal} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {IDataSet} from '../../DataSets';
 import OrderableTable from '../../components/OrderableTable';
 import RequiredMark from '../../components/RequiredMark';
 import {
@@ -26,7 +25,7 @@ import {
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import sortItems from '../../utils/sortItems';
-import {IField, IOrderable} from '../../utils/types';
+import {IDataSet, IField, IOrderable} from '../../utils/types';
 import {IDataSetSectionProps} from '../DataSet';
 
 interface IContentRendererProps {

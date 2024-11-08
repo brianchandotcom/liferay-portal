@@ -21,6 +21,7 @@ import {
 	EFieldFormat,
 	EFieldType,
 	EFilterType,
+	IDataSet,
 	IDateFilter,
 	IField,
 	IFieldTreeItem,
@@ -35,7 +36,6 @@ import FilterList from './components/FilterList';
 import SelectionFilterFormContent from './components/selection_filter/SelectionFilter';
 
 import '../../../css/Filters.scss';
-import {IDataSet} from '../../DataSets';
 import sortItems from '../../utils/sortItems';
 
 const FILTER_MODE = {

@@ -73,21 +73,10 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			null, null, null, null, null);
 	}
 
-	/**
-	 * Adds a company.
-	 *
-	 * @param  webId the company's web domain
-	 * @param  virtualHost the company's virtual host name
-	 * @param  mx the company's mail domain
-	 * @param  maxUsers the max number of company users (optionally
-	 *         <code>0</code>)
-	 * @param  active whether the company is active
-	 * @return the company
-	 */
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public Company addCompany(
-			Long companyId, String webId, String virtualHost, String mx,
+			long companyId, String webId, String virtualHost, String mx,
 			int maxUsers, boolean active, String defaultAdminPassword,
 			String defaultAdminScreenName, String defaultAdminEmailAddress,
 			String defaultAdminFirstName, String defaultAdminMiddleName,
@@ -105,6 +94,34 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			defaultAdminPassword, defaultAdminScreenName,
 			defaultAdminEmailAddress, defaultAdminFirstName,
 			defaultAdminMiddleName, defaultAdminLastName);
+	}
+
+	/**
+	 * Adds a company.
+	 *
+	 * @param  webId the company's web domain
+	 * @param  virtualHost the company's virtual host name
+	 * @param  mx the company's mail domain
+	 * @param  maxUsers the max number of company users (optionally
+	 *         <code>0</code>)
+	 * @param  active whether the company is active
+	 * @return the company
+	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public Company addCompany(
+			String webId, String virtualHost, String mx, int maxUsers,
+			boolean active, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
+		throws PortalException {
+
+		return addCompany(
+			0L, webId, virtualHost, mx, maxUsers, active, defaultAdminPassword,
+			defaultAdminScreenName, defaultAdminEmailAddress,
+			defaultAdminFirstName, defaultAdminMiddleName,
+			defaultAdminLastName);
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

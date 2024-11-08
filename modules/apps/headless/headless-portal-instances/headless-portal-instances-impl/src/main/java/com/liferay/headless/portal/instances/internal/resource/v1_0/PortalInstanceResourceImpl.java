@@ -108,29 +108,27 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 
 		long finalCompanyId = companyId;
 
-		Company company;
-
 		if (admin != null) {
 			_validateAdmin(admin);
 
-			company = PortalInstances.addCompany(
-				portalInstance.getSiteInitializerKey(),
-				() -> _companyService.addCompany(
-					finalCompanyId, portalInstance.getPortalInstanceId(),
-					portalInstance.getVirtualHost(), portalInstance.getDomain(),
-					0, true, null, null, admin.getEmailAddress(),
-					admin.getGivenName(), null, admin.getFamilyName()));
-		}
-		else {
-			company = PortalInstances.addCompany(
-				portalInstance.getSiteInitializerKey(),
-				() -> _companyService.addCompany(
-					finalCompanyId, portalInstance.getPortalInstanceId(),
-					portalInstance.getVirtualHost(), portalInstance.getDomain(),
-					0, true));
+			return _toPortalInstance(
+				PortalInstances.addCompany(
+					portalInstance.getSiteInitializerKey(),
+					() -> _companyService.addCompany(
+						finalCompanyId, portalInstance.getPortalInstanceId(),
+						portalInstance.getVirtualHost(),
+						portalInstance.getDomain(), 0, true, null, null,
+						admin.getEmailAddress(), admin.getGivenName(), null,
+						admin.getFamilyName())));
 		}
 
-		return _toPortalInstance(company);
+		return _toPortalInstance(
+			PortalInstances.addCompany(
+				portalInstance.getSiteInitializerKey(),
+				() -> _companyService.addCompany(
+					finalCompanyId, portalInstance.getPortalInstanceId(),
+					portalInstance.getVirtualHost(), portalInstance.getDomain(),
+					0, true)));
 	}
 
 	@Override

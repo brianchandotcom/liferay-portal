@@ -53,6 +53,10 @@ public class LanguageResources {
 
 		};
 
+	public static void clearResourceBundlesCache() {
+		_resourceBundles.clear();
+	}
+
 	public static String getMessage(Locale locale, String key) {
 		if (locale == null) {
 			return null;

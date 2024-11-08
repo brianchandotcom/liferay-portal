@@ -1895,6 +1895,194 @@ test.describe('Picklist input field', () => {
 	);
 });
 
+test.describe('Rich Text Fragment', () => {
+	test(
+		'The page designer can configure rich text fragment',
+		{
+			tag: '@LPS-170205',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a form fragment with a rich text fragment
+
+			const {className: objectDefinitionClassName} =
+				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+					ALL_FIELDS_OBJECT_ERC
+				);
+
+			const richTextId = getRandomString();
+
+			const richTextDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_richText',
+				},
+				id: richTextId,
+				key: 'INPUTS-rich-text-input',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [richTextDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Change label
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Label',
+				fragmentId: richTextId,
+				tab: 'General',
+				value: 'Description',
+			});
+
+			const richTexInput = page.locator('.rich-text-input');
+
+			await expect(richTexInput.getByText('Description')).not.toHaveClass(
+				/sr-only/
+			);
+
+			// Hide label
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Label',
+				fragmentId: richTextId,
+				tab: 'General',
+				value: false,
+			});
+
+			await expect(richTexInput.getByText('Description')).toHaveClass(
+				/sr-only/
+			);
+
+			// Show help text
+
+			await expect(richTexInput).not.toContainText(
+				/Add your help text here./
+			);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Help Text',
+				fragmentId: richTextId,
+				tab: 'General',
+				value: true,
+			});
+
+			await expect(richTexInput).toContainText(
+				/Add your help text here./
+			);
+		}
+	);
+
+	test(
+		'User should see error message below rich text fragment',
+		{
+			tag: '@LPS-182728',
+		},
+		async ({apiHelpers, page, pageManagementSite}) => {
+
+			// Adds rich text validation
+
+			const objectAdminRestClient = await apiHelpers.buildRestClient(
+				ObjectAdminRestClient
+			);
+
+			const objectValidationRule =
+				await objectAdminRestClient.objectValidationRule.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+					{
+						externalReferenceCode: ALL_FIELDS_OBJECT_ERC,
+						requestBody: {
+							active: true,
+							engine: 'ddm',
+							engineLabel: 'Expression Builder',
+							errorLabel: {
+								en_US: 'Please enter a valid description.',
+							},
+							name: {
+								en_US: 'Rich Text Validation',
+							},
+							objectValidationRuleSettings: [
+								{
+									name: 'outputObjectFieldExternalReferenceCode',
+									value: 'rich-text-erc',
+								} as any,
+							],
+							outputType: 'partialValidation',
+							script: 'NOT(isEmpty(richText))',
+							system: false,
+						},
+					}
+				);
+
+			// Create a page with a form fragment with a rich text fragment
+
+			const {className: objectDefinitionClassName} =
+				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+					ALL_FIELDS_OBJECT_ERC
+				);
+
+			const richTextId = getRandomString();
+
+			const richTextDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_richText',
+				},
+				id: richTextId,
+				key: 'INPUTS-rich-text-input',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [richTextDefinition, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Assert error message
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(page.locator('.rich-text-input')).toContainText(
+				'Please enter a valid description.'
+			);
+
+			// Delete validation
+
+			await objectAdminRestClient.objectValidationRule.deleteObjectValidationRule(
+				{objectValidationRuleId: objectValidationRule.id}
+			);
+		}
+	);
+});
+
 test.describe('Relationships', () => {
 	test('Allow selecting fields from main object and relationships in fields modal', async ({
 		apiHelpers,

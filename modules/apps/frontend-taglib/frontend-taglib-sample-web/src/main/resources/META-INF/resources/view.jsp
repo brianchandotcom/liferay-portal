@@ -7,4 +7,24 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/partials/search_paginator.jsp" servletContext="<%= application %>" />
+<%
+List<TabsItem> tabsItems = frontendSampleDisplayContext.getTabsItems();
+%>
+
+<clay:tabs
+	tabsItems="<%= tabsItems %>"
+>
+
+	<%
+	for (TabsItem tabsItem : tabsItems) {
+	%>
+
+		<clay:tabs-panel>
+			<liferay-util:include page='<%= "/partials/" + tabsItem.get("panelId") + ".jsp" %>' servletContext="<%= application %>" />
+		</clay:tabs-panel>
+
+	<%
+	}
+	%>
+
+</clay:tabs>

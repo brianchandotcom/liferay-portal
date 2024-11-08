@@ -3,43 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.content.wizard.schemas;
+package com.liferay.ai.content.wizard.langchain4j.descriptions;
 
 import dev.langchain4j.model.output.structured.Description;
 
-import org.json.JSONObject;
-
 /**
  * @author Keven Leone
+ * @author Brian Wing Shun Chan
  */
-public class KnowledgeBaseArticle {
-
-	public String getArticleBody() {
-		return articleBody;
-	}
-
-	public String[] getKeywords() {
-		return keywords;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseArticle
-		toKnowledgeBaseArticle() {
-
-		return com.liferay.headless.delivery.client.dto.v1_0.
-			KnowledgeBaseArticle.toDTO(
-				new JSONObject(
-				).put(
-					"articleBody", articleBody
-				).put(
-					"keywords", keywords
-				).put(
-					"title", title
-				).toString());
-	}
+public class KnowledgeBaseArticleDescriptions {
 
 	@Description(
 		"The knowledge base article body, the output is plain text, without HTML tags or Markdown."

@@ -13,11 +13,7 @@ import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategory
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPostingImage;
-import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseArticle;
-import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.client.resource.v1_0.BlogPostingImageResource;
-import com.liferay.headless.delivery.client.resource.v1_0.KnowledgeBaseArticleResource;
-import com.liferay.headless.delivery.client.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.headless.site.client.dto.v1_0.Site;
 import com.liferay.headless.site.client.resource.v1_0.SiteResource;
 
@@ -48,30 +44,6 @@ public class LiferayService extends BaseService {
 		return post(
 			_getAuthorization(), body,
 			"o/headless-admin-taxonomy/v1.0/sites/" + siteId + "/keywords");
-	}
-
-	public KnowledgeBaseArticle createKnowledgeBase(
-			long knowledgeBaseFolderId,
-			KnowledgeBaseArticle knowledgeBaseArticle)
-		throws Exception {
-
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_getKnowledgeBaseArticleResource();
-
-		return knowledgeBaseArticleResource.
-			postKnowledgeBaseFolderKnowledgeBaseArticle(
-				knowledgeBaseFolderId, knowledgeBaseArticle);
-	}
-
-	public KnowledgeBaseFolder createKnowledgeBaseFolder(
-			long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
-			_getKnowledgeBaseFolderResource();
-
-		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
-			siteId, knowledgeBaseFolder);
 	}
 
 	public String createObjectDefinition(String body) {
@@ -198,28 +170,6 @@ public class LiferayService extends BaseService {
 		throws Exception {
 
 		return BlogPostingImageResource.builder(
-		).endpoint(
-			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
-		).header(
-			HttpHeaders.AUTHORIZATION, _getAuthorization()
-		).build();
-	}
-
-	private KnowledgeBaseArticleResource _getKnowledgeBaseArticleResource()
-		throws Exception {
-
-		return KnowledgeBaseArticleResource.builder(
-		).endpoint(
-			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
-		).header(
-			HttpHeaders.AUTHORIZATION, _getAuthorization()
-		).build();
-	}
-
-	private KnowledgeBaseFolderResource _getKnowledgeBaseFolderResource()
-		throws Exception {
-
-		return KnowledgeBaseFolderResource.builder(
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).header(

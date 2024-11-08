@@ -93,7 +93,7 @@ test('LPD-25206 Admin product page shows correct account groups for account supp
 	await commerceAdminProductPage.gotoProduct(product1.name['en_US'], false);
 
 	await expect(
-		await commerceAdminProductDetailsPage.productSkusTab
+		await commerceAdminProductDetailsPage.productSkusLink
 	).toBeVisible();
 
 	await commerceAdminProductDetailsPage.goToProductVisibility();
@@ -190,7 +190,7 @@ test('LPD-25206 Admin product page shows correct account groups for admin user',
 	await commerceAdminProductPage.gotoProduct(product1.name['en_US'], false);
 
 	await expect(
-		await commerceAdminProductDetailsPage.productSkusTab
+		await commerceAdminProductDetailsPage.productSkusLink
 	).toBeVisible();
 
 	await commerceAdminProductDetailsPage.goToProductVisibility();

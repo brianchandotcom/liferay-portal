@@ -7,48 +7,53 @@ import {Locator, Page} from '@playwright/test';
 
 export class CommerceAdminProductDetailsPage {
 	readonly page: Page;
-	readonly productDiagramTab: Locator;
-	readonly productOptionsTab: Locator;
-	readonly productRelationsTab: Locator;
-	readonly productSkusTab: Locator;
-	readonly productVisibilityTab: Locator;
+	readonly productDetailsInput: (inputName: string) => Promise<Locator>;
+	readonly productDiagramLink: Locator;
+	readonly productOptionsLink: Locator;
+	readonly productRelationsLink: Locator;
+	readonly productSkusLink: Locator;
+	readonly productVisibilityLink: Locator;
+	readonly publishLink: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
-		this.productDiagramTab = page.getByRole('link', {
+		this.productDetailsInput = async (inputName: string) =>
+			page.getByLabel(inputName);
+		this.productDiagramLink = page.getByRole('link', {
 			name: 'Diagram',
 		});
-		this.productOptionsTab = page.getByRole('link', {
+		this.productOptionsLink = page.getByRole('link', {
 			name: 'Options',
 		});
-		this.productRelationsTab = page.getByRole('link', {
+		this.productRelationsLink = page.getByRole('link', {
 			name: 'Product Relations',
 		});
-		this.productSkusTab = page.getByRole('link', {
+		this.productSkusLink = page.getByRole('link', {
 			name: 'Skus',
 		});
-		this.productVisibilityTab = page.getByRole('link', {
+		this.productVisibilityLink = page.getByRole('link', {
 			name: 'Visibility',
 		});
+		this.publishLink = page.getByRole('link', {name: 'Publish'});
 	}
 
 	async goToProductDiagram() {
-		await this.productDiagramTab.click();
+		await this.productDiagramLink.click();
 	}
 
 	async goToProductOptions() {
-		await this.productOptionsTab.click();
+		await this.productOptionsLink.click();
 	}
 
 	async goToProductRelations() {
-		await this.productRelationsTab.click();
+		await this.productRelationsLink.click();
 	}
 
 	async goToProductSkus() {
-		await this.productSkusTab.click();
+		await this.productSkusLink.click();
 	}
 
 	async goToProductVisibility() {
-		await this.productVisibilityTab.click();
+		await this.productVisibilityLink.click();
 	}
 }

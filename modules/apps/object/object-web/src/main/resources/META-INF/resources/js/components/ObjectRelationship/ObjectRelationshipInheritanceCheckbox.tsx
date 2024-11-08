@@ -11,11 +11,13 @@ import React, {useState} from 'react';
 import './ObjectRelationshipInheritanceCheckbox.scss';
 
 interface ObjectRelationshipInheritanceCheckbox {
+	onSubmit: (values?: Partial<ObjectRelationship>) => Promise<void>;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 	values: Partial<ObjectRelationship>;
 }
 
 export function ObjectRelationshipInheritanceCheckbox({
+	onSubmit,
 	setValues,
 	values,
 }: ObjectRelationshipInheritanceCheckbox) {
@@ -35,6 +37,21 @@ export function ObjectRelationshipInheritanceCheckbox({
 								...values,
 								edge: true,
 							});
+						}
+						else {
+							const parentWindow = Liferay.Util.getOpener();
+
+							parentWindow.Liferay.fire(
+								'openModalDisableInheritance',
+								{
+									handleDisable: async () => {
+										await onSubmit({
+											...values,
+											edge: false,
+										});
+									},
+								}
+							);
 						}
 					}}
 				/>

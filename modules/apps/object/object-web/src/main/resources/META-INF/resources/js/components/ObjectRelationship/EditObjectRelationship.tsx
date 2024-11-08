@@ -10,7 +10,7 @@ import {
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
-import React, {useState} from 'react';
+import React, {FormEvent, useState} from 'react';
 
 import {EditObjectRelationshipContent} from './EditObjectRelationshipContent';
 import {Alert} from './ObjectRelationshipFormBase';
@@ -42,7 +42,16 @@ export default function EditObjectRelationship({
 		),
 	});
 
-	const onSubmit = async (objectRelationship: ObjectRelationship) => {
+	const {errors, handleChange, handleValidate, setValues, values} =
+		useObjectRelationshipForm({
+			initialValues,
+			onSubmit: () => {},
+			parameterRequired,
+		});
+
+	const onSubmit = async (
+		objectRelationship: Partial<ObjectRelationship> = values
+	) => {
 		try {
 			if (!Liferay.FeatureFlags['LPS-187142']) {
 				delete objectRelationship.edge;
@@ -69,12 +78,15 @@ export default function EditObjectRelationship({
 		}
 	};
 
-	const {errors, handleChange, handleSubmit, setValues, values} =
-		useObjectRelationshipForm({
-			initialValues,
-			onSubmit,
-			parameterRequired,
-		});
+	const handleSubmit = (event: FormEvent) => {
+		event.preventDefault();
+
+		const validationErrors = handleValidate();
+
+		if (!Object.keys(validationErrors).length) {
+			onSubmit(values);
+		}
+	};
 
 	const readOnly =
 		!hasUpdateObjectDefinitionPermission ||
@@ -105,6 +117,7 @@ export default function EditObjectRelationship({
 				objectRelationshipDeletionTypes={
 					objectRelationshipDeletionTypes
 				}
+				onSubmit={onSubmit}
 				parameterRequired={parameterRequired}
 				readOnly={readOnly}
 				restContextPath={restContextPath}

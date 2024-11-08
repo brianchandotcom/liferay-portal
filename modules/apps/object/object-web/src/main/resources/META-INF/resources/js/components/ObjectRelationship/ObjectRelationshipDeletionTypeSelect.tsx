@@ -7,14 +7,16 @@ import {SingleSelect} from '@liferay/object-js-components-web';
 import React from 'react';
 
 interface ObjectRelationshipDeletionTypeSelect {
+	autoSave?: boolean;
 	objectRelationshipDeletionTypes: LabelValueObject[];
-	onSubmit?: (values?: Partial<ObjectRelationship>) => void;
+	onSubmit: (values?: Partial<ObjectRelationship>) => void;
 	readOnly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 	values: Partial<ObjectRelationship>;
 }
 
 export function ObjectRelationshipDeletionTypeSelect({
+	autoSave,
 	objectRelationshipDeletionTypes,
 	onSubmit,
 	readOnly,
@@ -32,7 +34,7 @@ export function ObjectRelationshipDeletionTypeSelect({
 			onSelectionChange={(value) => {
 				setValues({deletionType: value as string});
 
-				if (onSubmit) {
+				if (autoSave) {
 					onSubmit({
 						...values,
 						deletionType: value as string,

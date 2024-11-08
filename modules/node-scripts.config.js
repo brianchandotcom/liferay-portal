@@ -37,6 +37,16 @@ module.exports = {
 
 		],
 		'axe-core': ['*', 'default'],
+		'ckeditor5': [
+			'Bold',
+			'ClassicEditor',
+			'EditorConfig',
+			'Essentials',
+			'GeneralHtmlSupport',
+			'Italic',
+			'Paragraph',
+			'Underline',
+		],
 		'clipboard': ['*', 'default'],
 		'cropperjs': ['*', 'default'],
 		'dagre': ['*', 'default'],

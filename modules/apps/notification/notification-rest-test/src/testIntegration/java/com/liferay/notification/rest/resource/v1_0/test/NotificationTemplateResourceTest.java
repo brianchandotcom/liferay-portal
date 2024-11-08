@@ -9,12 +9,10 @@ import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationRecipientConstants;
-import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -103,142 +101,96 @@ public class NotificationTemplateResourceTest
 	public void testPostNotificationTemplate() throws Exception {
 		super.testPostNotificationTemplate();
 
-		JSONArray jsonArray = JSONUtil.putAll(
-			JSONUtil.put(
-				NotificationRecipientSettingConstants.NAME_FROM,
-				RandomTestUtil.randomString()
-			).put(
-				NotificationRecipientSettingConstants.NAME_FROM_NAME,
-				RandomTestUtil.randomString()
-			).put(
-				NotificationRecipientSettingConstants.NAME_TO,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						NotificationRecipientSettingConstants.NAME_ROLE_NAME,
-						RoleConstants.ORGANIZATION_ADMINISTRATOR),
-					JSONUtil.put(
-						NotificationRecipientSettingConstants.NAME_ROLE_NAME,
-						RoleConstants.ORGANIZATION_OWNER),
-					JSONUtil.put(
-						NotificationRecipientSettingConstants.NAME_ROLE_NAME,
-						AccountRoleConstants.
-							REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR),
-					JSONUtil.put(
-						NotificationRecipientSettingConstants.NAME_ROLE_NAME,
-						AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER))
-			).put(
-				NotificationRecipientSettingConstants.NAME_TO_TYPE,
-				NotificationRecipientConstants.TYPE_ROLE
-			));
+		// Notification template recipient type email
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONObject recipientJSONObject = JSONUtil.put(
+			"from", RandomTestUtil.randomString()
+		).put(
+			"fromName", JSONUtil.put("en_US", RandomTestUtil.randomString())
+		).put(
+			"to", JSONUtil.put("en_US", RandomTestUtil.randomString())
+		).put(
+			"toType", NotificationRecipientConstants.TYPE_EMAIL
+		);
+
+		JSONObject notificationTemplateJSONObject = JSONUtil.put(
+			"editorType", NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT
+		).put(
+			"name", RandomTestUtil.randomString()
+		).put(
+			"recipients", JSONUtil.putAll(recipientJSONObject)
+		).put(
+			"subject",
 			JSONUtil.put(
-				"editorType",
-				NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"recipients", jsonArray
-			).put(
-				"subject",
-				JSONUtil.put(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
-					RandomTestUtil.randomString())
-			).put(
-				"type", NotificationConstants.TYPE_EMAIL
-			).toString(),
-			"notification/v1.0/notification-templates", Http.Method.POST);
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+				RandomTestUtil.randomString())
+		).put(
+			"type", NotificationConstants.TYPE_EMAIL
+		);
 
 		JSONAssert.assertEquals(
-			jsonArray.toString(), jsonObject.getString("recipients"),
+			recipientJSONObject.toString(),
+			JSONUtil.getValueAsString(
+				HTTPTestUtil.invokeToJSONObject(
+					notificationTemplateJSONObject.toString(),
+					"notification/v1.0/notification-templates",
+					Http.Method.POST),
+				"JSONArray/recipients", "JSONObject/0"),
 			JSONCompareMode.NON_EXTENSIBLE);
 
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"editorType",
-				NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"recipients",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"from", RandomTestUtil.randomString()
-					).put(
-						"fromName",
-						JSONUtil.put("en_US", RandomTestUtil.randomString())
-					).put(
-						"singleRecipient", false
-					).put(
-						"to",
-						JSONUtil.put("en_US", RandomTestUtil.randomString())
-					))
-			).put(
-				"recipientType", NotificationRecipientConstants.TYPE_EMAIL
-			).put(
-				"subject", JSONUtil.put("en_US", RandomTestUtil.randomString())
-			).put(
-				"system", false
-			).put(
-				"type", NotificationConstants.TYPE_EMAIL
-			).toString(),
-			"notification/v1.0/notification-templates", Http.Method.POST);
+		// Notification template recipient type role
+
+		recipientJSONObject = recipientJSONObject.put(
+			"to",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"roleName", RoleConstants.ORGANIZATION_ADMINISTRATOR),
+				JSONUtil.put("roleName", RoleConstants.ORGANIZATION_OWNER),
+				JSONUtil.put(
+					"roleName",
+					AccountRoleConstants.
+						REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR),
+				JSONUtil.put(
+					"roleName",
+					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER))
+		).put(
+			"toType", NotificationRecipientConstants.TYPE_ROLE
+		);
+
+		JSONAssert.assertEquals(
+			recipientJSONObject.toString(),
+			JSONUtil.getValueAsString(
+				HTTPTestUtil.invokeToJSONObject(
+					notificationTemplateJSONObject.put(
+						"recipients", JSONUtil.putAll(recipientJSONObject)
+					).toString(),
+					"notification/v1.0/notification-templates",
+					Http.Method.POST),
+				"JSONArray/recipients", "JSONObject/0"),
+			JSONCompareMode.NON_EXTENSIBLE);
+
+		// Notification template recipient type role via rest notification
+		// resource
+
+		NotificationTemplateResource.Builder
+			notificationTemplateResourceBuilder =
+				_notificationTemplateResourceFactory.create();
+
+		NotificationTemplateResource notificationTemplateResource =
+			notificationTemplateResourceBuilder.user(
+				TestPropsValues.getUser()
+			).build();
+
+		Assert.assertNotNull(
+			notificationTemplateResource.postNotificationTemplate(
+				com.liferay.notification.rest.dto.v1_0.NotificationTemplate.
+					toDTO(notificationTemplateJSONObject.toString())));
 
 		HTTPTestUtil.invokeToJSONObject(
 			null,
 			"headless-batch-engine/v1.0/export-task/com.liferay.notification." +
 				"rest.dto.v1_0.NotificationTemplate/json",
 			Http.Method.POST);
-	}
-
-	@Test
-	public void testPostNotificationTemplateViaRestNotificationTemplateResource()
-		throws Exception {
-
-		NotificationTemplateResource.Builder
-			notificationTemplateResourceBuilder =
-				_notificationTemplateResourceFactory.create();
-
-		NotificationTemplateResource restNotificationTemplateResource =
-			notificationTemplateResourceBuilder.user(
-				TestPropsValues.getUser()
-			).build();
-
-		Assert.assertNotNull(
-			restNotificationTemplateResource.postNotificationTemplate(
-				com.liferay.notification.rest.dto.v1_0.NotificationTemplate.
-					toDTO(
-						JSONUtil.put(
-							"editorType",
-							NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT
-						).put(
-							"name", RandomTestUtil.randomString()
-						).put(
-							"recipients",
-							JSONUtil.putAll(
-								JSONUtil.put(
-									"from", RandomTestUtil.randomString()
-								).put(
-									"fromName",
-									JSONUtil.put(
-										"en_US", RandomTestUtil.randomString())
-								).put(
-									"to",
-									JSONUtil.putAll(
-										JSONUtil.put(
-											"roleName", "Administrator"))
-								).put(
-									"toType", "role"
-								))
-						).put(
-							"recipientType",
-							NotificationRecipientConstants.TYPE_EMAIL
-						).put(
-							"subject",
-							JSONUtil.put("en_US", RandomTestUtil.randomString())
-						).put(
-							"type", NotificationConstants.TYPE_EMAIL
-						).toString())));
 	}
 
 	@Override

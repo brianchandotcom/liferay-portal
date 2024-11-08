@@ -55,11 +55,17 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 		boolean keepCreatorInfo = false;
 
+		String importCreatorStrategy = "OVERWRITE_CREATOR";
+
 		Map<String, Serializable> parameters =
 			batchEngineImportTask.getParameters();
 
-		String importCreatorStrategy = (String)parameters.getOrDefault(
-			"importCreatorStrategy", "OVERWRITE_CREATOR");
+		if ((parameters != null) &&
+			parameters.containsKey("importCreatorStrategy")) {
+
+			importCreatorStrategy = (String)parameters.get(
+				"importCreatorStrategy");
+		}
 
 		if (importCreatorStrategy.equals("KEEP_CREATOR") &&
 			FeatureFlagManagerUtil.isEnabled("LPD-19953")) {

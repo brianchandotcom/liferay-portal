@@ -5,10 +5,13 @@
 
 package com.liferay.portal.upgrade.v7_0_1;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -24,6 +27,15 @@ import javax.portlet.PortletPreferences;
  */
 public class UpgradeMessageBoards extends BasePortletPreferencesUpgradeProcess {
 
+	public UpgradeMessageBoards() {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					CompanyConstants.SYSTEM)) {
+
+			_availableLocales = LanguageUtil.getAvailableLocales();
+		}
+	}
+
 	@Override
 	protected String[] getPortletIds() {
 		return new String[] {
@@ -35,9 +47,7 @@ public class UpgradeMessageBoards extends BasePortletPreferencesUpgradeProcess {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
-
-		for (Locale availableLocale : availableLocales) {
+		for (Locale availableLocale : _availableLocales) {
 			String key =
 				"priorities_" + LanguageUtil.getLanguageId(availableLocale);
 
@@ -74,5 +84,7 @@ public class UpgradeMessageBoards extends BasePortletPreferencesUpgradeProcess {
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
+
+	private final Set<Locale> _availableLocales;
 
 }

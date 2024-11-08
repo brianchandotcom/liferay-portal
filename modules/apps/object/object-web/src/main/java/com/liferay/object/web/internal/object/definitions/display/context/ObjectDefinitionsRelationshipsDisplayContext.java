@@ -20,6 +20,7 @@ import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelpe
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -137,10 +138,8 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 			_objectDefinitionService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
 
-		return JSONUtil.put(
+		JSONObject objectRelationshipJSONObject = JSONUtil.put(
 			"deletionType", objectRelationship.getDeletionType()
-		).put(
-			"edge", objectRelationship.isEdge()
 		).put(
 			"id", Long.valueOf(objectRelationship.getObjectRelationshipId())
 		).put(
@@ -186,6 +185,13 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		).put(
 			"type", objectRelationship.getType()
 		);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+			objectRelationshipJSONObject.put(
+				"edge", objectRelationship.isEdge());
+		}
+
+		return objectRelationshipJSONObject;
 	}
 
 	public Set<String> getObjectRelationshipTypes(

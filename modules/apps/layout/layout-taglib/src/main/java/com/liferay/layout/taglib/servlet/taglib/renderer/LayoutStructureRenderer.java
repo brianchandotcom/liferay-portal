@@ -258,7 +258,7 @@ public class LayoutStructureRenderer {
 		}
 
 		jspWriter.write(" id=\"analytics-targetable-collection-");
-		jspWriter.write(collectionStyledLayoutStructureItem.getNamespace());
+		jspWriter.write(collectionStyledLayoutStructureItem.getItemId());
 		jspWriter.write("\" style=\"");
 		jspWriter.write(
 			_renderLayoutStructureDisplayContext.getStyle(

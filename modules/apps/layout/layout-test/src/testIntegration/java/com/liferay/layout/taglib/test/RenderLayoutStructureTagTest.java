@@ -1452,8 +1452,6 @@ public class RenderLayoutStructureTagTest {
 		}
 
 		collectionStyledLayoutStructureItem.setListStyle(listStyle);
-		collectionStyledLayoutStructureItem.setNamespace(
-			RandomTestUtil.randomString());
 
 		layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.

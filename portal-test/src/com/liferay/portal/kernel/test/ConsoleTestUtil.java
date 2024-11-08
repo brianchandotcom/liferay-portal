@@ -5,8 +5,8 @@
 
 package com.liferay.portal.kernel.test;
 
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;

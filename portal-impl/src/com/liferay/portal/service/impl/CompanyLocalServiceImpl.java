@@ -2469,7 +2469,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		if (PropsValues.COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED) {
 			if (StartupHelperUtil.isDBNew()) {
 				return counterLocalService.increment(
-					Company.class.getName(), 9900);
+					Company.class.getName(), 9999);
 			}
 
 			return counterLocalService.increment(Company.class.getName());

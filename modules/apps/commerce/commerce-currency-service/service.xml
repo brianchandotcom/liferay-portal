@@ -66,5 +66,6 @@
 		<exception>CommerceCurrencyCode</exception>
 		<exception>CommerceCurrencyFractionDigits</exception>
 		<exception>CommerceCurrencyName</exception>
+		<exception>DuplicateCommerceCurrency</exception>
 	</exceptions>
 </service-builder>

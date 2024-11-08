@@ -61,6 +61,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -1208,6 +1209,137 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testFetchLatestArticleByExternalReferenceCodeWithStatus()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Assert.assertNotNull(
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					_group.getGroupId(),
+					journalArticle.getExternalReferenceCode(),
+					WorkflowConstants.STATUS_ANY, true));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		JournalTestUtil.updateArticle(
+			journalArticle, RandomTestUtil.randomString(),
+			journalArticle.getContent(), false, false, serviceContext);
+
+		journalArticle =
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					_group.getGroupId(),
+					journalArticle.getExternalReferenceCode(),
+					WorkflowConstants.STATUS_ANY, false);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, journalArticle.getStatus());
+		Assert.assertEquals(1.1D, journalArticle.getVersion(), 0.0);
+
+		journalArticle =
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					_group.getGroupId(),
+					journalArticle.getExternalReferenceCode(),
+					WorkflowConstants.STATUS_ANY, true);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, journalArticle.getStatus());
+		Assert.assertEquals(1.0D, journalArticle.getVersion(), 0.0);
+
+		journalArticle =
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					_group.getGroupId(),
+					journalArticle.getExternalReferenceCode(),
+					WorkflowConstants.STATUS_APPROVED, false);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, journalArticle.getStatus());
+		Assert.assertEquals(1.0D, journalArticle.getVersion(), 0.0);
+
+		journalArticle =
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					_group.getGroupId(),
+					journalArticle.getExternalReferenceCode(),
+					WorkflowConstants.STATUS_DRAFT, false);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, journalArticle.getStatus());
+		Assert.assertEquals(1.1D, journalArticle.getVersion(), 0.0);
+	}
+
+	@Test
+	public void testFetchLatestArticleByExternalReferenceCodeWithStatuses()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Assert.assertNotNull(
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					_group.getGroupId(),
+					journalArticle.getExternalReferenceCode(),
+					new int[] {WorkflowConstants.STATUS_APPROVED}));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		JournalTestUtil.updateArticle(
+			journalArticle, RandomTestUtil.randomString(),
+			journalArticle.getContent(), false, false, serviceContext);
+
+		journalArticle =
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					_group.getGroupId(),
+					journalArticle.getExternalReferenceCode(),
+					new int[] {
+						WorkflowConstants.STATUS_APPROVED,
+						WorkflowConstants.STATUS_DRAFT
+					});
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, journalArticle.getStatus());
+		Assert.assertEquals(1.1D, journalArticle.getVersion(), 0.0);
+
+		Assert.assertNull(
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					_group.getGroupId(),
+					journalArticle.getExternalReferenceCode(),
+					new int[] {WorkflowConstants.STATUS_PENDING}));
+
+		journalArticle =
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					_group.getGroupId(),
+					journalArticle.getExternalReferenceCode(),
+					new int[] {
+						WorkflowConstants.STATUS_APPROVED,
+						WorkflowConstants.STATUS_PENDING
+					});
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, journalArticle.getStatus());
+		Assert.assertEquals(1.0D, journalArticle.getVersion(), 0.0);
+	}
+
+	@Test
 	public void testFetchPersistedModelByResourcePrimKey() throws Exception {
 		JournalArticle article = JournalTestUtil.addArticle(
 			_group.getGroupId(),
@@ -1495,6 +1627,24 @@ public class JournalArticleLocalServiceTest {
 		Assert.assertEquals(journalArticle, journalArticles.get(0));
 
 		_companyLocalService.deleteCompany(company);
+	}
+
+	@Test(expected = PortalException.class)
+	public void testGetLatestArticleByExternalReferenceCodeWithStatus()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Assert.assertNotNull(
+			_journalArticleLocalService.getLatestArticleByExternalReferenceCode(
+				_group.getGroupId(), journalArticle.getExternalReferenceCode(),
+				WorkflowConstants.STATUS_ANY, true));
+
+		_journalArticleLocalService.getLatestArticleByExternalReferenceCode(
+			_group.getGroupId(), journalArticle.getExternalReferenceCode(),
+			WorkflowConstants.STATUS_DRAFT, false);
 	}
 
 	@Test

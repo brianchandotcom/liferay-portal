@@ -28,13 +28,16 @@ boolean primary = BeanParamUtil.getBoolean(commerceCurrency, request, "primary")
 		<liferay-ui:error exception="<%= CommerceCurrencyCodeException.class %>" message="please-enter-a-valid-code" />
 		<liferay-ui:error exception="<%= CommerceCurrencyFractionDigitsException.class %>" message="the-decimal-place-bounds-are-invalid" />
 		<liferay-ui:error exception="<%= CommerceCurrencyNameException.class %>" message="please-enter-a-valid-name" />
+		<liferay-ui:error exception="<%= DuplicateCommerceCurrencyException.class %>" message="please-enter-a-unique-code" />
 
 		<div class="mb-4 sheet">
 			<div class="panel-group panel-group-flush">
 				<aui:fieldset>
 					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="name" />
 
-					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="code" readonly="<%= (commerceCurrency != null) ? true : false %>" type="text" />
+					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="code" readonly="<%= (commerceCurrency != null) ? true : false %>" type="text">
+						<aui:validator name="required" />
+					</aui:input>
 
 					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="symbol" />
 

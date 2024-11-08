@@ -21,6 +21,7 @@ import AttachmentFileUploader from './routes/attachment-uploader';
 import CustomerPortal from './routes/customer-portal';
 import Home from './routes/home';
 import Onboarding from './routes/onboarding';
+import SecurityVulnerability from './routes/security-vulnerability';
 
 const ELEMENT_ID = 'liferay-customer-custom-element';
 
@@ -29,6 +30,7 @@ const AppRoutes = {
 	home: Home,
 	onboarding: Onboarding,
 	portal: CustomerPortal,
+	securityVulnerability: SecurityVulnerability,
 };
 
 type Properties = {

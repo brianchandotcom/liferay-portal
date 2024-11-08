@@ -154,53 +154,7 @@ public class JspServlet extends HttpServlet {
 		final ServletContext servletContext = servletConfig.getServletContext();
 
 		servletContext.setAttribute(
-			InstanceManager.class.getName(),
-			new SimpleInstanceManager() {
-
-				@Override
-				public Object newInstance(
-						String className, ClassLoader classLoader)
-					throws ClassNotFoundException, IllegalAccessException,
-						   InstantiationException, InvocationTargetException,
-						   NamingException, NoSuchMethodException {
-
-					Class<?> clazz = null;
-
-					try {
-						clazz = classLoader.loadClass(className);
-					}
-					catch (ClassNotFoundException classNotFoundException) {
-						ClassLoader parentClassLoader = classLoader.getParent();
-
-						try {
-							byte[] bytes = StreamUtil.toByteArray(
-								parentClassLoader.getResourceAsStream(
-									StringUtil.replace(className, '.', '/') +
-										".class"));
-
-							if (bytes != null) {
-								clazz =
-									(Class<?>)
-										_defineClassMethodHandle.invokeExact(
-											classLoader, className, bytes, 0,
-											bytes.length);
-							}
-						}
-						catch (Throwable throwable) {
-							classNotFoundException.addSuppressed(throwable);
-						}
-
-						if (clazz == null) {
-							throw classNotFoundException;
-						}
-					}
-
-					Constructor<?> constructor = clazz.getConstructor();
-
-					return constructor.newInstance();
-				}
-
-			});
+			InstanceManager.class.getName(), new JspBundleInstanceManager());
 
 		ClassLoader classLoader = servletContext.getClassLoader();
 
@@ -451,6 +405,50 @@ public class JspServlet extends HttpServlet {
 	private boolean _logVerbosityLevelDebug;
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new CopyOnWriteArrayList<>();
+
+	private static class JspBundleInstanceManager
+		extends SimpleInstanceManager {
+
+		@Override
+		public Object newInstance(String className, ClassLoader classLoader)
+			throws ClassNotFoundException, IllegalAccessException,
+				   InstantiationException, InvocationTargetException,
+				   NamingException, NoSuchMethodException {
+
+			Class<?> clazz = null;
+
+			try {
+				clazz = classLoader.loadClass(className);
+			}
+			catch (ClassNotFoundException classNotFoundException) {
+				ClassLoader parentClassLoader = classLoader.getParent();
+
+				try {
+					byte[] bytes = StreamUtil.toByteArray(
+						parentClassLoader.getResourceAsStream(
+							StringUtil.replace(className, '.', '/') +
+								".class"));
+
+					if (bytes != null) {
+						clazz = (Class<?>)_defineClassMethodHandle.invokeExact(
+							classLoader, className, bytes, 0, bytes.length);
+					}
+				}
+				catch (Throwable throwable) {
+					classNotFoundException.addSuppressed(throwable);
+				}
+
+				if (clazz == null) {
+					throw classNotFoundException;
+				}
+			}
+
+			Constructor<?> constructor = clazz.getConstructor();
+
+			return constructor.newInstance();
+		}
+
+	}
 
 	private class ServletContextWrapper implements ServletContext {
 

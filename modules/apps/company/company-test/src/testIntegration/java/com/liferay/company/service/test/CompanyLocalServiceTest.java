@@ -8,6 +8,8 @@ package com.liferay.company.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.link.model.adapter.StagedAssetLink;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.counter.kernel.service.persistence.CounterFinder;
+import com.liferay.counter.model.CounterRegister;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -111,6 +113,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -451,27 +454,59 @@ public class CompanyLocalServiceTest {
 				PropsValues.class, "COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED",
 				true);
 
-		Company company = null;
+		Company company1 = null;
+		Company company2 = null;
 
 		try {
 			StartupHelperUtil.setDBNew(true);
 
-			String webId = RandomTestUtil.randomString() + "test.com";
+			String webId1 = RandomTestUtil.randomString() + "test.com";
 
-			company = _companyLocalService.addCompany(
-				null, webId, webId, "test.com", 0, true, true, null, null, null,
-				null, null, null);
+			company1 = _companyLocalService.addCompany(
+				null, webId1, webId1, "test.com", 0, true, true, null, null,
+				null, null, null, null);
 
 			if (!originalCompanyPredictableCompanyIdsEnabled) {
-				Assert.assertEquals(10000, company.getCompanyId());
+				Assert.assertEquals(10000, company1.getCompanyId());
+			}
+
+			StartupHelperUtil.setDBNew(false);
+
+			CounterFinder counterFinder = ReflectionTestUtil.getFieldValue(
+				_counterLocalService, "counterFinder");
+
+			Map<String, CounterRegister> counterRegisterMap =
+				ReflectionTestUtil.getFieldValue(
+					counterFinder, "_counterRegisterMap");
+
+			String encodedName = ReflectionTestUtil.invoke(
+				counterFinder, "_encodeKey", new Class<?>[] {String.class},
+				Company.class.getName());
+
+			counterRegisterMap.remove(encodedName);
+
+			String webId2 = RandomTestUtil.randomString() + "test.com";
+
+			company2 = _companyLocalService.addCompany(
+				null, webId2, webId2, "test.com", 0, true, true, null, null,
+				null, null, null, null);
+
+			if (!originalCompanyPredictableCompanyIdsEnabled) {
+				Assert.assertEquals(10001, company2.getCompanyId());
 			}
 		}
 		finally {
 			StartupHelperUtil.setDBNew(false);
 
-			if (company != null) {
-				_companyLocalService.deleteCompany(company);
+			if (company1 != null) {
+				_companyLocalService.deleteCompany(company1);
 			}
+
+			if (company2 != null) {
+				_companyLocalService.deleteCompany(company2);
+			}
+
+			_counterLocalService.reset(Company.class.getName());
 
 			ReflectionTestUtil.setFieldValue(
 				PropsValues.class, "COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED",

@@ -3,42 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.content.wizard.schemas;
+package com.liferay.ai.content.wizard.langchain4j.descriptions;
 
 import dev.langchain4j.model.output.structured.Description;
 
-import org.json.JSONObject;
-
 /**
  * @author Keven Leone
+ * @author Brian Wing Shun Chan
  */
-public class Account {
-
-	public String getDescription() {
-		return description;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public Type getType() {
-		return type;
-	}
-
-	public com.liferay.headless.admin.user.client.dto.v1_0.Account
-		toAccountDTO() {
-
-		return com.liferay.headless.admin.user.client.dto.v1_0.Account.toDTO(
-			new JSONObject(
-			).put(
-				"description", description
-			).put(
-				"name", name
-			).put(
-				"type", type
-			).toString());
-	}
+public class AccountDescriptions {
 
 	@Description("Account Description")
 	public String description;

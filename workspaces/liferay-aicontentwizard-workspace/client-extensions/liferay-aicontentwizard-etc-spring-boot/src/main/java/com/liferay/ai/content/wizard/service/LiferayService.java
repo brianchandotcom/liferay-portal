@@ -11,14 +11,10 @@ import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyVocabularyResource;
-import com.liferay.headless.admin.user.client.dto.v1_0.Account;
-import com.liferay.headless.admin.user.client.pagination.Pagination;
-import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseFolder;
-import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.delivery.client.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.delivery.client.resource.v1_0.KnowledgeBaseFolderResource;
@@ -40,12 +36,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class LiferayService extends BaseService {
-
-	public Account createAccount(Account account) throws Exception {
-		AccountResource accountResource = _getAccountResource();
-
-		return accountResource.postAccount(account);
-	}
 
 	public String createChildWikiPage(String body, String parentWikiPageId) {
 		return post(
@@ -153,26 +143,6 @@ public class LiferayService extends BaseService {
 			"o/headless-delivery/v1.0/wiki-nodes/" + nodeId + "/wiki-pages");
 	}
 
-	public void deleteAccountByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception {
-
-		AccountResource accountResource = _getAccountResource();
-
-		accountResource.deleteAccountByExternalReferenceCode(
-			externalReferenceCode);
-	}
-
-	public com.liferay.headless.admin.user.client.pagination.Page<Account>
-			getAccountsPage()
-		throws Exception {
-
-		AccountResource accountResource = _getAccountResource();
-
-		return accountResource.getAccountsPage(
-			"", "", Pagination.of(1, 20), "");
-	}
-
 	public String getKeywords() {
 		return null;
 	}
@@ -217,15 +187,6 @@ public class LiferayService extends BaseService {
 	public String postContentWizardSettings(String body) {
 		return post(
 			_getAuthorization(), body, "/o/c/k9l6aicontentwizardsettings");
-	}
-
-	private AccountResource _getAccountResource() throws Exception {
-		return AccountResource.builder(
-		).endpoint(
-			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
-		).header(
-			HttpHeaders.AUTHORIZATION, _getAuthorization()
-		).build();
 	}
 
 	private String _getAuthorization() {

@@ -5,11 +5,11 @@
 
 package com.liferay.ai.content.wizard;
 
+import com.liferay.ai.content.wizard.langchain4j.tools.AccountTools;
 import com.liferay.ai.content.wizard.langchain4j.tools.BlogPostingTools;
 import com.liferay.ai.content.wizard.langchain4j.tools.ToolsContext;
 import com.liferay.ai.content.wizard.models.AIContext;
 import com.liferay.ai.content.wizard.service.LiferayService;
-import com.liferay.ai.content.wizard.tools.AccountTool;
 import com.liferay.ai.content.wizard.tools.CategoryTool;
 import com.liferay.ai.content.wizard.tools.KnowledgeBaseTool;
 import com.liferay.ai.content.wizard.tools.SiteTool;
@@ -82,7 +82,7 @@ public class AIRestController extends BaseRestController {
 				true
 			).build()
 		).tools(
-			new AccountTool(aiContext), new BlogPostingTools(toolsContext),
+			new AccountTools(toolsContext), new BlogPostingTools(toolsContext),
 			new CategoryTool(aiContext), new KnowledgeBaseTool(aiContext),
 			new SiteTool(aiContext)
 		).chatMemory(

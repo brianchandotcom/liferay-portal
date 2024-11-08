@@ -54,12 +54,10 @@ public class PortletDisplayTemplateTest {
 
 			String className1 = RandomTestUtil.randomString();
 
-			TestTemplateHandler disabledTestTemplateHandler =
-				new TestTemplateHandler(className1, false);
-
 			serviceRegistrations.add(
 				bundleContext.registerService(
-					TemplateHandler.class, disabledTestTemplateHandler,
+					TemplateHandler.class,
+					new TestTemplateHandler(className1, false),
 					MapUtil.singletonDictionary(
 						"javax.portlet.name", RandomTestUtil.randomString())));
 
@@ -71,12 +69,10 @@ public class PortletDisplayTemplateTest {
 
 			String className2 = RandomTestUtil.randomString();
 
-			TestTemplateHandler enabledTestTemplateHandler =
-				new TestTemplateHandler(className2, true);
-
 			serviceRegistrations.add(
 				bundleContext.registerService(
-					TemplateHandler.class, enabledTestTemplateHandler,
+					TemplateHandler.class,
+					new TestTemplateHandler(className2, true),
 					MapUtil.singletonDictionary(
 						"javax.portlet.name", RandomTestUtil.randomString())));
 

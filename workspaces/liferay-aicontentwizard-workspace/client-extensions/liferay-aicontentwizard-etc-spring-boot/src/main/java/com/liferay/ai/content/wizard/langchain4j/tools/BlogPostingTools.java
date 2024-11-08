@@ -36,14 +36,14 @@ public class BlogPostingTools extends BaseTools {
 		).build();
 	}
 
-	@Tool("Returns a list of blog posts")
+	@Tool("Returns a list of blog entries")
 	public Page<BlogPosting> getSiteBlogPostingsPage() throws Exception {
 		return _blogPostingResource.getSiteBlogPostingsPage(
 			toolsContext.siteId, "", new ArrayList<String>(), "",
 			Pagination.of(1, 20), "");
 	}
 
-	@Tool("Create blog posts")
+	@Tool("Creates a blog entry")
 	public BlogPosting postSiteBlogPosting(
 			BlogPostingDescriptions blogPostingDescriptions)
 		throws Exception {

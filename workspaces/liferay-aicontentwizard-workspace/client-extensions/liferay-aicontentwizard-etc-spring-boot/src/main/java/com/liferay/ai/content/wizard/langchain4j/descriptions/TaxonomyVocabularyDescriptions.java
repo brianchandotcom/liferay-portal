@@ -15,13 +15,13 @@ import java.util.Map;
  */
 public class TaxonomyVocabularyDescriptions {
 
-	@Description("Name of the vocabulary")
+	@Description("Vocabulary name")
 	public String name;
 
-	@Description("Name of the vocabulary in BPC47 format, like en-US: Book")
+	@Description("Vocabulary name in BPC47 format, like en-US: Book")
 	public Map<String, String> name_i18n;
 
-	@Description("A list of categories")
+	@Description("An array of categories")
 	public TaxonomyCategoryDescriptions[] taxonomyCategoryDescriptionsArray;
 
 }

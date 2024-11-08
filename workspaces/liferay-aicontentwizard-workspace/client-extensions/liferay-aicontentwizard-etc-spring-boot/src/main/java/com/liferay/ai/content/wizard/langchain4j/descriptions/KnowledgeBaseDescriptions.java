@@ -13,7 +13,7 @@ import dev.langchain4j.model.output.structured.Description;
  */
 public class KnowledgeBaseDescriptions {
 
-	@Description("A list of Knowledge Bases related to a given topic")
+	@Description("A list of folder descriptions in a Knowledge Base")
 	public KnowledgeBaseFolderDescriptions[]
 		knowledgeBaseFolderDescriptionsArray;
 

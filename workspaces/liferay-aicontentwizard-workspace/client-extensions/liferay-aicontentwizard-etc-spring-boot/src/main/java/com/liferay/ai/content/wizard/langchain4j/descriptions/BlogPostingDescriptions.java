@@ -13,24 +13,24 @@ import dev.langchain4j.model.output.structured.Description;
  */
 public class BlogPostingDescriptions {
 
-	@Description("A headline that is a summary of the blog")
+	@Description("The blog entry's subtitle")
 	public String alternativeHeadline;
 
 	@Description(
-		"The content of the blog article, the output must be HTML format."
+		"The blog entry's content in HTML"
 	)
 	public String articleBody;
 
-	@Description("The title of the blog article")
+	@Description("The blog entry's title")
 	public String headline;
 
 	@Description(
-		"Identify the content of the blog and add meaningful keywords using the following format: hyphen-case'"
+		"Add keywords in hyphen-case to help users find this blog entry."
 	)
 	public String[] keywords;
 
 	@Description(
-		"A description of an appropriate image for this blog in three sentences."
+		"Describe this image for the visually impaired in at most three sentences."
 	)
 	public String pictureDescription;
 

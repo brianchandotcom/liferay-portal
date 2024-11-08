@@ -37,7 +37,7 @@ public class SitePageTools extends BaseTools {
 		).build();
 	}
 
-	@Tool("Create page based on the image url provided by the user")
+	@Tool("Creates a page in the site with the specified description")
 	public SitePage postSiteSitePage(SitePageDescriptions sitePageDescriptions)
 		throws Exception {
 
@@ -310,7 +310,7 @@ public class SitePageTools extends BaseTools {
 							"BASIC_COMPONENT-paragraph", null,
 							StringBundler.concat(
 								"<span class=\"lead\">This is a simple banner ",
-								"component that you can use when you need ",
+								"component to call ",
 								"extra attention to featured content or ",
 								"information.</span>"))
 					).put(

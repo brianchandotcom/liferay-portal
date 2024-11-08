@@ -14,16 +14,16 @@ import dev.langchain4j.model.output.structured.Description;
 public class KnowledgeBaseFolderDescriptions {
 
 	@Description(
-		"Articles related to this Knowledge Base, create a variety of articles between 1 and 3"
+		"An array of this folder's article descriptions"
 	)
 	public KnowledgeBaseArticleDescriptions[]
 		knowledgeBaseArticleDescriptionsArray;
 
-	@Description("Name of the knowledge base category")
+	@Description("The name of this Knowledge Base folder")
 	public String name;
 
 	@Description(
-		"The Knowledge Base can be viewed by one of these options, consider anyone if not specified."
+		"Shows whether this folder can be viewed by anyone, members, or only its owner."
 	)
 	public ViewableBy viewableBy;
 

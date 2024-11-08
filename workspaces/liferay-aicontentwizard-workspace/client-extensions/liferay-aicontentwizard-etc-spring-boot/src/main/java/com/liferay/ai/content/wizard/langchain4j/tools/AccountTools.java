@@ -36,7 +36,7 @@ public class AccountTools extends BaseTools {
 	}
 
 	@Tool(
-		"Account Deletion,use this tool only if you know the account external reference code, if you are uncertain call the list of accounts to retrieve this information"
+		"Deletes an account by its external reference code"
 	)
 	public void deleteAccountByExternalReferenceCode(
 			@P(value = "The account external reference code") String
@@ -53,7 +53,7 @@ public class AccountTools extends BaseTools {
 			"", "", Pagination.of(1, 20), "");
 	}
 
-	@Tool("Create Liferay Account")
+	@Tool("Creates an account")
 	public Account postAccount(AccountDescriptions accountDescriptions)
 		throws Exception {
 

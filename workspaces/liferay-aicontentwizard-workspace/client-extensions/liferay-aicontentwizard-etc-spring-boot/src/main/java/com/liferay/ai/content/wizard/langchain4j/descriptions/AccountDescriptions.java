@@ -20,20 +20,20 @@ public class AccountDescriptions {
 	public String name;
 
 	@Description(
-		"Liferay provides three account types: Business, Person, and Supplier"
+		"Liferay provides three account types: Business, Person, and Supplier."
 	)
 	public Type type;
 
 	public enum Type {
 
 		@Description(
-			"Business accounts are used in B2C or B2X sites, default option."
+			"Business accounts are used by default in B2C or B2X sites."
 		)
 		business,
 		@Description("Used based on the site type (i.e., B2B, or B2C)")
 		person,
 		@Description(
-			"For accounts that are catalog suppliers, can publish products on their behalf"
+			"Can publish products on behalf of catalog supplier accounts."
 		)
 		supplier
 

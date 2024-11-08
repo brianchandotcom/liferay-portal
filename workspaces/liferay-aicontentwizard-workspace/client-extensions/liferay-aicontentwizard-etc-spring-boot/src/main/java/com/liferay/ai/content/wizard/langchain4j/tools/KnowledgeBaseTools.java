@@ -42,7 +42,7 @@ public class KnowledgeBaseTools extends BaseTools {
 		).build();
 	}
 
-	@Tool("Creates a Knowledge Base")
+	@Tool("Creates a Knowledge Base folder")
 	public void postSiteKnowledgeBaseFolder(
 			KnowledgeBaseDescriptions knowledgeBaseDescriptions)
 		throws Exception {

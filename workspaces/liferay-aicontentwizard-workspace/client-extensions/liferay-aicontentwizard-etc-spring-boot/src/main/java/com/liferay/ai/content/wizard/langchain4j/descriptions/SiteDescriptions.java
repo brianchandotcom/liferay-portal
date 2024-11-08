@@ -14,33 +14,33 @@ import dev.langchain4j.model.output.structured.Description;
 public class SiteDescriptions {
 
 	@Description(
-		"Site ERC, if not specified by the user is auto generated UUID"
+		"The site's external reference code; auto-generated if not specified"
 	)
 	public String externalReferenceCode;
 
 	@Description(
-		"Membership type, value is lower case, default option is 'OPEN'"
+		"Membership type (open, restricted, or private). Defaults to 'open'."
 	)
 	public MembershipType membershipType;
 
-	@Description("Site Name")
+	@Description("Site name")
 	public String name;
 
-	@Description("Site Template Key, default is BLANK")
+	@Description("Foreign key to a linked site template")
 	public TemplateKey templateKey;
 
 	public enum MembershipType {
 
 		@Description(
-			"Users can join and leave whenever they want. The site is visible to all users in the My Sites tab"
+			"The site appears in My Sites. Users can join and leave at will."
 		)
 		Open,
 		@Description(
-			"The site appears in the My Sites application, but users must request membership to join"
+			"The site appears in My Sites. Users must request membership to join."
 		)
 		Private,
 		@Description(
-			"A site administrator must explicitly add users to the site. Private membership sites don’t appear in the My Sites app"
+			"The site is not in My Sites. Users cannot join or request membership; site administrators must add them."
 		)
 		Restricted
 

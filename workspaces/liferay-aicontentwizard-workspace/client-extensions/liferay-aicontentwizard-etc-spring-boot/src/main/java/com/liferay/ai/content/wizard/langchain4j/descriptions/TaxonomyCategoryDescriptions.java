@@ -15,14 +15,14 @@ import java.util.Map;
  */
 public class TaxonomyCategoryDescriptions {
 
-	@Description("A list of child categories")
+	@Description("An array of child categories")
 	public TaxonomyCategoryDescriptions[]
 		childTaxonomyCategoryDescriptionsArray;
 
-	@Description("Name of the category")
+	@Description("Category name")
 	public String name;
 
-	@Description("Name of the category in BPC47 format, like en-US: Book")
+	@Description("Category name in BPC47 format, like en-US: Book")
 	public Map<String, String> name_i18n;
 
 }

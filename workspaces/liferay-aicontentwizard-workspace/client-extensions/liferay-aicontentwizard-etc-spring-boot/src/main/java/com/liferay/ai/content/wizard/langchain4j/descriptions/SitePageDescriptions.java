@@ -14,12 +14,12 @@ import dev.langchain4j.model.output.structured.Description;
 public class SitePageDescriptions {
 
 	@Description(
-		"where each object either has a \"name\" key or a \"components\" key. \n" +
-			"When an object has only one element, it should simply use the \"name\" key to define it, like \"name\": \"heading\" or \"name\": \"carousel\".\n" +
+		"where each object has a \"name\" key or a \"components\" key. \n" +
+			"When an object has only one element, it should use the \"name\" key to define it, like \"name\": \"heading\" or \"name\": \"carousel\".\n" +
 				"For cases where multiple elements are involved, the \"components\" key is used. \n" +
-					"This key will hold an array of objects, each with its own \"name\" key to specify the type of the component, such as \"name\": \"paragraph\" or \"name\": \"card\". \n" +
-						"When any social components are present in a group, they must be consolidated into a single object with the \"name\" key set to \"social\", rather than listing multiple social elements. This ensures that all social elements are grouped together under one \"social\" entry.\n" +
-							"When components of the same type appear more than once, they should still be represented as individual objects within the \"components\" array, as seen with repeated \"card\" components."
+					"This key holds an array of objects with their own \"name\" keys that specify the type of the component, such as \"name\": \"paragraph\" or \"name\": \"card\". \n" +
+						"When a group has social components, they must be consolidated into a single object with the \"name\" key set to \"social\", rather than listing multiple social elements. This ensures that all social elements are grouped together under one \"social\" entry.\n" +
+							"When components of the same type appear more than once, they are represented as individual objects within the \"components\" array, as seen with repeated \"card\" components."
 	)
 	public Structure[] structures;
 
@@ -28,7 +28,7 @@ public class SitePageDescriptions {
 
 	public class Component {
 
-		@Description("The content description based on the parent instructions")
+		@Description("The name of this component")
 		public String name;
 
 	}
@@ -36,11 +36,11 @@ public class SitePageDescriptions {
 	public class Structure {
 
 		@Description(
-			"For cases where multiple elements are involved, the \"pageComponents\" key is used."
+			"An array of components in this structure. Use the \"pageComponents\" key when there are multiple elements."
 		)
 		public Component[] components;
 
-		@Description("The only available components for the JSON structure")
+		@Description("The name of this structure")
 		public StructureName name;
 
 	}
@@ -48,7 +48,7 @@ public class SitePageDescriptions {
 	public enum StructureName {
 
 		@Description(
-			"A small, darker rectangle with rounded corners, typically placed next to a paragraph or text."
+			"A small, dark rectangle with rounded corners, typically placed next to a paragraph or text."
 		)
 		button,
 		card,
@@ -57,11 +57,11 @@ public class SitePageDescriptions {
 		)
 		carousel,
 		@Description(
-			"A component containing an image (either square or circular), with a title beneath the image, a paragraph under the title, and a button after the paragraph. Multiple cards can appear in the same row."
+			"A component containing an image (square or circular), with a title beneath the image, a paragraph under the title, and a button after the paragraph. Multiple cards can appear in the same row."
 		)
 		footer,
 		@Description(
-			"Located at the top of the page, usually consisting of links, buttons, and sometimes an image."
+			"A component located at the top of the page, usually consisting of links, buttons, and sometimes an image."
 		)
 		header,
 		@Description(
@@ -69,12 +69,12 @@ public class SitePageDescriptions {
 		)
 		heading,
 		@Description(
-			"A block of content with controls that allow users to navigate through it."
+			"A block of content with controls for user navigation."
 		)
 		hero_banner,
 		@Description("A simple image component.")
 		image,
-		@Description("A component designed for displaying multiline text.")
+		@Description("A component that displays multiline text.")
 		paragraph,
 		@Description("A group of social media icons with links.")
 		social,

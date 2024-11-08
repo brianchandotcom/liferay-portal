@@ -22,7 +22,7 @@ public class Account {
 		return name;
 	}
 
-	public AccountType getType() {
+	public Type getType() {
 		return type;
 	}
 
@@ -49,9 +49,9 @@ public class Account {
 	@Description(
 		"Liferay provides three account types: Business, Person, and Supplier"
 	)
-	public AccountType type;
+	public Type type;
 
-	public enum AccountType {
+	public enum Type {
 
 		@Description(
 			"Business accounts are used in B2C or B2X sites, default option."

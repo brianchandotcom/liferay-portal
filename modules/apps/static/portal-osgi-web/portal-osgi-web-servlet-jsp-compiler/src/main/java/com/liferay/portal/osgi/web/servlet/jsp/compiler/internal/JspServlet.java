@@ -9,11 +9,15 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
@@ -72,6 +76,7 @@ import org.apache.tomcat.InstanceManager;
 import org.apache.tomcat.SimpleInstanceManager;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleReference;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
@@ -423,22 +428,37 @@ public class JspServlet extends HttpServlet {
 			catch (ClassNotFoundException classNotFoundException) {
 				ClassLoader parentClassLoader = classLoader.getParent();
 
-				try {
-					byte[] bytes = StreamUtil.toByteArray(
-						parentClassLoader.getResourceAsStream(
-							StringUtil.replace(className, '.', '/') +
-								".class"));
+				String resourceName = StringUtil.replace(
+					className, CharPool.PERIOD, CharPool.SLASH);
 
-					if (bytes != null) {
-						clazz = (Class<?>)_defineClassMethodHandle.invokeExact(
-							classLoader, className, bytes, 0, bytes.length);
-					}
+				URL url = parentClassLoader.getResource(
+					resourceName + ".class");
+
+				if (url == null) {
+					throw classNotFoundException;
 				}
-				catch (Throwable throwable) {
-					classNotFoundException.addSuppressed(throwable);
-				}
+
+				clazz = _loadClass(
+					className, classLoader, classNotFoundException, url);
 
 				if (clazz == null) {
+					throw classNotFoundException;
+				}
+
+				// preload inner classes
+
+				List<URL> innerClassURLs = _getInnerClassURLs(
+					url, resourceName);
+
+				for (URL innerClassURL : innerClassURLs) {
+					_loadClass(
+						_getClassName(innerClassURL), classLoader,
+						classNotFoundException, innerClassURL);
+				}
+
+				if (!ArrayUtil.isEmpty(
+						classNotFoundException.getSuppressed())) {
+
 					throw classNotFoundException;
 				}
 			}
@@ -446,6 +466,83 @@ public class JspServlet extends HttpServlet {
 			Constructor<?> constructor = clazz.getConstructor();
 
 			return constructor.newInstance();
+		}
+
+		private long _extractBundleId(URL url) {
+			String path = url.getHost();
+
+			String[] strings = StringUtil.split(path, CharPool.PERIOD);
+
+			if (strings.length > 1) {
+				return GetterUtil.getLong(strings[0]);
+			}
+
+			return -1;
+		}
+
+		private String _getClassName(URL url) {
+			String path = url.getPath();
+
+			if (path.startsWith(StringPool.SLASH)) {
+				path = path.substring(1);
+			}
+
+			path = path.substring(0, path.indexOf(".class"));
+
+			return StringUtil.replace(path, CharPool.SLASH, CharPool.PERIOD);
+		}
+
+		private List<URL> _getInnerClassURLs(URL url, String resourceName) {
+			String protocol = url.getProtocol();
+
+			if (protocol.equals("bundle") ||
+				protocol.equals("bundleresource")) {
+
+				BundleContext bundleContext = _jspBundle.getBundleContext();
+
+				long bundleId = _extractBundleId(url);
+
+				Bundle bundle = bundleContext.getBundle(bundleId);
+
+				if (bundle == null) {
+					return Collections.emptyList();
+				}
+
+				int index = resourceName.lastIndexOf(CharPool.SLASH);
+
+				Enumeration<URL> urlEnumeration = bundle.findEntries(
+					resourceName.substring(0, index),
+					resourceName.substring(index + 1) + "$*.class", false);
+
+				if (urlEnumeration == null) {
+					return Collections.emptyList();
+				}
+
+				return ListUtil.fromEnumeration(urlEnumeration);
+			}
+
+			return Collections.emptyList();
+		}
+
+		private Class<?> _loadClass(
+			String className, ClassLoader classLoader,
+			ClassNotFoundException classNotFoundException, URL url) {
+
+			Class<?> clazz = null;
+
+			try {
+				byte[] bytes = StreamUtil.toByteArray(url.openStream());
+
+				if (bytes != null) {
+					clazz = (Class<?>)_defineClassMethodHandle.invokeExact(
+						classLoader, className, bytes, 0, bytes.length);
+				}
+			}
+			catch (Throwable throwable) {
+				classNotFoundException.addSuppressed(throwable);
+			}
+
+			return clazz;
 		}
 
 	}

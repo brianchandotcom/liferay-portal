@@ -4,7 +4,7 @@
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.commerce.currency">
 	<author>Andrea Di Giorgi</author>
 	<namespace>Commerce</namespace>
-	<entity local-service="true" name="CommerceCurrency" remote-service="true" uuid="true">
+	<entity external-reference-code="company" local-service="true" name="CommerceCurrency" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

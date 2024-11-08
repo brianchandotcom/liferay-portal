@@ -3023,7 +3023,7 @@ public class CPConfigurationListPersistenceImpl
 	private static final String _FINDER_COLUMN_G_C_COMPANYID_2 =
 		"cpConfigurationList.companyId = ?";
 
-	private FinderPath _finderPathFetchByG_MasterCPConfigurationList;
+	private FinderPath _finderPathFetchByG_M;
 
 	/**
 	 * Returns the cp configuration list where groupId = &#63; and masterCPConfigurationList = &#63; or throws a <code>NoSuchCPConfigurationListException</code> if it could not be found.
@@ -3034,13 +3034,12 @@ public class CPConfigurationListPersistenceImpl
 	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
 	 */
 	@Override
-	public CPConfigurationList findByG_MasterCPConfigurationList(
+	public CPConfigurationList findByG_M(
 			long groupId, boolean masterCPConfigurationList)
 		throws NoSuchCPConfigurationListException {
 
-		CPConfigurationList cpConfigurationList =
-			fetchByG_MasterCPConfigurationList(
-				groupId, masterCPConfigurationList);
+		CPConfigurationList cpConfigurationList = fetchByG_M(
+			groupId, masterCPConfigurationList);
 
 		if (cpConfigurationList == null) {
 			StringBundler sb = new StringBundler(6);
@@ -3073,11 +3072,10 @@ public class CPConfigurationListPersistenceImpl
 	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
 	 */
 	@Override
-	public CPConfigurationList fetchByG_MasterCPConfigurationList(
+	public CPConfigurationList fetchByG_M(
 		long groupId, boolean masterCPConfigurationList) {
 
-		return fetchByG_MasterCPConfigurationList(
-			groupId, masterCPConfigurationList, true);
+		return fetchByG_M(groupId, masterCPConfigurationList, true);
 	}
 
 	/**
@@ -3089,7 +3087,7 @@ public class CPConfigurationListPersistenceImpl
 	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
 	 */
 	@Override
-	public CPConfigurationList fetchByG_MasterCPConfigurationList(
+	public CPConfigurationList fetchByG_M(
 		long groupId, boolean masterCPConfigurationList,
 		boolean useFinderCache) {
 
@@ -3107,8 +3105,7 @@ public class CPConfigurationListPersistenceImpl
 
 			if (useFinderCache) {
 				result = finderCache.getResult(
-					_finderPathFetchByG_MasterCPConfigurationList, finderArgs,
-					this);
+					_finderPathFetchByG_M, finderArgs, this);
 			}
 
 			if (result instanceof CPConfigurationList) {
@@ -3128,10 +3125,9 @@ public class CPConfigurationListPersistenceImpl
 
 				sb.append(_SQL_SELECT_CPCONFIGURATIONLIST_WHERE);
 
-				sb.append(_FINDER_COLUMN_G_MASTERCPCONFIGURATIONLIST_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_M_GROUPID_2);
 
-				sb.append(
-					_FINDER_COLUMN_G_MASTERCPCONFIGURATIONLIST_MASTERCPCONFIGURATIONLIST_2);
+				sb.append(_FINDER_COLUMN_G_M_MASTERCPCONFIGURATIONLIST_2);
 
 				String sql = sb.toString();
 
@@ -3153,8 +3149,7 @@ public class CPConfigurationListPersistenceImpl
 					if (list.isEmpty()) {
 						if (useFinderCache) {
 							finderCache.putResult(
-								_finderPathFetchByG_MasterCPConfigurationList,
-								finderArgs, list);
+								_finderPathFetchByG_M, finderArgs, list);
 						}
 					}
 					else {
@@ -3169,7 +3164,7 @@ public class CPConfigurationListPersistenceImpl
 								}
 
 								_log.warn(
-									"CPConfigurationListPersistenceImpl.fetchByG_MasterCPConfigurationList(long, boolean, boolean) with parameters (" +
+									"CPConfigurationListPersistenceImpl.fetchByG_M(long, boolean, boolean) with parameters (" +
 										StringUtil.merge(finderArgs) +
 											") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 							}
@@ -3207,13 +3202,12 @@ public class CPConfigurationListPersistenceImpl
 	 * @return the cp configuration list that was removed
 	 */
 	@Override
-	public CPConfigurationList removeByG_MasterCPConfigurationList(
+	public CPConfigurationList removeByG_M(
 			long groupId, boolean masterCPConfigurationList)
 		throws NoSuchCPConfigurationListException {
 
-		CPConfigurationList cpConfigurationList =
-			findByG_MasterCPConfigurationList(
-				groupId, masterCPConfigurationList);
+		CPConfigurationList cpConfigurationList = findByG_M(
+			groupId, masterCPConfigurationList);
 
 		return remove(cpConfigurationList);
 	}
@@ -3226,12 +3220,9 @@ public class CPConfigurationListPersistenceImpl
 	 * @return the number of matching cp configuration lists
 	 */
 	@Override
-	public int countByG_MasterCPConfigurationList(
-		long groupId, boolean masterCPConfigurationList) {
-
-		CPConfigurationList cpConfigurationList =
-			fetchByG_MasterCPConfigurationList(
-				groupId, masterCPConfigurationList);
+	public int countByG_M(long groupId, boolean masterCPConfigurationList) {
+		CPConfigurationList cpConfigurationList = fetchByG_M(
+			groupId, masterCPConfigurationList);
 
 		if (cpConfigurationList == null) {
 			return 0;
@@ -3240,13 +3231,11 @@ public class CPConfigurationListPersistenceImpl
 		return 1;
 	}
 
-	private static final String
-		_FINDER_COLUMN_G_MASTERCPCONFIGURATIONLIST_GROUPID_2 =
-			"cpConfigurationList.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_M_GROUPID_2 =
+		"cpConfigurationList.groupId = ? AND ";
 
-	private static final String
-		_FINDER_COLUMN_G_MASTERCPCONFIGURATIONLIST_MASTERCPCONFIGURATIONLIST_2 =
-			"cpConfigurationList.masterCPConfigurationList = ?";
+	private static final String _FINDER_COLUMN_G_M_MASTERCPCONFIGURATIONLIST_2 =
+		"cpConfigurationList.masterCPConfigurationList = ?";
 
 	private FinderPath _finderPathWithPaginationFindByLtD_S;
 	private FinderPath _finderPathWithPaginationCountByLtD_S;
@@ -5871,7 +5860,7 @@ public class CPConfigurationListPersistenceImpl
 				cpConfigurationList);
 
 			finderCache.putResult(
-				_finderPathFetchByG_MasterCPConfigurationList,
+				_finderPathFetchByG_M,
 				new Object[] {
 					cpConfigurationList.getGroupId(),
 					cpConfigurationList.isMasterCPConfigurationList()
@@ -5993,8 +5982,7 @@ public class CPConfigurationListPersistenceImpl
 			};
 
 			finderCache.putResult(
-				_finderPathFetchByG_MasterCPConfigurationList, args,
-				cpConfigurationListModelImpl);
+				_finderPathFetchByG_M, args, cpConfigurationListModelImpl);
 
 			args = new Object[] {
 				cpConfigurationListModelImpl.getExternalReferenceCode(),
@@ -6914,8 +6902,8 @@ public class CPConfigurationListPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "companyId"}, false);
 
-		_finderPathFetchByG_MasterCPConfigurationList = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_MasterCPConfigurationList",
+		_finderPathFetchByG_M = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_M",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"groupId", "masterCPConfigurationList"}, true);
 

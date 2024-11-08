@@ -324,12 +324,11 @@ public class CPConfigurationListPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_MasterCPConfigurationList() throws Exception {
-		_persistence.countByG_MasterCPConfigurationList(
+	public void testCountByG_M() throws Exception {
+		_persistence.countByG_M(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_MasterCPConfigurationList(
-			0L, RandomTestUtil.randomBoolean());
+		_persistence.countByG_M(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test

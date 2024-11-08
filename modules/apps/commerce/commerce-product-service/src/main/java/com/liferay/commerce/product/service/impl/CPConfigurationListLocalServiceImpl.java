@@ -164,8 +164,7 @@ public class CPConfigurationListLocalServiceImpl
 	public CPConfigurationList getMasterCPConfigurationList(long groupId)
 		throws NoSuchCPConfigurationListException {
 
-		return cpConfigurationListPersistence.findByG_MasterCPConfigurationList(
-			groupId, true);
+		return cpConfigurationListPersistence.findByG_M(groupId, true);
 	}
 
 	private void _validate(
@@ -175,9 +174,8 @@ public class CPConfigurationListLocalServiceImpl
 
 		if (masterConfigurationList) {
 			CPConfigurationList cpConfigurationList =
-				cpConfigurationListPersistence.
-					fetchByG_MasterCPConfigurationList(
-						groupId, masterConfigurationList);
+				cpConfigurationListPersistence.fetchByG_M(
+					groupId, masterConfigurationList);
 
 			if ((cpConfigurationList != null) &&
 				(cpConfigurationList.getCPConfigurationListId() !=

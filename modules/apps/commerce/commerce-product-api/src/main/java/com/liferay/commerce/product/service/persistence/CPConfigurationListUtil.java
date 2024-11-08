@@ -1074,13 +1074,12 @@ public class CPConfigurationListUtil {
 	 * @return the matching cp configuration list
 	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
 	 */
-	public static CPConfigurationList findByG_MasterCPConfigurationList(
+	public static CPConfigurationList findByG_M(
 			long groupId, boolean masterCPConfigurationList)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPConfigurationListException {
 
-		return getPersistence().findByG_MasterCPConfigurationList(
-			groupId, masterCPConfigurationList);
+		return getPersistence().findByG_M(groupId, masterCPConfigurationList);
 	}
 
 	/**
@@ -1090,11 +1089,10 @@ public class CPConfigurationListUtil {
 	 * @param masterCPConfigurationList the master cp configuration list
 	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
 	 */
-	public static CPConfigurationList fetchByG_MasterCPConfigurationList(
+	public static CPConfigurationList fetchByG_M(
 		long groupId, boolean masterCPConfigurationList) {
 
-		return getPersistence().fetchByG_MasterCPConfigurationList(
-			groupId, masterCPConfigurationList);
+		return getPersistence().fetchByG_M(groupId, masterCPConfigurationList);
 	}
 
 	/**
@@ -1105,11 +1103,11 @@ public class CPConfigurationListUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
 	 */
-	public static CPConfigurationList fetchByG_MasterCPConfigurationList(
+	public static CPConfigurationList fetchByG_M(
 		long groupId, boolean masterCPConfigurationList,
 		boolean useFinderCache) {
 
-		return getPersistence().fetchByG_MasterCPConfigurationList(
+		return getPersistence().fetchByG_M(
 			groupId, masterCPConfigurationList, useFinderCache);
 	}
 
@@ -1120,13 +1118,12 @@ public class CPConfigurationListUtil {
 	 * @param masterCPConfigurationList the master cp configuration list
 	 * @return the cp configuration list that was removed
 	 */
-	public static CPConfigurationList removeByG_MasterCPConfigurationList(
+	public static CPConfigurationList removeByG_M(
 			long groupId, boolean masterCPConfigurationList)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPConfigurationListException {
 
-		return getPersistence().removeByG_MasterCPConfigurationList(
-			groupId, masterCPConfigurationList);
+		return getPersistence().removeByG_M(groupId, masterCPConfigurationList);
 	}
 
 	/**
@@ -1136,11 +1133,10 @@ public class CPConfigurationListUtil {
 	 * @param masterCPConfigurationList the master cp configuration list
 	 * @return the number of matching cp configuration lists
 	 */
-	public static int countByG_MasterCPConfigurationList(
+	public static int countByG_M(
 		long groupId, boolean masterCPConfigurationList) {
 
-		return getPersistence().countByG_MasterCPConfigurationList(
-			groupId, masterCPConfigurationList);
+		return getPersistence().countByG_M(groupId, masterCPConfigurationList);
 	}
 
 	/**

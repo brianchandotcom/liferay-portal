@@ -53,6 +53,25 @@ public class CPConfigurationListLocalServiceUtil {
 		return getService().addCPConfigurationList(cpConfigurationList);
 	}
 
+	public static CPConfigurationList addCPConfigurationList(
+			String externalReferenceCode, long groupId, long userId,
+			long parentCPConfigurationListId, boolean masterCPConfigurationList,
+			String name, double priority, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire)
+		throws PortalException {
+
+		return getService().addCPConfigurationList(
+			externalReferenceCode, groupId, userId, parentCPConfigurationListId,
+			masterCPConfigurationList, name, priority, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire);
+	}
+
 	/**
 	 * Creates a new cp configuration list with the primary key. Does not add the cp configuration list to the database.
 	 *
@@ -84,9 +103,11 @@ public class CPConfigurationListLocalServiceUtil {
 	 *
 	 * @param cpConfigurationList the cp configuration list
 	 * @return the cp configuration list that was removed
+	 * @throws PortalException
 	 */
 	public static CPConfigurationList deleteCPConfigurationList(
-		CPConfigurationList cpConfigurationList) {
+			CPConfigurationList cpConfigurationList)
+		throws PortalException {
 
 		return getService().deleteCPConfigurationList(cpConfigurationList);
 	}
@@ -107,6 +128,12 @@ public class CPConfigurationListLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteCPConfigurationList(CPConfigurationListId);
+	}
+
+	public static void deleteCPConfigurationLists(long companyId)
+		throws PortalException {
+
+		getService().deleteCPConfigurationLists(companyId);
 	}
 
 	/**
@@ -232,6 +259,13 @@ public class CPConfigurationListLocalServiceUtil {
 			uuid, groupId);
 	}
 
+	public static CPConfigurationList forceDeleteCPConfigurationList(
+			CPConfigurationList cpConfigurationList)
+		throws PortalException {
+
+		return getService().forceDeleteCPConfigurationList(cpConfigurationList);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -294,6 +328,12 @@ public class CPConfigurationListLocalServiceUtil {
 		return getService().getCPConfigurationLists(start, end);
 	}
 
+	public static List<CPConfigurationList> getCPConfigurationLists(
+		long groupId, long companyId) {
+
+		return getService().getCPConfigurationLists(groupId, companyId);
+	}
+
 	/**
 	 * Returns all the cp configuration lists matching the UUID and company.
 	 *
@@ -349,6 +389,13 @@ public class CPConfigurationListLocalServiceUtil {
 			getIndexableActionableDynamicQuery() {
 
 		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static CPConfigurationList getMasterCPConfigurationList(long groupId)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPConfigurationListException {
+
+		return getService().getMasterCPConfigurationList(groupId);
 	}
 
 	/**

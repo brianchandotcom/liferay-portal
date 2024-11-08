@@ -50,6 +50,27 @@ public class CPConfigurationEntryLocalServiceWrapper
 			cpConfigurationEntry);
 	}
 
+	@Override
+	public CPConfigurationEntry addCPConfigurationEntry(
+			String externalReferenceCode, long userId,
+			long cpConfigurationListId, long classNameId, long classPK,
+			String cpDefinitionInventoryEngine, String lowStockActivity,
+			boolean displayAvailability, boolean displayStockQuantity,
+			java.math.BigDecimal minStockQuantity, boolean backOrders,
+			java.math.BigDecimal minOrderQuantity,
+			java.math.BigDecimal maxOrderQuantity,
+			String allowedOrderQuantities,
+			java.math.BigDecimal multipleOrderQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpConfigurationEntryLocalService.addCPConfigurationEntry(
+			externalReferenceCode, userId, cpConfigurationListId, classNameId,
+			classPK, cpDefinitionInventoryEngine, lowStockActivity,
+			displayAvailability, displayStockQuantity, minStockQuantity,
+			backOrders, minOrderQuantity, maxOrderQuantity,
+			allowedOrderQuantities, multipleOrderQuantity);
+	}
+
 	/**
 	 * Creates a new cp configuration entry with the primary key. Does not add the cp configuration entry to the database.
 	 *
@@ -74,6 +95,12 @@ public class CPConfigurationEntryLocalServiceWrapper
 
 		return _cpConfigurationEntryLocalService.createPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public void deleteCPConfigurationEntries(long cpConfigurationListId) {
+		_cpConfigurationEntryLocalService.deleteCPConfigurationEntries(
+			cpConfigurationListId);
 	}
 
 	/**
@@ -287,6 +314,14 @@ public class CPConfigurationEntryLocalServiceWrapper
 
 		return _cpConfigurationEntryLocalService.getCPConfigurationEntries(
 			start, end);
+	}
+
+	@Override
+	public java.util.List<CPConfigurationEntry> getCPConfigurationEntries(
+		long cpConfigurationListId) {
+
+		return _cpConfigurationEntryLocalService.getCPConfigurationEntries(
+			cpConfigurationListId);
 	}
 
 	/**

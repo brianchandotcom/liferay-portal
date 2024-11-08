@@ -474,3 +474,19 @@ test('LPD-29981 Check custom field is escaped', async ({
 
 	expect(customFieldDropDownOptions).toBeTruthy();
 });
+
+test('LPD-41022 Check toolbar select is not visible at all', async ({
+	usersAndOrganizationsPage,
+}) => {
+	await usersAndOrganizationsPage.goToUsers();
+
+	await expect(
+		usersAndOrganizationsPage.selectAllUsersCheckBox
+	).toBeVisible();
+
+	await usersAndOrganizationsPage.filterUsers('all');
+
+	await expect(
+		usersAndOrganizationsPage.selectAllUsersCheckBox
+	).not.toBeVisible();
+});

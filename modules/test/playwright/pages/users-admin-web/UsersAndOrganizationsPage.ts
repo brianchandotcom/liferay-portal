@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export const searchTableRowByValue = async function (
@@ -100,6 +101,9 @@ export class UsersAndOrganizationsPage {
 	) => Promise<Locator>;
 	readonly page: Page;
 	readonly pageTitle: Locator;
+	readonly selectAllUsersCheckBox: Locator;
+	readonly tableFilterMenu: Locator;
+	readonly tableFilterMenuItem: (option: string) => Locator;
 	readonly tableOrderMenu: Locator;
 	readonly tableOrderLastLoginDateItem: Locator;
 	readonly usersTableRow: (
@@ -349,6 +353,24 @@ export class UsersAndOrganizationsPage {
 				strictEqual
 			);
 		};
+		this.selectAllUsersCheckBox = page
+			.locator('.management-bar')
+			.getByLabel('Select All Users on the Page');
+		this.tableFilterMenu = page
+			.locator('.management-bar')
+			.getByLabel('Filter');
+		this.tableFilterMenuItem = (option: string) => {
+			if (option === 'all') {
+				return page
+					.locator('.dropdown-menu')
+					.getByRole('menuitem', {name: option})
+					.first();
+			}
+
+			return page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: option});
+		};
 		this.tableOrderMenu = page
 			.locator('.management-bar')
 			.getByLabel('Order');
@@ -444,6 +466,21 @@ export class UsersAndOrganizationsPage {
 				(resp) =>
 					resp.status() === 200 &&
 					resp.url().includes('screenNavigationCategoryKey=users')
+			),
+		]);
+	}
+
+	async filterUsers(option: string) {
+		await Promise.all([
+			clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.tableFilterMenuItem(option),
+				trigger: this.tableFilterMenu,
+			}),
+			this.page.waitForResponse(
+				(resp) =>
+					resp.status() === 200 &&
+					resp.url().includes('navigation=' + option)
 			),
 		]);
 	}

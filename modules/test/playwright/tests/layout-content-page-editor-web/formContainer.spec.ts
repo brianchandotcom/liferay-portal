@@ -217,6 +217,194 @@ test.describe('Captcha Fragment', () => {
 	);
 });
 
+test.describe('Checkbox Fragment', () => {
+	test(
+		'The page designer can configure checkbox fragment',
+		{
+			tag: '@LPS-151157',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a form fragment with a checkbox fragment
+
+			const {className: objectDefinitionClassName} =
+				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+					ALL_FIELDS_OBJECT_ERC
+				);
+
+			const checkboxId = getRandomString();
+
+			const checkboxDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_boolean',
+				},
+				id: checkboxId,
+				key: 'INPUTS-checkbox',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [checkboxDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Change label
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Label',
+				fragmentId: checkboxId,
+				tab: 'General',
+				value: 'Are you a fun of Stephen Curry?',
+			});
+
+			const checkboxInput = page.locator('.forms-checkbox');
+
+			await expect(
+				checkboxInput.getByText('Are you a fun of Stephen Curry?')
+			).not.toHaveClass(/sr-only/);
+
+			// Hide label
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Label',
+				fragmentId: checkboxId,
+				tab: 'General',
+				value: false,
+			});
+
+			await expect(
+				checkboxInput.getByText('Are you a fun of Stephen Curry?')
+			).toHaveClass(/sr-only/);
+
+			// Show help text
+
+			await expect(checkboxInput).not.toContainText(
+				/Add your help text here./
+			);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Help Text',
+				fragmentId: checkboxId,
+				tab: 'General',
+				value: true,
+			});
+
+			await expect(checkboxInput).toContainText(
+				/Add your help text here./
+			);
+		}
+	);
+
+	test(
+		'User should see error message below checkbox fragment',
+		{
+			tag: '@LPS-182728',
+		},
+		async ({apiHelpers, page, pageManagementSite}) => {
+
+			// Adds checkbox validation
+
+			const objectAdminRestClient = await apiHelpers.buildRestClient(
+				ObjectAdminRestClient
+			);
+
+			const objectValidationRule =
+				await objectAdminRestClient.objectValidationRule.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+					{
+						externalReferenceCode: ALL_FIELDS_OBJECT_ERC,
+						requestBody: {
+							active: true,
+							engine: 'ddm',
+							engineLabel: 'Expression Builder',
+							errorLabel: {
+								en_US: 'Please accept the terms of use and Privacy Policy.',
+							},
+							name: {
+								en_US: 'Checkbox Validation',
+							},
+							objectValidationRuleSettings: [
+								{
+									name: 'outputObjectFieldExternalReferenceCode',
+									value: 'boolean-erc',
+								} as any,
+							],
+							outputType: 'partialValidation',
+							script: 'boolean == true',
+							system: false,
+						},
+					}
+				);
+
+			// Create a page with a form fragment with a checkbox fragment
+
+			const {className: objectDefinitionClassName} =
+				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+					ALL_FIELDS_OBJECT_ERC
+				);
+
+			const checkboxId = getRandomString();
+
+			const checkboxDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_boolean',
+				},
+				id: checkboxId,
+				key: 'INPUTS-checkbox',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [checkboxDefinition, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Assert error message
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(page.locator('.forms-checkbox')).toContainText(
+				'Please accept the terms of use and Privacy Policy.'
+			);
+
+			// Delete validation
+
+			await objectAdminRestClient.objectValidationRule.deleteObjectValidationRule(
+				{objectValidationRuleId: objectValidationRule.id}
+			);
+		}
+	);
+});
+
 test.describe('Date Fragment', () => {
 	test(
 		'The page designer could map date field to date fragment',

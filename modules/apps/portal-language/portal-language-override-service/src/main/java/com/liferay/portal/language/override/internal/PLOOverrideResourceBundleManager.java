@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.override.internal.provider.PLOOriginalTranslationThreadLocal;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
@@ -53,6 +54,8 @@ public class PLOOverrideResourceBundleManager {
 
 	protected static void clearCache() {
 		_overrideResourceBundlesDCLSingleton.destroy(null);
+
+		LanguageResources.clearResourceBundlesCache();
 	}
 
 	private void _add(

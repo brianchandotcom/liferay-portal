@@ -1044,6 +1044,8 @@ public interface Portal {
 
 	public boolean isSystemRole(String roleName);
 
+	public boolean isUpgrading();
+
 	public boolean isValidPortalDomain(long companyId, String domain);
 
 	public boolean isValidResourceId(String resourceId);

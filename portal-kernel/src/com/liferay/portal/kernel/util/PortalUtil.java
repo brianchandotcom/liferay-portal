@@ -1712,6 +1712,10 @@ public class PortalUtil {
 		return _portal.isSystemRole(roleName);
 	}
 
+	public static boolean isUpgrading() {
+		return _portal.isUpgrading();
+	}
+
 	public static boolean isValidPortalDomain(long companyId, String domain) {
 		return _portal.isValidPortalDomain(companyId, domain);
 	}

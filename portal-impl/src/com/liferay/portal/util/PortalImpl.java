@@ -5821,6 +5821,11 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public boolean isUpgrading() {
+		return StartupHelperUtil.isUpgrading();
+	}
+
+	@Override
 	public boolean isValidPortalDomain(long companyId, String domain) {
 		if (_validPortalDomainCheckDisabled) {
 			return true;

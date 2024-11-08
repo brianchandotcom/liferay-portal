@@ -313,6 +313,39 @@ test.describe('Date Fragment', () => {
 		},
 		async ({apiHelpers, page, pageManagementSite}) => {
 
+			// Adds date validation
+
+			const objectAdminRestClient = await apiHelpers.buildRestClient(
+				ObjectAdminRestClient
+			);
+
+			const objectValidationRule =
+				await objectAdminRestClient.objectValidationRule.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+					{
+						externalReferenceCode: ALL_FIELDS_OBJECT_ERC,
+						requestBody: {
+							active: true,
+							engine: 'ddm',
+							engineLabel: 'Expression Builder',
+							errorLabel: {
+								en_US: 'Please enter a valid date.',
+							},
+							name: {
+								en_US: 'Date Validation',
+							},
+							objectValidationRuleSettings: [
+								{
+									name: 'outputObjectFieldExternalReferenceCode',
+									value: 'date-erc',
+								} as any,
+							],
+							outputType: 'partialValidation',
+							script: "futureDates(date, '2022-06-01')",
+							system: false,
+						},
+					}
+				);
+
 			// Create a page with a form fragment with a date fragment
 
 			const {className: objectDefinitionClassName} =
@@ -367,6 +400,12 @@ test.describe('Date Fragment', () => {
 
 			await expect(page.locator('.date-input')).toContainText(
 				'Please enter a valid date.'
+			);
+
+			// Delete validation
+
+			await objectAdminRestClient.objectValidationRule.deleteObjectValidationRule(
+				{objectValidationRuleId: objectValidationRule.id}
 			);
 		}
 	);

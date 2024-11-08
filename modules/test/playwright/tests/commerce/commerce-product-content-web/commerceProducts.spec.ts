@@ -956,3 +956,66 @@ test('LPD-3424 Can click AddToButton button multiple times on Diagram Product Di
 		/not-allowed/
 	);
 });
+
+test('LPD-37780 Friendly URLs history for products', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminProductDetailsPage,
+	commerceAdminProductPage,
+	commerceLayoutsPage,
+	page,
+	productDetailsPage,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'person',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: getRandomString(),
+		siteGroupId: site.id,
+	});
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: 'Product1'},
+	});
+
+	await commerceAdminProductPage.gotoProduct(product.name['en_US']);
+
+	await (
+		await commerceAdminProductDetailsPage.productDetailsInput(
+			'Friendly URL'
+		)
+	).fill('product2');
+	await commerceAdminProductDetailsPage.publishLink.click();
+
+	await waitForAlert(page);
+
+	await applicationsMenuPage.goToSite(site.name);
+
+	await commerceLayoutsPage.goToPages(false);
+	await commerceLayoutsPage.createWidgetPage('Product details');
+
+	await page.goto(`/web/${site.name}`);
+
+	await productDetailsPage.addProductDetailsWidget();
+
+	await page.goto(`/web/${site.name}/p/product1`);
+
+	await expect(page.getByText(product.name['en_US'])).toBeVisible();
+
+	await page.goto(`/web/${site.name}/p/product2`);
+
+	await expect(page.getByText(product.name['en_US'])).toBeVisible();
+});

@@ -95,7 +95,7 @@ public class ExportTaskResourceTest {
 					"BatchEngineExportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
-			JSONObject exportTaskJSONObject1 = _testPostExportTask(
+			JSONObject exportTaskJSONObject1 = _postExportTask(
 				_objectDefinition1, null);
 
 			Assert.assertEquals(
@@ -125,8 +125,7 @@ public class ExportTaskResourceTest {
 							_OBJECT_FIELD_NAME_TEXT)),
 					ObjectDefinitionConstants.SCOPE_COMPANY, user.getUserId());
 
-			exportTaskJSONObject1 = _testPostExportTask(
-				objectDefinition2, null);
+			exportTaskJSONObject1 = _postExportTask(objectDefinition2, null);
 
 			Assert.assertEquals(
 				"FAILED", exportTaskJSONObject1.get("executeStatus"));
@@ -138,14 +137,14 @@ public class ExportTaskResourceTest {
 				"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 			).apply(
 				() -> {
-					JSONObject exportTaskJSONObject2 = _testPostExportTask(
+					JSONObject exportTaskJSONObject2 = _postExportTask(
 						objectDefinition2, null);
 
 					Assert.assertEquals(
 						"COMPLETED",
 						exportTaskJSONObject2.get("executeStatus"));
 
-					exportTaskJSONObject2 = _testPostExportTask(
+					exportTaskJSONObject2 = _postExportTask(
 						_objectDefinition1, null);
 
 					Assert.assertEquals(
@@ -177,7 +176,7 @@ public class ExportTaskResourceTest {
 
 		String queryParametersString = "filter=" + encodedFilterString;
 
-		JSONObject jsonObject = _testPostExportTask(
+		JSONObject jsonObject = _postExportTask(
 			_objectDefinition1, queryParametersString);
 
 		Assert.assertEquals(2, jsonObject.getInt("processedItemsCount"));
@@ -212,7 +211,7 @@ public class ExportTaskResourceTest {
 			objectEntry2JSONObject.get("externalReferenceCode"));
 	}
 
-	private JSONObject _testPostExportTask(
+	private JSONObject _postExportTask(
 			ObjectDefinition objectDefinition, String queryParameters)
 		throws Exception {
 

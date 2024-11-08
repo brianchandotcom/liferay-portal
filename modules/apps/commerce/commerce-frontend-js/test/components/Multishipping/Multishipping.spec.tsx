@@ -102,7 +102,7 @@ describe('Multishipping', () => {
 			.fill(0)
 			.map((_, currentIndex) => {
 				return {
-					deliveryGroup: `deliveryGroup${currentIndex}`,
+					deliveryGroupName: `DeliveryGroupName${currentIndex}`,
 					id: 1000 + currentIndex,
 					name: `ProductName${currentIndex}`,
 					options: '[]',
@@ -163,7 +163,7 @@ describe('Multishipping', () => {
 			.fill(0)
 			.map((_, currentIndex) => {
 				return {
-					deliveryGroup: `deliveryGroup${currentIndex}`,
+					deliveryGroupName: `DeliveryGroupName${currentIndex}`,
 					id: 1000 + currentIndex,
 					name: `ProductName${currentIndex}`,
 					options: '[]',
@@ -297,7 +297,7 @@ describe('Multishipping', () => {
 			.fill(0)
 			.map((_, currentIndex) => {
 				return {
-					deliveryGroup: `deliveryGroup${currentIndex}`,
+					deliveryGroupName: `DeliveryGroupName${currentIndex}`,
 					id: 1000 + currentIndex,
 					name: `ProductName${currentIndex}`,
 					options: '[]',
@@ -377,7 +377,7 @@ describe('Multishipping', () => {
 			.fill(0)
 			.map((_, currentIndex) => {
 				return {
-					deliveryGroup: `deliveryGroup${currentIndex}`,
+					deliveryGroupName: `DeliveryGroupName${currentIndex}`,
 					id: 1000 + currentIndex,
 					name: `ProductName${currentIndex}`,
 					options: '[]',
@@ -425,7 +425,7 @@ describe('Multishipping', () => {
 			.fill(0)
 			.map((_, currentIndex) => {
 				return {
-					deliveryGroup: `deliveryGroup${currentIndex}`,
+					deliveryGroupName: `DeliveryGroupName${currentIndex}`,
 					id: 1000 + currentIndex,
 					name: `ProductName${currentIndex}`,
 					options: '[]',
@@ -525,7 +525,7 @@ describe('Multishipping', () => {
 			.fill(0)
 			.map((_, currentIndex) => {
 				return {
-					deliveryGroup: `deliveryGroup`,
+					deliveryGroupName: `DeliveryGroupName`,
 					id: 1000 + currentIndex,
 					name: `ProductName${currentIndex}`,
 					options: '[]',
@@ -576,7 +576,7 @@ describe('Multishipping', () => {
 	it('Table should display same product in multiple delivery groups', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -593,7 +593,7 @@ describe('Multishipping', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: `deliveryGroup2`,
+				deliveryGroupName: `DeliveryGroupName2`,
 				id: 1001,
 				name: `ProductName1`,
 				options: '[]',
@@ -610,7 +610,7 @@ describe('Multishipping', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: `deliveryGroup2`,
+				deliveryGroupName: `DeliveryGroupName2`,
 				id: 1002,
 				name: `ProductName2`,
 				options: '[]',
@@ -667,7 +667,7 @@ describe('Multishipping', () => {
 	it('Must fix missing delivery groups', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -684,7 +684,7 @@ describe('Multishipping', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: '',
+				deliveryGroupName: '',
 				id: 1001,
 				name: `ProductName1`,
 				options: '[]',
@@ -701,7 +701,7 @@ describe('Multishipping', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1002,
 				name: `ProductName2`,
 				options: '[]',
@@ -727,7 +727,7 @@ describe('Multishipping', () => {
 				} as IOrderItemAPIResponse;
 			})
 			.mockReturnValue(() => {
-				orderItems[1].deliveryGroup = 'deliveryGroup1';
+				orderItems[1].deliveryGroupName = 'DeliveryGroupName1';
 				orderItems[1].shippingAddressId = 1000;
 
 				return {
@@ -769,7 +769,7 @@ describe('Multishipping', () => {
 			isArrayEqual(
 				JSON.parse(fetchMock.calls().matched[1][1].body).cartItems,
 				JSON.parse(
-					'[{"deliveryGroup":"deliveryGroup1","id":1000,"options":"[]","quantity":3,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":1000,"skuId":100},{"deliveryGroup":"deliveryGroup1","id":1001,"options":"[]","quantity":5,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":1000,"skuId":100},{"deliveryGroup":"deliveryGroup1","id":1002,"options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":1000,"skuId":102}]'
+					'[{"deliveryGroupName":"DeliveryGroupName1","id":1000,"options":"[]","quantity":3,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":1000,"skuId":100},{"deliveryGroupName":"DeliveryGroupName1","id":1001,"options":"[]","quantity":5,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":1000,"skuId":100},{"deliveryGroupName":"DeliveryGroupName1","id":1002,"options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":1000,"skuId":102}]'
 				)
 			)
 		).toBeTruthy();
@@ -779,7 +779,7 @@ describe('Multishipping', () => {
 	it('Must show correct display groups for different products', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -797,7 +797,7 @@ describe('Multishipping', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1002,
 				name: `ProductName2`,
 				options: '[]',
@@ -824,7 +824,7 @@ describe('Multishipping', () => {
 				} as IOrderItemAPIResponse;
 			})
 			.mockReturnValueOnce(() => {
-				orderItems[1].deliveryGroup = 'deliveryGroup2';
+				orderItems[1].deliveryGroupName = 'DeliveryGroupName2';
 				orderItems[1].requestedDeliveryDate = '2024-12-12';
 				orderItems[1].shippingAddressId = 1000;
 
@@ -833,7 +833,7 @@ describe('Multishipping', () => {
 				} as IOrderItemAPIResponse;
 			})
 			.mockReturnValueOnce(() => {
-				orderItems[1].deliveryGroup = 'deliveryGroup1';
+				orderItems[1].deliveryGroupName = 'DeliveryGroupName1';
 				orderItems[1].requestedDeliveryDate = '2024-12-13';
 				orderItems[1].shippingAddressId = 1000;
 
@@ -842,7 +842,7 @@ describe('Multishipping', () => {
 				} as IOrderItemAPIResponse;
 			})
 			.mockReturnValueOnce(() => {
-				orderItems[1].deliveryGroup = 'deliveryGroup1';
+				orderItems[1].deliveryGroupName = 'DeliveryGroupName1';
 				orderItems[1].requestedDeliveryDate = '2024-12-12';
 				orderItems[1].shippingAddressId = 1001;
 
@@ -934,7 +934,7 @@ describe('Multishipping', () => {
 	it('Must show correct display groups for same product', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -952,7 +952,7 @@ describe('Multishipping', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1002,
 				name: `ProductName1`,
 				options: '[]',
@@ -979,7 +979,7 @@ describe('Multishipping', () => {
 				} as IOrderItemAPIResponse;
 			})
 			.mockReturnValueOnce(() => {
-				orderItems[1].deliveryGroup = 'deliveryGroup2';
+				orderItems[1].deliveryGroupName = 'DeliveryGroupName2';
 				orderItems[1].requestedDeliveryDate = '2024-12-12';
 				orderItems[1].shippingAddressId = 1000;
 
@@ -988,7 +988,7 @@ describe('Multishipping', () => {
 				} as IOrderItemAPIResponse;
 			})
 			.mockReturnValueOnce(() => {
-				orderItems[1].deliveryGroup = 'deliveryGroup1';
+				orderItems[1].deliveryGroupName = 'DeliveryGroupName1';
 				orderItems[1].requestedDeliveryDate = '2024-12-13';
 				orderItems[1].shippingAddressId = 1000;
 
@@ -997,7 +997,7 @@ describe('Multishipping', () => {
 				} as IOrderItemAPIResponse;
 			})
 			.mockReturnValueOnce(() => {
-				orderItems[1].deliveryGroup = 'deliveryGroup1';
+				orderItems[1].deliveryGroupName = 'DeliveryGroupName1';
 				orderItems[1].requestedDeliveryDate = '2024-12-12';
 				orderItems[1].shippingAddressId = 1001;
 
@@ -1089,7 +1089,7 @@ describe('Multishipping', () => {
 	it('Must create the default delivery group if address is passed and no delivery groups are there', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: '',
+				deliveryGroupName: '',
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -1107,7 +1107,7 @@ describe('Multishipping', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: '',
+				deliveryGroupName: '',
 				id: 1002,
 				name: `ProductName1`,
 				options: '[]',
@@ -1134,9 +1134,9 @@ describe('Multishipping', () => {
 				} as IOrderItemAPIResponse;
 			})
 			.mockReturnValue(() => {
-				orderItems[0].deliveryGroup = 'Default';
+				orderItems[0].deliveryGroupName = 'Default';
 				orderItems[0].shippingAddressId = 1000;
-				orderItems[1].deliveryGroup = 'Default';
+				orderItems[1].deliveryGroupName = 'Default';
 				orderItems[1].shippingAddressId = 1000;
 
 				return {
@@ -1181,7 +1181,7 @@ describe('Multishipping', () => {
 			isArrayEqual(
 				JSON.parse(fetchMock.calls().matched[1][1].body).cartItems,
 				JSON.parse(
-					'[{"deliveryGroup":"Default","options":"[]","quantity":3,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":1000,"skuId":100},{"deliveryGroup":"Default","options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":1000,"skuId":101}]'
+					'[{"deliveryGroupName":"Default","options":"[]","quantity":3,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":1000,"skuId":100},{"deliveryGroupName":"Default","options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":1000,"skuId":101}]'
 				)
 			)
 		).toBeTruthy();
@@ -1209,7 +1209,7 @@ describe('MultiShipping - bulk actions', () => {
 	it('Must check all the rows if select all is checked and the bulk actions are available', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -1227,7 +1227,7 @@ describe('MultiShipping - bulk actions', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: 'deliveryGroup1',
+				deliveryGroupName: 'DeliveryGroupName1',
 				id: 1002,
 				name: `ProductName1`,
 				options: '[]',
@@ -1330,7 +1330,7 @@ describe('MultiShipping - bulk actions', () => {
 	it('Must check a single row and the bulk actions are available', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -1348,7 +1348,7 @@ describe('MultiShipping - bulk actions', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: 'deliveryGroup1',
+				deliveryGroupName: 'DeliveryGroupName1',
 				id: 1002,
 				name: `ProductName1`,
 				options: '[]',
@@ -1474,7 +1474,7 @@ describe('MultiShipping - bulk actions', () => {
 	it('Must select all the rows', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -1492,7 +1492,7 @@ describe('MultiShipping - bulk actions', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: 'deliveryGroup1',
+				deliveryGroupName: 'DeliveryGroupName1',
 				id: 1002,
 				name: `ProductName1`,
 				options: '[]',
@@ -1637,7 +1637,7 @@ describe('MultiShipping - bulk actions', () => {
 	it('Bulk split action', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -1655,7 +1655,7 @@ describe('MultiShipping - bulk actions', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: 'deliveryGroup1',
+				deliveryGroupName: 'DeliveryGroupName1',
 				id: 1002,
 				name: `ProductName2`,
 				options: '[]',
@@ -1673,7 +1673,7 @@ describe('MultiShipping - bulk actions', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: 'deliveryGroup2',
+				deliveryGroupName: 'DeliveryGroupName2',
 				id: 1003,
 				name: `ProductName3`,
 				options: '[]',
@@ -1746,7 +1746,7 @@ describe('MultiShipping - bulk actions', () => {
 			isArrayEqual(
 				JSON.parse(fetchMock.calls().matched[1][1].body).cartItems,
 				JSON.parse(
-					'[{"deliveryGroup":"deliveryGroup2","id":0,"options":"[]","quantity":1,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":100},{"deliveryGroup":"deliveryGroup1","id":1000,"options":"[]","quantity":2,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-12","shippingAddressId":1000,"skuId":100},{"deliveryGroup":"deliveryGroup1","id":1002,"options":"[]","quantity":4,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-12","shippingAddressId":1000,"skuId":101},{"deliveryGroup":"deliveryGroup2","id":0,"options":"[]","quantity":4,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":101},{"deliveryGroup":"deliveryGroup2","id":1003,"options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":102}]'
+					'[{"deliveryGroupName":"DeliveryGroupName2","id":0,"options":"[]","quantity":1,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":100},{"deliveryGroupName":"DeliveryGroupName1","id":1000,"options":"[]","quantity":2,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-12","shippingAddressId":1000,"skuId":100},{"deliveryGroupName":"DeliveryGroupName1","id":1002,"options":"[]","quantity":4,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-12","shippingAddressId":1000,"skuId":101},{"deliveryGroupName":"DeliveryGroupName2","id":0,"options":"[]","quantity":4,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":101},{"deliveryGroupName":"DeliveryGroupName2","id":1003,"options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":102}]'
 				)
 			)
 		).toBeTruthy();
@@ -1756,7 +1756,7 @@ describe('MultiShipping - bulk actions', () => {
 	it('Bulk split action error', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -1774,7 +1774,7 @@ describe('MultiShipping - bulk actions', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: 'deliveryGroup1',
+				deliveryGroupName: 'DeliveryGroupName1',
 				id: 1002,
 				name: `ProductName2`,
 				options: '[]',
@@ -1837,7 +1837,7 @@ describe('MultiShipping - bulk actions', () => {
 	it('Bulk copy action', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -1855,7 +1855,7 @@ describe('MultiShipping - bulk actions', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: 'deliveryGroup1',
+				deliveryGroupName: 'DeliveryGroupName1',
 				id: 1002,
 				name: `ProductName2`,
 				options: '[]',
@@ -1873,7 +1873,7 @@ describe('MultiShipping - bulk actions', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: 'deliveryGroup2',
+				deliveryGroupName: 'DeliveryGroupName2',
 				id: 1003,
 				name: `ProductName3`,
 				options: '[]',
@@ -1946,7 +1946,7 @@ describe('MultiShipping - bulk actions', () => {
 			isArrayEqual(
 				JSON.parse(fetchMock.calls().matched[1][1].body).cartItems,
 				JSON.parse(
-					'[{"deliveryGroup":"deliveryGroup2","id":0,"options":"[]","quantity":3,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":100},{"deliveryGroup":"deliveryGroup1","id":1000,"options":"[]","quantity":3,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-12","shippingAddressId":1000,"skuId":100},{"deliveryGroup":"deliveryGroup2","id":0,"options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":101},{"deliveryGroup":"deliveryGroup1","id":1002,"options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-12","shippingAddressId":1000,"skuId":101},{"deliveryGroup":"deliveryGroup2","id":1003,"options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":102}]'
+					'[{"deliveryGroupName":"DeliveryGroupName2","id":0,"options":"[]","quantity":3,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":100},{"deliveryGroupName":"DeliveryGroupName1","id":1000,"options":"[]","quantity":3,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-12","shippingAddressId":1000,"skuId":100},{"deliveryGroupName":"DeliveryGroupName2","id":0,"options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":101},{"deliveryGroupName":"DeliveryGroupName1","id":1002,"options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-12","shippingAddressId":1000,"skuId":101},{"deliveryGroupName":"DeliveryGroupName2","id":1003,"options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":102}]'
 				)
 			)
 		).toBeTruthy();
@@ -1956,7 +1956,7 @@ describe('MultiShipping - bulk actions', () => {
 	it('Bulk copy action error', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -1974,7 +1974,7 @@ describe('MultiShipping - bulk actions', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: 'deliveryGroup1',
+				deliveryGroupName: 'DeliveryGroupName1',
 				id: 1002,
 				name: `ProductName2`,
 				options: '[]',
@@ -2037,7 +2037,7 @@ describe('MultiShipping - bulk actions', () => {
 	it('Bulk reset action', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -2055,7 +2055,7 @@ describe('MultiShipping - bulk actions', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: `deliveryGroup2`,
+				deliveryGroupName: `DeliveryGroupName2`,
 				id: 1001,
 				name: `ProductName1`,
 				options: '[]',
@@ -2073,7 +2073,7 @@ describe('MultiShipping - bulk actions', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: 'deliveryGroup2',
+				deliveryGroupName: 'DeliveryGroupName2',
 				id: 1003,
 				name: `ProductName3`,
 				options: '[]',
@@ -2146,7 +2146,7 @@ describe('MultiShipping - bulk actions', () => {
 			isArrayEqual(
 				JSON.parse(fetchMock.calls().matched[1][1].body).cartItems,
 				JSON.parse(
-					'[{"deliveryGroup":"deliveryGroup1","id":1000,"options":"[]","quantity":1,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-12","shippingAddressId":1000,"skuId":100},{"deliveryGroup":"deliveryGroup1","id":0,"options":"[]","quantity":1,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-12","shippingAddressId":1000,"skuId":102}]'
+					'[{"deliveryGroupName":"DeliveryGroupName1","id":1000,"options":"[]","quantity":1,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-12","shippingAddressId":1000,"skuId":100},{"deliveryGroupName":"DeliveryGroupName1","id":0,"options":"[]","quantity":1,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-12","shippingAddressId":1000,"skuId":102}]'
 				)
 			)
 		).toBeTruthy();
@@ -2156,7 +2156,7 @@ describe('MultiShipping - bulk actions', () => {
 	it('Bulk remove action', async () => {
 		const orderItems = [
 			{
-				deliveryGroup: `deliveryGroup1`,
+				deliveryGroupName: `DeliveryGroupName1`,
 				id: 1000,
 				name: `ProductName1`,
 				options: '[]',
@@ -2174,7 +2174,7 @@ describe('MultiShipping - bulk actions', () => {
 				thumbnail: '/o/commerce-media/default/?groupId=33472',
 			},
 			{
-				deliveryGroup: 'deliveryGroup2',
+				deliveryGroupName: 'DeliveryGroupName2',
 				id: 1003,
 				name: `ProductName3`,
 				options: '[]',
@@ -2243,7 +2243,7 @@ describe('MultiShipping - bulk actions', () => {
 			isArrayEqual(
 				JSON.parse(fetchMock.calls().matched[1][1].body).cartItems,
 				JSON.parse(
-					'[{"deliveryGroup":"deliveryGroup2","id":1003,"options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":102}]'
+					'[{"deliveryGroupName":"DeliveryGroupName2","id":1003,"options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"2024-12-13","shippingAddressId":1000,"skuId":102}]'
 				)
 			)
 		).toBeTruthy();

@@ -47,7 +47,7 @@ export interface IOrderItemDeliveryGroup {
 
 export interface IOrderItem {
 	cartItems?: Array<any>;
-	deliveryGroup?: string;
+	deliveryGroupName?: string;
 	deliveryGroups?: {[key: string]: IOrderItemDeliveryGroup};
 	externalReferenceCode?: string;
 	id: number;

@@ -67,7 +67,7 @@ export function formatCartItem(
 	quantity: number = 1
 ) {
 	return {
-		deliveryGroup: deliveryGroup.name,
+		deliveryGroupName: deliveryGroup.name,
 		options: orderItem.options,
 		quantity: Number(
 			Number(quantity).toFixed(orderItem.skuUnitOfMeasure?.precision || 0)
@@ -104,7 +104,7 @@ const createRequestData = (
 
 				if (deliveryGroup && orderItemConf.quantity > 0) {
 					data.push({
-						deliveryGroup: deliveryGroup.name,
+						deliveryGroupName: deliveryGroup.name,
 						id: orderItemConf.orderItemId,
 						options: orderItemConf.options,
 						quantity: orderItemConf.quantity,
@@ -200,7 +200,7 @@ const Multishipping = ({
 			items.forEach((orderItem) => {
 				let deliveryGroup = formattedDeliveryGroups.find((item) => {
 					return (
-						item.name === (orderItem.deliveryGroup || '') &&
+						item.name === (orderItem.deliveryGroupName || '') &&
 						item.deliveryDate ===
 							(orderItem.requestedDeliveryDate || '') &&
 						item.addressId === orderItem.shippingAddressId
@@ -212,7 +212,7 @@ const Multishipping = ({
 						addressId: orderItem.shippingAddressId,
 						deliveryDate: orderItem.requestedDeliveryDate || '',
 						id: Math.floor(Math.random() * 100000000),
-						name: orderItem.deliveryGroup || '',
+						name: orderItem.deliveryGroupName || '',
 					};
 
 					formattedDeliveryGroups.push(deliveryGroup);
@@ -224,7 +224,7 @@ const Multishipping = ({
 						item.skuUnitOfMeasure?.key ===
 							orderItem.skuUnitOfMeasure?.key &&
 						item.options === orderItem.options &&
-						orderItem.deliveryGroup !== ''
+						orderItem.deliveryGroupName !== ''
 					);
 				});
 
@@ -280,7 +280,9 @@ const Multishipping = ({
 					return item1.name.localeCompare(item2.name);
 				});
 
-				if (formattedItems.find((item) => item.deliveryGroup === '')) {
+				if (
+					formattedItems.find((item) => item.deliveryGroupName === '')
+				) {
 					try {
 						setSaving(true);
 

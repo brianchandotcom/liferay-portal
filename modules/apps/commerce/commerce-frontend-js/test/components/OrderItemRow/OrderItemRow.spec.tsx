@@ -533,7 +533,7 @@ describe('OrderItemRow', () => {
 				/headless-commerce-delivery-cart\/.*\/cart-items\/100/i,
 				(): IOrderItem => {
 					return {
-						deliveryGroup: '10000',
+						deliveryGroupName: '10000',
 						options: '[]',
 						quantity: 10,
 						replacedSkuId: 0,
@@ -547,7 +547,7 @@ describe('OrderItemRow', () => {
 				/headless-commerce-delivery-cart\/.*\/cart-items\/101/i,
 				(): IOrderItem => {
 					return {
-						deliveryGroup: '10001',
+						deliveryGroupName: '10001',
 						options: '[]',
 						quantity: 8,
 						replacedSkuId: 0,
@@ -567,13 +567,13 @@ describe('OrderItemRow', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 		];
 
@@ -664,7 +664,7 @@ describe('OrderItemRow', () => {
 		});
 
 		expect(fetchMock.calls().matched[0][1].body).toBe(
-			'{"deliveryGroup":"DeliveryGroup1","options":"[]","quantity":10,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":100,"skuId":1001,"skuUnitOfMeasure":{}}'
+			'{"deliveryGroupName":"DeliveryGroupName1","options":"[]","quantity":10,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":100,"skuId":1001,"skuUnitOfMeasure":{}}'
 		);
 		expect(fetchMock.calls().matched[0][1].method).toBe('PATCH');
 
@@ -696,7 +696,7 @@ describe('OrderItemRow', () => {
 		});
 
 		expect(fetchMock.calls().matched[1][1].body).toBe(
-			'{"deliveryGroup":"DeliveryGroup2","options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":100,"skuId":1001,"skuUnitOfMeasure":{}}'
+			'{"deliveryGroupName":"DeliveryGroupName2","options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":100,"skuId":1001,"skuUnitOfMeasure":{}}'
 		);
 		expect(fetchMock.calls().matched[1][1].method).toBe('PATCH');
 	});
@@ -707,7 +707,7 @@ describe('OrderItemRow', () => {
 				/headless-commerce-delivery-cart\/.*\/carts\/.*\/items/i,
 				(): IOrderItem => {
 					return {
-						deliveryGroup: '10001',
+						deliveryGroupName: '10001',
 						id: 200,
 						options: '[]',
 						quantity: 20,
@@ -722,7 +722,7 @@ describe('OrderItemRow', () => {
 				/headless-commerce-delivery-cart\/.*\/cart-items\/200/i,
 				(): IOrderItem => {
 					return {
-						deliveryGroup: '10001',
+						deliveryGroupName: '10001',
 						options: '[]',
 						quantity: 8,
 						replacedSkuId: 0,
@@ -742,13 +742,13 @@ describe('OrderItemRow', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 		];
 
@@ -831,7 +831,7 @@ describe('OrderItemRow', () => {
 		});
 
 		expect(fetchMock.calls().matched[0][1].body).toBe(
-			'{"deliveryGroup":"DeliveryGroup2","options":"[]","quantity":20,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":100,"skuId":1001,"skuUnitOfMeasure":{}}'
+			'{"deliveryGroupName":"DeliveryGroupName2","options":"[]","quantity":20,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":100,"skuId":1001,"skuUnitOfMeasure":{}}'
 		);
 		expect(fetchMock.calls().matched[0][1].method).toBe('POST');
 
@@ -863,7 +863,7 @@ describe('OrderItemRow', () => {
 		});
 
 		expect(fetchMock.calls().matched[1][1].body).toBe(
-			'{"deliveryGroup":"DeliveryGroup2","options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":100,"skuId":1001,"skuUnitOfMeasure":{}}'
+			'{"deliveryGroupName":"DeliveryGroupName2","options":"[]","quantity":8,"replacedSkuId":0,"requestedDeliveryDate":"","shippingAddressId":100,"skuId":1001,"skuUnitOfMeasure":{}}'
 		);
 		expect(fetchMock.calls().matched[1][1].method).toBe('PATCH');
 	});
@@ -883,13 +883,13 @@ describe('OrderItemRow', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 		];
 
@@ -1034,7 +1034,7 @@ describe('OrderItemRow', () => {
 				/headless-commerce-delivery-cart\/.*\/carts\/.*\/items/i,
 				(): IOrderItem => {
 					return {
-						deliveryGroup: '10000',
+						deliveryGroupName: '10000',
 						id: 300,
 						options: '[]',
 						quantity: 6,
@@ -1055,12 +1055,12 @@ describe('OrderItemRow', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 		];
 
 		const orderItem: IOrderItem = {
-			deliveryGroup: 'DeliveryGroup1',
+			deliveryGroupName: 'DeliveryGroupName1',
 			deliveryGroups: {
 				10000: {
 					options: '[]',
@@ -1135,12 +1135,12 @@ describe('OrderItemRow', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 		];
 
 		const orderItem: IOrderItem = {
-			deliveryGroup: 'DeliveryGroup1',
+			deliveryGroupName: 'DeliveryGroupName1',
 			deliveryGroups: {
 				10000: {
 					options: '[]',
@@ -1200,12 +1200,12 @@ describe('OrderItemRow', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 		];
 
 		const orderItem: IOrderItem = {
-			deliveryGroup: 'DeliveryGroup1',
+			deliveryGroupName: 'DeliveryGroupName1',
 			deliveryGroups: {
 				10000: {
 					options: '[]',
@@ -1292,13 +1292,13 @@ describe('OrderItemRow - actions', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 		];
 
@@ -1438,7 +1438,7 @@ describe('OrderItemRow - actions', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 		];
 
@@ -1525,13 +1525,13 @@ describe('OrderItemRow - actions', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 		];
 
@@ -1678,13 +1678,13 @@ describe('OrderItemRow - actions', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 		];
 
@@ -1798,13 +1798,13 @@ describe('OrderItemRow - actions', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 		];
 
@@ -1919,13 +1919,13 @@ describe('OrderItemRow - actions', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 		];
 
@@ -2004,19 +2004,19 @@ describe('OrderItemRow - actions', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10002,
-				name: 'DeliveryGroup3',
+				name: 'DeliveryGroupName3',
 			},
 		];
 
@@ -2103,13 +2103,13 @@ describe('OrderItemRow - actions', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 		];
 
@@ -2318,19 +2318,19 @@ describe('OrderItemRow - actions', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10002,
-				name: 'DeliveryGroup3',
+				name: 'DeliveryGroupName3',
 			},
 		];
 
@@ -2404,13 +2404,13 @@ describe('OrderItemRow - actions', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 		];
 
@@ -2493,13 +2493,13 @@ describe('OrderItemRow - actions', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 		];
 
@@ -2642,13 +2642,13 @@ describe('OrderItemRow - actions', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 		];
 
@@ -2760,13 +2760,13 @@ describe('OrderItemRow - actions', () => {
 				addressId: 100,
 				deliveryDate: '',
 				id: 10000,
-				name: 'DeliveryGroup1',
+				name: 'DeliveryGroupName1',
 			},
 			{
 				addressId: 100,
 				deliveryDate: '',
 				id: 10001,
-				name: 'DeliveryGroup2',
+				name: 'DeliveryGroupName2',
 			},
 		];
 

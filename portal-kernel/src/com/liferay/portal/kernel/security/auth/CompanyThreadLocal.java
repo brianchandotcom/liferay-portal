@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.events.StartupHelperUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,20 +42,11 @@ public class CompanyThreadLocal {
 			return null;
 		}
 
+		if (!StartupHelperUtil.isUpgrading()) {
+			return UserLocalServiceUtil.fetchGuestUser(companyId);
+		}
+
 		User guestUser = null;
-
-		try {
-			guestUser = UserLocalServiceUtil.fetchGuestUser(companyId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		if (guestUser != null) {
-			return guestUser;
-		}
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(

@@ -6,12 +6,32 @@
 package com.liferay.asset.categories.navigation.web.internal.portlet.action;
 
 import com.liferay.asset.categories.navigation.constants.AssetCategoriesNavigationPortletKeys;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.ReadOnlyException;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -27,5 +47,122 @@ public class AssetCategoriesNavigationConfigurationAction
 	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/configuration.jsp";
 	}
+
+	@Override
+	protected void postProcess(
+			long companyId, PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws PortalException {
+
+		super.postProcess(companyId, portletRequest, portletPreferences);
+
+		boolean allAssetVocabularies = GetterUtil.getBoolean(
+			portletPreferences.getValue("allAssetVocabularies", null));
+
+		if (allAssetVocabularies) {
+			return;
+		}
+
+		String assetVocabularyIdsString = portletPreferences.getValue(
+			"assetVocabularyIds", null);
+
+		if (Validator.isNull(assetVocabularyIdsString)) {
+			return;
+		}
+
+		long[] assetVocabularyIds = GetterUtil.getLongValues(
+			StringUtil.split(assetVocabularyIdsString, ','));
+
+		Map<Long, List<String>> groupAssetVocabularyIdsMap =
+			_getGroupAssetVocabularyExternalReferenceCodesMap(
+				assetVocabularyIds);
+
+		try {
+			_resetPortletPreferences(portletPreferences);
+
+			_setPortletPreferences(
+				portletPreferences, groupAssetVocabularyIdsMap);
+
+			portletPreferences.reset("assetVocabularyIds");
+		}
+		catch (ReadOnlyException readOnlyException) {
+			throw new SystemException(readOnlyException);
+		}
+	}
+
+	private Map<Long, List<String>>
+			_getGroupAssetVocabularyExternalReferenceCodesMap(
+				long[] assetVocabularyIds)
+		throws PortalException {
+
+		Map<Long, List<String>> groupAssetVocabularyExternalReferenceCodesMap =
+			new HashMap<>();
+
+		for (long assetVocabularyId : assetVocabularyIds) {
+			AssetVocabulary assetVocabulary =
+				_assetVocabularyService.fetchVocabulary(assetVocabularyId);
+
+			if (assetVocabulary == null) {
+				continue;
+			}
+
+			List<String> groupAssetVocabularyExternalReferenceCodes =
+				groupAssetVocabularyExternalReferenceCodesMap.computeIfAbsent(
+					assetVocabulary.getGroupId(), key -> new ArrayList<>());
+
+			groupAssetVocabularyExternalReferenceCodes.add(
+				assetVocabulary.getExternalReferenceCode());
+		}
+
+		return groupAssetVocabularyExternalReferenceCodesMap;
+	}
+
+	private void _resetPortletPreferences(PortletPreferences portletPreferences)
+		throws ReadOnlyException {
+
+		Map<String, String[]> portletPreferencesMap =
+			portletPreferences.getMap();
+
+		for (Map.Entry<String, String[]> entry :
+				portletPreferencesMap.entrySet()) {
+
+			String key = entry.getKey();
+
+			if (key.startsWith("assetVocabularyExternalReferenceCodes_")) {
+				portletPreferences.reset(key);
+			}
+		}
+	}
+
+	private void _setPortletPreferences(
+			PortletPreferences portletPreferences,
+			Map<Long, List<String>> groupAssetVocabularyIdsMap)
+		throws PortalException, ReadOnlyException {
+
+		List<String> groupExternalReferenceCodes = new ArrayList<>();
+
+		for (Map.Entry<Long, List<String>> entries :
+				groupAssetVocabularyIdsMap.entrySet()) {
+
+			Group group = _groupLocalService.getGroup(entries.getKey());
+
+			groupExternalReferenceCodes.add(group.getExternalReferenceCode());
+
+			portletPreferences.setValues(
+				"assetVocabularyExternalReferenceCodes_" +
+					group.getExternalReferenceCode(),
+				ArrayUtil.toStringArray(entries.getValue()));
+		}
+
+		portletPreferences.setValues(
+			"assetVocabularyGroupExternalReferenceCodes",
+			ArrayUtil.toStringArray(groupExternalReferenceCodes));
+	}
+
+	@Reference
+	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

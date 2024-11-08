@@ -28,7 +28,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
@@ -107,6 +106,15 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		return buildData.getBuildParameter(key);
 	}
 
+	private static String _getBuildProperty(String propertyName) {
+		try {
+			return JenkinsResultsParserUtil.getBuildProperty(propertyName);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	private void _archiveReport(String filePath) {
 		_mergeHTMLFiles(filePath);
 
@@ -141,7 +149,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 							archivedDataDir, dateString + ".tar.gz");
 
 						File unarchivedDir = new File(
-							_TMP_ARCHIVE_DIR_PATH, dateString);
+							_TMP_BASE_DIR_PATH, "/builds/" + dateString);
 
 						if (archiveFile.exists() && !unarchivedDir.exists()) {
 							System.out.println(
@@ -178,8 +186,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			durationDays, LocalDate.parse(startDateString, _dateTimeFormatter));
 
 		File dataArchiveDir = new File(
-			_buildProperties.getProperty(
-				"google.cloud.bucket.local.dir[jenkins]"),
+			_getBuildProperty("google.cloud.bucket.local.dir[jenkins]"),
 			"data");
 
 		File baseArchiveDir = dataArchiveDir.getParentFile();
@@ -234,8 +241,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 		try {
 			File testrayResultsBucketLocalDir = new File(
-				_buildProperties.getProperty(
-					"google.cloud.bucket.local.dir[testray]"));
+				_getBuildProperty("google.cloud.bucket.local.dir[testray]"));
 
 			testrayS3Bucket.downloadTestrayS3Objects(
 				testrayResultsBucketLocalDir, keys);
@@ -274,10 +280,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		_downloadTestrayBuildReportJSONFiles();
 
 		CISystemHistoryReportUtil.generateCISystemHistoryReport(
-			filePath,
-			_buildProperties.getProperty("ci.system.history.report.job.name"),
-			_buildProperties.getProperty(
-				"ci.system.history.report.test.suite.name"));
+			filePath, _getBuildProperty("ci.system.history.report.job.name"),
+			_getBuildProperty("ci.system.history.report.test.suite.name"));
 
 		_updateReport(filePath);
 	}
@@ -324,10 +328,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 			CISystemStatusReportUtil.writeTestrayDataJavaScriptFile(
 				filePath + "/js/testray-data.js",
-				_buildProperties.getProperty(
-					"ci.system.status.report.job.name"),
-				_buildProperties.getProperty(
-					"ci.system.status.report.test.suite.name"));
+				_getBuildProperty("ci.system.status.report.job.name"),
+				_getBuildProperty("ci.system.status.report.test.suite.name"));
 		}
 
 		_updateReport(filePath);
@@ -506,20 +508,19 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	}
 
 	private long _getReportDurationDays(String reportName) {
-		String reportDurationDays = _buildProperties.getProperty(
+		String reportDurationDays = _getBuildProperty(
 			JenkinsResultsParserUtil.combine(
 				"report.duration.days[", reportName, "]"));
 
 		if (reportDurationDays == null) {
-			reportDurationDays = _buildProperties.getProperty(
-				"report.duration.days");
+			reportDurationDays = _getBuildProperty("report.duration.days");
 		}
 
 		return Long.parseLong(reportDurationDays);
 	}
 
 	private String _getReportFilePath(String reportName) {
-		return _TMP_REPORT_DIR_PATH + _getReportDirName(reportName);
+		return _TMP_BASE_DIR_PATH + "/reports/" + _getReportDirName(reportName);
 	}
 
 	private String[] _getReportNames() {
@@ -659,8 +660,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 	private void _updateNodeDataFile(String filePath) throws IOException {
 		File dataArchiveDir = new File(
-			_buildProperties.getProperty(
-				"google.cloud.bucket.local.dir[jenkins]"),
+			_getBuildProperty("google.cloud.bucket.local.dir[jenkins]"),
 			"data");
 
 		File baseArchiveDir = dataArchiveDir.getParentFile();
@@ -704,9 +704,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		}
 	}
 
-	private static final String _ARCHIVE_BASE_DIR_PATH =
-		GenerateReportsBuildRunner._buildProperties.getProperty(
-			"google.cloud.bucket.local.dir[jenkins]");
+	private static final String _ARCHIVE_BASE_DIR_PATH = _getBuildProperty(
+		"google.cloud.bucket.local.dir[jenkins]");
 
 	private static final String _CURRENT_DATE_STRING;
 
@@ -719,26 +718,9 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	private static final String _SCRIPT_ELEMENT_REGEX =
 		"(?<scriptElement><script.*src=\\\"(?<srcValue>.*?)\\\".*<\\/script>)";
 
-	private static final String _TMP_ARCHIVE_DIR_PATH =
-		GenerateReportsBuildRunner._TMP_BASE_DIR_PATH + "/builds/";
+	private static final String _TMP_BASE_DIR_PATH = _getBuildProperty(
+		"archive.ci.build.data.tmp.dir");
 
-	private static final String _TMP_BASE_DIR_PATH =
-		GenerateReportsBuildRunner._buildProperties.getProperty(
-			"archive.ci.build.data.tmp.dir");
-
-	private static final String _TMP_REPORT_DIR_PATH =
-		_TMP_BASE_DIR_PATH + "/reports/";
-
-	private static final Properties _buildProperties = new Properties() {
-		{
-			try {
-				putAll(JenkinsResultsParserUtil.getBuildProperties());
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
-		}
-	};
 	private static final DateTimeFormatter _dateTimeFormatter =
 		DateTimeFormatter.ofPattern("yyyyMMdd");
 	private static final Pattern _linkElementPattern = Pattern.compile(

@@ -162,60 +162,54 @@ public class ExportTaskResourceTest {
 
 	@Test
 	public void testPostExportTaskWithFiltering() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal." +
-					"BatchEngineExportTaskExecutorImpl",
-				LoggerTestUtil.ERROR)) {
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "TestObject1");
 
-			ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-				_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "TestObject1");
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "TestObject2");
 
-			ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
-				_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "TestObject2");
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "Object3");
 
-			ObjectEntryTestUtil.addObjectEntry(
-				_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "Object3");
+		String encodedFilterString = URLCodec.encodeURL(
+			StringBundler.concat(
+				"contains(", _OBJECT_FIELD_NAME_TEXT, ", 'Test')"));
 
-			String encodedFilterString = URLCodec.encodeURL(
-				StringBundler.concat(
-					"contains(", _OBJECT_FIELD_NAME_TEXT, ", 'Test')"));
+		String queryParametersString = "filter=" + encodedFilterString;
 
-			String queryParametersString = "filter=" + encodedFilterString;
+		JSONObject jsonObject = _testPostExportTask(
+			_objectDefinition1, queryParametersString);
 
-			JSONObject jsonObject = _testPostExportTask(
-				_objectDefinition1, queryParametersString);
+		Assert.assertEquals(2, jsonObject.getInt("processedItemsCount"));
 
-			Assert.assertEquals(2, jsonObject.getInt("processedItemsCount"));
+		InputStream inputStream = HTTPTestUtil.invokeToInputStream(
+			null,
+			StringBundler.concat(
+				"headless-batch-engine/v1.0/export-task",
+				"/by-external-reference-code/",
+				jsonObject.getString("externalReferenceCode"), "/content"),
+			Http.Method.GET);
 
-			InputStream inputStream = HTTPTestUtil.invokeToInputStream(
-				null,
-				StringBundler.concat(
-					"headless-batch-engine/v1.0/export-task",
-					"/by-external-reference-code/",
-					jsonObject.getString("externalReferenceCode"), "/content"),
-				Http.Method.GET);
+		ZipInputStream zipInputStream = new ZipInputStream(inputStream);
 
-			ZipInputStream zipInputStream = new ZipInputStream(inputStream);
+		zipInputStream.getNextEntry();
 
-			zipInputStream.getNextEntry();
+		JSONArray responseJSONArray = _jsonFactory.createJSONArray(
+			StringUtil.read(zipInputStream));
 
-			JSONArray responseJSONArray = _jsonFactory.createJSONArray(
-				StringUtil.read(zipInputStream));
+		JSONObject objectEntry1JSONObject = (JSONObject)responseJSONArray.get(
+			0);
 
-			JSONObject objectEntry1JSONObject =
-				(JSONObject)responseJSONArray.get(0);
+		Assert.assertEquals(
+			objectEntry1.getExternalReferenceCode(),
+			objectEntry1JSONObject.get("externalReferenceCode"));
 
-			Assert.assertEquals(
-				objectEntry1.getExternalReferenceCode(),
-				objectEntry1JSONObject.get("externalReferenceCode"));
+		JSONObject objectEntry2JSONObject = (JSONObject)responseJSONArray.get(
+			1);
 
-			JSONObject objectEntry2JSONObject =
-				(JSONObject)responseJSONArray.get(1);
-
-			Assert.assertEquals(
-				objectEntry2.getExternalReferenceCode(),
-				objectEntry2JSONObject.get("externalReferenceCode"));
-		}
+		Assert.assertEquals(
+			objectEntry2.getExternalReferenceCode(),
+			objectEntry2JSONObject.get("externalReferenceCode"));
 	}
 
 	private JSONObject _testPostExportTask(

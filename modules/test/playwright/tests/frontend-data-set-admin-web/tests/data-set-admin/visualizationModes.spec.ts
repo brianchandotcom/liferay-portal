@@ -1259,9 +1259,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 				await page.goto(updatedUrl);
 
-				await visualizationModesPage.dataSetPage.selectTab(
-					'Modos de visualización'
-				);
+				await page.locator('nav.navbar').locator('li').nth(1).click();
 
 				await expect(
 					visualizationModesPage
@@ -1279,9 +1277,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 				await page.goto(updatedUrl);
 
-				await visualizationModesPage.dataSetPage.selectTab(
-					'Modos de exibição'
-				);
+				await page.locator('nav.navbar').locator('li').nth(1).click();
 
 				await expect(
 					visualizationModesPage

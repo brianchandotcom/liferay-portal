@@ -95,12 +95,12 @@ export default function SelectCollection({
 					/>
 
 					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('select-collection')}
+						aria-label={Liferay.Language.get('change-collection')}
 						className="c-mr-2 flex-shrink-0"
 						displayType="secondary"
 						onClick={onChangeCollectionButtonClick}
 						symbol={values.clearButtonEnabled ? 'change' : 'plus'}
-						title={Liferay.Language.get('select-collection')}
+						title={Liferay.Language.get('change-collection')}
 					/>
 
 					{values.clearButtonEnabled ? (

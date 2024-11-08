@@ -71,7 +71,6 @@
 /development/reflections.jar
 /development/saxpath.jar
 /development/sdk-addon-api-0.2.jar
-/development/slf4j-simple.jar
 /development/sling-commons-osgi.jar
 /development/sling-testing-osgi-mock-core.jar
 /development/smtp.jar
@@ -95,7 +94,6 @@
 /development/tomcat-websocket-api.jar
 /development/velocity-tools.jar
 /development/velocity.jar
-/development/xmlresolver.jar
 /portal/activation.jar
 /portal/commons-configuration.jar
 /portal/commons-lang.jar

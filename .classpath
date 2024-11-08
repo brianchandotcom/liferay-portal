@@ -102,7 +102,6 @@
 	<classpathentry kind="lib" path="lib/development/reflections.jar"/>
 	<classpathentry kind="lib" path="lib/development/saxpath.jar"/>
 	<classpathentry kind="lib" path="lib/development/sdk-addon-api-0.2.jar"/>
-	<classpathentry kind="lib" path="lib/development/slf4j-simple.jar"/>
 	<classpathentry kind="lib" path="lib/development/sling-commons-osgi.jar"/>
 	<classpathentry kind="lib" path="lib/development/sling-testing-osgi-mock-core.jar"/>
 	<classpathentry kind="lib" path="lib/development/smtp.jar"/>
@@ -126,7 +125,6 @@
 	<classpathentry kind="lib" path="lib/development/tomcat-websocket-api.jar"/>
 	<classpathentry kind="lib" path="lib/development/velocity.jar"/>
 	<classpathentry kind="lib" path="lib/development/velocity-tools.jar"/>
-	<classpathentry kind="lib" path="lib/development/xmlresolver.jar"/>
 	<classpathentry kind="lib" path="lib/development/xmltask.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-configuration.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-lang.jar"/>

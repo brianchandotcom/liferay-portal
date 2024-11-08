@@ -456,7 +456,7 @@ public class JspServlet extends HttpServlet {
 						classNotFoundException, innerClassURL);
 				}
 
-				if (!ArrayUtil.isEmpty(
+				if (ArrayUtil.isNotEmpty(
 						classNotFoundException.getSuppressed())) {
 
 					throw classNotFoundException;

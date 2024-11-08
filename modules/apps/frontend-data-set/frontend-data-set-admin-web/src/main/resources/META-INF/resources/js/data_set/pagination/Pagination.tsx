@@ -53,7 +53,7 @@ function Pagination({
 	const defaultItemsPerPageRef = useRef<HTMLInputElement>(null);
 
 	const getItemsPerPageArray = (): string[] => {
-		return listOfItemsPerPage.split(',').map((size) => size.trim());
+		return listOfItemsPerPage.split(',').map((size: string) => size.trim());
 	};
 
 	const listOfItemsPerPageFieldValidation = (itemsPerPageArray: string[]) => {

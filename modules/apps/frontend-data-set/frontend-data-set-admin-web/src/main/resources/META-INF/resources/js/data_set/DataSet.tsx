@@ -14,11 +14,10 @@ import {
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {IDataSet} from '../DataSets';
 import {API_URL, DEFAULT_FETCH_HEADERS} from '../utils/constants';
 import getFields from '../utils/getFields';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
-import {IFieldTreeItem} from '../utils/types';
+import {IDataSet, IFieldTreeItem} from '../utils/types';
 import Actions from './actions/Actions';
 import Details from './details/Details';
 import Filters from './filters/Filters';

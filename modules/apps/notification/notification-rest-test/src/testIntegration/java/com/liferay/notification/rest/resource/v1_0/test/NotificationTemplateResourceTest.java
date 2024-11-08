@@ -169,9 +169,6 @@ public class NotificationTemplateResourceTest
 				"JSONArray/recipients", "JSONObject/0"),
 			JSONCompareMode.NON_EXTENSIBLE);
 
-		// Notification template recipient type role via rest notification
-		// resource
-
 		NotificationTemplateResource.Builder
 			notificationTemplateResourceBuilder =
 				_notificationTemplateResourceFactory.create();

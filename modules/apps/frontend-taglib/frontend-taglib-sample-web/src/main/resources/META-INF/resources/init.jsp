@@ -10,7 +10,15 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.frontend.taglib.sample.web.internal.constants.TaglibSamplePortletKeys" %><%@
+<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem" %><%@
+page import="com.liferay.frontend.taglib.sample.web.internal.constants.TaglibSamplePortletKeys" %><%@
+page import="com.liferay.frontend.taglib.sample.web.internal.display.context.FrontendSampleDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.sample.web.internal.display.context.SearchPaginatorDisplayContext" %>
+
+<%@ page import="java.util.List" %>
+
+<%
+FrontendSampleDisplayContext frontendSampleDisplayContext = (FrontendSampleDisplayContext)request.getAttribute(TaglibSamplePortletKeys.FRONTEND_SAMPLE_DISPLAY_CONTEXT);
+%>
 
 <liferay-theme:defineObjects />

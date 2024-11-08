@@ -12,12 +12,18 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTy
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Objects;
 
@@ -73,6 +79,32 @@ public class DisplayPageTemplateFolderResourceImpl
 				getLayoutPageTemplateCollection(
 					displayPageTemplateFolderExternalReferenceCode,
 					group.getGroupId()));
+	}
+
+	@Override
+	public Page<DisplayPageTemplateFolder>
+			getSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage(
+				String siteExternalReferenceCode, String search,
+				Aggregation aggregation, Filter filter, Pagination pagination,
+				Sort[] sorts)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		return Page.of(
+			transform(
+				_layoutPageTemplateCollectionService.
+					getLayoutPageTemplateCollections(
+						group.getGroupId(),
+						LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				layoutPageTemplateCollection -> _toDisplayPageTemplateFolder(
+					layoutPageTemplateCollection)));
 	}
 
 	@Override

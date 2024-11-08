@@ -1327,6 +1327,36 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	@TestInfo("LPD-41653")
+	public void testViewAssertAnalyticsTargetableCollectionIdForCollectionStyledLayoutStructureItem()
+		throws Exception {
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				_addCollectionStyledLayoutStructureItem(
+					assetListEntry, layout, segmentsExperienceId);
+
+		String content = _getRenderLayoutHTML(layout);
+
+		Assert.assertTrue(
+			content.contains(
+				"id=\"analytics-targetable-collection-" +
+					collectionStyledLayoutStructureItem.getItemId() + "\""));
+	}
+
+	@Test
 	@TestInfo("LPS-151738")
 	public void testViewCommonStylesClassesGeneratedInOuterDivForFragmentEntryWithoutStylingAttribute()
 		throws Exception {

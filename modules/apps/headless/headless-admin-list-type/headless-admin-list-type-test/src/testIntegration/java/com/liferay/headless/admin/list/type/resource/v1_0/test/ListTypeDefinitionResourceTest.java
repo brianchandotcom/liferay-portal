@@ -9,10 +9,15 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -97,6 +102,31 @@ public class ListTypeDefinitionResourceTest
 
 		assertEquals(randomListTypeDefinition, postListTypeDefinition);
 		assertValid(postListTypeDefinition);
+
+		randomListTypeDefinition = randomListTypeDefinition();
+
+		randomListTypeDefinition.setName(RandomTestUtil.randomString());
+		randomListTypeDefinition.setName_i18n((Map<String, String>)null);
+
+		_assertListTypeDefinitionNameLocalizedMap(
+			testPostListTypeDefinition_addListTypeDefinition(
+				randomListTypeDefinition));
+	}
+
+	@Override
+	@Test
+	public void testPutListTypeDefinition() throws Exception {
+		super.testPutListTypeDefinition();
+
+		ListTypeDefinition listTypeDefinition =
+			testPutListTypeDefinition_addListTypeDefinition();
+
+		listTypeDefinition.setName(RandomTestUtil.randomString());
+		listTypeDefinition.setName_i18n((Map<String, String>)null);
+
+		_assertListTypeDefinitionNameLocalizedMap(
+			listTypeDefinitionResource.putListTypeDefinition(
+				listTypeDefinition.getId(), listTypeDefinition));
 	}
 
 	@Override
@@ -208,6 +238,17 @@ public class ListTypeDefinitionResourceTest
 
 		return listTypeDefinitionResource.postListTypeDefinition(
 			listTypeDefinition);
+	}
+
+	private void _assertListTypeDefinitionNameLocalizedMap(
+		ListTypeDefinition listTypeDefinition) {
+
+		Map<Locale, String> nameLocalizedMap = LocalizedMapUtil.getLocalizedMap(
+			listTypeDefinition.getName_i18n());
+
+		Assert.assertEquals(
+			listTypeDefinition.getName(),
+			nameLocalizedMap.get(LocaleUtil.getSiteDefault()));
 	}
 
 }

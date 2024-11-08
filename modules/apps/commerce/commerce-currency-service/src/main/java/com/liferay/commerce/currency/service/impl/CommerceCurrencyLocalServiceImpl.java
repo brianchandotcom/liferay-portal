@@ -12,6 +12,7 @@ import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConst
 import com.liferay.commerce.currency.constants.RoundingTypeConstants;
 import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;
 import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
+import com.liferay.commerce.currency.exception.DuplicateCommerceCurrencyException;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.internal.model.listener.PortalInstanceLifecycleListenerImpl;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -630,6 +631,16 @@ public class CommerceCurrencyLocalServiceImpl
 
 		if (Validator.isNull(code)) {
 			throw new CommerceCurrencyCodeException();
+		}
+
+		CommerceCurrency oldCommerceCurrency =
+			commerceCurrencyPersistence.fetchByC_C(companyId, code);
+
+		if ((oldCommerceCurrency != null) &&
+			(commerceCurrencyId !=
+				oldCommerceCurrency.getCommerceCurrencyId())) {
+
+			throw new DuplicateCommerceCurrencyException();
 		}
 
 		String name = nameMap.get(LocaleUtil.getSiteDefault());

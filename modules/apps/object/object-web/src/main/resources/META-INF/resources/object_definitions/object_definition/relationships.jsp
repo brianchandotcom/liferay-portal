@@ -59,3 +59,9 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 		%>'
 	/>
 </div>
+
+<div>
+	<react:component
+		module="{ModalDisableInheritance} from object-web"
+	/>
+</div>

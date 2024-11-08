@@ -55,11 +55,11 @@ export function ModalAddObjectRelationship({
 	};
 
 	const onSubmit = async ({
-		label,
+		label = {[defaultLanguageId]: ''},
 		name,
 		objectDefinitionExternalReferenceCode1,
 		...others
-	}: ObjectRelationship) => {
+	}: Partial<ObjectRelationship>) => {
 		try {
 			const objectRelationship = await API.save<ObjectRelationship>({
 				item: {
@@ -155,15 +155,15 @@ export function ModalAddObjectRelationship({
 									objectDefinitionExternalReferenceCode1={
 										values.objectDefinitionExternalReferenceCode2 as string
 									}
-									onChange={(parameterObjectFieldName) => {
+									onChange={async (
+										parameterObjectFieldName
+									) => {
 										setValues({parameterObjectFieldName});
 
-										if (onSubmit) {
-											onSubmit({
-												...values,
-												parameterObjectFieldName,
-											});
-										}											
+										await onSubmit({
+											...values,
+											parameterObjectFieldName,
+										});
 									}}
 									value={values.parameterObjectFieldName}
 								/>

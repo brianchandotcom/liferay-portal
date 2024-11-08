@@ -33,6 +33,7 @@ interface ObjectRelationshipFormBaseProps {
 	hasDefinedObjectDefinitionTarget?: boolean;
 	objectDefinitionExternalReferenceCode1: string;
 	objectDefinitionExternalReferenceCode2?: string;
+	onSubmit?: (values?: Partial<ObjectRelationship>) => Promise<void>;
 	readonly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 	values: Partial<ObjectRelationship>;
@@ -94,6 +95,7 @@ export function ObjectRelationshipFormBase({
 	hasDefinedObjectDefinitionTarget,
 	objectDefinitionExternalReferenceCode1,
 	objectDefinitionExternalReferenceCode2,
+	onSubmit,
 	readonly,
 	setValues,
 	values,
@@ -444,10 +446,12 @@ export function ObjectRelationshipFormBase({
 			{children}
 
 			{alert &&
+				onSubmit &&
 				values.type === 'oneToMany' &&
 				Liferay.FeatureFlags['LPS-187142'] && (
 					<>
 						<ObjectRelationshipInheritanceCheckbox
+							onSubmit={onSubmit}
 							setValues={setValues}
 							values={values}
 						/>

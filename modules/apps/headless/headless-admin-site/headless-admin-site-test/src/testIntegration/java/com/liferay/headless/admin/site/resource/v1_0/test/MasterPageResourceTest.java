@@ -97,6 +97,44 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPatchSiteSiteByExternalReferenceCodeMasterPage()
+		throws Exception {
+
+		MasterPage masterPage =
+			testPostSiteSiteByExternalReferenceCodeMasterPage_addMasterPage(
+				randomMasterPage());
+
+		_testPatchSiteSiteByExternalReferenceCodeMasterPage(
+			Boolean.TRUE,
+			_getMasterPage(
+				Boolean.TRUE, masterPage.getExternalReferenceCode()));
+
+		_testPatchSiteSiteByExternalReferenceCodeMasterPage(
+			Boolean.TRUE,
+			_getMasterPage(null, masterPage.getExternalReferenceCode()));
+
+		_testPatchSiteSiteByExternalReferenceCodeMasterPage(
+			Boolean.FALSE,
+			_getMasterPage(
+				Boolean.FALSE, masterPage.getExternalReferenceCode()));
+
+		try {
+			masterPageResource.patchSiteSiteByExternalReferenceCodeMasterPage(
+				testGroup.getExternalReferenceCode(),
+				RandomTestUtil.randomString(), randomMasterPage());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"externalReferenceCode", "name"};
 	}
@@ -135,6 +173,34 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		return testGetSiteSiteByExternalReferenceCodeMasterPagesPage_addMasterPage(
 			testGroup.getExternalReferenceCode(), masterPage);
+	}
+
+	private MasterPage _getMasterPage(
+			Boolean markedAsDefault, String masterPageExternalReferenceCode)
+		throws Exception {
+
+		MasterPage masterPage = randomMasterPage();
+
+		masterPage.setExternalReferenceCode(masterPageExternalReferenceCode);
+		masterPage.setMarkedAsDefault(markedAsDefault);
+
+		return masterPage;
+	}
+
+	private void _testPatchSiteSiteByExternalReferenceCodeMasterPage(
+			Boolean expectedMarkedAsDefault, MasterPage masterPage)
+		throws Exception {
+
+		MasterPage patchMasterPage =
+			masterPageResource.patchSiteSiteByExternalReferenceCodeMasterPage(
+				testGroup.getExternalReferenceCode(),
+				masterPage.getExternalReferenceCode(), masterPage);
+
+		assertEquals(masterPage, patchMasterPage);
+		assertValid(patchMasterPage);
+
+		Assert.assertEquals(
+			expectedMarkedAsDefault, patchMasterPage.getMarkedAsDefault());
 	}
 
 	@Inject

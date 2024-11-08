@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
 
 import java.sql.Connection;
@@ -41,20 +42,11 @@ public class CompanyThreadLocal {
 			return null;
 		}
 
+		if (!PortalUtil.isUpgrading()) {
+			return UserLocalServiceUtil.fetchGuestUser(companyId);
+		}
+
 		User guestUser = null;
-
-		try {
-			guestUser = UserLocalServiceUtil.fetchGuestUser(companyId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		if (guestUser != null) {
-			return guestUser;
-		}
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(

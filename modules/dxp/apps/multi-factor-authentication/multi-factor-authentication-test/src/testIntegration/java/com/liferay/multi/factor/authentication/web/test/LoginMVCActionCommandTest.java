@@ -11,8 +11,6 @@ import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.multi.factor.authentication.spi.checker.headless.HeadlessMFAChecker;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -191,9 +189,6 @@ public class LoginMVCActionCommandTest {
 					user1.isPasswordReset(), user2.isPasswordReset());
 				Assert.assertTrue(user2.isPasswordReset());
 			}
-			catch (Exception exception) {
-				_log.error("Pushing Service Context ", exception);
-			}
 			finally {
 				ServiceContextThreadLocal.popServiceContext();
 			}
@@ -306,9 +301,6 @@ public class LoginMVCActionCommandTest {
 
 		return themeDisplay;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LoginMVCActionCommandTest.class);
 
 	private Company _company;
 

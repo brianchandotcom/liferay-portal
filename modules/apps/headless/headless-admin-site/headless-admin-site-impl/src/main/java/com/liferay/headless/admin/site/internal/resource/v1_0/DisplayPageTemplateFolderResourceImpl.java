@@ -10,7 +10,6 @@ import com.liferay.headless.admin.site.resource.v1_0.DisplayPageTemplateFolderRe
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
-import com.liferay.layout.page.template.exception.NoSuchPageTemplateCollectionException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -69,17 +68,11 @@ public class DisplayPageTemplateFolderResourceImpl
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
 
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
+		return _toDisplayPageTemplateFolder(
 			_layoutPageTemplateCollectionService.
-				fetchLayoutPageTemplateCollection(
+				getLayoutPageTemplateCollection(
 					displayPageTemplateFolderExternalReferenceCode,
-					group.getGroupId());
-
-		if (layoutPageTemplateCollection == null) {
-			throw new NoSuchPageTemplateCollectionException();
-		}
-
-		return _toDisplayPageTemplateFolder(layoutPageTemplateCollection);
+					group.getGroupId()));
 	}
 
 	@Override

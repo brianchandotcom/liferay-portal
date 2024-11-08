@@ -54,6 +54,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.UserBagFactoryUtil;
@@ -143,6 +145,22 @@ public class UserResourceDTOConverter
 				setEmailAddress(user::getEmailAddress);
 				setExternalReferenceCode(user::getExternalReferenceCode);
 				setFamilyName(user::getLastName);
+				setGender(
+					() -> {
+						if (!PrefsPropsUtil.getBoolean(
+								user.getCompanyId(),
+								PropsKeys.
+									FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE)) {
+
+							return null;
+						}
+
+						if (contact.isMale()) {
+							return Gender.MALE;
+						}
+
+						return Gender.FEMALE;
+					});
 				setGivenName(user::getFirstName);
 				setHasLoginDate(
 					() -> {

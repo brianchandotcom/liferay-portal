@@ -1776,6 +1776,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		String redirect = verifyInResponseTo(samlResponse);
 
+		httpServletRequest.setAttribute(WebKeys.REDIRECT, redirect);
+
 		verifyDestination(messageContext, samlResponse.getDestination());
 
 		Issuer issuer = samlResponse.getIssuer();

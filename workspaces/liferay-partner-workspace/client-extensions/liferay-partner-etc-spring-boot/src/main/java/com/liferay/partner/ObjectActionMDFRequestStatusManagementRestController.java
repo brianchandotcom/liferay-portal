@@ -88,23 +88,22 @@ public class ObjectActionMDFRequestStatusManagementRestController
 			return new ResponseEntity<>(json, HttpStatus.OK);
 		}
 
-		String response = get(
-			getAuthorization(),
-			_defaultUriBuilderFactory.builder(
-			).path(
-				"/o/c/activities"
-			).queryParam(
-				"filter",
-				"r_mdfReqToActs_c_mdfRequestId eq '" +
-					mdfRequestJSONObject.getString("id") + "'"
-			).queryParam(
-				"page", "1"
-			).queryParam(
-				"pageSize", "-1"
-			).build(
-			).toString());
-
-		JSONObject responseJSONObject = new JSONObject(response);
+		JSONObject responseJSONObject = new JSONObject(
+			get(
+				getAuthorization(),
+				_defaultUriBuilderFactory.builder(
+				).path(
+					"/o/c/activities"
+				).queryParam(
+					"filter",
+					"r_mdfReqToActs_c_mdfRequestId eq '" +
+						mdfRequestJSONObject.getString("id") + "'"
+				).queryParam(
+					"page", "1"
+				).queryParam(
+					"pageSize", "-1"
+				).build(
+				).toString()));
 
 		JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
 

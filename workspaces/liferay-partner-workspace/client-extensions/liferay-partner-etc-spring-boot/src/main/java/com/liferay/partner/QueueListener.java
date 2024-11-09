@@ -372,12 +372,12 @@ public class QueueListener extends BaseRestController {
 		return "";
 	}
 
-	private JSONObject _getJSONObject(String response) {
+	private JSONObject _getJSONObject(String json) {
 		try {
-			return new JSONObject(response);
+			return new JSONObject(json);
 		}
 		catch (JSONException jsonException) {
-			_log.error("Unable to create JSON object for: " + response);
+			_log.error("Unable to create JSON object: " + json);
 
 			throw jsonException;
 		}

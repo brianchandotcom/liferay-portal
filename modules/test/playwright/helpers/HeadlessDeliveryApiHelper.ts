@@ -17,6 +17,7 @@ interface createSitePageProps {
 }
 
 type TDocument = {
+	contentUrl?: string;
 	description?: string;
 	externalReferenceCode?: string;
 	fileName?: string;

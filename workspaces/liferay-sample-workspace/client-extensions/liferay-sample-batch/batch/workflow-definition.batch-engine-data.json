@@ -443,6 +443,7 @@
 				"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
 				"xsi:schemaLocation": "urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 			},
+			"defaultLanguageId": "en_US",
 			"description": "A machine approved content workflow.",
 			"name": "Machine Approver",
 			"nodes": [

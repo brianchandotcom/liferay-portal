@@ -12,6 +12,7 @@
 	"items": [
 		{
 			"alternateName": "m2h8.admin.adam",
+			"defaultLanguageId": "en_US",
 			"emailAddress": "m2h8.admin.adam@liferay.com",
 			"externalReferenceCode": "M2H8_ADMIN_ADAM",
 			"familyName": "Adam",
@@ -22,6 +23,7 @@
 		},
 		{
 			"alternateName": "m2h8.customer.carl",
+			"defaultLanguageId": "en_US",
 			"emailAddress": "m2h8.customer.carl@liferay.com",
 			"externalReferenceCode": "M2H8_CUSTOMER_CARL",
 			"familyName": "Carl",
@@ -32,6 +34,7 @@
 		},
 		{
 			"alternateName": "m2h8.support.sam",
+			"defaultLanguageId": "en_US",
 			"emailAddress": "m2h8.support.sam@liferay.com",
 			"externalReferenceCode": "M2H8_SUPPORT_SAM",
 			"familyName": "Sam",

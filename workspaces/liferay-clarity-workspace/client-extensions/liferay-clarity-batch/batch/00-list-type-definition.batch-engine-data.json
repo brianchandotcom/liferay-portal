@@ -11,6 +11,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "D4B8_ANNUAL_PURCHASE_VOLUMES",
 			"listTypeEntries": [
 				{
@@ -52,6 +53,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "D4B8_APPLICATION_STATES",
 			"listTypeEntries": [
 				{
@@ -109,6 +111,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "D4B8_ASSESSMENT_SCORES",
 			"listTypeEntries": [
 				{
@@ -158,6 +161,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "D4B8_BUSINESS_TYPES",
 			"listTypeEntries": [
 				{
@@ -191,6 +195,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "D4B8_DECISIONS",
 			"listTypeEntries": [
 				{
@@ -240,6 +245,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "D4B8_DISTRIBUTION_CHANNELS",
 			"listTypeEntries": [
 				{
@@ -273,6 +279,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "D4B8_DISTRIBUTION_REGIONS",
 			"listTypeEntries": [
 				{
@@ -362,6 +369,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "D4B8_ORDER_TYPES",
 			"listTypeEntries": [
 				{
@@ -403,6 +411,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "D4B8_PRODUCT_LABELS",
 			"listTypeEntries": [
 				{
@@ -428,6 +437,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "D4B8_PRODUCT_TYPES",
 			"name": "D4B8 Product Types",
 			"name_i18n": {
@@ -435,6 +445,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "D4B8_RECOMMENDATIONS",
 			"listTypeEntries": [
 				{

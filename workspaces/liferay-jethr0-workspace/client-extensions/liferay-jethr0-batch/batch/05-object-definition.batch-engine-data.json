@@ -11,6 +11,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "GitPullRequest",
 			"label": {
 				"en_US": "Git Pull Request"
@@ -53,6 +54,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "Routine",
 			"label": {
 				"en_US": "Routine"

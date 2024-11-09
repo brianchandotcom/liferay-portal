@@ -11,10 +11,12 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "test-1",
 			"name": "test-1"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "test-5",
 			"name": "test-5"
 		}

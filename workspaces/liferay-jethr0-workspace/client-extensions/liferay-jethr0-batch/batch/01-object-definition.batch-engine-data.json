@@ -11,6 +11,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "Environment",
 			"label": {
 				"en_US": "Environment"
@@ -115,6 +116,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "JenkinsNode",
 			"label": {
 				"en_US": "Jenkins Node"
@@ -203,6 +205,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "JobComparator",
 			"label": {
 				"en_US": "Job Comparator"
@@ -255,6 +258,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "JobDefinitionParameter",
 			"label": {
 				"en_US": "Job Definition Parameter"
@@ -337,6 +341,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "TaskRun",
 			"label": {
 				"en_US": "Task Run"
@@ -379,6 +384,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "TestSuite",
 			"label": {
 				"en_US": "Test Suite"

@@ -13,6 +13,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "L_DATA_SET",
 			"label": {
 				"en_US": "Data Set"
@@ -390,6 +391,7 @@
 			"titleObjectFieldName": "label"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"enableLocalization": true,
 			"externalReferenceCode": "L_DATA_SET_ACTION",
 			"label": {
@@ -636,6 +638,7 @@
 			"system": true
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "L_DATA_SET_CARDS_SECTION",
 			"label": {
 				"en_US": "Data Set Cards Section"
@@ -702,6 +705,7 @@
 			"system": true
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"enableLocalization": true,
 			"externalReferenceCode": "L_DATA_SET_CLIENT_EXTENSION_FILTER",
 			"label": {
@@ -772,6 +776,7 @@
 			"system": true
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"enableLocalization": true,
 			"externalReferenceCode": "L_DATA_SET_DATE_FILTER",
 			"label": {
@@ -874,6 +879,7 @@
 			"system": true
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "L_DATA_SET_LIST_SECTION",
 			"label": {
 				"en_US": "Data Set List Section"
@@ -940,6 +946,7 @@
 			"system": true
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"enableLocalization": true,
 			"externalReferenceCode": "L_DATA_SET_SELECTION_FILTER",
 			"label": {
@@ -1154,6 +1161,7 @@
 			"system": true
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"enableLocalization": true,
 			"externalReferenceCode": "L_DATA_SET_SORT",
 			"label": {
@@ -1240,6 +1248,7 @@
 			"system": true
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"enableLocalization": true,
 			"externalReferenceCode": "L_DATA_SET_TABLE_SECTION",
 			"label": {

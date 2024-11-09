@@ -18,6 +18,7 @@
 			},
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
+			"defaultLanguageId": "en_US",
 			"description": "Is there any company that you have partnered with in order to do little adjustments to my frames?",
 			"externalReferenceCode": "TICKET_1",
 			"priority": {
@@ -50,6 +51,7 @@
 			},
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
+			"defaultLanguageId": "en_US",
 			"description": "No, we don’t have any retail stores because we make the digital experience even better.",
 			"externalReferenceCode": "TICKET_2",
 			"priority": {
@@ -82,6 +84,7 @@
 			},
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
+			"defaultLanguageId": "en_US",
 			"description": "All our glasses and sunglasses are a Standard Size. For the majority of people, this Standard Size is the correct fit on the face.",
 			"externalReferenceCode": "TICKET_3",
 			"priority": {
@@ -110,6 +113,7 @@
 		{
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
+			"defaultLanguageId": "en_US",
 			"description": "I need to understand what's the process for sending my glassess to a review as they have different problems in the side pieces.",
 			"externalReferenceCode": "TICKET_4",
 			"priority": {
@@ -138,6 +142,7 @@
 		{
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
+			"defaultLanguageId": "en_US",
 			"description": "I need to adquire another pair of glasses. For existing customers, are you thinking on creating a specific promotion?",
 			"externalReferenceCode": "TICKET_5",
 			"priority": {
@@ -166,6 +171,7 @@
 		{
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
+			"defaultLanguageId": "en_US",
 			"description": "I want to know what are the main recommended brands to clean my glasses, model 45TRGR",
 			"externalReferenceCode": "TICKET_6",
 			"priority": {

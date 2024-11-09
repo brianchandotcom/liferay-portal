@@ -12,6 +12,7 @@
 	"items": [
 		{
 			"cron": "0 0 16 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "analyticsCloudAcceptanceController",
 			"jobName": "ci:test:analytics-cloud-acceptance - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"osbAsahBranchURL\", \"value\": \"https://github.com/liferay/com-liferay-osb-asah-private/tree/latest\"}, {\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testrayProjectName\", \"value\": \"Analytics Cloud\"}, {\"key\": \"testrayRoutineName\", \"value\": \"[master] ci:test:analytics-cloud-acceptance\"}, {\"key\": \"testSuiteName\", \"value\": \"analytics-cloud-acceptance\"}]",
@@ -23,6 +24,7 @@
 		},
 		{
 			"cron": "0 0 18 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "analyticsCloudQuarantineController",
 			"jobName": "ci:test:analytics-cloud-quarantine - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"osbAsahBranchURL\", \"value\": \"https://github.com/liferay/com-liferay-osb-asah-private/tree/7.0.x\"}, {\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testrayProjectName\", \"value\": \"Analytics Cloud\"}, {\"key\": \"testrayRoutineName\", \"value\": \"[master] ci:test:analytics-cloud-quarantine\"}, {\"key\": \"testSuiteName\", \"value\": \"analytics-cloud-quarantine\"}]",
@@ -34,6 +36,7 @@
 		},
 		{
 			"cron": "0 0 20 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "analyticsCloudReleaseController",
 			"jobName": "ci:test:analytics-cloud-release - faro-v4.8.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"osbAsahBranchURL\", \"value\": \"https://github.com/liferay/com-liferay-osb-asah-private/tree/4.7.x\"}, {\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay-ac/liferay-portal/tree/faro-v4.8.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testrayProjectName\", \"value\": \"Analytics Cloud\"}, {\"key\": \"testrayRoutineName\", \"value\": \"[master] ci:test:analytics-cloud-release\"}, {\"key\": \"testSuiteName\", \"value\": \"analytics-cloud-release\"}]",
@@ -45,6 +48,7 @@
 		},
 		{
 			"cron": "0 0 16 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "analyticsCloudUpstreamController",
 			"jobName": "ci:test:analytics-cloud-upstream - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"osbAsahBranchURL\", \"value\": \"https://github.com/liferay/com-liferay-osb-asah-private/tree/7.0.x\"}, {\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testrayProjectName\", \"value\": \"Analytics Cloud\"}, {\"key\": \"testrayRoutineName\", \"value\": \"[master] ci:test:analytics-cloud-upstream\"}, {\"key\": \"testSuiteName\", \"value\": \"analytics-cloud-upstream\"}]",
@@ -56,6 +60,7 @@
 		},
 		{
 			"cron": "0 0/30 * ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "approveGitHubCollaboratorInvitesController",
 			"jobName": "Approve GitHub Collaborator Invites - $[current_date]",
 			"jobParameters": "[{\"key\": \"jenkinsSlaveLabel\", \"value\": \"!master\"}]",
@@ -66,6 +71,7 @@
 		},
 		{
 			"cron": "0 0 0/8 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "archiveCIBuildDataController",
 			"jobName": "Archive CI Build Data - $[current_date]",
 			"jobParameters": "[{\"key\": \"jenkinsSlaveLabel\", \"value\": \"master\"}]",
@@ -76,6 +82,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "forwardBranchesCleanupDailyController",
 			"jobName": "Forward Branches Cleanup Daily - $[current_date]",
 			"jobParameters": "[{\"key\": \"jenkinsSlaveLabel\", \"value\": \"!master\"}]",
@@ -86,6 +93,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateFlakyTestReportController70x",
 			"jobName": "Generate Flaky Test Report (7.0.x) - $[current_date]",
 			"jobParameters": "[{\"key\": \"jenkinsSlaveLabel\", \"value\": \"!master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.0.x\"}]",
@@ -96,6 +104,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateFlakyTestReportController71x",
 			"jobName": "Generate Flaky Test Report (7.1.x) - $[current_date]",
 			"jobParameters": "[{\"key\": \"jenkinsSlaveLabel\", \"value\": \"!master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.1.x\"}]",
@@ -106,6 +115,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateFlakyTestReportController72x",
 			"jobName": "Generate Flaky Test Report (7.2.x) - $[current_date]",
 			"jobParameters": "[{\"key\": \"jenkinsSlaveLabel\", \"value\": \"!master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.2.x\"}]",
@@ -116,6 +126,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateFlakyTestReportController73x",
 			"jobName": "Generate Flaky Test Report (7.3.x) - $[current_date]",
 			"jobParameters": "[{\"key\": \"jenkinsSlaveLabel\", \"value\": \"!master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.3.x\"}]",
@@ -126,6 +137,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateFlakyTestReportControllerEE61x",
 			"jobName": "Generate Flaky Test Report (ee-6.1.x) - $[current_date]",
 			"jobParameters": "[{\"key\": \"jenkinsSlaveLabel\", \"value\": \"!master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"ee-6.1.x\"}]",
@@ -136,6 +148,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateFlakyTestReportControllerEE62x",
 			"jobName": "Generate Flaky Test Report (ee-6.2.x) - $[current_date]",
 			"jobParameters": "[{\"key\": \"jenkinsSlaveLabel\", \"value\": \"!master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"ee-6.2.x\"}]",
@@ -146,6 +159,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateFlakyTestReportControllerMaster",
 			"jobName": "Generate Flaky Test Report (master) - $[current_date]",
 			"jobParameters": "[{\"key\": \"jenkinsSlaveLabel\", \"value\": \"!master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}]",
@@ -156,6 +170,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateReportsController",
 			"jobName": "Generate Reports - $[current_date]",
 			"jobParameters": "[{\"key\": \"jenkinsSlaveLabel\", \"value\": \"!master\"}]",
@@ -166,6 +181,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateReportsControllerDaily",
 			"jobName": "Generate Reports (Daily) - $[current_date]",
 			"jobParameters": "[{\"key\": \"reportNames\", \"value\": \"Build History,CI System History,Pull Request History,Release History,Upstream History\"}]",
@@ -176,6 +192,7 @@
 		},
 		{
 			"cron": "0 */10 * ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateReportsControllerEvery10Mins",
 			"jobName": "Generate Reports (Every 10 Mins) - $[current_date]",
 			"jobParameters": "[{\"key\": \"reportNames\", \"value\": \"CI System Status\"}]",
@@ -186,6 +203,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 1",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateReportsControllerWeekly",
 			"jobName": "Generate Reports (Weekly) - $[current_date]",
 			"jobParameters": "[{\"key\": \"reportNames\", \"value\": \"Utilization\"}]",
@@ -196,6 +214,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "liferayBinariesCacheUpdaterController",
 			"jobName": "Liferay Binaries Cache Updater - $[current_date]",
 			"jobParameters": "[]",
@@ -206,6 +225,7 @@
 		},
 		{
 			"cron": "0 0 0 1 * ? *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamAcceptanceControllerEE61x",
 			"jobName": "Portal Upstream Acceptance (ee-6.1.x) - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBuildProfile\", \"value\": \"portal\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"ee-6.1.x\"}]",
@@ -217,6 +237,7 @@
 		},
 		{
 			"cron": "0 0 0 1 * ? *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamAcceptanceControllerEE62x",
 			"jobName": "Portal Upstream Acceptance (ee-6.2.x) - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBuildProfile\", \"value\": \"portal\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"ee-6.2.x\"}]",
@@ -228,6 +249,7 @@
 		},
 		{
 			"cron": "0 0 0 1 * ? *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamAcceptanceControllerEE70x",
 			"jobName": "Portal Upstream Acceptance (7.0.x) - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalUpstreamBranchName\", \"value\": \"7.0.x\"}]",
@@ -239,6 +261,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamAcceptanceControllerEE71x",
 			"jobName": "Portal Upstream Acceptance (7.1.x) - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalUpstreamBranchName\", \"value\": \"7.1.x\"}]",
@@ -250,6 +273,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamAcceptanceControllerEE72x",
 			"jobName": "Portal Upstream Acceptance (7.2.x) - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalUpstreamBranchName\", \"value\": \"7.2.x\"}]",
@@ -261,6 +285,7 @@
 		},
 		{
 			"cron": "0 0 4,12 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamAcceptanceControllerEE73x",
 			"jobName": "Portal Upstream Acceptance (7.3.x) - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalUpstreamBranchName\", \"value\": \"7.3.x\"}]",
@@ -272,6 +297,7 @@
 		},
 		{
 			"cron": "0 0 0/4 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamAcceptanceControllerMaster",
 			"jobName": "Portal Upstream Acceptance (master) - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}]",
@@ -283,6 +309,7 @@
 		},
 		{
 			"cron": "0 0 0,8,16 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamControllerRelease2023Q3AcceptanceUpstream",
 			"jobName": "ci:test:acceptance-upstream - release-2023.q3 - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/release-2023.q3\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"release-2023.q3\"}, {\"key\": \"testSuiteName\", \"value\": \"acceptance-upstream\"}]",
@@ -294,6 +321,7 @@
 		},
 		{
 			"cron": "0 0 2,10,18 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamControllerRelease2023Q4AcceptanceUpstream",
 			"jobName": "ci:test:acceptance-upstream - release-2023.q4 - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/release-2023.q4\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"release-2023.q4\"}, {\"key\": \"testSuiteName\", \"value\": \"acceptance-upstream\"}]",
@@ -305,6 +333,7 @@
 		},
 		{
 			"cron": "0 0 4,12,20 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamControllerRelease2024Q1AcceptanceUpstream",
 			"jobName": "ci:test:acceptance-upstream - release-2024.q1 - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/release-2024.q1\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"release-2024.q1\"}, {\"key\": \"testSuiteName\", \"value\": \"acceptance-upstream\"}]",
@@ -316,6 +345,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 2 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE62xUpstream",
 			"jobName": "ci:test:upstream - ee-6.2.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/ee-6.2.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"ee-6.2.x\"}, {\"key\": \"testrayProjectName\", \"value\": \"Liferay Portal 6.2\"}, {\"key\": \"testrayRoutineName\", \"value\": \"EE Development (ee-6.2.x)\"}, {\"key\": \"testSuiteName\", \"value\": \"upstream\"}]",
@@ -326,6 +356,7 @@
 			"type": "upstreamBranchCron"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE70xBundles",
 			"jobName": "ci:test:bundles - 7.0.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.0.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.0.x\"}, {\"key\": \"testSuiteName\", \"value\": \"bundles\"}]",
@@ -337,6 +368,7 @@
 		},
 		{
 			"cron": "0 0/30 * ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE70xStable",
 			"jobName": "ci:test:stable - 7.0.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/brianchandotcom/liferay-portal-ee/tree/7.0.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.0.x\"}, {\"key\": \"testrayProjectName\", \"value\": \"Liferay Portal 7.0\"}, {\"key\": \"testSuiteName\", \"value\": \"stable\"}]",
@@ -347,6 +379,7 @@
 			"type": "upstreamBranchCron"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xBundles",
 			"jobName": "ci:test:bundles - 7.1.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.1.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.1.x\"}, {\"key\": \"testSuiteName\", \"value\": \"bundles\"}]",
@@ -358,6 +391,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xEnvironments",
 			"jobName": "ci:test:environments - 7.1.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.1.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.1.x\"}, {\"key\": \"testSuiteName\", \"value\": \"environments\"}]",
@@ -369,6 +403,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xJDK11",
 			"jobName": "ci:test:jdk11 - 7.1.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.1.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.1.x\"}, {\"key\": \"testSuiteName\", \"value\": \"jdk11\"}]",
@@ -380,6 +415,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xLicense",
 			"jobName": "ci:test:license - 7.1.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.1.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.1.x\"}, {\"key\": \"testSuiteName\", \"value\": \"license\"}]",
@@ -391,6 +427,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xLicenseCluster",
 			"jobName": "ci:test:license-cluster - 7.1.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.1.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.1.x\"}, {\"key\": \"testSuiteName\", \"value\": \"license-cluster\"}]",
@@ -402,6 +439,7 @@
 		},
 		{
 			"cron": "0 0/30 * ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xStable",
 			"jobName": "ci:test:stable - 7.1.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/brianchandotcom/liferay-portal-ee/tree/7.1.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.1.x\"}, {\"key\": \"testSuiteName\", \"value\": \"stable\"}]",
@@ -413,6 +451,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xUpgrade",
 			"jobName": "ci:test:upgrade - 7.1.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.1.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.1.x\"}, {\"key\": \"testSuiteName\", \"value\": \"upgrade\"}]",
@@ -423,6 +462,7 @@
 			"type": "upstreamBranchCron"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE72xBundles",
 			"jobName": "ci:test:bundles - 7.2.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.2.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.2.x\"}, {\"key\": \"testSuiteName\", \"value\": \"bundles\"}]",
@@ -434,6 +474,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE72xEnvironments",
 			"jobName": "ci:test:environments - 7.2.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.2.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.2.x\"}, {\"key\": \"testSuiteName\", \"value\": \"environments\"}]",
@@ -445,6 +486,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE72xJDK11",
 			"jobName": "ci:test:jdk11 - 7.2.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.2.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.2.x\"}, {\"key\": \"testSuiteName\", \"value\": \"jdk11\"}]",
@@ -456,6 +498,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE72xLicense",
 			"jobName": "ci:test:license - 7.2.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.2.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.2.x\"}, {\"key\": \"testSuiteName\", \"value\": \"license\"}]",
@@ -467,6 +510,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE72xLicenseCluster",
 			"jobName": "ci:test:license-cluster - 7.2.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.2.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.2.x\"}, {\"key\": \"testSuiteName\", \"value\": \"license-cluster\"}]",
@@ -478,6 +522,7 @@
 		},
 		{
 			"cron": "0 0/30 * ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE72xStable",
 			"jobName": "ci:test:stable - 7.2.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/brianchandotcom/liferay-portal-ee/tree/7.2.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.2.x\"}, {\"key\": \"testSuiteName\", \"value\": \"stable\"}]",
@@ -489,6 +534,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE72xUpgrade",
 			"jobName": "ci:test:upgrade - 7.2.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.2.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.2.x\"}, {\"key\": \"testSuiteName\", \"value\": \"upgrade\"}]",
@@ -499,6 +545,7 @@
 			"type": "upstreamBranchCron"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE73xBundles",
 			"jobName": "ci:test:bundles - 7.3.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.3.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.3.x\"}, {\"key\": \"testSuiteName\", \"value\": \"bundles\"}]",
@@ -510,6 +557,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE73xEnvironments",
 			"jobName": "ci:test:environments - 7.3.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.3.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.3.x\"}, {\"key\": \"testSuiteName\", \"value\": \"environments\"}]",
@@ -521,6 +569,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE73xJDK11",
 			"jobName": "ci:test:jdk11 - 7.3.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.3.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.3.x\"}, {\"key\": \"testSuiteName\", \"value\": \"jdk11\"}]",
@@ -532,6 +581,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE73xLicense",
 			"jobName": "ci:test:license - 7.3.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.3.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.3.x\"}, {\"key\": \"testSuiteName\", \"value\": \"license\"}]",
@@ -543,6 +593,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE73xLicenseCluster",
 			"jobName": "ci:test:license-cluster - 7.3.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.3.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.3.x\"}, {\"key\": \"testSuiteName\", \"value\": \"license-cluster\"}]",
@@ -554,6 +605,7 @@
 		},
 		{
 			"cron": "0 0/30 * ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE73xStable",
 			"jobName": "ci:test:stable - 7.3.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/brianchandotcom/liferay-portal-ee/tree/7.3.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.3.x\"}, {\"key\": \"testSuiteName\", \"value\": \"stable\"}]",
@@ -565,6 +617,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE73xUpgrade",
 			"jobName": "ci:test:upgrade - 7.3.x - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal-ee/tree/7.3.x\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"7.3.x\"}, {\"key\": \"testSuiteName\", \"value\": \"upgrade\"}]",
@@ -576,6 +629,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterAcceptanceFunctionalDBPartition",
 			"jobName": "ci:test:acceptance-functional-db-partition - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"acceptance-functional-db-partition\"}]",
@@ -586,6 +640,7 @@
 			"type": "upstreamBranchCron"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterBundles",
 			"jobName": "ci:test:bundles - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"bundles\"}]",
@@ -597,6 +652,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterCalendar",
 			"jobName": "ci:test:calendar - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"calendar\"}]",
@@ -608,6 +664,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterCommerce",
 			"jobName": "ci:test:commerce - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"commerce\"}]",
@@ -619,6 +676,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterContentManagement",
 			"jobName": "ci:test:content-management - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"content-management\"}]",
@@ -630,6 +688,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterDBPartition",
 			"jobName": "ci:test:db-partition - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"db-partition\"}]",
@@ -641,6 +700,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterDataEngine",
 			"jobName": "ci:test:data-engine - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"data-engine\"}]",
@@ -652,6 +712,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterEcho",
 			"jobName": "ci:test:echo - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"echo\"}]",
@@ -663,6 +724,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterEnvironments",
 			"jobName": "ci:test:environments - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"environments\"}]",
@@ -674,6 +736,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterForms",
 			"jobName": "ci:test:forms - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"forms\"}]",
@@ -685,6 +748,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterFrontend",
 			"jobName": "ci:test:frontend - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"frontend\"}]",
@@ -696,6 +760,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterHeadless",
 			"jobName": "ci:test:headless - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"headless\"}]",
@@ -707,6 +772,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterJDK11",
 			"jobName": "ci:test:jdk11 - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"jdk11\"}]",
@@ -718,6 +784,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterLicense",
 			"jobName": "ci:test:license - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"license\"}]",
@@ -729,6 +796,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterLicenseCluster",
 			"jobName": "ci:test:license-cluster - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"license-cluster\"}]",
@@ -740,6 +808,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterLiferaySampleWorkspace",
 			"jobName": "ci:test:liferay-sample-workspace - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"liferay-sample-workspace\"}]",
@@ -751,6 +820,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterObject",
 			"jobName": "ci:test:object - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"object\"}]",
@@ -762,6 +832,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterPlatformExperience",
 			"jobName": "ci:test:platform-experience - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"platform-experience\"}]",
@@ -773,6 +844,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterPortalContextPath",
 			"jobName": "ci:test:portal-context-path - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"portal-context-path\"}]",
@@ -784,6 +856,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterPortalProxyPath",
 			"jobName": "ci:test:portal-proxy-path - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"portal-proxy-path\"}]",
@@ -795,6 +868,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterSecurity",
 			"jobName": "ci:test:security - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"security\"}]",
@@ -806,6 +880,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterSolutionsAcceptance",
 			"jobName": "ci:test:solutions-acceptance - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"solutions-acceptance\"}]",
@@ -817,6 +892,7 @@
 		},
 		{
 			"cron": "0 0/30 * ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterStable",
 			"jobName": "ci:test:stable - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/brianchandotcom/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"stable\"}]",
@@ -828,6 +904,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterUM",
 			"jobName": "ci:test:um - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"um\"}]",
@@ -839,6 +916,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterUpgrade",
 			"jobName": "ci:test:upgrade - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"upgrade\"}]",
@@ -850,6 +928,7 @@
 		},
 		{
 			"cron": "0 0 0 1/3 * ? *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterUpgradeAll",
 			"jobName": "ci:test:upgrade-all - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"upgrade-all\"}]",
@@ -861,6 +940,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterUpgradeAppServers",
 			"jobName": "ci:test:upgrade-app-servers - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"upgrade-app-servers\"}]",
@@ -872,6 +952,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterUpgradePerformance",
 			"jobName": "ci:test:upgrade-performance - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"upgrade-performance\"}]",
@@ -883,6 +964,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterUpgradeWorkflowMetrics",
 			"jobName": "ci:test:workflow-metrics - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"workflow-metrics\"}]",
@@ -894,6 +976,7 @@
 		},
 		{
 			"cron": "0 0 18 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterUpstreamDXP",
 			"jobName": "ci:test:upstream-dxp - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"upstream-dxp\"}]",
@@ -905,6 +988,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterWorkflow",
 			"jobName": "ci:test:workflow - master - $[current_date]",
 			"jobParameters": "[{\"key\": \"portalBranchURL\", \"value\": \"https://github.com/liferay/liferay-portal/tree/master\"}, {\"key\": \"portalUpstreamBranchName\", \"value\": \"master\"}, {\"key\": \"testSuiteName\", \"value\": \"workflow\"}]",
@@ -916,6 +1000,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "publishPortalDockerImageDXPNightlyController",
 			"jobName": "Publish Portal Docker Image DXP Nightly - $[current_date]",
 			"jobParameters": "[{\"key\": \"dockerImageFilter\", \"value\": \"7.4.13.nightly\"}]",
@@ -926,6 +1011,7 @@
 		},
 		{
 			"cron": "0 0 14 ? * 1-5 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesDailyACGeneratorsController",
 			"jobName": "QA Websites AC Generators - $[current_date]",
 			"jobParameters": "[{\"key\": \"qaWebsitesBranchURL\", \"value\": \"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"}, {\"key\": \"qaWebsitesProjectName\", \"value\": \"analytics-cloud\"}, {\"key\": \"testSuiteName\", \"value\": \"analytics-cloud-generators\"}]",
@@ -936,6 +1022,7 @@
 		},
 		{
 			"cron": "0 0 20 ? * 1-5 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesDailyACVerifiersController",
 			"jobName": "QA Websites AC Verifiers - $[current_date]",
 			"jobParameters": "[{\"key\": \"qaWebsitesBranchURL\", \"value\": \"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"}, {\"key\": \"qaWebsitesProjectName\", \"value\": \"analytics-cloud\"}, {\"key\": \"testSuiteName\", \"value\": \"analytics-cloud-verifiers\"}]",
@@ -946,6 +1033,7 @@
 		},
 		{
 			"cron": "0 0 19 ? * 1-5 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesDailyLearnProductionController",
 			"jobName": "QA Websites - Learn Production - $[current_date]",
 			"jobParameters": "[{\"key\": \"qaWebsitesBranchURL\", \"value\": \"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"}, {\"key\": \"qaWebsitesProjectName\", \"value\": \"learn\"}, {\"key\": \"testrayProjectName\", \"value\": \"Learn\"}, {\"key\": \"testrayRoutineName\", \"value\": \"Production\"}, {\"key\": \"testSuiteName\", \"value\": \"learn_production\"}]",
@@ -956,6 +1044,7 @@
 		},
 		{
 			"cron": "0 0 19 ? * 1-5 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesDailyLearnUATController",
 			"jobName": "QA Websites - Learn UAT - $[current_date]",
 			"jobParameters": "[{\"key\": \"qaWebsitesBranchURL\", \"value\": \"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"}, {\"key\": \"qaWebsitesProjectName\", \"value\": \"learn\"}, {\"key\": \"testrayProjectName\", \"value\": \"Learn\"}, {\"key\": \"testrayRoutineName\", \"value\": \"UAT\"}, {\"key\": \"testSuiteName\", \"value\": \"learn_uat\"}]",
@@ -966,6 +1055,7 @@
 		},
 		{
 			"cron": "0 0 4 ? * 1-5 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesDailyMarketplaceProductionController",
 			"jobName": "QA Websites - Marketplace Production - $[current_date]",
 			"jobParameters": "[{\"key\": \"qaWebsitesBranchURL\", \"value\": \"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"}, {\"key\": \"qaWebsitesProjectName\", \"value\": \"marketplace\"}, {\"key\": \"testrayProjectName\", \"value\": \"Marketplace\"}, {\"key\": \"testrayRoutineName\", \"value\": \"Production\"}, {\"key\": \"testSuiteName\", \"value\": \"marketplace-production\"}]",
@@ -976,6 +1066,7 @@
 		},
 		{
 			"cron": "0 0 4 ? * 1-5 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesDailyMarketplaceUATController",
 			"jobName": "QA Websites - Marketplace UAT - $[current_date]",
 			"jobParameters": "[{\"key\": \"qaWebsitesBranchURL\", \"value\": \"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"}, {\"key\": \"qaWebsitesProjectName\", \"value\": \"marketplace\"}, {\"key\": \"testrayProjectName\", \"value\": \"Marketplace\"}, {\"key\": \"testrayRoutineName\", \"value\": \"UAT\"}, {\"key\": \"testSuiteName\", \"value\": \"marketplace-uat\"}]",
@@ -986,6 +1077,7 @@
 		},
 		{
 			"cron": "0 0 19 ? * 1-5 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesDailyPartnerUATController",
 			"jobName": "QA Websites - Partner UAT - $[current_date]",
 			"jobParameters": "[{\"key\": \"qaWebsitesBranchURL\", \"value\": \"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"}, {\"key\": \"qaWebsitesProjectName\", \"value\": \"partner\"}, {\"key\": \"testrayProjectName\", \"value\": \"Partner\"}, {\"key\": \"testrayRoutineName\", \"value\": \"UAT\"}]",
@@ -996,6 +1088,7 @@
 		},
 		{
 			"cron": "0 0 4 ? * 1-5 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesDailyWWWProductionController",
 			"jobName": "QA Websites - WWW Production - $[current_date]",
 			"jobParameters": "[{\"key\": \"qaWebsitesBranchURL\", \"value\": \"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"}, {\"key\": \"qaWebsitesProjectName\", \"value\": \"www\"}, {\"key\": \"testrayProjectName\", \"value\": \"WWW\"}, {\"key\": \"testrayRoutineName\", \"value\": \"Production\"}, {\"key\": \"testSuiteName\", \"value\": \"www-production\"}]",
@@ -1006,6 +1099,7 @@
 		},
 		{
 			"cron": "0 0 4 ? * 1-5 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesDailyWWWUATController",
 			"jobName": "QA Websites - WWW UAT - $[current_date]",
 			"jobParameters": "[{\"key\": \"qaWebsitesBranchURL\", \"value\": \"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"}, {\"key\": \"qaWebsitesProjectName\", \"value\": \"www\"}, {\"key\": \"testrayProjectName\", \"value\": \"WWW\"}, {\"key\": \"testrayRoutineName\", \"value\": \"UAT\"}, {\"key\": \"testSuiteName\", \"value\": \"www-uat\"}]",
@@ -1017,6 +1111,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "repositoryArchiveController",
 			"jobName": "Repository Archive - $[current_date]",
 			"jobParameters": "[{\"key\": \"dockerImageFilter\", \"value\": \"7.4.13.nightly\"}]",
@@ -1027,6 +1122,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 5 *",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "sanitizeLanguageController",
 			"jobName": "Sanitize Language - $[current_date]",
 			"jobParameters": "[]",

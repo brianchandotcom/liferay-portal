@@ -11,6 +11,7 @@
 			"active": true,
 			"dateCreated": "2022-08-16T16:31:41.557+00:00",
 			"dateModified": "2022-08-16T16:31:42.358+00:00",
+			"defaultLanguageId": "en_US",
 			"id": 43442,
 			"label": {
 				"en_US": "Coupon"

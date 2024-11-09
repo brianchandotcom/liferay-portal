@@ -13,6 +13,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"externalReferenceCode": "L_COMMERCE_RETURN",
 			"label": {
@@ -83,6 +84,7 @@
 			"titleObjectFieldName": "id"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"externalReferenceCode": "L_COMMERCE_RETURN_ITEM",
 			"label": {

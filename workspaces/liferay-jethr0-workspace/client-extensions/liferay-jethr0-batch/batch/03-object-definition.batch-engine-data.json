@@ -11,6 +11,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "Build",
 			"label": {
 				"en_US": "Build"
@@ -125,6 +126,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "JenkinsCohort",
 			"label": {
 				"en_US": "Jenkins Cohort"

@@ -11,6 +11,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "approveGitHubCollaboratorInvites",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -24,6 +25,7 @@
 			"label": "Approve GitHub Collaborator Invites"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "archiveCIBuildData",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -34,6 +36,7 @@
 			"label": "Archive CI Build Data"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "default",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -44,6 +47,7 @@
 			"label": "Default"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "filePropagator",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -66,6 +70,7 @@
 			"label": "File Propagator"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "fixpackBuilderPullRequest",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -88,6 +93,7 @@
 			"label": "Fixpack Builder Pull Request"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "forwardBranchesCleanupDaily",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -101,6 +107,7 @@
 			"label": "Forward Branches Cleanup Daily"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "forwardPullRequest",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -120,6 +127,7 @@
 			"label": "Forward Pull Request"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateFlakyTestReport",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -136,6 +144,7 @@
 			"label": "Generate Flaky Test Report"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateReports",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -149,6 +158,7 @@
 			"label": "Generate Reports"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateTestDurationMetrics",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -168,6 +178,7 @@
 			"label": "Generate Test Duration Metrics"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "generateTestrayCSV",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -187,6 +198,7 @@
 			"label": "Generate Testray CSV"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "jenkinsPullRequest",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -197,6 +209,7 @@
 			"label": "Jenkins Pull Request"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "legacyDatabaseDump",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -216,6 +229,7 @@
 			"label": "Legacy Database Dump"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "liferayBinariesCacheUpdater",
 			"jobDefinitionsToJobDefinitionParameters": [
 			],
@@ -223,6 +237,7 @@
 			"label": "Liferay Binaries Cache Updater"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "maintenanceDaily",
 			"jobDefinitionsToJobDefinitionParameters": [
 			],
@@ -230,6 +245,7 @@
 			"label": "Maintenance Daily"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "maintenanceMatrixJobs",
 			"jobDefinitionsToJobDefinitionParameters": [
 			],
@@ -237,6 +253,7 @@
 			"label": "Maintenance Matrix Jobs"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "maintenanceStaleArtifacts",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -247,6 +264,7 @@
 			"label": "Maintenance Stale Artifacts"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "maintenanceWeekly",
 			"jobDefinitionsToJobDefinitionParameters": [
 			],
@@ -254,6 +272,7 @@
 			"label": "Maintenance Weekly"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "maintenanceWeeklyNode",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -264,6 +283,7 @@
 			"label": "Maintenance Weekly Node"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "mergeCentralSubrepository",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -277,6 +297,7 @@
 			"label": "Merge Central Subrepository"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "mergePortalSubrepository",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -299,6 +320,7 @@
 			"label": "Merge Portal Subrepository"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "mirrorsLocalCachePropagator",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -312,6 +334,7 @@
 			"label": "Mirrors Local Cache Propagator"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pluginsExtraApps",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -334,6 +357,7 @@
 			"label": "Plugins Extra Apps"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pluginsMarketplaceApp",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -359,6 +383,7 @@
 			"label": "Plugins Marketplace App"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pluginsPullRequest",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -375,6 +400,7 @@
 			"label": "Plugins Pull Request"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pluginsRelease",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -406,6 +432,7 @@
 			"label": "Plugins Release"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pluginsUpstream",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -437,6 +464,7 @@
 			"label": "Plugins Upstream"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalAppRelease",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -447,6 +475,7 @@
 			"label": "Portal App Release"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalBuildOptimization",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -466,6 +495,7 @@
 			"label": "Portal Build Optimization"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalEvaluatePullRequest",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -488,6 +518,7 @@
 			"label": "Portal Evaluate Pull Request"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalFixpackRelease",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -513,6 +544,7 @@
 			"label": "Portal Fixpack Release"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalHotfixRelease",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -550,6 +582,7 @@
 			"label": "Portal Hotfix Release"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalPullRequest",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -566,6 +599,7 @@
 			"label": "Portal Pull Request"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalPullRequestSF",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -582,6 +616,7 @@
 			"label": "Portal Pull Request SF"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalRelease",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -634,6 +669,7 @@
 			"label": "Portal Release"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstream",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -680,6 +716,7 @@
 			"label": "Portal Upstream"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamAcceptance",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -696,6 +733,7 @@
 			"label": "Portal Upstream Acceptance"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamTestSuite",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -742,6 +780,7 @@
 			"label": "Portal Upstream Test Suite"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "poshiRelease",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -758,6 +797,7 @@
 			"label": "Poshi Release"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "publishPortalDockerImage",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -771,6 +811,7 @@
 			"label": "Publish Portal Docker Image"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "publishTestrayReport",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -811,6 +852,7 @@
 			"label": "Publish Testray Report"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesDaily",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -842,6 +884,7 @@
 			"label": "QA Websites Daily"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesPullRequestSF",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -855,6 +898,7 @@
 			"label": "QA Websites Pull Request SF"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesWeekly",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -886,6 +930,7 @@
 			"label": "QA Websites Weekly"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "repositoryArchive",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -896,6 +941,7 @@
 			"label": "Repository Archive"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "rootCauseAnalysisTool",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -927,6 +973,7 @@
 			"label": "Root Cause Analysis Tool"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "sanitizeLanguage",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -937,6 +984,7 @@
 			"label": "Sanitize Language"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "scancodePipelines",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -965,6 +1013,7 @@
 			"label": "Scancode Pipelines"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "subrepositoryPullRequest",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -984,6 +1033,7 @@
 			"label": "Subrepository Pull Request"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "verification",
 			"jobDefinitionsToJobDefinitionParameters": [
 			],
@@ -991,6 +1041,7 @@
 			"label": "Verification"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "verificationNode",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -1001,6 +1052,7 @@
 			"label": "Verification Node"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "verificationServersDaily",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{

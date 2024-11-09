@@ -11,6 +11,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "BuildRun",
 			"label": {
 				"en_US": "Build Run"
@@ -88,6 +89,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "JenkinsServer",
 			"label": {
 				"en_US": "Jenkins Server"
@@ -148,6 +150,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "JobDefinition",
 			"label": {
 				"en_US": "Job Definition"
@@ -200,6 +203,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "JobPrioritizer",
 			"label": {
 				"en_US": "Job Prioritizer"
@@ -252,6 +256,7 @@
 			}
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "Task",
 			"label": {
 				"en_US": "Task"

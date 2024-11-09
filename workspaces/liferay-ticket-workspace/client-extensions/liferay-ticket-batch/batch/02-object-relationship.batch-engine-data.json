@@ -12,6 +12,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"deletionType": "prevent",
 			"label": {
 				"en_US": "User to J3Y7 Ticket"

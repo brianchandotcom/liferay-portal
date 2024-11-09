@@ -11,6 +11,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "GitCommit",
 			"label": {
 				"en_US": "Git Commit"

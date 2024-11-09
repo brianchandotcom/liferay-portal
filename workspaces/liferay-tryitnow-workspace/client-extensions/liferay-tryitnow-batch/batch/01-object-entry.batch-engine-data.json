@@ -12,41 +12,49 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"done": false,
 			"externalReferenceCode": "STEP_1",
 			"stepNumber": 1
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"done": false,
 			"externalReferenceCode": "STEP_2",
 			"stepNumber": 2
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"done": false,
 			"externalReferenceCode": "STEP_3",
 			"stepNumber": 3
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"done": false,
 			"externalReferenceCode": "STEP_4",
 			"stepNumber": 4
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"done": false,
 			"externalReferenceCode": "STEP_5",
 			"stepNumber": 5
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"done": false,
 			"externalReferenceCode": "STEP_6",
 			"stepNumber": 6
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"done": false,
 			"externalReferenceCode": "STEP_7",
 			"stepNumber": 7
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"done": false,
 			"externalReferenceCode": "STEP_8",
 			"stepNumber": 8

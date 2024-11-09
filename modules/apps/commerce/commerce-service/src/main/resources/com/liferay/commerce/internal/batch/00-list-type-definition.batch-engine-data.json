@@ -13,6 +13,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "L_COMMERCE_RETURN_ITEM_STATUSES",
 			"listTypeEntries": [
 				{
@@ -111,6 +112,7 @@
 			"system": true
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "L_COMMERCE_RETURN_REASONS",
 			"listTypeEntries": [
 				{
@@ -137,6 +139,7 @@
 			"system": true
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "L_COMMERCE_RETURN_RESOLUTION_METHODS",
 			"listTypeEntries": [
 				{
@@ -155,6 +158,7 @@
 			"system": true
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "L_COMMERCE_RETURN_STATUSES",
 			"listTypeEntries": [
 				{

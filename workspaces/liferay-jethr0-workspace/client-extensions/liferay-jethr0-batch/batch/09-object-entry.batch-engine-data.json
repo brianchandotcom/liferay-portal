@@ -11,6 +11,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "batchNames",
 			"key": "batchNames",
 			"label": "Batch Names",
@@ -18,6 +19,7 @@
 			"valueDescription": "Insert your batch names here in a comma delimited list"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "callbackURL",
 			"key": "callbackURL",
 			"label": "Callback URL",
@@ -26,6 +28,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "cleanUpCommand",
 			"key": "cleanUpCommand",
 			"label": "Clean Up Command",
@@ -33,6 +36,7 @@
 			"valueDescription": "Insert your clean up command here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "dockerImageFilter",
 			"key": "dockerImageFilter",
 			"label": "Docker Image Filter",
@@ -41,6 +45,7 @@
 			"valueDescription": "Insert your Docker image filter here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "dockerTag",
 			"key": "dockerTag",
 			"label": "Docker Tag",
@@ -48,6 +53,7 @@
 			"valueDescription": "e.g. dxp:2024.q1.2 or portal:7.4.3.112-ga112"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "fileNames",
 			"key": "fileNames",
 			"label": "File Names",
@@ -55,6 +61,7 @@
 			"valueDescription": "Insert your file names here in a comma-delimited list"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "forwardForce",
 			"key": "forwardForce",
 			"label": "Forward Force",
@@ -64,6 +71,7 @@
 			"valueRegex": "(false|true)"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "forwardReceiverUserName",
 			"key": "forwardReceiverUserName",
 			"label": "Forward Receiver User Name",
@@ -72,6 +80,7 @@
 			"valueDescription": "Insert your forward receiver user name here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "jenkinsBranchURL",
 			"key": "jenkinsBranchURL",
 			"label": "Jenkins Branch URL",
@@ -80,6 +89,7 @@
 			"valueRegex": "https://github.com/[^/]+/liferay-jenkins-ee/tree/[^/]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "jenkinsBuildID",
 			"key": "jenkinsBuildID",
 			"label": "Jenkins Build ID",
@@ -88,6 +98,7 @@
 			"valueRegex": "\\d+_\\d+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "jenkinsBuildURL",
 			"key": "jenkinsBuildURL",
 			"label": "Jenkins Build URL",
@@ -96,6 +107,7 @@
 			"valueRegex": "https?://test-\\d+-\\d+(.liferay.com)?/job/[^/]+/\\d+/?"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "jenkinsSlaveLabel",
 			"key": "jenkinsSlaveLabel",
 			"label": "Jenkins Slave Label",
@@ -103,6 +115,7 @@
 			"valueDescription": "e.g. !master"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "mirrorsURL",
 			"key": "mirrorsURL",
 			"label": "Mirrors URL",
@@ -111,6 +124,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "osbAsahBranchURL",
 			"key": "osbAsahBranchURL",
 			"label": "OSB Asah URL",
@@ -119,6 +133,7 @@
 			"valueRegex": "https://github.com/[^/]+/com-liferay-osb-asah-private/tree/[^/]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pipelineName",
 			"key": "pipelineName",
 			"label": "Pipeline Name",
@@ -127,6 +142,7 @@
 			"valueDescription": "Insert your Pipeline name here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pluginName",
 			"key": "pluginName",
 			"label": "Plugin Name",
@@ -134,6 +150,7 @@
 			"valueDescription": "Insert your plugin name here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pluginsBranchSHA",
 			"key": "pluginsBranchSHA",
 			"label": "Plugins Branch SHA",
@@ -142,6 +159,7 @@
 			"valueRegex": "[a-f0-9]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pluginsBranchURL",
 			"key": "pluginsBranchURL",
 			"label": "Plugins Branch URL",
@@ -150,6 +168,7 @@
 			"valueRegex": "https://github.com/[^/]+/liferay-plugins-ee/tree/[^/]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pluginsExtraAppsURL",
 			"key": "pluginsExtraAppsURL",
 			"label": "Plugins Extra Apps URL",
@@ -158,6 +177,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pluginsMarketplaceAppFileName",
 			"key": "pluginsMarketplaceAppFileName",
 			"label": "Plugins Marketplace App File Name",
@@ -165,6 +185,7 @@
 			"valueDescription": "Insert your Marketplace app file name here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pluginsMarketplaceAppType",
 			"key": "pluginsMarketplaceAppType",
 			"label": "Plugins Marketplace App Type",
@@ -173,6 +194,7 @@
 			"valueDescription": "Insert your Marketplace app type here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pluginsMarketplaceAppURL",
 			"key": "pluginsMarketplaceAppURL",
 			"label": "Plugins Marketplace App URL",
@@ -181,6 +203,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pluginsUpstreamBranchName",
 			"key": "pluginsUpstreamBranchName",
 			"label": "Plugins Upstream Branch Name",
@@ -188,6 +211,7 @@
 			"valueDescription": "Insert your plugins upstream branch name here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalBatchName",
 			"key": "portalBatchName",
 			"label": "Portal Batch Name",
@@ -195,6 +219,7 @@
 			"valueDescription": "e.g. functional-tomcat90-mysql57"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalBatchTestSelector",
 			"key": "portalBatchTestSelector",
 			"label": "Portal Batch Test Selector",
@@ -202,6 +227,7 @@
 			"valueDescription": "e.g. PortalSmoke#Smoke"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalBranchSHA",
 			"key": "portalBranchSHA",
 			"label": "Portal Branch SHA",
@@ -210,6 +236,7 @@
 			"valueRegex": "[a-f0-9]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalBranchSHAs",
 			"key": "portalBranchSHAs",
 			"label": "Portal Branch SHAs",
@@ -217,6 +244,7 @@
 			"valueDescription": "e.g. 617eb3201c2ad33025bfe6a3989ba90c268431ba,b2003beba572c86324f221650b696eaa431903f9,eec06d83124d6f6b47fac5fcca9464b9bb3fe877"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalBranchURL",
 			"key": "portalBranchURL",
 			"label": "Portal Branch URL",
@@ -225,6 +253,7 @@
 			"valueRegex": "https://github.com/[^/]+/liferay-portal(-ee)?/tree/[^/]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalBuildProfile",
 			"key": "portalBuildProfile",
 			"label": "Portal Build Profile",
@@ -234,6 +263,7 @@
 			"valueRegex": "(dxp|portal)"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalCherryPickSHAs",
 			"key": "portalCherryPickSHAs",
 			"label": "Portal Cherry Pick SHAs",
@@ -241,6 +271,7 @@
 			"valueDescription": "e.g. 617eb3201c2ad33025bfe6a3989ba90c268431ba,b2003beba572c86324f221650b696eaa431903f9,eec06d83124d6f6b47fac5fcca9464b9bb3fe877"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalFixpackReleaseURL",
 			"key": "portalFixpackReleaseURL",
 			"label": "Portal Fixpack Release URL",
@@ -249,6 +280,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalHotfixReleaseURL",
 			"key": "portalHotfixReleaseURL",
 			"label": "Portal Hotfix Release URL",
@@ -257,6 +289,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalLegacyBranchURL",
 			"key": "portalLegacyBranchURL",
 			"label": "Portal Legacy Branch URL",
@@ -265,6 +298,7 @@
 			"valueRegex": "https://github.com/[^/]+/liferay-qa-portal-legacy-ee/tree/[^/]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalLegacyVersions",
 			"key": "portalLegacyVersions",
 			"label": "Portal Legacy Versions",
@@ -272,6 +306,7 @@
 			"valueDescription": "e.g. 2023.q4.0, 7.4.13-u106"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalPatchTicketURL",
 			"key": "portalPatchTicketURL",
 			"label": "Portal Patch Ticket URL",
@@ -281,6 +316,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalPatcherBuildID",
 			"key": "portalPatcherBuildID",
 			"label": "Portal Patcher Build ID",
@@ -288,6 +324,7 @@
 			"valueDescription": "Insert your portal patcher build ID here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalPatcherRequestKey",
 			"key": "portalPatcherRequestKey",
 			"label": "Portal Patcher Request Key",
@@ -295,6 +332,7 @@
 			"valueDescription": "Insert your portal patcher request key here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalPatcherUserID",
 			"key": "portalPatcherUserID",
 			"label": "Portal Patcher User ID",
@@ -302,6 +340,7 @@
 			"valueDescription": "Insert your portal patcher user ID here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalPullRequestURL",
 			"key": "portalPullRequestURL",
 			"label": "Portal Pull Request URL",
@@ -310,6 +349,7 @@
 			"valueRegex": "https://github.com/[^/]+/liferay-portal(-ee)?/pull/[^/]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalReleaseDependenciesURL",
 			"key": "portalReleaseDependenciesURL",
 			"label": "Portal Release Dependencies URL",
@@ -318,6 +358,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalReleaseOSGiURL",
 			"key": "portalReleaseOSGiURL",
 			"label": "Portal Release OSGi URL",
@@ -326,6 +367,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalReleaseSQLURL",
 			"key": "portalReleaseSQLURL",
 			"label": "Portal Release SQL URL",
@@ -334,6 +376,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalReleaseTomcatURL",
 			"key": "portalReleaseTomcatURL",
 			"label": "Portal Release Tomcat URL",
@@ -342,6 +385,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalReleaseToolsURL",
 			"key": "portalReleaseToolsURL",
 			"label": "Portal Release Tools URL",
@@ -350,6 +394,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalReleaseVersion",
 			"key": "portalReleaseVersion",
 			"label": "Portal Release Version",
@@ -358,6 +403,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalReleaseWarURL",
 			"key": "portalReleaseWarURL",
 			"label": "Portal Release War URL",
@@ -366,6 +412,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamBranchName",
 			"key": "portalUpstreamBranchName",
 			"label": "Portal Upstream Branch Name",
@@ -373,6 +420,7 @@
 			"valueDescription": "Insert your portal upstream branch name here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUpstreamBranchSHA",
 			"key": "portalUpstreamBranchSHA",
 			"label": "Portal Upstream Branch SHA",
@@ -381,6 +429,7 @@
 			"valueRegex": "[a-f0-9]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "portalUserName",
 			"key": "portalUserName",
 			"label": "Portal User Name",
@@ -388,6 +437,7 @@
 			"valueDescription": "e.g. liferay, brianchandotcom"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "poshiQuery",
 			"key": "poshiQuery",
 			"label": "Poshi Query",
@@ -395,6 +445,7 @@
 			"valueDescription": "e.g. (test.class.method.name == \"PortalSmoke#Smoke\")"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "pullRequestURL",
 			"key": "pullRequestURL",
 			"label": "Pull Request URL",
@@ -403,6 +454,7 @@
 			"valueRegex": "https://github.com/[^/]+/[^/]+/pull/[^/]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesBranchSHA",
 			"key": "qaWebsitesBranchSHA",
 			"label": "QA Websites Branch SHA",
@@ -411,6 +463,7 @@
 			"valueRegex": "[a-f0-9]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesBranchURL",
 			"key": "qaWebsitesBranchURL",
 			"label": "QA Websites Branch URL",
@@ -419,6 +472,7 @@
 			"valueRegex": "https://github.com/[^/]+/liferay-qa-websites-ee/tree/[^/]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "qaWebsitesProjectName",
 			"key": "qaWebsitesProjectName",
 			"label": "QA Websites Project Name",
@@ -426,6 +480,7 @@
 			"valueDescription": "Insert your QA Websites project name here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "reportNames",
 			"key": "reportNames",
 			"label": "Report Names",
@@ -433,6 +488,7 @@
 			"valueDescription": "Insert your report names here in a comma delimited list"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "repositoryNames",
 			"key": "repositoryNames",
 			"label": "Repository Names",
@@ -441,6 +497,7 @@
 			"valueDescription": "e.g. liferay-jenkins-ee"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "retestCount",
 			"key": "retestCount",
 			"label": "Retest Count",
@@ -449,6 +506,7 @@
 			"valueRegex": "\\d+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "sourceDirURL",
 			"key": "sourceDirURL",
 			"label": "Source Dir URL",
@@ -457,6 +515,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "subrepositoryBranchSHA",
 			"key": "subrepositoryBranchSHA",
 			"label": "Subrepository Branch SHA",
@@ -465,6 +524,7 @@
 			"valueRegex": "[a-f0-9]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "subrepositoryBranchURL",
 			"key": "subrepositoryBranchURL",
 			"label": "Subrepository Branch URL",
@@ -473,6 +533,7 @@
 			"valueRegex": "https://github.com/[^/]+/com-liferay-[^/]+-private/tree/[^/]+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "subrepositoryUpstreamBranchName",
 			"key": "subrepositoryUpstreamBranchName",
 			"label": "Subrepository Upstream Branch Name",
@@ -480,6 +541,7 @@
 			"valueDescription": "Insert your subrepository upstream branch name here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "targetDirPath",
 			"key": "targetDirPath",
 			"label": "Target Dir Path",
@@ -487,6 +549,7 @@
 			"valueDescription": "Insert your target dir path here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "testSuiteName",
 			"key": "testSuiteName",
 			"label": "Test Suite Name",
@@ -494,6 +557,7 @@
 			"valueDescription": "Insert your test suite name here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "testrayBuildID",
 			"key": "testrayBuildID",
 			"label": "Testray Build ID",
@@ -502,6 +566,7 @@
 			"valueRegex": "\\d+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "testrayBuildName",
 			"key": "testrayBuildName",
 			"label": "Testray Build Name",
@@ -509,6 +574,7 @@
 			"valueDescription": "Insert your Testray build name here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "testrayProductVersion",
 			"key": "testrayProductVersion",
 			"label": "Testray Product Version",
@@ -516,6 +582,7 @@
 			"valueDescription": "Insert your Testray product version here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "testrayProjectName",
 			"key": "testrayProjectName",
 			"label": "Testray Project Name",
@@ -523,6 +590,7 @@
 			"valueDescription": "Insert your Testray project name here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "testrayRoutineName",
 			"key": "testrayRoutineName",
 			"label": "Testray Routine Name",
@@ -530,6 +598,7 @@
 			"valueDescription": "Insert your Testray routine name here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "testrayServerType",
 			"key": "testrayServerType",
 			"label": "Testray Server Type",
@@ -537,6 +606,7 @@
 			"valueDescription": "Insert your Testray server type here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "testrayServerURL",
 			"key": "testrayServerURL",
 			"label": "Testray Server URL",
@@ -545,6 +615,7 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "testraySlackChannels",
 			"key": "testraySlackChannels",
 			"label": "Testray Slack Channels",
@@ -552,6 +623,7 @@
 			"valueDescription": "Insert your Testray Slack channels here"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "testraySlackIconEmoji",
 			"key": "testraySlackIconEmoji",
 			"label": "Testray Slack Icon Emoji",
@@ -560,6 +632,7 @@
 			"valueRegex": ":[^:]+:"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "testraySlackUserName",
 			"key": "testraySlackUserName",
 			"label": "Testray Slack User Name",

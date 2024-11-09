@@ -11,14 +11,17 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "brianchandotcom",
 			"url": "https://github.com/brianchandotcom"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "liferay",
 			"url": "https://github.com/liferay"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "liferay-ac",
 			"url": "https://github.com/liferay-ac"
 		}

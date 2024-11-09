@@ -17,6 +17,7 @@
 			},
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "FOO_ERC_1"
 		},
 		{
@@ -26,6 +27,7 @@
 			},
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "FOO_ERC_2"
 		},
 		{
@@ -35,21 +37,25 @@
 			},
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "FOO_ERC_3"
 		},
 		{
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "FOO_ERC_4"
 		},
 		{
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "FOO_ERC_5"
 		},
 		{
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "FOO_ERC_6"
 		}
 	]

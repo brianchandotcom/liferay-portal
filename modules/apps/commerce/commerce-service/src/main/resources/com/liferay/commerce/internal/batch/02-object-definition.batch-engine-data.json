@@ -13,6 +13,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "L_ACCOUNT",
 			"objectRelationships": [
 				{
@@ -118,6 +119,7 @@
 			"titleObjectFieldName": "name"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "L_COMMERCE_ORDER",
 			"objectRelationships": [
 				{
@@ -176,6 +178,7 @@
 			"titleObjectFieldName": "id"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "L_COMMERCE_ORDER_ITEM",
 			"objectRelationships": [
 				{

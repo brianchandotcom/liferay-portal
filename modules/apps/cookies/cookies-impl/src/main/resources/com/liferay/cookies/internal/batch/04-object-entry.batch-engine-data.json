@@ -13,6 +13,7 @@
 	},
 	"items": [
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "",
 			"externalReferenceCode": "3e083fed-87e2-4aef-a4d1-05cc426a06a5",
 			"host": "Liferay",
@@ -21,6 +22,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "2 Years",
 			"externalReferenceCode": "72eaf4c5-5a68-4e8d-89d2-6a5701072d21",
 			"host": "Liferay",
@@ -29,6 +31,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "1 Minute",
 			"externalReferenceCode": "f8a53c0e-306d-4e19-a6f6-a69527241ff4",
 			"host": "Liferay",
@@ -37,6 +40,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "1 Day",
 			"externalReferenceCode": "68c95960-004c-4970-ba4b-779429e76dff",
 			"host": "Liferay",
@@ -45,6 +49,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "30 Minutes",
 			"externalReferenceCode": "a5e9578a-1307-4d89-998f-cc91609dc189",
 			"host": "Liferay",
@@ -53,6 +58,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "Session Time",
 			"externalReferenceCode": "59d7f57b-fc51-4e37-8177-4fcaf62a01c7",
 			"host": "Liferay",
@@ -61,6 +67,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "30 Minutes",
 			"externalReferenceCode": "f5c92d83-57bd-4f83-8e92-70427bffd002",
 			"host": "Liferay",
@@ -69,6 +76,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "30 Minutes",
 			"externalReferenceCode": "e9f2eb7c-9c73-45ce-94ec-c54f0b199428",
 			"host": "Liferay",
@@ -77,6 +85,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "30 Minutes",
 			"externalReferenceCode": "b81c84db-1469-4581-9e81-849d9470d090",
 			"host": "Liferay",
@@ -85,6 +94,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "365 Days",
 			"externalReferenceCode": "3ce10a77-8d95-41b6-b9f2-e7674314df17",
 			"host": "Liferay",
@@ -93,6 +103,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "365 Days",
 			"externalReferenceCode": "8818db63-0e64-48b3-a609-bc6ddadc39a4",
 			"host": "Liferay",
@@ -101,6 +112,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "365 Days",
 			"externalReferenceCode": "100522f5-949f-410e-a983-ed156cec2775",
 			"host": "Liferay",
@@ -109,6 +121,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "365 Days",
 			"externalReferenceCode": "79765961-2d08-444d-b549-7c3bbdabb580",
 			"host": "Liferay",
@@ -117,6 +130,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "365 Days",
 			"externalReferenceCode": "192a7263-1d3f-4ab8-aa6b-449a69ec470d",
 			"host": "Liferay",
@@ -125,6 +139,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "365 Days",
 			"externalReferenceCode": "50913b94-dd64-4812-b311-9c428cd40590",
 			"host": "Liferay",
@@ -133,6 +148,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "365 Days",
 			"externalReferenceCode": "c2a8f09e-6f95-4fc8-84f7-d50165a2c385",
 			"host": "Liferay",
@@ -141,6 +157,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "365 Days",
 			"externalReferenceCode": "c86f9553-cb17-4ea7-94f6-caa207f2ac1c",
 			"host": "Liferay",
@@ -149,6 +166,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "365 Days",
 			"externalReferenceCode": "8e1fd120-ae3c-4af2-9ce8-573c3ded34e8",
 			"host": "Liferay",
@@ -157,6 +175,7 @@
 			"type": "First Party"
 		},
 		{
+			"defaultLanguageId": "en_US",
 			"expiration": "365 Days",
 			"externalReferenceCode": "2d43f854-d24f-4c07-854c-2c3f975fecdd",
 			"host": "Liferay",

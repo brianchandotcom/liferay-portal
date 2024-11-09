@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Layout Taglib
 Bundle-SymbolicName: com.liferay.layout.taglib
-Bundle-Version: 16.1.25
+Bundle-Version: 16.1.26
 Export-Package:\
 	com.liferay.layout.taglib.servlet.taglib,\
 	com.liferay.layout.taglib.servlet.taglib.react,\

@@ -165,7 +165,7 @@ export class WidgetPagePage {
 		}
 	}
 
-	async saveAndClose(title: string) {
+	async save(title: string) {
 		const configurationIFrame = this.page.frameLocator(
 			`iframe[title*="${title}"]`
 		);
@@ -176,6 +176,10 @@ export class WidgetPagePage {
 			configurationIFrame,
 			'Success:You have successfully updated the setup.'
 		);
+	}
+
+	async saveAndClose(title: string) {
+		await this.save(title);
 
 		await this.page
 			.locator('.modal-header')

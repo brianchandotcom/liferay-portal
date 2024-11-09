@@ -39,6 +39,13 @@ public class JSONBatchEngineDataFileCheck extends BaseFileCheck {
 		jsonObject.remove("actions");
 		jsonObject.remove("facets");
 
+		jsonObject = _checkConfiguration(jsonObject);
+		jsonObject = _checkItems(jsonObject);
+
+		return JSONUtil.toString(jsonObject);
+	}
+
+	private JSONObject _checkConfiguration(JSONObject jsonObject) {
 		JSONObject configurationJSONObject = jsonObject.getJSONObject(
 			"configuration");
 
@@ -58,9 +65,7 @@ public class JSONBatchEngineDataFileCheck extends BaseFileCheck {
 			jsonObject.put("configuration", configurationJSONObject);
 		}
 
-		jsonObject = _checkItems(jsonObject);
-
-		return JSONUtil.toString(jsonObject);
+		return jsonObject;
 	}
 
 	private JSONObject _checkItems(JSONObject jsonObject) {

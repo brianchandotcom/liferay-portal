@@ -55,7 +55,7 @@ public class PLOOverrideResourceBundleManager {
 	protected static void clearCache() {
 		_overrideResourceBundlesDCLSingleton.destroy(null);
 
-		LanguageResources.clearResourceBundlesCache();
+		LanguageResources.clearResourceBundles();
 	}
 
 	private void _add(

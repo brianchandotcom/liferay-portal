@@ -53,7 +53,7 @@ public class LanguageResources {
 
 		};
 
-	public static void clearResourceBundlesCache() {
+	public static void clearResourceBundles() {
 		_resourceBundles.clear();
 	}
 

@@ -182,7 +182,7 @@ public class JenkinsClient extends BaseRestController {
 	}
 
 	@Override
-	protected String getLXCDXPURL() {
+	protected String getWebClientBaseURL() {
 		return "";
 	}
 

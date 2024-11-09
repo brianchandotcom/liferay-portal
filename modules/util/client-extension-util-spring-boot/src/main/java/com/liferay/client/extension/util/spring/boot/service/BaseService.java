@@ -142,7 +142,7 @@ public abstract class BaseService {
 			clientRequest);
 	}
 
-	protected String getLXCDXPURL() {
+	protected String getWebClientBaseURL() {
 		return lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
 	}
 
@@ -256,7 +256,7 @@ public abstract class BaseService {
 	private WebClient _getWebClient() {
 		return WebClient.builder(
 		).baseUrl(
-			getLXCDXPURL()
+			getWebClientBaseURL()
 		).defaultHeader(
 			HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
 		).defaultHeader(

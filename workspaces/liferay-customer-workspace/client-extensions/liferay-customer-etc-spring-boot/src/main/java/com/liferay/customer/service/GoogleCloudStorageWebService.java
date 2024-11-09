@@ -105,7 +105,7 @@ public class GoogleCloudStorageWebService extends BaseRestController {
 	}
 
 	@Override
-	protected String getLXCDXPURL() {
+	protected String getWebClientBaseURL() {
 		return "https://storage.googleapis.com";
 	}
 

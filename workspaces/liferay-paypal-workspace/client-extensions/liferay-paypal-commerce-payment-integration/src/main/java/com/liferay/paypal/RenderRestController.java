@@ -50,7 +50,7 @@ public class RenderRestController extends BaseRestController {
 		sb.append(
 			WebClient.create(
 				StringBundler.concat(
-					getLXCDXPURL(),
+					getWebClientBaseURL(),
 					"/o/headless-commerce-delivery-cart/v1.0/carts/", orderId,
 					"/payment-url")
 			).get(

@@ -141,7 +141,7 @@ public class ConsoleService extends BaseService {
 	}
 
 	@Override
-	protected String getLXCDXPURL() {
+	protected String getWebClientBaseURL() {
 		return _consoleAuthURL;
 	}
 

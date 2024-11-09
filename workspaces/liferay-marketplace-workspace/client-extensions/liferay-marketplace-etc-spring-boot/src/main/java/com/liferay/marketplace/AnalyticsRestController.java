@@ -229,7 +229,7 @@ public class AnalyticsRestController extends BaseRestController {
 	}
 
 	@Override
-	protected String getLXCDXPURL() {
+	protected String getWebClientBaseURL() {
 		return _analyticsAuthUrl;
 	}
 

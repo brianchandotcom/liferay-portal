@@ -32,23 +32,21 @@ public class TestrayCommandLineRunner
 	extends BaseRestController implements CommandLineRunner {
 
 	public void archiveTestrayBuilds() throws Exception {
-		String response = get(
-			_getAuthorization(),
-			_defaultUriBuilderFactory.builder(
-			).path(
-				"/o/c/builds"
-			).queryParam(
-				"filter",
-				"archived eq false and promoted eq false and (not (" +
-					"buildToTasks/id ne '0')) and dateCreated lt " +
-						_currentDateTime.minusDays(_maxDaysOpened)
-			).queryParam(
-				"pageSize", "-1"
-			).build(
-			).toString());
-
 		JSONArray jsonArray = new JSONObject(
-			response
+			get(
+				_getAuthorization(),
+				_defaultUriBuilderFactory.builder(
+				).path(
+					"/o/c/builds"
+				).queryParam(
+					"filter",
+					"archived eq false and promoted eq false and (not (" +
+						"buildToTasks/id ne '0')) and dateCreated lt " +
+							_currentDateTime.minusDays(_maxDaysOpened)
+				).queryParam(
+					"pageSize", "-1"
+				).build(
+				).toString())
 		).getJSONArray(
 			"items"
 		);
@@ -71,24 +69,22 @@ public class TestrayCommandLineRunner
 	}
 
 	public void deleteTestrayBuilds() throws Exception {
-		String response = get(
-			_getAuthorization(),
-			_defaultUriBuilderFactory.builder(
-			).path(
-				"/o/c/builds"
-			).queryParam(
-				"fields", "id"
-			).queryParam(
-				"filter",
-				"archived eq true and dateArchived lt " +
-					_currentDateTime.minusDays(_maxDaysArchived)
-			).queryParam(
-				"pageSize", "-1"
-			).build(
-			).toString());
-
 		JSONArray jsonArray = new JSONObject(
-			response
+			get(
+				_getAuthorization(),
+				_defaultUriBuilderFactory.builder(
+				).path(
+					"/o/c/builds"
+				).queryParam(
+					"fields", "id"
+				).queryParam(
+					"filter",
+					"archived eq true and dateArchived lt " +
+						_currentDateTime.minusDays(_maxDaysArchived)
+				).queryParam(
+					"pageSize", "-1"
+				).build(
+				).toString())
 		).getJSONArray(
 			"items"
 		);

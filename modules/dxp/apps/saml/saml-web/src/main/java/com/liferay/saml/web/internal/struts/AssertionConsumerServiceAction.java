@@ -5,19 +5,15 @@
 
 package com.liferay.saml.web.internal.struts;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException.MustNotUseCompanyMx;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
-import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
@@ -106,23 +102,11 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 
 			httpSession.setAttribute(SamlWebKeys.SAML_SSO_ERROR, error);
 
-			String redirect = _portal.getHomeURL(httpServletRequest);
-
-			LastPath lastPath = (LastPath)httpSession.getAttribute(
-				WebKeys.LAST_PATH);
-
-			if (GetterUtil.getBoolean(
-					_props.get(PropsKeys.AUTH_FORWARD_BY_LAST_PATH)) &&
-				(lastPath != null)) {
-
-				redirect = StringBundler.concat(
-					_portal.getPortalURL(httpServletRequest),
-					lastPath.getContextPath(), lastPath.getPath(),
-					lastPath.getParameters());
-			}
-
 			try {
-				httpServletResponse.sendRedirect(redirect);
+				httpServletResponse.sendRedirect(
+					GetterUtil.getString(
+						httpServletRequest.getAttribute(WebKeys.REDIRECT),
+						_portal.getHomeURL(httpServletRequest)));
 
 				return null;
 			}
@@ -136,9 +120,6 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private Props _props;
 
 	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;

@@ -61,17 +61,21 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		JobProperty jobProperty = getJobProperty(
 			PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME, testSuiteName, batchName);
 
-		if (jobProperty == null) {
-			jobProperty = getJobProperty(
-				PLAYWRIGHT_PROJECTS_INCLUDES_PROPERTY_NAME, testSuiteName,
-				batchName);
-		}
-
 		List<JobProperty> jobProperties = new ArrayList<>();
 
 		jobProperties.add(jobProperty);
 
 		String jobPropertyValue = jobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			jobProperty = getJobProperty(
+				PLAYWRIGHT_PROJECTS_INCLUDES_PROPERTY_NAME, testSuiteName,
+				batchName);
+
+			jobPropertyValue = jobProperty.getValue();
+
+			jobProperties.add(jobProperty);
+		}
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
 			jobPropertyValue = System.getenv("PLAYWRIGHT_PROJECT_NAME");
@@ -90,12 +94,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		String excludesJobPropertyValue = excludesJobProperty.getValue();
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(excludesJobPropertyValue)) {
-			String[] excludesProjectNames = excludesJobPropertyValue.split(
-				"\\s*,\\s*");
-
-			for (String excludeProjectName : excludesProjectNames) {
-				_projectNames.remove(excludeProjectName);
-			}
+			removeProjectNames(excludesJobPropertyValue);
 
 			jobProperties.add(excludesJobProperty);
 		}
@@ -130,6 +129,14 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				).split(
 					","
 				));
+		}
+
+		JobProperty excludesJobProperty =
+			playwrightTestSelector.getPlaywrightExcludesJobProperty();
+
+		if (excludesJobProperty != null) {
+			removeProjectNames(excludesJobProperty.getValue());
+			playwrightJobProperties.add(excludesJobProperty);
 		}
 
 		recordJobProperties(new ArrayList<>(playwrightJobProperties));
@@ -213,6 +220,11 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 					modifiedFile, PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME,
 					JobProperty.Type.MODULE_TEST_DIR, null);
 
+			playwrightTestProjectJobProperties.addAll(
+				getJobProperties(
+					modifiedFile, PLAYWRIGHT_PROJECTS_INCLUDES_PROPERTY_NAME,
+					JobProperty.Type.MODULE_TEST_DIR, null));
+
 			for (JobProperty playwrightTestProjectJobProperty :
 					playwrightTestProjectJobProperties) {
 
@@ -226,6 +238,25 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 						playwrightTestProjectJobProperty);
 				}
 			}
+
+			List<JobProperty> playwrightExcludeProjectJobProperties =
+				getJobProperties(
+					modifiedFile, PLAYWRIGHT_PROJECTS_EXCLUDES_PROPERTY_NAME,
+					JobProperty.Type.MODULE_TEST_DIR, null);
+
+			for (JobProperty playwrightExcludeProjectJobProperty :
+					playwrightExcludeProjectJobProperties) {
+
+				if (playwrightExcludeProjectJobProperty.getValue() != null) {
+					String projectNames =
+						playwrightExcludeProjectJobProperty.getValue();
+
+					removeProjectNames(projectNames);
+
+					playwrightJobProperties.add(
+						playwrightExcludeProjectJobProperty);
+				}
+			}
 		}
 
 		playwrightJobProperties.removeAll(Collections.singleton(null));
@@ -235,6 +266,14 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 	protected List<JSONObject> getSpecJSONObjects() {
 		return _specJSONObjects;
+	}
+
+	protected void removeProjectNames(String jobPropertyValue) {
+		String[] excludesProjectNames = jobPropertyValue.split("\\s*,\\s*");
+
+		for (String excludeProjectName : excludesProjectNames) {
+			_projectNames.remove(excludeProjectName);
+		}
 	}
 
 	protected void setTestClasses() {

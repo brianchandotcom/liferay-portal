@@ -17,5 +17,5 @@
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format"
 	},
-	"version": "23.2.6"
+	"version": "23.2.7"
 }

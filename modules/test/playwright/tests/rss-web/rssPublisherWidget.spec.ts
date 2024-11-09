@@ -22,6 +22,89 @@ const test = mergeTests(
 	pageViewModePagesTest
 );
 
+test(
+	'The user can configure display settings on rss publisher widget',
+	{
+		tag: '@LPS-107942',
+	},
+	async ({apiHelpers, page, site, widgetPagePage}) => {
+
+		// Add widget page and navigate to view
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		// Add rss publisher widget
+
+		await widgetPagePage.addPortlet('RSS Publisher');
+
+		await widgetPagePage.clickOnAction('RSS Publisher', 'Configuration');
+
+		const configurationIFrame = page.frameLocator(
+			'iframe[title*="RSS Publisher"]'
+		);
+
+		// Add url
+
+		await configurationIFrame
+			.getByLabel('Title', {exact: true})
+			.fill('LA Times: Technology News');
+
+		const file = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(path.join(__dirname, '/dependencies/rss2.0.xml'))
+		);
+
+		await configurationIFrame
+			.getByLabel('URL')
+			.fill(liferayConfig.environment.baseUrl + file.contentUrl);
+
+		await widgetPagePage.save('RSS Publisher');
+
+		// Go to display settings
+
+		await configurationIFrame
+			.getByRole('tab', {name: 'Display Settings'})
+			.click();
+
+		// Assert number of entries per feed allows integer numbers greater than 10
+
+		await configurationIFrame
+			.getByLabel('# of Entries Per Feed', {exact: true})
+			.fill('11');
+
+		await widgetPagePage.save('RSS Publisher');
+
+		await configurationIFrame
+			.getByRole('tab', {name: 'Display Settings'})
+			.click();
+
+		await expect(
+			configurationIFrame.getByLabel('# of Entries Per Feed', {
+				exact: true,
+			})
+		).toHaveValue('11');
+
+		// Disable feed title
+
+		await configurationIFrame
+			.getByLabel('Show Feed Title', {exact: true})
+			.uncheck();
+
+		await widgetPagePage.saveAndClose('RSS Publisher');
+
+		// Assert feed title is not present
+
+		await expect(
+			page.getByText('LA Times: Technology News')
+		).not.toBeVisible();
+	}
+);
+
 test('The user can configure feeds on rss publisher widget', async ({
 	apiHelpers,
 	page,

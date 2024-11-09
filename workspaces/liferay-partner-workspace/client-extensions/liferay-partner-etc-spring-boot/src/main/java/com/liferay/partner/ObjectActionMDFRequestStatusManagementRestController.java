@@ -90,7 +90,7 @@ public class ObjectActionMDFRequestStatusManagementRestController
 
 		JSONObject responseJSONObject = new JSONObject(
 			get(
-				getAuthorization(),
+				_getAuthorization(),
 				_defaultUriBuilderFactory.builder(
 				).path(
 					"/o/c/activities"
@@ -121,13 +121,13 @@ public class ObjectActionMDFRequestStatusManagementRestController
 		}
 
 		put(
-			getAuthorization(), itemsJSONArray.toString(),
+			_getAuthorization(), itemsJSONArray.toString(),
 			"/o/c/activities/batch");
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 
-	protected String getAuthorization() {
+	private String _getAuthorization() {
 		return _liferayOAuth2AccessTokenManager.getAuthorization(
 			"liferay-partner-etc-spring-boot-oauth-application-headless-" +
 				"server");

@@ -30,9 +30,27 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 
 		validate();
 
-		_playwrightJobProperties.add(
-			getJobProperty(
-				_PLAYWRIGHT_TEST_PROJECT, JobProperty.Type.MODULE_TEST_DIR));
+		JobProperty jobProperty = getJobProperty(
+			_PLAYWRIGHT_TEST_PROJECT, JobProperty.Type.MODULE_TEST_DIR);
+
+		if (jobProperty.getValue() == null) {
+			jobProperty = getJobProperty(
+				_PLAYWRIGHT_PROJECTS_INCLUDES,
+				JobProperty.Type.MODULE_TEST_DIR);
+		}
+
+		_playwrightJobProperties.add(jobProperty);
+	}
+
+	public JobProperty getPlaywrightExcludesJobProperty() {
+		JobProperty excludesJobProperty = getJobProperty(
+			_PLAYWRIGHT_PROJECTS_EXCLUDES, JobProperty.Type.MODULE_TEST_DIR);
+
+		if (excludesJobProperty.getValue() != null) {
+			return excludesJobProperty;
+		}
+
+		return null;
 	}
 
 	public Set<JobProperty> getPlaywrightJobProperties() {
@@ -54,8 +72,41 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 
 	@Override
 	public void validate() throws RelevantRuleConfigurationException {
-		validate(_PLAYWRIGHT_TEST_PROJECT);
+		if ((getProperty(_PLAYWRIGHT_PROJECTS_INCLUDES) == null) &&
+			(getProperty(_PLAYWRIGHT_TEST_PROJECT) == null)) {
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Unable to create batch ");
+			sb.append(getBatchName());
+			sb.append(" since ");
+			sb.append(_PLAYWRIGHT_PROJECTS_INCLUDES);
+			sb.append("[");
+			sb.append(getRelevantRuleName());
+			sb.append("][");
+			sb.append(getTestSuiteName());
+			sb.append("][");
+			sb.append(getBatchName());
+			sb.append("] or ");
+			sb.append(_PLAYWRIGHT_TEST_PROJECT);
+			sb.append("[");
+			sb.append(getRelevantRuleName());
+			sb.append("][");
+			sb.append(getTestSuiteName());
+			sb.append("][");
+			sb.append(getBatchName());
+			sb.append("] is not set in ");
+			sb.append(getPropertiesFile());
+
+			throw new RelevantRuleConfigurationException(sb.toString());
+		}
 	}
+
+	private static final String _PLAYWRIGHT_PROJECTS_EXCLUDES =
+		"playwright.projects.excludes";
+
+	private static final String _PLAYWRIGHT_PROJECTS_INCLUDES =
+		"playwright.projects.includes";
 
 	private static final String _PLAYWRIGHT_TEST_PROJECT =
 		"playwright.test.project";

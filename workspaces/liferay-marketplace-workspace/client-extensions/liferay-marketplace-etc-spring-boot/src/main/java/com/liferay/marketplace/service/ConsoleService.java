@@ -123,6 +123,11 @@ public class ConsoleService extends BaseService {
 	}
 
 	@Override
+	protected String getWebClientBaseURL() {
+		return _consoleAuthURL;
+	}
+
+	@Override
 	protected ExchangeFilterFunction getWebClientExchangeFilterFunction() {
 		return (clientRequest, exchangeFunction) -> exchangeFunction.exchange(
 			clientRequest
@@ -138,11 +143,6 @@ public class ConsoleService extends BaseService {
 				}
 			)
 		);
-	}
-
-	@Override
-	protected String getWebClientBaseURL() {
-		return _consoleAuthURL;
 	}
 
 	private void _inviteProject(String emailAddress, String projectId)

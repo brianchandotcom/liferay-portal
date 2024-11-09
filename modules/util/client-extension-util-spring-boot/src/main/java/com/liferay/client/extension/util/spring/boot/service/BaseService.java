@@ -137,13 +137,13 @@ public abstract class BaseService {
 		).block();
 	}
 
+	protected String getWebClientBaseURL() {
+		return lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
+	}
+
 	protected ExchangeFilterFunction getWebClientExchangeFilterFunction() {
 		return (clientRequest, exchangeFunction) -> exchangeFunction.exchange(
 			clientRequest);
-	}
-
-	protected String getWebClientBaseURL() {
-		return lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
 	}
 
 	protected void log(Jwt jwt, Log log) {

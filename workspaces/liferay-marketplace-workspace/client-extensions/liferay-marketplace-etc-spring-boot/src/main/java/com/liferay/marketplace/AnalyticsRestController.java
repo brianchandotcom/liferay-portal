@@ -211,6 +211,11 @@ public class AnalyticsRestController extends BaseRestController {
 	}
 
 	@Override
+	protected String getWebClientBaseURL() {
+		return _analyticsAuthUrl;
+	}
+
+	@Override
 	protected ExchangeFilterFunction getWebClientExchangeFilterFunction() {
 		return (clientRequest, exchangeFunction) -> exchangeFunction.exchange(
 			clientRequest
@@ -226,11 +231,6 @@ public class AnalyticsRestController extends BaseRestController {
 				}
 			)
 		);
-	}
-
-	@Override
-	protected String getWebClientBaseURL() {
-		return _analyticsAuthUrl;
 	}
 
 	private WebClient _getWebClient(String authorization) {

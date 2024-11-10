@@ -310,9 +310,8 @@ public class SitePageTools extends BaseTools {
 							"BASIC_COMPONENT-paragraph", null,
 							StringBundler.concat(
 								"<span class=\"lead\">This is a simple banner ",
-								"component to call ",
-								"extra attention to featured content or ",
-								"information.</span>"))
+								"component to call extra attention to ",
+								"featured content or information.</span>"))
 					).put(
 						new JSONObject(
 						).put(

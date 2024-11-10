@@ -9,8 +9,11 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
@@ -21,11 +24,96 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	pageEditorPagesTest,
 	pagesPagesTest,
 	pageViewModePagesTest
 );
 
 test.describe('Page content', () => {
+	test(
+		'Preview content on content page by experience',
+		{
+			tag: '@LPS-186155',
+		},
+		async ({
+			apiHelpers,
+			page,
+			pageEditorPage,
+			simulationMenuPage,
+			site,
+		}) => {
+
+			// Create page and go to view mode
+
+			const headingId = getRandomString();
+
+			const headingDefinition = getFragmentDefinition({
+				id: headingId,
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([headingDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.editTextEditable(
+				headingId,
+				'element-text',
+				'Default Text'
+			);
+
+			// Create experience
+
+			await pageEditorPage.createExperience('E1');
+
+			await pageEditorPage.editTextEditable(
+				headingId,
+				'element-text',
+				'E1 Text'
+			);
+
+			await pageEditorPage.publishPage();
+
+			// Go to view page and open simulation panel
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await simulationMenuPage.openSimulationPanel();
+
+			// Select experiences
+
+			await simulationMenuPage.changePreviewBy('experiences');
+
+			// Assert default experience
+
+			const iframe = page.frameLocator(
+				'iframe[title="Simulation Preview"]'
+			);
+
+			await expect(iframe.getByText('Default Text')).toBeVisible();
+
+			// Assert custom experience
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'E1'}),
+				trigger: page.getByRole('combobox', {name: 'Experience'}),
+			});
+
+			await expect(
+				page.getByText('Showing content for the experience "E1".')
+			).toBeVisible();
+
+			await expect(iframe.getByText('E1 Text')).toBeVisible();
+		}
+	);
+
 	test(
 		'View info messages',
 		{

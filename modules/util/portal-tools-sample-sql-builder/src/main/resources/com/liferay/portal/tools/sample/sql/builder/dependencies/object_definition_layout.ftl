@@ -1,9 +1,8 @@
 <#assign
 	layoutModel = dataFactory.newContentLayoutModel(groupId, objectDefinitionModel.getName(), null)
 
-	layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(layoutModel)
-
 	fragmentEntryLinkModels = dataFactory.newObjectFieldsFragmentEntryLinkModels(layoutModel, objectFieldModels)
+	layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(layoutModel)
 />
 
 ${dataFactory.toInsertSQL(layoutModel)}

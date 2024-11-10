@@ -10,7 +10,6 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
@@ -62,11 +61,7 @@ test.describe('Page content', () => {
 				)
 			).toBeVisible();
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.locator('#experiences'),
-				trigger: page.getByRole('combobox', {name: 'Preview By'}),
-			});
+			await simulationMenuPage.changePreviewBy('experiences');
 
 			await expect(
 				page.getByText('Showing content for the experience "Default".')

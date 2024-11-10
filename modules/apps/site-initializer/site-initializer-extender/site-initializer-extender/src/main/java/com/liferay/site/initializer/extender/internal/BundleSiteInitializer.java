@@ -1176,8 +1176,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_replaceObjectDefinitionValues(
 				serviceBuilderObjectDefinition.getClassName(),
-				serviceBuilderObjectDefinition.getObjectDefinitionId(),
 				serviceBuilderObjectDefinition.getName(),
+				serviceBuilderObjectDefinition.getObjectDefinitionId(),
 				stringUtilReplaceValues);
 		}
 
@@ -1243,8 +1243,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			_replaceObjectDefinitionValues(
-				objectDefinition.getClassName(), objectDefinition.getId(),
-				objectDefinition.getName(), stringUtilReplaceValues);
+				objectDefinition.getClassName(), objectDefinition.getName(),
+				objectDefinition.getId(), stringUtilReplaceValues);
 		}
 	}
 
@@ -5683,26 +5683,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _replaceObjectDefinitionValues(
-		String objectDefinitionClassName, long objectDefinitionId,
-		String objectDefinitionName,
+		String className, String name, long objectDefinitionId,
 		Map<String, String> stringUtilReplaceValues) {
 
 		stringUtilReplaceValues.put(
-			"OBJECT_DEFINITION_CLASS_NAME:" + objectDefinitionName,
-			objectDefinitionClassName);
+			"OBJECT_DEFINITION_CLASS_NAME:" + name, className);
 		stringUtilReplaceValues.put(
-			"OBJECT_DEFINITION_ID:" + objectDefinitionName,
-			String.valueOf(objectDefinitionId));
+			"OBJECT_DEFINITION_ID:" + name, String.valueOf(objectDefinitionId));
 
-		if (!objectDefinitionName.contains(StringPool.POUND)) {
+		if (!name.contains(StringPool.POUND)) {
 			return;
 		}
 
 		stringUtilReplaceValues.put(
-			"OBJECT_DEFINITION_PORTLET_ID:" + objectDefinitionName,
+			"OBJECT_DEFINITION_PORTLET_ID:" + name,
 			ObjectPortletKeys.OBJECT_DEFINITIONS +
-				StringUtil.split(objectDefinitionClassName, StringPool.POUND)
-					[1]);
+				StringUtil.split(className, StringPool.POUND)[1]);
 	}
 
 	private void _setDefaultLayoutUtilityPageEntries(

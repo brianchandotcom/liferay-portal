@@ -5,6 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+
 export class SimulationMenuPage {
 	readonly page: Page;
 
@@ -19,6 +21,14 @@ export class SimulationMenuPage {
 				exact: true,
 				name: 'Simulation',
 			});
+	}
+
+	async changePreviewBy(name: 'experiences' | 'segments') {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.locator(`#${name}`),
+			trigger: this.page.getByRole('combobox', {name: 'Preview By'}),
+		});
 	}
 
 	async openSimulationPanel() {

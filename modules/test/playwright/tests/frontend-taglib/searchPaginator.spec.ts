@@ -29,17 +29,15 @@ test(
 	async ({apiHelpers, page, site, taglibSamplePage}) => {
 		let dropdownMenuHandler: Locator;
 
-		await test.step('Create a content site and the frontend taglib sample widget', async () => {
-			await test.step('Create a content site and the taglib sample widget', async () => {
-				await taglibSamplePage.setupTaglibSampleWidget({
-					apiHelpers,
-					site,
-				});
+		await test.step('Create a content site and the taglib sample widget', async () => {
+			await taglibSamplePage.setupTaglibSampleWidget({
+				apiHelpers,
+				site,
 			});
+		});
 
-			await test.step('Select Panel tab', async () => {
-				await taglibSamplePage.selectTab(tabName);
-			});
+		await test.step('Select Panel tab', async () => {
+			await taglibSamplePage.selectTab(tabName);
 		});
 
 		await test.step('Open navigator dropdown', async () => {

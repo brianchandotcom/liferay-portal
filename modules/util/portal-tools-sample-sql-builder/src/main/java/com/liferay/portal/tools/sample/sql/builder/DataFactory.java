@@ -5681,8 +5681,7 @@ public class DataFactory {
 	}
 
 	public List<FragmentEntryLinkModel> newObjectFieldsFragmentEntryLinkModels(
-			LayoutModel layoutModel, long segmentsExperienceId,
-			List<ObjectFieldModel> objectFieldModels)
+			LayoutModel layoutModel, List<ObjectFieldModel> objectFieldModels)
 		throws Exception {
 
 		List<FragmentEntryLinkModel> fragmentEntryLinkModels =
@@ -5723,9 +5722,8 @@ public class DataFactory {
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, 0, segmentsExperienceId, headingCss,
-					headingHtml, StringPool.BLANK, editValue,
-					paragraphRenderNamespace, 0,
+					layoutModel, 0, 0, headingCss, headingHtml,
+					StringPool.BLANK, editValue, paragraphRenderNamespace, 0,
 					_FRAGMENT_COMPONENT_RENDER_KEY_HEADING));
 		}
 

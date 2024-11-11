@@ -885,7 +885,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
-				"Could not find parent site page", logEntry.getMessage());
+				"Unable to get parent layout", logEntry.getMessage());
 		}
 	}
 

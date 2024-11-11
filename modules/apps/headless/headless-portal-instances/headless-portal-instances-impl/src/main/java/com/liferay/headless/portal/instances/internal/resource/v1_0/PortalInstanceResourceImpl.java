@@ -96,10 +96,6 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 
 		Admin admin = portalInstance.getAdmin();
 
-		if (admin != null) {
-			_validateAdmin(admin);
-		}
-
 		Long companyId = portalInstance.getCompanyId();
 
 		if (companyId == null) {

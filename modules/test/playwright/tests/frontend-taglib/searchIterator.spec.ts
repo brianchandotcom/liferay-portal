@@ -45,7 +45,7 @@ test(
 			const permissionsIframe = page.frameLocator(
 				'iframe[title*="Permissions"]'
 			);
-			
+
 			const bottomestElement = permissionsIframe
 				.getByLabel('Pagination')
 				.locator('div')

@@ -1,14 +1,9 @@
 <#assign
 	dlFolderModel = dataFactory.newDLFolderModel()
-
 	listTypeDefinitionModel = dataFactory.newListTypeDefinitionModel()
-
 	listTypeEntryModels = dataFactory.newListTypeEntryModels(listTypeDefinitionModel.getListTypeDefinitionId())
-
 	objectDefinitionModel = dataFactory.newObjectDefinitionModel(objectFolderModel.getObjectFolderId())
-
 	relationshipObjectFieldModel = dataFactory.newObjectFieldModel(0, objectDefinitionModel.getObjectDefinitionId(), "Relationship", "r_userTicket_userId", objectDefinitionModel.getDBTableName(), "Long", "Assignee", "r_userTicket_userId", false, false, false)
-
 	objectFieldModels = dataFactory.newObjectFieldModels(listTypeDefinitionModel.getListTypeDefinitionId(), objectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getDBTableName())
 />
 
@@ -40,7 +35,6 @@ ${dataFactory.toInsertSQL(listTypeDefinitionModel)}
 	<#if objectFieldModel.getState()>
 		<#assign
 			objectStateFlowModel = dataFactory.newObjectStateFlowModel(objectFieldModel.getObjectFieldId())
-
 			objectStates = dataFactory.newObjectStateModels(listTypeEntryModels, objectStateFlowModel.getObjectStateFlowId())
 		 />
 
@@ -74,7 +68,6 @@ ${dataFactory.getExtensionDynamicObjectDefinitionTableCreateSQL(objectDefinition
 <#list dataFactory.newObjectEntryModels(objectDefinitionModel.getObjectDefinitionId()) as objectEntryModel>
 	<#assign
 		dlFileEntryModel = dataFactory.newDLFileEntryModel(dlFolderModel, "FileEntry" + objectEntryModel.getObjectEntryId(), "txt", "text/plain", dataFactory.getCounterNext())
-
 		dlFileVersionModel = dataFactory.newDLFileVersionModel(dlFileEntryModel)
 	 />
 

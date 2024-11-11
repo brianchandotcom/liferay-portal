@@ -1,0 +1,28 @@
+.sv-filter-content {
+	.custom-control-input {
+		accent-color:var(--color-action-primary-default);
+		opacity: 1;
+	}
+
+	.disabled.sv-clear-button {
+		color: var(--color-action-neutral-disabled);
+	}
+
+	.sv-filter-box {
+		background-color: var(--color-neutral-1);
+		border-radius: var(--border-radius-lg);
+		margin-bottom: var(--spacer-3);
+		padding: var(--spacer-3);
+
+		& label span {
+			color: var(--color-neutral-10);
+			font-size: var(--font-size-sm);
+		}
+	}
+
+	.sv-select-all-button, .sv-clear-button {
+		color: var(--color-action-neutral-default);
+		font-size: var(--font-size-sm);
+		font-weight: var(--font-weight-semi-bold);
+	}
+}

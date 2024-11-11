@@ -1,0 +1,31 @@
+.sv-table {
+	& tbody tr:hover {
+		background-color: var(--color-action-primary-hover-lighten);
+	}
+
+	& td, & th {
+		padding: var(--spacer-3);
+		
+		&:first-child {
+			border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm) !important;
+		}
+		
+		&:last-child {
+			border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0 !important;
+		}
+	}
+
+	& td {
+		border-width: 0;
+		color: var(--color-neutral-8);
+	}
+
+	& thead {
+		background-color: var(--color-neutral-1);
+	}
+
+	.ticket-name-link {
+		font-size: var(--h3-font-size);
+		font-weight: var(--font-weight-semi-bold);
+	}
+}

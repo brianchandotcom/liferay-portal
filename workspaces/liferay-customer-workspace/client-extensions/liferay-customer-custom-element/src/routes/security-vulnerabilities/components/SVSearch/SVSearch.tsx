@@ -7,22 +7,24 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import i18n from '~/common/I18n';
 
-interface SearchBarProps {
-	searchTerm: string;
-	onSearchChange: (term: string) => void;
+import './SVSearch.css';
+
+interface IProps {
+	onChange: (term: string) => void;
+	term: string;
 }
 
-const SearchBar = ({searchTerm, onSearchChange}: SearchBarProps) => {
+const SVSearch = ({onChange, term}: IProps) => {
 	return (
-		<div className="flex-grow-1 mr-3 position-relative">
+		<div className="flex-grow-1 mr-3 position-relative sv-search">
 			<ClayInput
-				className="border border-brand-primary-lighten-4 font-weight-semi-bold px-5 py-3 rounded-pill shadow-lg sv-search"
-				onChange={(event) => onSearchChange(event.target.value)}
+				className="border border-brand-primary-lighten-4 font-weight-semi-bold px-5 py-3 rounded-pill shadow-lg sv-search-input"
+				onChange={(event) => onChange(event.target.value)}
 				placeholder={i18n.translate(
 					'search-for-sves-by-keyword-or-cve-id'
 				)}
 				type="text"
-				value={searchTerm}
+				value={term}
 			/>
 
 			<ClayIcon
@@ -33,4 +35,4 @@ const SearchBar = ({searchTerm, onSearchChange}: SearchBarProps) => {
 	);
 };
 
-export default SearchBar;
+export default SVSearch;

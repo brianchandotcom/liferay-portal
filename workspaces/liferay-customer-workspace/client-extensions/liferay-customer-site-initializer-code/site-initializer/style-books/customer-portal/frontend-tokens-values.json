@@ -1,4 +1,16 @@
 {
+	"borderRadiusLg": {
+		"cssVariableMapping": "border-radius-lg",
+		"value": "10px"
+	},
+	"borderRadiusPill": {
+		"cssVariableMapping": "border-radius-pill",
+		"value": "48px"
+	},
+	"borderRadiusSm": {
+		"cssVariableMapping": "border-radius-sm",
+		"value": "4px"
+	},
 	"boxShadowLg": {
 		"cssVariableMapping": "box-shadow-lg",
 		"value": "var(--elevation-fluffy-1) rgba(0, 54, 156, 0.12);"
@@ -65,7 +77,7 @@
 	},
 	"colorActionNeutralDisabled": {
 		"cssVariableMapping": "color-action-neutral-disabled",
-		"value": "#2B3A4B80"
+		"value": "#959DA5"
 	},
 	"colorActionNeutralHover": {
 		"cssVariableMapping": "color-action-neutral-hover",
@@ -317,11 +329,11 @@
 	},
 	"colorNeutral1": {
 		"cssVariableMapping": "color-neutral-1",
-		"value": "#F8F8F9"
+		"value": "#F7F7F8"
 	},
 	"colorNeutral10": {
 		"cssVariableMapping": "color-neutral-10",
-		"value": "#272833"
+		"value": "#282934"
 	},
 	"colorNeutral2": {
 		"cssVariableMapping": "color-neutral-2",
@@ -345,11 +357,11 @@
 	},
 	"colorNeutral7": {
 		"cssVariableMapping": "color-neutral-7",
-		"value": "#6C6C76"
+		"value": "#6C6C75"
 	},
 	"colorNeutral8": {
 		"cssVariableMapping": "color-neutral-8",
-		"value": "#555660"
+		"value": "#54555F"
 	},
 	"colorNeutral9": {
 		"cssVariableMapping": "color-neutral-9",
@@ -373,7 +385,7 @@
 	},
 	"colorStateErrorLighten2": {
 		"cssVariableMapping": "color-state-error-lighten-2",
-		"value": "#f8e4e4"
+		"value": "#FBE3E3"
 	},
 	"colorStateInfo": {
 		"cssVariableMapping": "color-state-info",
@@ -393,7 +405,7 @@
 	},
 	"colorStateInfoLighten2": {
 		"cssVariableMapping": "color-state-info-lighten-2",
-		"value": "#e5e8f1"
+		"value": "#E6EBF5"
 	},
 	"colorStateSuccess": {
 		"cssVariableMapping": "color-state-success",
@@ -433,7 +445,7 @@
 	},
 	"colorStateWarningLighten2": {
 		"cssVariableMapping": "color-state-warning-lighten-2",
-		"value": "#f3e7e4"
+		"value": "#F7EAE0"
 	},
 	"fontFamilyBase": {
 		"cssVariableMapping": "font-family-base",

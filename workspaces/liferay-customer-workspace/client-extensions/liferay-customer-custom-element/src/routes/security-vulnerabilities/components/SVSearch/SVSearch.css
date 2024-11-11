@@ -1,0 +1,14 @@
+.sv-search {
+	width: var(--container-max-md);
+	
+	.sv-search-icon {
+		bottom: calc(50% - var(--font-size-base)/2);
+		font-size: var(--font-size-base);
+		right: var(--spacer-4);
+	}
+
+	.sv-search-input {
+		color: var(--color-neutral-8);
+		width: 100%;
+	}
+}

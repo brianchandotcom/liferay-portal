@@ -4,18 +4,17 @@
  */
 
 import {BrowserRouter} from 'react-router-dom';
-import './app.scss';
 
 import Pages from './pages';
 
-const SecurityVulnerability = () => {
+const SecurityVulnerabilities = () => {
 	return (
 		<div>
-			<BrowserRouter basename="/web/customer-portal/security-vulnerability">
+			<BrowserRouter basename="/web/customer-portal/security-vulnerabilities">
 				<Pages />
 			</BrowserRouter>
 		</div>
 	);
 };
 
-export default SecurityVulnerability;
+export default SecurityVulnerabilities;

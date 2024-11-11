@@ -5,39 +5,23 @@
 
 import {Body, Cell, Head, Row, Table} from '@clayui/core';
 
-interface Ticket {
-	id: number;
-	name: string;
-	category: string[];
-	classification: string;
-	summary: string;
-	versions: string[];
-	severity: string;
-	date: string;
-}
+import './SVTable.css';
 
-interface Column {
+interface IColumn {
 	columnKey: string;
 	label: string;
 }
 
-interface RowData {
-	[key: string]: string | number | JSX.Element;
+interface IRow {
+	[key: string]: string | number | JSX.Element | undefined;
 }
 
-interface TicketTableProps {
-	columns: Column[];
-	rows: RowData[];
-	tickets: Ticket[];
-	filters: {
-		categories: string[];
-		classifications: string;
-		versions: string[];
-		severities: string;
-	};
+interface IProps {
+	columns: IColumn[];
+	rows: IRow[];
 }
 
-const TicketTable = ({columns, rows}: TicketTableProps) => {
+const SVTable = ({columns, rows}: IProps) => {
 	return (
 		<Table
 			borderless
@@ -48,7 +32,7 @@ const TicketTable = ({columns, rows}: TicketTableProps) => {
 		>
 			<Head align="left" items={columns}>
 				{columns.map((column) => (
-					<Cell key={column.columnKey} className="text-neutral-10">
+					<Cell className="text-neutral-10" key={column.columnKey}>
 						{column.label}
 					</Cell>
 				))}
@@ -59,9 +43,7 @@ const TicketTable = ({columns, rows}: TicketTableProps) => {
 					<Row key={index}>
 						{columns.map((column) => (
 							<Cell key={column.columnKey}>
-								{column.columnKey === 'prioritySummary'
-									? row[column.columnKey]
-									: row[column.columnKey]}
+								{row[column.columnKey]}
 							</Cell>
 						))}
 					</Row>
@@ -71,4 +53,4 @@ const TicketTable = ({columns, rows}: TicketTableProps) => {
 	);
 };
 
-export default TicketTable;
+export default SVTable;

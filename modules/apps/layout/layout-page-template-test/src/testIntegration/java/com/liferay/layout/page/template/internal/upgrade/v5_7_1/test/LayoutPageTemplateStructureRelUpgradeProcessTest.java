@@ -102,10 +102,17 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 			).put(
 				"type", InfoListProviderItemSelectorReturnType.class.getName()
 			),
-			_layout, _layoutStructureProvider, null, null, 0,
+			_layout.fetchDraftLayout(), _layoutStructureProvider, null, null, 0,
 			_segmentsExperienceId);
 
-		Assert.assertEquals(key, _getLayoutPageTemplateStructureDataKey());
+		ContentLayoutTestUtil.publishLayout(
+			_layout.fetchDraftLayout(), _layout);
+
+		Assert.assertEquals(
+			key, _getLayoutPageTemplateStructureDataKey(_layout));
+		Assert.assertEquals(
+			key,
+			_getLayoutPageTemplateStructureDataKey(_layout.fetchDraftLayout()));
 
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator, _CLASS_NAME);
@@ -117,13 +124,18 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 
 		Assert.assertEquals(
 			_objectDefinition.getClassName(),
-			_getLayoutPageTemplateStructureDataKey());
+			_getLayoutPageTemplateStructureDataKey(_layout));
+		Assert.assertEquals(
+			_objectDefinition.getClassName(),
+			_getLayoutPageTemplateStructureDataKey(_layout.fetchDraftLayout()));
 	}
 
-	private String _getLayoutPageTemplateStructureDataKey()	throws Exception {
+	private String _getLayoutPageTemplateStructureDataKey(Layout layout)
+		throws Exception {
+
 		LayoutStructure layoutStructure =
 			_layoutStructureProvider.getLayoutStructure(
-				_layout.getPlid(), _segmentsExperienceId);
+				layout.getPlid(), _segmentsExperienceId);
 
 		List<CollectionStyledLayoutStructureItem>
 			collectionStyledLayoutStructureItems =

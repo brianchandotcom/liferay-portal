@@ -28,6 +28,9 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.asset.util.AssetRendererFactoryWrapper;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.type.CET;
@@ -40,9 +43,11 @@ import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -92,6 +97,7 @@ import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -104,6 +110,7 @@ import com.liferay.layout.utility.page.converter.LayoutUtilityPageEntryTypeConve
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
@@ -226,6 +233,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
+import com.liferay.wiki.model.WikiPage;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -5399,7 +5407,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private Map<String, String> _getClassNameIdStringUtilReplaceValues() {
 		Map<String, String> map = new HashMap<>();
 
-		Class<?>[] classes = {DDMStructure.class, JournalArticle.class};
+		Class<?>[] classes = {
+			BlogsEntry.class, BookmarksEntry.class, BookmarksFolder.class,
+			com.liferay.calendar.model.Calendar.class, DDLRecord.class,
+			DDMStructure.class, DLFileEntry.class, DLFolder.class,
+			JournalArticle.class, KBArticle.class, MBMessage.class,
+			WikiPage.class
+		};
 
 		for (Class<?> clazz : classes) {
 			map.put(

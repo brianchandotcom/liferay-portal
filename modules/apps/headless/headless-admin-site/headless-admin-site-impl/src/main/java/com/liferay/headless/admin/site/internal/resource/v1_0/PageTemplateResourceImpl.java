@@ -122,6 +122,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 				getFirstLayoutPageTemplateEntry(
 					layoutPrototype.getLayoutPrototypeId());
 
+		layoutPageTemplateEntry.setGroupId(group.getGroupId());
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
 			_getLayoutPageTemplateCollectionId(group, pageTemplate));
 

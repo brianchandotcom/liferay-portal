@@ -333,6 +333,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 
 		String body = null;
 		String subject = null;
+		String welcomeMsg = null;
 
 		if (faroUser.getLiveUserId() > 0) {
 			body = StringUtil.read(
@@ -342,12 +343,15 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 				resourceBundle,
 				"x-has-added-you-to-a-workspace-on-analytics-cloud",
 				user.getFullName());
+			welcomeMsg = _language.get(resourceBundle, "new-workspace-access");
 		}
 		else {
 			body = StringUtil.read(
 				getClassLoader(),
 				"com/liferay/osb/faro/dependencies/invite-new-user.html");
 			subject = _language.get(
+				resourceBundle, "welcome-to-analytics-cloud");
+			welcomeMsg = _language.get(
 				resourceBundle, "welcome-to-analytics-cloud");
 		}
 
@@ -381,8 +385,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 					}),
 				EmailUtil.getLogoIconURL(),
 				_getNotificationMessage(roleId, groupId, resourceBundle),
-				EmailUtil.getTitleIconURL(),
-				_language.get(resourceBundle, "welcome-to-analytics-cloud")
+				EmailUtil.getTitleIconURL(), welcomeMsg
 			});
 
 		_mailService.sendEmail(new MailMessage(from, to, subject, body, true));

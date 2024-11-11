@@ -1,6 +1,5 @@
 <#assign
 	layoutModel = dataFactory.newContentLayoutModel(groupId, objectDefinitionModel.getName(), null)
-
 	fragmentEntryLinkModels = dataFactory.newObjectFieldsFragmentEntryLinkModels(layoutModel, objectFieldModels)
 	layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(layoutModel)
 />

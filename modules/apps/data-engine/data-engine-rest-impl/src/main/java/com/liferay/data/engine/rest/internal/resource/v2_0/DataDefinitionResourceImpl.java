@@ -1355,19 +1355,6 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		_sortNestedDDMFormFields(ddmForm.getDDMFormFields());
 
-		if (dataDefinition.getId() == null) {
-			dataDefinition.setId(ddmStructure::getStructureId);
-		}
-
-		if (dataDefinition.getSiteId() == null) {
-			dataDefinition.setSiteId(ddmStructure::getGroupId);
-		}
-
-		if (Validator.isNull(dataDefinition.getContentType())) {
-			dataDefinition.setContentType(
-				() -> DataDefinitionUtil.getContentType(ddmStructure));
-		}
-
 		return _updateDataDefinition(dataDefinition, dataDefinitionId, ddmForm);
 	}
 
@@ -1946,12 +1933,15 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			_ddmStructureLocalService.updateStructure(
 				dataDefinition.getExternalReferenceCode(),
 				PrincipalThreadLocal.getUserId(), dataDefinitionId,
-				dataDefinition.getSiteId(),
+				GetterUtil.getLong(
+					dataDefinition.getSiteId(), ddmStructure.getGroupId()),
 				GetterUtil.getLong(
 					ddmStructure.getParentStructureId(),
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID),
 				DataDefinitionContentTypeRegistryUtil.getClassNameId(
-					dataDefinition.getContentType()),
+					GetterUtil.getString(
+						dataDefinition.getContentType(),
+						DataDefinitionUtil.getContentType(ddmStructure))),
 				dataDefinition.getDataDefinitionKey(),
 				LocalizedValueUtil.toLocaleStringMap(dataDefinition.getName()),
 				LocalizedValueUtil.toLocaleStringMap(

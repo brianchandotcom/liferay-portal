@@ -73,10 +73,12 @@
 	}
 
 	.miller-columns-item-drag-handler {
-		color: $gray-500;
-		cursor: move;
-		top: 2px;
 		z-index: 2;
+
+		.btn {
+			color: $gray-500;
+			cursor: move;
+		}
 
 		+ .autofit-col {
 			padding-bottom: 6px;

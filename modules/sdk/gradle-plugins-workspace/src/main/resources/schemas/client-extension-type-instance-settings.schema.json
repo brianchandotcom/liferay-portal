@@ -558,6 +558,12 @@
 				"pid": {
 					"const": "com.liferay.change.tracking.configuration.CTConflictConfiguration",
 					"title": "Publications Conflicts"
+				},
+				"schemaVersionCheckEnabled": {
+					"default": false,
+					"description": "Enabling the Schema Version Check will allow unpublished publications to go Out-of-Date after an upgrade.",
+					"title": "Schema Version Check Enabled",
+					"type": "boolean"
 				}
 			},
 			"required": [

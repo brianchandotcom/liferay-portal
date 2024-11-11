@@ -10,7 +10,7 @@ ${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(layoutModel))}
 
 ${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 
-<#assign fragmentEntryLinkModels = dataFactory.newObjectFieldsFragmentEntryLinkModels(layoutModel, 0, objectFieldModels) />
+<#assign fragmentEntryLinkModels = dataFactory.newObjectFieldsFragmentEntryLinkModels(layoutModel, objectFieldModels) />
 
 <#list fragmentEntryLinkModels as fragmentEntryLinkModel>
 	${dataFactory.toInsertSQL(fragmentEntryLinkModel)}

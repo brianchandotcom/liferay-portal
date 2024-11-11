@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CTConflictConfiguration {
 
 	@Meta.AD(
-		deflt = "true", name = "modification-deletion-conflict-check-enabled",
+		deflt = "false", name = "modification-deletion-conflict-check-enabled",
 		required = false
 	)
 	public boolean modificationDeletionConflictCheckEnabled();

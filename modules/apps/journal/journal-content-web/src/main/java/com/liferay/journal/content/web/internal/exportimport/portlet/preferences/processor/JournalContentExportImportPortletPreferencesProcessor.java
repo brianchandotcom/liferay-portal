@@ -259,8 +259,32 @@ public class JournalContentExportImportPortletPreferencesProcessor
 		}
 
 		String defaultDDMTemplateKey = article.getDDMTemplateKey();
-		String preferenceDDMTemplateKey = portletPreferences.getValue(
-			"ddmTemplateKey", null);
+
+		String preferenceDDMTemplateKey = null;
+
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-27566")) {
+			String preferenceDDMTemplateExternalReferenceCode =
+				portletPreferences.getValue(
+					"ddmTemplateExternalReferenceCode", null);
+
+			if (Validator.isNotNull(
+					preferenceDDMTemplateExternalReferenceCode)) {
+
+				DDMTemplate ddmTemplate =
+					_ddmTemplateLocalService.
+						fetchDDMTemplateByExternalReferenceCode(
+							preferenceDDMTemplateExternalReferenceCode,
+							article.getGroupId());
+
+				if (ddmTemplate != null) {
+					preferenceDDMTemplateKey = ddmTemplate.getTemplateKey();
+				}
+			}
+		}
+		else {
+			preferenceDDMTemplateKey = portletPreferences.getValue(
+				"ddmTemplateKey", null);
+		}
 
 		if (Validator.isNotNull(defaultDDMTemplateKey) &&
 			Validator.isNotNull(preferenceDDMTemplateKey) &&
@@ -279,8 +303,17 @@ public class JournalContentExportImportPortletPreferencesProcessor
 						_portal.getClassNameId(DDMStructure.class),
 						defaultDDMTemplateKey, true);
 
-					portletPreferences.setValue(
-						"ddmTemplateKey", defaultDDMTemplateKey);
+					if (FeatureFlagManagerUtil.isEnabled(
+							companyId, "LPD-27566")) {
+
+						portletPreferences.setValue(
+							"ddmTemplateExternalReferenceCode",
+							ddmTemplate.getExternalReferenceCode());
+					}
+					else {
+						portletPreferences.setValue(
+							"ddmTemplateKey", defaultDDMTemplateKey);
+					}
 				}
 
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -445,19 +478,44 @@ public class JournalContentExportImportPortletPreferencesProcessor
 				}
 			}
 
-			String ddmTemplateKey = portletPreferences.getValue(
-				"ddmTemplateKey", null);
+			if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-27566")) {
+				String ddmTemplateExternalReferenceCode =
+					portletPreferences.getValue(
+						"ddmTemplateExternalReferenceCode", null);
 
-			if (Validator.isNotNull(ddmTemplateKey)) {
-				Map<String, String> ddmTemplateKeys =
-					(Map<String, String>)
-						portletDataContext.getNewPrimaryKeysMap(
-							DDMTemplate.class + ".ddmTemplateKey");
+				if (Validator.isNotNull(ddmTemplateExternalReferenceCode)) {
+					Map<String, String> ddmTemplateExternalReferenceCodes =
+						(Map<String, String>)
+							portletDataContext.getNewPrimaryKeysMap(
+								DDMTemplate.class +
+									".ddmTemplateExternalReferenceCode");
 
-				ddmTemplateKey = MapUtil.getString(
-					ddmTemplateKeys, ddmTemplateKey, ddmTemplateKey);
+					ddmTemplateExternalReferenceCode = MapUtil.getString(
+						ddmTemplateExternalReferenceCodes,
+						ddmTemplateExternalReferenceCode,
+						ddmTemplateExternalReferenceCode);
 
-				portletPreferences.setValue("ddmTemplateKey", ddmTemplateKey);
+					portletPreferences.setValue(
+						"ddmTemplateExternalReferenceCode",
+						ddmTemplateExternalReferenceCode);
+				}
+			}
+			else {
+				String ddmTemplateKey = portletPreferences.getValue(
+					"ddmTemplateKey", null);
+
+				if (Validator.isNotNull(ddmTemplateKey)) {
+					Map<String, String> ddmTemplateKeys =
+						(Map<String, String>)
+							portletDataContext.getNewPrimaryKeysMap(
+								DDMTemplate.class + ".ddmTemplateKey");
+
+					ddmTemplateKey = MapUtil.getString(
+						ddmTemplateKeys, ddmTemplateKey, ddmTemplateKey);
+
+					portletPreferences.setValue(
+						"ddmTemplateKey", ddmTemplateKey);
+				}
 			}
 		}
 		catch (ReadOnlyException readOnlyException) {

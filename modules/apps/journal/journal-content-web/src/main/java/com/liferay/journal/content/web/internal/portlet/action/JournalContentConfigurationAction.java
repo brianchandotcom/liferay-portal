@@ -210,7 +210,7 @@ public class JournalContentConfigurationAction
 		_ddmTemplateLinkLocalService.deleteTemplateLink(
 			_portal.getClassNameId(compositeClassName), journalArticle.getId());
 
-		long ddmTemplateId = _getDDMTemplateId(actionRequest);
+		long ddmTemplateId = _getDDMTemplateId(actionRequest, themeDisplay);
 
 		if (ddmTemplateId == 0) {
 			return;
@@ -304,18 +304,41 @@ public class JournalContentConfigurationAction
 		return StringUtil.toUpperCase(article.getArticleId());
 	}
 
-	private long _getDDMTemplateId(PortletRequest portletRequest)
+	private long _getDDMTemplateId(
+			PortletRequest portletRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		String ddmTemplateKey = getParameter(portletRequest, "ddmTemplateKey");
+		DDMTemplate ddmTemplate = null;
 
-		if (Validator.isNull(ddmTemplateKey)) {
-			return 0;
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-27566")) {
+
+			String ddmTemplateExternalReferenceCode = getParameter(
+				portletRequest, "ddmTemplateExternalReferenceCode");
+
+			if (Validator.isNull(ddmTemplateExternalReferenceCode)) {
+				return 0;
+			}
+
+			ddmTemplate =
+				_ddmTemplateLocalService.
+					fetchDDMTemplateByExternalReferenceCode(
+						ddmTemplateExternalReferenceCode,
+						_getArticleGroupId(portletRequest));
 		}
+		else {
+			String ddmTemplateKey = getParameter(
+				portletRequest, "ddmTemplateKey");
 
-		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-			_getArticleGroupId(portletRequest),
-			_portal.getClassNameId(DDMStructure.class), ddmTemplateKey, true);
+			if (Validator.isNull(ddmTemplateKey)) {
+				return 0;
+			}
+
+			ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+				_getArticleGroupId(portletRequest),
+				_portal.getClassNameId(DDMStructure.class), ddmTemplateKey,
+				true);
+		}
 
 		if (ddmTemplate == null) {
 			return 0;

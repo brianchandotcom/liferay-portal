@@ -78,7 +78,8 @@ public class JournalContentPortletDataHandler extends BasePortletDataHandler {
 				CompanyThreadLocal.getCompanyId(), "LPD-27566")) {
 
 			setDataPortletPreferences(
-				"articleExternalReferenceCode", "ddmTemplateKey", "groupId");
+				"articleExternalReferenceCode",
+				"ddmTemplateExternalReferenceCode", "groupId");
 		}
 		else {
 			setDataPortletPreferences("articleId", "ddmTemplateKey", "groupId");
@@ -108,12 +109,14 @@ public class JournalContentPortletDataHandler extends BasePortletDataHandler {
 
 			portletPreferences.setValue(
 				"articleExternalReferenceCode", StringPool.BLANK);
+			portletPreferences.setValue(
+				"ddmTemplateExternalReferenceCode", StringPool.BLANK);
 		}
 		else {
 			portletPreferences.setValue("articleId", StringPool.BLANK);
+			portletPreferences.setValue("ddmTemplateKey", StringPool.BLANK);
 		}
 
-		portletPreferences.setValue("ddmTemplateKey", StringPool.BLANK);
 		portletPreferences.setValue("groupId", StringPool.BLANK);
 
 		return portletPreferences;

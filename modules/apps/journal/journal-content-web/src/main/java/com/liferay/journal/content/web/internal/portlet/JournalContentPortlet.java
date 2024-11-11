@@ -175,8 +175,30 @@ public class JournalContentPortlet extends MVCPortlet {
 					}
 				}
 
-				String ddmTemplateKey = PrefsParamUtil.getString(
-					portletPreferences, renderRequest, "ddmTemplateKey");
+				String ddmTemplateKey = null;
+
+				if (FeatureFlagManagerUtil.isEnabled(
+						themeDisplay.getCompanyId(), "LPD-27566")) {
+
+					String ddmTemplateExternalReferenceCode =
+						PrefsParamUtil.getString(
+							portletPreferences, renderRequest,
+							"ddmTemplateExternalReferenceCode");
+
+					DDMTemplate ddmTemplate =
+						_ddmTemplateLocalService.
+							fetchDDMTemplateByExternalReferenceCode(
+								ddmTemplateExternalReferenceCode,
+								article.getGroupId());
+
+					if (ddmTemplate != null) {
+						ddmTemplateKey = ddmTemplate.getTemplateKey();
+					}
+				}
+				else {
+					ddmTemplateKey = PrefsParamUtil.getString(
+						portletPreferences, renderRequest, "ddmTemplateKey");
+				}
 
 				if (Validator.isNull(ddmTemplateKey)) {
 					ddmTemplateKey = article.getDDMTemplateKey();

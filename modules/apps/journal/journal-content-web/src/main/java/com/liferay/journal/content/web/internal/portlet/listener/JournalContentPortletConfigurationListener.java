@@ -57,13 +57,15 @@ public class JournalContentPortletConfigurationListener
 						CompanyThreadLocal.getCompanyId(), "LPD-27566")) {
 
 					portletPreferences.reset("articleExternalReferenceCode");
+					portletPreferences.reset(
+						"ddmTemplateExternalReferenceCode");
 				}
 				else {
 					portletPreferences.reset("articleId");
 					portletPreferences.reset("assetEntryId");
+					portletPreferences.reset("ddmTemplateKey");
 				}
 
-				portletPreferences.reset("ddmTemplateKey");
 				portletPreferences.reset("groupId");
 			}
 

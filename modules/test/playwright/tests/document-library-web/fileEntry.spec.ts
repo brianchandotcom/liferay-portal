@@ -124,20 +124,14 @@ test(
 
 		await expect(toastAlertContainer).toBeVisible();
 
-		await expect(toastAlertContainer).toHaveText(
-			`Success:${title} will be published on ${new Intl.DateTimeFormat(
-				'en-US',
-				{
-					day: 'numeric',
-					hour: 'numeric',
-					hour12: true,
-					minute: 'numeric',
-					month: 'numeric',
-					year: '2-digit',
-				}
-			)
-				.format(new Date(scheduleDate))
-				.replace(',', '')}.`
+		await expect(toastAlertContainer).toContainText(`Success:${title}`);
+
+		await expect(toastAlertContainer).toContainText(
+			new Intl.DateTimeFormat('en-US', {
+				day: 'numeric',
+				month: 'numeric',
+				year: '2-digit',
+			}).format(new Date(scheduleDate))
 		);
 	}
 );

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.Definition;
 import com.liferay.portal.struts.TilesUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -103,6 +104,45 @@ public class ContentObjectFragmentRendererTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@FeatureFlags("LPD-39437")
+	@Test
+	public void testRenderAssertAnalyticsAttributesInEditMode()
+		throws Exception {
+
+		String content = _render(
+			_addFragmentEntryLink(), FragmentEntryLinkConstants.EDIT);
+
+		Assert.assertFalse(content.contains("data-analytics-asset-action"));
+	}
+
+	@FeatureFlags("LPD-39437")
+	@Test
+	public void testRenderAssertAnalyticsAttributesInViewMode()
+		throws Exception {
+
+		String content = _render(
+			_addFragmentEntryLink(), FragmentEntryLinkConstants.VIEW);
+
+		Assert.assertTrue(
+			content.contains("data-analytics-asset-action=\"view\""));
+		Assert.assertTrue(
+			content.contains(
+				"data-analytics-asset-id=\"" +
+					_journalArticle.getResourcePrimKey() + "\""));
+		Assert.assertTrue(
+			content.contains(
+				"data-analytics-asset-subtype=\"" +
+					_journalArticle.getDDMStructureId() + "\""));
+		Assert.assertTrue(
+			content.contains(
+				"data-analytics-asset-title=\"" +
+					_journalArticle.getTitle(LocaleUtil.US) + "\""));
+		Assert.assertTrue(
+			content.contains(
+				"data-analytics-asset-type=\"" +
+					JournalArticle.class.getName() + "\""));
 	}
 
 	@Test

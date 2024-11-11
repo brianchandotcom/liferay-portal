@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplate;
 import com.liferay.headless.admin.site.resource.v1_0.PageTemplateResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
@@ -30,8 +31,11 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -109,32 +113,48 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 						group, pageTemplate, pageTemplate.getUuid())));
 		}
 
+		WidgetPageTemplate widgetPageTemplate =
+			(WidgetPageTemplate)pageTemplate;
+
 		ServiceContext serviceContext = _getServiceContext(
-			group, pageTemplate, null);
+			group, widgetPageTemplate, null);
+
+		Map<Locale, String> nameMap = HashMapBuilder.put(
+			serviceContext.getLocale(), widgetPageTemplate.getName()
+		).build();
+
+		if (widgetPageTemplate.getName_i18n() != null) {
+			nameMap = LocalizedMapUtil.getLocalizedMap(
+				widgetPageTemplate.getName_i18n());
+		}
+
+		Map<Locale, String> descriptionMap = Collections.emptyMap();
+
+		if (widgetPageTemplate.getDescription_i18n() != null) {
+			descriptionMap = LocalizedMapUtil.getLocalizedMap(
+				widgetPageTemplate.getDescription_i18n());
+		}
 
 		LayoutPrototype layoutPrototype =
 			_layoutPrototypeService.addLayoutPrototype(
-				HashMapBuilder.put(
-					serviceContext.getLocale(), pageTemplate.getName()
-				).build(),
-				new HashMap<>(), true, serviceContext);
+				nameMap, descriptionMap, true, serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				getFirstLayoutPageTemplateEntry(
 					layoutPrototype.getLayoutPrototypeId());
 
-		if (pageTemplate.getExternalReferenceCode() != null) {
+		if (widgetPageTemplate.getExternalReferenceCode() != null) {
 			layoutPageTemplateEntry.setExternalReferenceCode(
-				pageTemplate.getExternalReferenceCode());
+				widgetPageTemplate.getExternalReferenceCode());
 		}
 
 		layoutPageTemplateEntry.setGroupId(group.getGroupId());
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
-			_getLayoutPageTemplateCollectionId(group, pageTemplate));
+			_getLayoutPageTemplateCollectionId(group, widgetPageTemplate));
 
-		if (pageTemplate.getUuid() != null) {
-			layoutPageTemplateEntry.setUuid(pageTemplate.getUuid());
+		if (widgetPageTemplate.getUuid() != null) {
+			layoutPageTemplateEntry.setUuid(widgetPageTemplate.getUuid());
 		}
 
 		return _pageTemplateDTOConverter.toDTO(

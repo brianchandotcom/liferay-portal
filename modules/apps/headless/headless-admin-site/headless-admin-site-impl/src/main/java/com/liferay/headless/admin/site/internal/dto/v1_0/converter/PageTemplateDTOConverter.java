@@ -15,9 +15,13 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutPrototypeService;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,16 +109,36 @@ public class PageTemplateDTOConverter
 
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeService.getLayoutPrototype(
+				layoutPageTemplateEntry.getLayoutPrototypeId());
 
 		return new WidgetPageTemplate() {
 			{
 				setDateCreated(layoutPageTemplateEntry::getCreateDate);
 				setDateModified(layoutPageTemplateEntry::getModifiedDate);
 				setDatePublished(layout::getPublishDate);
+				setDescription_i18n(
+					() -> {
+						if (MapUtil.isEmpty(
+								layoutPrototype.getDescriptionMap())) {
+
+							return null;
+						}
+
+						return LocalizedMapUtil.getI18nMap(
+							true, layoutPrototype.getDescriptionMap());
+					});
 				setExternalReferenceCode(
 					layoutPageTemplateEntry::getExternalReferenceCode);
+				setFriendlyUrlPath_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						true, layout.getFriendlyURLMap()));
 				setKey(layoutPageTemplateEntry::getLayoutPageTemplateEntryKey);
 				setName(layoutPageTemplateEntry::getName);
+				setName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						true, layoutPrototype.getNameMap()));
 				setPageSpecifications(
 					() -> new PageSpecification[] {
 						_pageSpecificationDTOConverter.toDTO(layout)
@@ -133,6 +157,9 @@ public class PageTemplateDTOConverter
 	@Reference
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
+
+	@Reference
+	private LayoutPrototypeService _layoutPrototypeService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageSpecificationDTOConverter)"

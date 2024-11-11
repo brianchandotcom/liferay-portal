@@ -39,7 +39,7 @@ ${dataFactory.toInsertSQL(listTypeDefinitionModel)}
 		${dataFactory.toInsertSQL(objectFieldSettingModel)}
 	</#list>
 
-	<#if objectFieldModel.getState() == true>
+	<#if objectFieldModel.getState()>
 		<#assign objectStateFlowModel = dataFactory.newObjectStateFlowModel(objectFieldModel.getObjectFieldId()) />
 
 		${dataFactory.toInsertSQL(objectStateFlowModel)}

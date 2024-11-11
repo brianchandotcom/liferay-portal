@@ -159,7 +159,6 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/displaypagetemplate/DisplayPageTemplatesAdmin\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/pageeditor/EditableFloatingToolbar/PageEditorEditableLink\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/pageeditor/PageEditor\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/pageeditor/PageEditorConfiguration\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/pageeditor/PageEditorMapping\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/pagesadmin/PagesAdmin\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/sitepage/Page\.macro" />

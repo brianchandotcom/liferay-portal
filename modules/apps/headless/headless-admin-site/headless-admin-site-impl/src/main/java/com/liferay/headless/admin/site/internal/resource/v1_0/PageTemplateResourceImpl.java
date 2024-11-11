@@ -105,10 +105,12 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 					pageTemplate.getName(),
 					LayoutPageTemplateEntryTypeConstants.BASIC, 0L,
 					WorkflowConstants.STATUS_DRAFT,
-					_getServiceContext(group, pageTemplate)));
+					_getServiceContext(
+						group, pageTemplate, pageTemplate.getUuid())));
 		}
 
-		ServiceContext serviceContext = _getServiceContext(group, pageTemplate);
+		ServiceContext serviceContext = _getServiceContext(
+			group, pageTemplate, null);
 
 		LayoutPrototype layoutPrototype =
 			_layoutPrototypeService.addLayoutPrototype(
@@ -122,9 +124,18 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 				getFirstLayoutPageTemplateEntry(
 					layoutPrototype.getLayoutPrototypeId());
 
+		if (pageTemplate.getExternalReferenceCode() != null) {
+			layoutPageTemplateEntry.setExternalReferenceCode(
+				pageTemplate.getExternalReferenceCode());
+		}
+
 		layoutPageTemplateEntry.setGroupId(group.getGroupId());
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
 			_getLayoutPageTemplateCollectionId(group, pageTemplate));
+
+		if (pageTemplate.getUuid() != null) {
+			layoutPageTemplateEntry.setUuid(pageTemplate.getUuid());
+		}
 
 		return _pageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
@@ -157,7 +168,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	private ServiceContext _getServiceContext(
-		Group group, PageTemplate pageTemplate) {
+		Group group, PageTemplate pageTemplate, String uuid) {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
 			group.getGroupId(), contextHttpServletRequest, null
@@ -165,7 +176,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 
 		serviceContext.setCreateDate(pageTemplate.getDateCreated());
 		serviceContext.setModifiedDate(pageTemplate.getDateModified());
-		serviceContext.setUuid(pageTemplate.getUuid());
+		serviceContext.setUuid(uuid);
 
 		return serviceContext;
 	}

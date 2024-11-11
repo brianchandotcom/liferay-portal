@@ -637,10 +637,6 @@ public class DataFactory {
 			objectFieldModels.size());
 
 		for (ObjectFieldModel objectFieldModel : objectFieldModels) {
-			if (objectFieldModel.isSystem()) {
-				continue;
-			}
-
 			objectFields.add((ObjectField)objectFieldModel);
 		}
 
@@ -697,10 +693,6 @@ public class DataFactory {
 		sb.append(objectEntryId);
 
 		for (ObjectFieldModel objectFieldModel : objectFieldModels) {
-			if (objectFieldModel.isSystem()) {
-				continue;
-			}
-
 			Object value = objectFieldModel.getName() + objectEntryId;
 
 			if (StringUtil.equals(
@@ -5471,8 +5463,7 @@ public class DataFactory {
 		long listTypeDefinitionId, long objectDefinitionId,
 		String objectDefinitionDBTableName) {
 
-		List<ObjectFieldModel> objectFieldModels = newSystemObjectFieldModels(
-			objectDefinitionId, "ObjectEntry", "objectEntryId");
+		List<ObjectFieldModel> objectFieldModels = new ArrayList<>();
 
 		objectFieldModels.add(
 			newObjectFieldModel(
@@ -5613,10 +5604,6 @@ public class DataFactory {
 		String paragraphRenderNamespace = StringUtil.randomId();
 
 		for (ObjectFieldModel objectFieldModel : objectFieldModels) {
-			if (objectFieldModel.isSystem()) {
-				continue;
-			}
-
 			String editValue;
 
 			if (StringUtil.equals(

@@ -18,6 +18,7 @@ export default function updatePriorities(defaultLanguageId, namespace) {
 					'priorityImage' + i + '_' + lang
 				);
 
+				const data = {};
 				let image = '';
 
 				if (defaultImageInput && priorityImageInput) {
@@ -26,6 +27,8 @@ export default function updatePriorities(defaultLanguageId, namespace) {
 
 					image = priorityImage || defaultImage;
 				}
+
+				data['priorityImage' + i + '_temp'] = image;
 
 				const defaultNameInput = getFormElement(
 					form,
@@ -45,6 +48,8 @@ export default function updatePriorities(defaultLanguageId, namespace) {
 					name = priorityName || defaultName;
 				}
 
+				data['priorityName' + i + '_temp'] = name;
+
 				const defaultValueInput = getFormElement(
 					form,
 					'priorityValue' + i + defaultLanguageId
@@ -63,13 +68,7 @@ export default function updatePriorities(defaultLanguageId, namespace) {
 					value = priorityValue || defaultValue;
 				}
 
-				const data = {};
-
-				if (name && image && value) {
-					data['priorityName' + i + '_temp'] = name;
-					data['priorityImage' + i + '_temp'] = image;
-					data['priorityValue' + i + '_temp'] = value;
-				}
+				data['priorityValue' + i + '_temp'] = value;
 
 				setFormValues(form, data);
 			}

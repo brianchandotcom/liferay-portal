@@ -8,9 +8,12 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
+import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplate;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -71,10 +74,29 @@ public class PageTemplateDTOConverter
 						_pageSpecificationDTOConverter.toDTO(
 							layout.fetchDraftLayout())
 					});
+				setPageTemplateSet(
+					() -> _getPageTemplateSet(layoutPageTemplateEntry));
 				setType(() -> Type.CONTENT_PAGE_TEMPLATE);
 				setUuid(layoutPageTemplateEntry::getUuid);
 			}
 		};
+	}
+
+	private PageTemplateSet _getPageTemplateSet(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws Exception {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				fetchLayoutPageTemplateCollection(
+					layoutPageTemplateEntry.
+						getLayoutPageTemplateCollectionId());
+
+		if (layoutPageTemplateCollection == null) {
+			return null;
+		}
+
+		return _pageTemplateSetDTOConverter.toDTO(layoutPageTemplateCollection);
 	}
 
 	private PageTemplate _getWidgetPageTemplate(
@@ -97,6 +119,8 @@ public class PageTemplateDTOConverter
 					() -> new PageSpecification[] {
 						_pageSpecificationDTOConverter.toDTO(layout)
 					});
+				setPageTemplateSet(
+					() -> _getPageTemplateSet(layoutPageTemplateEntry));
 				setType(() -> Type.WIDGET_PAGE_TEMPLATE);
 				setUuid(layoutPageTemplateEntry::getUuid);
 			}
@@ -106,10 +130,20 @@ public class PageTemplateDTOConverter
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
+	@Reference
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
+
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageSpecificationDTOConverter)"
 	)
 	private DTOConverter<Layout, PageSpecification>
 		_pageSpecificationDTOConverter;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageTemplateSetDTOConverter)"
+	)
+	private DTOConverter<LayoutPageTemplateCollection, PageTemplateSet>
+		_pageTemplateSetDTOConverter;
 
 }

@@ -14,11 +14,10 @@
 		"@types/yauzl": "^2.10.3",
 		"dotenv": "^16.3.2",
 		"ts-node": "^10.9.2",
-		"typescript": "4.4.2",
+		"typescript": "4.7.4",
 		"zip-a-folder": "^3.1.6"
 	},
-	"keywords": [
-	],
+	"keywords": [],
 	"license": "ISC",
 	"main": "index.js",
 	"name": "@liferay/playwright",

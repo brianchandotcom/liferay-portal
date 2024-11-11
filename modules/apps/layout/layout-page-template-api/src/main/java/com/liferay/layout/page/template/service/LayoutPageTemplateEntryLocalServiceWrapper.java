@@ -413,6 +413,15 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 	}
 
 	@Override
+	public LayoutPageTemplateEntry getFirstLayoutPageTemplateEntry(
+			long layoutPrototypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateEntryLocalService.
+			getFirstLayoutPageTemplateEntry(layoutPrototypeId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

@@ -363,6 +363,13 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	public static LayoutPageTemplateEntry getFirstLayoutPageTemplateEntry(
+			long layoutPrototypeId)
+		throws PortalException {
+
+		return getService().getFirstLayoutPageTemplateEntry(layoutPrototypeId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

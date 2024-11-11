@@ -295,6 +295,11 @@ public interface LayoutPageTemplateEntryLocalService
 		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntry getFirstLayoutPageTemplateEntry(
+			long layoutPrototypeId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**

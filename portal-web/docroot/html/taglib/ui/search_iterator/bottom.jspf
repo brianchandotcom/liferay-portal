@@ -91,6 +91,8 @@
 				var contentBox = searchContainer.get('contentBox');
 
 				var fixedHeader = document.getElementById('<%= namespace + id %>fixedHeader');
+				var tableResponsiveContainer = document.getElementById('<%= namespace + id %>table-responsive-container');
+				var innerWrapperContainer = document.getElementById('<%= namespace + id %>inner-wrapper-container');
 
 				if (contentBox) {
 					var mainContent = contentBox.ancestor('#main-content');
@@ -105,6 +107,8 @@
 
 						var syncScrollingContainers = function(event) {
 							fixedHeaderScrollingContainer.scrollLeft = horizontalScrollingContainer.scrollLeft;
+
+							innerWrapperContainer.style.width = tableResponsiveContainer.getBoundingClientRect().width + 'px';
 						}
 
 						var fixedHeaderEventHandler = function(event) {

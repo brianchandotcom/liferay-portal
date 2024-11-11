@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.test.rule.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
@@ -66,6 +67,7 @@ import org.junit.runner.RunWith;
  * @author Jeyvison Nascimento
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
+@FeatureFlags("LPD-34651")
 @RunWith(Arquillian.class)
 public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {

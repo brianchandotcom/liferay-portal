@@ -58,45 +58,33 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			return;
 		}
 
-		JobProperty jobProperty = getJobProperty(
-			PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME, testSuiteName, batchName);
-
 		List<JobProperty> jobProperties = new ArrayList<>();
 
-		jobProperties.add(jobProperty);
+		JobProperty playwrightProjectsIncludesJobProperty =
+			_getPlaywrightProjectsIncludesJobProperty();
 
-		String jobPropertyValue = jobProperty.getValue();
+		if (playwrightProjectsIncludesJobProperty == null) {
+			_addProjectNames(_getDefaultProjectNames());
+		}
+		else {
+			_addProjectNames(playwrightProjectsIncludesJobProperty.getValue());
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
-			jobProperty = getJobProperty(
-				PLAYWRIGHT_PROJECTS_INCLUDES_PROPERTY_NAME, testSuiteName,
-				batchName);
-
-			jobPropertyValue = jobProperty.getValue();
-
-			jobProperties.add(jobProperty);
+			jobProperties.add(playwrightProjectsIncludesJobProperty);
 		}
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
-			jobPropertyValue = System.getenv("PLAYWRIGHT_PROJECT_NAME");
-		}
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
-			jobPropertyValue = _getDefaultProjectNames();
-		}
-
-		_addProjectNames(jobPropertyValue);
-
-		JobProperty excludesJobProperty = getJobProperty(
+		JobProperty playwrightProjectsExcludesJobProperty = getJobProperty(
 			PLAYWRIGHT_PROJECTS_EXCLUDES_PROPERTY_NAME, testSuiteName,
 			batchName);
 
-		String excludesJobPropertyValue = excludesJobProperty.getValue();
+		String playwrightProjectsExcludesJobPropertyValue =
+			playwrightProjectsExcludesJobProperty.getValue();
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(excludesJobPropertyValue)) {
-			removeProjectNames(excludesJobPropertyValue);
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(
+				playwrightProjectsExcludesJobPropertyValue)) {
 
-			jobProperties.add(excludesJobProperty);
+			removeProjectNames(playwrightProjectsExcludesJobPropertyValue);
+
+			jobProperties.add(playwrightProjectsExcludesJobProperty);
 		}
 
 		recordJobProperties(jobProperties);
@@ -417,6 +405,12 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private String _getDefaultProjectNames() {
+		String playwrightProjectName = System.getenv("PLAYWRIGHT_PROJECT_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(playwrightProjectName)) {
+			return playwrightProjectName;
+		}
+
 		_loadPlaywrightJSONObjects();
 
 		JSONObject configJSONObject = _playwrightJSONObject.getJSONObject(
@@ -437,6 +431,35 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		sb.setLength(sb.length() - 1);
 
 		return sb.toString();
+	}
+
+	private JobProperty _getPlaywrightProjectsIncludesJobProperty() {
+		JobProperty playwrightProjectsIncludesJobProperty = getJobProperty(
+			PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME, testSuiteName, batchName);
+
+		String playwrightProjectsIncludesJobPropertyValue =
+			playwrightProjectsIncludesJobProperty.getValue();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(
+				playwrightProjectsIncludesJobPropertyValue)) {
+
+			return playwrightProjectsIncludesJobProperty;
+		}
+
+		playwrightProjectsIncludesJobProperty = getJobProperty(
+			PLAYWRIGHT_PROJECTS_INCLUDES_PROPERTY_NAME, testSuiteName,
+			batchName);
+
+		playwrightProjectsIncludesJobPropertyValue =
+			playwrightProjectsIncludesJobProperty.getValue();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(
+				playwrightProjectsIncludesJobPropertyValue)) {
+
+			return playwrightProjectsIncludesJobProperty;
+		}
+
+		return null;
 	}
 
 	private String _getPortalProperty(String propertyName) {

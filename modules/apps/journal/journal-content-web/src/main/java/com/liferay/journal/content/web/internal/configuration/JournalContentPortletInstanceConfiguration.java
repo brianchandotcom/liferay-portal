@@ -35,6 +35,9 @@ public interface JournalContentPortletInstanceConfiguration {
 	@Meta.AD(name = "ddm-template-key", required = false)
 	public String ddmTemplateKey();
 
+	@Meta.AD(name = "ddm-template-external-reference-code", required = false)
+	public String ddmTemplateExternalReferenceCode();
+
 	@Meta.AD(name = "user-tool-asset-addon-entry-keys", required = false)
 	public String userToolAssetAddonEntryKeys();
 

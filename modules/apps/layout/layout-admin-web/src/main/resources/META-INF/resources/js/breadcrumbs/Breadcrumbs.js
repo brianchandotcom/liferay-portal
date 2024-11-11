@@ -12,7 +12,7 @@ const Breadcrumbs = ({entries}) => (
 		{entries.map((entry, index) => (
 			<BreadcrumbsItem
 				active={index === entries.length - 1}
-				key={entry.url}
+				key={`${entry.title}-${entry.url || ''}`}
 				title={entry.title}
 				url={entry.url}
 			/>

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.version.Version;
 
@@ -84,7 +85,7 @@ public class CTSchemaVersionLocalServiceImpl
 			CTConflictConfiguration ctConflictConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					CTConflictConfiguration.class,
-					ctSchemaVersion.getCompanyId());
+					CompanyThreadLocal.getCompanyId());
 
 			if (!ctConflictConfiguration.schemaVersionCheckEnabled()) {
 				return true;
@@ -92,6 +93,10 @@ public class CTSchemaVersionLocalServiceImpl
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(configurationException);
+		}
+
+		if (ctSchemaVersion == null) {
+			return false;
 		}
 
 		Map<String, Serializable> schemaContext =
@@ -138,10 +143,6 @@ public class CTSchemaVersionLocalServiceImpl
 	public boolean isLatestCTSchemaVersion(long ctSchemaVersionId) {
 		CTSchemaVersion ctSchemaVersion =
 			ctSchemaVersionPersistence.fetchByPrimaryKey(ctSchemaVersionId);
-
-		if (ctSchemaVersion == null) {
-			return false;
-		}
 
 		return isLatestCTSchemaVersion(ctSchemaVersion, false);
 	}

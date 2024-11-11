@@ -17,14 +17,9 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
-import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
-import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
-import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
-import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -52,7 +47,6 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -67,7 +61,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -388,13 +381,25 @@ public class ClientExtensionEntryLocalServiceImpl
 			clientExtensionEntry.getTypeSettings(),
 			clientExtensionEntry.getType());
 
+		undeployClientExtensionEntry(clientExtensionEntry);
+
 		try {
-			_undeployClientExtensionEntryClusterWide(clientExtensionEntry);
+			Class<ClientExtensionEntryLocalService>
+				clientExtensionEntryLocalServiceClass =
+					ClientExtensionEntryLocalService.class;
+
+			ClusterableInvokerUtil.synchronousInvokeOnCluster(
+				ClusterInvokeAcceptor.class, this,
+				clientExtensionEntryLocalServiceClass.getMethod(
+					"undeployClientExtensionEntry", ClientExtensionEntry.class),
+				new Object[] {clientExtensionEntry},
+				_clientExtensionConfiguration.clusterTimeout(),
+				TimeUnit.MILLISECONDS);
 		}
-		catch (Exception exception) {
+		catch (Throwable throwable) {
 			throw new PortalException(
 				"Unable to undeploy client extension entry across the cluster",
-				exception);
+				throwable);
 		}
 
 		clientExtensionEntry.setDescription(description);
@@ -562,58 +567,6 @@ public class ClientExtensionEntryLocalServiceImpl
 			ClientExtensionEntry.class.getName(),
 			clientExtensionEntry.getClientExtensionEntryId(),
 			clientExtensionEntry, serviceContext, new HashMap<>());
-	}
-
-	private void _undeployClientExtensionEntryClusterWide(
-			ClientExtensionEntry clientExtensionEntry)
-		throws Exception {
-
-		undeployClientExtensionEntry(clientExtensionEntry);
-
-		if (!ClusterInvokeThreadLocal.isEnabled()) {
-			return;
-		}
-
-		Class<ClientExtensionEntryLocalService>
-			clientExtensionEntryLocalServiceClass =
-				ClientExtensionEntryLocalService.class;
-
-		MethodHandler methodHandler =
-			ClusterableInvokerUtil.createMethodHandler(
-				ClusterInvokeAcceptor.class, this,
-				clientExtensionEntryLocalServiceClass.getMethod(
-					"undeployClientExtensionEntry", ClientExtensionEntry.class),
-				new Object[] {clientExtensionEntry});
-
-		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
-			methodHandler, true);
-
-		clusterRequest.setFireAndForget(false);
-
-		FutureClusterResponses futureClusterResponses =
-			ClusterExecutorUtil.execute(clusterRequest);
-
-		BlockingQueue<ClusterNodeResponse> clusterNodeResponses =
-			futureClusterResponses.getPartialResults();
-
-		while (!(clusterNodeResponses.isEmpty() &&
-				 futureClusterResponses.isDone())) {
-
-			ClusterNodeResponse clusterNodeResponse = clusterNodeResponses.poll(
-				_clientExtensionConfiguration.clusterTimeout(),
-				TimeUnit.MILLISECONDS);
-
-			if (clusterNodeResponse == null) {
-				throw new PortalException(
-					"Timeout waiting for undeployment in the cluster");
-			}
-
-			Exception exception = clusterNodeResponse.getException();
-
-			if (exception != null) {
-				throw exception;
-			}
-		}
 	}
 
 	private void _validateName(Map<Locale, String> nameMap)

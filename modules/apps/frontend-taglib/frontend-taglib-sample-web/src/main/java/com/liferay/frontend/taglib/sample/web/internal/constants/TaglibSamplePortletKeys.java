@@ -13,6 +13,9 @@ public class TaglibSamplePortletKeys {
 	public static final String FRONTEND_SAMPLE_DISPLAY_CONTEXT =
 		"FRONTEND_TAGLIB_DISPLAY_CONTEXT";
 
+	public static final String SEARCH_ITERATOR_DISPLAY_CONTEXT =
+		"SEARCH_ITERATOR_DISPLAY_CONTEXT";
+
 	public static final String SEARCH_PAGINATOR_DISPLAY_CONTEXT =
 		"SEARCH_PAGINATOR_DISPLAY_CONTEXT";
 

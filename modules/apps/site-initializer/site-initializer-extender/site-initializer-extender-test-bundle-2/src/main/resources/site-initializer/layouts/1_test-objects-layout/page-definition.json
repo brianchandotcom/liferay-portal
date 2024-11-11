@@ -5,7 +5,7 @@
 				"definition": {
 					"collectionConfig": {
 						"collectionReference": {
-							"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_C_[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]"
+							"className": "[$OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition3$]"
 						},
 						"collectionType": "CollectionProvider"
 					},

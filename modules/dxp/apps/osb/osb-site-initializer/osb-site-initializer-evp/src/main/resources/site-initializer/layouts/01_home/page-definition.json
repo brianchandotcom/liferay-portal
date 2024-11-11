@@ -531,7 +531,7 @@
 								"definition": {
 									"collectionConfig": {
 										"collectionReference": {
-											"className": "com.liferay.object.web.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_[$COMPANY_ID$]_C_EVPHomepageData"
+											"className": "[$OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition3$]"
 										},
 										"collectionType": "CollectionProvider"
 									},

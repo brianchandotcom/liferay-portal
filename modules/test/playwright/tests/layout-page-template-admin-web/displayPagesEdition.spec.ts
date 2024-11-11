@@ -14,6 +14,7 @@ import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {getWebContentStructureId} from '../../utils/structured-content/getBasicWebContentStructureId';
+import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 import {
 	ANIMAL_01_FRIENDLY_URL,
 	ANIMAL_DDM_STRUCTURE_KEY,
@@ -24,7 +25,8 @@ const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	pageEditorPagesTest,
 	loginTest(),
-	pageManagementSiteTest
+	pageManagementSiteTest,
+	pagesPagesTest
 );
 
 async function addDefaultAnimalDisplayPageTemplate(
@@ -494,6 +496,113 @@ test.describe('General', () => {
 			await expect(
 				page.getByText(displayPageTemplateName, {exact: true})
 			).not.toBeVisible();
+		}
+	);
+});
+
+test.describe('Image Resolution', () => {
+	test(
+		'Check image resolution in display page template',
+		{
+			tag: '@LPS-125191',
+		},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+			simulationMenuPage,
+		}) => {
+
+			// Create display page template
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					'com.liferay.portal.kernel.repository.model.FileEntry'
+				);
+
+			const displayPageTemplateName = getRandomString();
+
+			const displayPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+					{
+						classNameId: className.classNameId,
+						classTypeId: '0',
+						groupId: pageManagementSite.id,
+						name: displayPageTemplateName,
+					}
+				);
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
+				{
+					layoutPageTemplateEntryId:
+						displayPage.layoutPageTemplateEntryId,
+				}
+			);
+
+			// Go to edit display page template
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			// Map Image
+
+			await pageEditorPage.addFragment(
+				'Featured Content',
+				'Banner Center'
+			);
+
+			const containerId = await pageEditorPage.getFragmentId('Container');
+
+			await pageEditorPage.selectFragment(containerId);
+
+			await page.getByRole('tab', {exact: true, name: 'Styles'}).click();
+
+			await page
+				.getByLabel('Image Source', {exact: true})
+				.selectOption({label: 'Mapping'});
+
+			await pageEditorPage.waitForChangesSaved();
+
+			await page
+				.getByLabel('Field', {exact: true})
+				.selectOption({label: 'File URL'});
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Go to view mode
+
+			await page.goto(
+				`web${pageManagementSite.friendlyUrlPath}/d/high_resolution_photo-jpg`
+			);
+
+			// Open simulation panel
+
+			await simulationMenuPage.openSimulationPanel();
+
+			// Assert image in desktop
+
+			const iframe = page.frameLocator(
+				'iframe[title="Simulation Preview"]'
+			);
+
+			await expect(
+				iframe.locator('.lfr-layout-structure-item-container').first()
+			).toHaveCSS('background-image', /documents/);
+
+			// Assert image in tablet
+
+			await page.getByLabel('Tablet').click();
+
+			await expect(
+				iframe.locator('.lfr-layout-structure-item-container').first()
+			).toHaveCSS('background-image', /Preview-1000x0/);
 		}
 	);
 });

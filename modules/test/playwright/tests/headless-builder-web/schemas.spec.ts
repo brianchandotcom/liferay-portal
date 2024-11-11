@@ -11,6 +11,7 @@ import {
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {waitForLoading} from '../osb-faro-web/utils/loading';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
 export const testFeatureFlagsEnabled = mergeTests(
@@ -416,6 +417,8 @@ testFeatureFlagsDisabled(
 
 		// Assert that principal object properties are enabled
 
+		waitForLoading;
+
 		expect(
 			await schemaPage.page.getByLabel('Add Author Property')
 		).toBeEnabled();
@@ -425,6 +428,8 @@ testFeatureFlagsDisabled(
 			.click();
 
 		// Assert that unmodifiable system object properties are disabled
+
+		waitForLoading;
 
 		await schemaPage.page
 			.getByRole('button', {name: 'Organization'})
@@ -566,6 +571,8 @@ testFeatureFlagsEnabled(
 
 		// Assert that principal object properties are enabled
 
+		waitForLoading;
+
 		await expect(
 			await schemaPage.page.getByLabel('Add Author Property')
 		).toBeEnabled();
@@ -575,6 +582,8 @@ testFeatureFlagsEnabled(
 			.click();
 
 		// Assert that unmodifiable system object properties are disabled
+
+		waitForLoading;
 
 		await schemaPage.page
 			.getByRole('button', {name: 'Organization'})

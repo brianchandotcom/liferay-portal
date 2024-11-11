@@ -20,12 +20,7 @@ import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import ACTIONS from '../actions';
 import {ACCEPTING_TYPES} from './constants/acceptingTypes';
-
-const DROP_ZONES = {
-	BOTTOM: 'BOTTOM',
-	ELEMENT: 'ELEMENT',
-	TOP: 'TOP',
-};
+import {DROP_POSITIONS} from './constants/dropPositions';
 
 const ITEM_HOVER_BORDER_LIMIT = 20;
 
@@ -37,7 +32,12 @@ const ITEM_STATES_COLORS = {
 	'pending': 'info',
 };
 
-const isValidTarget = (sources, target, dropZone, isPrivateLayoutsEnabled) => {
+const isValidTarget = (
+	sources,
+	target,
+	dropPosition,
+	isPrivateLayoutsEnabled
+) => {
 	if (sources.some((item) => item.id === target.id)) {
 		return false;
 	}
@@ -56,7 +56,7 @@ const isValidTarget = (sources, target, dropZone, isPrivateLayoutsEnabled) => {
 		return false;
 	}
 
-	if (dropZone === DROP_ZONES.TOP) {
+	if (dropPosition === DROP_POSITIONS.top) {
 		return !sources.some(
 			(source) =>
 				!(
@@ -66,7 +66,7 @@ const isValidTarget = (sources, target, dropZone, isPrivateLayoutsEnabled) => {
 				)
 		);
 	}
-	else if (dropZone === DROP_ZONES.BOTTOM) {
+	else if (dropPosition === DROP_POSITIONS.bottom) {
 		return !sources.some(
 			(source) =>
 				!(
@@ -76,14 +76,14 @@ const isValidTarget = (sources, target, dropZone, isPrivateLayoutsEnabled) => {
 				)
 		);
 	}
-	else if (dropZone === DROP_ZONES.ELEMENT) {
+	else if (dropPosition === DROP_POSITIONS.middle) {
 		return !sources.some(
 			(source) => !(target.id !== source.parentId && target.parentable)
 		);
 	}
 };
 
-const getDropZone = (ref, monitor) => {
+const getDropPosition = (ref, monitor) => {
 	if (!ref.current) {
 		return;
 	}
@@ -95,16 +95,16 @@ const getDropZone = (ref, monitor) => {
 		dropItemBoundingRect.height - ITEM_HOVER_BORDER_LIMIT;
 	const hoverClientY = clientOffset.y - dropItemBoundingRect.top;
 
-	let dropZone = DROP_ZONES.ELEMENT;
+	let dropPosition = DROP_POSITIONS.middle;
 
 	if (hoverClientY < hoverTopLimit) {
-		dropZone = DROP_ZONES.TOP;
+		dropPosition = DROP_POSITIONS.top;
 	}
 	else if (hoverClientY > hoverBottomLimit) {
-		dropZone = DROP_ZONES.BOTTOM;
+		dropPosition = DROP_POSITIONS.bottom;
 	}
 
-	return dropZone;
+	return dropPosition;
 };
 
 function addSeparators(items) {
@@ -197,7 +197,7 @@ const MillerColumnsItem = ({
 
 	const [openModal, setOpenModal] = useState(false);
 
-	const [dropZone, setDropZone] = useState();
+	const [dropPosition, setDropPosition] = useState();
 
 	const [layoutActionsActive, setLayoutActionsActive] = useState(false);
 
@@ -318,12 +318,12 @@ const MillerColumnsItem = ({
 	const [{isOver}, drop] = useDrop({
 		accept: ACCEPTING_TYPES.ITEM,
 		canDrop(source, monitor) {
-			const dropZone = getDropZone(ref, monitor);
+			const dropPosition = getDropPosition(ref, monitor);
 
 			return isValidTarget(
 				source.items,
 				{columnIndex, id: itemId, itemIndex, parentId, parentable},
-				dropZone,
+				dropPosition,
 				isPrivateLayoutsEnabled
 			);
 		},
@@ -332,7 +332,7 @@ const MillerColumnsItem = ({
 		}),
 		drop(source, monitor) {
 			if (monitor.canDrop()) {
-				if (dropZone === DROP_ZONES.ELEMENT) {
+				if (dropPosition === DROP_POSITIONS.middle) {
 					const newIndex = Array.from(items.values()).filter(
 						(item) => item.parentId === itemId
 					).length;
@@ -342,7 +342,7 @@ const MillerColumnsItem = ({
 				else {
 					let newIndex = itemIndex;
 
-					if (dropZone === DROP_ZONES.BOTTOM) {
+					if (dropPosition === DROP_POSITIONS.bottom) {
 						newIndex = itemIndex + 1;
 					}
 
@@ -351,17 +351,17 @@ const MillerColumnsItem = ({
 			}
 		},
 		hover(source, monitor) {
-			let dropZone;
+			let dropPosition;
 
 			if (isOver && monitor.canDrop()) {
-				dropZone = getDropZone(ref, monitor);
+				dropPosition = getDropPosition(ref, monitor);
 			}
 
 			if (active) {
 				source.redirectURL = url;
 			}
 
-			setDropZone(dropZone);
+			setDropPosition(dropPosition);
 		},
 	});
 
@@ -374,7 +374,11 @@ const MillerColumnsItem = ({
 	}, [previewRef]);
 
 	useEffect(() => {
-		if (!active && dropZone === DROP_ZONES.ELEMENT && !timeoutRef.current) {
+		if (
+			!active &&
+			dropPosition === DROP_POSITIONS.middle &&
+			!timeoutRef.current
+		) {
 			timeoutRef.current = setTimeout(() => {
 				if (isOver) {
 					onItemStayHover(itemId);
@@ -383,12 +387,12 @@ const MillerColumnsItem = ({
 		}
 		else if (
 			!isOver ||
-			(dropZone !== DROP_ZONES.ELEMENT && timeoutRef.current)
+			(dropPosition !== DROP_POSITIONS.middle && timeoutRef.current)
 		) {
 			clearTimeout(timeoutRef.current);
 			timeoutRef.current = null;
 		}
-	}, [active, dropZone, isOver, itemId, onItemStayHover]);
+	}, [active, dropPosition, isOver, itemId, onItemStayHover]);
 
 	const warningMessage = isLayoutSetPrototype
 		? Liferay.Language.get(
@@ -402,9 +406,9 @@ const MillerColumnsItem = ({
 		<ClayLayout.ContentRow
 			className={classNames('list-group-item-flex miller-columns-item', {
 				'dragging': isDragging,
-				'drop-bottom': isOver && dropZone === DROP_ZONES.BOTTOM,
-				'drop-element': isOver && dropZone === DROP_ZONES.ELEMENT,
-				'drop-top': isOver && dropZone === DROP_ZONES.TOP,
+				'drop-bottom': isOver && dropPosition === DROP_POSITIONS.bottom,
+				'drop-middle': isOver && dropPosition === DROP_POSITIONS.middle,
+				'drop-top': isOver && dropPosition === DROP_POSITIONS.top,
 				'miller-columns-item--active': active,
 			})}
 			containerElement="li"

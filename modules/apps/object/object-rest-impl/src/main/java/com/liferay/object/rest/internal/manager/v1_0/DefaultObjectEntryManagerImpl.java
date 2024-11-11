@@ -445,8 +445,7 @@ public class DefaultObjectEntryManagerImpl
 					objectDefinition.getObjectDefinitionId(), predicate, search,
 					start, end, sorts),
 				primaryKey -> _getObjectEntry(
-					dtoConverterContext, objectDefinition,
-					objectEntryLocalService.getValues(primaryKey))),
+					dtoConverterContext, objectDefinition, primaryKey)),
 			pagination,
 			objectEntryLocalService.getValuesListCount(
 				groupId, companyId, dtoConverterContext.getUserId(),
@@ -1162,13 +1161,11 @@ public class DefaultObjectEntryManagerImpl
 
 	private ObjectEntry _getObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, Map<String, Serializable> values)
+			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.getObjectEntry(
-				GetterUtil.getLong(
-					values.get(objectDefinition.getPKObjectFieldName())));
+			_objectEntryService.getObjectEntry(objectEntryId);
 
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);

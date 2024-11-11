@@ -28,8 +28,10 @@ import java.lang.reflect.Method;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Shuyang Zhou
@@ -90,6 +92,45 @@ public class ClusterableInvokerUtil {
 
 		return futureResult.get(
 			_CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT, TimeUnit.SECONDS);
+	}
+
+	public static void synchronousInvokeOnCluster(
+			Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass,
+			Object targetObject, Method method, Object[] arguments,
+			long timeout, TimeUnit timeoutUnit)
+		throws Throwable {
+
+		MethodHandler methodHandler = createMethodHandler(
+			clusterInvokeAcceptorClass, targetObject, method, arguments);
+
+		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
+			methodHandler, true);
+
+		clusterRequest.setFireAndForget(false);
+
+		FutureClusterResponses futureClusterResponses =
+			ClusterExecutorUtil.execute(clusterRequest);
+
+		BlockingQueue<ClusterNodeResponse> clusterNodeResponses =
+			futureClusterResponses.getPartialResults();
+
+		while (!(clusterNodeResponses.isEmpty() &&
+				 futureClusterResponses.isDone())) {
+
+			ClusterNodeResponse clusterNodeResponse = clusterNodeResponses.poll(
+				timeout, timeoutUnit);
+
+			if (clusterNodeResponse == null) {
+				throw new TimeoutException(
+					"Timeout waiting for undeployment in the cluster");
+			}
+
+			Exception exception = clusterNodeResponse.getException();
+
+			if (exception != null) {
+				throw exception;
+			}
+		}
 	}
 
 	@SuppressWarnings("unused")

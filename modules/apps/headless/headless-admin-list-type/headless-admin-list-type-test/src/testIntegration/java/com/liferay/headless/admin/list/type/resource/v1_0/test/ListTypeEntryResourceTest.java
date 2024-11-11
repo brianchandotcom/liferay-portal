@@ -14,9 +14,13 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -102,6 +106,36 @@ public class ListTypeEntryResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPostListTypeDefinitionListTypeEntry() throws Exception {
+		super.testPostListTypeDefinitionListTypeEntry();
+
+		ListTypeEntry listTypeEntry = randomListTypeEntry();
+
+		listTypeEntry.setName(RandomTestUtil.randomString());
+		listTypeEntry.setName_i18n((Map<String, String>)null);
+
+		_assertListTypeEntryNameLocalizedMap(
+			testPostListTypeDefinitionListTypeEntry_addListTypeEntry(
+				listTypeEntry));
+	}
+
+	@Override
+	@Test
+	public void testPutListTypeEntry() throws Exception {
+		super.testPutListTypeEntry();
+
+		ListTypeEntry listTypeEntry = testPutListTypeEntry_addListTypeEntry();
+
+		listTypeEntry.setName(RandomTestUtil.randomString());
+		listTypeEntry.setName_i18n((Map<String, String>)null);
+
+		_assertListTypeEntryNameLocalizedMap(
+			listTypeEntryResource.putListTypeEntry(
+				listTypeEntry.getId(), listTypeEntry));
+	}
+
+	@Override
 	protected ListTypeEntry randomListTypeEntry() throws Exception {
 		ListTypeEntry listTypeEntry = super.randomListTypeEntry();
 
@@ -180,6 +214,17 @@ public class ListTypeEntryResourceTest
 		return listTypeEntryResource.postListTypeDefinitionListTypeEntry(
 			_listTypeDefinition.getListTypeDefinitionId(),
 			randomListTypeEntry());
+	}
+
+	private void _assertListTypeEntryNameLocalizedMap(
+		ListTypeEntry listTypeEntry) {
+
+		Map<Locale, String> nameLocalizedMap = LocalizedMapUtil.getLocalizedMap(
+			listTypeEntry.getName_i18n());
+
+		Assert.assertEquals(
+			listTypeEntry.getName(),
+			nameLocalizedMap.get(LocaleUtil.getSiteDefault()));
 	}
 
 	@DeleteAfterTestRun

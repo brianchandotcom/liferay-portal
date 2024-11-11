@@ -451,6 +451,8 @@ export class A11yChecker {
 			this.axeOptions
 		);
 
+		// @ts-ignore
+
 		this.callback(results);
 	}
 

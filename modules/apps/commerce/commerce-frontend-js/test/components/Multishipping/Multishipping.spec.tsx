@@ -1554,9 +1554,11 @@ describe('MultiShipping - bulk actions', () => {
 
 		userEvent.click(selectAllButton);
 
-		expect(row0SelectCheckbox).toBeChecked();
-		expect(row1SelectCheckbox).toBeChecked();
-		expect(selectionStatsSpan).toHaveTextContent('2 of 2');
+		await waitFor(() => {
+			expect(row0SelectCheckbox).toBeChecked();
+			expect(row1SelectCheckbox).toBeChecked();
+			expect(selectionStatsSpan).toHaveTextContent('2 of 2');
+		});
 	});
 
 	it('Bulk actions should be disabled if no delivery groups', async () => {

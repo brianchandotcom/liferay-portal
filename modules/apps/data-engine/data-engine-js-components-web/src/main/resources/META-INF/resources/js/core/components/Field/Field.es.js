@@ -27,7 +27,7 @@ const getModule = (fieldTypes, fieldType) => {
 const useLazy = (fieldModule) => {
 	const {components} = useStorage();
 
-	let hasFieldInStorage = components.has(fieldModule);
+	const hasFieldInStorage = components.has(fieldModule);
 
 	const [loading, setLoading] = useState(!hasFieldInStorage);
 

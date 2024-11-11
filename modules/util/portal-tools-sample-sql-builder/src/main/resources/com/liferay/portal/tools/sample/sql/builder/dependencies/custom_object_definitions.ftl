@@ -56,6 +56,10 @@ ${dataFactory.toInsertSQL(listTypeDefinitionModel)}
 	</#if>
 </#list>
 
+<#list dataFactory.newSystemObjectFieldModels(objectDefinitionModel.getObjectDefinitionId(), "ObjectEntry", "objectEntryId") as systemObjectFieldModel>
+	${dataFactory.toInsertSQL(systemObjectFieldModel)}
+</#list>
+
 <#assign
 	objectFieldModels = objectFieldModels + [relationshipObjectFieldModel]
 

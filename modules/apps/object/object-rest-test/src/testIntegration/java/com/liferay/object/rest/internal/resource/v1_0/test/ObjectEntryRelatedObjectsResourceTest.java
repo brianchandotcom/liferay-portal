@@ -325,7 +325,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// invalid nestedFields before ID
+		// Incorrect nestedFields before ID
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
@@ -333,7 +333,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				LoggerTestUtil.WARN)) {
 
 			Assert.assertEquals(
-				"BAD_REQUEST",
+				"approved",
 				HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
 						ObjectFieldSettingUtil.getValue(
@@ -343,7 +343,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 						_objectEntry1.getExternalReferenceCode()
 					).put(
 						objectRelationship.getName(),
-						RandomTestUtil.randomString()
+						JSONUtil.put(
+							RandomTestUtil.randomString(),
+							RandomTestUtil.randomString())
 					).put(
 						StringBundler.concat(
 							"r_", objectRelationship.getName(), "_",
@@ -366,8 +368,10 @@ public class ObjectEntryRelatedObjectsResourceTest {
 						1
 					),
 					Http.Method.POST
-				).get(
+				).getJSONObject(
 					"status"
+				).get(
+					"label"
 				));
 		}
 	}

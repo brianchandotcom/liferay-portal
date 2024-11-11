@@ -25,6 +25,8 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -89,12 +91,6 @@ public class RelationshipObjectFieldBusinessType
 			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
-		String objectRelationshipERCObjectFieldName =
-			ObjectFieldSettingUtil.getValue(
-				ObjectFieldSettingConstants.
-					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-				objectField);
-
 		String objectRelationshipObjectFieldName = StringUtil.split(
 			objectField.getName(), CharPool.UNDERLINE
 		).get(
@@ -106,12 +102,6 @@ public class RelationshipObjectFieldBusinessType
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
 			values.containsKey(objectRelationshipObjectFieldName)) {
 
-			if (!(values.get(objectRelationshipObjectFieldName) instanceof
-					Map)) {
-
-				return null;
-			}
-
 			Map<String, Object> nestedField = (Map<String, Object>)values.get(
 				objectRelationshipObjectFieldName);
 
@@ -119,25 +109,51 @@ public class RelationshipObjectFieldBusinessType
 				"externalReferenceCode");
 
 			if (Validator.isNotNull(externalReferenceCode)) {
-				ObjectDefinition objectDefinition = _getObjectDefinition(
-					objectField, objectRelationshipObjectFieldName);
+				ObjectRelationship objectRelationship =
+					_objectRelationshipLocalService.
+						fetchObjectRelationshipByObjectDefinitionId(
+							objectField.getObjectDefinitionId(),
+							objectRelationshipObjectFieldName);
+
+				if (objectRelationship == null) {
+					return 0;
+				}
+
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId1());
 
 				if (objectDefinition.isUnmodifiableSystemObject()) {
 					return _getPrimaryKeyObj(
 						externalReferenceCode, objectDefinition, 0L);
 				}
+
 				try {
-					ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-						externalReferenceCode,
-						objectDefinition.getObjectDefinitionId());
+					ObjectEntry objectEntry =
+						_objectEntryLocalService.getObjectEntry(
+							externalReferenceCode,
+							objectDefinition.getObjectDefinitionId());
+
+					if (!Objects.equals(
+							objectDefinition.getObjectDefinitionId(),
+							objectEntry.getObjectDefinitionId())) {
+
+						throw new ObjectEntryValuesException.InvalidValue(
+							objectField.getName());
+					}
 
 					return objectEntry.getObjectEntryId();
-				} catch (Exception exception) {
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+
 					return 0;
 				}
 			}
-			
-			return null;
+
+			return 0;
 		}
 
 		if (values.containsKey(objectField.getName())) {
@@ -156,10 +172,10 @@ public class RelationshipObjectFieldBusinessType
 				return _getPrimaryKeyObj(null, objectDefinition, valueLong);
 			}
 
-			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-				valueLong);
+			try {
+				ObjectEntry objectEntry =
+					_objectEntryLocalService.getObjectEntry(valueLong);
 
-			if (objectEntry != null) {
 				if (!Objects.equals(
 						objectDefinition.getObjectDefinitionId(),
 						objectEntry.getObjectDefinitionId())) {
@@ -170,10 +186,20 @@ public class RelationshipObjectFieldBusinessType
 
 				return objectEntry.getObjectEntryId();
 			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
 		}
 
-		if (values.containsKey(objectRelationshipERCObjectFieldName)) {
+		String objectRelationshipERCObjectFieldName =
+			ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.
+					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+				objectField);
 
+		if (values.containsKey(objectRelationshipERCObjectFieldName)) {
 			String externalReferenceCode = GetterUtil.getString(
 				values.get(objectRelationshipERCObjectFieldName));
 
@@ -193,7 +219,7 @@ public class RelationshipObjectFieldBusinessType
 				return objectEntry.getObjectEntryId();
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -204,23 +230,6 @@ public class RelationshipObjectFieldBusinessType
 			_objectRelationshipLocalService.
 				fetchObjectRelationshipByObjectFieldId2(
 					objectField.getObjectFieldId());
-
-		return _objectDefinitionLocalService.getObjectDefinition(
-			objectRelationship.getObjectDefinitionId1());
-	}
-
-	private ObjectDefinition _getObjectDefinition(
-			ObjectField objectField, String name)
-		throws PortalException {
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.
-				fetchObjectRelationshipByObjectDefinitionId(
-					objectField.getObjectDefinitionId(), name);
-
-		if (objectRelationship == null) {
-			return null;
-		}
 
 		return _objectDefinitionLocalService.getObjectDefinition(
 			objectRelationship.getObjectDefinitionId1());
@@ -247,6 +256,9 @@ public class RelationshipObjectFieldBusinessType
 
 		return baseModel.getPrimaryKeyObj();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RelationshipObjectFieldBusinessType.class);
 
 	@Reference
 	private Language _language;

@@ -57,12 +57,12 @@ public class CPConfigurationListLocalServiceImpl
 		_validate(
 			groupId, 0, masterCPConfigurationList, parentCPConfigurationListId);
 
-		Date expirationDate = null;
-
 		Date displayDate = _portal.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
 			CommercePriceListDisplayDateException.class);
+
+		Date expirationDate = null;
 
 		if (!neverExpire) {
 			expirationDate = _portal.getDate(
@@ -142,8 +142,7 @@ public class CPConfigurationListLocalServiceImpl
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPConfigurationList forceDeleteCPConfigurationList(
-			CPConfigurationList cpConfigurationList)
-		throws PortalException {
+		CPConfigurationList cpConfigurationList) {
 
 		cpConfigurationListPersistence.remove(cpConfigurationList);
 
@@ -188,7 +187,7 @@ public class CPConfigurationListLocalServiceImpl
 		}
 
 		if (parentCPConfigurationListId > 0) {
-			if (parentCPConfigurationListId == cpConfigurationListId) {
+			if (cpConfigurationListId == parentCPConfigurationListId) {
 				throw new CPConfigurationListParentCPConfigurationListGroupIdException();
 			}
 

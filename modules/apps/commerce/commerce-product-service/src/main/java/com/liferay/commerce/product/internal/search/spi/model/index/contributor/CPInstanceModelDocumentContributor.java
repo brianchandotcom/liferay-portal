@@ -56,6 +56,7 @@ public class CPInstanceModelDocumentContributor
 			document.addText(
 				CPField.EXTERNAL_REFERENCE_CODE,
 				cpInstance.getExternalReferenceCode());
+			document.addKeyword(CPField.GTIN, cpInstance.getGtin());
 			document.addKeyword(
 				CPField.HAS_CHILD_CP_DEFINITIONS,
 				_cpDefinitionLocalService.hasChildCPDefinitions(

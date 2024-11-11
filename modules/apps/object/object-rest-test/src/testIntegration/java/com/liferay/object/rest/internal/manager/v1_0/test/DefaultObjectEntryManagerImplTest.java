@@ -601,7 +601,7 @@ public class DefaultObjectEntryManagerImplTest
 			_originalNestedFieldsContext);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			objectDefinitionLocalService,
+			objectDefinitionLocalService, _objectRelationshipLocalService,
 			new String[] {"C_AAB", "C_AAA", "C_AB", "C_AA", "C_A"},
 			_objectEntryLocalService);
 	}

@@ -81,7 +81,6 @@ import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectFolderPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
-import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
@@ -1018,50 +1017,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 				return null;
 			});
-	}
-
-	@Override
-	public void unbindObjectDefinition(long objectDefinitionId)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
-
-		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
-			new ObjectDefinitionTreeFactory(
-				objectDefinitionLocalService, _objectRelationshipLocalService);
-
-		Tree tree = objectDefinitionTreeFactory.create(
-			objectDefinition.getObjectDefinitionId());
-
-		Iterator<Node> iterator = tree.iterator(
-			objectDefinition.getObjectDefinitionId());
-
-		while (iterator.hasNext()) {
-			Node node = iterator.next();
-
-			objectDefinitionLocalService.updateRootObjectDefinitionId(
-				node.getPrimaryKey(), 0);
-
-			if (node.getEdge() == null) {
-				_objectRelationshipLocalService.disableEdge(
-					node.getPrimaryKey());
-
-				continue;
-			}
-
-			Edge edge = node.getEdge();
-
-			ObjectRelationship objectRelationship =
-				_objectRelationshipLocalService.getObjectRelationship(
-					edge.getObjectRelationshipId());
-
-			objectRelationship.setEdge(false);
-
-			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship);
-		}
 	}
 
 	@Override

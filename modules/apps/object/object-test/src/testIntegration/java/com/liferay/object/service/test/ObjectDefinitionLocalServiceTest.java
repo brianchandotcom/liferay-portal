@@ -542,7 +542,7 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"},
 			_objectEntryLocalService);
 	}
@@ -1447,7 +1447,7 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinitionA.getObjectDefinitionId());
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			new String[] {"C_A", "C_AA", "C_AAA", "C_AAB"},
 			_objectEntryLocalService);
 	}
@@ -1921,8 +1921,8 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
-			_objectEntryLocalService);
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			new String[] {"C_A", "C_AA"}, _objectEntryLocalService);
 	}
 
 	@Test
@@ -2036,7 +2036,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			new String[] {
 				"C_AAABA", "C_AAAAA", "C_AAAB", "C_AAAA", "C_AAA", "C_AA", "C_A"
 			},
@@ -2101,7 +2101,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			new String[] {"C_A", "C_AA", "C_AAA", "C_AAAA", "C_AAAAA"},
 			_objectEntryLocalService);
 	}
@@ -2151,8 +2151,8 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
-			_objectEntryLocalService);
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			new String[] {"C_A", "C_AA"}, _objectEntryLocalService);
 
 		// publish a draft object definition from a draft object definition tree
 
@@ -2233,7 +2233,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			new String[] {"C_AAAAA", "C_AAAA", "C_AAA", "C_AA", "C_A"},
 			_objectEntryLocalService);
 	}

@@ -421,7 +421,7 @@
 							});
 
 							const ckeditorImage = document.querySelector(
-								'[data-cke-saved-src]'
+								'img[data-cke-saved-src^="data:image"]:not([data-fileentryid])'
 							);
 
 							if (ckeditorImage) {

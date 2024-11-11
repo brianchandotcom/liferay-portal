@@ -111,9 +111,6 @@ public interface ObjectDefinitionLocalService
 			List<ObjectField> objectFields)
 		throws PortalException;
 
-	public void bindObjectDefinitions(long[] objectRelationshipIds)
-		throws PortalException;
-
 	/**
 	 * Creates a new object definition with the primary key. Does not add the object definition to the database.
 	 *
@@ -417,9 +414,6 @@ public interface ObjectDefinitionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition publishSystemObjectDefinition(
 			long userId, long objectDefinitionId)
-		throws PortalException;
-
-	public void unbindObjectDefinition(long objectDefinitionId)
 		throws PortalException;
 
 	public void undeployObjectDefinition(ObjectDefinition objectDefinition);

@@ -112,14 +112,6 @@ public class ObjectDefinitionLocalServiceWrapper
 			objectFields);
 	}
 
-	@Override
-	public void bindObjectDefinitions(long[] objectRelationshipIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_objectDefinitionLocalService.bindObjectDefinitions(
-			objectRelationshipIds);
-	}
-
 	/**
 	 * Creates a new object definition with the primary key. Does not add the object definition to the database.
 	 *
@@ -635,14 +627,6 @@ public class ObjectDefinitionLocalServiceWrapper
 
 		return _objectDefinitionLocalService.publishSystemObjectDefinition(
 			userId, objectDefinitionId);
-	}
-
-	@Override
-	public void unbindObjectDefinition(long objectDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_objectDefinitionLocalService.unbindObjectDefinition(
-			objectDefinitionId);
 	}
 
 	@Override

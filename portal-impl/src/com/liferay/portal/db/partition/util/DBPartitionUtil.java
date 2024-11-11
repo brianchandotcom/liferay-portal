@@ -311,6 +311,16 @@ public class DBPartitionUtil {
 		}
 	}
 
+	public static void synchronizeCompanyIds() {
+		List<Long> companyIds = new CopyOnWriteArrayList<>();
+
+		for (long companyId : PortalInstancePool.getCompanyIds()) {
+			companyIds.add(companyId);
+		}
+
+		_companyIds = companyIds;
+	}
+
 	public static DataSource wrapDataSource(DataSource dataSource)
 		throws SQLException {
 
@@ -861,11 +871,9 @@ public class DBPartitionUtil {
 		return columnNames;
 	}
 
-	private static List<Long> _getCompanyIds() throws SQLException {
+	private static List<Long> _getCompanyIds() {
 		if (_companyIds.isEmpty()) {
-			for (long companyId : PortalInstancePool.getCompanyIds()) {
-				_companyIds.add(companyId);
-			}
+			synchronizeCompanyIds();
 		}
 
 		return _companyIds;
@@ -1384,7 +1392,7 @@ public class DBPartitionUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DBPartitionUtil.class);
 
-	private static final List<Long> _companyIds = new CopyOnWriteArrayList<>();
+	private static List<Long> _companyIds = new CopyOnWriteArrayList<>();
 	private static DBPartitionDB _dbPartitionDB;
 	private static volatile long _defaultCompanyId;
 	private static String _defaultPartitionName;

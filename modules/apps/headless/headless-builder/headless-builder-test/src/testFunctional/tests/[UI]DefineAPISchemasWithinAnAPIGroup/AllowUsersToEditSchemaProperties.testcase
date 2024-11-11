@@ -102,7 +102,7 @@ definition {
 				locator1 = "APIBuilder#PROPERTY_CONTAINER");
 
 			AssertElementPresent(
-				key_commentValue = "External Reference Code",
+				key_commentValue = "externalReferenceCode",
 				locator1 = "PublicationsChanges#COMMENT_VALUE");
 		}
 
@@ -112,13 +112,13 @@ definition {
 				value1 = "name");
 
 			DragAndDrop.dragAndDrop(
-				key_commentValue = "External Reference Code",
+				key_commentValue = "externalReferenceCode",
 				locator1 = "PublicationsChanges#COMMENT_VALUE",
 				value1 = "0,45");
 
 			AssertTextPresent(
 				locator1 = "APIBuilder#LAST_ELEMENT_IN_PROPERTY_BOX",
-				value1 = "External Reference Code");
+				value1 = "externalReferenceCode");
 		}
 	}
 
@@ -143,7 +143,7 @@ definition {
 		task ("When searching property 'External Reference Code' with Search box") {
 			Type(
 				locator1 = "TextInput#SEARCH",
-				value1 = "External Reference Code");
+				value1 = "externalReferenceCode");
 		}
 
 		task ("Then only 'External Reference Code' present in Properties list") {
@@ -156,7 +156,7 @@ definition {
 			}
 
 			AssertElementPresent(
-				key_commentValue = "External Reference Code",
+				key_commentValue = "externalReferenceCode",
 				locator1 = "PublicationsChanges#COMMENT_VALUE");
 		}
 	}
@@ -179,7 +179,7 @@ definition {
 				locator1 = "APIBuilder#PROPERTY_CONTAINER");
 
 			AssertElementPresent(
-				key_commentValue = "ID",
+				key_commentValue = "id",
 				locator1 = "PublicationsChanges#COMMENT_VALUE");
 		}
 
@@ -220,7 +220,7 @@ definition {
 
 		task ("Then 'External Reference Code' is placed in Properties") {
 			AssertElementPresent(
-				key_commentValue = "External Reference Code",
+				key_commentValue = "externalReferenceCode",
 				locator1 = "PublicationsChanges#COMMENT_VALUE");
 		}
 	}
@@ -295,16 +295,16 @@ definition {
 
 		task ("When removing 'Create Date' from Properties list") {
 			Click(
-				key_commentValue = "Create Date",
+				key_commentValue = "createDate",
 				locator1 = "PublicationsChanges#COMMENT_VALUE");
 
 			Click(
-				key_commentValue = "Create Date",
+				key_commentValue = "createDate",
 				locator1 = "APIBuilder#DELETE_BUTTON_FROM_PROPERTY_BOX");
 		}
 
 		AssertElementNotPresent(
-			key_text = "Create Date",
+			key_text = "createDate",
 			locator1 = "APIBuilder#DISABLED_PROPERTY_CONTAINER");
 	}
 

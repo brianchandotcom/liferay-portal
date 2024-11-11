@@ -7,19 +7,17 @@ package com.liferay.layout.page.template.internal.upgrade.v5_7_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -31,13 +29,14 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -121,43 +120,27 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 			_getLayoutPageTemplateStructureDataKey());
 	}
 
-	private String _getLayoutPageTemplateStructureDataKey() throws Exception {
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					_layout.getGroupId(), _layout.getPlid());
+	private String _getLayoutPageTemplateStructureDataKey()	throws Exception {
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_layout.getPlid(), _segmentsExperienceId);
 
-		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(
-			layoutPageTemplateStructure.getData(_segmentsExperienceId));
+		List<CollectionStyledLayoutStructureItem>
+			collectionStyledLayoutStructureItems =
+				layoutStructure.getCollectionStyledLayoutStructureItems();
 
-		JSONObject itemsJSONObject = dataJSONObject.getJSONObject("items");
+		Assert.assertEquals(
+			collectionStyledLayoutStructureItems.toString(), 1,
+			collectionStyledLayoutStructureItems.size());
 
-		for (String key : itemsJSONObject.keySet()) {
-			JSONObject itemJSONObject = itemsJSONObject.getJSONObject(key);
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				collectionStyledLayoutStructureItems.get(0);
 
-			if (!StringUtil.equals(
-					itemJSONObject.getString("type"),
-					LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
+		JSONObject collectionJSONObject =
+			collectionStyledLayoutStructureItem.getCollectionJSONObject();
 
-				continue;
-			}
-
-			JSONObject configJSONObject = itemJSONObject.getJSONObject(
-				"config");
-
-			JSONObject collectionJSONObject = configJSONObject.getJSONObject(
-				"collection");
-
-			if (StringUtil.equals(
-					collectionJSONObject.getString("itemSubtype"),
-					String.valueOf(
-						_objectDefinition.getObjectDefinitionId()))) {
-
-				return collectionJSONObject.getString("key");
-			}
-		}
-
-		return null;
+		return collectionJSONObject.getString("key");
 	}
 
 	private static final String _CLASS_NAME =
@@ -176,10 +159,6 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 	private Group _group;
 
 	private Layout _layout;
-
-	@Inject
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;

@@ -15,6 +15,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	ckeditorSamplePageTest,
 	featureFlagsTest({
+		'LPD-11235': true,
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,

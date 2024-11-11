@@ -29,6 +29,10 @@ const ClassicEditor = ({config}: {config?: EditorConfig}) => {
 		toolbar: ['undo', 'redo', '|', 'bold', 'italic', 'underline'],
 	};
 
+	if (!Liferay.FeatureFlags['LPD-11235']) {
+		return <></>;
+	}
+
 	return (
 		<CKEditor
 			config={{

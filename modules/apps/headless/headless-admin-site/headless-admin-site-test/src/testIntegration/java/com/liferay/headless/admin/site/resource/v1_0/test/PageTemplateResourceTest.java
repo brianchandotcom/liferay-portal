@@ -6,8 +6,27 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplate;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplateSet;
+import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageTemplate;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -116,6 +135,14 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		super.testPatchSiteSiteByExternalReferenceCodePageTemplate();
 	}
 
+	@Override
+	@Test
+	public void testPostSiteSiteByExternalReferenceCodePageTemplate()
+		throws Exception {
+
+		_testPostSiteSiteByExternalReferenceCodePageTemplate();
+	}
+
 	@Ignore
 	@Override
 	@Test
@@ -166,7 +193,20 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"externalReferenceCode", "name"};
+		return new String[] {
+			"description_i18n", "externalReferenceCode", "name", "name_i18n",
+			"pageTemplateSet"
+		};
+	}
+
+	@Override
+	protected PageTemplate randomIrrelevantPageTemplate() throws Exception {
+		return _getPageRandomTemplate(irrelevantGroup);
+	}
+
+	@Override
+	protected PageTemplate randomPageTemplate() throws Exception {
+		return _getPageRandomTemplate(testGroup);
 	}
 
 	@Override
@@ -205,5 +245,132 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		return testGetSiteSiteByExternalReferenceCodePageTemplatesPage_addPageTemplate(
 			testGroup.getExternalReferenceCode(), pageTemplate);
 	}
+
+	private ContentPageTemplate _getContentPageTemplate(Group group)
+		throws Exception {
+
+		return new ContentPageTemplate() {
+			{
+				creatorExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				datePublished = RandomTestUtil.nextDate();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				pageTemplateSet = _getPageTemplateSet(group);
+				type = Type.CONTENT_PAGE_TEMPLATE;
+				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
+	}
+
+	private PageTemplate _getPageRandomTemplate(Group group) throws Exception {
+		List<UnsafeSupplier<PageTemplate, Exception>> unsafeSuppliers =
+			Arrays.asList(
+				() -> _getContentPageTemplate(group),
+				() -> _getWidgetPageTemplate(group));
+
+		UnsafeSupplier<PageTemplate, Exception> unsafeSupplier =
+			unsafeSuppliers.get(
+				RandomTestUtil.randomInt(0, unsafeSuppliers.size() - 1));
+
+		return unsafeSupplier.get();
+	}
+
+	private PageTemplateSet _getPageTemplateSet(Group group) throws Exception {
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					ServiceContextTestUtil.getServiceContext(
+						group, TestPropsValues.getUserId()));
+
+		return new PageTemplateSet() {
+			{
+				setDateCreated(layoutPageTemplateCollection::getCreateDate);
+				setDateModified(layoutPageTemplateCollection::getModifiedDate);
+				setDescription(layoutPageTemplateCollection::getDescription);
+				setExternalReferenceCode(
+					layoutPageTemplateCollection::getExternalReferenceCode);
+				setName(layoutPageTemplateCollection::getName);
+			}
+		};
+	}
+
+	private WidgetPageTemplate _getWidgetPageTemplate(Group group)
+		throws Exception {
+
+		return new WidgetPageTemplate() {
+			{
+				active = RandomTestUtil.randomBoolean();
+				creatorExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				datePublished = RandomTestUtil.nextDate();
+				description_i18n = HashMapBuilder.put(
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
+					RandomTestUtil.randomString()
+				).build();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				hiddenFromNavigation = RandomTestUtil.randomBoolean();
+				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+				name_i18n = HashMapBuilder.put(
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()), name
+				).build();
+
+				pageTemplateSet = _getPageTemplateSet(group);
+				type = PageTemplate.Type.WIDGET_PAGE_TEMPLATE;
+				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
+	}
+
+	private void _testPostSiteSiteByExternalReferenceCodePageTemplate()
+		throws Exception {
+
+		PageTemplate randomPageTemplate = randomPageTemplate();
+
+		PageTemplate postPageTemplate =
+			testPostSiteSiteByExternalReferenceCodePageTemplate_addPageTemplate(
+				randomPageTemplate);
+
+		assertEquals(randomPageTemplate, postPageTemplate);
+		assertValid(postPageTemplate);
+
+		ContentPageTemplate contentPageTemplate = _getContentPageTemplate(
+			testGroup);
+
+		assertEquals(
+			contentPageTemplate,
+			pageTemplateResource.
+				postSiteSiteByExternalReferenceCodePageTemplate(
+					testGroup.getExternalReferenceCode(), contentPageTemplate));
+
+		WidgetPageTemplate widgetPageTemplate = _getWidgetPageTemplate(
+			testGroup);
+
+		assertEquals(
+			widgetPageTemplate,
+			pageTemplateResource.
+				postSiteSiteByExternalReferenceCodePageTemplate(
+					testGroup.getExternalReferenceCode(), widgetPageTemplate));
+	}
+
+	@Inject
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
 
 }

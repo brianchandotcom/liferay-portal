@@ -612,7 +612,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	}
 
 	private void _addDataDefinitionFieldLinks(
-			String contentType, Long dataDefinitionId,
+			String contentType, long dataDefinitionId,
 			List<DDMFormField> ddmFormFields, long groupId)
 		throws Exception {
 
@@ -930,7 +930,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	}
 
 	private String[] _getRemovedFieldNames(
-			DataDefinition dataDefinition, Long dataDefinitionId)
+			DataDefinition dataDefinition, long dataDefinitionId)
 		throws Exception {
 
 		List<String> removedFieldNames = new ArrayList<>();

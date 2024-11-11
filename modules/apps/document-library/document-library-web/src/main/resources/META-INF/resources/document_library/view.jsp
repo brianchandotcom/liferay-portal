@@ -14,7 +14,7 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisplayContext, request, renderRequest, renderResponse);
 %>
 
-<liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
+<liferay-ui:success key='<%= DLPortletKeys.DOCUMENT_LIBRARY_ADMIN + "requestProcessed" %>' message="your-request-completed-successfully" />
 
 <c:choose>
 	<c:when test="<%= dlViewDisplayContext.isFileEntryTypesNavigation() %>">

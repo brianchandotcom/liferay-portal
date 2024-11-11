@@ -62,8 +62,8 @@ export default function updatePriorities(defaultLanguageId, namespace) {
 				let value = '';
 
 				if (defaultValueInput && priorityValueInput) {
-					const defaultValue = defaultValueInput;
-					const priorityValue = priorityValueInput;
+					const defaultValue = defaultValueInput.value;
+					const priorityValue = priorityValueInput.value;
 
 					value = priorityValue || defaultValue;
 				}

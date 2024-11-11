@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.product.internal.search.spi.model.query.contributor;
 
+import com.liferay.commerce.product.constants.CPField;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -34,18 +35,13 @@ public class CPConfigurationEntryModelPreFilterContributor
 		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
 		SearchContext searchContext) {
 
-		_filterByCPConfigurationList(booleanFilter, searchContext);
-	}
-
-	private void _filterByCPConfigurationList(
-		BooleanFilter booleanFilter, SearchContext searchContext) {
-
 		long cpConfigurationListId = GetterUtil.getLong(
-			searchContext.getAttribute("cpConfigurationListId"));
+			searchContext.getAttribute(CPField.CP_CONFIGURATION_LIST_ID));
 
 		if (cpConfigurationListId > 0) {
 			Filter termFilter = new TermFilter(
-				"cpConfigurationListId", String.valueOf(cpConfigurationListId));
+				CPField.CP_CONFIGURATION_LIST_ID,
+				String.valueOf(cpConfigurationListId));
 
 			booleanFilter.add(termFilter, BooleanClauseOccur.MUST);
 		}

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
@@ -31,6 +30,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
+
+import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
@@ -67,17 +68,14 @@ public class CPConfigurationEntryLocalServiceTest {
 		_commerceCatalog = _commerceCatalogService.addCommerceCatalog(
 			RandomTestUtil.randomString(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			RandomTestUtil.randomString(), "USD", "en_US",
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getCompanyId(), _user.getGroupId(),
-				_user.getUserId()));
-
-		_cpDefinition = CPTestUtil.addCPDefinition(
-			_commerceCatalog.getGroupId());
+			RandomTestUtil.randomString(), "USD", "en_US", _serviceContext);
 
 		_cpConfigurationList =
 			_cpConfigurationListLocalService.getMasterCPConfigurationList(
 				_commerceCatalog.getGroupId());
+
+		_cpDefinition = CPTestUtil.addCPDefinition(
+			_commerceCatalog.getGroupId());
 	}
 
 	@After
@@ -87,7 +85,7 @@ public class CPConfigurationEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddCPConfigurationList() throws Exception {
+	public void testAddCPConfigurationEntry() throws Exception {
 		frutillaRule.scenario(
 			"Add Product Configuration Entry"
 		).given(
@@ -100,25 +98,34 @@ public class CPConfigurationEntryLocalServiceTest {
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		CPConfigurationEntry cpConfigurationEntry =
+		CPConfigurationEntry cpConfigurationEntry1 =
 			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
 				externalReferenceCode, _user.getUserId(),
-				_cpConfigurationList.getCPConfigurationListId(),
 				_portal.getClassNameId(CPDefinition.class),
-				_cpDefinition.getCPDefinitionId(), "cpde", "lowstoc", true,
-				true, BigDecimal.ONE, true, BigDecimal.ONE, BigDecimal.TEN,
-				"123", BigDecimal.ONE);
+				_cpDefinition.getCPDefinitionId(),
+				_cpConfigurationList.getCPConfigurationListId(), "123", true,
+				"cpde", true, true, "lowstoc", BigDecimal.TEN, BigDecimal.ONE,
+				BigDecimal.ONE, BigDecimal.ONE);
 
-		Assert.assertNotNull(cpConfigurationEntry);
+		Assert.assertNotNull(cpConfigurationEntry1);
 		Assert.assertEquals(
 			externalReferenceCode,
-			cpConfigurationEntry.getExternalReferenceCode());
+			cpConfigurationEntry1.getExternalReferenceCode());
+
+		List<CPConfigurationEntry> cpConfigurationEntries =
+			_cpConfigurationEntryLocalService.getCPConfigurationEntries(
+				_cpConfigurationList.getCPConfigurationListId());
+
+		CPConfigurationEntry cpConfigurationEntry2 = cpConfigurationEntries.get(
+			0);
+
+		Assert.assertEquals(
+			cpConfigurationEntry1.getCPConfigurationEntryId(),
+			cpConfigurationEntry2.getCPConfigurationEntryId());
 	}
 
 	@Rule
 	public final FrutillaRule frutillaRule = new FrutillaRule();
-
-	private static User _user;
 
 	private CommerceCatalog _commerceCatalog;
 
@@ -142,5 +149,6 @@ public class CPConfigurationEntryLocalServiceTest {
 	private Portal _portal;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

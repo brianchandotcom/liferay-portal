@@ -437,7 +437,6 @@
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>CommerceBasePriceListCannotDelete</exception>
 		<exception>CommercePriceEntryDisplayDate</exception>
 		<exception>CommercePriceEntryExpirationDate</exception>
 		<exception>CommercePriceEntryPrice</exception>
@@ -459,5 +458,6 @@
 		<exception>DuplicateCommercePriceListCommerceAccountGroupRel</exception>
 		<exception>DuplicateCommercePriceListOrderTypeRel</exception>
 		<exception>DuplicateCommerceTierPriceEntry</exception>
+		<exception>RequiredCommerceBasePriceList</exception>
 	</exceptions>
 </service-builder>

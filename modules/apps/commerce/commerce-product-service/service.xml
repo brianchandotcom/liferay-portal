@@ -1400,7 +1400,6 @@
 		<exception>CPAttachmentFileEntryName</exception>
 		<exception>CPAttachmentFileEntryProtocol</exception>
 		<exception>CPAttachmentFileEntrySize</exception>
-		<exception>CPConfigurationListCannotDelete</exception>
 		<exception>CPConfigurationListParentCPConfigurationListGroupId</exception>
 		<exception>CPDefinitionDeliveryMaxSubscriptionCycles</exception>
 		<exception>CPDefinitionDeliverySubscriptionLength</exception>
@@ -1472,5 +1471,6 @@
 		<exception>DuplicateCPSpecificationOptionKey</exception>
 		<exception>DuplicateCPTaxCategory</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
+		<exception>RequiredCPConfigurationList</exception>
 	</exceptions>
 </service-builder>

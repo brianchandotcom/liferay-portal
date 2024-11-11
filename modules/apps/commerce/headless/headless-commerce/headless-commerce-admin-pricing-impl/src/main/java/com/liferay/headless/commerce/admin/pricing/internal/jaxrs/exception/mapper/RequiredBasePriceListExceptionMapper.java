@@ -5,8 +5,9 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.price.list.exception.CommerceBasePriceListCannotDeleteException;
-import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
+import com.liferay.commerce.price.list.exception.RequiredCommerceBasePriceListException;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -21,22 +22,21 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing.BasePriceListCannotDeleteExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing.RequiredBasePriceListExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class BasePriceListCannotDeleteExceptionMapper
-	extends BaseExceptionMapper<CommerceBasePriceListCannotDeleteException> {
+public class RequiredBasePriceListExceptionMapper
+	extends BaseExceptionMapper<RequiredCommerceBasePriceListException> {
 
 	@Override
-	public String getErrorDescription() {
-		return "Unable to delete base price list";
-	}
+	protected Problem getProblem(
+		RequiredCommerceBasePriceListException
+			requiredCommerceBasePriceListException) {
 
-	@Override
-	public Response.Status getStatus() {
-		return Response.Status.BAD_REQUEST;
+		return new Problem(
+			Response.Status.BAD_REQUEST, "Unable to delete base price list");
 	}
 
 }

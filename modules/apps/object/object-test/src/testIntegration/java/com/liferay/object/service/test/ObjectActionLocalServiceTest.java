@@ -957,8 +957,11 @@ public class ObjectActionLocalServiceTest {
 			_objectEntryLocalService.deleteObjectEntry(
 				rootObjectEntry.getObjectEntryId());
 
-			_objectDefinitionLocalService.unbindObjectDefinition(
-				objectDefinitionA.getObjectDefinitionId());
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationshipA_AA.getExternalReferenceCode(),
+				objectRelationshipA_AA.getObjectRelationshipId(), 0,
+				objectRelationshipA_AA.getDeletionType(), false,
+				objectRelationshipA_AA.getLabelMap(), null);
 
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinitionA);

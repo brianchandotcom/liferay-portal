@@ -32,7 +32,7 @@ export default function updatePriorities(defaultLanguageId, namespace) {
 
 				const defaultNameInput = getFormElement(
 					form,
-					'priorityName' + i + defaultLanguageId
+					'priorityName' + i + '_' + defaultLanguageId
 				);
 				const priorityNameInput = getFormElement(
 					form,
@@ -52,7 +52,7 @@ export default function updatePriorities(defaultLanguageId, namespace) {
 
 				const defaultValueInput = getFormElement(
 					form,
-					'priorityValue' + i + defaultLanguageId
+					'priorityValue' + i + '_' + defaultLanguageId
 				);
 				const priorityValueInput = getFormElement(
 					form,

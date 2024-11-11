@@ -34,13 +34,13 @@ public class CPConfigurationEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPConfigurationEntry addCPConfigurationEntry(
-			String externalReferenceCode, long userId,
-			long cpConfigurationListId, long classNameId, long classPK,
-			String cpDefinitionInventoryEngine, String lowStockActivity,
-			boolean displayAvailability, boolean displayStockQuantity,
-			BigDecimal minStockQuantity, boolean backOrders,
-			BigDecimal minOrderQuantity, BigDecimal maxOrderQuantity,
-			String allowedOrderQuantities, BigDecimal multipleOrderQuantity)
+			String externalReferenceCode, long userId, long classNameId,
+			long classPK, long cpConfigurationListId,
+			String allowedOrderQuantities, boolean backOrders,
+			String cpDefinitionInventoryEngine, boolean displayAvailability,
+			boolean displayStockQuantity, String lowStockActivity,
+			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
+			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -74,16 +74,8 @@ public class CPConfigurationEntryLocalServiceImpl
 
 	@Override
 	public void deleteCPConfigurationEntries(long cpConfigurationListId) {
-		List<CPConfigurationEntry> cpConfigurationEntries =
-			cpConfigurationEntryLocalService.getCPConfigurationEntries(
-				cpConfigurationListId);
-
-		for (CPConfigurationEntry cpConfigurationEntry :
-				cpConfigurationEntries) {
-
-			cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
-				cpConfigurationEntry);
-		}
+		cpConfigurationEntryPersistence.removeByCPConfigurationListId(
+			cpConfigurationListId);
 	}
 
 	@Override

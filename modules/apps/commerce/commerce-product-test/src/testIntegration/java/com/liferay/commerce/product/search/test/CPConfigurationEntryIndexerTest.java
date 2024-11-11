@@ -6,6 +6,7 @@
 package com.liferay.commerce.product.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -60,8 +61,8 @@ public class CPConfigurationEntryIndexerTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-		_user = UserTestUtil.addUser();
 		_indexer = _indexerRegistry.getIndexer(CPConfigurationEntry.class);
+		_user = UserTestUtil.addUser();
 	}
 
 	@Test
@@ -83,16 +84,16 @@ public class CPConfigurationEntryIndexerTest {
 		CPConfigurationEntry cpConfigurationEntry =
 			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
 				RandomTestUtil.randomString(), _user.getUserId(),
-				cpConfigurationList.getCPConfigurationListId(),
 				_portal.getClassNameId(CPDefinition.class),
-				cpDefinition.getCPDefinitionId(), "cpde", "lowstoc", true, true,
-				BigDecimal.ONE, true, BigDecimal.ONE, BigDecimal.TEN, "123",
-				BigDecimal.ONE);
+				cpDefinition.getCPDefinitionId(),
+				cpConfigurationList.getCPConfigurationListId(), "123", true,
+				"cpde", true, true, "lowstoc", BigDecimal.TEN, BigDecimal.ONE,
+				BigDecimal.ONE, BigDecimal.ONE);
 
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAttribute(
-			"cpConfigurationListId",
+			CPField.CP_CONFIGURATION_LIST_ID,
 			cpConfigurationEntry.getCPConfigurationListId());
 		searchContext.setCompanyId(_group.getCompanyId());
 

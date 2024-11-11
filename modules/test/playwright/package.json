@@ -17,7 +17,8 @@
 		"typescript": "4.7.4",
 		"zip-a-folder": "^3.1.6"
 	},
-	"keywords": [],
+	"keywords": [
+	],
 	"license": "ISC",
 	"main": "index.js",
 	"name": "@liferay/playwright",

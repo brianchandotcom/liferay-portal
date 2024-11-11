@@ -2674,7 +2674,7 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetValues() throws Exception {
+	public void testGetPrimaryKeyList() throws Exception {
 		Sort[] sorts = {new Sort("id", false)};
 
 		List<Map<String, Serializable>> valuesList = TransformUtil.transform(

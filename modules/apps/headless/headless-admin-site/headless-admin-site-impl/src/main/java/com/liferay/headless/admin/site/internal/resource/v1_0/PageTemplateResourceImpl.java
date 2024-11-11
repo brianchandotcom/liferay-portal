@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.headless.admin.site.dto.v1_0.ContentPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplate;
@@ -94,6 +95,21 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		return _addPageTemplate(group, pageTemplate);
 	}
 
+	private PageTemplate _addContentPageTemplate(
+			ContentPageTemplate contentPageTemplate, Group group)
+		throws Exception {
+
+		return _pageTemplateDTOConverter.toDTO(
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				contentPageTemplate.getExternalReferenceCode(),
+				group.getGroupId(),
+				_getLayoutPageTemplateCollectionId(group, contentPageTemplate),
+				contentPageTemplate.getName(),
+				LayoutPageTemplateEntryTypeConstants.BASIC, 0L,
+				WorkflowConstants.STATUS_DRAFT,
+				_getServiceContext(group, contentPageTemplate)));
+	}
+
 	private PageTemplate _addPageTemplate(
 			Group group, PageTemplate pageTemplate)
 		throws Exception {
@@ -102,22 +118,19 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 				pageTemplate.getType(),
 				PageTemplate.Type.CONTENT_PAGE_TEMPLATE)) {
 
-			return _pageTemplateDTOConverter.toDTO(
-				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-					pageTemplate.getExternalReferenceCode(), group.getGroupId(),
-					_getLayoutPageTemplateCollectionId(group, pageTemplate),
-					pageTemplate.getName(),
-					LayoutPageTemplateEntryTypeConstants.BASIC, 0L,
-					WorkflowConstants.STATUS_DRAFT,
-					_getServiceContext(
-						group, pageTemplate, pageTemplate.getUuid())));
+			return _addContentPageTemplate(
+				(ContentPageTemplate)pageTemplate, group);
 		}
 
-		WidgetPageTemplate widgetPageTemplate =
-			(WidgetPageTemplate)pageTemplate;
+		return _addWidgetPageTemplate(group, (WidgetPageTemplate)pageTemplate);
+	}
+
+	private PageTemplate _addWidgetPageTemplate(
+			Group group, WidgetPageTemplate widgetPageTemplate)
+		throws Exception {
 
 		ServiceContext serviceContext = _getServiceContext(
-			group, widgetPageTemplate, null);
+			group, widgetPageTemplate);
 
 		Map<Locale, String> nameMap = HashMapBuilder.put(
 			serviceContext.getLocale(), widgetPageTemplate.getName()
@@ -188,7 +201,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	private ServiceContext _getServiceContext(
-		Group group, PageTemplate pageTemplate, String uuid) {
+		Group group, PageTemplate pageTemplate) {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
 			group.getGroupId(), contextHttpServletRequest, null
@@ -196,7 +209,13 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 
 		serviceContext.setCreateDate(pageTemplate.getDateCreated());
 		serviceContext.setModifiedDate(pageTemplate.getDateModified());
-		serviceContext.setUuid(uuid);
+
+		if (Objects.equals(
+				pageTemplate.getType(),
+				PageTemplate.Type.CONTENT_PAGE_TEMPLATE)) {
+
+			serviceContext.setUuid(pageTemplate.getUuid());
+		}
 
 		return serviceContext;
 	}

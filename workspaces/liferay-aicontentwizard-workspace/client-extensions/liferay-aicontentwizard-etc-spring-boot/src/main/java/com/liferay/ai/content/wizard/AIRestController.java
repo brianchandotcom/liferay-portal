@@ -74,8 +74,7 @@ public class AIRestController extends BaseRestController {
 		).tools(
 			new AccountTools(toolsContext), new BlogPostingTools(toolsContext),
 			new KnowledgeBaseTools(toolsContext),
-			new SitePageTools(toolsContext), new SiteTools(toolsContext),
-			new TaxonomyTools(toolsContext)
+			new SitePageTools(toolsContext), new SiteTools(toolsContext)
 		).chatMemory(
 			MessageWindowChatMemory.withMaxMessages(10)
 		).build();

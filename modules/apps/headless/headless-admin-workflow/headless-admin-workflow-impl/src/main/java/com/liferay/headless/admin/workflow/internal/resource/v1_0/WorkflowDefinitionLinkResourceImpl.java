@@ -12,15 +12,12 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.logging.Level;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -78,11 +75,6 @@ public class WorkflowDefinitionLinkResourceImpl
 				_workflowDefinitionLinkService.getWorkflowDefinitionLinks(
 					contextCompany.getCompanyId(), workflowDefinition.getName(),
 					workflowDefinition.getVersion());
-		
-		ModelResourcePermission<KaleoDefinition>
-			modelResourcePermission =
-			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-				"com.liferay.portal.workflow.kaleo.model.KaleoDefinition");
 
 		return Page.of(
 			HashMapBuilder.put(
@@ -92,7 +84,8 @@ public class WorkflowDefinitionLinkResourceImpl
 					"postWorkflowDefinitionWorkflowDefinitionLinkBatch",
 					ModelResourcePermissionRegistryUtil.
 						getModelResourcePermission(
-							"com.liferay.portal.workflow.kaleo.model.KaleoDefinition"))
+							"com.liferay.portal.workflow.kaleo.model." +
+								"KaleoDefinition"))
 			).build(),
 			transform(
 				ListUtil.subList(

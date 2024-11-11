@@ -123,9 +123,7 @@ export class DataSetsPage {
 	async goto(dataSetsType: string = 'Custom Data Sets') {
 		await this.applicationsMenuPage.goToDataSetManager();
 
-		if (
-			dataSetsType === 'System Data Sets'
-		) {
+		if (dataSetsType === 'System Data Sets') {
 			await this.systemDataSetsTab.click();
 			await this.page.locator('.system-data-sets').waitFor();
 		}

@@ -16,40 +16,25 @@
 				{
 					"externalReferenceCode": "FIRST_TIER",
 					"key": "firstTier",
-					"name": "$50,000 - $100,000 USD",
-					"name_i18n": {
-						"en-US": "$50,000 - $100,000 USD"
-					}
+					"name": "$50,000 - $100,000 USD"
 				},
 				{
 					"externalReferenceCode": "FOURTH_TIER",
 					"key": "fourthTier",
-					"name": "$1M+ USD",
-					"name_i18n": {
-						"en-US": "$1M+ USD"
-					}
+					"name": "$1M+ USD"
 				},
 				{
 					"externalReferenceCode": "SECOND_TIER",
 					"key": "secondTier",
-					"name": "$200,000 - $500,000 USD",
-					"name_i18n": {
-						"en-US": "$200,000 - $500,000 USD"
-					}
+					"name": "$200,000 - $500,000 USD"
 				},
 				{
 					"externalReferenceCode": "THIRD_TIER",
 					"key": "thirdTier",
-					"name": "$500,000 - $1M USD",
-					"name_i18n": {
-						"en-US": "$500,000 - $1M USD"
-					}
+					"name": "$500,000 - $1M USD"
 				}
 			],
-			"name": "D4B8 Annual Purchase Volumes",
-			"name_i18n": {
-				"en-US": "D4B8 Annual Purchase Volumes"
-			}
+			"name": "D4B8 Annual Purchase Volumes"
 		},
 		{
 			"externalReferenceCode": "D4B8_APPLICATION_STATES",
@@ -57,56 +42,35 @@
 				{
 					"externalReferenceCode": "APPROVED",
 					"key": "approved",
-					"name": "Approved",
-					"name_i18n": {
-						"en-US": "Approved"
-					}
+					"name": "Approved"
 				},
 				{
 					"externalReferenceCode": "DENIED",
 					"key": "denied",
-					"name": "Denied",
-					"name_i18n": {
-						"en-US": "Denied"
-					}
+					"name": "Denied"
 				},
 				{
 					"externalReferenceCode": "ON_HOLD",
 					"key": "onHold",
-					"name": "On Hold",
-					"name_i18n": {
-						"en-US": "On Hold"
-					}
+					"name": "On Hold"
 				},
 				{
 					"externalReferenceCode": "OPEN",
 					"key": "open",
-					"name": "Open",
-					"name_i18n": {
-						"en-US": "Open"
-					}
+					"name": "Open"
 				},
 				{
 					"externalReferenceCode": "UNDER_REVIEW",
 					"key": "underReview",
-					"name": "Under Review",
-					"name_i18n": {
-						"en-US": "Under Review"
-					}
+					"name": "Under Review"
 				},
 				{
 					"externalReferenceCode": "WITHDRAWN",
 					"key": "withdrawn",
-					"name": "Withdrawn",
-					"name_i18n": {
-						"en-US": "Withdrawn"
-					}
+					"name": "Withdrawn"
 				}
 			],
-			"name": "D4B8 Application States",
-			"name_i18n": {
-				"en-US": "D4B8 Application States"
-			}
+			"name": "D4B8 Application States"
 		},
 		{
 			"externalReferenceCode": "D4B8_ASSESSMENT_SCORES",
@@ -114,48 +78,30 @@
 				{
 					"externalReferenceCode": "AVERAGE",
 					"key": "average",
-					"name": "Average",
-					"name_i18n": {
-						"en-US": "Average"
-					}
+					"name": "Average"
 				},
 				{
 					"externalReferenceCode": "EXCELLENT",
 					"key": "excellent",
-					"name": "Excellent",
-					"name_i18n": {
-						"en-US": "Excellent"
-					}
+					"name": "Excellent"
 				},
 				{
 					"externalReferenceCode": "FAIR",
 					"key": "fair",
-					"name": "Fair",
-					"name_i18n": {
-						"en-US": "Fair"
-					}
+					"name": "Fair"
 				},
 				{
 					"externalReferenceCode": "GOOD",
 					"key": "good",
-					"name": "Good",
-					"name_i18n": {
-						"en-US": "Good"
-					}
+					"name": "Good"
 				},
 				{
 					"externalReferenceCode": "POOR",
 					"key": "poor",
-					"name": "Poor",
-					"name_i18n": {
-						"en-US": "Poor"
-					}
+					"name": "Poor"
 				}
 			],
-			"name": "D4B8 Assessment Scores",
-			"name_i18n": {
-				"en-US": "D4B8 Assessment Scores"
-			}
+			"name": "D4B8 Assessment Scores"
 		},
 		{
 			"externalReferenceCode": "D4B8_BUSINESS_TYPES",
@@ -163,32 +109,20 @@
 				{
 					"externalReferenceCode": "FRANCHISE",
 					"key": "franchise",
-					"name": "Franchise",
-					"name_i18n": {
-						"en-US": "Franchise"
-					}
+					"name": "Franchise"
 				},
 				{
 					"externalReferenceCode": "INDEPENDENT",
 					"key": "independent",
-					"name": "Independent",
-					"name_i18n": {
-						"en-US": "Independent"
-					}
+					"name": "Independent"
 				},
 				{
 					"externalReferenceCode": "OTHER",
 					"key": "other",
-					"name": "Other",
-					"name_i18n": {
-						"en-US": "Other"
-					}
+					"name": "Other"
 				}
 			],
-			"name": "D4B8 Business Types",
-			"name_i18n": {
-				"en-US": "D4B8 Business Types"
-			}
+			"name": "D4B8 Business Types"
 		},
 		{
 			"externalReferenceCode": "D4B8_DECISIONS",
@@ -196,48 +130,30 @@
 				{
 					"externalReferenceCode": "APPROVED",
 					"key": "approved",
-					"name": "Approved",
-					"name_i18n": {
-						"en-US": "Approved"
-					}
+					"name": "Approved"
 				},
 				{
 					"externalReferenceCode": "APPROVED_WITH_CONDITIONS",
 					"key": "approvedWithConditions",
-					"name": "Approved With Conditions",
-					"name_i18n": {
-						"en-US": "Approved With Conditions"
-					}
+					"name": "Approved With Conditions"
 				},
 				{
 					"externalReferenceCode": "HOLD_FOR_FUTURE_CONSIDERATION",
 					"key": "holdForFutureConsideration",
-					"name": "Hold for Future Consideration",
-					"name_i18n": {
-						"en-US": "Hold for Future Consideration"
-					}
+					"name": "Hold for Future Consideration"
 				},
 				{
 					"externalReferenceCode": "REJECTED",
 					"key": "rejected",
-					"name": "Rejected",
-					"name_i18n": {
-						"en-US": "Rejected"
-					}
+					"name": "Rejected"
 				},
 				{
 					"externalReferenceCode": "WITHDRAWN",
 					"key": "withdrawn",
-					"name": "Withdrawn",
-					"name_i18n": {
-						"en-US": "Withdrawn"
-					}
+					"name": "Withdrawn"
 				}
 			],
-			"name": "D4B8 Decisions",
-			"name_i18n": {
-				"en-US": "D4B8 Decisions"
-			}
+			"name": "D4B8 Decisions"
 		},
 		{
 			"externalReferenceCode": "D4B8_DISTRIBUTION_CHANNELS",
@@ -245,32 +161,20 @@
 				{
 					"externalReferenceCode": "E_COMMERCE",
 					"key": "eCommerce",
-					"name": "E-Commerce",
-					"name_i18n": {
-						"en-US": "E-Commerce"
-					}
+					"name": "E-Commerce"
 				},
 				{
 					"externalReferenceCode": "OTHER_RETAILERS",
 					"key": "otherRetailers",
-					"name": "Distribute to Other Retailers",
-					"name_i18n": {
-						"en-US": "Distribute to Other Retailers"
-					}
+					"name": "Distribute to Other Retailers"
 				},
 				{
 					"externalReferenceCode": "OWN_RETAIL",
 					"key": "ownRetail",
-					"name": "Sell Through Own Retail",
-					"name_i18n": {
-						"en-US": "Sell Through Own Retail"
-					}
+					"name": "Sell Through Own Retail"
 				}
 			],
-			"name": "D4B8 Distribution Channels",
-			"name_i18n": {
-				"en-US": "D4B8 Distribution Channels"
-			}
+			"name": "D4B8 Distribution Channels"
 		},
 		{
 			"externalReferenceCode": "D4B8_DISTRIBUTION_REGIONS",
@@ -278,88 +182,55 @@
 				{
 					"externalReferenceCode": "AFRICA",
 					"key": "africa",
-					"name": "Africa",
-					"name_i18n": {
-						"en-US": "Africa"
-					}
+					"name": "Africa"
 				},
 				{
 					"externalReferenceCode": "ASIA_PACIFIC_RIM",
 					"key": "asiaPacificRim",
-					"name": "Asia & Pacific Rim",
-					"name_i18n": {
-						"en-US": "Asia & Pacific Rim"
-					}
+					"name": "Asia & Pacific Rim"
 				},
 				{
 					"externalReferenceCode": "CARIBBEAN",
 					"key": "caribbean",
-					"name": "Caribbean",
-					"name_i18n": {
-						"en-US": "Caribbean"
-					}
+					"name": "Caribbean"
 				},
 				{
 					"externalReferenceCode": "CENTRAL_ASIA",
 					"key": "centralAsia",
-					"name": "Central Asia",
-					"name_i18n": {
-						"en-US": "Central Asia"
-					}
+					"name": "Central Asia"
 				},
 				{
 					"externalReferenceCode": "EASTERN_EUROPE",
 					"key": "easternEurope",
-					"name": "Eastern Europe",
-					"name_i18n": {
-						"en-US": "Eastern Europe"
-					}
+					"name": "Eastern Europe"
 				},
 				{
 					"externalReferenceCode": "INDIA",
 					"key": "india",
-					"name": "India",
-					"name_i18n": {
-						"en-US": "India"
-					}
+					"name": "India"
 				},
 				{
 					"externalReferenceCode": "LATIN_AMERICA",
 					"key": "latinAmerica",
-					"name": "Latin America",
-					"name_i18n": {
-						"en-US": "Latin America"
-					}
+					"name": "Latin America"
 				},
 				{
 					"externalReferenceCode": "MIDDLE_EAST",
 					"key": "middleEast",
-					"name": "Middle East",
-					"name_i18n": {
-						"en-US": "Middle East"
-					}
+					"name": "Middle East"
 				},
 				{
 					"externalReferenceCode": "NORTH_AMERICA",
 					"key": "northAmerica",
-					"name": "North America",
-					"name_i18n": {
-						"en-US": "North America"
-					}
+					"name": "North America"
 				},
 				{
 					"externalReferenceCode": "WESTERN_EUROPE",
 					"key": "westernEurope",
-					"name": "Western Europe",
-					"name_i18n": {
-						"en-US": "Western Europe"
-					}
+					"name": "Western Europe"
 				}
 			],
-			"name": "D4B8 Distribution Regions",
-			"name_i18n": {
-				"en-US": "D4B8 Distribution Regions"
-			}
+			"name": "D4B8 Distribution Regions"
 		},
 		{
 			"externalReferenceCode": "D4B8_ORDER_TYPES",
@@ -367,40 +238,25 @@
 				{
 					"externalReferenceCode": "BULK_FORMATS",
 					"key": "bulkFormats",
-					"name": "Bulk Formats",
-					"name_i18n": {
-						"en-US": "Bulk Formats"
-					}
+					"name": "Bulk Formats"
 				},
 				{
 					"externalReferenceCode": "NOT_SURE",
 					"key": "notSure",
-					"name": "Not Sure",
-					"name_i18n": {
-						"en-US": "Not Sure"
-					}
+					"name": "Not Sure"
 				},
 				{
 					"externalReferenceCode": "PRIVATE_LABELING",
 					"key": "privateLabeling",
-					"name": "Private Labeling",
-					"name_i18n": {
-						"en-US": "Private Labeling"
-					}
+					"name": "Private Labeling"
 				},
 				{
 					"externalReferenceCode": "WHOLESALE",
 					"key": "wholesale",
-					"name": "Wholesale",
-					"name_i18n": {
-						"en-US": "Wholesale"
-					}
+					"name": "Wholesale"
 				}
 			],
-			"name": "D4B8 Order Types",
-			"name_i18n": {
-				"en-US": "D4B8 Order Types"
-			}
+			"name": "D4B8 Order Types"
 		},
 		{
 			"externalReferenceCode": "D4B8_PRODUCT_LABELS",
@@ -408,31 +264,19 @@
 				{
 					"externalReferenceCode": "LOCALIZED",
 					"key": "localized",
-					"name": "Localized",
-					"name_i18n": {
-						"en-US": "Localized"
-					}
+					"name": "Localized"
 				},
 				{
 					"externalReferenceCode": "STANDARD_US",
 					"key": "standardUS",
-					"name": "Standard US",
-					"name_i18n": {
-						"en-US": "Standard US"
-					}
+					"name": "Standard US"
 				}
 			],
-			"name": "D4B8 Product Labels",
-			"name_i18n": {
-				"en-US": "D4B8 Product Labels"
-			}
+			"name": "D4B8 Product Labels"
 		},
 		{
 			"externalReferenceCode": "D4B8_PRODUCT_TYPES",
-			"name": "D4B8 Product Types",
-			"name_i18n": {
-				"en-US": "D4B8 Product Types"
-			}
+			"name": "D4B8 Product Types"
 		},
 		{
 			"externalReferenceCode": "D4B8_RECOMMENDATIONS",
@@ -440,56 +284,35 @@
 				{
 					"externalReferenceCode": "DECLINE_APPLICATION",
 					"key": "declineApplication",
-					"name": "Decline Application",
-					"name_i18n": {
-						"en-US": "Decline Application"
-					}
+					"name": "Decline Application"
 				},
 				{
 					"externalReferenceCode": "PROPOSE_APPROVAL",
 					"key": "proposeApproval",
-					"name": "Propose Approval",
-					"name_i18n": {
-						"en-US": "Propose Approval"
-					}
+					"name": "Propose Approval"
 				},
 				{
 					"externalReferenceCode": "PROPOSE_CONDITIONAL_APPROVAL",
 					"key": "proposeConditionalApproval",
-					"name": "Propose Conditional Approval",
-					"name_i18n": {
-						"en-US": "Propose Conditional Approval"
-					}
+					"name": "Propose Conditional Approval"
 				},
 				{
 					"externalReferenceCode": "REQUEST_ADDITIONAL_DOCUMENTS",
 					"key": "requestAdditionalDocuments",
-					"name": "Request Additional Documents",
-					"name_i18n": {
-						"en-US": "Request Additional Documents"
-					}
+					"name": "Request Additional Documents"
 				},
 				{
 					"externalReferenceCode": "SCHEDULE_FOLLOW_UP_INTERVIEW",
 					"key": "scheduleFollowUpInterview",
-					"name": "Schedule Follow-up Interview",
-					"name_i18n": {
-						"en-US": "Schedule Follow-up Interview"
-					}
+					"name": "Schedule Follow-up Interview"
 				},
 				{
 					"externalReferenceCode": "SEEK_LEGAL_REVIEW",
 					"key": "seekLegalReview",
-					"name": "Seek Legal Review",
-					"name_i18n": {
-						"en-US": "Seek Legal Review"
-					}
+					"name": "Seek Legal Review"
 				}
 			],
-			"name": "D4B8 Recommendations",
-			"name_i18n": {
-				"en-US": "D4B8 Recommendations"
-			}
+			"name": "D4B8 Recommendations"
 		}
 	]
 }

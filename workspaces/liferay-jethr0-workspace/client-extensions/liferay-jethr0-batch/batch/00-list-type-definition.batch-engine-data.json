@@ -16,24 +16,15 @@
 				{
 					"externalReferenceCode": "default",
 					"key": "default",
-					"name": "Default",
-					"name_i18n": {
-						"en-US": "Default"
-					}
+					"name": "Default"
 				},
 				{
 					"externalReferenceCode": "upstream",
 					"key": "upstream",
-					"name": "Upstream",
-					"name_i18n": {
-						"en-US": "Upstream"
-					}
+					"name": "Upstream"
 				}
 			],
-			"name": "gitBranchType",
-			"name_i18n": {
-				"en-US": "Git Branch Type"
-			}
+			"name": "Git Branch Type"
 		},
 		{
 			"externalReferenceCode": "jenkinsNodeType",
@@ -41,24 +32,15 @@
 				{
 					"externalReferenceCode": "master",
 					"key": "master",
-					"name": "Master",
-					"name_i18n": {
-						"en-US": "Master"
-					}
+					"name": "Master"
 				},
 				{
 					"externalReferenceCode": "slave",
 					"key": "slave",
-					"name": "Slave",
-					"name_i18n": {
-						"en-US": "Slave"
-					}
+					"name": "Slave"
 				}
 			],
-			"name": "jenkinsNodeType",
-			"name_i18n": {
-				"en-US": "Jenkins Node Type"
-			}
+			"name": "Jenkins Node Type"
 		},
 		{
 			"externalReferenceCode": "jobComparatorType",
@@ -66,64 +48,40 @@
 				{
 					"externalReferenceCode": "blessed",
 					"key": "blessed",
-					"name": "Blessed",
-					"name_i18n": {
-						"en-US": "Blessed"
-					}
+					"name": "Blessed"
 				},
 				{
 					"externalReferenceCode": "fifo",
 					"key": "fifo",
-					"name": "First In First Out",
-					"name_i18n": {
-						"en-US": "First In First Out"
-					}
+					"name": "First In First Out"
 				},
 				{
 					"externalReferenceCode": "jobPriority",
 					"key": "jobPriority",
-					"name": "Job Priority",
-					"name_i18n": {
-						"en-US": "Job Priority"
-					}
+					"name": "Job Priority"
 				},
 				{
 					"externalReferenceCode": "jobStartDate",
 					"key": "jobStartDate",
-					"name": "Job Start Date",
-					"name_i18n": {
-						"en-US": "Job Start Date"
-					}
+					"name": "Job Start Date"
 				},
 				{
 					"externalReferenceCode": "jobType",
 					"key": "jobType",
-					"name": "Job Type",
-					"name_i18n": {
-						"en-US": "Job Type"
-					}
+					"name": "Job Type"
 				},
 				{
 					"externalReferenceCode": "testSuiteName",
 					"key": "testSuiteName",
-					"name": "Test Suite Name",
-					"name_i18n": {
-						"en-US": "Test Suite Name"
-					}
+					"name": "Test Suite Name"
 				},
 				{
 					"externalReferenceCode": "upstreamGitBranchName",
 					"key": "upstreamGitBranchName",
-					"name": "Upstream Git Branch Name",
-					"name_i18n": {
-						"en-US": "Upstream Git Branch Name"
-					}
+					"name": "Upstream Git Branch Name"
 				}
 			],
-			"name": "jobComparatorType",
-			"name_i18n": {
-				"en-US": "Job Comparator Type"
-			}
+			"name": "Job Comparator Type"
 		},
 		{
 			"externalReferenceCode": "jobDefinitionParameterType",
@@ -131,24 +89,15 @@
 				{
 					"externalReferenceCode": "string",
 					"key": "string",
-					"name": "String",
-					"name_i18n": {
-						"en-US": "String"
-					}
+					"name": "String"
 				},
 				{
 					"externalReferenceCode": "url",
 					"key": "url",
-					"name": "URL",
-					"name_i18n": {
-						"en-US": "URL"
-					}
+					"name": "URL"
 				}
 			],
-			"name": "jobDefinitionParameterType",
-			"name_i18n": {
-				"en-US": "Job Definition Parameter Type"
-			}
+			"name": "Job Definition Parameter Type"
 		},
 		{
 			"externalReferenceCode": "jobType",
@@ -156,424 +105,265 @@
 				{
 					"externalReferenceCode": "approveGitHubCollaboratorInvites",
 					"key": "approveGitHubCollaboratorInvites",
-					"name": "Approve GitHub Collaborator Invites",
-					"name_i18n": {
-						"en-US": "Approve GitHub Collaborator Invites"
-					}
+					"name": "Approve GitHub Collaborator Invites"
 				},
 				{
 					"externalReferenceCode": "archiveCIBuildData",
 					"key": "archiveCIBuildData",
-					"name": "Archive CI Build Data",
-					"name_i18n": {
-						"en-US": "Archive CI Build Data"
-					}
+					"name": "Archive CI Build Data"
 				},
 				{
 					"externalReferenceCode": "default",
 					"key": "default",
-					"name": "Default",
-					"name_i18n": {
-						"en-US": "Default"
-					}
+					"name": "Default"
 				},
 				{
 					"externalReferenceCode": "filePropagator",
 					"key": "filePropagator",
-					"name": "File Propagator",
-					"name_i18n": {
-						"en-US": "File Propagator"
-					}
+					"name": "File Propagator"
 				},
 				{
 					"externalReferenceCode": "fixpackBuilderPullRequest",
 					"key": "fixpackBuilderPullRequest",
-					"name": "Fixpack Builder Pull Request",
-					"name_i18n": {
-						"en-US": "Fixpack Builder Pull Request"
-					}
+					"name": "Fixpack Builder Pull Request"
 				},
 				{
 					"externalReferenceCode": "forwardBranchesCleanupDaily",
 					"key": "forwardBranchesCleanupDaily",
-					"name": "Forward Branches Cleanup Daily",
-					"name_i18n": {
-						"en-US": "Forward Branches Cleanup Daily"
-					}
+					"name": "Forward Branches Cleanup Daily"
 				},
 				{
 					"externalReferenceCode": "forwardPullRequest",
 					"key": "forwardPullRequest",
-					"name": "Forward Pull Request",
-					"name_i18n": {
-						"en-US": "Forward Pull Request"
-					}
+					"name": "Forward Pull Request"
 				},
 				{
 					"externalReferenceCode": "generateFlakyTestReport",
 					"key": "generateFlakyTestReport",
-					"name": "Generate Flaky Test Report",
-					"name_i18n": {
-						"en-US": "Generate Flaky Test Report"
-					}
+					"name": "Generate Flaky Test Report"
 				},
 				{
 					"externalReferenceCode": "generateReports",
 					"key": "generateReports",
-					"name": "Generate Reports",
-					"name_i18n": {
-						"en-US": "Generate Reports"
-					}
+					"name": "Generate Reports"
 				},
 				{
 					"externalReferenceCode": "generateTestDurationMetrics",
 					"key": "generateTestDurationMetrics",
-					"name": "Generate Test Duration Metrics",
-					"name_i18n": {
-						"en-US": "Generate Test Duration Metrics"
-					}
+					"name": "Generate Test Duration Metrics"
 				},
 				{
 					"externalReferenceCode": "generateTestrayCSV",
 					"key": "generateTestrayCSV",
-					"name": "Generate Testray CSV",
-					"name_i18n": {
-						"en-US": "Generate Testray CSV"
-					}
+					"name": "Generate Testray CSV"
 				},
 				{
 					"externalReferenceCode": "jenkinsPullRequest",
 					"key": "jenkinsPullRequest",
-					"name": "Jenkins Pull Request",
-					"name_i18n": {
-						"en-US": "Jenkins Pull Request"
-					}
+					"name": "Jenkins Pull Request"
 				},
 				{
 					"externalReferenceCode": "legacyDatabaseDump",
 					"key": "legacyDatabaseDump",
-					"name": "Legacy Database Dump",
-					"name_i18n": {
-						"en-US": "Legacy Database Dump"
-					}
+					"name": "Legacy Database Dump"
 				},
 				{
 					"externalReferenceCode": "liferayBinariesCacheUpdater",
 					"key": "liferayBinariesCacheUpdater",
-					"name": "Liferay Binaries Cache Updater",
-					"name_i18n": {
-						"en-US": "Liferay Binaries Cache Updater"
-					}
+					"name": "Liferay Binaries Cache Updater"
 				},
 				{
 					"externalReferenceCode": "maintenanceDaily",
 					"key": "maintenanceDaily",
-					"name": "Maintenance Daily",
-					"name_i18n": {
-						"en-US": "Maintenance Daily"
-					}
+					"name": "Maintenance Daily"
 				},
 				{
 					"externalReferenceCode": "maintenanceMatrixJobs",
 					"key": "maintenanceMatrixJobs",
-					"name": "Maintenance Matrix Jobs",
-					"name_i18n": {
-						"en-US": "Maintenance Matrix Jobs"
-					}
+					"name": "Maintenance Matrix Jobs"
 				},
 				{
 					"externalReferenceCode": "maintenanceStaleArtifacts",
 					"key": "maintenanceStaleArtifacts",
-					"name": "Maintenance Stale Artifacts",
-					"name_i18n": {
-						"en-US": "Maintenance Stale Artifacts"
-					}
+					"name": "Maintenance Stale Artifacts"
 				},
 				{
 					"externalReferenceCode": "maintenanceWeekly",
 					"key": "maintenanceWeekly",
-					"name": "Maintenance Weekly",
-					"name_i18n": {
-						"en-US": "Maintenance Weekly"
-					}
+					"name": "Maintenance Weekly"
 				},
 				{
 					"externalReferenceCode": "maintenanceWeeklyNode",
 					"key": "maintenanceWeeklyNode",
-					"name": "Maintenance Weekly Node",
-					"name_i18n": {
-						"en-US": "Maintenance Weekly Node"
-					}
+					"name": "Maintenance Weekly Node"
 				},
 				{
 					"externalReferenceCode": "mergeCentralSubrepository",
 					"key": "mergeCentralSubrepository",
-					"name": "Merge Central Subrepository",
-					"name_i18n": {
-						"en-US": "Merge Central Subrepository"
-					}
+					"name": "Merge Central Subrepository"
 				},
 				{
 					"externalReferenceCode": "mergePortalSubrepository",
 					"key": "mergePortalSubrepository",
-					"name": "Merge Portal Subrepository",
-					"name_i18n": {
-						"en-US": "Merge Portal Subrepository"
-					}
+					"name": "Merge Portal Subrepository"
 				},
 				{
 					"externalReferenceCode": "mirrorsLocalCachePropagator",
 					"key": "mirrorsLocalCachePropagator",
-					"name": "Mirrors Local Cache Propagator",
-					"name_i18n": {
-						"en-US": "Mirrors Local Cache Propagator"
-					}
+					"name": "Mirrors Local Cache Propagator"
 				},
 				{
 					"externalReferenceCode": "pluginsExtraApps",
 					"key": "pluginsExtraApps",
-					"name": "Plugins Extra Apps",
-					"name_i18n": {
-						"en-US": "Plugins Extra Apps"
-					}
+					"name": "Plugins Extra Apps"
 				},
 				{
 					"externalReferenceCode": "pluginsMarketplaceApp",
 					"key": "pluginsMarketplaceApp",
-					"name": "Plugins Marketplace App",
-					"name_i18n": {
-						"en-US": "Plugins Marketplace App"
-					}
+					"name": "Plugins Marketplace App"
 				},
 				{
 					"externalReferenceCode": "pluginsPullRequest",
 					"key": "pluginsPullRequest",
-					"name": "Plugins Pull Request",
-					"name_i18n": {
-						"en-US": "Plugins Pull Request"
-					}
+					"name": "Plugins Pull Request"
 				},
 				{
 					"externalReferenceCode": "pluginsRelease",
 					"key": "pluginsRelease",
-					"name": "Plugins Release",
-					"name_i18n": {
-						"en-US": "Plugins Release"
-					}
+					"name": "Plugins Release"
 				},
 				{
 					"externalReferenceCode": "pluginsUpstream",
 					"key": "pluginsUpstream",
-					"name": "Plugins Upstream",
-					"name_i18n": {
-						"en-US": "Plugins Upstream"
-					}
+					"name": "Plugins Upstream"
 				},
 				{
 					"externalReferenceCode": "portalAppRelease",
 					"key": "portalAppRelease",
-					"name": "Portal App Release",
-					"name_i18n": {
-						"en-US": "Portal App Release"
-					}
+					"name": "Portal App Release"
 				},
 				{
 					"externalReferenceCode": "portalBuildOptimization",
 					"key": "portalBuildOptimization",
-					"name": "Portal Build Optimization",
-					"name_i18n": {
-						"en-US": "Portal Build Optimization"
-					}
+					"name": "Portal Build Optimization"
 				},
 				{
 					"externalReferenceCode": "portalEvaluatePullRequest",
 					"key": "portalEvaluatePullRequest",
-					"name": "Portal Evaluate Pull Request",
-					"name_i18n": {
-						"en-US": "Portal Evaluate Pull Request"
-					}
+					"name": "Portal Evaluate Pull Request"
 				},
 				{
 					"externalReferenceCode": "portalFixpackRelease",
 					"key": "portalFixpackRelease",
-					"name": "Portal Fixpack Release",
-					"name_i18n": {
-						"en-US": "Portal Fixpack Release"
-					}
+					"name": "Portal Fixpack Release"
 				},
 				{
 					"externalReferenceCode": "portalHotfixRelease",
 					"key": "portalHotfixRelease",
-					"name": "Portal Hotfix Release",
-					"name_i18n": {
-						"en-US": "Portal Hotfix Release"
-					}
+					"name": "Portal Hotfix Release"
 				},
 				{
 					"externalReferenceCode": "portalPullRequest",
 					"key": "portalPullRequest",
-					"name": "Portal Pull Request",
-					"name_i18n": {
-						"en-US": "Portal Pull Request"
-					}
+					"name": "Portal Pull Request"
 				},
 				{
 					"externalReferenceCode": "portalPullRequestSF",
 					"key": "portalPullRequestSF",
-					"name": "Portal Pull Request SF",
-					"name_i18n": {
-						"en-US": "Portal Pull Request SF"
-					}
+					"name": "Portal Pull Request SF"
 				},
 				{
 					"externalReferenceCode": "portalRelease",
 					"key": "portalRelease",
-					"name": "Portal Release",
-					"name_i18n": {
-						"en-US": "Portal Release"
-					}
+					"name": "Portal Release"
 				},
 				{
 					"externalReferenceCode": "portalUpstream",
 					"key": "portalUpstream",
-					"name": "Portal Upstream",
-					"name_i18n": {
-						"en-US": "Portal Upstream"
-					}
+					"name": "Portal Upstream"
 				},
 				{
 					"externalReferenceCode": "portalUpstreamAcceptance",
 					"key": "portalUpstreamAcceptance",
-					"name": "Portal Upstream Acceptance",
-					"name_i18n": {
-						"en-US": "Portal Upstream Acceptance"
-					}
+					"name": "Portal Upstream Acceptance"
 				},
 				{
 					"externalReferenceCode": "portalUpstreamTestSuite",
 					"key": "portalUpstreamTestSuite",
-					"name": "Portal Upstream Test Suite",
-					"name_i18n": {
-						"en-US": "Portal Upstream Test Suite"
-					}
+					"name": "Portal Upstream Test Suite"
 				},
 				{
 					"externalReferenceCode": "poshiRelease",
 					"key": "poshiRelease",
-					"name": "Poshi Release",
-					"name_i18n": {
-						"en-US": "Poshi Release"
-					}
+					"name": "Poshi Release"
 				},
 				{
 					"externalReferenceCode": "publishPortalDockerImage",
 					"key": "publishPortalDockerImage",
-					"name": "Publish Portal Docker Image",
-					"name_i18n": {
-						"en-US": "Publish Portal Docker Image"
-					}
+					"name": "Publish Portal Docker Image"
 				},
 				{
 					"externalReferenceCode": "publishTestrayReport",
 					"key": "publishTestrayReport",
-					"name": "Publish Testray Report",
-					"name_i18n": {
-						"en-US": "Publish Testray Report"
-					}
+					"name": "Publish Testray Report"
 				},
 				{
 					"externalReferenceCode": "qaWebsitesDaily",
 					"key": "qaWebsitesDaily",
-					"name": "QA Websites Daily",
-					"name_i18n": {
-						"en-US": "QA Websites Daily"
-					}
+					"name": "QA Websites Daily"
 				},
 				{
 					"externalReferenceCode": "qaWebsitesPullRequestSF",
 					"key": "qaWebsitesPullRequestSF",
-					"name": "QA Websites Pull Request SF",
-					"name_i18n": {
-						"en-US": "QA Websites Pull Request SF"
-					}
+					"name": "QA Websites Pull Request SF"
 				},
 				{
 					"externalReferenceCode": "qaWebsitesWeekly",
 					"key": "qaWebsitesWeekly",
-					"name": "QA Websites Weekly",
-					"name_i18n": {
-						"en-US": "QA Websites Weekly"
-					}
+					"name": "QA Websites Weekly"
 				},
 				{
 					"externalReferenceCode": "repositoryArchive",
 					"key": "repositoryArchive",
-					"name": "Repository Archive",
-					"name_i18n": {
-						"en-US": "Repository Archive"
-					}
+					"name": "Repository Archive"
 				},
 				{
 					"externalReferenceCode": "rootCauseAnalysisTool",
 					"key": "rootCauseAnalysisTool",
-					"name": "Root Cause Analysis Tool",
-					"name_i18n": {
-						"en-US": "Root Cause Analysis Tool"
-					}
+					"name": "Root Cause Analysis Tool"
 				},
 				{
 					"externalReferenceCode": "sanitizeLanguage",
 					"key": "sanitizeLanguage",
-					"name": "Sanitize Language",
-					"name_i18n": {
-						"en-US": "Sanitize Language"
-					}
+					"name": "Sanitize Language"
 				},
 				{
 					"externalReferenceCode": "scancodePipelines",
 					"key": "scancodePipelines",
-					"name": "Scancode Pipelines",
-					"name_i18n": {
-						"en-US": "Sanitize Language"
-					}
+					"name": "Scancode Pipelines"
 				},
 				{
 					"externalReferenceCode": "subrepositoryPullRequest",
 					"key": "subrepositoryPullRequest",
-					"name": "Subrepository Pull Request",
-					"name_i18n": {
-						"en-US": "Subrepository Pull Request"
-					}
+					"name": "Subrepository Pull Request"
 				},
 				{
 					"externalReferenceCode": "verification",
 					"key": "verification",
-					"name": "Verification",
-					"name_i18n": {
-						"en-US": "Verification"
-					}
+					"name": "Verification"
 				},
 				{
 					"externalReferenceCode": "verificationNode",
 					"key": "verificationNode",
-					"name": "Verification Node",
-					"name_i18n": {
-						"en-US": "Verification Node"
-					}
+					"name": "Verification Node"
 				},
 				{
 					"externalReferenceCode": "verificationServersDaily",
 					"key": "verificationServersDaily",
-					"name": "Verification Servers Daily",
-					"name_i18n": {
-						"en-US": "Verification Servers Daily"
-					}
+					"name": "Verification Servers Daily"
 				}
 			],
-			"name": "jobType",
-			"name_i18n": {
-				"en-US": "Job Type"
-			}
+			"name": "Job Type"
 		},
 		{
 			"externalReferenceCode": "liferayBundle",
@@ -581,56 +371,35 @@
 				{
 					"externalReferenceCode": "dxpFixpackRelease",
 					"key": "dxpFixpackRelease",
-					"name": "DXP Fixpack Release",
-					"name_i18n": {
-						"en-US": "DXP Fixpack Release"
-					}
+					"name": "DXP Fixpack Release"
 				},
 				{
 					"externalReferenceCode": "dxpHotfixRelease",
 					"key": "dxpHotfixRelease",
-					"name": "DXP Hotfix Release",
-					"name_i18n": {
-						"en-US": "DXP Hotfix Release"
-					}
+					"name": "DXP Hotfix Release"
 				},
 				{
 					"externalReferenceCode": "dxpRelease",
 					"key": "dxpRelease",
-					"name": "DXP Release",
-					"name_i18n": {
-						"en-US": "DXP Release"
-					}
+					"name": "DXP Release"
 				},
 				{
 					"externalReferenceCode": "dxpSource",
 					"key": "dxpSource",
-					"name": "DXP Source",
-					"name_i18n": {
-						"en-US": "DXP Source"
-					}
+					"name": "DXP Source"
 				},
 				{
 					"externalReferenceCode": "portalRelease",
 					"key": "portalRelease",
-					"name": "Portal Release",
-					"name_i18n": {
-						"en-US": "Portal Release"
-					}
+					"name": "Portal Release"
 				},
 				{
 					"externalReferenceCode": "portalSource",
 					"key": "portalSource",
-					"name": "Portal Source",
-					"name_i18n": {
-						"en-US": "Portal Source"
-					}
+					"name": "Portal Source"
 				}
 			],
-			"name": "liferayBundle",
-			"name_i18n": {
-				"en-US": "Liferay Bundle"
-			}
+			"name": "Liferay Bundle"
 		},
 		{
 			"externalReferenceCode": "liferayPortalBranch",
@@ -638,80 +407,50 @@
 				{
 					"externalReferenceCode": "70x",
 					"key": "70x",
-					"name": "7.0.x",
-					"name_i18n": {
-						"en-US": "7.0.x"
-					}
+					"name": "7.0.x"
 				},
 				{
 					"externalReferenceCode": "71x",
 					"key": "71x",
-					"name": "7.1.x",
-					"name_i18n": {
-						"en-US": "7.1.x"
-					}
+					"name": "7.1.x"
 				},
 				{
 					"externalReferenceCode": "72x",
 					"key": "72x",
-					"name": "7.2.x",
-					"name_i18n": {
-						"en-US": "7.2.x"
-					}
+					"name": "7.2.x"
 				},
 				{
 					"externalReferenceCode": "73x",
 					"key": "73x",
-					"name": "7.3.x",
-					"name_i18n": {
-						"en-US": "7.3.x"
-					}
+					"name": "7.3.x"
 				},
 				{
 					"externalReferenceCode": "ee61x",
 					"key": "ee61x",
-					"name": "ee61x",
-					"name_i18n": {
-						"en-US": "ee-6.1.x"
-					}
+					"name": "ee-6.1.x"
 				},
 				{
 					"externalReferenceCode": "ee62x",
 					"key": "ee62x",
-					"name": "ee62x",
-					"name_i18n": {
-						"en-US": "ee-6.2.x"
-					}
+					"name": "ee-6.2.x"
 				},
 				{
 					"externalReferenceCode": "ee6130",
 					"key": "ee6130",
-					"name": "ee6130",
-					"name_i18n": {
-						"en-US": "ee-6.1.30"
-					}
+					"name": "ee-6.1.30"
 				},
 				{
 					"externalReferenceCode": "ee6210",
 					"key": "ee6210",
-					"name": "ee6210",
-					"name_i18n": {
-						"en-US": "ee-6.2.10"
-					}
+					"name": "ee-6.2.10"
 				},
 				{
 					"externalReferenceCode": "master",
 					"key": "master",
-					"name": "master",
-					"name_i18n": {
-						"en-US": "master"
-					}
+					"name": "master"
 				}
 			],
-			"name": "liferayPortalBranch",
-			"name_i18n": {
-				"en-US": "Liferay Portal Branch"
-			}
+			"name": "Liferay Portal Branch"
 		},
 		{
 			"externalReferenceCode": "result",
@@ -719,24 +458,15 @@
 				{
 					"externalReferenceCode": "failed",
 					"key": "failed",
-					"name": "Failed",
-					"name_i18n": {
-						"en-US": "Failed"
-					}
+					"name": "Failed"
 				},
 				{
 					"externalReferenceCode": "passed",
 					"key": "passed",
-					"name": "Passed",
-					"name_i18n": {
-						"en-US": "Passed"
-					}
+					"name": "Passed"
 				}
 			],
-			"name": "result",
-			"name_i18n": {
-				"en-US": "Result"
-			}
+			"name": "Result"
 		},
 		{
 			"externalReferenceCode": "routineType",
@@ -744,40 +474,25 @@
 				{
 					"externalReferenceCode": "cron",
 					"key": "cron",
-					"name": "Cron",
-					"name_i18n": {
-						"en-US": "Cron"
-					}
+					"name": "Cron"
 				},
 				{
 					"externalReferenceCode": "manual",
 					"key": "manual",
-					"name": "Manual",
-					"name_i18n": {
-						"en-US": "Manual"
-					}
+					"name": "Manual"
 				},
 				{
 					"externalReferenceCode": "upstreamBranch",
 					"key": "upstreamBranch",
-					"name": "Upstream Branch",
-					"name_i18n": {
-						"en-US": "Upstream Branch"
-					}
+					"name": "Upstream Branch"
 				},
 				{
 					"externalReferenceCode": "upstreamBranchCron",
 					"key": "upstreamBranchCron",
-					"name": "Upstream Branch Cron",
-					"name_i18n": {
-						"en-US": "Upstream Branch Cron"
-					}
+					"name": "Upstream Branch Cron"
 				}
 			],
-			"name": "routineType",
-			"name_i18n": {
-				"en-US": "Routine Type"
-			}
+			"name": "Routine Type"
 		},
 		{
 			"externalReferenceCode": "state",
@@ -785,48 +500,30 @@
 				{
 					"externalReferenceCode": "blocked",
 					"key": "blocked",
-					"name": "Blocked",
-					"name_i18n": {
-						"en-US": "Blocked"
-					}
+					"name": "Blocked"
 				},
 				{
 					"externalReferenceCode": "completed",
 					"key": "completed",
-					"name": "Completed",
-					"name_i18n": {
-						"en-US": "Completed"
-					}
+					"name": "Completed"
 				},
 				{
 					"externalReferenceCode": "opened",
 					"key": "opened",
-					"name": "Opened",
-					"name_i18n": {
-						"en-US": "Opened"
-					}
+					"name": "Opened"
 				},
 				{
 					"externalReferenceCode": "queued",
 					"key": "queued",
-					"name": "Queued",
-					"name_i18n": {
-						"en-US": "Queued"
-					}
+					"name": "Queued"
 				},
 				{
 					"externalReferenceCode": "running",
 					"key": "running",
-					"name": "Running",
-					"name_i18n": {
-						"en-US": "Running"
-					}
+					"name": "Running"
 				}
 			],
-			"name": "state",
-			"name_i18n": {
-				"en-US": "State"
-			}
+			"name": "State"
 		}
 	]
 }

@@ -1,7 +1,4 @@
 {
 	"externalReferenceCode": "BILLINGOPTION",
-	"name": "BillingOption",
-	"name_i18n": {
-		"en-US": "BillingOption"
-	}
+	"name": "BillingOption"
 }

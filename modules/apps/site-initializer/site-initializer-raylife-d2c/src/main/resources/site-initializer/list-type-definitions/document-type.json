@@ -1,7 +1,4 @@
 {
 	"externalReferenceCode": "DOCUMENTTYPE",
-	"name": "DocumentType",
-	"name_i18n": {
-		"en-US": "DocumentType"
-	}
+	"name": "DocumentType"
 }

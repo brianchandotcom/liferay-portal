@@ -19,24 +19,15 @@
 				{
 					"externalReferenceCode": "FIELD",
 					"key": "field",
-					"name": "field",
-					"name_i18n": {
-						"en-US": "Field"
-					}
+					"name": "Field"
 				},
 				{
 					"externalReferenceCode": "RECORD",
 					"key": "record",
-					"name": "record",
-					"name_i18n": {
-						"en-US": "Record"
-					}
+					"name": "Record"
 				}
 			],
 			"name": "API Property Types",
-			"name_i18n": {
-				"en-US": "API Property Types"
-			},
 			"system": true
 		}
 	]

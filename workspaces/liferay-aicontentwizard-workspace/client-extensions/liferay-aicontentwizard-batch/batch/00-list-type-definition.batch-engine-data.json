@@ -16,56 +16,35 @@
 				{
 					"externalReferenceCode": "GOOGLE_GEMINI15FLASH001",
 					"key": "gemini15flash001",
-					"name": "gemini-1.5-flash-001",
-					"name_i18n": {
-						"en-US": "gemini-1.5-flash-001"
-					}
+					"name": "gemini-1.5-flash-001"
 				},
 				{
 					"externalReferenceCode": "GOOGLE_GEMINI15PRO001",
 					"key": "gemini15pro001",
-					"name": "gemini-1.5-pro-001",
-					"name_i18n": {
-						"en-US": "gemini-1.5-pro-001"
-					}
+					"name": "gemini-1.5-pro-001"
 				},
 				{
 					"externalReferenceCode": "OPENAI_GPT35TURBO",
 					"key": "gpt35turbo",
-					"name": "gpt-3.5-turbo",
-					"name_i18n": {
-						"en-US": "gpt-3.5-turbo"
-					}
+					"name": "gpt-3.5-turbo"
 				},
 				{
 					"externalReferenceCode": "OPENAI_GPT4",
 					"key": "gpt4",
-					"name": "gpt4",
-					"name_i18n": {
-						"en-US": "gpt-4"
-					}
+					"name": "gpt-4"
 				},
 				{
 					"externalReferenceCode": "OPENAI_GPT4O",
 					"key": "gpt4o",
-					"name": "gpt4o",
-					"name_i18n": {
-						"en-US": "gpt-4o"
-					}
+					"name": "gpt-4o"
 				},
 				{
 					"externalReferenceCode": "OPENAI_GPT4TURBO",
 					"key": "gpt4turbo",
-					"name": "gpt4-turbo",
-					"name_i18n": {
-						"en-US": "gpt-4-turbo"
-					}
+					"name": "gpt-4-turbo"
 				}
 			],
-			"name": "K9L6 AI Content Wizard Models",
-			"name_i18n": {
-				"en-US": "K9L6 AI Content Wizard Models"
-			}
+			"name": "K9L6 AI Content Wizard Models"
 		},
 		{
 			"externalReferenceCode": "K9L6_AI_CONTENT_WIZARD_PROVIDERS",
@@ -73,24 +52,15 @@
 				{
 					"externalReferenceCode": "GOOGLE",
 					"key": "google",
-					"name": "Google",
-					"name_i18n": {
-						"en-US": "Google"
-					}
+					"name": "Google"
 				},
 				{
 					"externalReferenceCode": "OPENAI",
 					"key": "openai",
-					"name": "OpenAI",
-					"name_i18n": {
-						"en-US": "OpenAI"
-					}
+					"name": "OpenAI"
 				}
 			],
-			"name": "K9L6 AI Content Wizard Providers",
-			"name_i18n": {
-				"en-US": "K9L6 AI Content Wizard Providers"
-			}
+			"name": "K9L6 AI Content Wizard Providers"
 		}
 	]
 }

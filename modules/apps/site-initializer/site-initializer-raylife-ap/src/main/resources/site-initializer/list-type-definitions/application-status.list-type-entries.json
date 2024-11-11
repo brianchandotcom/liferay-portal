@@ -1,51 +1,30 @@
 [
 	{
 		"key": "bound",
-		"name": "Bound",
-		"name_i18n": {
-			"en-US": "Bound"
-		}
+		"name": "Bound"
 	},
 	{
 		"key": "incomplete",
-		"name": "Incomplete",
-		"name_i18n": {
-			"en-US": "Incomplete"
-		}
+		"name": "Incomplete"
 	},
 	{
 		"key": "rejected",
-		"name": "Rejected",
-		"name_i18n": {
-			"en-US": "Rejected"
-		}
+		"name": "Rejected"
 	},
 	{
 		"key": "quoted",
-		"name": "Quoted",
-		"name_i18n": {
-			"en-US": "Quoted"
-		}
+		"name": "Quoted"
 	},
 	{
 		"key": "open",
-		"name": "Open",
-		"name_i18n": {
-			"en-US": "Open"
-		}
+		"name": "Open"
 	},
 	{
 		"key": "reviewed",
-		"name": "Reviewed",
-		"name_i18n": {
-			"en-US": "Reviewed"
-		}
+		"name": "Reviewed"
 	},
 	{
 		"key": "underwriting",
-		"name": "Underwriting",
-		"name_i18n": {
-			"en-US": "Underwriting"
-		}
+		"name": "Underwriting"
 	}
 ]

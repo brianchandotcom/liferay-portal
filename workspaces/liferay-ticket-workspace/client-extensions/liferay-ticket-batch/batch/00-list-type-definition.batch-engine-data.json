@@ -16,48 +16,30 @@
 				{
 					"externalReferenceCode": "CRITICAL",
 					"key": "critical",
-					"name": "Critical",
-					"name_i18n": {
-						"en-US": "Critical"
-					}
+					"name": "Critical"
 				},
 				{
 					"externalReferenceCode": "MAJOR",
 					"key": "major",
-					"name": "Major",
-					"name_i18n": {
-						"en-US": "Major"
-					}
+					"name": "Major"
 				},
 				{
 					"externalReferenceCode": "MINOR",
 					"key": "minor",
-					"name": "Minor",
-					"name_i18n": {
-						"en-US": "Minor"
-					}
+					"name": "Minor"
 				},
 				{
 					"externalReferenceCode": "MODERATE",
 					"key": "moderate",
-					"name": "Moderate",
-					"name_i18n": {
-						"en-US": "Moderate"
-					}
+					"name": "Moderate"
 				},
 				{
 					"externalReferenceCode": "UNASSIGNED",
 					"key": "unassigned",
-					"name": "Unassigned",
-					"name_i18n": {
-						"en-US": "Unassigned"
-					}
+					"name": "Unassigned"
 				}
 			],
-			"name": "J3Y7 Priorities",
-			"name_i18n": {
-				"en-US": "J3Y7 Priorities"
-			}
+			"name": "J3Y7 Priorities"
 		},
 		{
 			"externalReferenceCode": "J3Y7_REGIONS",
@@ -65,40 +47,25 @@
 				{
 					"externalReferenceCode": "APAC",
 					"key": "aPAC",
-					"name": "APAC",
-					"name_i18n": {
-						"en-US": "APAC"
-					}
+					"name": "APAC"
 				},
 				{
 					"externalReferenceCode": "EMEA",
 					"key": "eMEA",
-					"name": "EMEA",
-					"name_i18n": {
-						"en-US": "EMEA"
-					}
+					"name": "EMEA"
 				},
 				{
 					"externalReferenceCode": "LATAM",
 					"key": "lATAM",
-					"name": "LATAM",
-					"name_i18n": {
-						"en-US": "LATAM"
-					}
+					"name": "LATAM"
 				},
 				{
 					"externalReferenceCode": "NORAM",
 					"key": "nORAM",
-					"name": "NORAM",
-					"name_i18n": {
-						"en-US": "NORAM"
-					}
+					"name": "NORAM"
 				}
 			],
-			"name": "J3Y7 Regions",
-			"name_i18n": {
-				"en-US": "J3Y7 Regions"
-			}
+			"name": "J3Y7 Regions"
 		},
 		{
 			"externalReferenceCode": "J3Y7_RESOLUTIONS",
@@ -106,64 +73,40 @@
 				{
 					"externalReferenceCode": "APPROVED",
 					"key": "approved",
-					"name": "Approved",
-					"name_i18n": {
-						"en-US": "Approved"
-					}
+					"name": "Approved"
 				},
 				{
 					"externalReferenceCode": "DONE",
 					"key": "done",
-					"name": "Done",
-					"name_i18n": {
-						"en-US": "Done"
-					}
+					"name": "Done"
 				},
 				{
 					"externalReferenceCode": "DUPLICATE",
 					"key": "duplicate",
-					"name": "Duplicate",
-					"name_i18n": {
-						"en-US": "Duplicate"
-					}
+					"name": "Duplicate"
 				},
 				{
 					"externalReferenceCode": "EXPIRED",
 					"key": "expired",
-					"name": "Expired",
-					"name_i18n": {
-						"en-US": "Expired"
-					}
+					"name": "Expired"
 				},
 				{
 					"externalReferenceCode": "FIXED",
 					"key": "fixed",
-					"name": "Fixed",
-					"name_i18n": {
-						"en-US": "Fixed"
-					}
+					"name": "Fixed"
 				},
 				{
 					"externalReferenceCode": "REJECTED",
 					"key": "rejected",
-					"name": "Rejected",
-					"name_i18n": {
-						"en-US": "Rejected"
-					}
+					"name": "Rejected"
 				},
 				{
 					"externalReferenceCode": "UNRESOLVED",
 					"key": "unresolved",
-					"name": "Unresolved",
-					"name_i18n": {
-						"en-US": "Unresolved"
-					}
+					"name": "Unresolved"
 				}
 			],
-			"name": "J3Y7 Resolutions",
-			"name_i18n": {
-				"en-US": "J3Y7 Resolutions"
-			}
+			"name": "J3Y7 Resolutions"
 		},
 		{
 			"externalReferenceCode": "J3Y7_STATUSES",
@@ -171,80 +114,50 @@
 				{
 					"externalReferenceCode": "ANSWERED",
 					"key": "answered",
-					"name": "Answered",
-					"name_i18n": {
-						"en-US": "Answered"
-					}
+					"name": "Answered"
 				},
 				{
 					"externalReferenceCode": "CLOSED",
 					"key": "closed",
-					"name": "Closed",
-					"name_i18n": {
-						"en-US": "Closed"
-					}
+					"name": "Closed"
 				},
 				{
 					"externalReferenceCode": "ESCALATED",
 					"key": "escalated",
-					"name": "Escalated",
-					"name_i18n": {
-						"en-US": "Escalated"
-					}
+					"name": "Escalated"
 				},
 				{
 					"externalReferenceCode": "IN_PROGRESS",
 					"key": "inProgress",
-					"name": "In Progress",
-					"name_i18n": {
-						"en-US": "In Progress"
-					}
+					"name": "In Progress"
 				},
 				{
 					"externalReferenceCode": "IN_REVIEW",
 					"key": "inReview",
-					"name": "In Review",
-					"name_i18n": {
-						"en-US": "In Review"
-					}
+					"name": "In Review"
 				},
 				{
 					"externalReferenceCode": "OPEN",
 					"key": "open",
-					"name": "Open",
-					"name_i18n": {
-						"en-US": "Open"
-					}
+					"name": "Open"
 				},
 				{
 					"externalReferenceCode": "QUEUED",
 					"key": "queued",
-					"name": "Queued",
-					"name_i18n": {
-						"en-US": "Queued"
-					}
+					"name": "Queued"
 				},
 				{
 					"externalReferenceCode": "VERIFYING",
 					"key": "verifying",
-					"name": "Verifying",
-					"name_i18n": {
-						"en-US": "Verifying"
-					}
+					"name": "Verifying"
 				},
 				{
 					"externalReferenceCode": "WAITING",
 					"key": "waiting",
-					"name": "Waiting",
-					"name_i18n": {
-						"en-US": "Waiting"
-					}
+					"name": "Waiting"
 				}
 			],
-			"name": "J3Y7 Statuses",
-			"name_i18n": {
-				"en-US": "J3Y7 Statuses"
-			}
+			"name": "J3Y7 Statuses"
 		},
 		{
 			"externalReferenceCode": "J3Y7_TYPES",
@@ -252,72 +165,45 @@
 				{
 					"externalReferenceCode": "ACCOUNT_ISSUE",
 					"key": "accountIssue",
-					"name": "Account Issue",
-					"name_i18n": {
-						"en-US": "Account Issue"
-					}
+					"name": "Account Issue"
 				},
 				{
 					"externalReferenceCode": "APPLICATION",
 					"key": "application",
-					"name": "Application",
-					"name_i18n": {
-						"en-US": "Application"
-					}
+					"name": "Application"
 				},
 				{
 					"externalReferenceCode": "CREDIT_LIMIT",
 					"key": "creditLimitIncrease",
-					"name": "Credit Limit Increase",
-					"name_i18n": {
-						"en-US": "Credit Limit Increase"
-					}
+					"name": "Credit Limit Increase"
 				},
 				{
 					"externalReferenceCode": "DELIVERY_ISSUE",
 					"key": "deliveryIssue",
-					"name": "Delivery Issue",
-					"name_i18n": {
-						"en-US": "Delivery Issue"
-					}
+					"name": "Delivery Issue"
 				},
 				{
 					"externalReferenceCode": "ORDER_ISSUE",
 					"key": "orderIssue",
-					"name": "Order Issue",
-					"name_i18n": {
-						"en-US": "Order Issue"
-					}
+					"name": "Order Issue"
 				},
 				{
 					"externalReferenceCode": "OTHER",
 					"key": "other",
-					"name": "Other",
-					"name_i18n": {
-						"en-US": "Other"
-					}
+					"name": "Other"
 				},
 				{
 					"externalReferenceCode": "PRODUCT_ISSUE",
 					"key": "productIssue",
-					"name": "Product Issue",
-					"name_i18n": {
-						"en-US": "Product Issue"
-					}
+					"name": "Product Issue"
 				},
 				{
 					"externalReferenceCode": "SITE_ISSUE",
 					"key": "siteIssue",
-					"name": "Site Issue",
-					"name_i18n": {
-						"en-US": "Site Issue"
-					}
+					"name": "Site Issue"
 				}
 			],
-			"name": "J3Y7 Types",
-			"name_i18n": {
-				"en-US": "J3Y7 Types"
-			}
+			"name": "J3Y7 Types"
 		}
 	]
 }

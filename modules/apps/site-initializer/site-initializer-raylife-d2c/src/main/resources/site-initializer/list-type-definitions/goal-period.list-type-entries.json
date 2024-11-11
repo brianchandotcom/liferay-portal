@@ -1,30 +1,18 @@
 [
 	{
 		"key": "monthlyGoal",
-		"name": "Monthly Goal",
-		"name_i18n": {
-			"en-US": "Monthly Goal"
-		}
+		"name": "Monthly Goal"
 	},
 	{
 		"key": "quarterlyGoal",
-		"name": "Quarterly Goal",
-		"name_i18n": {
-			"en-US": "Quarterly Goal"
-		}
+		"name": "Quarterly Goal"
 	},
 	{
 		"key": "semiannualGoal",
-		"name": "Semiannual Goal",
-		"name_i18n": {
-			"en-US": "Semiannual Goal"
-		}
+		"name": "Semiannual Goal"
 	},
 	{
 		"key": "yearlyGoal",
-		"name": "Yearly Goal",
-		"name_i18n": {
-			"en-US": "Yearly Goal"
-		}
+		"name": "Yearly Goal"
 	}
 ]

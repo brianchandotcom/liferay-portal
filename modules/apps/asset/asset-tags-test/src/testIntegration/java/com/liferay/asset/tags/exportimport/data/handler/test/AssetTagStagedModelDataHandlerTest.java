@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -42,7 +43,9 @@ public class AssetTagStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		return AssetTestUtil.addTag(group.getGroupId());
+		return AssetTestUtil.addTag(
+			RandomTestUtil.randomString(), group.getGroupId(),
+			RandomTestUtil.randomString());
 	}
 
 	@Override

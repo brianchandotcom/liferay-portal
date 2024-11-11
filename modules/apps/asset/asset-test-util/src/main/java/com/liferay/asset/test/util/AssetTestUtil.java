@@ -103,10 +103,17 @@ public class AssetTestUtil {
 	public static AssetTag addTag(long groupId, String assetTagName)
 		throws PortalException {
 
+		return addTag(null, groupId, assetTagName);
+	}
+
+	public static AssetTag addTag(
+			String externalReferenceCode, long groupId, String assetTagName)
+		throws PortalException {
+
 		long userId = TestPropsValues.getUserId();
 
 		return AssetTagLocalServiceUtil.addTag(
-			null, userId, groupId, assetTagName,
+			externalReferenceCode, userId, groupId, assetTagName,
 			ServiceContextTestUtil.getServiceContext(groupId, userId));
 	}
 

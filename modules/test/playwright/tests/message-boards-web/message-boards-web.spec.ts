@@ -22,6 +22,54 @@ export const test = mergeTests(
 );
 
 test(
+	'Thread Priorities can be translated',
+	{tag: '@LPD-41689'},
+	async ({messageBoardsPage, page, site}) => {
+		await messageBoardsPage.goto(site.friendlyUrlPath);
+
+		await page.getByRole('button', {name: 'Options'}).click();
+
+		await page.getByRole('menuitem', {name: 'Configuration'}).click();
+
+		await page.getByRole('menuitem', {name: 'Thread Priorities'}).click();
+
+		await page.getByLabel('Localized Language').waitFor();
+
+		await page.getByLabel('Localized Language').selectOption('hu_HU');
+
+		await page
+			.locator(
+				'[id="_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_priorityName0_temp"]'
+			)
+			.click();
+
+		const expectedPriorityName = 'test';
+
+		await page
+			.locator(
+				'[id="_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_priorityName0_temp"]'
+			)
+			.fill(expectedPriorityName);
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await page.waitForLoadState('networkidle');
+
+		await page.getByLabel('Localized Language').waitFor();
+
+		await page.getByLabel('Localized Language').selectOption('hu_HU');
+
+		const actualPriorityName = await page
+			.locator(
+				'[id="_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_priorityName0_temp"]'
+			)
+			.inputValue();
+
+		await expect(actualPriorityName).toBe(expectedPriorityName);
+	}
+);
+
+test(
 	'Show the status to guest user',
 	{tag: '@LPD-25630'},
 	async ({

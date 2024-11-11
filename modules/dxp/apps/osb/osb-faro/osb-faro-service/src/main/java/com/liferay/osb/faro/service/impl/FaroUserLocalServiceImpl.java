@@ -437,7 +437,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 				_language.get(
 					resourceBundle, "email-sign-in-to-approve-or-deny"),
 				EmailUtil.getLogoIconURL(),
-				_language.get(resourceBundle, "new-request-to-join-workspace"),
+				_language.get(resourceBundle, "request-to-join-workspace"),
 				_language.format(
 					resourceBundle, "x-has-requested-to-join-the-x-workspace",
 					new String[] {

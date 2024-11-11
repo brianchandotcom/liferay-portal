@@ -25,8 +25,8 @@
 			max-width: 100%;
 		}
 
-		img[data-cke-saved-src]:not([data-fileentryid]) {
-			visibility: hidden;
+		img[data-cke-saved-src^='data:image']:not([data-fileentryid]) {
+			display: none;
 		}
 
 		.cover-image-container {

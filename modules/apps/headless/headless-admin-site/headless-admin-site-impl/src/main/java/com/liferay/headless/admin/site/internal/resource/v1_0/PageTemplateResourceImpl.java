@@ -6,19 +6,33 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
+import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.resource.v1_0.PageTemplateResource;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.LayoutPrototypeService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.HashMap;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,8 +75,113 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 					layoutPageTemplateEntry)));
 	}
 
+	@Override
+	public PageTemplate postSiteSiteByExternalReferenceCodePageTemplate(
+			String siteExternalReferenceCode, PageTemplate pageTemplate)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		return _addPageTemplate(group, pageTemplate);
+	}
+
+	private PageTemplate _addPageTemplate(
+			Group group, PageTemplate pageTemplate)
+		throws Exception {
+
+		if (Objects.equals(
+				pageTemplate.getType(),
+				PageTemplate.Type.CONTENT_PAGE_TEMPLATE)) {
+
+			return _pageTemplateDTOConverter.toDTO(
+				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+					pageTemplate.getExternalReferenceCode(), group.getGroupId(),
+					_getLayoutPageTemplateCollectionId(group, pageTemplate),
+					pageTemplate.getName(),
+					LayoutPageTemplateEntryTypeConstants.BASIC, 0L,
+					WorkflowConstants.STATUS_DRAFT,
+					_getServiceContext(group, pageTemplate)));
+		}
+
+		ServiceContext serviceContext = _getServiceContext(group, pageTemplate);
+
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeService.addLayoutPrototype(
+				HashMapBuilder.put(
+					serviceContext.getLocale(), pageTemplate.getName()
+				).build(),
+				new HashMap<>(), true, serviceContext);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getFirstLayoutPageTemplateEntry(
+					layoutPrototype.getLayoutPrototypeId());
+
+		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
+			_getLayoutPageTemplateCollectionId(group, pageTemplate));
+
+		return _pageTemplateDTOConverter.toDTO(
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry));
+	}
+
+	private long _getLayoutPageTemplateCollectionId(
+			Group group, PageTemplate pageTemplate)
+		throws Exception {
+
+		PageTemplateSet pageTemplateSet = pageTemplate.getPageTemplateSet();
+
+		if (pageTemplateSet == null) {
+			return LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+		}
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionService.
+				fetchLayoutPageTemplateCollection(
+					pageTemplateSet.getExternalReferenceCode(),
+					group.getGroupId());
+
+		if (layoutPageTemplateCollection == null) {
+			return LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+		}
+
+		return layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
+	}
+
+	private ServiceContext _getServiceContext(
+		Group group, PageTemplate pageTemplate) {
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			group.getGroupId(), contextHttpServletRequest, null
+		).build();
+
+		serviceContext.setCreateDate(pageTemplate.getDateCreated());
+		serviceContext.setModifiedDate(pageTemplate.getDateModified());
+		serviceContext.setUuid(pageTemplate.getUuid());
+
+		return serviceContext;
+	}
+
+	@Reference
+	private LayoutPageTemplateCollectionService
+		_layoutPageTemplateCollectionService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private LayoutPrototypeService _layoutPrototypeService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageTemplateDTOConverter)"

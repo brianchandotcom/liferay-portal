@@ -68,6 +68,9 @@ public class AssetTagStagedModelDataHandlerTest
 		AssetTag tag = (AssetTag)stagedModel;
 		AssetTag importedTag = (AssetTag)importedStagedModel;
 
+		Assert.assertEquals(
+			tag.getExternalReferenceCode(),
+			importedTag.getExternalReferenceCode());
 		Assert.assertEquals(tag.getName(), importedTag.getName());
 	}
 

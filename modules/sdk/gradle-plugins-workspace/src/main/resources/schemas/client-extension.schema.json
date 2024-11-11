@@ -408,10 +408,10 @@
 									"type": "string"
 								},
 								"scope": {
-									"default": "page",
+									"default": "layout",
 									"enum": [
 										"controlPanel",
-										"page"
+										"layout"
 									]
 								}
 							},

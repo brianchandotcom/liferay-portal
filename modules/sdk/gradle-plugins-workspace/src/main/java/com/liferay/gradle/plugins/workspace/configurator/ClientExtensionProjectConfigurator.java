@@ -1223,7 +1223,7 @@ public class ClientExtensionProjectConfigurator
 		}
 		else if (Objects.equals(clientExtension.type, "themeCSS")) {
 			_validateTypeSettingsValues(
-				clientExtension, "scope", "controlPanel", "page");
+				clientExtension, "scope", "controlPanel", "layout");
 		}
 	}
 

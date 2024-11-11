@@ -452,7 +452,7 @@
 				"type": "CETProperty.Type.String"
 			},
 			{
-				"default": "page",
+				"default": "layout",
 				"name": "scope",
 				"type": "CETProperty.Type.String"
 			},

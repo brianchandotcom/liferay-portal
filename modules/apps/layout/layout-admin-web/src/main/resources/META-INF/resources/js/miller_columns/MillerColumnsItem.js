@@ -19,13 +19,15 @@ import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import ACTIONS from '../actions';
-import {ACCEPTING_TYPES, ITEM_HOVER_BORDER_LIMIT} from './constants';
+import {ACCEPTING_TYPES} from './constants/acceptingTypes';
 
 const DROP_ZONES = {
 	BOTTOM: 'BOTTOM',
 	ELEMENT: 'ELEMENT',
 	TOP: 'TOP',
 };
+
+const ITEM_HOVER_BORDER_LIMIT = 20;
 
 const ITEM_HOVER_TIMEOUT = 500;
 

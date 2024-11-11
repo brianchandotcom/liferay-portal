@@ -12,7 +12,7 @@ import React, {useEffect, useRef} from 'react';
 import {useDrop} from 'react-dnd';
 
 import MillerColumnsItem from './MillerColumnsItem';
-import {ACCEPTING_TYPES} from './constants';
+import {ACCEPTING_TYPES} from './constants/acceptingTypes';
 
 const AUTOSCROLL_DELAY = 20;
 const AUTOSCROLL_DISTANCE = 20;

@@ -153,51 +153,53 @@ const SideMenu = () => {
 					</div>
 				)}
 
-				<li>
-					<div className="d-flex">
-						<Button
-							appendIcon={
-								!!activationSubscriptionGroups.length &&
-								'angle-right-small'
-							}
-							appendIconClassName="ml-auto"
+				{accountSubscriptionGroupsMenuItem.length > 0 && (
+					<li>
+						<div className="d-flex">
+							<Button
+								appendIcon={
+									!!activationSubscriptionGroups.length &&
+									'angle-right-small'
+								}
+								appendIconClassName="ml-auto"
+								className={classNames(
+									'align-items-center btn-borderless d-flex px-2 py-2 rounded w-100',
+									{
+										'cp-product-activation-active': isOpenedProductsMenu,
+										'text-neutral-4':
+											activationSubscriptionGroups.length < 1,
+										'text-neutral-10': !!activationSubscriptionGroups.length,
+									}
+								)}
+								disabled={activationSubscriptionGroups.length < 1}
+								iconKey="productActivation"
+								onClick={() =>
+									setIsOpenedProductsMenu(
+										(previousIsOpenedProductsMenu) =>
+											!previousIsOpenedProductsMenu
+									)
+								}
+							>
+								{i18n.translate(
+									getKebabCase(MENU_TYPES.productActivation)
+								)}
+							</Button>
+						</div>
+
+						<ul
 							className={classNames(
-								'align-items-center btn-borderless d-flex px-2 py-2 rounded w-100',
+								'cp-products-list list-unstyled ml-3 overflow-hidden mb-1',
 								{
-									'cp-product-activation-active': isOpenedProductsMenu,
-									'text-neutral-4':
-										activationSubscriptionGroups.length < 1,
-									'text-neutral-10': !!activationSubscriptionGroups.length,
+									'cp-products-list-active': isOpenedProductsMenu,
 								}
 							)}
-							disabled={activationSubscriptionGroups.length < 1}
-							iconKey="productActivation"
-							onClick={() =>
-								setIsOpenedProductsMenu(
-									(previousIsOpenedProductsMenu) =>
-										!previousIsOpenedProductsMenu
-								)
-							}
+							ref={productActivationMenuRef}
 						>
-							{i18n.translate(
-								getKebabCase(MENU_TYPES.productActivation)
-							)}
-						</Button>
-					</div>
-
-					<ul
-						className={classNames(
-							'cp-products-list list-unstyled ml-3 overflow-hidden mb-1',
-							{
-								'cp-products-list-active': isOpenedProductsMenu,
-							}
-						)}
-						ref={productActivationMenuRef}
-					>
-						{accountSubscriptionGroupsMenuItem}
-					</ul>
-				</li>
-
+							{accountSubscriptionGroupsMenuItem}
+						</ul>
+					</li>
+				)}
+				
 				{featureFlags.includes('ISSD-119') && (
 					<div className="d-flex">
 						<MenuItem

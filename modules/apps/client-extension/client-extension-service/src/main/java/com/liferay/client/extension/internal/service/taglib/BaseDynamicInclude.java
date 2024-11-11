@@ -113,7 +113,7 @@ public abstract class BaseDynamicInclude implements DynamicInclude {
 				GlobalJSCET globalJSCET = (GlobalJSCET)cet;
 
 				if (!StringUtil.equalsIgnoreCase(
-						globalJSCET.getScope(), "instance")) {
+						globalJSCET.getScope(), "company")) {
 
 					continue;
 				}

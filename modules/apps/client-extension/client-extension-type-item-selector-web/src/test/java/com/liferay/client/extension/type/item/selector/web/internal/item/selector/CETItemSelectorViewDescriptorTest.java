@@ -76,7 +76,7 @@ public class CETItemSelectorViewDescriptorTest {
 		Mockito.when(
 			globalJSCET1.getScope()
 		).thenReturn(
-			"instance"
+			"company"
 		);
 
 		GlobalJSCET globalJSCET2 = Mockito.mock(GlobalJSCET.class);

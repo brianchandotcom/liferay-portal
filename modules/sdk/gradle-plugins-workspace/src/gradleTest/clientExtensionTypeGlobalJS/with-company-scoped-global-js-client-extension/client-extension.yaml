@@ -1,0 +1,5 @@
+with-company-scoped-global-js-client-extension:
+    scope: "company"
+    scriptLocation: "head"
+    type: globalJS
+    url: src/dummy.js

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -87,7 +88,9 @@ public class CETItemSelectorViewDescriptor
 			for (CET cet : cets) {
 				GlobalJSCET globalJSCET = (GlobalJSCET)cet;
 
-				if (!Objects.equals(globalJSCET.getScope(), "instance")) {
+				if (!StringUtil.equalsIgnoreCase(
+						globalJSCET.getScope(), "company")) {
+
 					filteredCETs.add(cet);
 				}
 			}

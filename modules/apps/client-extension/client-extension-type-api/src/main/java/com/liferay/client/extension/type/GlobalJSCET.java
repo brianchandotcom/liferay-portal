@@ -18,7 +18,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface GlobalJSCET extends CET {
 
 	@CETProperty(
-		defaultValue = "page", label = "scope", name = "scope",
+		defaultValue = "layout", label = "scope", name = "scope",
 		type = CETProperty.Type.String
 	)
 	public String getScope();

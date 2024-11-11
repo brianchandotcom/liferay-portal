@@ -1201,7 +1201,7 @@ public class ClientExtensionProjectConfigurator
 		else if (Objects.equals(clientExtension.type, "globalJS")) {
 			_validateGlobalJSScriptElementAttributes(clientExtension);
 			_validateTypeSettingsValues(
-				clientExtension, "scope", "instance", "page");
+				clientExtension, "scope", "company", "layout");
 			_validateTypeSettingsValues(
 				clientExtension, "scriptLocation", "bottom", "head");
 		}

@@ -116,7 +116,7 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 - *liferay-sample-global-js-3*
 
-	Add a global script element to an instance.
+	Add a global script element to a company.
 
 - *liferay-sample-iframe-1*
 

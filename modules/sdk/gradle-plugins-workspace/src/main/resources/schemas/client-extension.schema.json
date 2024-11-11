@@ -221,10 +221,10 @@
 						{
 							"properties": {
 								"scope": {
-									"default": "page",
+									"default": "layout",
 									"enum": [
-										"instance",
-										"page"
+										"company",
+										"layout"
 									]
 								},
 								"scriptElementAttributes": {

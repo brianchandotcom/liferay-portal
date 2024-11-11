@@ -281,7 +281,7 @@ public class FaroChannelLocalServiceImpl
 					resourceBundle,
 					"log-in-to-your-workspace-to-access-this-property"),
 				EmailUtil.getTitleIconURL(),
-				_language.get(resourceBundle, "you-have-been-added")
+				_language.get(resourceBundle, "new-property-access")
 			});
 
 		_mailService.sendEmail(new MailMessage(from, to, subject, body, true));

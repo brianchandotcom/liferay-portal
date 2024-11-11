@@ -260,6 +260,12 @@ public abstract class BasePortalInstanceResourceTestCase {
 	}
 
 	@Test
+	public void testPostPortalInstanceWithAdminWhenCompanyStrangersTrue()
+		throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPutPortalInstanceActivate() throws Exception {
 		Assert.assertTrue(false);
 	}

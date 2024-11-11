@@ -93,6 +93,7 @@ public class PortalInstanceResourceTest
 		_testPostPortalInstanceWithAdmin();
 	}
 
+	@Override
 	@Test
 	public void testPostPortalInstanceWithAdminWhenCompanyStrangersTrue()
 		throws Exception {

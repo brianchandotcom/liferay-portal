@@ -23,6 +23,11 @@ public class FrontendSampleDisplayContext {
 		_tabsItems = TabsItemListBuilder.add(
 			tabsItem -> {
 				tabsItem.setActive(true);
+				tabsItem.setLabel("Search Iterator");
+				tabsItem.setPanelId("search_iterator");
+			}
+		).add(
+			tabsItem -> {
 				tabsItem.setLabel("Search Paginator");
 				tabsItem.setPanelId("search_paginator");
 			}

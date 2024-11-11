@@ -17,6 +17,7 @@ import com.liferay.dynamic.data.mapping.item.selector.DDMTemplateItemSelectorRet
 import com.liferay.dynamic.data.mapping.item.selector.criterion.DDMTemplateItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType;
@@ -61,6 +62,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -94,10 +96,10 @@ public class JournalContentDisplayContext {
 
 	public static JournalContentDisplayContext create(
 			PortletRequest portletRequest, PortletResponse portletResponse,
-			long ddmStructureClassNameId,
+			DDMTemplateLocalService ddmTemplateLocalService,
 			ModelResourcePermission<DDMTemplate>
 				ddmTemplateModelResourcePermission,
-			ItemSelector itemSelector, TrashHelper trashHelper)
+			ItemSelector itemSelector, Portal portal, TrashHelper trashHelper)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -119,8 +121,8 @@ public class JournalContentDisplayContext {
 			journalContentDisplayContext = new JournalContentDisplayContext(
 				portletRequest, portletResponse, themeDisplay,
 				journalContentPortletInstanceConfiguration,
-				ddmStructureClassNameId, ddmTemplateModelResourcePermission,
-				itemSelector, trashHelper);
+				ddmTemplateLocalService, ddmTemplateModelResourcePermission,
+				itemSelector, portal, trashHelper);
 
 			portletRequest.setAttribute(
 				getRequestAttributeName(portletDisplay.getId()),
@@ -358,9 +360,37 @@ public class JournalContentDisplayContext {
 			return _ddmTemplateKey;
 		}
 
-		String ddmTemplateKey = ParamUtil.getString(
-			_portletRequest, "ddmTemplateKey",
-			_journalContentPortletInstanceConfiguration.ddmTemplateKey());
+		String ddmTemplateKey = null;
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-27566")) {
+
+			String ddmTemplateExternalReferenceCode =
+				_journalContentPortletInstanceConfiguration.
+					ddmTemplateExternalReferenceCode();
+
+			ddmTemplateKey = ParamUtil.getString(
+				_portletRequest, "ddmTemplateKey");
+
+			if (Validator.isNotNull(ddmTemplateExternalReferenceCode) &&
+				Validator.isNull(ddmTemplateKey)) {
+
+				DDMTemplate ddmTemplate =
+					_ddmTemplateLocalService.
+						fetchDDMTemplateByExternalReferenceCode(
+							ddmTemplateExternalReferenceCode,
+							_themeDisplay.getScopeGroupId());
+
+				if (ddmTemplate != null) {
+					ddmTemplateKey = ddmTemplate.getTemplateKey();
+				}
+			}
+		}
+		else {
+			ddmTemplateKey = ParamUtil.getString(
+				_portletRequest, "ddmTemplateKey",
+				_journalContentPortletInstanceConfiguration.ddmTemplateKey());
+		}
 
 		if (Validator.isNotNull(ddmTemplateKey)) {
 			_ddmTemplateKey = ddmTemplateKey;
@@ -742,6 +772,27 @@ public class JournalContentDisplayContext {
 	}
 
 	public boolean isDefaultTemplate() {
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-27566")) {
+
+			String ddmTemplateExternalReferenceCode = ParamUtil.getString(
+				_portletRequest, "ddmTemplateExternalReferenceCode");
+
+			if (Validator.isNotNull(ddmTemplateExternalReferenceCode)) {
+				return false;
+			}
+
+			ddmTemplateExternalReferenceCode =
+				_journalContentPortletInstanceConfiguration.
+					ddmTemplateExternalReferenceCode();
+
+			if (Validator.isNotNull(ddmTemplateExternalReferenceCode)) {
+				return false;
+			}
+
+			return true;
+		}
+
 		String ddmTemplateKey = ParamUtil.getString(
 			_portletRequest, "ddmTemplateKey");
 
@@ -976,10 +1027,10 @@ public class JournalContentDisplayContext {
 			ThemeDisplay themeDisplay,
 			JournalContentPortletInstanceConfiguration
 				journalContentPortletInstanceConfiguration,
-			long ddmStructureClassNameId,
+			DDMTemplateLocalService ddmTemplateLocalService,
 			ModelResourcePermission<DDMTemplate>
 				ddmTemplateModelResourcePermission,
-			ItemSelector itemSelector, TrashHelper trashHelper)
+			ItemSelector itemSelector, Portal portal, TrashHelper trashHelper)
 		throws PortalException {
 
 		_portletRequest = portletRequest;
@@ -987,10 +1038,11 @@ public class JournalContentDisplayContext {
 		_themeDisplay = themeDisplay;
 		_journalContentPortletInstanceConfiguration =
 			journalContentPortletInstanceConfiguration;
-		_ddmStructureClassNameId = ddmStructureClassNameId;
+		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_ddmTemplateModelResourcePermission =
 			ddmTemplateModelResourcePermission;
 		_itemSelector = itemSelector;
+		_portal = portal;
 		_trashHelper = trashHelper;
 
 		AssetEntry assetEntry = _getAssetEntry();
@@ -1078,8 +1130,8 @@ public class JournalContentDisplayContext {
 		}
 
 		return DDMTemplateLocalServiceUtil.fetchTemplate(
-			article.getGroupId(), _ddmStructureClassNameId, ddmTemplateKey,
-			true);
+			article.getGroupId(), _portal.getClassNameId(DDMStructure.class),
+			ddmTemplateKey, true);
 	}
 
 	private Group _getGroup() {
@@ -1102,9 +1154,9 @@ public class JournalContentDisplayContext {
 	private String _articleExternalReferenceCode;
 	private Long _articleGroupId;
 	private String _articleId;
-	private final long _ddmStructureClassNameId;
 	private DDMTemplate _ddmTemplate;
 	private String _ddmTemplateKey;
+	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final ModelResourcePermission<DDMTemplate>
 		_ddmTemplateModelResourcePermission;
 	private List<DDMTemplate> _ddmTemplates;
@@ -1115,6 +1167,7 @@ public class JournalContentDisplayContext {
 	private final JournalContentPortletInstanceConfiguration
 		_journalContentPortletInstanceConfiguration;
 	private JournalArticle _latestArticle;
+	private final Portal _portal;
 	private final PortletRequest _portletRequest;
 	private String _portletResource;
 	private final PortletResponse _portletResponse;

@@ -5,8 +5,8 @@
 
 package com.liferay.journal.content.web.internal.portlet;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.constants.JournalContentPortletKeys;
@@ -221,9 +221,8 @@ public class JournalContentPortlet extends MVCPortlet {
 
 		try {
 			JournalContentDisplayContext.create(
-				renderRequest, renderResponse,
-				_portal.getClassNameId(DDMStructure.class),
-				_ddmTemplateModelResourcePermission, _itemSelector,
+				renderRequest, renderResponse, _ddmTemplateLocalService,
+				_ddmTemplateModelResourcePermission, _itemSelector, _portal,
 				_trashHelper);
 		}
 		catch (PortalException portalException) {
@@ -280,9 +279,8 @@ public class JournalContentPortlet extends MVCPortlet {
 
 			try {
 				JournalContentDisplayContext.create(
-					resourceRequest, resourceResponse,
-					_portal.getClassNameId(DDMStructure.class),
-					_ddmTemplateModelResourcePermission, _itemSelector,
+					resourceRequest, resourceResponse, _ddmTemplateLocalService,
+					_ddmTemplateModelResourcePermission, _itemSelector, _portal,
 					_trashHelper);
 			}
 			catch (PortalException portalException) {
@@ -310,6 +308,9 @@ public class JournalContentPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentPortlet.class);
+
+	@Reference
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate)"

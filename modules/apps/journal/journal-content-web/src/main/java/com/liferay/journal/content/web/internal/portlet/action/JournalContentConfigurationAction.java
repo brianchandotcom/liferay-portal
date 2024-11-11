@@ -91,9 +91,8 @@ public class JournalContentConfigurationAction
 
 		try {
 			JournalContentDisplayContext.create(
-				portletRequest, portletResponse,
-				_portal.getClassNameId(DDMStructure.class),
-				_ddmTemplateModelResourcePermission, _itemSelector,
+				portletRequest, portletResponse, _ddmTemplateLocalService,
+				_ddmTemplateModelResourcePermission, _itemSelector, _portal,
 				_trashHelper);
 		}
 		catch (PortalException portalException) {
@@ -133,6 +132,35 @@ public class JournalContentConfigurationAction
 		setPreference(
 			actionRequest, "contentMetadataAssetAddonEntryKeys",
 			StringUtil.merge(contentMetadataAssetAddonEntryKeys));
+
+		String ddmTemplateKey = ParamUtil.getString(
+			actionRequest, "ddmTemplateKey");
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-27566")) {
+
+			String ddmTemplateExternalReferenceCode = StringPool.BLANK;
+
+			if (Validator.isNotNull(ddmTemplateKey)) {
+				DDMTemplate ddmTemplate =
+					_ddmTemplateLocalService.fetchTemplate(
+						themeDisplay.getScopeGroupId(),
+						_portal.getClassNameId(DDMStructure.class),
+						ddmTemplateKey);
+
+				if (ddmTemplate != null) {
+					ddmTemplateExternalReferenceCode =
+						ddmTemplate.getExternalReferenceCode();
+				}
+			}
+
+			setPreference(
+				actionRequest, "ddmTemplateExternalReferenceCode",
+				ddmTemplateExternalReferenceCode);
+		}
+		else {
+			setPreference(actionRequest, "ddmTemplateKey", ddmTemplateKey);
+		}
 
 		setPreference(
 			actionRequest, "groupId",

@@ -24,7 +24,6 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import dragAndDropElement from '../../utils/dragAndDropElement';
 import getGlobalSiteId from '../../utils/getGlobalSiteId';
 import getRandomString from '../../utils/getRandomString';
-import {PORTLET_URLS} from '../../utils/portletUrls';
 import getBasicWebContentStructureId, {
 	getWebContentStructureId,
 } from '../../utils/structured-content/getBasicWebContentStructureId';
@@ -37,6 +36,7 @@ import {
 	LEMON_OBJECT_ERC,
 } from '../setup/page-management-site/constants';
 import {deleteObjectEntries} from '../setup/page-management-site/utils/deleteObjectEntries';
+import {gotoObjectEntries} from '../setup/page-management-site/utils/gotoObjectEntries';
 import getContainerDefinition from './utils/getContainerDefinition';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -1789,7 +1789,7 @@ test.describe('Tags Fragment', () => {
 			ObjectAdminRestClient
 		);
 
-		const {className: objectDefinitionClassName, id: objectDefinitionId} =
+		const {className: objectDefinitionClassName} =
 			await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
 				{
 					externalReferenceCode: LEMON_OBJECT_ERC,
@@ -1895,9 +1895,11 @@ test.describe('Tags Fragment', () => {
 
 		// Go to the object definition page and check the Tags fragment
 
-		await page.goto(
-			`/group${pageManagementSite.friendlyUrlPath}${PORTLET_URLS.objects}_${objectDefinitionId}`
-		);
+		await gotoObjectEntries({
+			entityName: 'Lemons',
+			page,
+			siteUrl: pageManagementSite.friendlyUrlPath,
+		});
 
 		const objectRow = page
 			.locator('.dnd-tr')

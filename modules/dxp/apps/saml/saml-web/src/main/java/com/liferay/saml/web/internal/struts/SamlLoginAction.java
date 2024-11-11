@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -114,18 +113,15 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 					"redirecting-to-your-identity-provider"));
 		}
 		else if (samlSpIdpConnections.size() == 1) {
-			Layout layout = (Layout)httpServletRequest.getAttribute(
-				WebKeys.LAYOUT);
-
-			Company company = _portal.getCompany(httpServletRequest);
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			Company company = _portal.getCompany(httpServletRequest);
+
 			String title = _layoutSEOLinkManager.getFullPageTitle(
-				layout, null, null, null, null, company.getName(),
-				themeDisplay.getLocale());
+				themeDisplay.getLayout(), null, null, null, null,
+				company.getName(), themeDisplay.getLocale());
 
 			JspUtil.dispatch(
 				httpServletRequest, httpServletResponse,

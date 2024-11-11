@@ -149,9 +149,13 @@ public class SamlLoginActionTest {
 			htmlTitle
 		);
 
-		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
-
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			themeDisplay.getLayout()
+		).thenReturn(
+			layout
+		);
 
 		Mockito.when(
 			themeDisplay.getLocale()

@@ -34,12 +34,6 @@ public class CPConfigurationEntryModelPreFilterContributor
 		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
 		SearchContext searchContext) {
 
-		_filterByCPConfigurationList(booleanFilter, searchContext);
-	}
-
-	private void _filterByCPConfigurationList(
-		BooleanFilter booleanFilter, SearchContext searchContext) {
-
 		long cpConfigurationListId = GetterUtil.getLong(
 			searchContext.getAttribute("cpConfigurationListId"));
 

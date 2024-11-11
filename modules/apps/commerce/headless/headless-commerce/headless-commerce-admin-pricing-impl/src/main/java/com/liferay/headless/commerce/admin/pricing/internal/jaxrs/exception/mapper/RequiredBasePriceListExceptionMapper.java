@@ -5,7 +5,7 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.price.list.exception.CommerceBasePriceListCannotDeleteException;
+import com.liferay.commerce.price.list.exception.RequiredCommerceBasePriceListException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -21,13 +21,13 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing.BasePriceListCannotDeleteExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing.RequiredBasePriceListExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class BasePriceListCannotDeleteExceptionMapper
-	extends BaseExceptionMapper<CommerceBasePriceListCannotDeleteException> {
+public class RequiredBasePriceListExceptionMapper
+	extends BaseExceptionMapper<RequiredCommerceBasePriceListException> {
 
 	@Override
 	public String getErrorDescription() {

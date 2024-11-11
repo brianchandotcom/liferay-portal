@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
-import com.liferay.saml.helper.RelayStateHelper;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributePublisherImpl;
@@ -1321,8 +1320,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				messageContext.getSubcontext(SAMLBindingContext.class);
 
 			redirect = portal.escapeRedirect(
-				_relayStateHelper.getRedirectFromRelayStateToken(
-					samlBindingContext.getRelayState()));
+				samlBindingContext.getRelayState());
 		}
 
 		if (Validator.isNull(redirect)) {
@@ -2281,9 +2279,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		policyOption = ReferencePolicyOption.GREEDY, target = "(!(companyId=*))"
 	)
 	private NameIdResolver _defaultNameIdResolver;
-
-	@Reference
-	private RelayStateHelper _relayStateHelper;
 
 	private SamlConfiguration _samlConfiguration;
 

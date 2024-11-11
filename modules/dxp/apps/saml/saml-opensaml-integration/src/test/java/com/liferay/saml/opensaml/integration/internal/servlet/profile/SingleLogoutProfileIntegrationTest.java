@@ -5,10 +5,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.cache.test.util.TestPortalCache;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cookies.CookiesManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -19,7 +16,6 @@ import com.liferay.portal.struts.TilesUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
-import com.liferay.saml.opensaml.integration.internal.helper.RelayStateHelperImpl;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlSpSession;
@@ -111,21 +107,6 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 			keyStoreLocalEntityManager);
 		ReflectionTestUtil.setFieldValue(
 			_singleLogoutProfileImpl, "portal", portal);
-
-		PortalCache<String, String> portalCache = new TestPortalCache<>(
-			StringPool.BLANK);
-
-		ReflectionTestUtil.setFieldValue(
-			_relayStateHelperImpl, "_redirectsToRelayStateTokensPortalCache",
-			portalCache);
-		ReflectionTestUtil.setFieldValue(
-			_relayStateHelperImpl, "_relayStateTokensToRedirectsPortalCache",
-			portalCache);
-
-		ReflectionTestUtil.setFieldValue(
-			_singleLogoutProfileImpl, "_relayStateHelper",
-			_relayStateHelperImpl);
-
 		ReflectionTestUtil.setFieldValue(
 			_singleLogoutProfileImpl, "samlBindingProvider",
 			samlBindingProvider);
@@ -381,8 +362,6 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 	private static ServiceRegistration<CookiesManager>
 		_cookiesManagerServiceRegistration;
 
-	private final RelayStateHelperImpl _relayStateHelperImpl =
-		new RelayStateHelperImpl();
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
 	private SamlIdpSpSessionLocalService _samlIdpSpSessionLocalService;
 	private SamlSpSessionLocalService _samlSpSessionLocalService;

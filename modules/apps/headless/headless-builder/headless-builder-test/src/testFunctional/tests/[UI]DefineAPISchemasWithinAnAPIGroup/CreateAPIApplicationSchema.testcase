@@ -28,7 +28,7 @@ definition {
 	tearDown {
 		ApplicationAPI.deleteAllAPIApplication();
 
-		JSONObject.deleteAllCustomObjects(pageSize = 21);
+		JSONObject.deleteAllCustomObjects();
 
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 

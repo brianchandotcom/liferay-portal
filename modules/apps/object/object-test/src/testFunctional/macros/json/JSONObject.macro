@@ -875,7 +875,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteAllCustomObjects(pageSize = null) {
+	macro deleteAllCustomObjects() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -886,15 +886,8 @@ definition {
 			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
-		if (isSet(pageSize)) {
-			var url = "object-admin/v1.0/object-definitions?pageSize=${pageSize}";
-		}
-		else {
-			var url = "object-admin/v1.0/object-definitions";
-		}
-
 		var curl = '''
-			${portalURL}/o/${url} \
+			${portalURL}/o/object-admin/v1.0/object-definitions?pageSize=-1 \
 				-u ${userEmailAddress}:${userPassword}
 		''';
 

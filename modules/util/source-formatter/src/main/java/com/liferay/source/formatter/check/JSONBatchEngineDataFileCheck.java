@@ -71,26 +71,28 @@ public class JSONBatchEngineDataFileCheck extends BaseFileCheck {
 	private JSONObject _checkItems(JSONObject jsonObject) {
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
-		if (jsonArray != null) {
-			List<Object> objects = JSONUtil.toObjectList(jsonArray);
+		if (jsonArray == null) {
+			return jsonObject;
+		}
 
-			jsonArray = new JSONArrayImpl();
+		List<Object> objects = JSONUtil.toObjectList(jsonArray);
 
-			for (Object object : objects) {
-				JSONObject itemJSONObject = (JSONObject)object;
+		jsonArray = new JSONArrayImpl();
 
-				String defaultLanguageId = itemJSONObject.getString(
-					"defaultLanguageId");
+		for (Object object : objects) {
+			JSONObject itemJSONObject = (JSONObject)object;
 
-				if (defaultLanguageId.equals(StringPool.BLANK)) {
-					itemJSONObject.put("defaultLanguageId", "en_US");
-				}
+			String defaultLanguageId = itemJSONObject.getString(
+				"defaultLanguageId");
 
-				jsonArray.put(itemJSONObject);
+			if (defaultLanguageId.equals(StringPool.BLANK)) {
+				itemJSONObject.put("defaultLanguageId", "en_US");
 			}
 
-			jsonObject.put("items", jsonArray);
+			jsonArray.put(itemJSONObject);
 		}
+
+		jsonObject.put("items", jsonArray);
 
 		return jsonObject;
 	}

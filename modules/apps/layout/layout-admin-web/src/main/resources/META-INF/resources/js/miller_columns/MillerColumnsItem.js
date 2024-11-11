@@ -13,7 +13,7 @@ import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {PageTemplateModal} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
-import {fetch, sub} from 'frontend-js-web';
+import {fetch, navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
@@ -410,7 +410,23 @@ const MillerColumnsItem = ({
 			ref={ref}
 			verticalAlign="center"
 		>
-			<a className="miller-columns-item-mask" href={url} role="button">
+			<a
+				className="miller-columns-item-mask"
+				href={url}
+				onKeyDown={(event) => {
+					const key = rtl ? 'ArrowLeft' : 'ArrowRight';
+
+					if (
+						event.key === key &&
+						hasChild &&
+						!active &&
+						Liferay.FeatureFlags['LPD-35220']
+					) {
+						navigate(url);
+					}
+				}}
+				role="button"
+			>
 				<span className="c-inner sr-only">{title}</span>
 			</a>
 

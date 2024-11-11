@@ -5,8 +5,6 @@
 
 	relationshipObjectFieldModel = dataFactory.newObjectFieldModel(0, objectDefinitionModel.getObjectDefinitionId(), "Relationship", "r_userTicket_userId", objectDefinitionModel.getDBTableName(), "Long", "Assignee", "r_userTicket_userId", false, false, false)
 
-	objectFieldSettingModel = dataFactory.newObjectFieldSettingModel(relationshipObjectFieldModel.getObjectFieldId(), "objectRelationshipERCObjectFieldName", "r_userTicket_userERC")
-
 	listTypeDefinitionModel = dataFactory.newListTypeDefinitionModel()
 
 	listTypeEntryModels = dataFactory.newListTypeEntryModels(listTypeDefinitionModel.getListTypeDefinitionId())
@@ -22,7 +20,7 @@ ${dataFactory.toInsertSQL(objectDefinitionModel)}
 
 ${dataFactory.toInsertSQL(relationshipObjectFieldModel)}
 
-${dataFactory.toInsertSQL(objectFieldSettingModel)}
+${dataFactory.toInsertSQL(dataFactory.newObjectFieldSettingModel(relationshipObjectFieldModel.getObjectFieldId(), "objectRelationshipERCObjectFieldName", "r_userTicket_userERC"))}
 
 ${dataFactory.toInsertSQL(dataFactory.newObjectRelationshipModel(userObjectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getObjectDefinitionId(), relationshipObjectFieldModel.getObjectFieldId()))}
 

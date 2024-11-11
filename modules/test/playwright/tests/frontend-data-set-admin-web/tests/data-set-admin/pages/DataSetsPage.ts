@@ -124,7 +124,6 @@ export class DataSetsPage {
 		await this.applicationsMenuPage.goToDataSetManager();
 
 		if (
-			(await this.dataSetsTabs.isVisible()) &&
 			dataSetsType === 'System Data Sets'
 		) {
 			await this.systemDataSetsTab.click();

@@ -238,7 +238,7 @@ definition {
 		}
 
 		task ("Then all fields of APISort object definition are present") {
-			var fieldNameList = "Author,Create Date,External Reference Code,ID,Modified Date,Status,OData Sort,UniversityAPISorts";
+			var fieldNameList = "Author,Create Date,External Reference Code,ID,Modified Date,Status,OData Sort";
 
 			for (var fieldName : list ${fieldNameList}) {
 				AssertElementPresent(

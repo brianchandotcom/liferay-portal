@@ -73,8 +73,8 @@ const assertListVisualizationMode = async ({dataSetFragmentPage}) => {
 
 test.describe('Data Set Default Visualization Mode in fragment', () => {
 	test('When there is only one visualization mode defined, that will be the default one. Cards', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 	}) => {
 		await test.step('Assign a field to a Card title section', async () => {
@@ -89,8 +89,8 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 	});
 
 	test('When there are more than one visualization mode defined (cards & list), the user could change the visualization option.', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 	}) => {
 		await test.step('Assign a field to a Card and List title sections', async () => {
@@ -114,8 +114,8 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 	});
 
 	test('When there are more than one visualization modes defined, with a default selected (List), this will be the default one in the fragment.', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 		page,
 	}) => {
@@ -158,8 +158,8 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 	});
 
 	test('When the default visualization mode is changed in the Data Set Manager, the change is reflected in the fragment', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 		page,
 	}) => {

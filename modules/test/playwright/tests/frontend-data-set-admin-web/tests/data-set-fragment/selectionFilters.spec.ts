@@ -161,8 +161,8 @@ test.afterEach(
 );
 
 test('Selection filter of type "Object Picklist" is displayed in fragment @LPD-10754', async ({
-	dataSetManagerApiHelpers,
 	dataSetFragmentPage,
+	dataSetManagerApiHelpers,
 	layout,
 	page,
 	picklistApiHelpers,
@@ -270,8 +270,8 @@ test('Selection filter of type "Object Picklist" is displayed in fragment @LPD-1
 });
 
 test('Selection filter of type "Object Picklist" can be configured to use single or multiple selection', async ({
-	dataSetManagerApiHelpers,
 	dataSetFragmentPage,
+	dataSetManagerApiHelpers,
 	layout,
 	page,
 	picklistApiHelpers,
@@ -435,8 +435,8 @@ test('Selection filter of type "Object Picklist" can be configured to use single
 });
 
 test('Selection filter of type "Object Picklist" can be configured to include or exclude selected values', async ({
-	dataSetManagerApiHelpers,
 	dataSetFragmentPage,
+	dataSetManagerApiHelpers,
 	layout,
 	page,
 	picklistApiHelpers,
@@ -559,8 +559,8 @@ test('Selection filter of type "Object Picklist" can be configured to include or
 });
 
 test('Selection filter of type "API REST Application" is displayed in fragment @LPD-10754', async ({
-	dataSetManagerApiHelpers,
 	dataSetFragmentPage,
+	dataSetManagerApiHelpers,
 	layout,
 }) => {
 	const filterLabel = getRandomString();
@@ -756,7 +756,7 @@ test('Selection filter of type "API REST Application" is displayed in fragment @
 test(
 	'Selection filter of type "API REST Application" with a composed field name is displayed in the fragment',
 	{tag: '@25905'},
-	async ({dataSetManagerApiHelpers, dataSetFragmentPage, layout}) => {
+	async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout}) => {
 		const filterLabel = getRandomString();
 		const customDataSetLabel = getRandomString();
 		const customDataSetERC = getRandomString();
@@ -852,7 +852,9 @@ test(
 			);
 
 			await expect(
-				dataSetFragmentPage.page.getByText('Showing 1 to 1 of 1 entries.')
+				dataSetFragmentPage.page.getByText(
+					'Showing 1 to 1 of 1 entries.'
+				)
 			).toBeVisible();
 		});
 	}

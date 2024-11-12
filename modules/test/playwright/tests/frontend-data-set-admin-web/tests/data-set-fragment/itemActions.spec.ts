@@ -56,8 +56,8 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 
 test.describe('Empty Item Actions in Data Set fragment', () => {
 	test('Item Action button does not appear if there is no item action', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 	}) => {
 		await test.step('Create table field', async () => {
@@ -78,7 +78,9 @@ test.describe('Empty Item Actions in Data Set fragment', () => {
 
 		await test.step('Check that the Item Action button is not present', async () => {
 			await expect(
-				dataSetFragmentPage.page.getByLabel(LINK_ITEM_ACTION_NAME).first()
+				dataSetFragmentPage.page
+					.getByLabel(LINK_ITEM_ACTION_NAME)
+					.first()
 			).not.toBeVisible();
 		});
 	});
@@ -104,8 +106,8 @@ test.describe('Item Actions in Data Set fragment', () => {
 	});
 
 	test('Link Item Action (single action) is shown in the fragment', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 		page,
 	}) => {
@@ -129,7 +131,9 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 		await test.step('Check that the Item Action button is present', async () => {
 			await expect(
-				dataSetFragmentPage.page.getByLabel(LINK_ITEM_ACTION_NAME).first()
+				dataSetFragmentPage.page
+					.getByLabel(LINK_ITEM_ACTION_NAME)
+					.first()
 			).toBeVisible();
 		});
 
@@ -158,8 +162,8 @@ test.describe('Item Actions in Data Set fragment', () => {
 	});
 
 	test('Link, Modal and Side Panel Item Actions (multiple actions) are shown in fragment', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 		page,
 	}) => {
@@ -322,8 +326,8 @@ test.describe('Item Actions in Data Set fragment', () => {
 	});
 
 	test('Async and Headless Item Actions (multiple actions) are shown in fragment', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 		page,
 	}) => {
@@ -478,8 +482,8 @@ test.describe('Item Actions in Data Set fragment', () => {
 	});
 
 	test('Async and Headless Item Actions (multiple actions) performs UPDATE operations on items', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 		page,
 	}) => {
@@ -632,8 +636,8 @@ test.describe('Item Actions in Data Set fragment', () => {
 	});
 
 	test('Async Item Action shows an error toast in the fragment when a failure occurs', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 		page,
 	}) => {

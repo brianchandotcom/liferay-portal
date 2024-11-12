@@ -43,8 +43,8 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 
 test.describe('Visualization Modes in Data Set fragment', () => {
 	test('Show mapped fields in the fragment', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 		page,
 	}) => {
@@ -226,8 +226,8 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 	});
 
 	test('Show mapped scalar array field in the fragment @LPD-11769', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 		page,
 	}) => {

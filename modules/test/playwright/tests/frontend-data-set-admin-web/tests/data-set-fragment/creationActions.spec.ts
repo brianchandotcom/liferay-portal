@@ -67,13 +67,15 @@ test.describe('Creation Actions in Data Set fragment', () => {
 		});
 
 		await test.step('Check that the Creation Action button is not present', async () => {
-			await expect(dataSetFragmentPage.creationMenuButton).not.toBeVisible();
+			await expect(
+				dataSetFragmentPage.creationMenuButton
+			).not.toBeVisible();
 		});
 	});
 
 	test('Show a simple button if only one Creation Action is defined', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 		page,
 	}) => {
@@ -116,8 +118,8 @@ test.describe('Creation Actions in Data Set fragment', () => {
 	});
 
 	test('Show the Creation Actions menu if more than one Creation Action is defined', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 	}) => {
 		const firstActionLabel = 'Custom Creation Action';
@@ -146,7 +148,9 @@ test.describe('Creation Actions in Data Set fragment', () => {
 
 		const actionDropdownMenuId =
 			await test.step('Check that the Creation Action menu is present', async () => {
-				await dataSetFragmentPage.creationMenuButton.first().isVisible();
+				await dataSetFragmentPage.creationMenuButton
+					.first()
+					.isVisible();
 
 				const button = dataSetFragmentPage.creationMenuButton.first();
 

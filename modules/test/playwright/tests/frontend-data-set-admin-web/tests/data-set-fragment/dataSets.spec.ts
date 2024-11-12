@@ -84,7 +84,7 @@ test(
 	{
 		tag: '@LPS-172403',
 	},
-	async ({dataSetManagerApiHelpers, dataSetFragmentPage, layout, page}) => {
+	async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout, page}) => {
 		const dataSetERC1 = getRandomString();
 		const dataSetERC2 = getRandomString();
 		const dataSetLabel1 = getRandomString();
@@ -184,7 +184,9 @@ test(
 				}),
 			});
 
-			await expect(dataSetFragmentPage.selectedDataSetInput).toHaveValue('');
+			await expect(dataSetFragmentPage.selectedDataSetInput).toHaveValue(
+				''
+			);
 		});
 
 		await test.step('Remove "Data Set" fragment from the page', async () => {
@@ -251,8 +253,8 @@ test(
 	},
 	async ({
 		apiHelpers,
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 		page,
 	}) => {

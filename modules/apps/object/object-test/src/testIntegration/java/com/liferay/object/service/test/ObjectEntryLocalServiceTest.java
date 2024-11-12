@@ -786,14 +786,58 @@ public class ObjectEntryLocalServiceTest {
 					"listTypeEntryKeyRequired", "listTypeEntryKey1"
 				).build()));
 
+		// localized values
+
 		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
 			true,
-			Arrays.asList(
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING,
+					RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_SITE);
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		Group group = GroupTestUtil.addGroup();
+
+		_testAddObjectEntryWithLocalizedValues(objectDefinition, group);
+
+		ObjectDefinition modifiableSystemObjectDefinition =
+			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), null, true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			TestPropsValues.getUserId(),
+			modifiableSystemObjectDefinition.getObjectDefinitionId());
+
+		_testAddObjectEntryWithLocalizedValues(
+			modifiableSystemObjectDefinition, group);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			modifiableSystemObjectDefinition.getObjectDefinitionId());
+
+		// unique values in different sites
+
+		objectDefinition = _publishCustomObjectDefinition(
+			false,
+			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 					RandomTestUtil.randomString(), "name",
-					Arrays.asList(
+					Collections.singletonList(
 						new ObjectFieldSettingBuilder(
 						).name(
 							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
@@ -814,6 +858,14 @@ public class ObjectEntryLocalServiceTest {
 				"name", "Peter"
 			).build());
 
+		_addObjectEntry(
+			group.getGroupId(), objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", "Peter"
+			).build());
+
+		// unique values in the same site
+
 		long finalObjectDefinitionId = objectDefinition.getObjectDefinitionId();
 
 		AssertUtils.assertFailure(
@@ -826,14 +878,6 @@ public class ObjectEntryLocalServiceTest {
 					"name", "Peter"
 				).build()));
 
-		Group group = GroupTestUtil.addGroup();
-
-		_addObjectEntry(
-			group.getGroupId(), objectDefinition.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"name", "Peter"
-			).build());
-
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
 			"Unique value constraint violation for " +
@@ -844,32 +888,7 @@ public class ObjectEntryLocalServiceTest {
 					"name", "Peter"
 				).build()));
 
-		_testAddObjectEntryWithLocalizedValues(objectDefinition, group);
-
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-
-		ObjectDefinition modifiableSystemObjectDefinition =
-			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), StringUtil.randomId())));
-
-		_objectDefinitionLocalService.publishSystemObjectDefinition(
-			TestPropsValues.getUserId(),
-			modifiableSystemObjectDefinition.getObjectDefinitionId());
-
-		_testAddObjectEntryWithLocalizedValues(
-			modifiableSystemObjectDefinition, group);
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			modifiableSystemObjectDefinition.getObjectDefinitionId());
 	}
 
 	@Test

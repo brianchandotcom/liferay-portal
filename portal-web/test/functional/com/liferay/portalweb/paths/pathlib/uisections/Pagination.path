@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ACTIVE_PAGE</td>
+	<td>//ul[@class='pagination']/li[@class='page-item active']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPROXIMATE_RESULTS</td>
 	<td>//div[@class='clearfix lfr-pagination']/small</td>
 	<td></td>

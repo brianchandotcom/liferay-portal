@@ -122,10 +122,10 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 				(ContentPageTemplate)pageTemplate, group);
 		}
 
-		return _addWidgetPageTemplate(group, (WidgetPageTemplate)pageTemplate);
+		return _addPageTemplate(group, (WidgetPageTemplate)pageTemplate);
 	}
 
-	private PageTemplate _addWidgetPageTemplate(
+	private PageTemplate _addPageTemplate(
 			Group group, WidgetPageTemplate widgetPageTemplate)
 		throws Exception {
 

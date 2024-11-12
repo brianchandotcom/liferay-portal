@@ -137,6 +137,17 @@ public class BuildServiceTask extends JavaExec {
 			jvmArgs.add("--illegal-access=permit");
 		}
 
+		if (javaVersion.isJava11Compatible()) {
+			jvmArgs.add("--add-opens=java.base/java.lang=ALL-UNNAMED");
+			jvmArgs.add("--add-opens=java.base/java.lang.invoke=ALL-UNNAMED");
+			jvmArgs.add("--add-opens=java.base/java.lang.reflect=ALL-UNNAMED");
+			jvmArgs.add("--add-opens=java.base/java.net=ALL-UNNAMED");
+			jvmArgs.add(
+				"--add-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED");
+			jvmArgs.add("--add-opens=java.base/sun.util.calendar=ALL-UNNAMED");
+			jvmArgs.add("--add-opens=jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED");
+		}
+
 		return jvmArgs;
 	}
 

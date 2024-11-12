@@ -499,6 +499,22 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	@Override
+	public Layout fetchLayoutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		Layout layout = layoutLocalService.fetchLayoutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+
+		if (layout != null) {
+			LayoutPermissionUtil.check(
+				getPermissionChecker(), layout, ActionKeys.VIEW);
+		}
+
+		return layout;
+	}
+
+	@Override
 	public long fetchLayoutPlid(
 			String uuid, long groupId, boolean privateLayout)
 		throws PortalException {

@@ -615,7 +615,6 @@ public class JournalContentDisplayContext {
 
 		String articleExternalReferenceCode = portletPreferences.getValue(
 			"articleExternalReferenceCode", null);
-
 		long groupId = GetterUtil.getLong(
 			portletPreferences.getValue("groupId", null));
 

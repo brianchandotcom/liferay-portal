@@ -881,23 +881,6 @@ public class JournalArticleLocalServiceUtil {
 			groupId, externalReferenceCode);
 	}
 
-	/**
-	 * Returns the latest web content article matching the group, the
-	 * external reference code and the status.
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param externalReferenceCode the web content article's external
-	 reference code
-	 * @param status the web content article's workflow status. For more
-	 information see {@link WorkflowConstants} for constants starting
-	 with the "STATUS_" prefix.
-	 * @param preferApproved whether to prefer returning the latest matching
-	 article that has workflow status {@link
-	 WorkflowConstants#STATUS_APPROVED} over returning one that has a
-	 different status
-	 * @return the latest matching web content article, or <code>null</code> if
-	 no matching web content article could be found
-	 */
 	public static JournalArticle fetchLatestArticleByExternalReferenceCode(
 		long groupId, String externalReferenceCode, int status,
 		boolean preferApproved) {
@@ -906,18 +889,6 @@ public class JournalArticleLocalServiceUtil {
 			groupId, externalReferenceCode, status, preferApproved);
 	}
 
-	/**
-	 * Returns the latest web content article matching the group, article ID,
-	 * and workflow status.
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param articleId the primary key of the web content article
-	 * @param statuses the web content article's workflow statuses. For more
-	 information see {@link WorkflowConstants} for constants starting
-	 with the "STATUS_" prefix.
-	 * @return the latest matching web content article, or <code>null</code> if
-	 no matching web content article could be found
-	 */
 	public static JournalArticle fetchLatestArticleByExternalReferenceCode(
 		long groupId, String externalReferenceCode, int[] statuses) {
 
@@ -2105,23 +2076,6 @@ public class JournalArticleLocalServiceUtil {
 			groupId, externalReferenceCode);
 	}
 
-	/**
-	 * Returns the latest web content article matching the group, the
-	 * external reference code and the status.
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param externalReferenceCode the web content article's external
-	 reference code
-	 * @param status the web content article's workflow status. For more
-	 information see {@link WorkflowConstants} for constants starting
-	 with the "STATUS_" prefix.
-	 * @param preferApproved whether to prefer returning the latest matching
-	 article that has workflow status {@link
-	 WorkflowConstants#STATUS_APPROVED} over returning one that has a
-	 different status
-	 * @return the latest matching web content article
-	 * @throws PortalException if a portal exception occurred
-	 */
 	public static JournalArticle getLatestArticleByExternalReferenceCode(
 			long groupId, String externalReferenceCode, int status,
 			boolean preferApproved)

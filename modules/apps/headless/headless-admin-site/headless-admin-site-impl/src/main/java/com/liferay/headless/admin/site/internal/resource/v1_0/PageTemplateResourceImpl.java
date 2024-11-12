@@ -95,7 +95,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		return _addPageTemplate(group, pageTemplate);
 	}
 
-	private PageTemplate _addContentPageTemplate(
+	private PageTemplate _addPageTemplate(
 			ContentPageTemplate contentPageTemplate, Group group)
 		throws Exception {
 
@@ -118,7 +118,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 				pageTemplate.getType(),
 				PageTemplate.Type.CONTENT_PAGE_TEMPLATE)) {
 
-			return _addContentPageTemplate(
+			return _addPageTemplate(
 				(ContentPageTemplate)pageTemplate, group);
 		}
 

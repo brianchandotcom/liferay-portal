@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.currency.service.persistence.impl;
 
+import com.liferay.commerce.currency.exception.DuplicateCommerceCurrencyExternalReferenceCodeException;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceCurrencyTable;
@@ -23,12 +24,18 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -3565,6 +3572,213 @@ public class CommerceCurrencyPersistenceImpl
 	private static final String _FINDER_COLUMN_C_P_A_ACTIVE_2 =
 		"commerceCurrency.active = ?";
 
+	private FinderPath _finderPathFetchByERC_C;
+
+	/**
+	 * Returns the commerce currency where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCurrencyException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching commerce currency
+	 * @throws NoSuchCurrencyException if a matching commerce currency could not be found
+	 */
+	@Override
+	public CommerceCurrency findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchCurrencyException {
+
+		CommerceCurrency commerceCurrency = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (commerceCurrency == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCurrencyException(sb.toString());
+		}
+
+		return commerceCurrency;
+	}
+
+	/**
+	 * Returns the commerce currency where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
+	 */
+	@Override
+	public CommerceCurrency fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns the commerce currency where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
+	 */
+	@Override
+	public CommerceCurrency fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {externalReferenceCode, companyId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByERC_C, finderArgs, this);
+		}
+
+		if (result instanceof CommerceCurrency) {
+			CommerceCurrency commerceCurrency = (CommerceCurrency)result;
+
+			if (!Objects.equals(
+					externalReferenceCode,
+					commerceCurrency.getExternalReferenceCode()) ||
+				(companyId != commerceCurrency.getCompanyId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_COMMERCECURRENCY_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				List<CommerceCurrency> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByERC_C, finderArgs, list);
+					}
+				}
+				else {
+					CommerceCurrency commerceCurrency = list.get(0);
+
+					result = commerceCurrency;
+
+					cacheResult(commerceCurrency);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CommerceCurrency)result;
+		}
+	}
+
+	/**
+	 * Removes the commerce currency where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the commerce currency that was removed
+	 */
+	@Override
+	public CommerceCurrency removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchCurrencyException {
+
+		CommerceCurrency commerceCurrency = findByERC_C(
+			externalReferenceCode, companyId);
+
+		return remove(commerceCurrency);
+	}
+
+	/**
+	 * Returns the number of commerce currencies where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching commerce currencies
+	 */
+	@Override
+	public int countByERC_C(String externalReferenceCode, long companyId) {
+		CommerceCurrency commerceCurrency = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (commerceCurrency == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"commerceCurrency.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(commerceCurrency.externalReferenceCode IS NULL OR commerceCurrency.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"commerceCurrency.companyId = ?";
+
 	public CommerceCurrencyPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3598,6 +3812,14 @@ public class CommerceCurrencyPersistenceImpl
 			_finderPathFetchByC_C,
 			new Object[] {
 				commerceCurrency.getCompanyId(), commerceCurrency.getCode()
+			},
+			commerceCurrency);
+
+		finderCache.putResult(
+			_finderPathFetchByERC_C,
+			new Object[] {
+				commerceCurrency.getExternalReferenceCode(),
+				commerceCurrency.getCompanyId()
 			},
 			commerceCurrency);
 	}
@@ -3682,6 +3904,14 @@ public class CommerceCurrencyPersistenceImpl
 
 		finderCache.putResult(
 			_finderPathFetchByC_C, args, commerceCurrencyModelImpl);
+
+		args = new Object[] {
+			commerceCurrencyModelImpl.getExternalReferenceCode(),
+			commerceCurrencyModelImpl.getCompanyId()
+		};
+
+		finderCache.putResult(
+			_finderPathFetchByERC_C, args, commerceCurrencyModelImpl);
 	}
 
 	/**
@@ -3820,6 +4050,72 @@ public class CommerceCurrencyPersistenceImpl
 			String uuid = PortalUUIDUtil.generate();
 
 			commerceCurrency.setUuid(uuid);
+		}
+
+		if (Validator.isNull(commerceCurrency.getExternalReferenceCode())) {
+			commerceCurrency.setExternalReferenceCode(
+				commerceCurrency.getUuid());
+		}
+		else {
+			if (!Objects.equals(
+					commerceCurrencyModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					commerceCurrency.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = commerceCurrency.getCompanyId();
+
+					long groupId = 0;
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = commerceCurrency.getPrimaryKey();
+					}
+
+					try {
+						commerceCurrency.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								CommerceCurrency.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								commerceCurrency.getExternalReferenceCode(),
+								null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			CommerceCurrency ercCommerceCurrency = fetchByERC_C(
+				commerceCurrency.getExternalReferenceCode(),
+				commerceCurrency.getCompanyId());
+
+			if (isNew) {
+				if (ercCommerceCurrency != null) {
+					throw new DuplicateCommerceCurrencyExternalReferenceCodeException(
+						"Duplicate commerce currency with external reference code " +
+							commerceCurrency.getExternalReferenceCode() +
+								" and company " +
+									commerceCurrency.getCompanyId());
+				}
+			}
+			else {
+				if ((ercCommerceCurrency != null) &&
+					(commerceCurrency.getCommerceCurrencyId() !=
+						ercCommerceCurrency.getCommerceCurrencyId())) {
+
+					throw new DuplicateCommerceCurrencyExternalReferenceCodeException(
+						"Duplicate commerce currency with external reference code " +
+							commerceCurrency.getExternalReferenceCode() +
+								" and company " +
+									commerceCurrency.getCompanyId());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -4279,6 +4575,11 @@ public class CommerceCurrencyPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"companyId", "primary_", "active_"}, false);
+
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
 
 		CommerceCurrencyUtil.setPersistence(this);
 	}

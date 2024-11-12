@@ -33,7 +33,8 @@ public class CommerceCurrencyServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.currency.service.impl.CommerceCurrencyServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CommerceCurrency addCommerceCurrency(
-			String code, Map<java.util.Locale, String> nameMap, String symbol,
+			String externalReferenceCode, String code,
+			Map<java.util.Locale, String> nameMap, String symbol,
 			java.math.BigDecimal rate,
 			Map<java.util.Locale, String> formatPatternMap,
 			int maxFractionDigits, int minFractionDigits, String roundingMode,
@@ -41,14 +42,23 @@ public class CommerceCurrencyServiceUtil {
 		throws PortalException {
 
 		return getService().addCommerceCurrency(
-			code, nameMap, symbol, rate, formatPatternMap, maxFractionDigits,
-			minFractionDigits, roundingMode, primary, priority, active);
+			externalReferenceCode, code, nameMap, symbol, rate,
+			formatPatternMap, maxFractionDigits, minFractionDigits,
+			roundingMode, primary, priority, active);
 	}
 
 	public static void deleteCommerceCurrency(long commerceCurrencyId)
 		throws PortalException {
 
 		getService().deleteCommerceCurrency(commerceCurrencyId);
+	}
+
+	public static CommerceCurrency fetchCommerceCurrencyByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCommerceCurrencyByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static CommerceCurrency fetchPrimaryCommerceCurrency(long companyId)
@@ -135,8 +145,9 @@ public class CommerceCurrencyServiceUtil {
 	}
 
 	public static CommerceCurrency updateCommerceCurrency(
-			long commerceCurrencyId, Map<java.util.Locale, String> nameMap,
-			String symbol, java.math.BigDecimal rate,
+			String externalReferenceCode, long commerceCurrencyId,
+			Map<java.util.Locale, String> nameMap, String symbol,
+			java.math.BigDecimal rate,
 			Map<java.util.Locale, String> formatPatternMap,
 			int maxFractionDigits, int minFractionDigits, String roundingMode,
 			boolean primary, double priority, boolean active,
@@ -144,9 +155,9 @@ public class CommerceCurrencyServiceUtil {
 		throws PortalException {
 
 		return getService().updateCommerceCurrency(
-			commerceCurrencyId, nameMap, symbol, rate, formatPatternMap,
-			maxFractionDigits, minFractionDigits, roundingMode, primary,
-			priority, active, serviceContext);
+			externalReferenceCode, commerceCurrencyId, nameMap, symbol, rate,
+			formatPatternMap, maxFractionDigits, minFractionDigits,
+			roundingMode, primary, priority, active, serviceContext);
 	}
 
 	public static void updateExchangeRate(

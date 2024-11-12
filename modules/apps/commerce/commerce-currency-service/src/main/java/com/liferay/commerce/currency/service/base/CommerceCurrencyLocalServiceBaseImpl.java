@@ -262,6 +262,23 @@ public abstract class CommerceCurrencyLocalServiceBaseImpl
 			uuid, companyId, null);
 	}
 
+	@Override
+	public CommerceCurrency fetchCommerceCurrencyByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return commerceCurrencyPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public CommerceCurrency getCommerceCurrencyByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return commerceCurrencyPersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the commerce currency with the primary key.
 	 *

@@ -6,6 +6,7 @@
 package com.liferay.commerce.currency.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.currency.exception.DuplicateCommerceCurrencyExternalReferenceCodeException;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
@@ -122,6 +123,9 @@ public class CommerceCurrencyPersistenceTest {
 
 		newCommerceCurrency.setUuid(RandomTestUtil.randomString());
 
+		newCommerceCurrency.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newCommerceCurrency.setCompanyId(RandomTestUtil.nextLong());
 
 		newCommerceCurrency.setUserId(RandomTestUtil.nextLong());
@@ -167,6 +171,9 @@ public class CommerceCurrencyPersistenceTest {
 			newCommerceCurrency.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceCurrency.getUuid(), newCommerceCurrency.getUuid());
+		Assert.assertEquals(
+			existingCommerceCurrency.getExternalReferenceCode(),
+			newCommerceCurrency.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingCommerceCurrency.getCommerceCurrencyId(),
 			newCommerceCurrency.getCommerceCurrencyId());
@@ -219,6 +226,28 @@ public class CommerceCurrencyPersistenceTest {
 			Time.getShortTimestamp(
 				existingCommerceCurrency.getLastPublishDate()),
 			Time.getShortTimestamp(newCommerceCurrency.getLastPublishDate()));
+	}
+
+	@Test(
+		expected = DuplicateCommerceCurrencyExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		CommerceCurrency commerceCurrency = addCommerceCurrency();
+
+		CommerceCurrency newCommerceCurrency = addCommerceCurrency();
+
+		newCommerceCurrency.setCompanyId(commerceCurrency.getCompanyId());
+
+		newCommerceCurrency = _persistence.update(newCommerceCurrency);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newCommerceCurrency);
+
+		newCommerceCurrency.setExternalReferenceCode(
+			commerceCurrency.getExternalReferenceCode());
+
+		_persistence.update(newCommerceCurrency);
 	}
 
 	@Test
@@ -282,6 +311,15 @@ public class CommerceCurrencyPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C("null", 0L);
+
+		_persistence.countByERC_C((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceCurrency newCommerceCurrency = addCommerceCurrency();
 
@@ -307,12 +345,12 @@ public class CommerceCurrencyPersistenceTest {
 	protected OrderByComparator<CommerceCurrency> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"CommerceCurrency", "mvccVersion", true, "uuid", true,
-			"commerceCurrencyId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "code",
-			true, "name", true, "symbol", true, "rate", true, "formatPattern",
-			true, "maxFractionDigits", true, "minFractionDigits", true,
-			"roundingMode", true, "primary", true, "priority", true, "active",
-			true, "lastPublishDate", true);
+			"externalReferenceCode", true, "commerceCurrencyId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "code", true, "name", true, "symbol",
+			true, "rate", true, "formatPattern", true, "maxFractionDigits",
+			true, "minFractionDigits", true, "roundingMode", true, "primary",
+			true, "priority", true, "active", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -594,6 +632,17 @@ public class CommerceCurrencyPersistenceTest {
 			ReflectionTestUtil.invoke(
 				commerceCurrency, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "code_"));
+
+		Assert.assertEquals(
+			commerceCurrency.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				commerceCurrency, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(commerceCurrency.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				commerceCurrency, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected CommerceCurrency addCommerceCurrency() throws Exception {
@@ -604,6 +653,9 @@ public class CommerceCurrencyPersistenceTest {
 		commerceCurrency.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceCurrency.setUuid(RandomTestUtil.randomString());
+
+		commerceCurrency.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		commerceCurrency.setCompanyId(RandomTestUtil.nextLong());
 

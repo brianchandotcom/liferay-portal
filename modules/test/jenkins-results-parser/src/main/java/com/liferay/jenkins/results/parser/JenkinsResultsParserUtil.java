@@ -2397,6 +2397,23 @@ public class JenkinsResultsParserUtil {
 		return JenkinsCohort.getInstance(getCohortName());
 	}
 
+	public static String getJenkinsLoadBalancerURL() {
+		try {
+			String jenkinsLoadBalancerURL = getBuildProperty(
+				"jenkins.load.balancer.url");
+
+			if (isURL(jenkinsLoadBalancerURL)) {
+				return jenkinsLoadBalancerURL;
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
+		}
+
+		return _URL_LOAD_BALANCER_DEFAULT;
+	}
+
 	public static String getJenkinsMasterName(String jenkinsSlaveName) {
 		jenkinsSlaveName = jenkinsSlaveName.replaceAll("([^\\.]+).*", "$1");
 
@@ -2605,6 +2622,23 @@ public class JenkinsResultsParserUtil {
 		_jenkinsProperties = new SecureProperties(properties);
 
 		return (Properties)_jenkinsProperties;
+	}
+
+	public static String getJenkinsTempMapURL() {
+		try {
+			String jenkinsOSBJenkinsWebURL = getBuildProperty(
+				"jenkins.osb.jenkins.web.url");
+
+			if (isURL(jenkinsOSBJenkinsWebURL)) {
+				return jenkinsOSBJenkinsWebURL + "/map";
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
+		}
+
+		return _URL_TEMP_MAP_DEFAULT;
 	}
 
 	public static Document getJobConfigDocument(
@@ -2834,7 +2868,7 @@ public class JenkinsResultsParserUtil {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_URL_LOAD_BALANCER);
+		sb.append(getJenkinsLoadBalancerURL());
 		sb.append("?baseInvocationURL=");
 		sb.append(baseInvocationURL);
 
@@ -6849,8 +6883,11 @@ public class JenkinsResultsParserUtil {
 
 	private static final String _UPSTREAM_USER_NAME_DEFAULT = "liferay";
 
-	private static final String _URL_LOAD_BALANCER =
+	private static final String _URL_LOAD_BALANCER_DEFAULT =
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/load_balancer";
+
+	private static final String _URL_TEMP_MAP_DEFAULT =
+		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map";
 
 	private static final Log _log = LogFactory.getLog(
 		JenkinsResultsParserUtil.class);

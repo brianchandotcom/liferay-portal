@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -75,6 +77,17 @@ public interface CPConfigurationEntryLocalService
 	public CPConfigurationEntry addCPConfigurationEntry(
 		CPConfigurationEntry cpConfigurationEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CPConfigurationEntry addCPConfigurationEntry(
+			String externalReferenceCode, long userId, long classNameId,
+			long classPK, long cpConfigurationListId,
+			String allowedOrderQuantities, boolean backOrders,
+			String cpDefinitionInventoryEngine, boolean displayAvailability,
+			boolean displayStockQuantity, String lowStockActivity,
+			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
+			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity)
+		throws PortalException;
+
 	/**
 	 * Creates a new cp configuration entry with the primary key. Does not add the cp configuration entry to the database.
 	 *
@@ -90,6 +103,8 @@ public interface CPConfigurationEntryLocalService
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void deleteCPConfigurationEntries(long cpConfigurationListId);
 
 	/**
 	 * Deletes the cp configuration entry from the database. Also notifies the appropriate model listeners.
@@ -237,6 +252,10 @@ public interface CPConfigurationEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPConfigurationEntry> getCPConfigurationEntries(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPConfigurationEntry> getCPConfigurationEntries(
+		long cpConfigurationListId);
 
 	/**
 	 * Returns the number of cp configuration entries.

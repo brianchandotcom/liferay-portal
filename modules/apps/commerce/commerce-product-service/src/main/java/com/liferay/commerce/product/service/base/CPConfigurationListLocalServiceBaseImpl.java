@@ -147,11 +147,13 @@ public abstract class CPConfigurationListLocalServiceBaseImpl
 	 *
 	 * @param cpConfigurationList the cp configuration list
 	 * @return the cp configuration list that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CPConfigurationList deleteCPConfigurationList(
-		CPConfigurationList cpConfigurationList) {
+			CPConfigurationList cpConfigurationList)
+		throws PortalException {
 
 		return cpConfigurationListPersistence.remove(cpConfigurationList);
 	}

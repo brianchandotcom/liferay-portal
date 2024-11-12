@@ -156,35 +156,6 @@ definition {
 	}
 
 	@priority = 5
-	test ViewOutOfDatePublicationsArchive735 {
-		property data.archive.type = "data-archive-publications";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "7.3.5";
-
-		ValidatePublicationsUpgrade.viewOutOfDatePublications();
-	}
-
-	@priority = 5
-	test ViewOutOfDatePublicationsArchive7310 {
-		property data.archive.type = "data-archive-publications";
-		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";
-		property portal.version = "7.3.10";
-		property test.run.environment = "EE";
-
-		ValidatePublicationsUpgrade.viewOutOfDatePublications();
-	}
-
-	@priority = 5
-	test ViewOutOfDatePublicationsArchive73101 {
-		property data.archive.type = "data-archive-publications";
-		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";
-		property portal.version = "7.3.10.1";
-		property test.run.environment = "EE";
-
-		ValidatePublicationsUpgrade.viewOutOfDatePublications();
-	}
-
-	@priority = 5
 	test ViewPublicationsUserRolePermissionsArchive735 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,postgresql";

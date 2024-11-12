@@ -50,6 +50,26 @@ public class CPConfigurationListLocalServiceWrapper
 			cpConfigurationList);
 	}
 
+	@Override
+	public CPConfigurationList addCPConfigurationList(
+			String externalReferenceCode, long groupId, long userId,
+			long parentCPConfigurationListId, boolean masterCPConfigurationList,
+			String name, double priority, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpConfigurationListLocalService.addCPConfigurationList(
+			externalReferenceCode, groupId, userId, parentCPConfigurationListId,
+			masterCPConfigurationList, name, priority, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire);
+	}
+
 	/**
 	 * Creates a new cp configuration list with the primary key. Does not add the cp configuration list to the database.
 	 *
@@ -85,10 +105,12 @@ public class CPConfigurationListLocalServiceWrapper
 	 *
 	 * @param cpConfigurationList the cp configuration list
 	 * @return the cp configuration list that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public CPConfigurationList deleteCPConfigurationList(
-		CPConfigurationList cpConfigurationList) {
+			CPConfigurationList cpConfigurationList)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpConfigurationListLocalService.deleteCPConfigurationList(
 			cpConfigurationList);
@@ -112,6 +134,13 @@ public class CPConfigurationListLocalServiceWrapper
 
 		return _cpConfigurationListLocalService.deleteCPConfigurationList(
 			CPConfigurationListId);
+	}
+
+	@Override
+	public void deleteCPConfigurationLists(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpConfigurationListLocalService.deleteCPConfigurationLists(companyId);
 	}
 
 	/**
@@ -262,6 +291,14 @@ public class CPConfigurationListLocalServiceWrapper
 	}
 
 	@Override
+	public CPConfigurationList forceDeleteCPConfigurationList(
+		CPConfigurationList cpConfigurationList) {
+
+		return _cpConfigurationListLocalService.forceDeleteCPConfigurationList(
+			cpConfigurationList);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -330,6 +367,14 @@ public class CPConfigurationListLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List<CPConfigurationList> getCPConfigurationLists(
+		long groupId, long companyId) {
+
+		return _cpConfigurationListLocalService.getCPConfigurationLists(
+			groupId, companyId);
+	}
+
 	/**
 	 * Returns all the cp configuration lists matching the UUID and company.
 	 *
@@ -393,6 +438,15 @@ public class CPConfigurationListLocalServiceWrapper
 
 		return _cpConfigurationListLocalService.
 			getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public CPConfigurationList getMasterCPConfigurationList(long groupId)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPConfigurationListException {
+
+		return _cpConfigurationListLocalService.getMasterCPConfigurationList(
+			groupId);
 	}
 
 	/**

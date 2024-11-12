@@ -53,6 +53,26 @@ public class CPConfigurationEntryLocalServiceUtil {
 		return getService().addCPConfigurationEntry(cpConfigurationEntry);
 	}
 
+	public static CPConfigurationEntry addCPConfigurationEntry(
+			String externalReferenceCode, long userId, long classNameId,
+			long classPK, long cpConfigurationListId,
+			String allowedOrderQuantities, boolean backOrders,
+			String cpDefinitionInventoryEngine, boolean displayAvailability,
+			boolean displayStockQuantity, String lowStockActivity,
+			java.math.BigDecimal maxOrderQuantity,
+			java.math.BigDecimal minOrderQuantity,
+			java.math.BigDecimal minStockQuantity,
+			java.math.BigDecimal multipleOrderQuantity)
+		throws PortalException {
+
+		return getService().addCPConfigurationEntry(
+			externalReferenceCode, userId, classNameId, classPK,
+			cpConfigurationListId, allowedOrderQuantities, backOrders,
+			cpDefinitionInventoryEngine, displayAvailability,
+			displayStockQuantity, lowStockActivity, maxOrderQuantity,
+			minOrderQuantity, minStockQuantity, multipleOrderQuantity);
+	}
+
 	/**
 	 * Creates a new cp configuration entry with the primary key. Does not add the cp configuration entry to the database.
 	 *
@@ -73,6 +93,12 @@ public class CPConfigurationEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static void deleteCPConfigurationEntries(
+		long cpConfigurationListId) {
+
+		getService().deleteCPConfigurationEntries(cpConfigurationListId);
 	}
 
 	/**
@@ -254,6 +280,12 @@ public class CPConfigurationEntryLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getCPConfigurationEntries(start, end);
+	}
+
+	public static List<CPConfigurationEntry> getCPConfigurationEntries(
+		long cpConfigurationListId) {
+
+		return getService().getCPConfigurationEntries(cpConfigurationListId);
 	}
 
 	/**

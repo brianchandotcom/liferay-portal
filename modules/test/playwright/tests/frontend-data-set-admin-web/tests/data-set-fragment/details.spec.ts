@@ -43,8 +43,8 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 
 test.describe('Parameters in Data Set Fragment', () => {
 	test('Check that the sort parameter is applied @LPD-25241', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 	}) => {
 		await test.step('Add fields', async () => {
@@ -93,8 +93,8 @@ test.describe('Parameters in Data Set Fragment', () => {
 	});
 
 	test('Check that the filter parameter is applied @LPD-25241', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 	}) => {
 		await test.step('Add fields', async () => {

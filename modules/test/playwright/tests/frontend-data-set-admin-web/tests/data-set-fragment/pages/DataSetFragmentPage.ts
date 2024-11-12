@@ -60,9 +60,7 @@ export class DataSetFragmentPage {
 		this.loadingIndicator = page.locator('.fds .loading-animation');
 		this.page = page;
 		this.paginationResults = page.locator('.pagination-results');
-		this.paginationWrapper = page.locator(
-			'.data-set-pagination-wrapper'
-		);
+		this.paginationWrapper = page.locator('.data-set-pagination-wrapper');
 		this.publishPageButton = page.getByRole('button', {
 			name: 'Publish',
 		});
@@ -77,8 +75,8 @@ export class DataSetFragmentPage {
 			name: 'Select Data Set View',
 		});
 		this.selectedDataSetInput = page
-		.getByLabel('Configuration Panel')
-		.getByLabel('Data Set View', {exact: true});
+			.getByLabel('Configuration Panel')
+			.getByLabel('Data Set View', {exact: true});
 		this.tableWrapper = page.locator('.dnd-table');
 	}
 

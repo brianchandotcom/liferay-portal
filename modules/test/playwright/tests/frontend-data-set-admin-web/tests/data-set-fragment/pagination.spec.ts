@@ -87,7 +87,9 @@ test.describe('Data Set Pagination configuration in the fragment', () => {
 		await dataSetFragmentPage.page.locator(`#${dropdownId}`).waitFor();
 
 		await expect(
-			dataSetFragmentPage.page.locator(`#${dropdownId}`).getByRole('option')
+			dataSetFragmentPage.page
+				.locator(`#${dropdownId}`)
+				.getByRole('option')
 		).toHaveCount(deltas.length);
 
 		const paginationOptions = await dataSetFragmentPage.page
@@ -135,8 +137,8 @@ test.describe('Data Set Pagination configuration in the fragment', () => {
 	});
 
 	test('FDS uses custom pagination configuration after creating a Data Set', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 	}) => {
 		await test.step('Update Data Set pagination configuration', async () => {

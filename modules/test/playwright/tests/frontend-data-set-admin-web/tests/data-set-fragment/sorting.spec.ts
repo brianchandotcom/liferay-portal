@@ -43,8 +43,8 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 
 test.describe('Sorting Dropdown in Data Set Fragment', () => {
 	test('When sorting is configured with at least 1 sort, the dropdown is displayed in the fragment @LPD-19503', async ({
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 		page,
 	}) => {
@@ -154,9 +154,12 @@ test.describe('Sorting Dropdown in Data Set Fragment', () => {
 			await page.getByRole('button', {name: 'Order'}).click();
 			await page.getByRole('menuitem', {name: 'Ascending'}).click();
 
-			const firstNameTextAscending = await dataSetFragmentPage.tableWrapper
-				.locator('.dnd-tbody .dnd-tr:first-child .dnd-td:nth-child(2)')
-				.textContent();
+			const firstNameTextAscending =
+				await dataSetFragmentPage.tableWrapper
+					.locator(
+						'.dnd-tbody .dnd-tr:first-child .dnd-td:nth-child(2)'
+					)
+					.textContent();
 
 			const lastNameTextAscending = await dataSetFragmentPage.tableWrapper
 				.locator('.dnd-tbody .dnd-tr:last-child .dnd-td:nth-child(2)')
@@ -168,8 +171,8 @@ test.describe('Sorting Dropdown in Data Set Fragment', () => {
 
 	test('When the current page language is changed, the current translation is used and fallbacks to the site default language @LPD-25464', async ({
 		accountSettingsPage,
-		dataSetManagerApiHelpers,
 		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
 		layout,
 		page,
 	}) => {

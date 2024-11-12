@@ -165,8 +165,14 @@ public class TypeFacetPortletSharedSearchContributorTest {
 
 		SearchRequest searchRequest = searchRequestBuilder.build();
 
-		Assert.assertEquals(
-			expectedEntryClassNames, searchRequest.getEntryClassNames());
+		List<String> actualEntryClassNames = new ArrayList<>(
+			searchRequest.getEntryClassNames());
+
+		Collections.sort(actualEntryClassNames);
+
+		Collections.sort(expectedEntryClassNames);
+
+		Assert.assertEquals(expectedEntryClassNames, actualEntryClassNames);
 	}
 
 	private static final PortletPreferences _portletPreferences = Mockito.mock(

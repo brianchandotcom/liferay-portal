@@ -62,7 +62,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 		boolean processed = GetterUtil.getBoolean(
 			portalPreferences.getValue(
-				FeatureFlagConstants.FEATURE_FLAG,
+				FeatureFlagConstants.PREFERENCE_KEY_FEATURE_FLAG,
 				FeatureFlagConstants.PREFERENCE_KEY_DEPRECATION_PROCESSED));
 
 		if (processed) {
@@ -82,7 +82,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		}
 
 		portalPreferences.setValue(
-			FeatureFlagConstants.FEATURE_FLAG,
+			FeatureFlagConstants.PREFERENCE_KEY_FEATURE_FLAG,
 			FeatureFlagConstants.PREFERENCE_KEY_DEPRECATION_PROCESSED, "true");
 
 		_portalPreferencesLocalService.updatePreferences(

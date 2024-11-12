@@ -267,7 +267,7 @@ public class LoginMVCActionCommandTest {
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		httpSession.setAttribute("MFA_WEB_KEY", "key");
+		httpSession.setAttribute("MFA_WEB_KEY", RandomTestUtil.randomString());
 
 		return mockLiferayPortletActionRequest;
 	}

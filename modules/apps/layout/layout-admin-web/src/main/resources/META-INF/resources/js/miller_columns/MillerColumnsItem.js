@@ -107,14 +107,6 @@ const getDropZone = (ref, monitor) => {
 	return dropZone;
 };
 
-const getItemIndex = (item = {}, items) => {
-	const siblings = Array.from(items.values()).filter(
-		(_item) => _item.columnIndex === item.columnIndex
-	);
-
-	return siblings.indexOf(item);
-};
-
 function addSeparators(items) {
 	if (items.length < 2) {
 		return items;
@@ -315,18 +307,8 @@ const MillerColumnsItem = ({
 		},
 		item: {
 			items: checked
-				? Array.from(items.values())
-						.filter((item) => item.checked)
-						.map((item) => ({
-							...item,
-							itemIndex: getItemIndex(item, items),
-						}))
-				: [
-						{
-							...items.get(itemId),
-							itemIndex: getItemIndex(items.get(itemId), items),
-						},
-					],
+				? Array.from(items.values()).filter((item) => item.checked)
+				: [items.get(itemId)],
 			type: ACCEPTING_TYPES.ITEM,
 		},
 	});

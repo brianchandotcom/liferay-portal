@@ -1,0 +1,49 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import React from 'react';
+
+type ProgressBarContentProps = {
+	maxCount: number;
+	title: string;
+	usedCount: number;
+};
+
+const ProgressBarContent: React.FC<ProgressBarContentProps> = ({
+	maxCount,
+	title,
+	usedCount,
+}) => {
+	const barPercentage = `${(usedCount / maxCount) * 100}%`;
+
+	return (
+		<div className="progress-bar-content w-100">
+			<h5 className="mb-3">{title}</h5>
+
+			<div>
+				<div className="align-items-end d-flex justify-content-between mb-2">
+					<h3 className="m-0 value-text">
+						{usedCount.toLocaleString()}
+					</h3>
+
+					<span className="total-value-text">
+						of {maxCount.toLocaleString()}
+					</span>
+				</div>
+
+				<div className="bar-container">
+					<div
+						className="bar-content overflow-hidden"
+						style={{
+							width: barPercentage,
+						}}
+					/>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export default ProgressBarContent;

@@ -53,6 +53,42 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 
 	@Override
+	public void deleteSiteSiteByExternalReferenceCodePageTemplate(
+			String siteExternalReferenceCode,
+			String pageTemplateExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntry(
+			pageTemplateExternalReferenceCode,
+			GroupUtil.getGroupId(
+				true, false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
+	}
+
+	@Override
+	public PageTemplate getSiteSiteByExternalReferenceCodePageTemplate(
+			String siteExternalReferenceCode,
+			String pageTemplateExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _pageTemplateDTOConverter.toDTO(
+			_layoutPageTemplateEntryService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					pageTemplateExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode)));
+	}
+
+	@Override
 	public Page<PageTemplate>
 			getSiteSiteByExternalReferenceCodePageTemplatesPage(
 				String siteExternalReferenceCode, String search,

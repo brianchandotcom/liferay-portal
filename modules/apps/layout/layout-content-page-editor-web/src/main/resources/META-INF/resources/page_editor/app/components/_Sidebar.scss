@@ -218,7 +218,7 @@ html#{$cadmin-selector} body {
 		--toolbar-height: #{$desktopToolbarHeight};
 	}
 
-	@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
+	@include media-breakpoint-up(lg, $cadmin-grid-breakpoints) {
 		overflow: hidden;
 	}
 }

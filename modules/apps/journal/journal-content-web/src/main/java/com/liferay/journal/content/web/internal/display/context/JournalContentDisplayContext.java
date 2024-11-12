@@ -437,20 +437,6 @@ public class JournalContentDisplayContext {
 			_themeDisplay.getScopeGroupId(), JournalPortletKeys.JOURNAL);
 	}
 
-	public String getId() {
-
-		// TODO Remove this method. Modify usage to call
-		// getArticleExternalReferenceCode or getArticleId depending on FF.
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPD-27566")) {
-
-			return getArticleExternalReferenceCode();
-		}
-
-		return getArticleId();
-	}
-
 	public PortletURL getItemSelectorURL() {
 		LiferayRenderRequest liferayRenderRequest =
 			(LiferayRenderRequest)LiferayPortletUtil.getLiferayPortletRequest(

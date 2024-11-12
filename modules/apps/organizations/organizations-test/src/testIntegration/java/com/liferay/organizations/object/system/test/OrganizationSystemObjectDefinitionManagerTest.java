@@ -7,6 +7,7 @@ package com.liferay.organizations.object.system.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -131,9 +132,22 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 			_organizationSystemObjectDefinitionManager.getObjectFields();
 
 		Assert.assertNotNull(objectFields);
-		Assert.assertEquals(objectFields.toString(), 2, objectFields.size());
+		Assert.assertEquals(objectFields.toString(), 3, objectFields.size());
 
 		ListIterator<ObjectField> iterator = objectFields.listIterator();
+
+		Assert.assertTrue(iterator.hasNext());
+
+		_assertEquals(
+			new LongIntegerObjectFieldBuilder(
+			).labelMap(
+				_getLabelMap("parentOrganizationId")
+			).name(
+				"parentOrganizationId"
+			).system(
+				true
+			).build(),
+			iterator.next());
 
 		Assert.assertTrue(iterator.hasNext());
 
@@ -184,7 +198,7 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 			_organizationSystemObjectDefinitionManager.
 				getTitleObjectFieldName());
 		Assert.assertEquals(
-			2, _organizationSystemObjectDefinitionManager.getVersion());
+			3, _organizationSystemObjectDefinitionManager.getVersion());
 	}
 
 	private long _addBaseModel(Map<String, Object> values) throws Exception {

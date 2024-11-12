@@ -87,7 +87,7 @@ test('Workflow task view page is accessible', async ({
 	const assetMetadataWrapperElementSelector = 'div.taglib-asset-metadata';
 
 	const openActionsMenuLinkSelector =
-		'a[title="Open Actions Menu"][role="button"]';
+		'button[aria-label="Open Actions Menu"]';
 
 	const taskContentActionsSelectors = ['edit', 'view', 'viewUsages'].map(
 		(sufix) => `#${workflowTaskDetailsPage.portletNameSpace + sufix}`

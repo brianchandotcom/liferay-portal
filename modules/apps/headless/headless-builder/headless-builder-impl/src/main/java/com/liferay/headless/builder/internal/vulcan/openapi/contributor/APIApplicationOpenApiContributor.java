@@ -74,10 +74,6 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 			return;
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35944")) {
-			_lPD35944(openAPI);
-		}
-
 		APIApplication apiApplication = _fetchAPIApplication(openAPIContext);
 
 		if (apiApplication == null) {
@@ -345,43 +341,6 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 		}
 
 		return schema;
-	}
-
-	private void _lPD35944(OpenAPI openAPI) {
-		if (!Objects.equals(
-				openAPI.getInfo(
-				).getTitle(),
-				"Headless Batch Engine")) {
-
-			return;
-		}
-
-		Paths paths = openAPI.getPaths();
-
-		if (paths == null) {
-			return;
-		}
-
-		PathItem pathItem = paths.get("/v1.0/import-task/{className}");
-
-		if (pathItem == null) {
-			return;
-		}
-
-		Operation operation = pathItem.getPost();
-
-		if (operation == null) {
-			return;
-		}
-
-		List<Parameter> parameters = operation.getParameters();
-
-		if (parameters == null) {
-			return;
-		}
-
-		parameters.removeIf(
-			param -> Objects.equals(param.getName(), "restrictedFieldNames"));
 	}
 
 	private Map<String, Schema> _removedUnusedPageSchema(

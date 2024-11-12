@@ -5,6 +5,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "io.swagger.core.v3", name: "swagger-annotations", version: "2.0.5"
+	compileOnly group: "io.swagger.core.v3", name: "swagger-models", version: "2.0.6"
 	compileOnly group: "javax.annotation", name: "javax.annotation-api", version: "1.3.2"
 	compileOnly group: "javax.annotation", name: "jsr250-api", version: "1.0"
 	compileOnly group: "javax.validation", name: "validation-api", version: "2.0.1.Final"

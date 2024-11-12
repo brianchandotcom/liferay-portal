@@ -6,6 +6,10 @@
 package com.liferay.commerce.wish.list.internal.model.listener;
 
 import com.liferay.commerce.wish.list.service.CommerceWishListLocalService;
+import com.liferay.commerce.wish.list.util.CommerceWishListThreadLocal;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -21,9 +25,21 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onBeforeRemove(Group group) {
-		_commerceWishListLocalService.deleteCommerceWishListsByGroupId(
-			group.getGroupId());
+		try {
+			CommerceWishListThreadLocal.setDefaultWishListDeletable(true);
+			_commerceWishListLocalService.deleteCommerceWishListsByGroupId(
+				group.getGroupId());
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+		finally {
+			CommerceWishListThreadLocal.setDefaultWishListDeletable(false);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GroupModelListener.class);
 
 	@Reference
 	private CommerceWishListLocalService _commerceWishListLocalService;

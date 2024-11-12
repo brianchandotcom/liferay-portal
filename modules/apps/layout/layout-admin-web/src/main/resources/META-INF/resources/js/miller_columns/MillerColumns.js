@@ -16,14 +16,16 @@ const getItemsMap = (columns, oldItems = new Map()) => {
 	const map = new Map();
 
 	let parentId;
+	let parentIndex;
 	let parentKey;
 
 	columns.forEach((column, columnIndex) => {
 		let childrenCount = 0;
 		let newParentId;
+		let newParentIndex;
 		let newParentKey;
 
-		column.forEach((item) => {
+		column.forEach((item, itemIndex) => {
 			childrenCount++;
 
 			const oldItem = Array.from(oldItems.values()).find(
@@ -34,12 +36,15 @@ const getItemsMap = (columns, oldItems = new Map()) => {
 				...item,
 				checked: oldItem ? oldItem.checked : false,
 				columnIndex,
+				itemIndex,
 				parentId,
+				parentIndex,
 				parentKey,
 			});
 
 			if (item.active && item.hasChild) {
 				newParentId = item.id;
+				newParentIndex = itemIndex;
 				newParentKey = item.key;
 			}
 		});
@@ -52,6 +57,7 @@ const getItemsMap = (columns, oldItems = new Map()) => {
 		}
 
 		parentId = newParentId;
+		parentIndex = newParentIndex;
 		parentKey = newParentKey;
 	});
 

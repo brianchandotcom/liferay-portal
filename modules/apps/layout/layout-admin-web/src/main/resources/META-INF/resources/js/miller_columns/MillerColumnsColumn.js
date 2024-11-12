@@ -126,7 +126,7 @@ const MillerColumnsColumn = ({
 				ref={ref}
 				{...sizeProps}
 			>
-				{columnItems.map((item, index) => (
+				{columnItems.map((item) => (
 					<MillerColumnsItem
 						createPageTemplateURL={createPageTemplateURL}
 						getItemActionsURL={getItemActionsURL}
@@ -135,7 +135,7 @@ const MillerColumnsColumn = ({
 						}
 						isLayoutSetPrototype={isLayoutSetPrototype}
 						isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
-						item={{...item, itemIndex: index}}
+						item={item}
 						items={items}
 						key={item.key}
 						namespace={namespace}

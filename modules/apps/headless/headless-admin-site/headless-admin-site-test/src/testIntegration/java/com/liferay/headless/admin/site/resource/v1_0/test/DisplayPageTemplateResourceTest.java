@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassSubtypeReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder;
@@ -20,6 +21,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -82,20 +84,28 @@ public class DisplayPageTemplateResourceTest
 					postDisplayPageTemplate.getExternalReferenceCode(),
 					testGroup.getGroupId()));
 
-		try {
-			displayPageTemplateResource.
-				deleteSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-					testGroup.getExternalReferenceCode(),
-					postDisplayPageTemplate.getExternalReferenceCode());
+		_assertProblemException(
+			"NOT_FOUND",
+			() ->
+				displayPageTemplateResource.
+					deleteSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+						testGroup.getExternalReferenceCode(),
+						postDisplayPageTemplate.getExternalReferenceCode()));
 
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
+		DisplayPageTemplate liveGroupDisplayPageTemplate =
+			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplate_addDisplayPageTemplate(
+				randomDisplayPageTemplate());
 
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+		_enableLocalStaging();
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				displayPageTemplateResource.
+					deleteSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+						testGroup.getExternalReferenceCode(),
+						liveGroupDisplayPageTemplate.
+							getExternalReferenceCode()));
 	}
 
 	@Override
@@ -103,33 +113,25 @@ public class DisplayPageTemplateResourceTest
 	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate()
 		throws Exception {
 
-		DisplayPageTemplate postDisplayPageTemplate =
+		DisplayPageTemplate displayPageTemplate =
 			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplate_addDisplayPageTemplate(
 				randomDisplayPageTemplate());
 
-		DisplayPageTemplate getDisplayPageTemplate =
-			displayPageTemplateResource.
-				getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-					testGroup.getExternalReferenceCode(),
-					postDisplayPageTemplate.getExternalReferenceCode());
+		_testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+			displayPageTemplate);
 
-		assertEquals(postDisplayPageTemplate, getDisplayPageTemplate);
-		assertValid(getDisplayPageTemplate);
+		_assertProblemException(
+			"NOT_FOUND",
+			() ->
+				displayPageTemplateResource.
+					getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+						testGroup.getExternalReferenceCode(),
+						RandomTestUtil.randomString()));
 
-		try {
-			displayPageTemplateResource.
-				getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-					testGroup.getExternalReferenceCode(),
-					RandomTestUtil.randomString());
+		_enableLocalStaging();
 
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+		_testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+			displayPageTemplate);
 	}
 
 	@Ignore
@@ -230,20 +232,25 @@ public class DisplayPageTemplateResourceTest
 			postDisplayPageTemplate.getExternalReferenceCode(), null,
 			Boolean.TRUE);
 
-		try {
-			displayPageTemplateResource.
-				patchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-					testGroup.getExternalReferenceCode(),
-					RandomTestUtil.randomString(), randomDisplayPageTemplate());
+		_assertProblemException(
+			"NOT_FOUND",
+			() ->
+				displayPageTemplateResource.
+					patchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+						testGroup.getExternalReferenceCode(),
+						RandomTestUtil.randomString(),
+						randomDisplayPageTemplate()));
 
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
+		_enableLocalStaging();
 
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				displayPageTemplateResource.
+					patchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+						testGroup.getExternalReferenceCode(),
+						postDisplayPageTemplate.getExternalReferenceCode(),
+						postDisplayPageTemplate));
 	}
 
 	@Override
@@ -284,9 +291,23 @@ public class DisplayPageTemplateResourceTest
 		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			randomDisplayPageTemplate());
 
-		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+		DisplayPageTemplate displayPageTemplate =
 			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplate_addDisplayPageTemplate(
-				randomDisplayPageTemplate()));
+				randomDisplayPageTemplate());
+
+		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+			displayPageTemplate);
+
+		_enableLocalStaging();
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				displayPageTemplateResource.
+					putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+						testGroup.getExternalReferenceCode(),
+						displayPageTemplate.getExternalReferenceCode(),
+						displayPageTemplate));
 	}
 
 	@Ignore
@@ -412,6 +433,30 @@ public class DisplayPageTemplateResourceTest
 			testGroup.getExternalReferenceCode(), displayPageTemplate);
 	}
 
+	private void _assertProblemException(
+			String status, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			unsafeRunnable.run();
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(status, problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	private void _enableLocalStaging() throws Exception {
+		_stagingLocalService.enableLocalStaging(
+			TestPropsValues.getUserId(), testGroup, true, false,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+	}
+
 	private String _getLayoutPageTemplateCollectionExternalReferenceCode(
 			long groupId)
 		throws Exception {
@@ -471,6 +516,20 @@ public class DisplayPageTemplateResourceTest
 					});
 			}
 		};
+	}
+
+	private void _testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+			DisplayPageTemplate displayPageTemplate)
+		throws Exception {
+
+		DisplayPageTemplate getDisplayPageTemplate =
+			displayPageTemplateResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplate.getExternalReferenceCode());
+
+		assertEquals(displayPageTemplate, getDisplayPageTemplate);
+		assertValid(getDisplayPageTemplate);
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
@@ -632,5 +691,8 @@ public class DisplayPageTemplateResourceTest
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private StagingLocalService _stagingLocalService;
 
 }

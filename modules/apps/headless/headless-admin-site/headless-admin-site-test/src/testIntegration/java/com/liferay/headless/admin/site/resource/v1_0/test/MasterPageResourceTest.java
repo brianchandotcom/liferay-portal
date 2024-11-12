@@ -6,15 +6,24 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -24,6 +33,13 @@ import org.junit.runner.RunWith;
 @FeatureFlags("LPD-35443")
 @RunWith(Arquillian.class)
 public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Override
 	@Test
@@ -50,19 +66,27 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 					postMasterPage.getExternalReferenceCode(),
 					testGroup.getGroupId()));
 
-		try {
-			masterPageResource.deleteSiteSiteByExternalReferenceCodeMasterPage(
-				testGroup.getExternalReferenceCode(),
-				postMasterPage.getExternalReferenceCode());
+		_assertProblemException(
+			"NOT_FOUND",
+			() ->
+				masterPageResource.
+					deleteSiteSiteByExternalReferenceCodeMasterPage(
+						testGroup.getExternalReferenceCode(),
+						postMasterPage.getExternalReferenceCode()));
 
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
+		MasterPage liveGroupMasterPage =
+			testPostSiteSiteByExternalReferenceCodeMasterPage_addMasterPage(
+				randomMasterPage());
 
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+		_enableLocalStaging();
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				masterPageResource.
+					deleteSiteSiteByExternalReferenceCodeMasterPage(
+						testGroup.getExternalReferenceCode(),
+						liveGroupMasterPage.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -70,31 +94,22 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	public void testGetSiteSiteByExternalReferenceCodeMasterPage()
 		throws Exception {
 
-		MasterPage postMasterPage =
+		MasterPage masterPage =
 			testPostSiteSiteByExternalReferenceCodeMasterPage_addMasterPage(
 				randomMasterPage());
 
-		MasterPage getMasterPage =
-			masterPageResource.getSiteSiteByExternalReferenceCodeMasterPage(
-				testGroup.getExternalReferenceCode(),
-				postMasterPage.getExternalReferenceCode());
+		_testGetSiteSiteByExternalReferenceCodeMasterPage(masterPage);
 
-		assertEquals(postMasterPage, getMasterPage);
-		assertValid(getMasterPage);
+		_assertProblemException(
+			"NOT_FOUND",
+			() ->
+				masterPageResource.getSiteSiteByExternalReferenceCodeMasterPage(
+					testGroup.getExternalReferenceCode(),
+					RandomTestUtil.randomString()));
 
-		try {
-			masterPageResource.getSiteSiteByExternalReferenceCodeMasterPage(
-				testGroup.getExternalReferenceCode(),
-				RandomTestUtil.randomString());
+		_enableLocalStaging();
 
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+		_testGetSiteSiteByExternalReferenceCodeMasterPage(masterPage);
 	}
 
 	@Ignore
@@ -188,19 +203,28 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			_getMasterPage(
 				Boolean.FALSE, masterPage.getExternalReferenceCode()));
 
-		try {
-			masterPageResource.patchSiteSiteByExternalReferenceCodeMasterPage(
-				testGroup.getExternalReferenceCode(),
-				RandomTestUtil.randomString(), randomMasterPage());
+		_assertProblemException(
+			"NOT_FOUND",
+			() ->
+				masterPageResource.
+					patchSiteSiteByExternalReferenceCodeMasterPage(
+						testGroup.getExternalReferenceCode(),
+						RandomTestUtil.randomString(), randomMasterPage()));
 
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
+		MasterPage liveGroupMasterPage =
+			testPostSiteSiteByExternalReferenceCodeMasterPage_addMasterPage(
+				randomMasterPage());
 
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+		_enableLocalStaging();
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				masterPageResource.
+					patchSiteSiteByExternalReferenceCodeMasterPage(
+						testGroup.getExternalReferenceCode(),
+						liveGroupMasterPage.getExternalReferenceCode(),
+						liveGroupMasterPage));
 	}
 
 	@Ignore
@@ -226,6 +250,15 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		_testPutSiteSiteByExternalReferenceCodeMasterPage(
 			_getMasterPage(null, masterPage.getExternalReferenceCode()));
+
+		_enableLocalStaging();
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				masterPageResource.putSiteSiteByExternalReferenceCodeMasterPage(
+					testGroup.getExternalReferenceCode(),
+					masterPage.getExternalReferenceCode(), masterPage));
 	}
 
 	@Ignore
@@ -287,6 +320,30 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			testGroup.getExternalReferenceCode(), masterPage);
 	}
 
+	private void _assertProblemException(
+			String status, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			unsafeRunnable.run();
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(status, problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	private void _enableLocalStaging() throws Exception {
+		_stagingLocalService.enableLocalStaging(
+			TestPropsValues.getUserId(), testGroup, true, false,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+	}
+
 	private MasterPage _getMasterPage(
 			Boolean markedAsDefault, String masterPageExternalReferenceCode)
 		throws Exception {
@@ -297,6 +354,19 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		masterPage.setMarkedAsDefault(markedAsDefault);
 
 		return masterPage;
+	}
+
+	private void _testGetSiteSiteByExternalReferenceCodeMasterPage(
+			MasterPage masterPage)
+		throws Exception {
+
+		MasterPage getMasterPage =
+			masterPageResource.getSiteSiteByExternalReferenceCodeMasterPage(
+				testGroup.getExternalReferenceCode(),
+				masterPage.getExternalReferenceCode());
+
+		assertEquals(masterPage, getMasterPage);
+		assertValid(getMasterPage);
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodeMasterPage(
@@ -331,5 +401,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private StagingLocalService _stagingLocalService;
 
 }

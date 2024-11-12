@@ -6,15 +6,24 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -26,6 +35,13 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class DisplayPageTemplateFolderResourceTest
 	extends BaseDisplayPageTemplateFolderResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Override
 	@Test
@@ -47,6 +63,22 @@ public class DisplayPageTemplateFolderResourceTest
 				fetchLayoutPageTemplateCollection(
 					postDisplayPageTemplateFolder.getExternalReferenceCode(),
 					testGroup.getGroupId()));
+
+		DisplayPageTemplateFolder liveGroupDisplayPageTemplateFolder =
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
+				testGroup.getExternalReferenceCode(),
+				randomDisplayPageTemplateFolder());
+
+		_enableLocalStaging();
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				displayPageTemplateFolderResource.
+					deleteSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+						testGroup.getExternalReferenceCode(),
+						liveGroupDisplayPageTemplateFolder.
+							getExternalReferenceCode()));
 	}
 
 	@Override
@@ -68,6 +100,15 @@ public class DisplayPageTemplateFolderResourceTest
 		assertEquals(
 			postDisplayPageTemplateFolder, getDisplayPageTemplateFolder);
 		assertValid(getDisplayPageTemplateFolder);
+
+		_enableLocalStaging();
+
+		assertEquals(
+			postDisplayPageTemplateFolder,
+			displayPageTemplateFolderResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+					testGroup.getExternalReferenceCode(),
+					postDisplayPageTemplateFolder.getExternalReferenceCode()));
 	}
 
 	@Ignore
@@ -124,21 +165,25 @@ public class DisplayPageTemplateFolderResourceTest
 		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
 			displayPageTemplateFolder.getExternalReferenceCode(), null);
 
-		try {
-			displayPageTemplateFolderResource.
-				patchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-					testGroup.getExternalReferenceCode(),
-					RandomTestUtil.randomString(),
-					randomDisplayPageTemplateFolder());
+		_assertProblemException(
+			"NOT_FOUND",
+			() ->
+				displayPageTemplateFolderResource.
+					patchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+						testGroup.getExternalReferenceCode(),
+						RandomTestUtil.randomString(),
+						randomDisplayPageTemplateFolder()));
 
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
+		_enableLocalStaging();
 
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				displayPageTemplateFolderResource.
+					patchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+						testGroup.getExternalReferenceCode(),
+						displayPageTemplateFolder.getExternalReferenceCode(),
+						displayPageTemplateFolder));
 	}
 
 	@Override
@@ -150,6 +195,16 @@ public class DisplayPageTemplateFolderResourceTest
 			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder();
 
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithExistingParentExternalReferenceCode();
+
+		_enableLocalStaging();
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				displayPageTemplateFolderResource.
+					postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+						testGroup.getExternalReferenceCode(),
+						randomDisplayPageTemplateFolder()));
 	}
 
 	@Override
@@ -188,6 +243,23 @@ public class DisplayPageTemplateFolderResourceTest
 			parentDisplayPageTemplateFolder.getExternalReferenceCode(),
 			displayPageTemplateFolder.
 				getParentDisplayPageTemplateFolderExternalReferenceCode());
+
+		DisplayPageTemplateFolder liveGroupDisplayPageTemplateFolder =
+			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+				randomDisplayPageTemplateFolder(),
+				RandomTestUtil.randomString());
+
+		_enableLocalStaging();
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				displayPageTemplateFolderResource.
+					putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+						testGroup.getExternalReferenceCode(),
+						liveGroupDisplayPageTemplateFolder.
+							getExternalReferenceCode(),
+						parentDisplayPageTemplateFolder));
 	}
 
 	@Ignore
@@ -265,6 +337,30 @@ public class DisplayPageTemplateFolderResourceTest
 
 		return testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
 			testGroup.getExternalReferenceCode(), displayPageTemplateFolder);
+	}
+
+	private void _assertProblemException(
+			String status, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			unsafeRunnable.run();
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(status, problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	private void _enableLocalStaging() throws Exception {
+		_stagingLocalService.enableLocalStaging(
+			TestPropsValues.getUserId(), testGroup, true, false,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
 	}
 
 	private void
@@ -368,5 +464,8 @@ public class DisplayPageTemplateFolderResourceTest
 	@Inject
 	private LayoutPageTemplateCollectionService
 		_layoutPageTemplateCollectionService;
+
+	@Inject
+	private StagingLocalService _stagingLocalService;
 
 }

@@ -6,14 +6,24 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplateSet;
+import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -24,6 +34,13 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class PageTemplateSetResourceTest
 	extends BasePageTemplateSetResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Override
 	@Test
@@ -44,6 +61,20 @@ public class PageTemplateSetResourceTest
 				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 					pageTemplateSet.getExternalReferenceCode(),
 					testGroup.getGroupId()));
+
+		PageTemplateSet liveGroupPageTemplateSet =
+			testGetSiteSiteByExternalReferenceCodePageTemplateSetsPage_addPageTemplateSet(
+				testGroup.getExternalReferenceCode(), randomPageTemplateSet());
+
+		_enableLocalStaging();
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				pageTemplateSetResource.
+					deleteSiteSiteByExternalReferenceCodePageTemplateSet(
+						testGroup.getExternalReferenceCode(),
+						liveGroupPageTemplateSet.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -55,14 +86,11 @@ public class PageTemplateSetResourceTest
 			testGetSiteSiteByExternalReferenceCodePageTemplateSetsPage_addPageTemplateSet(
 				testGroup.getExternalReferenceCode(), randomPageTemplateSet());
 
-		PageTemplateSet getPageTemplateSet =
-			pageTemplateSetResource.
-				getSiteSiteByExternalReferenceCodePageTemplateSet(
-					testGroup.getExternalReferenceCode(),
-					pageTemplateSet.getExternalReferenceCode());
+		_testGetSiteSiteByExternalReferenceCodePageTemplateSet(pageTemplateSet);
 
-		assertEquals(pageTemplateSet, getPageTemplateSet);
-		assertValid(getPageTemplateSet);
+		_enableLocalStaging();
+
+		_testGetSiteSiteByExternalReferenceCodePageTemplateSet(pageTemplateSet);
 	}
 
 	@Ignore
@@ -130,6 +158,17 @@ public class PageTemplateSetResourceTest
 
 		assertEquals(pageTemplateSet, patchPageTemplateSet);
 		assertValid(patchPageTemplateSet);
+
+		_enableLocalStaging();
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				pageTemplateSetResource.
+					patchSiteSiteByExternalReferenceCodePageTemplateSet(
+						testGroup.getExternalReferenceCode(),
+						pageTemplateSet.getExternalReferenceCode(),
+						pageTemplateSet));
 	}
 
 	@Override
@@ -148,6 +187,17 @@ public class PageTemplateSetResourceTest
 
 		assertEquals(pageTemplateSet, putPageTemplateSet);
 		assertValid(putPageTemplateSet);
+
+		_enableLocalStaging();
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				pageTemplateSetResource.
+					putSiteSiteByExternalReferenceCodePageTemplateSet(
+						testGroup.getExternalReferenceCode(),
+						pageTemplateSet.getExternalReferenceCode(),
+						pageTemplateSet));
 	}
 
 	@Ignore
@@ -208,8 +258,49 @@ public class PageTemplateSetResourceTest
 				pageTemplateSet.getExternalReferenceCode(), pageTemplateSet);
 	}
 
+	private void _assertProblemException(
+			String status, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			unsafeRunnable.run();
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(status, problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	private void _enableLocalStaging() throws Exception {
+		_stagingLocalService.enableLocalStaging(
+			TestPropsValues.getUserId(), testGroup, true, false,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+	}
+
+	private void _testGetSiteSiteByExternalReferenceCodePageTemplateSet(
+			PageTemplateSet pageTemplateSet)
+		throws Exception {
+
+		PageTemplateSet getPageTemplateSet =
+			pageTemplateSetResource.
+				getSiteSiteByExternalReferenceCodePageTemplateSet(
+					testGroup.getExternalReferenceCode(),
+					pageTemplateSet.getExternalReferenceCode());
+
+		assertEquals(pageTemplateSet, getPageTemplateSet);
+		assertValid(getPageTemplateSet);
+	}
+
 	@Inject
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
+
+	@Inject
+	private StagingLocalService _stagingLocalService;
 
 }

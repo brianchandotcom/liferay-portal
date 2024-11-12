@@ -119,6 +119,17 @@ public class LayoutUtilityPageEntryServiceImpl
 	}
 
 	@Override
+	public LayoutUtilityPageEntry
+			fetchLayoutUtilityPageEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return layoutUtilityPageEntryLocalService.
+			fetchLayoutUtilityPageEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
+	@Override
 	public LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
 			long groupId, String type)
 		throws PortalException {

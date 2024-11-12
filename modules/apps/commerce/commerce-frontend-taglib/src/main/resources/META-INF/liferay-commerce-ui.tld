@@ -333,6 +333,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of Cavanaugh (7.4.x).</description>
 		<name>modal</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.ModalTag</tag-class>
 		<body-content>empty</body-content>

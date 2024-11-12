@@ -17,7 +17,9 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author Fabio Diego Mastrorilli
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public class ModalTag extends IncludeTag {
 
 	public String getId() {

@@ -506,7 +506,9 @@ public class CompanyLocalServiceTest {
 				_companyLocalService.deleteCompany(company2);
 			}
 
-			_counterLocalService.reset(Company.class.getName());
+			if (!originalCompanyPredictableCompanyIdsEnabled) {
+				_counterLocalService.reset(Company.class.getName());
+			}
 
 			ReflectionTestUtil.setFieldValue(
 				PropsValues.class, "COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED",

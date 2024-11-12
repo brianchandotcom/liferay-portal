@@ -32,7 +32,7 @@ public class SelectRoleVerticalCard implements VerticalCard {
 
 	@Override
 	public String getCssClass() {
-		return "selector-button";
+		return "card-interactive card-interactive-secondary selector-button";
 	}
 
 	@Override

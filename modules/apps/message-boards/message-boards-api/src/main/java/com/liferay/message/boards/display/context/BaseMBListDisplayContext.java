@@ -36,6 +36,11 @@ public class BaseMBListDisplayContext
 	}
 
 	@Override
+	public String getEmptyResultsMessage() {
+		return parentDisplayContext.getEmptyResultsMessage();
+	}
+
+	@Override
 	public int getThreadEntriesDelta() {
 		return parentDisplayContext.getThreadEntriesDelta();
 	}

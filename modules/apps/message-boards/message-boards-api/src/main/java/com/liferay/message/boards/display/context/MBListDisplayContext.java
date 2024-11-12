@@ -15,6 +15,8 @@ public interface MBListDisplayContext extends MBDisplayContext {
 
 	public int getCategoryEntriesDelta();
 
+	public String getEmptyResultsMessage();
+
 	public int getThreadEntriesDelta();
 
 	public boolean isShowMyPosts();

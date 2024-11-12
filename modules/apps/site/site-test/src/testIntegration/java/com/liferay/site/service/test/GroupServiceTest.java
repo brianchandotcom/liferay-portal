@@ -8,6 +8,7 @@ package com.liferay.site.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
@@ -64,6 +65,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import java.util.ArrayList;
@@ -75,7 +77,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -97,6 +101,33 @@ public class GroupServiceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_originalAvailableLocales = _language.getAvailableLocales();
+		_originalDefaultLocale = LocaleUtil.getDefault();
+		_originalLocalesEnabled = PropsValues.LOCALES_ENABLED;
+
+		_language.init();
+
+		CompanyTestUtil.resetCompanyLocales(
+			_portal.getDefaultCompanyId(), _availableLocales, _defaultLocale);
+
+		PropsValues.LOCALES_ENABLED = TransformUtil.transformToArray(
+			_availableLocales, locale -> _language.getLanguageId(locale),
+			String.class);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_language.init();
+
+		CompanyTestUtil.resetCompanyLocales(
+			_portal.getDefaultCompanyId(), _originalAvailableLocales,
+			_originalDefaultLocale);
+
+		PropsValues.LOCALES_ENABLED = _originalLocalesEnabled;
+	}
 
 	@Test
 	public void testAddCompanyStagingGroup() throws Exception {
@@ -1457,6 +1488,21 @@ public class GroupServiceTest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupServiceTest.class);
 
+	private static final List<Locale> _availableLocales = Arrays.asList(
+		LocaleUtil.BRAZIL, LocaleUtil.CHINA, LocaleUtil.ENGLISH,
+		LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US);
+	private static final Locale _defaultLocale = LocaleUtil.US;
+
+	@Inject
+	private static Language _language;
+
+	private static Set<Locale> _originalAvailableLocales;
+	private static Locale _originalDefaultLocale;
+	private static String[] _originalLocalesEnabled;
+
+	@Inject
+	private static Portal _portal;
+
 	@Inject
 	private AssetTagLocalService _assetTagLocalService;
 
@@ -1479,13 +1525,7 @@ public class GroupServiceTest {
 	private GroupService _groupService;
 
 	@Inject
-	private Language _language;
-
-	@Inject
 	private OrganizationLocalService _organizationLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

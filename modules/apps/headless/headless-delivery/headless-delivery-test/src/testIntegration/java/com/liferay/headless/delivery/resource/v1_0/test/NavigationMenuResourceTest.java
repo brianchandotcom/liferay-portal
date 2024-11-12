@@ -34,11 +34,13 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -61,12 +63,14 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -118,6 +122,19 @@ public class NavigationMenuResourceTest
 			ExpandoColumnConstants.STRING, StringPool.BLANK);
 
 		_expandoColumnNames.add(expandoColumn2.getName());
+
+		_originalAvailableLocales = _language.getAvailableLocales();
+		_originalDefaultLocale = LocaleUtil.getDefault();
+		_originalLocalesEnabled = PropsValues.LOCALES_ENABLED;
+
+		_language.init();
+
+		CompanyTestUtil.resetCompanyLocales(
+			_portal.getDefaultCompanyId(), _availableLocales, _defaultLocale);
+
+		PropsValues.LOCALES_ENABLED = TransformUtil.transformToArray(
+			_availableLocales, locale -> _language.getLanguageId(locale),
+			String.class);
 	}
 
 	@AfterClass
@@ -135,6 +152,14 @@ public class NavigationMenuResourceTest
 			_expandoColumnLocalService.deleteColumn(
 				_originalExpandoTable.getTableId(), expandoColumnName);
 		}
+
+		_language.init();
+
+		CompanyTestUtil.resetCompanyLocales(
+			_portal.getDefaultCompanyId(), _originalAvailableLocales,
+			_originalDefaultLocale);
+
+		PropsValues.LOCALES_ENABLED = _originalLocalesEnabled;
 	}
 
 	@Before
@@ -940,6 +965,10 @@ public class NavigationMenuResourceTest
 		navigationMenuResource.deleteNavigationMenu(postNavigationMenu.getId());
 	}
 
+	private static final List<Locale> _availableLocales = Arrays.asList(
+		LocaleUtil.SPAIN, LocaleUtil.US);
+	private static final Locale _defaultLocale = LocaleUtil.US;
+
 	@Inject
 	private static ExpandoColumnLocalService _expandoColumnLocalService;
 
@@ -948,7 +977,16 @@ public class NavigationMenuResourceTest
 	@Inject
 	private static ExpandoTableLocalService _expandoTableLocalService;
 
+	@Inject
+	private static Language _language;
+
+	private static Set<Locale> _originalAvailableLocales;
+	private static Locale _originalDefaultLocale;
 	private static ExpandoTable _originalExpandoTable;
+	private static String[] _originalLocalesEnabled;
+
+	@Inject
+	private static Portal _portal;
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
@@ -963,9 +1001,6 @@ public class NavigationMenuResourceTest
 
 	@Inject
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject
 	private ResourceActions _resourceActions;

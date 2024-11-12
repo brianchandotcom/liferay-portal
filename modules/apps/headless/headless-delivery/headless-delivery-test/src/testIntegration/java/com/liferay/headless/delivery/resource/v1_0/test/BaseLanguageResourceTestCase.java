@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -56,6 +58,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -65,6 +68,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.core.MultivaluedHashMap;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -88,6 +92,30 @@ public abstract class BaseLanguageResourceTestCase {
 	public static void setUpClass() throws Exception {
 		_dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		_originalAvailableLocales = _language.getAvailableLocales();
+		_originalDefaultLocale = LocaleUtil.getDefault();
+		_originalLocalesEnabled = PropsValues.LOCALES_ENABLED;
+
+		_language.init();
+
+		CompanyTestUtil.resetCompanyLocales(
+			_portal.getDefaultCompanyId(), _availableLocales, _defaultLocale);
+
+		PropsValues.LOCALES_ENABLED = TransformUtil.transformToArray(
+			_availableLocales, locale -> _language.getLanguageId(locale),
+			String.class);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_language.init();
+
+		CompanyTestUtil.resetCompanyLocales(
+			_portal.getDefaultCompanyId(), _originalAvailableLocales,
+			_originalDefaultLocale);
+
+		PropsValues.LOCALES_ENABLED = _originalLocalesEnabled;
 	}
 
 	@Before
@@ -1229,10 +1257,24 @@ public abstract class BaseLanguageResourceTestCase {
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseLanguageResourceTestCase.class);
 
+	private static final List<Locale> _availableLocales = Arrays.asList(
+		LocaleUtil.CHINA, LocaleUtil.FRANCE, LocaleUtil.SPAIN, LocaleUtil.US);
+	private static final Locale _defaultLocale = LocaleUtil.US;
+
 	private static DateFormat _dateFormat;
+
+	@Inject
+	private static com.liferay.portal.kernel.language.Language _language;
 
 	@Inject
 	private com.liferay.headless.delivery.resource.v1_0.LanguageResource
 		_languageResource;
+
+	private static Set<Locale> _originalAvailableLocales;
+	private static Locale _originalDefaultLocale;
+	private static String[] _originalLocalesEnabled;
+
+	@Inject
+	private static Portal _portal;
 
 }

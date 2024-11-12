@@ -10,11 +10,11 @@ import React, {useEffect, useState} from 'react';
 
 function ModalDisableInheritance() {
 	const [handleDisable, setHandleDisable] = useState<() => Promise<void>>();
-	const [visibility, setVisibility] = useState(false);
+	const [visible, setVisible] = useState(false);
 
 	const {observer, onClose} = useModal({
 		onClose: () => {
-			setVisibility(false);
+			setVisible(false);
 		},
 	});
 
@@ -38,7 +38,7 @@ function ModalDisableInheritance() {
 			handleDisable: () => Promise<void>;
 		}) => {
 			setHandleDisable(() => handleDisable);
-			setVisibility(true);
+			setVisible(true);
 		};
 
 		Liferay.on('openModalDisableInheritance', openModal);
@@ -52,7 +52,7 @@ function ModalDisableInheritance() {
 
 	return (
 		<>
-			{visibility && (
+			{visible && (
 				<ClayModalProvider>
 					<ClayModal center observer={observer} status="warning">
 						<ClayModal.Header>

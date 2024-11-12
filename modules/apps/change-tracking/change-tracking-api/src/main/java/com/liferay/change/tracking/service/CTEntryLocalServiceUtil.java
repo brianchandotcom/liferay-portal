@@ -241,13 +241,6 @@ public class CTEntryLocalServiceUtil {
 		return getService().fetchCTEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
-	public static CTEntry fetchTimelineCTEntry(
-		long ctCollectionId, long modelClassNameId, long modelClassPK) {
-
-		return getService().fetchTimelineCTEntry(
-			ctCollectionId, modelClassNameId, modelClassPK);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

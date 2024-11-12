@@ -958,7 +958,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		response.setIssuer(OpenSamlUtil.buildIssuer(IDP_ENTITY_ID));
 
-		_webSsoProfileImpl.verifyInResponseTo(response);
+		Assert.assertNull(_webSsoProfileImpl.verifyInResponseTo(response));
 	}
 
 	@Test(expected = InResponseToException.class)
@@ -978,6 +978,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		SamlSpAuthRequest samlSpAuthRequest = new SamlSpAuthRequestImpl();
 
 		samlSpAuthRequest.setSamlIdpEntityId(IDP_ENTITY_ID);
+		samlSpAuthRequest.setSamlRelayState(RELAY_STATE);
 
 		IdentifierGenerationStrategy identifierGenerationStrategy =
 			IdentifierGeneratorStrategyFactory.create(30);
@@ -997,7 +998,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		response.setInResponseTo(samlSpAuthRequestKey);
 		response.setIssuer(OpenSamlUtil.buildIssuer(IDP_ENTITY_ID));
 
-		_webSsoProfileImpl.verifyInResponseTo(response);
+		Assert.assertEquals(
+			RELAY_STATE, _webSsoProfileImpl.verifyInResponseTo(response));
 	}
 
 	@Test(expected = IssuerException.class)

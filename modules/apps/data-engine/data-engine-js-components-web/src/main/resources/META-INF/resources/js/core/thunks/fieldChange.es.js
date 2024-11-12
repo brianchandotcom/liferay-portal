@@ -92,11 +92,13 @@ export default function fieldChange({
 
 		if (Liferay.FeatureFlags['LPD-11228']) {
 			if (
-				fieldInstance.type === 'color' ||
-				fieldInstance.type === 'image' ||
-				fieldInstance.type === 'numeric' ||
-				fieldInstance.type === 'rich_text' ||
-				fieldInstance.type === 'text'
+				(fieldInstance.type === 'color' ||
+					fieldInstance.type === 'image' ||
+					fieldInstance.type === 'numeric' ||
+					fieldInstance.type === 'rich_text' ||
+					fieldInstance.type === 'text') &&
+				document.activeElement.name !== 'journal_undo_redo' &&
+				document.body !== document.activeElement
 			) {
 				dispatch({type: EVENT_TYPES.HISTORY.MARK});
 			}

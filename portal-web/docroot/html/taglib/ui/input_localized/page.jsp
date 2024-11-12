@@ -41,6 +41,7 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 
 					function <%= namespace + randomNamespace %>onBlurMethod() {
 						if (edited && Liferay.FeatureFlags['LPD-11228']) {
+							Liferay.fire('journal:unlock')
 							edited = false;
 
 							var inputLocalized = Liferay.component('<%= namespace + HtmlUtil.escapeJS(fieldName) %>');
@@ -53,7 +54,10 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 					}
 
 					function <%= namespace + randomNamespace %>onChangeEditor() {
-						if (Liferay.FeatureFlags['LPD-11228']) edited = true;
+						if (Liferay.FeatureFlags['LPD-11228'] && document.activeElement.name !== 'journal_undo_redo' && document.body !== document.activeElement) {
+							Liferay.fire('journal:lock')
+							edited = true;
+						}
 
 						var inputLocalized = Liferay.component('<%= namespace + HtmlUtil.escapeJS(fieldName) %>');
 

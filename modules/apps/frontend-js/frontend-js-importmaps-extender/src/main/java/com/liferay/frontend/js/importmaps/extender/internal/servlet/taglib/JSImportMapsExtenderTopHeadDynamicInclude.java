@@ -271,7 +271,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		long companyId, String scope, JSONObject jsonObject) {
 
 		if (scope == null) {
-			final ConcurrentMap<Long, JSONObject> globalImportMapsJSONObjects =
+			ConcurrentMap<Long, JSONObject> globalImportMapsJSONObjects =
 				_getGlobalImportMapsJSONObjects(companyId);
 
 			long globalId = _nextGlobalId.getAndIncrement();
@@ -280,31 +280,17 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 			_rebuildImportMaps(companyId);
 
-			return new JSImportMapsRegistration() {
-
-				@Override
-				public void unregister() {
-					globalImportMapsJSONObjects.remove(globalId);
-				}
-
-			};
+			return () -> globalImportMapsJSONObjects.remove(globalId);
 		}
 
-		final ConcurrentMap<String, JSONObject> scopedImportMapJSONObjects =
+		ConcurrentMap<String, JSONObject> scopedImportMapJSONObjects =
 			_getScopedImportMapJSONObjects(companyId);
 
 		scopedImportMapJSONObjects.put(scope, jsonObject);
 
 		_rebuildImportMaps(companyId);
 
-		return new JSImportMapsRegistration() {
-
-			@Override
-			public void unregister() {
-				scopedImportMapJSONObjects.remove(scope);
-			}
-
-		};
+		return () -> scopedImportMapJSONObjects.remove(scope);
 	}
 
 	private static final long _ALL_COMPANIES = 0;

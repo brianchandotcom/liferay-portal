@@ -18,7 +18,7 @@ enum URLConstants {
 	CreateProperty = 'https://learn.liferay.com/analytics-cloud/latest/en/workspace-settings/scoping-sites-and-individuals-using-properties.html',
 	CustomEventsDocumentation = 'https://learn.liferay.com/analytics-cloud/latest/en/touchpoints/events/tracking-events.html',
 	DataSourceConnection = 'https://learn.liferay.com/analytics-cloud/latest/en/getting-started/connecting-liferay-dxp-to-analytics-cloud.html',
-	DefinitionsForEventsDocumentation = 'https://learn.liferay.com/analytics-cloud/latest/en/workspace-data/definitions/definitions-for-events.html',
+	DefinitionsForEventsDocumentation = 'https://learn.liferay.com/w/analytics-cloud/workspace-data/definitions#custom-events',
 	DeletePropertyDocumentation = 'https://learn.liferay.com/en/w/analytics-cloud/workspace-settings/managing-properties#adding-and-removing-users-to-a-property',
 	DocumentationAdminLink = 'https://learn.liferay.com/analytics-cloud/latest/en/getting-started.html',
 	DocumentationLink = 'https://learn.liferay.com/analytics-cloud/latest/en/',

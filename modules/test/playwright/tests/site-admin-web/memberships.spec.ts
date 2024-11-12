@@ -123,3 +123,27 @@ test(
 		);
 	}
 );
+
+test(
+	'Filter by roles shows cards as selectable',
+	{
+		tag: '@LPD-41741',
+	},
+	async ({membershipsPage, page}) => {
+		await membershipsPage.goto();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Roles'}),
+			timeout: 500,
+			trigger: page.getByLabel('Filter'),
+		});
+
+		await expect(
+			page
+				.frameLocator('iframe[title="Select Role"]')
+				.locator('.card-interactive')
+				.first()
+		).toBeVisible();
+	}
+);

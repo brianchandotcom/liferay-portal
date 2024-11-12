@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -91,11 +90,8 @@ public class DLFileEntrySharingEntryServiceTest {
 
 		Date expirationDate = Date.from(instant.plus(2, ChronoUnit.DAYS));
 
-		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
-			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Collections.singletonList(SharingEntryAction.VIEW),
-			expirationDate,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		SharingEntry sharingEntry = _addSharingEntry(
+			classNameId, classPK, expirationDate);
 
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
 		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
@@ -115,17 +111,10 @@ public class DLFileEntrySharingEntryServiceTest {
 	public void testUpdateSharingEntry() throws Exception {
 		Instant instant = Instant.now();
 
-		Date expirationDate = Date.from(instant.plus(2, ChronoUnit.DAYS));
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
-			_toUser.getUserId(),
+		SharingEntry sharingEntry = _addSharingEntry(
 			_classNameLocalService.getClassNameId(DLFileEntry.class.getName()),
-			_dlFileEntry.getFileEntryId(), _group.getGroupId(), true,
-			Collections.singletonList(SharingEntryAction.VIEW), expirationDate,
-			serviceContext);
+			_dlFileEntry.getFileEntryId(),
+			Date.from(instant.plus(2, ChronoUnit.DAYS)));
 
 		Assert.assertEquals(
 			SharingEntryAction.DOWNLOAD.getBitwiseValue() |
@@ -135,13 +124,25 @@ public class DLFileEntrySharingEntryServiceTest {
 		sharingEntry = _sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
 			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
-			true, null, serviceContext);
+			true, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
 			SharingEntryAction.DOWNLOAD.getBitwiseValue() |
 			SharingEntryAction.UPDATE.getBitwiseValue() |
 			SharingEntryAction.VIEW.getBitwiseValue(),
 			sharingEntry.getActionIds());
+	}
+
+	private SharingEntry _addSharingEntry(
+			long classNameId, long classPK, Date expirationDate)
+		throws Exception {
+
+		return _sharingEntryService.addSharingEntry(
+			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
+			true, Collections.singletonList(SharingEntryAction.VIEW),
+			expirationDate,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@Inject

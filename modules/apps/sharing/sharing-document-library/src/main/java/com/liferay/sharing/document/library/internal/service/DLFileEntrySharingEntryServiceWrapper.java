@@ -95,20 +95,11 @@ public class DLFileEntrySharingEntryServiceWrapper
 		Set<SharingEntryAction> sharingEntryActions = new HashSet<>(
 			originalSharingEntryActions);
 
-		if (originalSharingEntryActions.contains(SharingEntryAction.DOWNLOAD) &&
-			!originalSharingEntryActions.contains(SharingEntryAction.VIEW)) {
-
-			sharingEntryActions.remove(SharingEntryAction.DOWNLOAD);
+		if (originalSharingEntryActions.contains(SharingEntryAction.VIEW)) {
+			sharingEntryActions.add(SharingEntryAction.DOWNLOAD);
 		}
-
-		for (SharingEntryAction sharingEntryAction :
-				originalSharingEntryActions) {
-
-			if (SharingEntryAction.VIEW.equals(sharingEntryAction) &&
-				!sharingEntryActions.contains(SharingEntryAction.DOWNLOAD)) {
-
-				sharingEntryActions.add(SharingEntryAction.DOWNLOAD);
-			}
+		else {
+			sharingEntryActions.remove(SharingEntryAction.DOWNLOAD);
 		}
 
 		return sharingEntryActions;

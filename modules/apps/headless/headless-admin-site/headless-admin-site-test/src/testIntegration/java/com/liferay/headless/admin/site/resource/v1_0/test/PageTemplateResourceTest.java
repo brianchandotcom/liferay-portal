@@ -6,16 +6,26 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageTemplate;
+import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -24,11 +34,17 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
+import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -38,6 +54,13 @@ import org.junit.runner.RunWith;
 @FeatureFlags("LPD-35443")
 @RunWith(Arquillian.class)
 public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Ignore
 	@Override
@@ -246,6 +269,37 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			testGroup.getExternalReferenceCode(), pageTemplate);
 	}
 
+	private void _assertProblemException(
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			unsafeRunnable.run();
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	private void _enableLocalStaging() throws Exception {
+		_stagingLocalService.enableLocalStaging(
+			TestPropsValues.getUserId(), testGroup, true, false,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+	}
+
+	private Group _getCompanyGroup() throws Exception {
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		return company.getGroup();
+	}
+
 	private ContentPageTemplate _getContentPageTemplate(Group group)
 		throws Exception {
 
@@ -281,6 +335,10 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	}
 
 	private PageTemplateSet _getPageTemplateSet(Group group) throws Exception {
+		if (group.isCompany() || group.isDepot()) {
+			return null;
+		}
+
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
@@ -338,6 +396,17 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		};
 	}
 
+	private void _postSiteSiteByExternalReferenceCodePageTemplate(
+			PageTemplate pageTemplate, String siteExternalReferenceCode)
+		throws Exception {
+
+		assertEquals(
+			pageTemplate,
+			pageTemplateResource.
+				postSiteSiteByExternalReferenceCodePageTemplate(
+					siteExternalReferenceCode, pageTemplate));
+	}
+
 	private void _testPostSiteSiteByExternalReferenceCodePageTemplate()
 		throws Exception {
 
@@ -350,27 +419,85 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		assertEquals(randomPageTemplate, postPageTemplate);
 		assertValid(postPageTemplate);
 
-		ContentPageTemplate contentPageTemplate = _getContentPageTemplate(
-			testGroup);
+		_postSiteSiteByExternalReferenceCodePageTemplate(
+			_getContentPageTemplate(testGroup),
+			testGroup.getExternalReferenceCode());
 
-		assertEquals(
-			contentPageTemplate,
-			pageTemplateResource.
-				postSiteSiteByExternalReferenceCodePageTemplate(
-					testGroup.getExternalReferenceCode(), contentPageTemplate));
+		_postSiteSiteByExternalReferenceCodePageTemplate(
+			_getWidgetPageTemplate(testGroup),
+			testGroup.getExternalReferenceCode());
+
+		_enableLocalStaging();
+
+		_assertProblemException(
+			() -> _postSiteSiteByExternalReferenceCodePageTemplate(
+				_getPageTemplate(testGroup),
+				testGroup.getExternalReferenceCode()));
+
+		Group companyGroup = _getCompanyGroup();
 
 		WidgetPageTemplate widgetPageTemplate = _getWidgetPageTemplate(
-			testGroup);
+			companyGroup);
 
-		assertEquals(
-			widgetPageTemplate,
-			pageTemplateResource.
-				postSiteSiteByExternalReferenceCodePageTemplate(
-					testGroup.getExternalReferenceCode(), widgetPageTemplate));
+		try {
+			_postSiteSiteByExternalReferenceCodePageTemplate(
+				widgetPageTemplate, companyGroup.getExternalReferenceCode());
+		}
+		finally {
+			_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+				widgetPageTemplate.getExternalReferenceCode(),
+				companyGroup.getGroupId());
+		}
+
+		_assertProblemException(
+			() ->
+				pageTemplateResource.
+					postSiteSiteByExternalReferenceCodePageTemplate(
+						companyGroup.getExternalReferenceCode(),
+						_getContentPageTemplate(companyGroup)));
+
+		_withDepotEntry(
+			group -> _assertProblemException(
+				() ->
+					pageTemplateResource.
+						postSiteSiteByExternalReferenceCodePageTemplate(
+							group.getExternalReferenceCode(),
+							_getPageTemplate(group))));
 	}
+
+	private void _withDepotEntry(
+			UnsafeConsumer<Group, Exception> unsafeConsumer)
+		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			new HashMap<>(), ServiceContextTestUtil.getServiceContext());
+
+		try {
+			unsafeConsumer.accept(depotEntry.getGroup());
+		}
+		finally {
+			_depotEntryLocalService.deleteDepotEntry(depotEntry);
+		}
+	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private StagingLocalService _stagingLocalService;
 
 }

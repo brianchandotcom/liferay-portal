@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
@@ -45,7 +44,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -72,7 +70,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
@@ -436,21 +433,11 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isDisabled() {
-		try {
-			int count =
-				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
-					_dlAdminDisplayContext.getRepositoryId(), _getFolderId(),
-					WorkflowConstants.STATUS_ANY, true);
-
-			if (count <= 0) {
-				return true;
-			}
-
-			return false;
+		if (searchContainer.getTotal() <= 0) {
+			return true;
 		}
-		catch (PortalException portalException) {
-			throw new SystemException(portalException);
-		}
+
+		return false;
 	}
 
 	@Override

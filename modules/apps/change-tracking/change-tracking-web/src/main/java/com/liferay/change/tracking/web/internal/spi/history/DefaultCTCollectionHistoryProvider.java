@@ -6,7 +6,9 @@
 package com.liferay.change.tracking.web.internal.spi.history;
 
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalServiceUtil;
+import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -24,6 +26,14 @@ public class DefaultCTCollectionHistoryProvider<T>
 
 		return CTCollectionLocalServiceUtil.getExclusivePublishedCTCollections(
 			classNameId, classPK);
+	}
+
+	@Override
+	public CTEntry getCTEntry(
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+
+		return CTEntryLocalServiceUtil.fetchCTEntry(
+			ctCollectionId, modelClassNameId, modelClassPK);
 	}
 
 	@Override

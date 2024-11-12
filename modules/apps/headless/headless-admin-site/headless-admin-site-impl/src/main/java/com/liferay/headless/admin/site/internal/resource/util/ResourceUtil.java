@@ -21,7 +21,7 @@ public class ResourceUtil {
 		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, companyId);
 
-		if (group.isCompany() ||
+		if (group.isCompany() || group.isDepot() ||
 			(!allowLiveGroup && group.hasLocalOrRemoteStagingGroup())) {
 
 			throw new UnsupportedOperationException();

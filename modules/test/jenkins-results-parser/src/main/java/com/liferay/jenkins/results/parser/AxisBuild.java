@@ -520,7 +520,8 @@ public class AxisBuild extends BaseBuild {
 			topLevelBuild.getJenkinsMaster();
 
 		return JenkinsResultsParserUtil.combine(
-			URL_BASE_TEMP_MAP, topLevelBuildJenkinsMaster.getName(), "/",
+			JenkinsResultsParserUtil.getJenkinsTempMapURL(), "/",
+			topLevelBuildJenkinsMaster.getName(), "/",
 			topLevelBuild.getJobName(), "/",
 			String.valueOf(topLevelBuild.getBuildNumber()), "/", getJobName(),
 			"/", getAxisVariable(), "/", getParameterValue("JOB_VARIANT"), "/",

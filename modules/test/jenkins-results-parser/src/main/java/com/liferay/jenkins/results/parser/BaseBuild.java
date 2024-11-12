@@ -2983,12 +2983,6 @@ public abstract class BaseBuild implements Build {
 
 	protected static final int PIXELS_WIDTH_INDENT = 35;
 
-	protected static final String URL_BASE_FAILURES_JOB_UPSTREAM =
-		"https://test-1-0.liferay.com/userContent/testResults/";
-
-	protected static final String URL_BASE_TEMP_MAP =
-		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/";
-
 	protected static final Pattern jobNamePattern = Pattern.compile(
 		"(?<baseJob>[^\\(]+)\\((?<branchName>[^\\)]+)\\)");
 	protected static final Pattern stopWatchPattern = Pattern.compile(

@@ -307,6 +307,11 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Layout fetchLayoutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long fetchLayoutPlid(
 			String uuid, long groupId, boolean privateLayout)
 		throws PortalException;

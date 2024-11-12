@@ -346,6 +346,14 @@ public class LayoutServiceUtil {
 		return getService().fetchLayout(groupId, privateLayout, layoutId);
 	}
 
+	public static Layout fetchLayoutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().fetchLayoutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	public static long fetchLayoutPlid(
 			String uuid, long groupId, boolean privateLayout)
 		throws PortalException {

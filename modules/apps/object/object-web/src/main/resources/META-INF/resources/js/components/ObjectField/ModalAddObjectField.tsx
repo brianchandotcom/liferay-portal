@@ -27,7 +27,7 @@ interface ModalAddObjectField {
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionName?: string;
 	onAfterSubmit: (value: ObjectField) => void;
-	setVisibility: (value: boolean) => void;
+	setVisible: (value: boolean) => void;
 }
 
 export function ModalAddObjectField({
@@ -35,7 +35,7 @@ export function ModalAddObjectField({
 	creationLanguageId,
 	objectDefinitionExternalReferenceCode,
 	onAfterSubmit,
-	setVisibility,
+	setVisible,
 }: ModalAddObjectField) {
 	const [error, setError] = useState<string>('');
 	const [objectDefinition, setObjectDefinition] =
@@ -43,7 +43,7 @@ export function ModalAddObjectField({
 	const [objectFieldBusinessTypes, setObjectFieldBusinessTypes] = useState<
 		ObjectFieldBusinessType[]
 	>([]);
-	const {observer, onClose} = useModal({onClose: () => setVisibility(false)});
+	const {observer, onClose} = useModal({onClose: () => setVisible(false)});
 	const formId = 'modalAddObjectField';
 	const initialValues: Partial<ObjectField> = {
 		indexed: true,

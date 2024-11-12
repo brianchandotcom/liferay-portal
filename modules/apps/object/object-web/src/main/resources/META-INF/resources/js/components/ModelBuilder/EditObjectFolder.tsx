@@ -361,7 +361,7 @@ export default function EditObjectFolder({
 								type: TYPES.SET_SHOW_ALL_OBJECT_FIELDS,
 							});
 						}}
-						setVisibility={() =>
+						setVisible={() =>
 							dispatch({
 								payload: {
 									updatedModelBuilderModals: {

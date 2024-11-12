@@ -13,7 +13,7 @@ export const Liferay = window.Liferay || {
 		FromUserAgentApplication: (_userAgentApplicationId) => {
 			return {
 				_getOrRequestToken: () => typeof string,
-				fetch: (_url, _options = {}) => typeof fetch,
+				fetch: (_url, _options = {}) => fetch(_url, _options),
 			};
 		},
 	},

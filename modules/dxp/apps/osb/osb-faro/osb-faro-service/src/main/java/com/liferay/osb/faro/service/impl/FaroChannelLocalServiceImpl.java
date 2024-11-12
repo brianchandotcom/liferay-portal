@@ -10,9 +10,11 @@ import com.liferay.mail.kernel.service.MailService;
 import com.liferay.osb.faro.constants.DocumentationConstants;
 import com.liferay.osb.faro.constants.FaroChannelConstants;
 import com.liferay.osb.faro.model.FaroChannel;
+import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.service.base.FaroChannelLocalServiceBaseImpl;
+import com.liferay.osb.faro.service.persistence.FaroProjectPersistence;
 import com.liferay.osb.faro.util.EmailUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -252,6 +254,9 @@ public class FaroChannelLocalServiceImpl
 			resourceBundle,
 			"analytics-cloud-you-have-been-added-to-a-property");
 
+		FaroProject faroProject = _faroProjectPersistence.fetchByGroupId(
+			faroChannel.getWorkspaceGroupId());
+
 		String body = StringUtil.replace(
 			StringUtil.read(
 				getClassLoader(),
@@ -275,8 +280,10 @@ public class FaroChannelLocalServiceImpl
 					}),
 				EmailUtil.getLogoIconURL(),
 				_language.format(
-					resourceBundle, "x-has-been-added-to-your-properties-list",
-					faroChannel.getName()),
+					resourceBundle,
+					"you-have-been-added-as-a-team-member-on-x-workspace-" +
+						"property-by-x",
+					new String[] {faroProject.getName(), user.getFullName()}),
 				_language.get(
 					resourceBundle,
 					"log-in-to-your-workspace-to-access-this-property"),
@@ -289,6 +296,9 @@ public class FaroChannelLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FaroChannelLocalServiceImpl.class);
+
+	@Reference
+	private FaroProjectPersistence _faroProjectPersistence;
 
 	@Reference
 	private FaroUserLocalService _faroUserLocalService;

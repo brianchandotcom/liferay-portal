@@ -134,7 +134,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 
 		if (sendEmail) {
 			try {
-				_sendEmail(faroUser, groupId, roleId, userId);
+				_sendEmail(faroUser, groupId, userId);
 			}
 			catch (Exception exception) {
 				throw new SystemException(exception);
@@ -270,45 +270,29 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 	}
 
 	private String _getNotificationMessage(
-			long roleId, long groupId, ResourceBundle resourceBundle)
-		throws Exception {
-
-		String roleName = null;
-
-		Role role = _roleLocalService.getRole(roleId);
-
-		if (StringUtil.equals(
-				role.getName(), RoleConstants.SITE_ADMINISTRATOR)) {
-
-			roleName = "administrator-fragment";
-		}
-		else {
-			roleName = "member-fragment";
-		}
+		String fullName, long groupId, ResourceBundle resourceBundle) {
 
 		FaroProject faroProject = _faroProjectPersistence.fetchByGroupId(
 			groupId);
 
 		return _language.format(
-			resourceBundle, "you-have-been-added-as-a-team-x-on-workspace-x",
-			new String[] {
-				roleName, "<strong>" + faroProject.getName() + "</strong>"
-			});
+			resourceBundle,
+			"you-have-been-added-as-a-team-member-on-x-workspace-by-x",
+			new String[] {faroProject.getName(), fullName});
 	}
 
-	private void _sendEmail(
-			FaroUser faroUser, long groupId, long roleId, long userId)
+	private void _sendEmail(FaroUser faroUser, long groupId, long userId)
 		throws Exception {
 
 		if (faroUser.getStatus() == FaroUserConstants.STATUS_REQUESTED) {
 			_sendEmailRequest(userId, groupId);
 		}
 		else {
-			_sendEmailNewUser(faroUser, groupId, roleId);
+			_sendEmailNewUser(faroUser, groupId);
 		}
 	}
 
-	private void _sendEmailNewUser(FaroUser faroUser, long groupId, long roleId)
+	private void _sendEmailNewUser(FaroUser faroUser, long groupId)
 		throws Exception {
 
 		User user = _userLocalService.getUser(faroUser.getUserId());
@@ -384,7 +368,8 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 							faroUser.getEmailAddress() + "</strong>"
 					}),
 				EmailUtil.getLogoIconURL(),
-				_getNotificationMessage(roleId, groupId, resourceBundle),
+				_getNotificationMessage(
+					user.getFullName(), groupId, resourceBundle),
 				EmailUtil.getTitleIconURL(), welcomeMsg
 			});
 

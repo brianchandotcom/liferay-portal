@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
  * @author Amos Fong
  */
 @Component
-public class TicketAttachmentWebService extends BaseRestController {
+public class TicketAttachmentService extends BaseRestController {
 
 	public TicketAttachment addTicketAttachment(
 			Jwt jwt, String accountKey, String externalReferenceCode,
@@ -152,7 +152,7 @@ public class TicketAttachmentWebService extends BaseRestController {
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		TicketAttachmentWebService.class);
+		TicketAttachmentService.class);
 
 	@Value("${liferay.customer.gcs.bucket.name}")
 	private String _gcsBucketName;

@@ -37,7 +37,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  * @author Amos Fong
  */
 @Component
-public class GoogleCloudStorageWebService extends BaseRestController {
+public class GoogleCloudStorageService extends BaseRestController {
 
 	public void deleteObject(String bucketName, String objectName)
 		throws Exception {

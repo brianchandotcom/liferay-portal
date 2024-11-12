@@ -7,11 +7,11 @@ package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.customer.model.TicketAttachment;
-import com.liferay.customer.service.GoogleCloudStorageWebService;
-import com.liferay.customer.service.TicketAttachmentWebService;
+import com.liferay.customer.service.GoogleCloudStorageService;
+import com.liferay.customer.service.TicketAttachmentService;
 import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskOrganization;
 import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
-import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskWebService;
+import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -54,7 +54,7 @@ public class TicketAttachmentsInitiateUploadRestController
 			long zendeskTicketId = jsonObject.getLong("zendeskTicketId");
 
 			TicketAttachment ticketAttachment =
-				_ticketAttachmentWebService.fetchTicketAttachment(
+				_ticketAttachmentService.fetchTicketAttachment(
 					jwt, fileName, md5Checksum, zendeskTicketId);
 
 			if (ticketAttachment != null) {
@@ -72,18 +72,17 @@ public class TicketAttachmentsInitiateUploadRestController
 				String fileSize = jsonObject.getString("fileSize");
 				String type = jsonObject.optString("type");
 
-				ticketAttachment =
-					_ticketAttachmentWebService.addTicketAttachment(
-						jwt, _getAccountKey(zendeskTicketId),
-						externalReferenceCode, fileName, fileSize, md5Checksum,
-						TicketAttachment.STATUS_DRAFT, type, zendeskTicketId);
+				ticketAttachment = _ticketAttachmentService.addTicketAttachment(
+					jwt, _getAccountKey(zendeskTicketId), externalReferenceCode,
+					fileName, fileSize, md5Checksum,
+					TicketAttachment.STATUS_DRAFT, type, zendeskTicketId);
 			}
 
 			JSONObject responseJSONObject = new JSONObject();
 
 			responseJSONObject.put(
 				"gcsSessionURL",
-				_googleCloudStorageWebService.getUploadSessionURL(
+				_googleCloudStorageService.getUploadSessionURL(
 					origin, ticketAttachment.getGCSBucketName(),
 					ticketAttachment.getGCSObjectName())
 			).put(
@@ -102,7 +101,7 @@ public class TicketAttachmentsInitiateUploadRestController
 	}
 
 	private String _getAccountKey(long zendeskTicketId) throws Exception {
-		ZendeskTicket zendeskTicket = _zendeskWebService.getZendeskTicket(
+		ZendeskTicket zendeskTicket = _zendeskService.getZendeskTicket(
 			zendeskTicketId);
 
 		if (zendeskTicket.isClosed()) {
@@ -111,7 +110,7 @@ public class TicketAttachmentsInitiateUploadRestController
 		}
 
 		ZendeskOrganization zendeskOrganization =
-			_zendeskWebService.getZendeskOrganization(
+			_zendeskService.getZendeskOrganization(
 				zendeskTicket.getZendeskOrganizationId());
 
 		return zendeskOrganization.getAccountKey();
@@ -121,12 +120,12 @@ public class TicketAttachmentsInitiateUploadRestController
 		TicketAttachmentsInitiateUploadRestController.class);
 
 	@Autowired
-	private GoogleCloudStorageWebService _googleCloudStorageWebService;
+	private GoogleCloudStorageService _googleCloudStorageService;
 
 	@Autowired
-	private TicketAttachmentWebService _ticketAttachmentWebService;
+	private TicketAttachmentService _ticketAttachmentService;
 
 	@Autowired
-	private ZendeskWebService _zendeskWebService;
+	private ZendeskService _zendeskService;
 
 }

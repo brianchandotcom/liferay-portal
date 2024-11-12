@@ -7,7 +7,7 @@ package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.customer.model.AccountUsage;
-import com.liferay.customer.service.GoogleCloudFunctionWebService;
+import com.liferay.customer.service.GoogleCloudFunctionService;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 
@@ -55,7 +55,7 @@ public class AccountUsageRestController extends BaseRestController {
 			accountUsage.setAccountId(account.getId());
 
 			JSONObject jsonObject =
-				_googleCloudFunctionWebService.getCustomerAccountUsage(
+				_googleCloudFunctionService.getCustomerAccountUsage(
 					externalReferenceCode);
 
 			Random random = new Random();
@@ -101,6 +101,6 @@ public class AccountUsageRestController extends BaseRestController {
 		AccountUsageRestController.class);
 
 	@Autowired
-	private GoogleCloudFunctionWebService _googleCloudFunctionWebService;
+	private GoogleCloudFunctionService _googleCloudFunctionService;
 
 }

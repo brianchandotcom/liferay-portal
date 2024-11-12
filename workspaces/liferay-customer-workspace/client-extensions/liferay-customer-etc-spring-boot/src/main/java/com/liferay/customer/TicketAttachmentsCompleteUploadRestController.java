@@ -7,9 +7,9 @@ package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.customer.model.TicketAttachment;
-import com.liferay.customer.service.TicketAttachmentWebService;
+import com.liferay.customer.service.TicketAttachmentService;
 import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskUser;
-import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskWebService;
+import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -60,7 +60,7 @@ public class TicketAttachmentsCompleteUploadRestController
 				emailAddress = _zendeskAPIEmailAddress;
 			}
 
-			ZendeskUser zendeskUser = _zendeskWebService.fetchZendeskUser(
+			ZendeskUser zendeskUser = _zendeskService.fetchZendeskUser(
 				emailAddress);
 
 			if (zendeskUser == null) {
@@ -71,7 +71,7 @@ public class TicketAttachmentsCompleteUploadRestController
 			}
 
 			TicketAttachment ticketAttachment =
-				_ticketAttachmentWebService.approveTicketAttachment(
+				_ticketAttachmentService.approveTicketAttachment(
 					jwt, ticketAttachmentId);
 			JSONObject jsonObject = new JSONObject(json);
 
@@ -80,12 +80,12 @@ public class TicketAttachmentsCompleteUploadRestController
 				jsonObject.optString("zendeskTicketCommentBody"));
 
 			if (zendeskUser.isEndUser()) {
-				_zendeskWebService.addEndUserZendeskTicketComment(
+				_zendeskService.addEndUserZendeskTicketComment(
 					zendeskUser.getEmailAddress(), zendeskTicketCommentBody,
 					ticketAttachment.getZendeskTicketId());
 			}
 			else {
-				_zendeskWebService.addAgentZendeskTicketComment(
+				_zendeskService.addAgentZendeskTicketComment(
 					zendeskTicketCommentBody,
 					ticketAttachment.getZendeskTicketId(),
 					zendeskUser.getZendeskUserId());
@@ -131,12 +131,12 @@ public class TicketAttachmentsCompleteUploadRestController
 		TicketAttachmentsCompleteUploadRestController.class);
 
 	@Autowired
-	private TicketAttachmentWebService _ticketAttachmentWebService;
+	private TicketAttachmentService _ticketAttachmentService;
 
 	@Value("${liferay.osb.spring.boot.client.zendesk.api.email.address}")
 	private String _zendeskAPIEmailAddress;
 
 	@Autowired
-	private ZendeskWebService _zendeskWebService;
+	private ZendeskService _zendeskService;
 
 }

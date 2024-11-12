@@ -33,7 +33,7 @@ import org.springframework.stereotype.Component;
  * @author Amos Fong
  */
 @Component
-public class GoogleCloudFunctionWebService {
+public class GoogleCloudFunctionService {
 
 	public JSONObject getCustomerAccountUsage(String accountKey)
 		throws Exception {

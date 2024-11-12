@@ -33,7 +33,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  * @author Amos Fong
  */
 @Component
-public class ZendeskWebService {
+public class ZendeskService {
 
 	public void addAgentZendeskTicketComment(
 			String htmlBody, long zendeskTicketId, long zendeskUserId)

@@ -10,7 +10,7 @@ import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenMan
 import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
 import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
 import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
-import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskWebService;
+import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
 
 import java.text.SimpleDateFormat;
 
@@ -68,7 +68,7 @@ public class CustomerCommandLineRunner
 		while (page > 0) {
 			zendeskTicketQuery.setPage(page);
 
-			SearchHits<ZendeskTicket> searchHits = _zendeskWebService.search(
+			SearchHits<ZendeskTicket> searchHits = _zendeskService.search(
 				zendeskTicketQuery);
 
 			for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
@@ -135,10 +135,10 @@ public class CustomerCommandLineRunner
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _lxcDXPServerProtocol;
 
+	@Autowired
+	private ZendeskService _zendeskService;
+
 	@Value("${liferay.customer.zendesk.ticket.closed.days}")
 	private int _zendeskTicketClosedDays;
-
-	@Autowired
-	private ZendeskWebService _zendeskWebService;
 
 }

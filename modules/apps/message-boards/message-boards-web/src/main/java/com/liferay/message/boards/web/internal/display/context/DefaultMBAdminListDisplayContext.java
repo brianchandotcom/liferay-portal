@@ -55,6 +55,15 @@ public class DefaultMBAdminListDisplayContext
 	}
 
 	@Override
+	public String getEmptyResultsMessage() {
+		if (isShowSearch()) {
+			return "there-are-no-threads";
+		}
+
+		return "there-are-no-threads-or-categories";
+	}
+
+	@Override
 	public int getEntriesDelta() {
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(

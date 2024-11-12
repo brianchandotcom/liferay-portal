@@ -7,6 +7,7 @@ package com.liferay.commerce.currency.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -42,6 +43,19 @@ public class CommerceCurrencyServiceUpgradeStepRegistrator
 				@Override
 				protected String[] getTableNames() {
 					return new String[] {"CommerceCurrency"};
+				}
+
+			});
+
+		registry.register(
+			"1.3.0", "1.4.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"CommerceCurrency", "commerceCurrencyId"}
+					};
 				}
 
 			});

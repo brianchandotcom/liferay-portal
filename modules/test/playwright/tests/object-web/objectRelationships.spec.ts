@@ -11,21 +11,25 @@ import {
 	ObjectRelationship,
 } from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPS-187142': true,
+	}),
 	loginTest(),
 	objectPagesTest
 );
 
-test.describe('Manage object relationships through Model Builder', () => {
-	test.beforeEach(({page}) => {
-		page.setViewportSize({height: 1080, width: 1920});
-	});
+test.beforeEach(({page}) => {
+	page.setViewportSize({height: 1080, width: 1920});
+});
 
+test.describe('Manage object relationships through Model Builder', () => {
 	test('can create multiple object relationships between the same objects', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,
@@ -1015,5 +1019,189 @@ test.describe('Manage object relationships through Model Builder', () => {
 				},
 			}
 		);
+	});
+});
+
+test.describe('Manage object relationships through Object Admin', () => {
+	test('creating multiple inheritance relationships between the same objects should trigger a warning message', async ({
+		apiHelpers,
+		objectRelationshipsPage,
+		page,
+	}) => {
+		const objectRelationships: ObjectRelationship[] = [];
+
+		try {
+			const objectDefinition1 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFolderExternalReferenceCode: 'default',
+					status: {code: 1},
+				});
+			const objectDefinition2 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFolderExternalReferenceCode: 'default',
+					status: {code: 1},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition1.id,
+				type: 'objectDefinition',
+			});
+
+			apiHelpers.data.push({
+				id: objectDefinition2.id,
+				type: 'objectDefinition',
+			});
+
+			const objectAdminRestClient = await apiHelpers.buildRestClient(
+				ObjectAdminRestClient
+			);
+
+			const objectRelationshipLabel1 =
+				'objectRelationshipLabel' + getRandomInt();
+
+			const objectRelationshipName1 =
+				'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+			const objectRelationship1 =
+				await objectAdminRestClient.objectRelationship.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					{
+						externalReferenceCode:
+							objectDefinition1.externalReferenceCode,
+						requestBody: {
+							edge: true,
+							label: {
+								en_US: objectRelationshipLabel1,
+							},
+							name: objectRelationshipName1,
+							objectDefinitionExternalReferenceCode1:
+								objectDefinition1.externalReferenceCode,
+							objectDefinitionExternalReferenceCode2:
+								objectDefinition2.externalReferenceCode,
+							objectDefinitionId1: objectDefinition1.id,
+							objectDefinitionId2: objectDefinition2.id,
+							objectDefinitionName2: objectDefinition2.name,
+							type: 'oneToMany' as ObjectRelationshipType,
+						},
+					}
+				);
+
+			objectRelationships.push(objectRelationship1);
+
+			apiHelpers.data.push({
+				id: objectRelationship1.id,
+				type: 'objectRelationship',
+			});
+
+			const objectRelationshipLabel2 =
+				'objectRelationshipLabel' + getRandomInt();
+
+			const objectRelationshipName2 =
+				'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+			const objectRelationship2 =
+				await objectAdminRestClient.objectRelationship.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					{
+						externalReferenceCode:
+							objectDefinition1.externalReferenceCode,
+						requestBody: {
+							edge: false,
+							label: {
+								en_US: objectRelationshipLabel2,
+							},
+							name: objectRelationshipName2,
+							objectDefinitionExternalReferenceCode1:
+								objectDefinition1.externalReferenceCode,
+							objectDefinitionExternalReferenceCode2:
+								objectDefinition2.externalReferenceCode,
+							objectDefinitionId1: objectDefinition1.id,
+							objectDefinitionId2: objectDefinition2.id,
+							objectDefinitionName2: objectDefinition2.name,
+							type: 'oneToMany' as ObjectRelationshipType,
+						},
+					}
+				);
+
+			objectRelationships.push(objectRelationship2);
+
+			apiHelpers.data.push({
+				id: objectRelationship2.id,
+				type: 'objectRelationship',
+			});
+
+			// fail enabling inheritance in object relationship 2
+
+			await objectRelationshipsPage.goto(
+				objectDefinition1.label['en_US']
+			);
+
+			await page
+				.getByRole('link', {name: objectRelationshipLabel2})
+				.click();
+
+			await objectRelationshipsPage.inheritanceCheckbox.check();
+
+			await objectRelationshipsPage.saveObjectRelationshipButton.click();
+
+			await expect(
+				objectRelationshipsPage.inheritanceWarningMessage
+			).toBeVisible();
+
+			await objectRelationshipsPage.cancelButton.click();
+
+			// remove inheritance from object relationship 1
+
+			await page
+				.getByRole('link', {name: objectRelationshipLabel1})
+				.click();
+
+			await objectRelationshipsPage.inheritanceCheckbox.click();
+
+			await expect(
+				objectRelationshipsPage.inheritanceModalHeader
+			).toBeVisible();
+
+			await objectRelationshipsPage.inheritanceModalDisableButton.click();
+
+			// enable inheritance in object relationship 2
+
+			await page
+				.getByRole('link', {name: objectRelationshipLabel2})
+				.click();
+
+			await objectRelationshipsPage.inheritanceCheckbox.check();
+
+			await objectRelationshipsPage.saveObjectRelationshipButton.click();
+
+			await page.waitForLoadState('load');
+
+			await page
+				.getByRole('link', {name: objectRelationshipLabel2})
+				.click();
+
+			await expect(
+				objectRelationshipsPage.inheritanceCheckbox
+			).toBeChecked();
+		}
+		finally {
+			const objectAdminRestClient = await apiHelpers.buildRestClient(
+				ObjectAdminRestClient
+			);
+
+			for (const objectRelationship of objectRelationships) {
+				await objectAdminRestClient.objectRelationship.putObjectRelationship(
+					{
+						objectRelationshipId: objectRelationship.id,
+						requestBody: {
+							...objectRelationship,
+							edge: false,
+							objectField: {
+								...objectRelationship.objectField,
+								required: true,
+							},
+						},
+					}
+				);
+			}
+		}
 	});
 });

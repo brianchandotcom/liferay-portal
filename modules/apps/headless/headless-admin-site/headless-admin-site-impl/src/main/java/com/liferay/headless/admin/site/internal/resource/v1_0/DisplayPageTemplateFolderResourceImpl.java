@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder;
+import com.liferay.headless.admin.site.internal.resource.util.ResourceUtil;
 import com.liferay.headless.admin.site.resource.v1_0.DisplayPageTemplateFolderResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
@@ -14,10 +15,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -53,11 +52,10 @@ public class DisplayPageTemplateFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		_layoutPageTemplateCollectionService.deleteLayoutPageTemplateCollection(
-			displayPageTemplateFolderExternalReferenceCode, group.getGroupId());
+			displayPageTemplateFolderExternalReferenceCode,
+			ResourceUtil.getGroupId(
+				contextCompany.getCompanyId(), siteExternalReferenceCode));
 	}
 
 	@Override
@@ -71,14 +69,13 @@ public class DisplayPageTemplateFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		return _toDisplayPageTemplateFolder(
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollection(
 					displayPageTemplateFolderExternalReferenceCode,
-					group.getGroupId()));
+					ResourceUtil.getGroupId(
+						contextCompany.getCompanyId(),
+						siteExternalReferenceCode)));
 	}
 
 	@Override
@@ -93,14 +90,13 @@ public class DisplayPageTemplateFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		return Page.of(
 			transform(
 				_layoutPageTemplateCollectionService.
 					getLayoutPageTemplateCollections(
-						group.getGroupId(),
+						ResourceUtil.getGroupId(
+							contextCompany.getCompanyId(),
+							siteExternalReferenceCode),
 						LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 				layoutPageTemplateCollection -> _toDisplayPageTemplateFolder(
@@ -118,10 +114,10 @@ public class DisplayPageTemplateFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
-		return _addDisplayPageTemplateFolder(displayPageTemplateFolder, group);
+		return _addDisplayPageTemplateFolder(
+			displayPageTemplateFolder,
+			ResourceUtil.getGroupId(
+				contextCompany.getCompanyId(), siteExternalReferenceCode));
 	}
 
 	@Override
@@ -136,23 +132,22 @@ public class DisplayPageTemplateFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
+		long groupId = ResourceUtil.getGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				fetchLayoutPageTemplateCollection(
-					displayPageTemplateFolderExternalReferenceCode,
-					group.getGroupId());
+					displayPageTemplateFolderExternalReferenceCode, groupId);
 
 		if (layoutPageTemplateCollection == null) {
 			return _addDisplayPageTemplateFolder(
-				displayPageTemplateFolder, group);
+				displayPageTemplateFolder, groupId);
 		}
 
 		long parentLayoutPageTemplateCollectionId =
 			_getParentLayoutPageTemplateCollectionId(
-				displayPageTemplateFolder, group);
+				displayPageTemplateFolder, groupId);
 
 		if (Validator.isNotNull(
 				displayPageTemplateFolder.
@@ -180,24 +175,24 @@ public class DisplayPageTemplateFolderResourceImpl
 	}
 
 	private DisplayPageTemplateFolder _addDisplayPageTemplateFolder(
-			DisplayPageTemplateFolder displayPageTemplateFolder, Group group)
+			DisplayPageTemplateFolder displayPageTemplateFolder, long groupId)
 		throws Exception {
 
 		return _toDisplayPageTemplateFolder(
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
 					displayPageTemplateFolder.getExternalReferenceCode(),
-					group.getGroupId(),
+					groupId,
 					_getParentLayoutPageTemplateCollectionId(
-						displayPageTemplateFolder, group),
+						displayPageTemplateFolder, groupId),
 					displayPageTemplateFolder.getName(),
 					displayPageTemplateFolder.getDescription(),
 					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
-					_getServiceContext(displayPageTemplateFolder, group)));
+					_getServiceContext(displayPageTemplateFolder, groupId)));
 	}
 
 	private long _getParentLayoutPageTemplateCollectionId(
-			DisplayPageTemplateFolder displayPageTemplateFolder, Group group)
+			DisplayPageTemplateFolder displayPageTemplateFolder, long groupId)
 		throws Exception {
 
 		long parentLayoutPageTemplateCollectionId =
@@ -216,7 +211,7 @@ public class DisplayPageTemplateFolderResourceImpl
 				fetchLayoutPageTemplateCollection(
 					displayPageTemplateFolder.
 						getParentDisplayPageTemplateFolderExternalReferenceCode(),
-					group.getGroupId());
+					groupId);
 
 		if (parentLayoutPageTemplateCollection != null) {
 			parentLayoutPageTemplateCollectionId =
@@ -228,10 +223,10 @@ public class DisplayPageTemplateFolderResourceImpl
 	}
 
 	private ServiceContext _getServiceContext(
-		DisplayPageTemplateFolder displayPageTemplateFolder, Group group) {
+		DisplayPageTemplateFolder displayPageTemplateFolder, long groupId) {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
-			group.getGroupId(), contextHttpServletRequest, null
+			groupId, contextHttpServletRequest, null
 		).build();
 
 		serviceContext.setCreateDate(
@@ -257,9 +252,6 @@ public class DisplayPageTemplateFolderResourceImpl
 	private DTOConverter
 		<LayoutPageTemplateCollection, DisplayPageTemplateFolder>
 			_displayPageTemplateFolderDTOConverter;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutPageTemplateCollectionService

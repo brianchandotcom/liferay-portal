@@ -7,11 +7,13 @@ package com.liferay.commerce.wish.list.service.impl;
 
 import com.liferay.commerce.wish.list.exception.CommerceWishListNameException;
 import com.liferay.commerce.wish.list.exception.GuestWishListMaxAllowedException;
+import com.liferay.commerce.wish.list.exception.RequiredCommerceWishListException;
 import com.liferay.commerce.wish.list.internal.configuration.CommerceWishListConfiguration;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemLocalService;
 import com.liferay.commerce.wish.list.service.base.CommerceWishListLocalServiceBaseImpl;
+import com.liferay.commerce.wish.list.util.CommerceWishListThreadLocal;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
@@ -78,7 +80,14 @@ public class CommerceWishListLocalServiceImpl
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceWishList deleteCommerceWishList(
-		CommerceWishList commerceWishList) {
+			CommerceWishList commerceWishList)
+		throws PortalException {
+
+		if (!CommerceWishListThreadLocal.isDefaultWishListDeletable() &&
+			commerceWishList.isDefaultWishList()) {
+
+			throw new RequiredCommerceWishListException();
+		}
 
 		// Commerce wish list
 
@@ -109,7 +118,9 @@ public class CommerceWishListLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceWishListsByGroupId(long groupId) {
+	public void deleteCommerceWishListsByGroupId(long groupId)
+		throws PortalException {
+
 		List<CommerceWishList> commerceWishLists =
 			commerceWishListPersistence.findByGroupId(groupId);
 
@@ -120,7 +131,9 @@ public class CommerceWishListLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceWishListsByUserId(long userId) {
+	public void deleteCommerceWishListsByUserId(long userId)
+		throws PortalException {
+
 		List<CommerceWishList> commerceWishLists =
 			commerceWishListPersistence.findByUserId(userId);
 

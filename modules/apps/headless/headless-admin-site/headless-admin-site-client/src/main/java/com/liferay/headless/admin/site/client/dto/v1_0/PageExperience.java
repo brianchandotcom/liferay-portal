@@ -151,30 +151,55 @@ public class PageExperience implements Cloneable, Serializable {
 
 	protected Integer priority;
 
-	public ItemExternalReference[] getSegmentItemExternalReferences() {
-		return segmentItemExternalReferences;
+	public String getSegmentExternalReferenceCode() {
+		return segmentExternalReferenceCode;
 	}
 
-	public void setSegmentItemExternalReferences(
-		ItemExternalReference[] segmentItemExternalReferences) {
+	public void setSegmentExternalReferenceCode(
+		String segmentExternalReferenceCode) {
 
-		this.segmentItemExternalReferences = segmentItemExternalReferences;
+		this.segmentExternalReferenceCode = segmentExternalReferenceCode;
 	}
 
-	public void setSegmentItemExternalReferences(
-		UnsafeSupplier<ItemExternalReference[], Exception>
-			segmentItemExternalReferencesUnsafeSupplier) {
+	public void setSegmentExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			segmentExternalReferenceCodeUnsafeSupplier) {
 
 		try {
-			segmentItemExternalReferences =
-				segmentItemExternalReferencesUnsafeSupplier.get();
+			segmentExternalReferenceCode =
+				segmentExternalReferenceCodeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected ItemExternalReference[] segmentItemExternalReferences;
+	protected String segmentExternalReferenceCode;
+
+	public String getSitePageExternalReferenceCode() {
+		return sitePageExternalReferenceCode;
+	}
+
+	public void setSitePageExternalReferenceCode(
+		String sitePageExternalReferenceCode) {
+
+		this.sitePageExternalReferenceCode = sitePageExternalReferenceCode;
+	}
+
+	public void setSitePageExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			sitePageExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			sitePageExternalReferenceCode =
+				sitePageExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String sitePageExternalReferenceCode;
 
 	@Override
 	public PageExperience clone() throws CloneNotSupportedException {

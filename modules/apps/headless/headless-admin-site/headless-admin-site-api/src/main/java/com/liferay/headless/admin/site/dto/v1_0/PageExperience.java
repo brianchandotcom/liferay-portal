@@ -309,37 +309,34 @@ public class PageExperience implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _prioritySupplier;
 
-	@Schema(
-		description = "A list of external references to the segments the experience is used for."
-	)
-	@Valid
-	public ItemExternalReference[] getSegmentItemExternalReferences() {
-		if (_segmentItemExternalReferencesSupplier != null) {
-			segmentItemExternalReferences =
-				_segmentItemExternalReferencesSupplier.get();
+	@Schema(description = "The segment's external reference code.")
+	public String getSegmentExternalReferenceCode() {
+		if (_segmentExternalReferenceCodeSupplier != null) {
+			segmentExternalReferenceCode =
+				_segmentExternalReferenceCodeSupplier.get();
 
-			_segmentItemExternalReferencesSupplier = null;
+			_segmentExternalReferenceCodeSupplier = null;
 		}
 
-		return segmentItemExternalReferences;
+		return segmentExternalReferenceCode;
 	}
 
-	public void setSegmentItemExternalReferences(
-		ItemExternalReference[] segmentItemExternalReferences) {
+	public void setSegmentExternalReferenceCode(
+		String segmentExternalReferenceCode) {
 
-		this.segmentItemExternalReferences = segmentItemExternalReferences;
+		this.segmentExternalReferenceCode = segmentExternalReferenceCode;
 
-		_segmentItemExternalReferencesSupplier = null;
+		_segmentExternalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setSegmentItemExternalReferences(
-		UnsafeSupplier<ItemExternalReference[], Exception>
-			segmentItemExternalReferencesUnsafeSupplier) {
+	public void setSegmentExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			segmentExternalReferenceCodeUnsafeSupplier) {
 
-		_segmentItemExternalReferencesSupplier = () -> {
+		_segmentExternalReferenceCodeSupplier = () -> {
 			try {
-				return segmentItemExternalReferencesUnsafeSupplier.get();
+				return segmentExternalReferenceCodeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -350,15 +347,57 @@ public class PageExperience implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "A list of external references to the segments the experience is used for."
-	)
+	@GraphQLField(description = "The segment's external reference code.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ItemExternalReference[] segmentItemExternalReferences;
+	protected String segmentExternalReferenceCode;
 
 	@JsonIgnore
-	private Supplier<ItemExternalReference[]>
-		_segmentItemExternalReferencesSupplier;
+	private Supplier<String> _segmentExternalReferenceCodeSupplier;
+
+	@Schema(description = "The segment's external reference code.")
+	public String getSitePageExternalReferenceCode() {
+		if (_sitePageExternalReferenceCodeSupplier != null) {
+			sitePageExternalReferenceCode =
+				_sitePageExternalReferenceCodeSupplier.get();
+
+			_sitePageExternalReferenceCodeSupplier = null;
+		}
+
+		return sitePageExternalReferenceCode;
+	}
+
+	public void setSitePageExternalReferenceCode(
+		String sitePageExternalReferenceCode) {
+
+		this.sitePageExternalReferenceCode = sitePageExternalReferenceCode;
+
+		_sitePageExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSitePageExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			sitePageExternalReferenceCodeUnsafeSupplier) {
+
+		_sitePageExternalReferenceCodeSupplier = () -> {
+			try {
+				return sitePageExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The segment's external reference code.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String sitePageExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _sitePageExternalReferenceCodeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -487,27 +526,37 @@ public class PageExperience implements Serializable {
 			sb.append(priority);
 		}
 
-		ItemExternalReference[] segmentItemExternalReferences =
-			getSegmentItemExternalReferences();
+		String segmentExternalReferenceCode = getSegmentExternalReferenceCode();
 
-		if (segmentItemExternalReferences != null) {
+		if (segmentExternalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"segmentItemExternalReferences\": ");
+			sb.append("\"segmentExternalReferenceCode\": ");
 
-			sb.append("[");
+			sb.append("\"");
 
-			for (int i = 0; i < segmentItemExternalReferences.length; i++) {
-				sb.append(String.valueOf(segmentItemExternalReferences[i]));
+			sb.append(_escape(segmentExternalReferenceCode));
 
-				if ((i + 1) < segmentItemExternalReferences.length) {
-					sb.append(", ");
-				}
+			sb.append("\"");
+		}
+
+		String sitePageExternalReferenceCode =
+			getSitePageExternalReferenceCode();
+
+		if (sitePageExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
 			}
 
-			sb.append("]");
+			sb.append("\"sitePageExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sitePageExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

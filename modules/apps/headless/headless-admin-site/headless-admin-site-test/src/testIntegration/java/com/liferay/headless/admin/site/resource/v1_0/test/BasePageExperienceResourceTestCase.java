@@ -169,6 +169,8 @@ public abstract class BasePageExperienceResourceTestCase {
 
 		pageExperience.setExternalReferenceCode(regex);
 		pageExperience.setKey(regex);
+		pageExperience.setSegmentExternalReferenceCode(regex);
+		pageExperience.setSitePageExternalReferenceCode(regex);
 
 		String json = PageExperienceSerDes.toJSON(pageExperience);
 
@@ -178,6 +180,10 @@ public abstract class BasePageExperienceResourceTestCase {
 
 		Assert.assertEquals(regex, pageExperience.getExternalReferenceCode());
 		Assert.assertEquals(regex, pageExperience.getKey());
+		Assert.assertEquals(
+			regex, pageExperience.getSegmentExternalReferenceCode());
+		Assert.assertEquals(
+			regex, pageExperience.getSitePageExternalReferenceCode());
 	}
 
 	@Test
@@ -499,10 +505,21 @@ public abstract class BasePageExperienceResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"segmentItemExternalReferences",
+					"segmentExternalReferenceCode",
 					additionalAssertFieldName)) {
 
-				if (pageExperience.getSegmentItemExternalReferences() == null) {
+				if (pageExperience.getSegmentExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"sitePageExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (pageExperience.getSitePageExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -696,12 +713,26 @@ public abstract class BasePageExperienceResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"segmentItemExternalReferences",
+					"segmentExternalReferenceCode",
 					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						pageExperience1.getSegmentItemExternalReferences(),
-						pageExperience2.getSegmentItemExternalReferences())) {
+						pageExperience1.getSegmentExternalReferenceCode(),
+						pageExperience2.getSegmentExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"sitePageExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						pageExperience1.getSitePageExternalReferenceCode(),
+						pageExperience2.getSitePageExternalReferenceCode())) {
 
 					return false;
 				}
@@ -930,9 +961,96 @@ public abstract class BasePageExperienceResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("segmentItemExternalReferences")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("segmentExternalReferenceCode")) {
+			Object object = pageExperience.getSegmentExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("sitePageExternalReferenceCode")) {
+			Object object = pageExperience.getSitePageExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -984,6 +1102,10 @@ public abstract class BasePageExperienceResourceTestCase {
 					RandomTestUtil.randomString());
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				priority = RandomTestUtil.randomInt();
+				segmentExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				sitePageExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}

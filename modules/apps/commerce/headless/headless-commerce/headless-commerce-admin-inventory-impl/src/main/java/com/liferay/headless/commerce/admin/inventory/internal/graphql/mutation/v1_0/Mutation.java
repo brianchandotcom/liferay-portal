@@ -7,10 +7,14 @@ package com.liferay.headless.commerce.admin.inventory.internal.graphql.mutation.
 
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.ReplenishmentItem;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse;
+import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseAccount;
+import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseAccountGroup;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseChannel;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseOrderType;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.ReplenishmentItemResource;
+import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseAccountGroupResource;
+import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseAccountResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseChannelResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseItemResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseOrderTypeResource;
@@ -60,6 +64,22 @@ public class Mutation {
 
 		_warehouseResourceComponentServiceObjects =
 			warehouseResourceComponentServiceObjects;
+	}
+
+	public static void setWarehouseAccountResourceComponentServiceObjects(
+		ComponentServiceObjects<WarehouseAccountResource>
+			warehouseAccountResourceComponentServiceObjects) {
+
+		_warehouseAccountResourceComponentServiceObjects =
+			warehouseAccountResourceComponentServiceObjects;
+	}
+
+	public static void setWarehouseAccountGroupResourceComponentServiceObjects(
+		ComponentServiceObjects<WarehouseAccountGroupResource>
+			warehouseAccountGroupResourceComponentServiceObjects) {
+
+		_warehouseAccountGroupResourceComponentServiceObjects =
+			warehouseAccountGroupResourceComponentServiceObjects;
 	}
 
 	public static void setWarehouseChannelResourceComponentServiceObjects(
@@ -337,6 +357,160 @@ public class Mutation {
 			this::_populateResourceContext,
 			warehouseResource -> warehouseResource.patchWarehouseId(
 				id, warehouse));
+	}
+
+	@GraphQLField
+	public boolean deleteWarehouseAccount(
+			@GraphQLName("warehouseAccountId") Long warehouseAccountId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_warehouseAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountResource ->
+				warehouseAccountResource.deleteWarehouseAccount(
+					warehouseAccountId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteWarehouseAccountBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountResource ->
+				warehouseAccountResource.deleteWarehouseAccountBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public WarehouseAccount
+			createWarehouseByExternalReferenceCodeWarehouseAccount(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("warehouseAccount") WarehouseAccount
+					warehouseAccount)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountResource ->
+				warehouseAccountResource.
+					postWarehouseByExternalReferenceCodeWarehouseAccount(
+						externalReferenceCode, warehouseAccount));
+	}
+
+	@GraphQLField
+	public WarehouseAccount createWarehouseIdWarehouseAccount(
+			@GraphQLName("id") Long id,
+			@GraphQLName("warehouseAccount") WarehouseAccount warehouseAccount)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountResource ->
+				warehouseAccountResource.postWarehouseIdWarehouseAccount(
+					id, warehouseAccount));
+	}
+
+	@GraphQLField
+	public Response createWarehouseIdWarehouseAccountBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountResource ->
+				warehouseAccountResource.postWarehouseIdWarehouseAccountBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteWarehouseAccountGroup(
+			@GraphQLName("warehouseAccountGroupId") Long
+				warehouseAccountGroupId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_warehouseAccountGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountGroupResource ->
+				warehouseAccountGroupResource.deleteWarehouseAccountGroup(
+					warehouseAccountGroupId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteWarehouseAccountGroupBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseAccountGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountGroupResource ->
+				warehouseAccountGroupResource.deleteWarehouseAccountGroupBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public WarehouseAccountGroup
+			createWarehouseByExternalReferenceCodeWarehouseAccountGroup(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("warehouseAccountGroup") WarehouseAccountGroup
+					warehouseAccountGroup)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseAccountGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountGroupResource ->
+				warehouseAccountGroupResource.
+					postWarehouseByExternalReferenceCodeWarehouseAccountGroup(
+						externalReferenceCode, warehouseAccountGroup));
+	}
+
+	@GraphQLField
+	public WarehouseAccountGroup createWarehouseIdWarehouseAccountGroup(
+			@GraphQLName("id") Long id,
+			@GraphQLName("warehouseAccountGroup") WarehouseAccountGroup
+				warehouseAccountGroup)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseAccountGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountGroupResource ->
+				warehouseAccountGroupResource.
+					postWarehouseIdWarehouseAccountGroup(
+						id, warehouseAccountGroup));
+	}
+
+	@GraphQLField
+	public Response createWarehouseIdWarehouseAccountGroupBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseAccountGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountGroupResource ->
+				warehouseAccountGroupResource.
+					postWarehouseIdWarehouseAccountGroupBatch(
+						callbackURL, object));
 	}
 
 	@GraphQLField
@@ -694,6 +868,50 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			WarehouseAccountResource warehouseAccountResource)
+		throws Exception {
+
+		warehouseAccountResource.setContextAcceptLanguage(_acceptLanguage);
+		warehouseAccountResource.setContextCompany(_company);
+		warehouseAccountResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		warehouseAccountResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		warehouseAccountResource.setContextUriInfo(_uriInfo);
+		warehouseAccountResource.setContextUser(_user);
+		warehouseAccountResource.setGroupLocalService(_groupLocalService);
+		warehouseAccountResource.setRoleLocalService(_roleLocalService);
+
+		warehouseAccountResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		warehouseAccountResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
+			WarehouseAccountGroupResource warehouseAccountGroupResource)
+		throws Exception {
+
+		warehouseAccountGroupResource.setContextAcceptLanguage(_acceptLanguage);
+		warehouseAccountGroupResource.setContextCompany(_company);
+		warehouseAccountGroupResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		warehouseAccountGroupResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		warehouseAccountGroupResource.setContextUriInfo(_uriInfo);
+		warehouseAccountGroupResource.setContextUser(_user);
+		warehouseAccountGroupResource.setGroupLocalService(_groupLocalService);
+		warehouseAccountGroupResource.setRoleLocalService(_roleLocalService);
+
+		warehouseAccountGroupResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		warehouseAccountGroupResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
 			WarehouseChannelResource warehouseChannelResource)
 		throws Exception {
 
@@ -762,6 +980,10 @@ public class Mutation {
 		_replenishmentItemResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WarehouseResource>
 		_warehouseResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WarehouseAccountResource>
+		_warehouseAccountResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WarehouseAccountGroupResource>
+		_warehouseAccountGroupResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WarehouseChannelResource>
 		_warehouseChannelResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WarehouseItemResource>

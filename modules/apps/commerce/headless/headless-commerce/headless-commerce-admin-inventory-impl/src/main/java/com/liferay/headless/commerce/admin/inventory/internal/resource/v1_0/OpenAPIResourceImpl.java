@@ -85,6 +85,10 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(AccountResourceImpl.class);
+
+			add(AccountGroupResourceImpl.class);
+
 			add(ChannelResourceImpl.class);
 
 			add(OrderTypeResourceImpl.class);
@@ -92,6 +96,10 @@ public class OpenAPIResourceImpl {
 			add(ReplenishmentItemResourceImpl.class);
 
 			add(WarehouseResourceImpl.class);
+
+			add(WarehouseAccountResourceImpl.class);
+
+			add(WarehouseAccountGroupResourceImpl.class);
 
 			add(WarehouseChannelResourceImpl.class);
 

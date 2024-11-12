@@ -363,6 +363,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		defaultItemsPerPage,
 		defaultVisualizationMode,
 		erc = DEFAULT_DATA_SET_ERC,
+		filtersOrder,
 		label,
 		listOfItemsPerPage,
 	}: {
@@ -370,6 +371,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		defaultItemsPerPage?: number;
 		defaultVisualizationMode?: string;
 		erc?: string;
+		filtersOrder?: string;
 		label?: string;
 		listOfItemsPerPage?: string;
 	}) {
@@ -379,6 +381,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			additionalAPIURLParameters,
 			defaultItemsPerPage,
 			defaultVisualizationMode,
+			filtersOrder,
 			label,
 			listOfItemsPerPage,
 		};

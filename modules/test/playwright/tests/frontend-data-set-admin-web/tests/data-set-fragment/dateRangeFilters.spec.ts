@@ -200,3 +200,105 @@ test('Can create Date-time filter without start and end dates', async ({
 
 	await assertDataIsFetched();
 });
+
+test('Filters are displayed in the order stored in the filtersOrder field', async ({
+	dataSetManagerApiHelpers,
+	fdsFragmentPage,
+	layout,
+}) => {
+	const fieldLabel = getRandomString();
+	const filter1Label = getRandomString();
+	const filter2Label = getRandomString();
+	const modifiedDateField = 'dateModified';
+	const filterIds = [];
+
+	await test.step('Create a couple of new date-time filters without start nor end dates', async () => {
+		const filter1 = await dataSetManagerApiHelpers.createDataSetDateFilter({
+			dataSetERC,
+			fieldName: DATE_FIELD_NAME,
+			from: '',
+			label_i18n: {en_US: filter1Label},
+			to: '',
+			type: 'date-time',
+		});
+
+		const filter2 = await dataSetManagerApiHelpers.createDataSetDateFilter({
+			dataSetERC,
+			fieldName: modifiedDateField,
+			from: '',
+			label_i18n: {en_US: filter2Label},
+			to: '',
+			type: 'date-time',
+		});
+
+		filterIds.push(filter1.id, filter2.id);
+	});
+
+	await test.step('Add a field, so FDS has something to show', async () => {
+		await dataSetManagerApiHelpers.createDataSetTableSection({
+			dataSetERC,
+			fieldName: 'renderer',
+			label_i18n: {en_US: fieldLabel},
+			type: 'string',
+		});
+	});
+
+	await test.step('Configure Data Set fragment', async () => {
+		await fdsFragmentPage.configureDataSetFragment({
+			dataSetLabel,
+			layout,
+		});
+	});
+
+	const filterDropdownId =
+		await fdsFragmentPage.fdsFilterButton.getAttribute('aria-controls');
+
+	await test.step('Assert that the date filters are in the UI', async () => {
+		await expect(fdsFragmentPage.fdsFilterButton).toBeVisible();
+
+		await fdsFragmentPage.fdsFilterButton.click();
+		await fdsFragmentPage.page
+			.locator(`#${filterDropdownId}`)
+			.waitFor({state: 'visible'});
+		const filtersDropdown = fdsFragmentPage.page.locator(
+			`#${filterDropdownId}`
+		);
+		await expect(filtersDropdown.getByRole('menuitem')).toHaveCount(2);
+
+		await expect(filtersDropdown.getByRole('menuitem').nth(0)).toHaveText(
+			filter1Label
+		);
+		await expect(filtersDropdown.getByRole('menuitem').nth(1)).toHaveText(
+			filter2Label
+		);
+	});
+
+	await test.step('Update filters order', async () => {
+		await dataSetManagerApiHelpers.updateDataSet({
+			erc: dataSetERC,
+			filtersOrder: filterIds.reverse().join(),
+		});
+
+		await fdsFragmentPage.page.reload();
+	});
+
+	await test.step('Assert that the date filters are shown in the UI in the new order', async () => {
+		await expect(fdsFragmentPage.fdsFilterButton).toBeVisible();
+
+		await fdsFragmentPage.fdsFilterButton.click();
+		await fdsFragmentPage.page
+			.locator(`#${filterDropdownId}`)
+			.waitFor({state: 'visible'});
+		const filtersDropdown = fdsFragmentPage.page.locator(
+			`#${filterDropdownId}`
+		);
+		await expect(filtersDropdown.getByRole('menuitem')).toHaveCount(2);
+
+		await expect(filtersDropdown.getByRole('menuitem').nth(0)).toHaveText(
+			filter2Label
+		);
+		await expect(filtersDropdown.getByRole('menuitem').nth(1)).toHaveText(
+			filter1Label
+		);
+	});
+});

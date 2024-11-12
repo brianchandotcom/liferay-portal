@@ -173,6 +173,32 @@ export class FiltersPage {
 		await expect(visualFeedback).toContainText(text);
 	}
 
+	async assertTableCellContent({filterData, page, rowIndex = 0}) {
+
+		// await test.step('Assert table cell content', async () => {
+
+		await page
+			.locator('.orderable-table > tbody > .orderable-table-row')
+			.first()
+			.waitFor();
+
+		const tableRowContent = await page
+			.locator('.orderable-table-row')
+			.nth(rowIndex)
+			.locator('td');
+
+		const expectedRowContent = [
+			filterData.name,
+			filterData.fieldName,
+			filterData.type,
+		];
+
+		await expect(tableRowContent).toContainText(expectedRowContent);
+
+		// });
+
+	}
+
 	async cancelAddFilterForm() {
 		await this.newFilterForm.cancelButton.click();
 	}

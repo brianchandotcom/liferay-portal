@@ -13,6 +13,8 @@
 			dir="."
 			fork="true"
 		>
+			<jvmarg value="--add-opens=java.base/java.lang.invoke=ALL-UNNAMED" />
+			<jvmarg value="--add-opens=java.base/java.lang.reflect=ALL-UNNAMED" />
 			<classpath>
 				<fileset
 					dir="${sdk.dir}/dist"

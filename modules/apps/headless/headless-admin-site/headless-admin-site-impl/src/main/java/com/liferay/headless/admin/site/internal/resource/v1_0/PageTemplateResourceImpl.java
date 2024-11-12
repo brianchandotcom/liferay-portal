@@ -9,6 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ContentPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplate;
+import com.liferay.headless.admin.site.internal.resource.util.ResourceUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageTemplateResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
@@ -20,7 +21,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -64,13 +64,12 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		return Page.of(
 			transform(
 				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
-					group.getGroupId(),
+					ResourceUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode),
 					new int[] {
 						LayoutPageTemplateEntryTypeConstants.BASIC,
 						LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE
@@ -89,47 +88,48 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
-		return _addPageTemplate(group, pageTemplate);
+		return _addPageTemplate(
+			ResourceUtil.getGroupId(
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode),
+			pageTemplate);
 	}
 
 	private PageTemplate _addPageTemplate(
-			ContentPageTemplate contentPageTemplate, Group group)
+			ContentPageTemplate contentPageTemplate, long groupId)
 		throws Exception {
 
 		return _pageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				contentPageTemplate.getExternalReferenceCode(),
-				group.getGroupId(),
-				_getLayoutPageTemplateCollectionId(group, contentPageTemplate),
+				contentPageTemplate.getExternalReferenceCode(), groupId,
+				_getLayoutPageTemplateCollectionId(
+					groupId, contentPageTemplate),
 				contentPageTemplate.getName(),
 				LayoutPageTemplateEntryTypeConstants.BASIC, 0L,
 				WorkflowConstants.STATUS_DRAFT,
-				_getServiceContext(group, contentPageTemplate)));
+				_getServiceContext(groupId, contentPageTemplate)));
 	}
 
 	private PageTemplate _addPageTemplate(
-			Group group, PageTemplate pageTemplate)
+			long groupId, PageTemplate pageTemplate)
 		throws Exception {
 
 		if (Objects.equals(
 				pageTemplate.getType(),
 				PageTemplate.Type.CONTENT_PAGE_TEMPLATE)) {
 
-			return _addPageTemplate((ContentPageTemplate)pageTemplate, group);
+			return _addPageTemplate((ContentPageTemplate)pageTemplate, groupId);
 		}
 
-		return _addPageTemplate(group, (WidgetPageTemplate)pageTemplate);
+		return _addPageTemplate(groupId, (WidgetPageTemplate)pageTemplate);
 	}
 
 	private PageTemplate _addPageTemplate(
-			Group group, WidgetPageTemplate widgetPageTemplate)
+			long groupId, WidgetPageTemplate widgetPageTemplate)
 		throws Exception {
 
 		ServiceContext serviceContext = _getServiceContext(
-			group, widgetPageTemplate);
+			groupId, widgetPageTemplate);
 
 		Map<Locale, String> nameMap = HashMapBuilder.put(
 			serviceContext.getLocale(), widgetPageTemplate.getName()
@@ -161,9 +161,9 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 				widgetPageTemplate.getExternalReferenceCode());
 		}
 
-		layoutPageTemplateEntry.setGroupId(group.getGroupId());
+		layoutPageTemplateEntry.setGroupId(groupId);
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
-			_getLayoutPageTemplateCollectionId(group, widgetPageTemplate));
+			_getLayoutPageTemplateCollectionId(groupId, widgetPageTemplate));
 
 		if (widgetPageTemplate.getUuid() != null) {
 			layoutPageTemplateEntry.setUuid(widgetPageTemplate.getUuid());
@@ -175,7 +175,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	private long _getLayoutPageTemplateCollectionId(
-			Group group, PageTemplate pageTemplate)
+			long groupId, PageTemplate pageTemplate)
 		throws Exception {
 
 		PageTemplateSet pageTemplateSet = pageTemplate.getPageTemplateSet();
@@ -188,8 +188,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				fetchLayoutPageTemplateCollection(
-					pageTemplateSet.getExternalReferenceCode(),
-					group.getGroupId());
+					pageTemplateSet.getExternalReferenceCode(), groupId);
 
 		if (layoutPageTemplateCollection == null) {
 			return LayoutPageTemplateConstants.
@@ -200,10 +199,10 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	private ServiceContext _getServiceContext(
-		Group group, PageTemplate pageTemplate) {
+		long groupId, PageTemplate pageTemplate) {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
-			group.getGroupId(), contextHttpServletRequest, null
+			groupId, contextHttpServletRequest, null
 		).build();
 
 		serviceContext.setCreateDate(pageTemplate.getDateCreated());

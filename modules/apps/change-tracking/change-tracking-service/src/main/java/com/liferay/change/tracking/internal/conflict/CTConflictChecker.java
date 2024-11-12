@@ -144,12 +144,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		_checkAdditions(
 			connection, ctPersistence, conflictInfos, primaryKeyName);
 
-		if (_ctConflictConfiguration.
-				modificationDeletionConflictCheckEnabled()) {
-
-			_checkDeletions(
-				connection, ctPersistence, conflictInfos, primaryKeyName);
-		}
+		_checkDeletions(
+			connection, ctPersistence, conflictInfos, primaryKeyName);
 
 		if (_modificationCTEntries != null) {
 			_checkModifications(
@@ -343,31 +339,38 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Connection connection, CTPersistence<T> ctPersistence,
 		List<ConflictInfo> conflictInfos, String primaryKeyName) {
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select publication.", primaryKeyName, " from ",
-					ctPersistence.getTableName(),
-					" publication inner join CTEntry on CTEntry.modelClassPK ",
-					"= publication.", primaryKeyName,
-					" where CTEntry.ctCollectionId = ", _sourceCTCollectionId,
-					" and CTEntry.modelClassNameId = ", _modelClassNameId,
-					" and CTEntry.changeType = ",
-					CTConstants.CT_CHANGE_TYPE_DELETION,
-					" and (publication.ctCollectionId = ",
-					_targetCTCollectionId, " or publication.ctCollectionId = ",
-					CTConstants.CT_COLLECTION_ID_PRODUCTION,
-					") and CTEntry.modelMvccVersion != ",
-					"publication.mvccVersion"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+		if (_ctConflictConfiguration.
+				modificationDeletionConflictCheckEnabled()) {
 
-			while (resultSet.next()) {
-				conflictInfos.add(
-					new ModificationDeletionConflictInfo(
-						resultSet.getLong(1), false));
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						StringBundler.concat(
+							"select publication.", primaryKeyName, " from ",
+							ctPersistence.getTableName(),
+							" publication inner join CTEntry on ",
+							"CTEntry.modelClassPK = publication.",
+							primaryKeyName, " where CTEntry.ctCollectionId = ",
+							_sourceCTCollectionId,
+							" and CTEntry.modelClassNameId = ",
+							_modelClassNameId, " and CTEntry.changeType = ",
+							CTConstants.CT_CHANGE_TYPE_DELETION,
+							" and (publication.ctCollectionId = ",
+							_targetCTCollectionId,
+							" or publication.ctCollectionId = ",
+							CTConstants.CT_COLLECTION_ID_PRODUCTION,
+							") and CTEntry.modelMvccVersion != ",
+							"publication.mvccVersion"));
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				while (resultSet.next()) {
+					conflictInfos.add(
+						new ModificationDeletionConflictInfo(
+							resultSet.getLong(1), false));
+				}
 			}
-		}
-		catch (SQLException sqlException) {
-			throw new ORMException(sqlException);
+			catch (SQLException sqlException) {
+				throw new ORMException(sqlException);
+			}
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(

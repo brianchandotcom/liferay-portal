@@ -80,6 +80,17 @@ public class LayoutUtilityPageEntryServiceWrapper
 	}
 
 	@Override
+	public LayoutUtilityPageEntry
+			fetchLayoutUtilityPageEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutUtilityPageEntryService.
+			fetchLayoutUtilityPageEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
+	@Override
 	public LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
 			long groupId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {

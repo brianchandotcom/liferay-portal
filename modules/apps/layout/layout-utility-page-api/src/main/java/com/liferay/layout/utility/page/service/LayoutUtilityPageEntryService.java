@@ -71,6 +71,12 @@ public interface LayoutUtilityPageEntryService extends BaseService {
 		long layoutUtilityPageEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutUtilityPageEntry
+			fetchLayoutUtilityPageEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
 			long groupId, String type)
 		throws PortalException;

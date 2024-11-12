@@ -76,6 +76,15 @@ public class LayoutUtilityPageEntryServiceUtil {
 			layoutUtilityPageEntryId);
 	}
 
+	public static LayoutUtilityPageEntry
+			fetchLayoutUtilityPageEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().fetchLayoutUtilityPageEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	public static LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
 			long groupId, String type)
 		throws PortalException {

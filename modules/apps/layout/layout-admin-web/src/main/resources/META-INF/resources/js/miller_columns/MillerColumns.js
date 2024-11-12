@@ -11,6 +11,8 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import MillerColumnsColumn from './MillerColumnsColumn';
+import {KeyboardMovementProvider} from './contexts/KeyboardMovementContext';
+import {KeyboardNavigationProvider} from './contexts/KeyboardNavigationContext';
 
 const getItemsMap = (columns, oldItems = new Map()) => {
 	const map = new Map();
@@ -277,34 +279,44 @@ const MillerColumns = ({
 		}
 	};
 
-	return (
-		<DndProvider backend={HTML5Backend}>
-			<DragPreview getLabel={getDragPreviewLabel} />
+	const columnSizes = initialColumns
+		.filter((col) => col.length)
+		.map((col) => col.length);
 
-			<div className="bg-white miller-columns-row" ref={ref}>
-				{columns.map((column, index) => (
-					<MillerColumnsColumn
-						columnItems={column.items}
-						columnsContainer={ref}
-						createPageTemplateURL={createPageTemplateURL}
-						getItemActionsURL={getItemActionsURL}
-						getPageTemplateCollectionsURL={
-							getPageTemplateCollectionsURL
-						}
-						index={index}
-						isLayoutSetPrototype={isLayoutSetPrototype}
-						isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
-						items={items}
-						key={index}
-						namespace={namespace}
-						onItemDrop={onItemDrop}
-						onItemStayHover={onItemStayHover}
-						parent={column.parent}
-						rtl={rtl}
-					/>
-				))}
-			</div>
-		</DndProvider>
+	return (
+		<KeyboardNavigationProvider columnSizes={columnSizes}>
+			<KeyboardMovementProvider columnSizes={columnSizes}>
+				<DndProvider backend={HTML5Backend}>
+					<DragPreview getLabel={getDragPreviewLabel} />
+
+					<div className="bg-white miller-columns-row" ref={ref}>
+						{columns.map((column, index) => (
+							<MillerColumnsColumn
+								columnItems={column.items}
+								columnsContainer={ref}
+								createPageTemplateURL={createPageTemplateURL}
+								getItemActionsURL={getItemActionsURL}
+								getPageTemplateCollectionsURL={
+									getPageTemplateCollectionsURL
+								}
+								index={index}
+								isLayoutSetPrototype={isLayoutSetPrototype}
+								isPrivateLayoutsEnabled={
+									isPrivateLayoutsEnabled
+								}
+								items={items}
+								key={index}
+								namespace={namespace}
+								onItemDrop={onItemDrop}
+								onItemStayHover={onItemStayHover}
+								parent={column.parent}
+								rtl={rtl}
+							/>
+						))}
+					</div>
+				</DndProvider>
+			</KeyboardMovementProvider>
+		</KeyboardNavigationProvider>
 	);
 };
 

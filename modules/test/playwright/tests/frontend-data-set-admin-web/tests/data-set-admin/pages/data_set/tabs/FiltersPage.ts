@@ -174,9 +174,6 @@ export class FiltersPage {
 	}
 
 	async assertTableCellContent({filterData, page, rowIndex = 0}) {
-
-		// await test.step('Assert table cell content', async () => {
-
 		await page
 			.locator('.orderable-table > tbody > .orderable-table-row')
 			.first()
@@ -194,9 +191,6 @@ export class FiltersPage {
 		];
 
 		await expect(tableRowContent).toContainText(expectedRowContent);
-
-		// });
-
 	}
 
 	async cancelAddFilterForm() {

@@ -263,14 +263,11 @@ test('Filters are displayed in the order stored in the filtersOrder field', asyn
 		const filtersDropdown = fdsFragmentPage.page.locator(
 			`#${filterDropdownId}`
 		);
-		await expect(filtersDropdown.getByRole('menuitem')).toHaveCount(2);
+		const filterDropdownItems = filtersDropdown.getByRole('menuitem');
+		await expect(filterDropdownItems).toHaveCount(2);
 
-		await expect(filtersDropdown.getByRole('menuitem').nth(0)).toHaveText(
-			filter1Label
-		);
-		await expect(filtersDropdown.getByRole('menuitem').nth(1)).toHaveText(
-			filter2Label
-		);
+		await expect(filterDropdownItems.nth(0)).toHaveText(filter1Label);
+		await expect(filterDropdownItems.nth(1)).toHaveText(filter2Label);
 	});
 
 	await test.step('Update filters order', async () => {
@@ -292,13 +289,10 @@ test('Filters are displayed in the order stored in the filtersOrder field', asyn
 		const filtersDropdown = fdsFragmentPage.page.locator(
 			`#${filterDropdownId}`
 		);
-		await expect(filtersDropdown.getByRole('menuitem')).toHaveCount(2);
+		const filterDropdownItems = filtersDropdown.getByRole('menuitem');
+		await expect(filterDropdownItems).toHaveCount(2);
 
-		await expect(filtersDropdown.getByRole('menuitem').nth(0)).toHaveText(
-			filter2Label
-		);
-		await expect(filtersDropdown.getByRole('menuitem').nth(1)).toHaveText(
-			filter1Label
-		);
+		await expect(filterDropdownItems.nth(0)).toHaveText(filter2Label);
+		await expect(filterDropdownItems.nth(1)).toHaveText(filter1Label);
 	});
 });

@@ -13,6 +13,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageTemplate;
+import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
@@ -98,6 +99,42 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		super.
 			testGetSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage();
+	}
+
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodePageTemplatesPage()
+		throws Exception {
+
+		super.testGetSiteSiteByExternalReferenceCodePageTemplatesPage();
+
+		long totalCount =
+			_getSiteSiteByExternalReferenceCodePageTemplatesPageTotalCount(
+				testGroup.getExternalReferenceCode());
+
+		_enableLocalStaging();
+
+		Assert.assertEquals(
+			totalCount,
+			_getSiteSiteByExternalReferenceCodePageTemplatesPageTotalCount(
+				testGroup.getExternalReferenceCode()));
+
+		Group companyGroup = _getCompanyGroup();
+
+		totalCount =
+			_getSiteSiteByExternalReferenceCodePageTemplatesPageTotalCount(
+				companyGroup.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			totalCount,
+			_getSiteSiteByExternalReferenceCodePageTemplatesPageTotalCount(
+				companyGroup.getExternalReferenceCode()));
+
+		_withDepotEntry(
+			group -> _assertProblemException(
+				() ->
+					_getSiteSiteByExternalReferenceCodePageTemplatesPageTotalCount(
+						group.getExternalReferenceCode())));
 	}
 
 	@Ignore
@@ -361,6 +398,18 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				setName(layoutPageTemplateCollection::getName);
 			}
 		};
+	}
+
+	private long _getSiteSiteByExternalReferenceCodePageTemplatesPageTotalCount(
+			String siteExternalReferenceCode)
+		throws Exception {
+
+		Page<PageTemplate> page =
+			pageTemplateResource.
+				getSiteSiteByExternalReferenceCodePageTemplatesPage(
+					siteExternalReferenceCode, null, null, null, null, null);
+
+		return page.getTotalCount();
 	}
 
 	private WidgetPageTemplate _getWidgetPageTemplate(Group group)

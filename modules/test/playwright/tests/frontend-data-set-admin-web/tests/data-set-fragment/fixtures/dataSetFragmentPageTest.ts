@@ -6,18 +6,18 @@
 import {mergeTests} from '@playwright/test';
 
 import {dataSetManagerSetupTest} from '../../data-set-admin/fixtures/dataSetManagerSetupTest';
-import {FDSFragmentPage} from '../pages/FDSFragmentPage';
+import {DataSetFragmentPage} from '../pages/DataSetFragmentPage';
 
 // ensures data-set-fragment tests can run before data-set-admin tests
 
 const test = mergeTests(dataSetManagerSetupTest);
 
-const fdsFragmentPageTest = test.extend<{
-	fdsFragmentPage: FDSFragmentPage;
+const dataSetFragmentPageTest = test.extend<{
+	dataSetFragmentPage: DataSetFragmentPage;
 }>({
-	fdsFragmentPage: async ({page}, use) => {
-		await use(new FDSFragmentPage(page));
+	dataSetFragmentPage: async ({page}, use) => {
+		await use(new DataSetFragmentPage(page));
 	},
 });
 
-export {fdsFragmentPageTest};
+export {dataSetFragmentPageTest};

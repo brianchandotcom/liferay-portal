@@ -11,7 +11,7 @@ import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 
 export const test = mergeTests(
 	accountSettingsPagesTest,
@@ -21,7 +21,7 @@ export const test = mergeTests(
 	}),
 	isolatedLayoutTest({publish: false}),
 	loginTest(),
-	fdsFragmentPageTest
+	dataSetFragmentPageTest
 );
 
 let dataSetERC: string;
@@ -44,7 +44,7 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 test.describe('Parameters in Data Set Fragment', () => {
 	test('Check that the sort parameter is applied @LPD-25241', async ({
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 	}) => {
 		await test.step('Add fields', async () => {
@@ -73,18 +73,18 @@ test.describe('Parameters in Data Set Fragment', () => {
 		});
 
 		await test.step('Configure Data Set fragment', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
+			await dataSetFragmentPage.configureDataSetFragment({
 				dataSetLabel,
 				layout,
 			});
 		});
 
 		await test.step('Check that the sorting is applied', async () => {
-			const firstNameText = await fdsFragmentPage.fdsTableWrapper
+			const firstNameText = await dataSetFragmentPage.tableWrapper
 				.locator('.dnd-tbody .dnd-tr:first-child .dnd-td:first-child')
 				.textContent();
 
-			const lastNameText = await fdsFragmentPage.fdsTableWrapper
+			const lastNameText = await dataSetFragmentPage.tableWrapper
 				.locator('.dnd-tbody .dnd-tr:last-child .dnd-td:first-child')
 				.textContent();
 
@@ -94,7 +94,7 @@ test.describe('Parameters in Data Set Fragment', () => {
 
 	test('Check that the filter parameter is applied @LPD-25241', async ({
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 	}) => {
 		await test.step('Add fields', async () => {
@@ -123,14 +123,14 @@ test.describe('Parameters in Data Set Fragment', () => {
 		});
 
 		await test.step('Configure Data Set fragment', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
+			await dataSetFragmentPage.configureDataSetFragment({
 				dataSetLabel,
 				layout,
 			});
 		});
 
 		await test.step('Check that the filter is applied', async () => {
-			const tableNameCellTexts = await fdsFragmentPage.fdsTableWrapper
+			const tableNameCellTexts = await dataSetFragmentPage.tableWrapper
 				.locator(`.dnd-tbody > .dnd-tr > .dnd-td:nth-child(1)`)
 				.allInnerTexts();
 

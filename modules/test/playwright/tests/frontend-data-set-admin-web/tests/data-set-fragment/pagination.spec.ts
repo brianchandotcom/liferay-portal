@@ -10,7 +10,7 @@ import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -19,7 +19,7 @@ export const test = mergeTests(
 	}),
 	isolatedLayoutTest({publish: false}),
 	loginTest(),
-	fdsFragmentPageTest
+	dataSetFragmentPageTest
 );
 
 let dataSetERC: string;
@@ -58,12 +58,12 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 
 test.describe('Data Set Pagination configuration in the fragment', () => {
 	const assertPaginationValues = async (
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		itemsPerPage,
 		deltas
 	) => {
 		const paginatorWrapper =
-			await fdsFragmentPage.fdsPaginationWrapper.locator(
+			await dataSetFragmentPage.paginationWrapper.locator(
 				'.pagination-bar'
 			);
 
@@ -84,13 +84,13 @@ test.describe('Data Set Pagination configuration in the fragment', () => {
 			node.getAttribute('aria-controls')
 		);
 
-		await fdsFragmentPage.page.locator(`#${dropdownId}`).waitFor();
+		await dataSetFragmentPage.page.locator(`#${dropdownId}`).waitFor();
 
 		await expect(
-			fdsFragmentPage.page.locator(`#${dropdownId}`).getByRole('option')
+			dataSetFragmentPage.page.locator(`#${dropdownId}`).getByRole('option')
 		).toHaveCount(deltas.length);
 
-		const paginationOptions = await fdsFragmentPage.page
+		const paginationOptions = await dataSetFragmentPage.page
 			.locator(`#${dropdownId}`)
 			.getByRole('option')
 			.allInnerTexts();
@@ -98,9 +98,9 @@ test.describe('Data Set Pagination configuration in the fragment', () => {
 		expect(paginationOptions).toEqual(deltas);
 	};
 
-	const configureDataSet = async (fdsFragmentPage, layout) => {
+	const configureDataSet = async (dataSetFragmentPage, layout) => {
 		await test.step('Configure Data Set in the page', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
+			await dataSetFragmentPage.configureDataSetFragment({
 				dataSetLabel,
 				layout,
 			});
@@ -108,7 +108,7 @@ test.describe('Data Set Pagination configuration in the fragment', () => {
 
 		await test.step('Frontend Data Set Table is in the page', async () => {
 			expect(
-				await fdsFragmentPage.page
+				await dataSetFragmentPage.page
 					.locator('.dnd-thead > div')
 					.first()
 					.locator('.dnd-th')
@@ -118,13 +118,13 @@ test.describe('Data Set Pagination configuration in the fragment', () => {
 	};
 
 	test('FDS uses default pagination configuration after creating a Data Set', async ({
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 	}) => {
-		await configureDataSet(fdsFragmentPage, layout);
+		await configureDataSet(dataSetFragmentPage, layout);
 
 		await test.step('Check that the FDS Table pagination uses default configuration values', async () => {
-			await assertPaginationValues(fdsFragmentPage, '20 Items', [
+			await assertPaginationValues(dataSetFragmentPage, '20 Items', [
 				'4 Items',
 				'8 Items',
 				'20 Items',
@@ -136,7 +136,7 @@ test.describe('Data Set Pagination configuration in the fragment', () => {
 
 	test('FDS uses custom pagination configuration after creating a Data Set', async ({
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 	}) => {
 		await test.step('Update Data Set pagination configuration', async () => {
@@ -148,10 +148,10 @@ test.describe('Data Set Pagination configuration in the fragment', () => {
 			});
 		});
 
-		await configureDataSet(fdsFragmentPage, layout);
+		await configureDataSet(dataSetFragmentPage, layout);
 
 		await test.step('Check that the FDS Table pagination uses custom configuration values', async () => {
-			await assertPaginationValues(fdsFragmentPage, '10 Items', [
+			await assertPaginationValues(dataSetFragmentPage, '10 Items', [
 				'5 Items',
 				'10 Items',
 				'15 Items',

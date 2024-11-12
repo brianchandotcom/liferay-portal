@@ -9,66 +9,66 @@ import {ApiHelpers} from '../../../../../helpers/ApiHelpers';
 import {DEFAULT_LABEL} from '../../../utils/constants';
 import {VisualizationMode} from '../../../utils/types';
 
-export class FDSFragmentPage {
+export class DataSetFragmentPage {
+	readonly activeViewSelector: Locator;
+	readonly addFilterButton: Locator;
 	readonly apiHelpers: ApiHelpers;
+	readonly cardsWrapper: Locator;
 	readonly changeDataSetButton: Locator;
 	readonly creationMenuButton: Locator;
 	readonly editPageButton: Locator;
 	readonly emptyStateTitle: Locator;
-	readonly fdsActiveViewSelector: Locator;
-	readonly fdsAddFilterButton: Locator;
-	readonly fdsCardsWrapper: Locator;
-	readonly fdsFilterButton: Locator;
-	fdsFilterItem: Locator;
-	readonly fdsFilterResumeButton: Locator;
-	readonly fdsListWrapper: Locator;
-	readonly fdsPaginationResults: Locator;
-	readonly fdsPaginationWrapper: Locator;
-	readonly fdsResetFilterButton: Locator;
-	readonly fdsTableWrapper: Locator;
+	readonly filterButton: Locator;
+	filterItem: Locator;
+	readonly filterResumeButton: Locator;
 	readonly fragmentWidgetSearchInput: Locator;
+	readonly listWrapper: Locator;
 	readonly loadingIndicator: Locator;
 	readonly page: Page;
+	readonly paginationResults: Locator;
+	readonly paginationWrapper: Locator;
 	readonly publishPageButton: Locator;
+	readonly resetFilterButton: Locator;
 	readonly selectDataSetModalFrame: FrameLocator;
 	readonly selectDataSetButton: Locator;
 	readonly selectedDataSetInput: Locator;
+	readonly tableWrapper: Locator;
 
 	constructor(page: Page) {
+		this.activeViewSelector = page.getByLabel('Show View Options');
+		this.addFilterButton = page.getByRole('button', {
+			exact: true,
+			name: 'Add Filter',
+		});
 		this.apiHelpers = new ApiHelpers(page);
+		this.cardsWrapper = page.locator('.cards-container');
 		this.changeDataSetButton = page.getByRole('button', {
 			name: 'Change Data Set View',
 		});
 		this.creationMenuButton = page.getByRole('button', {name: 'New'});
 		this.emptyStateTitle = page.getByText('No Results Found');
-		this.fdsActiveViewSelector = page.getByLabel('Show View Options');
-		this.fdsAddFilterButton = page.getByRole('button', {
-			exact: true,
-			name: 'Add Filter',
-		});
-		this.fdsCardsWrapper = page.locator('.cards-container');
-		this.fdsFilterButton = page.getByRole('button', {
+
+		this.filterButton = page.getByRole('button', {
 			exact: true,
 			name: 'Filter',
 		});
-		this.fdsFilterResumeButton = page.locator('.filter-resume');
-		this.fdsListWrapper = page.locator('.list-sheet');
-		this.fdsPaginationWrapper = page.locator(
-			'.data-set-pagination-wrapper'
-		);
-		this.fdsPaginationResults = page.locator('.pagination-results');
-		this.fdsResetFilterButton = page.getByRole('button', {
-			exact: true,
-			name: 'Reset Filters',
-		});
-		this.fdsTableWrapper = page.locator('.dnd-table');
+		this.filterResumeButton = page.locator('.filter-resume');
 		this.fragmentWidgetSearchInput = page.getByLabel(
 			'Search Fragments and Widgets'
 		);
+		this.listWrapper = page.locator('.list-sheet');
 		this.loadingIndicator = page.locator('.fds .loading-animation');
 		this.page = page;
+		this.paginationResults = page.locator('.pagination-results');
+		this.paginationWrapper = page.locator(
+			'.data-set-pagination-wrapper'
+		);
 		this.publishPageButton = page.getByRole('button', {
 			name: 'Publish',
+		});
+		this.resetFilterButton = page.getByRole('button', {
+			exact: true,
+			name: 'Reset Filters',
 		});
 		this.selectDataSetModalFrame = page.frameLocator(
 			'iframe[title="Select"]'
@@ -77,8 +77,9 @@ export class FDSFragmentPage {
 			name: 'Select Data Set View',
 		});
 		this.selectedDataSetInput = page
-			.getByLabel('Configuration Panel')
-			.getByLabel('Data Set View', {exact: true});
+		.getByLabel('Configuration Panel')
+		.getByLabel('Data Set View', {exact: true});
+		this.tableWrapper = page.locator('.dnd-table');
 	}
 
 	async goto() {
@@ -108,15 +109,15 @@ export class FDSFragmentPage {
 	}
 
 	async selectFilter(filterLabel: string) {
-		await this.fdsFilterButton.waitFor({state: 'visible'});
+		await this.filterButton.waitFor({state: 'visible'});
 		const filterDropdownId =
-			await this.fdsFilterButton.getAttribute('aria-controls');
-		await this.fdsFilterButton.click();
+			await this.filterButton.getAttribute('aria-controls');
+		await this.filterButton.click();
 		await this.page
 			.locator(`#${filterDropdownId}`)
 			.waitFor({state: 'visible'});
-		this.fdsFilterItem = this.page.locator(`#${filterDropdownId}`);
-		this.fdsFilterItem
+		this.filterItem = this.page.locator(`#${filterDropdownId}`);
+		this.filterItem
 			.getByRole('menuitem', {
 				name: filterLabel,
 			})
@@ -124,10 +125,10 @@ export class FDSFragmentPage {
 	}
 
 	async changeVisualizationMode(visualizationMode: VisualizationMode) {
-		await this.fdsActiveViewSelector.waitFor({
+		await this.activeViewSelector.waitFor({
 			state: 'visible',
 		});
-		await this.fdsActiveViewSelector.click();
+		await this.activeViewSelector.click();
 
 		await this.page
 			.getByRole('listbox')

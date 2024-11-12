@@ -11,7 +11,7 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {API_ENDPOINT_PATH} from '../../utils/constants';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 
 let settingsDataSetERC: string;
 let dataSetLabel: string;
@@ -23,7 +23,7 @@ export const test = mergeTests(
 	}),
 	isolatedLayoutTest({publish: false}),
 	loginTest(),
-	fdsFragmentPageTest
+	dataSetFragmentPageTest
 );
 
 test.beforeEach(async ({dataSetManagerApiHelpers}) => {
@@ -42,9 +42,9 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: settingsDataSetERC});
 });
 
-const configureDataset = async ({fdsFragmentPage, layout}) => {
+const configureDataset = async ({dataSetFragmentPage, layout}) => {
 	await test.step('Configure Data Set in the page', async () => {
-		await fdsFragmentPage.configureDataSetFragment({
+		await dataSetFragmentPage.configureDataSetFragment({
 			dataSetLabel,
 			layout,
 		});
@@ -59,22 +59,22 @@ const assertVisualizationMode = async ({locator}) => {
 	});
 };
 
-const assertCardsVisualizationMode = async ({fdsFragmentPage}) => {
+const assertCardsVisualizationMode = async ({dataSetFragmentPage}) => {
 	await assertVisualizationMode({
-		locator: fdsFragmentPage.fdsCardsWrapper,
+		locator: dataSetFragmentPage.cardsWrapper,
 	});
 };
 
-const assertListVisualizationMode = async ({fdsFragmentPage}) => {
+const assertListVisualizationMode = async ({dataSetFragmentPage}) => {
 	await assertVisualizationMode({
-		locator: fdsFragmentPage.fdsListWrapper,
+		locator: dataSetFragmentPage.listWrapper,
 	});
 };
 
 test.describe('Data Set Default Visualization Mode in fragment', () => {
 	test('When there is only one visualization mode defined, that will be the default one. Cards', async ({
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 	}) => {
 		await test.step('Assign a field to a Card title section', async () => {
@@ -83,14 +83,14 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 			});
 		});
 
-		await configureDataset({fdsFragmentPage, layout});
+		await configureDataset({dataSetFragmentPage, layout});
 
-		await assertCardsVisualizationMode({fdsFragmentPage});
+		await assertCardsVisualizationMode({dataSetFragmentPage});
 	});
 
 	test('When there are more than one visualization mode defined (cards & list), the user could change the visualization option.', async ({
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 	}) => {
 		await test.step('Assign a field to a Card and List title sections', async () => {
@@ -102,20 +102,20 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 			});
 		});
 
-		await configureDataset({fdsFragmentPage, layout});
+		await configureDataset({dataSetFragmentPage, layout});
 
-		await assertCardsVisualizationMode({fdsFragmentPage});
+		await assertCardsVisualizationMode({dataSetFragmentPage});
 
 		await test.step('Change Data Set Visualization option', async () => {
-			await fdsFragmentPage.changeVisualizationMode('List');
+			await dataSetFragmentPage.changeVisualizationMode('List');
 		});
 
-		await assertListVisualizationMode({fdsFragmentPage});
+		await assertListVisualizationMode({dataSetFragmentPage});
 	});
 
 	test('When there are more than one visualization modes defined, with a default selected (List), this will be the default one in the fragment.', async ({
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 		page,
 	}) => {
@@ -135,15 +135,15 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 			});
 		});
 
-		await configureDataset({fdsFragmentPage, layout});
+		await configureDataset({dataSetFragmentPage, layout});
 
-		await assertListVisualizationMode({fdsFragmentPage});
+		await assertListVisualizationMode({dataSetFragmentPage});
 
 		await test.step('Check Default Visualization Mode option', async () => {
-			await fdsFragmentPage.fdsActiveViewSelector.waitFor({
+			await dataSetFragmentPage.activeViewSelector.waitFor({
 				state: 'visible',
 			});
-			await fdsFragmentPage.fdsActiveViewSelector.click();
+			await dataSetFragmentPage.activeViewSelector.click();
 
 			await page
 				.getByRole('listbox', {name: 'View Options'})
@@ -159,7 +159,7 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 
 	test('When the default visualization mode is changed in the Data Set Manager, the change is reflected in the fragment', async ({
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 		page,
 	}) => {
@@ -179,15 +179,15 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 			});
 		});
 
-		await configureDataset({fdsFragmentPage, layout});
+		await configureDataset({dataSetFragmentPage, layout});
 
-		await assertListVisualizationMode({fdsFragmentPage});
+		await assertListVisualizationMode({dataSetFragmentPage});
 
 		await test.step('Check default visualization mode option', async () => {
-			await fdsFragmentPage.fdsActiveViewSelector.waitFor({
+			await dataSetFragmentPage.activeViewSelector.waitFor({
 				state: 'visible',
 			});
-			await fdsFragmentPage.fdsActiveViewSelector.click();
+			await dataSetFragmentPage.activeViewSelector.click();
 
 			await page
 				.getByRole('listbox', {name: 'View Options'})
@@ -210,12 +210,12 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 		await test.step('Reload page and check the default visualization mode', async () => {
 			await page.reload();
 
-			await assertCardsVisualizationMode({fdsFragmentPage});
+			await assertCardsVisualizationMode({dataSetFragmentPage});
 
-			await fdsFragmentPage.fdsActiveViewSelector.waitFor({
+			await dataSetFragmentPage.activeViewSelector.waitFor({
 				state: 'visible',
 			});
-			await fdsFragmentPage.fdsActiveViewSelector.click();
+			await dataSetFragmentPage.activeViewSelector.click();
 
 			await page
 				.getByRole('listbox', {name: 'View Options'})

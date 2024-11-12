@@ -18,7 +18,7 @@ import {
 	EItemActionTarget,
 	EModalActionVariant,
 } from '../../utils/types';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 
 const LINK_ITEM_ACTION_NAME = 'Link item action';
 const LINK_ITEM_ACTION_CONFIRMATION_MESSAGE =
@@ -35,7 +35,7 @@ export const test = mergeTests(
 	}),
 	isolatedLayoutTest({publish: false}),
 	loginTest(),
-	fdsFragmentPageTest
+	dataSetFragmentPageTest
 );
 
 test.beforeEach(async ({dataSetManagerApiHelpers}) => {
@@ -57,7 +57,7 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 test.describe('Empty Item Actions in Data Set fragment', () => {
 	test('Item Action button does not appear if there is no item action', async ({
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 	}) => {
 		await test.step('Create table field', async () => {
@@ -70,7 +70,7 @@ test.describe('Empty Item Actions in Data Set fragment', () => {
 		});
 
 		await test.step('Configure Data Set in the page', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
+			await dataSetFragmentPage.configureDataSetFragment({
 				dataSetLabel,
 				layout,
 			});
@@ -78,7 +78,7 @@ test.describe('Empty Item Actions in Data Set fragment', () => {
 
 		await test.step('Check that the Item Action button is not present', async () => {
 			await expect(
-				fdsFragmentPage.page.getByLabel(LINK_ITEM_ACTION_NAME).first()
+				dataSetFragmentPage.page.getByLabel(LINK_ITEM_ACTION_NAME).first()
 			).not.toBeVisible();
 		});
 	});
@@ -105,7 +105,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 	test('Link Item Action (single action) is shown in the fragment', async ({
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 		page,
 	}) => {
@@ -121,7 +121,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		});
 
 		await test.step('Configure Data Set in the page', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
+			await dataSetFragmentPage.configureDataSetFragment({
 				dataSetLabel,
 				layout,
 			});
@@ -129,7 +129,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 		await test.step('Check that the Item Action button is present', async () => {
 			await expect(
-				fdsFragmentPage.page.getByLabel(LINK_ITEM_ACTION_NAME).first()
+				dataSetFragmentPage.page.getByLabel(LINK_ITEM_ACTION_NAME).first()
 			).toBeVisible();
 		});
 
@@ -142,7 +142,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 					return dialog.message();
 				});
 
-			await fdsFragmentPage.page
+			await dataSetFragmentPage.page
 				.getByLabel(LINK_ITEM_ACTION_NAME)
 				.first()
 				.click();
@@ -159,7 +159,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 	test('Link, Modal and Side Panel Item Actions (multiple actions) are shown in fragment', async ({
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 		page,
 	}) => {
@@ -195,7 +195,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		});
 
 		await test.step('Configure Data Set in the page', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
+			await dataSetFragmentPage.configureDataSetFragment({
 				dataSetLabel,
 				layout,
 			});
@@ -323,7 +323,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 	test('Async and Headless Item Actions (multiple actions) are shown in fragment', async ({
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 		page,
 	}) => {
@@ -361,7 +361,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		});
 
 		await test.step('Configure Data Set in the page', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
+			await dataSetFragmentPage.configureDataSetFragment({
 				dataSetLabel,
 				layout,
 			});
@@ -479,7 +479,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 	test('Async and Headless Item Actions (multiple actions) performs UPDATE operations on items', async ({
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 		page,
 	}) => {
@@ -510,7 +510,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		});
 
 		await test.step('Configure Data Set in the page', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
+			await dataSetFragmentPage.configureDataSetFragment({
 				dataSetLabel,
 				layout,
 			});
@@ -633,7 +633,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 	test('Async Item Action shows an error toast in the fragment when a failure occurs', async ({
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 		page,
 	}) => {
@@ -651,7 +651,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		});
 
 		await test.step('Configure Data Set in the page', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
+			await dataSetFragmentPage.configureDataSetFragment({
 				dataSetLabel,
 				layout,
 			});

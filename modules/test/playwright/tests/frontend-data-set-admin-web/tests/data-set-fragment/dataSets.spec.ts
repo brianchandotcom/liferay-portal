@@ -16,7 +16,7 @@ import getRandomString from '../../../../utils/getRandomString';
 
 import getBasicWebContentStructureId from '../../../../utils/structured-content/getBasicWebContentStructureId';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -27,7 +27,7 @@ export const test = mergeTests(
 	}),
 	isolatedLayoutTest({publish: false}),
 	loginTest(),
-	fdsFragmentPageTest
+	dataSetFragmentPageTest
 );
 
 const dataSetERCs: string[] = [];
@@ -84,7 +84,7 @@ test(
 	{
 		tag: '@LPS-172403',
 	},
-	async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
+	async ({dataSetManagerApiHelpers, dataSetFragmentPage, layout, page}) => {
 		const dataSetERC1 = getRandomString();
 		const dataSetERC2 = getRandomString();
 		const dataSetLabel1 = getRandomString();
@@ -126,20 +126,20 @@ test(
 		});
 
 		await test.step('Go to page configuration, add "Data Set" fragment', async () => {
-			await fdsFragmentPage.addDataSetFragment(layout);
+			await dataSetFragmentPage.addDataSetFragment(layout);
 		});
 
 		await test.step('Assign first data set to fragment', async () => {
-			await fdsFragmentPage.selectDataSetButton.click();
+			await dataSetFragmentPage.selectDataSetButton.click();
 
-			await fdsFragmentPage.selectDataSet(dataSetLabel1);
+			await dataSetFragmentPage.selectDataSet(dataSetLabel1);
 		});
 
 		await test.step('Change assigment to second data set', async () => {
-			await fdsFragmentPage.changeDataSetButton.click();
+			await dataSetFragmentPage.changeDataSetButton.click();
 
 			const selectionListContainer =
-				fdsFragmentPage.selectDataSetModalFrame.locator(
+				dataSetFragmentPage.selectDataSetModalFrame.locator(
 					'.fds-admin-item-selector'
 				);
 
@@ -154,15 +154,15 @@ test(
 					.getByRole('radio')
 			).toBeChecked();
 
-			await fdsFragmentPage.selectDataSet(dataSetLabel2);
+			await dataSetFragmentPage.selectDataSet(dataSetLabel2);
 		});
 
 		await test.step('Assert that the data set is available on the page', async () => {
-			await fdsFragmentPage.fdsTableWrapper.waitFor({
+			await dataSetFragmentPage.tableWrapper.waitFor({
 				state: 'visible',
 			});
 
-			await expect(fdsFragmentPage.fdsTableWrapper).toBeInViewport();
+			await expect(dataSetFragmentPage.tableWrapper).toBeInViewport();
 
 			expect(
 				await page
@@ -184,7 +184,7 @@ test(
 				}),
 			});
 
-			await expect(fdsFragmentPage.selectedDataSetInput).toHaveValue('');
+			await expect(dataSetFragmentPage.selectedDataSetInput).toHaveValue('');
 		});
 
 		await test.step('Remove "Data Set" fragment from the page', async () => {
@@ -213,31 +213,31 @@ test(
 			).toBeInViewport();
 
 			await expect(
-				await fdsFragmentPage.fdsTableWrapper
+				await dataSetFragmentPage.tableWrapper
 			).not.toBeInViewport();
 		});
 	}
 );
 
 test('Data set selection modal shows a "No results found" message when there are no data sets created', async ({
-	fdsFragmentPage,
+	dataSetFragmentPage,
 	layout,
 }) => {
 	await test.step('Go to page configuration, add "Data Set" fragment', async () => {
-		await fdsFragmentPage.addDataSetFragment(layout);
+		await dataSetFragmentPage.addDataSetFragment(layout);
 	});
 
 	await test.step('Open data set selection modal', async () => {
-		await fdsFragmentPage.selectDataSetButton.click();
+		await dataSetFragmentPage.selectDataSetButton.click();
 	});
 
 	await test.step('Assert that there are no Data Sets available to select', async () => {
-		await fdsFragmentPage.selectDataSetModalFrame
+		await dataSetFragmentPage.selectDataSetModalFrame
 			.locator('.fds-admin-item-selector')
 			.waitFor({state: 'visible'});
 
 		await expect(
-			fdsFragmentPage.selectDataSetModalFrame.locator(
+			dataSetFragmentPage.selectDataSetModalFrame.locator(
 				'.c-empty-state-title'
 			)
 		).toContainText('No Results Found');
@@ -252,7 +252,7 @@ test(
 	async ({
 		apiHelpers,
 		dataSetManagerApiHelpers,
-		fdsFragmentPage,
+		dataSetFragmentPage,
 		layout,
 		page,
 	}) => {
@@ -363,18 +363,18 @@ test(
 		});
 
 		await test.step('Configure Structured Content Schema Data Set fragment', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
+			await dataSetFragmentPage.configureDataSetFragment({
 				dataSetLabel: structuredContentDataSetConfig.label,
 				layout,
 			});
 		});
 
 		await test.step('Assert that the Data Set is available on the page', async () => {
-			await fdsFragmentPage.fdsTableWrapper.waitFor({
+			await dataSetFragmentPage.tableWrapper.waitFor({
 				state: 'visible',
 			});
 
-			await expect(fdsFragmentPage.fdsTableWrapper).toBeInViewport();
+			await expect(dataSetFragmentPage.tableWrapper).toBeInViewport();
 
 			expect(
 				await page
@@ -398,32 +398,32 @@ test(
 		});
 
 		await test.step('Confirm that we can change the Data Set and display the Roles Data Set', async () => {
-			await fdsFragmentPage.editPage({layout});
+			await dataSetFragmentPage.editPage({layout});
 
-			await fdsFragmentPage.fdsTableWrapper.click();
+			await dataSetFragmentPage.tableWrapper.click();
 
-			await fdsFragmentPage.changeDataSetButton.click();
+			await dataSetFragmentPage.changeDataSetButton.click();
 
 			const selectionListContainer =
-				fdsFragmentPage.selectDataSetModalFrame.locator(
+				dataSetFragmentPage.selectDataSetModalFrame.locator(
 					'.fds-admin-item-selector'
 				);
 
 			await expect(selectionListContainer).toBeVisible();
 
-			await fdsFragmentPage.selectDataSetModalFrame
+			await dataSetFragmentPage.selectDataSetModalFrame
 				.locator('li')
 				.filter({hasText: adminUserDataSetConfig.label})
 				.first()
 				.click();
 
-			await fdsFragmentPage.selectDataSetModalFrame
+			await dataSetFragmentPage.selectDataSetModalFrame
 				.getByRole('button', {name: 'Save'})
 				.click();
 
-			await fdsFragmentPage.publishPage();
+			await dataSetFragmentPage.publishPage();
 
-			await fdsFragmentPage.goToPage({layout});
+			await dataSetFragmentPage.goToPage({layout});
 
 			await page
 				.locator('.data-set-content-wrapper')
@@ -431,11 +431,11 @@ test(
 		});
 
 		await test.step('Assert that the User Schema (Roles) Data Set is available on the page', async () => {
-			await fdsFragmentPage.fdsTableWrapper.waitFor({
+			await dataSetFragmentPage.tableWrapper.waitFor({
 				state: 'visible',
 			});
 
-			await expect(fdsFragmentPage.fdsTableWrapper).toBeInViewport();
+			await expect(dataSetFragmentPage.tableWrapper).toBeInViewport();
 
 			expect(
 				await page
@@ -455,14 +455,14 @@ test(
 		});
 
 		await test.step('Confirm that we can change the Data Set and display the Taxonomy Vocabulary Data Set', async () => {
-			await fdsFragmentPage.editPage({layout});
+			await dataSetFragmentPage.editPage({layout});
 
-			await fdsFragmentPage.fdsTableWrapper.click();
+			await dataSetFragmentPage.tableWrapper.click();
 
-			await fdsFragmentPage.changeDataSetButton.click();
+			await dataSetFragmentPage.changeDataSetButton.click();
 
 			const selectionListContainer =
-				fdsFragmentPage.selectDataSetModalFrame.locator(
+				dataSetFragmentPage.selectDataSetModalFrame.locator(
 					'.fds-admin-item-selector'
 				);
 
@@ -480,9 +480,9 @@ test(
 				.getByRole('button', {name: 'Save'})
 				.click();
 
-			await fdsFragmentPage.publishPage();
+			await dataSetFragmentPage.publishPage();
 
-			await fdsFragmentPage.goToPage({layout});
+			await dataSetFragmentPage.goToPage({layout});
 
 			await page
 				.locator('.data-set-content-wrapper')
@@ -490,12 +490,12 @@ test(
 		});
 
 		await test.step('Assert that the Taxonomy Vocabulary Data Set is available on the page', async () => {
-			await fdsFragmentPage.fdsTableWrapper.waitFor({
+			await dataSetFragmentPage.tableWrapper.waitFor({
 				state: 'visible',
 			});
 
 			await expect(
-				await fdsFragmentPage.fdsTableWrapper
+				await dataSetFragmentPage.tableWrapper
 			).toBeInViewport();
 
 			expect(

@@ -12,7 +12,7 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 
 let dataSetERC: string;
 let dataSet: any;
@@ -27,7 +27,7 @@ export const test = mergeTests(
 	}),
 	isolatedLayoutTest({publish: false}),
 	loginTest(),
-	fdsFragmentPageTest
+	dataSetFragmentPageTest
 );
 
 test.beforeEach(async ({dataSetManagerApiHelpers}) => {
@@ -48,7 +48,7 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 
 test('Deployed client extension filter is available in fragment @LPS-190457', async ({
 	dataSetManagerApiHelpers,
-	fdsFragmentPage,
+	dataSetFragmentPage,
 	layout,
 	page,
 }) => {
@@ -73,7 +73,7 @@ test('Deployed client extension filter is available in fragment @LPS-190457', as
 	});
 
 	await test.step('Configure Data Set fragment', async () => {
-		await fdsFragmentPage.configureDataSetFragment({
+		await dataSetFragmentPage.configureDataSetFragment({
 			dataSetLabel,
 			layout,
 		});

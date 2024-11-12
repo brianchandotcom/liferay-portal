@@ -111,6 +111,10 @@ public class ClusterableInvokerUtil {
 		FutureClusterResponses futureClusterResponses =
 			ClusterExecutorUtil.execute(clusterRequest);
 
+		if (futureClusterResponses == null) {
+			return;
+		}
+
 		BlockingQueue<ClusterNodeResponse> clusterNodeResponses =
 			futureClusterResponses.getPartialResults();
 

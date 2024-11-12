@@ -6,6 +6,7 @@
 package com.liferay.portal.instances.internal.configuration;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,6 +46,10 @@ public class PortalInstancesConfigurationFactory {
 
 		DependencyManagerSyncUtil.registerSyncCallable(
 			() -> {
+				if (!_clusterMasterExecutor.isMaster()) {
+					return null;
+				}
+
 				String webId = _getWebId(properties);
 				String virtualHostname =
 					portalInstancesConfiguration.virtualHostname();
@@ -108,6 +113,9 @@ public class PortalInstancesConfigurationFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstancesConfigurationFactory.class);
+
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.db.partition.internal.operation;
 
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -18,6 +19,8 @@ import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mariano Álvaro Sáiz
  */
@@ -29,6 +32,10 @@ public abstract class BaseVirtualInstanceOperation {
 		Callable<Company> callable, Map<String, Object> properties) {
 
 		try {
+			if (!clusterMasterExecutor.isMaster()) {
+				return;
+			}
+
 			Company company = callable.call();
 
 			if (company != null) {
@@ -50,6 +57,9 @@ public abstract class BaseVirtualInstanceOperation {
 			_deleteConfiguration((String)properties.get("service.pid"));
 		}
 	}
+
+	@Reference
+	protected ClusterMasterExecutor clusterMasterExecutor;
 
 	private void _deleteConfiguration(String pid) {
 		try {

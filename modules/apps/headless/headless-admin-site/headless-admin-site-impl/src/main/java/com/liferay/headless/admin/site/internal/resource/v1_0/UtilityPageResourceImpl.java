@@ -17,7 +17,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -37,6 +39,42 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = UtilityPageResource.class
 )
 public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
+
+	@Override
+	public void deleteSiteSiteByExternalReferenceCodeUtilityPage(
+			String siteExternalReferenceCode,
+			String utilityPageExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		_layoutUtilityPageEntryService.deleteLayoutUtilityPageEntry(
+			utilityPageExternalReferenceCode, group.getGroupId());
+	}
+
+	@Override
+	public UtilityPage getSiteSiteByExternalReferenceCodeUtilityPage(
+			String siteExternalReferenceCode,
+			String utilityPageExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		return _utilityPageDTOConverter.toDTO(
+			_layoutUtilityPageEntryService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					utilityPageExternalReferenceCode, group.getGroupId()));
+	}
 
 	@Override
 	public Page<UtilityPage> getSiteSiteByExternalReferenceCodeUtilityPagesPage(
@@ -72,6 +110,62 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 
 		Group group = groupLocalService.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		return _addLayoutUtilityPageEntry(group, utilityPage);
+	}
+
+	@Override
+	public UtilityPage putSiteSiteByExternalReferenceCodeUtilityPage(
+			String siteExternalReferenceCode,
+			String utilityPageExternalReferenceCode, UtilityPage utilityPage)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryService.
+				fetchLayoutUtilityPageEntryByExternalReferenceCode(
+					utilityPageExternalReferenceCode, group.getGroupId());
+
+		if (layoutUtilityPageEntry == null) {
+			return _addLayoutUtilityPageEntry(group, utilityPage);
+		}
+
+		if (Validator.isNotNull(utilityPage.getMarkedAsDefault())) {
+			if (GetterUtil.getBoolean(utilityPage.getMarkedAsDefault()) &&
+				!layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry()) {
+
+				layoutUtilityPageEntry =
+					_layoutUtilityPageEntryService.
+						setDefaultLayoutUtilityPageEntry(
+							layoutUtilityPageEntry.
+								getLayoutUtilityPageEntryId());
+			}
+			else if (!GetterUtil.getBoolean(utilityPage.getMarkedAsDefault()) &&
+					 layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry()) {
+
+				layoutUtilityPageEntry =
+					_layoutUtilityPageEntryService.
+						unsetDefaultLayoutUtilityPageEntry(
+							layoutUtilityPageEntry.
+								getLayoutUtilityPageEntryId());
+			}
+		}
+
+		return _utilityPageDTOConverter.toDTO(
+			_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+				utilityPage.getName()));
+	}
+
+	private UtilityPage _addLayoutUtilityPageEntry(
+			Group group, UtilityPage utilityPage)
+		throws Exception {
 
 		return _utilityPageDTOConverter.toDTO(
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(

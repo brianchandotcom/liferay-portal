@@ -139,6 +139,24 @@ public class SegmentsExperienceServiceImpl
 	}
 
 	@Override
+	public SegmentsExperience fetchSegmentsExperienceByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		SegmentsExperience segmentsExperience =
+			segmentsExperienceLocalService.
+				fetchSegmentsExperienceByExternalReferenceCode(
+					externalReferenceCode, groupId);
+
+		if (segmentsExperience != null) {
+			_segmentsExperienceResourcePermission.check(
+				getPermissionChecker(), segmentsExperience, ActionKeys.VIEW);
+		}
+
+		return segmentsExperience;
+	}
+
+	@Override
 	public SegmentsExperience getSegmentsExperience(long segmentsExperienceId)
 		throws PortalException {
 

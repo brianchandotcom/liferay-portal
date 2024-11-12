@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 
-import java.math.BigDecimal;
-
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
@@ -57,16 +55,9 @@ public class WishListItemResourceTest extends BaseWishListItemResourceTestCase {
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			testGroup.getGroupId(), RandomTestUtil.randomString());
-		_commerceCPInstance1 = CPTestUtil.addCPInstanceWithRandomSku(
-			testGroup.getGroupId(), BigDecimal.TEN);
-		_commerceCPInstance2 = CPTestUtil.addCPInstanceWithRandomSku(
-			testGroup.getGroupId(), BigDecimal.ONE);
-		_commerceCPDefinition1 = _commerceCPInstance1.getCPDefinition();
-		_commerceCPDefinition2 = _commerceCPInstance2.getCPDefinition();
 		_commerceWishList =
 			CommerceWishListLocalServiceUtil.addCommerceWishList(
-				RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(),
-				serviceContext);
+				RandomTestUtil.randomString(), false, serviceContext);
 	}
 
 	@Override
@@ -76,24 +67,34 @@ public class WishListItemResourceTest extends BaseWishListItemResourceTestCase {
 
 	@Override
 	protected WishListItem randomPatchWishListItem() throws Exception {
-		CProduct commerceProduct = _commerceCPDefinition2.getCProduct();
+		_cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
+			testGroup.getGroupId());
+
+		CPDefinition cpDefinition = _cpInstance.getCPDefinition();
+
+		CProduct commerceProduct = cpDefinition.getCProduct();
 
 		return new WishListItem() {
 			{
 				productId = commerceProduct.getCProductId();
-				skuId = _commerceCPInstance2.getCPInstanceId();
+				skuId = _cpInstance.getCPInstanceId();
 			}
 		};
 	}
 
 	@Override
 	protected WishListItem randomWishListItem() throws Exception {
-		CProduct commerceProduct = _commerceCPDefinition1.getCProduct();
+		_cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
+			testGroup.getGroupId());
+
+		CPDefinition cpDefinition = _cpInstance.getCPDefinition();
+
+		CProduct commerceProduct = cpDefinition.getCProduct();
 
 		return new WishListItem() {
 			{
 				productId = commerceProduct.getCProductId();
-				skuId = _commerceCPInstance1.getCPInstanceId();
+				skuId = _cpInstance.getCPInstanceId();
 			}
 		};
 	}
@@ -164,19 +165,10 @@ public class WishListItemResourceTest extends BaseWishListItemResourceTestCase {
 	private CommerceChannel _commerceChannel;
 
 	@DeleteAfterTestRun
-	private CPDefinition _commerceCPDefinition1;
-
-	@DeleteAfterTestRun
-	private CPDefinition _commerceCPDefinition2;
-
-	@DeleteAfterTestRun
-	private CPInstance _commerceCPInstance1;
-
-	@DeleteAfterTestRun
-	private CPInstance _commerceCPInstance2;
-
-	@DeleteAfterTestRun
 	private CommerceWishList _commerceWishList;
+
+	@DeleteAfterTestRun
+	private CPInstance _cpInstance;
 
 	@DeleteAfterTestRun
 	private User _user;

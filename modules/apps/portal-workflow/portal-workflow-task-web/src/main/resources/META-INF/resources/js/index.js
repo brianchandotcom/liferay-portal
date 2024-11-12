@@ -53,3 +53,5 @@ export function WorkflowTaskAction({
 		},
 	};
 }
+
+export {default as WorkFlowTaskActionDropdownPropsTransformer} from './WorkFlowTaskActionDropdownPropsTransformer';

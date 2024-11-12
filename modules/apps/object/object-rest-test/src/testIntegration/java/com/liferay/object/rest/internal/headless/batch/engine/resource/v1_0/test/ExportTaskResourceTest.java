@@ -167,10 +167,8 @@ public class ExportTaskResourceTest {
 			StringBundler.concat(
 				"contains(", _OBJECT_FIELD_NAME_TEXT, ", 'Test')"));
 
-		String queryParametersString = "filter=" + encodedFilterString;
-
 		JSONObject jsonObject = _postExportTask(
-			_objectDefinition, queryParametersString);
+			_objectDefinition, "filter=" + encodedFilterString);
 
 		Assert.assertEquals(2, jsonObject.getInt("processedItemsCount"));
 

@@ -6,13 +6,15 @@
 import React, {ReactNode} from 'react';
 import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
 
-type CardContainerProps = {
+import './CardContainer.css';
+
+interface IProps {
 	children: ReactNode;
 	className?: string;
 	infoButtonText?: string;
-};
+}
 
-const CardContainer: React.FC<CardContainerProps> = ({
+const CardContainer: React.FC<IProps> = ({
 	children,
 	className,
 	infoButtonText,

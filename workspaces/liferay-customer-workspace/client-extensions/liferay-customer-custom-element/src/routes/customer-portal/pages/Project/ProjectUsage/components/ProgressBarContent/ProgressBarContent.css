@@ -1,0 +1,16 @@
+.progress-bar-content {
+	.bar-container {
+		background-color: var(--color-neutral-2);
+		border-radius: var(--border-radius-sm);
+		
+		.bar-content {
+			background-color: var(--color-action-primary-active);
+			border-radius: var(--border-radius-sm);
+			height: var(--label-lg-icon-size);
+		}
+	}
+
+	.total-value-text {
+		font-size: var(--color-neutral-2);
+	}
+}

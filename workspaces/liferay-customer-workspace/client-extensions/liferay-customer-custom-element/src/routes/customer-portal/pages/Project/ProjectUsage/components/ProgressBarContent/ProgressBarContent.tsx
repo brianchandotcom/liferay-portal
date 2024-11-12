@@ -5,17 +5,15 @@
 
 import React from 'react';
 
-type ProgressBarContentProps = {
+import './ProgressBarContent.css';
+
+interface IProps {
 	maxCount: number;
 	title: string;
 	usedCount: number;
-};
+}
 
-const ProgressBarContent: React.FC<ProgressBarContentProps> = ({
-	maxCount,
-	title,
-	usedCount,
-}) => {
+const ProgressBarContent: React.FC<IProps> = ({maxCount, title, usedCount}) => {
 	const barPercentage = `${(usedCount / maxCount) * 100}%`;
 
 	return (

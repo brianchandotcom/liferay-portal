@@ -6,7 +6,7 @@
 import CardContainer from './components/CardContainer';
 import ProgressBarContent from './components/ProgressBarContent';
 
-import './_project_usage.scss';
+import './ProjectUsage.css';
 import useProjectUsageData from './hooks/useProjectUsageData';
 
 const ProjectUsage = () => {

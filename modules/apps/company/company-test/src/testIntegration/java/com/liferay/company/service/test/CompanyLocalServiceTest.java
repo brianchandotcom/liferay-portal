@@ -472,6 +472,8 @@ public class CompanyLocalServiceTest {
 
 			StartupHelperUtil.setDBNew(false);
 
+			// This simulates a reboot
+
 			CounterFinder counterFinder = ReflectionTestUtil.getFieldValue(
 				_counterLocalService, "counterFinder");
 

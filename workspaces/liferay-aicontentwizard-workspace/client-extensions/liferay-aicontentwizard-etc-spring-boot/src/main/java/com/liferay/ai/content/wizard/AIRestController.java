@@ -10,7 +10,6 @@ import com.liferay.ai.content.wizard.langchain4j.tools.BlogPostingTools;
 import com.liferay.ai.content.wizard.langchain4j.tools.KnowledgeBaseTools;
 import com.liferay.ai.content.wizard.langchain4j.tools.SitePageTools;
 import com.liferay.ai.content.wizard.langchain4j.tools.SiteTools;
-import com.liferay.ai.content.wizard.langchain4j.tools.TaxonomyTools;
 import com.liferay.ai.content.wizard.langchain4j.tools.ToolsContext;
 import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;

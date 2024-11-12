@@ -786,6 +786,35 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteCurrencyByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_currencyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			currencyResource ->
+				currencyResource.deleteCurrencyByExternalReferenceCode(
+					externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Currency patchCurrencyByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("currency") Currency currency)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_currencyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			currencyResource ->
+				currencyResource.patchCurrencyByExternalReferenceCode(
+					externalReferenceCode, currency));
+	}
+
+	@GraphQLField
 	public boolean deleteCurrency(@GraphQLName("id") Long id) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_currencyResourceComponentServiceObjects,

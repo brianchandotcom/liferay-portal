@@ -197,7 +197,7 @@ public abstract class BaseCurrencyResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/currencies' -d $'{"active": ___, "code": ___, "formatPattern": ___, "id": ___, "maxFractionDigits": ___, "minFractionDigits": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "roundingMode": ___, "symbol": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/currencies' -d $'{"active": ___, "code": ___, "externalReferenceCode": ___, "formatPattern": ___, "id": ___, "maxFractionDigits": ___, "minFractionDigits": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "roundingMode": ___, "symbol": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Currency")}
@@ -253,6 +253,102 @@ public abstract class BaseCurrencyResourceImpl
 			vulcanBatchEngineImportTaskResource.postImportTask(
 				Currency.class.getName(), callbackURL, null, object)
 		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/currencies/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Currency")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path(
+		"/currencies/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteCurrencyByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/currencies/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Currency")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/currencies/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Currency getCurrencyByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+
+		return new Currency();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/currencies/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "code": ___, "externalReferenceCode": ___, "formatPattern": ___, "id": ___, "maxFractionDigits": ___, "minFractionDigits": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "roundingMode": ___, "symbol": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Currency")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path(
+		"/currencies/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Currency patchCurrencyByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			Currency currency)
+		throws Exception {
+
+		return new Currency();
 	}
 
 	/**
@@ -358,7 +454,7 @@ public abstract class BaseCurrencyResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/currencies/{id}' -d $'{"active": ___, "code": ___, "formatPattern": ___, "id": ___, "maxFractionDigits": ___, "minFractionDigits": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "roundingMode": ___, "symbol": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/currencies/{id}' -d $'{"active": ___, "code": ___, "externalReferenceCode": ___, "formatPattern": ___, "id": ___, "maxFractionDigits": ___, "minFractionDigits": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "roundingMode": ___, "symbol": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

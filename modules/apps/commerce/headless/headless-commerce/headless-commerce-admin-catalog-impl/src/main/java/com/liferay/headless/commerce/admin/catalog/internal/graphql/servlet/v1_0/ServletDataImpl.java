@@ -427,6 +427,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CurrencyResourceImpl.class, "postCurrencyBatch"));
 					put(
+						"mutation#deleteCurrencyByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CurrencyResourceImpl.class,
+							"deleteCurrencyByExternalReferenceCode"));
+					put(
+						"mutation#patchCurrencyByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CurrencyResourceImpl.class,
+							"patchCurrencyByExternalReferenceCode"));
+					put(
 						"mutation#deleteCurrency",
 						new ObjectValuePair<>(
 							CurrencyResourceImpl.class, "deleteCurrency"));
@@ -1206,6 +1216,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CurrencyResourceImpl.class, "getCurrenciesPage"));
 					put(
+						"query#currencyByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CurrencyResourceImpl.class,
+							"getCurrencyByExternalReferenceCode"));
+					put(
 						"query#currency",
 						new ObjectValuePair<>(
 							CurrencyResourceImpl.class, "getCurrency"));
@@ -1621,6 +1636,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							GroupedProductResourceImpl.class,
 							"getProductByExternalReferenceCodeGroupedProductsPage"));
+					put(
+						"query#Attachment.currencyByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CurrencyResourceImpl.class,
+							"getCurrencyByExternalReferenceCode"));
 					put(
 						"query#Attachment.productByExternalReferenceCodeProductChannels",
 						new ObjectValuePair<>(

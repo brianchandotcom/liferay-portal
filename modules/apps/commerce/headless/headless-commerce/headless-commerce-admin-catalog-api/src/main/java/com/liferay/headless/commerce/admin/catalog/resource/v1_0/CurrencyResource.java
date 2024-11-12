@@ -62,6 +62,18 @@ public interface CurrencyResource {
 	public Response postCurrencyBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteCurrencyByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Currency getCurrencyByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Currency patchCurrencyByExternalReferenceCode(
+			String externalReferenceCode, Currency currency)
+		throws Exception;
+
 	public void deleteCurrency(Long id) throws Exception;
 
 	public Response deleteCurrencyBatch(String callbackURL, Object object)

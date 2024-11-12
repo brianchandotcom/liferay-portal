@@ -40,7 +40,9 @@ export class WorkflowTaskDetailsPage {
 		this.assignToDialogIFRAME = page.frameLocator(
 			`iframe[name="${MY_WORKFLOW_TASK_PORTLET_NAMESPACE}assignToDialog_iframe_"]`
 		);
-		this.assignToMenuItem = page.getByRole('link', {name: 'Assign to...'});
+		this.assignToMenuItem = page.locator(
+			'button[data-title="Assign to..."]'
+		);
 		this.assignToSingleSelect =
 			this.assignToDialogIFRAME.getByLabel('Assign to');
 		this.assigneeDoneButton = this.assignToDialogIFRAME.getByRole(
@@ -61,9 +63,9 @@ export class WorkflowTaskDetailsPage {
 		});
 		this.rejectMenuItem = page.getByRole('menuitem', {name: 'reject'});
 		this.replyButton = page.getByRole('button', {name: 'Reply'});
-		this.reviewActionMenu = page.locator(
-			`[id="${MY_WORKFLOW_TASK_PORTLET_NAMESPACE}kldx___menu"]`
-		);
+		this.reviewActionMenu = page.getByRole('button', {
+			name: 'Open Actions Menu',
+		});
 		this.reviewComment = page.getByRole('textbox', {name: 'Comment'});
 		this.subscribeButton = page.getByLabel('Subscribe to Comments');
 		this.commentsTextbox = page.frameLocator('iframe').getByRole('textbox');

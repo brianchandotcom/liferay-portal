@@ -22,7 +22,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
@@ -125,30 +124,6 @@ public class BuildServiceTask extends JavaExec {
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getInputFile() {
 		return GradleUtil.toFile(getProject(), _inputFile);
-	}
-
-	@Override
-	public List<String> getJvmArgs() {
-		List<String> jvmArgs = new ArrayList<>();
-
-		JavaVersion javaVersion = getJavaVersion();
-
-		if (javaVersion.isJava9Compatible()) {
-			jvmArgs.add("--illegal-access=permit");
-		}
-
-		if (javaVersion.isJava11Compatible()) {
-			jvmArgs.add("--add-opens=java.base/java.lang=ALL-UNNAMED");
-			jvmArgs.add("--add-opens=java.base/java.lang.invoke=ALL-UNNAMED");
-			jvmArgs.add("--add-opens=java.base/java.lang.reflect=ALL-UNNAMED");
-			jvmArgs.add("--add-opens=java.base/java.net=ALL-UNNAMED");
-			jvmArgs.add(
-				"--add-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED");
-			jvmArgs.add("--add-opens=java.base/sun.util.calendar=ALL-UNNAMED");
-			jvmArgs.add("--add-opens=jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED");
-		}
-
-		return jvmArgs;
 	}
 
 	@Input

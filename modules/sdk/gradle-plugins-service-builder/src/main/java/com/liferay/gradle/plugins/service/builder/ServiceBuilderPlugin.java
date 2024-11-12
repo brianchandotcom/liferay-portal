@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
+import org.gradle.api.JavaVersion;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -231,6 +232,30 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 	@SuppressWarnings("rawtypes")
 	protected void configureTaskBuildService(
 		final BuildServiceTask buildServiceTask) {
+
+		JavaVersion javaVersion = buildServiceTask.getJavaVersion();
+
+		if (javaVersion.isJava9Compatible()) {
+			buildServiceTask.jvmArgs("--illegal-access", "permit");
+		}
+
+		if (javaVersion.isJava11Compatible()) {
+			buildServiceTask.jvmArgs(
+				"--add-opens", "java.base/java.lang=ALL-UNNAMED");
+			buildServiceTask.jvmArgs(
+				"--add-opens", "java.base/java.lang.invoke=ALL-UNNAMED");
+			buildServiceTask.jvmArgs(
+				"--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED");
+			buildServiceTask.jvmArgs(
+				"--add-opens", "java.base/java.net=ALL-UNNAMED");
+			buildServiceTask.jvmArgs(
+				"--add-opens",
+				"java.base/sun.net.www.protocol.http=ALL-UNNAMED");
+			buildServiceTask.jvmArgs(
+				"--add-opens", "java.base/sun.util.calendar=ALL-UNNAMED");
+			buildServiceTask.jvmArgs(
+				"--add-opens", "jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED");
+		}
 
 		Project project = buildServiceTask.getProject();
 

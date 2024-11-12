@@ -16,6 +16,7 @@ import {ModelBuilderRightSidebarPage} from '../pages/object-web/model-builder/Mo
 import {EditObjectDetailsPage} from '../pages/object-web/object-details/EditObjectDetailsPage';
 import {ViewObjectEntriesPage} from '../pages/object-web/object-entries/ViewObjectEntriesPage';
 import {ObjectFieldsPage} from '../pages/object-web/object-fields/ObjectFieldsPage';
+import {ObjectRelationshipsPage} from '../pages/object-web/object-relationship/ObjectRelationshipsPage';
 import {EditObjectValidationPage} from '../pages/object-web/object-validation/EditObjectValidationPage';
 import {ModalAddObjectValidationPage} from '../pages/object-web/object-validation/ModalAddObjectValidationPage';
 import {ObjectValidationsPage} from '../pages/object-web/object-validation/ObjectValidationsPage';
@@ -37,6 +38,7 @@ const objectPagesTest = test.extend<{
 	modelBuilderRightSidebarPage: ModelBuilderRightSidebarPage;
 	objectDetailsPage: ObjectDetailsPage;
 	objectFieldsPage: ObjectFieldsPage;
+	objectRelationshipsPage: ObjectRelationshipsPage;
 	objectValidationsPage: ObjectValidationsPage;
 	objectViewPage: ObjectViewPage;
 	viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
@@ -80,6 +82,9 @@ const objectPagesTest = test.extend<{
 	},
 	objectFieldsPage: async ({page}, use) => {
 		await use(new ObjectFieldsPage(page));
+	},
+	objectRelationshipsPage: async ({page}, use) => {
+		await use(new ObjectRelationshipsPage(page));
 	},
 	objectValidationsPage: async ({page}, use) => {
 		await use(new ObjectValidationsPage(page));

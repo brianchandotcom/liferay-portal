@@ -21,11 +21,11 @@ export const test = mergeTests(
 	objectPagesTest
 );
 
-test.describe('Manage object relationships through Model Builder', () => {
-	test.beforeEach(({page}) => {
-		page.setViewportSize({height: 1080, width: 1920});
-	});
+test.beforeEach(({page}) => {
+	page.setViewportSize({height: 1080, width: 1920});
+});
 
+test.describe('Manage object relationships through Model Builder', () => {
 	test('can create multiple object relationships between the same objects', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,

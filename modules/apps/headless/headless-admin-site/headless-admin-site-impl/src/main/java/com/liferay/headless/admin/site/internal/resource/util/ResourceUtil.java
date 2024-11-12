@@ -20,6 +20,10 @@ public class ResourceUtil {
 		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, companyId);
 
+		if (group.isCompany() || group.hasLocalOrRemoteStagingGroup()) {
+			throw new UnsupportedOperationException();
+		}
+
 		return group.getGroupId();
 	}
 

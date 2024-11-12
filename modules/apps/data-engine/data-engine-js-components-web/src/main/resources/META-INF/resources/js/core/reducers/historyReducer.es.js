@@ -23,6 +23,7 @@ export default function historyReducer(state, action) {
 			};
 		case EVENT_TYPES.HISTORY.BLUR:
 			if (state.history.edited) {
+				Liferay.fire('journal:unlock');
 				Liferay.fire('journal:storeState', {
 					fieldName:
 						Liferay.Language.get('edit') + ' ' + action.payload,
@@ -46,6 +47,8 @@ export default function historyReducer(state, action) {
 				},
 			};
 		case EVENT_TYPES.HISTORY.MARK:
+			Liferay.fire('journal:lock');
+
 			return {
 				history: {
 					...state.history,

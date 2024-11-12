@@ -381,3 +381,114 @@ test('Correct viewport configuration is set when adding a Grid', async ({
 
 	await expect(globalFrame.locator('.page-editor__col.col-6')).toHaveCount(6);
 });
+
+test('Checks that the layout has scroll when resizing on tablet viewport', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+
+	// Create page with various image fragments and go to edit mode
+
+	const imageId1 = getRandomString();
+	const imageId2 = getRandomString();
+
+	const imageFragment1 = getFragmentDefinition({
+		id: imageId1,
+		key: 'BASIC_COMPONENT-image',
+	});
+
+	const imageFragment2 = getFragmentDefinition({
+		id: imageId2,
+		key: 'BASIC_COMPONENT-image',
+	});
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([imageFragment1, imageFragment2]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Change viewport size to allow to resize tablet to his max
+
+	const viewport = page.viewportSize();
+
+	await page.setViewportSize({height: 500, width: 1920});
+
+	// Select fragment and change to Tablet viewport
+
+	await pageEditorPage.selectFragment(imageId1);
+
+	await pageEditorPage.switchViewport('Tablet');
+
+	// Get the handle for the resize
+
+	const resizeHandle = page.locator('.page-editor__layout-viewport__handle');
+
+	// Get the element to be resized
+
+	const resizer = page.locator('.page-editor__layout-viewport__resizer');
+
+	// Get the size and the position of the previous elements
+
+	const originalSize = await resizeHandle.boundingBox();
+	const originalSizeResizer = await resizer.boundingBox();
+
+	// Check the original size of the resizer element
+
+	expect(originalSizeResizer.width).toBe(768);
+
+	// Make sure element is fully outside of viewport.
+
+	const tabletImageFragment2 = pageEditorPage.getFragment(imageId2, false);
+
+	await expect(tabletImageFragment2).not.toBeInViewport();
+
+	// Scroll to the image fragment
+
+	await tabletImageFragment2.scrollIntoViewIfNeeded();
+
+	// Make sure at least some part of element intersects viewport.
+
+	await expect(tabletImageFragment2).toBeInViewport();
+
+	// Simulate mouse movement to resize the element to his max
+
+	await resizeHandle.hover();
+	await page.mouse.down();
+	await page.mouse.move(
+		originalSize.x + originalSize.width / 2 + 112,
+		originalSize.y
+	);
+	await page.mouse.up();
+
+	// Get the new size of the resizer element and verify that it has increased
+
+	const newSizeResizer = await resizer.boundingBox();
+
+	expect(newSizeResizer.width).toBe(991);
+
+	// Make sure element is fully outside of viewport.
+
+	const tabletImageFragment1 = pageEditorPage.getFragment(imageId1, false);
+
+	await expect(tabletImageFragment1).not.toBeInViewport();
+
+	// Scroll to the image fragment
+
+	await tabletImageFragment1.scrollIntoViewIfNeeded();
+
+	// Make sure at least some part of element intersects viewport.
+
+	await expect(tabletImageFragment1).toBeInViewport();
+
+	// Set back to original viewport size
+
+	await page.setViewportSize({
+		height: viewport.height,
+		width: viewport.width,
+	});
+});

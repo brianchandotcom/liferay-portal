@@ -40,41 +40,43 @@ definition {
 	@priority = 5
 	test AllObjectDefinitionsAreAvailableInTheObjectMenu {
 		task ("Given multiple custom object definitions created and published") {
-			ObjectAdmin.openObjectAdmin();
-
 			var i = 0;
 
-			WaitForElementPresent(locator1 = "Pagination#RESULTS");
-
-			var moreThanTwenty = selenium.getText("Pagination#RESULTS");
-
-			while (${moreThanTwenty} != "Showing 1 to 20 of 21 entries.") {
-				var i = ${i} + 1;
-
+			while (${i} != 21) {
 				ObjectDefinitionAPI.createAndPublishObjectDefinition(
 					en_US_label = "Student${i}",
 					en_US_plural_label = "Student${i}s",
 					name = "Student${i}",
 					requiredStringFieldName = "name");
 
-				Refresh();
-
-				WaitForElementPresent(locator1 = "Pagination#RESULTS");
-
-				var moreThanTwenty = selenium.getText("Pagination#RESULTS");
+				var i = ${i} + 1;
 			}
 		}
 
-		task ("And Given all 20+ object definitions entities available in Objects") {
+		task ("And Given 20+ custom object definitions entities available in Objects") {
 			ObjectAdmin.openObjectAdmin();
-
-			AssertTextEquals(
-				locator1 = "Pagination#RESULTS",
-				value1 = "Showing 1 to 20 of 21 entries.");
 		}
 
-		task ("And Given one of object definitions on 2nd page") {
+		task ("And Given one of object definitions not on 1st page") {
 			Click(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_NAVIGATE_NEXT");
+
+			while ((IsElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_NAVIGATE_NEXT")) && (maxIterations = "20")) {
+				Click(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_NAVIGATE_NEXT");
+			}
+
+			WaitForElementPresent(locator1 = "Pagination#ACTIVE_PAGE");
+
+			var text = selenium.getAttribute("//ul[contains(@class,'pagination')]/li[contains(@class,'page-item') and contains(@class,'active')]/a[contains(@class,'page-link')]@aria-label");
+
+			var pageNumber = StringUtil.extractLast(${text}, ", ");
+
+			echo(${pageNumber});
+
+			var match = StringUtil.matches(1, ${pageNumber});
+
+			if (${match} == "true") {
+				fail("Pagination did not move past the 1st page.");
+			}
 		}
 
 		task ("And Given I go to the Schemas tab of API Application edition") {

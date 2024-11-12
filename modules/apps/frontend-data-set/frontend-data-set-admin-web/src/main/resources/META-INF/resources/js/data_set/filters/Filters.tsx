@@ -226,7 +226,7 @@ function Filters({
 
 			filtersOrdered = sortItems(
 				filtersOrdered,
-				responseJSON.fdsFiltersOrder,
+				responseJSON.filtersOrder,
 				true
 			) as FilterCollection;
 
@@ -246,15 +246,15 @@ function Filters({
 	}, [dataSet]);
 
 	const updateFDSFiltersOrder = async ({
-		fdsFiltersOrder,
+		filtersOrder,
 	}: {
-		fdsFiltersOrder: string;
+		filtersOrder: string;
 	}) => {
 		const response = await fetch(
 			`${API_URL.DATA_SETS}/by-external-reference-code/${dataSet.externalReferenceCode}`,
 			{
 				body: JSON.stringify({
-					fdsFiltersOrder,
+					filtersOrder,
 				}),
 				headers: DEFAULT_FETCH_HEADERS,
 				method: 'PATCH',
@@ -269,12 +269,12 @@ function Filters({
 
 		const responseJSON = await response.json();
 
-		const storedFDSFiltersOrder = responseJSON?.fdsFiltersOrder;
+		const storedFDSFiltersOrder = responseJSON?.filtersOrder;
 
 		if (
 			filters &&
 			storedFDSFiltersOrder &&
-			storedFDSFiltersOrder === fdsFiltersOrder
+			storedFDSFiltersOrder === filtersOrder
 		) {
 			setFilters(
 				sortItems(

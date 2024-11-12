@@ -21,7 +21,7 @@ const FilterList = ({
 	editFilter: ({item}: {item: IFilter}) => void;
 	filterTypes: Record<EFilterType, IFilterTypeProps>;
 	filters: IFilter[];
-	updateFiltersOrder: ({fdsFiltersOrder}: {fdsFiltersOrder: string}) => void;
+	updateFiltersOrder: ({filtersOrder}: {filtersOrder: string}) => void;
 }) => {
 	return (
 		<OrderableTable
@@ -66,7 +66,7 @@ const FilterList = ({
 				'no-default-filters-were-created'
 			)}
 			onOrderChange={({order}: {order: string}) => {
-				updateFiltersOrder({fdsFiltersOrder: order});
+				updateFiltersOrder({filtersOrder: order});
 			}}
 			title={Liferay.Language.get('filters')}
 		/>

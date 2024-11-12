@@ -602,7 +602,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			objectDefinitionLocalService, _objectRelationshipLocalService,
-			new String[] {"C_AAB", "C_AAA", "C_AB", "C_AA", "C_A"},
+			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"},
 			_objectEntryLocalService);
 	}
 

@@ -1011,7 +1011,7 @@ public class ObjectFieldLocalServiceTest {
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			new String[] {"C_AA", "C_A"}, _objectEntryLocalService);
+			new String[] {"C_A", "C_AA"}, _objectEntryLocalService);
 
 		// Object field required
 

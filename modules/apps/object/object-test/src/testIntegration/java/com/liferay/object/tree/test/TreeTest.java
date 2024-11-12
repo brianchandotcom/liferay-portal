@@ -64,7 +64,7 @@ public class TreeTest {
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			new String[] {"C_AAA", "C_AAB", "C_AA", "C_AB", "C_A"},
+			new String[] {"C_A", "C_AB", "C_AA", "C_AAB", "C_AAA"},
 			_objectEntryLocalService);
 	}
 
@@ -115,7 +115,7 @@ public class TreeTest {
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			new String[] {"C_AAA", "C_AAB", "C_AA", "C_AB", "C_A"},
+			new String[] {"C_A", "C_AB", "C_AA", "C_AAB", "C_AAA"},
 			_objectEntryLocalService);
 	}
 

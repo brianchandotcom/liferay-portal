@@ -963,6 +963,12 @@ public class ObjectActionLocalServiceTest {
 				objectRelationshipA_AA.getDeletionType(), false,
 				objectRelationshipA_AA.getLabelMap(), null);
 
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationshipAA_AAA.getExternalReferenceCode(),
+				objectRelationshipAA_AAA.getObjectRelationshipId(), 0,
+				objectRelationshipAA_AAA.getDeletionType(), false,
+				objectRelationshipAA_AAA.getLabelMap(), null);
+
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinitionA);
 			_objectDefinitionLocalService.deleteObjectDefinition(

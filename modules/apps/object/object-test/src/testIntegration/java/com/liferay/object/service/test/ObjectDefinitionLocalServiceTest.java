@@ -1442,8 +1442,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					_objectRelationshipLocalService, objectDefinitionAA,
 					ObjectDefinitionTestUtil.addCustomObjectDefinition("AAB"),
-					ObjectRelationshipConstants.DELETION_TYPE_PREVENT),
-				objectRelationshipA_AA),
+					ObjectRelationshipConstants.DELETION_TYPE_PREVENT)),
 			objectDefinitionA.getObjectDefinitionId());
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
@@ -2038,7 +2037,7 @@ public class ObjectDefinitionLocalServiceTest {
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			new String[] {
-				"C_AAABA", "C_AAAAA", "C_AAAB", "C_AAAA", "C_AAA", "C_AA", "C_A"
+				"C_A", "C_AA", "C_AAA", "C_AAAA", "C_AAAB", "C_AAAAA", "C_AAABA"
 			},
 			_objectEntryLocalService);
 	}
@@ -2234,7 +2233,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			new String[] {"C_AAAAA", "C_AAAA", "C_AAA", "C_AA", "C_A"},
+			new String[] {"C_A", "C_AA", "C_AAA", "C_AAAA", "C_AAAAA"},
 			_objectEntryLocalService);
 	}
 

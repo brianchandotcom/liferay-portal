@@ -710,6 +710,23 @@
 		},
 		{
 			"properties": {
+				"clusterTimeout": {
+					"default": 10000,
+					"title": "Cluster Timeout",
+					"type": "number"
+				},
+				"pid": {
+					"const": "com.liferay.client.extension.internal.configuration.ClientExtensionConfiguration",
+					"title": "Client Extension"
+				}
+			},
+			"required": [
+				"pid"
+			],
+			"title": "Client Extension"
+		},
+		{
+			"properties": {
 				"baseURL": {
 					"type": "string"
 				},
@@ -4026,6 +4043,7 @@
 				"com.liferay.change.tracking.configuration.CTSettingsConfiguration",
 				"com.liferay.change.tracking.web.internal.configuration.CTConfiguration",
 				"com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration",
+				"com.liferay.client.extension.internal.configuration.ClientExtensionConfiguration",
 				"com.liferay.client.extension.type.configuration.CETConfiguration",
 				"com.liferay.commerce.payment.configuration.CommercePaymentEntryAuditConfiguration",
 				"com.liferay.commerce.payment.configuration.CommercePaymentEntryRefundTypeConfiguration",

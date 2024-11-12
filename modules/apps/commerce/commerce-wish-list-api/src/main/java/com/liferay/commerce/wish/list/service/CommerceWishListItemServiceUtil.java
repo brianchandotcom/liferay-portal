@@ -33,13 +33,22 @@ public class CommerceWishListItemServiceUtil {
 	 */
 	public static CommerceWishListItem addCommerceWishListItem(
 			long commerceAccountId, long commerceWishListId, long cProductId,
-			String cpInstanceUuid, String json,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			String cpInstanceUuid, String json)
 		throws PortalException {
 
 		return getService().addCommerceWishListItem(
 			commerceAccountId, commerceWishListId, cProductId, cpInstanceUuid,
-			json, serviceContext);
+			json);
+	}
+
+	public static CommerceWishListItem addOrUpdateCommerceWishListItem(
+			long commerceAccountId, long commerceWishListId, long cProductId,
+			String cpInstanceUuid, String json)
+		throws PortalException {
+
+		return getService().addOrUpdateCommerceWishListItem(
+			commerceAccountId, commerceWishListId, cProductId, cpInstanceUuid,
+			json);
 	}
 
 	public static void deleteCommerceWishListItem(long commerceWishListItemId)
@@ -107,6 +116,16 @@ public class CommerceWishListItemServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static CommerceWishListItem updateCommerceWishListItem(
+			long commerceAccountId, long commerceWishListId, long cProductId,
+			String cpInstanceUuid, String json)
+		throws PortalException {
+
+		return getService().updateCommerceWishListItem(
+			commerceAccountId, commerceWishListId, cProductId, cpInstanceUuid,
+			json);
 	}
 
 	public static CommerceWishListItemService getService() {

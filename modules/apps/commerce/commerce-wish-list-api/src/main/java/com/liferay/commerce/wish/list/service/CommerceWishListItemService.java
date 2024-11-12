@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -46,7 +45,12 @@ public interface CommerceWishListItemService extends BaseService {
 	 */
 	public CommerceWishListItem addCommerceWishListItem(
 			long commerceAccountId, long commerceWishListId, long cProductId,
-			String cpInstanceUuid, String json, ServiceContext serviceContext)
+			String cpInstanceUuid, String json)
+		throws PortalException;
+
+	public CommerceWishListItem addOrUpdateCommerceWishListItem(
+			long commerceAccountId, long commerceWishListId, long cProductId,
+			String cpInstanceUuid, String json)
 		throws PortalException;
 
 	public void deleteCommerceWishListItem(long commerceWishListItemId)
@@ -91,5 +95,10 @@ public interface CommerceWishListItemService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public CommerceWishListItem updateCommerceWishListItem(
+			long commerceAccountId, long commerceWishListId, long cProductId,
+			String cpInstanceUuid, String json)
+		throws PortalException;
 
 }

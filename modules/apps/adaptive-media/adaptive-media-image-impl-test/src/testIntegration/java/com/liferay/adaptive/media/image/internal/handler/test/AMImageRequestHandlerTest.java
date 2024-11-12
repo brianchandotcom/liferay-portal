@@ -92,10 +92,10 @@ public class AMImageRequestHandlerTest {
 		AMRequestHandler<?> amRequestHandler = _serviceTrackerMap.getService(
 			"image");
 
-		FileEntry fileEntry = _addFileEntryWithoutViewPermission();
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
+
+		FileEntry fileEntry = _addFileEntryWithoutViewPermission();
 
 		mockHttpServletRequest.setPathInfo(
 			StringBundler.concat(

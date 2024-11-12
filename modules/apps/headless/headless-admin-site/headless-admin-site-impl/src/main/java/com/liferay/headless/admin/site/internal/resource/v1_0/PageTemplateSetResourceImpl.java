@@ -49,7 +49,8 @@ public class PageTemplateSetResourceImpl
 		_layoutPageTemplateCollectionService.deleteLayoutPageTemplateCollection(
 			pageTemplateSetExternalReferenceCode,
 			ResourceUtil.getGroupId(
-				contextCompany.getCompanyId(), siteExternalReferenceCode));
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 	}
 
 	@Override
@@ -67,7 +68,7 @@ public class PageTemplateSetResourceImpl
 				getLayoutPageTemplateCollection(
 					pageTemplateSetExternalReferenceCode,
 					ResourceUtil.getGroupId(
-						contextCompany.getCompanyId(),
+						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode)));
 	}
 
@@ -84,7 +85,7 @@ public class PageTemplateSetResourceImpl
 		}
 
 		long groupId = ResourceUtil.getGroupId(
-			contextCompany.getCompanyId(), siteExternalReferenceCode);
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		return Page.of(
 			transform(
@@ -113,7 +114,8 @@ public class PageTemplateSetResourceImpl
 		return _toPageTemplateSet(
 			_addLayoutPageTemplateCollection(
 				ResourceUtil.getGroupId(
-					contextCompany.getCompanyId(), siteExternalReferenceCode),
+					false, contextCompany.getCompanyId(),
+					siteExternalReferenceCode),
 				pageTemplateSet));
 	}
 
@@ -129,7 +131,7 @@ public class PageTemplateSetResourceImpl
 		}
 
 		long groupId = ResourceUtil.getGroupId(
-			contextCompany.getCompanyId(), siteExternalReferenceCode);
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.

@@ -54,7 +54,8 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 		_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntry(
 			masterPageExternalReferenceCode,
 			ResourceUtil.getGroupId(
-				contextCompany.getCompanyId(), siteExternalReferenceCode));
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 	}
 
 	@Override
@@ -72,7 +73,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 				getLayoutPageTemplateEntryByExternalReferenceCode(
 					masterPageExternalReferenceCode,
 					ResourceUtil.getGroupId(
-						contextCompany.getCompanyId(),
+						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode)));
 	}
 
@@ -91,7 +92,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			transform(
 				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 					ResourceUtil.getGroupId(
-						contextCompany.getCompanyId(),
+						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode),
 					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
@@ -110,7 +111,8 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		return _addMasterPage(
 			ResourceUtil.getGroupId(
-				contextCompany.getCompanyId(), siteExternalReferenceCode),
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode),
 			masterPage);
 	}
 
@@ -125,7 +127,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 		}
 
 		long groupId = ResourceUtil.getGroupId(
-			contextCompany.getCompanyId(), siteExternalReferenceCode);
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.

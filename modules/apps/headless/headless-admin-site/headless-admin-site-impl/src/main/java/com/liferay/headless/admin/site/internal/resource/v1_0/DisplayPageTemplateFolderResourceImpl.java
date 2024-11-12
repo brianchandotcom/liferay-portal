@@ -55,7 +55,8 @@ public class DisplayPageTemplateFolderResourceImpl
 		_layoutPageTemplateCollectionService.deleteLayoutPageTemplateCollection(
 			displayPageTemplateFolderExternalReferenceCode,
 			ResourceUtil.getGroupId(
-				contextCompany.getCompanyId(), siteExternalReferenceCode));
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 	}
 
 	@Override
@@ -74,7 +75,7 @@ public class DisplayPageTemplateFolderResourceImpl
 				getLayoutPageTemplateCollection(
 					displayPageTemplateFolderExternalReferenceCode,
 					ResourceUtil.getGroupId(
-						contextCompany.getCompanyId(),
+						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode)));
 	}
 
@@ -95,7 +96,7 @@ public class DisplayPageTemplateFolderResourceImpl
 				_layoutPageTemplateCollectionService.
 					getLayoutPageTemplateCollections(
 						ResourceUtil.getGroupId(
-							contextCompany.getCompanyId(),
+							true, contextCompany.getCompanyId(),
 							siteExternalReferenceCode),
 						LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
@@ -117,7 +118,8 @@ public class DisplayPageTemplateFolderResourceImpl
 		return _addDisplayPageTemplateFolder(
 			displayPageTemplateFolder,
 			ResourceUtil.getGroupId(
-				contextCompany.getCompanyId(), siteExternalReferenceCode));
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 	}
 
 	@Override
@@ -133,7 +135,7 @@ public class DisplayPageTemplateFolderResourceImpl
 		}
 
 		long groupId = ResourceUtil.getGroupId(
-			contextCompany.getCompanyId(), siteExternalReferenceCode);
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.

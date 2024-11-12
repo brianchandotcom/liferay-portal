@@ -862,7 +862,7 @@ const SelectSubscription = ({
 									)
 								}
 								isActivationKeyAvailable={5}
-								label="Complimentary"
+								label={i18n.translate('complimentary')}
 								onChange={(event) => {
 									setSelectedSubscription({
 										...event.target.value,

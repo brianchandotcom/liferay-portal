@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -67,6 +69,7 @@ import java.io.Serializable;
 import java.text.Format;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -108,6 +111,89 @@ public class WorkflowTaskDisplayContext {
 
 		_workflowTaskRequestHelper = new WorkflowTaskRequestHelper(
 			_httpServletRequest);
+	}
+
+	public List<DropdownItem> getActionDropdownItems(WorkflowTask workflowTask)
+		throws PortalException {
+
+		if (workflowTask.isCompleted()) {
+			return Collections.emptyList();
+		}
+
+		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/view.jsp"
+		).buildPortletURL();
+
+		return DropdownItemListBuilder.addAll(
+			_getEditWorkflowTaskDropdownItems(redirectURL, workflowTask)
+		).add(
+			() -> !isAssignedToUser(workflowTask),
+			_getAssignToMeUnsafeConsumer(redirectURL, workflowTask)
+		).add(
+			dropdownItem -> {
+				dropdownItem.put("symbolLeft", "assign-to-...");
+
+				String label = LanguageUtil.get(
+					_httpServletRequest, "assign-to-...");
+
+				dropdownItem.setData(
+					HashMapBuilder.<String, Object>put(
+						"action", "taskAssign"
+					).put(
+						"assignURL",
+						PortletURLBuilder.createRenderURL(
+							_liferayPortletResponse
+						).setMVCPath(
+							"/workflow_task_assign.jsp"
+						).setRedirect(
+							redirectURL
+						).setParameter(
+							"workflowTaskId", workflowTask.getWorkflowTaskId()
+						).setParameter(
+							"workflowTaskURL", getCurrentURL()
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString()
+					).put(
+						"namespace", _liferayPortletResponse.getNamespace()
+					).put(
+						"title", label
+					).build());
+				dropdownItem.setLabel(label);
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.put("symbolLeft", "update-due-date");
+
+				String label = LanguageUtil.get(
+					_httpServletRequest, "update-due-date");
+
+				dropdownItem.setData(
+					HashMapBuilder.<String, Object>put(
+						"action", "updateDueDate"
+					).put(
+						"namespace", _liferayPortletResponse.getNamespace()
+					).put(
+						"title", label
+					).put(
+						"updateDueDateURL",
+						PortletURLBuilder.createRenderURL(
+							_liferayPortletResponse
+						).setMVCPath(
+							"/workflow_task_due_date.jsp"
+						).setRedirect(
+							getCurrentURL()
+						).setParameter(
+							"workflowTaskId", workflowTask.getWorkflowTaskId()
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString()
+					).build());
+				dropdownItem.setLabel(label);
+			}
+		).build();
 	}
 
 	public AssetEntry getAssetEntry() throws PortalException {
@@ -738,6 +824,61 @@ public class WorkflowTaskDisplayContext {
 		return null;
 	}
 
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getAssignToMeUnsafeConsumer(
+			PortletURL redirectURL, WorkflowTask workflowTask) {
+
+		return dropdownItem -> {
+			dropdownItem.put("symbolLeft", "assign-to-me");
+
+			String label = LanguageUtil.get(
+				_httpServletRequest, "assign-to-me");
+
+			dropdownItem.setData(
+				HashMapBuilder.<String, Object>put(
+					"action", "taskAssignToMe"
+				).put(
+					"assignToMeURL",
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/workflow_task_assign.jsp"
+					).setRedirect(
+						() -> {
+							if (Validator.isNull(
+									_httpServletRequest.getParameter(
+										"workflowTaskId"))) {
+
+								return redirectURL;
+							}
+
+							return getCurrentURL();
+						}
+					).setParameter(
+						"assigneeUserId",
+						() -> {
+							ThemeDisplay themeDisplay =
+								(ThemeDisplay)_httpServletRequest.getAttribute(
+									WebKeys.THEME_DISPLAY);
+
+							return themeDisplay.getUserId();
+						}
+					).setParameter(
+						"assignMode", "assignToMe"
+					).setParameter(
+						"workflowTaskId", workflowTask.getWorkflowTaskId()
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString()
+				).put(
+					"namespace", _liferayPortletResponse.getNamespace()
+				).put(
+					"title", label
+				).build());
+			dropdownItem.setLabel(label);
+		};
+	}
+
 	private Boolean _getCompleted() {
 		if (_isNavigationAll()) {
 			return null;
@@ -780,6 +921,66 @@ public class WorkflowTaskDisplayContext {
 		return workflowHandler.getURLEdit(
 			getWorkflowContextEntryClassPK(workflowTask),
 			_liferayPortletRequest, _liferayPortletResponse);
+	}
+
+	private List<DropdownItem> _getEditWorkflowTaskDropdownItems(
+			PortletURL redirectURL, WorkflowTask workflowTask)
+		throws PortalException {
+
+		List<DropdownItem> dropdownItems = new ArrayList<>();
+
+		if (!isAssignedToUser(workflowTask)) {
+			return dropdownItems;
+		}
+
+		for (WorkflowTransition workflowTransition :
+				getWorkflowTaskWorkflowTransitions(workflowTask)) {
+
+			String label = workflowTransition.getLabel(getTaskContentLocale());
+
+			dropdownItems.add(
+				DropdownItemBuilder.putData(
+					"action", "taskEditWorkflowTask"
+				).putData(
+					"formSubmitURL",
+					PortletURLBuilder.createActionURL(
+						_liferayPortletResponse, PortletKeys.MY_WORKFLOW_TASK
+					).setActionName(
+						"/portal_workflow_task/complete_task"
+					).setMVCPath(
+						"/edit_workflow_task.jsp"
+					).setRedirect(
+						redirectURL
+					).setParameter(
+						"assigneeUserId", workflowTask.getAssigneeUserId()
+					).setParameter(
+						"closeRedirect",
+						ParamUtil.getString(
+							_httpServletRequest, "closeRedirect")
+					).setParameter(
+						"transitionName",
+						() -> {
+							if (Validator.isNotNull(
+									workflowTransition.getName())) {
+
+								return workflowTransition.getName();
+							}
+
+							return null;
+						}
+					).setParameter(
+						"workflowTaskId", workflowTask.getWorkflowTaskId()
+					).buildString()
+				).putData(
+					"namespace", _liferayPortletResponse.getNamespace()
+				).putData(
+					"title", label
+				).setLabel(
+					label
+				).build());
+		}
+
+		return dropdownItems;
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

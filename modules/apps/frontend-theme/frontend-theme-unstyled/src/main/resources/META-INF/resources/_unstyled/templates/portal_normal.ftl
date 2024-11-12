@@ -46,7 +46,7 @@
 		</#if>
 	</header>
 
-	<div id="content">
+	<section id="content">
 		<#if selectable>
 			<@liferay_util["include"] page=content_include />
 		<#else>
@@ -58,7 +58,7 @@
 				<@liferay_util["include"] page=content_include />
 			</@>
 		</#if>
-	</div>
+	</section>
 
 	<footer id="footer">
 		<p class="powered-by">

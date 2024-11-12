@@ -690,6 +690,9 @@
 		<finder name="CPDefinitionId" return-type="Collection">
 			<finder-column name="CPDefinitionId" />
 		</finder>
+		<finder name="CPOptionId" return-type="Collection">
+			<finder-column name="CPOptionId" />
+		</finder>
 		<finder name="C_C" return-type="CPDefinitionOptionRel" unique="true">
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="CPOptionId" />

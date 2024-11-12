@@ -31,7 +31,6 @@ test(
 
 		await test.step('Create a content site and the taglib sample widget', async () => {
 			await taglibSamplePage.setupTaglibSampleWidget({
-				apiHelpers,
 				site,
 			});
 		});

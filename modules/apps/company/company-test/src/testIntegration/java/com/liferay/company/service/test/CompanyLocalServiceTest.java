@@ -479,11 +479,10 @@ public class CompanyLocalServiceTest {
 				ReflectionTestUtil.getFieldValue(
 					counterFinder, "_counterRegisterMap");
 
-			String encodedName = ReflectionTestUtil.invoke(
-				counterFinder, "_encodeKey", new Class<?>[] {String.class},
-				Company.class.getName());
-
-			counterRegisterMap.remove(encodedName);
+			counterRegisterMap.remove(
+				ReflectionTestUtil.invoke(
+					counterFinder, "_encodeKey", new Class<?>[] {String.class},
+					Company.class.getName()));
 
 			String webId2 = RandomTestUtil.randomString() + "test.com";
 
@@ -491,7 +490,8 @@ public class CompanyLocalServiceTest {
 				null, webId2, webId2, "test.com", 0, true, true, null, null,
 				null, null, null, null);
 
-			Assert.assertEquals(company1.getCompanyId() + 1, company2.getCompanyId());
+			Assert.assertEquals(
+				company1.getCompanyId() + 1, company2.getCompanyId());
 		}
 		finally {
 			StartupHelperUtil.setDBNew(false);

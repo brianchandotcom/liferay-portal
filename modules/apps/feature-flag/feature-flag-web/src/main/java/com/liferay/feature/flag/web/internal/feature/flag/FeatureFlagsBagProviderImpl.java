@@ -250,7 +250,9 @@ public class FeatureFlagsBagProviderImpl
 		Map<String, FeatureFlag> systemFeatureFlags) {
 
 		Properties properties = PropsUtil.getProperties(
-			FeatureFlagConstants.FEATURE_FLAG + StringPool.PERIOD, true);
+			FeatureFlagConstants.PREFERENCE_KEY_FEATURE_FLAG +
+				StringPool.PERIOD,
+			true);
 
 		for (String stringPropertyName : properties.stringPropertyNames()) {
 			if (!_isFeatureFlagKey(stringPropertyName)) {

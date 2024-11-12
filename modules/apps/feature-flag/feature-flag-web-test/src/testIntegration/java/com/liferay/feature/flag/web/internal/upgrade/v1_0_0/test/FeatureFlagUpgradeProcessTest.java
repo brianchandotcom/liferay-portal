@@ -46,7 +46,7 @@ public class FeatureFlagUpgradeProcessTest {
 			company.getCompanyId());
 
 		portalPreferences.setValue(
-			FeatureFlagConstants.FEATURE_FLAG,
+			FeatureFlagConstants.PREFERENCE_KEY_FEATURE_FLAG,
 			FeatureFlagConstants.PREFERENCE_KEY_DEPRECATION_PROCESSED, "false");
 
 		_portalPreferencesLocalService.updatePreferences(
@@ -63,7 +63,7 @@ public class FeatureFlagUpgradeProcessTest {
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				portalPreferences.getValue(
-					FeatureFlagConstants.FEATURE_FLAG,
+					FeatureFlagConstants.PREFERENCE_KEY_FEATURE_FLAG,
 					FeatureFlagConstants.
 						PREFERENCE_KEY_DEPRECATION_PROCESSED)));
 	}

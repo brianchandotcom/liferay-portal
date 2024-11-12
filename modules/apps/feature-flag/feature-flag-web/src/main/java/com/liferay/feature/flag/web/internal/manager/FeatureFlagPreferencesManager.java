@@ -33,7 +33,7 @@ public class FeatureFlagPreferencesManager {
 		PortalPreferences portalPreferences = _getPortalPreferences(companyId);
 
 		String value = portalPreferences.getValue(
-			FeatureFlagConstants.FEATURE_FLAG, key);
+			FeatureFlagConstants.PREFERENCE_KEY_FEATURE_FLAG, key);
 
 		if (value == null) {
 			return null;
@@ -46,7 +46,8 @@ public class FeatureFlagPreferencesManager {
 		PortalPreferences portalPreferences = _getPortalPreferences(companyId);
 
 		portalPreferences.setValue(
-			FeatureFlagConstants.FEATURE_FLAG, key, String.valueOf(enabled));
+			FeatureFlagConstants.PREFERENCE_KEY_FEATURE_FLAG, key,
+			String.valueOf(enabled));
 
 		_portalPreferencesLocalService.updatePreferences(
 			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, portalPreferences);

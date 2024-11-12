@@ -39,7 +39,7 @@ public class FeatureFlagUpgradeProcess extends UpgradeProcess {
 					portalPreferencesWrapper.getPortalPreferencesImpl();
 
 				portalPreferences.setValue(
-					FeatureFlagConstants.FEATURE_FLAG,
+					FeatureFlagConstants.PREFERENCE_KEY_FEATURE_FLAG,
 					FeatureFlagConstants.PREFERENCE_KEY_DEPRECATION_PROCESSED,
 					"true");
 

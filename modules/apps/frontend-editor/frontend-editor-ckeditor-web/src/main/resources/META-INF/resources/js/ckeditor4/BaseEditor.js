@@ -49,6 +49,7 @@ const BaseEditor = forwardRef(
 		const [loading, setLoading] = useState(false);
 
 		const editorRef = useRef();
+		const firstRenderRef = useRef(true);
 
 		useEffect(() => {
 			Liferay.once('beforeScreenFlip', () => {
@@ -62,6 +63,13 @@ const BaseEditor = forwardRef(
 		}, []);
 
 		useEffect(() => {
+			if (firstRenderRef.current) {
+				firstRenderRef.current = false;
+			}
+			else {
+				return;
+			}
+
 			if (!initialConfig.editorTransformerURLs) {
 				return;
 			}
@@ -76,9 +84,7 @@ const BaseEditor = forwardRef(
 					setLoading(false);
 				},
 			});
-
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, []);
+		}, [initialConfig]);
 
 		const getHTML = useCallback(() => {
 			let data = contents;

@@ -103,10 +103,8 @@ public class JournalContentPortlet extends MVCPortlet {
 		long articleGroupId = PrefsParamUtil.getLong(
 			portletPreferences, renderRequest, "groupId",
 			themeDisplay.getScopeGroupId());
-
 		String articleExternalReferenceCode = PrefsParamUtil.getString(
 			portletPreferences, renderRequest, "articleExternalReferenceCode");
-
 		String articleId = PrefsParamUtil.getString(
 			portletPreferences, renderRequest, "articleId");
 

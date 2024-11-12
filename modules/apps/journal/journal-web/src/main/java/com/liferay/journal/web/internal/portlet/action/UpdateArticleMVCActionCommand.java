@@ -126,13 +126,12 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 		// Journal content
 
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
-		long refererPlid = ParamUtil.getLong(actionRequest, "refererPlid");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+		long refererPlid = ParamUtil.getLong(actionRequest, "refererPlid");
 
 		if (Validator.isNotNull(portletResource) && (refererPlid > 0)) {
 			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(

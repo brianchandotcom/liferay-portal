@@ -105,7 +105,6 @@ public class JournalContentExportImportPortletPreferencesProcessor
 
 		String articleExternalReferenceCode = portletPreferences.getValue(
 			"articleExternalReferenceCode", null);
-
 		String articleId = portletPreferences.getValue("articleId", null);
 
 		long companyId = _getCompanyId(portletDataContext);
@@ -115,8 +114,8 @@ public class JournalContentExportImportPortletPreferencesProcessor
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No articleExternalReferenceCode found in preferences of " +
-						"portlet " + portletId);
+					"No article external reference code found in preferences " +
+						"of portlet " + portletId);
 			}
 
 			return portletPreferences;
@@ -344,10 +343,8 @@ public class JournalContentExportImportPortletPreferencesProcessor
 		}
 
 		long groupId = MapUtil.getLong(groupIds, importGroupId, importGroupId);
-
 		String articleExternalReferenceCode = portletPreferences.getValue(
 			"articleExternalReferenceCode", null);
-
 		String articleId = portletPreferences.getValue("articleId", null);
 
 		Map<String, Long> articleGroupIds =

@@ -118,8 +118,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 				pageTemplate.getType(),
 				PageTemplate.Type.CONTENT_PAGE_TEMPLATE)) {
 
-			return _addPageTemplate(
-				(ContentPageTemplate)pageTemplate, group);
+			return _addPageTemplate((ContentPageTemplate)pageTemplate, group);
 		}
 
 		return _addPageTemplate(group, (WidgetPageTemplate)pageTemplate);

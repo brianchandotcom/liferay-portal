@@ -215,7 +215,7 @@ export default function Fields({
 						setShowAddFieldModal(false);
 						window.location.reload();
 					}}
-					setVisibility={setShowAddFieldModal}
+					setVisible={setShowAddFieldModal}
 				/>
 			)}
 

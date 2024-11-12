@@ -55,7 +55,7 @@ export default function Resizer({
 	widthRef.current = width;
 
 	const getInitialWidth = useCallback(
-		(currentWidth) =>
+		(currentWidth: any) =>
 			!currentWidth && targetRef.current
 				? targetRef.current.offsetWidth
 				: currentWidth,

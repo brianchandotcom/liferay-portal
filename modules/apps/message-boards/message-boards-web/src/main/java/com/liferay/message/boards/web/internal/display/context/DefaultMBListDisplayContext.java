@@ -86,6 +86,15 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 	}
 
 	@Override
+	public String getEmptyResultsMessage() {
+		if (isShowSearch()) {
+			return "there-are-no-threads";
+		}
+
+		return "there-are-no-threads-or-categories";
+	}
+
+	@Override
 	public int getThreadEntriesDelta() {
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(

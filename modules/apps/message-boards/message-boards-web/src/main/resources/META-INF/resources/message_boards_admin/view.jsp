@@ -36,7 +36,7 @@ MBAdminListDisplayContext mbAdminListDisplayContext = MBDisplayContextUtil.getMB
 
 PortletURL portletURL = mbEntriesManagementToolbarDisplayContext.getPortletURL();
 
-SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, mbAdminListDisplayContext.getEntriesDelta(), portletURL, null, "there-are-no-threads-or-categories");
+SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, mbAdminListDisplayContext.getEntriesDelta(), portletURL, null, mbAdminListDisplayContext.getEmptyResultsMessage());
 
 mbAdminListDisplayContext.setEntriesDelta(entriesSearchContainer);
 

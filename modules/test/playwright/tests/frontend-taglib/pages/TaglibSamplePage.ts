@@ -5,12 +5,14 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 export class TaglibSamplePage {
+	readonly apiHelpers: ApiHelpers;
 	readonly page: Page;
 	readonly tablist: Locator;
 
@@ -27,13 +29,13 @@ export class TaglibSamplePage {
 		await tabHeading.click();
 	}
 
-	async setupTaglibSampleWidget({apiHelpers, site}) {
+	async setupTaglibSampleWidget({site}) {
 		const widgetDefinition = getWidgetDefinition({
 			id: getRandomString(),
 			widgetName: 'com_liferay_sample_web_portlet_TaglibSamplePortlet',
 		});
 
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
+		const layout = await this.apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([widgetDefinition]),
 			siteId: site.id,
 			title: getRandomString(),

@@ -173,6 +173,7 @@ public abstract class BaseCurrencyResourceTestCase {
 		Currency currency = randomCurrency();
 
 		currency.setCode(regex);
+		currency.setExternalReferenceCode(regex);
 		currency.setSymbol(regex);
 
 		String json = CurrencySerDes.toJSON(currency);
@@ -182,6 +183,7 @@ public abstract class BaseCurrencyResourceTestCase {
 		currency = CurrencySerDes.toDTO(json);
 
 		Assert.assertEquals(regex, currency.getCode());
+		Assert.assertEquals(regex, currency.getExternalReferenceCode());
 		Assert.assertEquals(regex, currency.getSymbol());
 	}
 
@@ -598,6 +600,200 @@ public abstract class BaseCurrencyResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteCurrencyByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Currency currency =
+			testDeleteCurrencyByExternalReferenceCode_addCurrency();
+
+		assertHttpResponseStatusCode(
+			204,
+			currencyResource.deleteCurrencyByExternalReferenceCodeHttpResponse(
+				currency.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			currencyResource.getCurrencyByExternalReferenceCodeHttpResponse(
+				currency.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			currencyResource.getCurrencyByExternalReferenceCodeHttpResponse(
+				currency.getExternalReferenceCode()));
+	}
+
+	protected Currency testDeleteCurrencyByExternalReferenceCode_addCurrency()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetCurrencyByExternalReferenceCode() throws Exception {
+		Currency postCurrency =
+			testGetCurrencyByExternalReferenceCode_addCurrency();
+
+		Currency getCurrency =
+			currencyResource.getCurrencyByExternalReferenceCode(
+				postCurrency.getExternalReferenceCode());
+
+		assertEquals(postCurrency, getCurrency);
+		assertValid(getCurrency);
+	}
+
+	protected Currency testGetCurrencyByExternalReferenceCode_addCurrency()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCurrencyByExternalReferenceCode()
+		throws Exception {
+
+		Currency currency =
+			testGraphQLGetCurrencyByExternalReferenceCode_addCurrency();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				currency,
+				CurrencySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"currencyByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												currency.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/currencyByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				currency,
+				CurrencySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"currencyByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													currency.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/currencyByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetCurrencyByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"currencyByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"currencyByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Currency
+			testGraphQLGetCurrencyByExternalReferenceCode_addCurrency()
+		throws Exception {
+
+		return testGraphQLCurrency_addCurrency();
+	}
+
+	@Test
+	public void testPatchCurrencyByExternalReferenceCode() throws Exception {
+		Currency postCurrency =
+			testPatchCurrencyByExternalReferenceCode_addCurrency();
+
+		Currency randomPatchCurrency = randomPatchCurrency();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Currency patchCurrency =
+			currencyResource.patchCurrencyByExternalReferenceCode(
+				postCurrency.getExternalReferenceCode(), randomPatchCurrency);
+
+		Currency expectedPatchCurrency = postCurrency.clone();
+
+		BeanTestUtil.copyProperties(randomPatchCurrency, expectedPatchCurrency);
+
+		Currency getCurrency =
+			currencyResource.getCurrencyByExternalReferenceCode(
+				patchCurrency.getExternalReferenceCode());
+
+		assertEquals(expectedPatchCurrency, getCurrency);
+		assertValid(getCurrency);
+	}
+
+	protected Currency testPatchCurrencyByExternalReferenceCode_addCurrency()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteCurrency() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Currency currency = testDeleteCurrency_addCurrency();
@@ -924,6 +1120,16 @@ public abstract class BaseCurrencyResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (currency.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("formatPattern", additionalAssertFieldName)) {
 				if (currency.getFormatPattern() == null) {
 					valid = false;
@@ -1129,6 +1335,19 @@ public abstract class BaseCurrencyResourceTestCase {
 			if (Objects.equals("code", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						currency1.getCode(), currency2.getCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						currency1.getExternalReferenceCode(),
+						currency2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1400,6 +1619,52 @@ public abstract class BaseCurrencyResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = currency.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("formatPattern")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1541,6 +1806,8 @@ public abstract class BaseCurrencyResourceTestCase {
 			{
 				active = RandomTestUtil.randomBoolean();
 				code = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				maxFractionDigits = RandomTestUtil.randomInt();
 				minFractionDigits = RandomTestUtil.randomInt();

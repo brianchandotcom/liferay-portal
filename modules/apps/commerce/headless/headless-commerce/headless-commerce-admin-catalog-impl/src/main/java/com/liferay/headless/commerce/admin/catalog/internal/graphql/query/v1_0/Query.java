@@ -652,7 +652,25 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {currency(id: ___){active, code, formatPattern, id, maxFractionDigits, minFractionDigits, name, primary, priority, rate, roundingMode, symbol}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {currencyByExternalReferenceCode(externalReferenceCode: ___){active, code, externalReferenceCode, formatPattern, id, maxFractionDigits, minFractionDigits, name, primary, priority, rate, roundingMode, symbol}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Currency currencyByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_currencyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			currencyResource ->
+				currencyResource.getCurrencyByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {currency(id: ___){active, code, externalReferenceCode, formatPattern, id, maxFractionDigits, minFractionDigits, name, primary, priority, rate, roundingMode, symbol}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Currency currency(@GraphQLName("id") Long id) throws Exception {
@@ -2344,6 +2362,29 @@ public class Query {
 						getProductByExternalReferenceCodeGroupedProductsPage(
 							_attachment.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class GetCurrencyByExternalReferenceCodeTypeExtension {
+
+		public GetCurrencyByExternalReferenceCodeTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public Currency currencyByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_currencyResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				currencyResource ->
+					currencyResource.getCurrencyByExternalReferenceCode(
+						_attachment.getExternalReferenceCode()));
 		}
 
 		private Attachment _attachment;

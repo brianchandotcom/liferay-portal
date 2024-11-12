@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface MBAdminListDisplayContext extends MBDisplayContext {
 
+	public String getEmptyResultsMessage();
+
 	public int getEntriesDelta();
 
 	public boolean isShowSearch();

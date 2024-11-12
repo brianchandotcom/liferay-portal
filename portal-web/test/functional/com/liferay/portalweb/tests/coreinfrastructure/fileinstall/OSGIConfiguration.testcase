@@ -29,7 +29,9 @@ definition {
 	@description = "This is a test for LPS-200501. Verify if virtual instances can be created via OSGI config file with database partitioning enabled."
 	@priority = 5
 	test CanCreatePartitionedVirtualInstanceViaConfig {
+		property app.server.bundles.size = "1";
 		property app.server.types = "tomcat";
+		property cluster.enabled = "true";
 		property database.types = "mysql, postgresql";
 		property liferay.online.properties = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.instances.internal.configuration.PortalInstancesConfiguration~www.able.com.config";
@@ -52,6 +54,8 @@ definition {
 	@description = "This is a test for LPS-173655. Verify if virtual instances can be created via OSGI config file."
 	@priority = 4
 	test CanCreateVirtualInstanceViaConfig {
+		property app.server.bundles.size = "1";
+		property cluster.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.instances.internal.configuration.PortalInstancesConfiguration~www.able.com.config";
 		property osgi.module.configurations = "mx=\"www.able.com\"${line.separator}virtualHostname=\"www.able.com\"";
 		property test.assert.warning.exceptions = "true";

@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
+import com.liferay.headless.admin.site.internal.resource.util.ResourceUtil;
 import com.liferay.headless.admin.site.resource.v1_0.MasterPageResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
@@ -14,7 +15,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -51,11 +51,10 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntry(
-			masterPageExternalReferenceCode, group.getGroupId());
+			masterPageExternalReferenceCode,
+			ResourceUtil.getGroupId(
+				contextCompany.getCompanyId(), siteExternalReferenceCode));
 	}
 
 	@Override
@@ -68,13 +67,13 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		return _masterPageDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.
 				getLayoutPageTemplateEntryByExternalReferenceCode(
-					masterPageExternalReferenceCode, group.getGroupId()));
+					masterPageExternalReferenceCode,
+					ResourceUtil.getGroupId(
+						contextCompany.getCompanyId(),
+						siteExternalReferenceCode)));
 	}
 
 	@Override
@@ -88,13 +87,12 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		return Page.of(
 			transform(
 				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
-					group.getGroupId(),
+					ResourceUtil.getGroupId(
+						contextCompany.getCompanyId(),
+						siteExternalReferenceCode),
 					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 				layoutPageTemplateEntry -> _masterPageDTOConverter.toDTO(
@@ -110,10 +108,10 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
-		return _addMasterPage(group, masterPage);
+		return _addMasterPage(
+			ResourceUtil.getGroupId(
+				contextCompany.getCompanyId(), siteExternalReferenceCode),
+			masterPage);
 	}
 
 	@Override
@@ -126,16 +124,16 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
+		long groupId = ResourceUtil.getGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.
 				fetchLayoutPageTemplateEntryByExternalReferenceCode(
-					masterPageExternalReferenceCode, group.getGroupId());
+					masterPageExternalReferenceCode, groupId);
 
 		if (layoutPageTemplateEntry == null) {
-			return _addMasterPage(group, masterPage);
+			return _addMasterPage(groupId, masterPage);
 		}
 
 		if (Validator.isNotNull(masterPage.getMarkedAsDefault()) &&
@@ -155,25 +153,25 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 				masterPage.getName()));
 	}
 
-	private MasterPage _addMasterPage(Group group, MasterPage masterPage)
+	private MasterPage _addMasterPage(long groupId, MasterPage masterPage)
 		throws Exception {
 
 		return _masterPageDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				masterPage.getExternalReferenceCode(), group.getGroupId(),
+				masterPage.getExternalReferenceCode(), groupId,
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				masterPage.getName(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT,
-				_getServiceContext(group, masterPage)));
+				_getServiceContext(groupId, masterPage)));
 	}
 
 	private ServiceContext _getServiceContext(
-		Group group, MasterPage masterPage) {
+		long groupId, MasterPage masterPage) {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
-			group.getGroupId(), contextHttpServletRequest, null
+			groupId, contextHttpServletRequest, null
 		).build();
 
 		serviceContext.setCreateDate(masterPage.getDateCreated());

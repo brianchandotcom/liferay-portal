@@ -10,7 +10,7 @@ type Writeable<T> = {-readonly [P in keyof T]: T[P]};
 
 type PopoverIconButtonProps = {
 	alignPosition?: Writeable<(typeof ALIGN_POSITIONS)[number]>;
-	iconSize?: 'sm' | 'xs' | 'regular';
+	iconSize?: 'regular' | 'sm' | 'xs';
 	isSubscriptionCard?: boolean;
 	popoverLink?: {textLink: string; url: string};
 	popoverText?: string;

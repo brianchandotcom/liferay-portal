@@ -1,0 +1,13 @@
+.cp-project-usage-page {
+	.cp-project-usage-info-button {
+		background: var(--status-info-lighten-2);
+		border-radius: var(--border-radius-sm);
+		height: var(--spacer-3);
+		width: var(--spacer-3);
+	}
+
+	.sites-users-card {
+		max-width: var(--max-width-sm);
+		width: 100%;
+	}
+}

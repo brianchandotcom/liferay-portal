@@ -71,11 +71,11 @@ public class ObjectEntryItemSelectorViewDescriptor
 		_portal = portal;
 		_portletURL = portletURL;
 
+		_keywords = ParamUtil.getString(httpServletRequest, "keywords");
 		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-		_keywords = ParamUtil.getString(httpServletRequest, "keywords");
 	}
 
 	@Override

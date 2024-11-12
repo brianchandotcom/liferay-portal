@@ -93,9 +93,11 @@ public class CommerceWishListLocalServiceUtil {
 	 *
 	 * @param commerceWishList the commerce wish list
 	 * @return the commerce wish list that was removed
+	 * @throws PortalException
 	 */
 	public static CommerceWishList deleteCommerceWishList(
-		CommerceWishList commerceWishList) {
+			CommerceWishList commerceWishList)
+		throws PortalException {
 
 		return getService().deleteCommerceWishList(commerceWishList);
 	}
@@ -124,11 +126,15 @@ public class CommerceWishListLocalServiceUtil {
 		getService().deleteCommerceWishLists(userId, date);
 	}
 
-	public static void deleteCommerceWishListsByGroupId(long groupId) {
+	public static void deleteCommerceWishListsByGroupId(long groupId)
+		throws PortalException {
+
 		getService().deleteCommerceWishListsByGroupId(groupId);
 	}
 
-	public static void deleteCommerceWishListsByUserId(long userId) {
+	public static void deleteCommerceWishListsByUserId(long userId)
+		throws PortalException {
+
 		getService().deleteCommerceWishListsByUserId(userId);
 	}
 

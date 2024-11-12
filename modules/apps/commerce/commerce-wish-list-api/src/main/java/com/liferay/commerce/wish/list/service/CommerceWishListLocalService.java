@@ -102,11 +102,13 @@ public interface CommerceWishListLocalService
 	 *
 	 * @param commerceWishList the commerce wish list
 	 * @return the commerce wish list that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceWishList deleteCommerceWishList(
-		CommerceWishList commerceWishList);
+			CommerceWishList commerceWishList)
+		throws PortalException;
 
 	/**
 	 * Deletes the commerce wish list with the primary key from the database. Also notifies the appropriate model listeners.
@@ -125,9 +127,11 @@ public interface CommerceWishListLocalService
 
 	public void deleteCommerceWishLists(long userId, Date date);
 
-	public void deleteCommerceWishListsByGroupId(long groupId);
+	public void deleteCommerceWishListsByGroupId(long groupId)
+		throws PortalException;
 
-	public void deleteCommerceWishListsByUserId(long userId);
+	public void deleteCommerceWishListsByUserId(long userId)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException

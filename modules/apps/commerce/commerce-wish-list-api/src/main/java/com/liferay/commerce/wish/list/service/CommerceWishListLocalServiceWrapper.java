@@ -95,12 +95,14 @@ public class CommerceWishListLocalServiceWrapper
 	 *
 	 * @param commerceWishList the commerce wish list
 	 * @return the commerce wish list that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishList
-		deleteCommerceWishList(
-			com.liferay.commerce.wish.list.model.CommerceWishList
-				commerceWishList) {
+			deleteCommerceWishList(
+				com.liferay.commerce.wish.list.model.CommerceWishList
+					commerceWishList)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceWishListLocalService.deleteCommerceWishList(
 			commerceWishList);
@@ -132,12 +134,16 @@ public class CommerceWishListLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceWishListsByGroupId(long groupId) {
+	public void deleteCommerceWishListsByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_commerceWishListLocalService.deleteCommerceWishListsByGroupId(groupId);
 	}
 
 	@Override
-	public void deleteCommerceWishListsByUserId(long userId) {
+	public void deleteCommerceWishListsByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_commerceWishListLocalService.deleteCommerceWishListsByUserId(userId);
 	}
 

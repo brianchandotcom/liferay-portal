@@ -82,6 +82,11 @@ public interface CommerceWishListItemLocalService
 			String json, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceWishListItem addOrUpdateCommerceWishListItem(
+			long commerceWishListId, long cProductId, String cpInstanceUuid,
+			String json, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new commerce wish list item with the primary key. Does not add the commerce wish list item to the database.
 	 *
@@ -227,6 +232,10 @@ public interface CommerceWishListItemLocalService
 		long commerceWishListItemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceWishListItem fetchCommerceWishListItem(
+		long commerceWishListId, String cpInstanceUuid, long cProductId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -316,5 +325,10 @@ public interface CommerceWishListItemLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceWishListItem updateCommerceWishListItem(
 		CommerceWishListItem commerceWishListItem);
+
+	public CommerceWishListItem updateCommerceWishListItem(
+			long commerceWishListId, String cpInstanceUuid, long cProductId,
+			String json)
+		throws PortalException;
 
 }

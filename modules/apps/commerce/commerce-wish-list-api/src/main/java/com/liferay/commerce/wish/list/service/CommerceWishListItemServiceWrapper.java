@@ -42,6 +42,19 @@ public class CommerceWishListItemServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishListItem
+			addOrUpdateCommerceWishListItem(
+				long commerceAccountId, long commerceWishListId,
+				long cProductId, String cpInstanceUuid, String json,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceWishListItemService.addOrUpdateCommerceWishListItem(
+			commerceAccountId, commerceWishListId, cProductId, cpInstanceUuid,
+			json, serviceContext);
+	}
+
+	@Override
 	public void deleteCommerceWishListItem(long commerceWishListItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -126,6 +139,18 @@ public class CommerceWishListItemServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _commerceWishListItemService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishListItem
+			updateCommerceWishListItem(
+				long commerceAccountId, long commerceWishListId,
+				long cProductId, String cpInstanceUuid, String json)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceWishListItemService.updateCommerceWishListItem(
+			commerceAccountId, commerceWishListId, cProductId, cpInstanceUuid,
+			json);
 	}
 
 	@Override

@@ -132,11 +132,13 @@ public abstract class CommerceWishListLocalServiceBaseImpl
 	 *
 	 * @param commerceWishList the commerce wish list
 	 * @return the commerce wish list that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceWishList deleteCommerceWishList(
-		CommerceWishList commerceWishList) {
+			CommerceWishList commerceWishList)
+		throws PortalException {
 
 		return commerceWishListPersistence.remove(commerceWishList);
 	}

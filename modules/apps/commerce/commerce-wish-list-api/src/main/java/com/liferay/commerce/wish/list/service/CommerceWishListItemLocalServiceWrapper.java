@@ -79,6 +79,20 @@ public class CommerceWishListItemLocalServiceWrapper
 			serviceContext);
 	}
 
+	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishListItem
+			addOrUpdateCommerceWishListItem(
+				long commerceWishListId, long cProductId, String cpInstanceUuid,
+				String json,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceWishListItemLocalService.
+			addOrUpdateCommerceWishListItem(
+				commerceWishListId, cProductId, cpInstanceUuid, json,
+				serviceContext);
+	}
+
 	/**
 	 * Creates a new commerce wish list item with the primary key. Does not add the commerce wish list item to the database.
 	 *
@@ -298,6 +312,15 @@ public class CommerceWishListItemLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishListItem
+		fetchCommerceWishListItem(
+			long commerceWishListId, String cpInstanceUuid, long cProductId) {
+
+		return _commerceWishListItemLocalService.fetchCommerceWishListItem(
+			commerceWishListId, cpInstanceUuid, cProductId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -446,6 +469,17 @@ public class CommerceWishListItemLocalServiceWrapper
 
 		return _commerceWishListItemLocalService.updateCommerceWishListItem(
 			commerceWishListItem);
+	}
+
+	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishListItem
+			updateCommerceWishListItem(
+				long commerceWishListId, String cpInstanceUuid, long cProductId,
+				String json)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceWishListItemLocalService.updateCommerceWishListItem(
+			commerceWishListId, cpInstanceUuid, cProductId, json);
 	}
 
 	@Override

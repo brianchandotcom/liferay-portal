@@ -45,6 +45,21 @@ public class SegmentsExperienceServiceUtil {
 			active, typeSettingsUnicodeProperties, serviceContext);
 	}
 
+	public static SegmentsExperience addSegmentsExperience(
+			String externalReferenceCode, long groupId, long segmentsEntryId,
+			String segmentsExperienceKey, long plid,
+			Map<java.util.Locale, String> nameMap, int priority, boolean active,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				typeSettingsUnicodeProperties,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addSegmentsExperience(
+			externalReferenceCode, groupId, segmentsEntryId,
+			segmentsExperienceKey, plid, nameMap, priority, active,
+			typeSettingsUnicodeProperties, serviceContext);
+	}
+
 	public static SegmentsExperience appendSegmentsExperience(
 			long groupId, long segmentsEntryId, long plid,
 			Map<java.util.Locale, String> nameMap, boolean active,
@@ -89,6 +104,15 @@ public class SegmentsExperienceServiceUtil {
 
 		return getService().fetchSegmentsExperience(
 			groupId, segmentsExperienceKey, plid);
+	}
+
+	public static SegmentsExperience
+			fetchSegmentsExperienceByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().fetchSegmentsExperienceByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -168,11 +192,11 @@ public class SegmentsExperienceServiceUtil {
 			typeSettingsUnicodeProperties);
 	}
 
-	public static void updateSegmentsExperiencePriority(
+	public static SegmentsExperience updateSegmentsExperiencePriority(
 			long segmentsExperienceId, int newPriority)
 		throws PortalException {
 
-		getService().updateSegmentsExperiencePriority(
+		return getService().updateSegmentsExperiencePriority(
 			segmentsExperienceId, newPriority);
 	}
 

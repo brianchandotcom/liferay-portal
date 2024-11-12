@@ -56,6 +56,14 @@ public interface SegmentsExperienceService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public SegmentsExperience addSegmentsExperience(
+			String externalReferenceCode, long groupId, long segmentsEntryId,
+			String segmentsExperienceKey, long plid,
+			Map<Locale, String> nameMap, int priority, boolean active,
+			UnicodeProperties typeSettingsUnicodeProperties,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public SegmentsExperience appendSegmentsExperience(
 			long groupId, long segmentsEntryId, long plid,
 			Map<Locale, String> nameMap, boolean active,
@@ -80,6 +88,11 @@ public interface SegmentsExperienceService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperience fetchSegmentsExperience(
 			long groupId, String segmentsExperienceKey, long plid)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsExperience fetchSegmentsExperienceByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**
@@ -130,7 +143,7 @@ public interface SegmentsExperienceService extends BaseService {
 			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException;
 
-	public void updateSegmentsExperiencePriority(
+	public SegmentsExperience updateSegmentsExperiencePriority(
 			long segmentsExperienceId, int newPriority)
 		throws PortalException;
 

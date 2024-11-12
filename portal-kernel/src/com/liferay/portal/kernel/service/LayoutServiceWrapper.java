@@ -353,6 +353,15 @@ public class LayoutServiceWrapper
 	}
 
 	@Override
+	public Layout fetchLayoutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutService.fetchLayoutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public long fetchLayoutPlid(
 			String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -235,10 +235,6 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 
 		JavaVersion javaVersion = buildServiceTask.getJavaVersion();
 
-		if (javaVersion.isJava9Compatible()) {
-			buildServiceTask.jvmArgs("--illegal-access", "permit");
-		}
-
 		if (javaVersion.isJava11Compatible()) {
 			buildServiceTask.jvmArgs(
 				"--add-opens", "java.base/java.lang=ALL-UNNAMED");

@@ -270,14 +270,6 @@ public class CTEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.change.tracking.model.CTEntry fetchTimelineCTEntry(
-		long ctCollectionId, long modelClassNameId, long modelClassPK) {
-
-		return _ctEntryLocalService.fetchTimelineCTEntry(
-			ctCollectionId, modelClassNameId, modelClassPK);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

@@ -88,11 +88,7 @@ public class ExportTaskResourceTest {
 					"BatchEngineExportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
-			JSONObject exportTaskJSONObject1 = _postExportTask(
-				_objectDefinition, null);
-
-			Assert.assertEquals(
-				"COMPLETED", exportTaskJSONObject1.get("executeStatus"));
+			_postExportTask("COMPLETED", null, _objectDefinition);
 
 			JSONObject companyJSONObject = HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -118,10 +114,7 @@ public class ExportTaskResourceTest {
 							_OBJECT_FIELD_NAME_TEXT)),
 					ObjectDefinitionConstants.SCOPE_COMPANY, user.getUserId());
 
-			exportTaskJSONObject1 = _postExportTask(objectDefinition2, null);
-
-			Assert.assertEquals(
-				"FAILED", exportTaskJSONObject1.get("executeStatus"));
+			_postExportTask("FAILED", null, objectDefinition2);
 
 			HTTPTestUtil.customize(
 			).withBaseURL(
@@ -130,18 +123,9 @@ public class ExportTaskResourceTest {
 				"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 			).apply(
 				() -> {
-					JSONObject exportTaskJSONObject2 = _postExportTask(
-						objectDefinition2, null);
+					_postExportTask("COMPLETED", null, objectDefinition2);
 
-					Assert.assertEquals(
-						"COMPLETED",
-						exportTaskJSONObject2.get("executeStatus"));
-
-					exportTaskJSONObject2 = _postExportTask(
-						_objectDefinition, null);
-
-					Assert.assertEquals(
-						"FAILED", exportTaskJSONObject2.get("executeStatus"));
+					_postExportTask("FAILED", null, _objectDefinition);
 				}
 			);
 		}
@@ -168,7 +152,7 @@ public class ExportTaskResourceTest {
 				"contains(", _OBJECT_FIELD_NAME_TEXT, ", 'Test')"));
 
 		JSONObject jsonObject = _postExportTask(
-			_objectDefinition, "filter=" + encodedFilterString);
+			"COMPLETED", "filter=" + encodedFilterString, _objectDefinition);
 
 		Assert.assertEquals(2, jsonObject.getInt("processedItemsCount"));
 
@@ -203,7 +187,8 @@ public class ExportTaskResourceTest {
 	}
 
 	private JSONObject _postExportTask(
-			ObjectDefinition objectDefinition, String queryParameters)
+			String expectedExecuteStatus, String queryParameters,
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		String endpointString = StringBundler.concat(
@@ -238,6 +223,8 @@ public class ExportTaskResourceTest {
 				break;
 			}
 		}
+
+		Assert.assertEquals(expectedExecuteStatus, actualExecuteStatus);
 
 		return jsonObject;
 	}

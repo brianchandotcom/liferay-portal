@@ -158,9 +158,9 @@ public class ObjectEntryDisplayContextTest {
 			_getBackURL(mockHttpServletRequest));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			_objectDefinitionLocalService,
 			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"},
-			_objectEntryLocalService);
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	private String _getBackURL(MockHttpServletRequest mockHttpServletRequest)

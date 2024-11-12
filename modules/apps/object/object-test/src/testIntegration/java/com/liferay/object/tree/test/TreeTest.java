@@ -63,9 +63,9 @@ public class TreeTest {
 		Assert.assertEquals(2, tree.getHeight(tree.getRootNode()));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			new String[] {"C_AAA", "C_AAB", "C_AA", "C_AB", "C_A"},
-			_objectEntryLocalService);
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AB", "C_AA", "C_AAB", "C_AAA"},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	@Test
@@ -114,9 +114,9 @@ public class TreeTest {
 			tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			new String[] {"C_AAA", "C_AAB", "C_AA", "C_AB", "C_A"},
-			_objectEntryLocalService);
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AB", "C_AA", "C_AAB", "C_AAA"},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	private void _testIterator(

@@ -49,6 +49,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
 /**
  * @author Carolina Barbosa
  */
@@ -168,22 +171,19 @@ public class ExportTaskResourceTest {
 
 		zipInputStream.getNextEntry();
 
-		JSONArray responseJSONArray = _jsonFactory.createJSONArray(
-			StringUtil.read(zipInputStream));
+		String responseJSONArrayString = StringUtil.read(zipInputStream);
 
-		JSONObject objectEntry1JSONObject = (JSONObject)responseJSONArray.get(
-			0);
+		JSONArray expectedJSONArray = JSONUtil.putAll(
+			JSONUtil.put(
+				"externalReferenceCode",
+				objectEntry1.getExternalReferenceCode()),
+			JSONUtil.put(
+				"externalReferenceCode",
+				objectEntry2.getExternalReferenceCode()));
 
-		Assert.assertEquals(
-			objectEntry1.getExternalReferenceCode(),
-			objectEntry1JSONObject.get("externalReferenceCode"));
-
-		JSONObject objectEntry2JSONObject = (JSONObject)responseJSONArray.get(
-			1);
-
-		Assert.assertEquals(
-			objectEntry2.getExternalReferenceCode(),
-			objectEntry2JSONObject.get("externalReferenceCode"));
+		JSONAssert.assertEquals(
+			expectedJSONArray.toString(), responseJSONArrayString,
+			JSONCompareMode.LENIENT);
 	}
 
 	private JSONObject _postExportTask(

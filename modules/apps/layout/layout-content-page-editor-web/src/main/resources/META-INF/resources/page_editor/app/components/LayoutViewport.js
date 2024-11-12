@@ -58,7 +58,7 @@ export default function LayoutViewport() {
 						initialWidth + (event.clientX - initialX) * 2,
 						minWidth
 					),
-					maxWidth + 1
+					maxWidth
 				)
 			);
 		});

@@ -66,7 +66,7 @@ public class ExportTaskResourceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
+		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -75,7 +75,7 @@ public class ExportTaskResourceTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			TestPropsValues.getUserId());
 
-		_objectDefinitions.add(_objectDefinition1);
+		_objectDefinitions.add(_objectDefinition);
 	}
 
 	@After
@@ -96,7 +96,7 @@ public class ExportTaskResourceTest {
 				LoggerTestUtil.ERROR)) {
 
 			JSONObject exportTaskJSONObject1 = _postExportTask(
-				_objectDefinition1, null);
+				_objectDefinition, null);
 
 			Assert.assertEquals(
 				"COMPLETED", exportTaskJSONObject1.get("executeStatus"));
@@ -145,7 +145,7 @@ public class ExportTaskResourceTest {
 						exportTaskJSONObject2.get("executeStatus"));
 
 					exportTaskJSONObject2 = _postExportTask(
-						_objectDefinition1, null);
+						_objectDefinition, null);
 
 					Assert.assertEquals(
 						"FAILED", exportTaskJSONObject2.get("executeStatus"));
@@ -162,13 +162,13 @@ public class ExportTaskResourceTest {
 	@Test
 	public void testPostExportTaskWithFiltering() throws Exception {
 		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "TestObject1");
+			_objectDefinition, _OBJECT_FIELD_NAME_TEXT, "TestObject1");
 
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "TestObject2");
+			_objectDefinition, _OBJECT_FIELD_NAME_TEXT, "TestObject2");
 
 		ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, "Object3");
+			_objectDefinition, _OBJECT_FIELD_NAME_TEXT, "Object3");
 
 		String encodedFilterString = URLCodec.encodeURL(
 			StringBundler.concat(
@@ -177,7 +177,7 @@ public class ExportTaskResourceTest {
 		String queryParametersString = "filter=" + encodedFilterString;
 
 		JSONObject jsonObject = _postExportTask(
-			_objectDefinition1, queryParametersString);
+			_objectDefinition, queryParametersString);
 
 		Assert.assertEquals(2, jsonObject.getInt("processedItemsCount"));
 
@@ -260,7 +260,7 @@ public class ExportTaskResourceTest {
 	@Inject
 	private JSONFactory _jsonFactory;
 
-	private ObjectDefinition _objectDefinition1;
+	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

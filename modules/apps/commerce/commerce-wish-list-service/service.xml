@@ -115,5 +115,6 @@
 		<exception>CommerceWishListName</exception>
 		<exception>GuestWishListItemMaxAllowed</exception>
 		<exception>GuestWishListMaxAllowed</exception>
+		<exception>RequiredCommerceWishList</exception>
 	</exceptions>
 </service-builder>

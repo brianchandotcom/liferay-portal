@@ -65,7 +65,8 @@ public class DisplayPageTemplateResourceImpl
 		_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntry(
 			displayPageTemplateExternalReferenceCode,
 			ResourceUtil.getGroupId(
-				contextCompany.getCompanyId(), siteExternalReferenceCode));
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 	}
 
 	@Override
@@ -84,7 +85,7 @@ public class DisplayPageTemplateResourceImpl
 				getLayoutPageTemplateEntryByExternalReferenceCode(
 					displayPageTemplateExternalReferenceCode,
 					ResourceUtil.getGroupId(
-						contextCompany.getCompanyId(),
+						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode)));
 	}
 
@@ -101,7 +102,7 @@ public class DisplayPageTemplateResourceImpl
 		}
 
 		long groupId = ResourceUtil.getGroupId(
-			contextCompany.getCompanyId(), siteExternalReferenceCode);
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
@@ -136,7 +137,7 @@ public class DisplayPageTemplateResourceImpl
 			transform(
 				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 					ResourceUtil.getGroupId(
-						contextCompany.getCompanyId(),
+						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode),
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
@@ -157,7 +158,7 @@ public class DisplayPageTemplateResourceImpl
 		}
 
 		long groupId = ResourceUtil.getGroupId(
-			contextCompany.getCompanyId(), siteExternalReferenceCode);
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		return _addDisplayPageTemplate(
 			displayPageTemplate, groupId,
@@ -177,7 +178,7 @@ public class DisplayPageTemplateResourceImpl
 		}
 
 		long groupId = ResourceUtil.getGroupId(
-			contextCompany.getCompanyId(), siteExternalReferenceCode);
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
@@ -202,7 +203,7 @@ public class DisplayPageTemplateResourceImpl
 		}
 
 		long groupId = ResourceUtil.getGroupId(
-			contextCompany.getCompanyId(), siteExternalReferenceCode);
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.

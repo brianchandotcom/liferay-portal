@@ -6,6 +6,7 @@
 package com.liferay.change.tracking.spi.history;
 
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -19,6 +20,9 @@ public interface CTCollectionHistoryProvider<T> {
 
 	public List<CTCollection> getCTCollections(long classNameId, long classPK)
 		throws PortalException;
+
+	public CTEntry getCTEntry(
+		long ctCollectionId, long modelClassNameId, long modelClassPK);
 
 	public Class<T> getModelClass();
 

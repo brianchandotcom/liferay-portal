@@ -438,6 +438,10 @@ public class JournalContentDisplayContext {
 	}
 
 	public String getId() {
+
+		// TODO Remove this method. Modify usage to call
+		// getArticleExternalReferenceCode or getArticleId depending on FF.
+
 		if (FeatureFlagManagerUtil.isEnabled(
 				_themeDisplay.getCompanyId(), "LPD-27566")) {
 

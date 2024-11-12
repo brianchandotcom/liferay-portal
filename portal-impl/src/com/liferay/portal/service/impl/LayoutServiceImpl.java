@@ -694,7 +694,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		Layout layout = layoutLocalService.fetchLayoutByExternalReferenceCode(
+		Layout layout = layoutLocalService.getLayoutByExternalReferenceCode(
 			externalReferenceCode, groupId);
 
 		LayoutPermissionUtil.check(

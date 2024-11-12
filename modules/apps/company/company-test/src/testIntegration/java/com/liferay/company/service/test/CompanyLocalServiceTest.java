@@ -491,9 +491,7 @@ public class CompanyLocalServiceTest {
 				null, webId2, webId2, "test.com", 0, true, true, null, null,
 				null, null, null, null);
 
-			if (!originalCompanyPredictableCompanyIdsEnabled) {
-				Assert.assertEquals(10001, company2.getCompanyId());
-			}
+			Assert.assertEquals(company1.getCompanyId() + 1, company2.getCompanyId());
 		}
 		finally {
 			StartupHelperUtil.setDBNew(false);

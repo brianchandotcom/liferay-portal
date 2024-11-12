@@ -38,9 +38,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.zip.ZipInputStream;
 
 import org.junit.After;
@@ -74,16 +72,11 @@ public class ExportTaskResourceTest {
 					_OBJECT_FIELD_NAME_TEXT)),
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			TestPropsValues.getUserId());
-
-		_objectDefinitions.add(_objectDefinition);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		for (ObjectDefinition objectDefinition : _objectDefinitions) {
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition);
-		}
+		_objectDefinitionLocalService.deleteObjectDefinition(_objectDefinition);
 	}
 
 	@Test
@@ -264,7 +257,5 @@ public class ExportTaskResourceTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	private final List<ObjectDefinition> _objectDefinitions = new ArrayList<>();
 
 }

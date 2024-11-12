@@ -71,12 +71,14 @@ public class CommerceCurrencyCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", commerceCurrencyId=");
 		sb.append(commerceCurrencyId);
 		sb.append(", companyId=");
@@ -129,6 +131,14 @@ public class CommerceCurrencyCacheModel
 		}
 		else {
 			commerceCurrencyImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			commerceCurrencyImpl.setExternalReferenceCode("");
+		}
+		else {
+			commerceCurrencyImpl.setExternalReferenceCode(
+				externalReferenceCode);
 		}
 
 		commerceCurrencyImpl.setCommerceCurrencyId(commerceCurrencyId);
@@ -218,6 +228,7 @@ public class CommerceCurrencyCacheModel
 
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		commerceCurrencyId = objectInput.readLong();
 
@@ -255,6 +266,13 @@ public class CommerceCurrencyCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(commerceCurrencyId);
@@ -324,6 +342,7 @@ public class CommerceCurrencyCacheModel
 
 	public long mvccVersion;
 	public String uuid;
+	public String externalReferenceCode;
 	public long commerceCurrencyId;
 	public long companyId;
 	public long userId;

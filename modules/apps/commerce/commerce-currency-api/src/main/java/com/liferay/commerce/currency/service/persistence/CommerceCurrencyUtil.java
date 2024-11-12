@@ -1271,6 +1271,76 @@ public class CommerceCurrencyUtil {
 	}
 
 	/**
+	 * Returns the commerce currency where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCurrencyException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching commerce currency
+	 * @throws NoSuchCurrencyException if a matching commerce currency could not be found
+	 */
+	public static CommerceCurrency findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.commerce.currency.exception.NoSuchCurrencyException {
+
+		return getPersistence().findByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the commerce currency where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
+	 */
+	public static CommerceCurrency fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the commerce currency where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
+	 */
+	public static CommerceCurrency fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		return getPersistence().fetchByERC_C(
+			externalReferenceCode, companyId, useFinderCache);
+	}
+
+	/**
+	 * Removes the commerce currency where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the commerce currency that was removed
+	 */
+	public static CommerceCurrency removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.commerce.currency.exception.NoSuchCurrencyException {
+
+		return getPersistence().removeByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the number of commerce currencies where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching commerce currencies
+	 */
+	public static int countByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().countByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
 	 * Caches the commerce currency in the entity cache if it is enabled.
 	 *
 	 * @param commerceCurrency the commerce currency

@@ -14,20 +14,29 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 public class ResourceUtil {
 
 	public static long getGroupId(
-			boolean allowLiveGroup, long companyId,
+			boolean allowCompanyGroup, boolean allowLiveGroup, long companyId,
 			String siteExternalReferenceCode)
 		throws Exception {
 
 		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, companyId);
 
-		if (group.isCompany() || group.isDepot() ||
+		if ((!allowCompanyGroup && group.isCompany()) || group.isDepot() ||
 			(!allowLiveGroup && group.hasLocalOrRemoteStagingGroup())) {
 
 			throw new UnsupportedOperationException();
 		}
 
 		return group.getGroupId();
+	}
+
+	public static long getGroupId(
+			boolean allowLiveGroup, long companyId,
+			String siteExternalReferenceCode)
+		throws Exception {
+
+		return getGroupId(
+			false, allowLiveGroup, companyId, siteExternalReferenceCode);
 	}
 
 }

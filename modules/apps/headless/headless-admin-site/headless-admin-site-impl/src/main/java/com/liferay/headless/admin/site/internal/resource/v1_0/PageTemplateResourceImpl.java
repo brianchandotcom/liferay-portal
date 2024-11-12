@@ -68,7 +68,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			transform(
 				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 					ResourceUtil.getGroupId(
-						true, contextCompany.getCompanyId(),
+						true, true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode),
 					new int[] {
 						LayoutPageTemplateEntryTypeConstants.BASIC,
@@ -90,8 +90,8 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 
 		return _addPageTemplate(
 			ResourceUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode),
+				_isCompanyGroupAllowed(pageTemplate), false,
+				contextCompany.getCompanyId(), siteExternalReferenceCode),
 			pageTemplate);
 	}
 
@@ -216,6 +216,17 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		}
 
 		return serviceContext;
+	}
+
+	private boolean _isCompanyGroupAllowed(PageTemplate pageTemplate) {
+		if (Objects.equals(
+				pageTemplate.getType(),
+				PageTemplate.Type.WIDGET_PAGE_TEMPLATE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

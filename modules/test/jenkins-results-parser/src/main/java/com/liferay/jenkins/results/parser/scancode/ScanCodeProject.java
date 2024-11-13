@@ -17,7 +17,9 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +31,28 @@ import org.json.JSONObject;
  * @author Brittney Nguyen
  */
 public class ScanCodeProject {
+
+	public static void addErrorsToMap(
+		JSONObject complianceAlertJSONObject, String key, String errorType) {
+
+		if (!complianceAlertJSONObject.has(key)) {
+			return;
+		}
+
+		JSONObject keyJSONObject = complianceAlertJSONObject.getJSONObject(key);
+
+		if ((keyJSONObject != null) && keyJSONObject.has(errorType)) {
+			JSONArray errorTypeJSONArray = keyJSONObject.getJSONArray(
+				errorType);
+
+			if (errorType.equals("warning")) {
+				_warningCountMap.put(key, errorTypeJSONArray.length());
+			}
+			else {
+				_errorCountMap.put(key, errorTypeJSONArray.length());
+			}
+		}
+	}
 
 	public ScanCodeProject(String buildURL, String pipelineName) {
 		_buildURL = buildURL;
@@ -109,12 +133,8 @@ public class ScanCodeProject {
 			return;
 		}
 
-		JSONObject packagesJSONObject = complianceAlertJSONObject.getJSONObject(
-			"packages");
-
-		if (packagesJSONObject.has(errorType)) {
-			_errorTypes.add(errorType);
-		}
+		addErrorsToMap(complianceAlertJSONObject, "packages", errorType);
+		addErrorsToMap(complianceAlertJSONObject, "resources", errorType);
 	}
 
 	public void downloadResultFiles() throws IOException {
@@ -173,6 +193,30 @@ public class ScanCodeProject {
 		);
 
 		return jsonObject;
+	}
+
+	public String getComplianceAlertString(
+		HashMap<String, Integer> map, String errorType) {
+
+		StringBuilder sb = new StringBuilder();
+
+		if ((map != null) && !map.isEmpty()) {
+			if (errorType.equals("error")) {
+				sb.append(":red_circle: ");
+			}
+			else {
+				sb.append(":large_yellow_circle: ");
+			}
+
+			for (Map.Entry<String, Integer> entry : map.entrySet()) {
+				sb.append(entry.getKey());
+				sb.append(":");
+				sb.append(entry.getValue());
+				sb.append(" ");
+			}
+		}
+
+		return sb.toString();
 	}
 
 	public JSONObject getInspectPackagesJSONObject() {
@@ -326,17 +370,19 @@ public class ScanCodeProject {
 
 		String subject = "ScanCode pipeline is complete";
 
-		if (_errorTypes.contains("error")) {
+		if ((_errorCountMap != null) && !_errorCountMap.isEmpty()) {
 			subject = ":red-alert: Release blocker :red-alert:";
 		}
 
-		if (!_errorTypes.isEmpty()) {
+		String complianceAlertString = getComplianceAlertString(
+			_errorCountMap, "error");
+
+		complianceAlertString += getComplianceAlertString(
+			_warningCountMap, "warning");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(complianceAlertString)) {
 			sb.append("*Compliance alerts:* ");
-			sb.append(
-				_errorTypes.toString(
-				).replaceAll(
-					"(^\\[|\\]$)", ""
-				));
+			sb.append(complianceAlertString);
 			sb.append("\n");
 		}
 
@@ -496,6 +542,10 @@ public class ScanCodeProject {
 	private static final Pattern _dockerTagPattern = Pattern.compile(
 		"(?<buildProfile>portal|dxp):(?<releaseVersion>" +
 			"\\d+.\\d+.\\d+[.\\d+]*-(ga|u)\\d+|\\d{4}.[qQ]\\d+.\\d+)");
+	private static final HashMap<String, Integer> _errorCountMap =
+		new HashMap<>();
+	private static final HashMap<String, Integer> _warningCountMap =
+		new HashMap<>();
 
 	static {
 		try {
@@ -509,7 +559,6 @@ public class ScanCodeProject {
 	}
 
 	private final String _buildURL;
-	private final List<String> _errorTypes = new ArrayList<>();
 	private final String _pipelineName;
 	private String _projectAPIURL;
 	private String _projectID;

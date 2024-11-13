@@ -14,7 +14,7 @@ export enum SiteAndUserDataEnum {
 	SITES = 'sites',
 }
 
-interface ChartData {
+interface IProps {
 	infoText: string;
 	maxCount: number;
 	title: string;
@@ -22,7 +22,7 @@ interface ChartData {
 }
 
 const useProjectUsageData = () => {
-	const [siteAndUsersData, setSiteAndUsersData] = useState<ChartData[]>([]);
+	const [siteAndUsersData, setSiteAndUsersData] = useState<IProps[]>([]);
 
 	const [{project}] = useCustomerPortal();
 

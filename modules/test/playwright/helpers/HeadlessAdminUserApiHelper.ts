@@ -454,6 +454,15 @@ export class HeadlessAdminUserApiHelper {
 		return userGroup;
 	}
 
+	async assignUsersToUserGroup(userGroupId: number, userIds: number[]) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/user-groups/${userGroupId}/user-group-users`,
+			{
+				data: {userIds},
+			}
+		);
+	}
+
 	async getAccountRoles(accountId: number) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/accounts/${accountId}/account-roles`

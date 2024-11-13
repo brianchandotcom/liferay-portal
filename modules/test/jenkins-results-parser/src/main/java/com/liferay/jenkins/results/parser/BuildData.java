@@ -18,8 +18,6 @@ public interface BuildData {
 
 	public static final File DIR_WORKSPACE_DEFAULT = new File(".");
 
-	public static final String FILE_PATH_DIST_ROOT = "/tmp/dist";
-
 	public static final String URL_JENKINS_GITHUB_DEFAULT =
 		"https://github.com/liferay/liferay-jenkins-ee/tree/master";
 

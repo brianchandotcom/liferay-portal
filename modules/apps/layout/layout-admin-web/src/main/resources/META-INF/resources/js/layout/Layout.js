@@ -113,19 +113,8 @@ const Layout = ({
 	const saveData = (movedItems, parentItemId) => {
 		const formData = new FormData();
 
-		const activeItems = layoutColumns.reduce(
-			(acc, column) => [...acc, ...column.filter((item) => item.active)],
-			[]
-		);
-
-		const activeItem = activeItems[activeItems.length - 1];
-
 		formData.append(`${namespace}plids`, JSON.stringify(movedItems));
 		formData.append(`${namespace}parentPlid`, parentItemId);
-
-		if (activeItem) {
-			formData.append(`${namespace}selPlid`, activeItem.id);
-		}
 
 		fetch(moveItemURL, {
 			body: formData,

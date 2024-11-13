@@ -55,6 +55,7 @@ export function getDDMFormField({
 		}
 		else if (fieldName === 'name') {
 			ddmFormField.fieldName = value;
+			ddmFormField.name = value;
 		}
 		else {
 			ddmFormField[fieldName] = localizable

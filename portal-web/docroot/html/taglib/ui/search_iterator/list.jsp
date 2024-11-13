@@ -36,7 +36,7 @@ if (fixedHeader) {
 }
 %>
 
-<div class="table-responsive" id="<%= namespace + id %>table-responsive-container">
+<div class="table-responsive" id="<%= namespace + id %>tableResponsiveContainer">
 	<table class="<%= searchResultCssClass %>">
 		<c:if test="<%= Validator.isNotNull(summary) %>">
 			<caption class="sr-only"><%= summary %></caption>
@@ -185,7 +185,7 @@ if (fixedHeader) {
 				<c:if test="<%= fixedHeader %>">
 					<tr aria-hidden="true" class="hide lfr-search-iterator-fixed-header" id="<%= namespace + id %>fixedHeader">
 						<th>
-							<div class="lfr-search-iterator-fixed-header-inner-wrapper" id="<%= namespace + id %>inner-wrapper-container">
+							<div class="lfr-search-iterator-fixed-header-inner-wrapper" id="<%= namespace + id %>innerWrapperContainer">
 								<table>
 									<thead>
 										<tr>

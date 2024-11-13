@@ -580,11 +580,55 @@ public class ObjectRelationshipLocalServiceTest {
 			_objectDefinitionLocalService, new String[] {"C_AA", "C_A"},
 			_objectEntryLocalService);
 
-		// Bind a draft object definition tree to a published object definition
-		// tree
+		// Bind a draft object definition to a published object definition
+		// with entries
+
+		objectDefinitionAA = _addAndPublishCustomObjectDefinition("AA");
+
+		_addObjectEntry(objectDefinitionAA, Collections.emptyMap());
 
 		ObjectDefinition objectDefinitionA =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition("A");
+
+		_testBindObjectDefinitions(
+			objectDefinitionA, objectDefinitionAA,
+			(objectDefinition1, objectDefinition2) -> {
+				TreeTestUtil.assertObjectDefinitionTree(
+					LinkedHashMapBuilder.put(
+						"A", new String[0]
+					).build(),
+					_objectDefinitionTreeFactory.create(
+						objectDefinition1.getObjectDefinitionId()),
+					_objectDefinitionLocalService);
+				TreeTestUtil.assertObjectDefinitionTree(
+					LinkedHashMapBuilder.put(
+						"AA", new String[0]
+					).build(),
+					_objectDefinitionTreeFactory.create(
+						objectDefinition2.getObjectDefinitionId()),
+					_objectDefinitionLocalService);
+			});
+
+		long objectDefinitionId = objectDefinitionA.getObjectDefinitionId();
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			StringBundler.concat(
+				"There must be no unrelated object entries when both object ",
+				"definitions are published so that the object relationship ",
+				"can be an edge to a root context"),
+			() -> _objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(), objectDefinitionId));
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService, new String[] {"C_AA", "C_A"},
+			_objectEntryLocalService);
+
+		// Bind a draft object definition tree to a published object definition
+		// tree
+
+		objectDefinitionA = ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			"A");
 		objectDefinitionAA = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			"AA");
 

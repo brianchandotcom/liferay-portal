@@ -32,6 +32,33 @@
 					}
 				},
 				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"widgetInstance": {
+						"widgetConfig": {
+							"anyAssetType": "false",
+							"classNameIds": [
+								"[$CLASS_NAME_ID:com.liferay.blogs.model.BlogsEntry$]",
+								"[$CLASS_NAME_ID:com.liferay.bookmarks.model.BookmarksEntry$]",
+								"[$CLASS_NAME_ID:com.liferay.bookmarks.model.BookmarksFolder$]",
+								"[$CLASS_NAME_ID:com.liferay.calendar.model.Calendar$]",
+								"[$CLASS_NAME_ID:com.liferay.document.library.kernel.model.DLFileEntry$]",
+								"[$CLASS_NAME_ID:com.liferay.document.library.kernel.model.DLFolder$]",
+								"[$CLASS_NAME_ID:com.liferay.dynamic.data.lists.model.DDLRecord$]",
+								"[$CLASS_NAME_ID:com.liferay.dynamic.data.mapping.model.DDMStructure$]",
+								"[$CLASS_NAME_ID:com.liferay.journal.model.JournalArticle$]",
+								"[$CLASS_NAME_ID:com.liferay.knowledge.base.model.KBArticle$]",
+								"[$CLASS_NAME_ID:com.liferay.message.boards.model.MBMessage$]",
+								"[$CLASS_NAME_ID:com.liferay.wiki.model.WikiPage$]"
+							],
+							"displayStyle": "full-content",
+							"selectionStyle": "dynamic"
+						},
+						"widgetName": "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet"
+					}
+				},
+				"type": "Widget"
 			}
 		],
 		"type": "Root"

@@ -3163,6 +3163,13 @@ public class BundleSiteInitializerTest {
 			"Test Link to Layout", layout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("link_to_layout", layout.getType());
 		Assert.assertFalse(layout.isHidden());
+
+		sitePage = sitePageResource.getSiteSitePage(
+			_group.getGroupId(), "test-public-layout");
+
+		pageDefinitionString = String.valueOf(sitePage.getPageDefinition());
+
+		Assert.assertFalse(pageDefinitionString.contains("$CLASS_NAME_ID"));
 	}
 
 	private void _assertPublicLayouts2() throws Exception {

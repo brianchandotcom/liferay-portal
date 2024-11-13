@@ -5,7 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {
+	ObjectRelationship,
+	ObjectRelationshipApi,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
@@ -25,17 +28,18 @@ test('can create an object custom view using object relationship entry', async (
 	page,
 }) => {
 	const objectDefinition1 =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			objectFolderExternalReferenceCode: 'default',
-			status: {code: 0},
-		});
+		await apiHelpers.objectAdmin.postRandomObjectDefinition(
+			{code: 0},
+			undefined,
+			'default'
+		);
 
 	const objectDefinition2 =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			objectFolderExternalReferenceCode: 'default',
-			status: {code: 0},
-		});
-
+		await apiHelpers.objectAdmin.postRandomObjectDefinition(
+			{code: 0},
+			undefined,
+			'default'
+		);
 	apiHelpers.data.push({id: objectDefinition1.id, type: 'objectDefinition'});
 
 	apiHelpers.data.push({id: objectDefinition2.id, type: 'objectDefinition'});
@@ -44,27 +48,25 @@ test('can create an object custom view using object relationship entry', async (
 	const objectRelationshipName =
 		'objectRelationshipName' + Math.floor(Math.random() * 99);
 
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
+	const objectRelationshipApiClient = await apiHelpers.buildRestClient(
+		ObjectRelationshipApi
 	);
 
-	await objectAdminRestClient.objectRelationship.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+	await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+		objectDefinition1.externalReferenceCode,
 		{
-			externalReferenceCode: objectDefinition1.externalReferenceCode,
-			requestBody: {
-				label: {
-					en_US: objectRelationshipLabel,
-				},
-				name: objectRelationshipName,
-				objectDefinitionExternalReferenceCode1:
-					objectDefinition1.externalReferenceCode,
-				objectDefinitionExternalReferenceCode2:
-					objectDefinition2.externalReferenceCode,
-				objectDefinitionId1: objectDefinition1.id,
-				objectDefinitionId2: objectDefinition2.id,
-				objectDefinitionName2: objectDefinition2.name,
-				type: 'oneToMany' as ObjectRelationshipType,
+			label: {
+				en_US: objectRelationshipLabel,
 			},
+			name: objectRelationshipName,
+			objectDefinitionExternalReferenceCode1:
+				objectDefinition1.externalReferenceCode,
+			objectDefinitionExternalReferenceCode2:
+				objectDefinition2.externalReferenceCode,
+			objectDefinitionId1: objectDefinition1.id,
+			objectDefinitionId2: objectDefinition2.id,
+			objectDefinitionName2: objectDefinition2.name,
+			type: ObjectRelationship.TypeEnum.OneToMany,
 		}
 	);
 

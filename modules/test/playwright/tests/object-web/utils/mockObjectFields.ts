@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectField} from '../../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {ObjectField} from '../../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import {LabelNameObject, ListTypeDefinition} from '../../../types/object';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {
@@ -45,65 +46,80 @@ type ObjectFieldBusinessTypes =
 
 const objectFieldbusinessTypeInfo: {
 	[K in ObjectFieldBusinessTypes]: {
-		['DBType']: ObjectField['DBType'];
 		['businessType']: ObjectField['businessType'];
+		['dBType']: ObjectField['dBType'];
+		['type']: ObjectField['type'];
 	};
 } = {
 	attachment: {
-		DBType: 'Long',
-		businessType: 'Attachment',
+		businessType: ObjectField.BusinessTypeEnum.Attachment,
+		dBType: ObjectField.DBTypeEnum.Long,
+		type: ObjectField.TypeEnum.Long,
 	},
 	autoIncrement: {
-		DBType: 'String',
-		businessType: 'AutoIncrement',
+		businessType: ObjectField.BusinessTypeEnum.AutoIncrement,
+		dBType: ObjectField.DBTypeEnum.String,
+		type: ObjectField.TypeEnum.String,
 	},
 	boolean: {
-		DBType: 'Boolean',
-		businessType: 'Boolean',
+		businessType: ObjectField.BusinessTypeEnum.Boolean,
+		dBType: ObjectField.DBTypeEnum.Boolean,
+		type: ObjectField.TypeEnum.Boolean,
 	},
 	date: {
-		DBType: 'Date',
-		businessType: 'Date',
+		businessType: ObjectField.BusinessTypeEnum.Date,
+		dBType: ObjectField.DBTypeEnum.Date,
+		type: ObjectField.TypeEnum.Date,
 	},
 	decimal: {
-		DBType: 'Double',
-		businessType: 'Decimal',
+		businessType: ObjectField.BusinessTypeEnum.Decimal,
+		dBType: ObjectField.DBTypeEnum.Double,
+		type: ObjectField.TypeEnum.Double,
 	},
 	encrypted: {
-		DBType: 'Clob',
-		businessType: 'Encrypted',
+		businessType: ObjectField.BusinessTypeEnum.Encrypted,
+		dBType: ObjectField.DBTypeEnum.Clob,
+		type: ObjectField.TypeEnum.Clob,
 	},
 	integer: {
-		DBType: 'Integer',
-		businessType: 'Integer',
+		businessType: ObjectField.BusinessTypeEnum.Integer,
+		dBType: ObjectField.DBTypeEnum.Integer,
+		type: ObjectField.TypeEnum.Integer,
 	},
 	longInteger: {
-		DBType: 'Long',
-		businessType: 'LongInteger',
+		businessType: ObjectField.BusinessTypeEnum.LongInteger,
+		dBType: ObjectField.DBTypeEnum.Long,
+		type: ObjectField.TypeEnum.Long,
 	},
 	longText: {
-		DBType: 'Clob',
-		businessType: 'LongText',
+		businessType: ObjectField.BusinessTypeEnum.LongText,
+		dBType: ObjectField.DBTypeEnum.Clob,
+		type: ObjectField.TypeEnum.Clob,
 	},
 	multiselectPicklist: {
-		DBType: 'String',
-		businessType: 'MultiselectPicklist',
+		businessType: ObjectField.BusinessTypeEnum.MultiselectPicklist,
+		dBType: ObjectField.DBTypeEnum.String,
+		type: ObjectField.TypeEnum.String,
 	},
 	picklist: {
-		DBType: 'String',
-		businessType: 'Picklist',
+		businessType: ObjectField.BusinessTypeEnum.Picklist,
+		dBType: ObjectField.DBTypeEnum.String,
+		type: ObjectField.TypeEnum.String,
 	},
 	precisionDecimal: {
-		DBType: 'BigDecimal',
-		businessType: 'PrecisionDecimal',
+		businessType: ObjectField.BusinessTypeEnum.PrecisionDecimal,
+		dBType: ObjectField.DBTypeEnum.BigDecimal,
+		type: ObjectField.TypeEnum.BigDecimal,
 	},
 	richText: {
-		DBType: 'Clob',
-		businessType: 'RichText',
+		businessType: ObjectField.BusinessTypeEnum.RichText,
+		dBType: ObjectField.DBTypeEnum.Clob,
+		type: ObjectField.TypeEnum.Clob,
 	},
 	text: {
-		DBType: 'String',
-		businessType: 'Text',
+		businessType: ObjectField.BusinessTypeEnum.Text,
+		dBType: ObjectField.DBTypeEnum.String,
+		type: ObjectField.TypeEnum.String,
 	},
 };
 
@@ -116,7 +132,7 @@ export function createObjectField(
 		indexedAsKeyword: false,
 		indexedLanguageId: '',
 		localized: false,
-		readOnly: 'false',
+		readOnly: ObjectField.ReadOnlyEnum.False,
 		readOnlyConditionExpression: '',
 		required: false,
 		state: false,
@@ -125,13 +141,13 @@ export function createObjectField(
 	};
 
 	return {
-		DBType: objectFieldbusinessTypeInfo[businessType].DBType,
 		businessType: objectFieldbusinessTypeInfo[businessType].businessType,
+		dBType: objectFieldbusinessTypeInfo[businessType].dBType,
 		label: {
 			en_US: objectFieldBusinessTypeLabelName.label,
 		},
 		name: objectFieldBusinessTypeLabelName.name,
-		type: objectFieldbusinessTypeInfo[businessType].DBType,
+		type: objectFieldbusinessTypeInfo[businessType].type,
 		...additionalSettings,
 		...baseObjectField,
 	};

@@ -5,7 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {ObjectDefinitionApi} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {editObjectDefinitionPagesTest} from '../../fixtures/editObjectDefinitionPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -31,10 +31,10 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 		});
 
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				objectFields
+			);
 
 		const objectLayoutBlockName = getRandomString();
 
@@ -62,12 +62,11 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 
 		// Clean up
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-			objectDefinitionId: objectDefinition.id,
-		});
+		await objectDefinitionAPIClient.deleteObjectDefinition(
+			objectDefinition.id
+		);
 	});
 });

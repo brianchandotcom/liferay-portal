@@ -6,9 +6,12 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {
-	ObjectAdminRestClient,
+	ObjectActionApi,
 	ObjectDefinition,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+	ObjectDefinitionApi,
+	ObjectValidationRule,
+	ObjectValidationRuleApi,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {scriptManagementPagesTest} from '../../fixtures/scriptManagementPagesTest';
@@ -25,17 +28,12 @@ const createdEntities = {
 };
 
 test.afterEach(async ({apiHelpers, scriptManagementPage}) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
 	if (createdEntities.objectDefinitionsIds.length) {
 		for (const id of createdEntities.objectDefinitionsIds) {
-			await objectAdminRestClient.objectDefinition.deleteObjectDefinition(
-				{
-					objectDefinitionId: id,
-				}
-			);
+			await objectDefinitionAPIClient.deleteObjectDefinition(id);
 		}
 	}
 	await scriptManagementPage.enableScriptManagementConfiguration();
@@ -54,39 +52,37 @@ test.describe('Script management container', () => {
 		scriptManagementPage,
 	}) => {
 		const objectDefinition =
-			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			})) as ObjectDefinition;
+			(await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default'
+			)) as ObjectDefinition;
 
 		createdEntities.objectDefinitionsIds.push(objectDefinition.id);
 
 		const groovyObjectActionName = 'groovyObjectAction' + getRandomInt();
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectActionApiClient =
+			await apiHelpers.buildRestClient(ObjectActionApi);
 
-		await objectAdminRestClient.objectAction.postObjectDefinitionByExternalReferenceCodeObjectAction(
+		await objectActionApiClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+			objectDefinition.externalReferenceCode,
 			{
-				externalReferenceCode: objectDefinition.externalReferenceCode,
-				requestBody: {
-					active: true,
-					errorMessage: {
-						en_US: '',
-					},
-					label: {
-						en_US: groovyObjectActionName,
-					},
-					name: groovyObjectActionName,
-					objectActionExecutorKey: 'groovy',
-					objectActionTriggerKey: 'onAfterAdd',
-					parameters: {
-						lineCount: 1,
-						script: 'test',
-					},
-					system: false,
+				active: true,
+				errorMessage: {
+					en_US: '',
 				},
+				label: {
+					en_US: groovyObjectActionName,
+				},
+				name: groovyObjectActionName,
+				objectActionExecutorKey: 'groovy',
+				objectActionTriggerKey: 'onAfterAdd',
+				parameters: {
+					lineCount: 1,
+					script: 'test',
+				},
+				system: false,
 			}
 		);
 
@@ -109,38 +105,37 @@ test.describe('Script management container', () => {
 		scriptManagementPage,
 	}) => {
 		const objectDefinition =
-			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			})) as ObjectDefinition;
+			(await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default'
+			)) as ObjectDefinition;
 
 		createdEntities.objectDefinitionsIds.push(objectDefinition.id);
 
 		const objectValidationName =
 			'Groovy Object Validation' + getRandomInt();
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
+		const objectValidationRuleApiClient = await apiHelpers.buildRestClient(
+			ObjectValidationRuleApi
 		);
 
-		await objectAdminRestClient.objectValidationRule.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+		await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+			objectDefinition.externalReferenceCode,
 			{
-				externalReferenceCode: objectDefinition.externalReferenceCode,
-				requestBody: {
-					active: true,
-					engine: 'groovy',
-					engineLabel: 'Groovy',
-					errorLabel: {
-						en_US: 'Groovy Object Validation Error',
-					},
-					name: {
-						en_US: objectValidationName,
-					},
-					objectValidationRuleSettings: [],
-					outputType: 'fullValidation',
-					script: 'test',
-					system: false,
+				active: true,
+				engine: 'groovy',
+				engineLabel: 'Groovy',
+				errorLabel: {
+					en_US: 'Groovy Object Validation Error',
 				},
+				name: {
+					en_US: objectValidationName,
+				},
+				objectValidationRuleSettings: [],
+				outputType: ObjectValidationRule.OutputTypeEnum.FullValidation,
+				script: 'test',
+				system: false,
 			}
 		);
 

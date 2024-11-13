@@ -5,6 +5,15 @@
 
 import {expect} from '@playwright/test';
 
+import {
+	ObjectField,
+	ObjectRelationship,
+} from '../../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
+import {
+	CreateObjectField,
+	CreateObjectRelationship,
+} from '../../../types/object';
+
 import type {Locator, Page} from '@playwright/test';
 
 export class ModelBuilderObjectDefinitionNodePage {
@@ -132,7 +141,7 @@ export class ModelBuilderObjectDefinitionNodePage {
 			objectFieldBusinessType
 		);
 
-		if (objectFieldBusinessType === 'Picklist') {
+		if (objectFieldBusinessType === ObjectField.BusinessTypeEnum.Picklist) {
 			await this.objectFieldPicklistSelect.click();
 			await this.page
 				.getByRole('option', {
@@ -165,7 +174,7 @@ export class ModelBuilderObjectDefinitionNodePage {
 		const objectRelationship = await this.handleObjectRelationshipModal({
 			manyRecordsOf,
 			objectRelationshipLabel,
-			type: objectRelationshipType,
+			type: String(objectRelationshipType),
 		});
 
 		return objectRelationship;
@@ -238,11 +247,14 @@ export class ModelBuilderObjectDefinitionNodePage {
 	}
 
 	async selectNewObjectFieldBusinessTypeOption(
-		objectFieldBusinessType: string
+		objectFieldBusinessType: ObjectField.BusinessTypeEnum
 	) {
 		await this.objectFieldBusinessTypeSelect.click();
 		await this.page
-			.getByRole('option', {exact: true, name: objectFieldBusinessType})
+			.getByRole('option', {
+				exact: true,
+				name: String(objectFieldBusinessType),
+			})
 			.click();
 	}
 }

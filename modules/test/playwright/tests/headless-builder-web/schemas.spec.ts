@@ -6,9 +6,11 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {
-	ObjectAdminRestClient,
 	ObjectDefinition,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+	ObjectDefinitionApi,
+	ObjectField,
+	ObjectRelationship,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {waitForLoading} from '../osb-faro-web/utils/loading';
@@ -39,8 +41,8 @@ const objectDefinitionData: ObjectDefinition = {
 	name: `ObjectDefinition`,
 	objectFields: [
 		{
-			DBType: 'String',
-			businessType: 'Text',
+			businessType: ObjectField.BusinessTypeEnum.Text,
+			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'ObjectFieldERC',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -53,7 +55,7 @@ const objectDefinitionData: ObjectDefinition = {
 			required: false,
 			state: false,
 			system: false,
-			type: 'String',
+			type: ObjectField.TypeEnum.String,
 		},
 	],
 	pluralLabel: {
@@ -75,8 +77,8 @@ const objectDefinition1Data: ObjectDefinition = {
 	name: `ObjectDefinition1`,
 	objectFields: [
 		{
-			DBType: 'String',
-			businessType: 'Text',
+			businessType: ObjectField.BusinessTypeEnum.Text,
+			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'ObjectField1ERC',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -89,12 +91,12 @@ const objectDefinition1Data: ObjectDefinition = {
 			required: false,
 			state: false,
 			system: false,
-			type: 'String',
+			type: ObjectField.TypeEnum.String,
 		},
 	],
 	objectRelationships: [
 		{
-			deletionType: 'cascade',
+			deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
 			externalReferenceCode: 'modifiable-system',
 			label: {
 				en_US: 'Test Modifiable System Object',
@@ -107,10 +109,10 @@ const objectDefinition1Data: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: 'oneToMany',
+			type: ObjectRelationship.TypeEnum.OneToMany,
 		},
 		{
-			deletionType: 'cascade',
+			deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
 			externalReferenceCode: 'unmodifiable-system',
 			label: {
 				en_US: 'Test Unmodifiable System Object',
@@ -123,10 +125,10 @@ const objectDefinition1Data: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: 'oneToMany',
+			type: ObjectRelationship.TypeEnum.OneToMany,
 		},
 		{
-			deletionType: 'cascade',
+			deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
 			externalReferenceCode: 'unmodifiable-system-allowed',
 			label: {
 				en_US: 'Test Unmodifiable Allowed System Object',
@@ -139,10 +141,10 @@ const objectDefinition1Data: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: 'oneToMany',
+			type: ObjectRelationship.TypeEnum.OneToMany,
 		},
 		{
-			deletionType: 'cascade',
+			deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
 			externalReferenceCode: 'custom',
 			label: {
 				en_US: 'Test Custom Object',
@@ -155,7 +157,7 @@ const objectDefinition1Data: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: 'oneToMany',
+			type: ObjectRelationship.TypeEnum.OneToMany,
 		},
 	],
 	pluralLabel: {
@@ -189,43 +191,46 @@ testFeatureFlagsDisabled(
 	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
 		const objectDefinitions = [];
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
 		for (let i = 0; i <= 21; i++) {
 			objectDefinitions.push(
-				await objectAdminRestClient.objectDefinition.postObjectDefinition(
-					{
-						requestBody: {
-							active: true,
-							externalReferenceCode: `objectDefinition${i}`,
-							label: {en_US: `objectDefinition${i}`},
-							name: `ObjectDefinition${i}`,
-							objectFields: [
-								{
-									DBType: 'String',
-									businessType: 'Text',
-									externalReferenceCode: 'ObjectFieldERC',
-									indexed: true,
-									indexedAsKeyword: false,
-									indexedLanguageId: 'en_US',
-									label: {en_US: 'Object Field'},
-									listTypeDefinitionId: 0,
-									name: 'objectField',
-									required: false,
-									state: false,
-									system: false,
-									type: 'String',
-								},
-							],
-							pluralLabel: {en_US: `objectDefinitions${i}`},
-							portlet: true,
-							scope: 'company',
-							status: {code: 0},
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					externalReferenceCode: `objectDefinition${i}`,
+					label: {
+						en_US: `objectDefinition${i}`,
+					},
+					name: `ObjectDefinition${i}`,
+					objectFields: [
+						{
+							businessType: ObjectField.BusinessTypeEnum.Text,
+							dBType: ObjectField.DBTypeEnum.String,
+							externalReferenceCode: 'ObjectFieldERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: 'en_US',
+							label: {
+								en_US: 'Object Field',
+							},
+							listTypeDefinitionId: 0,
+							name: 'objectField',
+							required: false,
+							state: false,
+							system: false,
+							type: ObjectField.TypeEnum.String,
 						},
-					}
-				)
+					],
+					pluralLabel: {
+						en_US: `objectDefinitions${i}`,
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				})
 			);
 		}
 
@@ -263,14 +268,13 @@ testFeatureFlagsDisabled(
 testFeatureFlagsDisabled(
 	'can see allowed object definitions on schema creation',
 	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const objectDefinition =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: objectDefinitionData,
-			});
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				objectDefinitionData
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
@@ -304,14 +308,13 @@ testFeatureFlagsDisabled(
 testFeatureFlagsEnabled(
 	'can see allowed object definitions on schema creation with feature flag',
 	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const objectDefinition =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: objectDefinitionData,
-			});
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				objectDefinitionData
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
@@ -354,24 +357,23 @@ testFeatureFlagsEnabled(
 testFeatureFlagsDisabled(
 	'check related objects enablement without feature flag',
 	async ({apiHelpers, applicationPage, headlessBuilderPage, schemaPage}) => {
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const objectDefinition =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: objectDefinitionData,
-			});
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				objectDefinitionData
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
 
-		const objectDefinition1 =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: objectDefinition1Data,
-			});
+		const {body: objectDefinition1} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				objectDefinition1Data
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition1.id,
@@ -400,8 +402,8 @@ testFeatureFlagsDisabled(
 
 		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
 
-		const customObjectDefinition =
-			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+		const {body: customObjectDefinition} =
+			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 				'customObjectDefinition'
 			);
 		apiHelpers.data.push({
@@ -508,24 +510,23 @@ testFeatureFlagsDisabled(
 testFeatureFlagsEnabled(
 	'check related objects enablement with feature flag',
 	async ({apiHelpers, applicationPage, headlessBuilderPage, schemaPage}) => {
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const objectDefinition =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: objectDefinitionData,
-			});
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				objectDefinitionData
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
 
-		const objectDefinition1 =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: objectDefinition1Data,
-			});
+		const {body: objectDefinition1} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				objectDefinition1Data
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition1.id,
@@ -554,8 +555,8 @@ testFeatureFlagsEnabled(
 
 		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
 
-		const customObjectDefinition =
-			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+		const {body: customObjectDefinition} =
+			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 				'customObjectDefinition'
 			);
 		apiHelpers.data.push({

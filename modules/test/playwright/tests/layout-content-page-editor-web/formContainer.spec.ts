@@ -5,7 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {
+	ObjectDefinitionApi,
+	ObjectValidationRule,
+	ObjectValidationRuleApi,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -267,10 +271,14 @@ test.describe('Captcha Fragment', () => {
 
 			// Create a page with a form fragment with a captcha fragment
 
-			const {className: objectDefinitionClassName} =
-				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
 					LEMON_OBJECT_ERC
-				);
+				)
+			).body;
 
 			const captchaDefinition = getFragmentDefinition({
 				id: getRandomString(),
@@ -330,10 +338,14 @@ test.describe('Checkbox Fragment', () => {
 
 			// Create a page with a form fragment with a checkbox fragment
 
-			const {className: objectDefinitionClassName} =
-				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
 					ALL_FIELDS_OBJECT_ERC
-				);
+				)
+			).body;
 
 			const checkboxId = getRandomString();
 
@@ -420,43 +432,46 @@ test.describe('Checkbox Fragment', () => {
 
 			// Adds checkbox validation
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectValidationRuleApiClient =
+				await apiHelpers.buildRestClient(ObjectValidationRuleApi);
 
-			const objectValidationRule =
-				await objectAdminRestClient.objectValidationRule.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+			const {body: objectValidationRule} =
+				await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+					ALL_FIELDS_OBJECT_ERC,
 					{
-						externalReferenceCode: ALL_FIELDS_OBJECT_ERC,
-						requestBody: {
-							active: true,
-							engine: 'ddm',
-							engineLabel: 'Expression Builder',
-							errorLabel: {
-								en_US: 'Please accept the terms of use and Privacy Policy.',
-							},
-							name: {
-								en_US: 'Checkbox Validation',
-							},
-							objectValidationRuleSettings: [
-								{
-									name: 'outputObjectFieldExternalReferenceCode',
-									value: 'boolean-erc',
-								} as any,
-							],
-							outputType: 'partialValidation',
-							script: 'boolean == true',
-							system: false,
+						active: true,
+						engine: 'ddm',
+						engineLabel: 'Expression Builder',
+						errorLabel: {
+							en_US: 'Please accept the terms of use and Privacy Policy.',
 						},
+						name: {
+							en_US: 'Checkbox Validation',
+						},
+						objectValidationRuleSettings: [
+							{
+								name: 'outputObjectFieldExternalReferenceCode',
+								value: 'boolean-erc',
+							} as any,
+						],
+						outputType:
+							ObjectValidationRule.OutputTypeEnum
+								.PartialValidation,
+						script: 'boolean == true',
+						system: false,
 					}
 				);
 
 			// Create a page with a form fragment with a checkbox fragment
 
-			const {className: objectDefinitionClassName} =
-				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
 					ALL_FIELDS_OBJECT_ERC
-				);
+				)
+			).body;
 
 			const checkboxId = getRandomString();
 
@@ -501,8 +516,8 @@ test.describe('Checkbox Fragment', () => {
 
 			// Delete validation
 
-			await objectAdminRestClient.objectValidationRule.deleteObjectValidationRule(
-				{objectValidationRuleId: objectValidationRule.id}
+			await objectValidationRuleApiClient.deleteObjectValidationRule(
+				objectValidationRule.id
 			);
 		}
 	);
@@ -518,10 +533,14 @@ test.describe('Date Fragment', () => {
 
 			// Create a page with a form fragment with a date fragment
 
-			const {className: objectDefinitionClassName} =
-				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
 					ALL_FIELDS_OBJECT_ERC
-				);
+				)
+			).body;
 
 			const dateId = getRandomString();
 
@@ -606,43 +625,46 @@ test.describe('Date Fragment', () => {
 
 			// Adds date validation
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectValidationRuleApiClient =
+				await apiHelpers.buildRestClient(ObjectValidationRuleApi);
 
-			const objectValidationRule =
-				await objectAdminRestClient.objectValidationRule.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+			const {body: objectValidationRule} =
+				await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+					ALL_FIELDS_OBJECT_ERC,
 					{
-						externalReferenceCode: ALL_FIELDS_OBJECT_ERC,
-						requestBody: {
-							active: true,
-							engine: 'ddm',
-							engineLabel: 'Expression Builder',
-							errorLabel: {
-								en_US: 'Please enter a valid date.',
-							},
-							name: {
-								en_US: 'Date Validation',
-							},
-							objectValidationRuleSettings: [
-								{
-									name: 'outputObjectFieldExternalReferenceCode',
-									value: 'date-erc',
-								} as any,
-							],
-							outputType: 'partialValidation',
-							script: "futureDates(date, '2022-06-01')",
-							system: false,
+						active: true,
+						engine: 'ddm',
+						engineLabel: 'Expression Builder',
+						errorLabel: {
+							en_US: 'Please enter a valid date.',
 						},
+						name: {
+							en_US: 'Date Validation',
+						},
+						objectValidationRuleSettings: [
+							{
+								name: 'outputObjectFieldExternalReferenceCode',
+								value: 'date-erc',
+							} as any,
+						],
+						outputType:
+							ObjectValidationRule.OutputTypeEnum
+								.PartialValidation,
+						script: "futureDates(date, '2022-06-01')",
+						system: false,
 					}
 				);
 
 			// Create a page with a form fragment with a date fragment
 
-			const {className: objectDefinitionClassName} =
-				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
 					ALL_FIELDS_OBJECT_ERC
-				);
+				)
+			).body;
 
 			const dateId = getRandomString();
 
@@ -695,8 +717,11 @@ test.describe('Date Fragment', () => {
 
 			// Delete validation
 
-			await objectAdminRestClient.objectValidationRule.deleteObjectValidationRule(
-				{objectValidationRuleId: objectValidationRule.id}
+			const objectvalidationRuleApiClient =
+				await apiHelpers.buildRestClient(ObjectValidationRuleApi);
+
+			await objectvalidationRuleApiClient.deleteObjectValidationRule(
+				objectValidationRule.id
 			);
 		}
 	);
@@ -712,10 +737,14 @@ test.describe('Date and Time Fragment', () => {
 
 			// Create a page with a form fragment with a date and time fragment
 
-			const {className: objectDefinitionClassName} =
-				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
 					ALL_FIELDS_OBJECT_ERC
-				);
+				)
+			).body;
 
 			const dateId = getRandomString();
 
@@ -2006,10 +2035,14 @@ test.describe('Rich Text Fragment', () => {
 
 			// Create a page with a form fragment with a rich text fragment
 
-			const {className: objectDefinitionClassName} =
-				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
 					ALL_FIELDS_OBJECT_ERC
-				);
+				)
+			).body;
 
 			const richTextId = getRandomString();
 
@@ -2096,43 +2129,46 @@ test.describe('Rich Text Fragment', () => {
 
 			// Adds rich text validation
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectValidationRuleApiClient =
+				await apiHelpers.buildRestClient(ObjectValidationRuleApi);
 
-			const objectValidationRule =
-				await objectAdminRestClient.objectValidationRule.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+			const {body: objectValidationRule} =
+				await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+					ALL_FIELDS_OBJECT_ERC,
 					{
-						externalReferenceCode: ALL_FIELDS_OBJECT_ERC,
-						requestBody: {
-							active: true,
-							engine: 'ddm',
-							engineLabel: 'Expression Builder',
-							errorLabel: {
-								en_US: 'Please enter a valid description.',
-							},
-							name: {
-								en_US: 'Rich Text Validation',
-							},
-							objectValidationRuleSettings: [
-								{
-									name: 'outputObjectFieldExternalReferenceCode',
-									value: 'rich-text-erc',
-								} as any,
-							],
-							outputType: 'partialValidation',
-							script: 'NOT(isEmpty(richText))',
-							system: false,
+						active: true,
+						engine: 'ddm',
+						engineLabel: 'Expression Builder',
+						errorLabel: {
+							en_US: 'Please enter a valid description.',
 						},
+						name: {
+							en_US: 'Rich Text Validation',
+						},
+						objectValidationRuleSettings: [
+							{
+								name: 'outputObjectFieldExternalReferenceCode',
+								value: 'rich-text-erc',
+							} as any,
+						],
+						outputType:
+							ObjectValidationRule.OutputTypeEnum
+								.PartialValidation,
+						script: 'NOT(isEmpty(richText))',
+						system: false,
 					}
 				);
 
 			// Create a page with a form fragment with a rich text fragment
 
-			const {className: objectDefinitionClassName} =
-				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
 					ALL_FIELDS_OBJECT_ERC
-				);
+				)
+			).body;
 
 			const richTextId = getRandomString();
 
@@ -2177,8 +2213,8 @@ test.describe('Rich Text Fragment', () => {
 
 			// Delete validation
 
-			await objectAdminRestClient.objectValidationRule.deleteObjectValidationRule(
-				{objectValidationRuleId: objectValidationRule.id}
+			await objectValidationRuleApiClient.deleteObjectValidationRule(
+				objectValidationRule.id
 			);
 		}
 	);
@@ -2303,16 +2339,14 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-			const {className: objectDefinitionClassName} =
-				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
-					{
-						externalReferenceCode: LEMON_OBJECT_ERC,
-					}
-				);
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				)
+			).body;
 
 			// Create a page with a Form fragment with a Stepper fragment
 
@@ -2385,16 +2419,14 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-			const {className: objectDefinitionClassName} =
-				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
-					{
-						externalReferenceCode: LEMON_OBJECT_ERC,
-					}
-				);
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				)
+			).body;
 
 			// Create a page with a form container
 
@@ -2484,16 +2516,14 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-			const {className: objectDefinitionClassName} =
-				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
-					{
-						externalReferenceCode: LEMON_OBJECT_ERC,
-					}
-				);
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				)
+			).body;
 
 			// Definition for the Stepper fragment
 
@@ -2562,16 +2592,14 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-			const {className: objectDefinitionClassName} =
-				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
-					{
-						externalReferenceCode: LEMON_OBJECT_ERC,
-					}
-				);
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				)
+			).body;
 
 			// Create a form with two steps and two form buttons
 
@@ -2695,16 +2723,14 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-			const {className: objectDefinitionClassName} =
-				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
-					{
-						externalReferenceCode: LEMON_OBJECT_ERC,
-					}
-				);
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				)
+			).body;
 
 			// Definition for the Steppers fragment
 
@@ -2793,16 +2819,14 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-			const {className: objectDefinitionClassName} =
-				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
-					{
-						externalReferenceCode: LEMON_OBJECT_ERC,
-					}
-				);
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				)
+			).body;
 
 			// Create a form with a Stepper
 
@@ -2863,16 +2887,14 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-			const {className: objectDefinitionClassName} =
-				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
-					{
-						externalReferenceCode: LEMON_OBJECT_ERC,
-					}
-				);
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				)
+			).body;
 
 			// Create a page with a Form fragment
 
@@ -2944,10 +2966,14 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const {className: objectDefinitionClassName} =
-				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
 					LEMON_OBJECT_ERC
-				);
+				)
+			).body;
 
 			// Create a page containing a multistep form with a stepper and a simple form
 
@@ -3047,10 +3073,14 @@ test.describe('Multistep', () => {
 
 			// Get the id of Potato object from the site initializer
 
-			const {className: objectDefinitionClassName} =
-				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
 					POTATO_OBJECT_ERC
-				);
+				)
+			).body;
 
 			// Create a form with three steps and a stepper
 
@@ -3189,16 +3219,14 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-			const {className: objectDefinitionClassName} =
-				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
-					{
-						externalReferenceCode: LEMON_OBJECT_ERC,
-					}
-				);
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				)
+			).body;
 
 			// Create a form with a Stepper
 
@@ -3409,16 +3437,14 @@ test.describe('Edit mode form errors', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-			const {className: objectDefinitionClassName} =
-				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
-					{
-						externalReferenceCode: LEMON_OBJECT_ERC,
-					}
-				);
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				)
+			).body;
 
 			// Create a page with a Form fragment
 
@@ -3460,16 +3486,14 @@ test.describe('Edit mode form errors', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-			const {className: objectDefinitionClassName} =
-				await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
-					{
-						externalReferenceCode: LEMON_OBJECT_ERC,
-					}
-				);
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				)
+			).body;
 
 			// Create a forms with three steps, forcing errors
 

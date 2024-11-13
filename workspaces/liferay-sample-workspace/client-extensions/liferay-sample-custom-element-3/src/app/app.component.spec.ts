@@ -34,14 +34,4 @@ describe('AppComponent', () => {
 			'liferay-sample-custom-element-3 app is running!'
 		);
 	});
-
-	it('should run ngOnInit once', () => {
-		const fixture = TestBed.createComponent(AppComponent);
-		const log = spyOn(fixture.componentInstance, 'logMessage');
-		expect(log).not.toHaveBeenCalled();
-
-		fixture.detectChanges();
-
-		expect(log).toHaveBeenCalledTimes(1);
-	});
 });

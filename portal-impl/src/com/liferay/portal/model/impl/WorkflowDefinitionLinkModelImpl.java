@@ -10,6 +10,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -51,6 +52,7 @@ import java.util.function.Function;
  * @see WorkflowDefinitionLinkImpl
  * @generated
  */
+@JSON(strict = true)
 public class WorkflowDefinitionLinkModelImpl
 	extends BaseModelImpl<WorkflowDefinitionLink>
 	implements WorkflowDefinitionLinkModel {
@@ -386,6 +388,7 @@ public class WorkflowDefinitionLinkModelImpl
 
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -400,6 +403,7 @@ public class WorkflowDefinitionLinkModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public long getCtCollectionId() {
 		return _ctCollectionId;
@@ -414,6 +418,7 @@ public class WorkflowDefinitionLinkModelImpl
 		_ctCollectionId = ctCollectionId;
 	}
 
+	@JSON
 	@Override
 	public long getWorkflowDefinitionLinkId() {
 		return _workflowDefinitionLinkId;
@@ -428,6 +433,7 @@ public class WorkflowDefinitionLinkModelImpl
 		_workflowDefinitionLinkId = workflowDefinitionLinkId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -451,6 +457,7 @@ public class WorkflowDefinitionLinkModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -475,6 +482,7 @@ public class WorkflowDefinitionLinkModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -505,6 +513,7 @@ public class WorkflowDefinitionLinkModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -524,6 +533,7 @@ public class WorkflowDefinitionLinkModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -538,6 +548,7 @@ public class WorkflowDefinitionLinkModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -578,6 +589,7 @@ public class WorkflowDefinitionLinkModelImpl
 		setClassNameId(classNameId);
 	}
 
+	@JSON
 	@Override
 	public long getClassNameId() {
 		return _classNameId;
@@ -602,6 +614,7 @@ public class WorkflowDefinitionLinkModelImpl
 			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
+	@JSON
 	@Override
 	public long getClassPK() {
 		return _classPK;
@@ -625,6 +638,7 @@ public class WorkflowDefinitionLinkModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
+	@JSON
 	@Override
 	public long getTypePK() {
 		return _typePK;
@@ -648,6 +662,7 @@ public class WorkflowDefinitionLinkModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("typePK"));
 	}
 
+	@JSON
 	@Override
 	public String getWorkflowDefinitionName() {
 		if (_workflowDefinitionName == null) {
@@ -676,6 +691,7 @@ public class WorkflowDefinitionLinkModelImpl
 		return getColumnOriginalValue("workflowDefinitionName");
 	}
 
+	@JSON
 	@Override
 	public int getWorkflowDefinitionVersion() {
 		return _workflowDefinitionVersion;

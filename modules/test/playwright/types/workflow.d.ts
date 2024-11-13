@@ -34,6 +34,7 @@ interface WorkflowDefinition {
 	content: string;
 	dateCreated: string;
 	dateModified: string;
+	externalReferenceCode: string;
 	id: number;
 	name: string;
 	title_i18n: DataObject;

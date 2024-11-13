@@ -12,6 +12,7 @@ import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import countSubstringOccurrences from './utils/countSubstringOccurrences';
 import {getWorkflowDefinition} from './utils/getWorkflowDefinition';
+import postSingleApproverCopy from './utils/postSingleApproverCopy';
 
 export const test = mergeTests(apiHelpersTest, loginTest(), workflowPagesTest);
 
@@ -51,20 +52,10 @@ let workflowDefinitionName: string;
 let scriptManagementDisabled: boolean = false;
 
 test.beforeEach(async ({apiHelpers}) => {
-	const singleApproverWorkflowDefinition =
-		await apiHelpers.headlessAdminWorkflow.getWorkflowDefinitionByName(
-			'Single Approver'
-		);
+	const workFlowDefinition = await postSingleApproverCopy(apiHelpers);
 
-	workflowDefinitionName = 'Copy of Single Approver' + getRandomInt();
-
-	const workflowDefinition =
-		await apiHelpers.headlessAdminWorkflow.postWorkflowDefinitionSave(
-			workflowDefinitionName,
-			singleApproverWorkflowDefinition
-		);
-
-	workflowDefinitionIds.push(workflowDefinition.id);
+	workflowDefinitionIds.push(workFlowDefinition.id);
+	workflowDefinitionName = workFlowDefinition.name;
 });
 
 test.afterEach(async ({apiHelpers, scriptManagementPage}) => {

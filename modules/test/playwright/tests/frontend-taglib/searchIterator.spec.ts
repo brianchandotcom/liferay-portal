@@ -28,7 +28,7 @@ test(
 	'Search Iterator overlaps fixed header on scrolling',
 	{tag: '@LPD-40036'},
 	async ({apiHelpers, page, site, widgetPagePage}) => {
-		await test.step('Select Panel tab', async () => {
+		await test.step('Create a content site, add taglib sample widget and open permissions configuration', async () => {
 			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 				groupId: site.id,
 				title: getRandomString(),

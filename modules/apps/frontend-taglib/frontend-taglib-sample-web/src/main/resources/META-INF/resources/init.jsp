@@ -5,18 +5,18 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem" %><%@
-page import="com.liferay.frontend.taglib.sample.web.internal.constants.TaglibSamplePortletKeys" %><%@
+<%@ page import="com.liferay.frontend.taglib.sample.web.internal.constants.TaglibSamplePortletKeys" %><%@
 page import="com.liferay.frontend.taglib.sample.web.internal.display.context.FrontendSampleDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.sample.web.internal.display.context.SearchIteratorDisplayContext" %><%@
-page import="com.liferay.frontend.taglib.sample.web.internal.display.context.SearchPaginatorDisplayContext" %>
-
-<%@ page import="java.util.List" %>
+page import="com.liferay.frontend.taglib.sample.web.internal.display.context.SearchPaginatorDisplayContext" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <%
 FrontendSampleDisplayContext frontendSampleDisplayContext = (FrontendSampleDisplayContext)request.getAttribute(TaglibSamplePortletKeys.FRONTEND_SAMPLE_DISPLAY_CONTEXT);

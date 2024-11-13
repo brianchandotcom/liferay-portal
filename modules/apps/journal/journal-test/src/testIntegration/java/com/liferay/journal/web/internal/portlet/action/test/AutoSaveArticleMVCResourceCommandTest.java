@@ -19,11 +19,17 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
@@ -128,6 +134,45 @@ public class AutoSaveArticleMVCResourceCommandTest {
 			WorkflowConstants.STATUS_DRAFT, journalArticle.getStatus());
 
 		Assert.assertEquals("1.0", jsonObject.getString("version"));
+	}
+
+	@Test
+	public void testServeResourceAddDraftArticleWithOwnerPermissions()
+		throws Exception {
+
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			_getMockLiferayResourceRequest();
+
+		mockLiferayResourceRequest.setParameter(
+			"groupPermissions", "ADD_DISCUSSION");
+		mockLiferayResourceRequest.setParameter(
+			"guestPermissions", "ADD_DISCUSSION");
+		mockLiferayResourceRequest.setParameter(
+			"inputPermissionsViewRole", "Owner");
+
+		_serveResource(mockLiferayResourceRequest);
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.fetchArticleByUrlTitle(
+				_group.getGroupId(), "title");
+
+		Assert.assertNotNull(journalArticle);
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, journalArticle.getStatus());
+		Assert.assertFalse(_hasGuestViewPermission(journalArticle));
+
+		_serveResource(
+			_getMockLiferayResourceRequest(
+				journalArticle.getArticleId(),
+				journalArticle.getFriendlyURLMap()));
+
+		journalArticle = _journalArticleLocalService.fetchArticleByUrlTitle(
+			_group.getGroupId(), "title");
+
+		Assert.assertNotNull(journalArticle);
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, journalArticle.getStatus());
+		Assert.assertFalse(_hasGuestViewPermission(journalArticle));
 	}
 
 	@Test
@@ -259,6 +304,19 @@ public class AutoSaveArticleMVCResourceCommandTest {
 		return themeDisplay;
 	}
 
+	private boolean _hasGuestViewPermission(JournalArticle journalArticle)
+		throws Exception {
+
+		Role guestRole = _roleLocalService.getRole(
+			journalArticle.getCompanyId(), RoleConstants.GUEST);
+
+		return _resourcePermissionLocalService.hasResourcePermission(
+			journalArticle.getCompanyId(), JournalArticle.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(journalArticle.getResourcePrimKey()),
+			guestRole.getRoleId(), ActionKeys.VIEW);
+	}
+
 	private JSONObject _serveResource(
 			MockLiferayResourceRequest mockLiferayResourceRequest)
 		throws Exception {
@@ -343,5 +401,11 @@ public class AutoSaveArticleMVCResourceCommandTest {
 
 	@Inject
 	private PortletLocalService _portletLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

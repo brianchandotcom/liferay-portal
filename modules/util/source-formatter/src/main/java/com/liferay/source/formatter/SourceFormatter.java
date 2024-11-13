@@ -180,6 +180,14 @@ public class SourceFormatter {
 						baseDirName,
 						sourceFormatterArgs.getGitWorkingBranchName(), false),
 					baseDirName);
+				sourceFormatterArgs.setCurrentBranchAddedFileNames(
+					GitUtil.getCurrentBranchAddedFileNames(
+						sourceFormatterArgs.getBaseDirName(),
+						sourceFormatterArgs.getGitWorkingBranchName()));
+				sourceFormatterArgs.setCurrentBranchRenamedFileNames(
+					GitUtil.getCurrentBranchRenamedFileNames(
+						sourceFormatterArgs.getBaseDirName(),
+						sourceFormatterArgs.getGitWorkingBranchName()));
 			}
 			else if (sourceFormatterArgs.isFormatLatestAuthor()) {
 				sourceFormatterArgs.addRecentChangesFileNames(
@@ -191,15 +199,6 @@ public class SourceFormatter {
 					GitUtil.getLocalChangesFileNames(baseDirName, false),
 					baseDirName);
 			}
-
-			sourceFormatterArgs.setCurrentBranchAddedFileNames(
-				GitUtil.getCurrentBranchAddedFileNames(
-					sourceFormatterArgs.getBaseDirName(),
-					sourceFormatterArgs.getGitWorkingBranchName()));
-			sourceFormatterArgs.setCurrentBranchRenamedFileNames(
-				GitUtil.getCurrentBranchRenamedFileNames(
-					sourceFormatterArgs.getBaseDirName(),
-					sourceFormatterArgs.getGitWorkingBranchName()));
 
 			String[] fileNames = StringUtil.split(
 				ArgumentsUtil.getString(

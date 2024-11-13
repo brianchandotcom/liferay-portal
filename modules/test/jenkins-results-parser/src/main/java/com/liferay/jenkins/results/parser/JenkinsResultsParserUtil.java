@@ -2397,6 +2397,21 @@ public class JenkinsResultsParserUtil {
 		return JenkinsCohort.getInstance(getCohortName());
 	}
 
+	public static String getJenkinsDistRootPath() {
+		try {
+			String filePath = getBuildProperty("jenkins.dist.root.path");
+
+			if (!isNullOrEmpty(filePath)) {
+				return filePath;
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return _JENKINS_DIST_ROOT_PATH_DEFAULT;
+	}
+
 	public static String getJenkinsLoadBalancerURL() {
 		try {
 			String jenkinsLoadBalancerURL = getBuildProperty(
@@ -6861,6 +6876,8 @@ public class JenkinsResultsParserUtil {
 
 	private static final String _DIST_PORTAL_BUNDLES_URL_DEFAULT =
 		"http://test-1-0/userContent/bundles/test-portal-acceptance-upstream";
+
+	private static final String _JENKINS_DIST_ROOT_PATH_DEFAULT = "/tmp/dist";
 
 	private static final long _MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT =
 		1000 * 60 * 60;

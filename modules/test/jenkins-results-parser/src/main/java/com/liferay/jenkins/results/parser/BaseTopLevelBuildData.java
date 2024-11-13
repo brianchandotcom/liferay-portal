@@ -184,8 +184,9 @@ public abstract class BaseTopLevelBuildData
 
 	private String _getDistPath() {
 		return JenkinsResultsParserUtil.combine(
-			BuildData.FILE_PATH_DIST_ROOT, "/", getMasterHostname(), "/",
-			getJobName(), "/", String.valueOf(getBuildNumber()), "/dist");
+			JenkinsResultsParserUtil.getJenkinsDistRootPath(), "/",
+			getMasterHostname(), "/", getJobName(), "/",
+			String.valueOf(getBuildNumber()), "/dist");
 	}
 
 	private static final String[] _KEYS_REQUIRED = {

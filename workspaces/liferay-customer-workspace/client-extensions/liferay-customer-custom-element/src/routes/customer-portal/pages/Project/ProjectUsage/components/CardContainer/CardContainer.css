@@ -5,8 +5,8 @@
 		background-color: var(--color-state-info-lighten-2);
 		border-radius: var(--border-radius-sm);
 		height: var(--spacer-4);
-		right: var(--spacer-1);
-		top: var(--spacer-1);
+		right: var(--spacer-2);
+		top: var(--spacer-2);
 		width: var(--spacer-4);
 	}
 }

@@ -31,9 +31,9 @@ const ProgressBarContent: React.FC<IProps> = ({maxCount, title, usedCount}) => {
 					</span>
 				</div>
 
-				<div className="bar-container">
+				<div className="bar-container overflow-hidden">
 					<div
-						className="bar-content overflow-hidden"
+						className="bar-content"
 						style={{
 							width: barPercentage,
 						}}

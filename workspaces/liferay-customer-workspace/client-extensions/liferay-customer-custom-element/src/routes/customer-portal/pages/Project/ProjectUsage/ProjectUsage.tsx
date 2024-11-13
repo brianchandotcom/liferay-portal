@@ -7,6 +7,7 @@ import CardContainer from './components/CardContainer';
 import ProgressBarContent from './components/ProgressBarContent';
 
 import './ProjectUsage.css';
+import ProjectUsageSection from './components/ProjectUsageSection';
 import useProjectUsageData from './hooks/useProjectUsageData';
 
 const ProjectUsage = () => {
@@ -16,27 +17,22 @@ const ProjectUsage = () => {
 		<div className="cp-project-usage-page m-0 p-0">
 			<h2 className="mb-5">Project Usage Metrics</h2>
 
-			<div className="align-items-center d-flex mb-3">
-				<h3 className="mr-4 my-0">Sites and Users</h3>
-			</div>
-
-			<div className="mx-0 row">
-				{siteAndUsersData.map((chartData, index) => {
-					return (
-						<CardContainer
-							className="mb-3 mr-3 sites-users-card"
-							infoButtonText={chartData.infoText}
-							key={`${chartData.title}-${index}`}
-						>
+			<ProjectUsageSection className="mb-5" title="Sites and Users">
+				{siteAndUsersData.map((chartData, index) => (
+					<div
+						className="col-12 col-md-6 col-xl-4 mb-3"
+						key={`${chartData.title}-${index}`}
+					>
+						<CardContainer infoButtonText={chartData.infoText}>
 							<ProgressBarContent
 								maxCount={chartData.maxCount}
 								title={chartData.title}
 								usedCount={chartData.usedCount}
 							/>
 						</CardContainer>
-					);
-				})}
-			</div>
+					</div>
+				))}
+			</ProjectUsageSection>
 		</div>
 	);
 };

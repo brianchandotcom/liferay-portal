@@ -5,9 +5,4 @@
 		height: var(--spacer-3);
 		width: var(--spacer-3);
 	}
-
-	.sites-users-card {
-		max-width: var(--max-width-sm);
-		width: 100%;
-	}
 }

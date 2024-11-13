@@ -14,12 +14,12 @@ export enum SiteAndUserDataEnum {
 	SITES = 'sites',
 }
 
-type ChartData = {
+interface ChartData {
 	infoText: string;
 	maxCount: number;
 	title: string;
 	usedCount: number;
-};
+}
 
 const useProjectUsageData = () => {
 	const [siteAndUsersData, setSiteAndUsersData] = useState<ChartData[]>([]);

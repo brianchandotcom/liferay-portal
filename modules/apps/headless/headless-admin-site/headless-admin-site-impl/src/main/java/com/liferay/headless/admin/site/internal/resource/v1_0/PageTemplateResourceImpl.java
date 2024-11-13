@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -185,7 +186,9 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 
 		LayoutPrototype layoutPrototype =
 			_layoutPrototypeService.addLayoutPrototype(
-				nameMap, descriptionMap, true, serviceContext);
+				nameMap, descriptionMap,
+				GetterUtil.getBoolean(widgetPageTemplate.getActive()),
+				serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.

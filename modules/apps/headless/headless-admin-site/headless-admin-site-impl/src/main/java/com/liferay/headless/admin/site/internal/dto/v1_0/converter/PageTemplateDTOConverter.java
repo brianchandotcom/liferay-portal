@@ -115,6 +115,7 @@ public class PageTemplateDTOConverter
 
 		return new WidgetPageTemplate() {
 			{
+				setActive(layoutPrototype::isActive);
 				setDateCreated(layoutPageTemplateEntry::getCreateDate);
 				setDateModified(layoutPageTemplateEntry::getModifiedDate);
 				setDatePublished(layout::getPublishDate);

@@ -21,6 +21,7 @@ import {getEmptyImage} from 'react-dnd-html5-backend';
 import ACTIONS from '../actions';
 import {ACCEPTING_TYPES} from './constants/acceptingTypes';
 import {DROP_POSITIONS} from './constants/dropPositions';
+import {isValidMovement} from './utils/isValidMovement';
 
 const ITEM_HOVER_BORDER_LIMIT = 20;
 
@@ -30,57 +31,6 @@ const ITEM_STATES_COLORS = {
 	'conversion-draft': 'info',
 	'draft': 'secondary',
 	'pending': 'info',
-};
-
-const isValidTarget = (
-	sources,
-	target,
-	dropPosition,
-	isPrivateLayoutsEnabled
-) => {
-	if (sources.some((item) => item.id === target.id)) {
-		return false;
-	}
-
-	if (
-		sources.some(
-			(source) =>
-				!(
-					(((isPrivateLayoutsEnabled && target.parentId) ||
-						!isPrivateLayoutsEnabled) &&
-						target.columnIndex <= source.columnIndex) ||
-					(target.columnIndex > source.columnIndex && !source.active)
-				)
-		)
-	) {
-		return false;
-	}
-
-	if (dropPosition === DROP_POSITIONS.top) {
-		return !sources.some(
-			(source) =>
-				!(
-					target.columnIndex !== source.columnIndex ||
-					target.itemIndex < source.itemIndex ||
-					target.itemIndex > source.itemIndex + 1
-				)
-		);
-	}
-	else if (dropPosition === DROP_POSITIONS.bottom) {
-		return !sources.some(
-			(source) =>
-				!(
-					target.columnIndex !== source.columnIndex ||
-					target.itemIndex > source.itemIndex ||
-					target.itemIndex < source.itemIndex - 1
-				)
-		);
-	}
-	else if (dropPosition === DROP_POSITIONS.middle) {
-		return !sources.some(
-			(source) => !(target.id !== source.parentId && target.parentable)
-		);
-	}
 };
 
 const getDropPosition = (ref, monitor) => {
@@ -169,7 +119,6 @@ const MillerColumnsItem = ({
 		active,
 		bulkActions = [],
 		checked,
-		columnIndex,
 		description,
 		draggable,
 		hasChild,
@@ -178,7 +127,6 @@ const MillerColumnsItem = ({
 		id: itemId,
 		itemIndex,
 		parentId,
-		parentable,
 		quickActions = [],
 		selectable,
 		states = [],
@@ -320,12 +268,12 @@ const MillerColumnsItem = ({
 		canDrop(source, monitor) {
 			const dropPosition = getDropPosition(ref, monitor);
 
-			return isValidTarget(
-				source.items,
-				{columnIndex, id: itemId, itemIndex, parentId, parentable},
+			return isValidMovement({
 				dropPosition,
-				isPrivateLayoutsEnabled
-			);
+				isPrivateLayoutsEnabled,
+				sources: source.items,
+				target: item,
+			});
 		},
 		collect: (monitor) => ({
 			isOver: !!monitor.isOver(),

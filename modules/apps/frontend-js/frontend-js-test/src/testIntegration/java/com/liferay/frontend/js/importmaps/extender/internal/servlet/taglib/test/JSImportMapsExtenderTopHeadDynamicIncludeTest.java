@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -95,9 +96,6 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 
 	@After
 	public void tearDown() throws PortalException {
-		_companyLocalService.deleteCompany(_company1);
-		_companyLocalService.deleteCompany(_company2);
-
 		for (ServiceRegistration<?> serviceRegistration :
 				_serviceRegistrations) {
 
@@ -185,7 +183,10 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 				).build()));
 	}
 
+	@DeleteAfterTestRun
 	private Company _company1;
+
+	@DeleteAfterTestRun
 	private Company _company2;
 
 	@Inject

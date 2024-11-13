@@ -5,8 +5,15 @@
 
 import {ClayRadio} from '@clayui/form';
 
-const RadioRoles = ({selected, ...props}) => {
-	return <ClayRadio {...props} checked={selected} disabled={false} />;
+const RadioRoles = ({onChange, selected, ...props}) => {
+	return (
+		<ClayRadio
+			{...props}
+			checked={selected}
+			disabled={false}
+			onChange={onChange}
+		/>
+	);
 };
 
 export default RadioRoles;

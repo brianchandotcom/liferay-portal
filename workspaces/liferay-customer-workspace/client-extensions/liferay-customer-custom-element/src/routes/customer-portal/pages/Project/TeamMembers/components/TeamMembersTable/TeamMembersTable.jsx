@@ -354,11 +354,11 @@ const TeamMembersTable = ({
 					removing={updating}
 				>
 					<p className="my-0 text-neutral-10">
-						<p className="font-weight-bold">
+						<span className="d-block font-weight-bold my-1">
 							{`${i18n.translate('team-member')}: ${
 								currentUserRemoving?.name
 							}`}
-						</p>
+						</span>
 
 						{!isSingleSubscribedUser.length ? (
 							<>

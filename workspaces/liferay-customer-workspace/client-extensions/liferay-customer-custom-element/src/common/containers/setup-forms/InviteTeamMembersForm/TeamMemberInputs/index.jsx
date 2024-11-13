@@ -149,7 +149,7 @@ const TeamMemberInputs = ({
 				},
 				{
 					partnerMemberRoles: {
-						active: undefined,
+						active: false,
 						roles: []
 					}
 				}

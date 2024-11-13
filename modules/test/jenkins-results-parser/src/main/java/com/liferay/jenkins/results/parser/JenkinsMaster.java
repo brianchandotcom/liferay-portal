@@ -479,17 +479,20 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public JenkinsSlave getRandomJenkinsSlave() {
-		List<JenkinsSlave> jenkinsSlaves = new ArrayList<>();
+		List<JenkinsSlave> jenkinsSlaves = new ArrayList<>(getJenkinsSlaves());
 
-		for (JenkinsSlave jenkinsSlave : getJenkinsSlaves()) {
-			if (jenkinsSlave.isOffline() || !jenkinsSlave.isReachable()) {
-				continue;
+		while (!jenkinsSlaves.isEmpty()) {
+			JenkinsSlave jenkinsSlave =
+				JenkinsResultsParserUtil.getRandomListItem(jenkinsSlaves);
+
+			if (!jenkinsSlave.isOffline() && jenkinsSlave.isReachable()) {
+				return jenkinsSlave;
 			}
 
-			jenkinsSlaves.add(jenkinsSlave);
+			jenkinsSlaves.remove(jenkinsSlave);
 		}
 
-		return JenkinsResultsParserUtil.getRandomListItem(jenkinsSlaves);
+		return null;
 	}
 
 	public String getRemoteURL() {

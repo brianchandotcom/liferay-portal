@@ -245,7 +245,7 @@ function Filters({
 		getFilters();
 	}, [dataSet]);
 
-	const updateFDSFiltersOrder = async ({
+	const updateFiltersOrder = async ({
 		filtersOrder,
 	}: {
 		filtersOrder: string;
@@ -269,17 +269,17 @@ function Filters({
 
 		const responseJSON = await response.json();
 
-		const storedFDSFiltersOrder = responseJSON?.filtersOrder;
+		const storedFiltersOrder = responseJSON?.filtersOrder;
 
 		if (
 			filters &&
-			storedFDSFiltersOrder &&
-			storedFDSFiltersOrder === filtersOrder
+			storedFiltersOrder &&
+			storedFiltersOrder === filtersOrder
 		) {
 			setFilters(
 				sortItems(
 					filters,
-					storedFDSFiltersOrder,
+					storedFiltersOrder,
 					true
 				) as FilterCollection
 			);
@@ -554,7 +554,7 @@ function Filters({
 						editFilter={onEdit}
 						filterTypes={FILTER_TYPES}
 						filters={filters}
-						updateFiltersOrder={updateFDSFiltersOrder}
+						updateFiltersOrder={updateFiltersOrder}
 					/>
 				</ClayLayout.ContainerFluid>
 			)}

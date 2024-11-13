@@ -189,7 +189,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 			applicationName
 		);
 
-		await viewObjectEntriesPage.goto(objectDefinition1.id);
+		await viewObjectEntriesPage.goto(objectDefinition1.className);
 
 		await viewObjectEntriesPage.clickAddObjectEntry(
 			objectDefinition1.label['en_US']

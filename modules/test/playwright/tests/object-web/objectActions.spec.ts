@@ -257,7 +257,7 @@ test('can send notification email via download action', async ({
 
 	// Create an object entry
 
-	await viewObjectEntriesPage.goto(objectDefinition.id);
+	await viewObjectEntriesPage.goto(objectDefinition.className);
 
 	await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.name);
 
@@ -281,7 +281,7 @@ test('can send notification email via download action', async ({
 
 	// Download attachment from object entry
 
-	await viewObjectEntriesPage.goto(objectDefinition.id);
+	await viewObjectEntriesPage.goto(objectDefinition.className);
 
 	await page
 		.getByRole('button', {name: 'Search'})

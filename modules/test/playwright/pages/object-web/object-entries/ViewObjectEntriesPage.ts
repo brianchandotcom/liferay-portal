@@ -161,7 +161,7 @@ export class ViewObjectEntriesPage {
 	}
 
 	async goto(
-		objectDefinitionId: number,
+		objectDefinitionClassName: string,
 		regionalCode?: string,
 		siteUrl?: Site['friendlyUrlPath']
 	) {
@@ -169,10 +169,13 @@ export class ViewObjectEntriesPage {
 			regionalCode = 'en';
 		}
 
+		const [_, objectDefinitionClassNameSuffix] =
+			objectDefinitionClassName.split('#');
+
 		await this.page.goto(
 			`/${regionalCode}/group${siteUrl ?? '/guest'}${
 				PORTLET_URLS.objects
-			}_${objectDefinitionId}`,
+			}_${objectDefinitionClassNameSuffix}`,
 			{waitUntil: 'load'}
 		);
 	}

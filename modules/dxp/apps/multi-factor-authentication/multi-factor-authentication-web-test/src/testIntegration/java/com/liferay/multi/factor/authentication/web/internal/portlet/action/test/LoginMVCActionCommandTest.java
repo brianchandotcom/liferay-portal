@@ -144,8 +144,8 @@ public class LoginMVCActionCommandTest {
 
 			HttpSession httpSession1 = httpServletRequest1.getSession();
 
-			String key = (String)httpSession1.getAttribute("MFA_WEB_KEY");
 			String digest = (String)httpSession1.getAttribute("MFA_WEB_DIGEST");
+			String key = (String)httpSession1.getAttribute("MFA_WEB_KEY");
 
 			MockLiferayPortletActionRequest mockLiferayPortletActionRequest2 =
 				_getMockLiferayPortletActionRequest(

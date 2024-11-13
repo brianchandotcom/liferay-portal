@@ -180,7 +180,8 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 					return jsonObject;
 				},
 				HashMapDictionaryBuilder.<String, Object>put(
-					"com.liferay.importmaps.company", company.getCompanyId()
+					"com.liferay.frontend.js.importmaps.company.id",
+					company.getCompanyId()
 				).build()));
 	}
 

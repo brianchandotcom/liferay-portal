@@ -28,7 +28,9 @@ import org.mockito.stubbing.Answer;
  */
 public abstract class BaseTestCase {
 
-	protected void mockGetColumns(List<String> tableNames) throws SQLException {
+	protected static void mockGetColumns(List<String> tableNames)
+		throws SQLException {
+
 		ResultSet resultSet1 = Mockito.mock(ResultSet.class);
 
 		Mockito.when(
@@ -96,7 +98,7 @@ public abstract class BaseTestCase {
 		);
 	}
 
-	protected void mockGetCompanies(List<Company> companies)
+	protected static void mockGetCompanies(List<Company> companies)
 		throws SQLException {
 
 		PreparedStatement preparedStatement = Mockito.mock(
@@ -228,7 +230,7 @@ public abstract class BaseTestCase {
 		);
 	}
 
-	protected void mockGetCompanyIds(List<Long> companyIds)
+	protected static void mockGetCompanyIds(List<Long> companyIds)
 		throws SQLException {
 
 		PreparedStatement preparedStatement = Mockito.mock(
@@ -289,7 +291,7 @@ public abstract class BaseTestCase {
 		);
 	}
 
-	protected void mockGetCompanyInfos(List<Long> companyIds)
+	protected static void mockGetCompanyInfos(List<Long> companyIds)
 		throws SQLException {
 
 		PreparedStatement preparedStatement = Mockito.mock(
@@ -350,7 +352,8 @@ public abstract class BaseTestCase {
 		);
 	}
 
-	protected void mockGetConnection(String password, String url, String user)
+	protected static void mockGetConnection(
+			String password, String url, String user)
 		throws SQLException {
 
 		_driverManagerMockedStatic.when(
@@ -372,7 +375,9 @@ public abstract class BaseTestCase {
 		);
 	}
 
-	protected void mockGetReleases(List<Release> releases) throws SQLException {
+	protected static void mockGetReleases(List<Release> releases)
+		throws SQLException {
+
 		PreparedStatement preparedStatement = Mockito.mock(
 			PreparedStatement.class);
 
@@ -503,7 +508,9 @@ public abstract class BaseTestCase {
 		);
 	}
 
-	protected void mockGetTables(boolean defaultPartition) throws SQLException {
+	protected static void mockGetTables(boolean defaultPartition)
+		throws SQLException {
+
 		ResultSet resultSet = Mockito.mock(ResultSet.class);
 
 		Mockito.when(

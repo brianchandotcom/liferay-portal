@@ -107,7 +107,24 @@ public class BatchEngineServiceUpgradeStepRegistrator
 				"BatchEngineExportTask", "callbackURL", "VARCHAR(255) null"),
 			UpgradeProcessFactory.alterColumnType(
 				"BatchEngineImportTask", "callbackURL", "VARCHAR(255) null"));
+
+		registry.register(
+			"4.6.3", "4.6.4",
+			UpgradeProcessFactory.runSQL(
+				String.format(
+					_DELETE_UNLINKED_COMPANY_ID_ROWS_SQL,
+					"BatchEngineExportTask"),
+				String.format(
+					_DELETE_UNLINKED_COMPANY_ID_ROWS_SQL,
+					"BatchEngineImportTask"),
+				String.format(
+					_DELETE_UNLINKED_COMPANY_ID_ROWS_SQL,
+					"BatchEngineImportTaskError")));
 	}
+
+	private static final String _DELETE_UNLINKED_COMPANY_ID_ROWS_SQL =
+		"delete from %s t where not exists (select 1 from Company c where " +
+			"c.companyId = t.companyId)";
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

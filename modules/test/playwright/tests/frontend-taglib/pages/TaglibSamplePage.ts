@@ -14,19 +14,20 @@ import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getW
 export class TaglibSamplePage {
 	readonly apiHelpers: ApiHelpers;
 	readonly page: Page;
-	readonly tablist: Locator;
+	readonly linkList: Locator;
 
 	constructor(page: Page) {
+		this.apiHelpers = new ApiHelpers(page);
 		this.page = page;
-		this.tablist = page.getByRole('tablist');
+		this.linkList = page.getByRole('link');
 	}
 
-	async selectTab(tabName: string) {
-		const tabHeading = this.tablist.getByText(tabName);
+	async selectLink(tabName: string) {
+		const linkHeading = this.linkList.getByText(tabName);
 
-		await expect(tabHeading).toBeInViewport();
+		await expect(linkHeading).toBeInViewport();
 
-		await tabHeading.click();
+		await linkHeading.click();
 	}
 
 	async setupTaglibSampleWidget({site}) {

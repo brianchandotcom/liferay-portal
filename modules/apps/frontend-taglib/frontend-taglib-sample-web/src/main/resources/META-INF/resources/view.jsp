@@ -8,23 +8,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<TabsItem> tabsItems = frontendSampleDisplayContext.getTabsItems();
+final String navigation = ParamUtil.getString(request, "navigation", "search-iterator");
 %>
 
-<clay:tabs
-	tabsItems="<%= tabsItems %>"
->
+<clay:navigation-bar
+	navigationItems="<%= frontendSampleDisplayContext.getNavigationItems() %>"
+/>
 
-	<%
-	for (TabsItem tabsItem : tabsItems) {
-	%>
-
-		<clay:tabs-panel>
-			<liferay-util:include page='<%= "/partials/" + tabsItem.get("panelId") + ".jsp" %>' servletContext="<%= application %>" />
-		</clay:tabs-panel>
-
-	<%
-	}
-	%>
-
-</clay:tabs>
+<c:choose>
+	<c:when test='<%= navigation.equals("search-iterator") %>'>
+		<liferay-util:include page="/partials/search_iterator.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/partials/search_paginator.jsp" servletContext="<%= application %>" />
+	</c:otherwise>
+</c:choose>

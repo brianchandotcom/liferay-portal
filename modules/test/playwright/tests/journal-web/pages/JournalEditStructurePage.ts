@@ -18,6 +18,7 @@ export enum FIELD_TYPES {
 export class JournalEditStructurePage {
 	readonly page: Page;
 
+	readonly fieldsetsTab: Locator;
 	readonly journalStructurePage: JournalStructuresPage;
 	readonly propertyPlaceholderText: Locator;
 	readonly propertiesTab: Locator;
@@ -26,6 +27,7 @@ export class JournalEditStructurePage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.fieldsetsTab = page.getByRole('tab', {name: 'Fieldsets'});
 		this.journalStructurePage = new JournalStructuresPage(page);
 		this.propertyPlaceholderText = page.getByLabel('Placeholder Text');
 		this.propertiesTab = page.getByRole('tab', {name: 'Properties'});

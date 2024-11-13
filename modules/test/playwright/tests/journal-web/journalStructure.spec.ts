@@ -73,3 +73,25 @@ test(
 		);
 	}
 );
+
+test(
+	'Can add a fieldset that contains a Rich text',
+	{
+		tag: '@LPD-42003',
+	},
+	async ({journalEditStructurePage, journalStructuresPage, page, site}) => {
+		await journalStructuresPage.goto(site.friendlyUrlPath);
+
+		await expect(journalStructuresPage.newButton).toBeVisible();
+		await journalStructuresPage.newButton.click();
+
+		await journalEditStructurePage.fieldsetsTab.click();
+		await page
+			.getByRole('button', {name: 'Press enter to add Basic Web'})
+			.dblclick();
+
+		await expect(
+			page.locator('.ddm-field-container > .ddm-field')
+		).toBeVisible();
+	}
+);

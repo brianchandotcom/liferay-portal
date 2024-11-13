@@ -873,6 +873,25 @@ public class LayoutStructureTest {
 				fragmentStyledLayoutStructureItem2);
 	}
 
+	@Test(expected = UnsupportedOperationException.class)
+	public void testDuplicateDropZoneLayoutStructureItem() {
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem containerStyledLayoutStructureItem =
+			layoutStructure.addContainerStyledLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addDropZoneLayoutStructureItem(
+			containerStyledLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.duplicateLayoutStructureItem(
+			Collections.singletonList(
+				containerStyledLayoutStructureItem.getItemId()));
+	}
+
 	@Test
 	public void testMarkLayoutStructureItemForDeletion1() {
 		LayoutStructure layoutStructure = new LayoutStructure();

@@ -285,7 +285,7 @@ public class SegmentsExperienceServiceImpl
 	}
 
 	@Override
-	public void updateSegmentsExperiencePriority(
+	public SegmentsExperience updateSegmentsExperiencePriority(
 			long segmentsExperienceId, int newPriority)
 		throws PortalException {
 
@@ -307,7 +307,7 @@ public class SegmentsExperienceServiceImpl
 				ActionKeys.UPDATE);
 		}
 
-		segmentsExperienceLocalService.updateSegmentsExperiencePriority(
+		return segmentsExperienceLocalService.updateSegmentsExperiencePriority(
 			segmentsExperienceId, newPriority);
 	}
 

@@ -177,6 +177,12 @@ public class CPDefinitionModelDocumentContributor
 				CPField.EXTERNAL_REFERENCE_CODE,
 				cProduct.getExternalReferenceCode());
 
+			document.addText(
+				CPField.GTINS,
+				TransformUtil.transformToArray(
+					cpDefinition.getCPInstances(), CPInstance::getGtin,
+					String.class));
+
 			document.addNumber(CPField.HEIGHT, cpDefinition.getHeight());
 			document.addKeyword(
 				CPField.IS_IGNORE_SKU_COMBINATIONS,

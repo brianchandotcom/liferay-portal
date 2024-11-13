@@ -86,6 +86,8 @@ public class CPField {
 
 	public static final String GTIN = "gtin";
 
+	public static final String GTINS = "gtins";
+
 	public static final String HAS_CHILD_CP_DEFINITIONS =
 		"hasChildCPDefinitions";
 

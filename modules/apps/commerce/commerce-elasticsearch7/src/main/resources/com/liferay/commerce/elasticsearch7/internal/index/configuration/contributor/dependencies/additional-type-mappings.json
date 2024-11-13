@@ -80,6 +80,12 @@
 		"entryModelClassName": {
 			"type": "keyword"
 		},
+		"gtin": {
+			"type": "keyword"
+		},
+		"gtins": {
+			"type": "keyword"
+		},
 		"optionsNames": {
 			"type": "keyword"
 		},

@@ -76,7 +76,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDLFileEntryTypeTest {
 		_depotGroup = _groupLocalService.getGroup(_depotEntry.getGroupId());
 
 		DDMStructure depotDDMStructure = _ddmStructureLocalService.addStructure(
-			_depotGroup.getCreatorUserId(), _depotGroup.getGroupId(),
+			null, _depotGroup.getCreatorUserId(), _depotGroup.getGroupId(),
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			PortalUtil.getClassNameId(DLFileEntryMetadata.class),
 			StringPool.BLANK,
@@ -100,7 +100,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDLFileEntryTypeTest {
 		_group = GroupTestUtil.addGroup();
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
-			_group.getCreatorUserId(), _group.getGroupId(),
+			null, _group.getCreatorUserId(), _group.getGroupId(),
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			PortalUtil.getClassNameId(DLFileEntryMetadata.class),
 			StringPool.BLANK,

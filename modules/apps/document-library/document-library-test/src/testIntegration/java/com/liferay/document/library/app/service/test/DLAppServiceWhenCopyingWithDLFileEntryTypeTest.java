@@ -65,7 +65,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 		super.setUp();
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
-			group.getCreatorUserId(), group.getGroupId(),
+			null, group.getCreatorUserId(), group.getGroupId(),
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			PortalUtil.getClassNameId(DLFileEntryMetadata.class),
 			StringPool.BLANK,

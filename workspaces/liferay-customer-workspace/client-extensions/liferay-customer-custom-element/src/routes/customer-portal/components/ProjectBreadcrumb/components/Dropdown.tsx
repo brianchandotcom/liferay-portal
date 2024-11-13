@@ -65,7 +65,10 @@ const Dropdown: React.FC<DropdownProps> = ({
 			onActiveChange={setActive}
 			renderMenuOnClick
 			trigger={
-				<Button className="align-items-center bg-transparent cp-project-breadcrumbs-toggle d-flex p-0">
+				<Button
+					aria-label={selectedKoroneikiAccount?.name}
+					className="align-items-center bg-transparent cp-project-breadcrumbs-toggle d-flex p-0"
+				>
 					<div
 						className="font-weight-bold h5 m-0 text-neutral-9"
 						title={selectedKoroneikiAccount?.name}

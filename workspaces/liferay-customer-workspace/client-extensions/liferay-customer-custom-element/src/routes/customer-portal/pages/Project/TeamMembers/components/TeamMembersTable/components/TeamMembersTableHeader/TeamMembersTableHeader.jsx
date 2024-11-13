@@ -35,16 +35,13 @@ const TeamMembersTableHeader = ({
 			{open && (
 				<ClayModal center observer={observer}>
 					<InviteTeamMembersForm
-						availableSupportSeatsCount={
-							availableSupportSeatsCount
-						}
+						availableSupportSeatsCount={availableSupportSeatsCount}
 						handlePage={() => onOpenChange(false)}
 						leftButton={i18n.translate('cancel')}
 						oAuthToken={oAuthToken}
 						project={{
 							...koroneikiAccount,
-							id:
-								koroneikiAccount?.r_accountEntryToKoroneikiAccount_accountEntryId,
+							id: koroneikiAccount?.r_accountEntryToKoroneikiAccount_accountEntryId,
 						}}
 					/>
 				</ClayModal>
@@ -106,6 +103,7 @@ const TeamMembersTableHeader = ({
 
 						{hasAdministratorRole && (
 							<Button
+								aria-label={i18n.translate('invite')}
 								className="bg-white ml-3 px-3 py-2"
 								displayType="primary"
 								onClick={() => {
@@ -131,11 +129,11 @@ const TeamMembersTableHeader = ({
 								? i18n.sub('x-results-for-x', [
 										count,
 										searchTerm,
-								  ])
+									])
 								: i18n.sub('x-result-for-x', [
 										count,
 										searchTerm,
-								  ])}
+									])}
 						</p>
 					)}
 				</div>

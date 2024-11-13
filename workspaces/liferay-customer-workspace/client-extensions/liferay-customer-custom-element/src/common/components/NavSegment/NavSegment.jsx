@@ -6,6 +6,7 @@
 import Nav from '@clayui/nav';
 import {memo, useState} from 'react';
 import Skeleton from '../Skeleton';
+import i18n from '~/common/I18n';
 
 const NavSegment = ({
 	disabled,
@@ -48,6 +49,7 @@ const NavSegment = ({
 			>
 				<Nav.Link
 					active={index === currentIndex}
+					aria-label={i18n.sub('switch-to-x', [item.label])}
 					className="cp-nav-link text-neutral-10"
 					disabled={disabled}
 				>

@@ -23,7 +23,9 @@ const DeleteTicketAttachmentModal = ({
 		observer={observer}
 	>
 		<ClayModal.Header className="h-100 p-4">
-			<h2 className="mb-0 text-neutral-10">{modalTitle}</h2>
+			<span className="header-modal-title mb-0 text-neutral-10">
+				{modalTitle}
+			</span>
 		</ClayModal.Header>
 
 		<ClayModal.Body className="px-4 py-3">{children}</ClayModal.Body>
@@ -32,11 +34,16 @@ const DeleteTicketAttachmentModal = ({
 			className="p-4"
 			last={
 				<div className="d-flex justify-content-end">
-					<Button displayType="secondary" onClick={onClose}>
+					<Button
+						aria-label={i18n.translate('cancel')}
+						displayType="secondary"
+						onClick={onClose}
+					>
 						{i18n.translate('cancel')}
 					</Button>
 
 					<Button
+						aria-label={i18n.translate('delete')}
 						className={classNames('bg-danger d-flex ml-3', {
 							'cp-deactivate-loading': removing,
 						})}

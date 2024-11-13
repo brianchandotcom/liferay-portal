@@ -180,6 +180,7 @@ const ActivationKeysTable = ({
 			},
 			download: (
 				<ButtonWithIcon
+					aria-label={i18n.translate('download-key')}
 					displayType="null"
 					onClick={() =>
 						getActivationKeyDownload(

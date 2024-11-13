@@ -4,9 +4,11 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import i18n from '~/common/I18n';
 
 const SwitchSLACardButton = ({handleClick}) => (
 	<ClayButtonWithIcon
+		aria-label={i18n.translate('switch-sla-card')}
 		className="bg-white cp-switch-sla-card-button d-none p-1 position-absolute rounded-circle shadow-lg"
 		displayType="primary"
 		onClick={handleClick}

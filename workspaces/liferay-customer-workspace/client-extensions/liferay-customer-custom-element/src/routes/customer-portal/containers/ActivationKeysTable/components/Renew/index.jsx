@@ -7,6 +7,7 @@ import {Button as ClayButton} from '@clayui/core';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import i18n from '~/common/I18n';
 
 const RenewButton = ({
 	activationKeysByStatusPaginatedChecked,
@@ -92,6 +93,7 @@ const RenewButton = ({
 	return (
 		<>
 			<ClayButton
+				aria-label={i18n.translate('renew')}
 				className={classNames('btn mx-2 px-3 py-2', {
 					'btn-outline-dark cp-deactivate-button  text-dark':
 						!isVisibleModal && !isRenewTable,

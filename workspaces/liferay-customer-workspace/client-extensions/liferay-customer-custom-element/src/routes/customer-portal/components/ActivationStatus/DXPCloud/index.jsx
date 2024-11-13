@@ -176,6 +176,7 @@ const ActivationStatusDXPCloud = ({
 					align={Align.BottomRight}
 					customDropDownButton={
 						<ButtonWithIcon
+							aria-label={i18n.translate('set-to-active')}
 							displayType="null"
 							small
 							symbol="caret-bottom"

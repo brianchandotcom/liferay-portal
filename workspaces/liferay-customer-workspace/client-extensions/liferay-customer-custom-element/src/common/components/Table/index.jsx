@@ -9,16 +9,26 @@ import {useEffect, useState} from 'react';
 import {FilterIcon} from '../../icons/filter_icon';
 import TablePagination from './Pagination';
 import TableSkeleton from './Skeleton';
+import i18n from '~/common/I18n';
 
 const Table = ({
-	checkboxConfig,
+	checkboxConfig = {checkboxesChecked: [], setCheckboxesChecked: () => {}},
 	columns,
 	handleSortChange,
 	hasCheckbox,
 	hasPagination,
 	hasSorting,
 	isLoading = false,
-	paginationConfig,
+	paginationConfig = {
+		activePage: 1,
+		itemsPerPage: 5,
+		labels: '',
+		listItemsPerPage: [],
+		setActivePage: () => {},
+		setItemsPerPage: () => {},
+		showDeltasDropDown: false,
+		totalCount: 1,
+	},
 	rows,
 	...props
 }) => {
@@ -60,7 +70,7 @@ const Table = ({
 
 		setCheckboxesChecked((previousCheckboxesChecked) =>
 			previousCheckboxesChecked.filter(
-				(CheckboxChecked) => CheckboxChecked !== id
+				(checkboxChecked) => checkboxChecked !== id
 			)
 		);
 	};
@@ -86,6 +96,7 @@ const Table = ({
 						{hasCheckbox && (
 							<ClayTable.Cell className="text-center">
 								<input
+									aria-label={i18n.translate('select-all')}
 									checked={isAllCheckboxsSelected}
 									onChange={handleToggleAllCheckboxsSelected}
 									type="checkbox"
@@ -121,6 +132,7 @@ const Table = ({
 										{hasSorting &&
 											column.filterIdentifier && (
 												<FilterIcon
+													aria-label={i18n.translate('filter-items')}
 													columnName={
 														column.filterIdentifier
 													}
@@ -141,10 +153,11 @@ const Table = ({
 						{rows.map((row, rowIndex) => (
 							<ClayTable.Row
 								className={classNames({
-									'cp-common-table-active-row': checkboxesChecked.find(
-										(checkboxChecked) =>
-											checkboxChecked === row.id
-									),
+									'cp-common-table-active-row':
+										checkboxesChecked.find(
+											(checkboxChecked) =>
+												checkboxChecked === row.id
+										),
 								})}
 								key={row.id || rowIndex}
 							>
@@ -155,6 +168,7 @@ const Table = ({
 										key={`checkbox-${rowIndex}`}
 									>
 										<input
+											aria-label={i18n.translate('select-key')}
 											checked={checkboxesChecked.includes(
 												row.id
 											)}
@@ -216,20 +230,6 @@ const Table = ({
 			)}
 		</>
 	);
-};
-
-Table.defaultProps = {
-	checkboxConfig: {checkboxesChecked: [], setCheckboxesChecked: () => {}},
-	paginationConfig: {
-		activePage: 1,
-		itemsPerPage: 5,
-		labels: '',
-		listItemsPerPage: [],
-		setActivePage: () => {},
-		setItemsPerPage: () => {},
-		showDeltasDropDown: false,
-		totalCount: 1,
-	},
 };
 
 export default Table;

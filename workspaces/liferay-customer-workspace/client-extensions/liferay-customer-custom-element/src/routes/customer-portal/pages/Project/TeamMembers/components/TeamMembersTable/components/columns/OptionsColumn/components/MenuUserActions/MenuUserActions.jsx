@@ -9,6 +9,7 @@ import i18n from '../../../../../../../../../../../../common/I18n';
 const MenuUserActions = ({onCancel, onSave, saveDisabled}) => (
 	<div className="align-items-center d-flex">
 		<Button
+			aria-label={i18n.translate('cancel')}
 			className="bg-white mr-2"
 			displayType="secondary"
 			onClick={onCancel}
@@ -17,7 +18,12 @@ const MenuUserActions = ({onCancel, onSave, saveDisabled}) => (
 			{i18n.translate('cancel')}
 		</Button>
 
-		<Button disabled={saveDisabled} onClick={onSave} small>
+		<Button
+			aria-label={i18n.translate('save')}
+			disabled={saveDisabled}
+			onClick={onSave}
+			small
+		>
 			{i18n.translate('save')}
 		</Button>
 	</div>

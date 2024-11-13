@@ -19,7 +19,6 @@ import {
 	updateAccountSubscriptionGroups,
 } from '../../../../../common/services/liferay/graphql/queries';
 import getActivationStatusDateRange from '../../../../../common/utils/getActivationStatusDateRange';
-import AnalyticsCloudModal from '../../AnalyticsCloudModal';
 import {ALERT_UPDATE_ANALYTICS_CLOUD_STATUS} from '../../../containers/ActivationKeysTable/utils/constants/alertUpdateAnalyticsCloudStatus';
 import {useCustomerPortal} from '../../../context';
 import {actionTypes} from '../../../context/reducer';
@@ -29,15 +28,14 @@ import {
 	STATUS_TAG_TYPES,
 	STATUS_TAG_TYPE_NAMES,
 } from '../../../utils/constants';
+import AnalyticsCloudModal from '../../AnalyticsCloudModal';
 import PopoverIcon from '../DXPCloud/components/PopoverIcon';
 import ActivationStatusLayout from '../Layout';
 import AnalyticsCloudStatusModal from './AnalyticsCloudStatusModal';
 
 const ActivationStatusAnalyticsCloud = () => {
-	const [
-		{project, subscriptionGroups, userAccount},
-		dispatch,
-	] = useCustomerPortal();
+	const [{project, subscriptionGroups, userAccount}, dispatch] =
+		useCustomerPortal();
 
 	const {client} = useAppPropertiesContext();
 	const [activationStatusDate, setActivationStatusDate] = useState('');
@@ -46,12 +44,10 @@ const ActivationStatusAnalyticsCloud = () => {
 	const {observer: observerSetupModal, onClose} = useModal({
 		onClose: () => setIsVisible(false),
 	});
-	const {
-		observer: observerStatusModal,
-		onClose: onCloseStatusModal,
-	} = useModal({
-		onClose: () => setVisible(false),
-	});
+	const {observer: observerStatusModal, onClose: onCloseStatusModal} =
+		useModal({
+			onClose: () => setVisible(false),
+		});
 
 	const subscriptionGroupAnalyticsCloud = subscriptionGroups.find(
 		(subscriptionGroup) =>
@@ -134,6 +130,7 @@ const ActivationStatusAnalyticsCloud = () => {
 					align={Align.BottomRight}
 					customDropDownButton={
 						<ButtonWithIcon
+							aria-label={i18n.translate('set-to-active')}
 							displayType="null"
 							small
 							symbol="caret-bottom"
@@ -160,6 +157,7 @@ const ActivationStatusAnalyticsCloud = () => {
 			buttonLink: userAccount.isAccountAdmin && (
 				<Button
 					appendIcon="order-arrow-right"
+					aria-label={i18n.translate('finish-activation')}
 					className="btn btn-link font-weight-semi-bold p-0 text-brand-primary text-paragraph"
 					displayType="link"
 					onClick={() => setIsVisible(true)}

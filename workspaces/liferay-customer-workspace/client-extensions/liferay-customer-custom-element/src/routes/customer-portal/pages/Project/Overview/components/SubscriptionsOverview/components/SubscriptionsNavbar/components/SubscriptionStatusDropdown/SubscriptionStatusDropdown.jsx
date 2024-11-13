@@ -31,9 +31,10 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 		},
 	]);
 
-	const activeItems = useMemo(() => items.filter((item) => item.active), [
-		items,
-	]);
+	const activeItems = useMemo(
+		() => items.filter((item) => item.active),
+		[items]
+	);
 
 	const getTriggerLabel = useCallback(() => {
 		if (activeItems.length === MAX_SUBSCRIPTION_STATUS) {
@@ -51,7 +52,8 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 
 		if (currentActiveItems.length !== MAX_SUBSCRIPTION_STATUS) {
 			onClick(currentActiveItems.map((item) => item.label));
-		} else {
+		}
+		else {
 			onClick();
 		}
 
@@ -83,6 +85,7 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 				onActiveChange={setActive}
 				trigger={
 					<Button
+						aria-label={i18n.translate('select-status')}
 						borderless
 						className="align-items-center d-flex px-2"
 						disabled={disabled || loading}

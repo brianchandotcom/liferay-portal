@@ -72,7 +72,10 @@ export default function getActivationStatusCardLayout(
 
 							{i18n.translate('go-to-analytics-cloud-workspace')}
 
-							<ClayIcon className="ml-1" symbol="order-arrow-right" />
+							<ClayIcon
+								className="ml-1"
+								symbol="order-arrow-right"
+							/>
 						</a>
 					)}
 				</div>
@@ -90,6 +93,7 @@ export default function getActivationStatusCardLayout(
 					align={Align.BottomRight}
 					customDropDownButton={
 						<ButtonWithIcon
+							aria-label={i18n.translate('set-to-active')}
 							displayType="null"
 							small
 							symbol="caret-bottom"

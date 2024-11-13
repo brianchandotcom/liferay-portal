@@ -34,6 +34,7 @@ const ProjectCategoryDropdown = ({
 				onActiveChange={setActive}
 				trigger={
 					<Button
+						aria-label={selectedProjectCategoryKey?.label}
 						borderless
 						className="align-items-center d-flex px-2"
 						disabled={loading}

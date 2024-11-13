@@ -55,12 +55,14 @@ const SearchBar = ({clearSearchTerm, onSearchSubmit}) => {
 				<ClayInput.GroupInsetItem after tag="span">
 					{searching || !term ? (
 						<ClayButtonWithIcon
+							aria-label={i18n.translate('search')}
 							displayType="unstyled"
 							onClick={() => handleSearchSubmit()}
 							symbol="search"
 						/>
 					) : (
 						<ClayButtonWithIcon
+							aria-label={i18n.translate('clear')}
 							className="navbar-breakpoint-d-none"
 							displayType="unstyled"
 							onClick={() => handleSearchSubmit()}

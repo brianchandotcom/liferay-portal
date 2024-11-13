@@ -8,6 +8,7 @@ import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useState} from 'react';
 import Skeleton from '../../../../../../../../../../../../../common/components/Skeleton';
+import i18n from '~/common/I18n';
 
 const AccountSubscriptionGroupsDropdown = ({
 	accountSubscriptionGroups,
@@ -25,7 +26,8 @@ const AccountSubscriptionGroupsDropdown = ({
 			menuWidth="shrink"
 			onActiveChange={setActive}
 			trigger={
-				<ClayButton
+				<ClayButton 
+					aria-label={i18n.translate('select-subscription')}
 					borderless
 					className="align-items-center d-flex px-2"
 					data-testid="subscriptionDropDown"

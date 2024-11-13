@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
-import com.liferay.portal.osgi.web.servlet.JSPTaglibHelper;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
@@ -89,12 +88,10 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 public class WabBundleProcessor {
 
 	public WabBundleProcessor(
-		Bundle bundle, JSPServletFactory jspServletFactory,
-		JSPTaglibHelper jspTaglibHelper) {
+		Bundle bundle, JSPServletFactory jspServletFactory) {
 
 		_bundle = bundle;
 		_jspServletFactory = jspServletFactory;
-		_jspTaglibHelper = jspTaglibHelper;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
@@ -857,7 +854,8 @@ public class WabBundleProcessor {
 
 		List<String> listenerClassNames = new ArrayList<>();
 
-		_jspTaglibHelper.scanTLDs(_bundle, servletContext, listenerClassNames);
+		JSPTaglibHelperUtil.scanTLDs(
+			_bundle, servletContext, listenerClassNames);
 
 		for (String listenerClassName : listenerClassNames) {
 			try {
@@ -899,7 +897,6 @@ public class WabBundleProcessor {
 	private final Set<ServiceRegistration<Filter>> _filterServiceRegistrations =
 		new ConcurrentSkipListSet<>();
 	private final JSPServletFactory _jspServletFactory;
-	private final JSPTaglibHelper _jspTaglibHelper;
 	private final Set<ServiceRegistration<?>> _listenerServiceRegistrations =
 		new ConcurrentSkipListSet<>(
 			new ListenerServiceRegistrationComparator());

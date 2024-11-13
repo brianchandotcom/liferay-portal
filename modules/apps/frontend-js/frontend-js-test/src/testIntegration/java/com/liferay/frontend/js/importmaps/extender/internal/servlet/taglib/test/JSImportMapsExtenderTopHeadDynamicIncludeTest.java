@@ -116,7 +116,6 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 			json.matches(
 				".*\"specifier\".*:.*\"http://localhost/" +
 					_company1.getCompanyId() + ".js\".*"));
-
 		Assert.assertFalse(
 			json,
 			json.matches(
@@ -130,7 +129,6 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 			json.matches(
 				".*\"specifier\".*:.*\"http://localhost/" +
 					_company1.getCompanyId() + ".js\".*"));
-
 		Assert.assertTrue(
 			json,
 			json.matches(
@@ -144,7 +142,6 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 			json.matches(
 				".*\"specifier\".*:.*\"http://localhost/" +
 					_company1.getCompanyId() + ".js\".*"));
-
 		Assert.assertFalse(
 			json,
 			json.matches(

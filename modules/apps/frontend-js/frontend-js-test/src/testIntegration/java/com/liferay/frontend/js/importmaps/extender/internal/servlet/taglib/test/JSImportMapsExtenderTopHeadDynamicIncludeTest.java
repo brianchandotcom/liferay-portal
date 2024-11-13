@@ -96,12 +96,7 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 	@After
 	public void tearDown() throws PortalException {
 		_companyLocalService.deleteCompany(_company1);
-
-		_company1 = null;
-
 		_companyLocalService.deleteCompany(_company2);
-
-		_company2 = null;
 
 		for (ServiceRegistration<?> serviceRegistration :
 				_serviceRegistrations) {

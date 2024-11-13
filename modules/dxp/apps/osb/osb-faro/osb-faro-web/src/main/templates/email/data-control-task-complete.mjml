@@ -8,16 +8,16 @@
 
 		<mj-section>
 			<mj-column>
-				<mj-text align="center" color="#272833" font-size="32px" font-weight="700">Your Request is Complete!</mj-text>
+				<mj-text align="center" color="#272833" font-size="32px" font-weight="700">[$TITLE_MSG$]</mj-text>
 			</mj-column>
 		</mj-section>
 
 		<mj-section>
 			<mj-column width="556px">
 				<mj-text align="center" color="#6B6C7E" line-height="21px">
-					The request [$REQUEST_ID$] has been processed and is ready to be downloaded.
+					[$NOTIFICATION_MSG_1$]
 					<br />
-					Download files are available for 30 days and will need to be requested again if the download expires.
+					[$NOTIFICATION_MSG_2$]
 				</mj-text>
 			</mj-column>
 		</mj-section>

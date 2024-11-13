@@ -8,18 +8,18 @@
 
 		<mj-section>
 			<mj-column>
-				<mj-text align="center" color="#272833" font-size="32px" font-weight="700">You have been added!</mj-text>
+				<mj-text align="center" color="#272833" font-size="32px" font-weight="700">[$HEADER_MSG_1$]</mj-text>
 			</mj-column>
 		</mj-section>
 
 		<mj-section>
 			<mj-column width="556px">
 				<mj-text align="center" color="#6B6C7E" line-height="21px">
-					[$PROPERTY_NAME$] has been added to your Properties list.
+					[$NOTIFICATION_MSG_1$]
 
 					<br />
 
-					Log in to your workspace to access this property.
+					[$NOTIFICATION_MSG_2$]
 				</mj-text>
 			</mj-column>
 		</mj-section>

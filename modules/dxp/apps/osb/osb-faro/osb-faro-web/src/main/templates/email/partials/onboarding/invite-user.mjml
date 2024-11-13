@@ -1,11 +1,11 @@
 <mj-section>
 	<mj-column width="556px">
 		<mj-text align="center" color="#6B6C7E" line-height="21px">
-			You have been added as a team member on the Analytics Cloud.
+			[$NOTIFICATION_MSG_1$]
 		</mj-text>
 
 		<mj-text align="center" color="#6B6C7E" line-height="21px">
-			Sign in with your existing Liferay username and password, or <a style="color: #0b5fff; text-decoration: none;" href="https://login.liferay.com/signin/register" target="_blank">create an account</a> using [$USER_EMAIL$].
+			[$NOTIFICATION_MSG_2$]
 		</mj-text>
 	</mj-column>
 </mj-section>

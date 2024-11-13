@@ -8,18 +8,18 @@
 
 		<mj-section>
 			<mj-column>
-				<mj-text align="center" color="#272833" font-size="32px" font-weight="700">Welcome to Analytics Cloud!</mj-text>
+				<mj-text align="center" color="#272833" font-size="32px" font-weight="700">[$HEADER_MSG_1$]</mj-text>
 			</mj-column>
 		</mj-section>
 
 		<mj-section>
 			<mj-column width="556px">
 				<mj-text align="center" color="#6B6C7E" line-height="21px">
-					Your workspace, [$WORKSPACE_NAME$], is ready. You are moments away from serving your customers better with data driven insights.	
+					[$NOTIFICATION_MSG_1$]
 				</mj-text>
 
 				<mj-text align="center" color="#6B6C7E" line-height="21px">
-					Sign in with your existing Liferay username and password, or <a style="color: #0b5fff; text-decoration: none;" href="https://login.liferay.com/signin/register" target="_blank">create an account</a> using [$OWNER_EMAIL$].
+					[$NOTIFICATION_MSG_2$]
 				</mj-text>
 			</mj-column>
 		</mj-section>
@@ -27,11 +27,11 @@
 		<mj-section padding-bottom="50px">
 			<mj-column width="506px" padding="30px" background-color="#F0F5FF">
 				<mj-text color="#272833" font-size="18px" font-weight="600">
-					Getting Started
+					[$NOTIFICATION_MSG_3$]
 				</mj-text>
 
 				<mj-text color="#272833" font-size="16px" padding="25px 25px 20px 25px" font-weight="400">
-					Get up and running in three steps:
+					[$NOTIFICATION_MSG_4$]
 				</mj-text>
 
 				<mj-text>
@@ -42,7 +42,7 @@
 							</td>
 
 							<td style="line-height: 35px; font-size: 16px; color: #272833;">
-								Connect your Liferay DXP sites to a property.
+								[$NOTIFICATION_MSG_5$]
 							</td>
 						</tr>
 
@@ -52,7 +52,7 @@
 							</td>
 
 							<td style="line-height: 35px; font-size: 16px; color: #272833;">
-								Invite teammates to collaborate.
+								[$NOTIFICATION_MSG_6$]
 							</td>
 						</tr>
 
@@ -62,7 +62,7 @@
 							</td>
 
 							<td style="line-height: 35px; font-size: 16px; color: #272833;">
-								Connect and map user data.
+								[$NOTIFICATION_MSG_7$]
 							</td>
 						</tr>
 					</table>

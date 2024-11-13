@@ -8,7 +8,7 @@
 
 		<mj-section>
 			<mj-column>
-				<mj-text align="center" color="#272833" font-size="32px" font-weight="700">Welcome to Analytics Cloud!</mj-text>
+				<mj-text align="center" color="#272833" font-size="32px" font-weight="700">[$HEADER_MSG_1$]</mj-text>
 			</mj-column>
 		</mj-section>
 

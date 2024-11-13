@@ -6,9 +6,10 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {
-	ObjectAdminRestClient,
 	ObjectDefinition,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+	ObjectDefinitionApi,
+	ObjectField,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
@@ -103,10 +104,11 @@ test('can see available path parameter properties of a singleElement endpoint', 
 	page,
 }) => {
 	const objectDefinition =
-		(await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			objectFolderExternalReferenceCode: 'default',
-			status: {code: 0},
-		})) as ObjectDefinition;
+		(await apiHelpers.objectAdmin.postRandomObjectDefinition(
+			{code: 0},
+			undefined,
+			'default'
+		)) as ObjectDefinition;
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -153,10 +155,11 @@ test('can see path parameter property with map details', async ({
 	page,
 }) => {
 	const objectDefinition =
-		(await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			objectFolderExternalReferenceCode: 'default',
-			status: {code: 0},
-		})) as ObjectDefinition;
+		(await apiHelpers.objectAdmin.postRandomObjectDefinition(
+			{code: 0},
+			undefined,
+			'default'
+		)) as ObjectDefinition;
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -251,47 +254,44 @@ test('can list site scoped endpoint', async ({
 	headlessBuilderPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const studentSiteDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: {
-				active: true,
-				externalReferenceCode: 'site-student-definition',
-				label: {
-					en_US: 'Student',
-				},
-				name: 'Student',
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'student-name-field',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: 'en_US',
-						label: {
-							en_US: 'Student name',
-						},
-						listTypeDefinitionId: 0,
-						name: 'studentName',
-						required: true,
-						state: false,
-						system: false,
-						type: 'String',
+	const {body: studentSiteDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition({
+			active: true,
+			externalReferenceCode: 'site-student-definition',
+			label: {
+				en_US: 'Student',
+			},
+			name: 'Student',
+			objectFields: [
+				{
+					businessType: ObjectField.BusinessTypeEnum.Text,
+					dBType: ObjectField.DBTypeEnum.String,
+					externalReferenceCode: 'student-name-field',
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: 'en_US',
+					label: {
+						en_US: 'Student name',
 					},
-				],
-				pluralLabel: {
-					en_US: 'Students',
+					listTypeDefinitionId: 0,
+					name: 'studentName',
+					required: true,
+					state: false,
+					system: false,
+					type: ObjectField.TypeEnum.String,
 				},
-				portlet: true,
-				restContextPath: '/o/c/students',
-				scope: 'site',
-				status: {
-					code: 0,
-				},
+			],
+			pluralLabel: {
+				en_US: 'Students',
+			},
+			portlet: true,
+			restContextPath: '/o/c/students',
+			scope: 'site',
+			status: {
+				code: 0,
 			},
 		});
 

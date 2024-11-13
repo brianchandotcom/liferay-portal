@@ -8,9 +8,9 @@ import path from 'node:path';
 
 import {
 	ObjectAction,
-	ObjectAdminRestClient,
+	ObjectActionApi,
 	ObjectDefinition,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {editObjectDefinitionPagesTest} from '../../fixtures/editObjectDefinitionPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -30,10 +30,11 @@ let createdObjectDefinition: ObjectDefinition;
 
 test.beforeEach(async ({apiHelpers}) => {
 	const newObjectDefinition =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			objectFolderExternalReferenceCode: 'default',
-			status: {code: 0},
-		});
+		await apiHelpers.objectAdmin.postRandomObjectDefinition(
+			{code: 0},
+			undefined,
+			'default'
+		);
 
 	apiHelpers.data.push({
 		id: newObjectDefinition.id,
@@ -116,15 +117,12 @@ test.describe('Manage object actions through object actions tab', () => {
 			);
 		}
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectActionApiClient =
+			await apiHelpers.buildRestClient(ObjectActionApi);
 
-		const objectActions =
-			await objectAdminRestClient.objectAction.getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
-				{
-					externalReferenceCode: 'L_COMMERCE_ORDER',
-				}
+		const {body: objectActions} =
+			await objectActionApiClient.getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+				'L_COMMERCE_ORDER'
 			);
 
 		objectActions.items.forEach((objectAction: ObjectAction) =>
@@ -222,35 +220,32 @@ test('can send notification email via download action', async ({
 	// Create object definition with an attachment field
 
 	const objectDefinition =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			objectFields: [mockedObjectFields.attachmentFieldUserComputer],
-			objectFolderExternalReferenceCode: 'default',
-			status: {code: 0},
-		});
+		await apiHelpers.objectAdmin.postRandomObjectDefinition(
+			{code: 0},
+			[mockedObjectFields.attachmentFieldUserComputer],
+			'default'
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
 	// Create an action to send notification after attachment download
 
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectActionApiClient =
+		await apiHelpers.buildRestClient(ObjectActionApi);
 
-	await objectAdminRestClient.objectAction.postObjectDefinitionByExternalReferenceCodeObjectAction(
+	await objectActionApiClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+		objectDefinition.externalReferenceCode,
 		{
-			externalReferenceCode: objectDefinition.externalReferenceCode,
-			requestBody: {
-				active: true,
-				label: {
-					en_US: 'downloadAttachmentArchive',
-				},
-				name: 'downloadAttachmentArchive',
-				objectActionExecutorKey: 'notification',
-				objectActionTriggerKey: 'onAfterAttachmentDownload',
-				parameters: {
-					notificationTemplateId: notificationTemplate.id,
-					type: 'email',
-				},
+			active: true,
+			label: {
+				en_US: 'downloadAttachmentArchive',
+			},
+			name: 'downloadAttachmentArchive',
+			objectActionExecutorKey: 'notification',
+			objectActionTriggerKey: 'onAfterAttachmentDownload',
+			parameters: {
+				notificationTemplateId: notificationTemplate.id,
+				type: 'email',
 			},
 		}
 	);

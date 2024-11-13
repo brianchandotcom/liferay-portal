@@ -5,7 +5,10 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {ObjectDefinition} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {
+	ObjectDefinition,
+	ObjectField,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
@@ -14,6 +17,7 @@ import {listTypeDefinitionsPagesTest} from '../../fixtures/listTypeDefinitionsPa
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {siteSettingsPagesTest} from '../../fixtures/siteSettingsPagesTest';
+import {ListTypeDefinition, ListTypeEntry} from '../../types/object';
 import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(
@@ -241,10 +245,11 @@ test.describe('ensure picklist translation', () => {
 		// Create custom object with the picklist
 
 		const objectDefinition: ObjectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default'
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
@@ -339,11 +344,11 @@ test.describe('ensure picklist translation', () => {
 		// Create custom object with the picklist
 
 		const objectDefinition: ObjectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			});
-
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default'
+			);
 		apiHelpers.data.push({
 			id: objectDefinition.id,
 			type: 'objectDefinition',
@@ -359,7 +364,7 @@ test.describe('ensure picklist translation', () => {
 			listTypeDefinitionName: listTypeDefinition.name,
 			objectDefinitionNodes:
 				modelBuilderDiagramPage.objectDefinitionNodes,
-			objectFieldBusinessType: 'Picklist',
+			objectFieldBusinessType: ObjectField.BusinessTypeEnum.Picklist,
 			objectFieldLabel: fieldLabel,
 		});
 

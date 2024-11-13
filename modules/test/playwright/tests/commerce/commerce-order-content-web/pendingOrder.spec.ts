@@ -5,7 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {ObjectAdminRestClient} from '../../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {ObjectActionApi} from '../../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
@@ -258,25 +258,22 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 		type: 'notificationTemplate',
 	});
 
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectActionApiClient =
+		await apiHelpers.buildRestClient(ObjectActionApi);
 
-	const objectAction =
-		await objectAdminRestClient.objectAction.postObjectDefinitionByExternalReferenceCodeObjectAction(
+	const {body: objectAction} =
+		await objectActionApiClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+			'L_COMMERCE_ORDER',
 			{
-				externalReferenceCode: 'L_COMMERCE_ORDER',
-				requestBody: {
-					active: true,
-					label: {
-						en_US: 'commerceOrderStatusOnChange',
-					},
-					name: 'commerceOrderStatusOnChange',
-					objectActionExecutorKey: 'notification',
-					objectActionTriggerKey: 'liferay/commerce_order_status',
-					parameters: {
-						notificationTemplateId: notificationTemplate.id,
-					},
+				active: true,
+				label: {
+					en_US: 'commerceOrderStatusOnChange',
+				},
+				name: 'commerceOrderStatusOnChange',
+				objectActionExecutorKey: 'notification',
+				objectActionTriggerKey: 'liferay/commerce_order_status',
+				parameters: {
+					notificationTemplateId: notificationTemplate.id,
 				},
 			}
 		);

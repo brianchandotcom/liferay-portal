@@ -5,6 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {ObjectField} from '../../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
+import {CreateObjectField} from '../../../types/object';
 import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
 
 export class ObjectFieldsPage {
@@ -47,10 +49,15 @@ export class ObjectFieldsPage {
 		await this.objectFieldOptionsDropdown.click();
 
 		await this.page
-			.getByRole('option', {exact: true, name: objectFieldBusinessType})
+			.getByRole('option', {
+				exact: true,
+				name: String(objectFieldBusinessType),
+			})
 			.click();
 
-		if (objectFieldBusinessType === 'Attachment') {
+		if (
+			objectFieldBusinessType === ObjectField.BusinessTypeEnum.Attachment
+		) {
 			await this.objectFieldOptionsDropdown.click();
 			await this.page
 				.getByRole('option', {name: attachmentSource})
@@ -58,8 +65,9 @@ export class ObjectFieldsPage {
 		}
 
 		if (
-			objectFieldBusinessType === 'Multiselect Picklist' ||
-			objectFieldBusinessType === 'Picklist'
+			objectFieldBusinessType ===
+				ObjectField.BusinessTypeEnum.MultiselectPicklist ||
+			objectFieldBusinessType === ObjectField.BusinessTypeEnum.Picklist
 		) {
 			await this.objectFieldOptionsDropdown.click();
 			await this.page

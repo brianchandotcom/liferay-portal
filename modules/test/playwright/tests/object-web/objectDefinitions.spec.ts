@@ -5,7 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {
+	ObjectDefinitionApi,
+	ObjectFolderApi,
+	ObjectRelationship,
+	ObjectRelationshipApi,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -43,10 +48,11 @@ test.describe('Manage object definitions through Model Builder', () => {
 		modelBuilderDiagramPage,
 	}) => {
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default'
+			);
 
 		const commerceOrderItemLabel = 'Commerce Order Item';
 
@@ -186,16 +192,18 @@ test.describe('Manage object definitions through Model Builder', () => {
 		modelBuilderObjectDefinitionNodePage,
 	}) => {
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 2},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 2},
+				undefined,
+				'default'
+			);
 
 		const objectDefinition2 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 2},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 2},
+				undefined,
+				'default'
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition1.id,
@@ -248,10 +256,11 @@ test.describe('Manage object definitions through Model Builder', () => {
 		modelBuilderObjectDefinitionNodePage,
 	}) => {
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default'
+			);
 
 		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
 
@@ -316,17 +325,18 @@ test.describe('Manage object definitions through Model Builder', () => {
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode:
-					objectFolder.externalReferenceCode,
-				status: {code: 0},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default'
+			);
 
 		const objectDefinition2 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default'
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition1.id,
@@ -342,27 +352,25 @@ test.describe('Manage object definitions through Model Builder', () => {
 		const objectRelationshipName =
 			'objectRelationshipName' + Math.floor(Math.random() * 99);
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
+		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipApi
 		);
 
-		await objectAdminRestClient.objectRelationship.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			objectDefinition1.externalReferenceCode,
 			{
-				externalReferenceCode: objectDefinition1.externalReferenceCode,
-				requestBody: {
-					label: {
-						en_US: objectRelationshipLabel,
-					},
-					name: objectRelationshipName,
-					objectDefinitionExternalReferenceCode1:
-						objectDefinition1.externalReferenceCode,
-					objectDefinitionExternalReferenceCode2:
-						objectDefinition2.externalReferenceCode,
-					objectDefinitionId1: objectDefinition1.id,
-					objectDefinitionId2: objectDefinition2.id,
-					objectDefinitionName2: objectDefinition2.name,
-					type: 'oneToMany' as ObjectRelationshipType,
+				label: {
+					en_US: objectRelationshipLabel,
 				},
+				name: objectRelationshipName,
+				objectDefinitionExternalReferenceCode1:
+					objectDefinition1.externalReferenceCode,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition2.externalReferenceCode,
+				objectDefinitionId1: objectDefinition1.id,
+				objectDefinitionId2: objectDefinition2.id,
+				objectDefinitionName2: objectDefinition2.name,
+				type: ObjectRelationship.TypeEnum.OneToMany,
 			}
 		);
 
@@ -404,9 +412,10 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		// Clean up
 
-		await objectAdminRestClient.objectFolder.deleteObjectFolder({
-			objectFolderId: objectFolder.id,
-		});
+		const objectFolderApiClient =
+			await apiHelpers.buildRestClient(ObjectFolderApi);
+
+		await objectFolderApiClient.deleteObjectFolder(objectFolder.id);
 	});
 
 	test('navigate to edit object definition page', async ({
@@ -448,60 +457,55 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const department =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: {
-					active: true,
-					label: {
-						en_US: 'Department',
-						pt_BR: 'Departamento',
-					},
-					name: 'Department',
-					objectFields: [
-						createObjectField('text', {
-							label: 'Name',
-							name: 'name',
-						}),
-					],
-					objectFolderExternalReferenceCode:
-						objectFolder.externalReferenceCode,
-					panelCategoryKey: 'control_panel.object',
-					pluralLabel: {
-						en_US: 'Departments',
-						pt_BR: 'Departamentos',
-					},
-					scope: 'company',
-					status: {code: 0},
-					titleObjectFieldName: 'id',
+		const {body: department} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				label: {
+					en_US: 'Department',
+					pt_BR: 'Departamento',
 				},
+				name: 'Department',
+				objectFields: [
+					createObjectField('text', {
+						label: 'Name',
+						name: 'name',
+					}),
+				],
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				panelCategoryKey: 'control_panel.object',
+				pluralLabel: {
+					en_US: 'Departments',
+					pt_BR: 'Departamentos',
+				},
+				scope: 'company',
+				status: {code: 0},
+				titleObjectFieldName: 'id',
 			});
 
 		apiHelpers.data.push({id: department.id, type: 'objectDefinition'});
 
-		const employee =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: {
-					active: false,
-					label: {
-						en_US: 'Employee',
-						pt_BR: 'Funcionario',
-					},
-					name: 'Employee',
-					objectFolderExternalReferenceCode:
-						objectFolder.externalReferenceCode,
-					panelCategoryKey: 'site_administration.design',
-					pluralLabel: {
-						en_US: 'Employees',
-						pt_BR: 'Funcionarios',
-					},
-					scope: 'site',
-					status: {code: 1},
-					titleObjectFieldName: 'name',
+		const {body: employee} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: false,
+				label: {
+					en_US: 'Employee',
+					pt_BR: 'Funcionario',
 				},
+				name: 'Employee',
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				panelCategoryKey: 'site_administration.design',
+				pluralLabel: {
+					en_US: 'Employees',
+					pt_BR: 'Funcionarios',
+				},
+				scope: 'site',
+				status: {code: 1},
+				titleObjectFieldName: 'name',
 			});
 
 		apiHelpers.data.push({id: employee.id, type: 'objectDefinition'});
@@ -592,16 +596,18 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		viewObjectDefinitionsPage,
 	}) => {
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 2},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 2},
+				undefined,
+				'default'
+			);
 
 		const objectDefinition2 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 2},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 2},
+				undefined,
+				'default'
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition1.id,
@@ -656,10 +662,11 @@ test.describe('Manage object definitions through a Page', () => {
 		viewObjectDefinitionsPage,
 	}) => {
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default'
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
@@ -695,10 +702,11 @@ test.describe('Manage object definitions through a Page', () => {
 		viewObjectDefinitionsPage,
 	}) => {
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default'
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,

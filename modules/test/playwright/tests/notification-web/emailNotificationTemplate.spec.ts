@@ -6,9 +6,9 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {
-	ObjectAdminRestClient,
 	ObjectDefinition,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+	ObjectDefinitionApi,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {notificationPagesTest} from '../../fixtures/notificationPagesTest';
@@ -23,20 +23,18 @@ export const test = mergeTests(
 let objectDefinition: ObjectDefinition;
 
 test.beforeEach(async ({apiHelpers}) => {
-	objectDefinition = await apiHelpers.objectAdmin.postRandomObjectDefinition({
-		objectFolderExternalReferenceCode: 'default',
-		status: {code: 0},
-	});
+	objectDefinition = await apiHelpers.objectAdmin.postRandomObjectDefinition(
+		{code: 0},
+		undefined,
+		'default'
+	);
 });
 
 test.afterEach(async ({apiHelpers, notificationTemplatesPage, page}) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
-		objectDefinitionId: objectDefinition.id,
-	});
+	await objectDefinitionAPIClient.deleteObjectDefinition(objectDefinition.id);
 
 	await notificationTemplatesPage.goto();
 

@@ -6,9 +6,9 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {
-	ObjectAdminRestClient,
 	ObjectRelationship,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+	ObjectRelationshipApi,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -34,16 +34,18 @@ test.describe('Manage root models elements through Objects Admin', () => {
 
 		try {
 			const objectDefinition1 =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
-					status: {code: 0},
-				});
+				await apiHelpers.objectAdmin.postRandomObjectDefinition(
+					{code: 0},
+					undefined,
+					'default'
+				);
 
 			const objectDefinition2 =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
-					status: {code: 0},
-				});
+				await apiHelpers.objectAdmin.postRandomObjectDefinition(
+					{code: 0},
+					undefined,
+					'default'
+				);
 
 			apiHelpers.data.push({
 				id: objectDefinition1.id,
@@ -59,30 +61,26 @@ test.describe('Manage root models elements through Objects Admin', () => {
 			const objectRelationshipName =
 				'objectRelationshipName' + Math.floor(Math.random() * 99);
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectRelationshipApiClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipApi);
 
-			const objectRelationship =
-				await objectAdminRestClient.objectRelationship.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			const {body: objectRelationship} =
+				await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					objectDefinition1.externalReferenceCode,
 					{
-						externalReferenceCode:
-							objectDefinition1.externalReferenceCode,
-						requestBody: {
-							edge: true,
-							label: {
-								en_US: objectRelationshipLabel,
-							},
-							name: objectRelationshipName,
-							objectDefinitionExternalReferenceCode1:
-								objectDefinition1.externalReferenceCode,
-							objectDefinitionExternalReferenceCode2:
-								objectDefinition2.externalReferenceCode,
-							objectDefinitionId1: objectDefinition1.id,
-							objectDefinitionId2: objectDefinition2.id,
-							objectDefinitionName2: objectDefinition2.name,
-							type: 'oneToMany' as ObjectRelationshipType,
+						edge: true,
+						label: {
+							en_US: objectRelationshipLabel,
 						},
+						name: objectRelationshipName,
+						objectDefinitionExternalReferenceCode1:
+							objectDefinition1.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId1: objectDefinition1.id,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
+						type: ObjectRelationship.TypeEnum.OneToMany,
 					}
 				);
 
@@ -111,18 +109,15 @@ test.describe('Manage root models elements through Objects Admin', () => {
 			await page.getByRole('button', {name: 'Done'}).click();
 		}
 		finally {
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectRelationshipApiClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipApi);
 
 			for (const objectRelationship of objectRelationships) {
-				await objectAdminRestClient.objectRelationship.putObjectRelationship(
+				await objectRelationshipApiClient.putObjectRelationship(
+					objectRelationship.id,
 					{
-						objectRelationshipId: objectRelationship.id,
-						requestBody: {
-							...objectRelationship,
-							edge: false,
-						},
+						...objectRelationship,
+						edge: false,
 					}
 				);
 			}
@@ -138,16 +133,18 @@ test.describe('Manage root models elements through Objects Admin', () => {
 
 		try {
 			const objectDefinition1 =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
-					status: {code: 0},
-				});
+				await apiHelpers.objectAdmin.postRandomObjectDefinition(
+					{code: 0},
+					undefined,
+					'default'
+				);
 
 			const objectDefinition2 =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
-					status: {code: 0},
-				});
+				await apiHelpers.objectAdmin.postRandomObjectDefinition(
+					{code: 0},
+					undefined,
+					'default'
+				);
 
 			apiHelpers.data.push({
 				id: objectDefinition1.id,
@@ -163,30 +160,26 @@ test.describe('Manage root models elements through Objects Admin', () => {
 			const objectRelationshipName =
 				'objectRelationshipName' + Math.floor(Math.random() * 99);
 
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectRelationshipApiClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipApi);
 
-			const objectRelationship =
-				await objectAdminRestClient.objectRelationship.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			const {body: objectRelationship} =
+				await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					objectDefinition1.externalReferenceCode,
 					{
-						externalReferenceCode:
-							objectDefinition1.externalReferenceCode,
-						requestBody: {
-							edge: true,
-							label: {
-								en_US: objectRelationshipLabel,
-							},
-							name: objectRelationshipName,
-							objectDefinitionExternalReferenceCode1:
-								objectDefinition1.externalReferenceCode,
-							objectDefinitionExternalReferenceCode2:
-								objectDefinition2.externalReferenceCode,
-							objectDefinitionId1: objectDefinition1.id,
-							objectDefinitionId2: objectDefinition2.id,
-							objectDefinitionName2: objectDefinition2.name,
-							type: 'oneToMany' as ObjectRelationshipType,
+						edge: true,
+						label: {
+							en_US: objectRelationshipLabel,
 						},
+						name: objectRelationshipName,
+						objectDefinitionExternalReferenceCode1:
+							objectDefinition1.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId1: objectDefinition1.id,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
+						type: ObjectRelationship.TypeEnum.OneToMany,
 					}
 				);
 
@@ -215,18 +208,15 @@ test.describe('Manage root models elements through Objects Admin', () => {
 			await page.getByRole('button', {name: 'Done'}).click();
 		}
 		finally {
-			const objectAdminRestClient = await apiHelpers.buildRestClient(
-				ObjectAdminRestClient
-			);
+			const objectRelationshipApiClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipApi);
 
 			for (const objectRelationship of objectRelationships) {
-				await objectAdminRestClient.objectRelationship.putObjectRelationship(
+				await objectRelationshipApiClient.putObjectRelationship(
+					objectRelationship.id,
 					{
-						objectRelationshipId: objectRelationship.id,
-						requestBody: {
-							...objectRelationship,
-							edge: false,
-						},
+						...objectRelationship,
+						edge: false,
 					}
 				);
 			}

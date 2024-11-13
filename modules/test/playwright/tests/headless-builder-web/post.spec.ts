@@ -5,7 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {
+	ObjectDefinitionApi,
+	ObjectField,
+	ObjectRelationship,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -139,142 +143,138 @@ test('can create post endpoint with different request and response schema', asyn
 	headlessBuilderPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const subjectResponse =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: {
-				active: true,
-				externalReferenceCode: 'subject-definition',
-				label: {
-					en_US: 'Subject',
-				},
-				name: 'Subject',
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'subject-name-field',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: 'en_US',
-						label: {
-							en_US: 'Subject name',
-						},
-						listTypeDefinitionId: 0,
-						name: 'subjectName',
-						required: false,
-						state: false,
-						system: false,
-						type: 'String',
+	const {body: subjectResponse} =
+		await objectDefinitionAPIClient.postObjectDefinition({
+			active: true,
+			externalReferenceCode: 'subject-definition',
+			label: {
+				en_US: 'Subject',
+			},
+			name: 'Subject',
+			objectFields: [
+				{
+					businessType: ObjectField.BusinessTypeEnum.Text,
+					dBType: ObjectField.DBTypeEnum.String,
+					externalReferenceCode: 'subject-name-field',
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: 'en_US',
+					label: {
+						en_US: 'Subject name',
 					},
-				],
-				panelCategoryKey: 'control_panel.object',
-				pluralLabel: {
-					en_US: 'Subjects',
+					listTypeDefinitionId: 0,
+					name: 'subjectName',
+					required: false,
+					state: false,
+					system: false,
+					type: ObjectField.TypeEnum.String,
 				},
-				portlet: true,
-				restContextPath: '/o/c/subjects',
-				scope: 'company',
-				status: {
-					code: 0,
-				},
+			],
+			panelCategoryKey: 'control_panel.object',
+			pluralLabel: {
+				en_US: 'Subjects',
+			},
+			portlet: true,
+			restContextPath: '/o/c/subjects',
+			scope: 'company',
+			status: {
+				code: 0,
 			},
 		});
 
 	apiHelpers.data.push({id: subjectResponse.id, type: 'objectDefinition'});
 
-	const studentResponse =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: {
-				active: true,
-				externalReferenceCode: 'student-definition',
-				label: {
-					en_US: 'Student',
+	const {body: studentResponse} =
+		await objectDefinitionAPIClient.postObjectDefinition({
+			active: true,
+			externalReferenceCode: 'student-definition',
+			label: {
+				en_US: 'Student',
+			},
+			name: 'Student',
+			objectFields: [
+				{
+					businessType: ObjectField.BusinessTypeEnum.Text,
+					dBType: ObjectField.DBTypeEnum.String,
+					externalReferenceCode: 'student-name-field',
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: 'en_US',
+					label: {
+						en_US: 'Student name',
+					},
+					listTypeDefinitionId: 0,
+					name: 'studentName',
+					required: true,
+					state: false,
+					system: false,
+					type: ObjectField.TypeEnum.String,
 				},
-				name: 'Student',
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'student-name-field',
+			],
+			objectRelationships: [
+				{
+					deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
+					externalReferenceCode: 'student-subjects-relationship',
+					label: {
+						en_US: 'Student subjects',
+					},
+					name: 'studentSubjects',
+					objectDefinitionExternalReferenceCode1:
+						'student-definition',
+					objectDefinitionExternalReferenceCode2:
+						'subject-definition',
+					objectDefinitionModifiable2: true,
+					objectDefinitionName2: 'Subject',
+					objectDefinitionSystem2: false,
+					objectField: {
+						businessType: ObjectField.BusinessTypeEnum.Relationship,
+						dBType: ObjectField.DBTypeEnum.Long,
+						externalReferenceCode:
+							'student-subjects-relationship-field',
 						indexed: true,
 						indexedAsKeyword: false,
-						indexedLanguageId: 'en_US',
-						label: {
-							en_US: 'Student name',
-						},
-						listTypeDefinitionId: 0,
-						name: 'studentName',
-						required: true,
-						state: false,
-						system: false,
-						type: 'String',
-					},
-				],
-				objectRelationships: [
-					{
-						deletionType: 'cascade',
-						externalReferenceCode: 'student-subjects-relationship',
+						indexedLanguageId: '',
 						label: {
 							en_US: 'Student subjects',
 						},
-						name: 'studentSubjects',
-						objectDefinitionExternalReferenceCode1:
-							'student-definition',
-						objectDefinitionExternalReferenceCode2:
-							'subject-definition',
-						objectDefinitionModifiable2: true,
-						objectDefinitionName2: 'Subject',
-						objectDefinitionSystem2: false,
-						objectField: {
-							DBType: 'Long',
-							businessType: 'Relationship',
-							externalReferenceCode:
-								'student-subjects-relationship-field',
-							indexed: true,
-							indexedAsKeyword: false,
-							indexedLanguageId: '',
-							label: {
-								en_US: 'Student subjects',
-							},
-							name: 'r_studentSubjects_c_studentId',
-							objectFieldSettings: [
-								{
-									name: 'objectDefinition1ShortName',
-									value: 'Student',
-								} as any,
-								{
-									name: 'objectRelationshipERCObjectFieldName',
-									value: 'r_studentSubjects_c_studentERC',
-								} as any,
-							],
-							relationshipType: 'oneToMany',
-							required: false,
-							state: false,
-							system: false,
-							type: 'Long',
-							unique: false,
-						},
-						parameterObjectFieldId: 0,
-						parameterObjectFieldName: '',
-						reverse: false,
+						name: 'r_studentSubjects_c_studentId',
+						objectFieldSettings: [
+							{
+								name: 'objectDefinition1ShortName',
+								value: 'Student',
+							} as any,
+							{
+								name: 'objectRelationshipERCObjectFieldName',
+								value: 'r_studentSubjects_c_studentERC',
+							} as any,
+						],
+						relationshipType:
+							ObjectField.RelationshipTypeEnum.OneToMany,
+						required: false,
+						state: false,
 						system: false,
-						type: 'oneToMany',
+						type: ObjectField.TypeEnum.Long,
+						unique: false,
 					},
-				],
-				panelCategoryKey: 'control_panel.object',
-				pluralLabel: {
-					en_US: 'Students',
+					parameterObjectFieldId: 0,
+					parameterObjectFieldName: '',
+					reverse: false,
+					system: false,
+					type: ObjectRelationship.TypeEnum.OneToMany,
 				},
-				portlet: true,
-				restContextPath: '/o/c/students',
-				scope: 'company',
-				status: {
-					code: 0,
-				},
+			],
+			panelCategoryKey: 'control_panel.object',
+			pluralLabel: {
+				en_US: 'Students',
+			},
+			portlet: true,
+			restContextPath: '/o/c/students',
+			scope: 'company',
+			status: {
+				code: 0,
 			},
 		});
 

@@ -7,9 +7,11 @@ import {expect, mergeTests} from '@playwright/test';
 import * as path from 'path';
 
 import {
-	ObjectAdminRestClient,
 	ObjectDefinition,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+	ObjectDefinitionApi,
+	ObjectField,
+	ObjectRelationship,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -34,8 +36,8 @@ const companyObjectDefinition: ObjectDefinition = {
 	name: 'Test',
 	objectFields: [
 		{
-			DBType: 'String',
-			businessType: 'Aggregation',
+			businessType: ObjectField.BusinessTypeEnum.Aggregation,
+			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-AggregationField',
 			indexed: false,
 			indexedAsKeyword: false,
@@ -52,11 +54,11 @@ const companyObjectDefinition: ObjectDefinition = {
 			],
 			required: false,
 			system: false,
-			type: 'String',
+			type: ObjectField.TypeEnum.String,
 		},
 		{
-			DBType: 'String',
-			businessType: 'AutoIncrement',
+			businessType: ObjectField.BusinessTypeEnum.AutoIncrement,
+			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-AutoIncrementField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -71,11 +73,11 @@ const companyObjectDefinition: ObjectDefinition = {
 			],
 			required: false,
 			system: false,
-			type: 'String',
+			type: ObjectField.TypeEnum.String,
 		},
 		{
-			DBType: 'Boolean',
-			businessType: 'Boolean',
+			businessType: ObjectField.BusinessTypeEnum.Boolean,
+			dBType: ObjectField.DBTypeEnum.Boolean,
 			externalReferenceCode: 'Test-BooleanField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -85,11 +87,11 @@ const companyObjectDefinition: ObjectDefinition = {
 			name: 'testBooleanField',
 			required: false,
 			system: false,
-			type: 'Boolean',
+			type: ObjectField.TypeEnum.Boolean,
 		},
 		{
-			DBType: 'Date',
-			businessType: 'Date',
+			businessType: ObjectField.BusinessTypeEnum.Date,
+			dBType: ObjectField.DBTypeEnum.Date,
 			externalReferenceCode: 'Test-DateField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -99,11 +101,11 @@ const companyObjectDefinition: ObjectDefinition = {
 			name: 'testDateField',
 			required: false,
 			system: false,
-			type: 'Date',
+			type: ObjectField.TypeEnum.Date,
 		},
 		{
-			DBType: 'DateTime',
-			businessType: 'DateTime',
+			businessType: ObjectField.BusinessTypeEnum.DateTime,
+			dBType: ObjectField.DBTypeEnum.DateTime,
 			externalReferenceCode: 'Test-DateTimeField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -116,11 +118,11 @@ const companyObjectDefinition: ObjectDefinition = {
 			],
 			required: false,
 			system: false,
-			type: 'DateTime',
+			type: ObjectField.TypeEnum.DateTime,
 		},
 		{
-			DBType: 'Double',
-			businessType: 'Decimal',
+			businessType: ObjectField.BusinessTypeEnum.Decimal,
+			dBType: ObjectField.DBTypeEnum.Double,
 			externalReferenceCode: 'Test-DecimalField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -130,11 +132,11 @@ const companyObjectDefinition: ObjectDefinition = {
 			name: 'testDecimalField',
 			required: false,
 			system: false,
-			type: 'Double',
+			type: ObjectField.TypeEnum.Double,
 		},
 		{
-			DBType: 'String',
-			businessType: 'Formula',
+			businessType: ObjectField.BusinessTypeEnum.Formula,
+			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-FormulaField',
 			indexed: false,
 			indexedAsKeyword: false,
@@ -148,11 +150,11 @@ const companyObjectDefinition: ObjectDefinition = {
 			],
 			required: false,
 			system: false,
-			type: 'String',
+			type: ObjectField.TypeEnum.String,
 		},
 		{
-			DBType: 'Integer',
-			businessType: 'Integer',
+			businessType: ObjectField.BusinessTypeEnum.Integer,
+			dBType: ObjectField.DBTypeEnum.Integer,
 			externalReferenceCode: 'Test-IntegerField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -162,11 +164,11 @@ const companyObjectDefinition: ObjectDefinition = {
 			name: 'testIntegerField',
 			required: false,
 			system: false,
-			type: 'Integer',
+			type: ObjectField.TypeEnum.Integer,
 		},
 		{
-			DBType: 'Long',
-			businessType: 'LongInteger',
+			businessType: ObjectField.BusinessTypeEnum.LongInteger,
+			dBType: ObjectField.DBTypeEnum.Long,
 			externalReferenceCode: 'Test-LongIntegerField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -176,11 +178,11 @@ const companyObjectDefinition: ObjectDefinition = {
 			name: 'testLongInteger',
 			required: false,
 			system: false,
-			type: 'Long',
+			type: ObjectField.TypeEnum.Long,
 		},
 		{
-			DBType: 'Clob',
-			businessType: 'LongText',
+			businessType: ObjectField.BusinessTypeEnum.LongText,
+			dBType: ObjectField.DBTypeEnum.Clob,
 			externalReferenceCode: 'Test-LongTextField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -190,11 +192,11 @@ const companyObjectDefinition: ObjectDefinition = {
 			name: 'testLongTextField',
 			required: false,
 			system: false,
-			type: 'Clob',
+			type: ObjectField.TypeEnum.Clob,
 		},
 		{
-			DBType: 'BigDecimal',
-			businessType: 'PrecisionDecimal',
+			businessType: ObjectField.BusinessTypeEnum.PrecisionDecimal,
+			dBType: ObjectField.DBTypeEnum.BigDecimal,
 			externalReferenceCode: 'Test-PrecisionDecimalField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -204,11 +206,11 @@ const companyObjectDefinition: ObjectDefinition = {
 			name: 'testPrecisionDecimalField',
 			required: false,
 			system: false,
-			type: 'BigDecimal',
+			type: ObjectField.TypeEnum.BigDecimal,
 		},
 		{
-			DBType: 'Clob',
-			businessType: 'RichText',
+			businessType: ObjectField.BusinessTypeEnum.RichText,
+			dBType: ObjectField.DBTypeEnum.Clob,
 			externalReferenceCode: 'Test-RichTextField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -218,11 +220,11 @@ const companyObjectDefinition: ObjectDefinition = {
 			name: 'testRichTextField',
 			required: false,
 			system: false,
-			type: 'Clob',
+			type: ObjectField.TypeEnum.Clob,
 		},
 		{
-			DBType: 'String',
-			businessType: 'Text',
+			businessType: ObjectField.BusinessTypeEnum.Text,
+			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-TextField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -232,12 +234,12 @@ const companyObjectDefinition: ObjectDefinition = {
 			name: 'testTextField',
 			required: false,
 			system: false,
-			type: 'String',
+			type: ObjectField.TypeEnum.String,
 		},
 	],
 	objectRelationships: [
 		{
-			deletionType: 'cascade',
+			deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
 			externalReferenceCode: 'test-Relationship',
 			label: {
 				en_US: 'Test Relationship',
@@ -250,7 +252,7 @@ const companyObjectDefinition: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: 'oneToMany',
+			type: ObjectRelationship.TypeEnum.OneToMany,
 		},
 	],
 	panelCategoryKey: 'control_panel.users',
@@ -267,8 +269,8 @@ const siteObjectDefinition: ObjectDefinition = {
 	name: 'Test',
 	objectFields: [
 		{
-			DBType: 'String',
-			businessType: 'Aggregation',
+			businessType: ObjectField.BusinessTypeEnum.Aggregation,
+			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-AggregationField',
 			indexed: false,
 			indexedAsKeyword: false,
@@ -285,11 +287,11 @@ const siteObjectDefinition: ObjectDefinition = {
 			],
 			required: false,
 			system: false,
-			type: 'String',
+			type: ObjectField.TypeEnum.String,
 		},
 		{
-			DBType: 'String',
-			businessType: 'AutoIncrement',
+			businessType: ObjectField.BusinessTypeEnum.AutoIncrement,
+			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-AutoIncrementField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -304,11 +306,11 @@ const siteObjectDefinition: ObjectDefinition = {
 			],
 			required: false,
 			system: false,
-			type: 'String',
+			type: ObjectField.TypeEnum.String,
 		},
 		{
-			DBType: 'Boolean',
-			businessType: 'Boolean',
+			businessType: ObjectField.BusinessTypeEnum.Boolean,
+			dBType: ObjectField.DBTypeEnum.Boolean,
 			externalReferenceCode: 'Test-BooleanField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -318,11 +320,11 @@ const siteObjectDefinition: ObjectDefinition = {
 			name: 'testBooleanField',
 			required: false,
 			system: false,
-			type: 'Boolean',
+			type: ObjectField.TypeEnum.Boolean,
 		},
 		{
-			DBType: 'Date',
-			businessType: 'Date',
+			businessType: ObjectField.BusinessTypeEnum.Date,
+			dBType: ObjectField.DBTypeEnum.Date,
 			externalReferenceCode: 'Test-DateField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -332,11 +334,11 @@ const siteObjectDefinition: ObjectDefinition = {
 			name: 'testDateField',
 			required: false,
 			system: false,
-			type: 'Date',
+			type: ObjectField.TypeEnum.Date,
 		},
 		{
-			DBType: 'DateTime',
-			businessType: 'DateTime',
+			businessType: ObjectField.BusinessTypeEnum.DateTime,
+			dBType: ObjectField.DBTypeEnum.DateTime,
 			externalReferenceCode: 'Test-DateTimeField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -349,11 +351,11 @@ const siteObjectDefinition: ObjectDefinition = {
 			],
 			required: false,
 			system: false,
-			type: 'DateTime',
+			type: ObjectField.TypeEnum.DateTime,
 		},
 		{
-			DBType: 'Double',
-			businessType: 'Decimal',
+			businessType: ObjectField.BusinessTypeEnum.Decimal,
+			dBType: ObjectField.DBTypeEnum.Double,
 			externalReferenceCode: 'Test-DecimalField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -363,11 +365,11 @@ const siteObjectDefinition: ObjectDefinition = {
 			name: 'testDecimalField',
 			required: false,
 			system: false,
-			type: 'Double',
+			type: ObjectField.TypeEnum.Double,
 		},
 		{
-			DBType: 'String',
-			businessType: 'Formula',
+			businessType: ObjectField.BusinessTypeEnum.Formula,
+			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-FormulaField',
 			indexed: false,
 			indexedAsKeyword: false,
@@ -381,11 +383,11 @@ const siteObjectDefinition: ObjectDefinition = {
 			],
 			required: false,
 			system: false,
-			type: 'String',
+			type: ObjectField.TypeEnum.String,
 		},
 		{
-			DBType: 'Integer',
-			businessType: 'Integer',
+			businessType: ObjectField.BusinessTypeEnum.Integer,
+			dBType: ObjectField.DBTypeEnum.Integer,
 			externalReferenceCode: 'Test-IntegerField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -395,11 +397,11 @@ const siteObjectDefinition: ObjectDefinition = {
 			name: 'testIntegerField',
 			required: false,
 			system: false,
-			type: 'Integer',
+			type: ObjectField.TypeEnum.Integer,
 		},
 		{
-			DBType: 'Long',
-			businessType: 'LongInteger',
+			businessType: ObjectField.BusinessTypeEnum.LongInteger,
+			dBType: ObjectField.DBTypeEnum.Long,
 			externalReferenceCode: 'Test-LongIntegerField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -409,11 +411,11 @@ const siteObjectDefinition: ObjectDefinition = {
 			name: 'testLongInteger',
 			required: false,
 			system: false,
-			type: 'Long',
+			type: ObjectField.TypeEnum.Long,
 		},
 		{
-			DBType: 'Clob',
-			businessType: 'LongText',
+			businessType: ObjectField.BusinessTypeEnum.LongText,
+			dBType: ObjectField.DBTypeEnum.Clob,
 			externalReferenceCode: 'Test-LongTextField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -423,11 +425,11 @@ const siteObjectDefinition: ObjectDefinition = {
 			name: 'testLongTextField',
 			required: false,
 			system: false,
-			type: 'Clob',
+			type: ObjectField.TypeEnum.Clob,
 		},
 		{
-			DBType: 'BigDecimal',
-			businessType: 'PrecisionDecimal',
+			businessType: ObjectField.BusinessTypeEnum.PrecisionDecimal,
+			dBType: ObjectField.DBTypeEnum.BigDecimal,
 			externalReferenceCode: 'Test-PrecisionDecimalField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -437,11 +439,11 @@ const siteObjectDefinition: ObjectDefinition = {
 			name: 'testPrecisionDecimalField',
 			required: false,
 			system: false,
-			type: 'BigDecimal',
+			type: ObjectField.TypeEnum.BigDecimal,
 		},
 		{
-			DBType: 'Clob',
-			businessType: 'RichText',
+			businessType: ObjectField.BusinessTypeEnum.RichText,
+			dBType: ObjectField.DBTypeEnum.Clob,
 			externalReferenceCode: 'Test-RichTextField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -451,11 +453,11 @@ const siteObjectDefinition: ObjectDefinition = {
 			name: 'testRichTextField',
 			required: false,
 			system: false,
-			type: 'Clob',
+			type: ObjectField.TypeEnum.Clob,
 		},
 		{
-			DBType: 'String',
-			businessType: 'Text',
+			businessType: ObjectField.BusinessTypeEnum.Text,
+			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-TextField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -465,12 +467,12 @@ const siteObjectDefinition: ObjectDefinition = {
 			name: 'testTextField',
 			required: false,
 			system: false,
-			type: 'String',
+			type: ObjectField.TypeEnum.String,
 		},
 	],
 	objectRelationships: [
 		{
-			deletionType: 'cascade',
+			deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
 			externalReferenceCode: 'test-Relationship',
 			label: {
 				en_US: 'Test Relationship',
@@ -483,7 +485,7 @@ const siteObjectDefinition: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: 'oneToMany',
+			type: ObjectRelationship.TypeEnum.OneToMany,
 		},
 	],
 	panelCategoryKey: 'site_administration.design',
@@ -498,14 +500,13 @@ test('can handle OnlyAddNewRecords and UpdateChangedRecordFields import strategi
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: companyObjectDefinition,
-		});
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			companyObjectDefinition
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -544,14 +545,13 @@ test('can import CSV file with an unexisting field', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: companyObjectDefinition,
-		});
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			companyObjectDefinition
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -615,14 +615,13 @@ test('can import CSV file with custom columns order', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: siteObjectDefinition,
-		});
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			siteObjectDefinition
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -689,14 +688,13 @@ test('can import CSV file with multiple site scoped object entries', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: siteObjectDefinition,
-		});
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			siteObjectDefinition
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -794,14 +792,13 @@ test('can import CSV file with new and existing site scoped object entries', asy
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: siteObjectDefinition,
-		});
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			siteObjectDefinition
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -911,14 +908,13 @@ test('can import CSV file with new and modified existing company scoped object e
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: companyObjectDefinition,
-		});
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			companyObjectDefinition
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -1025,15 +1021,12 @@ test('can map all imported fields', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
-
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: siteObjectDefinition,
-		});
-
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			siteObjectDefinition
+		);
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
 	await dataMigrationCenterPage.goto();
@@ -1061,14 +1054,13 @@ test('can preview CSV file', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: siteObjectDefinition,
-		});
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			siteObjectDefinition
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -1144,14 +1136,13 @@ test('can show duplicate error message with CSV import existing entry and only a
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: companyObjectDefinition,
-		});
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			companyObjectDefinition
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -1186,14 +1177,13 @@ test('can show unique contraint error message with CSV import existing entry and
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: companyObjectDefinition,
-		});
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			companyObjectDefinition
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -1249,14 +1239,13 @@ test('cannot import CSV file with empty headers row', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: siteObjectDefinition,
-		});
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			siteObjectDefinition
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -1288,14 +1277,13 @@ test('cannot import CSV file with object entry with UPSERT strategy', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: companyObjectDefinition,
-		});
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			companyObjectDefinition
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -1321,14 +1309,13 @@ test('cannot import empty CSV file', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: companyObjectDefinition,
-		});
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			companyObjectDefinition
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -1352,41 +1339,38 @@ test('can see correct custom object name in dropdown', async ({
 	apiHelpers,
 	dataMigrationCenterPage,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: {
-				active: true,
-				externalReferenceCode: 'stockERC',
-				label: {
-					en_US: 'stock',
-				},
-				name: 'Stock',
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'nameERC',
-						indexed: true,
-						indexedAsKeyword: true,
-						label: {
-							en_US: 'name',
-						},
-						name: 'name',
-						required: true,
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition({
+			active: true,
+			externalReferenceCode: 'stockERC',
+			label: {
+				en_US: 'stock',
+			},
+			name: 'Stock',
+			objectFields: [
+				{
+					businessType: ObjectField.BusinessTypeEnum.Text,
+					dBType: ObjectField.DBTypeEnum.String,
+					externalReferenceCode: 'nameERC',
+					indexed: true,
+					indexedAsKeyword: true,
+					label: {
+						en_US: 'name',
 					},
-				],
-				pluralLabel: {
-					en_US: 'stocks',
+					name: 'name',
+					required: true,
 				},
-				portlet: true,
-				scope: 'company',
-				status: {
-					code: 0,
-				},
+			],
+			pluralLabel: {
+				en_US: 'stocks',
+			},
+			portlet: true,
+			scope: 'company',
+			status: {
+				code: 0,
 			},
 		});
 
@@ -1428,14 +1412,13 @@ test('cannot see relationship nested field', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: companyObjectDefinition,
-		});
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			companyObjectDefinition
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -1457,8 +1440,8 @@ test.describe('can rely on anyOf form validation', () => {
 		name: 'Student',
 		objectFields: [
 			{
-				DBType: 'String',
-				businessType: 'Text',
+				businessType: ObjectField.BusinessTypeEnum.Text,
+				dBType: ObjectField.DBTypeEnum.String,
 				externalReferenceCode: 'student-name-field',
 				indexed: true,
 				indexedAsKeyword: false,
@@ -1471,12 +1454,12 @@ test.describe('can rely on anyOf form validation', () => {
 				required: true,
 				state: false,
 				system: false,
-				type: 'String',
+				type: ObjectField.TypeEnum.String,
 			},
 		],
 		objectRelationships: [
 			{
-				deletionType: 'cascade',
+				deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
 				externalReferenceCode: 'student-subjects-relationship-1',
 				label: {
 					en_US: 'Student subjects 1',
@@ -1488,8 +1471,8 @@ test.describe('can rely on anyOf form validation', () => {
 				objectDefinitionName2: 'Subject',
 				objectDefinitionSystem2: false,
 				objectField: {
-					DBType: 'Long',
-					businessType: 'Relationship',
+					businessType: ObjectField.BusinessTypeEnum.Relationship,
+					dBType: ObjectField.DBTypeEnum.Long,
 					externalReferenceCode:
 						'student-subjects-relationship-field-1',
 					indexed: true,
@@ -1499,22 +1482,23 @@ test.describe('can rely on anyOf form validation', () => {
 						en_US: 'Student subjects 1',
 					},
 					name: 'r_studentSubjects1_c_studentId',
-					readOnly: 'false',
-					relationshipType: 'oneToMany',
+					readOnly: ObjectField.ReadOnlyEnum.False,
+					relationshipType:
+						ObjectField.RelationshipTypeEnum.OneToMany,
 					required: true,
 					state: false,
 					system: false,
-					type: 'Long',
+					type: ObjectField.TypeEnum.Long,
 					unique: false,
 				},
 				parameterObjectFieldId: 0,
 				parameterObjectFieldName: '',
 				reverse: false,
 				system: false,
-				type: 'oneToMany',
+				type: ObjectRelationship.TypeEnum.OneToMany,
 			},
 			{
-				deletionType: 'cascade',
+				deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
 				externalReferenceCode: 'student-subjects-relationship-2',
 				label: {
 					en_US: 'Student subjects 2',
@@ -1526,8 +1510,8 @@ test.describe('can rely on anyOf form validation', () => {
 				objectDefinitionName2: 'Subject',
 				objectDefinitionSystem2: false,
 				objectField: {
-					DBType: 'Long',
-					businessType: 'Relationship',
+					businessType: ObjectField.BusinessTypeEnum.Relationship,
+					dBType: ObjectField.DBTypeEnum.Long,
 					externalReferenceCode:
 						'student-subjects-relationship-field-2',
 					indexed: true,
@@ -1537,22 +1521,23 @@ test.describe('can rely on anyOf form validation', () => {
 						en_US: 'Student subjects 2',
 					},
 					name: 'r_studentSubjects2_c_studentId',
-					readOnly: 'false',
-					relationshipType: 'oneToMany',
+					readOnly: ObjectField.ReadOnlyEnum.False,
+					relationshipType:
+						ObjectField.RelationshipTypeEnum.OneToMany,
 					required: true,
 					state: false,
 					system: false,
-					type: 'Long',
+					type: ObjectField.TypeEnum.Long,
 					unique: false,
 				},
 				parameterObjectFieldId: 0,
 				parameterObjectFieldName: '',
 				reverse: false,
 				system: false,
-				type: 'oneToMany',
+				type: ObjectRelationship.TypeEnum.OneToMany,
 			},
 			{
-				deletionType: 'cascade',
+				deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
 				externalReferenceCode: 'student-subjects-relationship-3',
 				label: {
 					en_US: 'Student subjects 3',
@@ -1564,8 +1549,8 @@ test.describe('can rely on anyOf form validation', () => {
 				objectDefinitionName2: 'Subject',
 				objectDefinitionSystem2: false,
 				objectField: {
-					DBType: 'Long',
-					businessType: 'Relationship',
+					businessType: ObjectField.BusinessTypeEnum.Relationship,
+					dBType: ObjectField.DBTypeEnum.Long,
 					externalReferenceCode:
 						'student-subjects-relationship-field-3',
 					indexed: true,
@@ -1575,19 +1560,20 @@ test.describe('can rely on anyOf form validation', () => {
 						en_US: 'Student subjects 3',
 					},
 					name: 'r_studentSubjects3_c_studentId',
-					readOnly: 'false',
-					relationshipType: 'oneToMany',
+					readOnly: ObjectField.ReadOnlyEnum.False,
+					relationshipType:
+						ObjectField.RelationshipTypeEnum.OneToMany,
 					required: false,
 					state: false,
 					system: false,
-					type: 'Long',
+					type: ObjectField.TypeEnum.Long,
 					unique: false,
 				},
 				parameterObjectFieldId: 0,
 				parameterObjectFieldName: '',
 				reverse: false,
 				system: false,
-				type: 'oneToMany',
+				type: ObjectRelationship.TypeEnum.OneToMany,
 			},
 		],
 		panelCategoryKey: 'control_panel.object',
@@ -1611,8 +1597,8 @@ test.describe('can rely on anyOf form validation', () => {
 		name: 'Subject',
 		objectFields: [
 			{
-				DBType: 'String',
-				businessType: 'Text',
+				businessType: ObjectField.BusinessTypeEnum.Text,
+				dBType: ObjectField.DBTypeEnum.String,
 				externalReferenceCode: 'subject-name-field',
 				indexed: true,
 				indexedAsKeyword: false,
@@ -1625,7 +1611,7 @@ test.describe('can rely on anyOf form validation', () => {
 				required: false,
 				state: false,
 				system: false,
-				type: 'String',
+				type: ObjectField.TypeEnum.String,
 			},
 		],
 		panelCategoryKey: 'control_panel.object',
@@ -1645,24 +1631,23 @@ test.describe('can rely on anyOf form validation', () => {
 		dataMigrationCenterPage,
 		page,
 	}) => {
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const subjectResponse =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: subjectObjectDefinition,
-			});
+		const {body: subjectResponse} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				subjectObjectDefinition
+			);
 
 		apiHelpers.data.push({
 			id: subjectResponse.id,
 			type: 'objectDefinition',
 		});
 
-		const studentResponse =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: studentObjectDefinition,
-			});
+		const {body: studentResponse} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				studentObjectDefinition
+			);
 
 		apiHelpers.data.push({
 			id: studentResponse.id,
@@ -1711,24 +1696,23 @@ test.describe('can rely on anyOf form validation', () => {
 		dataMigrationCenterPage,
 		page,
 	}) => {
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const subjectResponse =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: subjectObjectDefinition,
-			});
+		const {body: subjectResponse} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				subjectObjectDefinition
+			);
 
 		apiHelpers.data.push({
 			id: subjectResponse.id,
 			type: 'objectDefinition',
 		});
 
-		const studentResponse =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: studentObjectDefinition,
-			});
+		const {body: studentResponse} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				studentObjectDefinition
+			);
 
 		apiHelpers.data.push({
 			id: studentResponse.id,
@@ -1785,24 +1769,23 @@ test.describe('can rely on anyOf form validation', () => {
 		dataMigrationCenterPage,
 		page,
 	}) => {
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const subjectResponse =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: subjectObjectDefinition,
-			});
+		const {body: subjectResponse} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				subjectObjectDefinition
+			);
 
 		apiHelpers.data.push({
 			id: subjectResponse.id,
 			type: 'objectDefinition',
 		});
 
-		const studentResponse =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: studentObjectDefinition,
-			});
+		const {body: studentResponse} =
+			await objectDefinitionAPIClient.postObjectDefinition(
+				studentObjectDefinition
+			);
 
 		apiHelpers.data.push({
 			id: studentResponse.id,

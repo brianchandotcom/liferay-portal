@@ -6,9 +6,11 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {
-	ObjectAdminRestClient,
+	ObjectDefinitionApi,
 	ObjectField,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+	ObjectRelationship,
+	ObjectRelationshipApi,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
@@ -49,8 +51,8 @@ test.describe('Manage object entries through Page Templates', () => {
 	}) => {
 		const objectFields: ObjectField[] = [
 			{
-				DBType: 'String',
-				businessType: 'Text',
+				businessType: ObjectField.BusinessTypeEnum.Text,
+				dBType: ObjectField.DBTypeEnum.String,
 				externalReferenceCode: 'textField',
 				indexed: true,
 				indexedAsKeyword: false,
@@ -61,38 +63,34 @@ test.describe('Manage object entries through Page Templates', () => {
 				name: 'textField',
 				required: false,
 				system: false,
-				type: 'String',
+				type: ObjectField.TypeEnum.String,
 			},
 		];
 
 		const objectDefinitionExternalReferenceCode =
 			'ObjectDefinition' + getRandomInt();
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const objectDefinition1 =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: {
-					active: true,
-					enableLocalization: true,
-					externalReferenceCode:
-						objectDefinitionExternalReferenceCode,
-					label: {
-						en_US: objectDefinitionExternalReferenceCode,
-					},
-					name: objectDefinitionExternalReferenceCode,
-					objectFields,
-					objectFolderExternalReferenceCode: 'default',
-					pluralLabel: {
-						en_US: objectDefinitionExternalReferenceCode,
-					},
-					portlet: true,
-					scope: 'company',
-					status: {code: 0},
-					titleObjectFieldName: 'textField',
+		const {body: objectDefinition1} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				enableLocalization: true,
+				externalReferenceCode: objectDefinitionExternalReferenceCode,
+				label: {
+					en_US: objectDefinitionExternalReferenceCode,
 				},
+				name: objectDefinitionExternalReferenceCode,
+				objectFields,
+				objectFolderExternalReferenceCode: 'default',
+				pluralLabel: {
+					en_US: objectDefinitionExternalReferenceCode,
+				},
+				portlet: true,
+				scope: 'company',
+				status: {code: 0},
+				titleObjectFieldName: 'textField',
 			});
 
 		apiHelpers.data.push({
@@ -101,10 +99,11 @@ test.describe('Manage object entries through Page Templates', () => {
 		});
 
 		const objectDefinition2 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default'
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition2.id,
@@ -116,23 +115,25 @@ test.describe('Manage object entries through Page Templates', () => {
 		const objectRelationshipName =
 			'objectRelationshipName' + Math.floor(Math.random() * 99);
 
-		await objectAdminRestClient.objectRelationship.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipApi
+		);
+
+		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			objectDefinition1.externalReferenceCode,
 			{
-				externalReferenceCode: objectDefinition1.externalReferenceCode,
-				requestBody: {
-					label: {
-						en_US: objectRelationshipLabel,
-					},
-					name: objectRelationshipName,
-					objectDefinitionExternalReferenceCode1:
-						objectDefinition1.externalReferenceCode,
-					objectDefinitionExternalReferenceCode2:
-						objectDefinition2.externalReferenceCode,
-					objectDefinitionId1: objectDefinition1.id,
-					objectDefinitionId2: objectDefinition2.id,
-					objectDefinitionName2: objectDefinition2.name,
-					type: 'oneToMany' as ObjectRelationshipType,
+				label: {
+					en_US: objectRelationshipLabel,
 				},
+				name: objectRelationshipName,
+				objectDefinitionExternalReferenceCode1:
+					objectDefinition1.externalReferenceCode,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition2.externalReferenceCode,
+				objectDefinitionId1: objectDefinition1.id,
+				objectDefinitionId2: objectDefinition2.id,
+				objectDefinitionName2: objectDefinition2.name,
+				type: ObjectRelationship.TypeEnum.OneToMany,
 			}
 		);
 
@@ -209,29 +210,26 @@ test.describe('Manage object entries through Page Templates', () => {
 			type: 'listTypeDefinition',
 		});
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const objectDefinition =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: {
-					active: true,
-					label: {
-						en_US: objectDefinitionLabel,
-					},
-					name: objectDefinitionName,
-					objectFields,
-					pluralLabel: {
-						en_US: objectDefinitionLabel,
-					},
-					portlet: true,
-					scope: 'company',
-					status: {
-						code: 0,
-					},
-					titleObjectFieldName,
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				label: {
+					en_US: objectDefinitionLabel,
 				},
+				name: objectDefinitionName,
+				objectFields,
+				pluralLabel: {
+					en_US: objectDefinitionLabel,
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+				titleObjectFieldName,
 			});
 
 		apiHelpers.data.push({
@@ -277,12 +275,12 @@ test.describe('Manage object entries through Page Templates', () => {
 			let matchString: string;
 
 			switch (objectField.businessType) {
-				case 'AutoIncrement': {
+				case ObjectField.BusinessTypeEnum.AutoIncrement: {
 					matchString = '1';
 
 					break;
 				}
-				case 'Date': {
+				case ObjectField.BusinessTypeEnum.Date: {
 					const date = new Date(
 						Date.parse(objectEntry[objectField.name])
 					);
@@ -293,14 +291,14 @@ test.describe('Manage object entries through Page Templates', () => {
 
 					continue overloop;
 				}
-				case 'Picklist': {
+				case ObjectField.BusinessTypeEnum.Picklist: {
 					matchString = (
 						objectEntry[objectField.name] as {key: string}
 					).key;
 
 					break;
 				}
-				case 'MultiselectPicklist': {
+				case ObjectField.BusinessTypeEnum.MultiselectPicklist: {
 					(objectEntry[objectField.name] as string[]).forEach(
 						(listTypeEntry, index) => {
 							index < 1
@@ -360,29 +358,26 @@ test.describe('Manage object entries through View Object Entries', () => {
 			type: 'listTypeDefinition',
 		});
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const objectDefinition =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: {
-					active: true,
-					externalReferenceCode: getRandomString(),
-					label: {
-						en_US: getRandomString(),
-					},
-					name: 'ObjectDefinitionName' + getRandomInt(),
-					objectFields,
-					panelCategoryKey: 'control_panel.object',
-					pluralLabel: {
-						en_US: 'NewObject',
-					},
-					portlet: true,
-					scope: 'company',
-					status: {
-						code: 0,
-					},
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				externalReferenceCode: getRandomString(),
+				label: {
+					en_US: getRandomString(),
+				},
+				name: 'ObjectDefinitionName' + getRandomInt(),
+				objectFields,
+				panelCategoryKey: 'control_panel.object',
+				pluralLabel: {
+					en_US: 'NewObject',
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
 				},
 			});
 
@@ -399,14 +394,14 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		for (const objectField of objectFields) {
 			switch (objectField.businessType) {
-				case 'Attachment': {
+				case ObjectField.BusinessTypeEnum.Attachment: {
 					await viewObjectEntriesPage.selectFileFromDocumentsAndMedia(
 						ATTACHMENT_FILE_NAME
 					);
 
 					break;
 				}
-				case 'Boolean': {
+				case ObjectField.BusinessTypeEnum.Boolean: {
 					objectEntry[objectField.name]
 						? await page
 								.getByLabel(objectField.label['en_US'])
@@ -417,7 +412,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 					break;
 				}
-				case 'Picklist': {
+				case ObjectField.BusinessTypeEnum.Picklist: {
 					await viewObjectEntriesPage.selectDropdownItem(
 						objectField.label['en_US'],
 						objectEntry[objectField.name].key.toString()
@@ -446,29 +441,29 @@ test.describe('Manage object entries through View Object Entries', () => {
 			let matchString: string;
 
 			switch (businessType) {
-				case 'Attachment': {
+				case ObjectField.BusinessTypeEnum.Attachment: {
 					matchString = ATTACHMENT_FILE_NAME;
 
 					break;
 				}
-				case 'Boolean': {
+				case ObjectField.BusinessTypeEnum.Boolean: {
 					matchString = objectEntry[name] ? 'Yes' : 'No';
 
 					break;
 				}
-				case 'Date': {
+				case ObjectField.BusinessTypeEnum.Date: {
 					const date = new Date(objectEntry[name]);
 
 					matchString = getFDSDateFormat(date);
 
 					break;
 				}
-				case 'Picklist': {
+				case ObjectField.BusinessTypeEnum.Picklist: {
 					matchString = (objectEntry[name] as {key: string}).key;
 
 					break;
 				}
-				case 'MultiselectPicklist': {
+				case ObjectField.BusinessTypeEnum.MultiselectPicklist: {
 					(objectEntry[name] as string[]).forEach(
 						(listTypeEntry, index) => {
 							index < 1
@@ -479,7 +474,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 					break;
 				}
-				case 'RichText': {
+				case ObjectField.BusinessTypeEnum.RichText: {
 					matchString = objectEntry[name].substring(0, 35);
 
 					break;
@@ -524,29 +519,26 @@ test.describe('Manage object entries through View Object Entries', () => {
 			type: 'listTypeDefinition',
 		});
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const objectDefinition =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: {
-					active: true,
-					externalReferenceCode: getRandomString(),
-					label: {
-						en_US: getRandomString(),
-					},
-					name: 'ObjectDefinitionName' + getRandomInt(),
-					objectFields,
-					panelCategoryKey: 'control_panel.object',
-					pluralLabel: {
-						en_US: 'NewObject',
-					},
-					portlet: true,
-					scope: 'company',
-					status: {
-						code: 0,
-					},
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				externalReferenceCode: getRandomString(),
+				label: {
+					en_US: getRandomString(),
+				},
+				name: 'ObjectDefinitionName' + getRandomInt(),
+				objectFields,
+				panelCategoryKey: 'control_panel.object',
+				pluralLabel: {
+					en_US: 'NewObject',
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
 				},
 			});
 
@@ -570,7 +562,9 @@ test.describe('Manage object entries through View Object Entries', () => {
 		await page.getByPlaceholder(placeHolderText).click();
 
 		const multiselectPicklistField = objectFields.find(
-			({businessType}) => businessType === 'MultiselectPicklist'
+			({businessType}) =>
+				businessType ===
+				ObjectField.BusinessTypeEnum.MultiselectPicklist
 		);
 
 		const firstOptionName = objectEntry[multiselectPicklistField.name][0];
@@ -609,29 +603,26 @@ test.describe('Manage object entries through View Object Entries', () => {
 			objectFieldBusinessTypes: ['attachment'],
 		});
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const objectDefinition =
-			await objectAdminRestClient.objectDefinition.postObjectDefinition({
-				requestBody: {
-					active: true,
-					externalReferenceCode: getRandomString(),
-					label: {
-						en_US: getRandomString(),
-					},
-					name: 'ObjectDefinitionName' + getRandomInt(),
-					objectFields,
-					panelCategoryKey: 'control_panel.object',
-					pluralLabel: {
-						en_US: 'NewObject',
-					},
-					portlet: true,
-					scope: 'company',
-					status: {
-						code: 0,
-					},
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				externalReferenceCode: getRandomString(),
+				label: {
+					en_US: getRandomString(),
+				},
+				name: 'ObjectDefinitionName' + getRandomInt(),
+				objectFields,
+				panelCategoryKey: 'control_panel.object',
+				pluralLabel: {
+					en_US: 'NewObject',
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
 				},
 			});
 
@@ -683,11 +674,12 @@ test.describe('Manage object entries through View Object Entries', () => {
 		viewObjectEntriesPage,
 	}) => {
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-				titleObjectFieldName: 'textField',
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default',
+				'textField'
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition1.id,
@@ -695,10 +687,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 		});
 
 		const objectDefinition2 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default'
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition2.id,
@@ -710,27 +703,25 @@ test.describe('Manage object entries through View Object Entries', () => {
 		const objectRelationshipName =
 			'objectRelationshipName' + Math.floor(Math.random() * 99);
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
+		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipApi
 		);
 
-		await objectAdminRestClient.objectRelationship.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			objectDefinition1.externalReferenceCode,
 			{
-				externalReferenceCode: objectDefinition1.externalReferenceCode,
-				requestBody: {
-					label: {
-						en_US: objectRelationshipLabel,
-					},
-					name: objectRelationshipName,
-					objectDefinitionExternalReferenceCode1:
-						objectDefinition1.externalReferenceCode,
-					objectDefinitionExternalReferenceCode2:
-						objectDefinition2.externalReferenceCode,
-					objectDefinitionId1: objectDefinition1.id,
-					objectDefinitionId2: objectDefinition2.id,
-					objectDefinitionName2: objectDefinition2.name,
-					type: 'oneToMany' as ObjectRelationshipType,
+				label: {
+					en_US: objectRelationshipLabel,
 				},
+				name: objectRelationshipName,
+				objectDefinitionExternalReferenceCode1:
+					objectDefinition1.externalReferenceCode,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition2.externalReferenceCode,
+				objectDefinitionId1: objectDefinition1.id,
+				objectDefinitionId2: objectDefinition2.id,
+				objectDefinitionName2: objectDefinition2.name,
+				type: ObjectRelationship.TypeEnum.OneToMany,
 			}
 		);
 
@@ -768,13 +759,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 		viewObjectEntriesPage,
 	}) => {
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					mockedObjectFields.attachmentFieldDocumentsAndMedia,
-				],
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				[mockedObjectFields.attachmentFieldDocumentsAndMedia],
+				'default'
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
@@ -804,11 +793,12 @@ test.describe('Manage object entries through Workflow', () => {
 		workflowTasksPage,
 	}) => {
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-				titleObjectFieldName: 'textField',
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default',
+				'textField'
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
@@ -847,7 +837,7 @@ test.describe('Manage object entries through Workflow', () => {
 		const objectFieldValue = getRandomString();
 
 		await viewObjectEntriesPage.fillObjectEntry({
-			objectFieldBusinessType: 'Text',
+			objectFieldBusinessType: ObjectField.BusinessTypeEnum.Text,
 			objectFieldLabel: objectDefinition.titleObjectFieldName,
 			objectFieldValue,
 		});
@@ -873,11 +863,12 @@ test.describe('Manage object entries through Workflow', () => {
 		const assetType = 'Single Approver';
 
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-				titleObjectFieldName: 'textField',
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default',
+				'textField'
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,

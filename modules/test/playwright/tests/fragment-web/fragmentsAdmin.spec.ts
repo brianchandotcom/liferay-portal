@@ -6,6 +6,7 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
+import {ObjectDefinitionApi} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
@@ -776,10 +777,14 @@ test(
 			key: basicFragmentEntryName,
 		});
 
-		const {className: objectDefinitionClassName} =
-			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+		const objectDefinitionApiClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		const {className: objectDefinitionClassName} = (
+			await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
 				LEMON_OBJECT_ERC
-			);
+			)
+		).body;
 
 		const inputFragmentDefinition = getFragmentDefinition({
 			id: getRandomString(),

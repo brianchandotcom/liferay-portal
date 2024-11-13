@@ -1201,6 +1201,12 @@ public class LayoutStructure {
 		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 			itemId);
 
+		if (layoutStructureItem instanceof DropZoneLayoutStructureItem) {
+			throw new UnsupportedOperationException(
+				"Duplicating the drop zone of a layout structure is not " +
+					"allowed");
+		}
+
 		LayoutStructureItem newLayoutStructureItem =
 			LayoutStructureItemUtil.create(
 				layoutStructureItem.getItemType(), parentItemId);

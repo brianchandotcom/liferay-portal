@@ -61,6 +61,45 @@
 	}
 }
 
+// TODO: remove the css customization bellow along with the removal of feature flag LPS-193005
+
+.dnd-table {
+	.dnd-td,
+	.dnd-th {
+		&.cell-actions {
+			max-width: 72px;
+		}
+
+		&.cell-dateModified {
+			min-width: 230px;
+		}
+
+		&.cell-label {
+			min-width: 250px;
+		}
+
+		&.cell-permissionInheritance {
+			max-width: 130px;
+		}
+
+		&.cell-scope {
+			min-width: 109px;
+		}
+
+		&.cell-status {
+			min-width: 113px;
+		}
+
+		&.cell-system {
+			max-width: 100px;
+		}
+
+		&.cell-type {
+			min-width: 107px;
+		}
+	}
+}
+
 .cursor-pointer {
 	cursor: pointer;
 }

@@ -5523,7 +5523,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.xstream.jar!xstream.jar</file-name>
-				<version>1.4.20</version>
+				<version>1.4.21</version>
 				<project-name>XStream Core</project-name>
 				<project-url>http://x-stream.github.io</project-url>
 				<licenses>

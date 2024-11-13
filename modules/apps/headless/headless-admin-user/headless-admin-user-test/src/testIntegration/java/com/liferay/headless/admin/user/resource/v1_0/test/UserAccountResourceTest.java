@@ -1884,6 +1884,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 			assertEquals(postUserAccount, getUserAccount);
 			assertValid(getUserAccount);
+
 			Assert.assertNull(getUserAccount.getGender());
 
 			portletPreferences.setValue(
@@ -2029,6 +2030,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 			assertEquals(randomUserAccount, patchUserAccount);
 			assertValid(patchUserAccount);
+
 			Assert.assertNull(patchUserAccount.getGender());
 
 			User user = _userLocalService.getUser(patchUserAccount.getId());
@@ -2045,6 +2047,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 			assertEquals(randomUserAccount, patchUserAccount);
 			assertValid(patchUserAccount);
+
 			Assert.assertEquals(
 				patchUserAccount.getGender(), UserAccount.Gender.FEMALE);
 		}
@@ -2204,6 +2207,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 			assertEquals(randomUserAccount, postUserAccount);
 			assertValid(postUserAccount);
+
 			Assert.assertNull(postUserAccount.getGender());
 
 			User user = _userLocalService.getUser(postUserAccount.getId());
@@ -2224,6 +2228,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 			assertEquals(randomUserAccount, postUserAccount);
 			assertValid(postUserAccount);
+
 			Assert.assertEquals(
 				postUserAccount.getGender(), UserAccount.Gender.FEMALE);
 		}

@@ -10,22 +10,18 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 
 @NgModule({
-	bootstrap: [AppComponent],
 	declarations: [AppComponent],
 	imports: [BrowserModule],
 	providers: [],
 })
 export class AppModule {
-	constructor(private injector: Injector) {}
-
-	ngDoBootstrap() {
-		const AppComponentElement = createCustomElement(AppComponent, {
+	constructor(private injector: Injector) {
+		const appElement = createCustomElement(AppComponent, {
 			injector: this.injector,
 		});
 
-		customElements.define(
-			'liferay-sample-custom-element-3',
-			AppComponentElement
-		);
+		customElements.define('liferay-sample-custom-element-3', appElement);
 	}
+
+	ngDoBootstrap() {}
 }

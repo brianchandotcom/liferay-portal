@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {TestBed} from '@angular/core/testing';
+import {TestBed, tick} from '@angular/core/testing';
 
 import {AppComponent} from './app.component';
 
@@ -33,5 +33,15 @@ describe('AppComponent', () => {
 		expect(compiled.querySelector('.content span')?.textContent).toContain(
 			'liferay-sample-custom-element-3 app is running!'
 		);
+	});
+
+	it('should run ngOnInit once', () => {
+		const fixture = TestBed.createComponent(AppComponent);
+		const log = spyOn(fixture.componentInstance, 'logMessage');
+		expect(log).not.toHaveBeenCalled();
+
+		fixture.detectChanges();
+
+		expect(log).toHaveBeenCalledTimes(1);
 	});
 });

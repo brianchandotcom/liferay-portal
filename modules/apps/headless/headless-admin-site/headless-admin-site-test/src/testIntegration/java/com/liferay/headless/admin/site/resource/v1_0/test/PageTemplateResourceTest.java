@@ -18,6 +18,7 @@ import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -64,22 +65,83 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Ignore
 	@Override
 	@Test
 	public void testDeleteSiteSiteByExternalReferenceCodePageTemplate()
 		throws Exception {
 
-		super.testDeleteSiteSiteByExternalReferenceCodePageTemplate();
+		PageTemplate pageTemplate =
+			testPostSiteSiteByExternalReferenceCodePageTemplate_addPageTemplate(
+				randomPageTemplate());
+
+		_testDeleteSiteSiteByExternalReferenceCodePageTemplate(
+			testGroup, pageTemplate.getExternalReferenceCode());
+
+		_enableLocalStaging();
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				pageTemplateResource.
+					deleteSiteSiteByExternalReferenceCodePageTemplate(
+						testGroup.getExternalReferenceCode(),
+						pageTemplate.getExternalReferenceCode()));
+
+		_withCompanyGroupWidgetPageTemplate(
+			(group, widgetPageTemplate) -> {
+				_postSiteSiteByExternalReferenceCodePageTemplate(
+					widgetPageTemplate, group.getExternalReferenceCode());
+
+				_testDeleteSiteSiteByExternalReferenceCodePageTemplate(
+					group, widgetPageTemplate.getExternalReferenceCode());
+			});
+
+		_withDepotEntry(
+			group -> _assertProblemException(
+				"BAD_REQUEST",
+				() ->
+					pageTemplateResource.
+						deleteSiteSiteByExternalReferenceCodePageTemplate(
+							group.getExternalReferenceCode(),
+							RandomTestUtil.randomString())));
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageTemplate()
 		throws Exception {
 
-		super.testGetSiteSiteByExternalReferenceCodePageTemplate();
+		PageTemplate pageTemplate =
+			testPostSiteSiteByExternalReferenceCodePageTemplate_addPageTemplate(
+				randomPageTemplate());
+
+		_testGetSiteSiteByExternalReferenceCodeMasterPage(pageTemplate);
+
+		_assertProblemException(
+			"NOT_FOUND",
+			() ->
+				pageTemplateResource.
+					getSiteSiteByExternalReferenceCodePageTemplate(
+						testGroup.getExternalReferenceCode(),
+						RandomTestUtil.randomString()));
+
+		_enableLocalStaging();
+
+		_testGetSiteSiteByExternalReferenceCodeMasterPage(pageTemplate);
+
+		_withCompanyGroupWidgetPageTemplate(
+			(group, widgetPageTemplate) ->
+				_postSiteSiteByExternalReferenceCodePageTemplate(
+					widgetPageTemplate, group.getExternalReferenceCode()));
+
+		_withDepotEntry(
+			group -> _assertProblemException(
+				"BAD_REQUEST",
+				() ->
+					pageTemplateResource.
+						getSiteSiteByExternalReferenceCodePageTemplate(
+							group.getExternalReferenceCode(),
+							RandomTestUtil.randomString())));
 	}
 
 	@Ignore
@@ -137,6 +199,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		_withDepotEntry(
 			group -> _assertProblemException(
+				"BAD_REQUEST",
 				() ->
 					_getSiteSiteByExternalReferenceCodePageTemplatesPageTotalCount(
 						group.getExternalReferenceCode())));
@@ -312,7 +375,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	}
 
 	private void _assertProblemException(
-			UnsafeRunnable<Exception> unsafeRunnable)
+			String status, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		try {
@@ -323,7 +386,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(status, problem.getStatus());
 			Assert.assertNull(problem.getTitle());
 		}
 	}
@@ -454,6 +517,46 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					siteExternalReferenceCode, pageTemplate));
 	}
 
+	private void _testDeleteSiteSiteByExternalReferenceCodePageTemplate(
+			Group group, String pageTemplateExternalReferenceCode)
+		throws Exception {
+
+		Assert.assertNotNull(
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					pageTemplateExternalReferenceCode, group.getGroupId()));
+
+		pageTemplateResource.deleteSiteSiteByExternalReferenceCodePageTemplate(
+			group.getExternalReferenceCode(),
+			pageTemplateExternalReferenceCode);
+
+		Assert.assertNull(
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					pageTemplateExternalReferenceCode, group.getGroupId()));
+
+		_assertProblemException(
+			"NOT_FOUND",
+			() ->
+				pageTemplateResource.
+					deleteSiteSiteByExternalReferenceCodePageTemplate(
+						group.getExternalReferenceCode(),
+						pageTemplateExternalReferenceCode));
+	}
+
+	private void _testGetSiteSiteByExternalReferenceCodeMasterPage(
+			PageTemplate pageTemplate)
+		throws Exception {
+
+		PageTemplate getPageTemplate =
+			pageTemplateResource.getSiteSiteByExternalReferenceCodePageTemplate(
+				testGroup.getExternalReferenceCode(),
+				pageTemplate.getExternalReferenceCode());
+
+		assertEquals(pageTemplate, getPageTemplate);
+		assertValid(getPageTemplate);
+	}
+
 	private void _testPostSiteSiteByExternalReferenceCodePageTemplate()
 		throws Exception {
 
@@ -477,6 +580,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		_enableLocalStaging();
 
 		_assertProblemException(
+			"BAD_REQUEST",
 			() -> _postSiteSiteByExternalReferenceCodePageTemplate(
 				_getPageTemplate(testGroup),
 				testGroup.getExternalReferenceCode()));
@@ -487,6 +591,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					widgetPageTemplate, group.getExternalReferenceCode());
 
 				_assertProblemException(
+					"BAD_REQUEST",
 					() ->
 						pageTemplateResource.
 							postSiteSiteByExternalReferenceCodePageTemplate(
@@ -496,6 +601,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		_withDepotEntry(
 			group -> _assertProblemException(
+				"BAD_REQUEST",
 				() ->
 					pageTemplateResource.
 						postSiteSiteByExternalReferenceCodePageTemplate(

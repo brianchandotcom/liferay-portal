@@ -39,6 +39,42 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 
 	@Override
+	public void deleteSiteSiteByExternalReferenceCodePageExperience(
+			String siteExternalReferenceCode,
+			String pageExperienceExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		_segmentsExperienceService.deleteSegmentsExperience(
+			pageExperienceExternalReferenceCode, group.getGroupId());
+	}
+
+	@Override
+	public PageExperience getSiteSiteByExternalReferenceCodePageExperience(
+			String siteExternalReferenceCode,
+			String pageExperienceExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		return _pageExperienceDTOConverter.toDTO(
+			_segmentsExperienceService.
+				getSegmentsExperienceByExternalReferenceCode(
+					pageExperienceExternalReferenceCode, group.getGroupId()));
+	}
+
+	@Override
 	public Page<PageExperience>
 			getSiteSiteByExternalReferenceCodePageSpecificationPageExperiencesPage(
 				String siteExternalReferenceCode,
@@ -91,6 +127,68 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		}
 
 		return _addSegmentsExperience(group, layout, pageExperience);
+	}
+
+	@Override
+	public PageExperience putSiteSiteByExternalReferenceCodePageExperience(
+			String siteExternalReferenceCode,
+			String pageExperienceExternalReferenceCode,
+			PageExperience pageExperience)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceService.
+				fetchSegmentsExperienceByExternalReferenceCode(
+					pageExperienceExternalReferenceCode, group.getGroupId());
+
+		if (segmentsExperience == null) {
+			Layout layout =
+				_layoutLocalService.fetchLayoutByExternalReferenceCode(
+					pageExperience.getSitePageExternalReferenceCode(),
+					group.getGroupId());
+
+			if (layout == null) {
+				throw new UnsupportedOperationException();
+			}
+
+			return _addSegmentsExperience(group, layout, pageExperience);
+		}
+
+		if ((pageExperience.getPriority() != null) &&
+			(segmentsExperience.getPriority() !=
+				pageExperience.getPriority())) {
+
+			segmentsExperience =
+				_segmentsExperienceService.updateSegmentsExperiencePriority(
+					segmentsExperience.getSegmentsExperienceId(),
+					GetterUtil.getInteger(pageExperience.getPriority()));
+		}
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				group.getGroupId(),
+				pageExperience.getSegmentExternalReferenceCode());
+
+		if (segmentsEntry == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _pageExperienceDTOConverter.toDTO(
+			_segmentsExperienceService.updateSegmentsExperience(
+				segmentsExperience.getSegmentsExperienceId(),
+				segmentsEntry.getSegmentsEntryId(),
+				LocalizedMapUtil.getLocalizedMap(pageExperience.getName_i18n()),
+				true,
+				UnicodePropertiesBuilder.create(
+					true
+				).build()));
 	}
 
 	private PageExperience _addSegmentsExperience(

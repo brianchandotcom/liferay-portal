@@ -5,37 +5,54 @@
 
 package com.liferay.frontend.taglib.sample.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Antonio Ortega
  */
 public class FrontendSampleDisplayContext {
 
-	public List<TabsItem> getTabsItems() {
-		if (_tabsItems != null) {
-			return _tabsItems;
-		}
+	public FrontendSampleDisplayContext(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_tabsItems = TabsItemListBuilder.add(
-			tabsItem -> {
-				tabsItem.setActive(true);
-				tabsItem.setLabel("Search Iterator");
-				tabsItem.setPanelId("search_iterator");
-			}
-		).add(
-			tabsItem -> {
-				tabsItem.setLabel("Search Paginator");
-				tabsItem.setPanelId("search_paginator");
-			}
-		).build();
-
-		return _tabsItems;
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 	}
 
-	private List<TabsItem> _tabsItems;
+	public List<NavigationItem> getNavigationItems() {
+		String navigation = ParamUtil.getString(
+			PortalUtil.getHttpServletRequest(_renderRequest), "navigation",
+			"search-iterator");
+
+		return NavigationItemList.of(
+			NavigationItemBuilder.setActive(
+				navigation.equals("search-iterator")
+			).setHref(
+				_renderResponse.createRenderURL(), "navigation",
+				"search-iterator"
+			).setLabel(
+				"Search Iterator"
+			).build(),
+			NavigationItemBuilder.setActive(
+				navigation.equals("search-paginator")
+			).setHref(
+				_renderResponse.createRenderURL(), "navigation",
+				"search-paginator"
+			).setLabel(
+				"Search Paginator"
+			).build());
+	}
+
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 
 }

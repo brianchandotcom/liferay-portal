@@ -124,6 +124,10 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				_CURRENT_DATE_STRING,
 			null, filePath);
 
+		JenkinsResultsParserUtil.rsync(
+			null, _ARCHIVE_BASE_DIR_PATH + "/reports/" + _CURRENT_DATE_STRING,
+			null, filePath);
+
 		CloudStorageSyncUtil.syncGCPFiles(
 			_ARCHIVE_BASE_DIR_PATH + "/reports",
 			CloudStorageSyncUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA + "/reports");

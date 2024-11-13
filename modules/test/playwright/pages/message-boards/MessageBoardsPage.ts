@@ -59,6 +59,22 @@ export class MessageBoardsPage {
 		);
 	}
 
+	async goToThreadPriorities(siteUrl?: Site['friendlyUrlPath']) {
+		this.goto(siteUrl);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Configuration'}),
+			trigger: this.optionsMenu,
+		});
+
+		await this.page
+			.getByRole('menuitem', {name: 'Thread Priorities'})
+			.click();
+	}
+
 	async goToCreateNewThread() {
 		await clickAndExpectToBeVisible({
 			autoClick: true,

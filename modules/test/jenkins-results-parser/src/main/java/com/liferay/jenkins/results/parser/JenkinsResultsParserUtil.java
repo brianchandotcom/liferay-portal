@@ -2412,6 +2412,21 @@ public class JenkinsResultsParserUtil {
 		return _JENKINS_DIST_ROOT_PATH_DEFAULT;
 	}
 
+	public static String getJenkinsGitHubURL() {
+		try {
+			String jenkinsGitHubURL = getBuildProperty("jenkins.github.url");
+
+			if (isURL(jenkinsGitHubURL)) {
+				return jenkinsGitHubURL;
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return _URL_JENKINS_GITHUB_DEFAULT;
+	}
+
 	public static String getJenkinsLoadBalancerURL() {
 		try {
 			String jenkinsLoadBalancerURL = getBuildProperty(
@@ -6899,6 +6914,9 @@ public class JenkinsResultsParserUtil {
 	private static final int _SECONDS_RETRY_PERIOD_MAX = 60 * 30;
 
 	private static final String _UPSTREAM_USER_NAME_DEFAULT = "liferay";
+
+	private static final String _URL_JENKINS_GITHUB_DEFAULT =
+		"https://github.com/liferay/liferay-jenkins-ee/tree/master";
 
 	private static final String _URL_LOAD_BALANCER_DEFAULT =
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/load_balancer";

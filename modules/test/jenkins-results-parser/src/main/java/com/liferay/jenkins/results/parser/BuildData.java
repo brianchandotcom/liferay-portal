@@ -18,9 +18,6 @@ public interface BuildData {
 
 	public static final File DIR_WORKSPACE_DEFAULT = new File(".");
 
-	public static final String URL_JENKINS_GITHUB_DEFAULT =
-		"https://github.com/liferay/liferay-jenkins-ee/tree/master";
-
 	public File getArtifactDir();
 
 	public String getBuildDescription();

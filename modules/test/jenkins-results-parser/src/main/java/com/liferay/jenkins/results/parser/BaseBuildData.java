@@ -354,7 +354,7 @@ public abstract class BaseBuildData implements BuildData {
 			setBuildDescription(_getDefaultBuildDescription());
 		}
 
-		setJenkinsGitHubURL(URL_JENKINS_GITHUB_DEFAULT);
+		setJenkinsGitHubURL(JenkinsResultsParserUtil.getJenkinsGitHubURL());
 		setWorkspaceDir(DIR_WORKSPACE_DEFAULT);
 
 		validateKeys(_KEYS_REQUIRED);

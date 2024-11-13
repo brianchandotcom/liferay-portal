@@ -684,7 +684,7 @@ const CustomDataSets = ({
 						href: permissionsURL,
 						icon: 'password-policies',
 						label: Liferay.Language.get('permissions'),
-						target: 'modal',
+						target: 'modal-permissions',
 					},
 					{
 						separator: true,

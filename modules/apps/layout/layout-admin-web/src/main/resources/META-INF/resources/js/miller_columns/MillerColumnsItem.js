@@ -158,7 +158,14 @@ const MillerColumnsItem = ({
 	getItemActionsURL,
 	isLayoutSetPrototype,
 	isPrivateLayoutsEnabled,
-	item: {
+	item,
+	items,
+	namespace,
+	onItemDrop = noop,
+	onItemStayHover = noop,
+	rtl,
+}) => {
+	const {
 		active,
 		bulkActions = [],
 		checked,
@@ -179,13 +186,8 @@ const MillerColumnsItem = ({
 		title,
 		url,
 		viewUrl,
-	},
-	items,
-	namespace,
-	onItemDrop = noop,
-	onItemStayHover = noop,
-	rtl,
-}) => {
+	} = item;
+
 	const ref = useRef();
 	const timeoutRef = useRef();
 

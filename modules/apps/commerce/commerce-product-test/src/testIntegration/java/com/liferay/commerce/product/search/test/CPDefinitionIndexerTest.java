@@ -138,6 +138,53 @@ public class CPDefinitionIndexerTest {
 		Assert.assertEquals("test", summary.getContent());
 	}
 
+	@Test
+	public void testSearchByGtin() throws Exception {
+		CommerceCatalog catalog =
+			_commerceCatalogLocalService.addCommerceCatalog(
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
+			catalog.getGroupId());
+
+		cpInstance.setGtin(
+			RandomTestUtil.randomString() + cpInstance.getCPInstanceId());
+
+		cpInstance = _cpInstanceLocalService.updateCPInstance(cpInstance);
+
+		_indexer.reindex(cpInstance.getCPDefinition());
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(_group.getCompanyId());
+		searchContext.setEntryClassNames(
+			new String[] {CPDefinition.class.getName()});
+		searchContext.setGroupIds(new long[] {catalog.getGroupId()});
+		searchContext.setKeywords(RandomTestUtil.randomString());
+
+		Hits hits = _indexer.search(searchContext);
+
+		HitsAssert.assertNoHits(hits);
+
+		searchContext.setKeywords(cpInstance.getGtin());
+
+		hits = _indexer.search(searchContext);
+
+		Document actualDocument = HitsAssert.assertOnlyOne(hits);
+
+		Document expectedDocument = _indexer.getDocument(
+			cpInstance.getCPDefinition());
+
+		Assert.assertEquals(
+			expectedDocument.get("entryClassPK"),
+			actualDocument.get("entryClassPK"));
+		Assert.assertEquals(
+			expectedDocument.get("gtins"), cpInstance.getGtin());
+	}
+
 	private void _setUp(String expandoValue, CPInstance cpInstance)
 		throws Exception {
 

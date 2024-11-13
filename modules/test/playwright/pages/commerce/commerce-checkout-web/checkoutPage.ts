@@ -264,4 +264,24 @@ export class CheckoutPage extends CommerceDNDTablePage {
 			await expect(this.orderSuccessMessage).toBeVisible();
 		}
 	}
+
+	async performCheckoutUntilStep(stopAt: string) {
+		let currentStep = await this.activeCheckoutStep.textContent();
+
+		while (!currentStep.includes(stopAt)) {
+			await this.continueButton.click();
+
+			await expect(async () => {
+				const nextStep = await this.activeCheckoutStep.textContent({
+					timeout: 1000,
+				});
+
+				expect(currentStep !== nextStep).toBeTruthy();
+
+				currentStep = nextStep;
+			}).toPass();
+		}
+
+		return;
+	}
 }

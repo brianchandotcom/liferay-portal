@@ -561,7 +561,7 @@
 				},
 				"schemaVersionCheckEnabled": {
 					"default": false,
-					"description": "Enabling the Schema Version Check will allow unpublished publications to go Out-of-Date after an upgrade.",
+					"description": "Enabling the schema version check will allow unpublished publications to go out-of-date after an upgrade.",
 					"title": "Schema Version Check Enabled",
 					"type": "boolean"
 				}

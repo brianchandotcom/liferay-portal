@@ -277,11 +277,7 @@ function Filters({
 			storedFiltersOrder === filtersOrder
 		) {
 			setFilters(
-				sortItems(
-					filters,
-					storedFiltersOrder,
-					true
-				) as FilterCollection
+				sortItems(filters, storedFiltersOrder, true) as FilterCollection
 			);
 
 			openDefaultSuccessToast();

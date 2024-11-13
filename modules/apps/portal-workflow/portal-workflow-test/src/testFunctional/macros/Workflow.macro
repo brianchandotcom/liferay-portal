@@ -162,7 +162,7 @@ definition {
 			workflowAssignedTo = ${workflowAssignedTo},
 			workflowTask = ${workflowTask});
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Approve");
 
 		Workflow.confirmWorkflowAction();
 
@@ -250,7 +250,7 @@ definition {
 
 	@summary = "Default summary"
 	macro assignByDetails(comment = null, user = null) {
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to...");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to...");
 
 		AssertTextEquals(
 			locator1 = "WCPreview#PREVIEW_TITLE",
@@ -343,7 +343,7 @@ definition {
 			workflowAssetTitle = ${workflowAssetTitle},
 			workflowTask = ${workflowTask});
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 		Workflow.confirmWorkflowAction();
 
@@ -828,7 +828,7 @@ definition {
 			workflowAssignedTo = ${workflowAssignedTo},
 			workflowTask = ${workflowTask});
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Reject");
 
 		Workflow.confirmWorkflowAction();
 
@@ -880,7 +880,7 @@ definition {
 			workflowAssignedTo = ${workflowAssignedTo},
 			workflowTask = ${workflowTask});
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Resubmit");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Resubmit");
 
 		Button.clickDone();
 

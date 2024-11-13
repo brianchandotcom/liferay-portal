@@ -53,11 +53,11 @@ definition {
 
 		Notifications.clickOnTheNotificationTitle(key_notificationsTitle = "sent you a User for review in the workflow.");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 		Workflow.confirmWorkflowAction();
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Approve");
 
 		Workflow.confirmWorkflowAction();
 

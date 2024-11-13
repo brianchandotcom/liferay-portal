@@ -89,11 +89,11 @@ definition {
 					locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 					value1 = "Category Manager sent you a Product Link for review in the workflow.");
 
-				LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 				Workflow.confirmWorkflowAction();
 
-				LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Approve");
 
 				Workflow.confirmWorkflowAction();
 
@@ -177,11 +177,11 @@ definition {
 				assetType = "Product Link",
 				user = "Category Manager");
 
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 			Workflow.confirmWorkflowAction();
 
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Approve");
 
 			Workflow.confirmWorkflowAction();
 		}
@@ -260,11 +260,11 @@ definition {
 				assetType = "Product Link",
 				user = "Category Manager");
 
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 			Workflow.confirmWorkflowAction();
 
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Reject");
 
 			Workflow.confirmWorkflowAction();
 		}
@@ -298,7 +298,7 @@ definition {
 				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 				value1 = "Your submission was rejected by Test Test, please modify and resubmit.");
 
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Resubmit");
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Resubmit");
 
 			Workflow.confirmWorkflowAction();
 		}
@@ -314,11 +314,11 @@ definition {
 				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 				value1 = "Category Manager sent you a Product Link for review in the workflow.");
 
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 			Workflow.confirmWorkflowAction();
 
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Approve");
 
 			Workflow.confirmWorkflowAction();
 		}
@@ -404,11 +404,11 @@ definition {
 					locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 					value1 = "Category Manager sent you a Product Link for review in the workflow.");
 
-				LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 				Workflow.confirmWorkflowAction();
 
-				LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
+				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Reject");
 
 				Workflow.confirmWorkflowAction();
 
@@ -450,7 +450,7 @@ definition {
 					locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 					value1 = "Your submission was rejected by Test Test, please modify and resubmit.");
 
-				LexiconEntry.gotoEllipsisMenuItem(menuItem = "Resubmit");
+				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Resubmit");
 
 				Workflow.confirmWorkflowAction();
 
@@ -472,11 +472,11 @@ definition {
 					locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 					value1 = "Category Manager sent you a Product Link for review in the workflow.");
 
-				LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 				Workflow.confirmWorkflowAction();
 
-				LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Approve");
 
 				Workflow.confirmWorkflowAction();
 

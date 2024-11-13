@@ -161,11 +161,11 @@ definition {
 				assetType = "Form Record",
 				user = "user1 user1");
 
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 			Workflow.confirmWorkflowAction();
 
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Approve");
 
 			Workflow.confirmWorkflowAction();
 

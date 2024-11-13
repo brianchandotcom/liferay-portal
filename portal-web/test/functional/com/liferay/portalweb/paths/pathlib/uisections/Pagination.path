@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>PARTICULAR_PAGE</td>
-	<td>//ul[@class='pagination']/li[@class='page-item active']/a[contains(.,'${key_pageNumber}')]</td>
+	<td>//ul[contains(@class,'pagination')]/li[contains(@class,'page-item')]/a[contains(.,'${key_pageNumber}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -91,8 +91,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CURRENT_PAGE_MENU</td>
-	<td>//div[contains(@class,'current-page-menu')]/a[contains(@class,'toggle')]</td>
+	<td>CURRENT_PAGE_LINK</td>
+	<td>//ul[contains(@class,'pagination')]//li[contains(@class,'page-item') and contains(@class,'active')]/a</td>
 	<td></td>
 </tr>
 <tr>

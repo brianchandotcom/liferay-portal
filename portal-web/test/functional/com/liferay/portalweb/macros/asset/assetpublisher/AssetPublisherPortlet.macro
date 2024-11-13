@@ -44,14 +44,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changePagination(currentPageNumber = null, paginationItem = null) {
-		Click(locator1 = "Pagination#CURRENT_PAGE_MENU");
-
-		MenuItem.click(menuItem = ${paginationItem});
+	macro changePagination(pageNumber = null) {
+		Click(
+			key_pageNumber = ${pageNumber},
+			locator1 = "Pagination#PARTICULAR_PAGE");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Pagination#CURRENT_PAGE_MENU",
-			value1 = "Page ${currentPageNumber}");
+			locator1 = "Pagination#CURRENT_PAGE_LINK",
+			value1 = ${pageNumber});
 	}
 
 	@summary = "Default summary"

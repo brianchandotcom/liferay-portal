@@ -908,9 +908,7 @@ definition {
 
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC Title 1");
 
-			AssetPublisherPortlet.changePagination(
-				currentPageNumber = "2 of 2",
-				paginationItem = 2);
+			AssetPublisherPortlet.changePagination(pageNumber = 2);
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = "WC Content 1",

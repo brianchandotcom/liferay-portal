@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
 	@Input('title') title = 'liferay-sample-custom-element-3';
 
 	logMessage() {
+		// eslint-disable-next-line no-console
 		console.log('liferay-sample-custom-element-3 loaded');
 	}
 

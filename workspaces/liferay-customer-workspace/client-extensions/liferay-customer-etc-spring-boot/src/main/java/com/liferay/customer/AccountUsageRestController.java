@@ -21,7 +21,6 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,18 +88,12 @@ public class AccountUsageRestController extends BaseRestController {
 		}
 	}
 
-	@Value("${com.liferay.lxc.dxp.mainDomain}")
-	protected String lxcDXPMainDomain;
-
-	@Value("${com.liferay.lxc.dxp.server.protocol}")
-	protected String lxcDXPServerProtocol;
-
 	private AccountResource _getAccountResource(Jwt jwt) throws Exception {
 		return AccountResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).endpoint(
-			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+			new URL(getWebClientBaseURL())
 		).build();
 	}
 

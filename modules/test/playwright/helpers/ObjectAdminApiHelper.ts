@@ -4,10 +4,12 @@
  */
 
 import {
-	ObjectAdminRestClient,
+	ObjectDefinition,
+	ObjectDefinitionApi,
 	ObjectField,
 	ObjectFolder,
-} from '../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+	ObjectFolderApi,
+} from '../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers} from './ApiHelpers';
 
@@ -20,14 +22,6 @@ export class ObjectAdminApiHelper {
 		this.basePath = 'object-admin/v1.0';
 	}
 
-	async getObjectDefinitionByExternalReferenceCode(
-		externalReferenceCode: string
-	): Promise<ObjectDefinition> {
-		return this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${externalReferenceCode}`
-		);
-	}
-
 	async postObjectDefinitionObjectFieldBatch(
 		objectDefinitionId: number,
 		objectFields: Partial<ObjectField>[]
@@ -38,21 +32,16 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
-	async postRandomObjectDefinition({
-		objectFields,
-		objectFolderExternalReferenceCode,
-		status,
-		titleObjectFieldName,
-	}: {
-		objectFields?: Partial<ObjectField>[];
-		objectFolderExternalReferenceCode?: string;
-		status: {code: number};
-		titleObjectFieldName?: string;
-	}) {
+	async postRandomObjectDefinition(
+		status: {code: number},
+		objectFields?: Partial<ObjectField>[],
+		objectFolderExternalReferenceCode?: string,
+		titleObjectFieldName?: string
+	): Promise<ObjectDefinition> {
 		const objectDefinitionExternalReferenceCode =
 			'ObjectDefinition' + getRandomInt();
 
-		const requestBody = {
+		const requestBody: ObjectDefinition = {
 			active: true,
 			externalReferenceCode: objectDefinitionExternalReferenceCode,
 			label: {
@@ -61,8 +50,8 @@ export class ObjectAdminApiHelper {
 			name: objectDefinitionExternalReferenceCode,
 			objectFields: objectFields ?? [
 				{
-					DBType: 'String',
-					businessType: 'Text',
+					businessType: ObjectField.BusinessTypeEnum.Text,
+					dBType: ObjectField.DBTypeEnum.String,
 					externalReferenceCode: 'textField',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -72,7 +61,7 @@ export class ObjectAdminApiHelper {
 					name: 'textField',
 					required: false,
 					system: false,
-					type: 'String',
+					type: ObjectField.TypeEnum.String,
 				},
 			],
 			objectFolderExternalReferenceCode,
@@ -89,31 +78,29 @@ export class ObjectAdminApiHelper {
 				objectFolderExternalReferenceCode;
 		}
 
-		const objectAdminRestClient = await this.apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionApiClient =
+			await this.apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		return objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody,
-		});
+		return (
+			await objectDefinitionApiClient.postObjectDefinition(requestBody)
+		).body;
 	}
 
 	async postRandomObjectFolder(): Promise<ObjectFolder> {
 		const objectFolderExternalReferenceCode =
 			'objectFolder' + getRandomInt();
 
-		const objectAdminRestClient = await this.apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectFolderApiClient =
+			await this.apiHelpers.buildRestClient(ObjectFolderApi);
 
-		return objectAdminRestClient.objectFolder.postObjectFolder({
-			requestBody: {
+		return (
+			await objectFolderApiClient.postObjectFolder({
 				externalReferenceCode: objectFolderExternalReferenceCode,
 				label: {
 					en_US: objectFolderExternalReferenceCode,
 				},
 				name: objectFolderExternalReferenceCode,
-			},
-		});
+			})
+		).body;
 	}
 }

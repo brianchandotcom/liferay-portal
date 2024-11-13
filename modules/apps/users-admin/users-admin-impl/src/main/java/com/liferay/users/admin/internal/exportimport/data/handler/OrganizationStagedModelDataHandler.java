@@ -198,7 +198,7 @@ public class OrganizationStagedModelDataHandler
 
 		Organization existingOrganization =
 			_organizationLocalService.fetchOrganizationByUuidAndCompanyId(
-				organization.getUuid(), portletDataContext.getGroupId());
+				organization.getUuid(), portletDataContext.getCompanyId());
 
 		if (existingOrganization == null) {
 			existingOrganization = _organizationLocalService.fetchOrganization(

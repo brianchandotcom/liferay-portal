@@ -103,6 +103,13 @@ public class CurrencyResourceTest extends BaseCurrencyResourceTestCase {
 	}
 
 	@Override
+	protected Currency testDeleteCurrencyByExternalReferenceCode_addCurrency()
+		throws Exception {
+
+		return _addCommerceCurrency(randomCurrency());
+	}
+
+	@Override
 	protected Currency testGetCurrenciesPage_addCurrency(Currency currency)
 		throws Exception {
 
@@ -115,12 +122,26 @@ public class CurrencyResourceTest extends BaseCurrencyResourceTestCase {
 	}
 
 	@Override
+	protected Currency testGetCurrencyByExternalReferenceCode_addCurrency()
+		throws Exception {
+
+		return _addCommerceCurrency(randomCurrency());
+	}
+
+	@Override
 	protected Currency testGraphQLCurrency_addCurrency() throws Exception {
 		return _addCommerceCurrency(randomCurrency());
 	}
 
 	@Override
 	protected Currency testPatchCurrency_addCurrency() throws Exception {
+		return _addCommerceCurrency(randomCurrency());
+	}
+
+	@Override
+	protected Currency testPatchCurrencyByExternalReferenceCode_addCurrency()
+		throws Exception {
+
 		return _addCommerceCurrency(randomCurrency());
 	}
 

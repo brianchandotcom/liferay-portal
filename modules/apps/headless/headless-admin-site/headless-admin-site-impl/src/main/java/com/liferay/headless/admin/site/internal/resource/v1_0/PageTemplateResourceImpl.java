@@ -194,6 +194,33 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			layoutPageTemplateEntry, (WidgetPageTemplate)pageTemplate);
 	}
 
+	@Override
+	protected void preparePatch(
+		PageTemplate pageTemplate, PageTemplate existingPageTemplate) {
+
+		if (pageTemplate.getPageTemplateSet() != null) {
+			existingPageTemplate.setPageTemplateSet(
+				pageTemplate::getPageTemplateSet);
+		}
+
+		if (Objects.equals(
+				existingPageTemplate.getType(),
+				PageTemplate.Type.CONTENT_PAGE_TEMPLATE)) {
+
+			return;
+		}
+
+		if (!(existingPageTemplate instanceof WidgetPageTemplate) ||
+			!(pageTemplate instanceof WidgetPageTemplate)) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		_preparePatch(
+			(WidgetPageTemplate)existingPageTemplate,
+			(WidgetPageTemplate)pageTemplate);
+	}
+
 	private PageTemplate _addPageTemplate(
 			ContentPageTemplate contentPageTemplate, long groupId)
 		throws Exception {
@@ -328,6 +355,25 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		}
 
 		return false;
+	}
+
+	private void _preparePatch(
+		WidgetPageTemplate existingWidgetPageTemplate,
+		WidgetPageTemplate widgetPageTemplate) {
+
+		if (widgetPageTemplate.getActive() != null) {
+			existingWidgetPageTemplate.setActive(widgetPageTemplate::getActive);
+		}
+
+		if (widgetPageTemplate.getDescription_i18n() != null) {
+			existingWidgetPageTemplate.setDescription_i18n(
+				widgetPageTemplate::getDescription_i18n);
+		}
+
+		if (widgetPageTemplate.getName_i18n() != null) {
+			existingWidgetPageTemplate.setName_i18n(
+				widgetPageTemplate::getName_i18n);
+		}
 	}
 
 	private PageTemplate _updatePageTemplate(

@@ -129,57 +129,38 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void testGetRoleUserIdsWithNoPermissions() throws Exception {
+	public void testGetRoleUserIds() throws Exception {
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-
-		User user = UserTestUtil.addUser();
 
 		try {
 			Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-			_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
+			User user = UserTestUtil.addUser();
 
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(user));
 
-			_userService.getRoleUserIds(role.getRoleId());
+			_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
 
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			String message = exception.getMessage();
+			try {
+				_userService.getRoleUserIds(role.getRoleId());
 
-			Assert.assertTrue(
-				message.contains(
-					"User " + user.getUserId() +
-						" must have ASSIGN_MEMBERS permission"));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
-	}
+				Assert.fail();
+			}
+			catch (Exception exception) {
+				String message = exception.getMessage();
 
-	@Test
-	public void testGetRoleUserIdsWithPermissions() throws Exception {
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		User user = UserTestUtil.addUser();
-
-		try {
-			Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+				Assert.assertTrue(
+					message.contains(
+						"User " + user.getUserId() +
+							" must have ASSIGN_MEMBERS permission"));
+			}
 
 			RoleTestUtil.addResourcePermission(
 				role, Role.class.getName(), ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(TestPropsValues.getCompanyId()),
 				ActionKeys.ASSIGN_MEMBERS);
-
-			_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
-
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
 
 			long[] roleUserIds = _userService.getRoleUserIds(role.getRoleId());
 

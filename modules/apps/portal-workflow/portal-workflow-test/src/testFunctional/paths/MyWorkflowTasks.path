@@ -88,12 +88,12 @@
 </tr>
 <tr>
 	<td>ASSIGNED_TO_ME_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[7]//div/a</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[7]//div/div/div/button</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_ME_TABLE_SPECIFIC_ACTIONS</td>
-	<td>//tr[${key_position}][contains(.,'${key_workflowAssetTitle}')]/td[7]//div/a</td>
+	<td>//tr[${key_position}][contains(.,'${key_workflowAssetTitle}')]/td[7]//div/div/div/button</td>
 	<td></td>
 </tr>
 <tr>
@@ -141,7 +141,7 @@
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_workflowTask}') and contains(.,'${key_workflowAssetTitle}')]/td[7]//div/a</td>
+	<td>//tr[contains(.,'${key_workflowTask}') and contains(.,'${key_workflowAssetTitle}')]/td[7]//div/div/div/button</td>
 	<td></td>
 </tr>
 <tr>

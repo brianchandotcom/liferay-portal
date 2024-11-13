@@ -77,7 +77,7 @@ definition {
 			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 			value1 = "Test Test sent you a Blogs Entry for review in the workflow.");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 		Workflow.confirmWorkflowAction();
 

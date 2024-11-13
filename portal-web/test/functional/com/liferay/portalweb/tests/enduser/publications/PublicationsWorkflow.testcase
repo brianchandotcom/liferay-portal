@@ -70,11 +70,11 @@ definition {
 				assetType = "Content Page",
 				user = "Test Test");
 
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 			Workflow.confirmWorkflowAction();
 
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Approve");
 
 			Workflow.confirmWorkflowAction();
 
@@ -166,11 +166,11 @@ definition {
 			assetType = "Web Content Article",
 			user = "userfn userln");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 		Workflow.confirmWorkflowAction();
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Reject");
 
 		Workflow.confirmWorkflowAction();
 
@@ -322,11 +322,11 @@ definition {
 			assetType = "Web Content Article",
 			user = "userfn userln");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 		Workflow.confirmWorkflowAction();
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Approve");
 
 		Workflow.confirmWorkflowAction();
 
@@ -419,7 +419,7 @@ definition {
 			assetType = "Web Content Article",
 			user = "userfn userln");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 		Workflow.confirmWorkflowAction();
 

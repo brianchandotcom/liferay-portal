@@ -94,7 +94,7 @@ definition {
 			workflowAssetType = "Web Content Article",
 			workflowTask = "Review");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Reject");
 
 		Workflow.confirmWorkflowAction();
 

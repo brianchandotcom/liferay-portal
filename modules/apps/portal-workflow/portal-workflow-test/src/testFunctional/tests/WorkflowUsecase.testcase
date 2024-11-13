@@ -956,7 +956,7 @@ definition {
 			assetType = "Blogs Entry",
 			user = "Test Test");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Assign to Me");
 
 		Workflow.confirmWorkflowAction();
 
@@ -972,7 +972,7 @@ definition {
 			workflowAssignedTo = "Test Test",
 			workflowTask = "Review");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Approve");
 
 		Button.clickDone();
 

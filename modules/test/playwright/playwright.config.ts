@@ -117,6 +117,7 @@ export default defineConfig({
 		timeout: 15 * 1000,
 	},
 	forbidOnly: !!process.env.CI,
+	globalTimeout: 60 * 60 * 1000,
 	projects: [
 		accessibilityMenuWeb,
 		accountAdminWebConfig,
@@ -236,7 +237,7 @@ export default defineConfig({
 			},
 		],
 	],
-	retries: process.env.CI ? 2 : 0,
+	retries: process.env.CI ? 1 : 0,
 	testDir: './tests',
 	timeout: 90 * 1000,
 	use: {

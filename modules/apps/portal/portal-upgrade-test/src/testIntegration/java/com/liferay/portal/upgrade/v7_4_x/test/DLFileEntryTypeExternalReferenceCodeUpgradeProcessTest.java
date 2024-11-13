@@ -51,7 +51,7 @@ public class DLFileEntryTypeExternalReferenceCodeUpgradeProcessTest
 				group, TestPropsValues.getUserId());
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			PortalUtil.getClassNameId(DLFileEntryMetadata.class),
 			StringPool.BLANK,

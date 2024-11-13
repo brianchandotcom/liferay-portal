@@ -287,7 +287,7 @@ public class CompanyLocalServiceTest {
 			serviceContext.setUserId(userId);
 
 			ddmStructure = _ddmStructureLocalService.addStructure(
-				userId, guestGroup.getGroupId(),
+				null, userId, guestGroup.getGroupId(),
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 				_portal.getClassNameId(DLFileEntryMetadata.class),
 				StringPool.BLANK,

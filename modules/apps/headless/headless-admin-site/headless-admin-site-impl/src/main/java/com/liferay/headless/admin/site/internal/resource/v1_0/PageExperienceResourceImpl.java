@@ -83,19 +83,26 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		Group group = groupLocalService.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, contextCompany.getCompanyId());
 
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			pageSpecificationExternalReferenceCode, group.getGroupId());
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _addSegmentsExperience(group, layout, pageExperience);
+	}
+
+	private PageExperience _addSegmentsExperience(
+			Group group, Layout layout, PageExperience pageExperience)
+		throws Exception {
+
 		SegmentsEntry segmentsEntry =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
 				group.getGroupId(),
 				pageExperience.getSegmentExternalReferenceCode());
 
 		if (segmentsEntry == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			pageSpecificationExternalReferenceCode, group.getGroupId());
-
-		if (layout == null) {
 			throw new UnsupportedOperationException();
 		}
 

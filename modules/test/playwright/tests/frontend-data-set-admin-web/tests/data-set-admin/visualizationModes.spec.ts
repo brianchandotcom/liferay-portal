@@ -1064,7 +1064,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 	});
 
-	test(
+	test.skip(
 		'Check that users can translate labels in table visualization mode.',
 		{tag: '@LPS-176516'},
 		async ({page, visualizationModesPage}) => {

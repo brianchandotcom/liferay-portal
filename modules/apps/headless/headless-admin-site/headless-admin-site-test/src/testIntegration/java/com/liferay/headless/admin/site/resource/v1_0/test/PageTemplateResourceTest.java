@@ -254,13 +254,85 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		super.testGetSiteSiteExternalReferenceCodePageTemplatePermissionsPage();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPatchSiteSiteByExternalReferenceCodePageTemplate()
 		throws Exception {
 
-		super.testPatchSiteSiteByExternalReferenceCodePageTemplate();
+		ContentPageTemplate contentPageTemplate =
+			(ContentPageTemplate)
+				pageTemplateResource.
+					postSiteSiteByExternalReferenceCodePageTemplate(
+						testGroup.getExternalReferenceCode(),
+						_getContentPageTemplate(testGroup));
+
+		_testPatchSiteSiteByExternalReferenceCodePageTemplate(
+			_getUpdatedContentPageTemplate(
+				testGroup, contentPageTemplate.getExternalReferenceCode()),
+			testGroup.getExternalReferenceCode());
+
+		WidgetPageTemplate widgetPageTemplate =
+			(WidgetPageTemplate)
+				pageTemplateResource.
+					postSiteSiteByExternalReferenceCodePageTemplate(
+						testGroup.getExternalReferenceCode(),
+						_getWidgetPageTemplate(testGroup));
+
+		_testPatchSiteSiteByExternalReferenceCodePageTemplate(
+			_getUpdatedWidgetPageTemplate(
+				testGroup, widgetPageTemplate.getExternalReferenceCode()),
+			testGroup.getExternalReferenceCode());
+
+		_enableLocalStaging();
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() -> _testPatchSiteSiteByExternalReferenceCodePageTemplate(
+				contentPageTemplate, testGroup.getExternalReferenceCode()));
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() -> _testPatchSiteSiteByExternalReferenceCodePageTemplate(
+				widgetPageTemplate, testGroup.getExternalReferenceCode()));
+
+		_withCompanyGroupWidgetPageTemplate(
+			(group, curWidgetPageTemplate) -> {
+				_postSiteSiteByExternalReferenceCodePageTemplate(
+					curWidgetPageTemplate, group.getExternalReferenceCode());
+
+				_testPatchSiteSiteByExternalReferenceCodePageTemplate(
+					_getUpdatedWidgetPageTemplate(
+						group,
+						curWidgetPageTemplate.getExternalReferenceCode()),
+					group.getExternalReferenceCode());
+
+				_assertProblemException(
+					"BAD_REQUEST",
+					() -> {
+						ContentPageTemplate curContentPageTemplate =
+							_getContentPageTemplate(group);
+
+						pageTemplateResource.
+							putSiteSiteByExternalReferenceCodePageTemplate(
+								group.getExternalReferenceCode(),
+								curContentPageTemplate.
+									getExternalReferenceCode(),
+								curContentPageTemplate);
+					});
+			});
+
+		_withDepotEntry(
+			group -> _assertProblemException(
+				"BAD_REQUEST",
+				() -> {
+					PageTemplate pageTemplate = _getPageTemplate(group);
+
+					pageTemplateResource.
+						putSiteSiteByExternalReferenceCodePageTemplate(
+							group.getExternalReferenceCode(),
+							pageTemplate.getExternalReferenceCode(),
+							pageTemplate);
+				}));
 	}
 
 	@Override
@@ -674,6 +746,18 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		assertEquals(pageTemplate, getPageTemplate);
 		assertValid(getPageTemplate);
+	}
+
+	private void _testPatchSiteSiteByExternalReferenceCodePageTemplate(
+			PageTemplate pageTemplate, String siteExternalReferenceCode)
+		throws Exception {
+
+		assertEquals(
+			pageTemplate,
+			pageTemplateResource.
+				patchSiteSiteByExternalReferenceCodePageTemplate(
+					siteExternalReferenceCode,
+					pageTemplate.getExternalReferenceCode(), pageTemplate));
 	}
 
 	private void _testPostSiteSiteByExternalReferenceCodePageTemplate()

@@ -6,12 +6,22 @@
 import {test} from '@playwright/test';
 
 import {AnnouncementsPage} from '../pages/AnnouncementsPage';
+import {AnnouncementsWidgetConfigurationPage} from '../pages/AnnouncementsWidgetConfigurationPage';
+import {AnnouncementsWidgetPage} from '../pages/AnnouncementsWidgetPage';
 
 const announcementsPagesTest = test.extend<{
 	announcementsPage: AnnouncementsPage;
+	announcementsWidgetConfigurationPage: AnnouncementsWidgetConfigurationPage;
+	announcementsWidgetPage: AnnouncementsWidgetPage;
 }>({
 	announcementsPage: async ({page}, use) => {
 		await use(new AnnouncementsPage(page));
+	},
+	announcementsWidgetConfigurationPage: async ({page}, use) => {
+		await use(new AnnouncementsWidgetConfigurationPage(page));
+	},
+	announcementsWidgetPage: async ({page}, use) => {
+		await use(new AnnouncementsWidgetPage(page));
 	},
 });
 

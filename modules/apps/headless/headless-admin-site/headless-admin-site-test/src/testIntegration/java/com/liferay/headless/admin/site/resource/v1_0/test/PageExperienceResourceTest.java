@@ -6,15 +6,38 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.test.rule.FeatureFlags;
 
 import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Rubén Pulido
  */
-@Ignore
+@FeatureFlags("LPD-35443")
 @RunWith(Arquillian.class)
 public class PageExperienceResourceTest
 	extends BasePageExperienceResourceTestCase {
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodePageSpecificationPageExperiencesPage()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodePageSpecificationPageExperiencesPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostSiteSiteByExternalReferenceCodePageSpecificationPageExperience()
+		throws Exception {
+
+		super.
+			testPostSiteSiteByExternalReferenceCodePageSpecificationPageExperience();
+	}
+
 }

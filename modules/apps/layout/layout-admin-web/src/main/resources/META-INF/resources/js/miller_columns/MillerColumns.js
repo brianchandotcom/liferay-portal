@@ -251,7 +251,8 @@ const MillerColumns = ({
 
 		onItemMove(
 			getMovedItems(sources, newParentId, targetIndex),
-			newParentId
+			newParentId,
+			sources[0].url
 		);
 	};
 

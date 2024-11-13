@@ -21,6 +21,7 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -42,6 +44,7 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 
@@ -321,6 +324,16 @@ public class JournalArticleUtil {
 
 			article = journalArticleService.getArticle(
 				groupId, articleId, version);
+
+			int count = journalArticleService.getArticlesCountByArticleId(
+				article.getGroupId(), article.getArticleId());
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPD-11228") || (count > 1) ||
+				!Objects.equals(
+					WorkflowConstants.STATUS_DRAFT, article.getStatus())) {
+
+				serviceContext.setModelPermissions(null);
+			}
 
 			if (actionName.equals("/journal/update_article")) {
 				article = journalArticleService.updateArticle(

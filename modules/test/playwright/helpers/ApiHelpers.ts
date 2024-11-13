@@ -5,8 +5,14 @@
 
 import {Page} from '@playwright/test';
 
-import {ObjectAdminRestClient} from '../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {
+	ObjectActionApi,
+	ObjectDefinitionApi,
+	ObjectFolderApi,
+	ObjectRelationshipApi,
+} from '../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {liferayConfig} from '../liferay.config';
+import {DataObject} from '../types/object';
 import {ApiBuilderHelper} from './ApiBuilderHelper';
 import {DataEngineApiHelper} from './DataEngineApiHelper';
 import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
@@ -399,38 +405,26 @@ export class DataApiHelpers extends ApiHelpers {
 				await this.notification.deleteNotificationTemplate(item.id);
 			}
 			else if (item.type === 'objectAction') {
-				const objectAdminRESTClient = await this.buildRestClient(
-					ObjectAdminRestClient
-				);
-
-				await objectAdminRESTClient.objectAction.deleteObjectAction({
-					objectActionId: item.id,
-				});
+				const objectActionApiClient =
+					await this.buildRestClient(ObjectActionApi);
+				await objectActionApiClient.deleteObjectAction(item.id);
 			}
 			else if (item.type === 'objectDefinition') {
-				const objectAdminRESTClient = await this.buildRestClient(
-					ObjectAdminRestClient
-				);
-				await objectAdminRESTClient.objectDefinition.deleteObjectDefinition(
-					{objectDefinitionId: item.id}
-				);
+				const objectDefinitionApiClient =
+					await this.buildRestClient(ObjectDefinitionApi);
+				await objectDefinitionApiClient.deleteObjectDefinition(item.id);
 			}
 			else if (item.type === 'objectFolder') {
-				const objectAdminRESTClient = await this.buildRestClient(
-					ObjectAdminRestClient
-				);
-				await objectAdminRESTClient.objectFolder.deleteObjectFolder({
-					objectFolderId: item.id,
-				});
+				const objectFolderRESTClient =
+					await this.buildRestClient(ObjectFolderApi);
+				await objectFolderRESTClient.deleteObjectFolder(item.id);
 			}
 			else if (item.type === 'objectRelationship') {
-				const objectAdminRESTClient = await this.buildRestClient(
-					ObjectAdminRestClient
+				const objectRelationshipRESTClient = await this.buildRestClient(
+					ObjectRelationshipApi
 				);
-				await objectAdminRESTClient.objectRelationship.deleteObjectRelationship(
-					{
-						objectRelationshipId: item.id,
-					}
+				await objectRelationshipRESTClient.deleteObjectRelationship(
+					item.id
 				);
 			}
 			else if (item.type === 'option') {

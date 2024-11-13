@@ -338,6 +338,7 @@
 	<bean class="com.liferay.portal.service.persistence.impl.WebsiteModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.WebsiteModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.persistence.impl.WebsitePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.WebsitePersistence" />
 	<bean class="com.liferay.portal.service.impl.WorkflowDefinitionLinkLocalServiceImpl" id="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService" />
+	<bean class="com.liferay.portal.service.impl.WorkflowDefinitionLinkServiceImpl" id="com.liferay.portal.kernel.service.WorkflowDefinitionLinkService" />
 	<bean class="com.liferay.portal.service.persistence.impl.WorkflowDefinitionLinkModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.WorkflowDefinitionLinkModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.persistence.impl.WorkflowDefinitionLinkPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence" />
 	<bean class="com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl" id="com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService" />

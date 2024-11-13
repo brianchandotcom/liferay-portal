@@ -61,6 +61,27 @@ public class SegmentsExperienceServiceImpl
 	}
 
 	@Override
+	public SegmentsExperience addSegmentsExperience(
+			String externalReferenceCode, long groupId, long segmentsEntryId,
+			String segmentsExperienceKey, long plid,
+			Map<Locale, String> nameMap, int priority, boolean active,
+			UnicodeProperties typeSettingsUnicodeProperties,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (!_hasUpdateLayoutPermission(_getPublishedLayoutPlid(plid))) {
+			_portletResourcePermission.check(
+				getPermissionChecker(), serviceContext.getScopeGroupId(),
+				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
+		}
+
+		return segmentsExperienceLocalService.addSegmentsExperience(
+			externalReferenceCode, getUserId(), groupId, segmentsEntryId,
+			segmentsExperienceKey, plid, nameMap, priority, active,
+			typeSettingsUnicodeProperties, serviceContext);
+	}
+
+	@Override
 	public SegmentsExperience appendSegmentsExperience(
 			long groupId, long segmentsEntryId, long plid,
 			Map<Locale, String> nameMap, boolean active,

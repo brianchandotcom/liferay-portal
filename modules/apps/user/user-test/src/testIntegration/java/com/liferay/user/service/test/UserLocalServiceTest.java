@@ -226,7 +226,7 @@ public class UserLocalServiceTest {
 		}
 	}
 
-	@Test
+	@Test(expected = UserPasswordException.class)
 	public void testAddUserWithWorkflowForLDAPUserWithoutLDAPPasswordPolicy()
 		throws Exception {
 
@@ -255,7 +255,7 @@ public class UserLocalServiceTest {
 		}
 	}
 
-	@Test
+	@Test(expected = UserPasswordException.class)
 	public void testAddUserWithWorkflowForPortalUserWithLDAPPasswordPolicy()
 		throws Exception {
 
@@ -377,7 +377,7 @@ public class UserLocalServiceTest {
 		}
 	}
 
-	@Test
+	@Test(expected = UserLockoutException.PasswordPolicyLockout.class)
 	public void testCheckLockoutLDAPUserWithoutLDAPPasswordPolicy()
 		throws Exception {
 
@@ -401,17 +401,9 @@ public class UserLocalServiceTest {
 
 			user = _userLocalService.updateUser(user);
 
-			try {
-				_userLocalService.checkLockout(user);
+			_userLocalService.checkLockout(user);
 
-				Assert.fail("Password policy is not being enforced");
-			}
-			catch (UserLockoutException userLockoutException) {
-			}
-			catch (Throwable throwable) {
-				throw new Exception(
-					"Exception unrelated to lockout was thrown", throwable);
-			}
+			Assert.fail("Password policy is not being enforced");
 		}
 		finally {
 			passwordPolicy.setLockout(false);
@@ -420,7 +412,7 @@ public class UserLocalServiceTest {
 		}
 	}
 
-	@Test
+	@Test(expected = UserLockoutException.PasswordPolicyLockout.class)
 	public void testCheckLockoutPortalUserWithLDAPPasswordPolicy()
 		throws Exception {
 
@@ -443,17 +435,7 @@ public class UserLocalServiceTest {
 
 			user = _userLocalService.updateUser(user);
 
-			try {
-				_userLocalService.checkLockout(user);
-
-				Assert.fail("Password policy is not being enforced");
-			}
-			catch (UserLockoutException userLockoutException) {
-			}
-			catch (Throwable throwable) {
-				throw new Exception(
-					"Exception unrelated to lockout was thrown", throwable);
-			}
+			_userLocalService.checkLockout(user);
 		}
 		finally {
 			passwordPolicy.setLockout(false);
@@ -1565,18 +1547,7 @@ public class UserLocalServiceTest {
 	private void _assertUserPasswordException(boolean ldapUser, String password)
 		throws Exception {
 
-		try {
-			_createUser(ldapUser, password);
-
-			Assert.fail("Password policy is not being applied to user");
-		}
-		catch (Throwable throwable) {
-			if (!(throwable instanceof UserPasswordException)) {
-				throw new Exception(
-					"Exception unrelated to password policy was thrown",
-					throwable);
-			}
-		}
+		_createUser(ldapUser, password);
 	}
 
 	private User _createUser(boolean ldapUser, String password)

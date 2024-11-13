@@ -156,6 +156,18 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			return _addPageTemplate(groupId, pageTemplate);
 		}
 
+		if ((Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.BASIC) &&
+			 !(pageTemplate instanceof ContentPageTemplate)) ||
+			(Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE) &&
+			 !(pageTemplate instanceof WidgetPageTemplate))) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		long layoutPageTemplateCollectionId =
 			_getLayoutPageTemplateCollectionId(groupId, pageTemplate);
 

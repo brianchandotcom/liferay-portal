@@ -5,7 +5,7 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {ObjectDefinitionApi} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
@@ -1846,16 +1846,14 @@ test.describe('Tags Fragment', () => {
 
 		// Get the id of Lemon object from the site initializer
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionApiClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const {className: objectDefinitionClassName} =
-			await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
-				{
-					externalReferenceCode: LEMON_OBJECT_ERC,
-				}
-			);
+		const {className: objectDefinitionClassName} = (
+			await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				LEMON_OBJECT_ERC
+			)
+		).body;
 
 		// Create a Form Container with a Tags fragment and Submit fragment
 
@@ -1998,16 +1996,14 @@ test.describe('Tags Fragment', () => {
 
 		// Get Lemon Basket object id from the site initializer
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
-		);
+		const objectDefinitionApiClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const {className: objectDefinitionClassName} =
-			await objectAdminRestClient.objectDefinition.getObjectDefinitionByExternalReferenceCode(
-				{
-					externalReferenceCode: LEMON_BASKET_OBJECT_ERC,
-				}
-			);
+		const {className: objectDefinitionClassName} = (
+			await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				LEMON_BASKET_OBJECT_ERC
+			)
+		).body;
 
 		// Set the "Enable Categorization of Object entries" configuration to false
 

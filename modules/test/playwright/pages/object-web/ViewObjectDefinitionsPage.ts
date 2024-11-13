@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ObjectFolder} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {ObjectFolder} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 

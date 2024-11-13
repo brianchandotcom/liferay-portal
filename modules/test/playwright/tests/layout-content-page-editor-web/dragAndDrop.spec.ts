@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {ObjectDefinitionApi} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -320,10 +321,14 @@ test(
 
 		// Get the id of Potato object from the site initializer
 
-		const {className: objectDefinitionClassName} =
-			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+		const objectDefinitionApiClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		const {className: objectDefinitionClassName} = (
+			await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
 				POTATO_OBJECT_ERC
-			);
+			)
+		).body;
 
 		// Create a form with two steps and a stepper
 

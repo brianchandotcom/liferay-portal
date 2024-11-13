@@ -5,7 +5,7 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
-import {ObjectField} from '../../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+import {ObjectField} from '../../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 export class ViewObjectEntriesPage {
@@ -97,7 +97,7 @@ export class ViewObjectEntriesPage {
 		objectFieldLabel?: string;
 		objectFieldValue: string;
 	}) {
-		if (objectFieldBusinessType === 'RichText') {
+		if (objectFieldBusinessType === ObjectField.BusinessTypeEnum.RichText) {
 			await this.page.waitForSelector('iframe');
 
 			await this.richTextInput.fill(objectFieldValue);

@@ -322,8 +322,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"description_i18n", "externalReferenceCode", "name", "name_i18n",
-			"pageTemplateSet"
+			"active", "description_i18n", "externalReferenceCode", "name",
+			"name_i18n", "pageTemplateSet"
 		};
 	}
 

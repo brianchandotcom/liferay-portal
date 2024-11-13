@@ -95,15 +95,15 @@ public class UtilityPageDTOConverter
 	}
 
 	private UtilityPage.Type _getType(String type) {
-		if (_internalToExternalTypeValuesMap.containsKey(type)) {
-			return _internalToExternalTypeValuesMap.get(type);
+		if (_internalToExternalValuesMap.containsKey(type)) {
+			return _internalToExternalValuesMap.get(type);
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
 	private static final Map<String, UtilityPage.Type>
-		_internalToExternalTypeValuesMap = HashMapBuilder.put(
+		_internalToExternalValuesMap = HashMapBuilder.put(
 			LayoutUtilityPageEntryConstants.TYPE_COOKIE_POLICY,
 			UtilityPage.Type.COOKIE_POLICY
 		).put(

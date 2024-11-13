@@ -190,15 +190,15 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 	}
 
 	private String _getType(UtilityPage.Type type) {
-		if (_externalToInternalTypeValuesMap.containsKey(type)) {
-			return _externalToInternalTypeValuesMap.get(type);
+		if (_externalToInternalValuesMap.containsKey(type)) {
+			return _externalToInternalValuesMap.get(type);
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
 	private static final Map<UtilityPage.Type, String>
-		_externalToInternalTypeValuesMap = HashMapBuilder.put(
+		_externalToInternalValuesMap = HashMapBuilder.put(
 			UtilityPage.Type.COOKIE_POLICY,
 			LayoutUtilityPageEntryConstants.TYPE_COOKIE_POLICY
 		).put(

@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
+package com.liferay.portal.osgi.web.wab.extender.internal;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.osgi.web.servlet.JSPTaglibHelper;
 
 import java.io.InputStream;
 
@@ -23,16 +22,13 @@ import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Tina Tian
  */
-@Component(service = JSPTaglibHelper.class)
-public class JSPTaglibHelperImpl implements JSPTaglibHelper {
+public class JSPTaglibHelperUtil {
 
-	@Override
-	public void scanTLDs(
+	public static void scanTLDs(
 		Bundle bundle, ServletContext servletContext,
 		List<String> listenerClassNames) {
 
@@ -73,7 +69,7 @@ public class JSPTaglibHelperImpl implements JSPTaglibHelper {
 		}
 	}
 
-	private void _parseTLD(
+	private static void _parseTLD(
 		URL url, ServletContext servletContext,
 		List<String> listenerClassNames) {
 
@@ -101,6 +97,6 @@ public class JSPTaglibHelperImpl implements JSPTaglibHelper {
 	}
 
 	private static final String _ANALYZED_TLDS =
-		JSPTaglibHelperImpl.class.getName() + "#ANALYZED_TLDS";
+		JSPTaglibHelperUtil.class.getName() + "#ANALYZED_TLDS";
 
 }

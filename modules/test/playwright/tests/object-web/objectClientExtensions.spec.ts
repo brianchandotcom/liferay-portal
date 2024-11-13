@@ -151,7 +151,7 @@ test('Can create, read, update, and delete object entries that use the client ex
 
 	// Create
 
-	await viewObjectEntriesPage.goto(objectDefinition.id);
+	await viewObjectEntriesPage.goto(objectDefinition.className);
 
 	await viewObjectEntriesPage.clickAddObjectEntry(
 		objectDefinition.label['en_US']
@@ -244,7 +244,7 @@ test('Can trigger object action as a client extension', async ({
 		'On After Add'
 	);
 
-	viewObjectEntriesPage.goto(objectDefinition.id);
+	viewObjectEntriesPage.goto(objectDefinition.className);
 
 	await viewObjectEntriesPage.clickAddObjectEntry(
 		objectDefinition.label['en_US']
@@ -303,7 +303,7 @@ test('Can trigger object validation as a client extension', async ({
 
 	await page.waitForEvent('domcontentloaded');
 
-	await viewObjectEntriesPage.goto(objectDefinition.id);
+	await viewObjectEntriesPage.goto(objectDefinition.className);
 
 	await viewObjectEntriesPage.clickAddObjectEntry(
 		objectDefinition.label['en_US']

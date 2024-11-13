@@ -155,7 +155,7 @@ test.describe('Manage object entries through Page Templates', () => {
 			itemValues.push(objectEntry.textField_i18n['pt_BR']);
 		}
 
-		await viewObjectEntriesPage.goto(objectDefinition2.id, 'pt');
+		await viewObjectEntriesPage.goto(objectDefinition2.className, 'pt');
 
 		await viewObjectEntriesPage.clickAddObjectEntry();
 
@@ -391,7 +391,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			type: 'objectDefinition',
 		});
 
-		await viewObjectEntriesPage.goto(objectDefinition.id);
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
 		await viewObjectEntriesPage.clickAddObjectEntry(
 			objectDefinition.label['en_US']
@@ -555,7 +555,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			type: 'objectDefinition',
 		});
 
-		await viewObjectEntriesPage.goto(objectDefinition.id);
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
 		await viewObjectEntriesPage.clickAddObjectEntry(
 			objectDefinition.label['en_US']
@@ -640,7 +640,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			type: 'objectDefinition',
 		});
 
-		await viewObjectEntriesPage.goto(objectDefinition.id);
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
 		await viewObjectEntriesPage.clickAddObjectEntry(
 			objectDefinition.label['en_US']
@@ -747,7 +747,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			applicationName
 		);
 
-		await viewObjectEntriesPage.goto(objectDefinition2.id);
+		await viewObjectEntriesPage.goto(objectDefinition2.className);
 		await viewObjectEntriesPage.clickAddObjectEntry(
 			objectDefinition2.label['en_US']
 		);
@@ -781,7 +781,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			type: 'objectDefinition',
 		});
 
-		await viewObjectEntriesPage.goto(objectDefinition.id, 'ar');
+		await viewObjectEntriesPage.goto(objectDefinition.className, 'ar');
 
 		await viewObjectEntriesPage.addObjectEntryButton.click();
 

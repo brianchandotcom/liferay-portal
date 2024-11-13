@@ -79,7 +79,7 @@ export default function getActivationStatusCardLayout(
 			),
 			id: STATUS_TAG_TYPES.active,
 			subtitle: i18n.translate(
-				'your-liferay-saas-project-is-being-set-up-and-will-be-available-soon'
+				'your-liferay-saas-project-is-set-up-if-you-need-to-submit-additional-workspaces-please-create-a-support-ticket'
 			),
 			title: i18n.translate('liferay-saas-activation'),
 		},

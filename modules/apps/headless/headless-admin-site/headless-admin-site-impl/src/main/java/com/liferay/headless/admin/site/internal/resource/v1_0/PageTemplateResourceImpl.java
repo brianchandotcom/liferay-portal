@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -130,6 +131,55 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 				_isTypeWidgetPageTemplate(pageTemplate), false,
 				contextCompany.getCompanyId(), siteExternalReferenceCode),
 			pageTemplate);
+	}
+
+	@Override
+	public PageTemplate putSiteSiteByExternalReferenceCodePageTemplate(
+			String siteExternalReferenceCode,
+			String pageTemplateExternalReferenceCode, PageTemplate pageTemplate)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		long groupId = GroupUtil.getGroupId(
+			_isTypeWidgetPageTemplate(pageTemplate), false,
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					pageTemplateExternalReferenceCode, groupId);
+
+		if (layoutPageTemplateEntry == null) {
+			return _addPageTemplate(groupId, pageTemplate);
+		}
+
+		long layoutPageTemplateCollectionId =
+			_getLayoutPageTemplateCollectionId(groupId, pageTemplate);
+
+		if (Validator.isNotNull(pageTemplate.getPageTemplateSet()) &&
+			!Objects.equals(
+				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
+				layoutPageTemplateCollectionId)) {
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.moveLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					layoutPageTemplateCollectionId);
+		}
+
+		if (Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.BASIC)) {
+
+			return _updatePageTemplate(
+				(ContentPageTemplate)pageTemplate, layoutPageTemplateEntry);
+		}
+
+		return _updatePageTemplate(
+			layoutPageTemplateEntry, (WidgetPageTemplate)pageTemplate);
 	}
 
 	private PageTemplate _addPageTemplate(
@@ -266,6 +316,58 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		}
 
 		return false;
+	}
+
+	private PageTemplate _updatePageTemplate(
+			ContentPageTemplate contentPageTemplate,
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws Exception {
+
+		return _pageTemplateDTOConverter.toDTO(
+			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				contentPageTemplate.getName()));
+	}
+
+	private PageTemplate _updatePageTemplate(
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			WidgetPageTemplate widgetPageTemplate)
+		throws Exception {
+
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeService.getLayoutPrototype(
+				layoutPageTemplateEntry.getLayoutPrototypeId());
+
+		Map<Locale, String> nameMap = layoutPrototype.getNameMap();
+
+		if (widgetPageTemplate.getName_i18n() != null) {
+			nameMap = LocalizedMapUtil.getLocalizedMap(
+				widgetPageTemplate.getName_i18n());
+		}
+
+		Map<Locale, String> descriptionMap =
+			layoutPrototype.getDescriptionMap();
+
+		if (widgetPageTemplate.getDescription_i18n() != null) {
+			descriptionMap = LocalizedMapUtil.getLocalizedMap(
+				widgetPageTemplate.getDescription_i18n());
+		}
+
+		boolean active = layoutPrototype.isActive();
+
+		if (widgetPageTemplate.getActive() != null) {
+			active = widgetPageTemplate.getActive();
+		}
+
+		_layoutPrototypeService.updateLayoutPrototype(
+			layoutPrototype.getLayoutPrototypeId(), nameMap, descriptionMap,
+			active,
+			_getServiceContext(
+				layoutPageTemplateEntry.getGroupId(), widgetPageTemplate));
+
+		return _pageTemplateDTOConverter.toDTO(
+			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 	}
 
 	@Reference

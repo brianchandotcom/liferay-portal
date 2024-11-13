@@ -38,23 +38,17 @@ const useProjectUsageData = () => {
 			const formatedData = [
 				{
 					...response[SiteAndUserDataEnum.SITES],
-					infoText: i18n.translate(
-						'number-of-unique-liferay-dxp-sites-which-comprises-a-set-of-pages-and-their-related-content'
-					),
+					infoText: i18n.translate('number-of-sites'),
 					title: i18n.translate('number-of-sites'),
 				},
 				{
 					...response[SiteAndUserDataEnum.MALUS],
-					infoText: i18n.translate(
-						'total-unique-authenticated-users-who-visited-sites-on-this-account-at-least-once-per-month'
-					),
+					infoText: i18n.translate('authenticated-logins-malus'),
 					title: i18n.translate('authenticated-logins-malus'),
 				},
 				{
 					...response[SiteAndUserDataEnum.APVS],
-					infoText: i18n.translate(
-						'total-count-of-anonymous-page-views-on-all-customer-sites'
-					),
+					infoText: i18n.translate('anonymous-page-views-apv'),
 					title: i18n.translate('anonymous-page-views-apv'),
 				},
 			];

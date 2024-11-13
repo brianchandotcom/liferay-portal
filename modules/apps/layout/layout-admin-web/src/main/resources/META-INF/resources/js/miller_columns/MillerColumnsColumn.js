@@ -106,9 +106,9 @@ const MillerColumnsColumn = ({
 		Liferay.FeatureFlags['LPD-35220'] && columnWidth
 			? {
 					style: {
-						'max-width': `${columnWidth}px`,
-						'min-width': `${columnWidth}px`,
-						'width': `${columnWidth}px`,
+						maxWidth: `${columnWidth}px`,
+						minWidth: `${columnWidth}px`,
+						width: `${columnWidth}px`,
 					},
 				}
 			: {lg: '4', md: '6', size: '11'};

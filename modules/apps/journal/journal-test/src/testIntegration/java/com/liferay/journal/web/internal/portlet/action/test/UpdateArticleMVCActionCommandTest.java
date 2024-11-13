@@ -64,7 +64,7 @@ import org.springframework.mock.web.MockMultipartHttpServletRequest;
  * @author Mikel Lorza
  */
 @RunWith(Arquillian.class)
-public class UpdateArticleMVCResourceCommandTest {
+public class UpdateArticleMVCActionCommandTest {
 
 	@ClassRule
 	@Rule
@@ -267,7 +267,7 @@ public class UpdateArticleMVCResourceCommandTest {
 		ReflectionTestUtil.setFieldValue(
 			_mvcActionCommand, "_portal",
 			ProxyUtil.newProxyInstance(
-				UpdateArticleMVCResourceCommandTest.class.getClassLoader(),
+				UpdateArticleMVCActionCommandTest.class.getClassLoader(),
 				new Class<?>[] {Portal.class},
 				(proxy, method, args) -> {
 					if (Objects.equals(

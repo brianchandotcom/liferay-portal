@@ -209,14 +209,13 @@ public class LoginMVCActionCommandTest {
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		mockLiferayPortletActionRequest.setParameter("state", state);
-		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG, _getLiferayPortletConfig());
 		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletActionResponse());
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+		mockLiferayPortletActionRequest.setParameter("state", state);
 
 		_addCookieSupportCookie(
 			(MockHttpServletRequest)
@@ -233,17 +232,15 @@ public class LoginMVCActionCommandTest {
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		mockLiferayPortletActionRequest.setParameter(
-			"login", user.getEmailAddress());
-		mockLiferayPortletActionRequest.setParameter("password", password);
-
-		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG, _getLiferayPortletConfig());
 		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletActionResponse());
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+		mockLiferayPortletActionRequest.setParameter(
+			"login", user.getEmailAddress());
+		mockLiferayPortletActionRequest.setParameter("password", password);
 
 		_addCookieSupportCookie(
 			(MockHttpServletRequest)

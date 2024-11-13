@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
@@ -1318,6 +1319,49 @@ public class GroupServiceTest {
 	}
 
 	@Test
+	public void testUpdateGroupWithDifferentDefaultLocale() throws Exception {
+		Group group = _groupLocalService.addGroup(
+			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			null, 0, GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, "Spanish"
+			).put(
+				LocaleUtil.US, "English"
+			).build(),
+			null, GroupConstants.TYPE_SITE_OPEN, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, true, true,
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertGroupKeyWithDifferentDefaultLocale(group, "Spanish");
+	}
+
+	@Test
+	public void testUpdateGroupWithDifferentDefaultLocaleAndCompanyTypeGroup()
+		throws Exception {
+
+		long classPK = RandomTestUtil.nextLong();
+
+		Group group2 = _groupLocalService.addGroup(
+			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			Company.class.getName(), classPK,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(),
+				() -> {
+					Group group1 = GroupTestUtil.addGroup();
+
+					return group1.getName(LocaleUtil.getDefault());
+				}
+			).build(),
+			null, GroupConstants.TYPE_SITE_OPEN, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, true, true,
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertGroupKeyWithDifferentDefaultLocale(
+			group2, String.valueOf(classPK));
+	}
+
+	@Test
 	public void testValidChangeAvailableLanguageIds() throws Exception {
 		_group = GroupTestUtil.addGroup(GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
@@ -1371,6 +1415,29 @@ public class GroupServiceTest {
 			_groupService.getGroupsCount(
 				TestPropsValues.getCompanyId(), parentGroupId, nameSearch,
 				true));
+	}
+
+	private void _assertGroupKeyWithDifferentDefaultLocale(
+			Group group, String expectedGroupKey)
+		throws Exception {
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		try {
+			LocaleUtil.setDefault(
+				LocaleUtil.SPAIN.getLanguage(), LocaleUtil.SPAIN.getCountry(),
+				LocaleUtil.SPAIN.getVariant());
+
+			group = _groupLocalService.updateGroup(
+				group.getGroupId(), group.getTypeSettings());
+
+			Assert.assertEquals(expectedGroupKey, group.getGroupKey());
+		}
+		finally {
+			LocaleUtil.setDefault(
+				defaultLocale.getLanguage(), defaultLocale.getCountry(),
+				defaultLocale.getVariant());
+		}
 	}
 
 	private Locale _getLocale() {
@@ -1459,6 +1526,9 @@ public class GroupServiceTest {
 
 	@Inject
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

@@ -60,7 +60,7 @@ public class TaglibSamplePortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			TaglibSamplePortletKeys.FRONTEND_SAMPLE_DISPLAY_CONTEXT,
-			new FrontendSampleDisplayContext());
+			new FrontendSampleDisplayContext(renderRequest, renderResponse));
 
 		renderRequest.setAttribute(
 			TaglibSamplePortletKeys.SEARCH_ITERATOR_DISPLAY_CONTEXT,

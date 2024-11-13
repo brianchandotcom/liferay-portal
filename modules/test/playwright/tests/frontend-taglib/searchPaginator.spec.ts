@@ -5,14 +5,12 @@
 
 import {Locator, expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {taglibSamplePageTest} from './fixtures/taglibSamplePageTest';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -21,12 +19,12 @@ export const test = mergeTests(
 	taglibSamplePageTest
 );
 
-const tabName = 'Search Paginator';
+const linkName = 'Search Paginator';
 
 test(
 	'Search Paginator dropdown generates page links on scrolling',
 	{tag: '@LPD-37458'},
-	async ({apiHelpers, page, site, taglibSamplePage}) => {
+	async ({page, site, taglibSamplePage}) => {
 		let dropdownMenuHandler: Locator;
 
 		await test.step('Create a content site and the taglib sample widget', async () => {
@@ -35,24 +33,22 @@ test(
 			});
 		});
 
-		await test.step('Select Panel tab', async () => {
-			await taglibSamplePage.selectTab(tabName);
+		await test.step('Select Panel link', async () => {
+			await taglibSamplePage.selectLink(linkName);
 		});
 
 		await test.step('Open navigator dropdown', async () => {
-			const searchPaginator = page.getByLabel(tabName);
-
-			await searchPaginator
+			await page
 				.getByRole('button', {
 					name: 'Intermediate Pages Use TAB to',
 				})
 				.click();
 
 			await expect(
-				searchPaginator.getByRole('link', {exact: true, name: 'Page 4'})
+				page.getByRole('link', {exact: true, name: 'Page 4'})
 			).toBeVisible();
 
-			dropdownMenuHandler = await searchPaginator.getByText(
+			dropdownMenuHandler = await page.getByText(
 				'Page 4 Page 5 Page 6 Page 7'
 			);
 		});
@@ -62,7 +58,6 @@ test(
 				element.scrollTop = 600;
 			});
 			await page
-				.getByLabel('Search Paginator')
 				.getByRole('link', {exact: true, name: 'Page 20'})
 				.waitFor();
 
@@ -94,7 +89,6 @@ test(
 				element.scrollTop = 600;
 			});
 			await page
-				.getByLabel('Search Paginator')
 				.getByRole('link', {exact: true, name: 'Page 20'})
 				.waitFor();
 

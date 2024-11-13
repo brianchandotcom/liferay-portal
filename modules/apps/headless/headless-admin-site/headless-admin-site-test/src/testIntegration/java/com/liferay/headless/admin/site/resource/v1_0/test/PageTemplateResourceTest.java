@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -119,16 +120,20 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			_getSiteSiteByExternalReferenceCodePageTemplatesPageTotalCount(
 				testGroup.getExternalReferenceCode()));
 
-		Group companyGroup = _getCompanyGroup();
+		_withCompanyGroupWidgetPageTemplate(
+			(group, widgetPageTemplate) -> {
+				long curTotalCount =
+					_getSiteSiteByExternalReferenceCodePageTemplatesPageTotalCount(
+						group.getExternalReferenceCode());
 
-		totalCount =
-			_getSiteSiteByExternalReferenceCodePageTemplatesPageTotalCount(
-				companyGroup.getExternalReferenceCode());
+				_postSiteSiteByExternalReferenceCodePageTemplate(
+					widgetPageTemplate, group.getExternalReferenceCode());
 
-		Assert.assertEquals(
-			totalCount,
-			_getSiteSiteByExternalReferenceCodePageTemplatesPageTotalCount(
-				companyGroup.getExternalReferenceCode()));
+				Assert.assertEquals(
+					curTotalCount + 1,
+					_getSiteSiteByExternalReferenceCodePageTemplatesPageTotalCount(
+						group.getExternalReferenceCode()));
+			});
 
 		_withDepotEntry(
 			group -> _assertProblemException(
@@ -330,13 +335,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				testGroup, TestPropsValues.getUserId()));
 	}
 
-	private Group _getCompanyGroup() throws Exception {
-		Company company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
-
-		return company.getGroup();
-	}
-
 	private ContentPageTemplate _getContentPageTemplate(Group group)
 		throws Exception {
 
@@ -483,27 +481,18 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				_getPageTemplate(testGroup),
 				testGroup.getExternalReferenceCode()));
 
-		Group companyGroup = _getCompanyGroup();
+		_withCompanyGroupWidgetPageTemplate(
+			(group, widgetPageTemplate) -> {
+				_postSiteSiteByExternalReferenceCodePageTemplate(
+					widgetPageTemplate, group.getExternalReferenceCode());
 
-		WidgetPageTemplate widgetPageTemplate = _getWidgetPageTemplate(
-			companyGroup);
-
-		try {
-			_postSiteSiteByExternalReferenceCodePageTemplate(
-				widgetPageTemplate, companyGroup.getExternalReferenceCode());
-		}
-		finally {
-			_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
-				widgetPageTemplate.getExternalReferenceCode(),
-				companyGroup.getGroupId());
-		}
-
-		_assertProblemException(
-			() ->
-				pageTemplateResource.
-					postSiteSiteByExternalReferenceCodePageTemplate(
-						companyGroup.getExternalReferenceCode(),
-						_getContentPageTemplate(companyGroup)));
+				_assertProblemException(
+					() ->
+						pageTemplateResource.
+							postSiteSiteByExternalReferenceCodePageTemplate(
+								group.getExternalReferenceCode(),
+								_getContentPageTemplate(group)));
+			});
 
 		_withDepotEntry(
 			group -> _assertProblemException(
@@ -512,6 +501,35 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 						postSiteSiteByExternalReferenceCodePageTemplate(
 							group.getExternalReferenceCode(),
 							_getPageTemplate(group))));
+	}
+
+	private void _withCompanyGroupWidgetPageTemplate(
+			UnsafeBiConsumer<Group, WidgetPageTemplate, Exception>
+				unsafeBiConsumer)
+		throws Exception {
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group group = company.getGroup();
+
+		WidgetPageTemplate widgetPageTemplate = _getWidgetPageTemplate(group);
+
+		try {
+			unsafeBiConsumer.accept(group, widgetPageTemplate);
+		}
+		finally {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByExternalReferenceCode(
+						widgetPageTemplate.getExternalReferenceCode(),
+						group.getGroupId());
+
+			if (layoutPageTemplateEntry != null) {
+				_layoutPageTemplateEntryLocalService.
+					deleteLayoutPageTemplateEntry(layoutPageTemplateEntry);
+			}
+		}
 	}
 
 	private void _withDepotEntry(

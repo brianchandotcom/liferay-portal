@@ -25,47 +25,29 @@ test(
 	'Thread Priorities can be translated',
 	{tag: '@LPD-41689'},
 	async ({messageBoardsPage, page, site}) => {
-		await messageBoardsPage.goto(site.friendlyUrlPath);
+		await messageBoardsPage.goToThreadPriorities(site.friendlyUrlPath);
 
-		await page.getByRole('button', {name: 'Options'}).click();
+		const languageLocator = page.getByLabel('Localized Language');
 
-		await page.getByRole('menuitem', {name: 'Configuration'}).click();
+		await languageLocator.waitFor();
 
-		await page.getByRole('menuitem', {name: 'Thread Priorities'}).click();
-
-		await page.getByLabel('Localized Language').waitFor();
-
-		await page.getByLabel('Localized Language').selectOption('hu_HU');
-
-		await page
-			.locator(
-				'[id="_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_priorityName0_temp"]'
-			)
-			.click();
+		await languageLocator.selectOption('hu_HU');
 
 		const expectedPriorityName = 'test';
 
-		await page
-			.locator(
-				'[id="_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_priorityName0_temp"]'
-			)
-			.fill(expectedPriorityName);
+		const priorityNameLocator = page.locator('[id$="priorityName0_temp"]');
+
+		await priorityNameLocator.fill(expectedPriorityName);
 
 		await page.getByRole('button', {name: 'Save'}).click();
 
-		await page.waitForLoadState('networkidle');
+		await expect(priorityNameLocator).toBeHidden();
 
-		await page.getByLabel('Localized Language').waitFor();
+		await languageLocator.selectOption('hu_HU');
 
-		await page.getByLabel('Localized Language').selectOption('hu_HU');
-
-		const actualPriorityName = await page
-			.locator(
-				'[id="_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_priorityName0_temp"]'
-			)
-			.inputValue();
-
-		await expect(actualPriorityName).toBe(expectedPriorityName);
+		expect(await priorityNameLocator.inputValue()).toBe(
+			expectedPriorityName
+		);
 	}
 );
 

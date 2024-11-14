@@ -6,15 +6,63 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
+import com.liferay.headless.admin.site.client.pagination.Page;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
 
-import org.junit.Ignore;
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Rubén Pulido
  */
-@Ignore
+@FeatureFlags("LPD-35443")
 @RunWith(Arquillian.class)
 public class FriendlyUrlHistoryResourceTest
 	extends BaseFriendlyUrlHistoryResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			testGroup.getGroupId());
+
+		String[] friendlyURLs = {
+			"/" + RandomTestUtil.randomString(),
+			"/" + RandomTestUtil.randomString(),
+			"/" + RandomTestUtil.randomString()
+		};
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		for (String friendlyURL : friendlyURLs) {
+			_layoutLocalService.updateFriendlyURL(
+				TestPropsValues.getUserId(), layout.getPlid(), friendlyURL,
+				defaultLanguageId);
+		}
+
+		Page<FriendlyUrlHistory> friendlyUrlHistoryPage =
+			friendlyUrlHistoryResource.
+				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage(
+					testGroup.getExternalReferenceCode(),
+					layout.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			friendlyURLs.length + 1, friendlyUrlHistoryPage.getPageSize());
+	}
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
 }

@@ -10,6 +10,7 @@ import {PORTLET_URLS} from '../../utils/portletUrls';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class ViewObjectDefinitionsPage {
+	readonly actionsButton: Locator;
 	readonly addObjectFolderButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly createObjectDefinitionButton: Locator;
@@ -29,6 +30,7 @@ export class ViewObjectDefinitionsPage {
 	readonly viewInModelBuilderButton: Locator;
 
 	constructor(page: Page) {
+		this.actionsButton = page.getByRole('button', {name: 'Actions'});
 		this.addObjectFolderButton = page.getByLabel('Add Object Folder');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.confirmObjectFolderNameInput = page.locator(

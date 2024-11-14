@@ -8,7 +8,9 @@ import {Locator, Page} from '@playwright/test';
 import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
 
 export class ObjectRelationshipsPage {
+	readonly actionsButton: Locator;
 	readonly cancelButton: Locator;
+	readonly deleteObjectRelationshipOption: Locator;
 	readonly inheritanceModalHeader: Locator;
 	readonly inheritanceModalDisableButton: Locator;
 	readonly inheritanceCheckbox: Locator;
@@ -18,7 +20,11 @@ export class ObjectRelationshipsPage {
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 
 	constructor(page: Page) {
+		this.actionsButton = page.getByRole('button', {name: 'Actions'});
 		this.cancelButton = page.frameLocator('iframe').getByText('Cancel');
+		this.deleteObjectRelationshipOption = page.getByRole('menuitem', {
+			name: 'Delete',
+		});
 		this.inheritanceModalHeader = page.getByRole('heading', {
 			name: 'Disable Inheritance?',
 		});

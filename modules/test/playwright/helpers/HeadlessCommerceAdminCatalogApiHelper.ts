@@ -340,12 +340,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 
 	async patchSpecification(
 		specificationId: string,
-		listTypeDefinitionId: number
+		listTypeDefinitionIds: number[]
 	) {
 		return this.apiHelpers.patch(
 			`${this.apiHelpers.baseUrl}${this.basePath}/specifications/${specificationId}`,
 			{
-				listTypeDefinitionId,
+				listTypeDefinitionIds,
 			}
 		);
 	}

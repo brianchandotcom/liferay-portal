@@ -125,7 +125,9 @@ export class ProductDetailsPage {
 			specificationValue: string
 		) => {
 			return this.ellipsisFrameProductSpecification
-				.getByLabel('Value')
+				.locator(
+					'select[name="_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_listTypeEntriesSelect"]'
+				)
 				.selectOption(specificationValue);
 		};
 		this.frameChooseSpecification = async (specificationName: string) => {
@@ -245,7 +247,7 @@ export class ProductDetailsPage {
 	) {
 		this.ellipsisProductSpecification.click();
 		(await this.dropdownProductSpecification(chooseAddOrCreate)).click();
-		this.editFrameSpecificationProduct(specificationValue);
+		await this.editFrameSpecificationProduct(specificationValue);
 		this.saveButtonEditFrame.click();
 	}
 

@@ -33,7 +33,7 @@ public class CTCollectionHistoryProviderRegistryImpl
 			classNameId);
 
 		if (className == null) {
-			return null;
+			return _getDefaultCTCollectionHistoryProvider();
 		}
 
 		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =

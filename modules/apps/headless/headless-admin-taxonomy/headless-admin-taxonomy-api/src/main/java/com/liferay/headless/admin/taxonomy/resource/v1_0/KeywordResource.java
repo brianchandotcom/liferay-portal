@@ -66,6 +66,18 @@ public interface KeywordResource {
 			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteAssetLibraryKeywordByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public Keyword getAssetLibraryKeywordByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public Keyword putAssetLibraryKeywordByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode, Keyword keyword)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getAssetLibraryKeywordPermissionsPage(
 				Long assetLibraryId, String roleNames)
@@ -113,6 +125,18 @@ public interface KeywordResource {
 
 	public Response postSiteKeywordBatch(
 			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteSiteKeywordByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public Keyword getSiteKeywordByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public Keyword putSiteKeywordByExternalReferenceCode(
+			Long siteId, String externalReferenceCode, Keyword keyword)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

@@ -237,19 +237,34 @@ public class ObjectEntryKeywordQueryContributor
 
 			String fieldName = "nestedFieldArray.value_text";
 
-			if (Objects.equals(
-					objectField.getIndexedLanguageId(),
-					searchContext.getLanguageId())) {
+			if (objectField.isLocalized()) {
+				String[] localizedFieldNames =
+					_searchLocalizationHelper.getLocalizedFieldNames(
+						new String[] {"nestedFieldArray.value"}, searchContext);
+
+				for (String localizedFieldName : localizedFieldNames) {
+					nestedBooleanQuery.add(
+						new MatchQuery(localizedFieldName, token),
+						BooleanClauseOccur.SHOULD);
+
+					queryConfig.addHighlightFieldNames(localizedFieldName);
+				}
+			}
+			else if (Objects.equals(
+						objectField.getIndexedLanguageId(),
+						searchContext.getLanguageId())) {
 
 				fieldName =
 					"nestedFieldArray.value_" +
 						objectField.getIndexedLanguageId();
 			}
 
-			nestedBooleanQuery.add(
-				new MatchQuery(fieldName, token), BooleanClauseOccur.MUST);
+			if (!objectField.isLocalized()) {
+				nestedBooleanQuery.add(
+					new MatchQuery(fieldName, token), BooleanClauseOccur.MUST);
 
-			queryConfig.addHighlightFieldNames(fieldName);
+				queryConfig.addHighlightFieldNames(fieldName);
+			}
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),

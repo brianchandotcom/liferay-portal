@@ -32,7 +32,7 @@ import org.json.JSONObject;
  */
 public class ScanCodeProject {
 
-	public static void addErrorsToMap(
+	public static void addComplianceAlertValuesToMaps(
 		JSONObject complianceAlertJSONObject, String key, String errorType) {
 
 		if (!complianceAlertJSONObject.has(key)) {
@@ -46,10 +46,10 @@ public class ScanCodeProject {
 				errorType);
 
 			if (errorType.equals("warning")) {
-				_warningCountMap.put(key, errorTypeJSONArray.length());
+				_warningCountsMap.put(key, errorTypeJSONArray.length());
 			}
 			else {
-				_errorCountMap.put(key, errorTypeJSONArray.length());
+				_errorCountsMap.put(key, errorTypeJSONArray.length());
 			}
 		}
 	}
@@ -133,8 +133,10 @@ public class ScanCodeProject {
 			return;
 		}
 
-		addErrorsToMap(complianceAlertJSONObject, "packages", errorType);
-		addErrorsToMap(complianceAlertJSONObject, "resources", errorType);
+		addComplianceAlertValuesToMaps(
+			complianceAlertJSONObject, "packages", errorType);
+		addComplianceAlertValuesToMaps(
+			complianceAlertJSONObject, "resources", errorType);
 	}
 
 	public void downloadResultFiles() throws IOException {
@@ -195,8 +197,8 @@ public class ScanCodeProject {
 		return jsonObject;
 	}
 
-	public String getComplianceAlertString(
-		HashMap<String, Integer> map, String errorType) {
+	public String getComplianceAlerts(
+		Map<String, Integer> map, String errorType) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -370,19 +372,17 @@ public class ScanCodeProject {
 
 		String subject = "ScanCode pipeline is complete";
 
-		if ((_errorCountMap != null) && !_errorCountMap.isEmpty()) {
+		if ((_errorCountsMap != null) && !_errorCountsMap.isEmpty()) {
 			subject = ":red-alert: Release blocker :red-alert:";
 		}
 
-		String complianceAlertString = getComplianceAlertString(
-			_errorCountMap, "error");
+		String complianceAlerts = getComplianceAlerts(_errorCountsMap, "error");
 
-		complianceAlertString += getComplianceAlertString(
-			_warningCountMap, "warning");
+		complianceAlerts += getComplianceAlerts(_warningCountsMap, "warning");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(complianceAlertString)) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(complianceAlerts)) {
 			sb.append("*Compliance alerts:* ");
-			sb.append(complianceAlertString);
+			sb.append(complianceAlerts);
 			sb.append("\n");
 		}
 
@@ -542,9 +542,8 @@ public class ScanCodeProject {
 	private static final Pattern _dockerTagPattern = Pattern.compile(
 		"(?<buildProfile>portal|dxp):(?<releaseVersion>" +
 			"\\d+.\\d+.\\d+[.\\d+]*-(ga|u)\\d+|\\d{4}.[qQ]\\d+.\\d+)");
-	private static final HashMap<String, Integer> _errorCountMap =
-		new HashMap<>();
-	private static final HashMap<String, Integer> _warningCountMap =
+	private static final Map<String, Integer> _errorCountsMap = new HashMap<>();
+	private static final Map<String, Integer> _warningCountsMap =
 		new HashMap<>();
 
 	static {

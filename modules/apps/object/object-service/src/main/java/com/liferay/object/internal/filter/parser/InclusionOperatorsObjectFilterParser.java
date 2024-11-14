@@ -41,12 +41,12 @@ public class InclusionOperatorsObjectFilterParser
 			for (Object value : (Object[])map.get("in")) {
 				values.add(
 					StringBundler.concat(
-						"(x ", excludes ? "ne " : "eq ", value, ")"));
+						"(status ", excludes ? "ne " : "eq ", value, ")"));
 			}
 
 			return StringBundler.concat(
-				"(", objectFilter.getFilterBy(), "/any(x:",
-				StringUtil.merge(values, excludes ? " and " : " or "), "))");
+				"(", StringUtil.merge(values, excludes ? " and " : " or "),
+				")");
 		}
 
 		for (Object value : (Object[])map.get("in")) {

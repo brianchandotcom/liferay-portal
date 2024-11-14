@@ -400,7 +400,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				notificationText);
 		}
 
-		httpServletResponse.sendRedirect(redirect);
+		httpServletResponse.sendRedirect(_portal.escapeRedirect(redirect));
 
 		return null;
 	}

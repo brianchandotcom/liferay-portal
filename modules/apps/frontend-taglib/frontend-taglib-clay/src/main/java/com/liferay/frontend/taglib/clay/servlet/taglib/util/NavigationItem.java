@@ -43,6 +43,10 @@ public class NavigationItem extends HashMap<String, Object> {
 		put("data", data);
 	}
 
+	public void setDeprecated(boolean deprecated) {
+		put("deprecated", deprecated);
+	}
+
 	public void setDisabled(boolean disabled) {
 		put("disabled", disabled);
 	}

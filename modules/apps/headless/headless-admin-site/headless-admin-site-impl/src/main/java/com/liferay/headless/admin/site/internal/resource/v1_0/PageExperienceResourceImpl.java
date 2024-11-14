@@ -6,11 +6,11 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
+import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageExperienceResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -48,11 +48,11 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		_segmentsExperienceService.deleteSegmentsExperience(
-			pageExperienceExternalReferenceCode, group.getGroupId());
+			pageExperienceExternalReferenceCode,
+			GroupUtil.getGroupId(
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 	}
 
 	@Override
@@ -65,13 +65,13 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		return _pageExperienceDTOConverter.toDTO(
 			_segmentsExperienceService.
 				getSegmentsExperienceByExternalReferenceCode(
-					pageExperienceExternalReferenceCode, group.getGroupId()));
+					pageExperienceExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode)));
 	}
 
 	@Override
@@ -85,11 +85,11 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			pageSpecificationExternalReferenceCode, group.getGroupId());
+			pageSpecificationExternalReferenceCode,
+			GroupUtil.getGroupId(
+				true, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 
 		if (layout == null) {
 			return Page.of(Collections.emptyList());
@@ -98,7 +98,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		return Page.of(
 			transform(
 				_segmentsExperienceService.getSegmentsExperiences(
-					group.getGroupId(), layout.getPlid(), true,
+					layout.getGroupId(), layout.getPlid(), true,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 				segmentsExperience -> _pageExperienceDTOConverter.toDTO(
 					segmentsExperience)));
@@ -116,17 +116,17 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			pageSpecificationExternalReferenceCode, group.getGroupId());
+			pageSpecificationExternalReferenceCode,
+			GroupUtil.getGroupId(
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 
 		if (layout == null) {
 			throw new UnsupportedOperationException();
 		}
 
-		return _addSegmentsExperience(group, layout, pageExperience);
+		return _addSegmentsExperience(layout, pageExperience);
 	}
 
 	@Override
@@ -140,25 +140,24 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
+		long groupId = GroupUtil.getGroupId(
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.
 				fetchSegmentsExperienceByExternalReferenceCode(
-					pageExperienceExternalReferenceCode, group.getGroupId());
+					pageExperienceExternalReferenceCode, groupId);
 
 		if (segmentsExperience == null) {
 			Layout layout =
 				_layoutLocalService.fetchLayoutByExternalReferenceCode(
-					pageExperience.getSitePageExternalReferenceCode(),
-					group.getGroupId());
+					pageExperience.getSitePageExternalReferenceCode(), groupId);
 
 			if (layout == null) {
 				throw new UnsupportedOperationException();
 			}
 
-			return _addSegmentsExperience(group, layout, pageExperience);
+			return _addSegmentsExperience(layout, pageExperience);
 		}
 
 		if ((pageExperience.getPriority() != null) &&
@@ -173,8 +172,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 
 		SegmentsEntry segmentsEntry =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
-				group.getGroupId(),
-				pageExperience.getSegmentExternalReferenceCode());
+				groupId, pageExperience.getSegmentExternalReferenceCode());
 
 		if (segmentsEntry == null) {
 			throw new UnsupportedOperationException();
@@ -192,12 +190,12 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 	}
 
 	private PageExperience _addSegmentsExperience(
-			Group group, Layout layout, PageExperience pageExperience)
+			Layout layout, PageExperience pageExperience)
 		throws Exception {
 
 		SegmentsEntry segmentsEntry =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
-				group.getGroupId(),
+				layout.getGroupId(),
 				pageExperience.getSegmentExternalReferenceCode());
 
 		if (segmentsEntry == null) {
@@ -206,7 +204,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 
 		return _pageExperienceDTOConverter.toDTO(
 			_segmentsExperienceService.addSegmentsExperience(
-				pageExperience.getExternalReferenceCode(), group.getGroupId(),
+				pageExperience.getExternalReferenceCode(), layout.getGroupId(),
 				segmentsEntry.getSegmentsEntryId(), pageExperience.getKey(),
 				layout.getPlid(),
 				LocalizedMapUtil.getLocalizedMap(pageExperience.getName_i18n()),
@@ -215,7 +213,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 					true
 				).build(),
 				ServiceContextBuilder.create(
-					group.getGroupId(), contextHttpServletRequest, null
+					layout.getGroupId(), contextHttpServletRequest, null
 				).build()));
 	}
 

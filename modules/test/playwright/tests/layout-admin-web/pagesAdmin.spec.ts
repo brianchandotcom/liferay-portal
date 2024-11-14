@@ -24,6 +24,182 @@ const test = mergeTests(
 	pagesAdminPagesTest
 );
 
+test.describe('Keyboard movement and navigation', () => {
+	test(
+		'Keyboard movement works as expected',
+		{tag: ['@LPD-35221']},
+		async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+			// Create five pages and go to admin page
+
+			for (const i of Array(5).keys()) {
+				await apiHelpers.headlessDelivery.createSitePage({
+					siteId: site.id,
+					title: `Page ${i}`,
+				});
+			}
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			// Check keyboard movement behavior
+			// Move item 3 on top of item 2
+
+			const getItem = (index: number) =>
+				page.locator('.miller-columns-item', {
+					hasText: `Page ${index}`,
+				});
+
+			const enableMovement = async (index: number) =>
+				await page.getByLabel(`Move Page ${index}`).press('Enter');
+
+			await expect(async () => {
+				await enableMovement(3);
+
+				await expect(getItem(2)).toHaveClass(/drop-middle/, {
+					timeout: 1000,
+				});
+			}).toPass();
+
+			await page.keyboard.press('ArrowUp');
+
+			await expect(getItem(2)).toHaveClass(/drop-top/);
+
+			await page.keyboard.press('Enter');
+
+			await expect(
+				page.locator('.miller-columns-item').nth(2)
+			).toContainText('Page 3');
+
+			// Move item 0 inside item 1
+
+			await enableMovement(0);
+
+			await expect(getItem(1)).toHaveClass(/drop-middle/);
+
+			await page.keyboard.press('Enter');
+
+			await expect(
+				page
+					.locator('.miller-columns-col')
+					.nth(1)
+					.locator('.miller-columns-item')
+			).toContainText('Page 0');
+
+			// Check source item is skipped when changing target
+
+			await enableMovement(3);
+
+			await expect(getItem(1)).toHaveClass(/drop-middle/);
+
+			await page.keyboard.press('ArrowDown');
+
+			await expect(getItem(2)).toHaveClass(/drop-middle/);
+
+			// Check Escape cancels the movement
+
+			await page.keyboard.press('Escape');
+
+			await expect(getItem(2)).not.toHaveClass(/drop-middle/);
+
+			// Check it's possible to move several items at a time
+
+			await page.getByLabel('Select Page 1').click();
+			await page.getByLabel('Select Page 3').click();
+
+			await enableMovement(1);
+
+			const page1Styles = await getItem(1).evaluate((element) =>
+				getComputedStyle(element)
+			);
+			const page3Styles = await getItem(3).evaluate((element) =>
+				getComputedStyle(element)
+			);
+
+			expect(page1Styles.opacity).toBe('0.4');
+			expect(page3Styles.opacity).toBe('0.4');
+		}
+	);
+
+	test(
+		'Keyboard navigation works as expected',
+		{tag: ['@LPD-35945']},
+		async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+			// Create five pages and go to admin page
+
+			for (const i of Array(5).keys()) {
+				await apiHelpers.headlessDelivery.createSitePage({
+					siteId: site.id,
+					title: `Page ${i}`,
+				});
+			}
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			// Check the first item has focus by default
+
+			const getItem = (index: number) =>
+				page.locator('.miller-columns-item', {
+					hasText: `Page ${index}`,
+				});
+
+			await expect(
+				getItem(0).locator('.miller-columns-item-mask')
+			).toBeFocused();
+
+			// Move to second and third item and check the focus moves well
+
+			await page.keyboard.press('ArrowDown');
+
+			await expect(
+				getItem(1).locator('.miller-columns-item-mask')
+			).toBeFocused();
+
+			await page.keyboard.press('ArrowDown');
+
+			await expect(
+				getItem(2).locator('.miller-columns-item-mask')
+			).toBeFocused();
+
+			// Check we can move to item content with tab
+
+			await page.keyboard.press('Tab');
+
+			await expect(page.getByLabel('Move Page 2')).toBeFocused();
+
+			// Move item 4 inside item 3, check moved item keep focus
+
+			const enableMovement = async (index: number) =>
+				await page.getByLabel(`Move Page ${index}`).press('Enter');
+
+			await enableMovement(4);
+
+			await expect(getItem(3)).toHaveClass(/drop-middle/);
+
+			await page.keyboard.press('Enter');
+
+			await expect(
+				page
+					.locator('.miller-columns-col')
+					.nth(1)
+					.locator('.miller-columns-item')
+			).toContainText('Page 4');
+
+			await expect(
+				getItem(4).locator('.miller-columns-item-mask')
+			).toBeFocused();
+
+			// Check we can come back to parent with left arrow
+
+			await page.keyboard.press('ArrowLeft');
+
+			await expect(
+				getItem(3).locator('.miller-columns-item-mask')
+			).toBeFocused();
+		}
+	);
+});
+
 test('Changes the permissions of a group of pages', async ({
 	apiHelpers,
 	page,

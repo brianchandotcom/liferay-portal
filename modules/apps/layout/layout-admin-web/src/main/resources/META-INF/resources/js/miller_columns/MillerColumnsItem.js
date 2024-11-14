@@ -450,13 +450,7 @@ const MillerColumnsItem = ({
 
 			<ClayLayout.ContentCol className="c-pl-1" expand>
 				<div
-					className={classNames(
-						'align-items-center list-group-title',
-						{
-							'text-truncate-inline':
-								!Liferay.FeatureFlags['LPD-35220'],
-						}
-					)}
+					className="align-items-center list-group-title text-truncate-inline"
 					data-qa-id="layoutHref"
 				>
 					{viewUrl ? (

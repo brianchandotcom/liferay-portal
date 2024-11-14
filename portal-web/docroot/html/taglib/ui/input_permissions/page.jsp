@@ -66,18 +66,16 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 
 		boolean submitted = request.getParameter(groupPermissionsName) != null;
 
-		boolean inputPermissionsShowOptions = FeatureFlagManagerUtil.isEnabled("LPD-19787") || ParamUtil.getBoolean(request, "inputPermissionsShowOptions");
-
 		String inputPermissionsViewRole = ParamUtil.getString(request, "inputPermissionsViewRole", InputPermissionsParamsTag.getDefaultViewRole(modelName, themeDisplay));
 		%>
 
-		<input id="<%= uniqueNamespace %>inputPermissionsShowOptions" name="<%= namespace %>inputPermissionsShowOptions" type="hidden" value="<%= inputPermissionsShowOptions %>" />
+		<input id="<%= uniqueNamespace %>inputPermissionsShowOptions" name="<%= namespace %>inputPermissionsShowOptions" type="hidden" value="<%= true %>" />
 
 		<c:if test="<%= supportedActions.contains(ActionKeys.VIEW) %>">
 			<p>
 				<label class="control-label" for="<%= namespace %>inputPermissionsViewRole">
 					<c:choose>
-						<c:when test='<%= supportedActions.contains(ActionKeys.DOWNLOAD) && FeatureFlagManagerUtil.isEnabled("LPD-19787") %>'>
+						<c:when test="<%= supportedActions.contains(ActionKeys.DOWNLOAD) %>">
 							<liferay-ui:message key="viewable-and-downloadable-by" />
 						</c:when>
 						<c:otherwise>
@@ -119,16 +117,6 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 
 					<option <%= inputPermissionsViewRole.equals(RoleConstants.OWNER) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.OWNER %>"><liferay-ui:message key="owner" /></option>
 				</select>
-
-				<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-19787") %>'>
-					<button aria-controls="<%= uniqueNamespace %>inputPermissionsTable" aria-expanded="<%= inputPermissionsShowOptions %>" class="btn btn-secondary btn-sm mt-3" id="<%= uniqueNamespace %>inputPermissionsOptionsButton" onclick="<%= uniqueNamespace %>inputPermissionsToggle();" type="button">
-						<%= inputPermissionsShowOptions ? LanguageUtil.get(request, "hide-options") : LanguageUtil.get(request, "more-options") %>
-					</button>
-
-					<span class="mt-3 <%= inputPermissionsShowOptions ? "hide" : "" %>" id="<%= uniqueNamespace %>inputPermissionsShowOptionsHelp">
-						<liferay-ui:icon-help message="input-permissions-more-options-help" />
-					</span>
-				</c:if>
 			</p>
 		</c:if>
 
@@ -142,52 +130,6 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 		</c:choose>
 
 		<aui:script>
-			<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-19787") %>'>
-				function <%= uniqueNamespace %>inputPermissionsToggle() {
-					var isInputPermissionsShowOptionsTrue = (document.getElementById('<%= uniqueNamespace %>inputPermissionsShowOptions').value === 'true');
-
-					<%= uniqueNamespace %>togglePermissionsOptions(!isInputPermissionsShowOptionsTrue);
-				}
-
-				function <%= uniqueNamespace %>togglePermissionsOptions(force) {
-					var inputPermissionsTable = document.getElementById('<%= uniqueNamespace %>inputPermissionsTable');
-
-					if (inputPermissionsTable) {
-						if (force) {
-							inputPermissionsTable.classList.remove('hide');
-						}
-						else {
-							inputPermissionsTable.classList.add('hide');
-						}
-					}
-
-					var inputPermissionsShowOptionsHelp = document.getElementById('<%= uniqueNamespace %>inputPermissionsShowOptionsHelp');
-
-					if (inputPermissionsShowOptionsHelp) {
-						if (force) {
-							inputPermissionsShowOptionsHelp.classList.add('hide');
-						}
-						else {
-							inputPermissionsShowOptionsHelp.classList.remove('hide');
-						}
-					}
-
-					var inputPermissionsShowOptions = document.getElementById('<%= uniqueNamespace %>inputPermissionsShowOptions');
-
-					if (inputPermissionsShowOptions) {
-						inputPermissionsShowOptions.value = force;
-					}
-
-					var inputPermissionsOptionsButton = document.getElementById('<%= uniqueNamespace %>inputPermissionsOptionsButton');
-
-					if (inputPermissionsOptionsButton) {
-						inputPermissionsOptionsButton.innerText = force ? '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "hide-options")) %>' : '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "more-options")) %>' ;
-						inputPermissionsOptionsButton.ariaExpanded = force;
-						inputPermissionsOptionsButton.classList = force ? "btn btn-secondary btn-sm mb-1 mt-3" : "btn btn-secondary btn-sm mb-5 mt-3";
-					}
-				}
-			</c:if>
-
 			function <%= uniqueNamespace %>updatePermissionsView() {
 				var permissionsViewRoleInput = document.getElementById('<%= uniqueNamespace %>inputPermissionsViewRole');
 
@@ -208,7 +150,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					<%= uniqueNamespace %>doUpdateViewValue('<%= uniqueNamespace %>guestPermissions_VIEW', checkGuestViewPermissions);
 					<%= uniqueNamespace %>doUpdateViewValue('<%= uniqueNamespace %>groupPermissions_VIEW', checkGroupViewPermissions);
 
-					<c:if test='<%= supportedActions.contains(ActionKeys.DOWNLOAD) && FeatureFlagManagerUtil.isEnabled("LPD-19787") %>'>
+					<c:if test="<%= supportedActions.contains(ActionKeys.DOWNLOAD) %>">
 						<%= uniqueNamespace %>doUpdateViewValue('<%= uniqueNamespace %>guestPermissions_DOWNLOAD', checkGuestViewPermissions);
 						<%= uniqueNamespace %>doUpdateViewValue('<%= uniqueNamespace %>groupPermissions_DOWNLOAD', checkGroupViewPermissions);
 					</c:if>

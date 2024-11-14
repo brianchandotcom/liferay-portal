@@ -12,7 +12,7 @@ ServiceContext#deriveDefaultPermissions(long, String).
 
 --%>
 
-<div class="permissions-table-container table-responsive <%= (inputPermissionsShowOptions || !supportedActions.contains(ActionKeys.VIEW)) ? "" : "hide" %>" id="<%= uniqueNamespace %>inputPermissionsTable" style="margin-bottom: 60px;">
+<div class="permissions-table-container table-responsive" id="<%= uniqueNamespace %>inputPermissionsTable" style="margin-bottom: 60px;">
 	<table class="table table-list">
 		<thead>
 			<tr>

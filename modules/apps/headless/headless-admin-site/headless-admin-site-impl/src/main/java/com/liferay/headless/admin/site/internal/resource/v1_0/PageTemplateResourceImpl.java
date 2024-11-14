@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplate;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageTemplateResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -108,6 +109,13 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollection(
 					pageTemplateSetExternalReferenceCode, groupId);
+
+		if (!Objects.equals(
+				LayoutPageTemplateCollectionTypeConstants.BASIC,
+				layoutPageTemplateCollection.getType())) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		return Page.of(
 			transform(
@@ -351,6 +359,13 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		if (layoutPageTemplateCollection == null) {
 			return LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+		}
+
+		if (!Objects.equals(
+				LayoutPageTemplateCollectionTypeConstants.BASIC,
+				layoutPageTemplateCollection.getType())) {
+
+			throw new UnsupportedOperationException();
 		}
 
 		return layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();

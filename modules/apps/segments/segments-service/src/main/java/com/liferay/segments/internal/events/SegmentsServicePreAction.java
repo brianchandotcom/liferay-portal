@@ -12,8 +12,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.SegmentsEntryRetriever;
@@ -25,6 +29,7 @@ import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +46,10 @@ import org.osgi.service.component.annotations.Reference;
 	property = "key=servlet.service.events.pre", service = LifecycleAction.class
 )
 public class SegmentsServicePreAction extends Action {
+
+	public static final String PORTLET_NAMESPACE_CONTENT_PAGE_EDITOR =
+		"_com_liferay_layout_content_page_editor_web_internal_portlet_" +
+			"ContentPageEditorPortlet_";
 
 	@Override
 	public void run(
@@ -136,6 +145,30 @@ public class SegmentsServicePreAction extends Action {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				ParamUtil.getLong(
+					httpServletRequest,
+					PORTLET_NAMESPACE_CONTENT_PAGE_EDITOR +
+						"segmentsExperienceId"));
+
+		if (permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId()) &&
+			Objects.equals(
+				ParamUtil.getString(
+					httpServletRequest, "p_l_mode", Constants.VIEW),
+				Constants.EDIT) &&
+			(segmentsExperience != null)) {
+
+			httpServletRequest.setAttribute(
+				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
+				new long[] {segmentsExperience.getSegmentsExperienceId()});
+
+			return;
+		}
 
 		if (!themeDisplay.isLifecycleRender()) {
 			return;

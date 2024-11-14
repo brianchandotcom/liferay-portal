@@ -33,7 +33,7 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 	@Test
 	public void testRewriteInlineEventHandlers() {
 		String html = _rewriteInlineEventHandlers(
-			"<div onclick=\"alert(1);\" onchange=\"alert(2);\">hey</div>",
+			"<div onclick=\"alert(1);\" onchange=\"alert(2);\">Yo!</div>",
 			"TEST_NONCE", false);
 
 		Assert.assertTrue(
@@ -54,7 +54,7 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 	@Test
 	public void testRewriteInlineEventHandlersRecursive() {
 		String html =
-			"<body onload=\"alert(1);\"><div onclick=\"alert(2);\">hey</div>" +
+			"<body onload=\"alert(1);\"><div onclick=\"alert(2);\">Yo!</div>" +
 				"</body>";
 
 		Assert.assertFalse(
@@ -72,7 +72,7 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 	@Test
 	public void testRewriteInlineEventHandlersWithBody() {
 		String html = _rewriteInlineEventHandlers(
-			"<BODY onclick=\"alert(1);\">hey</BODY>", "TEST_NONCE", false);
+			"<BODY onclick=\"alert(1);\">Yo!</BODY>", "TEST_NONCE", false);
 
 		Assert.assertTrue(_matches(html, ".*</body>"));
 		Assert.assertTrue(
@@ -85,7 +85,7 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 		Assert.assertTrue(_matches(html, "<body>.*"));
 
 		html = _rewriteInlineEventHandlers(
-			"<body onclick=\"alert(1);\" onchange=\"alert(2);\">hey</body>",
+			"<body onclick=\"alert(1);\" onchange=\"alert(2);\">Yo!</body>",
 			"TEST_NONCE", false);
 
 		Assert.assertTrue(_matches(html, ".*</body>"));
@@ -107,7 +107,7 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 	@Test
 	public void testRewriteInlineEventHandlersWithId() {
 		String html = _rewriteInlineEventHandlers(
-			"<div id=\"TEST_ID\" onclick=\"alert(1);\">hey</div>", "TEST_NONCE",
+			"<div id=\"TEST_ID\" onclick=\"alert(1);\">Yo!</div>", "TEST_NONCE",
 			false);
 
 		Assert.assertTrue(
@@ -118,8 +118,8 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 	@Test
 	public void testRewriteInlineEventHandlersWithMultipleTopNodes() {
 		String html = _rewriteInlineEventHandlers(
-			"<div onclick=\"alert(1);\">hey</div><div onclick=\"alert(2);\">" +
-				"hey</div>",
+			"<div onclick=\"alert(1);\">Yo!</div><div onclick=\"alert(2);\">" +
+				"Yo!</div>",
 			"TEST_NONCE", false);
 
 		Assert.assertTrue(
@@ -132,7 +132,7 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 	@Test
 	public void testRewriteInlineEventHandlersWithoutNonce() {
 		String html =
-			"<div onclick=\"alert(1);\" onchange=\"alert(2);\">hey</div>";
+			"<div onclick=\"alert(1);\" onchange=\"alert(2);\">Yo!</div>";
 
 		Assert.assertEquals(
 			html, _rewriteInlineEventHandlers(html, StringPool.BLANK, false));

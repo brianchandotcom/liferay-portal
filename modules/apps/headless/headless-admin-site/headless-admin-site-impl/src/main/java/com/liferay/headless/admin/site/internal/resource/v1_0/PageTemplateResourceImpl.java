@@ -92,6 +92,36 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 
 	@Override
 	public Page<PageTemplate>
+			getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage(
+				String siteExternalReferenceCode,
+				String pageTemplateSetExternalReferenceCode, Boolean flatten)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		long groupId = GroupUtil.getGroupId(
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionService.
+				getLayoutPageTemplateCollection(
+					pageTemplateSetExternalReferenceCode, groupId);
+
+		return Page.of(
+			transform(
+				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
+					groupId,
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				layoutPageTemplateEntry -> _pageTemplateDTOConverter.toDTO(
+					layoutPageTemplateEntry)));
+	}
+
+	@Override
+	public Page<PageTemplate>
 			getSiteSiteByExternalReferenceCodePageTemplatesPage(
 				String siteExternalReferenceCode, String search,
 				Aggregation aggregation, Filter filter, Pagination pagination,

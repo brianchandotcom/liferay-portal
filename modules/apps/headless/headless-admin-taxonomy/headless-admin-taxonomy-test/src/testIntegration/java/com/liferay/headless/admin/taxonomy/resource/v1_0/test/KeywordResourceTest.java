@@ -12,6 +12,7 @@ import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
+import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.KeywordResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -33,6 +34,86 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class KeywordResourceTest extends BaseKeywordResourceTestCase {
+
+	@Override
+	@Test
+	public void testDeleteAssetLibraryKeywordByExternalReferenceCode()
+		throws Exception {
+
+		super.testDeleteAssetLibraryKeywordByExternalReferenceCode();
+
+		testDeleteAssetLibraryKeywordByExternalReferenceCode_addKeyword();
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		try {
+			keywordResource.deleteAssetLibraryKeywordByExternalReferenceCode(
+				testDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
+				externalReferenceCode);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	@Override
+	@Test
+	public void testDeleteSiteKeywordByExternalReferenceCode()
+		throws Exception {
+
+		super.testDeleteSiteKeywordByExternalReferenceCode();
+
+		Keyword keyword =
+			testDeleteSiteKeywordByExternalReferenceCode_addKeyword();
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		try {
+			keywordResource.deleteSiteKeywordByExternalReferenceCode(
+				testDeleteSiteKeywordByExternalReferenceCode_getSiteId(keyword),
+				externalReferenceCode);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	@Override
+	@Test
+	public void testGetAssetLibraryKeywordByExternalReferenceCode()
+		throws Exception {
+
+		super.testGetAssetLibraryKeywordByExternalReferenceCode();
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		try {
+			keywordResource.getAssetLibraryKeywordByExternalReferenceCode(
+				testGetAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
+				externalReferenceCode);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
 
 	@Override
 	@Test
@@ -239,6 +320,74 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(keyword1, keyword2, keyword3),
 			(List<Keyword>)page3.getItems());
+	}
+
+	@Override
+	@Test
+	public void testGetSiteKeywordByExternalReferenceCode() throws Exception {
+		super.testGetSiteKeywordByExternalReferenceCode();
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		try {
+			keywordResource.getSiteKeywordByExternalReferenceCode(
+				testGetSiteKeywordByExternalReferenceCode_getSiteId(
+					randomKeyword()),
+				externalReferenceCode);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	@Override
+	@Test
+	public void testPutAssetLibraryKeywordByExternalReferenceCode()
+		throws Exception {
+
+		super.testPutAssetLibraryKeywordByExternalReferenceCode();
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		Keyword keyword =
+			testPutAssetLibraryKeywordByExternalReferenceCode_createKeyword();
+
+		Keyword putKeyword =
+			keywordResource.putAssetLibraryKeywordByExternalReferenceCode(
+				testPutAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
+				externalReferenceCode, keyword);
+
+		Assert.assertEquals(
+			externalReferenceCode, putKeyword.getExternalReferenceCode());
+		assertValid(putKeyword);
+	}
+
+	@Override
+	@Test
+	public void testPutSiteKeywordByExternalReferenceCode() throws Exception {
+		super.testPutSiteKeywordByExternalReferenceCode();
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		Keyword keyword =
+			testPutSiteKeywordByExternalReferenceCode_createKeyword();
+
+		Keyword putKeyword =
+			keywordResource.putSiteKeywordByExternalReferenceCode(
+				testPutSiteKeywordByExternalReferenceCode_getSiteId(keyword),
+				externalReferenceCode, keyword);
+
+		Assert.assertEquals(
+			externalReferenceCode, putKeyword.getExternalReferenceCode());
+		assertValid(putKeyword);
 	}
 
 	@Override

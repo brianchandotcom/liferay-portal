@@ -2239,7 +2239,7 @@ public class DDMStructureLocalServiceImpl
 
 		if (!commonDDMFormFieldNames.isEmpty()) {
 			throw new StructureDuplicateElementException(
-				"Duplicate DDM form field names: " +
+				"Duplicate dynamic data mapping form field names: " +
 					StringUtil.merge(commonDDMFormFieldNames));
 		}
 	}
@@ -2359,9 +2359,10 @@ public class DDMStructureLocalServiceImpl
 
 			throw new DuplicateDDMStructureExternalReferenceCodeException(
 				StringBundler.concat(
-					"Duplicate DDM structure external reference code \"",
-					externalReferenceCode, "\" for class name ID \"",
-					classNameId, "\" in group \"", groupId, "\""));
+					"Duplicate dynamic data mapping structure external ",
+					"reference code \"", externalReferenceCode,
+					"\" for class name ID \"", classNameId, "\" in group \"",
+					groupId, "\""));
 		}
 	}
 

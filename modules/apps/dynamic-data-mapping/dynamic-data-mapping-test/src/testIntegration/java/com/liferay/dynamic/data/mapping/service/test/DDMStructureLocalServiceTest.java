@@ -148,6 +148,9 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testAddStructureWithExternalReferenceCode() throws Exception {
+
+		// Duplicate dynamic data mapping structure external reference code
+
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		DDMStructure structure1 = _addStructure(
@@ -160,8 +163,8 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		AssertUtils.assertFailure(
 			DuplicateDDMStructureExternalReferenceCodeException.class,
 			StringBundler.concat(
-				"Duplicate DDM structure external reference code \"",
-				externalReferenceCode, "\" for class name ID \"",
+				"Duplicate dynamic data mapping structure external reference ",
+				"code \"", externalReferenceCode, "\" for class name ID \"",
 				structure1.getClassNameId(), "\" in group \"",
 				structure1.getGroupId(), "\""),
 			() -> _addStructure(
@@ -169,7 +172,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 				structure1.getGroupId(), structure1.getClassNameId(),
 				RandomTestUtil.randomString()));
 
-		// Same external reference code but different class name ID
+		// Same external reference code and different class name ID
 
 		DDMStructure structure2 = _addStructure(
 			externalReferenceCode, TestPropsValues.getUserId(),
@@ -180,7 +183,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		Assert.assertEquals(
 			externalReferenceCode, structure2.getExternalReferenceCode());
 
-		// Same external reference code but different group ID
+		// Same external reference code and different group ID
 
 		DDMStructure structure3 = _addStructure(
 			externalReferenceCode, TestPropsValues.getUserId(),
@@ -996,9 +999,9 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		AssertUtils.assertFailure(
 			DuplicateDDMStructureExternalReferenceCodeException.class,
 			StringBundler.concat(
-				"Duplicate DDM structure external reference code \"",
-				externalReferenceCode, "\" for class name ID \"", _classNameId,
-				"\" in group \"", structure1.getGroupId(), "\""),
+				"Duplicate dynamic data mapping structure external reference ",
+				"code \"", externalReferenceCode, "\" for class name ID \"",
+				_classNameId, "\" in group \"", structure1.getGroupId(), "\""),
 			() -> _updateStructure(
 				externalReferenceCode, structure2.getGroupId(),
 				structure2.getClassNameId(), structure2.getName(), structure2));

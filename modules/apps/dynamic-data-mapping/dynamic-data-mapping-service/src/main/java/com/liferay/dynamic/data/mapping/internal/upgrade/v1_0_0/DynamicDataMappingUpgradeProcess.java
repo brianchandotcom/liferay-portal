@@ -449,10 +449,13 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 							_getDDMFormFieldsNames(parentDDMForm),
 							_getDDMFormFieldsNames(ddmForm));
 
+						String commonDDMFormFieldNamesString = StringUtil.merge(
+							commonDDMFormFieldNames);
+
 						if (!commonDDMFormFieldNames.isEmpty()) {
 							throw new UpgradeException(
-								"Duplicate DDM form field names: " +
-									StringUtil.merge(commonDDMFormFieldNames));
+								"Duplicate dynamic data mapping form field " +
+									"names: " + commonDDMFormFieldNamesString);
 						}
 					}
 

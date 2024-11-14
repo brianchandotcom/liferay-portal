@@ -39,11 +39,11 @@ public class CPConfigurationEntryModelPreFilterContributor
 			searchContext.getAttribute(CPField.CP_CONFIGURATION_LIST_ID));
 
 		if (cpConfigurationListId > 0) {
-			Filter termFilter = new TermFilter(
+			Filter filter = new TermFilter(
 				CPField.CP_CONFIGURATION_LIST_ID,
 				String.valueOf(cpConfigurationListId));
 
-			booleanFilter.add(termFilter, BooleanClauseOccur.MUST);
+			booleanFilter.add(filter, BooleanClauseOccur.MUST);
 		}
 	}
 

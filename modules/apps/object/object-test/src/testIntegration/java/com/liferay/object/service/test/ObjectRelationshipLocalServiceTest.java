@@ -581,7 +581,7 @@ public class ObjectRelationshipLocalServiceTest {
 			_objectEntryLocalService);
 
 		// Bind a draft object definition to a published object definition
-		// with entries
+		// with object entries
 
 		objectDefinitionAA = _addAndPublishCustomObjectDefinition("AA");
 

@@ -36,19 +36,13 @@ public class FriendlyUrlHistoryResourceTest
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			testGroup.getGroupId());
-
-		String[] friendlyURLs = {
-			"/" + RandomTestUtil.randomString(),
-			"/" + RandomTestUtil.randomString(),
-			"/" + RandomTestUtil.randomString()
-		};
-
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
-		for (String friendlyURL : friendlyURLs) {
+		for (i < 0; i < 3) {
 			_layoutLocalService.updateFriendlyURL(
-				TestPropsValues.getUserId(), layout.getPlid(), friendlyURL,
+				TestPropsValues.getUserId(), layout.getPlid(),
+				"/" + RandomTestUtil.randomString(),
 				defaultLanguageId);
 		}
 
@@ -58,8 +52,7 @@ public class FriendlyUrlHistoryResourceTest
 					testGroup.getExternalReferenceCode(),
 					layout.getExternalReferenceCode());
 
-		Assert.assertEquals(
-			friendlyURLs.length + 1, friendlyUrlHistoryPage.getPageSize());
+		Assert.assertEquals(4, friendlyUrlHistoryPage.getPageSize());
 	}
 
 	@Inject

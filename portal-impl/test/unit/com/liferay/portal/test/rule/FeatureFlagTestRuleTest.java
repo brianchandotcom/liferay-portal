@@ -5,10 +5,15 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.util.PropsUtil;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,6 +29,14 @@ public class FeatureFlagTestRuleTest {
 	public static final AggregateTestRule aggregateTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@BeforeClass
+	public static void setUpClass() throws PortalException {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				FeatureFlagConstants.FEATURE_FLAG + ".METHOD-456", "true"
+			).build());
+	}
+
 	@Test
 	public void testAnnotateClass() throws Exception {
 		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("CLASS-123"));
@@ -33,6 +46,12 @@ public class FeatureFlagTestRuleTest {
 	@Test
 	public void testAnnotateMethod() throws Exception {
 		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("METHOD-123"));
+	}
+
+	@FeatureFlags(enable = false, value = "METHOD-456")
+	@Test
+	public void testDisableFeatureFlag() {
+		Assert.assertFalse(FeatureFlagManagerUtil.isEnabled("METHOD-456"));
 	}
 
 }

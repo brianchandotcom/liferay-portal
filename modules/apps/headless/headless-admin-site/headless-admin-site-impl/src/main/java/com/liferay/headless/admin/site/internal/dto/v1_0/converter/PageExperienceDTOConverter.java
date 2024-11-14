@@ -64,6 +64,10 @@ public class PageExperienceDTOConverter
 							_segmentsEntryLocalService.fetchSegmentsEntry(
 								segmentsExperience.getSegmentsEntryId());
 
+						if (segmentsEntry == null) {
+							return null;
+						}
+
 						return segmentsEntry.getSegmentsEntryKey();
 					});
 				setSitePageExternalReferenceCode(

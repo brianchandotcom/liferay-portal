@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -170,18 +171,11 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 					GetterUtil.getInteger(pageExperience.getPriority()));
 		}
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				groupId, pageExperience.getSegmentExternalReferenceCode());
-
-		if (segmentsEntry == null) {
-			throw new UnsupportedOperationException();
-		}
-
 		return _pageExperienceDTOConverter.toDTO(
 			_segmentsExperienceService.updateSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId(),
-				segmentsEntry.getSegmentsEntryId(),
+				_getSegmentsEntryId(
+					groupId, pageExperience.getSegmentExternalReferenceCode()),
 				LocalizedMapUtil.getLocalizedMap(pageExperience.getName_i18n()),
 				true,
 				UnicodePropertiesBuilder.create(
@@ -193,20 +187,13 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			Layout layout, PageExperience pageExperience)
 		throws Exception {
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				layout.getGroupId(),
-				pageExperience.getSegmentExternalReferenceCode());
-
-		if (segmentsEntry == null) {
-			throw new UnsupportedOperationException();
-		}
-
 		return _pageExperienceDTOConverter.toDTO(
 			_segmentsExperienceService.addSegmentsExperience(
 				pageExperience.getExternalReferenceCode(), layout.getGroupId(),
-				segmentsEntry.getSegmentsEntryId(), pageExperience.getKey(),
-				layout.getPlid(),
+				_getSegmentsEntryId(
+					layout.getGroupId(),
+					pageExperience.getSegmentExternalReferenceCode()),
+				pageExperience.getKey(), layout.getPlid(),
 				LocalizedMapUtil.getLocalizedMap(pageExperience.getName_i18n()),
 				GetterUtil.getInteger(pageExperience.getPriority()), true,
 				UnicodePropertiesBuilder.create(
@@ -215,6 +202,24 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 				ServiceContextBuilder.create(
 					layout.getGroupId(), contextHttpServletRequest, null
 				).build()));
+	}
+
+	private long _getSegmentsEntryId(
+		long groupId, String segmentExternalReferenceCode) {
+
+		if (Validator.isNull(segmentExternalReferenceCode)) {
+			return 0;
+		}
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				groupId, segmentExternalReferenceCode);
+
+		if (segmentsEntry == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		return segmentsEntry.getSegmentsEntryId();
 	}
 
 	@Reference

@@ -53,7 +53,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class JSImportMapsExtenderTopHeadDynamicInclude
 	extends BaseDynamicInclude {
 
-	public static final long ALL_COMPANIES = 0;
+	private static final long _COMPANY_ID_ALL = 0;
 
 	@Override
 	public void include(
@@ -113,9 +113,13 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		}
 	}
 
-	public synchronized void rebuildImportMaps(long companyId) {
-		if (companyId == ALL_COMPANIES) {
-			_companyLocalService.forEachCompanyId(this::rebuildImportMaps);
+	public void rebuildImportMaps() {
+		_rebuildImportMaps(_COMPANY_ID_ALL);
+	}
+
+	private synchronized void _rebuildImportMaps(long companyId) {
+		if (companyId == _COMPANY_ID_ALL) {
+			_companyLocalService.forEachCompanyId(this::_rebuildImportMaps);
 
 			return;
 		}
@@ -129,7 +133,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 				_putImports(
 					importsJSONObject,
-					_getGlobalImportMapsJSONObjects(ALL_COMPANIES));
+					_getGlobalImportMapsJSONObjects(_COMPANY_ID_ALL));
 				_putImports(
 					importsJSONObject,
 					_getGlobalImportMapsJSONObjects(companyId));
@@ -143,7 +147,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 				_putScopes(
 					scopesJSONObject,
-					_getScopedImportMapJSONObjects(ALL_COMPANIES));
+					_getScopedImportMapJSONObjects(_COMPANY_ID_ALL));
 				_putScopes(
 					scopesJSONObject,
 					_getScopedImportMapJSONObjects(companyId));
@@ -167,7 +171,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 		modified();
 
-		rebuildImportMaps(ALL_COMPANIES);
+		_rebuildImportMaps(_COMPANY_ID_ALL);
 
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, JSImportMapsContributor.class,
@@ -280,7 +284,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 			globalImportMapsJSONObjects.put(globalId, jsonObject);
 
-			rebuildImportMaps(companyId);
+			_rebuildImportMaps(companyId);
 
 			return () -> globalImportMapsJSONObjects.remove(globalId);
 		}
@@ -290,7 +294,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 		scopedImportMapJSONObjects.put(scope, jsonObject);
 
-		rebuildImportMaps(companyId);
+		_rebuildImportMaps(companyId);
 
 		return () -> scopedImportMapJSONObjects.remove(scope);
 	}
@@ -337,7 +341,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 							"com.liferay.frontend.js.importmaps.company.id");
 
 						if (companyId == null) {
-							companyId = Long.valueOf(ALL_COMPANIES);
+							companyId = Long.valueOf(_COMPANY_ID_ALL);
 						}
 
 						JSImportMapsContributor jsImportMapsContributor =

@@ -16,6 +16,10 @@ definition {
 
 		WikiPortlet.enableWiki();
 
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
 		Navigator.openURL();
 	}
 

@@ -168,14 +168,14 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 					organizationId, user.getUserId()));
 		}
 
-		List<User> removeUsers = users.subList(0, 2);
+		List<User> deleteUsers = users.subList(0, 2);
 
 		organizationResource.
 			deleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress(
 				organization.getExternalReferenceCode(),
-				_toEmailAddresses(removeUsers));
+				_toEmailAddresses(deleteUsers));
 
-		for (User user : removeUsers) {
+		for (User user : deleteUsers) {
 			Assert.assertFalse(
 				_userLocalService.hasOrganizationUser(
 					organizationId, user.getUserId()));
@@ -230,12 +230,12 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 					organizationId, user.getUserId()));
 		}
 
-		List<User> removeUsers = users.subList(0, 2);
+		List<User> deleteUsers = users.subList(0, 2);
 
 		organizationResource.deleteUserAccountsByEmailAddress(
-			organization.getId(), _toEmailAddresses(removeUsers));
+			organization.getId(), _toEmailAddresses(deleteUsers));
 
-		for (User user : removeUsers) {
+		for (User user : deleteUsers) {
 			Assert.assertFalse(
 				_userLocalService.hasOrganizationUser(
 					organizationId, user.getUserId()));

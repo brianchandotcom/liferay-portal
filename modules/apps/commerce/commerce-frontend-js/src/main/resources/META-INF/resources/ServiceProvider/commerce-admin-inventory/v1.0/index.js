@@ -4,5 +4,7 @@
  */
 
 export {default as warehouseAPI} from './Warehouse';
+export {default as warehouseAccountAPI} from './WarehouseAccount';
+export {default as warehouseAccountGroupAPI} from './WarehouseAccountGroup';
 export {default as warehouseChannelAPI} from './WarehouseChannel';
 export {default as warehouseOrderTypeAPI} from './WarehouseOrderType';

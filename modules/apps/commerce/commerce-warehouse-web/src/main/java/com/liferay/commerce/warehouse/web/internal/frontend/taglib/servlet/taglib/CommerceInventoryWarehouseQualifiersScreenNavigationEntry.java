@@ -6,6 +6,7 @@
 package com.liferay.commerce.warehouse.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseRelService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.warehouse.web.internal.display.context.CommerceInventoryWarehouseQualifiersDisplayContext;
@@ -80,8 +81,9 @@ public class CommerceInventoryWarehouseQualifiersScreenNavigationEntry
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new CommerceInventoryWarehouseQualifiersDisplayContext(
-				_commerceChannelRelService, _commerceInventoryWarehouseService,
-				httpServletRequest, _portal,
+				_commerceChannelRelService,
+				_commerceInventoryWarehouseRelService,
+				_commerceInventoryWarehouseService, httpServletRequest, _portal,
 				_commerceInventoryWarehouseModelResourcePermission));
 
 		_jspRenderer.renderJSP(
@@ -100,6 +102,10 @@ public class CommerceInventoryWarehouseQualifiersScreenNavigationEntry
 	)
 	private ModelResourcePermission<CommerceInventoryWarehouse>
 		_commerceInventoryWarehouseModelResourcePermission;
+
+	@Reference
+	private CommerceInventoryWarehouseRelService
+		_commerceInventoryWarehouseRelService;
 
 	@Reference
 	private CommerceInventoryWarehouseService

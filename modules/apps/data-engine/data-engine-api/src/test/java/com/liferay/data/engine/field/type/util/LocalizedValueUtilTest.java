@@ -6,6 +6,7 @@
 package com.liferay.data.engine.field.type.util;
 
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -75,14 +76,20 @@ public class LocalizedValueUtilTest {
 
 	@Test
 	public void testToLocalizedValueEmptyMap() {
+		LocalizedValue localizedValue = LocalizedValueUtil.toLocalizedValue(
+			new HashMap<>());
+
 		Assert.assertEquals(
-			new LocalizedValue(LocaleUtil.US),
-			LocalizedValueUtil.toLocalizedValue(new HashMap<>()));
+			StringPool.BLANK, localizedValue.getString(LocaleUtil.US));
 	}
 
 	@Test
 	public void testToLocalizedValueNullValue() {
-		Assert.assertNull(LocalizedValueUtil.toLocalizedValue(null));
+		LocalizedValue localizedValue = LocalizedValueUtil.toLocalizedValue(
+			null);
+
+		Assert.assertEquals(
+			StringPool.BLANK, localizedValue.getString(LocaleUtil.US));
 	}
 
 	@Test

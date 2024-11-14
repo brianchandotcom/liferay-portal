@@ -554,7 +554,7 @@ public class DataDefinitionResourceTest
 				problem.getType());
 		}
 
-		// Provide default layout name when none is informed
+		// Provide default data layout name when none is informed
 
 		DataDefinition dataDefinition =
 			dataDefinitionResource.postSiteDataDefinitionByContentType(
@@ -566,6 +566,41 @@ public class DataDefinitionResourceTest
 		DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
 
 		Assert.assertEquals(dataDefinition.getName(), dataLayout.getName());
+
+		dataDefinitionResource.deleteDataDefinition(dataDefinition.getId());
+
+		// Provide empty string as the data definition field default value when
+		// none is informed
+
+		dataDefinition = DataDefinition.toDTO(
+			DataDefinitionTestUtil.read("data-definition-basic.json"));
+
+		DataDefinitionField[] dataDefinitionFields =
+			dataDefinition.getDataDefinitionFields();
+
+		Assert.assertEquals(
+			Arrays.toString(dataDefinitionFields), 1,
+			dataDefinitionFields.length);
+
+		DataDefinitionField dataDefinitionField = dataDefinitionFields[0];
+
+		Assert.assertNull(dataDefinitionField.getDefaultValue());
+
+		dataDefinition =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				testGroup.getGroupId(), _CONTENT_TYPE, dataDefinition);
+
+		dataDefinitionFields = dataDefinition.getDataDefinitionFields();
+
+		dataDefinitionField = dataDefinitionFields[0];
+
+		Assert.assertEquals(
+			HashMapBuilder.<String, Object>put(
+				"en_US", StringPool.BLANK
+			).build(),
+			dataDefinitionField.getDefaultValue());
+
+		dataDefinitionResource.deleteDataDefinition(dataDefinition.getId());
 	}
 
 	@Override

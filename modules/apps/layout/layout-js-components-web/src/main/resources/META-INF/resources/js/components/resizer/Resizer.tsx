@@ -9,6 +9,14 @@ import React, {KeyboardEvent, useCallback, useEffect, useRef} from 'react';
 
 import './Resizer.scss';
 
+const ALLOWED_KEYS = ['ArrowLeft', 'ArrowRight', 'Home', 'End'] as const;
+
+type AllowedKey = (typeof ALLOWED_KEYS)[number];
+
+function isAllowedKey(key: string): key is AllowedKey {
+	return ALLOWED_KEYS.includes(key as AllowedKey);
+}
+
 interface ResizerProps {
 	ariaControls: string;
 	ariaLabel: string;
@@ -52,6 +60,15 @@ export default function Resizer({
 	);
 
 	const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+		const {key} = event;
+
+		if (!isAllowedKey(key)) {
+			return;
+		}
+
+		event.preventDefault();
+		event.stopPropagation();
+
 		const initialWidth = getInitialWidth(width);
 
 		const rtl =

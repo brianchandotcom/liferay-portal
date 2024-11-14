@@ -14,6 +14,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -27,6 +28,7 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -178,7 +180,11 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			pageExperience.getSitePageExternalReferenceCode(), groupId);
 
-		if (layout == null) {
+		if ((layout == null) ||
+			(!Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_COLLECTION) &&
+			 !Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT))) {
+
 			throw new UnsupportedOperationException();
 		}
 

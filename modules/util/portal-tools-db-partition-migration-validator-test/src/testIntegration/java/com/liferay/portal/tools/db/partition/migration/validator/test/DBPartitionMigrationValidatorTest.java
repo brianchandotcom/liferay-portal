@@ -19,14 +19,14 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.tools.db.partition.migration.validator.DBPartitionMigrationValidator;
 import com.liferay.portal.tools.db.partition.migration.validator.LiferayDatabase;
+import com.liferay.portal.tools.db.partition.migration.validator.Recorder;
 import com.liferay.portal.tools.db.partition.migration.validator.util.DatabaseUtil;
+import com.liferay.portal.tools.db.partition.migration.validator.util.ValidatorUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
-
-import java.security.Permission;
 
 import java.util.Arrays;
 
@@ -60,7 +60,6 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	public void setUp() throws Exception {
 		System.setErr(new PrintStream(_errByteArrayOutputStream));
 		System.setOut(new PrintStream(_outByteArrayOutputStream));
-		System.setSecurityManager(new DisallowExitSecurityManager());
 
 		if (_company == null) {
 			_company = CompanyTestUtil.addCompany();
@@ -175,11 +174,18 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 		throws Exception {
 
 		try {
-			DBPartitionMigrationValidator.main(
-				new String[] {
-					"validate", "--source-file", sourceFileName,
-					"--target-file", targetFileName
-				});
+			LiferayDatabase sourceLiferayDatabase = ReflectionTestUtil.invoke(
+				DBPartitionMigrationValidator.class, "_read",
+				new Class<?>[] {String.class}, sourceFileName);
+
+			LiferayDatabase targetLiferayDatabase = ReflectionTestUtil.invoke(
+				DBPartitionMigrationValidator.class, "_read",
+				new Class<?>[] {String.class}, targetFileName);
+
+			Recorder recorder = ValidatorUtil.validateDatabases(
+				sourceLiferayDatabase, targetLiferayDatabase);
+
+			recorder.printMessages();
 		}
 		catch (RuntimeException runtimeException) {
 			unsafeConsumer.accept(runtimeException);
@@ -201,20 +207,5 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	private final PrintStream _originalOutPrintStream = System.out;
 	private final ByteArrayOutputStream _outByteArrayOutputStream =
 		new ByteArrayOutputStream();
-
-	private class DisallowExitSecurityManager extends SecurityManager {
-
-		@Override
-		public void checkExit(int status) {
-			super.checkExit(status);
-
-			throw new RuntimeException(String.valueOf(status));
-		}
-
-		@Override
-		public void checkPermission(Permission perm) {
-		}
-
-	}
 
 }

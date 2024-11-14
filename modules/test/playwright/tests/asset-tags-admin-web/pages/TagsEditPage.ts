@@ -7,20 +7,29 @@ import {Locator, Page} from '@playwright/test';
 
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
-export class TagsAdminPage {
-	readonly newButton: Locator;
+export class TagsEditPage {
+	readonly nameInput: Locator;
+	readonly saveButton: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
-		this.newButton = page.getByRole('link', {
-			name: 'Add Tag',
+		this.nameInput = page.getByPlaceholder('Name');
+		this.saveButton = page.getByRole('button', {
+			name: 'Save',
 		});
 		this.page = page;
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
-			`/group${siteUrl || '/guest'}${PORTLET_URLS.tagsAdmin}`
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.tagsAdmin}/new`
 		);
+	}
+
+	async add(title: string, siteUrl?: Site['friendlyUrlPath']) {
+		await this.goto(siteUrl);
+
+		await this.nameInput.fill(title);
+		await this.saveButton.click();
 	}
 }

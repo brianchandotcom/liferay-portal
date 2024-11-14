@@ -225,7 +225,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 	}
 
 	@Test
-	@TestInfo("LPS-129852,LPS-167932")
+	@TestInfo({"LPS-129852", "LPS-167932"})
 	public void testUpdateFragmentEntryWithFragmentEntryLinkAddingDropZone()
 		throws Exception {
 

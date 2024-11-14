@@ -81,7 +81,7 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 	}
 
 	@Test
-	@TestInfo("LPS-122082,LPS-122641")
+	@TestInfo({"LPS-122082", "LPS-122641"})
 	public void testGetReactFragmentEntryActionDropdowns() throws Exception {
 		setUpFragmentPermission(true);
 		_setUpFragmentEntry(false, false, true);

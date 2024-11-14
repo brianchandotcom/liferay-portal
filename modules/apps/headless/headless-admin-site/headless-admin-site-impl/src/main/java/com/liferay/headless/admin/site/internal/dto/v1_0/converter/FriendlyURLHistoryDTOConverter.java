@@ -16,7 +16,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = "dto.class.name=com.liferay.portal.kernel.model.Layout",
+	property = "dto.class.name=com.liferay.friendly.url.model.FriendlyURLEntry",
 	service = DTOConverter.class
 )
 public class FriendlyURLHistoryDTOConverter

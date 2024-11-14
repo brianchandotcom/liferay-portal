@@ -24,6 +24,22 @@ public class AccountUsage {
 		_apvsUsed = apvsUsed;
 	}
 
+	public void setExtensionsCapacityCpuMax(long extensionsCapacityCpuMax) {
+		_extensionsCapacityCpuMax = extensionsCapacityCpuMax;
+	}
+
+	public void setExtensionsCapacityCpuUsed(long extensionsCapacityCpuUsed) {
+		_extensionsCapacityCpuUsed = extensionsCapacityCpuUsed;
+	}
+
+	public void setExtensionsCapacityRamMax(long extensionsCapacityRamMax) {
+		_extensionsCapacityRamMax = extensionsCapacityRamMax;
+	}
+
+	public void setExtensionsCapacityRamUsed(long extensionsCapacityRamUsed) {
+		_extensionsCapacityRamUsed = extensionsCapacityRamUsed;
+	}
+
 	public void setMALUsMax(long malusMax) {
 		_malusMax = malusMax;
 	}
@@ -40,15 +56,34 @@ public class AccountUsage {
 		_sitesUsed = sitesUsed;
 	}
 
+	public void setStorageCapacityMax(long storageCapacityMax) {
+		_storageCapacityMax = storageCapacityMax;
+	}
+
+	public void setStorageCapacityUsed(long storageCapacityUsed) {
+		_storageCapacityUsed = storageCapacityUsed;
+	}
+
 	public JSONObject toJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
 			"apvs", _getUsageJSONObject(_apvsUsed, _apvsMax)
 		).put(
+			"extensionsCapacityCpu",
+			_getUsageJSONObject(
+				_extensionsCapacityCpuUsed, _extensionsCapacityCpuMax)
+		).put(
+			"extensionsCapacityRam",
+			_getUsageJSONObject(
+				_extensionsCapacityRamUsed, _extensionsCapacityRamMax)
+		).put(
 			"malus", _getUsageJSONObject(_malusUsed, _malusMax)
 		).put(
 			"sites", _getUsageJSONObject(_sitesUsed, _sitesMax)
+		).put(
+			"storageCapacity",
+			_getUsageJSONObject(_storageCapacityUsed, _storageCapacityMax)
 		);
 
 		return jsonObject;
@@ -69,9 +104,15 @@ public class AccountUsage {
 	private long _accountId;
 	private long _apvsMax;
 	private long _apvsUsed;
+	private long _extensionsCapacityCpuMax;
+	private long _extensionsCapacityCpuUsed;
+	private long _extensionsCapacityRamMax;
+	private long _extensionsCapacityRamUsed;
 	private long _malusMax;
 	private long _malusUsed;
 	private long _sitesMax;
 	private long _sitesUsed;
+	private long _storageCapacityMax;
+	private long _storageCapacityUsed;
 
 }

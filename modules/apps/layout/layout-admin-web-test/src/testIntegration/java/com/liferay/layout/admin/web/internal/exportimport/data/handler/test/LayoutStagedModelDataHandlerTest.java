@@ -324,7 +324,7 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	@Test
-	@TestInfo({"LPS-125564", "LPS-198068", "LPS-98030"})
+	@TestInfo({"LPS-98030", "LPS-125564", "LPS-198068"})
 	public void testExportImportWithFileEntryContentReference()
 		throws Exception {
 

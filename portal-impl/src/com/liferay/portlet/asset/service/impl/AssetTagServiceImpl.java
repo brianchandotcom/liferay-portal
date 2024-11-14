@@ -74,6 +74,25 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	@Override
+	public AssetTag fetchAssetTagByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return sanitize(
+			assetTagLocalService.fetchAssetTagByExternalReferenceCode(
+				externalReferenceCode, groupId));
+	}
+
+	@Override
+	public AssetTag getAssetTagByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return sanitize(
+			assetTagLocalService.getAssetTagByExternalReferenceCode(
+				externalReferenceCode, groupId));
+	}
+
+	@Override
 	public List<AssetTag> getGroupsTags(long[] groupIds) {
 		return sanitize(
 			assetTagPersistence.findByGroupId(

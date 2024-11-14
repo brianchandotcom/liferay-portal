@@ -2240,6 +2240,7 @@ components:
                     example: specification-key
                     type: string
                 listTypeDefinitionId:
+                    deprecated: true
                     example: 31130
                     format: int64
                     minimum: 0

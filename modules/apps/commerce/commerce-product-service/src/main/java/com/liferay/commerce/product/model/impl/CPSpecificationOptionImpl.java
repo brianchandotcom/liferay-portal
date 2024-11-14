@@ -42,27 +42,14 @@ public class CPSpecificationOptionImpl extends CPSpecificationOptionBaseImpl {
 	}
 
 	@Override
+	public long getListTypeDefinitionCount() {
+		return ListTypeEntryLocalServiceUtil.dynamicQueryCount(
+			_buildDynamicQuery());
+	}
+
+	@Override
 	public List<ListTypeDefinition> getListTypeDefinitions() {
-		List<CPSpecificationOptionListTypeDefinitionRel>
-			cpSpecificationOptionListTypeDefinitionRels =
-				CPSpecificationOptionListTypeDefinitionRelLocalServiceUtil.
-					getCPSpecificationOptionListTypeDefinitionRels(
-						getCPSpecificationOptionId());
-
-		DynamicQuery dynamicQuery =
-			ListTypeDefinitionLocalServiceUtil.dynamicQuery();
-
-		Property listTypeDefinitionIdProperty = PropertyFactoryUtil.forName(
-			"listTypeDefinitionId");
-
-		dynamicQuery.add(
-			listTypeDefinitionIdProperty.in(
-				TransformUtil.transformToLongArray(
-					cpSpecificationOptionListTypeDefinitionRels,
-					CPSpecificationOptionListTypeDefinitionRel::
-						getListTypeDefinitionId)));
-
-		return ListTypeEntryLocalServiceUtil.dynamicQuery(dynamicQuery);
+		return ListTypeEntryLocalServiceUtil.dynamicQuery(_buildDynamicQuery());
 	}
 
 	@Override
@@ -87,6 +74,23 @@ public class CPSpecificationOptionImpl extends CPSpecificationOptionBaseImpl {
 						getListTypeDefinitionId)));
 
 		return ListTypeEntryLocalServiceUtil.dynamicQuery(dynamicQuery);
+	}
+
+	private DynamicQuery _buildDynamicQuery() {
+		DynamicQuery dynamicQuery =
+			ListTypeDefinitionLocalServiceUtil.dynamicQuery();
+
+		Property listTypeDefinitionIdProperty = PropertyFactoryUtil.forName(
+			"listTypeDefinitionId");
+
+		return dynamicQuery.add(
+			listTypeDefinitionIdProperty.in(
+				TransformUtil.transformToLongArray(
+					CPSpecificationOptionListTypeDefinitionRelLocalServiceUtil.
+						getCPSpecificationOptionListTypeDefinitionRels(
+							getCPSpecificationOptionId()),
+					CPSpecificationOptionListTypeDefinitionRel::
+						getListTypeDefinitionId)));
 	}
 
 }

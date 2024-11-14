@@ -157,7 +157,7 @@ test('Can add and delete a child page', async ({
 
 	await pagesAdminPage.goto(site.friendlyUrlPath);
 
-	await page.getByRole('button', {name: parentPageName}).click();
+	await page.getByRole('button', {exact: true, name: parentPageName}).click();
 
 	await expect(page.getByRole('link', {name: childPageName})).toBeVisible();
 
@@ -356,7 +356,7 @@ test(
 );
 
 test(
-	'Can resize pages column, ',
+	'Can resize columns',
 	{
 		tag: '@LPD-36861',
 	},

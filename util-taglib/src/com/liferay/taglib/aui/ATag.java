@@ -26,6 +26,7 @@ import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTag;
 
 /**
@@ -48,7 +49,9 @@ public class ATag extends BaseATag implements BodyTag {
 
 	@Override
 	protected int processEndTag() throws Exception {
-		_charArrayWriter.write(String.valueOf(getBodyContent()));
+		BodyContent bodyContent = getBodyContent();
+
+		_charArrayWriter.write(bodyContent.getString());
 
 		if (Validator.isNotNull(getHref())) {
 			if (AUIUtil.isOpensNewWindow(getTarget()) &&
@@ -92,7 +95,7 @@ public class ATag extends BaseATag implements BodyTag {
 
 		jspWriter.write(
 			ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineEventHandlers(
-				jspWriter.toString(), getRequest(), false));
+				_charArrayWriter.toString(), getRequest(), false));
 
 		return EVAL_PAGE;
 	}

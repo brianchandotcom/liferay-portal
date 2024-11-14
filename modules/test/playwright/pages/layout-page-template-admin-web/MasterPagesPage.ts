@@ -71,7 +71,11 @@ export class MasterPagesPage {
 	}
 
 	async createNewMaster(name: string) {
-		await this.newButton.click();
+		await clickAndExpectToBeVisible({
+			target: this.page.getByLabel('Name'),
+			trigger: this.newButton,
+		});
+
 		await this.page.getByLabel('Name').fill(name);
 		await this.page.getByRole('button', {name: 'Save'}).click();
 

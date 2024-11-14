@@ -17,11 +17,13 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import javax.mail.internet.InternetAddress;
@@ -99,19 +101,45 @@ public class EmailServlet extends BaseAsahServlet {
 				"com/liferay/osb/faro/dependencies" +
 					"/data-control-task-complete.html"),
 			new String[] {
-				"[$BUTTON_TEXT$]", "[$BUTTON_URL$]", "[$EMAIL_TITLE$]",
-				"[$LOGO_ICON_URL$]", "[$NOTIFICATION_MSG$]",
-				"[$TITLE_ICON_URL$]", "[$TITLE_MSG$]"
+				"[$BUTTON_TEXT$]", "[$BUTTON_URL$]", "[$DOWNLOAD_URL$]",
+				"[$EMAIL_HEADER_URL$]", "[$EMAIL_TITLE$]", "[$FOOTER_MENU_1$]",
+				"[$FOOTER_MENU_2$]", "[$FOOTER_MENU_3$]", "[$FOOTER_MSG_1$]",
+				"[$FOOTER_MSG_2$]", "[$FOOTER_MSG_3$]", "[$FOOTER_MSG_4$]",
+				"[$LIFERAY_LOGO_URL$]", "[$NOTIFICATION_MSG_1$]",
+				"[$NOTIFICATION_MSG_2$]", "[$TITLE_MSG$]", "[$YEAR$]"
 			},
 			new String[] {
 				_language.get(resourceBundle, "download"),
+				EmailUtil.getShareIconURL(),
 				_getDownloadURL(
 					jsonObject.getString("batchId"), faroUser.getGroupId()),
-				subject, EmailUtil.getLogoIconURL(),
+				EmailUtil.getEmailHeaderURL(), subject,
+				_language.get(resourceBundle, "contact-support"),
+				_language.get(resourceBundle, "documentation"),
+				_language.get(resourceBundle, "announcements"),
 				_language.format(
-					resourceBundle, "request-x-has-been-processed",
+					resourceBundle, "this-email-was-sent-by-x",
+					new String[] {
+						"<a style=\"color: #0b5fff; text-decoration: none;\" " +
+							"href=\"https://liferay.com\" target=\"_blank\">",
+						"</a>"
+					}),
+				_language.get(resourceBundle, "need-help"),
+				_language.get(
+					resourceBundle, "let-our-team-do-the-work-for-you"),
+				_language.get(
+					resourceBundle,
+					"liferay-experts-are-available-to-answer-your-questions-" +
+						"anytime"),
+				EmailUtil.getLiferayIconURL(),
+				_language.format(
+					resourceBundle,
+					"the-request-x-has-been-processed-and-is-ready-to-be-" +
+						"downloaded",
 					jsonObject.getString("batchId")),
-				EmailUtil.getTitleIconURL(), subject
+				_language.get(
+					resourceBundle, "download-files-are-available-for-30-days"),
+				subject, String.valueOf(DateUtil.getYear(new Date()))
 			});
 
 		_mailService.sendEmail(new MailMessage(from, to, subject, body, true));

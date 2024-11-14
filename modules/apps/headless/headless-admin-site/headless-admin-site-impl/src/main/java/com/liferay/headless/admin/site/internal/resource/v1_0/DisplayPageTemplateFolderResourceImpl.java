@@ -216,6 +216,13 @@ public class DisplayPageTemplateFolderResourceImpl
 					groupId);
 
 		if (parentLayoutPageTemplateCollection != null) {
+			if (!Objects.equals(
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					parentLayoutPageTemplateCollection.getType())) {
+
+				throw new UnsupportedOperationException();
+			}
+
 			parentLayoutPageTemplateCollectionId =
 				parentLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId();

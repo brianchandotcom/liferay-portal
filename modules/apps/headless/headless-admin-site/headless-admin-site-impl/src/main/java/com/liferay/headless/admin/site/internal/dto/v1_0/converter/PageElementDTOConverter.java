@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
-import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -25,7 +24,7 @@ public class PageElementDTOConverter
 
 	@Override
 	public String getContentType() {
-		return PageSpecification.class.getSimpleName();
+		return PageElement.class.getSimpleName();
 	}
 
 	@Override

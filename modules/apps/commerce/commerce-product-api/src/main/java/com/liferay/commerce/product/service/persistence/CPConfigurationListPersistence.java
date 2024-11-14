@@ -818,7 +818,7 @@ public interface CPConfigurationListPersistence
 	 * @return the matching cp configuration list
 	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
 	 */
-	public CPConfigurationList findByG_MasterCPConfigurationList(
+	public CPConfigurationList findByG_M(
 			long groupId, boolean masterCPConfigurationList)
 		throws NoSuchCPConfigurationListException;
 
@@ -829,7 +829,7 @@ public interface CPConfigurationListPersistence
 	 * @param masterCPConfigurationList the master cp configuration list
 	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
 	 */
-	public CPConfigurationList fetchByG_MasterCPConfigurationList(
+	public CPConfigurationList fetchByG_M(
 		long groupId, boolean masterCPConfigurationList);
 
 	/**
@@ -840,7 +840,7 @@ public interface CPConfigurationListPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
 	 */
-	public CPConfigurationList fetchByG_MasterCPConfigurationList(
+	public CPConfigurationList fetchByG_M(
 		long groupId, boolean masterCPConfigurationList,
 		boolean useFinderCache);
 
@@ -851,7 +851,7 @@ public interface CPConfigurationListPersistence
 	 * @param masterCPConfigurationList the master cp configuration list
 	 * @return the cp configuration list that was removed
 	 */
-	public CPConfigurationList removeByG_MasterCPConfigurationList(
+	public CPConfigurationList removeByG_M(
 			long groupId, boolean masterCPConfigurationList)
 		throws NoSuchCPConfigurationListException;
 
@@ -862,8 +862,7 @@ public interface CPConfigurationListPersistence
 	 * @param masterCPConfigurationList the master cp configuration list
 	 * @return the number of matching cp configuration lists
 	 */
-	public int countByG_MasterCPConfigurationList(
-		long groupId, boolean masterCPConfigurationList);
+	public int countByG_M(long groupId, boolean masterCPConfigurationList);
 
 	/**
 	 * Returns all the cp configuration lists where displayDate &lt; &#63; and status = &#63;.

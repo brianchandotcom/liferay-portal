@@ -15,7 +15,7 @@ import java.util.Arrays;
 /**
  * @author Alan Huang
  */
-public class JavaTestInfoAnnotationCheck extends BaseFileCheck {
+public class JavaFeatureFlagsAndTestInfoAnnotationCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {

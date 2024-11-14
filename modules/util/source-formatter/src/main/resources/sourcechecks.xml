@@ -726,6 +726,10 @@
 			<description name="Finds cases where `FeatureFlagManagerUtil.isEnabled` should be used." />
 			<property name="enabled" value="false" />
 		</check>
+		<check name="JavaFeatureFlagsAndTestInfoAnnotationCheck">
+			<category name="Styling" />
+			<description name="Sorts the values in `@FeatureFlags` and `@TestInfo` annotation." />
+		</check>
 		<check name="JavaFinderCacheCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that the method `BasePersistenceImpl.fetchByPrimaryKey` is overridden, when using `FinderPath`." />
@@ -843,10 +847,6 @@
 		<check name="JavaTaglibMethodCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that a `*Tag` class has a `set*` and `get*` or `is*` method for each attribute." />
-		</check>
-		<check name="JavaTestInfoAnnotationCheck">
-			<category name="Styling" />
-			<description name="Sorts the values in `@TestInfo` annotation." />
 		</check>
 		<check name="JavaTestMethodAnnotationsCheck">
 			<category name="Naming Conventions" />

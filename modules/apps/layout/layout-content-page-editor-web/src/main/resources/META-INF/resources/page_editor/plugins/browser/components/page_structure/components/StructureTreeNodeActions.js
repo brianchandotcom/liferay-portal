@@ -159,6 +159,10 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		(state) => state
 	);
 
+	const layoutDataItem = useSelector(
+		(state) => state.layoutData.items[item.id]
+	);
+
 	const isHidden = item.config?.styles?.display === 'none';
 
 	const dropdownItems = useMemo(() => {
@@ -169,8 +173,8 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 			item.type !== LAYOUT_DATA_ITEM_TYPES.formStep &&
 			item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
 			item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
-			!hasDropZoneChild(item, layoutData) &&
-			!isInputFragment(item, fragmentEntryLinks)
+			!hasDropZoneChild(layoutDataItem, layoutData) &&
+			!isInputFragment(layoutDataItem, fragmentEntryLinks)
 		) {
 			items.push({
 				action: () => {
@@ -210,7 +214,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 			});
 		}
 
-		if (canBeSaved(item, layoutData)) {
+		if (canBeSaved(layoutDataItem, layoutData)) {
 			items.push({
 				action: () => setOpenSaveModal(true),
 				icon: 'disk',
@@ -226,7 +230,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 
 		if (
 			Liferay.FeatureFlags['LPD-18221'] &&
-			canBeRemoved(item, layoutData)
+			canBeRemoved(layoutDataItem, layoutData)
 		) {
 			items.push({
 				action: () => {
@@ -247,7 +251,12 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 
 		if (
 			Liferay.FeatureFlags['LPD-18221'] &&
-			canBeDuplicated(fragmentEntryLinks, item, layoutData, getWidgets)
+			canBeDuplicated(
+				fragmentEntryLinks,
+				layoutDataItem,
+				layoutData,
+				getWidgets
+			)
 		) {
 			items.push({
 				action: () => {
@@ -261,7 +270,14 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 			});
 		}
 
-		if (canBeDuplicated(fragmentEntryLinks, item, layoutData, getWidgets)) {
+		if (
+			canBeDuplicated(
+				fragmentEntryLinks,
+				layoutDataItem,
+				layoutData,
+				getWidgets
+			)
+		) {
 			items.push({
 				action: () => {
 					dispatch(
@@ -282,7 +298,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 			Liferay.FeatureFlags['LPD-18221'] &&
 			(canBeDuplicated(
 				fragmentEntryLinks,
-				item,
+				layoutDataItem,
 				layoutData,
 				getWidgets
 			) ||
@@ -324,7 +340,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 			});
 		}
 
-		if (canBeRenamed(item)) {
+		if (canBeRenamed(layoutDataItem)) {
 			items.push({
 				action: () => {
 					setEditedNodeId(item.id);
@@ -333,7 +349,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 			});
 		}
 
-		if (canBeRemoved(item, layoutData)) {
+		if (canBeRemoved(layoutDataItem, layoutData)) {
 			items.push({
 				type: 'divider',
 			});
@@ -363,6 +379,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		hasRequiredChild,
 		item,
 		layoutData,
+		layoutDataItem,
 		selectedViewportSize,
 		selectItem,
 		setCopiedItemIds,

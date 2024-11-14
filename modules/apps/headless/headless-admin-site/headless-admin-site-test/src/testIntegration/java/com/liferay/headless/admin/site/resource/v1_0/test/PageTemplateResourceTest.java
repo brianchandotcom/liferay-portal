@@ -154,7 +154,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			testGetSiteSiteByExternalReferenceCodePageTemplatePermissionsPage();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage()
@@ -481,6 +480,58 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 	@Override
 	protected PageTemplate
+			testGetSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage_addPageTemplate(
+				String siteExternalReferenceCode,
+				String pageTemplateSetExternalReferenceCode,
+				PageTemplate pageTemplate)
+		throws Exception {
+
+		return pageTemplateResource.
+			postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
+				siteExternalReferenceCode, pageTemplateSetExternalReferenceCode,
+				pageTemplate);
+	}
+
+	@Override
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage_getIrrelevantPageTemplateSetExternalReferenceCode()
+		throws Exception {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_getLayoutPageTemplateCollection(irrelevantGroup);
+
+		return layoutPageTemplateCollection.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage_getIrrelevantSiteExternalReferenceCode()
+		throws Exception {
+
+		return irrelevantGroup.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage_getPageTemplateSetExternalReferenceCode()
+		throws Exception {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_getLayoutPageTemplateCollection(testGroup);
+
+		return layoutPageTemplateCollection.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		return testGroup.getExternalReferenceCode();
+	}
+
+	@Override
+	protected PageTemplate
 			testGetSiteSiteByExternalReferenceCodePageTemplatesPage_addPageTemplate(
 				String siteExternalReferenceCode, PageTemplate pageTemplate)
 		throws Exception {
@@ -561,6 +612,21 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		};
 	}
 
+	private LayoutPageTemplateCollection _getLayoutPageTemplateCollection(
+			Group group)
+		throws Exception {
+
+		return _layoutPageTemplateCollectionLocalService.
+			addLayoutPageTemplateCollection(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				LayoutPageTemplateCollectionTypeConstants.BASIC,
+				ServiceContextTestUtil.getServiceContext(
+					group, TestPropsValues.getUserId()));
+	}
+
 	private PageTemplate _getPageTemplate(Group group) throws Exception {
 		List<UnsafeSupplier<PageTemplate, Exception>> unsafeSuppliers =
 			Arrays.asList(
@@ -580,16 +646,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		}
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), group.getGroupId(),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(),
-					LayoutPageTemplateCollectionTypeConstants.BASIC,
-					ServiceContextTestUtil.getServiceContext(
-						group, TestPropsValues.getUserId()));
+			_getLayoutPageTemplateCollection(group);
 
 		return new PageTemplateSet() {
 			{

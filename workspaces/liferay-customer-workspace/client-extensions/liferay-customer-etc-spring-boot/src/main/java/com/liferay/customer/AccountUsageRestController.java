@@ -70,10 +70,31 @@ public class AccountUsageRestController extends BaseRestController {
 			accountUsage.setMALUsMax(malusMax);
 			accountUsage.setMALUsUsed(random.nextInt(malusMax));
 
+			int extensionsCapacityCpuMax = jsonObject.getInt(
+				"totalExtensionsCapacityCpuCount");
+
+			accountUsage.setExtensionsCapacityCpuMax(extensionsCapacityCpuMax);
+			accountUsage.setExtensionsCapacityCpuUsed(
+				random.nextInt(extensionsCapacityCpuMax));
+
+			int extensionsCapacityRamMax = jsonObject.getInt(
+				"totalExtensionsCapacityRam");
+
+			accountUsage.setExtensionsCapacityRamMax(extensionsCapacityRamMax);
+			accountUsage.setExtensionsCapacityRamUsed(
+				random.nextInt(extensionsCapacityRamMax));
+
 			int sitesMax = jsonObject.getInt("totalSitesCount");
 
 			accountUsage.setSitesMax(sitesMax);
 			accountUsage.setSitesUsed(random.nextInt(sitesMax));
+
+			int storageCapacityMax = jsonObject.getInt(
+				"totalStorageCapacityDocumentLibrary");
+
+			accountUsage.setStorageCapacityMax(storageCapacityMax);
+			accountUsage.setStorageCapacityUsed(
+				random.nextInt(storageCapacityMax));
 
 			JSONObject accountUsageJSONObject = accountUsage.toJSONObject();
 

@@ -59,8 +59,40 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 	@Override
+	public void deleteAssetLibraryKeywordByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception {
+
+		AssetTag assetTag = _assetTagService.getAssetTagByExternalReferenceCode(
+			externalReferenceCode, assetLibraryId);
+
+		_assetTagService.deleteTag(assetTag.getTagId());
+	}
+
+	@Override
 	public void deleteKeyword(Long keywordId) throws Exception {
 		_assetTagService.deleteTag(keywordId);
+	}
+
+	@Override
+	public void deleteSiteKeywordByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		AssetTag assetTag = _assetTagService.getAssetTagByExternalReferenceCode(
+			externalReferenceCode, siteId);
+
+		_assetTagService.deleteTag(assetTag.getTagId());
+	}
+
+	@Override
+	public Keyword getAssetLibraryKeywordByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception {
+
+		return _toKeyword(
+			_assetTagLocalService.getAssetTagByExternalReferenceCode(
+				externalReferenceCode, assetLibraryId));
 	}
 
 	@Override
@@ -144,6 +176,16 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	}
 
 	@Override
+	public Keyword getSiteKeywordByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		return _toKeyword(
+			_assetTagService.getAssetTagByExternalReferenceCode(
+				externalReferenceCode, siteId));
+	}
+
+	@Override
 	public Page<Keyword> getSiteKeywordsPage(
 			Long siteId, String search, Aggregation aggregation, Filter filter,
 			Pagination pagination, Sort[] sorts)
@@ -192,7 +234,30 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 		return _toKeyword(
 			_assetTagService.addTag(
-				null, siteId, keyword.getName(), new ServiceContext()));
+				keyword.getExternalReferenceCode(), siteId, keyword.getName(),
+				new ServiceContext()));
+	}
+
+	@Override
+	public Keyword putAssetLibraryKeywordByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode, Keyword keyword)
+		throws Exception {
+
+		AssetTag assetTag =
+			_assetTagService.fetchAssetTagByExternalReferenceCode(
+				externalReferenceCode, assetLibraryId);
+
+		if (assetTag != null) {
+			return _toKeyword(
+				_assetTagService.updateTag(
+					externalReferenceCode, assetTag.getTagId(),
+					keyword.getName(), null));
+		}
+
+		return _toKeyword(
+			_assetTagService.addTag(
+				externalReferenceCode, assetLibraryId, keyword.getName(),
+				new ServiceContext()));
 	}
 
 	@Override
@@ -201,7 +266,8 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 		return _toKeyword(
 			_assetTagService.updateTag(
-				null, keywordId, keyword.getName(), null));
+				keyword.getExternalReferenceCode(), keywordId,
+				keyword.getName(), null));
 	}
 
 	@Override
@@ -215,6 +281,28 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	@Override
 	public void putKeywordUnsubscribe(Long tagId) throws Exception {
 		_assetTagService.unsubscribeTag(contextUser.getUserId(), tagId);
+	}
+
+	@Override
+	public Keyword putSiteKeywordByExternalReferenceCode(
+			Long siteId, String externalReferenceCode, Keyword keyword)
+		throws Exception {
+
+		AssetTag assetTag =
+			_assetTagLocalService.fetchAssetTagByExternalReferenceCode(
+				externalReferenceCode, siteId);
+
+		if (assetTag != null) {
+			return _toKeyword(
+				_assetTagService.updateTag(
+					externalReferenceCode, assetTag.getTagId(),
+					keyword.getName(), null));
+		}
+
+		return _toKeyword(
+			_assetTagService.addTag(
+				externalReferenceCode, siteId, keyword.getName(),
+				new ServiceContext()));
 	}
 
 	@Override

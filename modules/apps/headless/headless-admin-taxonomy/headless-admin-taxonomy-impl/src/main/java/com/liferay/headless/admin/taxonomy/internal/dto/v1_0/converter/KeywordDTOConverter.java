@@ -66,6 +66,7 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 					});
 				setDateCreated(assetTag::getCreateDate);
 				setDateModified(assetTag::getModifiedDate);
+				setExternalReferenceCode(assetTag::getExternalReferenceCode);
 				setId(assetTag::getTagId);
 				setKeywordUsageCount(
 					() -> {

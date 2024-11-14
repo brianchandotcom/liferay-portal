@@ -307,14 +307,14 @@ public class AutoSaveArticleMVCResourceCommandTest {
 	private boolean _hasGuestViewPermission(JournalArticle journalArticle)
 		throws Exception {
 
-		Role guestRole = _roleLocalService.getRole(
+		Role role = _roleLocalService.getRole(
 			journalArticle.getCompanyId(), RoleConstants.GUEST);
 
 		return _resourcePermissionLocalService.hasResourcePermission(
 			journalArticle.getCompanyId(), JournalArticle.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(journalArticle.getResourcePrimKey()),
-			guestRole.getRoleId(), ActionKeys.VIEW);
+			role.getRoleId(), ActionKeys.VIEW);
 	}
 
 	private JSONObject _serveResource(

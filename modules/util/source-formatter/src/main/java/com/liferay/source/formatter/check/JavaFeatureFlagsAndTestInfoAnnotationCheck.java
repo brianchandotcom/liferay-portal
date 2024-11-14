@@ -36,16 +36,16 @@ public class JavaFeatureFlagsAndTestInfoAnnotationCheck extends BaseFileCheck {
 			while (matcher.find()) {
 				String annotationContent = matcher.group(1);
 
-				String trimmmedAnnotationContent = annotationContent.trim();
+				String trimmedAnnotationContent = annotationContent.trim();
 
-				if (trimmmedAnnotationContent.startsWith("\"") &&
-					trimmmedAnnotationContent.endsWith("\"")) {
+				if (trimmedAnnotationContent.startsWith("\"") &&
+					trimmedAnnotationContent.endsWith("\"")) {
 
-					trimmmedAnnotationContent =
-						trimmmedAnnotationContent.substring(
-							1, trimmmedAnnotationContent.length() - 1);
+					trimmedAnnotationContent =
+						trimmedAnnotationContent.substring(
+							1, trimmedAnnotationContent.length() - 1);
 
-					String[] values = trimmmedAnnotationContent.split(",");
+					String[] values = trimmedAnnotationContent.split(",");
 
 					if (values.length < 2) {
 						continue;
@@ -70,19 +70,18 @@ public class JavaFeatureFlagsAndTestInfoAnnotationCheck extends BaseFileCheck {
 						content, annotationContent, "{" + sb.toString() + "}",
 						matcher.start(1));
 				}
-				else if (trimmmedAnnotationContent.startsWith("{") &&
-						 trimmmedAnnotationContent.endsWith("}")) {
+				else if (trimmedAnnotationContent.startsWith("{") &&
+						 trimmedAnnotationContent.endsWith("}")) {
 
-					trimmmedAnnotationContent =
-						trimmmedAnnotationContent.substring(
-							1, trimmmedAnnotationContent.length() - 1);
+					trimmedAnnotationContent =
+						trimmedAnnotationContent.substring(
+							1, trimmedAnnotationContent.length() - 1);
 
-					trimmmedAnnotationContent =
-						trimmmedAnnotationContent.replaceAll("\n\t+", " ");
-					trimmmedAnnotationContent =
-						trimmmedAnnotationContent.trim();
+					trimmedAnnotationContent =
+						trimmedAnnotationContent.replaceAll("\n\t+", " ");
+					trimmedAnnotationContent = trimmedAnnotationContent.trim();
 
-					String[] values = trimmmedAnnotationContent.split(", ");
+					String[] values = trimmedAnnotationContent.split(", ");
 
 					if (values.length < 2) {
 						continue;

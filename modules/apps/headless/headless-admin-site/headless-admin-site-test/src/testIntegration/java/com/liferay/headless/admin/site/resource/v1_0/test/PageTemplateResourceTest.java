@@ -587,7 +587,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(),
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					ServiceContextTestUtil.getServiceContext(
 						group, TestPropsValues.getUserId()));
 

@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {tagsPagesTest} from './fixtures/tagsAdminPagesTest';
 
 const test = mergeTests(
@@ -17,7 +18,8 @@ const test = mergeTests(
 	loginTest()
 );
 
-test('Add and edit tag', async ({site, tagsAdminPage}) => {
-	await tagsAdminPage.goto(site.friendlyUrlPath);
-	await expect(tagsAdminPage.newButton).toBeVisible();
+test('Add and edit tag', async ({page, site, tagsEditPage}) => {
+	await tagsEditPage.add('tag name', site.friendlyUrlPath);
+
+	await waitForAlert(page);
 });

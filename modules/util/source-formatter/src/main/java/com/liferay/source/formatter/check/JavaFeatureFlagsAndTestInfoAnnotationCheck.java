@@ -68,7 +68,7 @@ public class JavaFeatureFlagsAndTestInfoAnnotationCheck extends BaseFileCheck {
 
 					return StringUtil.replaceFirst(
 						content, annotationContent, "{" + sb.toString() + "}",
-						matcher.start());
+						matcher.start(1));
 				}
 				else if (trimmmedAnnotationContent.startsWith("{") &&
 						 trimmmedAnnotationContent.endsWith("}")) {
@@ -106,7 +106,7 @@ public class JavaFeatureFlagsAndTestInfoAnnotationCheck extends BaseFileCheck {
 									"Incorrect order in @", annotationName,
 									": ", previousValue, " should come after ",
 									value),
-								getLineNumber(content, matcher.start()));
+								getLineNumber(content, matcher.start(1)));
 
 							break;
 						}

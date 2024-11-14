@@ -75,6 +75,34 @@ public interface KeywordResource {
 			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteAssetLibraryKeywordByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			deleteAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
+				Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public Keyword getAssetLibraryKeywordByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
+				Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public Keyword putAssetLibraryKeywordByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode, Keyword keyword)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			putAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
+				Long assetLibraryId, String externalReferenceCode,
+				Keyword keyword)
+		throws Exception;
+
 	public Page<Permission> getAssetLibraryKeywordPermissionsPage(
 			Long assetLibraryId, String roleNames)
 		throws Exception;
@@ -176,6 +204,33 @@ public interface KeywordResource {
 
 	public HttpInvoker.HttpResponse postSiteKeywordBatchHttpResponse(
 			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteSiteKeywordByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			deleteSiteKeywordByExternalReferenceCodeHttpResponse(
+				Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public Keyword getSiteKeywordByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getSiteKeywordByExternalReferenceCodeHttpResponse(
+				Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public Keyword putSiteKeywordByExternalReferenceCode(
+			Long siteId, String externalReferenceCode, Keyword keyword)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			putSiteKeywordByExternalReferenceCodeHttpResponse(
+				Long siteId, String externalReferenceCode, Keyword keyword)
 		throws Exception;
 
 	public Page<Permission> getSiteKeywordPermissionsPage(
@@ -758,6 +813,331 @@ public interface KeywordResource {
 						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords/batch");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteAssetLibraryKeywordByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
+					assetLibraryId, externalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
+					Long assetLibraryId, String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords/by-external-reference-code/{externalReferenceCode}");
+
+			httpInvoker.path("assetLibraryId", assetLibraryId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Keyword getAssetLibraryKeywordByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
+					assetLibraryId, externalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return KeywordSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
+					Long assetLibraryId, String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords/by-external-reference-code/{externalReferenceCode}");
+
+			httpInvoker.path("assetLibraryId", assetLibraryId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Keyword putAssetLibraryKeywordByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode,
+				Keyword keyword)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
+					assetLibraryId, externalReferenceCode, keyword);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return KeywordSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				putAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
+					Long assetLibraryId, String externalReferenceCode,
+					Keyword keyword)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(keyword.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords/by-external-reference-code/{externalReferenceCode}");
+
+			httpInvoker.path("assetLibraryId", assetLibraryId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -2265,6 +2645,329 @@ public interface KeywordResource {
 						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords/batch");
 
 			httpInvoker.path("siteId", siteId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteSiteKeywordByExternalReferenceCode(
+				Long siteId, String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteSiteKeywordByExternalReferenceCodeHttpResponse(
+					siteId, externalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteSiteKeywordByExternalReferenceCodeHttpResponse(
+					Long siteId, String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords/by-external-reference-code/{externalReferenceCode}");
+
+			httpInvoker.path("siteId", siteId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Keyword getSiteKeywordByExternalReferenceCode(
+				Long siteId, String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getSiteKeywordByExternalReferenceCodeHttpResponse(
+					siteId, externalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return KeywordSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getSiteKeywordByExternalReferenceCodeHttpResponse(
+					Long siteId, String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords/by-external-reference-code/{externalReferenceCode}");
+
+			httpInvoker.path("siteId", siteId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Keyword putSiteKeywordByExternalReferenceCode(
+				Long siteId, String externalReferenceCode, Keyword keyword)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putSiteKeywordByExternalReferenceCodeHttpResponse(
+					siteId, externalReferenceCode, keyword);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return KeywordSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				putSiteKeywordByExternalReferenceCodeHttpResponse(
+					Long siteId, String externalReferenceCode, Keyword keyword)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(keyword.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords/by-external-reference-code/{externalReferenceCode}");
+
+			httpInvoker.path("siteId", siteId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

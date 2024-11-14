@@ -113,6 +113,20 @@ public class KeywordSerDes {
 			sb.append("\"");
 		}
 
+		if (keyword.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(keyword.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (keyword.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -229,6 +243,15 @@ public class KeywordSerDes {
 				liferayToJSONDateFormat.format(keyword.getDateModified()));
 		}
 
+		if (keyword.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(keyword.getExternalReferenceCode()));
+		}
+
 		if (keyword.getId() == null) {
 			map.put("id", null);
 		}
@@ -298,6 +321,11 @@ public class KeywordSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -349,6 +377,14 @@ public class KeywordSerDes {
 				if (jsonParserFieldValue != null) {
 					keyword.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					keyword.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

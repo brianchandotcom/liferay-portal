@@ -103,6 +103,16 @@ public class ServletDataImpl implements ServletData {
 							KeywordResourceImpl.class,
 							"postAssetLibraryKeywordBatch"));
 					put(
+						"mutation#deleteAssetLibraryKeywordByExternalReferenceCode",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class,
+							"deleteAssetLibraryKeywordByExternalReferenceCode"));
+					put(
+						"mutation#updateAssetLibraryKeywordByExternalReferenceCode",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class,
+							"putAssetLibraryKeywordByExternalReferenceCode"));
+					put(
 						"mutation#updateAssetLibraryKeywordPermissionsPage",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class,
@@ -145,6 +155,16 @@ public class ServletDataImpl implements ServletData {
 						"mutation#createSiteKeywordBatch",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class, "postSiteKeywordBatch"));
+					put(
+						"mutation#deleteSiteKeywordByExternalReferenceCode",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class,
+							"deleteSiteKeywordByExternalReferenceCode"));
+					put(
+						"mutation#updateSiteKeywordByExternalReferenceCode",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class,
+							"putSiteKeywordByExternalReferenceCode"));
 					put(
 						"mutation#updateSiteKeywordPermissionsPage",
 						new ObjectValuePair<>(
@@ -307,6 +327,11 @@ public class ServletDataImpl implements ServletData {
 							KeywordResourceImpl.class,
 							"getAssetLibraryKeywordsPage"));
 					put(
+						"query#assetLibraryKeywordByExternalReferenceCode",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class,
+							"getAssetLibraryKeywordByExternalReferenceCode"));
+					put(
 						"query#assetLibraryKeywordPermissions",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class,
@@ -324,6 +349,11 @@ public class ServletDataImpl implements ServletData {
 						"query#keywords",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class, "getSiteKeywordsPage"));
+					put(
+						"query#keywordByExternalReferenceCode",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class,
+							"getSiteKeywordByExternalReferenceCode"));
 					put(
 						"query#keywordPermissions",
 						new ObjectValuePair<>(

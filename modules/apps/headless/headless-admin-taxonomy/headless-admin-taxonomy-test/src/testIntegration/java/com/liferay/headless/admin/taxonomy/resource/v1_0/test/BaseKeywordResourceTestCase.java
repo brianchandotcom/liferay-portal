@@ -192,6 +192,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword = randomKeyword();
 
 		keyword.setAssetLibraryKey(regex);
+		keyword.setExternalReferenceCode(regex);
 		keyword.setName(regex);
 
 		String json = KeywordSerDes.toJSON(keyword);
@@ -201,6 +202,7 @@ public abstract class BaseKeywordResourceTestCase {
 		keyword = KeywordSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, keyword.getAssetLibraryKey());
+		Assert.assertEquals(regex, keyword.getExternalReferenceCode());
 		Assert.assertEquals(regex, keyword.getName());
 	}
 
@@ -631,6 +633,299 @@ public abstract class BaseKeywordResourceTestCase {
 
 		return keywordResource.postAssetLibraryKeyword(
 			testGetAssetLibraryKeywordsPage_getAssetLibraryId(), keyword);
+	}
+
+	@Test
+	public void testDeleteAssetLibraryKeywordByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword keyword =
+			testDeleteAssetLibraryKeywordByExternalReferenceCode_addKeyword();
+
+		assertHttpResponseStatusCode(
+			204,
+			keywordResource.
+				deleteAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
+					keyword.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			keywordResource.
+				getAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
+					keyword.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			keywordResource.
+				getAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
+					keyword.getExternalReferenceCode()));
+	}
+
+	protected Long
+			testDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Keyword
+			testDeleteAssetLibraryKeywordByExternalReferenceCode_addKeyword()
+		throws Exception {
+
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
+	}
+
+	@Test
+	public void testGetAssetLibraryKeywordByExternalReferenceCode()
+		throws Exception {
+
+		Keyword postKeyword =
+			testGetAssetLibraryKeywordByExternalReferenceCode_addKeyword();
+
+		Keyword getKeyword =
+			keywordResource.getAssetLibraryKeywordByExternalReferenceCode(
+				testGetAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
+				postKeyword.getExternalReferenceCode());
+
+		assertEquals(postKeyword, getKeyword);
+		assertValid(getKeyword);
+	}
+
+	protected Long
+			testGetAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Keyword
+			testGetAssetLibraryKeywordByExternalReferenceCode_addKeyword()
+		throws Exception {
+
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryKeywordByExternalReferenceCode()
+		throws Exception {
+
+		Keyword keyword =
+			testGraphQLGetAssetLibraryKeywordByExternalReferenceCode_addKeyword();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				keyword,
+				KeywordSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"assetLibraryKeywordByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"assetLibraryId",
+											"\"" +
+												testGraphQLGetAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
+													"\"");
+
+										put(
+											"externalReferenceCode",
+											"\"" +
+												keyword.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/assetLibraryKeywordByExternalReferenceCode"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertTrue(
+			equals(
+				keyword,
+				KeywordSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminTaxonomy_v1_0",
+								new GraphQLField(
+									"assetLibraryKeywordByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"assetLibraryId",
+												"\"" +
+													testGraphQLGetAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
+														"\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													keyword.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminTaxonomy_v1_0",
+						"Object/assetLibraryKeywordByExternalReferenceCode"))));
+	}
+
+	protected Long
+			testGraphQLGetAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryKeywordByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"assetLibraryKeywordByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										testGraphQLGetAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"assetLibraryKeywordByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryId",
+										"\"" +
+											testGraphQLGetAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Keyword
+			testGraphQLGetAssetLibraryKeywordByExternalReferenceCode_addKeyword()
+		throws Exception {
+
+		return testGraphQLKeyword_addKeyword();
+	}
+
+	@Test
+	public void testPutAssetLibraryKeywordByExternalReferenceCode()
+		throws Exception {
+
+		Keyword postKeyword =
+			testPutAssetLibraryKeywordByExternalReferenceCode_addKeyword();
+
+		Keyword randomKeyword = randomKeyword();
+
+		Keyword putKeyword =
+			keywordResource.putAssetLibraryKeywordByExternalReferenceCode(
+				testPutAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
+				postKeyword.getExternalReferenceCode(), randomKeyword);
+
+		assertEquals(randomKeyword, putKeyword);
+		assertValid(putKeyword);
+
+		Keyword getKeyword =
+			keywordResource.getAssetLibraryKeywordByExternalReferenceCode(
+				testPutAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
+				putKeyword.getExternalReferenceCode());
+
+		assertEquals(randomKeyword, getKeyword);
+		assertValid(getKeyword);
+
+		Keyword newKeyword =
+			testPutAssetLibraryKeywordByExternalReferenceCode_createKeyword();
+
+		putKeyword =
+			keywordResource.putAssetLibraryKeywordByExternalReferenceCode(
+				testPutAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
+				newKeyword.getExternalReferenceCode(), newKeyword);
+
+		assertEquals(newKeyword, putKeyword);
+		assertValid(putKeyword);
+
+		getKeyword =
+			keywordResource.getAssetLibraryKeywordByExternalReferenceCode(
+				testPutAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
+				putKeyword.getExternalReferenceCode());
+
+		assertEquals(newKeyword, getKeyword);
+
+		Assert.assertEquals(
+			newKeyword.getExternalReferenceCode(),
+			putKeyword.getExternalReferenceCode());
+	}
+
+	protected Long
+			testPutAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Keyword
+			testPutAssetLibraryKeywordByExternalReferenceCode_createKeyword()
+		throws Exception {
+
+		return randomKeyword();
+	}
+
+	protected Keyword
+			testPutAssetLibraryKeywordByExternalReferenceCode_addKeyword()
+		throws Exception {
+
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
 	}
 
 	@Test
@@ -1545,6 +1840,283 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteKeywordByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword keyword =
+			testDeleteSiteKeywordByExternalReferenceCode_addKeyword();
+
+		assertHttpResponseStatusCode(
+			204,
+			keywordResource.
+				deleteSiteKeywordByExternalReferenceCodeHttpResponse(
+					testDeleteSiteKeywordByExternalReferenceCode_getSiteId(
+						keyword),
+					keyword.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			keywordResource.getSiteKeywordByExternalReferenceCodeHttpResponse(
+				testDeleteSiteKeywordByExternalReferenceCode_getSiteId(keyword),
+				keyword.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			keywordResource.getSiteKeywordByExternalReferenceCodeHttpResponse(
+				testDeleteSiteKeywordByExternalReferenceCode_getSiteId(keyword),
+				keyword.getExternalReferenceCode()));
+	}
+
+	protected Long testDeleteSiteKeywordByExternalReferenceCode_getSiteId(
+			Keyword keyword)
+		throws Exception {
+
+		return keyword.getSiteId();
+	}
+
+	protected Keyword testDeleteSiteKeywordByExternalReferenceCode_addKeyword()
+		throws Exception {
+
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
+	}
+
+	@Test
+	public void testGetSiteKeywordByExternalReferenceCode() throws Exception {
+		Keyword postKeyword =
+			testGetSiteKeywordByExternalReferenceCode_addKeyword();
+
+		Keyword getKeyword =
+			keywordResource.getSiteKeywordByExternalReferenceCode(
+				testGetSiteKeywordByExternalReferenceCode_getSiteId(
+					postKeyword),
+				postKeyword.getExternalReferenceCode());
+
+		assertEquals(postKeyword, getKeyword);
+		assertValid(getKeyword);
+	}
+
+	protected Long testGetSiteKeywordByExternalReferenceCode_getSiteId(
+			Keyword keyword)
+		throws Exception {
+
+		return keyword.getSiteId();
+	}
+
+	protected Keyword testGetSiteKeywordByExternalReferenceCode_addKeyword()
+		throws Exception {
+
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
+	}
+
+	@Test
+	public void testGraphQLGetSiteKeywordByExternalReferenceCode()
+		throws Exception {
+
+		Keyword keyword =
+			testGraphQLGetSiteKeywordByExternalReferenceCode_addKeyword();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				keyword,
+				KeywordSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"keywordByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												testGraphQLGetSiteKeywordByExternalReferenceCode_getSiteId(
+													keyword) + "\"");
+
+										put(
+											"externalReferenceCode",
+											"\"" +
+												keyword.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/keywordByExternalReferenceCode"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertTrue(
+			equals(
+				keyword,
+				KeywordSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminTaxonomy_v1_0",
+								new GraphQLField(
+									"keywordByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteKeywordByExternalReferenceCode_getSiteId(
+														keyword) + "\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													keyword.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminTaxonomy_v1_0",
+						"Object/keywordByExternalReferenceCode"))));
+	}
+
+	protected Long testGraphQLGetSiteKeywordByExternalReferenceCode_getSiteId(
+			Keyword keyword)
+		throws Exception {
+
+		return keyword.getSiteId();
+	}
+
+	@Test
+	public void testGraphQLGetSiteKeywordByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"keywordByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"keywordByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Keyword
+			testGraphQLGetSiteKeywordByExternalReferenceCode_addKeyword()
+		throws Exception {
+
+		return testGraphQLKeyword_addKeyword();
+	}
+
+	@Test
+	public void testPutSiteKeywordByExternalReferenceCode() throws Exception {
+		Keyword postKeyword =
+			testPutSiteKeywordByExternalReferenceCode_addKeyword();
+
+		Keyword randomKeyword = randomKeyword();
+
+		Keyword putKeyword =
+			keywordResource.putSiteKeywordByExternalReferenceCode(
+				testPutSiteKeywordByExternalReferenceCode_getSiteId(
+					postKeyword),
+				postKeyword.getExternalReferenceCode(), randomKeyword);
+
+		assertEquals(randomKeyword, putKeyword);
+		assertValid(putKeyword);
+
+		Keyword getKeyword =
+			keywordResource.getSiteKeywordByExternalReferenceCode(
+				testPutSiteKeywordByExternalReferenceCode_getSiteId(putKeyword),
+				putKeyword.getExternalReferenceCode());
+
+		assertEquals(randomKeyword, getKeyword);
+		assertValid(getKeyword);
+
+		Keyword newKeyword =
+			testPutSiteKeywordByExternalReferenceCode_createKeyword();
+
+		putKeyword = keywordResource.putSiteKeywordByExternalReferenceCode(
+			testPutSiteKeywordByExternalReferenceCode_getSiteId(newKeyword),
+			newKeyword.getExternalReferenceCode(), newKeyword);
+
+		assertEquals(newKeyword, putKeyword);
+		assertValid(putKeyword);
+
+		getKeyword = keywordResource.getSiteKeywordByExternalReferenceCode(
+			testPutSiteKeywordByExternalReferenceCode_getSiteId(putKeyword),
+			putKeyword.getExternalReferenceCode());
+
+		assertEquals(newKeyword, getKeyword);
+
+		Assert.assertEquals(
+			newKeyword.getExternalReferenceCode(),
+			putKeyword.getExternalReferenceCode());
+	}
+
+	protected Long testPutSiteKeywordByExternalReferenceCode_getSiteId(
+			Keyword keyword)
+		throws Exception {
+
+		return keyword.getSiteId();
+	}
+
+	protected Keyword testPutSiteKeywordByExternalReferenceCode_createKeyword()
+		throws Exception {
+
+		return randomKeyword();
+	}
+
+	protected Keyword testPutSiteKeywordByExternalReferenceCode_addKeyword()
+		throws Exception {
+
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
+	}
+
+	@Test
 	public void testGetSiteKeywordPermissionsPage() throws Exception {
 		Page<Permission> page = keywordResource.getSiteKeywordPermissionsPage(
 			testGroup.getGroupId(), RoleConstants.GUEST);
@@ -1682,6 +2254,8 @@ public abstract class BaseKeywordResourceTestCase {
 
 		List<GraphQLField> graphQLFields = getGraphQLFields();
 
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
+
 		graphQLFields.add(new GraphQLField("id"));
 
 		return jsonDeserializer.deserialize(
@@ -1809,6 +2383,16 @@ public abstract class BaseKeywordResourceTestCase {
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (keyword.getCreator() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (keyword.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -1994,6 +2578,19 @@ public abstract class BaseKeywordResourceTestCase {
 				if (!Objects.deepEquals(
 						keyword1.getDateModified(),
 						keyword2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						keyword1.getExternalReferenceCode(),
+						keyword2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2267,6 +2864,52 @@ public abstract class BaseKeywordResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = keyword.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2383,6 +3026,8 @@ public abstract class BaseKeywordResourceTestCase {
 					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				keywordUsageCount = RandomTestUtil.randomInt();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

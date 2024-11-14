@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Alan Huang
@@ -26,23 +28,13 @@ public class JavaFeatureFlagsAndTestInfoAnnotationCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		for (String annotationName : _ANNOTATION_NAMES) {
-			int x = -1;
+			Pattern pattern = Pattern.compile(
+				"\n\t*@" + annotationName + "\\((.+?)\\)\n", Pattern.DOTALL);
 
-			while (true) {
-				x = content.indexOf("\t@" + annotationName + "(", x + 1);
+			Matcher matcher = pattern.matcher(content);
 
-				if (x == -1) {
-					break;
-				}
-
-				int y = content.indexOf(")", x);
-
-				if (y == -1) {
-					continue;
-				}
-
-				String annotationContent = content.substring(
-					x + annotationName.length() + 3, y);
+			while (matcher.find()) {
+				String annotationContent = matcher.group(1);
 
 				String trimmmedAnnotationContent = annotationContent.trim();
 
@@ -76,7 +68,7 @@ public class JavaFeatureFlagsAndTestInfoAnnotationCheck extends BaseFileCheck {
 
 					return StringUtil.replaceFirst(
 						content, annotationContent, "{" + sb.toString() + "}",
-						x);
+						matcher.start());
 				}
 				else if (trimmmedAnnotationContent.startsWith("{") &&
 						 trimmmedAnnotationContent.endsWith("}")) {
@@ -114,10 +106,12 @@ public class JavaFeatureFlagsAndTestInfoAnnotationCheck extends BaseFileCheck {
 									"Incorrect order in @", annotationName,
 									": ", previousValue, " should come after ",
 									value),
-								getLineNumber(content, x));
+								getLineNumber(content, matcher.start()));
 
 							break;
 						}
+
+						previousValue = value;
 					}
 				}
 			}

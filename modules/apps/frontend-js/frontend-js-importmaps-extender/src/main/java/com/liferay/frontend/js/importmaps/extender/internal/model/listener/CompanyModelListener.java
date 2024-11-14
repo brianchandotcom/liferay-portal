@@ -21,22 +21,18 @@ import org.osgi.service.component.annotations.Reference;
 public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Override
-	public void onAfterCreate(Company model) {
-		_rebuildImportMaps();
-	}
-
-	@Override
-	public void onAfterRemove(Company model) {
-		_rebuildImportMaps();
-	}
-
-	private void _rebuildImportMaps() {
+	public void onAfterCreate(Company company) {
 		JSImportMapsExtenderTopHeadDynamicInclude
 			jsImportMapsExtenderTopHeadDynamicInclude =
 				(JSImportMapsExtenderTopHeadDynamicInclude)_dynamicInclude;
 
 		jsImportMapsExtenderTopHeadDynamicInclude.rebuildImportMaps(
 			JSImportMapsExtenderTopHeadDynamicInclude.ALL_COMPANIES);
+	}
+
+	@Override
+	public void onAfterRemove(Company company) {
+		onAfterCreate(company);
 	}
 
 	@Reference(

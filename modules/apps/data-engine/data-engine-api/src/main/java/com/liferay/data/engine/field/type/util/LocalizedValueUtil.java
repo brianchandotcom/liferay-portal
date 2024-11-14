@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -84,11 +85,15 @@ public class LocalizedValueUtil {
 	public static LocalizedValue toLocalizedValue(
 		Map<String, Object> localizedValues, Locale locale) {
 
-		if (localizedValues == null) {
-			return null;
-		}
+		LocalizedValue localizedValue = new LocalizedValue(
+			(Locale)GetterUtil.getObject(locale, LocaleUtil.getDefault()));
 
-		LocalizedValue localizedValue = new LocalizedValue();
+		if ((localizedValues == null) || localizedValues.isEmpty()) {
+			localizedValue.addString(
+				localizedValue.getDefaultLocale(), StringPool.BLANK);
+
+			return localizedValue;
+		}
 
 		for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
 			Object value = entry.getValue();
@@ -120,10 +125,6 @@ public class LocalizedValueUtil {
 				localizedValue.addString(
 					LocaleUtil.fromLanguageId(entry.getKey()),
 					StringPool.BLANK);
-			}
-
-			if (locale != null) {
-				localizedValue.setDefaultLocale(locale);
 			}
 		}
 

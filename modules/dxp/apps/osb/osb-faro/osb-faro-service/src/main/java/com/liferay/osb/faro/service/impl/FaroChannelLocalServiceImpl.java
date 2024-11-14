@@ -30,12 +30,14 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -248,40 +250,52 @@ public class FaroChannelLocalServiceImpl
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", invitedUser.getLocale(), getClass());
 
-		String subject = _language.get(
-			resourceBundle,
-			"analytics-cloud-you-have-been-added-to-a-property");
+		String subject = _language.get(resourceBundle, "new-property-access");
 
 		String body = StringUtil.replace(
 			StringUtil.read(
 				getClassLoader(),
 				"com/liferay/osb/faro/dependencies/property-invite.html"),
 			new String[] {
-				"[$BUTTON_TEXT$]", "[$BUTTON_URL$]", "[$EMAIL_TITLE$]",
-				"[$HELP_MSG$]", "[$LOGO_ICON_URL$]", "[$NOTIFICATION_MSG_1$]",
-				"[$NOTIFICATION_MSG_2$]", "[$TITLE_ICON_URL$]", "[$TITLE_MSG$]"
+				"[$BUTTON_TEXT$]", "[$BUTTON_URL$]", "[$EMAIL_HEADER_URL$]",
+				"[$EMAIL_TITLE$]", "[$FOOTER_MENU_1$]", "[$FOOTER_MENU_2$]",
+				"[$FOOTER_MENU_3$]", "[$FOOTER_MSG_1$]", "[$FOOTER_MSG_2$]",
+				"[$FOOTER_MSG_3$]", "[$FOOTER_MSG_4$]", "[$HEADER_MSG_1$]",
+				"[$LIFERAY_LOGO_URL$]",  "[$NOTIFICATION_MSG_1$]",
+				"[$NOTIFICATION_MSG_2$]", "[$YEAR$]"
 			},
 			new String[] {
-				_language.get(resourceBundle, "go-to-workspace"),
-				EmailUtil.getWorkspaceURL(
-					_groupLocalService.fetchGroup(faroChannel.getGroupId())),
-				subject,
+				_language.get(resourceBundle, "go-to-analytics-cloud"),
+				EmailUtil.getShareIconURL(), EmailUtil.getEmailHeaderURL(),
+				subject, _language.get(resourceBundle, "contact-support"),
+				_language.get(resourceBundle, "documentation"),
+				_language.get(resourceBundle, "announcements"),
 				_language.format(
-					resourceBundle, "email-need-more-help",
+					resourceBundle, "this-email-was-sent-by-x",
 					new String[] {
-						"<a class=\"body-link\" href=\"" +
-							DocumentationConstants.BASE_URL + "\">",
+						"<a style=\"color: #0b5fff; text-decoration: none;\" " +
+							"href=\"https://liferay.com\" target=\"_blank\">",
 						"</a>"
 					}),
-				EmailUtil.getLogoIconURL(),
-				_language.format(
-					resourceBundle, "x-has-been-added-to-your-properties-list",
-					faroChannel.getName()),
+				_language.get(resourceBundle, "need-help"),
+				_language.get(
+					resourceBundle, "let-our-team-do-the-work-for-you"),
 				_language.get(
 					resourceBundle,
-					"log-in-to-your-workspace-to-access-this-property"),
-				EmailUtil.getTitleIconURL(),
-				_language.get(resourceBundle, "new-property-access")
+					"liferay-experts-are-available-to-answer-your-questions-" +
+					"anytime"),
+				subject, EmailUtil.getLiferayIconURL(),
+				_language.format(
+					resourceBundle,
+					"you-have-been-added-as-a-team-member-on-the-analytics-" +
+						"cloud-x-workspace-property-by-x",
+					new String[] {
+						faroChannel.getName(), user.getEmailAddress()
+					}),
+				_language.get(
+					resourceBundle,
+						"log-in-to-your-workspace-to-access-this-property"),
+				String.valueOf(DateUtil.getYear(new Date()))
 			});
 
 		_mailService.sendEmail(new MailMessage(from, to, subject, body, true));

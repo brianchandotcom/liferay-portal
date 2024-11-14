@@ -117,17 +117,11 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			pageSpecificationExternalReferenceCode,
+		return _addSegmentsExperience(
 			GroupUtil.getGroupId(
 				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
-
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		return _addSegmentsExperience(layout, pageExperience);
+				siteExternalReferenceCode),
+			pageExperience);
 	}
 
 	@Override
@@ -150,15 +144,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 					pageExperienceExternalReferenceCode, groupId);
 
 		if (segmentsExperience == null) {
-			Layout layout =
-				_layoutLocalService.fetchLayoutByExternalReferenceCode(
-					pageExperience.getSitePageExternalReferenceCode(), groupId);
-
-			if (layout == null) {
-				throw new UnsupportedOperationException();
-			}
-
-			return _addSegmentsExperience(layout, pageExperience);
+			return _addSegmentsExperience(groupId, pageExperience);
 		}
 
 		if ((pageExperience.getPriority() != null) &&
@@ -184,8 +170,15 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 	}
 
 	private PageExperience _addSegmentsExperience(
-			Layout layout, PageExperience pageExperience)
+			long groupId, PageExperience pageExperience)
 		throws Exception {
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			pageExperience.getSitePageExternalReferenceCode(), groupId);
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
 
 		return _pageExperienceDTOConverter.toDTO(
 			_segmentsExperienceService.addSegmentsExperience(

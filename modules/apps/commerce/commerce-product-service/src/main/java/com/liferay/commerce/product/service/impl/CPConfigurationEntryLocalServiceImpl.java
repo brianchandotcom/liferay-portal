@@ -45,10 +45,9 @@ public class CPConfigurationEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		long cpConfigurationEntryId = counterLocalService.increment();
-
 		CPConfigurationEntry cpConfigurationEntry =
-			cpConfigurationEntryPersistence.create(cpConfigurationEntryId);
+			cpConfigurationEntryPersistence.create(
+				counterLocalService.increment());
 
 		cpConfigurationEntry.setExternalReferenceCode(externalReferenceCode);
 		cpConfigurationEntry.setCompanyId(user.getCompanyId());

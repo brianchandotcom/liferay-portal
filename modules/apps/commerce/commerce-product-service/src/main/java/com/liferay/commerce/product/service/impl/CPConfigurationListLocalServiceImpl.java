@@ -71,10 +71,9 @@ public class CPConfigurationListLocalServiceImpl
 				CommercePriceListExpirationDateException.class);
 		}
 
-		long cpConfigurationListId = counterLocalService.increment();
-
 		CPConfigurationList cpConfigurationList =
-			cpConfigurationListPersistence.create(cpConfigurationListId);
+			cpConfigurationListPersistence.create(
+				counterLocalService.increment());
 
 		cpConfigurationList.setExternalReferenceCode(externalReferenceCode);
 		cpConfigurationList.setGroupId(groupId);

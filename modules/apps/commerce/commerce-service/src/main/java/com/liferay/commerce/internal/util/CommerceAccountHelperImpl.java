@@ -374,6 +374,28 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 				return accountEntry;
 			}
 
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			int count =
+				_commerceChannelAccountEntryRelLocalService.
+					getCommerceChannelAccountEntryRelsCount(
+						commerceChannel.getCommerceChannelId(), null,
+						CommerceChannelAccountEntryRelConstants.
+							TYPE_ELIGIBILITY);
+
+			if (permissionChecker.hasPermission(
+					commerceChannelGroupId, AccountEntry.class.getName(),
+					commerceChannel.getCompanyId(), ActionKeys.VIEW) &&
+				(count == 0)) {
+
+				setCurrentCommerceAccount(
+					httpServletRequest, commerceChannelGroupId,
+					accountEntry.getAccountEntryId());
+
+				return accountEntry;
+			}
+
 			List<AccountEntry> commerceChannelAccountEntries =
 				_getCommerceChannelAccountEntries(
 					userId, commerceChannel.getCommerceChannelId());
@@ -560,28 +582,8 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			long userId, long commerceChannelId)
 		throws PortalException {
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannel(commerceChannelId);
-
-		List<AccountEntry> accountEntries = null;
-
-		User currentUser = _userLocalService.fetchUser(userId);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if ((currentUser != null) &&
-			permissionChecker.hasPermission(
-				null, AccountEntry.class.getName(),
-				commerceChannel.getCompanyId(), ActionKeys.VIEW)) {
-
-			accountEntries = _accountEntryLocalService.getAccountEntries(
-				commerceChannel.getCompanyId(),
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-		}
-		else {
-			accountEntries = _accountEntryLocalService.getUserAccountEntries(
+		List<AccountEntry> accountEntries =
+			_accountEntryLocalService.getUserAccountEntries(
 				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
 				new String[] {
 					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
@@ -590,7 +592,6 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 					AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER
 				},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		}
 
 		return _filterAccountEntries(accountEntries, commerceChannelId);
 	}

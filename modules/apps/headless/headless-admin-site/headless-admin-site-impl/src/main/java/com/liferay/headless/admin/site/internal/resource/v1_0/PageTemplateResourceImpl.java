@@ -172,6 +172,39 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	@Override
+	public PageTemplate
+			postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
+				String siteExternalReferenceCode,
+				String pageTemplateSetExternalReferenceCode,
+				PageTemplate pageTemplate)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionService.
+				getLayoutPageTemplateCollection(
+					pageTemplateSetExternalReferenceCode,
+					GroupUtil.getGroupId(
+						false, contextCompany.getCompanyId(),
+						siteExternalReferenceCode));
+
+		if (!Objects.equals(
+				LayoutPageTemplateCollectionTypeConstants.BASIC,
+				layoutPageTemplateCollection.getType())) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		return _addPageTemplate(
+			layoutPageTemplateCollection.getGroupId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			pageTemplate);
+	}
+
+	@Override
 	public PageTemplate putSiteSiteByExternalReferenceCodePageTemplate(
 			String siteExternalReferenceCode,
 			String pageTemplateExternalReferenceCode, PageTemplate pageTemplate)
@@ -260,36 +293,41 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	private PageTemplate _addPageTemplate(
-			ContentPageTemplate contentPageTemplate, long groupId)
+			ContentPageTemplate contentPageTemplate, long groupId,
+			long layoutPageTemplateCollectionId)
 		throws Exception {
 
 		return _pageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				contentPageTemplate.getExternalReferenceCode(), groupId,
-				_getLayoutPageTemplateCollectionId(
-					groupId, contentPageTemplate),
-				contentPageTemplate.getName(),
+				layoutPageTemplateCollectionId, contentPageTemplate.getName(),
 				LayoutPageTemplateEntryTypeConstants.BASIC, 0L,
 				WorkflowConstants.STATUS_DRAFT,
 				_getServiceContext(groupId, contentPageTemplate)));
 	}
 
 	private PageTemplate _addPageTemplate(
-			long groupId, PageTemplate pageTemplate)
+			long groupId, long layoutPageTemplateCollectionId,
+			PageTemplate pageTemplate)
 		throws Exception {
 
 		if (Objects.equals(
 				pageTemplate.getType(),
 				PageTemplate.Type.CONTENT_PAGE_TEMPLATE)) {
 
-			return _addPageTemplate((ContentPageTemplate)pageTemplate, groupId);
+			return _addPageTemplate(
+				(ContentPageTemplate)pageTemplate, groupId,
+				layoutPageTemplateCollectionId);
 		}
 
-		return _addPageTemplate(groupId, (WidgetPageTemplate)pageTemplate);
+		return _addPageTemplate(
+			groupId, layoutPageTemplateCollectionId,
+			(WidgetPageTemplate)pageTemplate);
 	}
 
 	private PageTemplate _addPageTemplate(
-			long groupId, WidgetPageTemplate widgetPageTemplate)
+			long groupId, long layoutPageTemplateCollectionId,
+			WidgetPageTemplate widgetPageTemplate)
 		throws Exception {
 
 		ServiceContext serviceContext = _getServiceContext(
@@ -329,7 +367,7 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 
 		layoutPageTemplateEntry.setGroupId(groupId);
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
-			_getLayoutPageTemplateCollectionId(groupId, widgetPageTemplate));
+			layoutPageTemplateCollectionId);
 
 		if (widgetPageTemplate.getUuid() != null) {
 			layoutPageTemplateEntry.setUuid(widgetPageTemplate.getUuid());
@@ -338,6 +376,15 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		return _pageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry));
+	}
+
+	private PageTemplate _addPageTemplate(
+			long groupId, PageTemplate pageTemplate)
+		throws Exception {
+
+		return _addPageTemplate(
+			groupId, _getLayoutPageTemplateCollectionId(groupId, pageTemplate),
+			pageTemplate);
 	}
 
 	private long _getLayoutPageTemplateCollectionId(

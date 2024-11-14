@@ -84,6 +84,7 @@ JavaAssertEqualsCheck | .java | Validates `Assert.assertEquals` calls. |
 JavaConstructorSuperCallCheck | .java | Finds unnecessary call to no-argument constructor of the superclass. |
 JavaEmptyLinesCheck | .java | Finds missing and unnecessary empty lines. |
 JavaEntityModelToEntityFieldsMapCallCheck | .java | Sorts parameters in EntityModel.toEntityFieldsMap call. |
+JavaFeatureFlagsAndTestInfoAnnotationCheck | .java | Sorts the values in `@FeatureFlags` and `@TestInfo` annotation. |
 JavaFinalVariableCheck | .java | Finds cases of unneeded `final` modifiers for variables and parameters. |
 [JavaForLoopCheck](check/java_for_loop_check.markdown#javaforloopcheck) | .java | Checks if a Enhanced For Loop can be used instead of a Simple For Loop. |
 JavaIOExceptionCheck | .java | Validates use of `IOException`. |
@@ -100,7 +101,6 @@ JavaStylingCheck | .java | Applies rules to enforce consistency in code style. |
 JavaTermDividersCheck | .java | Finds missing or unnecessary empty lines between javaterms. |
 JavaTermOrderCheck | .java | Checks the order of javaterms. |
 JavaTermStylingCheck | .java | Applies rules to enforce consistency in code style. |
-JavaTestInfoAnnotationCheck | .java | Sorts the values in `@TestInfo` annotation. |
 JavaToJSONArrayCheck | .java | Finds missing and unnecessary whitespace on `toJSONArray` calls. |
 JavaUpgradeAlterColumnCallsOrderCheck | .java | Sorts method calls for altering table columns. |
 JavaUpgradeEmptyLinesCheck | .java | Finds missing and unnecessary empty lines in upgrade classes. |

@@ -116,7 +116,7 @@ public class CommerceCatalogLocalServiceImpl
 		_resourceLocalService.addModelResources(
 			commerceCatalog, serviceContext);
 
-		// CPConfigurationList
+		// Commerce product configuration list
 
 		Date date = new Date();
 

@@ -12,12 +12,12 @@ import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,15 +57,9 @@ public class CommerceSpecificationOptionListTypeDefinitionFDSDataProvider
 			return Collections.emptyList();
 		}
 
-		List<ListTypeDefinition> listTypeDefinitions = new ArrayList<>();
-
-		for (com.liferay.list.type.model.ListTypeDefinition listTypeDefinition :
-				cpSpecificationOption.getListTypeDefinitions()) {
-
-			listTypeDefinitions.add(_toListTypeDefinition(listTypeDefinition));
-		}
-
-		return listTypeDefinitions;
+		return TransformUtil.transform(
+			cpSpecificationOption.getListTypeDefinitions(),
+			this::_toListTypeDefinition);
 	}
 
 	@Override
@@ -84,11 +78,7 @@ public class CommerceSpecificationOptionListTypeDefinitionFDSDataProvider
 			_cpSpecificationOptionService.getCPSpecificationOption(
 				specificationId);
 
-		List<com.liferay.list.type.model.ListTypeDefinition>
-			listTypeDefinitions =
-				cpSpecificationOption.getListTypeDefinitions();
-
-		return listTypeDefinitions.size();
+		return (int)cpSpecificationOption.getListTypeDefinitionCount();
 	}
 
 	private ListTypeDefinition _toListTypeDefinition(

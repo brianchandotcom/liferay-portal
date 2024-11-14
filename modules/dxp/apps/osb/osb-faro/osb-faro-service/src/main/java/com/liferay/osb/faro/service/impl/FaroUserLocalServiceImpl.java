@@ -7,7 +7,6 @@ package com.liferay.osb.faro.service.impl;
 
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
-import com.liferay.osb.faro.constants.DocumentationConstants;
 import com.liferay.osb.faro.constants.FaroUserConstants;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.model.FaroUser;
@@ -15,7 +14,6 @@ import com.liferay.osb.faro.service.FaroPreferencesLocalService;
 import com.liferay.osb.faro.service.base.FaroUserLocalServiceBaseImpl;
 import com.liferay.osb.faro.service.persistence.FaroProjectPersistence;
 import com.liferay.osb.faro.util.EmailUtil;
-import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -296,9 +294,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 			resourceBundle,
 			"you-have-been-added-as-a-team-x-on-the-analytics-cloud-x-" +
 				"workspace-by-x",
-			new String[] {
-				roleName, faroProject.getName(), userEmailAddress
-			});
+			new String[] {roleName, faroProject.getName(), userEmailAddress});
 	}
 
 	private void _sendEmail(
@@ -360,7 +356,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 				"[$EMAIL_TITLE$]", "[$FOOTER_MENU_1$]", "[$FOOTER_MENU_2$]",
 				"[$FOOTER_MENU_3$]", "[$FOOTER_MSG_1$]", "[$FOOTER_MSG_2$]",
 				"[$FOOTER_MSG_3$]", "[$FOOTER_MSG_4$]", "[$HEADER_MSG_1$]",
-				"[$LIFERAY_LOGO_URL$]",  "[$NOTIFICATION_MSG_1$]",
+				"[$LIFERAY_LOGO_URL$]", "[$NOTIFICATION_MSG_1$]",
 				"[$NOTIFICATION_MSG_2$]", "[$YEAR$]"
 			},
 			new String[] {
@@ -373,7 +369,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 					resourceBundle, "this-email-was-sent-by-x",
 					new String[] {
 						"<a style=\"color: #0b5fff; text-decoration: none;\" " +
-						"href=\"https://liferay.com\" target=\"_blank\">",
+							"href=\"https://liferay.com\" target=\"_blank\">",
 						"</a>"
 					}),
 				_language.get(resourceBundle, "need-help"),
@@ -382,18 +378,18 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 				_language.get(
 					resourceBundle,
 					"liferay-experts-are-available-to-answer-your-questions-" +
-					"anytime"),
+						"anytime"),
 				subject, EmailUtil.getLiferayIconURL(),
 				_getNotificationMessage(
 					roleId, groupId, resourceBundle, user.getEmailAddress()),
 				_language.format(
 					resourceBundle,
-					"sign-in-with-your-existing-liferay-username-and-password" +
-						"-or-create-an-account-using-x",
+					"sign-in-with-your-existing-liferay-username-and-" +
+						"password-or-create-an-account-using-x",
 					new String[] {
 						"<a style=\"color: #0b5fff; text-decoration: none;\" " +
-							"href=\"https://login.liferay.com/signin/" +
-								"register\" target=\"_blank\">",
+							"href=\"https://login.liferay.com/signin" +
+								"/register\" target=\"_blank\">",
 						"</a>", faroUser.getEmailAddress()
 					}),
 				String.valueOf(DateUtil.getYear(new Date()))
@@ -437,7 +433,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 				"[$EMAIL_TITLE$]", "[$FOOTER_MENU_1$]", "[$FOOTER_MENU_2$]",
 				"[$FOOTER_MENU_3$]", "[$FOOTER_MSG_1$]", "[$FOOTER_MSG_2$]",
 				"[$FOOTER_MSG_3$]", "[$FOOTER_MSG_4$]", "[$HEADER_MSG_1$]",
-				"[$LIFERAY_LOGO_URL$]",  "[$NOTIFICATION_MSG_1$]",
+				"[$LIFERAY_LOGO_URL$]", "[$NOTIFICATION_MSG_1$]",
 				"[$NOTIFICATION_MSG_2$]", "[$YEAR$]"
 			},
 			new String[] {
@@ -459,7 +455,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 				_language.get(
 					resourceBundle,
 					"liferay-experts-are-available-to-answer-your-questions-" +
-					"anytime"),
+						"anytime"),
 				subject, EmailUtil.getLiferayIconURL(),
 				_language.format(
 					resourceBundle, "x-has-requested-to-join-the-x-workspace",

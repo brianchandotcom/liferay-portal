@@ -20,16 +20,6 @@ public class EmailUtil {
 			"/o/osb-faro-web/images/email/icon-check.png");
 	}
 
-	public static String getShareIconURL() {
-		return FaroPropsValues.FARO_URL.concat(
-			"/o/osb-faro-web/images/email/icon-share.png");
-	}
-
-	public static String getEmailHeaderURL() {
-		return FaroPropsValues.FARO_URL.concat(
-			"/o/osb-faro-web/images/email/email-header.png");
-	}
-
 	public static String getEmailBannerURL(String frequency) {
 		if (Objects.equals(frequency, "daily")) {
 			return FaroPropsValues.FARO_URL.concat(
@@ -44,9 +34,9 @@ public class EmailUtil {
 			"/o/osb-faro-web/images/email/ac-email-banner-weekly.png");
 	}
 
-	public static String getLiferayLogoIconURL() {
+	public static String getEmailHeaderURL() {
 		return FaroPropsValues.FARO_URL.concat(
-			"/o/osb-faro-web/images/email/liferay-logo.png");
+			"/o/osb-faro-web/images/email/email-header.png");
 	}
 
 	public static String getLiferayIconURL() {
@@ -54,9 +44,19 @@ public class EmailUtil {
 			"/o/osb-faro-web/images/email/liferay-logo-1.png");
 	}
 
+	public static String getLiferayLogoIconURL() {
+		return FaroPropsValues.FARO_URL.concat(
+			"/o/osb-faro-web/images/email/liferay-logo.png");
+	}
+
 	public static String getLogoIconURL() {
 		return FaroPropsValues.FARO_URL.concat(
 			"/o/osb-faro-web/images/email/ac-chart.png");
+	}
+
+	public static String getShareIconURL() {
+		return FaroPropsValues.FARO_URL.concat(
+			"/o/osb-faro-web/images/email/icon-share.png");
 	}
 
 	public static String getTitleIconURL() {

@@ -7,7 +7,6 @@ package com.liferay.osb.faro.service.impl;
 
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
-import com.liferay.osb.faro.constants.DocumentationConstants;
 import com.liferay.osb.faro.constants.FaroChannelConstants;
 import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.osb.faro.model.FaroUser;
@@ -261,7 +260,7 @@ public class FaroChannelLocalServiceImpl
 				"[$EMAIL_TITLE$]", "[$FOOTER_MENU_1$]", "[$FOOTER_MENU_2$]",
 				"[$FOOTER_MENU_3$]", "[$FOOTER_MSG_1$]", "[$FOOTER_MSG_2$]",
 				"[$FOOTER_MSG_3$]", "[$FOOTER_MSG_4$]", "[$HEADER_MSG_1$]",
-				"[$LIFERAY_LOGO_URL$]",  "[$NOTIFICATION_MSG_1$]",
+				"[$LIFERAY_LOGO_URL$]", "[$NOTIFICATION_MSG_1$]",
 				"[$NOTIFICATION_MSG_2$]", "[$YEAR$]"
 			},
 			new String[] {
@@ -283,7 +282,7 @@ public class FaroChannelLocalServiceImpl
 				_language.get(
 					resourceBundle,
 					"liferay-experts-are-available-to-answer-your-questions-" +
-					"anytime"),
+						"anytime"),
 				subject, EmailUtil.getLiferayIconURL(),
 				_language.format(
 					resourceBundle,
@@ -294,7 +293,7 @@ public class FaroChannelLocalServiceImpl
 					}),
 				_language.get(
 					resourceBundle,
-						"log-in-to-your-workspace-to-access-this-property"),
+					"log-in-to-your-workspace-to-access-this-property"),
 				String.valueOf(DateUtil.getYear(new Date()))
 			});
 

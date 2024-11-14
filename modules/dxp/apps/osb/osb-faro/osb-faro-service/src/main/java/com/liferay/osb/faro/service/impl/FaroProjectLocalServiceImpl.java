@@ -7,7 +7,6 @@ package com.liferay.osb.faro.service.impl;
 
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
-import com.liferay.osb.faro.constants.DocumentationConstants;
 import com.liferay.osb.faro.constants.FaroProjectConstants;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.model.FaroUser;
@@ -17,11 +16,9 @@ import com.liferay.osb.faro.service.FaroProjectEmailDomainLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.service.base.FaroProjectLocalServiceBaseImpl;
 import com.liferay.osb.faro.util.EmailUtil;
-import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -275,7 +272,7 @@ public class FaroProjectLocalServiceImpl
 					resourceBundle, "this-email-was-sent-by-x",
 					new String[] {
 						"<a style=\"color: #0b5fff; text-decoration: none;\" " +
-						"href=\"https://liferay.com\" target=\"_blank\">",
+							"href=\"https://liferay.com\" target=\"_blank\">",
 						"</a>"
 					}),
 				_language.get(resourceBundle, "need-help"),
@@ -292,12 +289,12 @@ public class FaroProjectLocalServiceImpl
 					faroProject.getName()),
 				_language.format(
 					resourceBundle,
-					"sign-in-with-your-existing-liferay-username-and-password" +
-						"-or-create-an-account-using-x",
+					"sign-in-with-your-existing-liferay-username-and-" +
+						"password-or-create-an-account-using-x",
 					new String[] {
 						"<a style=\"color: #0b5fff; text-decoration: none;\" " +
-							"href=\"https://login.liferay.com/signin/" +
-								"register\" target=\"_blank\">",
+							"href=\"https://login.liferay.com/signin" +
+								"/register\" target=\"_blank\">",
 						"</a>", faroUser.getEmailAddress()
 					}),
 				_language.get(resourceBundle, "getting-started"),

@@ -73,4 +73,22 @@ definition {
 			value1 = ${feedTitle});
 	}
 
+	@summary = "Default summary"
+	macro viewUpdateFeedTitle(feedHeading = null, pageName = null) {
+		var key_feedHeading = ${feedHeading};
+
+		if (isSet(updateFeed)) {
+
+			// We need this pause to check issue due to the minimum feed time is 1 min
+
+			Pause(value1 = 60000);
+
+			Navigator._gotoPage(pageName = ${pageName});
+		}
+
+		AssertTextEquals(
+			locator1 = "RSSFeed#FEED_PANEL_HEADING",
+			value1 = ${feedHeading});
+	}
+
 }

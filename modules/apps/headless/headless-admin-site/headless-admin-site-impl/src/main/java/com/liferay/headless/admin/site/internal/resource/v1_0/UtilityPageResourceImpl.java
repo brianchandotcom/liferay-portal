@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
+import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.UtilityPageResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
@@ -13,7 +14,6 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -50,11 +50,11 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		_layoutUtilityPageEntryService.deleteLayoutUtilityPageEntry(
-			utilityPageExternalReferenceCode, group.getGroupId());
+			utilityPageExternalReferenceCode,
+			GroupUtil.getGroupId(
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 	}
 
 	@Override
@@ -67,13 +67,13 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		return _utilityPageDTOConverter.toDTO(
 			_layoutUtilityPageEntryService.
 				getLayoutUtilityPageEntryByExternalReferenceCode(
-					utilityPageExternalReferenceCode, group.getGroupId()));
+					utilityPageExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode)));
 	}
 
 	@Override
@@ -87,14 +87,13 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		return Page.of(
 			transform(
 				_layoutUtilityPageEntryService.getLayoutUtilityPageEntries(
-					group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null),
+					GroupUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 				layoutUtilityPageEntry -> _utilityPageDTOConverter.toDTO(
 					layoutUtilityPageEntry)));
 	}
@@ -108,10 +107,11 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
-		return _addLayoutUtilityPageEntry(group, utilityPage);
+		return _addLayoutUtilityPageEntry(
+			GroupUtil.getGroupId(
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode),
+			utilityPage);
 	}
 
 	@Override
@@ -124,16 +124,16 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
+		long groupId = GroupUtil.getGroupId(
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.
 				fetchLayoutUtilityPageEntryByExternalReferenceCode(
-					utilityPageExternalReferenceCode, group.getGroupId());
+					utilityPageExternalReferenceCode, groupId);
 
 		if (layoutUtilityPageEntry == null) {
-			return _addLayoutUtilityPageEntry(group, utilityPage);
+			return _addLayoutUtilityPageEntry(groupId, utilityPage);
 		}
 
 		if (Validator.isNotNull(utilityPage.getMarkedAsDefault())) {
@@ -164,22 +164,22 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 	}
 
 	private UtilityPage _addLayoutUtilityPageEntry(
-			Group group, UtilityPage utilityPage)
+			long groupId, UtilityPage utilityPage)
 		throws Exception {
 
 		return _utilityPageDTOConverter.toDTO(
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
-				utilityPage.getExternalReferenceCode(), group.getGroupId(), 0L,
-				0L, utilityPage.getMarkedAsDefault(), utilityPage.getName(),
+				utilityPage.getExternalReferenceCode(), groupId, 0L, 0L,
+				utilityPage.getMarkedAsDefault(), utilityPage.getName(),
 				_getType(utilityPage.getType()), 0L,
-				_getServiceContext(group, utilityPage)));
+				_getServiceContext(groupId, utilityPage)));
 	}
 
 	private ServiceContext _getServiceContext(
-		Group group, UtilityPage utilityPage) {
+		long groupId, UtilityPage utilityPage) {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
-			group.getGroupId(), contextHttpServletRequest, null
+			groupId, contextHttpServletRequest, null
 		).build();
 
 		serviceContext.setCreateDate(utilityPage.getDateCreated());

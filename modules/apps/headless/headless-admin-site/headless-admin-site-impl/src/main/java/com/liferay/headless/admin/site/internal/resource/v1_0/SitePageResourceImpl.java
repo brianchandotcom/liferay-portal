@@ -7,14 +7,13 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
+import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.SitePageResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,11 +48,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		_layoutService.deleteLayout(
-			sitePageExternalReferenceCode, group.getGroupId());
+			sitePageExternalReferenceCode,
+			GroupUtil.getGroupId(
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 	}
 
 	@Override
@@ -66,11 +65,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode, group.getGroupId());
+			sitePageExternalReferenceCode,
+			GroupUtil.getGroupId(
+				true, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 
 		return _toSitePage(layout);
 	}
@@ -84,22 +83,21 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
+		long groupId = GroupUtil.getGroupId(
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		WidgetPageSettings widgetPageSettings =
 			(WidgetPageSettings)sitePage.getPageSettings();
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
-			group.getGroupId(), contextHttpServletRequest,
-			sitePage.getViewableByAsString()
+			groupId, contextHttpServletRequest, sitePage.getViewableByAsString()
 		).build();
 
 		serviceContext.setUuid(sitePage.getUuid());
 
 		return _toSitePage(
 			_layoutService.addLayout(
-				sitePage.getExternalReferenceCode(), group.getGroupId(), false,
+				sitePage.getExternalReferenceCode(), groupId, false,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
 				LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()),
 				LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()), null,
@@ -144,9 +142,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutService _layoutService;

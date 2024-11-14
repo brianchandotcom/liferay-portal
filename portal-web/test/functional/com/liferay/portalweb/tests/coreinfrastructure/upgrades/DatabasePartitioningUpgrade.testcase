@@ -165,6 +165,10 @@ definition {
 			Clustering.startSpecificServer(
 				deleteLiferayHome = "false",
 				nodePort = 8080);
+
+			Clustering.startSpecificServer(
+				deleteLiferayHome = "false",
+				nodePort = 9080);
 		}
 
 		task ("Add previously extracted partitions into new database") {

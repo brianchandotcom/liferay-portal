@@ -6,10 +6,15 @@
 package com.liferay.announcements.web.internal.upgrade.registry;
 
 import com.liferay.announcements.web.internal.upgrade.v1_0_2.PermissionUpgradeProcess;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -41,6 +46,25 @@ public class AnnouncementsWebUpgradeStepRegistrator
 			"1.0.4", "2.0.0",
 			new com.liferay.announcements.web.internal.upgrade.v2_0_0.
 				PortletPreferencesUpgradeProcess());
+
+		registry.register(
+			"2.0.0", "2.1.0",
+			new com.liferay.announcements.web.internal.upgrade.v2_1_0.
+				UpgradePortletPreferences(
+					_groupLocalService, _organizationLocalService,
+					_roleLocalService, _userGroupLocalService));
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 }

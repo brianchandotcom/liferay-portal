@@ -8,10 +8,10 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.headless.admin.site.dto.v1_0.FriendlyUrlHistory;
+import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.FriendlyUrlHistoryResource;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -42,16 +42,16 @@ public class FriendlyUrlHistoryResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
-
 		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode, group.getGroupId());
+			sitePageExternalReferenceCode,
+			GroupUtil.getGroupId(
+				true, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 
 		return Page.of(
 			transform(
 				_friendlyURLEntryLocalService.getFriendlyURLEntries(
-					group.getGroupId(),
+					layout.getGroupId(),
 					_layoutFriendlyURLEntryHelper.getClassNameId(
 						layout.isPrivateLayout()),
 					layout.getPlid()),

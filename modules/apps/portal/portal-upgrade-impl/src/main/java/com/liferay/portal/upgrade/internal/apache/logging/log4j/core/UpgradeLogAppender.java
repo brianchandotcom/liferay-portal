@@ -130,7 +130,9 @@ public class UpgradeLogAppender implements Appender {
 		if (_started) {
 			_upgradeRecorder.stop();
 
-			if (_upgradeReport != null) {
+			if (PropsValues.UPGRADE_REPORT_ENABLED &&
+				!StartupHelperUtil.isDBNew()) {
+
 				_upgradeReport.generateReport(_upgradeRecorder);
 
 				_upgradeReport = null;

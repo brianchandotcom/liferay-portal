@@ -10,6 +10,7 @@ import com.liferay.client.extension.type.JSImportMapsEntryCET;
 import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Objects;
@@ -46,10 +47,12 @@ public class CETDeployerImplTest {
 		JSImportMapsEntryCET jsImportMapsEntryCET = Mockito.mock(
 			JSImportMapsEntryCET.class);
 
+		long companyId = RandomTestUtil.randomLong();
+
 		Mockito.when(
 			jsImportMapsEntryCET.getCompanyId()
 		).thenReturn(
-			1234L
+			companyId
 		);
 
 		Mockito.when(
@@ -69,7 +72,7 @@ public class CETDeployerImplTest {
 				dictionary -> Objects.equals(
 					dictionary.get(
 						"com.liferay.frontend.js.importmaps.company.id"),
-					1234L))
+					companyId))
 		);
 	}
 

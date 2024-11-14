@@ -9,6 +9,8 @@ import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageExperienceResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -180,7 +182,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return _pageExperienceDTOConverter.toDTO(
+		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
 				pageExperience.getExternalReferenceCode(), layout.getGroupId(),
 				_getSegmentsEntryId(
@@ -194,7 +196,27 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 				).build(),
 				ServiceContextBuilder.create(
 					layout.getGroupId(), contextHttpServletRequest, null
-				).build()));
+				).build());
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		layoutStructure.addRootLayoutStructureItem();
+
+		String data = layoutStructure.toString();
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				groupId, layout.getPlid(),
+				segmentsExperience.getSegmentsExperienceId(), data);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				groupId, draftLayout.getPlid(),
+				segmentsExperience.getSegmentsExperienceId(), data);
+
+		return _pageExperienceDTOConverter.toDTO(segmentsExperience);
 	}
 
 	private long _getSegmentsEntryId(
@@ -217,6 +239,10 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageExperienceDTOConverter)"

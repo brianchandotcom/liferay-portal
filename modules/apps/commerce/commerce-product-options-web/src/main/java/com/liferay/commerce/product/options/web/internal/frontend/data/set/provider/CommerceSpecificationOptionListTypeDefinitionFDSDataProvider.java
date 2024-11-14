@@ -78,7 +78,7 @@ public class CommerceSpecificationOptionListTypeDefinitionFDSDataProvider
 			_cpSpecificationOptionService.getCPSpecificationOption(
 				specificationId);
 
-		return (int)cpSpecificationOption.getListTypeDefinitionCount();
+		return (int)cpSpecificationOption.getListTypeDefinitionsCount();
 	}
 
 	private ListTypeDefinition _toListTypeDefinition(

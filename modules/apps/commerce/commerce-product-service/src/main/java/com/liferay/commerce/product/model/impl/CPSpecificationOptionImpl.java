@@ -12,7 +12,7 @@ import com.liferay.commerce.product.service.CPOptionCategoryLocalServiceUtil;
 import com.liferay.commerce.product.service.CPSpecificationOptionListTypeDefinitionRelLocalServiceUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
-import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
+import com.liferay.list.type.service.ListTypeDefinitionServiceUtil;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,14 +43,37 @@ public class CPSpecificationOptionImpl extends CPSpecificationOptionBaseImpl {
 	}
 
 	@Override
-	public long getListTypeDefinitionCount() {
-		return ListTypeEntryLocalServiceUtil.dynamicQueryCount(
-			_buildDynamicQuery());
+	public List<ListTypeDefinition> getListTypeDefinitions()
+		throws PortalException {
+
+		List<ListTypeDefinition> listTypeDefinitions = new ArrayList<>();
+
+		for (CPSpecificationOptionListTypeDefinitionRel
+				cpSpecificationOptionListTypeDefinitionRel :
+					CPSpecificationOptionListTypeDefinitionRelLocalServiceUtil.
+						getCPSpecificationOptionListTypeDefinitionRels(
+							getCPSpecificationOptionId())) {
+
+			ListTypeDefinition listTypeDefinition =
+				ListTypeDefinitionServiceUtil.getListTypeDefinition(
+					cpSpecificationOptionListTypeDefinitionRel.
+						getListTypeDefinitionId());
+
+			if (listTypeDefinitions.contains(listTypeDefinition)) {
+				continue;
+			}
+
+			listTypeDefinitions.add(listTypeDefinition);
+		}
+
+		return listTypeDefinitions;
 	}
 
 	@Override
-	public List<ListTypeDefinition> getListTypeDefinitions() {
-		return ListTypeEntryLocalServiceUtil.dynamicQuery(_buildDynamicQuery());
+	public long getListTypeDefinitionsCount() throws PortalException {
+		List<ListTypeDefinition> listTypeDefinitions = getListTypeDefinitions();
+
+		return listTypeDefinitions.size();
 	}
 
 	@Override
@@ -74,23 +98,6 @@ public class CPSpecificationOptionImpl extends CPSpecificationOptionBaseImpl {
 						getListTypeDefinitionId)));
 
 		return ListTypeEntryLocalServiceUtil.dynamicQuery(dynamicQuery);
-	}
-
-	private DynamicQuery _buildDynamicQuery() {
-		DynamicQuery dynamicQuery =
-			ListTypeDefinitionLocalServiceUtil.dynamicQuery();
-
-		Property listTypeDefinitionIdProperty = PropertyFactoryUtil.forName(
-			"listTypeDefinitionId");
-
-		return dynamicQuery.add(
-			listTypeDefinitionIdProperty.in(
-				TransformUtil.transformToLongArray(
-					CPSpecificationOptionListTypeDefinitionRelLocalServiceUtil.
-						getCPSpecificationOptionListTypeDefinitionRels(
-							getCPSpecificationOptionId()),
-					CPSpecificationOptionListTypeDefinitionRel::
-						getListTypeDefinitionId)));
 	}
 
 }

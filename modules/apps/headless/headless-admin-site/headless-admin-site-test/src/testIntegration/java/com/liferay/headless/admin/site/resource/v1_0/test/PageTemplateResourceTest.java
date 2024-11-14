@@ -352,14 +352,12 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			testPostSiteSiteByExternalReferenceCodePageTemplatePageSpecification();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPostSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate()
 		throws Exception {
 
-		super.
-			testPostSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate();
+		_testPostSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate();
 	}
 
 	@Override
@@ -567,6 +565,20 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			testGroup.getExternalReferenceCode(), pageTemplate);
 	}
 
+	@Override
+	protected PageTemplate
+			testPostSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate_addPageTemplate(
+				PageTemplate pageTemplate)
+		throws Exception {
+
+		PageTemplateSet pageTemplateSet = pageTemplate.getPageTemplateSet();
+
+		return pageTemplateResource.
+			postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
+				testGroup.getExternalReferenceCode(),
+				pageTemplateSet.getExternalReferenceCode(), pageTemplate);
+	}
+
 	private void _assertProblemException(
 			String status, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
@@ -765,6 +777,21 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					siteExternalReferenceCode, pageTemplate));
 	}
 
+	private void
+			_postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
+				PageTemplate pageTemplate, String siteExternalReferenceCode)
+		throws Exception {
+
+		PageTemplateSet pageTemplateSet = pageTemplate.getPageTemplateSet();
+
+		assertEquals(
+			pageTemplate,
+			pageTemplateResource.
+				postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
+					siteExternalReferenceCode,
+					pageTemplateSet.getExternalReferenceCode(), pageTemplate));
+	}
+
 	private void _testDeleteSiteSiteByExternalReferenceCodePageTemplate(
 			Group group, String pageTemplateExternalReferenceCode)
 		throws Exception {
@@ -867,6 +894,27 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 						postSiteSiteByExternalReferenceCodePageTemplate(
 							group.getExternalReferenceCode(),
 							_getPageTemplate(group))));
+	}
+
+	private void _testPostSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate()
+		throws Exception {
+
+		PageTemplate randomPageTemplate = randomPageTemplate();
+
+		PageTemplate postPageTemplate =
+			testPostSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate_addPageTemplate(
+				randomPageTemplate);
+
+		assertEquals(randomPageTemplate, postPageTemplate);
+		assertValid(postPageTemplate);
+
+		_postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
+			_getContentPageTemplate(testGroup),
+			testGroup.getExternalReferenceCode());
+
+		_postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
+			_getWidgetPageTemplate(testGroup),
+			testGroup.getExternalReferenceCode());
 	}
 
 	private void _testPutSiteSiteByExternalReferenceCodePageTemplate(

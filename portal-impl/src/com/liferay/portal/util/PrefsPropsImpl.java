@@ -469,20 +469,15 @@ public class PrefsPropsImpl implements PrefsProps {
 		if (ClusterExecutorUtil.isEnabled() &&
 			ClusterInvokeThreadLocal.isEnabled()) {
 
-			TransactionCommitCallbackUtil.registerCallback(
-				() -> {
-					ClusterRequest clusterRequest =
-						ClusterRequest.createMulticastRequest(
-							new MethodHandler(
-								_removePortletPreferenceMethodKey, companyId),
-							true);
+			ClusterRequest clusterRequest =
+				ClusterRequest.createMulticastRequest(
+					new MethodHandler(
+						_removePortletPreferenceMethodKey, companyId),
+					true);
 
-					clusterRequest.setFireAndForget(true);
+			clusterRequest.setFireAndForget(true);
 
-					ClusterExecutorUtil.execute(clusterRequest);
-
-					return null;
-				});
+			ClusterExecutorUtil.execute(clusterRequest);
 		}
 	}
 
@@ -491,28 +486,35 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	private PortletPreferences _fetchPreferences(long companyId) {
+		if (_localCacheThreadLocal.get()) {
+			return _getPortletPreferences(companyId);
+		}
+
 		return _portletPreferences.computeIfAbsent(
-			companyId,
-			keyCompanyId -> {
-				PortalPreferences portalPreferences =
-					_portalPreferencesLocalService.fetchPortalPreferences(
-						keyCompanyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+			companyId, this::_getPortletPreferences);
+	}
 
-				if (portalPreferences == null) {
-					return _emptyPortletPreferences;
-				}
+	private PortletPreferences _getPortletPreferences(long companyId) {
+		PortalPreferences portalPreferences =
+			_portalPreferencesLocalService.fetchPortalPreferences(
+				companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
-				PortalPreferencesImpl portalPreferencesImpl =
-					(PortalPreferencesImpl)
-						_portalPreferenceValueLocalService.getPortalPreferences(
-							portalPreferences, false);
+		if (portalPreferences == null) {
+			return _emptyPortletPreferences;
+		}
 
-				return new PortalPreferencesWrapper(portalPreferencesImpl);
-			});
+		PortalPreferencesImpl portalPreferencesImpl =
+			(PortalPreferencesImpl)
+				_portalPreferenceValueLocalService.getPortalPreferences(
+					portalPreferences, false);
+
+		return new PortalPreferencesWrapper(portalPreferencesImpl);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PrefsPropsImpl.class);
 
+	private static final ThreadLocal<Boolean> _localCacheThreadLocal =
+		ThreadLocal.withInitial(() -> false);
 	private static final Map<Long, PortletPreferences> _portletPreferences =
 		new ConcurrentHashMap<>();
 	private static final MethodKey _removePortletPreferenceMethodKey =
@@ -646,6 +648,10 @@ public class PrefsPropsImpl implements PrefsProps {
 		private void _clearPortletPreferencce(
 			PortalPreferenceValue portalPreferenceValue) {
 
+			if (_localCacheThreadLocal.get()) {
+				return;
+			}
+
 			try {
 				PortalPreferences portalPreferences =
 					_portalPreferencesLocalService.getPortalPreferences(
@@ -654,8 +660,17 @@ public class PrefsPropsImpl implements PrefsProps {
 				if (portalPreferences.getOwnerType() ==
 						PortletKeys.PREFS_OWNER_TYPE_COMPANY) {
 
-					_removePortletPreference(
-						portalPreferenceValue.getCompanyId());
+					_localCacheThreadLocal.set(true);
+
+					TransactionCommitCallbackUtil.registerCallback(
+						() -> {
+							_removePortletPreference(
+								portalPreferenceValue.getCompanyId());
+
+							_localCacheThreadLocal.set(false);
+
+							return null;
+						});
 				}
 			}
 			catch (PortalException portalException) {

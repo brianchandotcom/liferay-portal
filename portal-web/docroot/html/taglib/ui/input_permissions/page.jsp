@@ -84,39 +84,41 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					</c:choose>
 				</label>
 
-				<select class="form-control" id="<%= uniqueNamespace %>inputPermissionsViewRole" name="<%= namespace %>inputPermissionsViewRole" onChange="<%= uniqueNamespace %>updatePermissionsView();">
+				<liferay-ui:csp>
+					<select class="form-control" id="<%= uniqueNamespace %>inputPermissionsViewRole" name="<%= namespace %>inputPermissionsViewRole" onChange="<%= uniqueNamespace %>updatePermissionsView();">
 
-					<%
-					String guestRoleLabel = LanguageUtil.format(request, "x-role", guestRole.getTitle(themeDisplay.getLocale()), false);
+						<%
+						String guestRoleLabel = LanguageUtil.format(request, "x-role", guestRole.getTitle(themeDisplay.getLocale()), false);
 
-					if (PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED) {
-						guestRoleLabel = LanguageUtil.get(resourceBundle, "anyone") + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + guestRoleLabel + StringPool.CLOSE_PARENTHESIS;
-					}
-					%>
+						if (PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED) {
+							guestRoleLabel = LanguageUtil.get(resourceBundle, "anyone") + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + guestRoleLabel + StringPool.CLOSE_PARENTHESIS;
+						}
+						%>
 
-					<option <%= inputPermissionsViewRole.equals(RoleConstants.GUEST) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.GUEST %>"><%= guestRoleLabel %></option>
+						<option <%= inputPermissionsViewRole.equals(RoleConstants.GUEST) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.GUEST %>"><%= guestRoleLabel %></option>
 
-					<c:if test="<%= hasViewDefaultGroupRolePermission %>">
-						<option <%= inputPermissionsViewRole.equals(defaultGroupRole.getName()) ? "selected=\"selected\"" : "" %> value="<%= defaultGroupRole.getName() %>">
-							<c:choose>
-								<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.ORGANIZATION_USER) %>">
-									<liferay-ui:message key="organization-members" />
-								</c:when>
-								<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.POWER_USER) %>">
-									<liferay-ui:message key="power-users" />
-								</c:when>
-								<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.SITE_MEMBER) %>">
-									<liferay-ui:message key="site-members" />
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="user" />
-								</c:otherwise>
-							</c:choose>
-						</option>
-					</c:if>
+						<c:if test="<%= hasViewDefaultGroupRolePermission %>">
+							<option <%= inputPermissionsViewRole.equals(defaultGroupRole.getName()) ? "selected=\"selected\"" : "" %> value="<%= defaultGroupRole.getName() %>">
+								<c:choose>
+									<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.ORGANIZATION_USER) %>">
+										<liferay-ui:message key="organization-members" />
+									</c:when>
+									<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.POWER_USER) %>">
+										<liferay-ui:message key="power-users" />
+									</c:when>
+									<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.SITE_MEMBER) %>">
+										<liferay-ui:message key="site-members" />
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message key="user" />
+									</c:otherwise>
+								</c:choose>
+							</option>
+						</c:if>
 
-					<option <%= inputPermissionsViewRole.equals(RoleConstants.OWNER) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.OWNER %>"><liferay-ui:message key="owner" /></option>
-				</select>
+						<option <%= inputPermissionsViewRole.equals(RoleConstants.OWNER) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.OWNER %>"><liferay-ui:message key="owner" /></option>
+					</select>
+				</liferay-ui:csp>
 			</p>
 		</c:if>
 

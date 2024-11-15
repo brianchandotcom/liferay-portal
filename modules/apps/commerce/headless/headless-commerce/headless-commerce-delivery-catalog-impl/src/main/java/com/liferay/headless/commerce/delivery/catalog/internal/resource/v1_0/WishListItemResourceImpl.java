@@ -138,7 +138,7 @@ public class WishListItemResourceImpl extends BaseWishListItemResourceImpl {
 		}
 
 		CommerceWishListItem commerceWishListItem =
-			_commerceWishListItemService.addCommerceWishListItem(
+			_commerceWishListItemService.addOrUpdateCommerceWishListItem(
 				_getCommerceAccountId(accountId, commerceChannel), wishListId,
 				wishListItem.getProductId(), cpInstanceUuid,
 				wishListItem.toString(),

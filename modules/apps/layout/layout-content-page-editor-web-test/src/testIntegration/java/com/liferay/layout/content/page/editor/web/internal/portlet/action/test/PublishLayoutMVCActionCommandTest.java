@@ -398,26 +398,7 @@ public class PublishLayoutMVCActionCommandTest {
 	public void testPublishedLayoutWithNoninstanciablePortlet()
 		throws Exception {
 
-		ContentLayoutTestUtil.addPortletToLayout(
-			_draftLayout,
-			LayoutContentPageEditorWebPortletKeys.
-				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
-
-		Map<String, String> map = HashMapBuilder.put(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString()
-		).build();
-
-		_setUpPortletPreferences(
-			_draftLayout, map,
-			LayoutContentPageEditorWebPortletKeys.
-				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
-
-		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
-
-		_assertPortletPreferences(
-			_layout, map,
-			LayoutContentPageEditorWebPortletKeys.
-				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
+		_testPublishedLayoutWithNoninstanciablePortlet();
 	}
 
 	@Test
@@ -661,6 +642,31 @@ public class PublishLayoutMVCActionCommandTest {
 		portletPreferences.store();
 
 		_assertPortletPreferences(layout, map, portletId);
+	}
+
+	private void _testPublishedLayoutWithNoninstanciablePortlet()
+		throws Exception {
+
+		ContentLayoutTestUtil.addPortletToLayout(
+			_draftLayout,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
+
+		Map<String, String> map = HashMapBuilder.put(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString()
+		).build();
+
+		_setUpPortletPreferences(
+			_draftLayout, map,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		_assertPortletPreferences(
+			_layout, map,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
 	}
 
 	@Inject

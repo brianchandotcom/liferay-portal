@@ -296,6 +296,15 @@ const MillerColumnsItem = ({
 		collect: (monitor) => ({
 			isDragging: !!monitor.isDragging(),
 		}),
+		end: ({redirectURL}, monitor) => {
+			if (
+				!monitor.didDrop() &&
+				redirectURL &&
+				Liferay.FeatureFlags['LPD-35220']
+			) {
+				navigate(redirectURL);
+			}
+		},
 		isDragging: (monitor) => {
 			const movedItems = monitor.getItem().items;
 
@@ -362,6 +371,10 @@ const MillerColumnsItem = ({
 
 			if (isOver && monitor.canDrop()) {
 				dropZone = getDropZone(ref, monitor);
+			}
+
+			if (active) {
+				source.redirectURL = url;
 			}
 
 			setDropZone(dropZone);

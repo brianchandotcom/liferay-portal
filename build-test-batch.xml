@@ -2772,7 +2772,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							String testTaskName = testProjectName + ":" + "@{test.task}";
 
-							generateJunitReport(baseDir, testClassName, testTaskName)
+							generateJunitReport(baseDir, testClassName, testTaskName);
 
 							String testName = getTestName(testClassFile.toString());
 

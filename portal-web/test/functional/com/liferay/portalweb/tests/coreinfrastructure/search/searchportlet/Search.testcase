@@ -26,6 +26,43 @@ definition {
 		}
 	}
 
+	test AddElasticsearchMonitoringOnContentPageViaUI {
+		property portal.suite.search.engine = "elasticsearch7";
+
+		task ("Add a content page and navigate to the edit screen of said page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Content Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page",
+				siteName = "Guest");
+		}
+
+		task ("Add Elasticsearch Monitoring search widget via the UI and assert no error is present") {
+			SearchPage.addWidgetsOnContentPageViaUI(searchPortletList = "Elasticsearch Monitoring");
+		}
+	}
+
+	test AddElasticsearchMonitoringOnWidgetPageViaUI {
+		property portal.suite.search.engine = "elasticsearch7";
+
+		task ("Add a widget page and navigate to said page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Widget Page");
+
+			Navigator.openSitePage(
+				pageName = "Test Widget Page",
+				siteName = "Guest");
+		}
+
+		task ("Add Elasticsearch Monitoring search widget via the UI and assert no error is present") {
+			SearchPage.addWidgetsOnWidgetPageViaUI(searchPortletList = "Elasticsearch Monitoring");
+		}
+	}
+
 	test AddSearchWidgetsOnContentPageViaUI {
 		task ("Add a content page and navigate to the edit screen of said page") {
 			JSONLayout.addPublicLayout(

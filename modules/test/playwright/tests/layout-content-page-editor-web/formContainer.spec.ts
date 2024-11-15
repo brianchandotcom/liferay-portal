@@ -47,7 +47,7 @@ test.describe('Form Configuration', () => {
 	test(
 		'Can add custom translations for success message',
 		{
-			tag: '@LPS-155529',
+			tag: ['@LPS-155529', '@LPS-188036'],
 		},
 		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 

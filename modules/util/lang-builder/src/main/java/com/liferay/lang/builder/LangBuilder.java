@@ -336,7 +336,17 @@ public class LangBuilder {
 					translatedText = null;
 				}
 
+				if ((translatedText != null) && (parentProperties != null) &&
+					translatedText.endsWith(
+						LanguageBuilderUtil.AUTOMATIC_COPY)) {
+
+					translatedText = null;
+				}
+
+				boolean inheritedFromParent = false;
+
 				if ((translatedText == null) && (parentProperties != null)) {
+					inheritedFromParent = true;
 					translatedText = parentProperties.getProperty(key);
 				}
 
@@ -349,6 +359,7 @@ public class LangBuilder {
 						if ((translatedText == null) &&
 							(parentProperties != null)) {
 
+							inheritedFromParent = true;
 							translatedText = parentProperties.getProperty(key);
 						}
 					}
@@ -356,7 +367,7 @@ public class LangBuilder {
 
 				boolean automaticCopy = false;
 
-				if ((translatedText != null) &&
+				if (!inheritedFromParent && (translatedText != null) &&
 					translatedText.endsWith(
 						LanguageBuilderUtil.AUTOMATIC_COPY)) {
 

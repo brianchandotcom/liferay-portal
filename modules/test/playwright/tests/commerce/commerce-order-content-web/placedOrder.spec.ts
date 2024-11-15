@@ -821,3 +821,118 @@ test('LPD-33658 Global Settings for order date configuration', async ({
 		await page.getByTestId('submitConfiguration').click();
 	}
 });
+
+test('LPD-41952 Reorder from placed orders details page with different currency enabled', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	checkoutPage,
+	commerceAccountManagementPage,
+	commerceAdminOrderDetailsPage,
+	commerceChannelDefaultsPage,
+	commerceMiniCartPage,
+	page,
+	placedOrdersPage,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'admin',
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const {channel, site} = await miniumSetUp(apiHelpers);
+
+	await apiHelpers.headlessCommerceAdminAccount.postAddress(account.id, {
+		phoneNumber: '12345',
+		regionISOCode: 'LA',
+	});
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+		new URLSearchParams({
+			filter: `name eq 'U-Joint'`,
+		})
+	);
+
+	const productId = product.items[0].productId;
+
+	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+		.getProduct(productId)
+		.then((product) => {
+			return product.skus;
+		});
+
+	const sku = productSkus[0];
+
+	await apiHelpers.headlessCommerceDeliveryCart.postCart(
+		{
+			accountId: account.id,
+			cartItems: [
+				{
+					quantity: 1,
+					skuId: sku.id,
+				},
+			],
+		},
+		channel.id
+	);
+
+	await page.goto(`/web/${site.name}`);
+
+	await commerceMiniCartPage.submitCart();
+
+	await expect(page.getByText('U-joint')).toBeVisible();
+
+	await checkoutPage.chooseShippingAddress({index: 1});
+
+	await expect(page.getByText('Standard Delivery (+$ 15.00)')).toBeVisible();
+
+	await checkoutPage.continueButton.click();
+
+	await expect(page.getByText('U-joint')).toBeVisible();
+
+	await checkoutPage.continueButton.click();
+
+	await expect(checkoutPage.orderSuccessMessage).toBeVisible();
+
+	await applicationsMenuPage.goToAccounts();
+
+	await commerceAccountManagementPage
+		.accountsTableRowLink(account.id)
+		.click();
+	await commerceAccountManagementPage.channelDefaultsLink.click();
+
+	await commerceChannelDefaultsPage.defaultCommerceCurrenciesButton.click();
+	await commerceChannelDefaultsPage.editFrameCurrencySelect.selectOption(
+		'Chinese Yuan Renminbi'
+	);
+
+	await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+	await expect(page.getByText('Chinese Yuan Renminbi')).toBeVisible();
+
+	await page.goto(`/web/${site.name}/placed-orders`);
+
+	await placedOrdersPage.viewButton.click();
+
+	await commerceAdminOrderDetailsPage.reorderButton.click();
+
+	await expect(commerceAdminOrderDetailsPage.checkoutButton).toBeVisible();
+
+	await expect(
+		page
+			.locator('.col-md-3 > .commerce-panel > div')
+			.first()
+			.filter({hasText: '¥ 173.78'})
+	).toBeVisible();
+	await expect(
+		page
+			.locator('.col-md-3 > .commerce-panel > div')
+			.first()
+			.filter({hasText: '¥ 108.61'})
+	).toBeVisible();
+	await expect(
+		page
+			.locator('.col-md-3 > .commerce-panel > div:nth-child(2)')
+			.filter({hasText: '¥ 282.39'})
+	).toBeVisible();
+});

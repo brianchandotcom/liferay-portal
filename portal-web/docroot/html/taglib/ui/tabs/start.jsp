@@ -193,9 +193,11 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 	%>
 
 		<li class="nav-item" data-tab-name="<%= names[i] %>" id="<%= namespace %><%= param %><%= StringUtil.toCharCode(values[i]) %>TabsId" role="none">
-			<a class="<%= linkCssClass %>" href="<%= Validator.isNotNull(curURL) ? HtmlUtil.escapeAttribute(curURL) : "javascript:void(0);" %>" onClick="<%= Validator.isNotNull(curOnClick) ? curOnClick : StringPool.BLANK %>" role="tab">
-				<liferay-ui:message key="<%= HtmlUtil.escape(names[i]) %>" />
-			</a>
+			<liferay-ui:csp>
+				<a class="<%= linkCssClass %>" href="<%= Validator.isNotNull(curURL) ? HtmlUtil.escapeAttribute(curURL) : "javascript:void(0);" %>" onClick="<%= Validator.isNotNull(curOnClick) ? curOnClick : StringPool.BLANK %>" role="tab">
+					<liferay-ui:message key="<%= HtmlUtil.escape(names[i]) %>" />
+				</a>
+			</liferay-ui:csp>
 		</li>
 
 	<%

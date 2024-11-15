@@ -17,8 +17,10 @@ const COMMANDS = {
 	'build:custom': {
 		description: `
 		Builds artifacts for the current project using a custom esbuild configuration.
+
+		--serve builds and serves the bundle locally in 'watch' mode.
 `,
-		parameters: '',
+		parameters: '[--serve]',
 		script: './bundle/custom.mjs',
 	},
 	'build:report': {

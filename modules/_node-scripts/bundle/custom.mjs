@@ -6,14 +6,39 @@
 import * as esbuild from 'esbuild';
 
 import getCustomBuildConfig from '../configuration/getCustomBuildConfig.mjs';
+import getNamedArguments from '../util/getNamedArguments.mjs';
+
+const DEFAULT_PORT = 8081;
 
 export default async function main() {
+	const {serve} = getNamedArguments({
+		serve: '--serve',
+	});
+
 	const customBuildConfig = await getCustomBuildConfig();
 
-	await Promise.all([
-		customBuildConfig.other
-			? Promise.resolve(customBuildConfig.other())
-			: Promise.resolve(),
-		esbuild.build(customBuildConfig.esbuild),
-	]);
+	if (serve) {
+		const ctx = await esbuild.context({
+			...customBuildConfig.esbuild,
+		});
+
+		await ctx.watch();
+
+		const {port} = await ctx.serve({
+			port: DEFAULT_PORT,
+		});
+
+		console.log(`Bundle served at 'localhost:${port}'`);
+	}
+	else {
+		await Promise.all([
+			customBuildConfig.other
+				? Promise.resolve(customBuildConfig.other())
+				: Promise.resolve(),
+			esbuild.build({
+				minify: process.env.NODE_ENV === 'production',
+				...customBuildConfig.esbuild,
+			}),
+		]);
+	}
 }

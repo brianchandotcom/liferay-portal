@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -418,6 +419,26 @@ public class PublishLayoutMVCActionCommandTest {
 				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
 
 		_testPublishedLayoutWithNoninstanciablePortlet();
+
+		ContentLayoutTestUtil.markItemForDeletionFromLayout(
+			_getDraftLayoutFragmentStyledLayoutStructureItemId(), _draftLayout,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_portletPreferencesLocalService.getPortletPreferences(
+					_draftLayout.getPlid(),
+					LayoutContentPageEditorWebPortletKeys.
+						LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET)));
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_portletPreferencesLocalService.getPortletPreferences(
+					_layout.getPlid(),
+					LayoutContentPageEditorWebPortletKeys.
+						LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET)));
 	}
 
 	@Test

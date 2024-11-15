@@ -13,7 +13,7 @@ import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 
 import java.net.URL;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -58,43 +58,51 @@ public class AccountUsageRestController extends BaseRestController {
 				_googleCloudFunctionService.getCustomerAccountUsage(
 					externalReferenceCode);
 
-			Random random = new Random();
+			ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
 
-			int apvsMax = jsonObject.getInt("totalAnonymousPageViewsCount");
+			long anonymousPageViewsMax = jsonObject.getLong(
+				"totalAnonymousPageViewsCount");
 
-			accountUsage.setAPVsMax(apvsMax);
-			accountUsage.setAPVsUsed(random.nextInt(apvsMax));
+			accountUsage.setAnonymousPageViewsMax(anonymousPageViewsMax);
+			accountUsage.setAnonymousPageViewsUsed(
+				threadLocalRandom.nextLong(anonymousPageViewsMax));
 
-			int malusMax = jsonObject.getInt("totalActiveLoggedInUsersCount");
+			long clientExtensionsCapacityCPUMax = jsonObject.getLong(
+				"totalClientExtensionsCapacityCPUCount");
 
-			accountUsage.setMALUsMax(malusMax);
-			accountUsage.setMALUsUsed(random.nextInt(malusMax));
+			accountUsage.setClientExtensionsCapacityCPUMax(
+				clientExtensionsCapacityCPUMax);
+			accountUsage.setClientExtensionsCapacityCPUUsed(
+				threadLocalRandom.nextLong(clientExtensionsCapacityCPUMax));
 
-			int extensionsCapacityCpuMax = jsonObject.getInt(
-				"totalExtensionsCapacityCpuCount");
+			long clientExtensionsCapacityRAMMax = jsonObject.getLong(
+				"totalClientExtensionsCapacityRAM");
 
-			accountUsage.setExtensionsCapacityCpuMax(extensionsCapacityCpuMax);
-			accountUsage.setExtensionsCapacityCpuUsed(
-				random.nextInt(extensionsCapacityCpuMax));
+			accountUsage.setClientExtensionsCapacityRAMMax(
+				clientExtensionsCapacityRAMMax);
+			accountUsage.setClientExtensionsCapacityRAMUsed(
+				threadLocalRandom.nextLong(clientExtensionsCapacityRAMMax));
 
-			int extensionsCapacityRamMax = jsonObject.getInt(
-				"totalExtensionsCapacityRam");
+			long monthlyActiveLoggedInUsersMax = jsonObject.getLong(
+				"totalMonthlyActiveLoggedInUsersCount");
 
-			accountUsage.setExtensionsCapacityRamMax(extensionsCapacityRamMax);
-			accountUsage.setExtensionsCapacityRamUsed(
-				random.nextInt(extensionsCapacityRamMax));
+			accountUsage.setMonthlyActiveLoggedInUsersMax(
+				monthlyActiveLoggedInUsersMax);
+			accountUsage.setMonthlyActiveLoggedInUsersUsed(
+				threadLocalRandom.nextLong(monthlyActiveLoggedInUsersMax));
 
-			int sitesMax = jsonObject.getInt("totalSitesCount");
+			long sitesMax = jsonObject.getLong("totalSitesCount");
 
 			accountUsage.setSitesMax(sitesMax);
-			accountUsage.setSitesUsed(random.nextInt(sitesMax));
+			accountUsage.setSitesUsed(threadLocalRandom.nextLong(sitesMax));
 
-			int storageCapacityMax = jsonObject.getInt(
+			long storageCapacityDocumentLibraryMax = jsonObject.getLong(
 				"totalStorageCapacityDocumentLibrary");
 
-			accountUsage.setStorageCapacityMax(storageCapacityMax);
-			accountUsage.setStorageCapacityUsed(
-				random.nextInt(storageCapacityMax));
+			accountUsage.setStorageCapacityDocumentLibraryMax(
+				storageCapacityDocumentLibraryMax);
+			accountUsage.setStorageCapacityDocumentLibraryUsed(
+				threadLocalRandom.nextLong(storageCapacityDocumentLibraryMax));
 
 			JSONObject accountUsageJSONObject = accountUsage.toJSONObject();
 

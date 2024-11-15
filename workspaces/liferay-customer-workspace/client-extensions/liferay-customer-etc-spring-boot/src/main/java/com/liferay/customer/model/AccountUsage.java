@@ -16,36 +16,48 @@ public class AccountUsage {
 		_accountId = accountId;
 	}
 
-	public void setAPVsMax(long apvsMax) {
-		_apvsMax = apvsMax;
+	public void setAnonymousPageViewsMax(long anonymousPageViewsMax) {
+		_anonymousPageViewsMax = anonymousPageViewsMax;
 	}
 
-	public void setAPVsUsed(long apvsUsed) {
-		_apvsUsed = apvsUsed;
+	public void setAnonymousPageViewsUsed(long anonymousPageViewsUsed) {
+		_anonymousPageViewsUsed = anonymousPageViewsUsed;
 	}
 
-	public void setExtensionsCapacityCpuMax(long extensionsCapacityCpuMax) {
-		_extensionsCapacityCpuMax = extensionsCapacityCpuMax;
+	public void setClientExtensionsCapacityCPUMax(
+		long clientExtensionsCapacityCPUMax) {
+
+		_clientExtensionsCapacityCPUMax = clientExtensionsCapacityCPUMax;
 	}
 
-	public void setExtensionsCapacityCpuUsed(long extensionsCapacityCpuUsed) {
-		_extensionsCapacityCpuUsed = extensionsCapacityCpuUsed;
+	public void setClientExtensionsCapacityCPUUsed(
+		long clientExtensionsCapacityCPUUsed) {
+
+		_clientExtensionsCapacityCPUUsed = clientExtensionsCapacityCPUUsed;
 	}
 
-	public void setExtensionsCapacityRamMax(long extensionsCapacityRamMax) {
-		_extensionsCapacityRamMax = extensionsCapacityRamMax;
+	public void setClientExtensionsCapacityRAMMax(
+		long clientExtensionsCapacityRAMMax) {
+
+		_clientExtensionsCapacityRAMMax = clientExtensionsCapacityRAMMax;
 	}
 
-	public void setExtensionsCapacityRamUsed(long extensionsCapacityRamUsed) {
-		_extensionsCapacityRamUsed = extensionsCapacityRamUsed;
+	public void setClientExtensionsCapacityRAMUsed(
+		long clientExtensionsCapacityRAMUsed) {
+
+		_clientExtensionsCapacityRAMUsed = clientExtensionsCapacityRAMUsed;
 	}
 
-	public void setMALUsMax(long malusMax) {
-		_malusMax = malusMax;
+	public void setMonthlyActiveLoggedInUsersMax(
+		long monthlyActiveLoggedInUsersMax) {
+
+		_monthlyActiveLoggedInUsersMax = monthlyActiveLoggedInUsersMax;
 	}
 
-	public void setMALUsUsed(long malusUsed) {
-		_malusUsed = malusUsed;
+	public void setMonthlyActiveLoggedInUsersUsed(
+		long monthlyActiveLoggedInUsersUsed) {
+
+		monthlyActiveLoggedInUsersUsed = monthlyActiveLoggedInUsersUsed;
 	}
 
 	public void setSitesMax(long sitesMax) {
@@ -56,34 +68,46 @@ public class AccountUsage {
 		_sitesUsed = sitesUsed;
 	}
 
-	public void setStorageCapacityMax(long storageCapacityMax) {
-		_storageCapacityMax = storageCapacityMax;
+	public void setStorageCapacityDocumentLibraryMax(
+		long storageCapacityDocumentLibraryMax) {
+
+		_storageCapacityDocumentLibraryMax = storageCapacityDocumentLibraryMax;
 	}
 
-	public void setStorageCapacityUsed(long storageCapacityUsed) {
-		_storageCapacityUsed = storageCapacityUsed;
+	public void setStorageCapacityDocumentLibraryUsed(
+		long storageCapacityDocumentLibraryUsed) {
+
+		_storageCapacityDocumentLibraryUsed =
+			storageCapacityDocumentLibraryUsed;
 	}
 
 	public JSONObject toJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
-			"apvs", _getUsageJSONObject(_apvsUsed, _apvsMax)
+			"anonymousPageViews",
+			_getUsageJSONObject(_anonymousPageViewsUsed, _anonymousPageViewsMax)
 		).put(
-			"extensionsCapacityCpu",
+			"clientExtensionsCapacityCPU",
 			_getUsageJSONObject(
-				_extensionsCapacityCpuUsed, _extensionsCapacityCpuMax)
+				_clientExtensionsCapacityCPUUsed,
+				_clientExtensionsCapacityCPUMax)
 		).put(
-			"extensionsCapacityRam",
+			"clientExtensionsCapacityRAM",
 			_getUsageJSONObject(
-				_extensionsCapacityRamUsed, _extensionsCapacityRamMax)
+				_clientExtensionsCapacityRAMUsed,
+				_clientExtensionsCapacityRAMMax)
 		).put(
-			"malus", _getUsageJSONObject(_malusUsed, _malusMax)
+			"monthlyActiveLoggedInUsers",
+			_getUsageJSONObject(
+				_monthlyActiveLoggedInUsersUsed, _monthlyActiveLoggedInUsersMax)
 		).put(
 			"sites", _getUsageJSONObject(_sitesUsed, _sitesMax)
 		).put(
-			"storageCapacity",
-			_getUsageJSONObject(_storageCapacityUsed, _storageCapacityMax)
+			"storageCapacityDocumentLibrary",
+			_getUsageJSONObject(
+				_storageCapacityDocumentLibraryUsed,
+				_storageCapacityDocumentLibraryMax)
 		);
 
 		return jsonObject;
@@ -102,17 +126,17 @@ public class AccountUsage {
 	}
 
 	private long _accountId;
-	private long _apvsMax;
-	private long _apvsUsed;
-	private long _extensionsCapacityCpuMax;
-	private long _extensionsCapacityCpuUsed;
-	private long _extensionsCapacityRamMax;
-	private long _extensionsCapacityRamUsed;
-	private long _malusMax;
-	private long _malusUsed;
+	private long _anonymousPageViewsMax;
+	private long _anonymousPageViewsUsed;
+	private long _clientExtensionsCapacityCPUMax;
+	private long _clientExtensionsCapacityCPUUsed;
+	private long _clientExtensionsCapacityRAMMax;
+	private long _clientExtensionsCapacityRAMUsed;
+	private long _monthlyActiveLoggedInUsersMax;
+	private long _monthlyActiveLoggedInUsersUsed;
 	private long _sitesMax;
 	private long _sitesUsed;
-	private long _storageCapacityMax;
-	private long _storageCapacityUsed;
+	private long _storageCapacityDocumentLibraryMax;
+	private long _storageCapacityDocumentLibraryUsed;
 
 }

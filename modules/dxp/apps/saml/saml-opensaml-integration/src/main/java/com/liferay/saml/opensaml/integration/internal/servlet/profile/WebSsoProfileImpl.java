@@ -1765,8 +1765,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			throw new StatusException(statusCodeURI);
 		}
 
-		verifyDestination(messageContext, samlResponse.getDestination());
-
 		String redirect = verifyInResponseTo(samlResponse);
 
 		if (Validator.isNull(redirect)) {
@@ -1778,6 +1776,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 
 		httpServletRequest.setAttribute(WebKeys.REDIRECT, redirect);
+
+		verifyDestination(messageContext, samlResponse.getDestination());
 
 		Issuer issuer = samlResponse.getIssuer();
 

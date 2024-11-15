@@ -1963,6 +1963,10 @@ definition {
 			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea1@liferay.com");
 
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
 		for (var pageCount : list "1,2,3") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Staging Test Page ${pageCount}",
@@ -1970,11 +1974,25 @@ definition {
 
 			Portlet.addPG(portletName = "Web Content Display");
 
+			WaitForElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
 			Portlet.viewPG(portletName = "Web Content Display");
 
-			Navigator.gotoStagedSitePage(
-				pageName = "Staging Test Page ${pageCount}",
-				siteName = "Site Name");
+			var count = 0;
+
+			while (${count} != 10) {
+				Refresh();
+
+				WaitForPageLoad();
+
+				WaitForElementPresent(locator1 = "Message#WORKFLOW_STATUS");
+
+				var count = ${count} + 1;
+			}
+
+			AssertTextEquals(
+				locator1 = "Message#WORKFLOW_STATUS",
+				value1 = "Draft");
 
 			Staging.submitForWorkflowPageRevision();
 		}

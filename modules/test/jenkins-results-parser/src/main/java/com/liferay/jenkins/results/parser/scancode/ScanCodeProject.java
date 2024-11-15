@@ -374,13 +374,13 @@ public class ScanCodeProject {
 			subject = ":red-alert: Release blocker :red-alert:";
 		}
 
-		String complianceAlerts =
+		String complianceAlertsMessage =
 			getComplianceAlertsMessage(ComplianceAlertType.ERROR) +
 				getComplianceAlertsMessage(ComplianceAlertType.WARNING);
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(complianceAlerts)) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(complianceAlertsMessage)) {
 			sb.append("*Compliance alerts:* ");
-			sb.append(complianceAlerts);
+			sb.append(complianceAlertsMessage);
 			sb.append("\n");
 		}
 

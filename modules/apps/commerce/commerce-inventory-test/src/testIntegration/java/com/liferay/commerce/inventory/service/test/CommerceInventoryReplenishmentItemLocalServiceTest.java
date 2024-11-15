@@ -44,7 +44,7 @@ public class CommerceInventoryReplenishmentItemLocalServiceTest {
 	}
 
 	@Test
-	public void testGetReplenishmentItemsWithNullValues() {
+	public void testGetCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey() {
 		List<CommerceInventoryReplenishmentItem>
 			commerceInventoryReplenishmentItems =
 				_commerceInventoryReplenishmentItemLocalService.

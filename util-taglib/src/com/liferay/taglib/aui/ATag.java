@@ -51,7 +51,9 @@ public class ATag extends BaseATag implements BodyTag {
 	protected int processEndTag() throws Exception {
 		BodyContent bodyContent = getBodyContent();
 
-		_charArrayWriter.write(bodyContent.getString());
+		if (bodyContent != null) {
+			_charArrayWriter.write(bodyContent.getString());
+		}
 
 		if (Validator.isNotNull(getHref())) {
 			if (AUIUtil.isOpensNewWindow(getTarget()) &&

@@ -203,6 +203,7 @@ public class ScanCodeProject {
 			}
 
 			sb.append(alertType.getSlackEmoticon());
+			sb.append(" ");
 			sb.append(
 				key.replaceAll(
 					"(.*)-" + Pattern.quote(alertType.toString()) + "$", "$1"));
@@ -515,7 +516,8 @@ public class ScanCodeProject {
 
 	public static enum ComplianceAlertType {
 
-		ERROR("error", ":red_circle:"), WARNING("warning", ":yellow_circle:");
+		ERROR("error", ":red_circle:"),
+		WARNING("warning", ":large_yellow_circle:");
 
 		public String getSlackEmoticon() {
 			return _slackEmoticon;

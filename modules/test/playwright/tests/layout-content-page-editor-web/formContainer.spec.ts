@@ -45,6 +45,101 @@ const test = mergeTests(
 
 test.describe('Form Configuration', () => {
 	test(
+		'Can add custom translations for success message',
+		{
+			tag: '@LPS-155529',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a Form fragment and a widget
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode and change form configuration
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.mapFormFragment(formId, 'Lemon', [
+				'Lemon Size',
+				'Lemon Basket to Lemons',
+			]);
+
+			await pageEditorPage.selectFragment(formId);
+
+			await page
+				.getByLabel('Success Action', {exact: true})
+				.selectOption({label: 'Show Embedded Message'});
+
+			await pageEditorPage.switchLanguage('es-ES');
+
+			await page
+				.getByLabel('Embedded Message', {exact: true})
+				.fill('Estamos muy agradecidos de recibir su formulario.');
+
+			// Preview message
+
+			await page
+				.getByLabel('Preview Success Message', {exact: true})
+				.click();
+
+			await expect(
+				page.getByText(
+					'Estamos muy agradecidos de recibir su formulario.'
+				)
+			).toBeVisible();
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode in spanish language
+
+			await page.goto(
+				`/es/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Submit form
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			// Assert spanish success message
+
+			await page
+				.getByText('Estamos muy agradecidos de recibir su formulario.')
+				.waitFor();
+
+			// Go to view mode in english language
+
+			await page.goto(
+				`/en/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Submit form
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			// Assert english success message
+
+			await page
+				.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+				.waitFor();
+		}
+	);
+
+	test(
 		'Show success message only one time',
 		{
 			tag: '@LPD-37435',

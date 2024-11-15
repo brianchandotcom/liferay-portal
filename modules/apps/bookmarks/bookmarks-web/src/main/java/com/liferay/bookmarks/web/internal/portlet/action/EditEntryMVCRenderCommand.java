@@ -7,11 +7,20 @@ package com.liferay.bookmarks.web.internal.portlet.action;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.Portal;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderParameters;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,6 +38,25 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCRenderCommand.class
 )
 public class EditEntryMVCRenderCommand extends BaseEntryMVCRenderCommand {
+
+	@Override
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
+		httpServletRequest.setAttribute(
+			CTTimelineKeys.CLASS_NAME, BookmarksEntry.class.getName());
+
+		RenderParameters renderParameters = renderRequest.getRenderParameters();
+
+		httpServletRequest.setAttribute(
+			CTTimelineKeys.CLASS_PK, renderParameters.getValue("entryId"));
+
+		return super.render(renderRequest, renderResponse);
+	}
 
 	@Override
 	protected void checkPermissions(
@@ -49,5 +77,8 @@ public class EditEntryMVCRenderCommand extends BaseEntryMVCRenderCommand {
 	)
 	private volatile ModelResourcePermission<BookmarksEntry>
 		_bookmarksEntryModelResourcePermission;
+
+	@Reference
+	private Portal _portal;
 
 }

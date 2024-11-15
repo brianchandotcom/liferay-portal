@@ -31,7 +31,9 @@ export class DocumentLibraryEditFilePage {
 			'#_com_liferay_document_library_web_portlet_DLAdminPortlet_description'
 		);
 		this.documentLibraryPage = new DocumentLibraryPage(page);
-		this.permissionViewSelector = page.getByLabel('Viewable by');
+		this.permissionViewSelector = page.getByLabel(
+			'Viewable and Downloadable By'
+		);
 		this.publishButton = page.getByRole('button', {
 			exact: true,
 			name: 'Publish',

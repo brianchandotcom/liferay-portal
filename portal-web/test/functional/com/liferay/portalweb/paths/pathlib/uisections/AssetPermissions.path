@@ -16,16 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MORE_OPTIONS_LINK</td>
-	<td>//button[contains(@class,'btn')][normalize-space(text())='More Options']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HIDE_OPTIONS_LINK</td>
-	<td>//input[contains(@id,'inputPermissionsShowOptions') and @value='false']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PERMISSIONS_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_roleTitle}')]//input[@value='${key_permissionDefinitionKey}']</td>
 	<td></td>

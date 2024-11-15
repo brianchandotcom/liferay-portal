@@ -63,12 +63,6 @@ definition {
 		if (isSet(permissionDefinitionKey)) {
 			Panel.expandPanel(panel = "Permissions");
 
-			if (IsNotVisible(locator1 = "AssetPermissions#HIDE_OPTIONS_LINK")) {
-				AssertClick.assertPartialTextClickAt(
-					locator1 = "AssetPermissions#MORE_OPTIONS_LINK",
-					value1 = "More Options");
-			}
-
 			var key_permissionDefinitionKey = ${permissionDefinitionKey};
 			var key_roleTitle = ${roleTitle};
 

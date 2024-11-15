@@ -591,7 +591,7 @@ public class EditInfoItemStrutsActionTest {
 		_assertEmptyValues(objectEntry);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testUpdateInfoItemWithWrongRedirect() throws Exception {
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
 			new MockMultipartHttpServletRequest();
@@ -635,10 +635,19 @@ public class EditInfoItemStrutsActionTest {
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
-		_editInfoItemStrutsAction.execute(
-			uploadPortletRequest,
-			new PipingServletResponse(
-				mockHttpServletResponse, new UnsyncStringWriter()));
+		try {
+			_editInfoItemStrutsAction.execute(
+				uploadPortletRequest,
+				new PipingServletResponse(
+					mockHttpServletResponse, new UnsyncStringWriter()));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Redirect URL must not be null",
+				illegalArgumentException.getMessage());
+		}
 	}
 
 	private Layout _addLayout() throws Exception {

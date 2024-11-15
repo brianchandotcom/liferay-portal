@@ -18,12 +18,8 @@ import com.liferay.layout.content.page.editor.web.internal.exception.Noninstance
 import com.liferay.layout.content.page.editor.web.internal.manager.ContentManager;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.model.LayoutClassedModelUsage;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.CheckNoninstanceablePortletThreadLocal;
-import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -167,32 +163,11 @@ public class FragmentEntryLinkModelListener
 				getFragmentEntryLinksBySegmentsExperienceId(
 					fragmentEntryLink.getGroupId(),
 					fragmentEntryLink.getSegmentsExperienceId(),
-					fragmentEntryLink.getPlid());
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					fragmentEntryLink.getGroupId(),
-					fragmentEntryLink.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(
-				fragmentEntryLink.getSegmentsExperienceId()));
+					fragmentEntryLink.getPlid(), false);
 
 		for (FragmentEntryLink curFragmentEntryLink : fragmentEntryLinks) {
 			if (curFragmentEntryLink.getFragmentEntryLinkId() ==
 					fragmentEntryLink.getFragmentEntryLinkId()) {
-
-				continue;
-			}
-
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-					curFragmentEntryLink.getFragmentEntryLinkId());
-
-			if ((layoutStructureItem != null) &&
-				layoutStructure.isItemMarkedForDeletion(
-					layoutStructureItem.getItemId())) {
 
 				continue;
 			}
@@ -424,10 +399,6 @@ public class FragmentEntryLinkModelListener
 	@Reference
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
-
-	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -7,6 +7,10 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -15,6 +19,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -23,11 +28,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = "dto.class.name=com.liferay.segments.model.SegmentsExperience",
+	property = "dto.class.name=import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel",
 	service = DTOConverter.class
 )
 public class PageExperienceDTOConverter
-	implements DTOConverter<SegmentsExperience, PageExperience> {
+	implements DTOConverter<LayoutPageTemplateStructureRel, PageExperience> {
 
 	@Override
 	public String getContentType() {
@@ -37,8 +42,12 @@ public class PageExperienceDTOConverter
 	@Override
 	public PageExperience toDTO(
 			DTOConverterContext dtoConverterContext,
-			SegmentsExperience segmentsExperience)
+			LayoutPageTemplateStructureRel layoutPageTemplateStructureRel)
 		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				layoutPageTemplateStructureRel.getSegmentsExperienceId());
 
 		Layout layout = _layoutLocalService.getLayout(
 			segmentsExperience.getPlid());
@@ -52,10 +61,18 @@ public class PageExperienceDTOConverter
 					() -> LocalizedMapUtil.getI18nMap(
 						true, segmentsExperience.getNameMap()));
 				setPageElements(
-					() -> new PageElement[] {
-						_pageElementDTOConverter.toDTO(layout),
-						_pageElementDTOConverter.toDTO(
-							layout.fetchDraftLayout())
+					() -> {
+						LayoutStructure layoutStructure = LayoutStructure.of(
+							layoutPageTemplateStructureRel.getData());
+
+						LayoutStructureItem rootLayoutStructureItem =
+							layoutStructure.getMainLayoutStructureItem();
+
+						return TransformUtil.transformToArray(
+							rootLayoutStructureItem.getChildrenItemIds(),
+							itemId -> _pageElementDTOConverter.toDTO(
+								layoutStructure.getLayoutStructureItem(itemId)),
+							PageElement.class);
 					});
 				setPriority(segmentsExperience::getPriority);
 				setSegmentExternalReferenceCode(
@@ -82,9 +99,13 @@ public class PageExperienceDTOConverter
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageElementDTOConverter)"
 	)
-	private DTOConverter<Layout, PageElement> _pageElementDTOConverter;
+	private DTOConverter<LayoutStructureItem, PageElement>
+		_pageElementDTOConverter;
 
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

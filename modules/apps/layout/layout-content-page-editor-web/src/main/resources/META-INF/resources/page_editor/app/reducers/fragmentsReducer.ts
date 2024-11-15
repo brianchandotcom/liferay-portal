@@ -14,6 +14,7 @@ import updateFragments, {FragmentSet} from '../actions/updateFragments';
 import {HIGHLIGHTED_COLLECTION_ID} from '../config/constants/highlightedCollectionId';
 
 const DEFAULT_HIGHLIGHTED_COLLECTION: FragmentSet = {
+	deprecated: false,
 	fragmentCollectionId: HIGHLIGHTED_COLLECTION_ID,
 	fragmentEntries: [],
 	name: Liferay.Language.get('favorites'),
@@ -45,6 +46,7 @@ export default function fragmentsReducer(
 						],
 					}
 				: {
+						deprecated: false,
 						fragmentCollectionId: composition.fragmentCollectionId,
 						fragmentEntries: [composition],
 						name: composition.fragmentCollectionName,

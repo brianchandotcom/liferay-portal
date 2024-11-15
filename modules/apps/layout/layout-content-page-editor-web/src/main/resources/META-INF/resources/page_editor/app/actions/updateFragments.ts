@@ -19,6 +19,7 @@ export interface FragmentEntry {
 }
 
 export interface FragmentSet {
+	deprecated: boolean;
 	fragmentCollectionId: string;
 	fragmentEntries: Array<FragmentEntry | FragmentComposition>;
 	name: string;

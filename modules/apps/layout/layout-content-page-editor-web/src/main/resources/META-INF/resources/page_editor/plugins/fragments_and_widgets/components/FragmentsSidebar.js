@@ -153,6 +153,7 @@ export default function FragmentsSidebar() {
 						normalizeFragmentEntry(fragmentEntry)
 					),
 					collectionId: collection.fragmentCollectionId,
+					deprecated: collection.deprecated,
 					label: collection.name,
 				})),
 				id: COLLECTION_IDS.fragments,

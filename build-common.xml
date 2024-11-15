@@ -696,11 +696,12 @@ information.
 
 	<macrodef name="generate-backend-batch-junit-report-modules">
 		<attribute name="test.class.name" />
+		<attribute name="test.task.name" />
 
 		<sequential>
 			<generate-backend-batch-junit-report
 				junit.failure.count="1"
-				junit.failure.message.element="&lt;failure message=&quot;Failed to run test on CI&quot; /&gt;"
+				junit.failure.message.element="&lt;failure message=&quot;@{test.task.name} failed to compile successfully&quot; /&gt;"
 				test.class.name="@{test.class.name}"
 				test.command.name="testRun"
 				test.results.dir="modules/test-results"

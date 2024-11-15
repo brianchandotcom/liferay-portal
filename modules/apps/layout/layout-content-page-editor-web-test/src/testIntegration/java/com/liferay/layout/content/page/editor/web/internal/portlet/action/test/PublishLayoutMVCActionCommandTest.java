@@ -31,6 +31,7 @@ import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.BulkLayoutConverter;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.structure.DeletedLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -442,6 +443,52 @@ public class PublishLayoutMVCActionCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPS-148426")
+	public void testPublishedLayoutWithNoninstanciablePortlets()
+		throws Exception {
+
+		String[] portletIds = {
+			"com_liferay_commerce_checkout_web_internal_portlet_" +
+				"CommerceCheckoutPortlet",
+			"com_liferay_commerce_order_content_web_internal_portlet_" +
+				"CommerceOpenOrderContentPortlet",
+			"com_liferay_commerce_order_content_web_internal_portlet_" +
+				"CommerceOrderContentPortlet",
+			"com_liferay_commerce_wish_list_web_internal_portlet_" +
+				"CommerceWishListContentPortlet",
+			"com_liferay_commerce_wish_list_web_internal_portlet_" +
+				"MyCommerceWishListsPortlet"
+		};
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		String html = ContentLayoutTestUtil.getRenderLayoutHTML(
+			_layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			_segmentsExperienceId);
+
+		for (String portletId : portletIds) {
+			Assert.assertFalse(
+				html + " contain " + portletId, html.contains(portletId));
+		}
+
+		for (String portletId : portletIds) {
+			ContentLayoutTestUtil.addPortletToLayout(_draftLayout, portletId);
+		}
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		html = ContentLayoutTestUtil.getRenderLayoutHTML(
+			_layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			_segmentsExperienceId);
+
+		for (String portletId : portletIds) {
+			Assert.assertTrue(
+				html + " does not contain " + portletId,
+				html.contains(portletId));
+		}
+	}
+
+	@Test
 	@TestInfo("LPD-39258")
 	public void testPublishedLayoutWithNoninstanciablePortletWithZeroInstanceId()
 		throws Exception {
@@ -779,6 +826,9 @@ public class PublishLayoutMVCActionCommandTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;

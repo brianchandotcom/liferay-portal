@@ -32,28 +32,6 @@ import org.json.JSONObject;
  */
 public class ScanCodeProject {
 
-	public static void addComplianceAlertValuesToMaps(
-		JSONObject complianceAlertJSONObject, String key, String errorType) {
-
-		if (!complianceAlertJSONObject.has(key)) {
-			return;
-		}
-
-		JSONObject keyJSONObject = complianceAlertJSONObject.getJSONObject(key);
-
-		if ((keyJSONObject != null) && keyJSONObject.has(errorType)) {
-			JSONArray errorTypeJSONArray = keyJSONObject.getJSONArray(
-				errorType);
-
-			if (errorType.equals("warning")) {
-				_warningCountsMap.put(key, errorTypeJSONArray.length());
-			}
-			else {
-				_errorCountsMap.put(key, errorTypeJSONArray.length());
-			}
-		}
-	}
-
 	public ScanCodeProject(String buildURL, String pipelineName) {
 		_buildURL = buildURL;
 		_pipelineName = pipelineName;
@@ -99,7 +77,7 @@ public class ScanCodeProject {
 		}
 	}
 
-	public void checkComplianceAlerts(String errorType)
+	public void checkComplianceAlerts(ComplianceAlertType alertType)
 		throws IOException, TimeoutException {
 
 		StringBuilder sb = new StringBuilder();
@@ -107,7 +85,7 @@ public class ScanCodeProject {
 		sb.append("curl ");
 		sb.append(_projectAPIURL);
 		sb.append("compliance/?fail_level=");
-		sb.append(errorType);
+		sb.append(alertType);
 		sb.append(" --header ");
 		sb.append(_CONTENT_TYPE);
 		sb.append(" --header ");
@@ -126,17 +104,32 @@ public class ScanCodeProject {
 
 		JSONObject outputJSONObject = new JSONObject(output);
 
-		JSONObject complianceAlertJSONObject = outputJSONObject.getJSONObject(
+		JSONObject complianceAlertsJSONObject = outputJSONObject.getJSONObject(
 			"compliance_alerts");
 
-		if (complianceAlertJSONObject.isEmpty()) {
+		if (complianceAlertsJSONObject.isEmpty()) {
 			return;
 		}
 
-		addComplianceAlertValuesToMaps(
-			complianceAlertJSONObject, "packages", errorType);
-		addComplianceAlertValuesToMaps(
-			complianceAlertJSONObject, "resources", errorType);
+		for (String key : complianceAlertsJSONObject.keySet()) {
+			JSONObject complianceAlertJSONObject =
+				complianceAlertsJSONObject.getJSONObject(key);
+
+			if (complianceAlertJSONObject.has(alertType.toString())) {
+				JSONArray alertTypeJSONArray =
+					complianceAlertJSONObject.getJSONArray(
+						alertType.toString());
+
+				_complianceAlertsCountsMap.put(
+					key + "-" + alertType, alertTypeJSONArray.length());
+			}
+		}
+	}
+
+	public void checkComplianceAlerts(String alertTypeString)
+		throws IOException, TimeoutException {
+
+		checkComplianceAlerts(ComplianceAlertType.valueOf(alertTypeString));
 	}
 
 	public void downloadResultFiles() throws IOException {
@@ -197,28 +190,33 @@ public class ScanCodeProject {
 		return jsonObject;
 	}
 
-	public String getComplianceAlerts(
-		Map<String, Integer> map, String errorType) {
-
+	public String getComplianceAlertsMessage(ComplianceAlertType alertType) {
 		StringBuilder sb = new StringBuilder();
 
-		if ((map != null) && !map.isEmpty()) {
-			if (errorType.equals("error")) {
-				sb.append(":red_circle: ");
-			}
-			else {
-				sb.append(":large_yellow_circle: ");
+		for (Map.Entry<String, Integer> entry :
+				_complianceAlertsCountsMap.entrySet()) {
+
+			String key = entry.getKey();
+
+			if (!key.endsWith(alertType.toString())) {
+				continue;
 			}
 
-			for (Map.Entry<String, Integer> entry : map.entrySet()) {
-				sb.append(entry.getKey());
-				sb.append(":");
-				sb.append(entry.getValue());
-				sb.append(" ");
-			}
+			sb.append(alertType.getSlackEmoticon());
+			sb.append(
+				key.replaceAll(
+					"(.*)-" + Pattern.quote(alertType.toString()) + "$", "$1"));
+			sb.append(":");
+			sb.append(entry.getValue());
+			sb.append(" ");
 		}
 
 		return sb.toString();
+	}
+
+	public String getComplianceAlertsMessage(String alertTypeString) {
+		return getComplianceAlertsMessage(
+			ComplianceAlertType.valueOf(alertTypeString));
 	}
 
 	public JSONObject getInspectPackagesJSONObject() {
@@ -372,13 +370,13 @@ public class ScanCodeProject {
 
 		String subject = "ScanCode pipeline is complete";
 
-		if ((_errorCountsMap != null) && !_errorCountsMap.isEmpty()) {
+		if (_hasErrors()) {
 			subject = ":red-alert: Release blocker :red-alert:";
 		}
 
-		String complianceAlerts = getComplianceAlerts(_errorCountsMap, "error");
-
-		complianceAlerts += getComplianceAlerts(_warningCountsMap, "warning");
+		String complianceAlerts =
+			getComplianceAlertsMessage(ComplianceAlertType.ERROR) +
+				getComplianceAlertsMessage(ComplianceAlertType.WARNING);
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(complianceAlerts)) {
 			sb.append("*Compliance alerts:* ");
@@ -515,6 +513,28 @@ public class ScanCodeProject {
 		setProjectURL(_projectID, _projectName);
 	}
 
+	public static enum ComplianceAlertType {
+
+		ERROR("error", ":red_circle:"), WARNING("warning", ":yellow_circle:");
+
+		public String getSlackEmoticon() {
+			return _slackEmoticon;
+		}
+
+		public String toString() {
+			return _name;
+		}
+
+		private ComplianceAlertType(String name, String slackEmoticon) {
+			_name = name;
+			_slackEmoticon = slackEmoticon;
+		}
+
+		private final String _name;
+		private final String _slackEmoticon;
+
+	}
+
 	private List<String> _getLabels(String... labelsArray) {
 		List<String> labels = new ArrayList<>();
 
@@ -525,6 +545,16 @@ public class ScanCodeProject {
 		}
 
 		return labels;
+	}
+
+	private boolean _hasErrors() {
+		for (String key : _complianceAlertsCountsMap.keySet()) {
+			if (key.endsWith(ComplianceAlertType.ERROR.toString())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String _API_KEY;
@@ -539,12 +569,11 @@ public class ScanCodeProject {
 		"attribution", "cyclonedx", "spdx", "xls"
 	};
 
+	private static final Map<String, Integer> _complianceAlertsCountsMap =
+		new HashMap<>();
 	private static final Pattern _dockerTagPattern = Pattern.compile(
 		"(?<buildProfile>portal|dxp):(?<releaseVersion>" +
 			"\\d+.\\d+.\\d+[.\\d+]*-(ga|u)\\d+|\\d{4}.[qQ]\\d+.\\d+)");
-	private static final Map<String, Integer> _errorCountsMap = new HashMap<>();
-	private static final Map<String, Integer> _warningCountsMap =
-		new HashMap<>();
 
 	static {
 		try {

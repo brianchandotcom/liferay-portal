@@ -8,9 +8,14 @@ package com.liferay.portal.db.partition.internal.operation;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.Map;
 
@@ -50,7 +55,7 @@ public class DBPartitionInsertVirtualInstanceOperation
 					dBPartitionInsertVirtualInstanceConfiguration.
 						partitionCompanyId();
 
-				if (_companyLocalService.fetchCompany(companyId) != null) {
+				if (_companyIdExistsBySQL(companyId)) {
 					_log.error(
 						StringBundler.concat(
 							"Virtual instance with company ID ", companyId,
@@ -67,6 +72,19 @@ public class DBPartitionInsertVirtualInstanceOperation
 					dBPartitionInsertVirtualInstanceConfiguration.newWebId());
 			},
 			properties);
+	}
+
+	private boolean _companyIdExistsBySQL(long companyId) throws Exception {
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select companyId from Company where companyId = ?")) {
+
+			preparedStatement.setLong(1, companyId);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				return resultSet.next();
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

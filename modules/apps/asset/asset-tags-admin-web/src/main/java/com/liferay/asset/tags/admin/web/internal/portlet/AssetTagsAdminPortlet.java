@@ -13,12 +13,14 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
+import com.liferay.change.tracking.spi.history.util.CTCollectionTimelineUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
@@ -101,6 +103,9 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 			// Update tag
 
 			_assetTagService.updateTag(null, tagId, name, serviceContext);
+
+			CTCollectionTimelineUtil.setCTTimelineKeys(
+				serviceContext.getRequest(), AssetTag.class, tagId);
 		}
 	}
 
@@ -144,6 +149,9 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		CTCollectionTimelineUtil.setClassName(
+			_portal.getHttpServletRequest(renderRequest), AssetTag.class);
+
 		if (SessionErrors.contains(
 				renderRequest, NoSuchTagException.class.getName()) ||
 			SessionErrors.contains(
@@ -175,5 +183,8 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private AssetTagService _assetTagService;
+
+	@Reference
+	private Portal _portal;
 
 }

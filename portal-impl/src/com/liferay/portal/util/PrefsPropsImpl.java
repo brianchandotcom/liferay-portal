@@ -506,8 +506,9 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	private PortletPreferences _fetchPreferences(long companyId) {
-		if (_localCacheThreadLocal.get()) {
-			return _clonePortletPreferences(_getPortletPreferences(companyId), false);
+		if (_skipCacheThreadLocal.get()) {
+			return _clonePortletPreferences(
+				_getPortletPreferences(companyId), false);
 		}
 
 		return _clonePortletPreferences(
@@ -535,13 +536,13 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	private static final Log _log = LogFactoryUtil.getLog(PrefsPropsImpl.class);
 
-	private static final ThreadLocal<Boolean> _localCacheThreadLocal =
-		ThreadLocal.withInitial(() -> false);
 	private static final Map<Long, PortletPreferences> _portletPreferences =
 		new ConcurrentHashMap<>();
 	private static final MethodKey _removePortletPreferenceMethodKey =
 		new MethodKey(
 			PrefsPropsImpl.class, "_removePortletPreference", long.class);
+	private static final ThreadLocal<Boolean> _skipCacheThreadLocal =
+		ThreadLocal.withInitial(() -> false);
 
 	private final PortletPreferences _emptyPortletPreferences =
 		new PortletPreferencesImpl();
@@ -670,7 +671,7 @@ public class PrefsPropsImpl implements PrefsProps {
 		private void _clearPortletPreferencce(
 			PortalPreferenceValue portalPreferenceValue) {
 
-			if (_localCacheThreadLocal.get()) {
+			if (_skipCacheThreadLocal.get()) {
 				return;
 			}
 
@@ -682,14 +683,14 @@ public class PrefsPropsImpl implements PrefsProps {
 				if (portalPreferences.getOwnerType() ==
 						PortletKeys.PREFS_OWNER_TYPE_COMPANY) {
 
-					_localCacheThreadLocal.set(true);
+					_skipCacheThreadLocal.set(true);
 
 					TransactionCommitCallbackUtil.registerCallback(
 						() -> {
 							_removePortletPreference(
 								portalPreferenceValue.getCompanyId());
 
-							_localCacheThreadLocal.set(false);
+							_skipCacheThreadLocal.set(false);
 
 							return null;
 						});

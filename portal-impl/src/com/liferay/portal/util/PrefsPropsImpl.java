@@ -485,10 +485,7 @@ public class PrefsPropsImpl implements PrefsProps {
 		PortletPreferences portletPreferences, boolean fromCache) {
 
 		if (portletPreferences == _emptyPortletPreferences) {
-			PortletPreferencesImpl portletPreferencesImpl =
-				(PortletPreferencesImpl)portletPreferences;
-
-			return (PortletPreferences)portletPreferencesImpl.clone();
+			return portletPreferences;
 		}
 
 		if (fromCache) {

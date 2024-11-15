@@ -146,7 +146,7 @@ public class JournalContentConfigurationAction
 					_ddmTemplateLocalService.fetchTemplate(
 						themeDisplay.getScopeGroupId(),
 						_portal.getClassNameId(DDMStructure.class),
-						ddmTemplateKey);
+						ddmTemplateKey, true);
 
 				if (ddmTemplate != null) {
 					ddmTemplateExternalReferenceCode =

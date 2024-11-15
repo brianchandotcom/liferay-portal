@@ -10,6 +10,7 @@ import {liferayConfig} from '../liferay.config';
 import {ApiBuilderHelper} from './ApiBuilderHelper';
 import {DataEngineApiHelper} from './DataEngineApiHelper';
 import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
+import {HeadlessAdminAddressApiHelper} from './HeadlessAdminAddressApiHelper';
 import {HeadlessAdminContentApiHelper} from './HeadlessAdminContentApiHelper';
 import {HeadlessAdminTaxonomyApiHelper} from './HeadlessAdminTaxonomyApiHelper';
 import {HeadlessAdminUserApiHelper} from './HeadlessAdminUserApiHelper';
@@ -93,6 +94,7 @@ export class ApiHelpers {
 	readonly baseUrl: string;
 	readonly featureFlag: FeatureFlagApiHelper;
 	readonly dataEngine: DataEngineApiHelper;
+	readonly headlessAdminAddress: HeadlessAdminAddressApiHelper;
 	readonly headlessAdminContent: HeadlessAdminContentApiHelper;
 	readonly headlessAdminTaxonomy: HeadlessAdminTaxonomyApiHelper;
 	readonly headlessAdminUser: HeadlessAdminUserApiHelper;
@@ -149,6 +151,7 @@ export class ApiHelpers {
 		this.baseUrl = liferayConfig.environment.baseUrl + '/o/';
 		this.featureFlag = new FeatureFlagApiHelper(page);
 		this.dataEngine = new DataEngineApiHelper(this);
+		this.headlessAdminAddress = new HeadlessAdminAddressApiHelper(this);
 		this.headlessAdminContent = new HeadlessAdminContentApiHelper(this);
 		this.headlessAdminTaxonomy = new HeadlessAdminTaxonomyApiHelper(this);
 		this.headlessAdminUser = new HeadlessAdminUserApiHelper(this);

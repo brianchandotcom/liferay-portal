@@ -551,7 +551,7 @@
 		{
 			"properties": {
 				"modificationDeletionConflictCheckEnabled": {
-					"default": true,
+					"default": false,
 					"title": "Modification Deletion Conflict Check Enabled",
 					"type": "boolean"
 				},

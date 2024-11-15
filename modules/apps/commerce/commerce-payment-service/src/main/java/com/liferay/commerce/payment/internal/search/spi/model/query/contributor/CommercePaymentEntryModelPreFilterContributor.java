@@ -8,7 +8,6 @@ package com.liferay.commerce.payment.internal.search.spi.model.query.contributor
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.MissingFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -54,8 +53,8 @@ public class CommercePaymentEntryModelPreFilterContributor
 
 		for (long classNameId : classNameIds) {
 			classNameIdsBooleanFilter.add(
-				new TermFilter(
-				"classNameId", String.valueOf(classNameId)), BooleanClauseOccur.SHOULD);
+				new TermFilter("classNameId", String.valueOf(classNameId)),
+				BooleanClauseOccur.SHOULD);
 		}
 
 		classNameIdsBooleanFilter.add(
@@ -77,8 +76,9 @@ public class CommercePaymentEntryModelPreFilterContributor
 		BooleanFilter classPKsBooleanFilter = new BooleanFilter();
 
 		for (long classPK : classPKs) {
-			classPKsBooleanFilter.add(new TermFilter(
-				"classPK", String.valueOf(classPK)), BooleanClauseOccur.SHOULD);
+			classPKsBooleanFilter.add(
+				new TermFilter("classPK", String.valueOf(classPK)),
+				BooleanClauseOccur.SHOULD);
 		}
 
 		classPKsBooleanFilter.add(
@@ -101,8 +101,8 @@ public class CommercePaymentEntryModelPreFilterContributor
 
 		for (String currencyCode : currencyCodes) {
 			currencyCodesBooleanFilter.add(
-				new TermFilter(
-				"currencyCode", String.valueOf(currencyCode)), BooleanClauseOccur.SHOULD);
+				new TermFilter("currencyCode", String.valueOf(currencyCode)),
+				BooleanClauseOccur.SHOULD);
 		}
 
 		currencyCodesBooleanFilter.add(
@@ -126,7 +126,8 @@ public class CommercePaymentEntryModelPreFilterContributor
 		for (String paymentMethodName : paymentMethodNames) {
 			paymentMethodNamesBooleanFilter.add(
 				new TermFilter(
-				"paymentMethodName", String.valueOf(paymentMethodName)), BooleanClauseOccur.SHOULD);
+					"paymentMethodName", String.valueOf(paymentMethodName)),
+				BooleanClauseOccur.SHOULD);
 		}
 
 		paymentMethodNamesBooleanFilter.add(
@@ -149,8 +150,9 @@ public class CommercePaymentEntryModelPreFilterContributor
 		BooleanFilter statusesBooleanFilter = new BooleanFilter();
 
 		for (long paymentStatus : paymentStatuses) {
-			statusesBooleanFilter.add(new TermFilter(
-				"paymentStatus", String.valueOf(paymentStatus)), BooleanClauseOccur.SHOULD);
+			statusesBooleanFilter.add(
+				new TermFilter("paymentStatus", String.valueOf(paymentStatus)),
+				BooleanClauseOccur.SHOULD);
 		}
 
 		statusesBooleanFilter.add(

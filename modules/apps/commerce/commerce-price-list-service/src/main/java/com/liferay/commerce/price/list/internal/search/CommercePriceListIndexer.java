@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.MissingFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
@@ -140,8 +139,9 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 
 			BooleanFilter fieldBooleanFilter = new BooleanFilter();
 
-			fieldBooleanFilter.add(new TermFilter(
-				"commerceAccountGroupIds_required_matches", "0"), BooleanClauseOccur.SHOULD);
+			fieldBooleanFilter.add(
+				new TermFilter("commerceAccountGroupIds_required_matches", "0"),
+				BooleanClauseOccur.SHOULD);
 			fieldBooleanFilter.add(
 				termsSetFilterBuilder.build(), BooleanClauseOccur.SHOULD);
 

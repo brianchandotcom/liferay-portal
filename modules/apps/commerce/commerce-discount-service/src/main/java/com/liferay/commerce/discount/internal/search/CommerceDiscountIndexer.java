@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.MissingFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
@@ -160,9 +159,8 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 			BooleanFilter fieldBooleanFilter = new BooleanFilter();
 
 			fieldBooleanFilter.add(
-				new TermFilter(
-					"commerceAccountGroupIds_required_matches", "0"),
-					BooleanClauseOccur.SHOULD);
+				new TermFilter("commerceAccountGroupIds_required_matches", "0"),
+				BooleanClauseOccur.SHOULD);
 			fieldBooleanFilter.add(
 				termsSetFilterBuilder.build(), BooleanClauseOccur.SHOULD);
 
@@ -178,8 +176,8 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 
 			for (long groupId : groupIds) {
 				groupBooleanFilter.add(
-					new TermFilter(
-					FIELD_GROUP_IDS, String.valueOf(groupId)), BooleanClauseOccur.SHOULD);
+					new TermFilter(FIELD_GROUP_IDS, String.valueOf(groupId)),
+					BooleanClauseOccur.SHOULD);
 			}
 
 			groupBooleanFilter.add(

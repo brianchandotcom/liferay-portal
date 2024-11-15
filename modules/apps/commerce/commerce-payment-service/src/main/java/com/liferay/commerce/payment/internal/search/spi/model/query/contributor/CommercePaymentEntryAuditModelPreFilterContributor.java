@@ -8,7 +8,6 @@ package com.liferay.commerce.payment.internal.search.spi.model.query.contributor
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.MissingFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -51,8 +50,9 @@ public class CommercePaymentEntryAuditModelPreFilterContributor
 		for (long commercePaymentEntryId : commercePaymentEntryIds) {
 			commercePaymentEntryIdBooleanFilter.add(
 				new TermFilter(
-				"commercePaymentEntryId",
-				String.valueOf(commercePaymentEntryId)), BooleanClauseOccur.SHOULD);
+					"commercePaymentEntryId",
+					String.valueOf(commercePaymentEntryId)),
+				BooleanClauseOccur.SHOULD);
 		}
 
 		commercePaymentEntryIdBooleanFilter.add(

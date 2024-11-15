@@ -16,6 +16,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -70,7 +71,8 @@ public class CPAssetCategoriesNavigationPortlet extends MVCPortlet {
 						_portal.getHttpServletRequest(renderRequest),
 						_assetCategoryService, _assetVocabularyService,
 						_commerceMediaResolver, _cpAttachmentFileEntryService,
-						_cpFriendlyURL, _friendlyURLEntryLocalService, _portal);
+						_cpFriendlyURL, _friendlyURLEntryLocalService,
+						_groupLocalService, _portal);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -103,6 +105,9 @@ public class CPAssetCategoriesNavigationPortlet extends MVCPortlet {
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

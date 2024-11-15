@@ -2704,7 +2704,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							Map parameters = new HashMap();
 
 							parameters.put("test.class.name", testClassName);
-							parameters.put("test.class.name", testTaskName);
+							parameters.put("test.task.name", testTaskName);
 
 							AntUtil.callMacrodef(project, "generate-backend-batch-junit-report-modules", parameters);
 						}

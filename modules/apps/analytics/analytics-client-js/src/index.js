@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-module.exports = {
-	presets: [
-		[
-			'@babel/preset-env',
-			{
-				targets: 'defaults',
-			},
-		],
-	],
-};
+import 'core-js/fn/array/includes';
+
+import 'core-js/fn/object/assign';
+
+import 'core-js/fn/promise';
+
+import 'core-js/fn/string/includes';
+
+import './analytics.js';

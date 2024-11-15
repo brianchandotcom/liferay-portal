@@ -136,6 +136,14 @@ test.describe('Form Configuration', () => {
 					'Thank you. Your information was successfully received.'
 				)
 				.waitFor();
+
+			// Delete entries
+
+			await deleteObjectEntries({
+				entityName: 'Lemons',
+				page,
+				siteUrl: pageManagementSite.friendlyUrlPath,
+			});
 		}
 	);
 

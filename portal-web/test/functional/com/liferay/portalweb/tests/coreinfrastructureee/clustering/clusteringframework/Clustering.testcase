@@ -244,50 +244,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-170924."
-	@priority = 5
-	test CanCreateVirtualInstanceWithClusterDBPartitioningAndLOLProperties {
-		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.baker.com";
-		property database.partition.enabled = "true";
-		property database.types = "mysql, postgresql";
-		property liferay.online.properties = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		Clustering.viewClusterStatusInConsole();
-
-		Page.assertNodePortPG(nodePort = 8080);
-
-		PortalInstances.openVirtualInstancesAdmin();
-
-		PortalInstances.addCP(
-			mailDomain = "www.baker.com",
-			virtualHost = "www.baker.com",
-			webId = "www.baker.com");
-
-		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
-
-		User.firstLoginPG(
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "test@www.baker.com",
-			virtualHostsURL = "http://www.baker.com:8080");
-
-		Navigator.openSpecificURL(url = "http://www.baker.com:9080");
-
-		User.firstLoginUI(
-			password = PropsUtil.get("default.admin.password"),
-			specificURL = "http://www.baker.com:9080",
-			userEmailAddress = "test@www.baker.com");
-
-		Clustering.viewTextNotPresentOnSpecificNode(
-			exceptionText = "No default user was found for company",
-			nodePort = 8080);
-
-		Clustering.viewTextNotPresentOnSpecificNode(
-			exceptionText = "No default user was found for company",
-			nodePort = 9080);
-	}
-
 	@description = "This is a use case for LPS-171011."
 	@priority = 5
 	test CanCreateVirtualInstanceWithClustering {

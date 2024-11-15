@@ -87,10 +87,14 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.test.util.UploadTestUtil;
+import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -635,18 +639,32 @@ public class EditInfoItemStrutsActionTest {
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
-		try {
-			_editInfoItemStrutsAction.execute(
-				uploadPortletRequest,
-				new PipingServletResponse(
-					mockHttpServletResponse, new UnsyncStringWriter()));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				PortalImpl.class.getName(), LoggerTestUtil.WARN)) {
 
-			Assert.fail();
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
+			try {
+				_editInfoItemStrutsAction.execute(
+					uploadPortletRequest,
+					new PipingServletResponse(
+						mockHttpServletResponse, new UnsyncStringWriter()));
+
+				Assert.fail();
+			}
+			catch (IllegalArgumentException illegalArgumentException) {
+				Assert.assertEquals(
+					"Redirect URL must not be null",
+					illegalArgumentException.getMessage());
+			}
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
 			Assert.assertEquals(
-				"Redirect URL must not be null",
-				illegalArgumentException.getMessage());
+				"Redirect URL https://example.com/error is not allowed",
+				logEntry.getMessage());
 		}
 	}
 

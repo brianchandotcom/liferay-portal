@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.I18nServlet;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LanguageIds;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -37,10 +38,8 @@ import java.util.Set;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,6 +53,10 @@ import org.springframework.mock.web.MockServletContext;
 /**
  * @author Juan González
  */
+@LanguageIds(
+	availableLanguageIds = {"en_GB", "en_US", "es_ES", "fr_CA"},
+	defaultLanguageId = "en_US"
+)
 @RunWith(Arquillian.class)
 public class I18nServletTest extends I18nServlet {
 
@@ -61,41 +64,6 @@ public class I18nServletTest extends I18nServlet {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_availableLocales = _language.getAvailableLocales();
-		_defaultLocale = LocaleUtil.getDefault();
-		_hebrewLocale = new Locale("iw", "IL");
-		_localesEnabled = PropsValues.LOCALES_ENABLED;
-
-		_language.init();
-
-		CompanyTestUtil.resetCompanyLocales(
-			_portal.getDefaultCompanyId(),
-			Arrays.asList(
-				LocaleUtil.CANADA_FRENCH, LocaleUtil.SPAIN, LocaleUtil.UK,
-				LocaleUtil.US, _hebrewLocale),
-			LocaleUtil.US);
-
-		PropsValues.LOCALES_ENABLED = new String[] {
-			_language.getLanguageId(LocaleUtil.CANADA_FRENCH),
-			_language.getLanguageId(LocaleUtil.SPAIN),
-			_language.getLanguageId(LocaleUtil.UK),
-			_language.getLanguageId(LocaleUtil.US),
-			_language.getLanguageId(_hebrewLocale)
-		};
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_language.init();
-
-		CompanyTestUtil.resetCompanyLocales(
-			_portal.getDefaultCompanyId(), _availableLocales, _defaultLocale);
-
-		PropsValues.LOCALES_ENABLED = _localesEnabled;
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -391,38 +359,66 @@ public class I18nServletTest extends I18nServlet {
 
 	@Test
 	public void testSendRedirectWithLegacyLanguageCode() throws Exception {
-		MockServletContext mockServletContext = new MockServletContext();
+		Locale hebrewLocale = new Locale("iw", "IL");
 
-		String contextPath = StringPool.SLASH + RandomTestUtil.randomString(10);
+		Set<Locale> availableLocales = _language.getAvailableLocales();
+		Locale defaultLocale = LocaleUtil.getDefault();
+		String[] localesEnabled = PropsValues.LOCALES_ENABLED;
 
-		mockServletContext.setContextPath(contextPath);
+		try {
+			_language.init();
 
-		init(new MockServletConfig(mockServletContext));
+			CompanyTestUtil.resetCompanyLocales(
+				_portal.getDefaultCompanyId(),
+				Arrays.asList(LocaleUtil.US, hebrewLocale), LocaleUtil.US);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+			PropsValues.LOCALES_ENABLED = new String[] {
+				_language.getLanguageId(LocaleUtil.US),
+				_language.getLanguageId(hebrewLocale)
+			};
 
-		mockHttpServletRequest.setServletPath(
-			String.format(
-				"/%s_%s", _hebrewLocale.getLanguage(),
-				_hebrewLocale.getCountry()));
+			MockServletContext mockServletContext = new MockServletContext();
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
+			String contextPath =
+				StringPool.SLASH + RandomTestUtil.randomString(10);
 
-		sendRedirect(
-			mockHttpServletRequest, mockHttpServletResponse,
-			getI18nData(mockHttpServletRequest));
+			mockServletContext.setContextPath(contextPath);
 
-		Assert.assertEquals(
-			HttpServletResponse.SC_MOVED_PERMANENTLY,
-			mockHttpServletResponse.getStatus());
+			init(new MockServletConfig(mockServletContext));
 
-		Assert.assertEquals(
-			String.format(
-				"%s/%s-%s/", contextPath, _hebrewLocale.getLanguage(),
-				_hebrewLocale.getCountry()),
-			mockHttpServletResponse.getHeader("Location"));
+			MockHttpServletRequest mockHttpServletRequest =
+				new MockHttpServletRequest();
+
+			mockHttpServletRequest.setServletPath(
+				String.format(
+					"/%s_%s", hebrewLocale.getLanguage(),
+					hebrewLocale.getCountry()));
+
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
+			sendRedirect(
+				mockHttpServletRequest, mockHttpServletResponse,
+				getI18nData(mockHttpServletRequest));
+
+			Assert.assertEquals(
+				HttpServletResponse.SC_MOVED_PERMANENTLY,
+				mockHttpServletResponse.getStatus());
+
+			Assert.assertEquals(
+				String.format(
+					"%s/%s-%s/", contextPath, hebrewLocale.getLanguage(),
+					hebrewLocale.getCountry()),
+				mockHttpServletResponse.getHeader("Location"));
+		}
+		finally {
+			_language.init();
+
+			CompanyTestUtil.resetCompanyLocales(
+				_portal.getDefaultCompanyId(), availableLocales, defaultLocale);
+
+			PropsValues.LOCALES_ENABLED = localesEnabled;
+		}
 	}
 
 	@Test
@@ -587,14 +583,8 @@ public class I18nServletTest extends I18nServlet {
 	private static final boolean _ORIGINAL_LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE =
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE;
 
-	private static Set<Locale> _availableLocales;
-	private static Locale _defaultLocale;
-	private static Locale _hebrewLocale;
-
 	@Inject
 	private static Language _language;
-
-	private static String[] _localesEnabled;
 
 	@Inject
 	private static Portal _portal;

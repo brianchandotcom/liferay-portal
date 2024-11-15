@@ -7,6 +7,7 @@ package com.liferay.taglib.search;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyHTMLRewriterUtil;
 
 import java.io.Writer;
 
@@ -34,9 +35,11 @@ public class ButtonSearchEntry extends TextSearchEntry {
 		throws Exception {
 
 		writer.write(
-			StringBundler.concat(
-				"<input type=\"button\" value=\"", getName(), "\" onClick=\"",
-				getHref(), "\">"));
+			ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineEventHandlers(
+				StringBundler.concat(
+					"<input type=\"button\" value=\"", getName(),
+					"\" onClick=\"", getHref(), "\">"),
+				httpServletRequest, false));
 	}
 
 }

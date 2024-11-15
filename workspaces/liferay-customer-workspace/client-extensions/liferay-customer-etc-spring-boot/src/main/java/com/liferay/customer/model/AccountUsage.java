@@ -24,20 +24,20 @@ public class AccountUsage {
 		_apvsUsed = apvsUsed;
 	}
 
-	public void setExtensionsCapacityCpuMax(long extensionsCapacityCpuMax) {
-		_extensionsCapacityCpuMax = extensionsCapacityCpuMax;
+	public void setExtensionsCapacityCPUMax(long extensionsCapacityCPUMax) {
+		_extensionsCapacityCPUMax = extensionsCapacityCPUMax;
 	}
 
-	public void setExtensionsCapacityCpuUsed(long extensionsCapacityCpuUsed) {
-		_extensionsCapacityCpuUsed = extensionsCapacityCpuUsed;
+	public void setExtensionsCapacityCPUUsed(long extensionsCapacityCPUUsed) {
+		_extensionsCapacityCPUUsed = extensionsCapacityCPUUsed;
 	}
 
-	public void setExtensionsCapacityRamMax(long extensionsCapacityRamMax) {
-		_extensionsCapacityRamMax = extensionsCapacityRamMax;
+	public void setExtensionsCapacityRAMMax(long extensionsCapacityRAMMax) {
+		_extensionsCapacityRAMMax = extensionsCapacityRAMMax;
 	}
 
-	public void setExtensionsCapacityRamUsed(long extensionsCapacityRamUsed) {
-		_extensionsCapacityRamUsed = extensionsCapacityRamUsed;
+	public void setExtensionsCapacityRAMUsed(long extensionsCapacityRAMUsed) {
+		_extensionsCapacityRAMUsed = extensionsCapacityRAMUsed;
 	}
 
 	public void setMALUsMax(long malusMax) {
@@ -70,13 +70,13 @@ public class AccountUsage {
 		jsonObject.put(
 			"apvs", _getUsageJSONObject(_apvsUsed, _apvsMax)
 		).put(
-			"extensionsCapacityCpu",
+			"extensionsCapacityCPU",
 			_getUsageJSONObject(
-				_extensionsCapacityCpuUsed, _extensionsCapacityCpuMax)
+				_extensionsCapacityCPUUsed, _extensionsCapacityCPUMax)
 		).put(
-			"extensionsCapacityRam",
+			"extensionsCapacityRAM",
 			_getUsageJSONObject(
-				_extensionsCapacityRamUsed, _extensionsCapacityRamMax)
+				_extensionsCapacityRAMUsed, _extensionsCapacityRAMMax)
 		).put(
 			"malus", _getUsageJSONObject(_malusUsed, _malusMax)
 		).put(
@@ -104,10 +104,10 @@ public class AccountUsage {
 	private long _accountId;
 	private long _apvsMax;
 	private long _apvsUsed;
-	private long _extensionsCapacityCpuMax;
-	private long _extensionsCapacityCpuUsed;
-	private long _extensionsCapacityRamMax;
-	private long _extensionsCapacityRamUsed;
+	private long _extensionsCapacityCPUMax;
+	private long _extensionsCapacityCPUUsed;
+	private long _extensionsCapacityRAMMax;
+	private long _extensionsCapacityRAMUsed;
 	private long _malusMax;
 	private long _malusUsed;
 	private long _sitesMax;

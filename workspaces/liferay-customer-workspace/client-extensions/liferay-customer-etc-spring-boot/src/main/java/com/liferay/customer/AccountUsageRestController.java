@@ -65,24 +65,24 @@ public class AccountUsageRestController extends BaseRestController {
 			accountUsage.setAPVsMax(apvsMax);
 			accountUsage.setAPVsUsed(random.nextInt(apvsMax));
 
+			int extensionsCapacityCPUMax = jsonObject.getInt(
+				"totalExtensionsCapacityCPUCount");
+
+			accountUsage.setExtensionsCapacityCPUMax(extensionsCapacityCPUMax);
+			accountUsage.setExtensionsCapacityCPUUsed(
+				random.nextInt(extensionsCapacityCPUMax));
+
+			int extensionsCapacityRAMMax = jsonObject.getInt(
+				"totalExtensionsCapacityRAM");
+
+			accountUsage.setExtensionsCapacityRAMMax(extensionsCapacityRAMMax);
+			accountUsage.setExtensionsCapacityRAMUsed(
+				random.nextInt(extensionsCapacityRAMMax));
+
 			int malusMax = jsonObject.getInt("totalActiveLoggedInUsersCount");
 
 			accountUsage.setMALUsMax(malusMax);
 			accountUsage.setMALUsUsed(random.nextInt(malusMax));
-
-			int extensionsCapacityCpuMax = jsonObject.getInt(
-				"totalExtensionsCapacityCpuCount");
-
-			accountUsage.setExtensionsCapacityCpuMax(extensionsCapacityCpuMax);
-			accountUsage.setExtensionsCapacityCpuUsed(
-				random.nextInt(extensionsCapacityCpuMax));
-
-			int extensionsCapacityRamMax = jsonObject.getInt(
-				"totalExtensionsCapacityRam");
-
-			accountUsage.setExtensionsCapacityRamMax(extensionsCapacityRamMax);
-			accountUsage.setExtensionsCapacityRamUsed(
-				random.nextInt(extensionsCapacityRamMax));
 
 			int sitesMax = jsonObject.getInt("totalSitesCount");
 

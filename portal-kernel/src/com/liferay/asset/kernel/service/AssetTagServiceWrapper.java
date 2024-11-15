@@ -51,6 +51,23 @@ public class AssetTagServiceWrapper
 	}
 
 	@Override
+	public AssetTag fetchAssetTagByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return _assetTagService.fetchAssetTagByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public AssetTag getAssetTagByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetTagService.getAssetTagByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public java.util.List<AssetTag> getGroupsTags(long[] groupIds) {
 		return _assetTagService.getGroupsTags(groupIds);
 	}

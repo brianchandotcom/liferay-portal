@@ -58,6 +58,15 @@ public interface AssetTagService extends BaseService {
 	public void deleteTags(long[] tagIds) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetTag fetchAssetTagByExternalReferenceCode(
+		String externalReferenceCode, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetTag getAssetTagByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetTag> getGroupsTags(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -47,6 +47,21 @@ public class AssetTagServiceUtil {
 		getService().deleteTags(tagIds);
 	}
 
+	public static AssetTag fetchAssetTagByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return getService().fetchAssetTagByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
+	public static AssetTag getAssetTagByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getAssetTagByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	public static List<AssetTag> getGroupsTags(long[] groupIds) {
 		return getService().getGroupsTags(groupIds);
 	}

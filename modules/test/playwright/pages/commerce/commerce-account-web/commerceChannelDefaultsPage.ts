@@ -30,6 +30,7 @@ export class CommerceChannelDefaultsPage {
 	readonly defaultUsersButton: Locator;
 	readonly editFrame: FrameLocator;
 	readonly editFrameChannelSelect: Locator;
+	readonly editFrameCurrencySelect: Locator;
 	readonly editFramePriceListSelect: Locator;
 	readonly editFrameSaveButton: Locator;
 	readonly editMenuItem: Locator;
@@ -107,6 +108,8 @@ export class CommerceChannelDefaultsPage {
 		this.page = page;
 
 		this.editFrameChannelSelect = this.editFrame.getByLabel('Channel');
+		this.editFrameCurrencySelect =
+			this.editFrame.getByLabel('Currency Required');
 		this.editFramePriceListSelect = this.editFrame.getByLabel('Price List');
 		this.editFrameSaveButton = this.editFrame.getByRole('button', {
 			exact: true,

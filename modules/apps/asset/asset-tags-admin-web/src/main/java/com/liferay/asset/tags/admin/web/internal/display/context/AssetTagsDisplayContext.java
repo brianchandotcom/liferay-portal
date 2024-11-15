@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
+import com.liferay.change.tracking.spi.history.util.CTCollectionTimelineUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
@@ -241,6 +242,9 @@ public class AssetTagsDisplayContext {
 		}
 
 		_tagId = ParamUtil.getLong(_httpServletRequest, "tagId");
+
+		CTCollectionTimelineUtil.setCTTimelineKeys(
+			_httpServletRequest, AssetTag.class, _tagId);
 
 		return _tagId;
 	}

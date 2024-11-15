@@ -254,7 +254,7 @@ const MillerColumnsItem = ({
 		[items, onItemDrop]
 	);
 
-	const [{isDragging}, drag, previewRef] = useDrag({
+	const [{isDragging: isDragSource}, drag, previewRef] = useDrag({
 		collect: (monitor) => ({
 			isDragging: !!monitor.isDragging(),
 		}),
@@ -358,7 +358,7 @@ const MillerColumnsItem = ({
 	return (
 		<ClayLayout.ContentRow
 			className={classNames('list-group-item-flex miller-columns-item', {
-				'dragging': isDragging,
+				'dragging': isDragSource,
 				'drop-bottom': isOver && dropPosition === DROP_POSITIONS.bottom,
 				'drop-middle': isOver && dropPosition === DROP_POSITIONS.middle,
 				'drop-top': isOver && dropPosition === DROP_POSITIONS.top,

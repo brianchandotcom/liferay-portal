@@ -302,7 +302,15 @@ public class DLOpenerGoogleDriveManagerTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			_http.URLtoString(options));
 
-		return jsonObject.getString("access_token");
+		String accessToken = jsonObject.getString("access_token");
+
+		if (accessToken.isEmpty()) {
+			throw new Exception(
+				"The JSON response does not include an Access Token: " +
+					jsonObject);
+		}
+
+		return accessToken;
 	}
 
 	private boolean _isGoogleDriveFile(FileEntry fileEntry) {

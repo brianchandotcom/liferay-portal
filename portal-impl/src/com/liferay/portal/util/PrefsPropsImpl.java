@@ -481,17 +481,39 @@ public class PrefsPropsImpl implements PrefsProps {
 		}
 	}
 
+	private PortletPreferences _clonePortletPreferences(
+		PortletPreferences portletPreferences, boolean fromCache) {
+
+		if (portletPreferences == _emptyPortletPreferences) {
+			PortletPreferencesImpl portletPreferencesImpl =
+				(PortletPreferencesImpl)portletPreferences;
+
+			return (PortletPreferences)portletPreferencesImpl.clone();
+		}
+
+		if (fromCache) {
+			PortalPreferencesWrapper portalPreferencesWrapper =
+				(PortalPreferencesWrapper)portletPreferences;
+
+			return portalPreferencesWrapper.clone();
+		}
+
+		return portletPreferences;
+	}
+
 	private PortletPreferences _fetchPreferences() {
 		return _fetchPreferences(PortletKeys.PREFS_OWNER_ID_DEFAULT);
 	}
 
 	private PortletPreferences _fetchPreferences(long companyId) {
 		if (_localCacheThreadLocal.get()) {
-			return _getPortletPreferences(companyId);
+			return _clonePortletPreferences(_getPortletPreferences(companyId), false);
 		}
 
-		return _portletPreferences.computeIfAbsent(
-			companyId, this::_getPortletPreferences);
+		return _clonePortletPreferences(
+			_portletPreferences.computeIfAbsent(
+				companyId, this::_getPortletPreferences),
+			true);
 	}
 
 	private PortletPreferences _getPortletPreferences(long companyId) {

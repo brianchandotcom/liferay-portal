@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
@@ -38,5 +38,13 @@ export class CKEditorSamplePage {
 		await this.page.goto(
 			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}/${title}`
 		);
+	}
+
+	async selectTab(label: string) {
+		const navLink = this.page.locator('.nav-link').filter({hasText: label});
+
+		await navLink.click();
+
+		await expect(navLink).toHaveClass(/active/);
 	}
 }

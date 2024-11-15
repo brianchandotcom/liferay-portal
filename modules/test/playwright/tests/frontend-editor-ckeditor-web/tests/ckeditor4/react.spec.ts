@@ -5,32 +5,29 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {ckeditorSamplePageTest} from './fixtures/ckeditorSamplePageTest';
+import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../fixtures/loginTest';
+import {ckeditorSamplePageTest} from './../../fixtures/ckeditorSamplePageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	ckeditorSamplePageTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,
-	loginTest(),
-	ckeditorSamplePageTest
+	loginTest()
 );
 
 test.beforeEach(async ({ckeditorSamplePage, page, site}) => {
 	await ckeditorSamplePage.createAndGotoSitePage({site});
 
-	const reactTab = page.getByRole('tab', {
-		name: 'React',
-	});
+	await ckeditorSamplePage.selectTab('CKEditor 4');
+	await ckeditorSamplePage.selectTab('React');
 
-	await reactTab.click();
-
-	expect(
+	await expect(
 		page.getByText('Classic Editor used from a React component')
 	).toBeVisible();
 });

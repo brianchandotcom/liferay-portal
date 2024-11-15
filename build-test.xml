@@ -7580,7 +7580,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<property name="docker.start.script" value="docker_start.sh" />
 
 			<if>
-				<contains string="@{name}" substring="orcllinux" />
+				<or>
+					<contains string="@{name}" substring="orcllinux" />
+					<contains string="@{name}" substring="debian" />
+				</or>
 				<then>
 					<echo file="${docker.start.script}">
 						<![CDATA[

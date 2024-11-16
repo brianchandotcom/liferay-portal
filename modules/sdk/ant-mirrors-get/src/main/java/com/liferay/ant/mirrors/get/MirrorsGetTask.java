@@ -13,11 +13,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.Base64;
 import java.util.Enumeration;
@@ -83,6 +88,13 @@ public class MirrorsGetTask extends Task {
 	public void setSrc(String src) {
 		Matcher matcher = _basicAuthenticationURLPattern.matcher(src);
 
+		try {
+			src = URLDecoder.decode(src, StandardCharsets.UTF_8.name());
+		}
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			unsupportedEncodingException.printStackTrace();
+		}
+
 		if (matcher.matches()) {
 			_username = matcher.group(2);
 			_password = matcher.group(3);
@@ -104,9 +116,23 @@ public class MirrorsGetTask extends Task {
 			throw new RuntimeException("Invalid src attribute: " + _src);
 		}
 
-		_fileName = matcher.group(2);
+		_fileName = matcher.group("fileName");
 
-		_path = matcher.group(1);
+		_hostName = matcher.group("hostName");
+
+		Matcher releaseHostNameMatcher = _releaseHostNamePattern.matcher(
+			_hostName);
+		Matcher testHostNameMatcher = _testHostNamePattern.matcher(_hostName);
+
+		if (releaseHostNameMatcher.matches()) {
+			_hostName =
+				"release.liferay.com/" + releaseHostNameMatcher.group("id");
+		}
+		else if (testHostNameMatcher.matches()) {
+			_hostName += ".liferay.com";
+		}
+
+		_path = matcher.group("path");
 
 		if (_path.startsWith("mirrors/")) {
 			_path = _path.replaceFirst("mirrors", _getMirrorsHostname());
@@ -291,68 +317,86 @@ public class MirrorsGetTask extends Task {
 			}
 		}
 
-		StringBuilder sb = new StringBuilder();
+		File mirrorsCacheFile = _getMirrorsCacheFile();
 
-		sb.append(System.getProperty("user.home"));
-		sb.append(File.separator);
-		sb.append(".liferay");
-		sb.append(File.separator);
-		sb.append("mirrors");
-		sb.append(File.separator);
-		sb.append(_getPlatformIndependentPath(_path));
+		File mirrorsCacheTempFile = new File(
+			mirrorsCacheFile.toString() + ".tmp");
 
-		File localCacheDir = new File(sb.toString());
-
-		File localCacheFile = new File(localCacheDir, _fileName);
-
-		if (localCacheFile.exists() && !_force && _isZipFileName(_fileName)) {
-			_force = !_isZipFile(localCacheFile);
+		if (mirrorsCacheFile.exists() && !_force && _isZipFileName(_fileName)) {
+			_force = !_isZipFile(mirrorsCacheFile);
 		}
 
-		if (localCacheFile.exists() && _force) {
-			localCacheFile.delete();
+		if (mirrorsCacheFile.exists() && _force) {
+			mirrorsCacheFile.delete();
 		}
 
-		if (!localCacheFile.exists()) {
+		if (mirrorsCacheTempFile.exists()) {
+			mirrorsCacheTempFile.delete();
+		}
+
+		if (!mirrorsCacheFile.exists()) {
 			String mirrorsHostname = _getMirrorsHostname();
 
 			if (_tryLocalNetwork && !mirrorsHostname.isEmpty()) {
-				sb = new StringBuilder();
-
-				sb.append(_getURLScheme());
-				sb.append(mirrorsHostname);
-				sb.append("/");
-				sb.append(_path);
-				sb.append("/");
-				sb.append(_fileName);
-
-				URL sourceURL = new URL(sb.toString());
+				URL mirrorsURL = _getMirrorsURL();
 
 				try {
-					_downloadFile(sourceURL, localCacheFile, _retries);
+					_downloadFile(mirrorsURL, mirrorsCacheTempFile, _retries);
 				}
-				catch (IOException ioException) {
-					URL defaultURL = new URL(_src);
+				catch (IOException ioException1) {
+					URL localURL = _getLocalURL();
 
 					if (_verbose) {
 						System.out.println(
-							"Unable to connect to " + sourceURL +
-								", defaulting to " + defaultURL);
+							"Unable to connect to " + mirrorsURL +
+								", defaulting to " + localURL);
 					}
 
-					_downloadFile(defaultURL, localCacheFile, 0);
+					try {
+						_downloadFile(localURL, mirrorsCacheTempFile, _retries);
+					}
+					catch (IOException ioException2) {
+						URL remoteURL = _getRemoteURL();
+
+						if (_verbose) {
+							System.out.println(
+								"Unable to connect to " + localURL +
+									", defaulting to " + remoteURL);
+						}
+
+						_downloadFile(remoteURL, mirrorsCacheTempFile, 0);
+					}
+
+					mirrorsCacheTempFile.renameTo(mirrorsCacheFile);
 				}
 			}
 			else {
-				_downloadFile(new URL(_src), localCacheFile, 0);
+				URL localURL = _getLocalURL();
+
+				try {
+					_downloadFile(localURL, mirrorsCacheTempFile, _retries);
+				}
+				catch (IOException ioException) {
+					URL remoteURL = _getRemoteURL();
+
+					if (_verbose) {
+						System.out.println(
+							"Unable to connect to " + localURL +
+								", defaulting to " + remoteURL);
+					}
+
+					_downloadFile(remoteURL, mirrorsCacheTempFile, 0);
+				}
+
+				mirrorsCacheTempFile.renameTo(mirrorsCacheFile);
 			}
 		}
 
 		if (_dest.exists() && _dest.isDirectory()) {
-			_copyFile(localCacheFile, new File(_dest, _fileName));
+			_copyFile(mirrorsCacheFile, new File(_dest, _fileName));
 		}
 		else {
-			_copyFile(localCacheFile, _dest);
+			_copyFile(mirrorsCacheFile, _dest);
 		}
 	}
 
@@ -366,6 +410,56 @@ public class MirrorsGetTask extends Task {
 		process.waitFor();
 
 		return process;
+	}
+
+	private URL _getLocalURL() {
+		StringBuilder sb = new StringBuilder();
+
+		Matcher releaseHostNameMatcher = _releaseHostNamePattern.matcher(
+			_hostName);
+		Matcher testHostNameMatcher = _testHostNamePattern.matcher(_hostName);
+
+		if (releaseHostNameMatcher.find()) {
+			sb.append("http://release-");
+			sb.append(releaseHostNameMatcher.group("id"));
+			sb.append("/");
+			sb.append(releaseHostNameMatcher.group("id"));
+		}
+		else if (testHostNameMatcher.find()) {
+			sb.append("http://");
+			sb.append(testHostNameMatcher.group());
+		}
+		else {
+			return _getRemoteURL();
+		}
+
+		sb.append("/");
+		sb.append(_path);
+		sb.append("/");
+		sb.append(_fileName);
+
+		try {
+			return new URL(sb.toString());
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+	}
+
+	private File _getMirrorsCacheFile() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(System.getProperty("user.home"));
+		sb.append(File.separator);
+		sb.append(".liferay");
+		sb.append(File.separator);
+		sb.append("mirrors");
+		sb.append(File.separator);
+		sb.append(_hostName);
+		sb.append(File.separator);
+		sb.append(_getPlatformIndependentPath(_path));
+
+		return new File(sb.toString(), _fileName);
 	}
 
 	private String _getMirrorsHostname() {
@@ -382,6 +476,32 @@ public class MirrorsGetTask extends Task {
 		}
 
 		return _mirrorsHostname;
+	}
+
+	private URL _getMirrorsURL() {
+		String mirrorsHostname = _getMirrorsHostname();
+
+		if (mirrorsHostname.isEmpty()) {
+			return _getRemoteURL();
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_getURLScheme());
+		sb.append(mirrorsHostname);
+		sb.append("/");
+		sb.append(_hostName);
+		sb.append("/");
+		sb.append(_path);
+		sb.append("/");
+		sb.append(_fileName);
+
+		try {
+			return new URL(sb.toString());
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	private String _getPassword() {
@@ -429,6 +549,30 @@ public class MirrorsGetTask extends Task {
 		}
 
 		return processOutput.toString();
+	}
+
+	private URL _getRemoteURL() {
+		StringBuilder sb = new StringBuilder();
+
+		if (_hostName.contains(".liferay.com") || _src.startsWith("https://")) {
+			sb.append("https://");
+		}
+		else {
+			sb.append("http://");
+		}
+
+		sb.append(_hostName);
+		sb.append("/");
+		sb.append(_path);
+		sb.append("/");
+		sb.append(_fileName);
+
+		try {
+			return new URL(sb.toString());
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	private String _getURLScheme() {
@@ -756,12 +900,18 @@ public class MirrorsGetTask extends Task {
 		Pattern.compile("(https?://)([^:]+):([^@]+)@(.+)");
 	private static final Pattern _mirrorsHostNamePattern = Pattern.compile(
 		"^mirrors\\.[^\\.]+\\.liferay.com/");
+	private static final Pattern _releaseHostNamePattern = Pattern.compile(
+		"(release-\\d+|release.liferay.com)/(?<id>\\d+)");
 	private static final Pattern _srcPattern = Pattern.compile(
-		"https?://(.+/)(.+)");
+		"https?://(?<mirrorsHostname>mirrors(\\.[^\\.]+\\.liferay.com)?/)?" +
+			"(?<hostName>[^/]+(/\\d+)?)/(?<path>.+/)(?<fileName>.+)");
+	private static final Pattern _testHostNamePattern = Pattern.compile(
+		"test-\\d+-\\d+");
 
 	private File _dest;
 	private String _fileName;
 	private boolean _force;
+	private String _hostName;
 	private boolean _ignoreErrors;
 	private String _mirrorsHostname;
 	private String _password;

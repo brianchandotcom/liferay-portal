@@ -369,12 +369,11 @@ public class DBPartitionUtil {
 
 			preparedStatement.executeUpdate();
 
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-			DBInspector dbInspector = new DBInspector(connection);
-
 			List<Long> companyIds = ListUtil.fromArray(
 				PortalInstancePool.getCompanyIds());
+			DBInspector dbInspector = new DBInspector(connection);
+
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 			try (ResultSet resultSet = databaseMetaData.getTables(
 					_dbPartitionDB.getCatalog(

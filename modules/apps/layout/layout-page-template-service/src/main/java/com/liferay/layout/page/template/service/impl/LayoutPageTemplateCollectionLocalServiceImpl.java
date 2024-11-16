@@ -17,7 +17,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -188,20 +187,18 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 		layoutPageTemplateCollectionPersistence.remove(
 			layoutPageTemplateCollection);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-189856")) {
-			List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
-				layoutPageTemplateCollectionPersistence.findByG_P(
-					layoutPageTemplateCollection.getGroupId(),
-					layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId());
+		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
+			layoutPageTemplateCollectionPersistence.findByG_P(
+				layoutPageTemplateCollection.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId());
 
-			for (LayoutPageTemplateCollection curLayoutPageTemplateCollection :
-					layoutPageTemplateCollections) {
+		for (LayoutPageTemplateCollection curLayoutPageTemplateCollection :
+				layoutPageTemplateCollections) {
 
-				layoutPageTemplateCollectionLocalService.
-					deleteLayoutPageTemplateCollection(
-						curLayoutPageTemplateCollection);
-			}
+			layoutPageTemplateCollectionLocalService.
+				deleteLayoutPageTemplateCollection(
+					curLayoutPageTemplateCollection);
 		}
 
 		// Resources

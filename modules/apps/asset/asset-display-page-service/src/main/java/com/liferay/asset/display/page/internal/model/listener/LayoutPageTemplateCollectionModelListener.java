@@ -12,7 +12,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
@@ -33,8 +32,7 @@ public class LayoutPageTemplateCollectionModelListener
 			LayoutPageTemplateCollection layoutPageTemplateCollection)
 		throws ModelListenerException {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-189856") &&
-			_hasAssetDisplayPageEntry(
+		if (_hasAssetDisplayPageEntry(
 				layoutPageTemplateCollection.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId())) {

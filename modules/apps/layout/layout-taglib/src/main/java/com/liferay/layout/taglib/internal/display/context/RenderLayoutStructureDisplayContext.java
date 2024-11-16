@@ -259,8 +259,9 @@ public class RenderLayoutStructureDisplayContext {
 				InfoDisplayWebKeys.INFO_FORM);
 		}
 
+		defaultFragmentRendererContext.setInfoForm(infoForm);
+
 		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
-			defaultFragmentRendererContext.setInfoForm(infoForm);
 			defaultFragmentRendererContext.setMode(_mode);
 			defaultFragmentRendererContext.setPreviewClassNameId(
 				_getPreviewClassNameId());

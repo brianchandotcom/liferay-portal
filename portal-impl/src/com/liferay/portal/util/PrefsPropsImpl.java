@@ -248,13 +248,16 @@ public class PrefsPropsImpl implements PrefsProps {
 		PortletPreferences portletPreferences = _fetchPreferences(companyId);
 
 		if (portletPreferences == _emptyPortletPreferences) {
-			portletPreferences = new LazyPortletPreferences(
+			return new LazyPortletPreferences(
 				_emptyPortletPreferences,
 				() -> _portalPreferencesLocalService.getPreferences(
 					companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY));
 		}
 
-		return portletPreferences;
+		PortalPreferencesWrapper portalPreferencesWrapper =
+			(PortalPreferencesWrapper)portletPreferences;
+
+		return portalPreferencesWrapper.clone();
 	}
 
 	@Override
@@ -490,18 +493,8 @@ public class PrefsPropsImpl implements PrefsProps {
 			return _getPortletPreferences(companyId);
 		}
 
-		PortletPreferences portletPreferences =
-			_portletPreferences.computeIfAbsent(
-				companyId, this::_getPortletPreferences);
-
-		if (portletPreferences == _emptyPortletPreferences) {
-			return portletPreferences;
-		}
-
-		PortalPreferencesWrapper portalPreferencesWrapper =
-			(PortalPreferencesWrapper)portletPreferences;
-
-		return portalPreferencesWrapper.clone();
+		return _portletPreferences.computeIfAbsent(
+			companyId, this::_getPortletPreferences);
 	}
 
 	private PortletPreferences _getPortletPreferences(long companyId) {

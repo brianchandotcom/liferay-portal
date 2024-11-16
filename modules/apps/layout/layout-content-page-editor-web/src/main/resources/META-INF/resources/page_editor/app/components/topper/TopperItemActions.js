@@ -39,6 +39,7 @@ import {
 import getPortletCustomActions from '../../utils/getPortletCustomActions';
 import getPortletId from '../../utils/getPortletId';
 import hideFragment from '../../utils/hideFragment';
+import isCuttable from '../../utils/isCuttable';
 import isInputFragment from '../../utils/isInputFragment';
 import {isMovementValid} from '../../utils/isMovementValid';
 import isStepper from '../../utils/isStepper';
@@ -128,11 +129,7 @@ export default function TopperItemActions({disabled, item}) {
 
 		addDivider(items);
 
-		if (
-			Liferay.FeatureFlags['LPD-18221'] &&
-			canBeRemoved(item, layoutData) &&
-			!isStepper(fragmentEntryLinks[item.config.fragmentEntryLinkId])
-		) {
+		if (isCuttable(item.itemId, fragmentEntryLinks, layoutData)) {
 			items.push({
 				action: () => {
 					setClipboard([item.itemId]);

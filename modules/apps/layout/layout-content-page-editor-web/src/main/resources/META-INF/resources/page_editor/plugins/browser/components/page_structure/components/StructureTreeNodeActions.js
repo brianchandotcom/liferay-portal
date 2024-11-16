@@ -43,6 +43,7 @@ import {
 	FORM_ERROR_TYPES,
 	getFormErrorDescription,
 } from '../../../../../app/utils/getFormErrorDescription';
+import isCuttable from '../../../../../app/utils/isCuttable';
 import isInputFragment from '../../../../../app/utils/isInputFragment';
 import {isMovementValid} from '../../../../../app/utils/isMovementValid';
 import isStepper from '../../../../../app/utils/isStepper';
@@ -231,10 +232,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 			});
 		}
 
-		if (
-			Liferay.FeatureFlags['LPD-18221'] &&
-			canBeRemoved(layoutDataItem, layoutData)
-		) {
+		if (isCuttable(item.id, fragmentEntryLinks, layoutData)) {
 			items.push({
 				action: () => {
 					setClipboard([item.id]);

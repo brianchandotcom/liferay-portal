@@ -50,9 +50,9 @@ export class PagesAdminPage {
 		this.searchInput = this.page.getByPlaceholder('Search for');
 	}
 
-	async goto(siteUrl?: Site['friendlyUrlPath']) {
+	async goto(siteUrl?: Site['friendlyUrlPath'], doAsUserId?: string) {
 		await this.page.goto(
-			`/group${siteUrl || '/guest'}${PORTLET_URLS.pages}`
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.pages}${doAsUserId ? '&doAsUserId=' + doAsUserId : ''}`
 		);
 	}
 

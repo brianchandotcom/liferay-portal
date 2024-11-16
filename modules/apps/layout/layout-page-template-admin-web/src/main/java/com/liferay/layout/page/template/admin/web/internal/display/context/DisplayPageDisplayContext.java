@@ -12,7 +12,6 @@ import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.layout.page.template.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
@@ -26,7 +25,6 @@ import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollec
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -90,64 +88,6 @@ public class DisplayPageDisplayContext {
 
 	public SearchContainer<?> getDisplayPagesSearchContainer() {
 		if (_displayPagesSearchContainer != null) {
-			return _displayPagesSearchContainer;
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-189856")) {
-			SearchContainer<LayoutPageTemplateEntry>
-				displayPagesSearchContainer = new SearchContainer<>(
-					_liferayPortletRequest, getPortletURL(), null,
-					"there-are-no-display-page-templates");
-
-			displayPagesSearchContainer.setId(
-				"displayPages" + getLayoutPageTemplateCollectionId());
-			displayPagesSearchContainer.setOrderByCol(getOrderByCol());
-			displayPagesSearchContainer.setOrderByComparator(
-				LayoutPageTemplatePortletUtil.
-					getLayoutPageTemplateEntryOrderByComparator(
-						getOrderByCol(), getOrderByType()));
-			displayPagesSearchContainer.setOrderByType(getOrderByType());
-
-			if (isSearch()) {
-				displayPagesSearchContainer.setResultsAndTotal(
-					() ->
-						LayoutPageTemplateEntryServiceUtil.
-							getLayoutPageTemplateEntries(
-								_themeDisplay.getScopeGroupId(), getKeywords(),
-								LayoutPageTemplateEntryTypeConstants.
-									DISPLAY_PAGE,
-								displayPagesSearchContainer.getStart(),
-								displayPagesSearchContainer.getEnd(),
-								displayPagesSearchContainer.
-									getOrderByComparator()),
-					LayoutPageTemplateEntryServiceUtil.
-						getLayoutPageTemplateEntriesCount(
-							_themeDisplay.getScopeGroupId(), getKeywords(),
-							LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
-			}
-			else {
-				displayPagesSearchContainer.setResultsAndTotal(
-					() ->
-						LayoutPageTemplateEntryServiceUtil.
-							getLayoutPageTemplateEntries(
-								_themeDisplay.getScopeGroupId(),
-								LayoutPageTemplateEntryTypeConstants.
-									DISPLAY_PAGE,
-								displayPagesSearchContainer.getStart(),
-								displayPagesSearchContainer.getEnd(),
-								displayPagesSearchContainer.
-									getOrderByComparator()),
-					LayoutPageTemplateEntryServiceUtil.
-						getLayoutPageTemplateEntriesCount(
-							_themeDisplay.getScopeGroupId(),
-							LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
-			}
-
-			displayPagesSearchContainer.setRowChecker(
-				new EmptyOnClickRowChecker(_liferayPortletResponse));
-
-			_displayPagesSearchContainer = displayPagesSearchContainer;
-
 			return _displayPagesSearchContainer;
 		}
 

@@ -24,7 +24,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -67,7 +66,6 @@ public class DisplayPageManagementToolbarDisplayContext
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
-			() -> FeatureFlagManagerUtil.isEnabled("LPS-189856"),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
@@ -117,7 +115,6 @@ public class DisplayPageManagementToolbarDisplayContext
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
-			() -> FeatureFlagManagerUtil.isEnabled("LPS-189856"),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
@@ -250,7 +247,6 @@ public class DisplayPageManagementToolbarDisplayContext
 	@Override
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addDropdownItem(
-			() -> FeatureFlagManagerUtil.isEnabled("LPS-189856"),
 			dropdownItem -> {
 				dropdownItem.putData("action", "addDisplayPageCollection");
 				dropdownItem.putData(
@@ -301,11 +297,7 @@ public class DisplayPageManagementToolbarDisplayContext
 
 	@Override
 	public String getInfoPanelId() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-189856")) {
-			return "infoPanelId";
-		}
-
-		return null;
+		return "infoPanelId";
 	}
 
 	@Override
@@ -342,29 +334,17 @@ public class DisplayPageManagementToolbarDisplayContext
 	}
 
 	private String _getDeleteSelectedEntriesURL() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-189856")) {
-			return PortletURLBuilder.createActionURL(
-				liferayPortletResponse
-			).setActionName(
-				"/layout_page_template_admin/delete_layout_page_template_" +
-					"entries_and_layout_page_template_collections"
-			).setTabs1(
-				"display-page-templates"
-			).setParameter(
-				"layoutPageTemplateCollectionId",
-				ParamUtil.getLong(
-					httpServletRequest, "layoutPageTemplateCollectionId")
-			).buildString();
-		}
-
 		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse
 		).setActionName(
-			"/layout_page_template_admin/delete_layout_page_template_entry"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
+			"/layout_page_template_admin/delete_layout_page_template_" +
+				"entries_and_layout_page_template_collections"
 		).setTabs1(
 			"display-page-templates"
+		).setParameter(
+			"layoutPageTemplateCollectionId",
+			ParamUtil.getLong(
+				httpServletRequest, "layoutPageTemplateCollectionId")
 		).buildString();
 	}
 

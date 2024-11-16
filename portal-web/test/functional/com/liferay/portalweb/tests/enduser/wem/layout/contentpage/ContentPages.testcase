@@ -116,6 +116,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153383. The page creator cannot resize editor sidebar to an invalid size."
+	@priority = 4
+	test CannotResizeLeftSidebarPanelBeyoundLimitation {
+		task ("Given a page creator accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("When the page creator accesses to the left sidebar panel") {
+			AssertVisible(
+				key_sidebarButton = "Fragments and Widgets",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+		}
+
+		task ("Then the page creator cannot resize the left sidebar panel more than 500px or less than 280px") {
+			DragAndDrop.dragAndDrop(
+				locator1 = "PageEditor#SIDEBAR_RESIZER",
+				value1 = "220,0");
+
+			AssertCssValue(
+				locator1 = "Sidebar#PANEL_OPEN",
+				locator2 = "width",
+				value1 = "500px");
+
+			DragAndDrop.dragAndDrop(
+				locator1 = "PageEditor#SIDEBAR_RESIZER",
+				value1 = "100,0");
+
+			AssertCssValue(
+				locator1 = "Sidebar#PANEL_OPEN",
+				locator2 = "width",
+				value1 = "500px");
+
+			DragAndDrop.dragAndDrop(
+				locator1 = "PageEditor#SIDEBAR_RESIZER",
+				value1 = "-220,0");
+
+			AssertCssValue(
+				locator1 = "Sidebar#PANEL_OPEN",
+				locator2 = "width",
+				value1 = "280px");
+
+			DragAndDrop.dragAndDrop(
+				locator1 = "PageEditor#SIDEBAR_RESIZER",
+				value1 = "-100,0");
+
+			AssertCssValue(
+				locator1 = "Sidebar#PANEL_OPEN",
+				locator2 = "width",
+				value1 = "280px");
+		}
+	}
+
 	@description = "This is a test for LPS-125985. The Page Creater can configure configuration template of widget in page editor."
 	@priority = 5
 	test ConfigureConfigurationTemplateOfAssetPublisherInPageEditor {
@@ -270,6 +324,205 @@ definition {
 			AssertElementNotPresent(
 				key_portletName = "Asset Publisher",
 				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+		}
+	}
+
+	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session on content page in card view."
+	@priority = 3
+	test CouldAddAndRemoveFragmentInCardView {
+		task ("Given go to edit content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("When switch to card view") {
+			Click(
+				key_switchTo = "card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+		}
+
+		task ("Then assert could add and remove fragment to Favorites session") {
+			MouseOver(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM");
+
+			MouseOver(
+				ariaLabel = "Mark Button as Favorite",
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL");
+
+			AssertTextEquals(
+				locator1 = "Tooltip#GENERIC_TOOLTIP",
+				value1 = "Mark Button as Favorite");
+
+			Click.clickNoMouseOver(
+				ariaLabel = "Mark Button as Favorite",
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL");
+
+			AssertElementPresent(
+				key_collectionName = "Favorites",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM");
+
+			AssertElementPresent(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM");
+
+			AssertElementPresent(
+				index = 1,
+				key_panel = "Favorites",
+				locator1 = "Panel#PANEL_BY_INDEX");
+
+			MouseOver(
+				ariaLabel = "Unmark Button as Favorite",
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL");
+
+			AssertTextEquals(
+				locator1 = "Tooltip#GENERIC_TOOLTIP",
+				value1 = "Unmark Button as Favorite");
+
+			Click.clickNoMouseOver(
+				ariaLabel = "Unmark Button as Favorite",
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL");
+
+			AssertElementNotPresent(
+				key_collectionName = "Favorites",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM");
+
+			AssertElementPresent(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM");
+		}
+	}
+
+	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session and widget to Highlighted session on content page."
+	@priority = 5
+	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToHighlightedSessionOnReleaseBundle {
+		task ("When go to edit content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("Then could add and remove fragment to Favorites session and widget to Highlighted session") {
+			task ("Go to add and remove favorite fragment") {
+				MouseOver(
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				MouseOver(
+					ariaLabel = "Mark Button as Favorite",
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");
+
+				AssertTextEquals(
+					locator1 = "Tooltip#GENERIC_TOOLTIP",
+					value1 = "Mark Button as Favorite");
+
+				Click.clickNoMouseOver(
+					ariaLabel = "Mark Button as Favorite",
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");
+
+				AssertElementPresent(
+					key_collectionName = "Favorites",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				AssertElementPresent(
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				AssertElementPresent(
+					index = 1,
+					key_panel = "Favorites",
+					locator1 = "Panel#PANEL_BY_INDEX");
+
+				MouseOver(
+					ariaLabel = "Unmark Button as Favorite",
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");
+
+				AssertTextEquals(
+					locator1 = "Tooltip#GENERIC_TOOLTIP",
+					value1 = "Unmark Button as Favorite");
+
+				Click.clickNoMouseOver(
+					ariaLabel = "Unmark Button as Favorite",
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");
+
+				AssertElementNotPresent(
+					key_collectionName = "Favorites",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				AssertElementPresent(
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+			}
+
+			task ("Go to add and remove favorite widget") {
+				Navigator.gotoNavTab(navTab = "Widgets");
+
+				PageEditor.expandWidgetCategory(categoryName = "Collaboration");
+
+				MouseOver(
+					key_collectionName = "Collaboration",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				Click.clickNoMouseOver(
+					ariaLabel = "Mark Calendar as Favorite",
+					key_collectionName = "Collaboration",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");
+
+				AssertElementPresent(
+					key_collectionName = "Highlighted",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				AssertElementPresent(
+					key_collectionName = "Collaboration",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				Click.clickNoMouseOver(
+					ariaLabel = "Unmark Calendar as Favorite",
+					key_collectionName = "Collaboration",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");
+
+				AssertElementNotPresent(
+					key_collectionName = "Highlighted",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				AssertElementPresent(
+					key_collectionName = "Collaboration",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+			}
 		}
 	}
 
@@ -1096,6 +1349,223 @@ definition {
 
 		task ("Then you should easily see the ellipsis icon") {
 			AssertVisible(locator1 = "Portlet#OPTIONS_ICON");
+		}
+	}
+
+	@description = "This is a test for LPS-158746. The favorite fragment is hidden if it is not allowed on master page."
+	@priority = 3
+	test ViewFavoriteFragmentIsHiddenWhenItIsNotAllowedOnMasterPage {
+		task ("Given go to edit content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("And choose Button and Card fragment as Favorites") {
+			MouseOver(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+			Click.clickNoMouseOver(
+				ariaLabel = "Mark Button as Favorite",
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");
+
+			AssertElementPresent(
+				key_collectionName = "Favorites",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+			MouseOver(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+			Click.clickNoMouseOver(
+				ariaLabel = "Mark Card as Favorite",
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");
+
+			AssertElementPresent(
+				key_collectionName = "Favorites",
+				key_fragmentName = "Card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+		}
+
+		task ("When not allow Button fragment on master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = ${randomSiteName},
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = ${siteURLKey});
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			AssertClick(
+				locator1 = "Button#CONFIGURE_ALLOWED_FRAGMENTS",
+				value1 = "Configure Allowed Fragments");
+
+			SelectFrame(value1 = "relative=top");
+
+			Uncheck.uncheckToggleSwitch(
+				key_fragmentName = "Button",
+				locator1 = "Checkbox#ALLOWED_FRAGMENT");
+
+			Button.clickSave();
+
+			Button.clickNoError(button = "Publish Master");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name 2");
+
+			PageEditor.publish();
+		}
+
+		task ("Then Button fragment is hidden on conetent page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = ${randomSiteName});
+
+			AssertElementNotPresent(
+				key_collectionName = "Favorites",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+			AssertElementPresent(
+				key_collectionName = "Favorites",
+				key_fragmentName = "Card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+		}
+	}
+
+	@description = "This is a test for LPS-158746. Different users keep their own favorites list."
+	@priority = 4
+	test ViewFavoritesListInDifferentUsers {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given having 2 users") {
+			var userEmailAddress = StringUtil.randomString(8);
+			var userFirstName = StringUtil.randomString(8);
+			var userLastName = StringUtil.randomString(8);
+			var userScreenName = StringUtil.randomString(8);
+
+			JSONUser.addUser(
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}1@liferay.com"),
+				userFirstName = "${userFirstName}1",
+				userLastName = "${userLastName}1",
+				userScreenName = StringUtil.toLowerCase("${userScreenName}1"));
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}1@liferay.com"));
+
+			JSONUser.addUserToSite(
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}1@liferay.com"));
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = ${randomSiteName},
+				roleTitle = "Site Administrator",
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}1@liferay.com"));
+
+			JSONUser.addUser(
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}2@liferay.com"),
+				userFirstName = "${userFirstName}2",
+				userLastName = "${userLastName}2",
+				userScreenName = StringUtil.toLowerCase("${userScreenName}2"));
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}2@liferay.com"));
+
+			JSONUser.addUserToSite(
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}2@liferay.com"));
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = ${randomSiteName},
+				roleTitle = "Site Administrator",
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}2@liferay.com"));
+		}
+
+		task ("When the users add their own favorites list on content page") {
+			task ("Assert user1 could add favorites list") {
+				User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}1@liferay.com"));
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = ${randomSiteName});
+
+				MouseOver(
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				Click.clickNoMouseOver(
+					ariaLabel = "Mark Button as Favorite",
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");
+
+				AssertElementPresent(
+					key_collectionName = "Favorites",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+			}
+
+			task ("Assert user2 could add favorites list") {
+				User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}2@liferay.com"));
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = ${randomSiteName});
+
+				AssertElementNotPresent(
+					key_panel = "Favorites",
+					locator1 = "Panel#PANEL");
+
+				MouseOver(
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Card",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				Click.clickNoMouseOver(
+					ariaLabel = "Mark Card as Favorite",
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Card",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");
+
+				AssertElementPresent(
+					key_collectionName = "Favorites",
+					key_fragmentName = "Card",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+			}
+		}
+
+		task ("Then assert favorites list is kept for user session") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "${userEmailAddress}1@liferay.com");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			AssertElementPresent(
+				key_collectionName = "Favorites",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+			AssertElementNotPresent(
+				key_collectionName = "Favorites",
+				key_fragmentName = "Card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
 		}
 	}
 

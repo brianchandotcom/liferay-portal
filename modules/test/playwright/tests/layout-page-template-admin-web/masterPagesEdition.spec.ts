@@ -5,19 +5,159 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {deleteObjectEntries} from '../setup/page-management-site/utils/deleteObjectEntries';
+import {gotoObjectEntries} from '../setup/page-management-site/utils/gotoObjectEntries';
 
 export const test = mergeTests(
+	apiHelpersTest,
 	pagesAdminPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	masterPagesPagesTest,
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	pageManagementSiteTest
+);
+
+test(
+	'Categories field can be used in a master page',
+	{
+		tag: '@LPS-161638',
+	},
+	async ({
+		apiHelpers,
+		masterPagesPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create new master page
+
+		const layoutPageTemplateEntryName = getRandomString();
+
+		const masterPage =
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+				{
+					groupId: pageManagementSite.id,
+					name: layoutPageTemplateEntryName,
+					type: 'master-layout',
+				}
+			);
+
+		// Edit master page
+
+		await masterPagesPage.goto(pageManagementSite.friendlyUrlPath);
+
+		await masterPagesPage.editMaster(layoutPageTemplateEntryName);
+
+		// Add a form container and map it
+
+		await pageEditorPage.addFragment('Form Components', 'Form Container');
+
+		const fragmentId = await pageEditorPage.getFragmentId('Form Container');
+
+		await pageEditorPage.mapFormFragment(fragmentId, 'Lemon');
+
+		// Add categories form component
+
+		await pageEditorPage.addFragment(
+			'Form Components',
+			'Categories',
+			page.locator('.page-editor__form .page-editor__container')
+		);
+
+		// Publish master page
+
+		await pageEditorPage.publishPage();
+
+		// Create a layout with created master page
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: pageManagementSite.id,
+			masterLayoutPlid: masterPage.plid,
+			title: getRandomString(),
+		});
+
+		// Go to view mode
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyURL}`
+		);
+
+		// Select categories and submit the form
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('heading', {name: 'Select Animals'}),
+			trigger: page.getByLabel('Select Animals'),
+		});
+
+		const iframe = page.frameLocator('iframe[title="Select Animals"]');
+
+		await iframe
+			.locator('li')
+			.filter({hasText: 'Cats'})
+			.getByRole('checkbox')
+			.check();
+		await iframe
+			.locator('li')
+			.filter({hasText: 'Dogs'})
+			.getByRole('checkbox')
+			.check();
+
+		await page.getByRole('button', {name: 'Done'}).click();
+
+		await page.getByLabel('Lemon Weight').fill('200');
+
+		await page.getByLabel('Large').check();
+
+		await page.getByRole('button', {name: 'Submit'}).click();
+
+		// Assert success message
+
+		await expect(
+			page.getByText(
+				'Thank you. Your information was successfully received.'
+			)
+		).toBeVisible();
+
+		// Go to custom object admin
+
+		await gotoObjectEntries({
+			entityName: 'Lemons',
+			page,
+			siteUrl: pageManagementSite.friendlyUrlPath,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				exact: true,
+				name: 'View',
+			}),
+			trigger: page.locator('.dnd-tbody .item-actions').first(),
+		});
+
+		await expect(page.getByText('Cats')).toBeVisible();
+		await expect(page.getByText('Dogs')).toBeVisible();
+
+		// Delete entries
+
+		await deleteObjectEntries({
+			entityName: 'Lemons',
+			page,
+			siteUrl: pageManagementSite.friendlyUrlPath,
+		});
+	}
 );
 
 test('Items containing the drop zone cannot be duplicated or copied', async ({

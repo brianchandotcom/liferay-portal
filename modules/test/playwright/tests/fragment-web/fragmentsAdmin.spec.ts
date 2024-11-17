@@ -266,6 +266,137 @@ test(
 );
 
 test(
+	'Copy global fragment collection',
+	{
+		tag: ['@LPS-98501', '@LPS-101230', '@LPS-100540'],
+	},
+	async ({apiHelpers, fragmentsPage, page, site}) => {
+
+		// Create global fragment set
+
+		const globalSiteId = await getGlobalSiteId(apiHelpers);
+
+		const globalFragmentCollectionName = getRandomString();
+
+		const globalFragmentCollection =
+			await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+				{
+					groupId: globalSiteId,
+					name: globalFragmentCollectionName,
+				}
+			);
+
+		// Create global fragment
+
+		const fragmentEntryName = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId: globalFragmentCollection.fragmentCollectionId,
+			groupId: globalSiteId,
+			html: '<div class="fragment-name"><img src="[resources:image]" /></div>',
+			name: fragmentEntryName,
+		});
+
+		// Create fragment set in current site
+
+		const fragmentCollectionName = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+			{
+				groupId: site.id,
+				name: fragmentCollectionName,
+			}
+		);
+
+		// Assert global fragment view site usages is disabled
+
+		await fragmentsPage.goto('/global');
+
+		await fragmentsPage.gotoFragmentSet(globalFragmentCollectionName);
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {name: 'View Site Usages'}),
+			trigger: page
+				.locator(`//p[@title="${fragmentEntryName}"]/../..`)
+				.getByLabel('More actions'),
+		});
+
+		await expect(
+			page.getByRole('menuitem', {name: 'View Site Usages'})
+		).toHaveClass(/disabled/);
+
+		await page.locator('body').click();
+
+		// Add resource
+
+		const resources = page.getByRole('link', {name: 'Resources'});
+
+		await resources.click();
+
+		const fileChooserPromise = page.waitForEvent('filechooser');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'File Upload'}),
+			trigger: page.getByRole('button', {exact: true, name: 'New'}),
+		});
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(
+			path.join(__dirname, '/dependencies/image.jpg')
+		);
+
+		await expect(page.getByText('Image')).toBeVisible();
+
+		// Assert global fragment in current site
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		await page
+			.getByRole('menuitem', {
+				exact: true,
+				name: globalFragmentCollectionName,
+			})
+			.click();
+
+		await expect(
+			page.getByTitle(fragmentEntryName, {exact: true})
+		).toBeVisible();
+
+		// Copy fragment
+
+		await fragmentsPage.copyFragmentToSet(
+			fragmentEntryName,
+			fragmentCollectionName
+		);
+
+		// Go to fragment collection
+
+		await fragmentsPage.gotoFragmentSet(fragmentCollectionName);
+
+		// Assert copied fragment
+
+		await expect(
+			page.getByTitle(`${fragmentEntryName} (Copy)`, {exact: true})
+		).toBeVisible();
+
+		// Assert copied fragment resource
+
+		await resources.click();
+
+		await expect(page.getByText('Image')).toBeVisible();
+
+		// Delete global fragment collection
+
+		await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+			globalFragmentCollection.fragmentCollectionId
+		);
+	}
+);
+
+test(
 	'Can add, delete, copy and rename a fragment via UI',
 	{
 		tag: '@LPS-97184',

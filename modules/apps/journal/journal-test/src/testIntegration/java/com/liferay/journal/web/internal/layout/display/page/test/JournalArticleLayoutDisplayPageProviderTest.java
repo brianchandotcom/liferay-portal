@@ -267,6 +267,8 @@ public class JournalArticleLayoutDisplayPageProviderTest {
 				String.valueOf(
 					Sites.CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT));
 
+			portletPreferences.store();
+
 			Group childGroup = GroupTestUtil.addGroupToCompany(
 				_group.getCompanyId(), _group.getGroupId());
 

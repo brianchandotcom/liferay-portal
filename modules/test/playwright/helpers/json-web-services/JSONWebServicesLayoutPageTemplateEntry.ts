@@ -88,6 +88,28 @@ export class JSONWebServicesLayoutPageTemplateEntryApiHelper {
 		);
 	}
 
+	async deleteLayoutPageTemplateEntry({
+		layoutPageTemplateEntryId,
+	}: {
+		layoutPageTemplateEntryId: string;
+	}): Promise<LayoutPageTemplateEntry> {
+		const urlSearchParams = new URLSearchParams();
+
+		urlSearchParams.append(
+			'layoutPageTemplateEntryId',
+			layoutPageTemplateEntryId
+		);
+
+		return await this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}${this.basePath}/delete-layout-page-template-entry`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
+
 	async markAsDefaultDisplayPageLayoutPageTemplateEntry({
 		layoutPageTemplateEntryId,
 	}: {

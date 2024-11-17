@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -673,44 +674,37 @@ public class CompanyLocalServiceDBPartitionTest
 
 	@Test
 	public void testPrefsPropsImplCache() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					TestPropsValues.getCompanyId())) {
 
-		try {
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						company.getCompanyId())) {
-
-				_portalPreferencesLocalService.updatePreferences(
-					company.getCompanyId(),
-					PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-					"<portlet-preferences><preference><name>testName</name>" +
-						"<value>testValue</value></preference>" +
-							"</portlet-preferences>");
-			}
-
-			EntityCacheUtil.clearCache(CompanyImpl.class);
-
-			Map<Long, PortletPreferences> portletPreferencesMap =
-				(Map<Long, PortletPreferences>)ReflectionTestUtil.getFieldValue(
-					PrefsPropsUtil.getPrefsProps(), "_portletPreferences");
-
-			portletPreferencesMap.clear();
-
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(0L)) {
-
-				companyLocalService.getCompanies();
-			}
-
-			PortletPreferences portletPreferences = portletPreferencesMap.get(
-				company.getCompanyId());
-
-			Assert.assertEquals(
-				"testValue", portletPreferences.getValue("testName", null));
+			_portalPreferencesLocalService.updatePreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+				"<portlet-preferences><preference><name>testName</name>" +
+					"<value>testValue</value></preference>" +
+						"</portlet-preferences>");
 		}
-		finally {
-			companyLocalService.deleteCompany(company);
+
+		EntityCacheUtil.clearCache(CompanyImpl.class);
+
+		Map<Long, PortletPreferences> portletPreferencesMap =
+			(Map<Long, PortletPreferences>)ReflectionTestUtil.getFieldValue(
+				PrefsPropsUtil.getPrefsProps(), "_portletPreferences");
+
+		portletPreferencesMap.clear();
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(0L)) {
+
+			companyLocalService.getCompanies();
 		}
+
+		PortletPreferences portletPreferences = portletPreferencesMap.get(
+			TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			"testValue", portletPreferences.getValue("testName", null));
 	}
 
 	private static void _regenerateResourceActions() throws Exception {

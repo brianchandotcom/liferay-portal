@@ -61,6 +61,8 @@ test(
 			page.getByText('New editable fragment text')
 		).toBeVisible();
 
+		await pageEditorPage.waitForChangesSaved();
+
 		// Preview in a new tab
 
 		const pagePromise = context.waitForEvent('page');
@@ -126,6 +128,8 @@ test(
 
 		await expect(page.getByText('Texto Editado')).toBeVisible();
 
+		await pageEditorPage.waitForChangesSaved();
+
 		// Preview in a new tab
 
 		const pagePromise = context.waitForEvent('page');
@@ -136,12 +140,15 @@ test(
 
 		await expect(async () => {
 			await clickAndExpectToBeVisible({
-				autoClick: true,
 				target: previewButton,
 				trigger: page
 					.locator('.control-menu-nav-item')
 					.getByLabel('Options', {exact: true}),
 			});
+
+			if (await previewButton.isVisible()) {
+				await previewButton.click();
+			}
 
 			const newPage = await pagePromise;
 

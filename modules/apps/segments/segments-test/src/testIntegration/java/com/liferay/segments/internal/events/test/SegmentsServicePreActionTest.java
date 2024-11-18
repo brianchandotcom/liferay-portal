@@ -7,9 +7,11 @@ package com.liferay.segments.internal.events.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.events.LifecycleAction;
@@ -42,7 +44,6 @@ import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
 import com.liferay.segments.configuration.SegmentsConfiguration;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
-import com.liferay.segments.internal.events.SegmentsServicePreAction;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
@@ -191,9 +192,11 @@ public class SegmentsServicePreActionTest {
 
 				mockHttpServletRequest.setParameter("p_l_mode", Constants.EDIT);
 				mockHttpServletRequest.setParameter(
-					SegmentsServicePreAction.
-						PORTLET_NAMESPACE_CONTENT_PAGE_EDITOR +
-							"segmentsExperienceId",
+					String.join(
+						StringPool.BLANK, StringPool.UNDERLINE,
+						ContentPageEditorPortletKeys.
+							CONTENT_PAGE_EDITOR_PORTLET,
+						"_segmentsExperienceId"),
 					String.valueOf(
 						segmentsExperience.getSegmentsExperienceId()));
 				mockHttpServletRequest.setAttribute(

@@ -5,6 +5,8 @@
 
 package com.liferay.segments.internal.events;
 
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
@@ -46,10 +48,6 @@ import org.osgi.service.component.annotations.Reference;
 	property = "key=servlet.service.events.pre", service = LifecycleAction.class
 )
 public class SegmentsServicePreAction extends Action {
-
-	public static final String PORTLET_NAMESPACE_CONTENT_PAGE_EDITOR =
-		"_com_liferay_layout_content_page_editor_web_internal_portlet_" +
-			"ContentPageEditorPortlet_";
 
 	@Override
 	public void run(
@@ -153,8 +151,11 @@ public class SegmentsServicePreAction extends Action {
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				ParamUtil.getLong(
 					httpServletRequest,
-					PORTLET_NAMESPACE_CONTENT_PAGE_EDITOR +
-						"segmentsExperienceId"));
+					String.join(
+						StringPool.BLANK, StringPool.UNDERLINE,
+						ContentPageEditorPortletKeys.
+							CONTENT_PAGE_EDITOR_PORTLET,
+						"_segmentsExperienceId")));
 
 		if (permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId()) &&
 			Objects.equals(

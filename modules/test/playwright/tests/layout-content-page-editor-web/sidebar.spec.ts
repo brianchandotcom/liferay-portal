@@ -895,7 +895,7 @@ test.describe('Page Contents Panel', () => {
 
 	test(
 		'Allows editing mapped asset from Page Content Panel',
-		{tag: ['@LPS-125985', '@LPS-122396']},
+		{tag: ['@LPS-122204', '@LPS-125985', '@LPS-122396']},
 		async ({apiHelpers, journalPage, page, pageEditorPage, site}) => {
 
 			// Create a page with a Heading fragment

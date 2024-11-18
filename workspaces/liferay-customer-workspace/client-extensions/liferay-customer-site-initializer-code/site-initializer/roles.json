@@ -11,6 +11,14 @@
 		"actions": [
 		],
 		"description": "",
+		"name": "Customer",
+		"subtype": "",
+		"type": 1
+	},
+	{
+		"actions": [
+		],
+		"description": "",
 		"name": "Data Breach Contact",
 		"subtype": "",
 		"type": 6
@@ -20,6 +28,14 @@
 		],
 		"description": "",
 		"name": "Liferay Staff",
+		"subtype": "",
+		"type": 1
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Partner",
 		"subtype": "",
 		"type": 1
 	},

@@ -1,0 +1,20 @@
+[
+	{
+		"emailAddress": "customer@customer.com",
+		"roles": [
+			"Customer"
+		]
+	},
+	{
+		"emailAddress": "partner@partner.com",
+		"roles": [
+			"Partner"
+		]
+	},
+	{
+		"emailAddress": "test@liferay.com",
+		"roles": [
+			"Liferay Staff"
+		]
+	}
+]

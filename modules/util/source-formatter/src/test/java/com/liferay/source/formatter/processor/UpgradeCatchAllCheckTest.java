@@ -22,6 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -108,24 +109,15 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 
 	@Override
 	protected SourceFormatterArgs getSourceFormatterArgs() {
-		List<String> checkCategoryNames = new ArrayList<>();
-
-		checkCategoryNames.add("Upgrade");
-
-		List<String> sourceFormatterProperties = new ArrayList<>();
-
-		sourceFormatterProperties.add(
-			"upgrade.to.liferay.version=" + _UPGRADE_TO_LIFERAY_VERSION);
-		sourceFormatterProperties.add(
-			"upgrade.to.release.version=" + _UPGRADE_TO_RELEASE_VERSION);
-
 		SourceFormatterArgs sourceFormatterArgs =
 			super.getSourceFormatterArgs();
 
-		sourceFormatterArgs.setCheckCategoryNames(checkCategoryNames);
+		sourceFormatterArgs.setCheckCategoryNames(Arrays.asList("Upgrade"));
 		sourceFormatterArgs.setJavaParserEnabled(false);
 		sourceFormatterArgs.setSourceFormatterProperties(
-			sourceFormatterProperties);
+			Arrays.asList(
+				"upgrade.to.liferay.version=" + _UPGRADE_TO_LIFERAY_VERSION,
+				"upgrade.to.release.version=" + _UPGRADE_TO_RELEASE_VERSION));
 
 		return sourceFormatterArgs;
 	}

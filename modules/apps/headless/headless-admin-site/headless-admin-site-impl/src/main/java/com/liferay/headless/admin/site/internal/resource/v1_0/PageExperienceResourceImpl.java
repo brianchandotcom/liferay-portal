@@ -9,7 +9,10 @@ import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageExperienceResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -70,7 +73,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return _pageExperienceDTOConverter.toDTO(
+		return _toDTO(
 			_segmentsExperienceService.
 				getSegmentsExperienceByExternalReferenceCode(
 					pageExperienceExternalReferenceCode,
@@ -105,8 +108,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 				_segmentsExperienceService.getSegmentsExperiences(
 					layout.getGroupId(), layout.getPlid(), true,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-				segmentsExperience -> _pageExperienceDTOConverter.toDTO(
-					segmentsExperience)));
+				segmentsExperience -> _toDTO(segmentsExperience)));
 	}
 
 	@Override
@@ -161,7 +163,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 					GetterUtil.getInteger(pageExperience.getPriority()));
 		}
 
-		return _pageExperienceDTOConverter.toDTO(
+		return _toDTO(
 			_segmentsExperienceService.updateSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId(),
 				_getSegmentsEntryId(
@@ -222,7 +224,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 				groupId, draftLayout.getPlid(),
 				segmentsExperience.getSegmentsExperienceId(), data);
 
-		return _pageExperienceDTOConverter.toDTO(segmentsExperience);
+		return _toDTO(segmentsExperience);
 	}
 
 	private long _getSegmentsEntryId(
@@ -243,6 +245,30 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		return segmentsEntry.getSegmentsEntryId();
 	}
 
+	private PageExperience _toDTO(SegmentsExperience segmentsExperience)
+		throws Exception {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					segmentsExperience.getGroupId(),
+					segmentsExperience.getPlid());
+
+		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+			_layoutPageTemplateStructureRelLocalService.
+				fetchLayoutPageTemplateStructureRel(
+					layoutPageTemplateStructure.
+						getLayoutPageTemplateStructureId(),
+					segmentsExperience.getSegmentsExperienceId());
+
+		if (layoutPageTemplateStructureRel == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _pageExperienceDTOConverter.toDTO(
+			layoutPageTemplateStructureRel);
+	}
+
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
@@ -250,10 +276,14 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
+	@Reference
+	private LayoutPageTemplateStructureRelLocalService
+		_layoutPageTemplateStructureRelLocalService;
+
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageExperienceDTOConverter)"
 	)
-	private DTOConverter<SegmentsExperience, PageExperience>
+	private DTOConverter<LayoutPageTemplateStructureRel, PageExperience>
 		_pageExperienceDTOConverter;
 
 	@Reference

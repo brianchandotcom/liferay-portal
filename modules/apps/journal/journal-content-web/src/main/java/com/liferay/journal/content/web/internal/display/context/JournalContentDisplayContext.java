@@ -281,9 +281,36 @@ public class JournalContentDisplayContext {
 			return _articleGroupId;
 		}
 
-		_articleGroupId = ParamUtil.getLong(
-			_portletRequest, "groupId",
-			_journalContentPortletInstanceConfiguration.groupId());
+		_articleGroupId = ParamUtil.getLong(_portletRequest, "groupId");
+
+		if (_articleGroupId > 0) {
+			return _articleGroupId;
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-27566")) {
+
+			String groupExternalReferenceCode =
+				_journalContentPortletInstanceConfiguration.
+					groupExternalReferenceCode();
+
+			if (Validator.isNotNull(groupExternalReferenceCode)) {
+				Group group =
+					GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+						groupExternalReferenceCode,
+						_themeDisplay.getCompanyId());
+
+				if (group != null) {
+					_articleGroupId = group.getGroupId();
+
+					return _articleGroupId;
+				}
+			}
+		}
+		else {
+			_articleGroupId =
+				_journalContentPortletInstanceConfiguration.groupId();
+		}
 
 		if (_articleGroupId <= 0) {
 			_articleGroupId = _themeDisplay.getScopeGroupId();

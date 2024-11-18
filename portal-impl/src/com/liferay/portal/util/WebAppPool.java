@@ -5,7 +5,11 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.model.PortletCategory;
+import com.liferay.portal.kernel.util.WebKeys;
+
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -19,13 +23,18 @@ public class WebAppPool {
 	}
 
 	public static Object get(Long webAppId, String key) {
-		Map<String, Object> map = _webAppPool.get(webAppId);
+		Map<String, Object> map = _webAppPool.computeIfAbsent(
+			webAppId, absentWebAppId -> new ConcurrentHashMap<>());
 
-		if (map == null) {
-			return null;
-		}
+		return map.computeIfAbsent(
+			key,
+			absentKey -> {
+				if (Objects.equals(WebKeys.PORTLET_CATEGORY, absentKey)) {
+					return new PortletCategory();
+				}
 
-		return map.get(key);
+				return null;
+			});
 	}
 
 	public static void put(Long webAppId, String key, Object object) {

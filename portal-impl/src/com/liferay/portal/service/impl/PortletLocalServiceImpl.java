@@ -253,13 +253,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
 			companyId, WebKeys.PORTLET_CATEGORY);
 
-		if (portletCategory == null) {
-			portletCategory = new PortletCategory();
-
-			WebAppPool.put(
-				companyId, WebKeys.PORTLET_CATEGORY, portletCategory);
-		}
-
 		List<Portlet> portlets = getPortlets(companyId);
 
 		for (Portlet portlet : portlets) {

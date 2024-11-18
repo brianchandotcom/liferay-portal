@@ -34,31 +34,33 @@
 		</span>
 	</c:if>
 
-	<select class="<%= fieldCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" <%= multiple ? "multiple" : StringPool.BLANK %> name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(resourceBundle, title) + "\"" : StringPool.BLANK %> <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
-		<c:if test="<%= showEmptyOption %>">
-			<aui:option value="<%= (Validator.isNotNull(listType) || numericValue) ? 0 : StringPool.BLANK %>" />
-		</c:if>
+	<liferay-ui:csp>
+		<select class="<%= fieldCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" <%= multiple ? "multiple" : StringPool.BLANK %> name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(resourceBundle, title) + "\"" : StringPool.BLANK %> <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+			<c:if test="<%= showEmptyOption %>">
+				<aui:option value="<%= (Validator.isNotNull(listType) || numericValue) ? 0 : StringPool.BLANK %>" />
+			</c:if>
 
-		<c:if test="<%= Validator.isNotNull(listType) %>">
+			<c:if test="<%= Validator.isNotNull(listType) %>">
 
-			<%
-			long listTypeId = ParamUtil.getLong(request, name, BeanParamUtil.getLong(bean, request, listTypeFieldName));
+				<%
+				long listTypeId = ParamUtil.getLong(request, name, BeanParamUtil.getLong(bean, request, listTypeFieldName));
 
-			List<ListType> listTypeModels = ListTypeServiceUtil.getListTypes(themeDisplay.getCompanyId(), listType);
+				List<ListType> listTypeModels = ListTypeServiceUtil.getListTypes(themeDisplay.getCompanyId(), listType);
 
-			for (ListType listTypeModel : listTypeModels) {
-			%>
+				for (ListType listTypeModel : listTypeModels) {
+				%>
 
-				<aui:option selected="<%= listTypeId == listTypeModel.getListTypeId() %>" value="<%= listTypeModel.getListTypeId() %>"><liferay-ui:message key="<%= listTypeModel.getName() %>" /></aui:option>
+					<aui:option selected="<%= listTypeId == listTypeModel.getListTypeId() %>" value="<%= listTypeModel.getListTypeId() %>"><liferay-ui:message key="<%= listTypeModel.getName() %>" /></aui:option>
 
-			<%
-			}
-			%>
+				<%
+				}
+				%>
 
-		</c:if>
+			</c:if>
 
-		<%= bodyContent %>
-	</select>
+			<%= bodyContent %>
+		</select>
+	</liferay-ui:csp>
 
 	<c:if test="<%= Validator.isNotNull(suffix) %>">
 		<span class="suffix">

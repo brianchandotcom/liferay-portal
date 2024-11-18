@@ -102,5 +102,14 @@ test('Workflow task view page is accessible', async ({
 		],
 	});
 
+	await page.locator(openActionsMenuLinkSelector).click();
+
+	const assignToMeMenuItemSelector = 'button[data-title="Approve"]';
+
+	await checkAccessibility({
+		page,
+		selectors: [assignToMeMenuItemSelector],
+	});
+
 	expect(test.info().errors).toHaveLength(0);
 });

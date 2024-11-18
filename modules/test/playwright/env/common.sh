@@ -356,7 +356,7 @@ function get_playwright_project_dir {
 }
 
 function get_portal_log_file_size {
-	wc --lines --total=always ${LIFERAY_HOME}/logs/liferay.*.log | grep total | awk '{print $1}'
+	wc --lines --total=always $1/logs/liferay.*.log | grep total | awk '{print $1}'
 }
 
 function get_portal_project_dir {
@@ -417,11 +417,73 @@ function reverse {
 	done
 }
 
+function prepare_additional_bundles {
+	for ((i = 0 ; i < $1 ; i++ ))
+	do
+	appServerBundlesSize=$((1+ ${i}))
+
+	leadingPortNumber=$((8 + ${appServerBundlesSize}))
+
+	testAppServerParentDir="${LIFERAY_HOME}-${appServerBundlesSize}"
+
+	if [ -d "${testAppServerParentDir}" ]
+	 then
+	rm -rf "${testAppServerParentDir}"
+	fi
+
+	cp -r "${LIFERAY_HOME}" "${testAppServerParentDir}"
+
+	testAppServerDir=$(find ${testAppServerParentDir} -type d -name "tomcat*")
+
+	echo "${testAppServerDir}"
+
+	sed -i "s/=\"8\([0-9]\{3\}\)\"/=\"${leadingPortNumber}\1\"/g" "${testAppServerDir}/conf/server.xml"
+
+	sed -i "s/channel-logic-name/channel-logic-name-${appServerBundlesSize}/g" "${testAppServerDir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
+
+	sed -i "s|liferay.home=${LIFERAY_HOME}|liferay.home=${testAppServerParentDir}|g" "${testAppServerDir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
+
+	osgiConsolePort=$((11312 + ${appServerBundlesSize}))
+
+	sed -i "s/11312/${osgiConsolePort}/g" "${testAppServerDir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
+
+	chmod a+x "${testAppServerDir}"
+	done
+}
+
 function set_variables {
 	local playwright_env_dir=$(dirname ${BASH_SOURCE[0]})
 
 	_PLAYWRIGHT_BASE_DIR=$(get_absolute_dir ${playwright_env_dir}/../..)
 	_PORTAL_PROJECT_DIR=$(get_absolute_dir ${playwright_env_dir}/../../../../..)
+}
+
+function start_additional_bundles {
+	for ((i = 0 ; i < $1 ; i++ ))
+	do
+	appServerBundlesSize=$((1+ ${i}))
+
+	leadingPortNumber=$((8 + ${appServerBundlesSize}))
+
+	testAppServerParentDir="${LIFERAY_HOME}-${appServerBundlesSize}"
+
+	additionalPortalURL="${LIFERAY_PORTAL_URL/\:8/\:"$leadingPortNumber"}"
+
+	testAppServerDir=$(find ${testAppServerParentDir} -type d -name "tomcat*")
+
+	cd ${testAppServerDir}/bin
+
+	/bin/bash catalina.sh run &
+
+	while ! curl --output /dev/null --silent --head --fail ${additionalPortalURL}
+	do
+		sleep 5
+	done
+
+	wait_for_portal_log_inactivity ${testAppServerParentDir}
+
+	echo "${additionalPortalURL} is now available."
+	done
 }
 
 function start_analytics_cloud {
@@ -440,7 +502,7 @@ function start_app_server {
 		sleep 5
 	done
 
-	wait_for_portal_log_inactivity
+	wait_for_portal_log_inactivity ${LIFERAY_HOME}
 
 	echo "${LIFERAY_PORTAL_URL} is now available."
 }
@@ -491,6 +553,32 @@ function start_client_extension_spring_boot_application {
 	else
 		echo "The directory ${client_extension_dir} does not exist."
 	fi
+}
+
+function stop_additional_bundles {
+	for ((i = 0 ; i < $1 ; i++ ))
+	do
+	appServerBundlesSize=$((1+ ${i}))
+
+	testAppServerParentDir=${LIFERAY_HOME}-${appServerBundlesSize}
+
+	testAppServerDir=$(find ${testAppServerParentDir} -type d -name "tomcat*")
+
+	leadingPortNumber=$((8 + ${appServerBundlesSize}))
+
+	additionalPortalURL="${LIFERAY_PORTAL_URL/\:8/\:"$leadingPortNumber"}"
+
+	cd "${testAppServerDir}/bin"
+
+	/bin/bash shutdown.sh &
+
+	while curl --output /dev/null --silent --head --fail ${additionalPortalURL}
+	do
+		sleep 5
+	done
+
+	echo "${additionalPortalURL} is no longer available."
+	done
 }
 
 function stop_analytics_cloud {
@@ -585,7 +673,7 @@ function validate_environment_variables {
 }
 
 function wait_for_portal_log_inactivity {
-	local portal_log_file_size=$(get_portal_log_file_size)
+	local portal_log_file_size=$(get_portal_log_file_size $1)
 
 	local sleep_interval=15
 	local sleep_duration=180
@@ -593,9 +681,9 @@ function wait_for_portal_log_inactivity {
 
 	sleep ${sleep_interval}
 
-	while [[ ${portal_log_file_size} != $(get_portal_log_file_size) ]]
+	while [[ ${portal_log_file_size} != $(get_portal_log_file_size $1) ]]
 	do
-		portal_log_file_size=$(get_portal_log_file_size)
+		portal_log_file_size=$(get_portal_log_file_size $1)
 
 		if [[ ${total_duration} -ge ${sleep_duration} ]]
 		then

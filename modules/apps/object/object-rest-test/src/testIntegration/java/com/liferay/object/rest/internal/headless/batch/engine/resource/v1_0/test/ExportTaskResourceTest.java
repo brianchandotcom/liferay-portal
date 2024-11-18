@@ -124,7 +124,6 @@ public class ExportTaskResourceTest {
 			).apply(
 				() -> {
 					_testPostExportTask("COMPLETED", null, objectDefinition2);
-
 					_testPostExportTask("FAILED", null, _objectDefinition);
 				}
 			);

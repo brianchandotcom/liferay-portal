@@ -89,6 +89,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.io.File;
 import java.io.InputStream;
@@ -293,8 +295,8 @@ public class LayoutsImporterTest {
 	}
 
 	@Test
-	@TestInfo("LPS-129107")
-	public void testImportLayoutPageTemplateEntryWithFragmentEntryLinkFromMissingFragmentEntry()
+	@TestInfo({"LPS-128399", "LPS-129107"})
+	public void testImportLayoutPageTemplateEntryWithStyleBookAndMissingFragmentEntry()
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -313,9 +315,18 @@ public class LayoutsImporterTest {
 				RandomTestUtil.randomString(), fragmentEntryKey,
 				RandomTestUtil.randomString(), _serviceContext1));
 
+		StyleBookEntry styleBookEntry = _addStyleBookEntry(
+			_serviceContext1, RandomTestUtil.randomString());
+
+		_updateLayoutStyleBookEntryId(
+			layoutPageTemplateEntry, styleBookEntry.getStyleBookEntryId());
+
 		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
 			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
 			LayoutPageTemplateEntryTypeConstants.BASIC);
+
+		StyleBookEntry curStyleBookEntry = _addStyleBookEntry(
+			_serviceContext2, styleBookEntry.getStyleBookEntryKey());
 
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
 			_layoutsImporter.importFile(
@@ -340,8 +351,16 @@ public class LayoutsImporterTest {
 			},
 			layoutsImporterResultEntry.getWarningMessages());
 
-		_assertLayoutsImporterResultEntries(
-			fragmentEntry, layoutsImporterResultEntries);
+		LayoutPageTemplateEntry curLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group2.getGroupId(),
+				_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
+
+		_assertFragmentEntryLink(fragmentEntry, curLayoutPageTemplateEntry);
+
+		_assertStyleBookEntryId(
+			curLayoutPageTemplateEntry,
+			curStyleBookEntry.getStyleBookEntryId());
 	}
 
 	@Test
@@ -969,6 +988,16 @@ public class LayoutsImporterTest {
 					"myTextField", false)));
 	}
 
+	private StyleBookEntry _addStyleBookEntry(
+			ServiceContext serviceContext, String styleBookEntryKey)
+		throws Exception {
+
+		return _styleBookEntryLocalService.addStyleBookEntry(
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			false, StringPool.BLANK, RandomTestUtil.randomString(),
+			styleBookEntryKey, StringPool.BLANK, serviceContext);
+	}
+
 	private void _assertFragmentEntryLink(
 			FragmentEntry fragmentEntry,
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
@@ -1258,6 +1287,22 @@ public class LayoutsImporterTest {
 			curFragmentStyledLayoutStructureItem);
 	}
 
+	private void _assertStyleBookEntryId(
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			long styleBookEntryId)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Assert.assertEquals(styleBookEntryId, layout.getStyleBookEntryId());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertEquals(
+			styleBookEntryId, draftLayout.getStyleBookEntryId());
+	}
+
 	private ContainerStyledLayoutStructureItem _getContainerLayoutStructureItem(
 		LayoutStructure layoutStructure) {
 
@@ -1334,6 +1379,25 @@ public class LayoutsImporterTest {
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
+	private void _updateLayoutStyleBookEntryId(
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			long styleBookEntryId)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.publishLayout(
+			_layoutLocalService.updateStyleBookEntryId(
+				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+				draftLayout.getLayoutId(), styleBookEntryId),
+			layout);
+
+		_assertStyleBookEntryId(layoutPageTemplateEntry, styleBookEntryId);
 	}
 
 	private void _validateColumnLayoutStructureItem(
@@ -1594,6 +1658,9 @@ public class LayoutsImporterTest {
 
 	private ServiceContext _serviceContext1;
 	private ServiceContext _serviceContext2;
+
+	@Inject
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 	@Inject
 	private ZipWriterFactory _zipWriterFactory;

@@ -145,7 +145,7 @@ public class NavigationBarTag extends BaseContainerTag {
 					HtmlUtil.escape((String)navigationItem.get("label")));
 
 				if (GetterUtil.getBoolean(navigationItem.get("deprecated"))) {
-					jspWriter.write("<span class=\"badge badge-warning ");
+					jspWriter.write("<span class=\"badge badge-warning ml-2 ");
 					jspWriter.write("text-uppercase badge-translucent\">");
 					jspWriter.write("<span class=\"badge-item ");
 					jspWriter.write("badge-item-expand\">");

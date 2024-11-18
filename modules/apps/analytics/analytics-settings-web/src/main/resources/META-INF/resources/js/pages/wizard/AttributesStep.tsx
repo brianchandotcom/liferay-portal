@@ -26,13 +26,6 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 
 			<BasePage.Footer>
 				<ClayButton
-					displayType="secondary"
-					onClick={() => onChangeStep(ESteps.People)}
-				>
-					{Liferay.Language.get('previous')}
-				</ClayButton>
-
-				<ClayButton
 					onClick={() => {
 						sync();
 
@@ -49,6 +42,13 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 					}}
 				>
 					{Liferay.Language.get('finish')}
+				</ClayButton>
+
+				<ClayButton
+					displayType="secondary"
+					onClick={() => onChangeStep(ESteps.People)}
+				>
+					{Liferay.Language.get('previous')}
 				</ClayButton>
 			</BasePage.Footer>
 		</BasePage>

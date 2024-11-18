@@ -173,12 +173,13 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 
 	@Override
 	public int getCommerceInventoryWarehouseItemsCount(
-			long companyId, long groupId, String sku, String unitOfMeasureKey)
+			long companyId, long accountEntryId, long groupId, String sku,
+			String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryWarehouseItemService.
 			getCommerceInventoryWarehouseItemsCount(
-				companyId, groupId, sku, unitOfMeasureKey);
+				companyId, accountEntryId, groupId, sku, unitOfMeasureKey);
 	}
 
 	@Override
@@ -236,10 +237,11 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 
 	@Override
 	public java.math.BigDecimal getStockQuantity(
-		long companyId, long groupId, String sku, String unitOfMeasureKey) {
+		long companyId, long accountEntryId, long groupId, String sku,
+		String unitOfMeasureKey) {
 
 		return _commerceInventoryWarehouseItemService.getStockQuantity(
-			companyId, groupId, sku, unitOfMeasureKey);
+			companyId, accountEntryId, groupId, sku, unitOfMeasureKey);
 	}
 
 	@Override

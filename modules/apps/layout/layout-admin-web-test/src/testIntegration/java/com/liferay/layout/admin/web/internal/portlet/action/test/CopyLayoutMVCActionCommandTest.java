@@ -115,26 +115,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
 
-		_processAction(Collections.emptyMap());
-
-		Layout layout = _assertCopiedLayout();
-
-		List<ResourcePermission> expectedResourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				_layout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(_layout.getPlid()));
-
-		List<ResourcePermission> actualResourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				_layout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(layout.getPlid()));
-
-		Assert.assertNotEquals(
-			expectedResourcePermissions.toString(),
-			expectedResourcePermissions.size(),
-			actualResourcePermissions.size());
+		_assertCopyLayout(false, Collections.emptyMap());
 	}
 
 	@Test
@@ -154,7 +135,7 @@ public class CopyLayoutMVCActionCommandTest {
 			_group.getGroupId(), _layout.isPrivateLayout(),
 			_layout.getLayoutId(), masterLayoutPageTemplateEntry.getPlid());
 
-		_processAction(Collections.emptyMap());
+		_processAction(false, Collections.emptyMap());
 
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			_layout.getGroupId(), _layout.isPrivateLayout(), "/" + _NAME);
@@ -179,30 +160,12 @@ public class CopyLayoutMVCActionCommandTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(), "Menu",
 				SiteNavigationConstants.TYPE_DEFAULT, true, _serviceContext);
 
-		_processAction(
+		_assertCopyLayout(
+			false,
 			HashMapBuilder.put(
 				"TypeSettingsProperties--siteNavigationMenuId--",
 				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
 			).build());
-
-		Layout layout = _assertCopiedLayout();
-
-		List<ResourcePermission> expectedResourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				_layout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(_layout.getPlid()));
-
-		List<ResourcePermission> actualResourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				_group.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(layout.getPlid()));
-
-		Assert.assertNotEquals(
-			expectedResourcePermissions.toString(),
-			expectedResourcePermissions.size(),
-			actualResourcePermissions.size());
 
 		long navigationItemCount =
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(
@@ -224,29 +187,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_addModelResources(role);
 
-		_processAction(
-			HashMapBuilder.put(
-				"copyPermissions", StringPool.TRUE.toString()
-			).build());
-
-		Layout layout = _assertCopiedLayout();
-
-		List<ResourcePermission> expectedResourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				_layout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(_layout.getPlid()));
-
-		List<ResourcePermission> actualResourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				_layout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(layout.getPlid()));
-
-		Assert.assertEquals(
-			expectedResourcePermissions.toString(),
-			expectedResourcePermissions.size(),
-			actualResourcePermissions.size());
+		Layout layout = _assertCopyLayout(true, Collections.emptyMap());
 
 		Assert.assertNotNull(
 			_resourcePermissionLocalService.getResourcePermission(
@@ -279,7 +220,12 @@ public class CopyLayoutMVCActionCommandTest {
 			Layout.class.getName(), _layout.getPlid(), modelPermissions);
 	}
 
-	private Layout _assertCopiedLayout() {
+	private Layout _assertCopyLayout(
+			boolean copyPermissions, Map<String, String> map)
+		throws Exception {
+
+		_processAction(copyPermissions, map);
+
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			_layout.getGroupId(), _layout.isPrivateLayout(), "/" + _NAME);
 
@@ -339,6 +285,31 @@ public class CopyLayoutMVCActionCommandTest {
 			expectedLayoutFragmentEntryLink.getPosition(),
 			actualLayoutFragmentEntryLink.getPosition());
 
+		List<ResourcePermission> expectedResourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				_layout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(_layout.getPlid()));
+
+		List<ResourcePermission> actualResourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				_layout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPlid()));
+
+		if (copyPermissions) {
+			Assert.assertEquals(
+				expectedResourcePermissions.toString(),
+				expectedResourcePermissions.size(),
+				actualResourcePermissions.size());
+		}
+		else {
+			Assert.assertNotEquals(
+				expectedResourcePermissions.toString(),
+				expectedResourcePermissions.size(),
+				actualResourcePermissions.size());
+		}
+
 		return layout;
 	}
 
@@ -385,13 +356,18 @@ public class CopyLayoutMVCActionCommandTest {
 		return themeDisplay;
 	}
 
-	private void _processAction(Map<String, String> map) throws Exception {
+	private void _processAction(
+			boolean copyPermissions, Map<String, String> map)
+		throws Exception {
+
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
+		mockLiferayPortletActionRequest.addParameter(
+			"copyPermissions", String.valueOf(copyPermissions));
 		mockLiferayPortletActionRequest.addParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
 		mockLiferayPortletActionRequest.addParameter(

@@ -1130,8 +1130,8 @@ public class JournalContentDisplayContext {
 		}
 
 		return DDMTemplateLocalServiceUtil.fetchTemplate(
-			article.getGroupId(), _portal.getClassNameId(DDMStructure.class),
-			ddmTemplateKey, true);
+			_themeDisplay.getScopeGroupId(),
+			_portal.getClassNameId(DDMStructure.class), ddmTemplateKey, true);
 	}
 
 	private Group _getGroup() {

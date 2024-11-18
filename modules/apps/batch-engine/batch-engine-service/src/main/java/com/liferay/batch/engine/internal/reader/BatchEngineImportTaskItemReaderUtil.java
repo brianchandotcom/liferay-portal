@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -30,7 +32,6 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -279,25 +280,14 @@ public class BatchEngineImportTaskItemReaderUtil {
 			return new HashSet<>();
 		}
 
-		Serializable restrictedFieldNamesParam = parameters.get(
-			"restrictedFieldNames");
+		String restrictedFieldNames = MapUtil.getString(
+			parameters, "restrictedFieldNames");
 
-		if (restrictedFieldNamesParam instanceof String) {
-			String restrictedFieldNamesStr = (String)restrictedFieldNamesParam;
-
-			String[] restrictedFieldNamesArray = restrictedFieldNamesStr.split(
-				",");
-
-			Set<String> restrictedFieldNames = new HashSet<>();
-
-			for (String fieldName : restrictedFieldNamesArray) {
-				restrictedFieldNames.add(fieldName.trim());
-			}
-
-			return restrictedFieldNames;
+		if (Validator.isBlank(restrictedFieldNames)) {
+			return new HashSet<>();
 		}
 
-		return Collections.emptySet();
+		return SetUtil.fromArray(StringUtil.split(restrictedFieldNames));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

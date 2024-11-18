@@ -1220,6 +1220,67 @@ test.describe('Image Fragment', () => {
 	);
 });
 
+test.describe('Localization Select Fragment', () => {
+	test('Allow selecting a language', async ({apiHelpers, page, site}) => {
+
+		// Create a page with a localization select fragment
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'localization-select',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await page.exposeFunction('checkLanguageUpdate', (id) => {
+			expect(id).toBe('es-ES111');
+		});
+
+		// Check the language select is visible
+
+		const languageSelect = page.getByLabel(
+			'Select a language, current language: English (United States).'
+		);
+
+		// Click an option and checkt the langue select is updated and the event is fired
+
+		expect(languageSelect).toBeVisible();
+
+		await page.evaluate(() => {
+			Liferay.on('languageSelect:localeChanged', (event) => {
+				(window as any).TEST_LANGUAGE_SELECTED = event.languageId;
+			});
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {name: 'es-ES'}),
+			trigger: languageSelect,
+		});
+
+		const response = await page.waitForFunction(
+			() => {
+				return (window as any).TEST_LANGUAGE_SELECTED;
+			},
+			{timeout: 1000 * 60}
+		);
+
+		expect(await response.jsonValue()).toBe('es_ES');
+
+		await expect(
+			page.getByLabel(
+				'Select a language, current language: Spanish (Spain).'
+			)
+		).toBeVisible();
+	});
+});
+
 test.describe('Multiselect Fragment', () => {
 	test(
 		'Allow submit form if the field is required and at least one item is checked',

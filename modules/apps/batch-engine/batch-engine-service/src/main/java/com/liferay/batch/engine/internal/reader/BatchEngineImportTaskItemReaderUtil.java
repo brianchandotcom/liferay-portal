@@ -237,7 +237,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 			batchEngineImportTask.getParameters();
 
 		if (parameters == null) {
-			parameters = Collections.emptyMap();
+			return new HashSet<>();
 		}
 
 		Serializable restrictedFieldNamesParam = parameters.get(

@@ -6,6 +6,8 @@
 import {expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
@@ -13,14 +15,204 @@ import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
+import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 export const test = mergeTests(
+	apiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
 	isolatedSiteTest,
 	loginTest(),
 	pagesAdminPagesTest,
 	pageEditorPagesTest,
 	pageTemplatesPagesTest
 );
+
+test.describe('Convert content pages', () => {
+	test(
+		'Can add a page template set during convert to page template when the site have a page template set',
+		{
+			tag: ['@LPS-140483', '@LPS-166207'],
+		},
+		async ({apiHelpers, page, pageEditorPage, pageTemplatesPage, site}) => {
+
+			// Creates a content page
+
+			const layoutPageTemplateCollectionName = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateCollection.addLayoutPageTemplateCollection(
+				{
+					groupId: site.id,
+					name: layoutPageTemplateCollectionName,
+				}
+			);
+
+			// Creates a content page
+
+			const headingId = getRandomString();
+
+			const headingFragmentDefinition = getFragmentDefinition({
+				id: headingId,
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const layoutTitle = getRandomString();
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([headingFragmentDefinition]),
+				siteId: site.id,
+				title: layoutTitle,
+			});
+
+			// Go to edit mode of page and convert to page template
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.clickOnAction('Convert to Page Template');
+
+			// Save in a new page template set
+
+			await page
+				.getByRole('dialog')
+				.getByRole('button', {name: 'Save In New Set'})
+				.click();
+
+			await page
+				.getByRole('dialog')
+				.getByRole('button', {exact: true, name: 'Save'})
+				.click();
+
+			await waitForAlert(
+				page,
+				'The page template was created successfully. You can view it here: See in Page Templates.'
+			);
+
+			// Assert page template where created correctly
+
+			await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+			await page.getByRole('menuitem', {name: 'Untitled Set'}).click();
+
+			await expect(
+				page.getByRole('heading', {name: 'Untitled Set'})
+			).toBeVisible();
+
+			const pageTemplateName = `${layoutTitle} - Page Template`;
+
+			const card = page
+				.locator('.card-type-asset')
+				.filter({hasText: pageTemplateName});
+
+			await expect(card.getByText('Draft')).toBeVisible();
+		}
+	);
+
+	test(
+		'Can add a page template set during convert to page template when the site does not have a page template set',
+		{
+			tag: ['@LPS-140483', '@LPS-166207'],
+		},
+		async ({apiHelpers, page, pageEditorPage, pageTemplatesPage, site}) => {
+
+			// Creates a content page
+
+			const headingId = getRandomString();
+
+			const headingFragmentDefinition = getFragmentDefinition({
+				id: headingId,
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const widgetId = getRandomString();
+
+			const widgetDefinition = getWidgetDefinition({
+				id: widgetId,
+				widgetName:
+					'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
+			});
+
+			const layoutTitle = getRandomString();
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					headingFragmentDefinition,
+					widgetDefinition,
+				]),
+				siteId: site.id,
+				title: layoutTitle,
+			});
+
+			// Go to edit mode of page
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Edit translation
+
+			await pageEditorPage.switchLanguage('es-ES');
+
+			await pageEditorPage.editTextEditable(
+				headingId,
+				'element-text',
+				'Texto Editado'
+			);
+
+			// Convert to page template
+
+			await pageEditorPage.clickOnAction('Convert to Page Template');
+
+			// Save page template
+
+			await page
+				.getByRole('dialog')
+				.getByRole('button', {exact: true, name: 'Save'})
+				.click();
+
+			await waitForAlert(
+				page,
+				'The page template was created successfully. You can view it here: See in Page Templates.'
+			);
+
+			// Assert page template where created correctly
+
+			await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+			await expect(
+				page.getByRole('heading', {name: 'Untitled Set'})
+			).toBeVisible();
+
+			const pageTemplateName = `${layoutTitle} - Page Template`;
+
+			const card = page
+				.locator('.card-type-asset')
+				.filter({hasText: pageTemplateName});
+
+			await expect(card.getByText('Draft')).toBeVisible();
+
+			// Edit page template
+
+			await page
+				.getByRole('link', {exact: true, name: pageTemplateName})
+				.click();
+
+			// Assert page template elements
+
+			// Assert page template translations
+
+			await expect(page.getByText('Heading Example')).toBeVisible();
+
+			await expect(
+				page.locator('.portlet-asset-publisher')
+			).toBeVisible();
+
+			await pageEditorPage.switchLanguage('es-ES');
+
+			await expect(page.getByText('Texto Editado')).toBeVisible();
+		}
+	);
+});
 
 test.describe('General', () => {
 	test('Add, rename and delete a content page template', async ({

@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.taglib.sample.web.internal.portlet;
 
-import com.liferay.frontend.taglib.sample.web.internal.constants.TaglibSamplePortletKeys;
+import com.liferay.frontend.taglib.sample.web.internal.constants.SamplePortletKeys;
 import com.liferay.frontend.taglib.sample.web.internal.display.context.FrontendSampleDisplayContext;
 import com.liferay.frontend.taglib.sample.web.internal.display.context.SearchIteratorDisplayContext;
 import com.liferay.frontend.taglib.sample.web.internal.display.context.SearchPaginatorDisplayContext;
@@ -39,14 +39,14 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + TaglibSamplePortletKeys.TAGLIB_SAMPLE_PORTLET,
+		"javax.portlet.name=" + SamplePortletKeys.SAMPLE_PORTLET,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )
-public class TaglibSamplePortlet extends MVCPortlet {
+public class SamplePortlet extends MVCPortlet {
 
 	@Override
 	public void doDispatch(
@@ -54,16 +54,16 @@ public class TaglibSamplePortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			TaglibSamplePortletKeys.SEARCH_PAGINATOR_DISPLAY_CONTEXT,
+			SamplePortletKeys.SEARCH_PAGINATOR_DISPLAY_CONTEXT,
 			new SearchPaginatorDisplayContext(
 				_portal, renderRequest, renderResponse));
 
 		renderRequest.setAttribute(
-			TaglibSamplePortletKeys.FRONTEND_SAMPLE_DISPLAY_CONTEXT,
+			SamplePortletKeys.FRONTEND_SAMPLE_DISPLAY_CONTEXT,
 			new FrontendSampleDisplayContext(renderRequest, renderResponse));
 
 		renderRequest.setAttribute(
-			TaglibSamplePortletKeys.SEARCH_ITERATOR_DISPLAY_CONTEXT,
+			SamplePortletKeys.SEARCH_ITERATOR_DISPLAY_CONTEXT,
 			new SearchIteratorDisplayContext(
 				_portal, renderRequest, renderResponse));
 

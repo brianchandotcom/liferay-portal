@@ -72,9 +72,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 		for (Map.Entry<String, Object> entry : fieldNameValueMap.entrySet()) {
 			String name = entry.getKey();
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-35944") &&
-				restrictedFieldNames.contains(name)) {
-
+			if (restrictedFieldNames.contains(name)) {
 				continue;
 			}
 
@@ -269,6 +267,10 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 	private static Set<String> _getRestrictedFieldNames(
 		BatchEngineImportTask batchEngineImportTask) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35944")) {
+			return new HashSet<>();
+		}
 
 		Map<String, Serializable> parameters =
 			batchEngineImportTask.getParameters();

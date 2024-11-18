@@ -12,6 +12,7 @@ import React, {useState} from 'react';
 
 export function LocalizationSelect({
 	defaultLanguageId,
+	editMode,
 	hideLanguageLabel,
 	locales,
 	size,
@@ -31,7 +32,9 @@ export function LocalizationSelect({
 			hideLanguageLabel={hideLanguageLabel}
 			items={locales}
 			onActiveChange={(active) => {
-				setActive(active);
+				if (!editMode) {
+					setActive(active);
+				}
 			}}
 			onSelectionChange={(id) => {
 				onSelectedLocaleChange(id);

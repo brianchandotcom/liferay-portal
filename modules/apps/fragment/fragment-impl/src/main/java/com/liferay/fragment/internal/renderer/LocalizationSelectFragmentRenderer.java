@@ -131,6 +131,8 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 					"defaultLanguageId",
 					LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
 				).put(
+					"editMode", fragmentRendererContext.isEditMode()
+				).put(
 					"hideLanguageLabel",
 					GetterUtil.getBoolean(
 						_fragmentEntryConfigurationParser.getFieldValue(

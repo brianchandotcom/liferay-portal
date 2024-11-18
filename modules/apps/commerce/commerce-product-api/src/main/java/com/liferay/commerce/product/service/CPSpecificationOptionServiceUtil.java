@@ -32,14 +32,15 @@ public class CPSpecificationOptionServiceUtil {
 	 */
 	public static CPSpecificationOption addCPSpecificationOption(
 			String externalReferenceCode, long cpOptionCategoryId,
-			long listTypeDefinitionId, Map<java.util.Locale, String> titleMap,
+			long[] listTypeDefinitionIds,
+			Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap, boolean facetable,
 			String key, double priority,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCPSpecificationOption(
-			externalReferenceCode, cpOptionCategoryId, listTypeDefinitionId,
+			externalReferenceCode, cpOptionCategoryId, listTypeDefinitionIds,
 			titleMap, descriptionMap, facetable, key, priority, serviceContext);
 	}
 
@@ -100,7 +101,7 @@ public class CPSpecificationOptionServiceUtil {
 
 	public static CPSpecificationOption updateCPSpecificationOption(
 			String externalReferenceCode, long cpSpecificationOptionId,
-			long cpOptionCategoryId, long listTypeDefinitionId,
+			long cpOptionCategoryId, long[] listTypeDefinitionIds,
 			Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap, boolean facetable,
 			String key, double priority,
@@ -109,7 +110,7 @@ public class CPSpecificationOptionServiceUtil {
 
 		return getService().updateCPSpecificationOption(
 			externalReferenceCode, cpSpecificationOptionId, cpOptionCategoryId,
-			listTypeDefinitionId, titleMap, descriptionMap, facetable, key,
+			listTypeDefinitionIds, titleMap, descriptionMap, facetable, key,
 			priority, serviceContext);
 	}
 

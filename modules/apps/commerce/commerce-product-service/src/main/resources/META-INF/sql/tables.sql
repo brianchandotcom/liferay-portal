@@ -474,6 +474,16 @@ create table CPOptionValue (
 	primary key (CPOptionValueId, ctCollectionId)
 );
 
+create table CPSOListTypeDefinitionRel (
+	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
+	CPSOListTypeDefinitionRelId LONG not null,
+	companyId LONG,
+	CPSpecificationOptionId LONG,
+	listTypeDefinitionId LONG,
+	primary key (CPSOListTypeDefinitionRelId, ctCollectionId)
+);
+
 create table CPSpecificationOption (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,
@@ -486,7 +496,6 @@ create table CPSpecificationOption (
 	createDate DATE null,
 	modifiedDate DATE null,
 	CPOptionCategoryId LONG,
-	listTypeDefinitionId LONG,
 	title STRING null,
 	description STRING null,
 	facetable BOOLEAN,

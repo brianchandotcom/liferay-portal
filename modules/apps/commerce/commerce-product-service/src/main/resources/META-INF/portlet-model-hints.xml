@@ -648,7 +648,6 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="CPOptionCategoryId" type="long" />
-		<field name="listTypeDefinitionId" type="long" />
 		<field localized="true" name="title" type="String">
 			<validator name="required" />
 		</field>
@@ -661,6 +660,14 @@
 		</field>
 		<field name="priority" type="double" />
 		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPSpecificationOptionListTypeDefinitionRel">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="CPSpecificationOptionListTypeDefinitionRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="CPSpecificationOptionId" type="long" />
+		<field name="listTypeDefinitionId" type="long" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPTaxCategory">
 		<field name="mvccVersion" type="long" />

@@ -85,13 +85,10 @@ public interface CPSpecificationOptionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPSpecificationOption addCPSpecificationOption(
 			String externalReferenceCode, long userId, long cpOptionCategoryId,
-			long listTypeDefinitionId, Map<Locale, String> titleMap,
+			long[] listTypeDefinitionIds, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, boolean facetable, String key,
 			double priority, ServiceContext serviceContext)
 		throws PortalException;
-
-	public int countCPSpecificationOptionByListTypeDefinitionId(
-		long listTypeDefinitionId);
 
 	/**
 	 * Creates a new cp specification option with the primary key. Does not add the cp specification option to the database.
@@ -360,7 +357,7 @@ public interface CPSpecificationOptionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPSpecificationOption updateCPSpecificationOption(
 			String externalReferenceCode, long cpSpecificationOptionId,
-			long cpOptionCategoryId, long listTypeDefinitionId,
+			long cpOptionCategoryId, long[] listTypeDefinitionIds,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			boolean facetable, String key, double priority,
 			ServiceContext serviceContext)

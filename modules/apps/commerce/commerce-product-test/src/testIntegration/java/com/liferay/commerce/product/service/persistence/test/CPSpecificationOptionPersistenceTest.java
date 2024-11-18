@@ -143,9 +143,6 @@ public class CPSpecificationOptionPersistenceTest {
 		newCPSpecificationOption.setCPOptionCategoryId(
 			RandomTestUtil.nextLong());
 
-		newCPSpecificationOption.setListTypeDefinitionId(
-			RandomTestUtil.nextLong());
-
 		newCPSpecificationOption.setTitle(RandomTestUtil.randomString());
 
 		newCPSpecificationOption.setDescription(RandomTestUtil.randomString());
@@ -200,9 +197,6 @@ public class CPSpecificationOptionPersistenceTest {
 		Assert.assertEquals(
 			existingCPSpecificationOption.getCPOptionCategoryId(),
 			newCPSpecificationOption.getCPOptionCategoryId());
-		Assert.assertEquals(
-			existingCPSpecificationOption.getListTypeDefinitionId(),
-			newCPSpecificationOption.getListTypeDefinitionId());
 		Assert.assertEquals(
 			existingCPSpecificationOption.getTitle(),
 			newCPSpecificationOption.getTitle());
@@ -284,13 +278,6 @@ public class CPSpecificationOptionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByListTypeDefinitionId() throws Exception {
-		_persistence.countByListTypeDefinitionId(RandomTestUtil.nextLong());
-
-		_persistence.countByListTypeDefinitionId(0L);
-	}
-
-	@Test
 	public void testCountByC_K() throws Exception {
 		_persistence.countByC_K(RandomTestUtil.nextLong(), "");
 
@@ -340,9 +327,9 @@ public class CPSpecificationOptionPersistenceTest {
 			true, "uuid", true, "externalReferenceCode", true,
 			"CPSpecificationOptionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"CPOptionCategoryId", true, "listTypeDefinitionId", true, "title",
-			true, "description", true, "facetable", true, "key", true,
-			"priority", true, "lastPublishDate", true);
+			"CPOptionCategoryId", true, "title", true, "description", true,
+			"facetable", true, "key", true, "priority", true, "lastPublishDate",
+			true);
 	}
 
 	@Test
@@ -688,9 +675,6 @@ public class CPSpecificationOptionPersistenceTest {
 		cpSpecificationOption.setModifiedDate(RandomTestUtil.nextDate());
 
 		cpSpecificationOption.setCPOptionCategoryId(RandomTestUtil.nextLong());
-
-		cpSpecificationOption.setListTypeDefinitionId(
-			RandomTestUtil.nextLong());
 
 		cpSpecificationOption.setTitle(RandomTestUtil.randomString());
 

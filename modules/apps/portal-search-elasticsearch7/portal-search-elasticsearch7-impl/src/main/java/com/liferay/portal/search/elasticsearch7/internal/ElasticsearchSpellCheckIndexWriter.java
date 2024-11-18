@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
@@ -141,25 +140,23 @@ public class ElasticsearchSpellCheckIndexWriter
 		SearchContext searchContext, String typeFieldValue) {
 
 		try {
-			String indexName = _indexNameBuilder.getIndexName(
-				searchContext.getCompanyId());
+			BooleanQuery booleanQuery = new BooleanQueryImpl();
 
-			Filter termFilter = new TermFilter(Field.TYPE, typeFieldValue);
+			booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
 
 			BooleanFilter booleanFilter = new BooleanFilter();
 
-			booleanFilter.add(termFilter, BooleanClauseOccur.MUST);
-
-			MatchAllQuery matchAllQuery = new MatchAllQuery();
-
-			BooleanQuery booleanQuery = new BooleanQueryImpl();
+			booleanFilter.add(
+				new TermFilter(Field.TYPE, typeFieldValue),
+				BooleanClauseOccur.MUST);
 
 			booleanQuery.setPreBooleanFilter(booleanFilter);
 
-			booleanQuery.add(matchAllQuery, BooleanClauseOccur.MUST);
-
 			DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
-				new DeleteByQueryDocumentRequest(matchAllQuery, indexName);
+				new DeleteByQueryDocumentRequest(
+					booleanQuery,
+					_indexNameBuilder.getIndexName(
+						searchContext.getCompanyId()));
 
 			if (PortalRunMode.isTestMode() ||
 				searchContext.isCommitImmediately()) {

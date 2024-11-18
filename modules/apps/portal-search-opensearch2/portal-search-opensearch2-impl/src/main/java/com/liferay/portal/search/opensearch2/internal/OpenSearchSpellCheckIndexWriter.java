@@ -127,8 +127,9 @@ public class OpenSearchSpellCheckIndexWriter
 		SearchContext searchContext, String typeFieldValue) {
 
 		try {
-			String indexName = _indexNameBuilder.getIndexName(
-				searchContext.getCompanyId());
+			BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+			booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
 
 			BooleanFilter booleanFilter = new BooleanFilter();
 
@@ -136,16 +137,13 @@ public class OpenSearchSpellCheckIndexWriter
 				new TermFilter(Field.TYPE, typeFieldValue),
 				BooleanClauseOccur.MUST);
 
-			BooleanQuery booleanQuery = new BooleanQueryImpl();
-
 			booleanQuery.setPreBooleanFilter(booleanFilter);
 
-			MatchAllQuery matchAllQuery = new MatchAllQuery();
-
-			booleanQuery.add(matchAllQuery, BooleanClauseOccur.MUST);
-
 			DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
-				new DeleteByQueryDocumentRequest(matchAllQuery, indexName);
+				new DeleteByQueryDocumentRequest(
+					booleanQuery,
+					_indexNameBuilder.getIndexName(
+						searchContext.getCompanyId()));
 
 			if (PortalRunMode.isTestMode() ||
 				searchContext.isCommitImmediately()) {

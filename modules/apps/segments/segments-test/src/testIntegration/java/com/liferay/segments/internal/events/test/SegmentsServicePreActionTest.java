@@ -85,7 +85,7 @@ public class SegmentsServicePreActionTest {
 	}
 
 	@Test
-	public void testProcessLifecycleEvent() throws Exception {
+	public void testProcessLifecycleEvent1() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					SegmentsConfiguration.class.getName(),
@@ -141,7 +141,7 @@ public class SegmentsServicePreActionTest {
 	}
 
 	@Test
-	public void testProcessLifecycleEvent1() throws Exception {
+	public void testProcessLifecycleEvent2() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					SegmentsConfiguration.class.getName(),

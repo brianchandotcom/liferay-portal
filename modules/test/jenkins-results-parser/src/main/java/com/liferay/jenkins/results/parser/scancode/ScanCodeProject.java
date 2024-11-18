@@ -138,15 +138,16 @@ public class ScanCodeProject {
 		String scanCodeResultsDir = JenkinsResultsParserUtil.getBuildProperty(
 			"scancode.results.dir");
 
-		for (String extension : _RESULT_FILES_EXTENSIONS) {
+		for (String resultFileExtension : _RESULT_FILES_EXTENSIONS) {
 			String link = JenkinsResultsParserUtil.combine(
-				_projectURL, "results/", extension);
+				_projectURL, "results/", resultFileExtension);
 
 			URL url = new URL(link);
 
 			File file = new File(
 				JenkinsResultsParserUtil.combine(
-					scanCodeResultsDir, _projectNameFromURL, ".", extension));
+					scanCodeResultsDir, _projectNameFromURL, ".",
+					resultFileExtension));
 
 			JenkinsResultsParserUtil.toFile(url, file);
 		}
@@ -206,7 +207,7 @@ public class ScanCodeProject {
 				continue;
 			}
 
-			sb.append(complianceAlertType.getSlackEmoticon());
+			sb.append(complianceAlertType.getSlackEmoji());
 			sb.append(" ");
 			sb.append(
 				key.replaceAll(
@@ -525,21 +526,21 @@ public class ScanCodeProject {
 		ERROR("error", ":red_circle:"),
 		WARNING("warning", ":large_yellow_circle:");
 
-		public String getSlackEmoticon() {
-			return _slackEmoticon;
+		public String getSlackEmoji() {
+			return _slackEmoji;
 		}
 
 		public String toString() {
 			return _name;
 		}
 
-		private ComplianceAlertType(String name, String slackEmoticon) {
+		private ComplianceAlertType(String name, String slackEmoji) {
 			_name = name;
-			_slackEmoticon = slackEmoticon;
+			_slackEmoji = slackEmoji;
 		}
 
 		private final String _name;
-		private final String _slackEmoticon;
+		private final String _slackEmoji;
 
 	}
 

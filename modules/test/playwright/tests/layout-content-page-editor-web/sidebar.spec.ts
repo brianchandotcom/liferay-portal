@@ -1555,6 +1555,110 @@ test.describe('Page Design Options', () => {
 });
 
 test.describe('Rules Panel', () => {
+	test(
+		'Add page rule',
+		{
+			tag: ['@LPS-196461', '@LPS-196462', '@LPS-200349'],
+		},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create content page with a button fragment and go to edit mode
+
+			const buttonId = getRandomString();
+
+			const buttonDefinition = getFragmentDefinition({
+				id: buttonId,
+				key: 'BASIC_COMPONENT-button',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([buttonDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Assert info message
+
+			await pageEditorPage.goToSidebarTab('Page Rules');
+
+			await expect(
+				page.getByText('Fortunately, it is very easy to add new ones.')
+			).toBeVisible();
+
+			// Open new rule modal
+
+			const modal = page.locator('.modal-dialog');
+
+			await clickAndExpectToBeVisible({
+				target: modal.getByRole('heading', {name: 'New Rule'}),
+				trigger: page.getByRole('button', {name: 'New Rule'}),
+			});
+
+			// Create new rule
+
+			const ruleName = getRandomString();
+
+			await modal.getByLabel('Rule Name').fill(ruleName);
+
+			// Condition
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'User'}),
+				trigger: page.getByLabel('Select Item for the Condition'),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'Is the User'}),
+				trigger: page.getByLabel('Select Condition'),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'test'}),
+				trigger: page.getByLabel('Select User'),
+			});
+
+			// Action
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'Hide'}),
+				trigger: page.getByLabel('Select Action'),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'Fragment'}),
+				trigger: page.getByLabel('Select Item for the Action'),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'Button'}),
+				trigger: page.getByLabel('Select Fragment'),
+			});
+
+			await modal
+				.getByRole('button', {exact: true, name: 'Save'})
+				.click();
+
+			await waitForAlert(
+				page,
+				'Success:The rule was created successfully.'
+			);
+
+			// Assert rule is created
+
+			await expect(
+				page.getByText('IfUserIs the UsertestHideFragmentButton')
+			).toBeVisible();
+		}
+	);
+
 	test('Checks the accessibility of the rule modal by filling out a condition and an action', async ({
 		apiHelpers,
 		page,

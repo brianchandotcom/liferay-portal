@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -62,6 +63,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -108,18 +110,6 @@ public class CopyLayoutMVCActionCommandTest {
 
 		expectedLayout = _layoutLocalService.updateLayout(expectedLayout);
 
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest();
-
-		mockLiferayPortletActionRequest.addParameter(
-			"groupId", String.valueOf(_group.getGroupId()));
-		mockLiferayPortletActionRequest.addParameter(
-			"privateLayout", String.valueOf(expectedLayout.isPrivateLayout()));
-		mockLiferayPortletActionRequest.addParameter(
-			"name", "Copy test layout");
-		mockLiferayPortletActionRequest.addParameter(
-			"sourcePlid", String.valueOf(expectedLayout.getPlid()));
-
 		_addFragmentEntryLinkToLayout(
 			expectedLayout,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
@@ -133,9 +123,8 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_addModelResources(role, expectedLayout);
 
-		_mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		_processAction(
+			expectedLayout, "Copy test layout", Collections.emptyMap());
 
 		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
@@ -183,21 +172,8 @@ public class CopyLayoutMVCActionCommandTest {
 			expectedLayout.getLayoutId(),
 			masterLayoutPageTemplateEntry.getPlid());
 
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest();
-
-		mockLiferayPortletActionRequest.addParameter(
-			"groupId", String.valueOf(_group.getGroupId()));
-		mockLiferayPortletActionRequest.addParameter(
-			"privateLayout", String.valueOf(expectedLayout.isPrivateLayout()));
-		mockLiferayPortletActionRequest.addParameter(
-			"name", "Copy test layout");
-		mockLiferayPortletActionRequest.addParameter(
-			"sourcePlid", String.valueOf(expectedLayout.getPlid()));
-
-		_mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		_processAction(
+			expectedLayout, "Copy test layout", Collections.emptyMap());
 
 		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
@@ -219,26 +195,6 @@ public class CopyLayoutMVCActionCommandTest {
 
 		expectedLayout = _layoutLocalService.updateLayout(expectedLayout);
 
-		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.addSiteNavigationMenu(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), "Menu",
-				SiteNavigationConstants.TYPE_DEFAULT, true, _serviceContext);
-
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest();
-
-		mockLiferayPortletActionRequest.addParameter(
-			"groupId", String.valueOf(_group.getGroupId()));
-		mockLiferayPortletActionRequest.addParameter(
-			"privateLayout", String.valueOf(expectedLayout.isPrivateLayout()));
-		mockLiferayPortletActionRequest.addParameter(
-			"name", "Copy test layout");
-		mockLiferayPortletActionRequest.addParameter(
-			"sourcePlid", String.valueOf(expectedLayout.getPlid()));
-		mockLiferayPortletActionRequest.addParameter(
-			"TypeSettingsProperties--siteNavigationMenuId--",
-			String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()));
-
 		_addFragmentEntryLinkToLayout(
 			expectedLayout,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
@@ -252,9 +208,17 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_addModelResources(role, expectedLayout);
 
-		_mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), "Menu",
+				SiteNavigationConstants.TYPE_DEFAULT, true, _serviceContext);
+
+		_processAction(
+			expectedLayout, "Copy test layout",
+			HashMapBuilder.put(
+				"TypeSettingsProperties--siteNavigationMenuId--",
+				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
+			).build());
 
 		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
@@ -299,20 +263,6 @@ public class CopyLayoutMVCActionCommandTest {
 
 		expectedLayout = _layoutLocalService.updateLayout(expectedLayout);
 
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest();
-
-		mockLiferayPortletActionRequest.addParameter(
-			"groupId", String.valueOf(_group.getGroupId()));
-		mockLiferayPortletActionRequest.addParameter(
-			"privateLayout", String.valueOf(expectedLayout.isPrivateLayout()));
-		mockLiferayPortletActionRequest.addParameter(
-			"name", "Copy test layout with permissions");
-		mockLiferayPortletActionRequest.addParameter(
-			"copyPermissions", StringPool.TRUE);
-		mockLiferayPortletActionRequest.addParameter(
-			"sourcePlid", String.valueOf(expectedLayout.getPlid()));
-
 		_addFragmentEntryLinkToLayout(
 			expectedLayout,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
@@ -326,9 +276,11 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_addModelResources(role, expectedLayout);
 
-		_mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		_processAction(
+			expectedLayout, "Copy test layout with permissions",
+			HashMapBuilder.put(
+				"copyPermissions", StringPool.TRUE.toString()
+			).build());
 
 		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
@@ -410,19 +362,6 @@ public class CopyLayoutMVCActionCommandTest {
 		return _fragmentEntry;
 	}
 
-	private MockLiferayPortletActionRequest
-			_getMockLiferayPortletActionRequest()
-		throws Exception {
-
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
-
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		return mockLiferayPortletActionRequest;
-	}
-
 	private ServiceContext _getServiceContext(Group group) throws Exception {
 		return ServiceContextTestUtil.getServiceContext(
 			group, TestPropsValues.getUserId());
@@ -441,6 +380,34 @@ public class CopyLayoutMVCActionCommandTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
+	}
+
+	private void _processAction(
+			Layout layout, String name, Map<String, String> map)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		mockLiferayPortletActionRequest.addParameter(
+			"groupId", String.valueOf(_group.getGroupId()));
+		mockLiferayPortletActionRequest.addParameter(
+			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+		mockLiferayPortletActionRequest.addParameter("name", name);
+		mockLiferayPortletActionRequest.addParameter(
+			"sourcePlid", String.valueOf(layout.getPlid()));
+
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			mockLiferayPortletActionRequest.addParameter(
+				entry.getKey(), entry.getValue());
+		}
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 	}
 
 	private void _validateCopiedLayout(

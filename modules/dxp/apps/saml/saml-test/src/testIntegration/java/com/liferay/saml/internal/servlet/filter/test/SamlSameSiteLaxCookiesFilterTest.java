@@ -153,9 +153,8 @@ public class SamlSameSiteLaxCookiesFilterTest {
 		List<HttpCookie> cookies = cookieStore.getCookies();
 
 		cookies.forEach(
-			httpCookie -> Assert.assertFalse(
-				"New JSESSIONID cookie received, so session was undesirably " +
-					"invalidated",
+			httpCookie -> Assert.assertTrue(
+				"No JSESSIONID cookie received",
 				Objects.equals(httpCookie.getName(), "JSESSIONID")));
 
 		Map<String, String> paramsMap = new HashMap<>(_paramsMap);

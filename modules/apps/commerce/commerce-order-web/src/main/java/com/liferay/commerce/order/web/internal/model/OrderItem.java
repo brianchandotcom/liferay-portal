@@ -15,14 +15,14 @@ import java.util.List;
 public class OrderItem {
 
 	public OrderItem(
-		String deliveryGroup, String discount, String formattedQuantity,
+		String deliveryGroupName, String discount, String formattedQuantity,
 		ImageField image, String name, String options, long orderId,
 		long orderItemId, List<OrderItem> orderItems, long parentOrderItemId,
 		String price, String requestedDeliveryDate, String sku,
 		String subscriptionDuration, String subscriptionPeriod, String total,
 		String unitOfMeasureKey) {
 
-		_deliveryGroup = deliveryGroup;
+		_deliveryGroupName = deliveryGroupName;
 		_discount = discount;
 		_formattedQuantity = formattedQuantity;
 		_image = image;
@@ -41,8 +41,8 @@ public class OrderItem {
 		_unitOfMeasureKey = unitOfMeasureKey;
 	}
 
-	public String getDeliveryGroup() {
-		return _deliveryGroup;
+	public String getDeliveryGroupName() {
+		return _deliveryGroupName;
 	}
 
 	public String getDiscount() {
@@ -109,7 +109,7 @@ public class OrderItem {
 		return _unitOfMeasureKey;
 	}
 
-	private final String _deliveryGroup;
+	private final String _deliveryGroupName;
 	private final String _discount;
 	private final String _formattedQuantity;
 	private final ImageField _image;

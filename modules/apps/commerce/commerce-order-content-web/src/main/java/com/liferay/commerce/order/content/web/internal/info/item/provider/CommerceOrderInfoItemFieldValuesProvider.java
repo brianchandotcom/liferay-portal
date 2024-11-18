@@ -190,7 +190,7 @@ public class CommerceOrderInfoItemFieldValuesProvider
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.currencyIdInfoField,
-					commerceOrder.getCommerceCurrencyId()));
+					commerceOrder.getCommerceCurrencyCode()));
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.companyIdInfoField,

@@ -180,8 +180,8 @@ public class CommerceCheckoutTest {
 		CommerceOrder commerceOrder =
 			CommerceOrderLocalServiceUtil.addCommerceOrder(
 				user.getUserId(), _commerceChannel.getGroupId(),
-				accountEntry.getAccountEntryId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
+				0);
 
 		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 			commerceOrder, commerceOrder.getUserId(), false);
@@ -254,7 +254,7 @@ public class CommerceCheckoutTest {
 				CommerceOrderLocalServiceUtil.addCommerceOrder(
 					user1.getUserId(), _commerceChannel.getGroupId(),
 					accountEntry.getAccountEntryId(),
-					_commerceCurrency.getCommerceCurrencyId());
+					_commerceCurrency.getCode(), 0);
 
 			CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 				commerceOrder, commerceOrder.getUserId(), false);
@@ -326,7 +326,7 @@ public class CommerceCheckoutTest {
 				CommerceOrderLocalServiceUtil.addCommerceOrder(
 					user.getUserId(), _commerceChannel.getGroupId(),
 					accountEntry.getAccountEntryId(),
-					_commerceCurrency.getCommerceCurrencyId());
+					_commerceCurrency.getCode(), 0);
 
 			CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
 				commerceOrder, commerceOrder.getUserId(), false);
@@ -381,8 +381,8 @@ public class CommerceCheckoutTest {
 		CommerceOrder commerceOrder =
 			CommerceOrderLocalServiceUtil.addCommerceOrder(
 				user.getUserId(), _commerceChannel.getGroupId(),
-				accountEntry.getAccountEntryId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
+				0);
 
 		boolean activeBillingAddressCommerceCheckoutStep =
 			_commerceCheckoutStepHttpHelper.
@@ -425,8 +425,8 @@ public class CommerceCheckoutTest {
 		CommerceOrder commerceOrder =
 			CommerceOrderLocalServiceUtil.addCommerceOrder(
 				user.getUserId(), _commerceChannel.getGroupId(),
-				accountEntry.getAccountEntryId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
+				0);
 
 		CommerceAddress commerceAddress = addCommerceAddress(
 			commerceOrder,
@@ -481,8 +481,8 @@ public class CommerceCheckoutTest {
 		CommerceOrder commerceOrder =
 			CommerceOrderLocalServiceUtil.addCommerceOrder(
 				user.getUserId(), _commerceChannel.getGroupId(),
-				accountEntry.getAccountEntryId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
+				0);
 
 		CommerceAddress commerceAddress = addCommerceAddress(
 			commerceOrder, CommerceAddressConstants.ADDRESS_TYPE_SHIPPING);
@@ -533,8 +533,8 @@ public class CommerceCheckoutTest {
 		CommerceOrder commerceOrder =
 			CommerceOrderLocalServiceUtil.addCommerceOrder(
 				user.getUserId(), _commerceChannel.getGroupId(),
-				accountEntry.getAccountEntryId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
+				0);
 
 		boolean activePaymentMethod =
 			_commerceCheckoutStepHttpHelper.
@@ -576,8 +576,8 @@ public class CommerceCheckoutTest {
 		CommerceOrder commerceOrder =
 			CommerceOrderLocalServiceUtil.addCommerceOrder(
 				user.getUserId(), _commerceChannel.getGroupId(),
-				accountEntry.getAccountEntryId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
+				0);
 
 		CommerceTestUtil.addCommercePaymentMethodGroupRel(
 			user.getUserId(), commerceOrder.getGroupId());
@@ -637,8 +637,8 @@ public class CommerceCheckoutTest {
 		CommerceOrder commerceOrder =
 			CommerceOrderLocalServiceUtil.addCommerceOrder(
 				user.getUserId(), _commerceChannel.getGroupId(),
-				accountEntry.getAccountEntryId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
+				0);
 
 		CommerceTestUtil.addCommercePaymentMethodGroupRel(
 			user.getUserId(), commerceOrder.getGroupId());

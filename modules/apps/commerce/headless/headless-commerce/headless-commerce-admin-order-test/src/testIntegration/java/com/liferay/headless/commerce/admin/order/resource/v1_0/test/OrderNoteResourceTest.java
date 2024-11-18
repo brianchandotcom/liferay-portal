@@ -78,8 +78,7 @@ public class OrderNoteResourceTest extends BaseOrderNoteResourceTestCase {
 
 		_commerceOrder = _commerceOrderLocalService.addCommerceOrder(
 			_user.getUserId(), commerceChannel.getGroupId(),
-			accountEntry.getAccountEntryId(),
-			commerceCurrency.getCommerceCurrencyId(),
+			accountEntry.getAccountEntryId(), commerceCurrency.getCode(),
 			CommerceOrderConstants.TYPE_PK_FULFILLMENT);
 	}
 

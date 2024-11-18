@@ -137,7 +137,7 @@ public class CommerceServiceTest {
 
 		_commerceOrderService.addCommerceOrder(
 			_commerceChannel.getGroupId(), accountEntry.getAccountEntryId(),
-			_commerceCurrency.getCommerceCurrencyId(), 0);
+			_commerceCurrency.getCode(), 0);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -173,7 +173,7 @@ public class CommerceServiceTest {
 
 		_commerceOrderService.addCommerceOrder(
 			_commerceChannel.getGroupId(), accountEntry.getAccountEntryId(),
-			_commerceCurrency.getCommerceCurrencyId(), 0);
+			_commerceCurrency.getCode(), 0);
 	}
 
 	@Test
@@ -201,7 +201,7 @@ public class CommerceServiceTest {
 
 		_commerceOrderService.addCommerceOrder(
 			_commerceChannel.getGroupId(), accountEntry.getAccountEntryId(),
-			_commerceCurrency.getCommerceCurrencyId(), 0);
+			_commerceCurrency.getCode(), 0);
 	}
 
 	@Test
@@ -228,7 +228,7 @@ public class CommerceServiceTest {
 
 		_commerceOrderService.addCommerceOrder(
 			_commerceChannel.getGroupId(), accountEntry.getAccountEntryId(),
-			_commerceCurrency.getCommerceCurrencyId(), 0);
+			_commerceCurrency.getCode(), 0);
 	}
 
 	@Rule

@@ -366,10 +366,10 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			_commerceOrderService.addOrUpdateCommerceOrder(
 				externalReferenceCode, commerceChannel.getGroupId(),
 				billingAddressId, accountEntry.getAccountEntryId(),
-				commerceCurrency.getCommerceCurrencyId(),
-				_getCommerceOrderTypeId(order), commerceShippingMethodId,
-				shippingAddressId, order.getAdvanceStatus(),
-				order.getPaymentMethod(), GetterUtil.getString(order.getName()),
+				commerceCurrency.getCode(), _getCommerceOrderTypeId(order),
+				commerceShippingMethodId, shippingAddressId,
+				order.getAdvanceStatus(), order.getPaymentMethod(),
+				GetterUtil.getString(order.getName()),
 				GetterUtil.getInteger(
 					order.getOrderStatus(),
 					CommerceOrderConstants.ORDER_STATUS_PENDING),

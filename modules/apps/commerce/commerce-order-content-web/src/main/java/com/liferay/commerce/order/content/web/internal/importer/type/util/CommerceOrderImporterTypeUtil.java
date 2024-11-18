@@ -54,7 +54,7 @@ public class CommerceOrderImporterTypeUtil {
 
 		CommerceOrder tempCommerceOrder = commerceOrderService.addCommerceOrder(
 			commerceOrder.getGroupId(), commerceOrder.getCommerceAccountId(),
-			commerceOrder.getCommerceCurrencyId(),
+			commerceOrder.getCommerceCurrencyCode(),
 			commerceOrder.getCommerceOrderTypeId());
 
 		tempCommerceOrder.setManuallyAdjusted(true);

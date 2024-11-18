@@ -142,15 +142,15 @@ public class CommerceCheckoutStepTest {
 		CommerceOrder commerceOrder1 =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(),
-				accountEntry1.getAccountEntryId(),
-				_commerceCurrency.getCommerceCurrencyId(), 0);
+				accountEntry1.getAccountEntryId(), _commerceCurrency.getCode(),
+				0);
 
 		Assert.assertFalse(commerceOrder1.isGuestOrder());
 
 		CommerceOrder commerceOrder2 =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(), -1,
-				_commerceCurrency.getCommerceCurrencyId(), 0);
+				_commerceCurrency.getCode(), 0);
 
 		Assert.assertTrue(commerceOrder2.isGuestOrder());
 
@@ -200,7 +200,7 @@ public class CommerceCheckoutStepTest {
 		CommerceOrder commerceOrder1 =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(), -1,
-				_commerceCurrency.getCommerceCurrencyId(), 0);
+				_commerceCurrency.getCode(), 0);
 
 		Assert.assertTrue(commerceOrder1.isGuestOrder());
 
@@ -215,7 +215,7 @@ public class CommerceCheckoutStepTest {
 		CommerceOrder commerceOrder2 =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(), -1,
-				_commerceCurrency.getCommerceCurrencyId(), 0);
+				_commerceCurrency.getCode(), 0);
 
 		Assert.assertTrue(commerceOrder2.isGuestOrder());
 

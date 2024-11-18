@@ -1389,8 +1389,8 @@ public class ObjectActionLocalServiceTest {
 			_accountEntry.getAccountEntryId(),
 			commerceOrder2.getCommerceAccountId());
 		Assert.assertEquals(
-			_commerceCurrency.getCommerceCurrencyId(),
-			commerceOrder2.getCommerceCurrencyId());
+			_commerceCurrency.getCode(),
+			commerceOrder2.getCommerceCurrencyCode());
 		Assert.assertEquals(
 			CommerceOrderConstants.ORDER_STATUS_OPEN,
 			commerceOrder2.getOrderStatus());

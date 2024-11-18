@@ -373,8 +373,8 @@ public class CommerceInventoryEngineTest {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(),
-				_accountEntry.getAccountEntryId(),
-				_commerceCurrency.getCommerceCurrencyId(), 0);
+				_accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
+				0);
 
 		_commerceOrders.add(commerceOrder);
 

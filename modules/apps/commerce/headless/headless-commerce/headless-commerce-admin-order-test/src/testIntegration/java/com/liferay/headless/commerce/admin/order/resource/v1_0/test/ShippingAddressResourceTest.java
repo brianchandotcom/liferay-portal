@@ -122,7 +122,7 @@ public class ShippingAddressResourceTest
 		_commerceOrder = _commerceOrderLocalService.addCommerceOrder(
 			_user.getUserId(), commerceChannel.getGroupId(),
 			address.getAddressId(), accountEntry.getAccountEntryId(),
-			commerceCurrency.getCommerceCurrencyId(),
+			commerceCurrency.getCode(),
 			CommerceOrderConstants.TYPE_PK_FULFILLMENT, 0,
 			address.getAddressId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), 1, 1, 2022, 0, 0,

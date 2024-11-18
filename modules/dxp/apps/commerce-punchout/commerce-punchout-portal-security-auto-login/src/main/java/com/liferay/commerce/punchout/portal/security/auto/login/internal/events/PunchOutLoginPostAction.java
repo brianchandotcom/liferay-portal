@@ -104,14 +104,14 @@ public class PunchOutLoginPostAction extends Action {
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		long commerceCurrencyId = 0;
+		String commerceCurrencyCode = null;
 
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.getCommerceCurrency(
 				companyId, currencyCode);
 
 		if (commerceCurrency != null) {
-			commerceCurrencyId = commerceCurrency.getCommerceCurrencyId();
+			commerceCurrencyCode = commerceCurrency.getCode();
 		}
 
 		long commerceChannelGroupId =
@@ -130,7 +130,7 @@ public class PunchOutLoginPostAction extends Action {
 		else {
 			commerceOrder = _commerceOrderLocalService.addCommerceOrder(
 				punchOutUserId, commerceChannelGroupId, commerceAccountId,
-				commerceCurrencyId, 0);
+				commerceCurrencyCode, 0);
 
 			commerceOrder = _commerceOrderLocalService.updateStatus(
 				punchOutUserId, commerceOrder.getCommerceOrderId(),

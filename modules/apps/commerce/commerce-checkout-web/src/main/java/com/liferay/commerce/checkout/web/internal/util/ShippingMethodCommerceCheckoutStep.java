@@ -285,7 +285,7 @@ public class ShippingMethodCommerceCheckoutStep
 							commerceOrder.getCommerceOrderId(),
 							commerceOrder.getBillingAddressId(),
 							commerceOrder.getCommerceAccountId(),
-							commerceOrder.getCommerceCurrencyId(),
+							commerceOrder.getCommerceCurrencyCode(),
 							commerceOrder.getCommerceOrderTypeId(),
 							commerceShippingMethodId,
 							commerceOrder.getDeliveryCommerceTermEntryId(),

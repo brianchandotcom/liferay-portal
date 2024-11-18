@@ -271,8 +271,7 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(),
 				placedOrder.getPlacedOrderBillingAddressId(),
-				placedOrder.getAccountId(),
-				_commerceCurrency.getCommerceCurrencyId(),
+				placedOrder.getAccountId(), _commerceCurrency.getCode(),
 				placedOrder.getOrderTypeId(), 0,
 				placedOrder.getPlacedOrderShippingAddressId(),
 				placedOrder.getPaymentMethod(), placedOrder.getName(),

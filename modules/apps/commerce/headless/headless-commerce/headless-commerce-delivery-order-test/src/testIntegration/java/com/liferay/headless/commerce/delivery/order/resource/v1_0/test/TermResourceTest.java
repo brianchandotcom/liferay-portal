@@ -151,7 +151,7 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 		_commerceOrder = _commerceOrderLocalService.addCommerceOrder(
 			_user.getUserId(), _commerceChannel.getGroupId(),
 			_address.getAddressId(), _accountEntry.getAccountEntryId(),
-			_commerceCurrency.getCommerceCurrencyId(),
+			_commerceCurrency.getCode(),
 			CommerceOrderConstants.TYPE_PK_FULFILLMENT,
 			_commerceShippingMethod.getCommerceShippingMethodId(),
 			_address.getAddressId(), "money-order",

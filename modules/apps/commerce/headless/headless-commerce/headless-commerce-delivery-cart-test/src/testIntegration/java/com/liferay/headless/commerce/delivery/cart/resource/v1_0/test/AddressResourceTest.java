@@ -289,8 +289,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 
 		_commerceOrder = _commerceOrderLocalService.addCommerceOrder(
 			_user.getUserId(), _commerceChannel.getGroupId(),
-			_accountEntry.getAccountEntryId(),
-			_commerceCurrency.getCommerceCurrencyId(), 0);
+			_accountEntry.getAccountEntryId(), _commerceCurrency.getCode(), 0);
 
 		return _commerceOrder;
 	}

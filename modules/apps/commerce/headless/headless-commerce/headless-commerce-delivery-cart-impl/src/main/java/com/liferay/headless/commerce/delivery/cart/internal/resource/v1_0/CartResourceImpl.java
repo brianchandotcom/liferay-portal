@@ -501,14 +501,14 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			Cart cart, long commerceChannelGroupId)
 		throws Exception {
 
-		long commerceCurrencyId = 0;
+		String commerceCurrencyCode = null;
 
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.getCommerceCurrency(
 				contextCompany.getCompanyId(), cart.getCurrencyCode());
 
 		if (commerceCurrency != null) {
-			commerceCurrencyId = commerceCurrency.getCommerceCurrencyId();
+			commerceCurrencyCode = commerceCurrency.getCode();
 		}
 
 		AccountEntry accountEntry = null;
@@ -524,7 +524,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		return _commerceOrderService.addCommerceOrder(
 			commerceChannelGroupId, accountEntry.getAccountEntryId(),
-			commerceCurrencyId, _getCommerceOrderTypeId(cart));
+			commerceCurrencyCode, _getCommerceOrderTypeId(cart));
 	}
 
 	private void _addOrUpdateBillingAddress(

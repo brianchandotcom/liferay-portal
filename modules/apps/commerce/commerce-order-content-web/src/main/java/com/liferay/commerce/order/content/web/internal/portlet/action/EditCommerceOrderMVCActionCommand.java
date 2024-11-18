@@ -309,13 +309,13 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long commerceCurrencyId = 0;
+		String commerceCurrencyCode = null;
 
 		CommerceCurrency commerceCurrency =
 			commerceContext.getCommerceCurrency();
 
 		if (commerceCurrency != null) {
-			commerceCurrencyId = commerceCurrency.getCommerceCurrencyId();
+			commerceCurrencyCode = commerceCurrency.getCode();
 		}
 
 		long commerceChannelGroupId =
@@ -347,7 +347,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			return _commerceOrderService.addCommerceOrder(
 				commerceChannelGroupId, accountEntry.getAccountEntryId(),
-				commerceCurrencyId, commerceOrderTypeId);
+				commerceCurrencyCode, commerceOrderTypeId);
 		}
 		catch (Exception exception) {
 			if (exception instanceof CommerceOrderAccountLimitException) {

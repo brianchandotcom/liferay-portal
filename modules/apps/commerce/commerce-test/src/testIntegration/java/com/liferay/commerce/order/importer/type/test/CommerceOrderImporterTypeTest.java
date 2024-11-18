@@ -159,7 +159,7 @@ public class CommerceOrderImporterTypeTest {
 				_commerceOrderLocalService.addCommerceOrder(
 					_user.getUserId(), _commerceChannel.getGroupId(),
 					_accountEntry.getAccountEntryId(),
-					_commerceCurrency.getCommerceCurrencyId(), 0),
+					_commerceCurrency.getCode(), 0),
 				null,
 				DLAppLocalServiceUtil.addFileEntry(
 					null, _serviceContext.getUserId(),
@@ -228,7 +228,7 @@ public class CommerceOrderImporterTypeTest {
 				_commerceOrderLocalService.addCommerceOrder(
 					_user.getUserId(), _commerceChannel.getGroupId(),
 					_accountEntry.getAccountEntryId(),
-					_commerceCurrency.getCommerceCurrencyId(), 0),
+					_commerceCurrency.getCode(), 0),
 				null,
 				DLAppLocalServiceUtil.addFileEntry(
 					null, _serviceContext.getUserId(),

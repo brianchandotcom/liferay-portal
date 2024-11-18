@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -343,8 +344,12 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 							_commerceCurrencyLocalService.getCommerceCurrency(
 								commerceOrder.getCompanyId(), currencyCode);
 
-						if (commerceCurrency.getCommerceCurrencyId() !=
-								commerceOrder.getCommerceCurrencyId()) {
+						String commerceCurrencyCode =
+							commerceCurrency.getCode();
+
+						if (!StringUtil.equals(
+								commerceCurrencyCode,
+								commerceOrder.getCommerceCurrencyCode())) {
 
 							CommerceCurrency commerceOrderCommerceCurrency =
 								commerceOrder.getCommerceCurrency();

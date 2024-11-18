@@ -102,7 +102,7 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		return CommerceMoneyFactoryUtil.create(
-			commerceOrder.getCommerceCurrencyId(), getDiscountAmount());
+			commerceOrder.getCommerceCurrency(), getDiscountAmount());
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		return CommerceMoneyFactoryUtil.create(
-			commerceOrder.getCommerceCurrencyId(), getDiscountWithTaxAmount());
+			commerceOrder.getCommerceCurrency(), getDiscountWithTaxAmount());
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		return CommerceMoneyFactoryUtil.create(
-			commerceOrder.getCommerceCurrencyId(), getFinalPrice());
+			commerceOrder.getCommerceCurrency(), getFinalPrice());
 	}
 
 	@Override
@@ -130,8 +130,7 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		return CommerceMoneyFactoryUtil.create(
-			commerceOrder.getCommerceCurrencyId(),
-			getFinalPriceWithTaxAmount());
+			commerceOrder.getCommerceCurrency(), getFinalPriceWithTaxAmount());
 	}
 
 	@Override
@@ -156,7 +155,7 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		return CommerceMoneyFactoryUtil.create(
-			commerceOrder.getCommerceCurrencyId(), getPromoPrice());
+			commerceOrder.getCommerceCurrency(), getPromoPrice());
 	}
 
 	@Override
@@ -166,8 +165,7 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		return CommerceMoneyFactoryUtil.create(
-			commerceOrder.getCommerceCurrencyId(),
-			getPromoPriceWithTaxAmount());
+			commerceOrder.getCommerceCurrency(), getPromoPriceWithTaxAmount());
 	}
 
 	@Override
@@ -175,7 +173,7 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		return CommerceMoneyFactoryUtil.create(
-			commerceOrder.getCommerceCurrencyId(), getUnitPrice());
+			commerceOrder.getCommerceCurrency(), getUnitPrice());
 	}
 
 	@Override
@@ -185,7 +183,7 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		return CommerceMoneyFactoryUtil.create(
-			commerceOrder.getCommerceCurrencyId(), getUnitPriceWithTaxAmount());
+			commerceOrder.getCommerceCurrency(), getUnitPriceWithTaxAmount());
 	}
 
 	@Override

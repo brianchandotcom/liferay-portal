@@ -800,10 +800,10 @@ public class DataFactory {
 	}
 
 	public List<CommerceOrderModel> newAccountEntryCommerceOrderModels(
-		long groupId, long accountEntryId, long commerceCurrencyId,
-		long billingAddressId, long shippingAddressId,
-		long commerceShippingMethodId, String commerceShippingOptionName,
-		int orderStatus) {
+		long groupId, long accountEntryId, long commerceBillingAddressId,
+		String commerceCurrencyCode, int commerceOrderStatus,
+		long commerceShippingAddressId, long commerceShippingMethodId,
+		String commerceShippingOptionName) {
 
 		List<CommerceOrderModel> commerceOrderModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_ACCOUNT_ENTRY_COMMERCE_ORDER_COUNT);
@@ -814,10 +814,10 @@ public class DataFactory {
 
 			commerceOrderModels.add(
 				newCommerceOrderModel(
-					groupId, accountEntryId, commerceCurrencyId,
-					billingAddressId, shippingAddressId,
-					commerceShippingMethodId, commerceShippingOptionName,
-					orderStatus));
+					groupId, accountEntryId, commerceBillingAddressId,
+					commerceCurrencyCode, commerceOrderStatus,
+					commerceShippingAddressId, commerceShippingMethodId,
+					commerceShippingOptionName));
 		}
 
 		return commerceOrderModels;
@@ -1848,10 +1848,10 @@ public class DataFactory {
 	}
 
 	public CommerceOrderModel newCommerceOrderModel(
-		long groupId, long commerceAccountId, long commerceCurrencyId,
-		long billingAddressId, long shippingAddressId,
-		long commerceShippingMethodId, String shippingOptionName,
-		int orderStatus) {
+		long groupId, long commerceAccountId, long commerceBillingAddressId,
+		String commerceCurrencyCode, int commerceOrderStatus,
+		long commerceShippingAddressId, long commerceShippingMethodId,
+		String commerceShippingOptionName) {
 
 		CommerceOrderModel commerceOrderModel = new CommerceOrderModelImpl();
 
@@ -1874,13 +1874,13 @@ public class DataFactory {
 		// Other fields
 
 		commerceOrderModel.setCommerceAccountId(commerceAccountId);
-		commerceOrderModel.setCommerceCurrencyId(commerceCurrencyId);
-		commerceOrderModel.setBillingAddressId(billingAddressId);
-		commerceOrderModel.setShippingAddressId(shippingAddressId);
+		commerceOrderModel.setCommerceCurrencyCode(commerceCurrencyCode);
+		commerceOrderModel.setBillingAddressId(commerceBillingAddressId);
+		commerceOrderModel.setShippingAddressId(commerceShippingAddressId);
 		commerceOrderModel.setCommerceShippingMethodId(
 			commerceShippingMethodId);
-		commerceOrderModel.setShippingOptionName(shippingOptionName);
-		commerceOrderModel.setShippingAddressId(shippingAddressId);
+		commerceOrderModel.setShippingOptionName(commerceShippingOptionName);
+		commerceOrderModel.setShippingAddressId(commerceShippingAddressId);
 		commerceOrderModel.setSubtotal(BigDecimal.valueOf(0));
 		commerceOrderModel.setShippingAmount(BigDecimal.valueOf(0));
 		commerceOrderModel.setTotal(BigDecimal.valueOf(0));
@@ -1889,7 +1889,7 @@ public class DataFactory {
 		commerceOrderModel.setTotalWithTaxAmount(BigDecimal.valueOf(0));
 		commerceOrderModel.setPaymentStatus(1);
 		commerceOrderModel.setOrderDate(null);
-		commerceOrderModel.setOrderStatus(orderStatus);
+		commerceOrderModel.setOrderStatus(commerceOrderStatus);
 		commerceOrderModel.setPrintedNote(null);
 		commerceOrderModel.setRequestedDeliveryDate(null);
 		commerceOrderModel.setStatus(0);
@@ -1908,25 +1908,16 @@ public class DataFactory {
 	}
 
 	public List<CommerceOrderModel> newCommerceOrderModels(
-		long groupId, long accountEntryId, long commerceCurrencyId,
-		long commerceShippingMethodId, int orderStatus) {
-
-		return newCommerceOrderModels(
-			groupId, accountEntryId, commerceCurrencyId,
-			_firstAddressModel.getAddressId(),
-			_firstAddressModel.getAddressId(), commerceShippingMethodId,
-			"Standard Delivery", orderStatus);
-	}
-
-	public List<CommerceOrderModel> newCommerceOrderModels(
-		long groupId, long accountEntryId, long commerceCurrencyId,
-		long billingAddressId, long shippingAddressId,
-		long commerceShippingMethodId, String commerceShippingOptionName,
-		int orderStatus) {
+		long groupId, long accountEntryId, long commerceBillingAddressId,
+		String commerceCurrencyCode, int commerceOrderStatus,
+		long commerceShippingAddressId, long commerceShippingMethodId,
+		String commerceShippingOptionName) {
 
 		int maxCommerceOrderCount = 0;
 
-		if (orderStatus == CommerceOrderConstants.ORDER_STATUS_CANCELLED) {
+		if (commerceOrderStatus ==
+				CommerceOrderConstants.ORDER_STATUS_CANCELLED) {
+
 			maxCommerceOrderCount =
 				BenchmarksPropsValues.MAX_COMMERCE_ORDER_STATUS_CANCELLED_COUNT;
 
@@ -1936,7 +1927,9 @@ public class DataFactory {
 						BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT;
 			}
 		}
-		else if (orderStatus == CommerceOrderConstants.ORDER_STATUS_PENDING) {
+		else if (commerceOrderStatus ==
+					CommerceOrderConstants.ORDER_STATUS_PENDING) {
+
 			maxCommerceOrderCount =
 				BenchmarksPropsValues.MAX_COMMERCE_ORDER_STATUS_PENDING_COUNT;
 
@@ -1946,7 +1939,9 @@ public class DataFactory {
 						BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT;
 			}
 		}
-		else if (orderStatus == CommerceOrderConstants.ORDER_STATUS_OPEN) {
+		else if (commerceOrderStatus ==
+					CommerceOrderConstants.ORDER_STATUS_OPEN) {
+
 			maxCommerceOrderCount =
 				BenchmarksPropsValues.MAX_COMMERCE_ORDER_STATUS_OPEN_COUNT;
 		}
@@ -1957,13 +1952,24 @@ public class DataFactory {
 		for (int i = 1; i <= maxCommerceOrderCount; i++) {
 			commerceOrderModels.add(
 				newCommerceOrderModel(
-					groupId, accountEntryId, commerceCurrencyId,
-					billingAddressId, shippingAddressId,
-					commerceShippingMethodId, commerceShippingOptionName,
-					orderStatus));
+					groupId, accountEntryId, commerceBillingAddressId,
+					commerceCurrencyCode, commerceOrderStatus,
+					commerceShippingAddressId, commerceShippingMethodId,
+					commerceShippingOptionName));
 		}
 
 		return commerceOrderModels;
+	}
+
+	public List<CommerceOrderModel> newCommerceOrderModels(
+		long groupId, long accountEntryId, String commerceCurrencyCode,
+		int commerceOrderStatus, long commerceShippingMethodId) {
+
+		return newCommerceOrderModels(
+			groupId, accountEntryId, _firstAddressModel.getAddressId(),
+			commerceCurrencyCode, commerceOrderStatus,
+			_firstAddressModel.getAddressId(), commerceShippingMethodId,
+			"Standard Delivery");
 	}
 
 	public List<PortletPreferencesModel> newCommercePortletPreferencesModels(

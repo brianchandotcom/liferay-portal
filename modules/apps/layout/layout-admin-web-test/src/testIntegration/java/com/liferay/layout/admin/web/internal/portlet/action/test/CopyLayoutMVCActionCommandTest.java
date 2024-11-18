@@ -91,6 +91,10 @@ public class CopyLayoutMVCActionCommandTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_layout = LayoutTestUtil.addTypeContentPublishedLayout(
+			_group, RandomTestUtil.randomString(),
+			WorkflowConstants.STATUS_APPROVED);
+
 		_serviceContext = _getServiceContext(_group);
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
@@ -103,14 +107,9 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Test
 	public void testDoProcessActionCopyLayout() throws Exception {
-		Layout expectedLayout = LayoutTestUtil.addTypeContentPublishedLayout(
-			_group, RandomTestUtil.randomString(),
-			WorkflowConstants.STATUS_APPROVED);
-
 		_addFragmentEntryLinkToLayout(
-			expectedLayout,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				expectedLayout.getPlid()));
+				_layout.getPlid()));
 
 		Role role = _roleLocalService.addRole(
 			RandomTestUtil.randomString(), _serviceContext.getUserId(), null, 0,
@@ -118,21 +117,21 @@ public class CopyLayoutMVCActionCommandTest {
 			Collections.emptyMap(), RoleConstants.TYPE_REGULAR,
 			StringPool.BLANK, _serviceContext);
 
-		_addModelResources(role, expectedLayout);
+		_addModelResources(role);
 
-		_processAction(expectedLayout, Collections.emptyMap());
+		_processAction(Collections.emptyMap());
 
-		Layout actualLayout = _assertCopiedLayout(expectedLayout);
+		Layout actualLayout = _assertCopiedLayout();
 
 		List<ResourcePermission> expectedResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
-				expectedLayout.getCompanyId(), Layout.class.getName(),
+				_layout.getCompanyId(), Layout.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(expectedLayout.getPlid()));
+				String.valueOf(_layout.getPlid()));
 
 		List<ResourcePermission> actualResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
-				expectedLayout.getCompanyId(), Layout.class.getName(),
+				_layout.getCompanyId(), Layout.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(actualLayout.getPlid()));
 
@@ -147,10 +146,6 @@ public class CopyLayoutMVCActionCommandTest {
 	public void testDoProcessActionCopyLayoutWithMasterLayout()
 		throws Exception {
 
-		Layout expectedLayout = LayoutTestUtil.addTypeContentPublishedLayout(
-			_group, RandomTestUtil.randomString(),
-			WorkflowConstants.STATUS_APPROVED);
-
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
@@ -159,16 +154,14 @@ public class CopyLayoutMVCActionCommandTest {
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		expectedLayout = _layoutLocalService.updateMasterLayoutPlid(
-			_group.getGroupId(), expectedLayout.isPrivateLayout(),
-			expectedLayout.getLayoutId(),
-			masterLayoutPageTemplateEntry.getPlid());
+		_layout = _layoutLocalService.updateMasterLayoutPlid(
+			_group.getGroupId(), _layout.isPrivateLayout(),
+			_layout.getLayoutId(), masterLayoutPageTemplateEntry.getPlid());
 
-		_processAction(expectedLayout, Collections.emptyMap());
+		_processAction(Collections.emptyMap());
 
 		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
-			"/" + _NAME);
+			_layout.getGroupId(), _layout.isPrivateLayout(), "/" + _NAME);
 
 		Assert.assertEquals(
 			masterLayoutPageTemplateEntry.getPlid(),
@@ -179,14 +172,9 @@ public class CopyLayoutMVCActionCommandTest {
 	public void testDoProcessActionCopyLayoutWithNavigationMenu()
 		throws Exception {
 
-		Layout expectedLayout = LayoutTestUtil.addTypeContentPublishedLayout(
-			_group, RandomTestUtil.randomString(),
-			WorkflowConstants.STATUS_APPROVED);
-
 		_addFragmentEntryLinkToLayout(
-			expectedLayout,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				expectedLayout.getPlid()));
+				_layout.getPlid()));
 
 		Role role = _roleLocalService.addRole(
 			RandomTestUtil.randomString(), _serviceContext.getUserId(), null, 0,
@@ -194,7 +182,7 @@ public class CopyLayoutMVCActionCommandTest {
 			Collections.emptyMap(), RoleConstants.TYPE_REGULAR,
 			StringPool.BLANK, _serviceContext);
 
-		_addModelResources(role, expectedLayout);
+		_addModelResources(role);
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
@@ -202,23 +190,22 @@ public class CopyLayoutMVCActionCommandTest {
 				SiteNavigationConstants.TYPE_DEFAULT, true, _serviceContext);
 
 		_processAction(
-			expectedLayout,
 			HashMapBuilder.put(
 				"TypeSettingsProperties--siteNavigationMenuId--",
 				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
 			).build());
 
-		Layout actualLayout = _assertCopiedLayout(expectedLayout);
+		Layout actualLayout = _assertCopiedLayout();
 
 		List<ResourcePermission> expectedResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
-				expectedLayout.getCompanyId(), Layout.class.getName(),
+				_layout.getCompanyId(), Layout.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(expectedLayout.getPlid()));
+				String.valueOf(_layout.getPlid()));
 
 		List<ResourcePermission> actualResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
-				expectedLayout.getCompanyId(), Layout.class.getName(),
+				_group.getCompanyId(), Layout.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(actualLayout.getPlid()));
 
@@ -239,14 +226,9 @@ public class CopyLayoutMVCActionCommandTest {
 	public void testDoProcessActionCopyLayoutWithPermissions()
 		throws Exception {
 
-		Layout expectedLayout = LayoutTestUtil.addTypeContentPublishedLayout(
-			_group, RandomTestUtil.randomString(),
-			WorkflowConstants.STATUS_APPROVED);
-
 		_addFragmentEntryLinkToLayout(
-			expectedLayout,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				expectedLayout.getPlid()));
+				_layout.getPlid()));
 
 		Role role = _roleLocalService.addRole(
 			RandomTestUtil.randomString(), _serviceContext.getUserId(), null, 0,
@@ -254,25 +236,24 @@ public class CopyLayoutMVCActionCommandTest {
 			Collections.emptyMap(), RoleConstants.TYPE_REGULAR,
 			StringPool.BLANK, _serviceContext);
 
-		_addModelResources(role, expectedLayout);
+		_addModelResources(role);
 
 		_processAction(
-			expectedLayout,
 			HashMapBuilder.put(
 				"copyPermissions", StringPool.TRUE.toString()
 			).build());
 
-		Layout actualLayout = _assertCopiedLayout(expectedLayout);
+		Layout actualLayout = _assertCopiedLayout();
 
 		List<ResourcePermission> expectedResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
-				expectedLayout.getCompanyId(), Layout.class.getName(),
+				_layout.getCompanyId(), Layout.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(expectedLayout.getPlid()));
+				String.valueOf(_layout.getPlid()));
 
 		List<ResourcePermission> actualResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
-				expectedLayout.getCompanyId(), Layout.class.getName(),
+				_layout.getCompanyId(), Layout.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(actualLayout.getPlid()));
 
@@ -283,13 +264,13 @@ public class CopyLayoutMVCActionCommandTest {
 
 		Assert.assertNotNull(
 			_resourcePermissionLocalService.getResourcePermission(
-				expectedLayout.getCompanyId(), Layout.class.getName(),
+				_layout.getCompanyId(), Layout.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(actualLayout.getPlid()), role.getRoleId()));
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(
-			Layout layout, long segmentsExperienceId)
+			long segmentsExperienceId)
 		throws Exception {
 
 		FragmentEntry fragmentEntry = _getFragmentEntry();
@@ -297,28 +278,24 @@ public class CopyLayoutMVCActionCommandTest {
 		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), layout, fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getJs(), _layout, fragmentEntry.getFragmentEntryKey(),
 			segmentsExperienceId, fragmentEntry.getType());
 	}
 
-	private void _addModelResources(Role role, Layout expectedLayout)
-		throws Exception {
-
+	private void _addModelResources(Role role) throws Exception {
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			Layout.class.getName());
 
 		modelPermissions.addRolePermissions(role.getName(), ActionKeys.VIEW);
 
 		_resourceLocalService.addModelResources(
-			expectedLayout.getCompanyId(), expectedLayout.getGroupId(),
-			expectedLayout.getUserId(), Layout.class.getName(),
-			expectedLayout.getPlid(), modelPermissions);
+			_layout.getCompanyId(), _layout.getGroupId(), _layout.getUserId(),
+			Layout.class.getName(), _layout.getPlid(), modelPermissions);
 	}
 
-	private Layout _assertCopiedLayout(Layout expectedLayout) {
+	private Layout _assertCopiedLayout() {
 		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
-			"/" + _NAME);
+			_layout.getGroupId(), _layout.isPrivateLayout(), "/" + _NAME);
 
 		Assert.assertNotNull(actualLayout);
 
@@ -328,9 +305,8 @@ public class CopyLayoutMVCActionCommandTest {
 					getFragmentEntryLinksBySegmentsExperienceId(
 						_group.getGroupId(),
 						_segmentsExperienceLocalService.
-							fetchDefaultSegmentsExperienceId(
-								expectedLayout.getPlid()),
-						expectedLayout.getPlid());
+							fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+						_layout.getPlid());
 
 		List<FragmentEntryLink>
 			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks =
@@ -424,9 +400,7 @@ public class CopyLayoutMVCActionCommandTest {
 		return themeDisplay;
 	}
 
-	private void _processAction(Layout layout, Map<String, String> map)
-		throws Exception {
-
+	private void _processAction(Map<String, String> map) throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
@@ -436,10 +410,10 @@ public class CopyLayoutMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
 		mockLiferayPortletActionRequest.addParameter(
-			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+			"privateLayout", String.valueOf(_layout.isPrivateLayout()));
 		mockLiferayPortletActionRequest.addParameter("name", _NAME);
 		mockLiferayPortletActionRequest.addParameter(
-			"sourcePlid", String.valueOf(layout.getPlid()));
+			"sourcePlid", String.valueOf(_layout.getPlid()));
 
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			mockLiferayPortletActionRequest.addParameter(
@@ -470,6 +444,8 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private Layout _layout;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

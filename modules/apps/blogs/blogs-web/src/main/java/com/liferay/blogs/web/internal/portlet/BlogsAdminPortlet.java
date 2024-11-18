@@ -9,7 +9,7 @@ import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
+import com.liferay.change.tracking.spi.history.util.CTCollectionTimelineUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.trash.TrashHelper;
@@ -21,8 +21,6 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,11 +63,8 @@ public class BlogsAdminPortlet extends BaseBlogsPortlet {
 		renderRequest.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
-		httpServletRequest.setAttribute(
-			CTTimelineKeys.CLASS_NAME, BlogsEntry.class.getName());
+		CTCollectionTimelineUtil.setClassName(
+			_portal.getHttpServletRequest(renderRequest), BlogsEntry.class);
 
 		super.render(renderRequest, renderResponse);
 	}

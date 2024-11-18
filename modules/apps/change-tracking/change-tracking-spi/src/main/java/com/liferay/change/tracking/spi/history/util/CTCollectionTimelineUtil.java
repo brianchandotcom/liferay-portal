@@ -6,8 +6,6 @@
 package com.liferay.change.tracking.spi.history.util;
 
 import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
 import javax.servlet.http.HttpServletRequest;
 

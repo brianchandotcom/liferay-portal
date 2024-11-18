@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
-import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
+import com.liferay.change.tracking.spi.history.util.CTCollectionTimelineUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -18,12 +18,15 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -47,10 +50,9 @@ public abstract class BaseFileEntryMVCRenderCommand
 				checkPermissions(
 					themeDisplay.getPermissionChecker(), fileEntry);
 
-				renderRequest.setAttribute(
-					CTTimelineKeys.CLASS_NAME, DLFileEntry.class.getName());
-				renderRequest.setAttribute(
-					CTTimelineKeys.CLASS_PK, fileEntry.getFileEntryId());
+				CTCollectionTimelineUtil.setCTTimelineKeys(
+					portal.getHttpServletRequest(renderRequest),
+					DLFileEntry.class, fileEntry.getFileEntryId());
 			}
 
 			renderRequest.setAttribute(
@@ -91,5 +93,8 @@ public abstract class BaseFileEntryMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 	}
+
+	@Reference
+	protected Portal portal;
 
 }

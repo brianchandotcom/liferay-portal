@@ -53,6 +53,7 @@ import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.AddressLocalService;
@@ -732,6 +733,20 @@ public class CommerceServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.alterColumnName(
 				CommerceOrderItemModelImpl.TABLE_NAME, "deliveryGroup",
 				"deliveryGroupName VARCHAR(75) null"));
+
+		registry.register(
+			"12.0.0", "13.0.0",
+			UpgradeProcessFactory.addColumns(
+				CommerceOrderModelImpl.TABLE_NAME,
+				"commerceCurrencyCode VARCHAR(75) null"),
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"UPDATE CommerceOrder SET commerceCurrencyCode = (SELECT ",
+					"code_ FROM CommerceCurrency WHERE ",
+					"CommerceCurrency.commerceCurrencyId = ",
+					"CommerceOrder.commerceCurrencyId)")),
+			UpgradeProcessFactory.dropColumns(
+				CommerceOrderModelImpl.TABLE_NAME, "commerceCurrencyId"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

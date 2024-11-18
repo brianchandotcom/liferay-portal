@@ -40,7 +40,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			}
 			catch (PortalException portalException) {
 				_log.error(
-					"Unable to delete the batch engine import task " +
+					"Unable to delete the batch engine export task " +
 						batchEngineExportTask.getBatchEngineExportTaskId(),
 					portalException);
 			}
@@ -57,7 +57,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			}
 			catch (PortalException portalException) {
 				_log.error(
-					"Unable to delete the batch engine export task " +
+					"Unable to delete the batch engine import task " +
 						batchEngineImportTask.getBatchEngineImportTaskId(),
 					portalException);
 			}

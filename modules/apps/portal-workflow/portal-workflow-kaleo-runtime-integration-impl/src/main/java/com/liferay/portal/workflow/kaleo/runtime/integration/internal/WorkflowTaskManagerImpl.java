@@ -725,10 +725,6 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
 				workflowTaskId);
 
-		if (kaleoTaskInstanceToken.isCompleted()) {
-			return false;
-		}
-
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments =
 			_aggregateKaleoTaskAssignmentSelector.getKaleoTaskAssignments(
 				_kaleoTaskAssignmentLocalService.getKaleoTaskAssignments(

@@ -92,7 +92,7 @@ create table CommerceOrder (
 	modifiedDate DATE null,
 	billingAddressId LONG,
 	commerceAccountId LONG,
-	commerceCurrencyId LONG,
+	commerceCurrencyCode VARCHAR(75) null,
 	commerceOrderTypeId LONG,
 	commerceShippingMethodId LONG,
 	deliveryCommerceTermEntryId LONG,

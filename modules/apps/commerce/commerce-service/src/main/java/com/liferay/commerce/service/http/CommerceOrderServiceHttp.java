@@ -88,7 +88,7 @@ public class CommerceOrderServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
 			HttpPrincipal httpPrincipal, long groupId, long commerceAccountId,
-			long commerceCurrencyId, long commerceOrderTypeId)
+			String commerceCurrencyCode, long commerceOrderTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -97,7 +97,7 @@ public class CommerceOrderServiceHttp {
 				_addCommerceOrderParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, commerceAccountId, commerceCurrencyId,
+				methodKey, groupId, commerceAccountId, commerceCurrencyCode,
 				commerceOrderTypeId);
 
 			Object returnObj = null;
@@ -132,7 +132,7 @@ public class CommerceOrderServiceHttp {
 			addOrUpdateCommerceOrder(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long groupId, long billingAddressId, long commerceAccountId,
-				long commerceCurrencyId, long commerceOrderTypeId,
+				String commerceCurrencyCode, long commerceOrderTypeId,
 				long commerceShippingMethodId, long shippingAddressId,
 				String advanceStatus, String commercePaymentMethodKey,
 				String name, int orderDateMonth, int orderDateDay,
@@ -155,7 +155,7 @@ public class CommerceOrderServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId, billingAddressId,
-				commerceAccountId, commerceCurrencyId, commerceOrderTypeId,
+				commerceAccountId, commerceCurrencyCode, commerceOrderTypeId,
 				commerceShippingMethodId, shippingAddressId, advanceStatus,
 				commercePaymentMethodKey, name, orderDateMonth, orderDateDay,
 				orderDateYear, orderDateHour, orderDateMinute, orderStatus,
@@ -196,7 +196,7 @@ public class CommerceOrderServiceHttp {
 			addOrUpdateCommerceOrder(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long groupId, long billingAddressId, long commerceAccountId,
-				long commerceCurrencyId, long commerceOrderTypeId,
+				String commerceCurrencyCode, long commerceOrderTypeId,
 				long commerceShippingMethodId, long shippingAddressId,
 				String advanceStatus, String commercePaymentMethodKey,
 				String name, int orderStatus, int paymentStatus,
@@ -218,7 +218,7 @@ public class CommerceOrderServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId, billingAddressId,
-				commerceAccountId, commerceCurrencyId, commerceOrderTypeId,
+				commerceAccountId, commerceCurrencyCode, commerceOrderTypeId,
 				commerceShippingMethodId, shippingAddressId, advanceStatus,
 				commercePaymentMethodKey, name, orderStatus, paymentStatus,
 				purchaseOrderNumber, shippingAmount, shippingOptionName,
@@ -2743,10 +2743,10 @@ public class CommerceOrderServiceHttp {
 			java.io.InputStream.class
 		};
 	private static final Class<?>[] _addCommerceOrderParameterTypes1 =
-		new Class[] {long.class, long.class, long.class, long.class};
+		new Class[] {long.class, long.class, String.class, long.class};
 	private static final Class<?>[] _addOrUpdateCommerceOrderParameterTypes2 =
 		new Class[] {
-			String.class, long.class, long.class, long.class, long.class,
+			String.class, long.class, long.class, long.class, String.class,
 			long.class, long.class, long.class, String.class, String.class,
 			String.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, String.class, java.math.BigDecimal.class,
@@ -2759,7 +2759,7 @@ public class CommerceOrderServiceHttp {
 		};
 	private static final Class<?>[] _addOrUpdateCommerceOrderParameterTypes3 =
 		new Class[] {
-			String.class, long.class, long.class, long.class, long.class,
+			String.class, long.class, long.class, long.class, String.class,
 			long.class, long.class, long.class, String.class, String.class,
 			String.class, int.class, int.class, String.class,
 			java.math.BigDecimal.class, String.class,

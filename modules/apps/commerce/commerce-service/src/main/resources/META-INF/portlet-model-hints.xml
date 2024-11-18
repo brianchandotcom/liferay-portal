@@ -88,7 +88,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="billingAddressId" type="long" />
 		<field name="commerceAccountId" type="long" />
-		<field name="commerceCurrencyId" type="long" />
+		<field name="commerceCurrencyCode" type="String" />
 		<field name="commerceOrderTypeId" type="long" />
 		<field name="commerceShippingMethodId" type="long" />
 		<field name="deliveryCommerceTermEntryId" type="long" />

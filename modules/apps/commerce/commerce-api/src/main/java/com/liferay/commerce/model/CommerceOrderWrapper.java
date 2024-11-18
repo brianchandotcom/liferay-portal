@@ -48,7 +48,7 @@ public class CommerceOrderWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("commerceAccountId", getCommerceAccountId());
-		attributes.put("commerceCurrencyId", getCommerceCurrencyId());
+		attributes.put("commerceCurrencyCode", getCommerceCurrencyCode());
 		attributes.put("commerceOrderTypeId", getCommerceOrderTypeId());
 		attributes.put(
 			"commerceShippingMethodId", getCommerceShippingMethodId());
@@ -257,10 +257,11 @@ public class CommerceOrderWrapper
 			setCommerceAccountId(commerceAccountId);
 		}
 
-		Long commerceCurrencyId = (Long)attributes.get("commerceCurrencyId");
+		String commerceCurrencyCode = (String)attributes.get(
+			"commerceCurrencyCode");
 
-		if (commerceCurrencyId != null) {
-			setCommerceCurrencyId(commerceCurrencyId);
+		if (commerceCurrencyCode != null) {
+			setCommerceCurrencyCode(commerceCurrencyCode);
 		}
 
 		Long commerceOrderTypeId = (Long)attributes.get("commerceOrderTypeId");
@@ -813,13 +814,13 @@ public class CommerceOrderWrapper
 	}
 
 	/**
-	 * Returns the commerce currency ID of this commerce order.
+	 * Returns the commerce currency code of this commerce order.
 	 *
-	 * @return the commerce currency ID of this commerce order
+	 * @return the commerce currency code of this commerce order
 	 */
 	@Override
-	public long getCommerceCurrencyId() {
-		return model.getCommerceCurrencyId();
+	public String getCommerceCurrencyCode() {
+		return model.getCommerceCurrencyCode();
 	}
 
 	/**
@@ -1885,13 +1886,13 @@ public class CommerceOrderWrapper
 	}
 
 	/**
-	 * Sets the commerce currency ID of this commerce order.
+	 * Sets the commerce currency code of this commerce order.
 	 *
-	 * @param commerceCurrencyId the commerce currency ID of this commerce order
+	 * @param commerceCurrencyCode the commerce currency code of this commerce order
 	 */
 	@Override
-	public void setCommerceCurrencyId(long commerceCurrencyId) {
-		model.setCommerceCurrencyId(commerceCurrencyId);
+	public void setCommerceCurrencyCode(String commerceCurrencyCode) {
+		model.setCommerceCurrencyCode(commerceCurrencyCode);
 	}
 
 	/**

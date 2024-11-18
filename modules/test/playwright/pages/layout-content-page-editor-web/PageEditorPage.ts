@@ -461,6 +461,19 @@ export class PageEditorPage {
 			.waitFor({state: 'hidden'});
 	}
 
+	async clickOnAction(action: string) {
+		await clickAndExpectToBeVisible({
+			target: this.page.getByRole('menuitem', {
+				name: action,
+			}),
+			trigger: this.page
+				.locator('.control-menu-nav-item')
+				.getByLabel('Options', {exact: true}),
+		});
+
+		await this.page.getByRole('menuitem', {name: action}).click();
+	}
+
 	async copyFragment(fragmentId: string) {
 		await this.selectFragment(fragmentId);
 

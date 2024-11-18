@@ -74,16 +74,9 @@ public class JournalContentPortletDataHandler extends BasePortletDataHandler {
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-27566")) {
-
-			setDataPortletPreferences(
-				"articleExternalReferenceCode",
-				"ddmTemplateExternalReferenceCode", "groupId");
-		}
-		else {
-			setDataPortletPreferences("articleId", "ddmTemplateKey", "groupId");
-		}
+		setDataPortletPreferences(
+			"articleExternalReferenceCode", "articleId",
+			"ddmTemplateExternalReferenceCode", "ddmTemplateKey", "groupId");
 
 		setExportControls(
 			new PortletDataHandlerBoolean(

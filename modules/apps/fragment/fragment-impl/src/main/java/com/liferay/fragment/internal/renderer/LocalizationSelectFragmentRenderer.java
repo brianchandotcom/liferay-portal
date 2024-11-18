@@ -10,6 +10,10 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
+import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.permission.provider.InfoPermissionProvider;
+import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
@@ -95,7 +99,32 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		return FeatureFlagManagerUtil.isEnabled("LPD-37927");
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-37927")) {
+			return false;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		for (InfoItemClassDetails infoItemClassDetails :
+				_infoItemServiceRegistry.getInfoItemClassDetails(
+					EditPageInfoItemCapability.KEY)) {
+
+			InfoPermissionProvider infoPermissionProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoPermissionProvider.class,
+					infoItemClassDetails.getClassName());
+
+			if ((infoPermissionProvider == null) ||
+				infoPermissionProvider.hasViewPermission(
+					themeDisplay.getPermissionChecker())) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -187,6 +216,9 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

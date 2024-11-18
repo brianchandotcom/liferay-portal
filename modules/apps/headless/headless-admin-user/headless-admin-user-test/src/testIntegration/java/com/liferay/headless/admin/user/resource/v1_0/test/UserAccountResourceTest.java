@@ -1915,6 +1915,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE,
 				Boolean.TRUE.toString());
 
+			portletPreferences.store();
+
 			randomUserAccount = randomUserAccount();
 
 			randomUserAccount.setGender(UserAccount.Gender.FEMALE);
@@ -1933,6 +1935,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				PropsKeys.
 					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE,
 				Boolean.FALSE.toString());
+
+			portletPreferences.store();
 		}
 	}
 
@@ -2065,6 +2069,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE,
 				Boolean.TRUE.toString());
 
+			portletPreferences.store();
+
 			patchUserAccount = userAccountResource.patchUserAccount(
 				postUserAccount.getId(), userAccount);
 
@@ -2079,6 +2085,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				PropsKeys.
 					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE,
 				Boolean.FALSE.toString());
+
+			portletPreferences.store();
 		}
 	}
 
@@ -2242,6 +2250,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE,
 				Boolean.TRUE.toString());
 
+			portletPreferences.store();
+
 			randomUserAccount = randomUserAccount();
 
 			randomUserAccount.setGender(UserAccount.Gender.FEMALE);
@@ -2260,6 +2270,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				PropsKeys.
 					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE,
 				Boolean.FALSE.toString());
+
+			portletPreferences.store();
 		}
 	}
 

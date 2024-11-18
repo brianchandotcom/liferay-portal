@@ -85,12 +85,14 @@ public class JSONReplacementsFileCheck extends BaseFileCheck {
 			List<String> parameterTypes1 = new ArrayList<>();
 			List<String> parameterTypes2 = new ArrayList<>();
 
-			if (from1.indexOf("(") != -1) {
-				parameterTypes1 = JavaSourceUtil.getParameterTypes(from1);
-			}
+			if (!from1.startsWith("regex:") && !from2.startsWith("regex:")) {
+				if (from1.indexOf("(") != -1) {
+					parameterTypes1 = JavaSourceUtil.getParameterTypes(from1);
+				}
 
-			if (from2.indexOf("(") != -1) {
-				parameterTypes2 = JavaSourceUtil.getParameterTypes(from2);
+				if (from2.indexOf("(") != -1) {
+					parameterTypes2 = JavaSourceUtil.getParameterTypes(from2);
+				}
 			}
 
 			if (parameterTypes1.isEmpty() && !parameterTypes2.isEmpty()) {

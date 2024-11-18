@@ -4058,10 +4058,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				if ((nameMap != null) &&
 					Validator.isNotNull(nameMap.get(defaultLocale)) &&
 					((group.getClassNameId() <= 0) ||
-					 (group.getType() == GroupConstants.TYPE_DEPOT) ||
 					 Objects.equals(
-					 	group.getClassName(),
-					 	Group.class.getName()))) {
+						 group.getClassName(), Group.class.getName()) ||
+					 (group.getType() == GroupConstants.TYPE_DEPOT))) {
 
 					group.setGroupKey(nameMap.get(defaultLocale));
 				}

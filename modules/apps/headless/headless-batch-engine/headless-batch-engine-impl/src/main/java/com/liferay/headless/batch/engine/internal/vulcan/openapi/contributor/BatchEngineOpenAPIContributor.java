@@ -6,6 +6,7 @@
 package com.liferay.headless.batch.engine.internal.vulcan.openapi.contributor;
 
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 
@@ -30,20 +31,10 @@ public class BatchEngineOpenAPIContributor implements OpenAPIContributor {
 	public void contribute(OpenAPI openAPI, OpenAPIContext openAPIContext)
 		throws Exception {
 
-		if (openAPIContext == null) {
-			return;
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35944")) {
-			_lPD35944(openAPI);
-		}
-	}
-
-	private void _lPD35944(OpenAPI openAPI) {
-		if (!Objects.equals(
-				openAPI.getInfo(
-				).getTitle(),
-				"Headless Batch Engine")) {
+		if ((openAPIContext == null) ||
+			FeatureFlagManagerUtil.isEnabled("LPD-35944") ||
+			StringUtil.endsWith(
+				openAPIContext.getPath(), "/headless-batch-engine/")) {
 
 			return;
 		}

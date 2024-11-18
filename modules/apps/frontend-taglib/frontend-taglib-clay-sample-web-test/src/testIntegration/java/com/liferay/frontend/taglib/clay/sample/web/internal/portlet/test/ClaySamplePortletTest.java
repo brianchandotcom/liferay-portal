@@ -27,7 +27,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -69,7 +68,7 @@ public class ClaySamplePortletTest {
 
 		LayoutTestUtil.addPortletToLayout(
 			TestPropsValues.getUserId(), layout, _PORTLET_NAME, "column-1",
-			new HashMap<String, String[]>());
+			null);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"net.htmlparser.jericho", LoggerTestUtil.ERROR)) {

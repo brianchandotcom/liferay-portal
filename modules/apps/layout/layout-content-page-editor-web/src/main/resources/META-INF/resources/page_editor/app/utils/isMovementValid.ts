@@ -3,24 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openToast} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 
-import {FragmentLayoutDataItem} from '../../types/layout_data/FragmentLayoutDataItem';
 import {LayoutData, LayoutDataItem} from '../../types/layout_data/LayoutData';
 import {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
 import {WidgetSet} from '../actions/updateWidgets';
-import {FRAGMENT_ENTRY_TYPES} from '../config/constants/fragmentEntryTypes';
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import selectLayoutDataItemLabel from '../selectors/selectLayoutDataItemLabel';
 import checkAllowedChild, {
 	MovementItem,
 } from './drag_and_drop/checkAllowedChild';
-import {formIsMapped} from './formIsMapped';
-import {getFormParent} from './getFormParent';
-import getItemWidget from './getItemWidget';
-import {getStepperChild} from './getStepperChild';
-import getWidget from './getWidget';
-import {hasCollectionParent} from './hasCollectionParent';
-import isStepper from './isStepper';
 import toMovementItem from './toMovementItem';
 
 type Props = {
@@ -52,17 +43,20 @@ export function isMovementValid({
 
 	for (const source of sources) {
 
-		// Skip iteration if movement is valid
+		// Check if movement is valid
 
-		if (
-			checkAllowedChild(
-				source,
-				target,
-				layoutData,
-				fragmentEntryLinks,
-				getWidgets
-			)
-		) {
+		const {reason, valid} = checkAllowedChild(
+			source,
+			target,
+			layoutData,
+			fragmentEntryLinks,
+			getWidgets,
+			sources.length > 1
+		);
+
+		// Skip iteration if it is
+
+		if (valid === true) {
 			continue;
 		}
 
@@ -70,68 +64,72 @@ export function isMovementValid({
 
 		let message = '';
 
-		if (target.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
-			message = Liferay.Language.get(
-				'fragments-and-widgets-cannot-be-placed-inside-this-area'
-			);
-		}
-		else if (target.type === LAYOUT_DATA_ITEM_TYPES.collection) {
-			message = Liferay.Language.get(
-				'fragments-cannot-be-placed-inside-an-unmapped-collection-display-fragment'
-			);
-		}
-		else if (
-			target.type === LAYOUT_DATA_ITEM_TYPES.form &&
-			!formIsMapped(target)
-		) {
-			message = Liferay.Language.get(
-				'fragments-cannot-be-placed-inside-an-unmapped-form-container'
-			);
-		}
-		else if (source.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input) {
+		if (reason === 'input-outside-form') {
 			message = Liferay.Language.get(
 				'form-components-can-only-be-placed-inside-a-mapped-form-container'
 			);
-
-			if (isStepper(source)) {
-				const form = getFormParent(target, layoutData);
-
-				if (sources.length > 1) {
-					message = Liferay.Language.get(
-						'steppers-cannot-be-moved-along-with-other-elements'
-					);
-				}
-
-				if (
-					form &&
-					getStepperChild(form, layoutData, fragmentEntryLinks)
-				) {
-					message = Liferay.Language.get(
-						'forms-can-only-contain-one-stepper'
-					);
-				}
-			}
 		}
-		else if (source.isWidget && getFormParent(target, layoutData)) {
+		else if (reason === 'existing-stepper') {
 			message = Liferay.Language.get(
-				'widgets-cannot-be-placed-inside-a-form-container'
+				'forms-can-only-contain-one-stepper'
 			);
 		}
-		else if (target.type === LAYOUT_DATA_ITEM_TYPES.formStepContainer) {
-			message = Liferay.Language.get(
-				'fragments-cannot-be-placed-inside-a-form-step-container'
-			);
-		}
-		else if (
-			isNonInstanceableWidget(source, fragmentEntryLinks, getWidgets) &&
-			hasCollectionParent(target, layoutData)
-		) {
+		else if (reason === 'noninstanceable-widget-inside-collection') {
 			message = Liferay.Language.get(
 				'noninstanceable-widgets-cannot-be-placed-inside-a-collection-display'
 			);
 		}
-		else if (source.parentId !== target.itemId) {
-			message = Liferay.Language.get('an-unexpected-error-occurred');
+		else if (reason === 'stepper-multiple-action') {
+			message = Liferay.Language.get(
+				'steppers-cannot-be-moved-along-with-other-elements'
+			);
+		}
+		else if (reason === 'stepper-outside-form') {
+			message = Liferay.Language.get(
+				'steppers-can-only-be-placed-inside-a-form-container'
+			);
+		}
+		else if (reason === 'targeting-step-container') {
+			message = Liferay.Language.get(
+				'fragments-cannot-be-placed-inside-a-form-step-container'
+			);
+		}
+		else if (reason === 'unmapped-collection') {
+			message = Liferay.Language.get(
+				'fragments-cannot-be-placed-inside-an-unmapped-collection-display-fragment'
+			);
+		}
+		else if (reason === 'unmapped-form') {
+			message = Liferay.Language.get(
+				'fragments-cannot-be-placed-inside-an-unmapped-form-container'
+			);
+		}
+		else if (reason === 'widget-inside-form') {
+			message = Liferay.Language.get(
+				'widgets-cannot-be-placed-inside-a-form-container'
+			);
+		}
+		else {
+			const sourceLabel = selectLayoutDataItemLabel(
+				{
+					fragmentEntryLinks,
+					layoutData,
+				},
+				source
+			);
+
+			const targetLabel = selectLayoutDataItemLabel(
+				{
+					fragmentEntryLinks,
+					layoutData,
+				},
+				target
+			);
+
+			message = sub(
+				Liferay.Language.get('a-x-cannot-be-dropped-inside-a-x'),
+				[sourceLabel, targetLabel]
+			);
 		}
 
 		if (sources.length > 1) {
@@ -155,28 +153,4 @@ export function isMovementValid({
 	}
 
 	return true;
-}
-
-function isNonInstanceableWidget(
-	source: MovementItem,
-	fragmentEntryLinks: FragmentEntryLinkMap,
-	getWidgets: () => WidgetSet[]
-) {
-	if (!source.isWidget) {
-		return false;
-	}
-
-	const widgets = getWidgets();
-
-	const widget = source.portletId
-		? getWidget(widgets, source.portletId)
-		: getItemWidget(
-				source as FragmentLayoutDataItem,
-				fragmentEntryLinks,
-				widgets
-			);
-
-	if (!widget?.instanceable) {
-		return true;
-	}
 }

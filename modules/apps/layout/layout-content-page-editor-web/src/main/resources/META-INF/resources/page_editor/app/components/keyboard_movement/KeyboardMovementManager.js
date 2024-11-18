@@ -399,7 +399,7 @@ export function getInitialTarget(
 			layoutDataRef.current,
 			fragmentEntryLinksRef.current,
 			getWidgets
-		);
+		).valid;
 
 		// Check root children to see if someone is targetable
 
@@ -520,7 +520,7 @@ function getNextTarget(
 					layoutDataRef.current,
 					fragmentEntryLinksRef.current,
 					getWidgets
-				)
+				).valid
 			) {
 				return getNextTarget(
 					source,
@@ -542,7 +542,7 @@ function getNextTarget(
 					layoutDataRef.current,
 					fragmentEntryLinksRef.current,
 					getWidgets
-				)
+				).valid
 			) {
 				return getNextTarget(
 					source,
@@ -564,7 +564,7 @@ function getNextTarget(
 					layoutDataRef.current,
 					fragmentEntryLinksRef.current,
 					getWidgets
-				)
+				).valid
 			) {
 				return getNextTarget(
 					source,

@@ -111,6 +111,20 @@ const LAYOUT_DATA_CHECK_ALLOWED_CHILDREN = {
 		].some((type) => type === child.type),
 };
 
+type Result = {
+	reason?:
+		| 'input-outside-form'
+		| 'existing-stepper'
+		| 'noninstanceable-widget-inside-collection'
+		| 'stepper-outside-form'
+		| 'stepper-multiple-action'
+		| 'targeting-step-container'
+		| 'unmapped-collection'
+		| 'unmapped-form'
+		| 'widget-inside-form';
+	valid: boolean;
+};
+
 /**
  * Checks if the given child can be nested inside given parent
  */
@@ -119,10 +133,19 @@ export default function checkAllowedChild(
 	parent: MovementItem,
 	layoutData: LayoutData,
 	fragmentEntryLinks: FragmentEntryLinkMap,
-	getWidgets: () => WidgetSet[]
-) {
-	if (isUnmappedCollection(parent) || isUnmappedForm(parent)) {
-		return false;
+	getWidgets: () => WidgetSet[],
+	isMultiple: boolean = false
+): Result {
+	if (isUnmappedCollection(parent)) {
+		return {reason: 'unmapped-collection', valid: false};
+	}
+
+	if (isUnmappedForm(parent)) {
+		return {reason: 'unmapped-form', valid: false};
+	}
+
+	if (isMultiple && isStepper(child)) {
+		return {reason: 'stepper-multiple-action', valid: false};
 	}
 
 	const formParent = getFormParent(parent, layoutData);
@@ -132,13 +155,13 @@ export default function checkAllowedChild(
 		isMultistepForm(formParent) &&
 		!hasFormStepParent(parent, layoutData)
 	) {
-		return false;
+		return {reason: 'targeting-step-container', valid: false};
 	}
 
 	if (child.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 		if (isStepper(child)) {
 			if (parent.type !== LAYOUT_DATA_ITEM_TYPES.form) {
-				return false;
+				return {reason: 'stepper-outside-form', valid: false};
 			}
 
 			const existingStepper = getStepperChild(
@@ -148,7 +171,7 @@ export default function checkAllowedChild(
 			);
 
 			if (existingStepper && existingStepper.itemId !== child.itemId) {
-				return false;
+				return {reason: 'existing-stepper', valid: false};
 			}
 		}
 		else {
@@ -156,11 +179,11 @@ export default function checkAllowedChild(
 				child.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input &&
 				!formParent
 			) {
-				return false;
+				return {reason: 'input-outside-form', valid: false};
 			}
 
 			if (formParent && child.isWidget) {
-				return false;
+				return {reason: 'widget-inside-form', valid: false};
 			}
 
 			if (hasCollectionParent(parent, layoutData) && child.isWidget) {
@@ -176,10 +199,19 @@ export default function checkAllowedChild(
 							widgets
 						);
 
-				return widget?.instanceable;
+				if (!widget?.instanceable) {
+					return {
+						reason: 'noninstanceable-widget-inside-collection',
+						valid: false,
+					};
+				}
 			}
 		}
 	}
 
-	return LAYOUT_DATA_CHECK_ALLOWED_CHILDREN[parent.type](child, parent);
+	if (!LAYOUT_DATA_CHECK_ALLOWED_CHILDREN[parent.type](child, parent)) {
+		return {valid: false};
+	}
+
+	return {valid: true};
 }

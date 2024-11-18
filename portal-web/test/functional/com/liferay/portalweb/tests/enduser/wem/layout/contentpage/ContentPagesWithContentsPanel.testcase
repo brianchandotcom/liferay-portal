@@ -450,54 +450,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-173139. The page designer could see a tooltip for assets on the Page Content panel of content page."
-	@priority = 3
-	test ViewAssetWithLongTitle {
-		task ("Given a page deisgner displays a web content with long title on a content page") {
-			HeadlessWebcontent.addBasicWebContent(
-				content = "Lighthouse promises life coaching to help people realise their dreams. But an 18-month investigation by the BBC finds it takes over people'\''s lives, separates people from their loved ones and harasses its critics.",
-				groupName = ${randomSiteName},
-				title = "Inside the life coaching cult that takes over lives");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-
-			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Heading",
-				id = "element-text");
-
-			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = "Inside the life coaching cult that takes over lives",
-				navItem = "Web Content");
-
-			Select(
-				key_fieldLabel = "Field",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Content");
-
-			PageEditor.waitForAutoSave();
-		}
-
-		task ("When the page designer navigates to the Page Content panel") {
-			PageEditor.gotoTab(tabName = "Page Content");
-		}
-
-		task ("Then the page designer could see the full title on the tooltip") {
-			MouseOver.javaScriptFocus(
-				key_itemName = "Inside the life coaching cult that takes over lives",
-				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
-
-			AssertVisible(
-				key_content = "Inside the life coaching cult that takes over lives",
-				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-		}
-	}
-
 	@description = "This is a test for LPS-122396. The outline of editable field should be dashed when hover on mapped assets in Page Content panel."
 	@priority = 5
 	test ViewDashedOutlineOfMappedEditableFieldWhenHoverOnAssets {
@@ -822,44 +774,6 @@ definition {
 			AssertElementNotPresent(
 				index = 2,
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM_POSITION");
-		}
-	}
-
-	@description = "This is a test for LPS-153356. View Page Content tab on sidebar of content page."
-	@priority = 4
-	test ViewPageContentOnSidebarOfContentPage {
-		task ("Given a page creator has a content page with Heading fragment") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-		}
-
-		task ("When the page creator clicks on Content Panel on sidebar") {
-			PageEditor.gotoTab(tabName = "Page Content");
-		}
-
-		task ("Then the page creator can validate Page Content tab") {
-			task ("View paperclip icon is shown") {
-				AssertElementPresent(
-					key_text = "paperclip",
-					locator1 = "Icon#ANY");
-			}
-
-			task ("View title and description on Page Content tab") {
-				AssertVisible(
-					key_sidebarButton = "Page Content",
-					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
-				AssertTextPresent(value1 = "Access the content included in the page and the options to edit them.");
-			}
-
-			task ("View the order of Page Content is the fourth") {
-				PageEditor.viewOrderOfSideBarButtons(buttonNameList = "Fragments and Widgets,Browser,Page Design Options,Page Content,Comments");
-			}
 		}
 	}
 

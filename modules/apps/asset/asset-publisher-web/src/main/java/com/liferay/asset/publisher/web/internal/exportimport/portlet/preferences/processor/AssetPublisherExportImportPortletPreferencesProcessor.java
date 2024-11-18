@@ -37,13 +37,10 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
-import com.liferay.exportimport.kernel.staging.StagingURLHelperUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -60,13 +57,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -79,13 +73,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.site.model.adapter.StagedGroup;
 import com.liferay.staging.StagingGroupHelper;
 
@@ -205,56 +196,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	protected void activate(Map<String, Object> properties) {
 		_assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
 			AssetPublisherWebConfiguration.class, properties);
-	}
-
-	@Override
-	protected String getExportPortletPreferencesExternalReferenceCode(
-		PortletDataContext portletDataContext, Portlet portlet,
-		String className, String externalReferenceCode) {
-
-		if (!className.equals(Group.class.getName())) {
-			return externalReferenceCode;
-		}
-
-		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
-			externalReferenceCode, portletDataContext.getCompanyId());
-
-		if (group == null) {
-			return externalReferenceCode;
-		}
-
-		if (ExportImportThreadLocal.isStagingInProcess() &&
-			group.isStagedRemotely()) {
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				group.getTypeSettingsProperties();
-
-			String remoteGroupExternalReferenceCode =
-				typeSettingsUnicodeProperties.get(
-					"remoteGroupExternalReferenceCode");
-
-			if (Validator.isNull(remoteGroupExternalReferenceCode)) {
-				remoteGroupExternalReferenceCode =
-					_getRemoteGroupExternalReferenceCode(
-						typeSettingsUnicodeProperties);
-			}
-
-			if (Validator.isNotNull(remoteGroupExternalReferenceCode)) {
-				externalReferenceCode = remoteGroupExternalReferenceCode;
-			}
-		}
-
-		if (!group.isStagingGroup()) {
-			return externalReferenceCode;
-		}
-
-		Group liveGroup = groupLocalService.fetchGroup(group.getLiveGroupId());
-
-		if (liveGroup == null) {
-			return externalReferenceCode;
-		}
-
-		return liveGroup.getExternalReferenceCode();
 	}
 
 	@Override
@@ -798,57 +739,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		groupIdMappingElement.addAttribute("group-key", group.getGroupKey());
 
 		return String.valueOf(groupId);
-	}
-
-	private String _getRemoteGroupExternalReferenceCode(
-		UnicodeProperties typeSettingsUnicodeProperties) {
-
-		String remoteAddress = GetterUtil.getString(
-			typeSettingsUnicodeProperties.get("remoteAddress"));
-		long remoteGroupId = GetterUtil.getLong(
-			typeSettingsUnicodeProperties.get("remoteGroupId"));
-
-		if (Validator.isNull(remoteAddress) || (remoteGroupId <= 0)) {
-			return null;
-		}
-
-		int remotePort = GetterUtil.getInteger(
-			typeSettingsUnicodeProperties.get("remotePort"));
-		String remotePathContext = GetterUtil.getString(
-			typeSettingsUnicodeProperties.get("remotePathContext"));
-		boolean secureConnection = GetterUtil.getBoolean(
-			typeSettingsUnicodeProperties.get("secureConnection"));
-
-		String remoteURL = StagingURLHelperUtil.buildRemoteURL(
-			remoteAddress, remotePort, remotePathContext, secureConnection);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		User user = permissionChecker.getUser();
-
-		try {
-			HttpPrincipal httpPrincipal = new HttpPrincipal(
-				remoteURL, user.getLogin(), user.getPassword(),
-				user.isPasswordEncrypted());
-
-			try (SafeCloseable safeCloseable =
-					ThreadContextClassLoaderUtil.swap(
-						PortalClassLoaderUtil.getClassLoader())) {
-
-				Group group = GroupServiceHttp.getGroup(
-					httpPrincipal, remoteGroupId);
-
-				return group.getExternalReferenceCode();
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return null;
 	}
 
 	private void _importLayoutReferences(PortletDataContext portletDataContext)

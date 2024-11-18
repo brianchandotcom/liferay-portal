@@ -217,6 +217,73 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-97189. A user can edit displayed content in an Asset Publisher widget through Contents panel."
+	@priority = 4
+	test EditDisplayedWebContentInAssetPublisher {
+		property timeout.explicit.wait = "20";
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Add an Asset Publisher") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("Select the web content as manual selection in Asset Publisher") {
+			AssetPublisherPortlet.configureManualAssetSelectionPG(
+				assetTitle = "WC WebContent Title",
+				assetType = "Basic Web Content");
+		}
+
+		task ("Edit the displayed web content via Contents panel") {
+			Refresh();
+
+			WebContent.editViaContentPanel(
+				webContentContentEdit = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title",
+				webContentTitleEdit = "WC WebContent Title Edit");
+		}
+
+		task ("View the edited web content shown in Asset Publisher") {
+			AssertTextEquals(
+				key_assetTitle = "WC WebContent Title Edit",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "WC WebContent Title Edit");
+
+			AssertTextEquals.assertPartialText(
+				key_assetTitle = "WC WebContent Title Edit",
+				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+				value1 = "WC WebContent Content Edit");
+
+			PageEditor.publish();
+		}
+
+		task ("View the edited web content in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContent.viewPGViaAP(
+				webContentContent = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title Edit");
+		}
+	}
+
 	@description = "Edit the global web content via Asset Publisher."
 	@priority = 4
 	test EditGlobalWebContentViaAssetPublisher {

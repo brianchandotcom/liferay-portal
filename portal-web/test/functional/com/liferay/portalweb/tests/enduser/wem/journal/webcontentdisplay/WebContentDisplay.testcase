@@ -683,6 +683,60 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 	}
 
+	@description = "This is a test for LPS-97189. A user can edit displayed content in a Web Content Display widget through Contents panel."
+	@priority = 5
+	test EditDisplayedWebContentInWebContentDisplay {
+		property portal.acceptance = "true";
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Add a Web Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Web Content Display");
+		}
+
+		task ("Select the web content in Web Content Display") {
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+		}
+
+		task ("Edit the displayed web content via Contents panel") {
+			Refresh();
+
+			WebContent.editViaContentPanel(
+				webContentContentEdit = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title",
+				webContentTitleEdit = "WC WebContent Title Edit");
+		}
+
+		task ("View the edited web content in Web Content Display") {
+			AssertTextEquals(
+				index = 1,
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "WC WebContent Content Edit");
+
+			PageEditor.publish();
+		}
+
+		task ("View the edited web content in view mode") {
+			WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content Edit");
+		}
+	}
+
 	@description = "Can edit a web content template via Web Content Display."
 	@priority = 4
 	test EditTemplate {

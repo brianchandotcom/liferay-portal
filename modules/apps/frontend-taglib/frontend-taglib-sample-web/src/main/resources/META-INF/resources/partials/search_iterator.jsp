@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchIteratorDisplayContext searchIteratorDisplayContext = (SearchIteratorDisplayContext)request.getAttribute(TaglibSamplePortletKeys.SEARCH_ITERATOR_DISPLAY_CONTEXT);
+SearchIteratorDisplayContext searchIteratorDisplayContext = (SearchIteratorDisplayContext)request.getAttribute(SamplePortletKeys.SEARCH_ITERATOR_DISPLAY_CONTEXT);
 %>
 
 <clay:container-fluid>

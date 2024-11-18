@@ -12,14 +12,14 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.frontend.taglib.sample.web.internal.constants.TaglibSamplePortletKeys" %><%@
+<%@ page import="com.liferay.frontend.taglib.sample.web.internal.constants.SamplePortletKeys" %><%@
 page import="com.liferay.frontend.taglib.sample.web.internal.display.context.FrontendSampleDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.sample.web.internal.display.context.SearchIteratorDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.sample.web.internal.display.context.SearchPaginatorDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <%
-FrontendSampleDisplayContext frontendSampleDisplayContext = (FrontendSampleDisplayContext)request.getAttribute(TaglibSamplePortletKeys.FRONTEND_SAMPLE_DISPLAY_CONTEXT);
+FrontendSampleDisplayContext frontendSampleDisplayContext = (FrontendSampleDisplayContext)request.getAttribute(SamplePortletKeys.FRONTEND_SAMPLE_DISPLAY_CONTEXT);
 %>
 
 <liferay-theme:defineObjects />

@@ -8,18 +8,18 @@ package com.liferay.frontend.taglib.sample.web.internal.constants;
 /**
  * @author Miguel Arroyo
  */
-public class TaglibSamplePortletKeys {
+public class SamplePortletKeys {
 
 	public static final String FRONTEND_SAMPLE_DISPLAY_CONTEXT =
 		"FRONTEND_TAGLIB_DISPLAY_CONTEXT";
+
+	public static final String SAMPLE_PORTLET =
+		"com_liferay_sample_web_portlet_SamplePortlet";
 
 	public static final String SEARCH_ITERATOR_DISPLAY_CONTEXT =
 		"SEARCH_ITERATOR_DISPLAY_CONTEXT";
 
 	public static final String SEARCH_PAGINATOR_DISPLAY_CONTEXT =
 		"SEARCH_PAGINATOR_DISPLAY_CONTEXT";
-
-	public static final String TAGLIB_SAMPLE_PORTLET =
-		"com_liferay_sample_web_portlet_TaglibSamplePortlet";
 
 }

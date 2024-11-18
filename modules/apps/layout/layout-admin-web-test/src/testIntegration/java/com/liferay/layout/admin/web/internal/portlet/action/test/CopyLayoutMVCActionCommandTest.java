@@ -122,11 +122,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_processAction(expectedLayout, Collections.emptyMap());
 
-		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
-			"/" + _NAME);
-
-		_validateCopiedLayout(expectedLayout, actualLayout);
+		Layout actualLayout = _assertCopiedLayout(expectedLayout);
 
 		List<ResourcePermission> expectedResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
@@ -212,11 +208,7 @@ public class CopyLayoutMVCActionCommandTest {
 				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
 			).build());
 
-		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
-			"/" + _NAME);
-
-		_validateCopiedLayout(expectedLayout, actualLayout);
+		Layout actualLayout = _assertCopiedLayout(expectedLayout);
 
 		List<ResourcePermission> expectedResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
@@ -270,11 +262,7 @@ public class CopyLayoutMVCActionCommandTest {
 				"copyPermissions", StringPool.TRUE.toString()
 			).build());
 
-		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
-			"/" + _NAME);
-
-		_validateCopiedLayout(expectedLayout, actualLayout);
+		Layout actualLayout = _assertCopiedLayout(expectedLayout);
 
 		List<ResourcePermission> expectedResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
@@ -325,6 +313,72 @@ public class CopyLayoutMVCActionCommandTest {
 			expectedLayout.getCompanyId(), expectedLayout.getGroupId(),
 			expectedLayout.getUserId(), Layout.class.getName(),
 			expectedLayout.getPlid(), modelPermissions);
+	}
+
+	private Layout _assertCopiedLayout(Layout expectedLayout) {
+		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
+			"/" + _NAME);
+
+		Assert.assertNotNull(actualLayout);
+
+		List<FragmentEntryLink>
+			expectedLayoutSegmentsExperienceLayoutFragmentEntryLinks =
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinksBySegmentsExperienceId(
+						_group.getGroupId(),
+						_segmentsExperienceLocalService.
+							fetchDefaultSegmentsExperienceId(
+								expectedLayout.getPlid()),
+						expectedLayout.getPlid());
+
+		List<FragmentEntryLink>
+			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks =
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinksBySegmentsExperienceId(
+						_group.getGroupId(),
+						_segmentsExperienceLocalService.
+							fetchDefaultSegmentsExperienceId(
+								actualLayout.getPlid()),
+						actualLayout.getPlid());
+
+		Assert.assertEquals(
+			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.toString(),
+			expectedLayoutSegmentsExperienceLayoutFragmentEntryLinks.size(),
+			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.size());
+
+		FragmentEntryLink expectedLayoutFragmentEntryLink =
+			expectedLayoutSegmentsExperienceLayoutFragmentEntryLinks.get(0);
+
+		FragmentEntryLink actualLayoutFragmentEntryLink =
+			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.get(0);
+
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getConfiguration(),
+			actualLayoutFragmentEntryLink.getConfiguration());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getCss(),
+			actualLayoutFragmentEntryLink.getCss());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getEditableValues(),
+			actualLayoutFragmentEntryLink.getEditableValues());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getHtml(),
+			actualLayoutFragmentEntryLink.getHtml());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getJs(),
+			actualLayoutFragmentEntryLink.getJs());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getRendererKey(),
+			actualLayoutFragmentEntryLink.getRendererKey());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getEditableValues(),
+			actualLayoutFragmentEntryLink.getEditableValues());
+		Assert.assertEquals(
+			expectedLayoutFragmentEntryLink.getPosition(),
+			actualLayoutFragmentEntryLink.getPosition());
+
+		return actualLayout;
 	}
 
 	private FragmentEntry _getFragmentEntry() throws Exception {
@@ -395,68 +449,6 @@ public class CopyLayoutMVCActionCommandTest {
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
-	}
-
-	private void _validateCopiedLayout(
-		Layout expectedLayout, Layout actualLayout) {
-
-		Assert.assertNotNull(actualLayout);
-
-		List<FragmentEntryLink>
-			expectedLayoutSegmentsExperienceLayoutFragmentEntryLinks =
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinksBySegmentsExperienceId(
-						_group.getGroupId(),
-						_segmentsExperienceLocalService.
-							fetchDefaultSegmentsExperienceId(
-								expectedLayout.getPlid()),
-						expectedLayout.getPlid());
-
-		List<FragmentEntryLink>
-			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks =
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinksBySegmentsExperienceId(
-						_group.getGroupId(),
-						_segmentsExperienceLocalService.
-							fetchDefaultSegmentsExperienceId(
-								actualLayout.getPlid()),
-						actualLayout.getPlid());
-
-		Assert.assertEquals(
-			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.toString(),
-			expectedLayoutSegmentsExperienceLayoutFragmentEntryLinks.size(),
-			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.size());
-
-		FragmentEntryLink expectedLayoutFragmentEntryLink =
-			expectedLayoutSegmentsExperienceLayoutFragmentEntryLinks.get(0);
-
-		FragmentEntryLink actualLayoutFragmentEntryLink =
-			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.get(0);
-
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getConfiguration(),
-			actualLayoutFragmentEntryLink.getConfiguration());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getCss(),
-			actualLayoutFragmentEntryLink.getCss());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getEditableValues(),
-			actualLayoutFragmentEntryLink.getEditableValues());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getHtml(),
-			actualLayoutFragmentEntryLink.getHtml());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getJs(),
-			actualLayoutFragmentEntryLink.getJs());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getRendererKey(),
-			actualLayoutFragmentEntryLink.getRendererKey());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getEditableValues(),
-			actualLayoutFragmentEntryLink.getEditableValues());
-		Assert.assertEquals(
-			expectedLayoutFragmentEntryLink.getPosition(),
-			actualLayoutFragmentEntryLink.getPosition());
 	}
 
 	private static final String _NAME = StringUtil.toLowerCase(

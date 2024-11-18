@@ -381,6 +381,7 @@ public abstract class BaseJob implements Job {
 		return batchNames;
 	}
 
+	@Override
 	public Set<String> getDistRequiredSegmentNames() {
 		if (!isStandaloneBatchEnabled()) {
 			return getSegmentNames();

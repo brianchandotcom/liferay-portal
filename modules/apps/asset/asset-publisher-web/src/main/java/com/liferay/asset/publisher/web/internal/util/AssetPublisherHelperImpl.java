@@ -861,6 +861,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			Pagination.of(end, start), assetEntries.size());
 	}
 
+	@Override
 	public Group getItemSelectorScopeGroup(Group scopeGroup)
 		throws PortalException {
 

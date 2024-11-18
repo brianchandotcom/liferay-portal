@@ -40,6 +40,7 @@ public class CommerceProductPriceImpl implements CommerceProductPrice {
 		return _finalPriceWithTaxAmount;
 	}
 
+	@Override
 	public CommerceMoney getPricingQuantityUnitPrice() {
 		return _pricingQuantityUnitPrice;
 	}
@@ -121,6 +122,7 @@ public class CommerceProductPriceImpl implements CommerceProductPrice {
 		_priceOnApplication = priceOnApplication;
 	}
 
+	@Override
 	public void setPricingQuantityUnitPrice(
 		CommerceMoney pricingQuantityUnitPrice) {
 

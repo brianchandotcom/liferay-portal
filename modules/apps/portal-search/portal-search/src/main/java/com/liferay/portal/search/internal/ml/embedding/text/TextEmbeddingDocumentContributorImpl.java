@@ -46,6 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 public class TextEmbeddingDocumentContributorImpl
 	implements TextEmbeddingDocumentContributor {
 
+	@Override
 	public <T extends BaseModel<T>> void contribute(
 		Document document, String languageId, T model, String text) {
 
@@ -77,6 +78,7 @@ public class TextEmbeddingDocumentContributorImpl
 		_addTextEmbeddingField(document, languageId, textEmbedding);
 	}
 
+	@Override
 	public <T extends BaseModel<T>> void contribute(
 		Document document, T model, String text) {
 

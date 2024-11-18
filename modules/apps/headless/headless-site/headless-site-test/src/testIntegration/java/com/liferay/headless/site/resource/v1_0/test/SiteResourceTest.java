@@ -126,6 +126,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		}
 	}
 
+	@Override
 	@Test
 	public void testGetSiteByExternalReferenceCode() throws Exception {
 		super.testGetSiteByExternalReferenceCode();

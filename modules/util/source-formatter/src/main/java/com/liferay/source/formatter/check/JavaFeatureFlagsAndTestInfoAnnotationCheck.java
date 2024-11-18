@@ -24,6 +24,7 @@ public class JavaFeatureFlagsAndTestInfoAnnotationCheck extends BaseFileCheck {
 		return true;
 	}
 
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 

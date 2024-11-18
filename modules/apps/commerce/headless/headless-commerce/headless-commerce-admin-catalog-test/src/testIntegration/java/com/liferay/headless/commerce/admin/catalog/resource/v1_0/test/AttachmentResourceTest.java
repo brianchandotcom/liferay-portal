@@ -256,6 +256,7 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 		return _cProduct.getCProductId();
 	}
 
+	@Override
 	protected Attachment testGraphQLAttachment_addAttachment()
 		throws Exception {
 

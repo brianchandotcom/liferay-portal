@@ -23,14 +23,17 @@ public class JournalAMEditorConfigContributorTest
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Override
 	protected BaseAMEditorConfigContributor getBaseAMEditorConfigContributor() {
 		return new JournalAMEditorConfigContributor();
 	}
 
+	@Override
 	protected ItemSelectorCriterion getItemSelectorCriterion() {
 		return new JournalItemSelectorCriterion();
 	}
 
+	@Override
 	protected String
 		getItemSelectorCriterionFileEntryItemSelectorReturnTypeName() {
 

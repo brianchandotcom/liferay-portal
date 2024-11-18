@@ -172,6 +172,7 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 		return "searchFm";
 	}
 
+	@Override
 	public Boolean isSelectable() {
 		return _showDeleteButton || _showRestoreButton;
 	}

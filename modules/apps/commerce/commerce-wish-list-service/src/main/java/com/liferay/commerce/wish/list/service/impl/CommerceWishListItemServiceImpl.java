@@ -72,6 +72,7 @@ public class CommerceWishListItemServiceImpl
 			commerceWishListItem);
 	}
 
+	@Override
 	public void deleteCommerceWishListItems(long commerceWishListId)
 		throws PortalException {
 

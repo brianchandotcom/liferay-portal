@@ -225,6 +225,7 @@ public class CustomFacetDisplayContextBuilderTest
 			"some-time-ago", bucketDisplayContext.getBucketText());
 	}
 
+	@Override
 	@Test
 	public void testEmptySearchResults() throws Exception {
 		CustomFacetDisplayContextBuilder customFacetDisplayContextBuilder =

@@ -39,6 +39,7 @@ public class CTProcessResourceTest extends BaseCTProcessResourceTestCase {
 		return new String[] {"description", "ownerName", "status"};
 	}
 
+	@Override
 	protected CTProcess testDeleteCTProcess_addCTProcess() throws Exception {
 		return _addCTProcess();
 	}

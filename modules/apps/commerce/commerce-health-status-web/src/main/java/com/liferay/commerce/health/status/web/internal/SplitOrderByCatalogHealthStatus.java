@@ -15,6 +15,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -22,15 +23,17 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import javax.servlet.http.HttpServletRequest;
@@ -163,11 +166,7 @@ public class SplitOrderByCatalogHealthStatus implements CommerceHealthStatus {
 					false, "orderStatus = 10",
 					"This action splits an order into supplier orders by " +
 						"catalog",
-					null,
-					HashMapBuilder.put(
-						_serviceContext.getLocale(), "Split order by catalog"
-					).build(),
-					"SplitOrderByCatalog",
+					null, _getLabelMap(), "SplitOrderByCatalog",
 					CommerceObjectActionExecutorConstants.
 						KEY_SPLIT_COMMERCE_ORDER_BY_CATALOG,
 					"liferay/commerce_order_status",
@@ -183,6 +182,19 @@ public class SplitOrderByCatalogHealthStatus implements CommerceHealthStatus {
 
 		private OrderSplitCallable(ServiceContext serviceContext) {
 			_serviceContext = serviceContext;
+		}
+
+		private Map<Locale, String> _getLabelMap() {
+			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+
+			Map<Locale, String> labelMap = new HashMap<>(
+				availableLocales.size());
+
+			for (Locale locale : availableLocales) {
+				labelMap.put(locale, "Split order by catalog");
+			}
+
+			return labelMap;
 		}
 
 		private final ServiceContext _serviceContext;

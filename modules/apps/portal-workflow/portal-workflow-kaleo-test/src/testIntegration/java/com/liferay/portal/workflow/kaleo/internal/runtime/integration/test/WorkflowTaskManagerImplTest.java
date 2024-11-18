@@ -990,6 +990,32 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 		Assert.assertTrue(
 			_workflowTaskManager.isNotifiableUser(
 				user.getUserId(), workflowTask.getWorkflowTaskId()));
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			_workflowTaskManager.assignWorkflowTaskToUser(
+				_company.getCompanyId(), user.getUserId(),
+				workflowTask.getWorkflowTaskId(), user.getUserId(),
+				StringPool.BLANK, null, null);
+
+			_workflowTaskManager.completeWorkflowTask(
+				_company.getCompanyId(), user.getUserId(),
+				workflowTask.getWorkflowTaskId(), Constants.APPROVE,
+				StringPool.BLANK, null);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+
+		Assert.assertTrue(
+			_workflowTaskManager.isNotifiableUser(
+				user.getUserId(), workflowTask.getWorkflowTaskId()));
 	}
 
 	@Test

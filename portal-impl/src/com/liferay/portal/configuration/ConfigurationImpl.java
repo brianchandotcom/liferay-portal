@@ -226,6 +226,7 @@ public class ConfigurationImpl
 		return _EMPTY_ARRAY;
 	}
 
+	@Override
 	public List<String> getLoadedSources() {
 		return _classLoaderAggregateProperties.loadedSources();
 	}

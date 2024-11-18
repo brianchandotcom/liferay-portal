@@ -80,6 +80,7 @@ import org.w3c.dom.NodeList;
 @Component(service = TestrayManager.class)
 public class TestrayManagerImpl implements TestrayManager {
 
+	@Override
 	public int autofillTestrayBuilds(
 			long companyId, long testrayBuildId1, long testrayBuildId2,
 			long userId)
@@ -144,6 +145,7 @@ public class TestrayManagerImpl implements TestrayManager {
 		return caseAmount;
 	}
 
+	@Override
 	public int createTestraySubtasks(
 			long companyId, long testrayBuildId, long testrayTaskId,
 			long userId)

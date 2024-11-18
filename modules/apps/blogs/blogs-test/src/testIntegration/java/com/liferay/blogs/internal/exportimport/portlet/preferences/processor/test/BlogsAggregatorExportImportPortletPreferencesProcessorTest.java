@@ -7,30 +7,44 @@ package com.liferay.blogs.internal.exportimport.portlet.preferences.processor.te
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
+import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
+import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.persistence.GroupUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -151,6 +165,78 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 		Assert.assertEquals(
 			_organization.getOrganizationId(),
 			GetterUtil.getLong(importedOrganizationId));
+	}
+
+	@Test
+	public void testRemoteStagedOrganizationMissingRefValidation()
+		throws Exception {
+
+		Group remoteLiveGroup = GroupTestUtil.addGroup();
+
+		try {
+			_enableRemoteStaging(remoteLiveGroup, _group);
+
+			remoteLiveGroup = GroupLocalServiceUtil.getGroup(
+				remoteLiveGroup.getGroupId());
+
+			Map<String, String[]> parameters =
+				ExportImportConfigurationParameterMapFactoryUtil.
+					buildFullPublishParameterMap();
+
+			StagingUtil.publishLayouts(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				remoteLiveGroup.getGroupId(), false, parameters);
+
+			Assert.assertEquals(1, remoteLiveGroup.getPublicLayoutsPageCount());
+		}
+		finally {
+			GroupTestUtil.deleteGroup(remoteLiveGroup);
+		}
+	}
+
+	private void _enableRemoteStaging(
+			Group remoteLiveGroup, Group remoteStagingGroup)
+		throws Exception {
+
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET",
+					"F0E1D2C3B4A5968778695A4B3C2D1E0F");
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET_HEX", true)) {
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setScopeGroupId(remoteStagingGroup.getGroupId());
+
+			_setStagingAttribute(
+				serviceContext, PortletDataHandlerKeys.PORTLET_DATA_ALL, false);
+			_setStagingAttribute(
+				serviceContext, PortletDataHandlerKeys.PORTLET_SETUP_ALL,
+				false);
+
+			UserTestUtil.setUser(TestPropsValues.getUser());
+
+			StagingLocalServiceUtil.enableRemoteStaging(
+				TestPropsValues.getUserId(), remoteStagingGroup, false, false,
+				"localhost", PortalUtil.getPortalServerPort(false),
+				PortalUtil.getPathContext(), false,
+				remoteLiveGroup.getGroupId(), serviceContext);
+
+			GroupUtil.clearCache();
+		}
+	}
+
+	private void _setStagingAttribute(
+		ServiceContext serviceContext, String key, Object value) {
+
+		serviceContext.setAttribute(
+			StagingConstants.STAGED_PREFIX + key + StringPool.DOUBLE_DASH,
+			String.valueOf(value));
 	}
 
 	@Inject(filter = "javax.portlet.name=" + BlogsPortletKeys.BLOGS_AGGREGATOR)

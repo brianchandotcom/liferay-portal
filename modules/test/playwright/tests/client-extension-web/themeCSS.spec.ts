@@ -35,6 +35,11 @@ const SAMPLES = [
 		name: 'Liferay Sample Theme CSS 2',
 	},
 	{
+		erc: 'LXC:liferay-sample-theme-css-3',
+		mainURL: '/o/liferay-sample-theme-css-3/css/main.css',
+		name: 'Liferay Sample Theme CSS 3',
+	},
+	{
 		erc: 'LXC:liferay-sample-theme-css-4',
 		mainURL: '/o/liferay-sample-theme-css-4/css/main.css',
 		name: 'Liferay Sample Theme CSS 4',

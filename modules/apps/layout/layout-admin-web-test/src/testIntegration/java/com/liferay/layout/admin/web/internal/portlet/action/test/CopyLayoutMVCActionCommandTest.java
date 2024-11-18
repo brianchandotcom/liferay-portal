@@ -104,7 +104,8 @@ public class CopyLayoutMVCActionCommandTest {
 	@Test
 	public void testDoProcessActionCopyLayout() throws Exception {
 		Layout expectedLayout = LayoutTestUtil.addTypeContentPublishedLayout(
-			_group, "Test layout", WorkflowConstants.STATUS_APPROVED);
+			_group, RandomTestUtil.randomString(),
+			WorkflowConstants.STATUS_APPROVED);
 
 		_addFragmentEntryLinkToLayout(
 			expectedLayout,
@@ -119,12 +120,11 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_addModelResources(role, expectedLayout);
 
-		_processAction(
-			expectedLayout, "Copy test layout", Collections.emptyMap());
+		_processAction(expectedLayout, Collections.emptyMap());
 
 		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
-			"/copy-test-layout");
+			"/" + _NAME);
 
 		_validateCopiedLayout(expectedLayout, actualLayout);
 
@@ -168,12 +168,11 @@ public class CopyLayoutMVCActionCommandTest {
 			expectedLayout.getLayoutId(),
 			masterLayoutPageTemplateEntry.getPlid());
 
-		_processAction(
-			expectedLayout, "Copy test layout", Collections.emptyMap());
+		_processAction(expectedLayout, Collections.emptyMap());
 
 		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
-			"/copy-test-layout");
+			"/" + _NAME);
 
 		Assert.assertEquals(
 			masterLayoutPageTemplateEntry.getPlid(),
@@ -185,7 +184,8 @@ public class CopyLayoutMVCActionCommandTest {
 		throws Exception {
 
 		Layout expectedLayout = LayoutTestUtil.addTypeContentPublishedLayout(
-			_group, "Test layout", WorkflowConstants.STATUS_APPROVED);
+			_group, RandomTestUtil.randomString(),
+			WorkflowConstants.STATUS_APPROVED);
 
 		_addFragmentEntryLinkToLayout(
 			expectedLayout,
@@ -206,7 +206,7 @@ public class CopyLayoutMVCActionCommandTest {
 				SiteNavigationConstants.TYPE_DEFAULT, true, _serviceContext);
 
 		_processAction(
-			expectedLayout, "Copy test layout",
+			expectedLayout,
 			HashMapBuilder.put(
 				"TypeSettingsProperties--siteNavigationMenuId--",
 				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
@@ -214,7 +214,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
-			"/copy-test-layout");
+			"/" + _NAME);
 
 		_validateCopiedLayout(expectedLayout, actualLayout);
 
@@ -248,7 +248,7 @@ public class CopyLayoutMVCActionCommandTest {
 		throws Exception {
 
 		Layout expectedLayout = LayoutTestUtil.addTypeContentPublishedLayout(
-			_group, "Test layout with permissions",
+			_group, RandomTestUtil.randomString(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		_addFragmentEntryLinkToLayout(
@@ -265,14 +265,14 @@ public class CopyLayoutMVCActionCommandTest {
 		_addModelResources(role, expectedLayout);
 
 		_processAction(
-			expectedLayout, "Copy test layout with permissions",
+			expectedLayout,
 			HashMapBuilder.put(
 				"copyPermissions", StringPool.TRUE.toString()
 			).build());
 
 		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
-			"/copy-test-layout-with-permissions");
+			"/" + _NAME);
 
 		_validateCopiedLayout(expectedLayout, actualLayout);
 
@@ -370,8 +370,7 @@ public class CopyLayoutMVCActionCommandTest {
 		return themeDisplay;
 	}
 
-	private void _processAction(
-			Layout layout, String name, Map<String, String> map)
+	private void _processAction(Layout layout, Map<String, String> map)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -384,7 +383,7 @@ public class CopyLayoutMVCActionCommandTest {
 			"groupId", String.valueOf(_group.getGroupId()));
 		mockLiferayPortletActionRequest.addParameter(
 			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-		mockLiferayPortletActionRequest.addParameter("name", name);
+		mockLiferayPortletActionRequest.addParameter("name", _NAME);
 		mockLiferayPortletActionRequest.addParameter(
 			"sourcePlid", String.valueOf(layout.getPlid()));
 
@@ -459,6 +458,9 @@ public class CopyLayoutMVCActionCommandTest {
 			expectedLayoutFragmentEntryLink.getPosition(),
 			actualLayoutFragmentEntryLink.getPosition());
 	}
+
+	private static final String _NAME = StringUtil.toLowerCase(
+		RandomTestUtil.randomString());
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

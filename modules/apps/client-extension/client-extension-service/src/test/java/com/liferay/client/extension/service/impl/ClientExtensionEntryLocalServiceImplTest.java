@@ -8,23 +8,22 @@ package com.liferay.client.extension.service.impl;
 import com.liferay.client.extension.internal.configuration.ClientExtensionConfiguration;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.model.impl.ClientExtensionEntryImpl;
-import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.service.persistence.ClientExtensionEntryPersistence;
 import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.ClassRule;
@@ -51,6 +50,10 @@ public class ClientExtensionEntryLocalServiceImplTest {
 			_clusterableInvokerUtilMockedStatic.close();
 		}
 
+		if (_clusterExecutorUtilMockedStatic != null) {
+			_clusterExecutorUtilMockedStatic.close();
+		}
+
 		if (_localizationUtilMockedStatic != null) {
 			_localizationUtilMockedStatic.close();
 		}
@@ -65,8 +68,10 @@ public class ClientExtensionEntryLocalServiceImplTest {
 
 		// Prepare clientExtensionEntryLocalServiceImpl for test
 
-		_clusterableInvokerUtilMockedStatic = Mockito.mockStatic(
-			ClusterableInvokerUtil.class);
+		_mockClusterableInvokerUtil();
+
+		_clusterExecutorUtilMockedStatic = Mockito.mockStatic(
+			ClusterExecutorUtil.class);
 
 		_workflowHandlerRegistryUtilMockedStatic = Mockito.mockStatic(
 			WorkflowHandlerRegistryUtil.class);
@@ -103,19 +108,8 @@ public class ClientExtensionEntryLocalServiceImplTest {
 			1, 2, "description", new HashMap<>(), StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK);
 
-		Class<ClientExtensionEntryLocalService>
-			clientExtensionEntryLocalServiceClass =
-				ClientExtensionEntryLocalService.class;
-
-		_clusterableInvokerUtilMockedStatic.verify(
-			() -> ClusterableInvokerUtil.synchronousInvokeOnCluster(
-				Mockito.eq(ClusterInvokeAcceptor.class), Mockito.any(),
-				Mockito.eq(
-					clientExtensionEntryLocalServiceClass.getMethod(
-						"undeployClientExtensionEntry",
-						ClientExtensionEntry.class)),
-				Mockito.any(), Mockito.anyLong(), Mockito.any(TimeUnit.class)),
-			Mockito.times(1));
+		_clusterExecutorUtilMockedStatic.verify(
+			() -> ClusterExecutorUtil.execute(Mockito.any()), Mockito.times(1));
 
 		Mockito.verify(
 			clientExtensionEntryPersistence, Mockito.times(1)
@@ -169,6 +163,18 @@ public class ClientExtensionEntryLocalServiceImplTest {
 		return clientExtensionEntryPersistence;
 	}
 
+	private void _mockClusterableInvokerUtil() {
+		_clusterableInvokerUtilMockedStatic = Mockito.mockStatic(
+			ClusterableInvokerUtil.class);
+
+		_clusterableInvokerUtilMockedStatic.when(
+			() -> ClusterableInvokerUtil.createMethodHandler(
+				Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())
+		).thenReturn(
+			Mockito.mock(MethodHandler.class)
+		);
+	}
+
 	private CompanyLocalService _mockCompanyLocalService() throws Exception {
 		CompanyLocalService companyLocalService = Mockito.mock(
 			CompanyLocalService.class);
@@ -196,6 +202,7 @@ public class ClientExtensionEntryLocalServiceImplTest {
 
 	private MockedStatic<ClusterableInvokerUtil>
 		_clusterableInvokerUtilMockedStatic;
+	private MockedStatic<ClusterExecutorUtil> _clusterExecutorUtilMockedStatic;
 	private MockedStatic<LocalizationUtil> _localizationUtilMockedStatic;
 	private MockedStatic<WorkflowHandlerRegistryUtil>
 		_workflowHandlerRegistryUtilMockedStatic;

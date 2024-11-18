@@ -657,16 +657,25 @@ public class JournalContentDisplayContext {
 
 		String articleExternalReferenceCode = portletPreferences.getValue(
 			"articleExternalReferenceCode", null);
-		long groupId = GetterUtil.getLong(
-			portletPreferences.getValue("groupId", null));
+		String groupExternalReferenceCode = GetterUtil.getString(
+			portletPreferences.getValue("groupExternalReferenceCode", null));
 
-		if ((articleExternalReferenceCode == null) || (groupId == 0)) {
+		if ((articleExternalReferenceCode == null) ||
+			(groupExternalReferenceCode == null)) {
+
+			return null;
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+			groupExternalReferenceCode, _themeDisplay.getCompanyId());
+
+		if (group == null) {
 			return null;
 		}
 
 		return JournalArticleLocalServiceUtil.
 			fetchLatestArticleByExternalReferenceCode(
-				groupId, articleExternalReferenceCode,
+				group.getGroupId(), articleExternalReferenceCode,
 				WorkflowConstants.STATUS_ANY, true);
 	}
 

@@ -10,9 +10,10 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.DisplayInformationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletPreferences;
@@ -47,17 +48,24 @@ public class JournalContentDisplayInformationProvider
 				return StringPool.BLANK;
 			}
 
-			long groupId = GetterUtil.getLong(
-				portletPreferences.getValue("groupId", null));
+			String groupExternalReferenceCode = portletPreferences.getValue(
+				"groupExternalReferenceCode", null);
 
-			if (groupId == 0) {
+			if (Validator.isNull(groupExternalReferenceCode)) {
+				return StringPool.BLANK;
+			}
+
+			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				groupExternalReferenceCode, CompanyThreadLocal.getCompanyId());
+
+			if (group == null) {
 				return StringPool.BLANK;
 			}
 
 			JournalArticle article =
 				_journalArticleLocalService.
 					fetchLatestArticleByExternalReferenceCode(
-						groupId, articleExternalReferenceCode);
+						group.getGroupId(), articleExternalReferenceCode);
 
 			if (article == null) {
 				return StringPool.BLANK;
@@ -68,6 +76,9 @@ public class JournalContentDisplayInformationProvider
 
 		return portletPreferences.getValue("articleId", StringPool.BLANK);
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

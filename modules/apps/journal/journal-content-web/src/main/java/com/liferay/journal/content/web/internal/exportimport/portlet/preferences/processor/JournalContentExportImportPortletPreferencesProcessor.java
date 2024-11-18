@@ -132,8 +132,15 @@ public class JournalContentExportImportPortletPreferencesProcessor
 			return portletPreferences;
 		}
 
-		long articleGroupId = GetterUtil.getLong(
-			portletPreferences.getValue("groupId", StringPool.BLANK));
+		long articleGroupId = 0;
+
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-27566")) {
+			articleGroupId = _getGroupId(companyId, portletPreferences);
+		}
+		else {
+			articleGroupId = GetterUtil.getLong(
+				portletPreferences.getValue("groupId", StringPool.BLANK));
+		}
 
 		if (articleGroupId <= 0) {
 			if (_log.isWarnEnabled()) {
@@ -366,8 +373,17 @@ public class JournalContentExportImportPortletPreferencesProcessor
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		long importGroupId = GetterUtil.getLong(
-			portletPreferences.getValue("groupId", null));
+		long companyId = _getCompanyId(portletDataContext);
+
+		long importGroupId = 0;
+
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-27566")) {
+			importGroupId = _getGroupId(companyId, portletPreferences);
+		}
+		else {
+			importGroupId = GetterUtil.getLong(
+				portletPreferences.getValue("groupId", null));
+		}
 
 		if ((importGroupId == portletDataContext.getCompanyGroupId()) &&
 			MergeLayoutPrototypesThreadLocal.isInProgress()) {
@@ -383,8 +399,6 @@ public class JournalContentExportImportPortletPreferencesProcessor
 		Map<String, Long> articleGroupIds =
 			(Map<String, Long>)portletDataContext.getNewPrimaryKeysMap(
 				JournalArticle.class + ".groupId");
-
-		long companyId = _getCompanyId(portletDataContext);
 
 		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-27566")) {
 			if (articleGroupIds.containsKey(articleExternalReferenceCode)) {
@@ -438,6 +452,10 @@ public class JournalContentExportImportPortletPreferencesProcessor
 						portletPreferences.setValue(
 							"articleExternalReferenceCode",
 							articleExternalReferenceCode);
+
+						portletPreferences.setValue(
+							"groupExternalReferenceCode",
+							importedArticleGroup.getExternalReferenceCode());
 					}
 					else {
 						Map<String, String> articleIds =
@@ -449,10 +467,10 @@ public class JournalContentExportImportPortletPreferencesProcessor
 							articleIds, articleId, articleId);
 
 						portletPreferences.setValue("articleId", articleId);
-					}
 
-					portletPreferences.setValue(
-						"groupId", String.valueOf(groupId));
+						portletPreferences.setValue(
+							"groupId", String.valueOf(groupId));
+					}
 
 					if (!FeatureFlagManagerUtil.isEnabled(
 							companyId, "LPD-27566")) {
@@ -541,6 +559,26 @@ public class JournalContentExportImportPortletPreferencesProcessor
 		}
 
 		return CompanyThreadLocal.getCompanyId();
+	}
+
+	private long _getGroupId(
+		long companyId, PortletPreferences portletPreferences) {
+
+		String groupExternalReferenceCode = portletPreferences.getValue(
+			"groupExternalReferenceCode", StringPool.BLANK);
+
+		if (Validator.isNull(groupExternalReferenceCode)) {
+			return 0;
+		}
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			groupExternalReferenceCode, companyId);
+
+		if (group == null) {
+			return 0;
+		}
+
+		return group.getGroupId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

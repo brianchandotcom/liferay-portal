@@ -76,7 +76,8 @@ public class JournalContentPortletDataHandler extends BasePortletDataHandler {
 
 		setDataPortletPreferences(
 			"articleExternalReferenceCode", "articleId",
-			"ddmTemplateExternalReferenceCode", "ddmTemplateKey", "groupId");
+			"ddmTemplateExternalReferenceCode", "ddmTemplateKey",
+			"groupExternalReferenceCode", "groupId");
 
 		setExportControls(
 			new PortletDataHandlerBoolean(
@@ -104,13 +105,14 @@ public class JournalContentPortletDataHandler extends BasePortletDataHandler {
 				"articleExternalReferenceCode", StringPool.BLANK);
 			portletPreferences.setValue(
 				"ddmTemplateExternalReferenceCode", StringPool.BLANK);
+			portletPreferences.setValue(
+				"groupExternalReferenceCode", StringPool.BLANK);
 		}
 		else {
 			portletPreferences.setValue("articleId", StringPool.BLANK);
 			portletPreferences.setValue("ddmTemplateKey", StringPool.BLANK);
+			portletPreferences.setValue("groupId", StringPool.BLANK);
 		}
-
-		portletPreferences.setValue("groupId", StringPool.BLANK);
 
 		return portletPreferences;
 	}

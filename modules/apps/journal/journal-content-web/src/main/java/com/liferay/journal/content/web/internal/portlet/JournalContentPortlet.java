@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -100,9 +102,35 @@ public class JournalContentPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long articleGroupId = PrefsParamUtil.getLong(
-			portletPreferences, renderRequest, "groupId",
-			themeDisplay.getScopeGroupId());
+		long articleGroupId = 0;
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-27566")) {
+
+			String articleGroupExternalReferenceCode = PrefsParamUtil.getString(
+				portletPreferences, renderRequest,
+				"groupExternalReferenceCode");
+
+			if (Validator.isNotNull(articleGroupExternalReferenceCode)) {
+				Group group =
+					_groupLocalService.fetchGroupByExternalReferenceCode(
+						articleGroupExternalReferenceCode,
+						themeDisplay.getCompanyId());
+
+				if (group != null) {
+					articleGroupId = group.getGroupId();
+				}
+			}
+
+			if (articleGroupId == 0) {
+				articleGroupId = themeDisplay.getScopeGroupId();
+			}
+		}
+		else {
+			articleGroupId = PrefsParamUtil.getLong(
+				portletPreferences, renderRequest, "groupId",
+				themeDisplay.getScopeGroupId());
+		}
 
 		String articleExternalReferenceCode = PrefsParamUtil.getString(
 			portletPreferences, renderRequest, "articleExternalReferenceCode");
@@ -342,6 +370,9 @@ public class JournalContentPortlet extends MVCPortlet {
 
 	@Reference
 	private ExportArticleHelper _exportArticleHelper;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ItemSelector _itemSelector;

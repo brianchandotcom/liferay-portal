@@ -5,6 +5,10 @@
 
 package com.liferay.commerce.inventory.service.impl;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryTable;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.model.AccountGroupTable;
 import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWarehouseRelException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel;
@@ -160,6 +164,78 @@ public class CommerceInventoryWarehouseRelLocalServiceImpl
 
 	@Override
 	public List<CommerceInventoryWarehouseRel>
+		getAccountEntryCommerceInventoryWarehouseRels(
+			long commerceInventoryWarehouseId, String keywords, int start,
+			int end) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceInventoryWarehouseRelTable.INSTANCE),
+				AccountEntryTable.INSTANCE,
+				AccountEntryTable.INSTANCE.accountEntryId.eq(
+					CommerceInventoryWarehouseRelTable.INSTANCE.classPK),
+				commerceInventoryWarehouseId, AccountEntry.class.getName(),
+				keywords, AccountEntryTable.INSTANCE.name
+			).limit(
+				start, end
+			));
+	}
+
+	@Override
+	public int getAccountEntryCommerceInventoryWarehouseRelsCount(
+		long commerceInventoryWarehouseId, String keywords) {
+
+		return dslQueryCount(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.countDistinct(
+					CommerceInventoryWarehouseRelTable.INSTANCE.
+						commerceInventoryWarehouseRelId),
+				AccountEntryTable.INSTANCE,
+				AccountEntryTable.INSTANCE.accountEntryId.eq(
+					CommerceInventoryWarehouseRelTable.INSTANCE.classPK),
+				commerceInventoryWarehouseId, AccountEntry.class.getName(),
+				keywords, AccountEntryTable.INSTANCE.name));
+	}
+
+	@Override
+	public List<CommerceInventoryWarehouseRel>
+		getAccountGroupCommerceInventoryWarehouseRels(
+			long commerceInventoryWarehouseId, String keywords, int start,
+			int end) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceInventoryWarehouseRelTable.INSTANCE),
+				AccountGroupTable.INSTANCE,
+				AccountGroupTable.INSTANCE.accountGroupId.eq(
+					CommerceInventoryWarehouseRelTable.INSTANCE.classPK),
+				commerceInventoryWarehouseId, AccountGroup.class.getName(),
+				keywords, AccountGroupTable.INSTANCE.name
+			).limit(
+				start, end
+			));
+	}
+
+	@Override
+	public int getAccountGroupCommerceInventoryWarehouseRelsCount(
+		long commerceInventoryWarehouseId, String keywords) {
+
+		return dslQueryCount(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.countDistinct(
+					CommerceInventoryWarehouseRelTable.INSTANCE.
+						commerceInventoryWarehouseRelId),
+				AccountGroupTable.INSTANCE,
+				AccountGroupTable.INSTANCE.accountGroupId.eq(
+					CommerceInventoryWarehouseRelTable.INSTANCE.classPK),
+				commerceInventoryWarehouseId, AccountGroup.class.getName(),
+				keywords, AccountGroupTable.INSTANCE.name));
+	}
+
+	@Override
+	public List<CommerceInventoryWarehouseRel>
 		getCommerceInventoryWarehouseRels(long commerceInventoryWarehouseId) {
 
 		return commerceInventoryWarehouseRelPersistence.
@@ -179,11 +255,43 @@ public class CommerceInventoryWarehouseRelLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceInventoryWarehouseRel>
+		getCommerceInventoryWarehouseRels(
+			String className, long commerceInventoryWarehouseId) {
+
+		return commerceInventoryWarehouseRelPersistence.findByC_C(
+			_classNameLocalService.getClassNameId(className),
+			commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public List<CommerceInventoryWarehouseRel>
+		getCommerceInventoryWarehouseRels(
+			String className, long commerceInventoryWarehouseId, int start,
+			int end,
+			OrderByComparator<CommerceInventoryWarehouseRel>
+				orderByComparator) {
+
+		return commerceInventoryWarehouseRelPersistence.findByC_C(
+			_classNameLocalService.getClassNameId(className),
+			commerceInventoryWarehouseId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getCommerceInventoryWarehouseRelsCount(
 		long commerceInventoryWarehouseId) {
 
 		return commerceInventoryWarehouseRelPersistence.
 			countByCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public int getCommerceInventoryWarehouseRelsCount(
+		String className, long commerceInventoryWarehouseId) {
+
+		return commerceInventoryWarehouseRelPersistence.countByC_C(
+			_classNameLocalService.getClassNameId(className),
+			commerceInventoryWarehouseId);
 	}
 
 	@Override

@@ -6,13 +6,22 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.account.model.AccountEntryOrganizationRel;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.internal.search.ObjectEntryBatchReindexer;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.filter.factory.FilterFactory;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -71,13 +80,47 @@ public class AccountEntryOrganizationRelModelListener
 	}
 
 	private void _reindex(
-		AccountEntryOrganizationRel accountEntryOrganizationRel) {
+			AccountEntryOrganizationRel accountEntryOrganizationRel)
+		throws PortalException {
 
 		for (ObjectDefinition objectDefinition :
 				_objectDefinitionLocalService.getObjectDefinitions(true)) {
 
 			if (!objectDefinition.isEnableIndexSearch()) {
 				continue;
+			}
+
+			ObjectScopeProvider objectScopeProvider =
+				_objectScopeProviderRegistry.getObjectScopeProvider(
+					objectDefinition.getScope());
+
+			if (!objectScopeProvider.isGroupAware()) {
+				ObjectField objectField =
+					ObjectFieldLocalServiceUtil.fetchObjectField(
+						objectDefinition.
+							getAccountEntryRestrictedObjectFieldId());
+
+				if (objectField == null) {
+					continue;
+				}
+
+				String filterString = StringBundler.concat(
+					objectField.getName(), " eq '",
+					accountEntryOrganizationRel.getAccountEntryId(), "'");
+
+				Predicate predicate = _filterFactory.create(
+					filterString, objectDefinition);
+
+				int valuesListCount =
+					_objectEntryLocalService.getValuesListCount(
+						0, accountEntryOrganizationRel.getCompanyId(),
+						objectDefinition.getUserId(),
+						objectDefinition.getObjectDefinitionId(), predicate,
+						null);
+
+				if (valuesListCount <= 0) {
+					continue;
+				}
 			}
 
 			ObjectEntryBatchReindexer objectEntryBatchReindexer =
@@ -100,11 +143,19 @@ public class AccountEntryOrganizationRelModelListener
 	private DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
+	@Reference(
+		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
+	)
+	private FilterFactory<Predicate> _filterFactory;
+
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	private ServiceTrackerMap<String, IndexerDocumentBuilder>
 		_serviceTrackerMap;

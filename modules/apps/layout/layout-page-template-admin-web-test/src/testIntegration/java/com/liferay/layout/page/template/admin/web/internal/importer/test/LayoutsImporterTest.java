@@ -48,6 +48,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -228,7 +229,7 @@ public class LayoutsImporterTest {
 		Assert.assertEquals(
 			CompanyConstants.SYSTEM, fragmentEntry.getCompanyId());
 
-		_addFragmentEntryLink(fragmentEntry, layoutPageTemplateEntry);
+		_addFragmentEntryLinks(layoutPageTemplateEntry, fragmentEntry);
 
 		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
 			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
@@ -289,6 +290,58 @@ public class LayoutsImporterTest {
 		_assertLayoutPageTemplateEntry(
 			fragmentEntry, fragmentEntryLink,
 			_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
+	}
+
+	@Test
+	@TestInfo("LPS-129107")
+	public void testImportLayoutPageTemplateEntryWithFragmentEntryLinkFromMissingFragmentEntry()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry();
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
+		String fragmentEntryKey = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		_addFragmentEntryLinks(
+			layoutPageTemplateEntry, fragmentEntry,
+			_addFragmentEntry(
+				RandomTestUtil.randomString(), fragmentEntryKey,
+				RandomTestUtil.randomString(), _serviceContext1));
+
+		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
+			LayoutPageTemplateEntryTypeConstants.BASIC);
+
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			_layoutsImporter.importFile(
+				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+
+		Assert.assertEquals(
+			layoutsImporterResultEntries.toString(), 1,
+			layoutsImporterResultEntries.size());
+
+		LayoutsImporterResultEntry layoutsImporterResultEntry =
+			layoutsImporterResultEntries.get(0);
+
+		Assert.assertEquals(
+			LayoutsImporterResultEntry.Status.IMPORTED,
+			layoutsImporterResultEntry.getStatus());
+
+		Assert.assertArrayEquals(
+			new String[] {
+				"Fragment with key " + fragmentEntryKey +
+					" was ignored because it does not exist."
+			},
+			layoutsImporterResultEntry.getWarningMessages());
+
+		_assertLayoutsImporterResultEntries(
+			fragmentEntry, layoutsImporterResultEntries);
 	}
 
 	@Test
@@ -697,9 +750,9 @@ public class LayoutsImporterTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
-	private void _addFragmentEntryLink(
-			FragmentEntry fragmentEntry,
-			LayoutPageTemplateEntry layoutPageTemplateEntry)
+	private void _addFragmentEntryLinks(
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			FragmentEntry... fragmentEntries)
 		throws Exception {
 
 		Layout layout = _layoutLocalService.getLayout(
@@ -707,18 +760,42 @@ public class LayoutsImporterTest {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), draftLayout,
-			fragmentEntry.getFragmentEntryKey(),
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid()),
-			fragmentEntry.getType());
+		List<Long> fragmentEntryLinkIds = TransformUtil.transformToList(
+			fragmentEntries,
+			fragmentEntry -> {
+				FragmentEntryLink fragmentEntryLink =
+					ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+						null, fragmentEntry.getCss(),
+						fragmentEntry.getConfiguration(),
+						fragmentEntry.getFragmentEntryId(),
+						fragmentEntry.getHtml(), fragmentEntry.getJs(),
+						draftLayout, fragmentEntry.getFragmentEntryKey(),
+						_segmentsExperienceLocalService.
+							fetchDefaultSegmentsExperienceId(
+								draftLayout.getPlid()),
+						fragmentEntry.getType());
+
+				return fragmentEntryLink.getFragmentEntryLinkId();
+			});
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layoutPageTemplateEntry.getGroupId(),
+					layoutPageTemplateEntry.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
+
+		Assert.assertTrue(
+			MapUtil.toString(fragmentLayoutStructureItems),
+			fragmentEntryLinkIds.containsAll(
+				fragmentLayoutStructureItems.keySet()));
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-		_assertFragmentEntryLink(fragmentEntry, layoutPageTemplateEntry);
 	}
 
 	private FragmentEntryLink _addInputFragmentEntryLink(

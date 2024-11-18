@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.taglib.sample.web.internal.display.context;
 
-import com.liferay.frontend.taglib.sample.web.internal.constants.TaglibSamplePortletKeys;
+import com.liferay.frontend.taglib.sample.web.internal.constants.SamplePortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -49,11 +49,11 @@ public class SearchIteratorDisplayContext {
 		searchContainer.setId("StringItemSearchContainer");
 		searchContainer.setOrderByCol(
 			SearchOrderByUtil.getOrderByCol(
-				_renderRequest, TaglibSamplePortletKeys.TAGLIB_SAMPLE_PORTLET,
+				_renderRequest, SamplePortletKeys.SAMPLE_PORTLET,
 				"order-by-col", "name"));
 		searchContainer.setOrderByType(
 			SearchOrderByUtil.getOrderByType(
-				_renderRequest, TaglibSamplePortletKeys.TAGLIB_SAMPLE_PORTLET,
+				_renderRequest, SamplePortletKeys.SAMPLE_PORTLET,
 				"order-by-type", "asc"));
 
 		List<String> itemList = new ArrayList<>();

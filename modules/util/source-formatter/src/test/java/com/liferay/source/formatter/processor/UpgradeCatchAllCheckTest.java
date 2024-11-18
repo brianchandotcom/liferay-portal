@@ -46,6 +46,10 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 
 		ClassLoader classLoader = UpgradeCatchAllCheck.class.getClassLoader();
 
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringUtil.read(
 				classLoader.getResourceAsStream(
@@ -81,10 +85,6 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 
 	@Before
 	public void setUp() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
 		UpgradeCatchAllCheck.setIssueKey(_issueKey);
 		UpgradeCatchAllCheck.setTestMode(true);
 	}

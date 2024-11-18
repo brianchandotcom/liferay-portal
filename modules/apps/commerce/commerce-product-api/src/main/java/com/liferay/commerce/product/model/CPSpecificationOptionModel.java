@@ -252,20 +252,6 @@ public interface CPSpecificationOptionModel
 	public void setCPOptionCategoryId(long CPOptionCategoryId);
 
 	/**
-	 * Returns the list type definition ID of this cp specification option.
-	 *
-	 * @return the list type definition ID of this cp specification option
-	 */
-	public long getListTypeDefinitionId();
-
-	/**
-	 * Sets the list type definition ID of this cp specification option.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID of this cp specification option
-	 */
-	public void setListTypeDefinitionId(long listTypeDefinitionId);
-
-	/**
 	 * Returns the title of this cp specification option.
 	 *
 	 * @return the title of this cp specification option

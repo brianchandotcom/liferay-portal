@@ -25,6 +25,7 @@
 	<import class="com.liferay.commerce.product.model.CPOptionValue" />
 	<import class="com.liferay.commerce.product.model.CProduct" />
 	<import class="com.liferay.commerce.product.model.CPSpecificationOption" />
+	<import class="com.liferay.commerce.product.model.CPSpecificationOptionListTypeDefinitionRel" />
 	<import class="com.liferay.commerce.product.model.CPTaxCategory" />
 	<class dynamic-update="true" name="com.liferay.commerce.product.model.impl.CommerceCatalogImpl" table="CommerceCatalog">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceCatalogId" type="long">
@@ -589,13 +590,22 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPOptionCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="listTypeDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="facetable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="key_" name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.commerce.product.model.impl.CPSpecificationOptionListTypeDefinitionRelImpl" table="CPSOListTypeDefinitionRel">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="CPSOListTypeDefinitionRelId" name="CPSpecificationOptionListTypeDefinitionRelId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="ctCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPSpecificationOptionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="listTypeDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.product.model.impl.CPTaxCategoryImpl" table="CPTaxCategory">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPTaxCategoryId" type="long">

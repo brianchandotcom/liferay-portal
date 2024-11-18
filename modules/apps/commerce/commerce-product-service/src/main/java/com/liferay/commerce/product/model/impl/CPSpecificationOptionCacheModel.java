@@ -69,7 +69,7 @@ public class CPSpecificationOptionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -93,8 +93,6 @@ public class CPSpecificationOptionCacheModel
 		sb.append(modifiedDate);
 		sb.append(", CPOptionCategoryId=");
 		sb.append(CPOptionCategoryId);
-		sb.append(", listTypeDefinitionId=");
-		sb.append(listTypeDefinitionId);
 		sb.append(", title=");
 		sb.append(title);
 		sb.append(", description=");
@@ -162,7 +160,6 @@ public class CPSpecificationOptionCacheModel
 		}
 
 		cpSpecificationOptionImpl.setCPOptionCategoryId(CPOptionCategoryId);
-		cpSpecificationOptionImpl.setListTypeDefinitionId(listTypeDefinitionId);
 
 		if (title == null) {
 			cpSpecificationOptionImpl.setTitle("");
@@ -220,8 +217,6 @@ public class CPSpecificationOptionCacheModel
 		modifiedDate = objectInput.readLong();
 
 		CPOptionCategoryId = objectInput.readLong();
-
-		listTypeDefinitionId = objectInput.readLong();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
 
@@ -270,8 +265,6 @@ public class CPSpecificationOptionCacheModel
 
 		objectOutput.writeLong(CPOptionCategoryId);
 
-		objectOutput.writeLong(listTypeDefinitionId);
-
 		if (title == null) {
 			objectOutput.writeUTF("");
 		}
@@ -310,7 +303,6 @@ public class CPSpecificationOptionCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long CPOptionCategoryId;
-	public long listTypeDefinitionId;
 	public String title;
 	public String description;
 	public boolean facetable;

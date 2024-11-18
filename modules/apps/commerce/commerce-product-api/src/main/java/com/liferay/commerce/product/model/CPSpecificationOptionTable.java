@@ -59,10 +59,6 @@ public class CPSpecificationOptionTable
 		createColumn(
 			"CPOptionCategoryId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<CPSpecificationOptionTable, Long> listTypeDefinitionId =
-		createColumn(
-			"listTypeDefinitionId", Long.class, Types.BIGINT,
-			Column.FLAG_DEFAULT);
 	public final Column<CPSpecificationOptionTable, String> title =
 		createColumn("title", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPSpecificationOptionTable, String> description =

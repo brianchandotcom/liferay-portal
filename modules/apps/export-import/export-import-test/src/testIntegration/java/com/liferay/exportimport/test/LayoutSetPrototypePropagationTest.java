@@ -418,6 +418,7 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
+	@TestInfo("LPS-161955")
 	public void testLayoutPropagationWithMasterLayout() throws Exception {
 		Layout siteTemplateMasterLayout = LayoutTestUtil.addTypeContentLayout(
 			_layoutSetPrototypeGroup, true, false);

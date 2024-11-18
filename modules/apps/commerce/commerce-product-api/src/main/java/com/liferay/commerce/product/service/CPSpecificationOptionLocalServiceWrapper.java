@@ -53,7 +53,7 @@ public class CPSpecificationOptionLocalServiceWrapper
 	@Override
 	public CPSpecificationOption addCPSpecificationOption(
 			String externalReferenceCode, long userId, long cpOptionCategoryId,
-			long listTypeDefinitionId,
+			long[] listTypeDefinitionIds,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			boolean facetable, String key, double priority,
@@ -62,17 +62,8 @@ public class CPSpecificationOptionLocalServiceWrapper
 
 		return _cpSpecificationOptionLocalService.addCPSpecificationOption(
 			externalReferenceCode, userId, cpOptionCategoryId,
-			listTypeDefinitionId, titleMap, descriptionMap, facetable, key,
+			listTypeDefinitionIds, titleMap, descriptionMap, facetable, key,
 			priority, serviceContext);
-	}
-
-	@Override
-	public int countCPSpecificationOptionByListTypeDefinitionId(
-		long listTypeDefinitionId) {
-
-		return _cpSpecificationOptionLocalService.
-			countCPSpecificationOptionByListTypeDefinitionId(
-				listTypeDefinitionId);
 	}
 
 	/**
@@ -477,7 +468,7 @@ public class CPSpecificationOptionLocalServiceWrapper
 	@Override
 	public CPSpecificationOption updateCPSpecificationOption(
 			String externalReferenceCode, long cpSpecificationOptionId,
-			long cpOptionCategoryId, long listTypeDefinitionId,
+			long cpOptionCategoryId, long[] listTypeDefinitionIds,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			boolean facetable, String key, double priority,
@@ -486,7 +477,7 @@ public class CPSpecificationOptionLocalServiceWrapper
 
 		return _cpSpecificationOptionLocalService.updateCPSpecificationOption(
 			externalReferenceCode, cpSpecificationOptionId, cpOptionCategoryId,
-			listTypeDefinitionId, titleMap, descriptionMap, facetable, key,
+			listTypeDefinitionIds, titleMap, descriptionMap, facetable, key,
 			priority, serviceContext);
 	}
 

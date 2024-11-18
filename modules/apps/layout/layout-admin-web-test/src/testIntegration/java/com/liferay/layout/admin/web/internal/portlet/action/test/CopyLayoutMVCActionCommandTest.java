@@ -220,17 +220,20 @@ public class CopyLayoutMVCActionCommandTest {
 				_group.getGroupId(), layout.getPlid()));
 	}
 
-	private FragmentEntryLink _addFragmentEntryLinkToLayout(
-			long segmentsExperienceId)
+	private void _addFragmentEntryLinkToLayout(long segmentsExperienceId)
 		throws Exception {
 
 		FragmentEntry fragmentEntry = _getFragmentEntry();
 
-		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), _layout, fragmentEntry.getFragmentEntryKey(),
-			segmentsExperienceId, fragmentEntry.getType());
+			fragmentEntry.getJs(), _layout.fetchDraftLayout(),
+			fragmentEntry.getFragmentEntryKey(), segmentsExperienceId,
+			fragmentEntry.getType());
+
+		ContentLayoutTestUtil.publishLayout(
+			_layout.fetchDraftLayout(), _layout);
 	}
 
 	private void _addModelResources(Role role) throws Exception {

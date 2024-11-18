@@ -76,6 +76,11 @@ type LayoutPageTemplateEntry = {
 	plid: string;
 };
 
+type LayoutPageTemplateCollection = {
+	groupId: string;
+	layoutPageTemplateCollectionId: string;
+};
+
 type PageDefinition = {
 	pageElement: PageElement;
 };

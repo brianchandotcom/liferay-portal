@@ -94,6 +94,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 	}
 
 	@After
+	@Override
 	public void tearDown() throws Exception {
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 	}

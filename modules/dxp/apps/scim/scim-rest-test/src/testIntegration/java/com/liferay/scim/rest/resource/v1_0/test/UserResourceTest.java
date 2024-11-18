@@ -95,6 +95,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 	}
 
 	@After
+	@Override
 	public void tearDown() throws Exception {
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 	}

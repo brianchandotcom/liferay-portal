@@ -53,6 +53,7 @@ public class AssetMetricResourceTest extends BaseAssetMetricResourceTestCase {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
 
@@ -67,6 +68,7 @@ public class AssetMetricResourceTest extends BaseAssetMetricResourceTestCase {
 	}
 
 	@After
+	@Override
 	public void tearDown() throws Exception {
 		UnicodeProperties unicodeProperties =
 			_group.getTypeSettingsProperties();

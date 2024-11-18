@@ -123,8 +123,8 @@ public class BatchEngineServiceUpgradeStepRegistrator
 	}
 
 	private static final String _DELETE_UNLINKED_COMPANY_ID_ROWS_SQL =
-		"delete from %s t where not exists (select 1 from Company c where " +
-			"c.companyId = t.companyId)";
+		"delete from %s where not exists (select 1 from Company where " +
+			"Company.companyId = %1$s.companyId)";
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

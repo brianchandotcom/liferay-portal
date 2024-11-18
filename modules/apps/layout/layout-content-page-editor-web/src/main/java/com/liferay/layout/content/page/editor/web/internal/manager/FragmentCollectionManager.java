@@ -381,16 +381,6 @@ public class FragmentCollectionManager {
 				continue;
 			}
 
-			fragmentEntryMapsList.sort(
-				(fragmentEntryMap1, fragmentEntryMap2) -> {
-					String name1 = String.valueOf(
-						fragmentEntryMap1.get("name"));
-					String name2 = String.valueOf(
-						fragmentEntryMap2.get("name"));
-
-					return name1.compareTo(name2);
-				});
-
 			fragmentCollectionContributorMaps.put(
 				fragmentCollectionContributor.getFragmentCollectionKey(),
 				HashMapBuilder.<String, Object>put(
@@ -546,6 +536,24 @@ public class FragmentCollectionManager {
 
 		sortedFragmentCollectionMapsList.addAll(
 			fragmentCollectionMaps.values());
+
+		for (Map<String, Object> fragmentCollectionMap :
+				sortedFragmentCollectionMapsList) {
+
+			List<Map<String, Object>> fragmentEntries =
+				(List<Map<String, Object>>)fragmentCollectionMap.get(
+					"fragmentEntries");
+
+			fragmentEntries.sort(
+				(fragmentEntryMap1, fragmentEntryMap2) -> {
+					String name1 = String.valueOf(
+						fragmentEntryMap1.get("name"));
+					String name2 = String.valueOf(
+						fragmentEntryMap2.get("name"));
+
+					return name1.compareTo(name2);
+				});
+		}
 
 		return sortedFragmentCollectionMapsList;
 	}

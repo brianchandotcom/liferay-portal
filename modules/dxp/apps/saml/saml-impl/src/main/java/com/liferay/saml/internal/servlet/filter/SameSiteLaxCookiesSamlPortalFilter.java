@@ -54,9 +54,7 @@ public class SameSiteLaxCookiesSamlPortalFilter extends BaseSamlPortalFilter {
 
 		if (!_samlProviderConfigurationHelper.isEnabled() ||
 			Objects.equals(httpServletRequest.getMethod(), "GET") ||
-			ParamUtil.getBoolean(httpServletRequest, "continue") ||
-			(!ParamUtil.getBoolean(httpServletRequest, "noscript") &&
-			 (httpServletRequest.getSession(false) != null))) {
+			ParamUtil.getBoolean(httpServletRequest, "continue")) {
 
 			return false;
 		}

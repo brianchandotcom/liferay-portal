@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
@@ -17,6 +18,9 @@ import {announcementsPagesTest} from './fixtures/announcementsPagesTest';
 export const test = mergeTests(
 	announcementsPagesTest,
 	apiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest
@@ -67,114 +71,128 @@ test(
 		pageEditorPage,
 		site,
 	}) => {
+		const [organization, role, site1, userGroup] =
+			await test.step('Create new organization, role, site, and user group', async () => {
+				const user =
+					await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+						'test@liferay.com'
+					);
 
-		// Create new organization, role, site, and user group.
+				const organization =
+					await apiHelpers.headlessAdminUser.postOrganization();
 
-		const user =
-			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-				'test@liferay.com'
+				await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+					organization.id,
+					user.emailAddress
+				);
+
+				const role = await apiHelpers.headlessAdminUser.postRole({
+					name: 'Role' + getRandomString(),
+				});
+
+				const site1 = await apiHelpers.headlessSite.createSite({
+					name: 'Site' + getRandomString(),
+				});
+
+				const userGroup =
+					await apiHelpers.headlessAdminUser.postUserGroup();
+
+				await apiHelpers.headlessAdminUser.assignUsersToUserGroup(
+					userGroup.id,
+					[user.id]
+				);
+
+				return [organization, role, site1, userGroup];
+			});
+
+		const [layout, widgetId] =
+			await test.step('Create a page with the Announcements widget', async () => {
+				const widgetId = getRandomString();
+
+				const widgetDefinition = getWidgetDefinition({
+					id: widgetId,
+					widgetName:
+						'com_liferay_announcements_web_portlet_AnnouncementsPortlet',
+				});
+
+				const layout = await apiHelpers.headlessDelivery.createSitePage(
+					{
+						pageDefinition: getPageDefinition([widgetDefinition]),
+						siteId: site.id,
+						title: getRandomString(),
+					}
+				);
+
+				return [layout, widgetId];
+			});
+
+		await test.step('Configure the distribution scope of the Announcements widget', async () => {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.goToWidgetConfiguration(widgetId);
+
+			await expect(
+				announcementsWidgetConfigurationPage.distributionScopeOrganizationsTab
+			).toBeVisible();
+			await expect(
+				announcementsWidgetConfigurationPage.distributionScopeRolesTab
+			).toBeVisible();
+			await expect(
+				announcementsWidgetConfigurationPage.distributionScopeSitesTab
+			).toBeVisible();
+			await expect(
+				announcementsWidgetConfigurationPage.distributionScopeUserGroupsTab
+			).toBeVisible();
+
+			await announcementsWidgetConfigurationPage.distributionScopeMoveToCurrent(
+				'Organizations',
+				organization.name
+			);
+			await announcementsWidgetConfigurationPage.distributionScopeMoveToCurrent(
+				'Roles',
+				role.name
+			);
+			await announcementsWidgetConfigurationPage.distributionScopeMoveToCurrent(
+				'Sites',
+				site1.name
+			);
+			await announcementsWidgetConfigurationPage.distributionScopeMoveToCurrent(
+				'User Groups',
+				userGroup.name
 			);
 
-		const organization =
-			await apiHelpers.headlessAdminUser.postOrganization();
+			await announcementsWidgetConfigurationPage.saveAndClose();
 
-		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
-			organization.id,
-			user.emailAddress
-		);
-
-		const role = await apiHelpers.headlessAdminUser.postRole({
-			name: 'Role' + getRandomString(),
+			await pageEditorPage.publishPage();
 		});
 
-		const site1 = await apiHelpers.headlessSite.createSite({
-			name: 'Site' + getRandomString(),
+		await test.step('Check that the configured distribution scopes can be selected when adding a new announcement', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await announcementsWidgetPage.addAnnouncementButton.click();
+
+			await expect(
+				announcementsWidgetPage.getDistributionScopeSelectOptions(
+					'Organizations'
+				)
+			).toContainText([organization.name]);
+			await expect(
+				announcementsWidgetPage.getDistributionScopeSelectOptions(
+					'Roles'
+				)
+			).toContainText([role.name]);
+			await expect(
+				announcementsWidgetPage.getDistributionScopeSelectOptions(
+					'Sites'
+				)
+			).toContainText([site1.name]);
+			await expect(
+				announcementsWidgetPage.getDistributionScopeSelectOptions(
+					'User Groups'
+				)
+			).toContainText([userGroup.name]);
 		});
-
-		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
-
-		await apiHelpers.headlessAdminUser.assignUsersToUserGroup(
-			userGroup.id,
-			[user.id]
-		);
-
-		// Create a page with the Announcements widget.
-
-		const widgetId = getRandomString();
-
-		const widgetDefinition = getWidgetDefinition({
-			id: widgetId,
-			widgetName:
-				'com_liferay_announcements_web_portlet_AnnouncementsPortlet',
-		});
-
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([widgetDefinition]),
-			siteId: site.id,
-			title: getRandomString(),
-		});
-
-		// Configure the distribution scope of the Announcements widget.
-
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-		await pageEditorPage.goToWidgetConfiguration(widgetId);
-
-		await expect(
-			announcementsWidgetConfigurationPage.distributionScopeOrganizationsTab
-		).toBeVisible();
-		await expect(
-			announcementsWidgetConfigurationPage.distributionScopeRolesTab
-		).toBeVisible();
-		await expect(
-			announcementsWidgetConfigurationPage.distributionScopeSitesTab
-		).toBeVisible();
-		await expect(
-			announcementsWidgetConfigurationPage.distributionScopeUserGroupsTab
-		).toBeVisible();
-
-		await announcementsWidgetConfigurationPage.distributionScopeMoveToCurrent(
-			'Organizations',
-			organization.name
-		);
-		await announcementsWidgetConfigurationPage.distributionScopeMoveToCurrent(
-			'Roles',
-			role.name
-		);
-		await announcementsWidgetConfigurationPage.distributionScopeMoveToCurrent(
-			'Sites',
-			site1.name
-		);
-		await announcementsWidgetConfigurationPage.distributionScopeMoveToCurrent(
-			'User Groups',
-			userGroup.name
-		);
-
-		await announcementsWidgetConfigurationPage.saveAndClose();
-
-		await pageEditorPage.publishPage();
-
-		// Check that the configured distribution scopes can be selected when adding a new announcement.
-
-		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
-
-		await announcementsWidgetPage.addAnnouncementButton.click();
-
-		await expect(
-			announcementsWidgetPage.getDistributionScopeSelectOptions(
-				'Organizations'
-			)
-		).toContainText([organization.name]);
-		await expect(
-			announcementsWidgetPage.getDistributionScopeSelectOptions('Roles')
-		).toContainText([role.name]);
-		await expect(
-			announcementsWidgetPage.getDistributionScopeSelectOptions('Sites')
-		).toContainText([site1.name]);
-		await expect(
-			announcementsWidgetPage.getDistributionScopeSelectOptions(
-				'User Groups'
-			)
-		).toContainText([userGroup.name]);
 	}
 );

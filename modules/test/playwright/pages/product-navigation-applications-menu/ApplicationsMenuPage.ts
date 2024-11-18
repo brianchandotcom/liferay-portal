@@ -12,6 +12,7 @@ export class ApplicationsMenuPage {
 	private readonly aiCreatorLink: Locator;
 	private readonly announcementsItem: Locator;
 	private readonly apiBuilderMenuItem: Locator;
+	private readonly auditItem: Locator;
 	private readonly applicationsMenuTabButton: Locator;
 	private readonly blueprintsItem: Locator;
 	private readonly clientExtensionsLink: Locator;
@@ -74,6 +75,10 @@ export class ApplicationsMenuPage {
 		});
 		this.applicationsMenuTabButton = page.getByRole('tab', {
 			name: 'Applications',
+		});
+		this.auditItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Audit',
 		});
 		this.blueprintsItem = page.getByRole('menuitem', {
 			exact: true,
@@ -529,5 +534,11 @@ export class ApplicationsMenuPage {
 		await this.goto();
 		await this.controlPanelButton.click();
 		await this.virtualInstancesItem.click();
+	}
+
+	async goToAudit() {
+		await this.goto();
+		await this.controlPanelButton.click();
+		await this.auditItem.click();
 	}
 }

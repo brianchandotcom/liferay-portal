@@ -79,6 +79,7 @@ import {config as portalDefaultPermissionsWebConfig} from './tests/portal-defaul
 import {config as portalLanguageOverrideWebConfig} from './tests/portal-language-override-web/config';
 import {config as portalSearchAdminWebConfig} from './tests/portal-search-admin-web/config';
 import {config as portalSearchWebConfig} from './tests/portal-search-web/config';
+import {config as portalSecurityAuditWebConfig} from './tests/portal-security-audit-web/config';
 import {config as portalSecurityScriptManagementWebConfig} from './tests/portal-security-script-management-web/config';
 import {config as portalSecurityServiceAccessPolicyService} from './tests/portal-security-service-access-policy-service/config';
 import {config as portalToolsRestBuilderTestImpl} from './tests/portal-tools-rest-builder-test-impl/config';
@@ -200,6 +201,7 @@ export default defineConfig({
 		portalLanguageOverrideWebConfig,
 		portalSearchAdminWebConfig,
 		portalSearchWebConfig,
+		portalSecurityAuditWebConfig,
 		portalSecurityScriptManagementWebConfig,
 		portalSecurityServiceAccessPolicyService,
 		portalToolsRestBuilderTestImpl,

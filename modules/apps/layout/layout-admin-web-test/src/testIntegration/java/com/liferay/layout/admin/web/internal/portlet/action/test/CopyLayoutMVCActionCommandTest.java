@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -111,13 +113,7 @@ public class CopyLayoutMVCActionCommandTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid()));
 
-		Role role = _roleLocalService.addRole(
-			RandomTestUtil.randomString(), _serviceContext.getUserId(), null, 0,
-			StringUtil.randomString(), Collections.emptyMap(),
-			Collections.emptyMap(), RoleConstants.TYPE_REGULAR,
-			StringPool.BLANK, _serviceContext);
-
-		_addModelResources(role);
+		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
 
 		_processAction(Collections.emptyMap());
 
@@ -176,13 +172,7 @@ public class CopyLayoutMVCActionCommandTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid()));
 
-		Role role = _roleLocalService.addRole(
-			RandomTestUtil.randomString(), _serviceContext.getUserId(), null, 0,
-			StringUtil.randomString(), Collections.emptyMap(),
-			Collections.emptyMap(), RoleConstants.TYPE_REGULAR,
-			StringPool.BLANK, _serviceContext);
-
-		_addModelResources(role);
+		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
@@ -230,11 +220,7 @@ public class CopyLayoutMVCActionCommandTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid()));
 
-		Role role = _roleLocalService.addRole(
-			RandomTestUtil.randomString(), _serviceContext.getUserId(), null, 0,
-			StringUtil.randomString(), Collections.emptyMap(),
-			Collections.emptyMap(), RoleConstants.TYPE_REGULAR,
-			StringPool.BLANK, _serviceContext);
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_addModelResources(role);
 

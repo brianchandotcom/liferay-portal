@@ -77,7 +77,7 @@ public class ScanCodeProject {
 		}
 	}
 
-	public void checkComplianceAlerts(ComplianceAlertType alertType)
+	public void checkComplianceAlerts(ComplianceAlertType complianceAlertType)
 		throws IOException, TimeoutException {
 
 		StringBuilder sb = new StringBuilder();
@@ -85,7 +85,7 @@ public class ScanCodeProject {
 		sb.append("curl ");
 		sb.append(_projectAPIURL);
 		sb.append("compliance/?fail_level=");
-		sb.append(alertType);
+		sb.append(complianceAlertType);
 		sb.append(" --header ");
 		sb.append(_CONTENT_TYPE);
 		sb.append(" --header ");
@@ -115,21 +115,23 @@ public class ScanCodeProject {
 			JSONObject complianceAlertJSONObject =
 				complianceAlertsJSONObject.getJSONObject(key);
 
-			if (complianceAlertJSONObject.has(alertType.toString())) {
-				JSONArray alertTypeJSONArray =
+			if (complianceAlertJSONObject.has(complianceAlertType.toString())) {
+				JSONArray complianceAlertTypeJSONArray =
 					complianceAlertJSONObject.getJSONArray(
-						alertType.toString());
+						complianceAlertType.toString());
 
 				_complianceAlertsCountsMap.put(
-					key + "-" + alertType, alertTypeJSONArray.length());
+					key + "-" + complianceAlertType,
+					complianceAlertTypeJSONArray.length());
 			}
 		}
 	}
 
-	public void checkComplianceAlerts(String alertTypeString)
+	public void checkComplianceAlerts(String complianceAlertTypeString)
 		throws IOException, TimeoutException {
 
-		checkComplianceAlerts(ComplianceAlertType.valueOf(alertTypeString));
+		checkComplianceAlerts(
+			ComplianceAlertType.valueOf(complianceAlertTypeString));
 	}
 
 	public void downloadResultFiles() throws IOException {
@@ -190,7 +192,9 @@ public class ScanCodeProject {
 		return jsonObject;
 	}
 
-	public String getComplianceAlertsMessage(ComplianceAlertType alertType) {
+	public String getComplianceAlertsMessage(
+		ComplianceAlertType complianceAlertType) {
+
 		StringBuilder sb = new StringBuilder();
 
 		for (Map.Entry<String, Integer> entry :
@@ -198,15 +202,17 @@ public class ScanCodeProject {
 
 			String key = entry.getKey();
 
-			if (!key.endsWith(alertType.toString())) {
+			if (!key.endsWith(complianceAlertType.toString())) {
 				continue;
 			}
 
-			sb.append(alertType.getSlackEmoticon());
+			sb.append(complianceAlertType.getSlackEmoticon());
 			sb.append(" ");
 			sb.append(
 				key.replaceAll(
-					"(.*)-" + Pattern.quote(alertType.toString()) + "$", "$1"));
+					"(.*)-" + Pattern.quote(complianceAlertType.toString()) +
+						"$",
+					"$1"));
 			sb.append(":");
 			sb.append(entry.getValue());
 			sb.append(" ");
@@ -215,9 +221,9 @@ public class ScanCodeProject {
 		return sb.toString();
 	}
 
-	public String getComplianceAlertsMessage(String alertTypeString) {
+	public String getComplianceAlertsMessage(String complianceAlertTypeString) {
 		return getComplianceAlertsMessage(
-			ComplianceAlertType.valueOf(alertTypeString));
+			ComplianceAlertType.valueOf(complianceAlertTypeString));
 	}
 
 	public JSONObject getInspectPackagesJSONObject() {

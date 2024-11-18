@@ -67,6 +67,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -196,6 +199,27 @@ public class CopyLayoutMVCActionCommandTest {
 				String.valueOf(layout.getPlid()), role.getRoleId()));
 	}
 
+	@Test
+	@TestInfo("LPD-42253")
+	public void testDoProcessActionCopyLayoutWithSegmentsExperience()
+		throws Exception {
+
+		_addSegmentsExperience();
+
+		int count = _segmentsExperienceLocalService.getSegmentsExperiencesCount(
+			_layout.getGroupId(), _layout.getPlid());
+
+		_processAction(false, Collections.emptyMap());
+
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			_group.getGroupId(), _layout.isPrivateLayout(), "/" + _NAME);
+
+		Assert.assertEquals(
+			count,
+			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
+				_group.getGroupId(), layout.getPlid()));
+	}
+
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(
 			long segmentsExperienceId)
 		throws Exception {
@@ -218,6 +242,42 @@ public class CopyLayoutMVCActionCommandTest {
 		_resourceLocalService.addModelResources(
 			_layout.getCompanyId(), _layout.getGroupId(), _layout.getUserId(),
 			Layout.class.getName(), _layout.getPlid(), modelPermissions);
+	}
+
+	private void _addSegmentsExperience() throws Exception {
+		int count = _segmentsExperienceLocalService.getSegmentsExperiencesCount(
+			_layout.getGroupId(), _layout.getPlid());
+
+		Layout draftLayout = _layout.fetchDraftLayout();
+
+		MVCActionCommand addSegmentsExperienceMVCActionCommand =
+			ContentLayoutTestUtil.getMVCActionCommand(
+				"/layout_content_page_editor/add_segments_experience");
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
+				_companyLocalService.getCompany(_group.getCompanyId()), _group,
+				draftLayout);
+
+		mockLiferayPortletActionRequest.addParameter(
+			"groupId", String.valueOf(draftLayout.getGroupId()));
+		mockLiferayPortletActionRequest.addParameter(
+			"name", RandomTestUtil.randomString());
+		mockLiferayPortletActionRequest.addParameter(
+			"plid", String.valueOf(draftLayout.getPlid()));
+
+		ReflectionTestUtil.invoke(
+			addSegmentsExperienceMVCActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, _layout);
+
+		Assert.assertEquals(
+			count + 1,
+			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
+				_group.getGroupId(), _layout.getPlid()));
 	}
 
 	private Layout _assertCopyLayout(

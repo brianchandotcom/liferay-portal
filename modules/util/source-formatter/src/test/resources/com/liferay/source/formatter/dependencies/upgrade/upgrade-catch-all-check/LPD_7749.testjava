@@ -13,4 +13,5 @@ public class LPD_7749 {
 	public void method(Product product) {
 		product.getConfiguration();
 	}
+
 }

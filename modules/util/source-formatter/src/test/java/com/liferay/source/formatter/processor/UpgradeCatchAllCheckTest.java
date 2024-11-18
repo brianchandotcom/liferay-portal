@@ -38,7 +38,7 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 
 	@Parameterized.Parameters(name = "Testcase-{index}: Testing {0} .{1}")
 	public static Iterable<Object[]> data() throws Exception {
-		List<Object[]> tickets = new ArrayList<>();
+		List<Object[]> objectsArray = new ArrayList<>();
 
 		String[] issueKeys = StringUtil.split(
 			System.getProperty("issue.key", null), StringPool.COMMA);
@@ -69,12 +69,12 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 
 			for (String fileType : fileTypes) {
 				if (_hasValidUpgradeFiles(issueKey, fileType)) {
-					tickets.add(new Object[] {issueKey, fileType});
+					objectsArray.add(new Object[] {issueKey, fileType});
 				}
 			}
 		}
 
-		return tickets;
+		return objectsArray;
 	}
 
 	public UpgradeCatchAllCheckTest(String issueKey, String fileType) {
@@ -84,14 +84,14 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 
 	@Before
 	public void setUp() {
-		UpgradeCatchAllCheck.setTestMode(true);
 		UpgradeCatchAllCheck.setIssueKey(_issueKey);
+		UpgradeCatchAllCheck.setTestMode(true);
 	}
 
 	@After
 	public void tearDown() {
-		UpgradeCatchAllCheck.setTestMode(false);
 		UpgradeCatchAllCheck.setIssueKey(null);
+		UpgradeCatchAllCheck.setTestMode(false);
 	}
 
 	@Test

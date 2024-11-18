@@ -20,4 +20,5 @@ public class LPD_7751 {
 
 	@Reference
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
 }

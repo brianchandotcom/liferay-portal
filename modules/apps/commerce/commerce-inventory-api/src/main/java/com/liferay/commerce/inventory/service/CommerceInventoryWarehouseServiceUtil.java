@@ -125,11 +125,12 @@ public class CommerceInventoryWarehouseServiceUtil {
 
 	public static List<CommerceInventoryWarehouse>
 			getCommerceInventoryWarehouses(
-				long companyId, long groupId, boolean active)
+				long companyId, long accountEntryId, long groupId,
+				boolean active)
 		throws PortalException {
 
 		return getService().getCommerceInventoryWarehouses(
-			companyId, groupId, active);
+			companyId, accountEntryId, groupId, active);
 	}
 
 	public static int getCommerceInventoryWarehousesCount(long companyId)

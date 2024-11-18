@@ -77,6 +77,42 @@ public class CommerceInventoryWarehouseRelServiceUtil {
 			className, classPK, commerceInventoryWarehouseId);
 	}
 
+	public static List<CommerceInventoryWarehouseRel>
+			getAccountEntryCommerceInventoryWarehouseRels(
+				long commerceInventoryWarehouseId, String keywords, int start,
+				int end)
+		throws PortalException {
+
+		return getService().getAccountEntryCommerceInventoryWarehouseRels(
+			commerceInventoryWarehouseId, keywords, start, end);
+	}
+
+	public static int getAccountEntryCommerceInventoryWarehouseRelsCount(
+			long commerceInventoryWarehouseId, String keywords)
+		throws PortalException {
+
+		return getService().getAccountEntryCommerceInventoryWarehouseRelsCount(
+			commerceInventoryWarehouseId, keywords);
+	}
+
+	public static List<CommerceInventoryWarehouseRel>
+			getAccountGroupCommerceInventoryWarehouseRels(
+				long commerceInventoryWarehouseId, String keywords, int start,
+				int end)
+		throws PortalException {
+
+		return getService().getAccountGroupCommerceInventoryWarehouseRels(
+			commerceInventoryWarehouseId, keywords, start, end);
+	}
+
+	public static int getAccountGroupCommerceInventoryWarehouseRelsCount(
+			long commerceInventoryWarehouseId, String keywords)
+		throws PortalException {
+
+		return getService().getAccountGroupCommerceInventoryWarehouseRelsCount(
+			commerceInventoryWarehouseId, keywords);
+	}
+
 	public static CommerceInventoryWarehouseRel
 			getCommerceInventoryWarehouseRel(
 				long commerceInventoryWarehouseRelId)
@@ -105,12 +141,42 @@ public class CommerceInventoryWarehouseRelServiceUtil {
 			commerceInventoryWarehouseId, start, end, orderByComparator);
 	}
 
+	public static List<CommerceInventoryWarehouseRel>
+			getCommerceInventoryWarehouseRels(
+				String className, long commerceInventoryWarehouseId)
+		throws PortalException {
+
+		return getService().getCommerceInventoryWarehouseRels(
+			className, commerceInventoryWarehouseId);
+	}
+
+	public static List<CommerceInventoryWarehouseRel>
+			getCommerceInventoryWarehouseRels(
+				String className, long commerceInventoryWarehouseId, int start,
+				int end,
+				OrderByComparator<CommerceInventoryWarehouseRel>
+					orderByComparator)
+		throws PortalException {
+
+		return getService().getCommerceInventoryWarehouseRels(
+			className, commerceInventoryWarehouseId, start, end,
+			orderByComparator);
+	}
+
 	public static int getCommerceInventoryWarehouseRelsCount(
 			long commerceInventoryWarehouseId)
 		throws PortalException {
 
 		return getService().getCommerceInventoryWarehouseRelsCount(
 			commerceInventoryWarehouseId);
+	}
+
+	public static int getCommerceInventoryWarehouseRelsCount(
+			String className, long commerceInventoryWarehouseId)
+		throws PortalException {
+
+		return getService().getCommerceInventoryWarehouseRelsCount(
+			className, commerceInventoryWarehouseId);
 	}
 
 	public static List<CommerceInventoryWarehouseRel>

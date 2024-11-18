@@ -86,6 +86,52 @@ public class CommerceInventoryWarehouseRelServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel>
+				getAccountEntryCommerceInventoryWarehouseRels(
+					long commerceInventoryWarehouseId, String keywords,
+					int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseRelService.
+			getAccountEntryCommerceInventoryWarehouseRels(
+				commerceInventoryWarehouseId, keywords, start, end);
+	}
+
+	@Override
+	public int getAccountEntryCommerceInventoryWarehouseRelsCount(
+			long commerceInventoryWarehouseId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseRelService.
+			getAccountEntryCommerceInventoryWarehouseRelsCount(
+				commerceInventoryWarehouseId, keywords);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel>
+				getAccountGroupCommerceInventoryWarehouseRels(
+					long commerceInventoryWarehouseId, String keywords,
+					int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseRelService.
+			getAccountGroupCommerceInventoryWarehouseRels(
+				commerceInventoryWarehouseId, keywords, start, end);
+	}
+
+	@Override
+	public int getAccountGroupCommerceInventoryWarehouseRelsCount(
+			long commerceInventoryWarehouseId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseRelService.
+			getAccountGroupCommerceInventoryWarehouseRelsCount(
+				commerceInventoryWarehouseId, keywords);
+	}
+
+	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel
 			getCommerceInventoryWarehouseRel(
 				long commerceInventoryWarehouseRelId)
@@ -122,6 +168,35 @@ public class CommerceInventoryWarehouseRelServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel>
+				getCommerceInventoryWarehouseRels(
+					String className, long commerceInventoryWarehouseId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseRelService.
+			getCommerceInventoryWarehouseRels(
+				className, commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel>
+				getCommerceInventoryWarehouseRels(
+					String className, long commerceInventoryWarehouseId,
+					int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.commerce.inventory.model.
+							CommerceInventoryWarehouseRel> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseRelService.
+			getCommerceInventoryWarehouseRels(
+				className, commerceInventoryWarehouseId, start, end,
+				orderByComparator);
+	}
+
+	@Override
 	public int getCommerceInventoryWarehouseRelsCount(
 			long commerceInventoryWarehouseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -129,6 +204,16 @@ public class CommerceInventoryWarehouseRelServiceWrapper
 		return _commerceInventoryWarehouseRelService.
 			getCommerceInventoryWarehouseRelsCount(
 				commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public int getCommerceInventoryWarehouseRelsCount(
+			String className, long commerceInventoryWarehouseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseRelService.
+			getCommerceInventoryWarehouseRelsCount(
+				className, commerceInventoryWarehouseId);
 	}
 
 	@Override

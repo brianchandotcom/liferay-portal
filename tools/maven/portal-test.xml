@@ -28,7 +28,7 @@
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>
-			<version>@version@</version>
+			<version>@portal.kernel.version@</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

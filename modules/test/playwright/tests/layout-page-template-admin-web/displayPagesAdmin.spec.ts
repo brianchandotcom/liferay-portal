@@ -40,13 +40,6 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-const testForCollections = mergeTests(
-	test,
-	featureFlagsTest({
-		'LPS-189856': true,
-	})
-);
-
 async function addBasicJournalArticleWithSpecificDisplayPageTemplate(
 	apiHelpers: ApiHelpers,
 	displayPageTemplateName: string,
@@ -106,280 +99,6 @@ async function addDefaultJournalArticleDisplayPageLayoutPageTemplateEntry(
 		}
 	);
 }
-
-testForCollections.describe('Tests for Collections', () => {
-	testForCollections(
-		'View the info panel for a display page and for a folder',
-		{
-			tag: ['@LPD-34205', '@LPS-189857'],
-		},
-		async ({displayPageTemplatesPage, page, site}) => {
-
-			// Create a folder
-
-			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-			const displayPageTemplateFolderName = getRandomString();
-			const displayPageTemplateFolderDescription = getRandomString();
-
-			await displayPageTemplatesPage.createFolder(
-				displayPageTemplateFolderName,
-				displayPageTemplateFolderDescription
-			);
-
-			// Create a display page template for Blogs Entry
-
-			const displayPageTemplateName = getRandomString();
-
-			await displayPageTemplatesPage.createTemplate({
-				contentType: 'Blogs Entry',
-				folderName: displayPageTemplateFolderName,
-				name: displayPageTemplateName,
-			});
-
-			// Check folder info panel
-
-			await page.getByTitle('Toggle Info Panel', {exact: true}).click();
-
-			const infoPanel = page.getByLabel('Info Panel', {exact: true});
-
-			await expect(
-				infoPanel.locator('.sidebar-header .component-title')
-			).toContainText(displayPageTemplateFolderName);
-
-			await expect(
-				infoPanel.locator('.sidebar-header .component-subtitle')
-			).toContainText('Folder');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(0)
-			).toContainText('Manage Permissions');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(1)
-			).toContainText('Location');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(1)
-			).toContainText(`Home > ${displayPageTemplateFolderName}`);
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(2)
-			).toContainText('Number of Items');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(2)
-			).toContainText('1');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(3)
-			).toContainText('Created');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(4)
-			).toContainText('Modified');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(5)
-			).toContainText('Description');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(5)
-			).toContainText(displayPageTemplateFolderDescription);
-
-			// Check display page info panel
-
-			await page
-				.getByLabel(`Select ${displayPageTemplateName}`, {exact: true})
-				.check();
-
-			await expect(
-				infoPanel.locator('.sidebar-header .component-title')
-			).toContainText(displayPageTemplateName);
-
-			await expect(
-				infoPanel.locator('.sidebar-header .component-subtitle')
-			).toContainText('Display Page Template');
-
-			await expect(
-				infoPanel.locator('.sidebar-header .label-item')
-			).toContainText('Approved');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(0)
-			).toContainText('Manage Permissions');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(1)
-			).toContainText('Location');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(1)
-			).toContainText(`Home > ${displayPageTemplateFolderName}`);
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(2)
-			).toContainText('Content Type');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(2)
-			).toContainText('Blogs Entry');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(3)
-			).toContainText('Created');
-
-			await expect(
-				infoPanel.locator('.sidebar-body .c-mb-4').nth(4)
-			).toContainText('Modified');
-		}
-	);
-
-	testForCollections(
-		'User can copy a display page folder',
-		{
-			tag: '@LPD-39372',
-		},
-		async ({displayPageTemplatesPage, page, site}) => {
-
-			// Create two different display page folder
-
-			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-			const displayPageFolderNameSource = getRandomString();
-			const displayPageFolderNameTarget = getRandomString();
-
-			await displayPageTemplatesPage.createFolder(
-				displayPageFolderNameSource
-			);
-			await displayPageTemplatesPage.createFolder(
-				displayPageFolderNameTarget
-			);
-
-			// Copy folder source to folder target
-
-			await displayPageTemplatesPage.copyFolderTo(
-				displayPageFolderNameSource,
-				displayPageFolderNameTarget
-			);
-
-			// Assert copy display page collection
-
-			await page
-				.getByRole('link', {
-					exact: true,
-					name: displayPageFolderNameTarget,
-				})
-				.click();
-
-			await expect(
-				page.getByRole('link', {
-					exact: true,
-					name: displayPageFolderNameSource,
-				})
-			).toBeVisible();
-		}
-	);
-
-	testForCollections(
-		'User can manage permissions from info panel',
-		{
-			tag: '@LPD-39372',
-		},
-		async ({displayPageTemplatesPage, page, site}) => {
-
-			// Create a folder
-
-			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-			const displayPageTemplateFolderName = getRandomString();
-			const displayPageTemplateFolderDescription = getRandomString();
-
-			await displayPageTemplatesPage.createFolder(
-				displayPageTemplateFolderName,
-				displayPageTemplateFolderDescription
-			);
-
-			// Create a display page template for Blogs Entry
-
-			const displayPageTemplateName = getRandomString();
-
-			await displayPageTemplatesPage.createTemplate({
-				contentType: 'Blogs Entry',
-				folderName: displayPageTemplateFolderName,
-				name: displayPageTemplateName,
-			});
-
-			// Open the info panel
-
-			await page
-				.getByLabel(`Select ${displayPageTemplateName}`, {exact: true})
-				.check();
-
-			await page.getByTitle('Toggle Info Panel', {exact: true}).click();
-
-			const infoPanel = page.getByLabel('Info Panel', {exact: true});
-
-			await infoPanel
-				.getByRole('button', {name: 'Manage Permissions'})
-				.click();
-
-			const iframe = page.frameLocator('iframe[title="Permissions"]');
-
-			// Change permissions for display page template
-
-			await iframe.locator('#guest_ACTION_DELETE').check();
-			await iframe
-				.locator('#analytics-administrator_ACTION_DELETE')
-				.check();
-			await iframe
-				.locator('#analytics-administrator_ACTION_PERMISSIONS')
-				.check();
-
-			await iframe.getByRole('button', {name: 'Save'}).click();
-
-			await expect(
-				iframe.getByText('Success:Your request completed successfully.')
-			).toBeVisible();
-
-			await iframe.getByRole('button', {name: 'Cancel'}).click();
-
-			// Open the info panel
-
-			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-			const folderCard = page
-				.locator('.card-page-item-directory')
-				.filter({hasText: displayPageTemplateFolderName});
-
-			await folderCard.locator('input').check();
-
-			await page.getByTitle('Toggle Info Panel', {exact: true}).click();
-
-			await infoPanel
-				.getByRole('button', {name: 'Manage Permissions'})
-				.click();
-
-			// Change permissions for folder
-
-			await iframe.locator('#guest_ACTION_DELETE').check();
-			await iframe
-				.locator('#analytics-administrator_ACTION_DELETE')
-				.check();
-			await iframe
-				.locator('#analytics-administrator_ACTION_PERMISSIONS')
-				.check();
-
-			await iframe.getByRole('button', {name: 'Save'}).click();
-
-			await expect(
-				iframe.getByText('Success:Your request completed successfully.')
-			).toBeVisible();
-
-			await iframe.getByRole('button', {name: 'Cancel'}).click();
-		}
-	);
-});
 
 test.describe('Configuration', () => {
 	test(
@@ -1510,6 +1229,278 @@ test.describe('View', () => {
 			await expect(
 				page.getByRole('link', {name: document.title})
 			).toBeAttached();
+		}
+	);
+
+	test(
+		'View the info panel for a display page and for a folder',
+		{
+			tag: ['@LPD-34205', '@LPS-189857'],
+		},
+		async ({displayPageTemplatesPage, page, site}) => {
+
+			// Create a folder
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageTemplateFolderName = getRandomString();
+			const displayPageTemplateFolderDescription = getRandomString();
+
+			await displayPageTemplatesPage.createFolder(
+				displayPageTemplateFolderName,
+				displayPageTemplateFolderDescription
+			);
+
+			// Create a display page template for Blogs Entry
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentType: 'Blogs Entry',
+				folderName: displayPageTemplateFolderName,
+				name: displayPageTemplateName,
+			});
+
+			// Check folder info panel
+
+			await page.getByTitle('Toggle Info Panel', {exact: true}).click();
+
+			const infoPanel = page.getByLabel('Info Panel', {exact: true});
+
+			await expect(
+				infoPanel.locator('.sidebar-header .component-title')
+			).toContainText(displayPageTemplateFolderName);
+
+			await expect(
+				infoPanel.locator('.sidebar-header .component-subtitle')
+			).toContainText('Folder');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(0)
+			).toContainText('Manage Permissions');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(1)
+			).toContainText('Location');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(1)
+			).toContainText(`Home > ${displayPageTemplateFolderName}`);
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(2)
+			).toContainText('Number of Items');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(2)
+			).toContainText('1');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(3)
+			).toContainText('Created');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(4)
+			).toContainText('Modified');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(5)
+			).toContainText('Description');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(5)
+			).toContainText(displayPageTemplateFolderDescription);
+
+			// Check display page info panel
+
+			await page
+				.getByLabel(`Select ${displayPageTemplateName}`, {exact: true})
+				.check();
+
+			await expect(
+				infoPanel.locator('.sidebar-header .component-title')
+			).toContainText(displayPageTemplateName);
+
+			await expect(
+				infoPanel.locator('.sidebar-header .component-subtitle')
+			).toContainText('Display Page Template');
+
+			await expect(
+				infoPanel.locator('.sidebar-header .label-item')
+			).toContainText('Approved');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(0)
+			).toContainText('Manage Permissions');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(1)
+			).toContainText('Location');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(1)
+			).toContainText(`Home > ${displayPageTemplateFolderName}`);
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(2)
+			).toContainText('Content Type');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(2)
+			).toContainText('Blogs Entry');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(3)
+			).toContainText('Created');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .c-mb-4').nth(4)
+			).toContainText('Modified');
+		}
+	);
+
+	test(
+		'User can copy a display page folder',
+		{
+			tag: '@LPD-39372',
+		},
+		async ({displayPageTemplatesPage, page, site}) => {
+
+			// Create two different display page folder
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageFolderNameSource = getRandomString();
+			const displayPageFolderNameTarget = getRandomString();
+
+			await displayPageTemplatesPage.createFolder(
+				displayPageFolderNameSource
+			);
+			await displayPageTemplatesPage.createFolder(
+				displayPageFolderNameTarget
+			);
+
+			// Copy folder source to folder target
+
+			await displayPageTemplatesPage.copyFolderTo(
+				displayPageFolderNameSource,
+				displayPageFolderNameTarget
+			);
+
+			// Assert copy display page collection
+
+			await page
+				.getByRole('link', {
+					exact: true,
+					name: displayPageFolderNameTarget,
+				})
+				.click();
+
+			await expect(
+				page.getByRole('link', {
+					exact: true,
+					name: displayPageFolderNameSource,
+				})
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'User can manage permissions from info panel',
+		{
+			tag: '@LPD-39372',
+		},
+		async ({displayPageTemplatesPage, page, site}) => {
+
+			// Create a folder
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageTemplateFolderName = getRandomString();
+			const displayPageTemplateFolderDescription = getRandomString();
+
+			await displayPageTemplatesPage.createFolder(
+				displayPageTemplateFolderName,
+				displayPageTemplateFolderDescription
+			);
+
+			// Create a display page template for Blogs Entry
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentType: 'Blogs Entry',
+				folderName: displayPageTemplateFolderName,
+				name: displayPageTemplateName,
+			});
+
+			// Open the info panel
+
+			await page
+				.getByLabel(`Select ${displayPageTemplateName}`, {exact: true})
+				.check();
+
+			await page.getByTitle('Toggle Info Panel', {exact: true}).click();
+
+			const infoPanel = page.getByLabel('Info Panel', {exact: true});
+
+			await infoPanel
+				.getByRole('button', {name: 'Manage Permissions'})
+				.click();
+
+			const iframe = page.frameLocator('iframe[title="Permissions"]');
+
+			// Change permissions for display page template
+
+			await iframe.locator('#guest_ACTION_DELETE').check();
+			await iframe
+				.locator('#analytics-administrator_ACTION_DELETE')
+				.check();
+			await iframe
+				.locator('#analytics-administrator_ACTION_PERMISSIONS')
+				.check();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(
+				iframe.getByText('Success:Your request completed successfully.')
+			).toBeVisible();
+
+			await iframe.getByRole('button', {name: 'Cancel'}).click();
+
+			// Open the info panel
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const folderCard = page
+				.locator('.card-page-item-directory')
+				.filter({hasText: displayPageTemplateFolderName});
+
+			await folderCard.locator('input').check();
+
+			await page.getByTitle('Toggle Info Panel', {exact: true}).click();
+
+			await infoPanel
+				.getByRole('button', {name: 'Manage Permissions'})
+				.click();
+
+			// Change permissions for folder
+
+			await iframe.locator('#guest_ACTION_DELETE').check();
+			await iframe
+				.locator('#analytics-administrator_ACTION_DELETE')
+				.check();
+			await iframe
+				.locator('#analytics-administrator_ACTION_PERMISSIONS')
+				.check();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(
+				iframe.getByText('Success:Your request completed successfully.')
+			).toBeVisible();
+
+			await iframe.getByRole('button', {name: 'Cancel'}).click();
 		}
 	);
 });

@@ -1909,8 +1909,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			serviceContext, "autoPassword");
 
 		if (autoPassword) {
-			String password = StringPool.BLANK;
-
 			if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
@@ -1923,10 +1921,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 				RegExpToolkit regExpToolkit = new RegExpToolkit();
 
-				password = regExpToolkit.generate(null);
-			}
+				String password = regExpToolkit.generate(null);
 
-			if (Validator.isNotNull(password)) {
 				serviceContext.setAttribute("passwordUnencrypted", password);
 
 				PasswordModificationThreadLocal.setPasswordModified(true);

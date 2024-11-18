@@ -121,7 +121,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_processAction(Collections.emptyMap());
 
-		Layout actualLayout = _assertCopiedLayout();
+		Layout layout = _assertCopiedLayout();
 
 		List<ResourcePermission> expectedResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
@@ -133,7 +133,7 @@ public class CopyLayoutMVCActionCommandTest {
 			_resourcePermissionLocalService.getResourcePermissions(
 				_layout.getCompanyId(), Layout.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(actualLayout.getPlid()));
+				String.valueOf(layout.getPlid()));
 
 		Assert.assertNotEquals(
 			expectedResourcePermissions.toString(),
@@ -160,12 +160,12 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_processAction(Collections.emptyMap());
 
-		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			_layout.getGroupId(), _layout.isPrivateLayout(), "/" + _NAME);
 
 		Assert.assertEquals(
 			masterLayoutPageTemplateEntry.getPlid(),
-			actualLayout.getMasterLayoutPlid());
+			layout.getMasterLayoutPlid());
 	}
 
 	@Test
@@ -195,7 +195,7 @@ public class CopyLayoutMVCActionCommandTest {
 				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
 			).build());
 
-		Layout actualLayout = _assertCopiedLayout();
+		Layout layout = _assertCopiedLayout();
 
 		List<ResourcePermission> expectedResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
@@ -207,7 +207,7 @@ public class CopyLayoutMVCActionCommandTest {
 			_resourcePermissionLocalService.getResourcePermissions(
 				_group.getCompanyId(), Layout.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(actualLayout.getPlid()));
+				String.valueOf(layout.getPlid()));
 
 		Assert.assertNotEquals(
 			expectedResourcePermissions.toString(),
@@ -243,7 +243,7 @@ public class CopyLayoutMVCActionCommandTest {
 				"copyPermissions", StringPool.TRUE.toString()
 			).build());
 
-		Layout actualLayout = _assertCopiedLayout();
+		Layout layout = _assertCopiedLayout();
 
 		List<ResourcePermission> expectedResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
@@ -255,7 +255,7 @@ public class CopyLayoutMVCActionCommandTest {
 			_resourcePermissionLocalService.getResourcePermissions(
 				_layout.getCompanyId(), Layout.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(actualLayout.getPlid()));
+				String.valueOf(layout.getPlid()));
 
 		Assert.assertEquals(
 			expectedResourcePermissions.toString(),
@@ -266,7 +266,7 @@ public class CopyLayoutMVCActionCommandTest {
 			_resourcePermissionLocalService.getResourcePermission(
 				_layout.getCompanyId(), Layout.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(actualLayout.getPlid()), role.getRoleId()));
+				String.valueOf(layout.getPlid()), role.getRoleId()));
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(
@@ -294,10 +294,10 @@ public class CopyLayoutMVCActionCommandTest {
 	}
 
 	private Layout _assertCopiedLayout() {
-		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			_layout.getGroupId(), _layout.isPrivateLayout(), "/" + _NAME);
 
-		Assert.assertNotNull(actualLayout);
+		Assert.assertNotNull(layout);
 
 		List<FragmentEntryLink>
 			expectedLayoutSegmentsExperienceLayoutFragmentEntryLinks =
@@ -314,9 +314,8 @@ public class CopyLayoutMVCActionCommandTest {
 					getFragmentEntryLinksBySegmentsExperienceId(
 						_group.getGroupId(),
 						_segmentsExperienceLocalService.
-							fetchDefaultSegmentsExperienceId(
-								actualLayout.getPlid()),
-						actualLayout.getPlid());
+							fetchDefaultSegmentsExperienceId(layout.getPlid()),
+						layout.getPlid());
 
 		Assert.assertEquals(
 			actualLayoutSegmentsExperienceLayoutFragmentEntryLinks.toString(),
@@ -354,7 +353,7 @@ public class CopyLayoutMVCActionCommandTest {
 			expectedLayoutFragmentEntryLink.getPosition(),
 			actualLayoutFragmentEntryLink.getPosition());
 
-		return actualLayout;
+		return layout;
 	}
 
 	private FragmentEntry _getFragmentEntry() throws Exception {

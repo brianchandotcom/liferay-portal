@@ -1,0 +1,20 @@
+{
+	"dependencies": {
+		"@clayui/button": "3.116.0",
+		"@clayui/core": "3.121.0",
+		"@clayui/drop-down": "3.121.0",
+		"@clayui/icon": "3.111.0",
+		"@clayui/label": "3.111.0",
+		"@clayui/layout": "3.111.0",
+		"frontend-js-web": "*",
+		"react": "16.12.0"
+	},
+	"main": "js/index.js",
+	"name": "@liferay/fragment-impl",
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
+	},
+	"version": "4.0.108"
+}

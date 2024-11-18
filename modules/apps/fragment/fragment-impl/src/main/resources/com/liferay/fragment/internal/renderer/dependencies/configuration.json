@@ -1,0 +1,29 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "normal",
+					"label": "size",
+					"name": "size",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "normal"
+							},
+							{
+								"value": "small"
+							}
+						]
+					}
+				},
+				{
+					"label": "hide-language-label",
+					"name": "hideLanguageLabel",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

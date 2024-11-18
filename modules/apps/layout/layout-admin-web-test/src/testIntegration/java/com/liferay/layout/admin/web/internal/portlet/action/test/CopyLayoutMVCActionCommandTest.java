@@ -106,10 +106,6 @@ public class CopyLayoutMVCActionCommandTest {
 		Layout expectedLayout = LayoutTestUtil.addTypeContentPublishedLayout(
 			_group, "Test layout", WorkflowConstants.STATUS_APPROVED);
 
-		expectedLayout.setFriendlyURL("/test-layout");
-
-		expectedLayout = _layoutLocalService.updateLayout(expectedLayout);
-
 		_addFragmentEntryLinkToLayout(
 			expectedLayout,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
@@ -191,10 +187,6 @@ public class CopyLayoutMVCActionCommandTest {
 		Layout expectedLayout = LayoutTestUtil.addTypeContentPublishedLayout(
 			_group, "Test layout", WorkflowConstants.STATUS_APPROVED);
 
-		expectedLayout.setFriendlyURL("/test-layout");
-
-		expectedLayout = _layoutLocalService.updateLayout(expectedLayout);
-
 		_addFragmentEntryLinkToLayout(
 			expectedLayout,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
@@ -258,10 +250,6 @@ public class CopyLayoutMVCActionCommandTest {
 		Layout expectedLayout = LayoutTestUtil.addTypeContentPublishedLayout(
 			_group, "Test layout with permissions",
 			WorkflowConstants.STATUS_APPROVED);
-
-		expectedLayout.setFriendlyURL("/test-layout-with-permissions");
-
-		expectedLayout = _layoutLocalService.updateLayout(expectedLayout);
 
 		_addFragmentEntryLinkToLayout(
 			expectedLayout,

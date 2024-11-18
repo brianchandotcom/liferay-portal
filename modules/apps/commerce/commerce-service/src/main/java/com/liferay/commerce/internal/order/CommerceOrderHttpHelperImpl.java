@@ -558,8 +558,9 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		HttpServletRequest httpServletRequest) {
 
 		try {
-			CommerceOrder commerceOrder = getCurrentCommerceOrder(
-				httpServletRequest);
+			CommerceOrder commerceOrder =
+				CommerceOrderInfoItemUtil.getCommerceOrder(
+					_commerceOrderService, httpServletRequest);
 
 			if ((commerceOrder == null) ||
 				!_commerceOrderModelResourcePermission.contains(

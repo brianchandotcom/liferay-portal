@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=10",
+	property = "screen.navigation.entry.order:Integer=20",
 	service = ScreenNavigationEntry.class
 )
 public class CommerceCheckoutOrderSummaryOrderItemsScreenNavigationEntry

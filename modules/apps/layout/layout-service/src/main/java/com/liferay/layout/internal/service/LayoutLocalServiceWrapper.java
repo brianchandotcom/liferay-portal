@@ -763,6 +763,7 @@ public class LayoutLocalServiceWrapper
 				(SegmentsExperience)segmentsExperience.clone();
 
 			newSegmentsExperience.setUuid(serviceContext.getUuid());
+			newSegmentsExperience.setExternalReferenceCode(null);
 			newSegmentsExperience.setSegmentsExperienceId(
 				_counterLocalService.increment());
 			newSegmentsExperience.setUserId(user.getUserId());

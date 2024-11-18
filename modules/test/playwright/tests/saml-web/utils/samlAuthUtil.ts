@@ -79,7 +79,7 @@ export async function performIdpInitiatedSSO(
 	browser,
 	emailAddress: string,
 	idpDomain: string,
-	spDomain: string,
+	relayState: string,
 	spName: string
 ): Promise<Page> {
 	const newPage = await browser.newPage({
@@ -87,7 +87,7 @@ export async function performIdpInitiatedSSO(
 	});
 
 	await newPage.goto(
-		`${idpDomain}/c/portal/saml/sso?entityId=${spName}&RelayState=${spDomain}`
+		`${idpDomain}/c/portal/saml/sso?entityId=${spName}&RelayState=${relayState}`
 	);
 
 	await newPage.getByLabel('Email Address').waitFor({timeout: 30 * 1000});

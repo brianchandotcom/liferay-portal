@@ -616,6 +616,67 @@ test('Create two virtual instances, one IdP and one SP, and verify Custom User A
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
 });
 
+test('LPD-32187 AC1 TC1: Verify IdP initiated SSO with provided RelayState parameter redirects the user to designated RelayState.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create a new page on the SP Instance
+
+	const pagesAdminPage = new PagesAdminPage(spAdminPage);
+
+	await pagesAdminPage.goto();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: pageTitle,
+	});
+
+	const spNewPagePath = '/web/guest/' + pageTitle;
+
+	// Create new user in IdP instance
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// Execute IdP initiated SSO
+
+	const idpInstancePage = await performIdpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		DEFAULT_IDP_URL,
+		spNewPagePath,
+		DEFAULT_SP_NAME
+	);
+
+	// Assert authentication and SP redirection
+
+	await expect(
+		await idpInstancePage.getByTitle('User Profile Menu')
+	).toBeVisible();
+
+	await expect(await idpInstancePage.url()).toContain(
+		DEFAULT_SP_URL + spNewPagePath
+	);
+});
+
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({
 	browser,
 }) => {

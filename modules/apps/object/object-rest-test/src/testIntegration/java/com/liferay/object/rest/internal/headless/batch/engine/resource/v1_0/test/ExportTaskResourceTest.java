@@ -145,7 +145,8 @@ public class ExportTaskResourceTest {
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition, _OBJECT_FIELD_NAME_TEXT, "TestObject2");
 
-		String filterString = "contains(" + _OBJECT_FIELD_NAME_TEXT + "'Test')";
+		String filterString =
+			"contains(" + _OBJECT_FIELD_NAME_TEXT + ", 'Test')";
 
 		JSONObject jsonObject = _testPostExportTask(
 			"COMPLETED", "filter=" + URLCodec.encodeURL(filterString),

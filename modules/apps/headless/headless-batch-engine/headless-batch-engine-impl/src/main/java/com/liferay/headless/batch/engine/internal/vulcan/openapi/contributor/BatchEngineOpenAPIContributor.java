@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Mauricio Valdivia
  */
 @Component(service = OpenAPIContributor.class)
-public class BatchEngineOpenApiContributor implements OpenAPIContributor {
+public class BatchEngineOpenAPIContributor implements OpenAPIContributor {
 
 	@Override
 	public void contribute(OpenAPI openAPI, OpenAPIContext openAPIContext)

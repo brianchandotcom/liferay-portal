@@ -428,7 +428,7 @@ public class PageDefinitionDTOConverter
 		_layoutPageTemplateEntryLocalService;
 
 	@Reference(
-		target = "(dto.class.name=com.liferay.layout.util.structure.LayoutStructureItem)"
+		target = "(component.name=com.liferay.headless.delivery.internal.dto.v1_0.converter.PageElementDTOConverter)"
 	)
 	private DTOConverter<LayoutStructureItem, PageElement>
 		_pageElementDTOConverter;

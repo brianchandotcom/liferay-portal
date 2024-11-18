@@ -20,10 +20,15 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
@@ -40,6 +45,7 @@ import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -64,7 +70,13 @@ import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
 import com.liferay.portal.search.rest.pagination.SearchPage;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
@@ -91,6 +103,8 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -101,6 +115,13 @@ import org.junit.runner.RunWith;
 @FeatureFlags({"LPD-11232", "LPS-179669"})
 @RunWith(Arquillian.class)
 public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	@Override
@@ -353,6 +374,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		_testPostSearchPageWithGroupERCScope();
 		_testPostSearchPageWithGroupIdScope();
 		_testPostSearchPageWithHighlightConfiguration();
+		_testPostSearchPageWithLocalizedTextObjectField();
 		_testPostSearchPageWithKeywords();
 		_testPostSearchPageWithMultipleGroupIdsScope();
 		_testPostSearchPageWithNestedFacetConfiguration();
@@ -1131,6 +1153,69 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		Assert.assertEquals(1L, searchPage.getTotalCount());
 	}
 
+	private void _testPostSearchPageWithLocalizedTextObjectField()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				_user.getUserId(), 0, null, false, true, true, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Arrays.asList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).indexed(
+						true
+					).name(
+						"localizedTextObjectFieldName"
+					).localized(
+						true
+					).build()));
+
+		objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				_user.getUserId(), objectDefinition.getObjectDefinitionId());
+
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), _dtoConverterRegistry, null,
+				LocaleUtil.getDefault(), null, TestPropsValues.getUser());
+
+		_objectEntryManager.addObjectEntry(
+			dtoConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"localizedTextObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", "en_US localizedTextObjectFieldValue"
+						).put(
+							"pt_BR", "pt_BR localizedTextObjectFieldValue"
+						).build()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		SearchPage<SearchResult> searchPage = _postSearchPage(
+			objectDefinition.getClassName(), null, "pt_BR", "embedded", "0",
+			new SearchRequestBody());
+
+		List<SearchResult> searchResults = ListUtil.fromCollection(
+			searchPage.getItems());
+
+		Assert.assertTrue(
+			searchResults.toString(
+			).contains(
+				"en_US localizedTextObjectFieldValue"
+			));
+	}
+
 	private void _testPostSearchPageWithMultipleGroupIdsScope()
 		throws Exception {
 
@@ -1270,6 +1355,17 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 				jsonObject.getInt("page"), jsonObject.getInt("pageSize")),
 			jsonObject.getLong("totalCount"));
 	}
+
+	@Inject
+	private static DTOConverterRegistry _dtoConverterRegistry;
+
+	@Inject
+	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject(
+		filter = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
+	)
+	private static ObjectEntryManager _objectEntryManager;
 
 	private AssetCategory _assetCategory;
 

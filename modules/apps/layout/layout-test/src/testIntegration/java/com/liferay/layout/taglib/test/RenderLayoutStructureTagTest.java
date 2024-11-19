@@ -310,10 +310,10 @@ public class RenderLayoutStructureTagTest {
 		_addCollectionStyledLayoutStructureItem(
 			assetListEntry, layout, _COUNT_INFO_LIST_ITEMS, "none",
 			segmentsExperienceId,
-			_getFragmentEntryLinks(
+			_addFragmentEntryLinks(
 				_COUNT_FRAGMENT_ENTRY_LINKS,
 				JSONUtil.put("collectionFieldId", "JournalArticle_title"),
-				layout, segmentsExperienceId));
+				layout.fetchDraftLayout(), segmentsExperienceId));
 
 		List<AssetEntry> assetEntries = _addAssetEntries(assetListEntry);
 
@@ -418,9 +418,9 @@ public class RenderLayoutStructureTagTest {
 				"showAllItems", true
 			),
 			layout, null, segmentsExperienceId,
-			_getFragmentEntryLinks(
+			_addFragmentEntryLinks(
 				1, JSONUtil.put("collectionFieldId", "DDMStructure_Text1"),
-				layout, segmentsExperienceId));
+				layout.fetchDraftLayout(), segmentsExperienceId));
 
 		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
 			layout, mockHttpServletRequest);
@@ -1431,14 +1431,16 @@ public class RenderLayoutStructureTagTest {
 			FragmentEntryLink... fragmentEntryLinks)
 		throws Exception {
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		String itemId = ContentLayoutTestUtil.addCollectionDisplayToLayout(
-			collectionJSONObject, layout, _layoutStructureProvider, listStyle,
-			null, 0, segmentsExperienceId, fragmentEntryLinks);
+			collectionJSONObject, draftLayout, _layoutStructureProvider,
+			listStyle, null, 0, segmentsExperienceId, fragmentEntryLinks);
 
 		if (displayConfigJSONObject != null) {
 			LayoutStructure layoutStructure =
 				_layoutStructureProvider.getLayoutStructure(
-					layout.getPlid(), segmentsExperienceId);
+					draftLayout.getPlid(), segmentsExperienceId);
 
 			CollectionStyledLayoutStructureItem
 				collectionStyledLayoutStructureItem =
@@ -1457,9 +1459,11 @@ public class RenderLayoutStructureTagTest {
 
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
-					_group.getGroupId(), layout.getPlid(), segmentsExperienceId,
-					layoutStructure.toString());
+					_group.getGroupId(), draftLayout.getPlid(),
+					segmentsExperienceId, layoutStructure.toString());
 		}
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		return itemId;
 	}

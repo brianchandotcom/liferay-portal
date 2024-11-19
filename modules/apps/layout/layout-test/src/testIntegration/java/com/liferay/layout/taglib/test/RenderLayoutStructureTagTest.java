@@ -66,7 +66,6 @@ import com.liferay.layout.taglib.servlet.taglib.RenderLayoutStructureTag;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
-import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -736,6 +735,58 @@ public class RenderLayoutStructureTagTest {
 		_assertNumericPagination(itemId, layout, 2, 2, titles);
 		_assertNumericPagination(itemId, layout, 3, 2, titles);
 		_assertNumericPagination(itemId, layout, 4, 2, titles);
+
+		_updateItemConfig(
+			itemId,
+			JSONUtil.put(
+				"displayAllPages", false
+			).put(
+				"numberOfItemsPerPage", 6
+			).put(
+				"numberOfPages", 1
+			).put(
+				"paginationType", "numeric"
+			),
+			layout.fetchDraftLayout(), segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		_assertNumericPagination(itemId, layout, 1, 6, titles);
+
+		_updateItemConfig(
+			itemId,
+			JSONUtil.put(
+				"displayAllPages", true
+			).put(
+				"numberOfItemsPerPage", 7
+			).put(
+				"paginationType", "numeric"
+			),
+			layout.fetchDraftLayout(), segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		_assertNumericPagination(itemId, layout, 1, 7, titles);
+
+		_updateItemConfig(
+			itemId,
+			JSONUtil.put(
+				"displayAllItems", false
+			).put(
+				"displayAllPages", false
+			).put(
+				"numberOfItemsPerPage", 2
+			).put(
+				"numberOfPages", 2
+			).put(
+				"paginationType", "numeric"
+			),
+			layout.fetchDraftLayout(), segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		_assertNumericPagination(itemId, layout, 1, 2, 2, titles);
+		_assertNumericPagination(itemId, layout, 2, 2, 2, titles);
 	}
 
 	@Test
@@ -1487,29 +1538,9 @@ public class RenderLayoutStructureTagTest {
 			listStyle, null, 0, segmentsExperienceId, fragmentEntryLinks);
 
 		if (displayConfigJSONObject != null) {
-			LayoutStructure layoutStructure =
-				_layoutStructureProvider.getLayoutStructure(
-					draftLayout.getPlid(), segmentsExperienceId);
-
-			CollectionStyledLayoutStructureItem
-				collectionStyledLayoutStructureItem =
-					(CollectionStyledLayoutStructureItem)
-						layoutStructure.getLayoutStructureItem(itemId);
-
-			JSONObject itemConfigJSONObject =
-				collectionStyledLayoutStructureItem.getItemConfigJSONObject();
-
-			for (String key : displayConfigJSONObject.keySet()) {
-				itemConfigJSONObject.put(key, displayConfigJSONObject.get(key));
-			}
-
-			collectionStyledLayoutStructureItem.updateItemConfig(
-				itemConfigJSONObject);
-
-			_layoutPageTemplateStructureLocalService.
-				updateLayoutPageTemplateStructureData(
-					_group.getGroupId(), draftLayout.getPlid(),
-					segmentsExperienceId, layoutStructure.toString());
+			_updateItemConfig(
+				itemId, displayConfigJSONObject, draftLayout,
+				segmentsExperienceId);
 		}
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
@@ -1824,7 +1855,7 @@ public class RenderLayoutStructureTagTest {
 
 	private void _assertNumericPagination(
 			String itemId, Layout layout, int pageNumber,
-			int numberOfItemsPerPage, List<String> strings)
+			int numberOfItemsPerPage, int numberOfPages, List<String> strings)
 		throws Exception {
 
 		String html = _getRenderLayoutHTML(
@@ -1858,9 +1889,6 @@ public class RenderLayoutStructureTagTest {
 			}
 		}
 
-		int numberOfPages = (int)Math.ceil(
-			(double)strings.size() / numberOfItemsPerPage);
-
 		Assert.assertEquals(
 			html, numberOfPages + 2, StringUtil.count(html, "page-item"));
 
@@ -1892,6 +1920,17 @@ public class RenderLayoutStructureTagTest {
 				pageItems[pageNumber + 1],
 				StringUtil.endsWith(pageItems[pageNumber + 1], "\"disabled "));
 		}
+	}
+
+	private void _assertNumericPagination(
+			String itemId, Layout layout, int pageNumber,
+			int numberOfItemsPerPage, List<String> strings)
+		throws Exception {
+
+		_assertNumericPagination(
+			itemId, layout, pageNumber, numberOfItemsPerPage,
+			(int)Math.ceil((double)strings.size() / numberOfItemsPerPage),
+			strings);
 	}
 
 	private DDMForm _deserialize(String content) {
@@ -2045,6 +2084,33 @@ public class RenderLayoutStructureTagTest {
 			mockHttpServletRequest, mockHttpServletResponse);
 
 		return mockHttpServletResponse;
+	}
+
+	private void _updateItemConfig(
+			String itemId, JSONObject jsonObject, Layout layout,
+			long segmentsExperienceId)
+		throws Exception {
+
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				layout.getPlid(), segmentsExperienceId);
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(itemId);
+
+		JSONObject itemConfigJSONObject =
+			layoutStructureItem.getItemConfigJSONObject();
+
+		for (String key : jsonObject.keySet()) {
+			itemConfigJSONObject.put(key, jsonObject.get(key));
+		}
+
+		layoutStructureItem.updateItemConfig(itemConfigJSONObject);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), layout.getPlid(), segmentsExperienceId,
+				layoutStructure.toString());
 	}
 
 	private static final int _COUNT_FRAGMENT_ENTRY_LINKS = 5;

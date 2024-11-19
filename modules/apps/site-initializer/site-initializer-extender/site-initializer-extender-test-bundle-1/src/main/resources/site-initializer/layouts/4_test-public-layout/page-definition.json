@@ -40,8 +40,6 @@
 							"anyAssetType": "false",
 							"classNameIds": [
 								"[$CLASS_NAME_ID:com.liferay.blogs.model.BlogsEntry$]",
-								"[$CLASS_NAME_ID:com.liferay.bookmarks.model.BookmarksEntry$]",
-								"[$CLASS_NAME_ID:com.liferay.bookmarks.model.BookmarksFolder$]",
 								"[$CLASS_NAME_ID:com.liferay.calendar.model.Calendar$]",
 								"[$CLASS_NAME_ID:com.liferay.document.library.kernel.model.DLFileEntry$]",
 								"[$CLASS_NAME_ID:com.liferay.document.library.kernel.model.DLFolder$]",

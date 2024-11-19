@@ -18,6 +18,10 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_upgrade();
+	}
+
+	private void _upgrade() throws Exception {
 		processConcurrently(
 			SQLTransformer.transform(
 				StringBundler.concat(

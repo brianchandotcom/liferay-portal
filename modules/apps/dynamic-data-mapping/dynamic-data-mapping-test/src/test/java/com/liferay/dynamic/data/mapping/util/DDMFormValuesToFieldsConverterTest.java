@@ -546,6 +546,27 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 			fieldsDisplayField.getValue());
 	}
 
+	@Test
+	public void testConversionWithUndefinedField() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		addDDMFormFields(ddmForm, createTextDDMFormField("Title"));
+
+		DDMStructure ddmStructure = createStructure("Test Structure", ddmForm);
+
+		DDMFormValues ddmFormValues = createDDMFormValues(
+			ddmForm, _availableLocales, LocaleUtil.US);
+
+		Fields fields = _ddmFormValuesToFieldsConverter.convert(
+			ddmStructure, ddmFormValues);
+
+		Assert.assertNotNull(fields);
+
+		Field titleField = fields.get("Title");
+
+		Assert.assertEquals(StringPool.BLANK, titleField.getValue());
+	}
+
 	@Override
 	protected List<Serializable> createValuesList(String... valuesString) {
 		List<Serializable> values = new ArrayList<>();

@@ -166,8 +166,6 @@ public class DDMFormValuesToFieldsConverterImpl
 
 		Value value = ddmFormFieldValue.getValue();
 
-		String dataType = ddmFormField.getDataType();
-
 		if (MapUtil.isEmpty(value.getValues())) {
 			LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
@@ -196,7 +194,7 @@ public class DDMFormValuesToFieldsConverterImpl
 			field.addValue(
 				defaultLocale,
 				FieldConstants.getSerializable(
-					defaultLocale, LocaleUtil.ROOT, dataType,
+					defaultLocale, LocaleUtil.ROOT, ddmFormField.getDataType(),
 					value.getString(LocaleUtil.ROOT)));
 
 			return field;
@@ -208,7 +206,8 @@ public class DDMFormValuesToFieldsConverterImpl
 			field.addValue(
 				availableLocale,
 				FieldConstants.getSerializable(
-					availableLocale, availableLocale, dataType,
+					availableLocale, availableLocale,
+					ddmFormField.getDataType(),
 					value.getString(availableLocale)));
 		}
 

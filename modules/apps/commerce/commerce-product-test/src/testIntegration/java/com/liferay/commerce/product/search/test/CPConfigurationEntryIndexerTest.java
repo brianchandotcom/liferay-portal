@@ -86,7 +86,7 @@ public class CPConfigurationEntryIndexerTest {
 				RandomTestUtil.randomString(), _user.getUserId(),
 				_portal.getClassNameId(CPDefinition.class),
 				cpDefinition.getCPDefinitionId(),
-				cpConfigurationList.getCPConfigurationListId(), "123", true,
+				cpConfigurationList.getCPConfigurationListId(), "123", true, 0,
 				"cpde", true, true, "lowstoc", BigDecimal.TEN, BigDecimal.ONE,
 				BigDecimal.ONE, BigDecimal.ONE);
 

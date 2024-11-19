@@ -171,24 +171,27 @@ definition {
 		AppManager.openAppManagerAdmin();
 
 		AppManager.viewApp(
-			appName = "Asset Libraries",
-			appStatus = "Active");
+			appName = "Liferay Depot Web",
+			appStatus = "Active",
+			searchTerm = "com.liferay.depot.web");
 
-		AppManager.deactivateApp(appName = "Asset Libraries");
-
-		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
-
-		AppManager.viewApp(
-			appName = "Asset Libraries",
-			appStatus = "Resolved");
-
-		AppManager.activateApp(appName = "Asset Libraries");
+		AppManager.deactivateApp(appName = "com.liferay.depot.web");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewApp(
-			appName = "Asset Libraries",
-			appStatus = "Active");
+			appName = "Liferay Depot Web",
+			appStatus = "Resolved",
+			searchTerm = "com.liferay.depot.web");
+
+		AppManager.activateApp(appName = "com.liferay.depot.web");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewApp(
+			appName = "Liferay Depot Web",
+			appStatus = "Active",
+			searchTerm = "com.liferay.depot.web");
 	}
 
 	@description = "This ensures that the Blogs app in the app manager can be deactivated and reactivated."

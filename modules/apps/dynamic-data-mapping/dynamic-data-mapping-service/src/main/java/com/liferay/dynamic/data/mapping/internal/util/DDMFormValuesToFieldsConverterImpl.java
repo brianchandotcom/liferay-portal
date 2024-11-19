@@ -8,6 +8,7 @@ package com.liferay.dynamic.data.mapping.internal.util;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -165,7 +166,23 @@ public class DDMFormValuesToFieldsConverterImpl
 
 		Value value = ddmFormFieldValue.getValue();
 
+		String dataType = ddmFormField.getDataType();
+
 		if (MapUtil.isEmpty(value.getValues())) {
+			LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
+
+			Map<Locale, String> predefinedValuesMap =
+				predefinedValue.getValues();
+
+			if (predefinedValuesMap.isEmpty()) {
+				LocalizedValue localizedValue = new LocalizedValue(
+					defaultLocale);
+
+				localizedValue.addString(defaultLocale, StringPool.BLANK);
+
+				ddmFormField.setPredefinedValue(localizedValue);
+			}
+
 			value = ddmFormField.getPredefinedValue();
 
 			Set<Locale> availableLocales =
@@ -179,7 +196,7 @@ public class DDMFormValuesToFieldsConverterImpl
 			field.addValue(
 				defaultLocale,
 				FieldConstants.getSerializable(
-					defaultLocale, LocaleUtil.ROOT, ddmFormField.getDataType(),
+					defaultLocale, LocaleUtil.ROOT, dataType,
 					value.getString(LocaleUtil.ROOT)));
 
 			return field;
@@ -191,8 +208,7 @@ public class DDMFormValuesToFieldsConverterImpl
 			field.addValue(
 				availableLocale,
 				FieldConstants.getSerializable(
-					availableLocale, availableLocale,
-					ddmFormField.getDataType(),
+					availableLocale, availableLocale, dataType,
 					value.getString(availableLocale)));
 		}
 

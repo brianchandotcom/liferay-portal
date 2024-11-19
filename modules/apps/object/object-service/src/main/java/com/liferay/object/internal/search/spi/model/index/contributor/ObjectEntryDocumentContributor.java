@@ -9,6 +9,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
@@ -34,6 +35,13 @@ public class ObjectEntryDocumentContributor
 
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			(long)baseModel.getPrimaryKeyObj());
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectEntry.getCompanyId(), "LPD-42474")) {
+
+			document.addKeyword(
+				Field.FOLDER_ID, objectEntry.getObjectEntryFolderId());
+		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(

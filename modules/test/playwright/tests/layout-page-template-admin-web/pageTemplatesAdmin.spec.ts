@@ -37,7 +37,7 @@ test.describe('Convert content pages', () => {
 		{
 			tag: ['@LPS-140483', '@LPS-166207'],
 		},
-		async ({apiHelpers, page, pageEditorPage, pageTemplatesPage, site}) => {
+		async ({apiHelpers, page, pageEditorPage, site}) => {
 
 			// Creates a page template collection
 
@@ -76,9 +76,8 @@ test.describe('Convert content pages', () => {
 			// Save in a new page template set
 
 			await page
-				.getByRole('dialog')
-				.getByRole('button', {name: 'Save In New Set'})
-				.click();
+				.getByRole('combobox', {name: 'Page Template Set'})
+				.selectOption({label: layoutPageTemplateCollectionName});
 
 			await page
 				.getByRole('dialog')
@@ -87,18 +86,15 @@ test.describe('Convert content pages', () => {
 
 			await waitForAlert(
 				page,
-				'The page template was created successfully. You can view it here: See in Page Templates.'
+				'The page template was created successfully. You can view it here: See in Page Templates.',
+				{autoClose: false}
 			);
 
 			// Assert page template where created correctly
 
-			await pageTemplatesPage.goto(site.friendlyUrlPath);
-
-			await page.getByRole('menuitem', {name: 'Untitled Set'}).click();
-
-			await expect(
-				page.getByRole('heading', {name: 'Untitled Set'})
-			).toBeVisible();
+			await page
+				.getByRole('link', {name: 'See in Page Templates'})
+				.click();
 
 			const pageTemplateName = `${layoutTitle} - Page Template`;
 

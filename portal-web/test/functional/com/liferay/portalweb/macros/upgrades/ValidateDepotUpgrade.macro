@@ -111,7 +111,9 @@ definition {
 
 		AssetPublisherPortlet.gotoConfigurationPG(portletIndex = 1);
 
-		Button.click(button = "Clear");
+		Click(
+			ariaLabel = "Clear Collection",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		PortletEntry.save();
 

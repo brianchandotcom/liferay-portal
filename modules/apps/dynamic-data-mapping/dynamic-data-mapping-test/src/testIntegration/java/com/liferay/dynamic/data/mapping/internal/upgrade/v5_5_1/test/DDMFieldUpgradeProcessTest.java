@@ -22,11 +22,15 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -45,6 +49,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -112,6 +117,27 @@ public class DDMFieldUpgradeProcessTest {
 			ddmStructureVersion.getCompanyId(), ddmField.getCompanyId());
 	}
 
+	@Test
+	public void testUpgradeProcessSeveralCompanies() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		try {
+			testUpgradeProcess();
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
+	}
+
+	@Test
+	public void testUpgradeProcessWithDatabasePartitionEnabled()
+		throws Exception {
+
+		Assume.assumeTrue(DBPartition.isPartitionEnabled());
+
+		testUpgradeProcess();
+	}
+
 	private DDMField _addDDMField(long structureVersionId) {
 		DDMField ddmField = _ddmFieldLocalService.createDDMField(
 			_counterLocalService.increment());
@@ -152,6 +178,9 @@ public class DDMFieldUpgradeProcessTest {
 		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private CounterLocalService _counterLocalService;

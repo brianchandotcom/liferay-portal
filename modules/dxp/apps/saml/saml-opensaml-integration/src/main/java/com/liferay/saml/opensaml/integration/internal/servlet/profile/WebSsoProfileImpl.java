@@ -331,13 +331,14 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		SamlSsoRequestContext samlSsoRequestContext = null;
+
 		String samlMessageId = ParamUtil.getString(
 			httpServletRequest, "saml_message_id");
 
 		if (!Validator.isBlank(samlMessageId)) {
-			SamlSsoRequestContext samlSsoRequestContext =
-				_decodeAuthnConversationAfterLogin(
-					httpServletRequest, httpServletResponse);
+			samlSsoRequestContext = _decodeAuthnConversationAfterLogin(
+				httpServletRequest, httpServletResponse);
 
 			if (samlSsoRequestContext != null) {
 				MessageContext<?> messageContext =
@@ -376,9 +377,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 
 		if (idpInitiatedSSO) {
-			SamlSsoRequestContext samlSsoRequestContext =
-				_decodeAuthnConversationAfterLogin(
+			if (Validator.isBlank(samlMessageId)) {
+				samlSsoRequestContext = _decodeAuthnConversationAfterLogin(
 					httpServletRequest, httpServletResponse);
+			}
 
 			if (samlSsoRequestContext != null) {
 				MessageContext<?> messageContext =
@@ -409,8 +411,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlBinding = samlBindingProvider.getSamlBinding(
 				SAMLConstants.SAML2_POST_BINDING_URI);
 		}
-
-		SamlSsoRequestContext samlSsoRequestContext = null;
 
 		if (idpInitiatedSSO) {
 			messageContext = getMessageContext(

@@ -722,7 +722,16 @@ public class RenderLayoutStructureTagTest {
 				layout.getPlid());
 
 		String itemId = _addCollectionStyledLayoutStructureItem(
-			assetListEntry, layout, 2, "numeric", segmentsExperienceId,
+			JSONUtil.put(
+				"classNameId", _portal.getClassNameId(AssetListEntry.class)
+			).put(
+				"classPK", assetListEntry.getAssetListEntryId()
+			).put(
+				"itemType", JournalArticle.class.getName()
+			).put(
+				"type", InfoListItemSelectorReturnType.class.getName()
+			),
+			null, layout, null, segmentsExperienceId,
 			_addFragmentEntryLinks(
 				1, JSONUtil.put("collectionFieldId", "JournalArticle_title"),
 				layout.fetchDraftLayout(), segmentsExperienceId));
@@ -731,12 +740,18 @@ public class RenderLayoutStructureTagTest {
 
 		List<String> titles = _addJournalArticlesAndGetTitles(7, locale);
 
-		_assertNumericPagination(itemId, layout, 1, 2, titles);
-		_assertNumericPagination(itemId, layout, 2, 2, titles);
-		_assertNumericPagination(itemId, layout, 3, 2, titles);
-		_assertNumericPagination(itemId, layout, 4, 2, titles);
+		_testPagination(
+			itemId,
+			JSONUtil.put(
+				"displayAllItems", false
+			).put(
+				"displayAllPages", true
+			).put(
+				"numberOfItemsPerPage", 2
+			),
+			layout, 2, 4, segmentsExperienceId, titles);
 
-		_updateItemConfig(
+		_testPagination(
 			itemId,
 			JSONUtil.put(
 				"displayAllPages", false
@@ -744,31 +759,21 @@ public class RenderLayoutStructureTagTest {
 				"numberOfItemsPerPage", 6
 			).put(
 				"numberOfPages", 1
-			).put(
-				"paginationType", "numeric"
 			),
-			layout.fetchDraftLayout(), segmentsExperienceId);
+			layout, 6, 1, segmentsExperienceId, titles);
 
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
-
-		_assertNumericPagination(itemId, layout, 1, 6, titles);
-
-		_updateItemConfig(
+		_testPagination(
 			itemId,
 			JSONUtil.put(
 				"displayAllPages", true
 			).put(
 				"numberOfItemsPerPage", 7
 			).put(
-				"paginationType", "numeric"
+				"numberOfPages", 1
 			),
-			layout.fetchDraftLayout(), segmentsExperienceId);
+			layout, 7, 1, segmentsExperienceId, titles);
 
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
-
-		_assertNumericPagination(itemId, layout, 1, 7, titles);
-
-		_updateItemConfig(
+		_testPagination(
 			itemId,
 			JSONUtil.put(
 				"displayAllItems", false
@@ -778,15 +783,8 @@ public class RenderLayoutStructureTagTest {
 				"numberOfItemsPerPage", 2
 			).put(
 				"numberOfPages", 2
-			).put(
-				"paginationType", "numeric"
 			),
-			layout.fetchDraftLayout(), segmentsExperienceId);
-
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
-
-		_assertNumericPagination(itemId, layout, 1, 2, 2, titles);
-		_assertNumericPagination(itemId, layout, 2, 2, 2, titles);
+			layout, 2, 2, segmentsExperienceId, titles);
 	}
 
 	@Test
@@ -1854,40 +1852,7 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	private void _assertNumericPagination(
-			String itemId, Layout layout, int pageNumber,
-			int numberOfItemsPerPage, int numberOfPages, List<String> strings)
-		throws Exception {
-
-		String html = _getRenderLayoutHTML(
-			layout,
-			HashMapBuilder.put(
-				"page_number_" + itemId,
-				() -> {
-					if (pageNumber > 1) {
-						return String.valueOf(pageNumber);
-					}
-
-					return null;
-				}
-			).build());
-
-		int endIndex = pageNumber * numberOfItemsPerPage;
-		int startIndex =
-			(pageNumber * numberOfItemsPerPage) - numberOfItemsPerPage;
-
-		for (int i = 0; i < strings.size(); i++) {
-			String string = strings.get(i);
-
-			if ((i >= startIndex) && (i < endIndex)) {
-				Assert.assertTrue(
-					html + " does not contain " + string,
-					html.contains(string));
-			}
-			else {
-				Assert.assertFalse(
-					html + " contains " + string, html.contains(string));
-			}
-		}
+		String html, int pageNumber, int numberOfPages) {
 
 		Assert.assertEquals(
 			html, numberOfPages + 2, StringUtil.count(html, "page-item"));
@@ -1922,15 +1887,88 @@ public class RenderLayoutStructureTagTest {
 		}
 	}
 
-	private void _assertNumericPagination(
+	private void _assertPagination(
 			String itemId, Layout layout, int pageNumber,
-			int numberOfItemsPerPage, List<String> strings)
+			int numberOfItemsPerPage, int numberOfPages, String paginationType,
+			List<String> strings)
 		throws Exception {
 
-		_assertNumericPagination(
-			itemId, layout, pageNumber, numberOfItemsPerPage,
-			(int)Math.ceil((double)strings.size() / numberOfItemsPerPage),
-			strings);
+		String html = _getRenderLayoutHTML(
+			layout,
+			HashMapBuilder.put(
+				"page_number_" + itemId,
+				() -> {
+					if (pageNumber > 1) {
+						return String.valueOf(pageNumber);
+					}
+
+					return null;
+				}
+			).build());
+
+		int endIndex = pageNumber * numberOfItemsPerPage;
+		int startIndex =
+			(pageNumber * numberOfItemsPerPage) - numberOfItemsPerPage;
+
+		for (int i = 0; i < strings.size(); i++) {
+			String string = strings.get(i);
+
+			if ((i >= startIndex) && (i < endIndex)) {
+				Assert.assertTrue(
+					html + " does not contain " + string,
+					html.contains(string));
+			}
+			else {
+				Assert.assertFalse(
+					html + " contains " + string, html.contains(string));
+			}
+		}
+
+		if (paginationType.equals("numeric")) {
+			_assertNumericPagination(html, pageNumber, numberOfPages);
+		}
+		else {
+			_assertSimplePagination(html, itemId, pageNumber, numberOfPages);
+		}
+	}
+
+	private void _assertSimplePagination(
+		String html, String itemId, int pageNumber, int numberOfPages) {
+
+		Assert.assertTrue(
+			html, html.contains("paginationNextButton_" + itemId));
+		Assert.assertTrue(
+			html, html.contains("paginationPreviousButton_" + itemId));
+
+		if (pageNumber != 1) {
+			Assert.assertFalse(
+				html,
+				html.contains(
+					"paginationPreviousButton_" + itemId +
+						"\" disabled=\"disabled\""));
+		}
+		else {
+			Assert.assertTrue(
+				html,
+				html.contains(
+					"paginationPreviousButton_" + itemId +
+						"\" disabled=\"disabled\""));
+		}
+
+		if (pageNumber != numberOfPages) {
+			Assert.assertFalse(
+				html,
+				html.contains(
+					"paginationNextButton_" + itemId +
+						"\" disabled=\"disabled\""));
+		}
+		else {
+			Assert.assertTrue(
+				html,
+				html.contains(
+					"paginationNextButton_" + itemId +
+						"\" disabled=\"disabled\""));
+		}
 	}
 
 	private DDMForm _deserialize(String content) {
@@ -2084,6 +2122,41 @@ public class RenderLayoutStructureTagTest {
 			mockHttpServletRequest, mockHttpServletResponse);
 
 		return mockHttpServletResponse;
+	}
+
+	private void _testPagination(
+			String itemId, JSONObject jsonObject, Layout layout,
+			int numberOfItemsPerPage, int numberOfPages,
+			long segmentsExperienceId, List<String> strings)
+		throws Exception {
+
+		jsonObject.put("paginationType", "numeric");
+
+		_updateItemConfig(
+			itemId, jsonObject, layout.fetchDraftLayout(),
+			segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		for (int i = 1; i <= numberOfPages; i++) {
+			_assertPagination(
+				itemId, layout, i, numberOfItemsPerPage, numberOfPages,
+				"numeric", strings);
+		}
+
+		jsonObject.put("paginationType", "simple");
+
+		_updateItemConfig(
+			itemId, jsonObject, layout.fetchDraftLayout(),
+			segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		for (int i = 1; i <= numberOfPages; i++) {
+			_assertPagination(
+				itemId, layout, i, numberOfItemsPerPage, numberOfPages,
+				"simple", strings);
+		}
 	}
 
 	private void _updateItemConfig(

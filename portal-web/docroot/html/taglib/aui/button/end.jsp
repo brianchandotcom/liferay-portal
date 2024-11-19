@@ -13,50 +13,54 @@
 
 <c:choose>
 	<c:when test='<%= Validator.isNotNull(escapedHREF) && !type.equals("cancel") %>'>
-		<a
-			class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
-			href="<%= escapedHREF %>"
-			id="<%= id %>"
+		<liferay-ui:csp>
+			<a
+				class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
+				href="<%= escapedHREF %>"
+				id="<%= id %>"
 
-			<c:if test="<%= Validator.isNotNull(onClick) %>">
-				onClick="<%= onClick %>"
-			</c:if>
+				<c:if test="<%= Validator.isNotNull(onClick) %>">
+					onClick="<%= onClick %>"
+				</c:if>
 
-			role="button"
+				role="button"
 
-			<%= AUIUtil.buildData(data) %>
-			<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
-		>
+				<%= AUIUtil.buildData(data) %>
+				<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
+			>
+		</liferay-ui:csp>
 	</c:when>
 	<c:otherwise>
-		<button
-			class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
+		<liferay-ui:csp>
+			<button
+				class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
 
-			<c:if test="<%= disabled %>">
-				disabled
-			</c:if>
+				<c:if test="<%= disabled %>">
+					disabled
+				</c:if>
 
-			id="<%= id %>"
+				id="<%= id %>"
 
-			<c:if test="<%= Validator.isNotNull(name) %>">
-				name="<%= namespace %><%= name %>"
-			</c:if>
+				<c:if test="<%= Validator.isNotNull(name) %>">
+					name="<%= namespace %><%= name %>"
+				</c:if>
 
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(onClick) %>">
-					onClick="<%= onClick %>"
-				</c:when>
-				<c:when test="<%= Validator.isNotNull(escapedHREF) %>">
-					data-href="<%= escapedHREF %>"
-					onClick="Liferay.Util.navigate(this.dataset.href)"
-				</c:when>
-			</c:choose>
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(onClick) %>">
+						onClick="<%= onClick %>"
+					</c:when>
+					<c:when test="<%= Validator.isNotNull(escapedHREF) %>">
+						data-href="<%= escapedHREF %>"
+						onClick="Liferay.Util.navigate(this.dataset.href)"
+					</c:when>
+				</c:choose>
 
-			type="<%= type.equals("cancel") ? "button" : type %>"
+				type="<%= type.equals("cancel") ? "button" : type %>"
 
-			<%= AUIUtil.buildData(data) %>
-			<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
-		>
+				<%= AUIUtil.buildData(data) %>
+				<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
+			>
+		</liferay-ui:csp>
 	</c:otherwise>
 </c:choose>
 

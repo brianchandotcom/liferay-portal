@@ -7,6 +7,8 @@ package com.liferay.announcements.web.internal.upgrade.v2_1_0;
 
 import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -14,8 +16,9 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.function.Function;
 
@@ -77,11 +80,11 @@ public class UpgradePortletPreferences
 		String selectedScopeIds = portletPreferences.getValue(
 			"selectedScope" + scope + "Ids", null);
 
-		if (selectedScopeIds == null) {
+		if (Validator.isBlank(selectedScopeIds)) {
 			return;
 		}
 
-		String selectedScopeExternalReferenceCodes = ListUtil.toString(
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			TransformUtil.transformToList(
 				StringUtil.split(selectedScopeIds, 0L),
 				id -> {
@@ -95,14 +98,13 @@ public class UpgradePortletPreferences
 						return null;
 					}
 
-					return model.getExternalReferenceCode();
-				}),
-			(String)null);
+					return HtmlUtil.escape(model.getExternalReferenceCode());
+				}));
 
-		if (!selectedScopeExternalReferenceCodes.isEmpty()) {
+		if (jsonArray.length() > 0) {
 			portletPreferences.setValue(
 				"selectedScope" + scope + "ExternalReferenceCodes",
-				selectedScopeExternalReferenceCodes);
+				jsonArray.toString());
 		}
 	}
 

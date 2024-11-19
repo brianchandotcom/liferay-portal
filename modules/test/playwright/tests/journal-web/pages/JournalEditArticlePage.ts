@@ -293,25 +293,22 @@ export class JournalEditArticlePage {
 		await this.page
 			.getByRole('button', {name: 'Select Display Page'})
 			.click();
-		const selectDisplayPageModal = await this.page.frameLocator(
+		const selectDisplayPageModal = this.page.frameLocator(
 			'iframe[title*="Select Display Page"]'
 		);
 
-		await this.page
-			.locator('.modal-title', {
-				hasText: 'Select Display Page',
-			})
-			.waitFor({
-				state: 'visible',
-			});
+		await selectDisplayPageModal
+			.locator('.card-type-asset')
+			.filter({hasText: displayPageName})
+			.click({trial: true});
 
 		await clickAndExpectToBeHidden({
 			target: this.page.locator('.modal-title', {
 				hasText: 'Select Display Page',
 			}),
-			trigger: selectDisplayPageModal.getByLabel(
-				'Select ' + displayPageName
-			),
+			trigger: selectDisplayPageModal
+				.locator('.card-type-asset')
+				.filter({hasText: displayPageName}),
 		});
 	}
 

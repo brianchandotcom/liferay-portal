@@ -134,24 +134,22 @@ export class BlogsEditBlogEntryPage {
 			.getByLabel('Display Page Template')
 			.selectOption('Specific');
 		await displayPageFieldSet.getByRole('button', {name: 'Select'}).click();
-		const selectDisplayPageModal = await this.page.frameLocator(
+		const selectDisplayPageModal = this.page.frameLocator(
 			'iframe[title*="Select Page"]'
 		);
-		await this.page
-			.locator('.modal-title', {
-				hasText: 'Select Page',
-			})
-			.waitFor({
-				state: 'visible',
-			});
+
+		await selectDisplayPageModal
+			.locator('.card-type-asset')
+			.filter({hasText: displayPageName})
+			.click({trial: true});
 
 		await clickAndExpectToBeHidden({
 			target: this.page.locator('.modal-title', {
 				hasText: 'Select Page',
 			}),
-			trigger: selectDisplayPageModal.getByLabel(
-				'Select ' + displayPageName
-			),
+			trigger: selectDisplayPageModal
+				.locator('.card-type-asset')
+				.filter({hasText: displayPageName}),
 		});
 	}
 

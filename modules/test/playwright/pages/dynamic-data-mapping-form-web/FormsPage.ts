@@ -15,6 +15,7 @@ export class FormsPage {
 	readonly emptyResultNewFormButton: Locator;
 	readonly exportImportIframe: FrameLocator;
 	readonly formsHeader: Locator;
+	readonly formsTab: Locator;
 	readonly exportImportOption: Locator;
 	readonly formsOptionsKebab: Locator;
 	readonly importButton: Locator;
@@ -23,6 +24,7 @@ export class FormsPage {
 	readonly managementToolbarNewButton: Locator;
 	readonly managementToolbarSearchForButton: Locator;
 	readonly managementToolbarSelectAllItems: Locator;
+	readonly newFormButton: Locator;
 	readonly page: Page;
 	readonly selectFileButton: Locator;
 
@@ -48,6 +50,7 @@ export class FormsPage {
 			name: 'Forms',
 		});
 		this.formsOptionsKebab = page.getByLabel('Options');
+		this.formsTab = page.getByRole('link', {name: 'Forms'});
 		this.importButton = this.exportImportIframe.getByRole('button', {
 			name: 'Import',
 		});
@@ -64,6 +67,7 @@ export class FormsPage {
 		this.managementToolbarSelectAllItems = page.getByLabel(
 			'Select All Items on the Page'
 		);
+		this.newFormButton = page.getByRole('link', {name: 'New Form'});
 		this.page = page;
 		this.selectFileButton = this.exportImportIframe.getByRole('button', {
 			name: 'Select File',

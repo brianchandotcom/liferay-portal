@@ -12,6 +12,7 @@ export class FormBuilderPage {
 	readonly formsPage: FormsPage;
 	readonly formSettingsButton: Locator;
 	readonly formSettingsDoneButton: Locator;
+	readonly formTab: Locator;
 	readonly formTitle: Locator;
 	readonly newFormHeading: Locator;
 	readonly newPageButton: Locator;
@@ -29,6 +30,7 @@ export class FormBuilderPage {
 		this.formsPage = new FormsPage(page);
 		this.formSettingsButton = page.getByRole('button', {name: 'Settings'});
 		this.formSettingsDoneButton = page.getByRole('button', {name: 'Done'});
+		this.formTab = page.getByRole('button', {name: 'Form'});
 		this.formTitle = page.getByPlaceholder('Untitled Form');
 		this.newFormHeading = page.getByRole('heading', {name: 'New Form'});
 		this.newPageButton = page.getByRole('button', {name: 'New Page'});

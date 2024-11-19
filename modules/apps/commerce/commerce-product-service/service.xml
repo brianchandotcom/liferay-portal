@@ -325,6 +325,7 @@
 		<column name="CPTaxCategoryId" type="long" />
 		<column name="allowedOrderQuantities" type="String" />
 		<column name="backOrders" type="boolean" />
+		<column name="commerceAvailabilityEstimateId" type="long" />
 		<column name="CPDefinitionInventoryEngine" type="String" />
 		<column name="depth" type="double" />
 		<column name="displayAvailability" type="boolean" />
@@ -357,6 +358,11 @@
 			<finder-column name="companyId" />
 		</finder>
 		<finder name="CPConfigurationListId" return-type="Collection">
+			<finder-column name="CPConfigurationListId" />
+		</finder>
+		<finder name="C_C_C" return-type="CPConfigurationEntry">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
 			<finder-column name="CPConfigurationListId" />
 		</finder>
 	</entity>

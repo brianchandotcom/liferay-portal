@@ -5,7 +5,12 @@
 
 package com.liferay.announcements.web.internal.util;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -31,6 +36,7 @@ import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -261,6 +267,22 @@ public class AnnouncementsUtil {
 		}
 
 		return false;
+	}
+
+	public static String toJSONArrayString(List<String> stringList) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			TransformUtil.transform(stringList, HtmlUtil::escape));
+
+		return jsonArray.toString();
+	}
+
+	public static List<String> toStringList(String jsonArrayString)
+		throws JSONException {
+
+		return TransformUtil.transform(
+			JSONUtil.toStringList(
+				JSONFactoryUtil.createJSONArray(jsonArrayString)),
+			HtmlUtil::unescape);
 	}
 
 	private static final boolean _PERMISSIONS_CHECK_GUEST_ENABLED =

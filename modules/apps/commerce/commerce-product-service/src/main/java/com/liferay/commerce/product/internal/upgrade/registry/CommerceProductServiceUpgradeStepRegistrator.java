@@ -571,6 +571,11 @@ public class CommerceProductServiceUpgradeStepRegistrator
 		registry.register(
 			"5.21.1", "5.22.0", new CPSpecificationOptionUpgradeProcess());
 
+		registry.register(
+			"5.22.0", "5.23.0",
+			UpgradeProcessFactory.addColumns(
+				"CPConfigurationEntry", "commerceAvailabilityEstimateId LONG"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

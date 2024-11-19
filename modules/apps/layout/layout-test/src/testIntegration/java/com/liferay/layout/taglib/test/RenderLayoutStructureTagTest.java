@@ -1719,7 +1719,7 @@ public class RenderLayoutStructureTagTest {
 			int count, Locale locale)
 		throws Exception {
 
-		List<String> list = new ArrayList<>();
+		List<String> titles = new ArrayList<>();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
@@ -1738,10 +1738,10 @@ public class RenderLayoutStructureTagTest {
 				RandomTestUtil.randomString(), locale, true, true,
 				serviceContext);
 
-			list.add(journalArticle.getTitle(locale));
+			titles.add(journalArticle.getTitle(locale));
 		}
 
-		return list;
+		return titles;
 	}
 
 	private SegmentsEntry _addSegmentsEntryByFirstName(String firstName)

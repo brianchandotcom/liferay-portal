@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 
 import com.liferay.data.engine.constants.DataActionKeys;
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
-import com.liferay.data.engine.exception.NoSuchDataDefinitionException;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.data.engine.model.DEDataListView;
@@ -36,6 +35,7 @@ import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.form.builder.rule.DDMFormRuleDeserializer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
@@ -272,7 +272,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 					contentType));
 
 		if (ddmStructure == null) {
-			throw new NoSuchDataDefinitionException(
+			throw new NoSuchStructureException(
 				"Unable to find data definition with external reference code " +
 					externalReferenceCode);
 		}

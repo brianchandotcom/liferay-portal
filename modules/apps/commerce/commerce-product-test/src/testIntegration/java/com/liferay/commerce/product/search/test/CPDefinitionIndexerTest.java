@@ -140,7 +140,7 @@ public class CPDefinitionIndexerTest {
 
 	@Test
 	public void testSearchByGtin() throws Exception {
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
@@ -148,7 +148,7 @@ public class CPDefinitionIndexerTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
-			catalog.getGroupId());
+			commerceCatalog.getGroupId());
 
 		cpInstance.setGtin(
 			RandomTestUtil.randomString() + cpInstance.getCPInstanceId());
@@ -162,7 +162,7 @@ public class CPDefinitionIndexerTest {
 		searchContext.setCompanyId(_group.getCompanyId());
 		searchContext.setEntryClassNames(
 			new String[] {CPDefinition.class.getName()});
-		searchContext.setGroupIds(new long[] {catalog.getGroupId()});
+		searchContext.setGroupIds(new long[] {commerceCatalog.getGroupId()});
 		searchContext.setKeywords(RandomTestUtil.randomString());
 
 		Hits hits = _indexer.search(searchContext);

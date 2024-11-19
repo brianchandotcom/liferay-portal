@@ -7,12 +7,12 @@ import {Body, Cell, Head, Row, Table} from '@clayui/core';
 
 import './SVTable.css';
 
-interface IColumn {
+export interface IColumn {
 	columnKey: string;
 	label: string;
 }
 
-interface IRow {
+export interface IRow {
 	[key: string]: string | number | JSX.Element | undefined;
 }
 

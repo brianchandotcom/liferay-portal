@@ -6,7 +6,9 @@
 import {Locator, Page} from '@playwright/test';
 
 export class FormBuilderSidePanelPage {
+	readonly addSelectFromListButton: Locator;
 	readonly addSelectOptionButton: Locator;
+	readonly addSingleSelectionButton: Locator;
 	readonly advancedTab: Locator;
 	readonly backButton: Locator;
 	readonly htmlAutocompleteAttributeField: Locator;
@@ -17,11 +19,17 @@ export class FormBuilderSidePanelPage {
 	readonly page: Page;
 
 	constructor(page: Page) {
-		this.advancedTab = page.getByRole('tab', {
-			name: 'Advanced',
+		this.addSelectFromListButton = page.getByRole('button', {
+			name: 'Press enter to add Select',
 		});
 		this.addSelectOptionButton = page.getByRole('button', {
 			name: 'Add Option',
+		});
+		this.addSingleSelectionButton = page.getByRole('button', {
+			name: 'Press enter to add Single',
+		});
+		this.advancedTab = page.getByRole('tab', {
+			name: 'Advanced',
 		});
 		this.backButton = page.getByRole('button', {name: 'Back'});
 		this.htmlAutocompleteAttributeField = page.getByLabel(

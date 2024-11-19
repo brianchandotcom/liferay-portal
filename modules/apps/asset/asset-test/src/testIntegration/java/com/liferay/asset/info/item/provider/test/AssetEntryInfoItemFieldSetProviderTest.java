@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.info.field.InfoField;
@@ -70,6 +72,15 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -120,6 +131,37 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
 			_group.getGroupId());
+
+		InfoFieldSet infoFieldSet =
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);
+
+		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
+			assetVocabulary.getName());
+
+		Assert.assertEquals(
+			assetVocabulary.getName(), infoFieldSetEntry.getName());
+	}
+
+	@Test
+	public void testGetInfoFieldSetAssetLibraryVocabulary() throws Exception {
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _depotEntry.getGroupId(),
+				RandomTestUtil.randomString(),
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				null, null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+				ServiceContextTestUtil.getServiceContext(
+					_depotEntry.getGroupId()));
+
+		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
+
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			assetEntry.getEntryId(), assetCategory.getCategoryId());
 
 		InfoFieldSet infoFieldSet =
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);
@@ -389,6 +431,12 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@DeleteAfterTestRun
+	private DepotEntry _depotEntry;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

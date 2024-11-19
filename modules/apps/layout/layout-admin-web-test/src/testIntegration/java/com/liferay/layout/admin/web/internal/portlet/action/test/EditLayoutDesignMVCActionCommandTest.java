@@ -102,23 +102,23 @@ public class EditLayoutDesignMVCActionCommandTest {
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
 
-		Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
+		Group group = layoutSetPrototype.getGroup();
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			layoutSetPrototypeGroup.getGroupId(),
+			group.getGroupId(),
 			_portal.getClassNameId(JournalArticle.class), "BASIC-WEB-CONTENT",
 			true);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(),
-				layoutSetPrototypeGroup.getGroupId(), 0,
+				group.getGroupId(), 0,
 				_portal.getClassNameId(JournalArticle.class),
 				ddmStructure.getStructureId(), RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
 				0, 0, WorkflowConstants.STATUS_DRAFT,
 				ServiceContextTestUtil.getServiceContext(
-					layoutSetPrototypeGroup.getGroupId()));
+					group.getGroupId()));
 
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());

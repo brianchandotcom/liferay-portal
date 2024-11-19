@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TRANSLATION_MANAGER_BUTTON</td>
+	<td>//button[@role='combobox' and contains(@aria-label, 'Select a language')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECTED_IMAGE</td>
 	<td>//input[contains(@id,'JournalPortlet_Image')]</td>
 	<td></td>

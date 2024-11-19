@@ -41,11 +41,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LOCALIZED_BUTTON</td>
-	<td>//button[contains(@class,'localized-trigger')][contains(@id,'JournalPortlet_${key_fieldName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PRIORITY</td>
 	<td>//input[contains(@id,'assetPriority')]</td>
 	<td></td>

@@ -749,11 +749,11 @@ definition {
 			task ("Set up Friendly URL in Spanish") {
 				Click(
 					key_fieldName = "friendlyURL",
-					locator1 = "WC#LOCALIZED_BUTTON");
+					locator1 = "WCEditWebContent#TRANSLATION_MANAGER_BUTTON");
 
 				Click(
-					key_locale = "es-ES",
-					locator1 = "Translation#LOCALIZATION_NAME");
+					key_locale = "es_ES",
+					locator1 = "Translation#LOCALIZATION_NAME_TRANSLATED");
 
 				Type(
 					inputFieldId = "friendlyURL",

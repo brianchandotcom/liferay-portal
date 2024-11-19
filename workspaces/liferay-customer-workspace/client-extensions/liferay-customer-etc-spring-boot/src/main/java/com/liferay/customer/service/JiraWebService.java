@@ -29,7 +29,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 public class JiraWebService {
 
-	public String getJiraIssue(String issueKey) throws Exception {
+	public String getJiraIssue(String searchType, String issueKey)
+		throws Exception {
+
 		StringBundler sb = new StringBundler(3);
 
 		sb.append(_URL_REST_API_2);
@@ -52,7 +54,7 @@ public class JiraWebService {
 					String.class
 				).block());
 
-			jsonObject = _processResponse(jsonObject);
+			jsonObject = _processResponse(searchType, jsonObject);
 
 			return jsonObject.toString();
 		}
@@ -67,8 +69,56 @@ public class JiraWebService {
 		return null;
 	}
 
-	public String getJiraSearch(String keywords, String role) throws Exception {
-		StringBundler sb = new StringBundler(12);
+	public String getJiraSearch(String searchType, String keywords, String role)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(1);
+
+		if (searchType.equals(_JIRA_SEARCH_TYPE_SECURITIES)) {
+			sb.append(_buildSecuritiesJQL(keywords, role));
+		}
+
+		String[] fields = _getSearchTypeFields(searchType);
+
+		try {
+			JSONObject jsonObject = new JSONObject(
+				WebClient.create(
+					_jiraURL
+				).get(
+				).uri(
+					uriBuilder -> uriBuilder.path(
+						_URL_REST_API_2 + "/search"
+					).queryParam(
+						"jql", sb.toString()
+					).queryParam(
+						"fields", StringUtil.merge(fields)
+					).build()
+				).accept(
+					MediaType.APPLICATION_JSON
+				).header(
+					HttpHeaders.AUTHORIZATION, _getCredentials()
+				).retrieve(
+				).bodyToMono(
+					String.class
+				).block());
+
+			jsonObject = _processResponse(searchType, jsonObject);
+
+			return jsonObject.toString();
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to fetch Jira issues with jql " + sb.toString(),
+					exception);
+			}
+		}
+
+		return null;
+	}
+
+	private String _buildSecuritiesJQL(String keywords, String role) {
+		StringBundler sb = new StringBundler(10);
 
 		String[] projects = StringUtil.split(_jiraSecurityProjects);
 
@@ -86,63 +136,14 @@ public class JiraWebService {
 		}
 
 		if (Validator.isNotNull(keywords)) {
-			sb.append(" AND (description ~ ");
-			sb.append(StringUtil.quote(keywords));
-			sb.append(" OR summary ~ ");
+			sb.append(" AND ('Customer Portal Summary' ~ ");
 			sb.append(StringUtil.quote(keywords));
 			sb.append(" OR 'CVE IDs' ~ ");
 			sb.append(StringUtil.quote(keywords));
 			sb.append(")");
 		}
 
-		String[] jiraSearchFields = {
-			_JIRA_FIELD_AFFECTS_VERSIONS, _JIRA_FIELD_COMPONENTS,
-			_JIRA_FIELD_ISSUE_KEY, _jiraSecurityFieldAffectedVersionsDetails,
-			_jiraSecurityFieldCategory,
-			_jiraSecurityFieldCustomerPortalDescription,
-			_jiraSecurityFieldCustomerPortalSummary,
-			_jiraSecurityFieldCustomerPublishingDate, _jiraSecurityFieldCVEIds,
-			_jiraSecurityFieldCVSSBaseScore, _jiraSecurityFieldCVSSVectorString,
-			_jiraSecurityFieldCWEIds, _jiraSecurityFieldIssueClassification,
-			_jiraSecurityFieldPartnerPublishingDate,
-			_jiraSecurityFieldPublishingStatus, _jiraSecurityFieldSeverity
-		};
-
-		try {
-			JSONObject jsonObject = new JSONObject(
-				WebClient.create(
-					_jiraURL
-				).get(
-				).uri(
-					uriBuilder -> uriBuilder.path(
-						_URL_REST_API_2 + "/search"
-					).queryParam(
-						"jql", sb.toString()
-					).queryParam(
-						"fields", StringUtil.merge(jiraSearchFields)
-					).build()
-				).accept(
-					MediaType.APPLICATION_JSON
-				).header(
-					HttpHeaders.AUTHORIZATION, _getCredentials()
-				).retrieve(
-				).bodyToMono(
-					String.class
-				).block());
-
-			jsonObject = _processResponse(jsonObject);
-
-			return jsonObject.toString();
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to fetch Jira issues with jql " + sb.toString(),
-					exception);
-			}
-		}
-
-		return null;
+		return sb.toString();
 	}
 
 	private String _getCredentials() {
@@ -152,17 +153,36 @@ public class JiraWebService {
 		return "Basic " + Base64.encode(jiraUserNameAndJiraApiToken.getBytes());
 	}
 
+	private String[] _getSearchTypeFields(String searchType) {
+		if (searchType.equals(_JIRA_SEARCH_TYPE_SECURITIES)) {
+			return new String[] {
+				_JIRA_FIELD_AFFECTS_VERSIONS, _JIRA_FIELD_COMPONENTS,
+				_JIRA_FIELD_FIX_VERSIONS, _JIRA_FIELD_ISSUE_KEY,
+				_jiraSecurityFieldAffectedVersionsDetails,
+				_jiraSecurityFieldCategory,
+				_jiraSecurityFieldCustomerPortalDescription,
+				_jiraSecurityFieldCustomerPortalSummary,
+				_jiraSecurityFieldCustomerPublishingDate,
+				_jiraSecurityFieldCVEIds, _jiraSecurityFieldCVSSBaseScore,
+				_jiraSecurityFieldCVSSVectorString, _jiraSecurityFieldCWEIds,
+				_jiraSecurityFieldIssueClassification,
+				_jiraSecurityFieldPartnerPublishingDate,
+				_jiraSecurityFieldPublishingStatus, _jiraSecurityFieldSeverity
+			};
+		}
+
+		return new String[0];
+	}
+
 	private JSONArray _processFieldsJSONArray(JSONArray fieldsJSONArray) {
 		JSONArray jsonArray = new JSONArray();
 
 		for (int i = 0; i < fieldsJSONArray.length(); i++) {
 			JSONObject jsonObject = fieldsJSONArray.getJSONObject(i);
 
-			JSONObject nameJSONObject = new JSONObject();
+			String nameValue = jsonObject.getString("name");
 
-			nameJSONObject.put("name", jsonObject.getString("name"));
-
-			jsonArray.put(nameJSONObject);
+			jsonArray.put(nameValue);
 		}
 
 		return jsonArray;
@@ -176,12 +196,15 @@ public class JiraWebService {
 		return null;
 	}
 
-	private JSONObject _processIssue(JSONObject issueJSONObject) {
+	private JSONObject _processIssue(
+		String searchType, JSONObject issueJSONObject) {
+
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
 			"fields",
-			_processIssueFields(issueJSONObject.getJSONObject("fields"))
+			_processIssueFields(
+				searchType, issueJSONObject.getJSONObject("fields"))
 		).put(
 			"key", issueJSONObject.getString(_JIRA_FIELD_ISSUE_KEY)
 		);
@@ -189,72 +212,89 @@ public class JiraWebService {
 		return jsonObject;
 	}
 
-	private JSONObject _processIssueFields(JSONObject issueFieldsJSONObject) {
+	private JSONObject _processIssueFields(
+		String searchType, JSONObject issueFieldsJSONObject) {
+
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
-			"affectedVersionsDetails",
-			issueFieldsJSONObject.optString(
-				_jiraSecurityFieldAffectedVersionsDetails)
-		).put(
 			"affectsVersion",
 			_processFieldsJSONArray(
 				issueFieldsJSONObject.getJSONArray(
 					_JIRA_FIELD_AFFECTS_VERSIONS))
 		).put(
-			"category",
-			_processFieldsJSONObject(
-				issueFieldsJSONObject.optJSONObject(_jiraSecurityFieldCategory))
-		).put(
 			"components",
 			_processFieldsJSONArray(
 				issueFieldsJSONObject.getJSONArray(_JIRA_FIELD_COMPONENTS))
 		).put(
-			"customerPortalDescription",
-			issueFieldsJSONObject.optString(
-				_jiraSecurityFieldCustomerPortalDescription)
-		).put(
-			"customerPortalSummary",
-			issueFieldsJSONObject.optString(
-				_jiraSecurityFieldCustomerPortalSummary)
-		).put(
-			"customerPublishingDate",
-			issueFieldsJSONObject.optString(
-				_jiraSecurityFieldCustomerPublishingDate)
-		).put(
-			"cveIds", issueFieldsJSONObject.optString(_jiraSecurityFieldCVEIds)
-		).put(
-			"cvssBaseScore",
-			issueFieldsJSONObject.optString(_jiraSecurityFieldCVSSBaseScore)
-		).put(
-			"cvssVectorString",
-			issueFieldsJSONObject.optString(_jiraSecurityFieldCVSSVectorString)
-		).put(
-			"cweIds", issueFieldsJSONObject.optString(_jiraSecurityFieldCWEIds)
-		).put(
-			"issueClassification",
-			_processFieldsJSONObject(
-				issueFieldsJSONObject.optJSONObject(
-					_jiraSecurityFieldIssueClassification))
-		).put(
-			"partnerPublishingDate",
-			issueFieldsJSONObject.optString(
-				_jiraSecurityFieldPartnerPublishingDate)
-		).put(
-			"publishingStatus",
-			_processFieldsJSONObject(
-				issueFieldsJSONObject.optJSONObject(
-					_jiraSecurityFieldPublishingStatus))
-		).put(
-			"severity",
-			_processFieldsJSONObject(
-				issueFieldsJSONObject.optJSONObject(_jiraSecurityFieldSeverity))
+			"fixVersions",
+			_processFieldsJSONArray(
+				issueFieldsJSONObject.getJSONArray(_JIRA_FIELD_FIX_VERSIONS))
 		);
+
+		if (searchType.equals(_JIRA_SEARCH_TYPE_SECURITIES)) {
+			jsonObject.put(
+				"affectedVersionsDetails",
+				issueFieldsJSONObject.optString(
+					_jiraSecurityFieldAffectedVersionsDetails)
+			).put(
+				"category",
+				_processFieldsJSONObject(
+					issueFieldsJSONObject.optJSONObject(
+						_jiraSecurityFieldCategory))
+			).put(
+				"customerPortalDescription",
+				issueFieldsJSONObject.optString(
+					_jiraSecurityFieldCustomerPortalDescription)
+			).put(
+				"customerPortalSummary",
+				issueFieldsJSONObject.optString(
+					_jiraSecurityFieldCustomerPortalSummary)
+			).put(
+				"customerPublishingDate",
+				issueFieldsJSONObject.optString(
+					_jiraSecurityFieldCustomerPublishingDate)
+			).put(
+				"cveIds",
+				issueFieldsJSONObject.optString(_jiraSecurityFieldCVEIds)
+			).put(
+				"cvssBaseScore",
+				issueFieldsJSONObject.optString(_jiraSecurityFieldCVSSBaseScore)
+			).put(
+				"cvssVectorString",
+				issueFieldsJSONObject.optString(
+					_jiraSecurityFieldCVSSVectorString)
+			).put(
+				"cweIds",
+				issueFieldsJSONObject.optString(_jiraSecurityFieldCWEIds)
+			).put(
+				"issueClassification",
+				_processFieldsJSONObject(
+					issueFieldsJSONObject.optJSONObject(
+						_jiraSecurityFieldIssueClassification))
+			).put(
+				"partnerPublishingDate",
+				issueFieldsJSONObject.optString(
+					_jiraSecurityFieldPartnerPublishingDate)
+			).put(
+				"publishingStatus",
+				_processFieldsJSONObject(
+					issueFieldsJSONObject.optJSONObject(
+						_jiraSecurityFieldPublishingStatus))
+			).put(
+				"severity",
+				_processFieldsJSONObject(
+					issueFieldsJSONObject.optJSONObject(
+						_jiraSecurityFieldSeverity))
+			);
+		}
 
 		return jsonObject;
 	}
 
-	private JSONObject _processResponse(JSONObject responseJSONObject) {
+	private JSONObject _processResponse(
+		String searchType, JSONObject responseJSONObject) {
+
 		JSONObject jsonObject = new JSONObject();
 
 		if (responseJSONObject.has("issues")) {
@@ -266,21 +306,21 @@ public class JiraWebService {
 			for (int i = 0; i < issuesJSONArray.length(); i++) {
 				JSONObject issueJSONObject = issuesJSONArray.getJSONObject(i);
 
-				jsonArray.put(_processIssue(issueJSONObject));
+				jsonArray.put(_processIssue(searchType, issueJSONObject));
 			}
 
 			jsonObject.put(
 				"issues", jsonArray
 			).put(
-				"maxResults", responseJSONObject.getInt("maxResults")
+				"page", responseJSONObject.getInt("startAt") + 1
 			).put(
-				"startAt", responseJSONObject.getInt("startAt")
+				"pageSize", responseJSONObject.getInt("maxResults")
 			).put(
 				"total", responseJSONObject.getInt("total")
 			);
 		}
 		else {
-			jsonObject = _processIssue(responseJSONObject);
+			jsonObject = _processIssue(searchType, responseJSONObject);
 		}
 
 		return jsonObject;
@@ -290,7 +330,11 @@ public class JiraWebService {
 
 	private static final String _JIRA_FIELD_COMPONENTS = "components";
 
+	private static final String _JIRA_FIELD_FIX_VERSIONS = "fixVersions";
+
 	private static final String _JIRA_FIELD_ISSUE_KEY = "key";
+
+	private static final String _JIRA_SEARCH_TYPE_SECURITIES = "securities";
 
 	private static final String _URL_REST_API_2 = "/rest/api/2";
 

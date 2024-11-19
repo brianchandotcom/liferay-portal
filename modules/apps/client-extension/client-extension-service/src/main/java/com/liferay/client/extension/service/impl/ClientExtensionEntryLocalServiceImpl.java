@@ -579,6 +579,10 @@ public class ClientExtensionEntryLocalServiceImpl
 			long timeout, TimeUnit timeoutUnit)
 		throws Throwable {
 
+		if (!ClusterExecutorUtil.isEnabled()) {
+			return;
+		}
+
 		MethodHandler methodHandler =
 			ClusterableInvokerUtil.createMethodHandler(
 				clusterInvokeAcceptorClass, targetObject, method, arguments);

@@ -25,33 +25,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class JiraIssuesRestController extends BaseRestController {
 
-	@RequestMapping(method = RequestMethod.GET, path = "/jira/issue/{issueKey}")
+	@RequestMapping(
+		method = RequestMethod.GET, path = "/jira/securities/issue/{issueKey}"
+	)
 	public ResponseEntity<String> get(@PathVariable("issueKey") String issueKey)
 		throws Exception {
 
 		try {
 			return new ResponseEntity<>(
-				_jiraWebService.getJiraIssue(issueKey), HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@RequestMapping(
-		method = RequestMethod.GET,
-		path = {"/jira/search/customer", "/jira/search/customer/{keywords}"}
-	)
-	public ResponseEntity<String> searchCustomer(
-			@PathVariable(required = false, value = "keywords") String keywords)
-		throws Exception {
-
-		try {
-			return new ResponseEntity<>(
-				_jiraWebService.getJiraSearch(keywords, "customer"),
+				_jiraWebService.getJiraIssue("securities", issueKey),
 				HttpStatus.OK);
 		}
 		catch (Exception exception) {
@@ -64,15 +46,42 @@ public class JiraIssuesRestController extends BaseRestController {
 
 	@RequestMapping(
 		method = RequestMethod.GET,
-		path = {"/jira/search/partner", "/jira/search/partner/{keywords}"}
+		path = {
+			"/jira/securities/search/customer",
+			"/jira/securities/search/customer/{params}"
+		}
 	)
-	public ResponseEntity<String> searchPartner(
-			@PathVariable(required = false, value = "keywords") String keywords)
+	public ResponseEntity<String> searchCustomer(
+			@PathVariable(required = false, value = "params") String params)
 		throws Exception {
 
 		try {
 			return new ResponseEntity<>(
-				_jiraWebService.getJiraSearch(keywords, "partner"),
+				_jiraWebService.getJiraSearch("securities", params, "customer"),
+				HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@RequestMapping(
+		method = RequestMethod.GET,
+		path = {
+			"/jira/securities/search/partner",
+			"/jira/securities/search/partner/{params}"
+		}
+	)
+	public ResponseEntity<String> searchPartner(
+			@PathVariable(required = false, value = "params") String params)
+		throws Exception {
+
+		try {
+			return new ResponseEntity<>(
+				_jiraWebService.getJiraSearch("securities", params, "partner"),
 				HttpStatus.OK);
 		}
 		catch (Exception exception) {

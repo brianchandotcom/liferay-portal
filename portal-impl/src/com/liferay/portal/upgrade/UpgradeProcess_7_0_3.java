@@ -13,7 +13,6 @@ import com.liferay.portal.upgrade.v7_0_3.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeOracle;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeOrganization;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeSQLServer;
-import com.liferay.portal.upgrade.v7_0_3.UpgradeSybase;
 
 /**
  * @author Adolfo Pérez
@@ -35,7 +34,6 @@ public class UpgradeProcess_7_0_3 extends UpgradeProcess {
 		upgrade(new UpgradeOrganization());
 		upgrade(new UpgradeOracle());
 		upgrade(new UpgradeSQLServer());
-		upgrade(new UpgradeSybase());
 
 		clearIndexesCache();
 	}

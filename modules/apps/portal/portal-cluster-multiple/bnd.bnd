@@ -23,8 +23,6 @@ Import-Package:\
 	\
 	com.p6spy.engine.spy;resolution:=optional,\
 	\
-	com.sybase.jdbc4.jdbc;resolution:=optional,\
-	\
 	oracle.jdbc;resolution:=optional,\
 	\
 	org.hsqldb.jdbc;resolution:=optional,\

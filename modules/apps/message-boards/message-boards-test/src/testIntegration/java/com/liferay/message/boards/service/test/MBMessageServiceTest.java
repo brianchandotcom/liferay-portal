@@ -171,35 +171,6 @@ public class MBMessageServiceTest {
 						message.startsWith("Unable to process message"));
 				}
 			}
-			else if (DBManagerUtil.getDBType() == DBType.SYBASE) {
-				for (LogEntry logEntry : logCapture1.getLogEntries()) {
-					String message = logEntry.getMessage();
-
-					Assert.assertTrue(
-						message.startsWith("Caught unexpected exception"));
-				}
-
-				for (LogEntry logEntry : logCapture3.getLogEntries()) {
-					String message = logEntry.getMessage();
-
-					Assert.assertTrue(
-						message.startsWith(
-							"com.liferay.portal.kernel.exception." +
-								"SystemException:"));
-				}
-
-				for (LogEntry logEntry : logCapture4.getLogEntries()) {
-					String message = logEntry.getMessage();
-
-					Assert.assertTrue(
-						message, message.contains("Your server command"));
-					Assert.assertTrue(
-						message,
-						message.contains(
-							"encountered a deadlock situation. Please re-run " +
-								"your command."));
-				}
-			}
 		}
 
 		int successCount = 0;

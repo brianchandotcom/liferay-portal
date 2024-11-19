@@ -79,11 +79,6 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 				expectedDBType = ExpectedDBType.POSTGRESQL,
 				expectedLog = "ERROR: relation ",
 				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.SYBASE,
-				expectedLog = "There is already an index on table 'ResourcePermission' named ",
-				expectedType = ExpectedType.PREFIX
 			)
 		},
 		level = "WARN", loggerClass = BaseDB.class

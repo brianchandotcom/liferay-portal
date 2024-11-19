@@ -7,8 +7,6 @@ package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.CustomSQLParam;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -391,20 +389,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 				sql = StringUtil.removeSubstring(sql, _STATUS_SQL);
 			}
 
-			StringBundler sb = null;
-
-			DB db = getDB();
-
-			boolean sybase = false;
-
-			if (db.getDBType() == DBType.SYBASE) {
-				sybase = true;
-
-				sb = new StringBundler((paramsList.size() * 7) + 1);
-			}
-			else {
-				sb = new StringBundler((paramsList.size() * 4) + 1);
-			}
+			StringBundler sb = new StringBundler((paramsList.size() * 4) + 1);
 
 			sb.append("SELECT COUNT(userId) AS COUNT_VALUE FROM (");
 
@@ -413,18 +398,9 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 					sb.append(" UNION ");
 				}
 
-				if (sybase) {
-					sb.append("SELECT userId FROM ");
-				}
-
 				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append(replaceJoinAndWhere(sql, paramsList.get(i)));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				if (sybase) {
-					sb.append(" params");
-					sb.append(i);
-				}
 			}
 
 			sb.append(") userId");

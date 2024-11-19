@@ -59,10 +59,6 @@ public class CustomSQLUtil {
 		return _customSQLUtil._customSQL.isVendorOracle();
 	}
 
-	public static boolean isVendorSybase() {
-		return _customSQLUtil._customSQL.isVendorSybase();
-	}
-
 	public static String[] keywords(String keywords) {
 		return _customSQLUtil._customSQL.keywords(keywords);
 	}

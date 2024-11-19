@@ -83,12 +83,6 @@ public class CustomSQLImpl implements CustomSQL {
 
 	public static final String MYSQL_FUNCTION_IS_NULL = "IFNULL(?, '1') = '1'";
 
-	public static final String SYBASE_FUNCTION_IS_NOT_NULL =
-		"CONVERT(VARCHAR,?) IS NOT NULL";
-
-	public static final String SYBASE_FUNCTION_IS_NULL =
-		"CONVERT(VARCHAR,?) IS NULL";
-
 	@Override
 	public String appendCriteria(String sql, String criteria) {
 		if (Validator.isNull(criteria)) {
@@ -303,16 +297,6 @@ public class CustomSQLImpl implements CustomSQL {
 	 */
 	public boolean isVendorPostgreSQL() {
 		return _vendorPostgreSQL;
-	}
-
-	/**
-	 * Returns <code>true</code> if Hibernate is connecting to a Sybase
-	 * database.
-	 *
-	 * @return <code>true</code> if Hibernate is connecting to a Sybase database
-	 */
-	public boolean isVendorSybase() {
-		return _vendorSybase;
 	}
 
 	@Override
@@ -758,16 +742,6 @@ public class CustomSQLImpl implements CustomSQL {
 							"Detected MySQL with database name " + dbName);
 					}
 				}
-				else if (dbName.startsWith("Sybase") || dbName.equals("ASE")) {
-					_vendorSybase = true;
-					_functionIsNull = SYBASE_FUNCTION_IS_NULL;
-					_functionIsNotNull = SYBASE_FUNCTION_IS_NOT_NULL;
-
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Detected Sybase with database name " + dbName);
-					}
-				}
 				else if (dbName.startsWith("Oracle")) {
 					_vendorOracle = true;
 
@@ -981,7 +955,6 @@ public class CustomSQLImpl implements CustomSQL {
 	private boolean _vendorMySQL;
 	private boolean _vendorOracle;
 	private boolean _vendorPostgreSQL;
-	private boolean _vendorSybase;
 
 	private class CustomSQLContainer {
 

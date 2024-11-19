@@ -6,7 +6,6 @@
 package com.liferay.portal.tools;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -232,11 +231,6 @@ public class DBBuilder {
 
 				template = sb.toString();
 			}
-			else if (fileName.equals("indexes")) {
-				if (dbType == DBType.SYBASE) {
-					template = _removeBooleanIndexes(sqlDir, template);
-				}
-			}
 
 			if (Validator.isNull(template)) {
 				return;
@@ -249,65 +243,6 @@ public class DBBuilder {
 					sqlDir, "/", fileName, "/", fileName, "-", db.getDBType(),
 					".sql"),
 				template);
-		}
-	}
-
-	private String _removeBooleanIndexes(String sqlDir, String data)
-		throws IOException {
-
-		String portalData = FileUtil.read(sqlDir + "/portal-tables.sql");
-
-		if (Validator.isNull(portalData)) {
-			return StringPool.BLANK;
-		}
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
-
-			StringBundler sb = new StringBundler();
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				boolean append = true;
-
-				int x = line.indexOf(" on ");
-
-				if (x != -1) {
-					int y = line.indexOf(" (", x);
-
-					String table = line.substring(x + 4, y);
-
-					x = y + 2;
-
-					y = line.indexOf(")", x);
-
-					String[] columns = StringUtil.split(line.substring(x, y));
-
-					x = portalData.indexOf("create table " + table + " (");
-
-					y = portalData.indexOf(");", x);
-
-					String portalTableData = portalData.substring(x, y);
-
-					for (String column : columns) {
-						if (portalTableData.contains(
-								column.trim() + " BOOLEAN")) {
-
-							append = false;
-
-							break;
-						}
-					}
-				}
-
-				if (append) {
-					sb.append(line);
-					sb.append("\n");
-				}
-			}
-
-			return sb.toString();
 		}
 	}
 

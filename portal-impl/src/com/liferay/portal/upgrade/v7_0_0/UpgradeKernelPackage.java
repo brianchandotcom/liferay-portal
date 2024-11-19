@@ -10,17 +10,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * @author Preston Crary
@@ -43,9 +37,9 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			upgradeTable(
 				"ResourcePermission", "name", getClassNames(),
 				WildcardMode.SURROUND);
-			upgradeLongTextTable(
-				"UserNotificationEvent", "payload", "userNotificationEventId",
-				getClassNames(), WildcardMode.SURROUND);
+			upgradeTable(
+				"UserNotificationEvent", "payload", getClassNames(),
+				WildcardMode.SURROUND);
 
 			upgradeTable(
 				"ListType", "type_", getClassNames(), WildcardMode.TRAILING);
@@ -55,9 +49,9 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			upgradeTable(
 				"ResourcePermission", "name", getResourceNames(),
 				WildcardMode.LEADING);
-			upgradeLongTextTable(
-				"UserNotificationEvent", "payload", "userNotificationEventId",
-				getResourceNames(), WildcardMode.LEADING);
+			upgradeTable(
+				"UserNotificationEvent", "payload", getResourceNames(),
+				WildcardMode.LEADING);
 
 			DBInspector dbInspector = new DBInspector(connection);
 
@@ -82,68 +76,6 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 	protected String[][] getResourceNames() {
 		return _RESOURCE_NAMES;
-	}
-
-	protected void upgradeLongTextTable(
-			String columnName, String primaryKeyColumnName, String selectSQL,
-			String updateSQL, String[] name)
-		throws SQLException {
-
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				selectSQL);
-			ResultSet resultSet = preparedStatement1.executeQuery();
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection, updateSQL)) {
-
-			while (resultSet.next()) {
-				preparedStatement2.setString(
-					1,
-					StringUtil.replace(
-						resultSet.getString(columnName), name[0], name[1]));
-				preparedStatement2.setLong(
-					2, resultSet.getLong(primaryKeyColumnName));
-
-				preparedStatement2.addBatch();
-			}
-
-			preparedStatement2.executeBatch();
-		}
-	}
-
-	protected void upgradeLongTextTable(
-			String tableName, String columnName, String primaryKeyColumnName,
-			String[][] names, WildcardMode wildcardMode)
-		throws Exception {
-
-		if (DBManagerUtil.getDBType() != DBType.SYBASE) {
-			upgradeTable(tableName, columnName, names, wildcardMode);
-
-			return;
-		}
-
-		try (LoggingTimer loggingTimer = new LoggingTimer(
-				getClass(), tableName)) {
-
-			String updateSQL = StringBundler.concat(
-				"update ", tableName, " set ", columnName, " = ? where ",
-				primaryKeyColumnName, " = ?");
-
-			String selectPrefix = StringBundler.concat(
-				"select ", columnName, ", ", primaryKeyColumnName, " from ",
-				tableName, " where ", columnName, " like '",
-				wildcardMode.getLeadingWildcard());
-
-			String selectPostfix =
-				wildcardMode.getTrailingWildcard() + StringPool.APOSTROPHE;
-
-			for (String[] name : names) {
-				upgradeLongTextTable(
-					columnName, primaryKeyColumnName,
-					StringBundler.concat(selectPrefix, name[0], selectPostfix),
-					updateSQL, name);
-			}
-		}
 	}
 
 	protected void upgradeTable(

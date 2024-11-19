@@ -37,9 +37,6 @@ public class SQLTransformerFactory {
 		else if (dbType == DBType.SQLSERVER) {
 			sqlTransformerLogic = new SQLServerSQLTransformerLogic(db);
 		}
-		else if (dbType == DBType.SYBASE) {
-			sqlTransformerLogic = new SybaseSQLTransformerLogic(db);
-		}
 		else {
 			return sql -> sql;
 		}

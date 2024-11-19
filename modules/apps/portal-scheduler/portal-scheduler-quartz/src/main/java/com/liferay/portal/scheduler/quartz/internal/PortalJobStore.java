@@ -18,7 +18,6 @@ import org.quartz.impl.jdbcjobstore.MSSQLDelegate;
 import org.quartz.impl.jdbcjobstore.NoSuchDelegateException;
 import org.quartz.impl.jdbcjobstore.PostgreSQLDelegate;
 import org.quartz.impl.jdbcjobstore.StdJDBCDelegate;
-import org.quartz.impl.jdbcjobstore.SybaseDelegate;
 
 /**
  * @author Brian Wing Shun Chan
@@ -47,9 +46,6 @@ public class PortalJobStore extends JobStoreTX {
 			}
 			else if (dbType == DBType.SQLSERVER) {
 				driverDelegateClass = MSSQLDelegate.class;
-			}
-			else if (dbType == DBType.SYBASE) {
-				driverDelegateClass = SybaseDelegate.class;
 			}
 
 			if (_log.isDebugEnabled()) {

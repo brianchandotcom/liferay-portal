@@ -554,7 +554,7 @@ public class DataDefinitionResourceTest
 				problem.getType());
 		}
 
-		// Provide default data layout name when no one is informed
+		// Provide default data layout name when no name is provided
 
 		DataDefinition dataDefinition =
 			dataDefinitionResource.postSiteDataDefinitionByContentType(
@@ -570,7 +570,7 @@ public class DataDefinitionResourceTest
 		dataDefinitionResource.deleteDataDefinition(dataDefinition.getId());
 
 		// Provide empty string as the data definition field default value when
-		// no one is informed
+		// no default value is provided
 
 		dataDefinition = DataDefinition.toDTO(
 			DataDefinitionTestUtil.read("data-definition-basic.json"));

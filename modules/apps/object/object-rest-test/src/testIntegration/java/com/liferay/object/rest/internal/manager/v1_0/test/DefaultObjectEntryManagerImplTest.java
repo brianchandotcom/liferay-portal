@@ -3548,6 +3548,9 @@ public class DefaultObjectEntryManagerImplTest
 							_objectRelationshipERCObjectFieldName,
 							parentObjectEntry2.getExternalReferenceCode()
 						).put(
+							_objectRelationshipFieldName,
+							parentObjectEntry2.getId()
+						).put(
 							"dateObjectFieldName", () -> null
 						).put(
 							"dateTimeObjectFieldName", () -> null
@@ -3581,7 +3584,7 @@ public class DefaultObjectEntryManagerImplTest
 							parentObjectEntry1.getExternalReferenceCode()
 						).put(
 							_objectRelationshipFieldName,
-							parentObjectEntry2.getId()
+							parentObjectEntry1.getId()
 						).build();
 					}
 				}),

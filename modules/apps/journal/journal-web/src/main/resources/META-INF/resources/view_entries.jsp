@@ -317,11 +317,11 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							value="<%= curArticle.getDisplayDate() %>"
 						/>
 
-							<liferay-ui:search-container-column-date
-								cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-								name="create-date"
-								value="<%= curArticle.getCreateDate() %>"
-							/>
+						<liferay-ui:search-container-column-date
+							cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+							name="create-date"
+							value="<%= curArticle.getCreateDate() %>"
+						/>
 
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions

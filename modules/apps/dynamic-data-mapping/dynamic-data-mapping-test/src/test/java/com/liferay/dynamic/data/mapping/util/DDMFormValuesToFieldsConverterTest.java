@@ -344,7 +344,8 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		Field field = fields.get("text");
 
 		Assert.assertEquals(
-			createValuesList(null, value), field.getValues(LocaleUtil.US));
+			createValuesList(StringPool.BLANK, value),
+			field.getValues(LocaleUtil.US));
 	}
 
 	@Test

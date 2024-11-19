@@ -140,7 +140,7 @@ public class NavigationBarTag extends BaseContainerTag {
 					jspWriter.write("\"");
 				}
 
-				jspWriter.write("><span class=\"navbar-text-truncate\">");
+				jspWriter.write("><span>");
 				jspWriter.write(
 					HtmlUtil.escape((String)navigationItem.get("label")));
 

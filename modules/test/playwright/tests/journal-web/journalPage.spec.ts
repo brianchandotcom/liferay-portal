@@ -23,6 +23,55 @@ export const test = mergeTests(
 	loginTest()
 );
 
+test(
+	'Table view displays folders and articles correctly',
+	{
+		tag: '@LPD-42429',
+	},
+	async ({apiHelpers, journalPage, page, site}) => {
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: basicWebContentStructureId,
+			groupId: site.id,
+			titleMap: {en_US: 'First Web content'},
+		});
+
+		await apiHelpers.jsonWebServicesJournal.addFolder({
+			groupId: site.id,
+		});
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await journalPage.changeView('table');
+
+		await expect(page.getByRole('cell', {name: 'Title'})).toBeVisible();
+
+		await expect(
+			page.getByRole('cell', {name: 'Description'})
+		).toBeVisible();
+
+		await expect(page.getByRole('cell', {name: 'Author'})).toBeVisible();
+
+		await expect(page.getByRole('cell', {name: 'Status'})).toBeVisible();
+
+		await expect(page.getByRole('cell', {name: 'Type'})).toBeVisible();
+
+		await expect(
+			page.getByRole('cell', {name: 'Modified Date'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('cell', {name: 'Display Date'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('cell', {name: 'Create Date'})
+		).toBeVisible();
+	}
+);
+
 test('LPP-50468 After clicking on Clear (filter by structrure) you can see all the web contents', async ({
 	apiHelpers,
 	journalEditArticlePage,

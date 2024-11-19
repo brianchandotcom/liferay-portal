@@ -66,6 +66,8 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 				_portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse));
 
+		hideDefaultSuccessMessage(actionRequest);
+
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
 			JSONUtil.put(

@@ -113,6 +113,7 @@ const ACTIONS = {
 			itemSelectorURL,
 			layoutPageTemplateEntryId,
 			layoutPageTemplateEntryName,
+			moveSelectedDisplayPageURL,
 		},
 		portletNamespace
 	) {
@@ -124,12 +125,13 @@ const ACTIONS = {
 				);
 
 				setFormValues(form, {
+					copyPermissions: true,
 					layoutPageTemplateEntriesIds: layoutPageTemplateEntryId,
-					targetLayoutPageTemplateCollectionId:
+					layoutParentPageTemplateCollectionId:
 						selectedItem.resourceid,
 				});
 
-				submitForm(form);
+				submitForm(form, moveSelectedDisplayPageURL);
 			},
 			selectEventName: 'selectFolder',
 			size: 'md',

@@ -26,6 +26,7 @@ import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTempla
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -611,6 +612,18 @@ public class DisplayPageActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"layoutPageTemplateEntryName",
 				_layoutPageTemplateEntry.getName());
+			dropdownItem.putData(
+				"moveSelectedDisplayPageURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					StringBundler.concat(
+						"/layout_page_template_admin",
+						"/move_layout_page_template_entries",
+						"_and_layout_page_template_collections")
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).buildString());
 			dropdownItem.setIcon("move-folder");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "move"));

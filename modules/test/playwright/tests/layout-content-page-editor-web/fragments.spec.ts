@@ -1922,9 +1922,9 @@ test.describe('Tags Fragment', () => {
 		// Delete Lemon entry
 
 		await deleteObjectEntries({
-			entityName: 'Lemons',
-			page,
-			siteUrl: pageManagementSite.friendlyUrlPath,
+			apiHelpers,
+			entityName: 'lemons',
+			site: pageManagementSite,
 		});
 	});
 

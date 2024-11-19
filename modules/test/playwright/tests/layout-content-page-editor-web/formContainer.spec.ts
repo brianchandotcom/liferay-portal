@@ -140,9 +140,9 @@ test.describe('Form Configuration', () => {
 			// Delete entries
 
 			await deleteObjectEntries({
-				entityName: 'Lemons',
-				page,
-				siteUrl: pageManagementSite.friendlyUrlPath,
+				apiHelpers,
+				entityName: 'lemons',
+				site: pageManagementSite,
 			});
 		}
 	);
@@ -249,9 +249,9 @@ test.describe('Form Configuration', () => {
 			// Delete Lemon entry
 
 			await deleteObjectEntries({
-				entityName: 'Lemons',
-				page,
-				siteUrl: pageManagementSite.friendlyUrlPath,
+				apiHelpers,
+				entityName: 'lemons',
+				site: pageManagementSite,
 			});
 		}
 	);
@@ -841,9 +841,9 @@ test.describe('Date and Time Fragment', () => {
 			// Delete entries
 
 			await deleteObjectEntries({
-				entityName: 'All Fields',
-				page,
-				siteUrl: pageManagementSite.friendlyUrlPath,
+				apiHelpers,
+				entityName: 'allfieldsobjects',
+				site: pageManagementSite,
 			});
 		}
 	);
@@ -1025,9 +1025,9 @@ test.describe('Numeric input field', () => {
 		).toBeVisible();
 
 		await deleteObjectEntries({
-			entityName: 'Lemons',
-			page,
-			siteUrl: pageManagementSite.friendlyUrlPath,
+			apiHelpers,
+			entityName: 'lemons',
+			site: pageManagementSite,
 		});
 	});
 });
@@ -1677,9 +1677,9 @@ test.describe('Submit button', () => {
 			// Delete previously created object entries
 
 			await deleteObjectEntries({
-				entityName: 'Lemons',
-				page,
-				siteUrl: pageManagementSite.friendlyUrlPath,
+				apiHelpers,
+				entityName: 'lemons',
+				site: pageManagementSite,
 			});
 		}
 	);

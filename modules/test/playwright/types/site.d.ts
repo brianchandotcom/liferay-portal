@@ -5,6 +5,7 @@
 type Site = {
 	friendlyUrlPath: string;
 	id: string;
+	key: string;
 	name?: string;
 	templateKey?: number;
 	templateType?: string;

@@ -1,5 +1,8 @@
 dependencies {
 	testIntegrationImplementation project(":dxp:apps:saml:saml-api")
+	testIntegrationImplementation project(":dxp:apps:saml:saml-impl")
 	testIntegrationImplementation project(":dxp:apps:saml:saml-opensaml-integration")
+	testIntegrationImplementation project(":dxp:apps:saml:saml-persistence-api")
+	testIntegrationImplementation project(":dxp:apps:saml:saml-persistence-service")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

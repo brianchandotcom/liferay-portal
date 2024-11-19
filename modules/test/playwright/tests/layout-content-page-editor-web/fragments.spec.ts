@@ -1898,7 +1898,6 @@ test.describe('Tags Fragment', () => {
 		await gotoObjectEntries({
 			entityName: 'Lemons',
 			page,
-			siteUrl: pageManagementSite.friendlyUrlPath,
 		});
 
 		const objectRow = page

@@ -826,7 +826,6 @@ test.describe('Date and Time Fragment', () => {
 			await gotoObjectEntries({
 				entityName: 'All Fields',
 				page,
-				siteUrl: pageManagementSite.friendlyUrlPath,
 			});
 
 			// Check the date and time of the object entry
@@ -1389,7 +1388,6 @@ test.describe('Submit button', () => {
 				await gotoObjectEntries({
 					entityName: 'Lemons',
 					page,
-					siteUrl: pageManagementSite.friendlyUrlPath,
 				});
 
 				// Check the status of the object entry

@@ -135,7 +135,6 @@ test(
 		await gotoObjectEntries({
 			entityName: 'Lemons',
 			page,
-			siteUrl: pageManagementSite.friendlyUrlPath,
 		});
 
 		await clickAndExpectToBeVisible({

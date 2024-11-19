@@ -127,6 +127,17 @@ public class NotificationQueueEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCompanyNotificationQueueEntries(long companyId)
+		throws PortalException {
+
+		for (NotificationQueueEntry notificationQueueEntry :
+				notificationQueueEntryPersistence.findByCompanyId(companyId)) {
+
+			deleteNotificationQueueEntry(notificationQueueEntry);
+		}
+	}
+
+	@Override
 	public void deleteNotificationQueueEntries(Date sentDate)
 		throws PortalException {
 

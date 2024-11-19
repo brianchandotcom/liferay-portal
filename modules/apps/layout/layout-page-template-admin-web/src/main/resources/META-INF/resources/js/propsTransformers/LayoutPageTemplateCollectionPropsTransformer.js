@@ -16,6 +16,7 @@ import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal
 const ACTIONS = {
 	copyLayoutPageTemplateCollection(
 		{
+			copySelectedEntriesURL,
 			itemSelectorURL,
 			layoutPageTemplateCollectionId,
 			layoutPageTemplateCollectionName,
@@ -37,7 +38,7 @@ const ACTIONS = {
 						selectedItem.resourceid,
 				});
 
-				submitForm(form);
+				submitForm(form, copySelectedEntriesURL);
 			},
 			selectEventName: 'selectFolder',
 			size: 'md',
@@ -69,6 +70,7 @@ const ACTIONS = {
 			itemSelectorURL,
 			layoutPageTemplateCollectionId,
 			layoutPageTemplateCollectionName,
+			moveSelectedEntriesURL,
 		},
 		portletNamespace
 	) {
@@ -82,11 +84,11 @@ const ACTIONS = {
 				setFormValues(form, {
 					layoutPageTemplateCollectionsIds:
 						layoutPageTemplateCollectionId,
-					targetLayoutPageTemplateCollectionId:
+					layoutParentPageTemplateCollectionId:
 						selectedItem.resourceid,
 				});
 
-				submitForm(form);
+				submitForm(form, moveSelectedEntriesURL);
 			},
 			selectEventName: 'selectFolder',
 			size: 'md',

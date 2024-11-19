@@ -30,6 +30,7 @@ import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPConfigurationListLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServiceUtil;
@@ -954,12 +955,14 @@ public class CPTestUtil {
 			commerceCatalog.getCommerceCurrencyCode(),
 			CommercePriceListConstants.TYPE_PROMOTION, serviceContext);
 
-		return _addCPDefinition(
+		CPDefinition cpDefinition = _addCPDefinition(
 			commerceCatalog.getGroupId(), productTypeName,
 			ignoreSKUCombinations, hasDefaultInstance,
 			ServiceContextTestUtil.getServiceContext(
 				commerceCatalog.getGroupId()));
+		return cpDefinition;
 	}
+
 
 	private static CPDefinition _addCPDefinitionWithSku(
 			long groupId, String productTypeName, boolean ignoreSKUCombinations,

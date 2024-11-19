@@ -380,9 +380,12 @@ const MillerColumnsItem = ({
 			containerElement="li"
 			data-actions={bulkActions}
 			ref={ref}
+			role="none"
 			verticalAlign="center"
 		>
 			<a
+				aria-controls={itemId}
+				aria-haspopup={true}
 				className="miller-columns-item-mask"
 				href={url}
 				onKeyDown={(event) => {
@@ -397,7 +400,7 @@ const MillerColumnsItem = ({
 						navigate(url);
 					}
 				}}
-				role="button"
+				role="menuitem"
 				tabIndex={tabIndex}
 			>
 				<span className="c-inner sr-only">{title}</span>

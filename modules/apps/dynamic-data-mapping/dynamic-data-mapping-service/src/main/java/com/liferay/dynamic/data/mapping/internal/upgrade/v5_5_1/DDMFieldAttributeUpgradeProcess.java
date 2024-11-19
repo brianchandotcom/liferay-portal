@@ -8,6 +8,7 @@ package com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_1;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -27,6 +28,15 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 
 			return;
 		}
+
+		long[] companyIds = PortalInstancePool.getCompanyIds();
+
+		if (companyIds.length == 1) {
+			_upgradeByCompanyId(companyIds[0]);
+
+			return;
+		}
+
 		_upgrade();
 	}
 

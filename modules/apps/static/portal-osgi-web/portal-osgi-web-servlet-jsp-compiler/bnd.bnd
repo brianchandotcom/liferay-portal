@@ -2,9 +2,6 @@ Bundle-Name: Liferay Portal OSGi Web Servlet JSP Compiler
 Bundle-SymbolicName: com.liferay.portal.osgi.web.servlet.jsp.compiler
 Bundle-Version: 6.0.24
 Import-Package:\
-	!org.apache.el.util,\
-	!org.apache.tools.ant.*,\
-	\
 	!org.eclipse.jdt.core.compiler,\
 	!org.eclipse.jdt.internal.compiler,\
 	!org.eclipse.jdt.internal.compiler.classfmt,\

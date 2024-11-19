@@ -44,7 +44,9 @@ public class SystemFDSEntryRegistryImpl implements SystemFDSEntryRegistry {
 
 		if (serviceWrapper == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("No data set is associated with " + fdsName);
+				_log.debug(
+					"No frontend data set system entry is associated with " +
+						fdsName);
 			}
 
 			return null;

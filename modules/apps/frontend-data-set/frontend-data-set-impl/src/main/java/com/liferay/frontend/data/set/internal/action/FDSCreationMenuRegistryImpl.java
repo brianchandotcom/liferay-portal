@@ -32,7 +32,8 @@ public class FDSCreationMenuRegistryImpl implements FDSCreationMenuRegistry {
 		if (serviceWrapper == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No creation action list is associated with " + fdsName);
+					"No frontend data set creation menu is associated with " +
+						fdsName);
 			}
 
 			return null;

@@ -33,7 +33,8 @@ public class FDSItemActionListRegistryImpl
 		if (serviceWrapper == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No creation action list is associated with " + fdsName);
+					"No frontend data set item action list is associated with " +
+						fdsName);
 			}
 
 			return null;

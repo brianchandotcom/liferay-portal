@@ -411,7 +411,7 @@ public class ContentLayoutTestUtil {
 			"parentItemId", parentItemId);
 		mockLiferayPortletActionRequest.addParameter(
 			"position", String.valueOf(position));
-		mockLiferayPortletActionRequest.addParameter(
+		mockLiferayPortletActionRequest.setParameter(
 			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
@@ -429,6 +429,8 @@ public class ContentLayoutTestUtil {
 		mockLiferayPortletActionRequest.addParameter("itemConfig", itemConfig);
 		mockLiferayPortletActionRequest.addParameter(
 			"itemId", jsonObject.getString("addedItemId"));
+		mockLiferayPortletActionRequest.setParameter(
+			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
 
 		JSONObject responseJSONObject = (JSONObject)ReflectionTestUtil.invoke(
 			mvcActionCommand, "_updateItemConfig",

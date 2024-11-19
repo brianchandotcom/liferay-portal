@@ -99,6 +99,17 @@ public abstract class BaseTestResult implements TestResult {
 	}
 
 	@Override
+	public boolean isSkipped() {
+		String status = getStatus();
+
+		if (status.equals("SKIPPED")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isUniqueFailure() {
 		if (!isFailing()) {
 			return false;

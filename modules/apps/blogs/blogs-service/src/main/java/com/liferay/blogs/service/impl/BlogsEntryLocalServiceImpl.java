@@ -44,7 +44,6 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -1907,10 +1906,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	private boolean _isUpdatedAssetCategories(
 		BlogsEntry entry, ServiceContext serviceContext) {
 
-		if ((serviceContext == null) ||
-			!FeatureFlagManagerUtil.isEnabled(
-				entry.getCompanyId(), "LPD-11147")) {
-
+		if (serviceContext == null) {
 			return false;
 		}
 

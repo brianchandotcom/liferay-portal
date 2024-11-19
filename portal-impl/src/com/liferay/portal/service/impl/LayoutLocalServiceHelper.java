@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.LayoutParentLayoutIdException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -464,29 +463,21 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 			String urlSeparator = friendlyURLResolver.getURLSeparator();
 
-			if (!FeatureFlagManagerUtil.isEnabled("LPD-11147") &&
-				urlSeparator.contains(friendlyURL)) {
+			if (urlSeparator.contains(friendlyURL) ||
+				friendlyURL.startsWith(urlSeparator)) {
 
 				keywordConflict = urlSeparator;
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-11147")) {
-				if (urlSeparator.contains(friendlyURL) ||
-					friendlyURL.startsWith(urlSeparator)) {
+			String defaultURLSeparator =
+				friendlyURLResolver.getDefaultURLSeparator();
 
-					keywordConflict = urlSeparator;
-				}
+			if (Validator.isNull(keywordConflict) &&
+				friendlyURLResolver.isURLSeparatorConfigurable() &&
+				(defaultURLSeparator.contains(friendlyURL) ||
+				 friendlyURL.startsWith(defaultURLSeparator))) {
 
-				String defaultURLSeparator =
-					friendlyURLResolver.getDefaultURLSeparator();
-
-				if (Validator.isNull(keywordConflict) &&
-					friendlyURLResolver.isURLSeparatorConfigurable() &&
-					(defaultURLSeparator.contains(friendlyURL) ||
-					 friendlyURL.startsWith(defaultURLSeparator))) {
-
-					keywordConflict = defaultURLSeparator;
-				}
+				keywordConflict = defaultURLSeparator;
 			}
 
 			if (Validator.isNotNull(keywordConflict)) {

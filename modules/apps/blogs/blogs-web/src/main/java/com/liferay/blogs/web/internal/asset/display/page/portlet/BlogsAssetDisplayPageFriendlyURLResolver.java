@@ -7,7 +7,6 @@ package com.liferay.blogs.web.internal.asset.display.page.portlet;
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
@@ -36,7 +35,7 @@ public class BlogsAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public boolean isURLSeparatorConfigurable() {
-		return FeatureFlagManagerUtil.isEnabled("LPD-11147");
+		return true;
 	}
 
 	@Override

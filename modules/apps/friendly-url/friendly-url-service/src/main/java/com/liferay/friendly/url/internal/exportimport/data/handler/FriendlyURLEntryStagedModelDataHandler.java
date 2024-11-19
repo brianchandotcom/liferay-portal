@@ -21,7 +21,6 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -201,12 +200,6 @@ public class FriendlyURLEntryStagedModelDataHandler
 			FriendlyURLEntry friendlyURLEntry)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				friendlyURLEntry.getCompanyId(), "LPD-11147")) {
-
-			return;
-		}
-
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			FriendlyURLEntry.class.getName(),
 			friendlyURLEntry.getFriendlyURLEntryId());
@@ -244,10 +237,8 @@ public class FriendlyURLEntryStagedModelDataHandler
 			FriendlyURLEntry importedFriendlyURL)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				friendlyURLEntry.getCompanyId(), "LPD-11147") ||
-			(friendlyURLEntry.getClassNameId() == _portal.getClassNameId(
-				AssetCategory.class.getName()))) {
+		if (friendlyURLEntry.getClassNameId() == _portal.getClassNameId(
+				AssetCategory.class.getName())) {
 
 			return;
 		}

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -693,10 +692,6 @@ public class FriendlyURLEntryLocalServiceImpl
 	private void _deleteAssetEntry(
 		long companyId, String className, long classPK) {
 
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-11147")) {
-			return;
-		}
-
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			className, classPK);
 
@@ -812,10 +807,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			FriendlyURLEntry friendlyURLEntry, ServiceContext serviceContext)
 		throws PortalException {
 
-		if ((serviceContext == null) ||
-			!FeatureFlagManagerUtil.isEnabled(
-				friendlyURLEntry.getCompanyId(), "LPD-11147")) {
-
+		if (serviceContext == null) {
 			return;
 		}
 
@@ -899,10 +891,6 @@ public class FriendlyURLEntryLocalServiceImpl
 			long companyId, Map<String, String> urlTitleMap,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-11147")) {
-			return;
-		}
 
 		long[] friendlyURLAssetCategoryIds = GetterUtil.getLongValues(
 			serviceContext.getAttribute("friendlyURLAssetCategoryIds"));

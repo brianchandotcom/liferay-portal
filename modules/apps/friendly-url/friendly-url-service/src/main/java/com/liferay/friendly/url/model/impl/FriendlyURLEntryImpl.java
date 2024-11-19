@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -36,10 +35,6 @@ public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 
 	@Override
 	public String getCategorizedUrlTitle(String languageId) {
-		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPD-11147")) {
-			return getUrlTitle();
-		}
-
 		String urlTitle = super.getUrlTitle(languageId, false);
 
 		if (Validator.isNull(urlTitle)) {

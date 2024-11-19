@@ -190,92 +190,69 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 					String inputAddon = StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping(), 40) + StringPool.SLASH;
 					%>
 
-					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11147") %>'>
-						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="friendly-url">
-							<div class="form-group" id="<portlet:namespace />urlOptions">
-								<p>
-									<liferay-ui:message key="customize-the-url-of-this-blog-entry-to-your-preference-or-stick-to-the-default-setting-based-on-the-entry-title" />
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="friendly-url">
+						<div class="form-group" id="<portlet:namespace />urlOptions">
+							<p>
+								<liferay-ui:message key="customize-the-url-of-this-blog-entry-to-your-preference-or-stick-to-the-default-setting-based-on-the-entry-title" />
 
-									<clay:link
-										href="<%= blogsEditEntryDisplayContext.getFriendlyURLSeparatorCompanyConfigurationURL() %>"
-										label="check-instance-settings-for-more-url-separator-configurations"
-									/>
-								</p>
-
-								<aui:input checked="<%= automaticURL %>" helpMessage="the-url-will-be-based-on-the-entry-title" label="use-the-default-url" name="automaticURL" type="radio" value="<%= true %>" />
-
-								<aui:input checked="<%= !automaticURL %>" label="use-a-customized-url" name="automaticURL" type="radio" value="<%= false %>" />
-							</div>
-
-							<clay:alert
-								dismissible="<%= true %>"
-								message="ensure-your-url-unique-to-avoid-conflicts"
-							/>
-
-							<label><liferay-ui:message key="customize-the-url" /></label>
-
-							<p class="small text-secondary">
-								<liferay-ui:message key="add-and-reorder-categories-to-customize-the-friendly-url" />
-
-								<liferay-ui:message key="categories-will-only-appear-in-the-url-when-the-blog-entry-is-associated-to-a-display-page" />
-							</p>
-
-							<div>
-								<div class="py-7"><span aria-hidden="true" class="loading-animation"></span></div>
-
-								<react:component
-									module="{AssetCategoriesSelectionBox} from blogs-web"
-									props='<%=
-										HashMapBuilder.<String, Object>put(
-											"availableCategories", blogsEditEntryDisplayContext.getAvailableFriendlyURLAssetCategoriesJSONArray()
-										).put(
-											"currentCategories", blogsEditEntryDisplayContext.getCurrentFriendlyURLAssetCategoriesJSONArray()
-										).put(
-											"disabled", automaticURL
-										).put(
-											"inputAddon", inputAddon
-										).build()
-									%>'
+								<clay:link
+									href="<%= blogsEditEntryDisplayContext.getFriendlyURLSeparatorCompanyConfigurationURL() %>"
+									label="check-instance-settings-for-more-url-separator-configurations"
 								/>
-							</div>
-
-							<liferay-friendly-url:input
-								className="<%= BlogsEntry.class.getName() %>"
-								classPK="<%= blogsEditEntryDisplayContext.getEntryId() %>"
-								disabled="<%= automaticURL %>"
-								inputAddon="<%= inputAddon %>"
-								localizable="<%= false %>"
-								name="urlTitle"
-							/>
-
-							<p class="mt-n4 small text-secondary">
-								<liferay-ui:message key="the-url-prefix-might-change-based-on-the-selected-display-page" />
 							</p>
-						</aui:fieldset>
-					</c:if>
+
+							<aui:input checked="<%= automaticURL %>" helpMessage="the-url-will-be-based-on-the-entry-title" label="use-the-default-url" name="automaticURL" type="radio" value="<%= true %>" />
+
+							<aui:input checked="<%= !automaticURL %>" label="use-a-customized-url" name="automaticURL" type="radio" value="<%= false %>" />
+						</div>
+
+						<clay:alert
+							dismissible="<%= true %>"
+							message="ensure-your-url-unique-to-avoid-conflicts"
+						/>
+
+						<label><liferay-ui:message key="customize-the-url" /></label>
+
+						<p class="small text-secondary">
+							<liferay-ui:message key="add-and-reorder-categories-to-customize-the-friendly-url" />
+
+							<liferay-ui:message key="categories-will-only-appear-in-the-url-when-the-blog-entry-is-associated-to-a-display-page" />
+						</p>
+
+						<div>
+							<div class="py-7"><span aria-hidden="true" class="loading-animation"></span></div>
+
+							<react:component
+								module="{AssetCategoriesSelectionBox} from blogs-web"
+								props='<%=
+									HashMapBuilder.<String, Object>put(
+										"availableCategories", blogsEditEntryDisplayContext.getAvailableFriendlyURLAssetCategoriesJSONArray()
+									).put(
+										"currentCategories", blogsEditEntryDisplayContext.getCurrentFriendlyURLAssetCategoriesJSONArray()
+									).put(
+										"disabled", automaticURL
+									).put(
+										"inputAddon", inputAddon
+									).build()
+								%>'
+							/>
+						</div>
+
+						<liferay-friendly-url:input
+							className="<%= BlogsEntry.class.getName() %>"
+							classPK="<%= blogsEditEntryDisplayContext.getEntryId() %>"
+							disabled="<%= automaticURL %>"
+							inputAddon="<%= inputAddon %>"
+							localizable="<%= false %>"
+							name="urlTitle"
+						/>
+
+						<p class="mt-n4 small text-secondary">
+							<liferay-ui:message key="the-url-prefix-might-change-based-on-the-selected-display-page" />
+						</p>
+					</aui:fieldset>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
-						<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11147") %>'>
-							<div class="clearfix form-group">
-								<label><liferay-ui:message key="url" /></label>
-
-								<div class="form-group" id="<portlet:namespace />urlOptions">
-									<aui:input checked="<%= automaticURL %>" helpMessage="the-url-will-be-based-on-the-entry-title" label="automatic" name="automaticURL" type="radio" value="<%= true %>" />
-
-									<aui:input checked="<%= !automaticURL %>" label="custom" name="automaticURL" type="radio" value="<%= false %>" />
-								</div>
-
-								<liferay-friendly-url:input
-									className="<%= BlogsEntry.class.getName() %>"
-									classPK="<%= blogsEditEntryDisplayContext.getEntryId() %>"
-									disabled="<%= automaticURL %>"
-									inputAddon="<%= inputAddon %>"
-									localizable="<%= false %>"
-									name="urlTitle"
-								/>
-							</div>
-						</c:if>
-
 						<div class="clearfix form-group">
 							<label><liferay-ui:message key="abstract" /> <liferay-ui:icon-help message="an-abstract-is-a-brief-summary-of-a-blog-entry" /></label>
 

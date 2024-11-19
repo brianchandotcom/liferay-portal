@@ -1556,7 +1556,7 @@ test.describe('Page Design Options', () => {
 
 test.describe('Rules Panel', () => {
 	test(
-		'Add page rule',
+		'Add, edit and delete page rule',
 		{
 			tag: ['@LPS-196461', '@LPS-196462', '@LPS-200349'],
 		},
@@ -1655,6 +1655,55 @@ test.describe('Rules Panel', () => {
 
 			await expect(
 				page.getByText('IfUserIs the UsertestHideFragmentButton')
+			).toBeVisible();
+
+			// Edit rule
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Edit'}),
+				trigger: page.getByLabel(`View ${ruleName} Options`),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'Has the Role Of'}),
+				trigger: page.getByLabel('Select Condition'),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {exact: true, name: 'Guest'}),
+				trigger: page.getByLabel('Select Role'),
+			});
+
+			await modal
+				.getByRole('button', {exact: true, name: 'Save'})
+				.click();
+
+			await waitForAlert(
+				page,
+				'Success:The rule was updated successfully.'
+			);
+
+			// Assert rule was updated
+
+			await expect(
+				page.getByText('IfUserHas the Role OfGuestHideFragmentButton')
+			).toBeVisible();
+
+			// Delete rule
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Delete'}),
+				trigger: page.getByLabel(`View ${ruleName} Options`),
+			});
+
+			// Assert rule was deleted
+
+			await expect(
+				page.getByText('Fortunately, it is very easy to add new ones.')
 			).toBeVisible();
 		}
 	);

@@ -33,7 +33,7 @@ public class BatchEngineOpenAPIContributor implements OpenAPIContributor {
 
 		if ((openAPIContext == null) ||
 			FeatureFlagManagerUtil.isEnabled("LPD-35944") ||
-			StringUtil.endsWith(
+			!StringUtil.endsWith(
 				openAPIContext.getPath(), "/headless-batch-engine/")) {
 
 			return;

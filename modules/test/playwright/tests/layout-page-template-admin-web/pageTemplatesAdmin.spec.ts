@@ -39,7 +39,7 @@ test.describe('Convert content pages', () => {
 		},
 		async ({apiHelpers, page, pageEditorPage, pageTemplatesPage, site}) => {
 
-			// Creates a content page
+			// Creates a page template collection
 
 			const layoutPageTemplateCollectionName = getRandomString();
 
@@ -199,9 +199,9 @@ test.describe('Convert content pages', () => {
 
 			// Assert page template elements
 
-			// Assert page template translations
-
 			await expect(page.getByText('Heading Example')).toBeVisible();
+
+			// Assert page template translations
 
 			await expect(
 				page.locator('.portlet-asset-publisher')

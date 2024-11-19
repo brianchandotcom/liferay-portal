@@ -123,7 +123,14 @@ public class UserResourceDTOConverter
 				setActions(dtoConverterContext::getActions);
 				setAdditionalName(user::getMiddleName);
 				setAlternateName(user::getScreenName);
-				setBirthDate(contact::getBirthday);
+				setBirthDate(
+					() -> {
+						if (contact == null) {
+							return null;
+						}
+
+						return contact.getBirthday();
+					});
 				setCustomFields(
 					() -> CustomFieldsUtil.toCustomFields(
 						dtoConverterContext.isAcceptAllLanguages(),
@@ -150,7 +157,8 @@ public class UserResourceDTOConverter
 						if (!PrefsPropsUtil.getBoolean(
 								user.getCompanyId(),
 								PropsKeys.
-									FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE)) {
+									FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE) ||
+							(contact == null)) {
 
 							return null;
 						}
@@ -173,17 +181,27 @@ public class UserResourceDTOConverter
 						return hasLoginDate;
 					});
 				setHonorificPrefix(
-					() ->
-						ServiceBuilderListTypeUtil.
+					() -> {
+						if (contact == null) {
+							return null;
+						}
+
+						return ServiceBuilderListTypeUtil.
 							getServiceBuilderListTypeMessage(
 								contact.getPrefixListTypeId(),
-								dtoConverterContext.getLocale()));
+								dtoConverterContext.getLocale());
+					});
 				setHonorificSuffix(
-					() ->
-						ServiceBuilderListTypeUtil.
+					() -> {
+						if (contact == null) {
+							return null;
+						}
+
+						return ServiceBuilderListTypeUtil.
 							getServiceBuilderListTypeMessage(
 								contact.getSuffixListTypeId(),
-								dtoConverterContext.getLocale()));
+								dtoConverterContext.getLocale());
+					});
 				setId(user::getUserId);
 				setImage(
 					() -> {
@@ -274,8 +292,22 @@ public class UserResourceDTOConverter
 									user.getEmailAddresses(),
 									EmailAddressUtil::toEmailAddress,
 									EmailAddress.class));
-							setFacebook(contact::getFacebookSn);
-							setJabber(contact::getJabberSn);
+							setFacebook(
+								() -> {
+									if (contact == null) {
+										return null;
+									}
+
+									return contact.getFacebookSn();
+								});
+							setJabber(
+								() -> {
+									if (contact == null) {
+										return null;
+									}
+
+									return contact.getJabberSn();
+								});
 							setPostalAddresses(
 								() -> TransformUtil.transformToArray(
 									user.getAddresses(),
@@ -286,13 +318,34 @@ public class UserResourceDTOConverter
 											address, user.getCompanyId(),
 											dtoConverterContext.getLocale()),
 									PostalAddress.class));
-							setSkype(contact::getSkypeSn);
-							setSms(contact::getSmsSn);
+							setSkype(
+								() -> {
+									if (contact == null) {
+										return null;
+									}
+
+									return contact.getSkypeSn();
+								});
+							setSms(
+								() -> {
+									if (contact == null) {
+										return null;
+									}
+
+									return contact.getSmsSn();
+								});
 							setTelephones(
 								() -> TransformUtil.transformToArray(
 									user.getPhones(), PhoneUtil::toPhone,
 									Phone.class));
-							setTwitter(contact::getTwitterSn);
+							setTwitter(
+								() -> {
+									if (contact == null) {
+										return null;
+									}
+
+									return contact.getTwitterSn();
+								});
 							setWebUrls(
 								() -> TransformUtil.transformToArray(
 									user.getWebsites(), WebUrlUtil::toWebUrl,

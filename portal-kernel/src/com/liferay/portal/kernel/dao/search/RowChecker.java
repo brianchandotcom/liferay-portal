@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.dao.search;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyHTMLRewriterUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -192,12 +193,18 @@ public class RowChecker {
 		}
 
 		return StringBundler.concat(
-			"<label><input name=\"", name, "\" title=\"",
-			LanguageUtil.get(getLocale(httpServletRequest), "select-all"),
-			"\" type=\"checkbox\" ", HtmlUtil.buildData(_data),
-			"onClick=\"Liferay.Util.checkAll(AUI().one(this).ancestor(",
-			"'.table'), ", checkBoxRowIds,
-			", this, 'tr:not(.d-none)');\"></label>");
+			"<label>",
+			ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineEventHandlers(
+				StringBundler.concat(
+					"<input name=\"", name, "\" title=\"",
+					LanguageUtil.get(
+						getLocale(httpServletRequest), "select-all"),
+					"\" type=\"checkbox\" ", HtmlUtil.buildData(_data),
+					"onClick=\"Liferay.Util.checkAll(AUI().one(this).ancestor(",
+					"'.table'), ", checkBoxRowIds,
+					", this, 'tr:not(.d-none)');\">"),
+				httpServletRequest, false),
+			"</label>");
 	}
 
 	protected Locale getLocale(HttpServletRequest httpServletRequest) {
@@ -261,9 +268,22 @@ public class RowChecker {
 		boolean disabled, String name, String value, String checkBoxRowIds,
 		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
+		return StringBundler.concat(
+			"<label>",
+			_getInput(
+				httpServletRequest, checked, disabled, name, value,
+				checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick),
+			"</label>");
+	}
+
+	private String _getInput(
+		HttpServletRequest httpServletRequest, boolean checked,
+		boolean disabled, String name, String value, String checkBoxRowIds,
+		String checkBoxAllRowIds, String checkBoxPostOnClick) {
+
 		StringBundler sb = new StringBundler(17);
 
-		sb.append("<label><input ");
+		sb.append("<input ");
 
 		String rowElementId = (String)httpServletRequest.getAttribute(
 			"liferay-ui:search-container-row:rowElementId");
@@ -299,9 +319,10 @@ public class RowChecker {
 					checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick));
 		}
 
-		sb.append("></label>");
+		sb.append(">");
 
-		return sb.toString();
+		return ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineEventHandlers(
+			sb.toString(), httpServletRequest, false);
 	}
 
 	private String _align = ALIGN;

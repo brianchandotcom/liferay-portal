@@ -122,7 +122,7 @@ const QuestionList = ({
 
 	return (
 		<ClayEmptyState
-			aria-label={Liferay.Language.get('the-topic-is-not-found')}
+			aria-label={Liferay.Language.get('this-topic-is-empty')}
 			className="c-mx-auto c-px-0 col-xl-10"
 			description={lang.sub(
 				Liferay.Language.get(
@@ -133,7 +133,7 @@ const QuestionList = ({
 			imgSrc={
 				context.includeContextPath + '/assets/empty_questions_list.png'
 			}
-			title={Liferay.Language.get('the-topic-is-not-found')}
+			title={Liferay.Language.get('this-topic-is-empty')}
 		>
 			<ClayButton
 				displayType="primary"

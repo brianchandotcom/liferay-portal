@@ -15,7 +15,7 @@ public class StyleBookEntryThemeIdException extends PortalException {
 	public static class MustNotBeNull extends StyleBookEntryThemeIdException {
 
 		public MustNotBeNull() {
-			super("Value must not be null");
+			super("Theme ID must not be null");
 		}
 
 	}

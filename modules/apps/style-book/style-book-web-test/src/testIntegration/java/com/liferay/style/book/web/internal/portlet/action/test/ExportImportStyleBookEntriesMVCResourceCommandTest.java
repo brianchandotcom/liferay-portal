@@ -124,9 +124,9 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 
 		String name = RandomTestUtil.randomString();
 
-		String themeId = RandomTestUtil.randomString();
-
 		String styleBookEntryKey = RandomTestUtil.randomString();
+
+		String themeId = RandomTestUtil.randomString();
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
@@ -223,8 +223,6 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 			ServiceContextTestUtil.getServiceContext(
 				_sourceGroup, TestPropsValues.getUserId());
 
-		String name = RandomTestUtil.randomString();
-
 		String styleBookEntryKey = RandomTestUtil.randomString();
 
 		StyleBookEntry styleBookEntry =
@@ -244,6 +242,8 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 			new Class<?>[] {long.class, long.class, File.class, boolean.class},
 			TestPropsValues.getUserId(), _targetGroup.getGroupId(), file,
 			false);
+
+		String name = RandomTestUtil.randomString();
 
 		StyleBookEntry updatedStyleBookEntry =
 			_styleBookEntryLocalService.updateStyleBookEntry(

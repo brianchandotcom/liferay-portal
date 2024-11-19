@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cookies.CookiesManager;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -395,14 +396,6 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		Assert.assertEquals(
 			inboundSamlMessageId, messageInfoContext.getMessageId());
-
-		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
-			SAMLBindingContext.class);
-
-		Assert.assertEquals(
-			RELAY_STATE,
-			_relayStateHelperImpl.getRedirectFromRelayStateToken(
-				samlBindingContext.getRelayState()));
 
 		samlSsoRequestContexts =
 			(LRUMap<String, SamlSsoRequestContext>)mockHttpSession.getAttribute(

@@ -23,7 +23,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface ClientExtensionConfiguration {
 
-	@Meta.AD(deflt = "10000", name = "cluster-timeout", required = false)
+	@Meta.AD(
+		deflt = "10000", description = "cluster-timeout-help",
+		name = "cluster-timeout", required = false
+	)
 	public long clusterTimeout();
 
 }

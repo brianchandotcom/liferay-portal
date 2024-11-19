@@ -45,6 +45,27 @@ public class LocalizedMapUtil {
 	}
 
 	public static Map<String, String> getI18nMap(
+		boolean acceptAllLanguages, Set<Locale> availableLocales,
+		Map<String, String> localizedMap) {
+
+		if (!acceptAllLanguages) {
+			return null;
+		}
+
+		Map<String, String> i18nMap = new HashMap<>();
+
+		for (Locale locale : availableLocales) {
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			if (localizedMap.containsKey(languageId)) {
+				i18nMap.put(languageId, localizedMap.get(languageId));
+			}
+		}
+
+		return i18nMap;
+	}
+
+	public static Map<String, String> getI18nMap(
 		Map<Locale, String> localizedMap) {
 
 		return getI18nMap(true, localizedMap);

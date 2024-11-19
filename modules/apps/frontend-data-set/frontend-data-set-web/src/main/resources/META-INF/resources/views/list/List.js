@@ -82,36 +82,33 @@ const ListItem = ({item, schema}) => {
 
 	const {description, image, sticker, symbol, title, titleRenderer} = schema;
 
+	const SelectionInput =
+		selectionType === 'single' ? ClayRadio : ClayCheckbox;
+
 	return (
 		<ClayList.Item
 			className={classNames({
 				'menu-active': menuActive,
 				selectable,
+				'selected': selectedItemsValue.includes(item[selectedItemsKey]),
 			})}
 			flex
 			onClick={() => {
 				if (selectable) {
 					selectItems(item[selectedItemsKey]);
 
-					onSelect?.({selectedItems: [item]});
+					onSelect({selectedItems: [item]});
 				}
 			}}
 		>
 			{selectable && (
-				<ClayList.ItemField className="justify-content-center">
-					{selectionType === 'single' ? (
-						<ClayRadio
-							checked={selectedItemsValue
-								.map((element) => String(element))
-								.includes(String(item[selectedItemsKey]))}
-						/>
-					) : (
-						<ClayCheckbox
-							checked={selectedItemsValue
-								.map((element) => String(element))
-								.includes(String(item[selectedItemsKey]))}
-						/>
-					)}
+				<ClayList.ItemField className="justify-content-center selection-control">
+					<SelectionInput
+						checked={selectedItemsValue
+							.map((element) => String(element))
+							.includes(String(item[selectedItemsKey]))}
+						onChange={() => {}}
+					/>
 				</ClayList.ItemField>
 			)}
 
@@ -166,8 +163,7 @@ List.propTypes = {
 	context: PropTypes.any,
 	items: PropTypes.arrayOf(
 		PropTypes.shape({
-			id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-				.isRequired,
+			id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		})
 	),
 	schema: PropTypes.shape({

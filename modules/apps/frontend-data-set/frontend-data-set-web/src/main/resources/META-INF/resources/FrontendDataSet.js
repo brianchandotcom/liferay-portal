@@ -374,45 +374,49 @@ const FrontendDataSet = ({
 		}
 	}, [wrapperRef]);
 
-	function refreshData(successNotification) {
-		setDataLoading(true);
+	const refreshData = useCallback(
+		(successNotification) => {
+			setDataLoading(true);
 
-		return requestData()
-			.then(({data}) => {
-				if (successNotification?.showSuccessNotification) {
-					openToast({
-						message:
-							successNotification.message ||
-							Liferay.Language.get('table-data-updated'),
-						type: 'success',
-					});
-				}
+			return requestData()
+				.then(({data}) => {
+					if (successNotification?.showSuccessNotification) {
+						openToast({
+							message:
+								successNotification.message ||
+								Liferay.Language.get('table-data-updated'),
+							type: 'success',
+						});
+					}
 
-				if (isMounted()) {
-					updateDataSetItems(data);
+					if (isMounted()) {
+						updateDataSetItems(data);
 
-					const itemKeys = new Set(
-						data.items.map((item) => item[selectedItemsKey])
-					);
+						const itemKeys = new Set(
+							data.items.map((item) => item[selectedItemsKey])
+						);
 
-					setSelectedItemsValue(
-						selectedItemsValue.filter((item) => itemKeys.has(item))
-					);
+						setSelectedItemsValue(
+							selectedItemsValue.filter((item) =>
+								itemKeys.has(item)
+							)
+						);
 
+						setDataLoading(false);
+
+						Liferay.fire(EVENTS.DISPLAY_UPDATED, {id});
+					}
+
+					return data;
+				})
+				.catch((error) => {
 					setDataLoading(false);
 
-					Liferay.fire(EVENTS.DISPLAY_UPDATED, {id});
-				}
-
-				return data;
-			})
-			.catch((error) => {
-				logError(error);
-				setDataLoading(false);
-
-				throw error;
-			});
-	}
+					throw error;
+				});
+		},
+		[id, isMounted, requestData, selectedItemsKey, selectedItemsValue]
+	);
 
 	useEffect(() => {
 		setSelectedItems((selectedItems) => {
@@ -533,15 +537,6 @@ const FrontendDataSet = ({
 			setHighlightedItemsValue([]);
 		}
 
-		if (
-			(nestedItemsReferenceKey && !nestedItemsKey) ||
-			(!nestedItemsReferenceKey && nestedItemsKey)
-		) {
-			logError(
-				'"nestedItemsKey" and "nestedItemsReferenceKey" params are both mandatory to manage nested items'
-			);
-		}
-
 		Liferay.on(EVENTS.SIDE_PANEL_CLOSED, handleCloseSidePanel);
 		Liferay.on(EVENTS.UPDATE_DISPLAY, handleRefreshFromTheOutside);
 
@@ -549,9 +544,7 @@ const FrontendDataSet = ({
 			Liferay.detach(EVENTS.SIDE_PANEL_CLOSED, handleCloseSidePanel);
 			Liferay.detach(EVENTS.UPDATE_DISPLAY, handleRefreshFromTheOutside);
 		};
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [id]);
+	}, [id, refreshData]);
 
 	const managementBar = showManagementBar ? (
 		<div className="management-bar-wrapper">
@@ -862,6 +855,19 @@ const FrontendDataSet = ({
 			});
 	}
 
+	const onSearch = ({query}) => {
+		if (apiURL || appURL) {
+			setSearchParam(query);
+		}
+		else {
+			setItems(
+				itemsProp.filter((item) => {
+					return JSON.stringify(item).includes(query);
+				})
+			);
+		}
+	};
+
 	return (
 		<FrontendDataSetContext.Provider
 			value={{
@@ -889,6 +895,7 @@ const FrontendDataSet = ({
 				nestedItemsReferenceKey,
 				onActionDropdownItemClick,
 				onBulkActionItemClick,
+				onSearch,
 				onSelect,
 				openModal,
 				openSidePanel,
@@ -911,7 +918,6 @@ const FrontendDataSet = ({
 				uniformActionsDisplay,
 				updateDataSetItems,
 				updateItem,
-				updateSearchParam: setSearchParam,
 			}}
 		>
 			<ViewsContext.Provider value={[viewsState, viewsDispatch]}>
@@ -974,6 +980,7 @@ FrontendDataSet.defaultProps = {
 	inlineEditingSettings: null,
 	items: null,
 	itemsActions: null,
+	onSelect: () => {},
 	onSelectedItemsChange: () => {},
 	selectedItemsKey: 'id',
 	selectionType: 'multiple',

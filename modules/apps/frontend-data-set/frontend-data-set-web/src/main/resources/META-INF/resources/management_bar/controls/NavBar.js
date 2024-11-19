@@ -50,7 +50,11 @@ function NavBar({creationMenu, showSearch}) {
 						}}
 						showMobile={showMobile}
 					>
-						<MainSearch setShowMobile={setShowMobile} />
+						<MainSearch
+							onClear={() => {
+								setShowMobile(false);
+							}}
+						/>
 					</ManagementToolbar.Search>
 				</>
 			)}

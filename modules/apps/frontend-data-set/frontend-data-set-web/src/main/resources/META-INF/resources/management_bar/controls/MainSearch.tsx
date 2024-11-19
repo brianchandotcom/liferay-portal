@@ -9,22 +9,16 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 
-function MainSearch({setShowMobile}) {
-	const {searchParam, updateSearchParam} = useContext(FrontendDataSetContext);
+function MainSearch({onClear}: {onClear: () => void}) {
+	const {apiURL, appURL, onSearch, searchParam} = useContext(
+		FrontendDataSetContext
+	);
 
-	const [inputValue, setInputValue] = useState(searchParam);
+	const [inputValue, setInputValue] = useState(searchParam || '');
 
 	useEffect(() => {
 		setInputValue(searchParam || '');
 	}, [searchParam]);
-
-	function handleKeyDown(event) {
-		if (event.key === 'Enter') {
-			event.preventDefault();
-
-			return updateSearchParam(inputValue);
-		}
-	}
 
 	return (
 		<ClayInput.Group>
@@ -32,8 +26,20 @@ function MainSearch({setShowMobile}) {
 				<ClayInput
 					aria-label={Liferay.Language.get('search')}
 					className="input-group-inset input-group-inset-after"
-					onChange={(event) => setInputValue(event.target.value)}
-					onKeyDown={handleKeyDown}
+					onChange={(event) => {
+						setInputValue(event.target.value);
+
+						if (!apiURL && !appURL) {
+							onSearch({query: event.target.value});
+						}
+					}}
+					onKeyDown={(event) => {
+						if (event.key === 'Enter' && (apiURL || appURL)) {
+							event.preventDefault();
+
+							onSearch({query: inputValue});
+						}
+					}}
 					placeholder={Liferay.Language.get('search')}
 					value={inputValue}
 				/>
@@ -42,20 +48,22 @@ function MainSearch({setShowMobile}) {
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('clear')}
 						className="navbar-breakpoint-d-none"
-						disabled={!inputValue.length}
+						disabled={!inputValue?.length}
 						displayType="unstyled"
 						monospaced={false}
 						onClick={(event) => {
 							event.preventDefault();
 
 							setInputValue('');
-							setShowMobile(false);
 
-							updateSearchParam('');
+							onClear();
+							onSearch({query: ''});
 						}}
 						style={{
-							opacity: !inputValue.length ? 0 : 1,
-							pointerEvents: !inputValue.length ? 'none' : 'auto',
+							opacity: !inputValue?.length ? 0 : 1,
+							pointerEvents: !inputValue?.length
+								? 'none'
+								: 'auto',
 						}}
 						symbol="times-circle"
 					/>
@@ -67,7 +75,7 @@ function MainSearch({setShowMobile}) {
 						onClick={(event) => {
 							event.preventDefault();
 
-							updateSearchParam(inputValue);
+							onSearch({query: inputValue});
 						}}
 						symbol="search"
 						type="submit"

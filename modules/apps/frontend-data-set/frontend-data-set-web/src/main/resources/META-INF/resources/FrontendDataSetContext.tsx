@@ -35,6 +35,7 @@ export interface IFrontendDataSetContext {
 	nestedItemsReferenceKey?: string;
 	onActionDropdownItemClick: Function;
 	onBulkActionItemClick: Function;
+	onSearch: ({query}: {query: string}) => void;
 	onSelect: Function;
 	openModal: Function;
 	openSidePanel: Function;
@@ -52,7 +53,6 @@ export interface IFrontendDataSetContext {
 	uniformActionsDisplay?: boolean;
 	updateDataSetItems: Function;
 	updateItem: Function;
-	updateSearchParam: Function;
 }
 
 export interface IHTMLElementBuilder {
@@ -85,6 +85,7 @@ const FrontendDataSetContext = React.createContext({
 	loadData: () => {},
 	onActionDropdownItemClick: () => {},
 	onBulkActionItemClick: () => {},
+	onSearch: () => {},
 	onSelect: () => {},
 	openModal: () => {},
 	openSidePanel: () => {},
@@ -94,7 +95,6 @@ const FrontendDataSetContext = React.createContext({
 	toggleItemInlineEdit: () => {},
 	updateDataSetItems: () => {},
 	updateItem: () => {},
-	updateSearchParam: () => {},
 } as IFrontendDataSetContext);
 
 export default FrontendDataSetContext;

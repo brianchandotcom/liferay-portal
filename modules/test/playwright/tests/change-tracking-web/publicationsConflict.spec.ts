@@ -115,7 +115,12 @@ test('Resolve deletion modification conflict publications by discarding', async 
 
 	await expect(page.getByText('Missing entity')).toBeVisible();
 
-	await page.getByRole('link', {name: 'Discard Change'}).click();
+	await page
+		.getByLabel('Test Test added a Web Content')
+		.getByRole('button')
+		.click();
+
+	await page.getByRole('menuitem', {name: 'Discard Change'}).click();
 
 	await page.getByRole('button', {name: 'Discard'}).click();
 
@@ -136,6 +141,96 @@ test('Resolve deletion modification conflict publications by discarding', async 
 	await page.waitForTimeout(300);
 
 	await productMenuPage.openProductMenuIfClosed();
+
+	await page.getByRole('menuitem', {name: 'Recycle Bin'}).click();
+
+	await page.getByLabel('Recycle Bin').getByTestId('app').click();
+
+	await expect(
+		page
+			.getByTestId('header')
+			.locator('div')
+			.filter({hasText: 'Recycle Bin'})
+			.nth(1)
+	).toBeVisible();
+
+	await page.getByLabel('Select All Items on the Page').check();
+
+	await page.getByRole('button', {name: 'Delete'}).click();
+
+	await page
+		.getByLabel('Delete- Loading')
+		.getByRole('button', {name: 'Delete'})
+		.click();
+
+	await waitForAlert(page, 'Success:Your request completed successfully.');
+});
+
+test('Resolve deletion modification conflict publications by restoring from recycle bin', async ({
+	changeTrackingPage,
+	ctCollection,
+	journalEditArticlePage,
+	journalPage,
+	page,
+	productMenuPage,
+}) => {
+	await changeTrackingPage.workOnProduction();
+
+	await journalEditArticlePage.goto();
+
+	const title = getRandomString();
+
+	await journalEditArticlePage.fillTitle(title);
+
+	await page.getByRole('button', {name: 'Publish'}).click();
+
+	await waitForAlert(page, `Success:${title} was created successfully.`);
+
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	await journalPage.goto();
+
+	await journalEditArticlePage.editArticle(title);
+
+	await page.getByRole('button', {name: 'Publish'}).click();
+
+	await waitForAlert(page, `Success:${title} was updated successfully.`);
+
+	await changeTrackingPage.workOnProduction();
+
+	await journalPage.goto();
+
+	await page.getByLabel(`Actions for ${title}`).click();
+
+	await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+	await page.reload();
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	const publishLink = page.getByRole('link', {name: 'Publish'});
+
+	await publishLink.click();
+
+	await expect(page.getByText('Missing entity')).toBeVisible();
+
+	await page.getByRole('link', {name: 'Restore From Recycle Bin'}).click();
+
+	await journalPage.goto();
+
+	await expect(page.getByText(title)).toBeVisible();
+
+	await changeTrackingPage.workOnProduction();
+
+	await productMenuPage.openProductMenuIfClosed();
+
+	await journalPage.goto();
+
+	await page.getByLabel(`Actions for ${title}`).click();
+
+	await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+	await page.reload();
 
 	await page.getByRole('menuitem', {name: 'Recycle Bin'}).click();
 

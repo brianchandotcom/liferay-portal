@@ -10,6 +10,8 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionExcepti
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -19,6 +21,8 @@ import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUtil;
+import com.liferay.commerce.product.service.CPConfigurationEntryLocalServiceUtil;
+import com.liferay.commerce.product.service.CPConfigurationListLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalServiceUtil;
@@ -265,6 +269,20 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 				getCPDefinitionId());
 
 		return _descriptionMap;
+	}
+
+	@Override
+	public CPConfigurationEntry getMasterCPConfigurationEntry()
+		throws PortalException {
+
+		CPConfigurationList cpConfigurationList =
+			CPConfigurationListLocalServiceUtil.getMasterCPConfigurationList(
+				getGroupId());
+
+		return CPConfigurationEntryLocalServiceUtil.getCPConfigurationEntry(
+			PortalUtil.getClassNameId(CPDefinition.class.getName()),
+			getCPDefinitionId(),
+			cpConfigurationList.getCPConfigurationListId());
 	}
 
 	@Override

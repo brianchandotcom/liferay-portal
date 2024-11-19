@@ -393,6 +393,10 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			return "Failed prior to running test";
 		}
 
+		if (testResult.isSkipped()) {
+			return "Failed to run test on CI";
+		}
+
 		if (!testResult.isFailing()) {
 			return null;
 		}
@@ -440,6 +444,10 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			}
 
 			return Status.FAILED;
+		}
+
+		if (testResult.isSkipped()) {
+			return Status.UNTESTED;
 		}
 
 		if (testResult.isFailing()) {

@@ -16,6 +16,8 @@ public interface SystemFDSEntry {
 		return 10;
 	}
 
+	public String getDescription();
+
 	public String getName();
 
 	public String getRESTApplication();
@@ -23,5 +25,9 @@ public interface SystemFDSEntry {
 	public String getRESTEndpoint();
 
 	public String getRESTSchema();
+
+	public String getSymbol();
+
+	public String getTitle();
 
 }

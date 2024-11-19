@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Body, Cell, Head, Row, Table} from '@clayui/core';
+import ClayTable from '@clayui/table';
 
 import './SVTable.css';
+
+import i18n from '~/common/I18n';
 
 export interface IColumn {
 	columnKey: string;
@@ -23,33 +25,49 @@ interface IProps {
 
 const SVTable = ({columns, rows}: IProps) => {
 	return (
-		<Table
-			borderless
-			className="sv-table table"
-			columnsVisibility={false}
-			noWrap
-			striped={false}
-		>
-			<Head align="left" items={columns}>
-				{columns.map((column) => (
-					<Cell className="text-neutral-10" key={column.columnKey}>
-						{column.label}
-					</Cell>
-				))}
-			</Head>
+		<ClayTable borderless className="sv-table table" noWrap striped={false}>
+			<ClayTable.Head align="left">
+				<ClayTable.Row>
+					{columns.map((column) => (
+						<ClayTable.Cell
+							className="text-neutral-10"
+							key={column.columnKey}
+						>
+							{column.label}
+						</ClayTable.Cell>
+					))}
+				</ClayTable.Row>
+			</ClayTable.Head>
 
-			<Body align="left" defaultItems={rows}>
-				{rows.map((row, index) => (
-					<Row key={index}>
-						{columns.map((column) => (
-							<Cell key={column.columnKey}>
-								{row[column.columnKey]}
-							</Cell>
-						))}
-					</Row>
-				))}
-			</Body>
-		</Table>
+			<ClayTable.Body align="left">
+				{rows.length ? (
+					rows.map((row, index) => (
+						<ClayTable.Row key={index}>
+							{columns.map((column) => (
+								<ClayTable.Cell key={column.columnKey}>
+									{column.columnKey === 'prioritySummary'
+										? row[column.columnKey]
+										: row[column.columnKey]}
+								</ClayTable.Cell>
+							))}
+						</ClayTable.Row>
+					))
+				) : (
+					<ClayTable.Row>
+						<ClayTable.Cell
+							className="font-weight-semi-bold m-3 text-center text-neutral-10"
+							colSpan={5}
+						>
+							<div className="py-2">
+								{i18n.translate(
+									'the-requested-search-does-not-exist-in-our-database-please-try-again-with-different-criteria'
+								)}
+							</div>
+						</ClayTable.Cell>
+					</ClayTable.Row>
+				)}
+			</ClayTable.Body>
+		</ClayTable>
 	);
 };
 

@@ -518,6 +518,7 @@
 	"the-project's-support-level-is-displayed-here-for-projects-with-ticketing-support": "The project's Support Level is displayed here for projects with ticketing support.",
 	"the-requested-activation-key-exceeds-the-purchased-subscriptions-for-this-liferay-project-in-case-of-unauthorized-use-liferay-can-request-financial-compensation-for-breach-of-use": "The requested activation key exceeds the purchased subscriptions for this Liferay project. In case of unauthorized use, Liferay can request financial compensation for breach of use. For more information, please reach out to your Liferay contact or sales@liferay.com.",
 	"the-requested-activation-key-is-not-yet-available": "The requested activation key is not yet available.",
+	"the-requested-search-does-not-exist-in-our-database-please-try-again-with-different-criteria": "The requested search does not exist in our database. Please try again with different criteria.",
 	"the-start-date-must-be-less-than-30-days-ago": "The start date must be less than 30 days ago.",
 	"the-support-seats-limit-counts-the-total-users-with-the-administrator-or-requester-role-administrators-and-requesters-have-permissions-to-open-support-tickets": "The Support Seats limit counts the total users with the Administrator or Requester role. Administrators and Requesters have permissions to open support tickets. ",
 	"the-workspace-host-most-not-have-spaces": "The Workspace Host most not have spaces.",

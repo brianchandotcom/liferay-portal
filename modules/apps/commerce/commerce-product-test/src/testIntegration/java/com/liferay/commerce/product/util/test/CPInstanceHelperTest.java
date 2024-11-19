@@ -102,25 +102,21 @@ public class CPInstanceHelperTest {
 			_user.getCompanyId(), _user.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_user.getCompanyId());
-
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_user.getCompanyId(), _group.getGroupId(), _user.getUserId());
+
+		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(
+			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			LocaleUtil.US.getDisplayLanguage(), _serviceContext);
+
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_user.getCompanyId());
 
 		_commerceChannel = CommerceChannelLocalServiceUtil.addCommerceChannel(
 			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			_group.getGroupId(), "Test Channel",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);
-
-		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(
-			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			LocaleUtil.US.getDisplayLanguage(), _serviceContext);
-
-		CommercePriceListTestUtil.addCommercePriceList(
-			_commerceCatalog.getGroupId(), true,
-			CommercePriceListConstants.TYPE_PRICE_LIST, 1.0);
 	}
 
 	@After
@@ -321,6 +317,10 @@ public class CPInstanceHelperTest {
 			_commerceContextFactory.create(
 				_company.getCompanyId(), _commerceChannel.getGroupId(),
 				_user.getUserId(), 0, accountEntry.getAccountEntryId()));
+
+		CommercePriceListTestUtil.addCommercePriceList(
+			_commerceCatalog.getGroupId(), true,
+			CommercePriceListConstants.TYPE_PRICE_LIST, 1.0);
 
 		BigDecimal unitPrice = _cpInstanceHelper.fetchCPInstanceUnitPrice(
 			CPTestUtil.addCPInstanceFromCatalog(

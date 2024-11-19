@@ -121,10 +121,11 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 					cpInstance.getCPInstanceId(), BigDecimal.ONE,
 					StringPool.BLANK, CommerceContextThreadLocal.get());
 
-			CommerceMoney unitPrice = commerceProductPrice.getUnitPrice();
+			CommerceMoney unitPriceCommerceMoney =
+				commerceProductPrice.getUnitPrice();
 
-			if (!unitPrice.isEmpty()) {
-				return unitPrice.getPrice();
+			if (!unitPriceCommerceMoney.isEmpty()) {
+				return unitPriceCommerceMoney.getPrice();
 			}
 		}
 		catch (Exception exception) {
@@ -142,11 +143,11 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 					cpInstance.getCPInstanceId(), BigDecimal.ONE,
 					StringPool.BLANK, CommerceContextThreadLocal.get());
 
-			CommerceMoney unitPromoPrice =
+			CommerceMoney unitPromoPriceCommerceMoney =
 				commerceProductPrice.getUnitPromoPrice();
 
-			if (!unitPromoPrice.isEmpty()) {
-				return unitPromoPrice.getPrice();
+			if (!unitPromoPriceCommerceMoney.isEmpty()) {
+				return unitPromoPriceCommerceMoney.getPrice();
 			}
 		}
 		catch (Exception exception) {

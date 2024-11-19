@@ -84,10 +84,19 @@ export class PageTemplatesPage {
 		await this.page.getByRole('heading', {name}).waitFor();
 	}
 
-	async clickAction(action: string, title: string) {
-		const actionsPath = '//p[@title="' + title + '"]/../..';
+	async clickAction(action: string, title: string, collectionName?: string) {
+		if (collectionName) {
+			await this.page
+				.getByRole('menuitem', {name: collectionName})
+				.click();
+		}
 
-		await this.page.locator(actionsPath).getByLabel('More actions').click();
+		await this.page
+			.locator('.card-type-asset')
+			.filter({hasText: title})
+			.getByLabel('More actions')
+			.click();
+
 		await this.page.getByRole('menuitem', {name: action}).click();
 	}
 

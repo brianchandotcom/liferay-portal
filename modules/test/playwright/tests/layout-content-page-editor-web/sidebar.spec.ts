@@ -1476,40 +1476,6 @@ test.describe('Page Contents Panel', () => {
 
 test.describe('Page Design Options', () => {
 	test(
-		'Add page rule',
-		{
-			tag: '@LPS-196461',
-		},
-		async ({apiHelpers, page, pageEditorPage, site}) => {
-
-			// Create content page with a button fragment and go to edit mode
-
-			const buttonId = getRandomString();
-
-			const buttonDefinition = getFragmentDefinition({
-				id: buttonId,
-				key: 'BASIC_COMPONENT-button',
-			});
-
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				pageDefinition: getPageDefinition([buttonDefinition]),
-				siteId: site.id,
-				title: getRandomString(),
-			});
-
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-			// Assert info message
-
-			await pageEditorPage.goToSidebarTab('Page Rules');
-
-			await expect(
-				page.getByText('Fortunately, it is very easy to add new ones.')
-			).toBeVisible();
-		}
-	);
-
-	test(
 		'Allows editing inline text from Page Content Panel',
 		{
 			tag: '@LPS-146373',

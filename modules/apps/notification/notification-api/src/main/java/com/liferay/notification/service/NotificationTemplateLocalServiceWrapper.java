@@ -96,6 +96,14 @@ public class NotificationTemplateLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public void deleteCompanyNotificationTemplates(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_notificationTemplateLocalService.deleteCompanyNotificationTemplates(
+			companyId);
+	}
+
 	/**
 	 * Deletes the notification template with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

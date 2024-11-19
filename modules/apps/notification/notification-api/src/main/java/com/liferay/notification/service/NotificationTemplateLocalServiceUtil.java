@@ -90,6 +90,12 @@ public class NotificationTemplateLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
+	public static void deleteCompanyNotificationTemplates(long companyId)
+		throws PortalException {
+
+		getService().deleteCompanyNotificationTemplates(companyId);
+	}
+
 	/**
 	 * Deletes the notification template with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

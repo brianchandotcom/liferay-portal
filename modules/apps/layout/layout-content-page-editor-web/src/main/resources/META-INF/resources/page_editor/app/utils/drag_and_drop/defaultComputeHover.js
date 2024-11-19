@@ -305,7 +305,8 @@ function shouldBeIgnoredInElevation(item) {
 
 	return (
 		item.type === LAYOUT_DATA_ITEM_TYPES.collection ||
-		item.type === LAYOUT_DATA_ITEM_TYPES.row
+		item.type === LAYOUT_DATA_ITEM_TYPES.row ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.formStepContainer
 	);
 }
 

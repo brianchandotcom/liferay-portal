@@ -76,12 +76,7 @@ const assetPublisherDeprecationTest = mergeTests(
 
 const keepTitlesUntranslated = mergeTests(baseTest);
 
-const prefixUrlTest = mergeTests(
-	baseTest,
-	featureFlagsTest({
-		'LPD-11147': true,
-	})
-);
+const prefixUrlTest = mergeTests(baseTest);
 
 const translationAndAutosaveTest = mergeTests(
 	baseTest,

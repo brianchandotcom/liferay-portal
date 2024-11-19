@@ -184,6 +184,17 @@ public class NotificationTemplateLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCompanyNotificationTemplates(long companyId)
+		throws PortalException {
+
+		for (NotificationTemplate notificationTemplate :
+				notificationTemplatePersistence.findByCompanyId(companyId)) {
+
+			deleteNotificationTemplate(notificationTemplate);
+		}
+	}
+
+	@Override
 	public NotificationTemplate deleteNotificationTemplate(
 			long notificationTemplateId)
 		throws PortalException {

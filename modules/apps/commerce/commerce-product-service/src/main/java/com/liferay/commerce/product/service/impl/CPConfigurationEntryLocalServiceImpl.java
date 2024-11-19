@@ -37,6 +37,7 @@ public class CPConfigurationEntryLocalServiceImpl
 			String externalReferenceCode, long userId, long classNameId,
 			long classPK, long cpConfigurationListId,
 			String allowedOrderQuantities, boolean backOrders,
+			long commerceAvailabilityEstimateId,
 			String cpDefinitionInventoryEngine, boolean displayAvailability,
 			boolean displayStockQuantity, String lowStockActivity,
 			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
@@ -58,6 +59,8 @@ public class CPConfigurationEntryLocalServiceImpl
 		cpConfigurationEntry.setCPConfigurationListId(cpConfigurationListId);
 		cpConfigurationEntry.setAllowedOrderQuantities(allowedOrderQuantities);
 		cpConfigurationEntry.setBackOrders(backOrders);
+		cpConfigurationEntry.setCommerceAvailabilityEstimateId(
+			commerceAvailabilityEstimateId);
 		cpConfigurationEntry.setCPDefinitionInventoryEngine(
 			cpDefinitionInventoryEngine);
 		cpConfigurationEntry.setDisplayAvailability(displayAvailability);
@@ -73,8 +76,14 @@ public class CPConfigurationEntryLocalServiceImpl
 
 	@Override
 	public void deleteCPConfigurationEntries(long cpConfigurationListId) {
-		cpConfigurationEntryPersistence.removeByCPConfigurationListId(
-			cpConfigurationListId);
+
+		List<CPConfigurationEntry> cpConfigurationEntries =
+			cpConfigurationEntryLocalService.getCPConfigurationEntries(
+				cpConfigurationListId);
+
+		for (CPConfigurationEntry cpConfigurationEntry: cpConfigurationEntries) {
+			cpConfigurationEntryLocalService.deleteCPConfigurationEntry(cpConfigurationEntry);
+		}
 	}
 
 	@Override
@@ -83,6 +92,49 @@ public class CPConfigurationEntryLocalServiceImpl
 
 		return cpConfigurationEntryPersistence.findByCPConfigurationListId(
 			cpConfigurationListId);
+	}
+
+	@Override
+	public CPConfigurationEntry getCPConfigurationEntry(
+			long classNameId, long classPK, long cpConfigurationListId)
+		throws PortalException {
+
+		return cpConfigurationEntryPersistence.findByC_C_C(
+			classNameId, classPK, cpConfigurationListId);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CPConfigurationEntry updateCPConfigurationEntry(
+			String externalReferenceCode, long cpConfigurationEntryId,
+			String allowedOrderQuantities, boolean backOrders,
+			long commerceAvailabilityEstimateId,
+			String cpDefinitionInventoryEngine, boolean displayAvailability,
+			boolean displayStockQuantity, String lowStockActivity,
+			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
+			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity)
+		throws PortalException {
+
+		CPConfigurationEntry cpConfigurationEntry =
+			cpConfigurationEntryPersistence.findByPrimaryKey(
+				cpConfigurationEntryId);
+
+		cpConfigurationEntry.setExternalReferenceCode(externalReferenceCode);
+		cpConfigurationEntry.setAllowedOrderQuantities(allowedOrderQuantities);
+		cpConfigurationEntry.setBackOrders(backOrders);
+		cpConfigurationEntry.setCommerceAvailabilityEstimateId(
+			commerceAvailabilityEstimateId);
+		cpConfigurationEntry.setCPDefinitionInventoryEngine(
+			cpDefinitionInventoryEngine);
+		cpConfigurationEntry.setDisplayAvailability(displayAvailability);
+		cpConfigurationEntry.setDisplayStockQuantity(displayStockQuantity);
+		cpConfigurationEntry.setLowStockActivity(lowStockActivity);
+		cpConfigurationEntry.setMaxOrderQuantity(maxOrderQuantity);
+		cpConfigurationEntry.setMinOrderQuantity(minOrderQuantity);
+		cpConfigurationEntry.setMinStockQuantity(minStockQuantity);
+		cpConfigurationEntry.setMultipleOrderQuantity(multipleOrderQuantity);
+
+		return cpConfigurationEntryPersistence.update(cpConfigurationEntry);
 	}
 
 	@Reference

@@ -103,7 +103,7 @@ public class CPConfigurationEntryLocalServiceTest {
 				externalReferenceCode, _user.getUserId(),
 				_portal.getClassNameId(CPDefinition.class),
 				_cpDefinition.getCPDefinitionId(),
-				_cpConfigurationList.getCPConfigurationListId(), "123", true,
+				_cpConfigurationList.getCPConfigurationListId(), "123", true, 0,
 				"cpde", true, true, "lowstoc", BigDecimal.TEN, BigDecimal.ONE,
 				BigDecimal.ONE, BigDecimal.ONE);
 

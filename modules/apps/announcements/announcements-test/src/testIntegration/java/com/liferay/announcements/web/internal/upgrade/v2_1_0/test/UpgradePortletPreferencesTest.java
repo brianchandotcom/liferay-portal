@@ -9,9 +9,12 @@ import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -19,6 +22,10 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -29,6 +36,7 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -92,6 +100,54 @@ public class UpgradePortletPreferencesTest {
 	}
 
 	@Test
+	public void testUpgradeExternalReferenceCodeWithSpecialCharacters()
+		throws Exception {
+
+		String specialCharacters = "One\\+-!():^[]\"{}~*?|&,; /Two";
+
+		_testUpgrade(
+			_addModels(
+				1,
+				() -> {
+					Group group = GroupTestUtil.addGroup();
+
+					group.setExternalReferenceCode(specialCharacters);
+
+					return _groupLocalService.updateGroup(group);
+				}),
+			_addModels(
+				1,
+				() -> {
+					Organization organization =
+						OrganizationTestUtil.addOrganization();
+
+					organization.setExternalReferenceCode(specialCharacters);
+
+					return _organizationLocalService.updateOrganization(
+						organization);
+				}),
+			_addModels(
+				1,
+				() -> {
+					Role role = RoleTestUtil.addRole(
+						RoleConstants.TYPE_REGULAR);
+
+					role.setExternalReferenceCode(specialCharacters);
+
+					return _roleLocalService.updateRole(role);
+				}),
+			_addModels(
+				1,
+				() -> {
+					UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+					userGroup.setExternalReferenceCode(specialCharacters);
+
+					return _userGroupLocalService.updateUserGroup(userGroup);
+				}));
+	}
+
+	@Test
 	public void testUpgradeInvalidSelectedScopeId() throws Exception {
 		String randomSelectedScopeId = String.valueOf(
 			RandomTestUtil.randomLong());
@@ -152,14 +208,14 @@ public class UpgradePortletPreferencesTest {
 			RandomTestUtil.randomLong());
 
 		_testUpgrade(
-			ListUtil.toString(groups, _GROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
+			_toJSONArrayString(groups, _GROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			selectedScopeGroupIds + ',' + randomSelectedScopeId,
-			ListUtil.toString(
+			_toJSONArrayString(
 				organizations, _ORGANIZATION_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			selectedScopeOrganizationIds + ',' + randomSelectedScopeId,
-			ListUtil.toString(roles, _ROLE_EXTERNAL_REFERENCE_CODE_ACCESSOR),
+			_toJSONArrayString(roles, _ROLE_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			selectedScopeRoleIds + ',' + randomSelectedScopeId,
-			ListUtil.toString(
+			_toJSONArrayString(
 				userGroups, _USERGROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			selectedScopeUserGroupIds + ',' + randomSelectedScopeId);
 	}
@@ -264,15 +320,15 @@ public class UpgradePortletPreferencesTest {
 		throws Exception {
 
 		_testUpgrade(
-			ListUtil.toString(groups, _GROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
+			_toJSONArrayString(groups, _GROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			ListUtil.toString(groups, Group.GROUP_ID_ACCESSOR),
-			ListUtil.toString(
+			_toJSONArrayString(
 				organizations, _ORGANIZATION_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			ListUtil.toString(
 				organizations, Organization.ORGANIZATION_ID_ACCESSOR),
-			ListUtil.toString(roles, _ROLE_EXTERNAL_REFERENCE_CODE_ACCESSOR),
+			_toJSONArrayString(roles, _ROLE_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			ListUtil.toString(roles, Role.ROLE_ID_ACCESSOR),
-			ListUtil.toString(
+			_toJSONArrayString(
 				userGroups, _USERGROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			ListUtil.toString(userGroups, UserGroup.USER_GROUP_ID_ACCESSOR));
 	}
@@ -334,6 +390,16 @@ public class UpgradePortletPreferencesTest {
 			).build());
 	}
 
+	private <T> String _toJSONArrayString(
+		List<T> list, Accessor<T, String> accessor) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			TransformUtil.transform(
+				ListUtil.toList(list, accessor), HtmlUtil::escape));
+
+		return jsonArray.toString();
+	}
+
 	private static final String _CLASS_NAME =
 		"com.liferay.announcements.web.internal.upgrade.v2_1_0." +
 			"UpgradePortletPreferences";
@@ -360,16 +426,28 @@ public class UpgradePortletPreferencesTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	private Layout _layout;
 
 	@Inject
 	private MultiVMPool _multiVMPool;
 
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
+
 	private String _portletId;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.announcements.web.internal.upgrade.registry.AnnouncementsWebUpgradeStepRegistrator))"
 	)
 	private UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 }

@@ -119,19 +119,7 @@ function TopperContent({
 	const dropContainerId = useDropContainerId();
 	const dropTargetPosition = targetPosition || keyboardMovementPosition;
 
-	const isDropContainer = dropContainerId === item.itemId;
-	const isValidDrop =
-		!(
-			targetPosition === TARGET_POSITIONS.MIDDLE &&
-			(isUnmappedCollection(item) || isUnmappedForm(item))
-		) &&
-		(isOverTarget || keyboardMovementTargetId === item.itemId);
-
-	const isHighlighted =
-		item.type === LAYOUT_DATA_ITEM_TYPES.row ||
-		item.type === LAYOUT_DATA_ITEM_TYPES.collection
-			? item.children.includes(dropContainerId)
-			: isDropContainer & isValidDrop;
+	const isHighlighted = isItemHighlighted(item, dropContainerId);
 
 	const selectable =
 		!multiSelectType ||
@@ -200,6 +188,11 @@ function TopperContent({
 	const isDraggingSource =
 		draggingItem || draggingTopper || lastSource?.itemId === item.itemId;
 
+	const isTarget =
+		(isOverTarget || keyboardMovementTargetId === item.itemId) &&
+		!isUnmappedCollection(item) &&
+		!isUnmappedForm(item);
+
 	const {elementRef, isFocusable} = useLayoutKeyboardNavigation(item);
 
 	return (
@@ -207,20 +200,17 @@ function TopperContent({
 			className={classNames(className, 'page-editor__topper', {
 				'active': isActive,
 				'drag-over-bottom':
-					isValidDrop &&
-					dropTargetPosition === TARGET_POSITIONS.BOTTOM,
+					isTarget && dropTargetPosition === TARGET_POSITIONS.BOTTOM,
 				'drag-over-left':
-					isValidDrop && dropTargetPosition === TARGET_POSITIONS.LEFT,
+					isTarget && dropTargetPosition === TARGET_POSITIONS.LEFT,
 				'drag-over-middle':
-					isValidDrop &&
-					dropTargetPosition === TARGET_POSITIONS.MIDDLE,
+					isTarget && dropTargetPosition === TARGET_POSITIONS.MIDDLE,
 				'drag-over-right':
-					isValidDrop &&
-					dropTargetPosition === TARGET_POSITIONS.RIGHT,
+					isTarget && dropTargetPosition === TARGET_POSITIONS.RIGHT,
 				'drag-over-top':
-					isValidDrop && dropTargetPosition === TARGET_POSITIONS.TOP,
+					isTarget && dropTargetPosition === TARGET_POSITIONS.TOP,
 				'dragged': isDraggingSource,
-				'drop-container': isDropContainer,
+				'drop-container': dropContainerId === item.itemId,
 				'highlighted': isHighlighted,
 				'hovered': isHovered,
 				'not-allowed': !selectable,
@@ -432,6 +422,24 @@ class TopperErrorBoundary extends React.Component {
 			this.props.children
 		);
 	}
+}
+
+function isItemHighlighted(item, targetId) {
+	if (
+		item.type === LAYOUT_DATA_ITEM_TYPES.row ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.collection
+	) {
+		return item.children.includes(targetId);
+	}
+
+	if (
+		item.type === LAYOUT_DATA_ITEM_TYPES.container ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.form
+	) {
+		return targetId === item.itemId;
+	}
+
+	return false;
 }
 
 function isSelectionAllowed(element) {

@@ -1476,7 +1476,7 @@ test.describe('Page Contents Panel', () => {
 
 test.describe('Page Design Options', () => {
 	test(
-		'Allows editing inline text from Page Content Panel',
+		'Allows setting page design options',
 		{
 			tag: '@LPS-146373',
 		},
@@ -1493,7 +1493,7 @@ test.describe('Page Design Options', () => {
 
 			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-			// Go to Page Contents panel
+			// Go to Page Design Options tab
 
 			await pageEditorPage.goToSidebarTab('Page Design Options');
 

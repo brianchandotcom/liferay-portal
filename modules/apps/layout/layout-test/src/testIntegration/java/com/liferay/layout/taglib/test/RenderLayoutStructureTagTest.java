@@ -107,8 +107,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -117,6 +119,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -134,8 +137,10 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -687,6 +692,50 @@ public class RenderLayoutStructureTagTest {
 		Assert.assertEquals(
 			expectedJournalArticle1.getArticleId(),
 			actualJournalArticle.getArticleId());
+	}
+
+	@Test
+	@TestInfo("LPS-149178")
+	public void testRenderCollectionStyledLayoutStructureItemWithPagination()
+		throws Exception {
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_DYNAMIC,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"anyAssetType",
+					String.valueOf(_portal.getClassNameId(JournalArticle.class))
+				).put(
+					"orderByColumn1", "priority"
+				).put(
+					"orderByType1", "ASC"
+				).buildString(),
+				_serviceContext);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		String itemId = _addCollectionStyledLayoutStructureItem(
+			assetListEntry, layout, 2, "numeric", segmentsExperienceId,
+			_addFragmentEntryLinks(
+				1, JSONUtil.put("collectionFieldId", "JournalArticle_title"),
+				layout.fetchDraftLayout(), segmentsExperienceId));
+
+		Locale locale = _portal.getSiteDefaultLocale(_group);
+
+		List<String> titles = _addJournalArticlesAndGetTitles(7, locale);
+
+		_assertNumericPagination(itemId, layout, 1, 2, titles);
+		_assertNumericPagination(itemId, layout, 2, 2, titles);
+		_assertNumericPagination(itemId, layout, 3, 2, titles);
+		_assertNumericPagination(itemId, layout, 4, 2, titles);
 	}
 
 	@Test
@@ -1637,6 +1686,35 @@ public class RenderLayoutStructureTagTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
+	private List<String> _addJournalArticlesAndGetTitles(
+			int count, Locale locale)
+		throws Exception {
+
+		List<String> list = new ArrayList<>();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		for (int i = 0; i < count; i++) {
+			serviceContext.setAssetPriority(i);
+
+			JournalArticle journalArticle = JournalTestUtil.addArticle(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), locale, true, true,
+				serviceContext);
+
+			list.add(journalArticle.getTitle(locale));
+		}
+
+		return list;
+	}
+
 	private SegmentsEntry _addSegmentsEntryByFirstName(String firstName)
 		throws Exception {
 
@@ -1744,6 +1822,78 @@ public class RenderLayoutStructureTagTest {
 		}
 	}
 
+	private void _assertNumericPagination(
+			String itemId, Layout layout, int pageNumber,
+			int numberOfItemsPerPage, List<String> strings)
+		throws Exception {
+
+		String html = _getRenderLayoutHTML(
+			layout,
+			HashMapBuilder.put(
+				"page_number_" + itemId,
+				() -> {
+					if (pageNumber > 1) {
+						return String.valueOf(pageNumber);
+					}
+
+					return null;
+				}
+			).build());
+
+		int endIndex = pageNumber * numberOfItemsPerPage;
+		int startIndex =
+			(pageNumber * numberOfItemsPerPage) - numberOfItemsPerPage;
+
+		for (int i = 0; i < strings.size(); i++) {
+			String string = strings.get(i);
+
+			if ((i >= startIndex) && (i < endIndex)) {
+				Assert.assertTrue(
+					html + " does not contain " + string,
+					html.contains(string));
+			}
+			else {
+				Assert.assertFalse(
+					html + " contains " + string, html.contains(string));
+			}
+		}
+
+		int numberOfPages = (int)Math.ceil(
+			(double)strings.size() / numberOfItemsPerPage);
+
+		Assert.assertEquals(
+			html, numberOfPages + 2, StringUtil.count(html, "page-item"));
+
+		String[] pageItems = html.split("page-item");
+
+		Assert.assertEquals(
+			pageItems.toString(), numberOfPages + 3, pageItems.length);
+
+		Assert.assertTrue(
+			pageItems[pageNumber],
+			StringUtil.endsWith(pageItems[pageNumber], "\"active "));
+
+		if (pageNumber != 1) {
+			Assert.assertFalse(
+				pageItems[0], StringUtil.endsWith(pageItems[0], "\"disabled "));
+		}
+		else {
+			Assert.assertTrue(
+				pageItems[0], StringUtil.endsWith(pageItems[0], "\"disabled "));
+		}
+
+		if (pageNumber != numberOfPages) {
+			Assert.assertFalse(
+				pageItems[pageNumber + 1],
+				StringUtil.endsWith(pageItems[pageNumber + 1], "\"disabled "));
+		}
+		else {
+			Assert.assertTrue(
+				pageItems[pageNumber + 1],
+				StringUtil.endsWith(pageItems[pageNumber + 1], "\"disabled "));
+		}
+	}
+
 	private DDMForm _deserialize(String content) {
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
@@ -1787,12 +1937,22 @@ public class RenderLayoutStructureTagTest {
 	private MockHttpServletRequest _getMockHttpServletRequest(Layout layout)
 		throws Exception {
 
-		return _getMockHttpServletRequest(layout, null);
+		return _getMockHttpServletRequest(layout, null, Collections.emptyMap());
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
 			Layout layout,
 			LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider)
+		throws Exception {
+
+		return _getMockHttpServletRequest(
+			layout, layoutDisplayPageObjectProvider, Collections.emptyMap());
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest(
+			Layout layout,
+			LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider,
+			Map<String, String> map)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -1807,6 +1967,11 @@ public class RenderLayoutStructureTagTest {
 			"ORIGINAL_HTTP_SERVLET_REQUEST", mockHttpServletRequest);
 		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			mockHttpServletRequest.setParameter(
+				entry.getKey(), entry.getValue());
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)mockHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -1817,8 +1982,14 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	private String _getRenderLayoutHTML(Layout layout) throws Exception {
+		return _getRenderLayoutHTML(layout, Collections.emptyMap());
+	}
+
+	private String _getRenderLayoutHTML(Layout layout, Map<String, String> map)
+		throws Exception {
+
 		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
-			layout, _getMockHttpServletRequest(layout));
+			layout, _getMockHttpServletRequest(layout, null, map));
 
 		return mockHttpServletResponse.getContentAsString();
 	}

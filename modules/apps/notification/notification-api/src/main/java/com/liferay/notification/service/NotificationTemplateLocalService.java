@@ -97,6 +97,9 @@ public interface NotificationTemplateLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void deleteCompanyNotificationTemplates(long companyId)
+		throws PortalException;
+
 	/**
 	 * Deletes the notification template with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

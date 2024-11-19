@@ -88,6 +88,14 @@ public class NotificationQueueEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteCompanyNotificationQueueEntries(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_notificationQueueEntryLocalService.
+			deleteCompanyNotificationQueueEntries(companyId);
+	}
+
+	@Override
 	public void deleteNotificationQueueEntries(java.util.Date sentDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

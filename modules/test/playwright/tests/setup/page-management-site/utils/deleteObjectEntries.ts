@@ -13,17 +13,16 @@ export async function deleteObjectEntries({
 	entityName: 'allfieldsobjects' | 'lemons' | 'lemonbaskets' | 'potatos';
 	site: Site;
 }) {
-	const objectEntries = (
+	const {items: entries} =
 		await apiHelpers.objectEntry.getObjectDefinitionObjectEntriesByScope(
 			`c/${entityName}`,
 			site.key
-		)
-	).items;
+		);
 
-	objectEntries.forEach(({externalReferenceCode}) => {
+	for (const entry of entries) {
 		apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 			`c/${entityName}`,
-			externalReferenceCode
+			entry.externalReferenceCode
 		);
-	});
+	}
 }

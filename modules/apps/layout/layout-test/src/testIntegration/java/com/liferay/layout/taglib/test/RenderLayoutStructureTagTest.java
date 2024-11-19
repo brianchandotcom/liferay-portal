@@ -302,7 +302,8 @@ public class RenderLayoutStructureTagTest {
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem =
 				_addCollectionStyledLayoutStructureItem(
-					assetListEntry, layout, segmentsExperienceId);
+					assetListEntry, layout, _COUNT_INFO_LIST_ITEMS, "none",
+					segmentsExperienceId);
 
 		_addFragmentEntryLinks(
 			layout, collectionStyledLayoutStructureItem.getItemId(),
@@ -1346,7 +1347,8 @@ public class RenderLayoutStructureTagTest {
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem =
 				_addCollectionStyledLayoutStructureItem(
-					assetListEntry, layout, segmentsExperienceId);
+					assetListEntry, layout, _COUNT_INFO_LIST_ITEMS, "none",
+					segmentsExperienceId);
 
 		String content = _getRenderLayoutHTML(layout);
 
@@ -1407,6 +1409,7 @@ public class RenderLayoutStructureTagTest {
 	private CollectionStyledLayoutStructureItem
 			_addCollectionStyledLayoutStructureItem(
 				AssetListEntry assetListEntry, Layout layout,
+				int numberOfItemsPerPage, String paginationType,
 				long segmentsExperienceId)
 		throws Exception {
 
@@ -1424,11 +1427,9 @@ public class RenderLayoutStructureTagTest {
 				JSONUtil.put(
 					"displayAllPages", true
 				).put(
-					"numberOfItems", _COUNT_INFO_LIST_ITEMS
+					"numberOfItemsPerPage", numberOfItemsPerPage
 				).put(
-					"numberOfItemsPerPage", _COUNT_INFO_LIST_ITEMS
-				).put(
-					"paginationType", "none"
+					"paginationType", paginationType
 				).put(
 					"showAllItems", true
 				),

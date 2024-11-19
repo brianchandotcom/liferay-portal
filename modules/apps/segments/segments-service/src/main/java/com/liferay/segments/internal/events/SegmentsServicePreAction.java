@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -145,7 +144,7 @@ public class SegmentsServicePreAction extends Action {
 				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+			themeDisplay.getPermissionChecker();
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(

@@ -163,10 +163,6 @@ public class SegmentsServicePreActionTest {
 				MockHttpServletRequest mockHttpServletRequest =
 					new MockHttpServletRequest();
 
-				ServiceContext serviceContext =
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId(), TestPropsValues.getUserId());
-
 				Map<Locale, String> nameMap = Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
@@ -179,7 +175,14 @@ public class SegmentsServicePreActionTest {
 					UnicodePropertiesBuilder.put(
 						LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
 					).buildString(),
-					false, false, Collections.emptyMap(), 0, serviceContext);
+					false, false, Collections.emptyMap(), 0,
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId(), TestPropsValues.getUserId()));
+
+				mockHttpServletRequest.setAttribute(
+					WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
+				mockHttpServletRequest.setParameter("p_l_mode", Constants.EDIT);
 
 				SegmentsExperience segmentsExperience =
 					_segmentsExperienceLocalService.addSegmentsExperience(
@@ -190,7 +193,6 @@ public class SegmentsServicePreActionTest {
 						ServiceContextTestUtil.getServiceContext(
 							_group.getGroupId()));
 
-				mockHttpServletRequest.setParameter("p_l_mode", Constants.EDIT);
 				mockHttpServletRequest.setParameter(
 					String.join(
 						StringPool.BLANK, StringPool.UNDERLINE,
@@ -199,8 +201,6 @@ public class SegmentsServicePreActionTest {
 						"_segmentsExperienceId"),
 					String.valueOf(
 						segmentsExperience.getSegmentsExperienceId()));
-				mockHttpServletRequest.setAttribute(
-					WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
 
 				LifecycleEvent lifecycleEvent = new LifecycleEvent(
 					mockHttpServletRequest, new MockHttpServletResponse());

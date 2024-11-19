@@ -7,9 +7,13 @@ package com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_1;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+
+import java.sql.PreparedStatement;
 
 /**
  * @author Alicia García
@@ -18,6 +22,11 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (DBPartition.isPartitionEnabled()) {
+			_upgradeByCompanyId(CompanyThreadLocal.getCompanyId());
+
+			return;
+		}
 		_upgrade();
 	}
 
@@ -64,6 +73,17 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 			},
 			"Unable to update company IDs for dynamic data mapping field " +
 				"attributes");
+	}
+
+	private void _upgradeByCompanyId(long companyId) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update DDMFieldAttribute set companyId = ? where companyId " +
+					"= 0")) {
+
+			preparedStatement.setLong(1, companyId);
+
+			preparedStatement.executeUpdate();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

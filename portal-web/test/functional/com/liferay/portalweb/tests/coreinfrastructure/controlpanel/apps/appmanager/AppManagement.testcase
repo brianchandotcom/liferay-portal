@@ -270,24 +270,27 @@ definition {
 		AppManager.openAppManagerAdmin();
 
 		AppManager.viewApp(
-			appName = "Document Library Opener",
-			appStatus = "Active");
+			appName = "Liferay Document Library Opener Service",
+			appStatus = "Active",
+			searchTerm = "com.liferay.document.library.opener.service");
 
-		AppManager.deactivateApp(appName = "Document Library Opener");
-
-		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
-
-		AppManager.viewApp(
-			appName = "Document Library Opener",
-			appStatus = "Resolved");
-
-		AppManager.activateApp(appName = "Document Library Opener");
+		AppManager.deactivateApp(appName = "Liferay Document Library Opener Service");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AppManager.viewApp(
-			appName = "Document Library Opener",
-			appStatus = "Active");
+			appName = "Liferay Document Library Opener Service",
+			appStatus = "Resolved",
+			searchTerm = "com.liferay.document.library.opener.service");
+
+		AppManager.activateApp(appName = "Liferay Document Library Opener Service");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AppManager.viewApp(
+			appName = "Liferay Document Library Opener Service",
+			appStatus = "Active",
+			searchTerm = "com.liferay.document.library.opener.service");
 	}
 
 	@description = "This ensures that the Knowledge Base app in the app manager can be deactivated and reactivated."

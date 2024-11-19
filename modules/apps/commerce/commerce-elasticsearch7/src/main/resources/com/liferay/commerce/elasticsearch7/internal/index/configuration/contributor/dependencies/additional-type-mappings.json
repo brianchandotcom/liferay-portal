@@ -65,6 +65,9 @@
 		"couponCode": {
 			"type": "keyword"
 		},
+		"CPConfigurationListId": {
+			"type": "keyword"
+		},
 		"criterionType_organization_required_matches": {
 			"type": "integer"
 		},

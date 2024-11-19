@@ -15,8 +15,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
@@ -28,12 +27,9 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SortedArrayList;
 
 import java.util.ArrayList;
@@ -264,13 +260,9 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		long[] groupsIds;
 
 		try {
-			List<DepotEntry> depotEntries =
-				_depotEntryLocalService.getGroupConnectedDepotEntries(
-					scopeGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			groupsIds = ArrayUtil.append(
-				_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
-				ListUtil.toLongArray(depotEntries, DepotEntry::getGroupId));
+			groupsIds =
+				SiteConnectedGroupGroupProviderUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(scopeGroupId);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -327,14 +319,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		).build();
 
 	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
-
-	@Reference
-	private Portal _portal;
 
 	private final InfoField<TagsInfoFieldType> _tagsInfoField =
 		InfoField.builder(

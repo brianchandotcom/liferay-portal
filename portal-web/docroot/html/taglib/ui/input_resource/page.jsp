@@ -13,7 +13,9 @@ String title = (String)request.getAttribute("liferay-ui:input-resource:title");
 String url = (String)request.getAttribute("liferay-ui:input-resource:url");
 %>
 
-<input class="form-control lfr-input-resource <%= GetterUtil.getString((String)request.getAttribute("liferay-ui:input-resource:cssClass")) %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> onClick="this.select();" disabled <%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(resourceBundle, title) + "\"" : StringPool.BLANK %> type="text" value="<%= HtmlUtil.escapeAttribute(url) %>" />
+<liferay-ui:csp>
+	<input class="form-control lfr-input-resource <%= GetterUtil.getString((String)request.getAttribute("liferay-ui:input-resource:cssClass")) %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> onClick="this.select();" disabled <%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(resourceBundle, title) + "\"" : StringPool.BLANK %> type="text" value="<%= HtmlUtil.escapeAttribute(url) %>" />
+</liferay-ui:csp>
 
 <aui:script>
 	var inputField = document.getElementById('<portlet:namespace /><%= id %>');

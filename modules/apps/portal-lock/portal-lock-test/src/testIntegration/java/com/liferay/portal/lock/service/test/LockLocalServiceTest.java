@@ -7,8 +7,6 @@ package com.liferay.portal.lock.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -23,8 +21,6 @@ import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedMultipleLogs;
 import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.sql.BatchUpdateException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,7 +39,6 @@ import javax.persistence.PersistenceException;
 import org.hibernate.engine.jdbc.batch.internal.BatchingBatch;
 import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.exception.GenericJDBCException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -131,11 +126,6 @@ public class LockLocalServiceTest {
 						expectedDBType = ExpectedDBType.SQLSERVER,
 						expectedLog = "Cannot insert duplicate key row in object",
 						expectedType = ExpectedType.PREFIX
-					),
-					@ExpectedLog(
-						expectedDBType = ExpectedDBType.SYBASE,
-						expectedLog = "Attempt to insert duplicate key row",
-						expectedType = ExpectedType.CONTAINS
 					)
 				},
 				level = "ERROR", loggerClass = SqlExceptionHelper.class
@@ -351,11 +341,6 @@ public class LockLocalServiceTest {
 						expectedDBType = ExpectedDBType.SQLSERVER,
 						expectedLog = "Cannot insert duplicate key row in object",
 						expectedType = ExpectedType.PREFIX
-					),
-					@ExpectedLog(
-						expectedDBType = ExpectedDBType.SYBASE,
-						expectedLog = "Attempt to insert duplicate key row",
-						expectedType = ExpectedType.CONTAINS
 					)
 				},
 				level = "ERROR", loggerClass = SqlExceptionHelper.class
@@ -455,20 +440,12 @@ public class LockLocalServiceTest {
 								break;
 							}
 							catch (RuntimeException runtimeException) {
-								if (_isExpectedException(runtimeException)) {
-									continue;
-								}
-
 								throw runtimeException;
 							}
 						}
 					}
 				}
 				catch (RuntimeException runtimeException) {
-					if (_isExpectedException(runtimeException)) {
-						continue;
-					}
-
 					throw runtimeException;
 				}
 			}
@@ -482,30 +459,6 @@ public class LockLocalServiceTest {
 			_key = key;
 			_owner = owner;
 			_requiredSuccessCount = requiredSuccessCount;
-		}
-
-		private boolean _isExpectedException(
-			RuntimeException runtimeException) {
-
-			Throwable throwable = runtimeException.getCause();
-
-			if ((DBManagerUtil.getDBType() == DBType.SYBASE) &&
-				(throwable instanceof GenericJDBCException)) {
-
-				throwable = throwable.getCause();
-
-				String message = throwable.getMessage();
-
-				if ((throwable instanceof BatchUpdateException) &&
-					message.contains(
-						"Attempt to insert duplicate key row in object " +
-							"'Lock_' with unique index 'IX_228562AD'\n")) {
-
-					return true;
-				}
-			}
-
-			return false;
 		}
 
 		private final String _className;

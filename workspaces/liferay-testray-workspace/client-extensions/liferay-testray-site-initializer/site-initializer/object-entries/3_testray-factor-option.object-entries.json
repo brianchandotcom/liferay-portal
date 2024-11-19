@@ -766,21 +766,6 @@
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
-			"externalReferenceCode": "TRFOPT-154",
-			"name": "Sybase 15.5",
-			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
-		},
-		{
-			"externalReferenceCode": "TRFOPT-155",
-			"name": "Sybase 15.7",
-			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
-		},
-		{
-			"externalReferenceCode": "TRFOPT-156",
-			"name": "Sybase 16.0",
-			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
-		},
-		{
 			"externalReferenceCode": "TRFOPT-157",
 			"name": "Adopt OpenJDK 11 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"

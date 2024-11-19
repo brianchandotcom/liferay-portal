@@ -2609,21 +2609,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		_xStream.omitField(HashMap.class, "cache_bitmask");
 
-		try {
-			Class<?> timestampClass = classLoader.loadClass(
-				"com.sybase.jdbc4.tds.SybTimestamp");
-
-			_xStream.alias("sql-timestamp", timestampClass);
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to load class com.sybase.jdbc4.tds.SybTimestamp " +
-						"because the Sybase driver is not available",
-					classNotFoundException);
-			}
-		}
-
 		_xStream.registerConverter(
 			new ConverterAdapter(new TimestampConverter()),
 			XStream.PRIORITY_VERY_HIGH);

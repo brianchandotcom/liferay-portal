@@ -96,10 +96,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 		properties.remove("hibernate.cache.region.factory_class");
 
-		if (DBManagerUtil.getDBType(dialect) == DBType.SYBASE) {
-			properties.setProperty(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
-		}
-
 		properties.setProperty(
 			"hibernate.allow_update_outside_transaction", "true");
 		properties.setProperty("hibernate.cache.use_query_cache", "false");

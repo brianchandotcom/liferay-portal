@@ -11,7 +11,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.jdbc.pool.metrics.HikariConnectionPoolMetrics;
 import com.liferay.portal.dao.jdbc.util.AntiTimeDriftDataSourceWrapper;
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
-import com.liferay.portal.dao.jdbc.util.RetryDataSourceWrapper;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -172,15 +171,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Created data source " + dataSource.getClass());
-		}
-
-		if (PropsValues.RETRY_DATA_SOURCE_MAX_RETRIES > 0) {
-			DBType dbType = DBManagerUtil.getDBType(
-				DialectDetector.getDialect(dataSource));
-
-			if (dbType == DBType.SYBASE) {
-				dataSource = new RetryDataSourceWrapper(dataSource);
-			}
 		}
 
 		if (Boolean.getBoolean("jdbc.data.source.anti.time.drift")) {

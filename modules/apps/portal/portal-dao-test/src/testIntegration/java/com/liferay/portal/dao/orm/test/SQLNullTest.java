@@ -58,9 +58,6 @@ import org.junit.runner.RunWith;
  * Oracle 10G/11G
  * </th>
  * <th>
- * Sybase
- * </th>
- * <th>
  * Hypersonic
  * </th>
  * </tr>
@@ -510,10 +507,7 @@ public class SQLNullTest {
 	public void testBlankStringEqualsNull() {
 		String sql = _SQL_EQUALS_NULL;
 
-		if (isSybase()) {
-			sql = transformSybaseSQL(sql);
-		}
-		else if (isHypersonic()) {
+		if (isHypersonic()) {
 			sql = transformHypersonicSQL(sql);
 		}
 
@@ -538,10 +532,6 @@ public class SQLNullTest {
 	@Test
 	public void testBlankStringIsNotNull() {
 		String sql = _SQL_IS_NOT_NULL;
-
-		if (isSybase()) {
-			sql = transformSybaseSQL(sql);
-		}
 
 		Session session = _sessionFactory.openSession();
 
@@ -569,10 +559,6 @@ public class SQLNullTest {
 	@Test
 	public void testBlankStringIsNull() {
 		String sql = _SQL_IS_NULL;
-
-		if (isSybase()) {
-			sql = transformSybaseSQL(sql);
-		}
 
 		Session session = _sessionFactory.openSession();
 
@@ -627,10 +613,7 @@ public class SQLNullTest {
 	public void testBlankStringNotEqualsNull() {
 		String sql = _SQL_NOT_EQUALS_NULL;
 
-		if (isSybase()) {
-			sql = transformSybaseSQL(sql);
-		}
-		else if (isHypersonic()) {
+		if (isHypersonic()) {
 			sql = transformHypersonicSQL(sql);
 		}
 
@@ -645,12 +628,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			if (isSybase()) {
-				Assert.assertFalse(list.toString(), list.isEmpty());
-			}
-			else {
-				Assert.assertTrue(list.toString(), list.isEmpty());
-			}
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -676,12 +654,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			if (isSybase()) {
-				Assert.assertFalse(list.toString(), list.isEmpty());
-			}
-			else {
-				Assert.assertTrue(list.toString(), list.isEmpty());
-			}
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -692,10 +665,7 @@ public class SQLNullTest {
 	public void testNullEqualsNull() {
 		String sql = _SQL_EQUALS_NULL;
 
-		if (isSybase()) {
-			sql = transformSybaseSQL(sql);
-		}
-		else if (isHypersonic()) {
+		if (isHypersonic()) {
 			sql = transformHypersonicSQL(sql);
 		}
 
@@ -710,12 +680,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			if (isSybase()) {
-				Assert.assertFalse(list.toString(), list.isEmpty());
-			}
-			else {
-				Assert.assertTrue(list.toString(), list.isEmpty());
-			}
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -725,10 +690,6 @@ public class SQLNullTest {
 	@Test
 	public void testNullIsNotNull() {
 		String sql = _SQL_IS_NOT_NULL;
-
-		if (isSybase()) {
-			sql = transformSybaseSQL(sql);
-		}
 
 		Session session = _sessionFactory.openSession();
 
@@ -751,10 +712,6 @@ public class SQLNullTest {
 	@Test
 	public void testNullIsNull() {
 		String sql = _SQL_IS_NULL;
-
-		if (isSybase()) {
-			sql = transformSybaseSQL(sql);
-		}
 
 		Session session = _sessionFactory.openSession();
 
@@ -804,10 +761,7 @@ public class SQLNullTest {
 	public void testNullNotEqualsNull() {
 		String sql = _SQL_NOT_EQUALS_NULL;
 
-		if (isSybase()) {
-			sql = transformSybaseSQL(sql);
-		}
-		else if (isHypersonic()) {
+		if (isHypersonic()) {
 			sql = transformHypersonicSQL(sql);
 		}
 
@@ -848,12 +802,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			if (isSybase()) {
-				Assert.assertFalse(list.toString(), list.isEmpty());
-			}
-			else {
-				Assert.assertTrue(list.toString(), list.isEmpty());
-			}
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -935,9 +884,6 @@ public class SQLNullTest {
 		if (isPostgreSQL()) {
 			sql = transformPostgreSQL(sql);
 		}
-		else if (isSybase()) {
-			sql = transformSybaseSQL(sql);
-		}
 		else if (isHypersonic()) {
 			sql = transformHypersonicSQL(sql);
 		}
@@ -979,12 +925,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			if (isSybase()) {
-				Assert.assertFalse(list.toString(), list.isEmpty());
-			}
-			else {
-				Assert.assertTrue(list.toString(), list.isEmpty());
-			}
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -997,9 +938,6 @@ public class SQLNullTest {
 
 		if (isPostgreSQL()) {
 			sql = transformPostgreSQL(sql);
-		}
-		else if (isSybase()) {
-			sql = transformSybaseSQL(sql);
 		}
 		else if (isHypersonic()) {
 			sql = transformHypersonicSQL(sql);
@@ -1016,12 +954,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			if (isSybase()) {
-				Assert.assertFalse(list.toString(), list.isEmpty());
-			}
-			else {
-				Assert.assertTrue(list.toString(), list.isEmpty());
-			}
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -1048,20 +981,12 @@ public class SQLNullTest {
 		return isDBType(DBType.POSTGRESQL);
 	}
 
-	protected boolean isSybase() {
-		return isDBType(DBType.SYBASE);
-	}
-
 	protected String transformHypersonicSQL(String sql) {
 		return StringUtil.replace(sql, "NULL", "CAST_TEXT(NULL)");
 	}
 
 	protected String transformPostgreSQL(String sql) {
 		return StringUtil.replace(sql, '?', "CAST(? AS VARCHAR)");
-	}
-
-	protected String transformSybaseSQL(String sql) {
-		return StringUtil.replace(sql, '?', "CONVERT(VARCHAR, ?)");
 	}
 
 	private static final String _SQL_EQUALS_NULL =

@@ -1452,24 +1452,20 @@ public class RenderLayoutStructureTagTest {
 				String listStyle, long segmentsExperienceId)
 		throws Exception {
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(), layout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
-
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem =
-				(CollectionStyledLayoutStructureItem)
-					layoutStructure.addCollectionStyledLayoutStructureItem(
-						layoutStructure.getMainItemId(), 0);
-
-		collectionStyledLayoutStructureItem.setCollectionJSONObject(
-			collectionJSONObject);
+		String itemId = ContentLayoutTestUtil.addCollectionDisplayToLayout(
+			collectionJSONObject, layout, _layoutStructureProvider, listStyle,
+			null, 0, segmentsExperienceId);
 
 		if (displayConfigJSONObject != null) {
+			LayoutStructure layoutStructure =
+				_layoutStructureProvider.getLayoutStructure(
+					layout.getPlid(), segmentsExperienceId);
+
+			CollectionStyledLayoutStructureItem
+				collectionStyledLayoutStructureItem =
+					(CollectionStyledLayoutStructureItem)
+						layoutStructure.getLayoutStructureItem(itemId);
+
 			JSONObject itemConfigJSONObject =
 				collectionStyledLayoutStructureItem.getItemConfigJSONObject();
 
@@ -1479,18 +1475,15 @@ public class RenderLayoutStructureTagTest {
 
 			collectionStyledLayoutStructureItem.updateItemConfig(
 				itemConfigJSONObject);
-		}
 
-		collectionStyledLayoutStructureItem.setListStyle(listStyle);
-
-		layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
 					_group.getGroupId(), layout.getPlid(), segmentsExperienceId,
 					layoutStructure.toString());
+		}
 
-		return LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+		return _layoutStructureProvider.getLayoutStructure(
+			layout.getPlid(), segmentsExperienceId);
 	}
 
 	private Layout _addDisplayPageWithFormAndGetLayout(InfoField... infoFields)

@@ -211,6 +211,13 @@ public class NotificationQueueEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
 	public void testCountByNotificationTemplateId() throws Exception {
 		_persistence.countByNotificationTemplateId(RandomTestUtil.nextLong());
 

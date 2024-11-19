@@ -7,10 +7,8 @@ import {Button as ClayButton} from '@clayui/core';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import i18n from '~/common/I18n';
 
-import {
-	IFilterOptions,
-	IFilters,
-} from '../../pages/SecurityVulnerabilitiesList/SecurityVulnerabilitiesList';
+import {IFilters} from '../../pages/SecurityVulnerabilitiesList/SecurityVulnerabilitiesList';
+import {IProps as IFilterOptions} from '../../utils/constants/filtersOptions';
 
 import './SVFilter.css';
 
@@ -214,8 +212,8 @@ const SVFilter = ({filterOptions, filters, onChange}: IProps) => {
 						className="mr-3 p-0 sv-select-all-button"
 						displayType="link"
 						onClick={() =>
-							updateFilterValues('versions', [
-								...filterOptions.versions,
+							updateFilterValues('affectedVersions', [
+								...filterOptions.affectedVersions,
 							])
 						}
 					>
@@ -226,20 +224,27 @@ const SVFilter = ({filterOptions, filters, onChange}: IProps) => {
 						aria-label="Clear"
 						className="p-0 sv-clear-button"
 						displayType="link"
-						onClick={() => updateFilterValues('versions', null)}
+						onClick={() =>
+							updateFilterValues('affectedVersions', null)
+						}
 					>
 						{i18n.translate('clear')}
 					</ClayButton>
 				</div>
 
-				{filterOptions.versions.map((version) => (
+				{filterOptions.affectedVersions.map((affectedVersion) => (
 					<ClayCheckbox
-						aria-label={version}
-						checked={filters.versions.includes(version)}
-						key={version}
-						label={version}
+						aria-label={affectedVersion}
+						checked={filters.affectedVersions.includes(
+							affectedVersion
+						)}
+						key={affectedVersion}
+						label={affectedVersion}
 						onChange={() => {
-							toggleFilterValue('versions', version);
+							toggleFilterValue(
+								'affectedVersions',
+								affectedVersion
+							);
 						}}
 					/>
 				))}

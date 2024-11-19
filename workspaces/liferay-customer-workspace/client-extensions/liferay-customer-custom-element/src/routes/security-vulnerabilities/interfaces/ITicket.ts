@@ -4,12 +4,11 @@
  */
 
 export interface ITicket {
-	category?: string[];
+	affectedVersions?: string[];
+	category?: string;
 	classification?: string;
-	date?: string;
-	id?: number;
 	name?: string;
+	publishedDate?: string;
 	severity?: string;
 	summary?: string;
-	versions?: string[];
 }

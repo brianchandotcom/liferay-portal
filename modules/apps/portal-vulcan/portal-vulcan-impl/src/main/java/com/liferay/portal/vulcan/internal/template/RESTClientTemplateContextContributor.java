@@ -90,7 +90,7 @@ public class RESTClientTemplateContextContributor
 
 				requestDispatcher.forward(
 					new RESTClientHttpRequest(
-						_contextObjects, _httpServletRequest),
+						_contextObjects, _httpServletRequest, path),
 					httpServletResponse);
 			}
 			finally {

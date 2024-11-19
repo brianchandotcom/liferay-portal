@@ -49,7 +49,7 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 
 	public RESTClientHttpRequest(
 		Map<String, Object> contextObjects,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, String pathInfo) {
 
 		_attributes = HashMapBuilder.<String, Object>put(
 			RESTClientHttpRequest.class.getName(), true
@@ -100,6 +100,7 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 			}
 		).build();
 		_httpServletRequest = httpServletRequest;
+		_pathInfo = pathInfo;
 	}
 
 	@Override
@@ -181,7 +182,7 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 	}
 
 	public DispatcherType getDispatcherType() {
-		return _httpServletRequest.getDispatcherType();
+		return DispatcherType.FORWARD;
 	}
 
 	@Override
@@ -277,7 +278,7 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 
 	@Override
 	public String getPathInfo() {
-		return _httpServletRequest.getPathInfo();
+		return _pathInfo;
 	}
 
 	@Override
@@ -474,5 +475,6 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 	private final Map<String, Object> _attributes;
 	private final Map<String, String> _headers;
 	private final HttpServletRequest _httpServletRequest;
+	private final String _pathInfo;
 
 }

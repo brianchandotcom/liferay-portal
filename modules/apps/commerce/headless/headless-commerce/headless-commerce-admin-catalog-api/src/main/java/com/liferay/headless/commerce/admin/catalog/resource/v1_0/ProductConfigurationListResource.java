@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.admin.catalog.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfigurationList;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -46,76 +46,51 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface ProductConfigurationResource {
+public interface ProductConfigurationListResource {
 
-	public Page<ProductConfiguration>
-			getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-				String externalReferenceCode, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+	public Page<ProductConfigurationList> getProductConfigurationListsPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public ProductConfiguration
-			postProductConfigurationListByExternalReferenceCodeProductConfiguration(
-				String externalReferenceCode,
-				ProductConfiguration productConfiguration)
+	public Response postProductConfigurationListsPageExportBatch(
+			String search, Filter filter, Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
-	public Page<ProductConfiguration>
-			getProductConfigurationListIdProductConfigurationsPage(
-				Long id, String search, Filter filter, Pagination pagination,
-				Sort[] sorts)
+	public ProductConfigurationList postProductConfigurationList(
+			ProductConfigurationList productConfigurationList)
 		throws Exception;
 
-	public ProductConfiguration
-			postProductConfigurationListIdProductConfiguration(
-				Long id, ProductConfiguration productConfiguration)
-		throws Exception;
-
-	public Response postProductConfigurationListIdProductConfigurationBatch(
+	public Response postProductConfigurationListBatch(
 			String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteProductConfigurationByExternalReferenceCode(
+	public void deleteProductConfigurationListByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
-	public ProductConfiguration getProductConfigurationByExternalReferenceCode(
-			String externalReferenceCode)
+	public ProductConfigurationList
+			getProductConfigurationListByExternalReferenceCode(
+				String externalReferenceCode)
 		throws Exception;
 
-	public ProductConfiguration
-			patchProductConfigurationByExternalReferenceCode(
+	public ProductConfigurationList
+			patchProductConfigurationListByExternalReferenceCode(
 				String externalReferenceCode,
-				ProductConfiguration productConfiguration)
+				ProductConfigurationList productConfigurationList)
 		throws Exception;
 
-	public void deleteProductConfiguration(Long id) throws Exception;
+	public void deleteProductConfigurationList(Long id) throws Exception;
 
-	public Response deleteProductConfigurationBatch(
+	public Response deleteProductConfigurationListBatch(
 			String callbackURL, Object object)
 		throws Exception;
 
-	public ProductConfiguration getProductConfiguration(Long id)
+	public ProductConfigurationList getProductConfigurationList(Long id)
 		throws Exception;
 
-	public ProductConfiguration patchProductConfiguration(
-			Long id, ProductConfiguration productConfiguration)
-		throws Exception;
-
-	public ProductConfiguration getProductByExternalReferenceCodeConfiguration(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchProductByExternalReferenceCodeConfiguration(
-			String externalReferenceCode,
-			ProductConfiguration productConfiguration)
-		throws Exception;
-
-	public ProductConfiguration getProductIdConfiguration(Long id)
-		throws Exception;
-
-	public Response patchProductIdConfiguration(
-			Long id, ProductConfiguration productConfiguration)
+	public ProductConfigurationList patchProductConfigurationList(
+			Long id, ProductConfigurationList productConfigurationList)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -183,7 +158,7 @@ public interface ProductConfigurationResource {
 	@ProviderType
 	public interface Builder {
 
-		public ProductConfigurationResource build();
+		public ProductConfigurationListResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

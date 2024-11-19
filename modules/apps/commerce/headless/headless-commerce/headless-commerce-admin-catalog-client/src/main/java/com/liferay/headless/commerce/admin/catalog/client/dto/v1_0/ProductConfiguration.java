@@ -159,6 +159,121 @@ public class ProductConfiguration implements Cloneable, Serializable {
 
 	protected Boolean displayStockQuantity;
 
+	public String getEntityExternalReferenceCode() {
+		return entityExternalReferenceCode;
+	}
+
+	public void setEntityExternalReferenceCode(
+		String entityExternalReferenceCode) {
+
+		this.entityExternalReferenceCode = entityExternalReferenceCode;
+	}
+
+	public void setEntityExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			entityExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			entityExternalReferenceCode =
+				entityExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String entityExternalReferenceCode;
+
+	public Long getEntityId() {
+		return entityId;
+	}
+
+	public void setEntityId(Long entityId) {
+		this.entityId = entityId;
+	}
+
+	public void setEntityId(
+		UnsafeSupplier<Long, Exception> entityIdUnsafeSupplier) {
+
+		try {
+			entityId = entityIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long entityId;
+
+	public EntityType getEntityType() {
+		return entityType;
+	}
+
+	public String getEntityTypeAsString() {
+		if (entityType == null) {
+			return null;
+		}
+
+		return entityType.toString();
+	}
+
+	public void setEntityType(EntityType entityType) {
+		this.entityType = entityType;
+	}
+
+	public void setEntityType(
+		UnsafeSupplier<EntityType, Exception> entityTypeUnsafeSupplier) {
+
+		try {
+			entityType = entityTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected EntityType entityType;
+
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		try {
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String externalReferenceCode;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long id;
+
 	public String getInventoryEngine() {
 		return inventoryEngine;
 	}
@@ -316,6 +431,39 @@ public class ProductConfiguration implements Cloneable, Serializable {
 
 	public String toString() {
 		return ProductConfigurationSerDes.toJSON(this);
+	}
+
+	public static enum EntityType {
+
+		PRODUCT("product");
+
+		public static EntityType create(String value) {
+			for (EntityType entityType : values()) {
+				if (Objects.equals(entityType.getValue(), value) ||
+					Objects.equals(entityType.name(), value)) {
+
+					return entityType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private EntityType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

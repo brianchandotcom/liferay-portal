@@ -32,6 +32,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.info.collection.provider.RepeatableFieldInfoItemCollectionProvider;
 import com.liferay.info.constants.InfoDisplayWebKeys;
@@ -299,15 +300,13 @@ public class RenderLayoutStructureTagTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid());
 
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem =
-				_addCollectionStyledLayoutStructureItem(
-					assetListEntry, layout, _COUNT_INFO_LIST_ITEMS, "none",
-					segmentsExperienceId);
-
-		_addFragmentEntryLinks(
-			layout, collectionStyledLayoutStructureItem.getItemId(),
-			segmentsExperienceId);
+		_addCollectionStyledLayoutStructureItem(
+			assetListEntry, layout, _COUNT_INFO_LIST_ITEMS, "none",
+			segmentsExperienceId,
+			_getFragmentEntryLinks(
+				_COUNT_FRAGMENT_ENTRY_LINKS,
+				JSONUtil.put("collectionFieldId", "JournalArticle_title"),
+				layout, segmentsExperienceId));
 
 		List<AssetEntry> assetEntries = _addAssetEntries(assetListEntry);
 
@@ -388,48 +387,33 @@ public class RenderLayoutStructureTagTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid());
 
-		LayoutStructure layoutStructure =
-			_addCollectionStyledLayoutStructureItemAndGetLayoutStructure(
-				JSONUtil.put(
-					"fieldName", "Fieldset"
-				).put(
-					"itemSubType", String.valueOf(ddmStructure.getStructureId())
-				).put(
-					"itemType", JournalArticle.class.getName()
-				).put(
-					"key",
-					RepeatableFieldInfoItemCollectionProvider.class.getName()
-				).put(
-					"type",
-					InfoListProviderItemSelectorReturnType.class.getName()
-				),
-				JSONUtil.put(
-					"displayAllPages", true
-				).put(
-					"numberOfItems", 3
-				).put(
-					"numberOfItemsPerPage", 3
-				).put(
-					"paginationType", "none"
-				).put(
-					"showAllItems", true
-				),
-				layout, null, segmentsExperienceId);
-
-		List<CollectionStyledLayoutStructureItem>
-			collectionStyledLayoutStructureItems =
-				layoutStructure.getCollectionStyledLayoutStructureItems();
-
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem =
-				collectionStyledLayoutStructureItems.get(0);
-
-		List<String> childrenItemIds =
-			collectionStyledLayoutStructureItem.getChildrenItemIds();
-
-		_addFragmentEntryLinkToLayout(
-			JSONUtil.put("collectionFieldId", "DDMStructure_Text1"), layout,
-			childrenItemIds.get(0), segmentsExperienceId);
+		_addCollectionStyledLayoutStructureItemAndGetLayoutStructure(
+			JSONUtil.put(
+				"fieldName", "Fieldset"
+			).put(
+				"itemSubType", String.valueOf(ddmStructure.getStructureId())
+			).put(
+				"itemType", JournalArticle.class.getName()
+			).put(
+				"key", RepeatableFieldInfoItemCollectionProvider.class.getName()
+			).put(
+				"type", InfoListProviderItemSelectorReturnType.class.getName()
+			),
+			JSONUtil.put(
+				"displayAllPages", true
+			).put(
+				"numberOfItems", 3
+			).put(
+				"numberOfItemsPerPage", 3
+			).put(
+				"paginationType", "none"
+			).put(
+				"showAllItems", true
+			),
+			layout, null, segmentsExperienceId,
+			_getFragmentEntryLinks(
+				1, JSONUtil.put("collectionFieldId", "DDMStructure_Text1"),
+				layout, segmentsExperienceId));
 
 		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
 			layout, mockHttpServletRequest);
@@ -1410,7 +1394,8 @@ public class RenderLayoutStructureTagTest {
 			_addCollectionStyledLayoutStructureItem(
 				AssetListEntry assetListEntry, Layout layout,
 				int numberOfItemsPerPage, String paginationType,
-				long segmentsExperienceId)
+				long segmentsExperienceId,
+				FragmentEntryLink... fragmentEntryLinks)
 		throws Exception {
 
 		LayoutStructure layoutStructure =
@@ -1433,7 +1418,7 @@ public class RenderLayoutStructureTagTest {
 				).put(
 					"showAllItems", true
 				),
-				layout, null, segmentsExperienceId);
+				layout, null, segmentsExperienceId, fragmentEntryLinks);
 
 		List<CollectionStyledLayoutStructureItem>
 			collectionStyledLayoutStructureItems =
@@ -1450,12 +1435,13 @@ public class RenderLayoutStructureTagTest {
 			_addCollectionStyledLayoutStructureItemAndGetLayoutStructure(
 				JSONObject collectionJSONObject,
 				JSONObject displayConfigJSONObject, Layout layout,
-				String listStyle, long segmentsExperienceId)
+				String listStyle, long segmentsExperienceId,
+				FragmentEntryLink... fragmentEntryLinks)
 		throws Exception {
 
 		String itemId = ContentLayoutTestUtil.addCollectionDisplayToLayout(
 			collectionJSONObject, layout, _layoutStructureProvider, listStyle,
-			null, 0, segmentsExperienceId);
+			null, 0, segmentsExperienceId, fragmentEntryLinks);
 
 		if (displayConfigJSONObject != null) {
 			LayoutStructure layoutStructure =
@@ -1538,19 +1524,32 @@ public class RenderLayoutStructureTagTest {
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
-	private void _addFragmentEntryLinks(
-			Layout layout, String parentItemId, long segmentsExperienceId)
+	private FragmentEntryLink[] _addFragmentEntryLinks(
+			int count, JSONObject jsonObject, Layout layout,
+			long segmentsExperienceId)
 		throws Exception {
+
+		FragmentEntryLink[] fragmentEntryLinks = new FragmentEntryLink[count];
 
 		FragmentEntry fragmentEntry = _addFragmentEntry();
 
-		for (int i = 0; i < _COUNT_FRAGMENT_ENTRY_LINKS; i++) {
-			_addFragmentEntryLinkToLayout(
-				JSONUtil.put(
-					"element-text",
-					JSONUtil.put("collectionFieldId", "JournalArticle_title")),
-				fragmentEntry, layout, parentItemId, i, segmentsExperienceId);
+		for (int i = 0; i < count; i++) {
+			fragmentEntryLinks[i] =
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+					0, segmentsExperienceId, layout.getPlid(),
+					fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+					JSONUtil.put(
+						FragmentEntryProcessorConstants.
+							KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+						JSONUtil.put("element-text", jsonObject)
+					).toString(),
+					StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+					fragmentEntry.getType(), _serviceContext);
 		}
+
+		return fragmentEntryLinks;
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(
@@ -1891,6 +1890,9 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;

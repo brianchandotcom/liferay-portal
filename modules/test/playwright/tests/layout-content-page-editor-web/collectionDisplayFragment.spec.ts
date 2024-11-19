@@ -716,10 +716,11 @@ test('Activate the first element when a fragment is added to a Collection Displa
 
 	await page.keyboard.press('Backspace');
 
-	const collectionDisplayId =
-		await pageEditorPage.getFragmentId('Collection Display');
-
-	expect(await pageEditorPage.isActive(collectionDisplayId)).toBe(true);
+	await expect(
+		page.locator('.page-editor__topper__title', {
+			hasText: 'Collection Display',
+		})
+	).toBeVisible();
 });
 
 test(

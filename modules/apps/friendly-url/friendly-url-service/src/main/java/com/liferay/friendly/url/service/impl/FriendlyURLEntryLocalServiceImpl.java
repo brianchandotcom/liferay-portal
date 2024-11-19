@@ -96,10 +96,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		validate(groupId, classNameId, classPK, urlTitleMap);
 
-		Group group = _groupLocalService.getGroup(groupId);
-
-		_validateAssetCategories(
-			group.getCompanyId(), urlTitleMap, serviceContext);
+		_validateAssetCategories(urlTitleMap, serviceContext);
 
 		FriendlyURLEntryMapping friendlyURLEntryMapping =
 			_friendlyURLEntryMappingPersistence.fetchByC_C(
@@ -130,6 +127,8 @@ public class FriendlyURLEntryLocalServiceImpl
 
 			return friendlyURLEntry;
 		}
+
+		Group group = _groupLocalService.getGroup(groupId);
 
 		long friendlyURLEntryId = counterLocalService.increment();
 
@@ -215,7 +214,6 @@ public class FriendlyURLEntryLocalServiceImpl
 		// Asset
 
 		_deleteAssetEntry(
-			deletedFriendlyURLEntry.getCompanyId(),
 			FriendlyURLEntry.class.getName(),
 			deletedFriendlyURLEntry.getFriendlyURLEntryId());
 
@@ -260,7 +258,6 @@ public class FriendlyURLEntryLocalServiceImpl
 			// Asset
 
 			_deleteAssetEntry(
-				friendlyURLEntry.getCompanyId(),
 				FriendlyURLEntry.class.getName(),
 				friendlyURLEntry.getFriendlyURLEntryId());
 		}
@@ -273,10 +270,9 @@ public class FriendlyURLEntryLocalServiceImpl
 			long friendlyURLEntryId, String languageId)
 		throws PortalException {
 
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			friendlyURLEntryLocalizationPersistence.
-				removeByFriendlyURLEntryId_LanguageId(
-					friendlyURLEntryId, languageId);
+		friendlyURLEntryLocalizationPersistence.
+			removeByFriendlyURLEntryId_LanguageId(
+				friendlyURLEntryId, languageId);
 
 		int count =
 			friendlyURLEntryLocalizationPersistence.countByFriendlyURLEntryId(
@@ -297,9 +293,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		// Asset
 
-		_deleteAssetEntry(
-			friendlyURLEntryLocalization.getCompanyId(),
-			FriendlyURLEntry.class.getName(), friendlyURLEntryId);
+		_deleteAssetEntry(FriendlyURLEntry.class.getName(), friendlyURLEntryId);
 	}
 
 	@Override
@@ -337,7 +331,6 @@ public class FriendlyURLEntryLocalServiceImpl
 				// Asset
 
 				_deleteAssetEntry(
-					friendlyURLEntry.getCompanyId(),
 					FriendlyURLEntry.class.getName(),
 					friendlyURLEntry.getFriendlyURLEntryId());
 			});
@@ -561,8 +554,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		validate(
 			friendlyURLEntry.getGroupId(), classNameId, classPK, urlTitleMap);
 
-		_validateAssetCategories(
-			friendlyURLEntry.getCompanyId(), urlTitleMap, serviceContext);
+		_validateAssetCategories(urlTitleMap, serviceContext);
 
 		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 		friendlyURLEntry.setClassNameId(classNameId);
@@ -689,9 +681,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		return true;
 	}
 
-	private void _deleteAssetEntry(
-		long companyId, String className, long classPK) {
-
+	private void _deleteAssetEntry(String className, long classPK) {
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			className, classPK);
 
@@ -888,8 +878,7 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	private void _validateAssetCategories(
-			long companyId, Map<String, String> urlTitleMap,
-			ServiceContext serviceContext)
+			Map<String, String> urlTitleMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		long[] friendlyURLAssetCategoryIds = GetterUtil.getLongValues(

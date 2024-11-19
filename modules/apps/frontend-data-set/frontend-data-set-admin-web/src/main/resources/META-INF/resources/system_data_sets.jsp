@@ -16,7 +16,7 @@ portletDisplay.setBeta(true);
 		module="{SystemDataSets} from frontend-data-set-admin-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"namespace", liferayPortletResponse.getNamespace()
+				"systemDataSets", fdsAdminDisplayContext.getSystemFDSEntryJSONArray()
 			).build()
 		%>'
 	/>

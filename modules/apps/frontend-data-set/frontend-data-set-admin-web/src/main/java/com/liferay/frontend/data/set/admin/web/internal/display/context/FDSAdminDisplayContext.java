@@ -7,6 +7,8 @@ package com.liferay.frontend.data.set.admin.web.internal.display.context;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.frontend.data.set.SystemFDSEntry;
+import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.admin.web.internal.portlet.FDSAdminPortlet;
 import com.liferay.frontend.data.set.resolver.FDSAPIURLResolver;
@@ -31,6 +33,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
@@ -48,13 +51,15 @@ public class FDSAdminDisplayContext {
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		ServiceTrackerList<FDSAdminPortlet.CompanyScopedOpenAPIResource>
-			serviceTrackerList) {
+			serviceTrackerList,
+		SystemFDSEntryRegistry systemFDSEntryRegistry) {
 
 		_cetManager = cetManager;
 		_fdsAPIURLResolverRegistry = fdsAPIURLResolverRegistry;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_serviceTrackerList = serviceTrackerList;
+		_systemFDSEntryRegistry = systemFDSEntryRegistry;
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -115,16 +120,6 @@ public class FDSAdminDisplayContext {
 			"/data_set.jsp"
 		).setBackURL(
 			_themeDisplay.getURLCurrent()
-		).buildString();
-	}
-
-	public String getFDSEntriesURL() {
-		return PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				_renderRequest, FDSAdminPortletKeys.FDS_ADMIN,
-				RenderRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/data_sets.jsp"
 		).buildString();
 	}
 
@@ -215,6 +210,38 @@ public class FDSAdminDisplayContext {
 		return resourceURL.toString();
 	}
 
+	public JSONArray getSystemFDSEntryJSONArray() throws Exception {
+		Map<String, SystemFDSEntry> systemFDSEntries =
+			_systemFDSEntryRegistry.getSystemFDSEntries();
+
+		if (systemFDSEntries == null) {
+			return JSONFactoryUtil.createJSONArray();
+		}
+
+		return JSONUtil.toJSONArray(
+			systemFDSEntries.values(),
+			systemFDSEntry -> JSONUtil.put(
+				"additionalAPIURLParameters",
+				systemFDSEntry.getAdditionalAPIURLParameters()
+			).put(
+				"defaultItemsPerPage", systemFDSEntry.getDefaultItemsPerPage()
+			).put(
+				"description", systemFDSEntry.getDescription()
+			).put(
+				"name", systemFDSEntry.getName()
+			).put(
+				"restApplication", systemFDSEntry.getRESTApplication()
+			).put(
+				"restEndpoint", systemFDSEntry.getRESTEndpoint()
+			).put(
+				"restSchema", systemFDSEntry.getRESTSchema()
+			).put(
+				"symbol", systemFDSEntry.getSymbol()
+			).put(
+				"title", systemFDSEntry.getTitle()
+			));
+	}
+
 	private final CETManager _cetManager;
 	private final ObjectDefinition _dataSetObjectDefinition;
 	private final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry;
@@ -222,6 +249,7 @@ public class FDSAdminDisplayContext {
 	private final RenderResponse _renderResponse;
 	private final ServiceTrackerList
 		<FDSAdminPortlet.CompanyScopedOpenAPIResource> _serviceTrackerList;
+	private final SystemFDSEntryRegistry _systemFDSEntryRegistry;
 	private final ThemeDisplay _themeDisplay;
 
 }

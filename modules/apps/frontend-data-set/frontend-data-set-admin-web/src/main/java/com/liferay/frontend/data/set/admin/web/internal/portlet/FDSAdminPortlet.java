@@ -6,6 +6,7 @@
 package com.liferay.frontend.data.set.admin.web.internal.portlet;
 
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminWebKeys;
 import com.liferay.frontend.data.set.admin.web.internal.display.context.FDSAdminDisplayContext;
@@ -107,7 +108,7 @@ public class FDSAdminPortlet extends MVCPortlet {
 			new FDSAdminDisplayContext(
 				_cetManager, _fdsAPIURLResolverRegistry,
 				_objectDefinitionLocalService, renderRequest, renderResponse,
-				_serviceTrackerList));
+				_serviceTrackerList, _systemFDSEntryRegistry));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
@@ -125,6 +126,9 @@ public class FDSAdminPortlet extends MVCPortlet {
 
 	private ServiceTrackerList<CompanyScopedOpenAPIResource>
 		_serviceTrackerList;
+
+	@Reference
+	private SystemFDSEntryRegistry _systemFDSEntryRegistry;
 
 	private class CompanyScopedRESTApplicationServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

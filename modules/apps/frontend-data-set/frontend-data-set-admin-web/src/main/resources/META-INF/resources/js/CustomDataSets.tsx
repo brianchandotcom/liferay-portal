@@ -227,7 +227,7 @@ const NewDataSetModalContent = ({
 			setNoEnpointsRESTApplicationValidationError(true);
 		}
 		else if (schemaEndpoints.size === 1) {
-			const schema = schemaEndpoints.keys().next().value;
+			const schema = Array.from(schemaEndpoints.keys())[0];
 
 			setSelectedRESTSchema(schema);
 
@@ -525,31 +525,6 @@ const CustomDataSets = ({
 	resolvedRESTSchemas: Array<string>;
 	restApplications: Array<string>;
 }) => {
-	const creationMenu = {
-		primaryItems: [
-			{
-				label: Liferay.Language.get('new-data-set'),
-				onClick: ({loadData}: {loadData: Function}) => {
-					openModal({
-						contentComponent: ({
-							closeModal,
-						}: {
-							closeModal: Function;
-						}) => (
-							<NewDataSetModalContent
-								closeModal={closeModal}
-								loadData={loadData}
-								namespace={namespace}
-								resolvedRESTSchemas={resolvedRESTSchemas}
-								restApplications={restApplications}
-							/>
-						),
-					});
-				},
-			},
-		],
-	};
-
 	const getEditURL = (itemData: IDataSet) => {
 		const url = new URL(editDataSetURL);
 
@@ -608,6 +583,31 @@ const CustomDataSets = ({
 		});
 	};
 
+	const creationMenu = {
+		primaryItems: [
+			{
+				label: Liferay.Language.get('new-data-set'),
+				onClick: ({loadData}: {loadData: Function}) => {
+					openModal({
+						contentComponent: ({
+							closeModal,
+						}: {
+							closeModal: Function;
+						}) => (
+							<NewDataSetModalContent
+								closeModal={closeModal}
+								loadData={loadData}
+								namespace={namespace}
+								resolvedRESTSchemas={resolvedRESTSchemas}
+								restApplications={restApplications}
+							/>
+						),
+					});
+				},
+			},
+		],
+	};
+
 	const views = [
 		{
 			contentRenderer: 'table',
@@ -660,7 +660,7 @@ const CustomDataSets = ({
 					image: '/states/empty_state.svg',
 					title: Liferay.Language.get('no-data-sets-created'),
 				}}
-				id={`${namespace}DataSets`}
+				id={`${namespace}CustomDataSets`}
 				itemsActions={[
 					{
 						data: {

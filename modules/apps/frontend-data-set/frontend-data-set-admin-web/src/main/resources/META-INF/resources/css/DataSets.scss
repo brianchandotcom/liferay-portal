@@ -1,7 +1,36 @@
+@import 'atlas-variables';
 @import 'cadmin-variables';
 
-html#{$cadmin-selector} .cadmin .dropdown-menu.fds-entries-dropdown-menu {
-	max-height: 500px;
-	max-width: 550px;
-	width: 100%;
+html#{$cadmin-selector} .cadmin {
+	.dropdown-menu.fds-entries-dropdown-menu {
+		max-height: 500px;
+		max-width: 550px;
+		width: 100%;
+	}
+
+	.select-system-data-set-modal-content {
+		.container-fluid {
+			padding: 0;
+		}
+
+		.list-sheet {
+			border-width: 0;
+			padding: 0;
+		}
+
+		.list-group-item.selectable {
+			border-radius: 4px;
+			margin-bottom: 12px;
+
+			&.selected {
+				background-color: #f0f5ff;
+				border-color: #80acff;
+				box-shadow: 0 2px 4px rgba(39, 40, 51, 0.12);
+			}
+
+			.selection-control {
+				display: none;
+			}
+		}
+	}
 }

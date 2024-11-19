@@ -7,9 +7,112 @@ import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
 import '../css/DataSets.scss';
-import {FDS_DEFAULT_PROPS} from './utils/constants';
 
-const SystemDataSets = ({namespace}: {namespace: string}) => {
+import ClayButton from '@clayui/button';
+import ClayModal from '@clayui/modal';
+import {openModal} from 'frontend-js-web';
+
+import {API_URL, FDS_DEFAULT_PROPS} from './utils/constants';
+
+interface ISystemDataSet {
+	additionalAPIURLParameters: string;
+	defaultItemsPerPage: number;
+	description: string;
+	name: string;
+	restApplication: string;
+	restEndpoint: string;
+	restSchema: string;
+	symbol: string;
+	title: string;
+}
+
+const SelectSystemDataSetModalContent = ({
+	closeModal,
+	loadData,
+	systemDataSets,
+}: {
+	closeModal: Function;
+	loadData: Function;
+	systemDataSets: Array<ISystemDataSet>;
+}) => {
+	return (
+		<div className="select-system-data-set-modal-content">
+			<ClayModal.Header>
+				{Liferay.Language.get('create-system-data-set-customization')}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
+				<FrontendDataSet
+					{...FDS_DEFAULT_PROPS}
+					id="SystemDataSets"
+					items={systemDataSets}
+					selectedItemsKey="name"
+					selectionType="single"
+					views={[
+						{
+							contentRenderer: 'list',
+							name: 'list',
+							schema: {
+								description: 'description',
+								symbol: 'symbol',
+								title: 'title',
+							},
+						},
+					]}
+				/>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							className="btn-cancel"
+							displayType="secondary"
+							onClick={() => closeModal()}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton onClick={() => loadData()}>
+							{Liferay.Language.get('create')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</div>
+	);
+};
+
+const SystemDataSets = ({
+	systemDataSets,
+}: {
+	systemDataSets: Array<ISystemDataSet>;
+}) => {
+	const creationMenu = {
+		primaryItems: [
+			{
+				label: Liferay.Language.get(
+					'create-system-data-set-customization'
+				),
+				onClick: ({loadData}: {loadData: Function}) => {
+					openModal({
+						contentComponent: ({
+							closeModal,
+						}: {
+							closeModal: Function;
+						}) => (
+							<SelectSystemDataSetModalContent
+								closeModal={closeModal}
+								loadData={loadData}
+								systemDataSets={systemDataSets}
+							/>
+						),
+					});
+				},
+			},
+		],
+	};
+
 	const views = [
 		{
 			contentRenderer: 'table',
@@ -58,6 +161,8 @@ const SystemDataSets = ({namespace}: {namespace: string}) => {
 		<div className="data-sets system-data-sets">
 			<FrontendDataSet
 				{...FDS_DEFAULT_PROPS}
+				apiURL={API_URL.DATA_SETS}
+				creationMenu={creationMenu}
 				emptyState={{
 					description: Liferay.Language.get(
 						'start-creating-one-to-show-your-data'
@@ -65,7 +170,7 @@ const SystemDataSets = ({namespace}: {namespace: string}) => {
 					image: '/states/empty_state.svg',
 					title: Liferay.Language.get('no-system-data-sets-created'),
 				}}
-				id={`${namespace}DataSets`}
+				id="CustomizedSystemDataSets"
 				itemsActions={[]}
 				sorts={[{direction: 'desc', key: 'dateCreated'}]}
 				views={views}

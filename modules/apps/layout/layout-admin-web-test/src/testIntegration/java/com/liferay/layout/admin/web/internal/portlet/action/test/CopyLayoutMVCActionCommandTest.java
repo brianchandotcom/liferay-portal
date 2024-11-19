@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
@@ -178,7 +179,7 @@ public class CopyLayoutMVCActionCommandTest {
 	}
 
 	@Test
-	@TestInfo("LPS-192724")
+	@TestInfo({"LPS-175090", "LPS-192724"})
 	public void testDoProcessActionCopyLayoutWithPermissions()
 		throws Exception {
 
@@ -190,13 +191,16 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_addModelResources(role);
 
+		Role guestRole = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		_removeViewResourcePermission(guestRole.getRoleId());
+
 		Layout layout = _assertCopyLayout(true, Collections.emptyMap());
 
-		Assert.assertNotNull(
-			_resourcePermissionLocalService.getResourcePermission(
-				_layout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(layout.getPlid()), role.getRoleId()));
+		_assertViewResourcePermission(
+			layout.getPlid(), guestRole.getRoleId(), false);
+		_assertViewResourcePermission(layout.getPlid(), role.getRoleId(), true);
 	}
 
 	@Test
@@ -376,6 +380,24 @@ public class CopyLayoutMVCActionCommandTest {
 		return layout;
 	}
 
+	private void _assertViewResourcePermission(
+			long plid, long roleId, boolean permission)
+		throws Exception {
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				TestPropsValues.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(plid),
+				roleId);
+
+		if (permission) {
+			Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+		}
+		else {
+			Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
+		}
+	}
+
 	private FragmentEntry _getFragmentEntry() throws Exception {
 		if (_fragmentEntry != null) {
 			return _fragmentEntry;
@@ -447,6 +469,15 @@ public class CopyLayoutMVCActionCommandTest {
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
+	}
+
+	private void _removeViewResourcePermission(long roleId) throws Exception {
+		_resourcePermissionLocalService.removeResourcePermission(
+			TestPropsValues.getCompanyId(), Layout.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_layout.getPlid()), roleId, ActionKeys.VIEW);
+
+		_assertViewResourcePermission(_layout.getPlid(), roleId, false);
 	}
 
 	private static final String _NAME = StringUtil.toLowerCase(

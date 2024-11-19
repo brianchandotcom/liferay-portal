@@ -205,7 +205,9 @@
 		<!-- Other fields -->
 
 		<column name="objectDefinitionId" type="long" />
+		<column name="objectEntryFolderId" type="long" />
 		<column name="rootObjectEntryId" type="long" />
+		<column name="treePath" type="String" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
@@ -254,6 +256,59 @@
 			<finder-column name="userId" />
 			<finder-column comparator="&gt;" name="createDate" />
 			<finder-column name="objectDefinitionId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="ObjectEntryFolder" remote-service="true" uuid="true">
+
+		<!-- External reference code -->
+
+		<column name="externalReferenceCode" type="String" />
+
+		<!-- PK fields -->
+
+		<column container-model="true" name="objectEntryFolderId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="label" type="String" />
+		<column name="name" type="String" />
+		<column name="parentObjectEntryFolderId" parent-container-model="true" type="long" />
+		<column name="treePath" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="ERC_G_C" return-type="ObjectEntryFolder" unique="true">
+			<finder-column name="externalReferenceCode" />
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="G_C_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="parentObjectEntryFolderId" />
+		</finder>
+		<finder name="G_C_LikeT" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column comparator="LIKE" name="treePath" />
+		</finder>
+		<finder name="G_C_N_P" return-type="ObjectEntryFolder" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+			<finder-column name="parentObjectEntryFolderId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectField" remote-service="true" uuid="true">

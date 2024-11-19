@@ -70,8 +70,7 @@ public class ClientExtensionEntryLocalServiceImplTest {
 
 		_mockClusterableInvokerUtil();
 
-		_clusterExecutorUtilMockedStatic = Mockito.mockStatic(
-			ClusterExecutorUtil.class);
+		_mockClusterExecutorUtil();
 
 		_workflowHandlerRegistryUtilMockedStatic = Mockito.mockStatic(
 			WorkflowHandlerRegistryUtil.class);
@@ -172,6 +171,17 @@ public class ClientExtensionEntryLocalServiceImplTest {
 				Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())
 		).thenReturn(
 			Mockito.mock(MethodHandler.class)
+		);
+	}
+
+	private void _mockClusterExecutorUtil() {
+		_clusterExecutorUtilMockedStatic = Mockito.mockStatic(
+			ClusterExecutorUtil.class);
+
+		_clusterExecutorUtilMockedStatic.when(
+			ClusterExecutorUtil::isEnabled
+		).thenReturn(
+			true
 		);
 	}
 

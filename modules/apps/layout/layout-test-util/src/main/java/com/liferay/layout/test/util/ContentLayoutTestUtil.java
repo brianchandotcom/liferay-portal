@@ -406,10 +406,10 @@ public class ContentLayoutTestUtil {
 				CompanyLocalServiceUtil.getCompany(layout.getCompanyId()),
 				GroupLocalServiceUtil.getGroup(layout.getGroupId()), layout);
 
-		mockLiferayPortletActionRequest.addParameter("itemType", itemType);
-		mockLiferayPortletActionRequest.addParameter(
+		mockLiferayPortletActionRequest.setParameter("itemType", itemType);
+		mockLiferayPortletActionRequest.setParameter(
 			"parentItemId", parentItemId);
-		mockLiferayPortletActionRequest.addParameter(
+		mockLiferayPortletActionRequest.setParameter(
 			"position", String.valueOf(position));
 		mockLiferayPortletActionRequest.setParameter(
 			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
@@ -426,8 +426,8 @@ public class ContentLayoutTestUtil {
 			CompanyLocalServiceUtil.getCompany(layout.getCompanyId()),
 			GroupLocalServiceUtil.getGroup(layout.getGroupId()), layout);
 
-		mockLiferayPortletActionRequest.addParameter("itemConfig", itemConfig);
-		mockLiferayPortletActionRequest.addParameter(
+		mockLiferayPortletActionRequest.setParameter("itemConfig", itemConfig);
+		mockLiferayPortletActionRequest.setParameter(
 			"itemId", jsonObject.getString("addedItemId"));
 		mockLiferayPortletActionRequest.setParameter(
 			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
@@ -461,7 +461,7 @@ public class ContentLayoutTestUtil {
 			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
 				layout.getPlid());
 
-		mockLiferayPortletActionRequest.addParameter(
+		mockLiferayPortletActionRequest.setParameter(
 			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -472,10 +472,10 @@ public class ContentLayoutTestUtil {
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
-		mockLiferayPortletActionRequest.addParameter(
+		mockLiferayPortletActionRequest.setParameter(
 			"parentItemId", layoutStructure.getMainItemId());
 
-		mockLiferayPortletActionRequest.addParameter("portletId", portletId);
+		mockLiferayPortletActionRequest.setParameter("portletId", portletId);
 
 		return ReflectionTestUtil.invoke(
 			addPortletMVCActionCommand, "_processAddPortlet",
@@ -528,7 +528,7 @@ public class ContentLayoutTestUtil {
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		mockLiferayPortletActionRequest.addParameter(
+		mockLiferayPortletActionRequest.setParameter(
 			"segmentsExperienceId",
 			String.valueOf(
 				SegmentsExperienceLocalServiceUtil.
@@ -663,8 +663,8 @@ public class ContentLayoutTestUtil {
 				CompanyLocalServiceUtil.getCompany(layout.getCompanyId()),
 				GroupLocalServiceUtil.getGroup(layout.getGroupId()), layout);
 
-		mockLiferayPortletActionRequest.addParameter("itemId", itemId);
-		mockLiferayPortletActionRequest.addParameter(
+		mockLiferayPortletActionRequest.setParameter("itemId", itemId);
+		mockLiferayPortletActionRequest.setParameter(
 			"portletIds", new String[] {portletId});
 
 		return ReflectionTestUtil.invoke(

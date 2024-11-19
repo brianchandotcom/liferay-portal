@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutImpl;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -61,7 +60,6 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Mikel Lorza
  */
-@FeatureFlags("LPD-11147")
 @RunWith(Arquillian.class)
 @Sync
 public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {

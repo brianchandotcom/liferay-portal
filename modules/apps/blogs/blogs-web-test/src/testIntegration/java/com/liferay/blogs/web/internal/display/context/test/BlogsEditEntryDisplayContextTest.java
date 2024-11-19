@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -89,7 +88,6 @@ public class BlogsEditEntryDisplayContextTest {
 			new ServiceContext());
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetAvailableFriendlyURLAssetCategoriesJSONArrayWhenCreatingBlogEntry()
 		throws Exception {
@@ -104,7 +102,6 @@ public class BlogsEditEntryDisplayContextTest {
 			0, availableFriendlyURLAssetCategoriesJSONArray.length());
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetAvailableFriendlyURLAssetCategoriesJSONArrayWhenParameterHasValues()
 		throws Exception {
@@ -156,7 +153,6 @@ public class BlogsEditEntryDisplayContextTest {
 			_assetCategoryIds[2], GetterUtil.getLong(jsonObject2.get("value")));
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetAvailableFriendlyURLAssetCategoriesJSONArrayWhenTwoCurrentFriendlyURLAssetCategories()
 		throws Exception {
@@ -183,7 +179,6 @@ public class BlogsEditEntryDisplayContextTest {
 			3, availableFriendlyURLAssetCategoriesJSONArray.length());
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetAvailableFriendlyURLAssetCategoriesJSONArrayWhenZeroCurrentFriendlyURLAssetCategories()
 		throws Exception {
@@ -210,7 +205,6 @@ public class BlogsEditEntryDisplayContextTest {
 			5, availableFriendlyURLAssetCategoriesJSONArray.length());
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetCurrentFriendlyURLAssetCategoriesJSONArrayWhenCreatingBlogEntry()
 		throws Exception {
@@ -225,7 +219,6 @@ public class BlogsEditEntryDisplayContextTest {
 			0, currentFriendlyURLAssetCategoriesJSONArray.length());
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetCurrentFriendlyURLAssetCategoriesJSONArrayWhenParameterHasValues()
 		throws Exception {
@@ -274,7 +267,6 @@ public class BlogsEditEntryDisplayContextTest {
 			_assetCategoryIds[2], GetterUtil.getLong(jsonObject2.get("value")));
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetCurrentFriendlyURLAssetCategoriesJSONArrayWhenReverseCurrentFriendlyURLAssetCategories()
 		throws Exception {
@@ -321,7 +313,6 @@ public class BlogsEditEntryDisplayContextTest {
 			_assetCategoryIds[0], GetterUtil.getLong(jsonObject3.get("value")));
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetCurrentFriendlyURLAssetCategoriesJSONArrayWhenTwoCurrentFriendlyURLAssetCategories()
 		throws Exception {
@@ -348,7 +339,6 @@ public class BlogsEditEntryDisplayContextTest {
 			2, currentFriendlyURLAssetCategoriesJSONArray.length());
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetCurrentFriendlyURLAssetCategoriesJSONArrayWhenZeroCurrentFriendlyURLAssetCategories()
 		throws Exception {

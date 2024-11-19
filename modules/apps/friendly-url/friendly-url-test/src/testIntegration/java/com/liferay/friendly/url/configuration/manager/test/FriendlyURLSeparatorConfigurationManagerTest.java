@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -39,7 +38,6 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Mikel Lorza
  */
-@FeatureFlags("LPD-11147")
 @RunWith(Arquillian.class)
 @Sync
 public class FriendlyURLSeparatorConfigurationManagerTest {

@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -110,7 +109,6 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetFriendlyURLWithConfiguredURLSeparator()
 		throws Exception {

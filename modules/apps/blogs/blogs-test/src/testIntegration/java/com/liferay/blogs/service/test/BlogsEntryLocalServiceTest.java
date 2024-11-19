@@ -70,7 +70,6 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -396,7 +395,6 @@ public class BlogsEntryLocalServiceTest {
 		Assert.assertEquals("title-1", entry.getUrlTitle());
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test(expected = DuplicateFriendlyURLEntryException.class)
 	public void testAddEntryWithDuplicatedCategorizedFriendlyURL()
 		throws Exception {

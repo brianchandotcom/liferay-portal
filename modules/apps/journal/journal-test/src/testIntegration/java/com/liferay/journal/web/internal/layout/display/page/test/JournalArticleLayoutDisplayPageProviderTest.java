@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.sites.kernel.util.Sites;
@@ -285,7 +284,6 @@ public class JournalArticleLayoutDisplayPageProviderTest {
 		}
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetURLSeparator() {
 		Assert.assertEquals(
@@ -293,7 +291,6 @@ public class JournalArticleLayoutDisplayPageProviderTest {
 			_layoutDisplayPageProvider.getURLSeparator());
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetURLSeparatorWithConfiguredURLSeparator()
 		throws Exception {

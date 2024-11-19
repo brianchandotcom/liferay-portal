@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -69,7 +68,6 @@ public class LayoutFriendlyURLSeparatorCompositeTest {
 			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetLayoutFriendlyURLSeparatorCompositeWithConfiguredURLSeparator()
 		throws Exception {

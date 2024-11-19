@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -145,7 +144,6 @@ public class BlogsEntryStagedModelDataHandlerTest
 			importedUpdatedEntry.getCoverImageFileEntryId());
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testImportedFriendlyURLCategoriesAfterUpdate()
 		throws Exception {

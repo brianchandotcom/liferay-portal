@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -134,7 +133,6 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 			FriendlyURLResolverConstants.URL_SEPARATOR_X_CUSTOM_ASSET);
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetInfoFieldValuesWithConfiguredURLSeparator()
 		throws Exception {

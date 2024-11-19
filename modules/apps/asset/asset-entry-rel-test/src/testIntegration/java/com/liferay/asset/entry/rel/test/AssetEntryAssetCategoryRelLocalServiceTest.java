@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -328,7 +327,6 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 				getAssetEntryAssetCategoryRelsCount(assetEntryId));
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetAssetEntryAssetCategoryRelsCountByClassNameId() {
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(

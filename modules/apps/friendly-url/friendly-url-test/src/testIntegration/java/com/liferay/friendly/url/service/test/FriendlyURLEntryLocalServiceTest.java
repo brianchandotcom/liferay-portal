@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -131,7 +130,6 @@ public class FriendlyURLEntryLocalServiceTest {
 		Assert.assertEquals(urlTitle, finalFriendlyURL.getUrlTitle());
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testAddFriendlyURLEntryWithAssetCategories() throws Exception {
 		ServiceContext serviceContext = _getServiceContext();
@@ -169,7 +167,6 @@ public class FriendlyURLEntryLocalServiceTest {
 				_language.getLanguageId(LocaleUtil.US)));
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testAddFriendlyURLEntryWithLocalizedAssetCategories()
 		throws Exception {
@@ -201,7 +198,6 @@ public class FriendlyURLEntryLocalServiceTest {
 				_language.getLanguageId(new Locale("es", "ES"))));
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test(expected = FriendlyURLCategoryException.class)
 	public void testAddFriendlyURLEntryWithSlashAndAssetCategories()
 		throws Exception {
@@ -235,7 +231,6 @@ public class FriendlyURLEntryLocalServiceTest {
 			serviceContext);
 	}
 
-	@FeatureFlags("LPD-11147")
 	@Test
 	public void testAddUnlocalizedFriendlyURLEntryWithLocalizedAssetCategories()
 		throws Exception {

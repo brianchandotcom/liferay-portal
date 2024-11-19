@@ -85,6 +85,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -95,7 +96,10 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -134,6 +138,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -488,21 +495,17 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		SegmentsExperience segmentsExperience =
-			SegmentsTestUtil.addSegmentsExperience(
-				_group.getGroupId(), segmentsEntry2.getSegmentsEntryId(),
-				layout.getPlid());
+		long segmentsExperienceId = _addSegmentsExperience(
+			layout, segmentsEntry2.getSegmentsEntryId());
 
-		_createLayoutStructure(
-			assetListEntry.getAssetListEntryId(), layout,
-			segmentsExperience.getSegmentsExperienceId());
+		_addCollectionStyledLayoutStructureItem(
+			assetListEntry.getAssetListEntryId(), layout, segmentsExperienceId);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(layout);
 
 		mockHttpServletRequest.addParameter(
-			"segmentsExperienceId",
-			String.valueOf(segmentsExperience.getSegmentsExperienceId()));
+			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -510,7 +513,7 @@ public class RenderLayoutStructureTagTest {
 		RenderLayoutStructureTag renderLayoutStructureTag =
 			_getRenderLayoutStructureTag(
 				layout, mockHttpServletRequest, mockHttpServletResponse,
-				segmentsExperience.getSegmentsExperienceId());
+				segmentsExperienceId);
 
 		renderLayoutStructureTag.doTag(
 			mockHttpServletRequest, mockHttpServletResponse);
@@ -571,21 +574,17 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		SegmentsExperience segmentsExperience =
-			SegmentsTestUtil.addSegmentsExperience(
-				_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
-				layout.getPlid());
+		long segmentsExperienceId = _addSegmentsExperience(
+			layout, segmentsEntry.getSegmentsEntryId());
 
-		_createLayoutStructure(
-			assetListEntry.getAssetListEntryId(), layout,
-			segmentsExperience.getSegmentsExperienceId());
+		_addCollectionStyledLayoutStructureItem(
+			assetListEntry.getAssetListEntryId(), layout, segmentsExperienceId);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(layout);
 
 		mockHttpServletRequest.addParameter(
-			"segmentsExperienceId",
-			String.valueOf(segmentsExperience.getSegmentsExperienceId()));
+			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -593,7 +592,7 @@ public class RenderLayoutStructureTagTest {
 		RenderLayoutStructureTag renderLayoutStructureTag =
 			_getRenderLayoutStructureTag(
 				layout, mockHttpServletRequest, mockHttpServletResponse,
-				segmentsExperience.getSegmentsExperienceId());
+				segmentsExperienceId);
 
 		renderLayoutStructureTag.doTag(
 			mockHttpServletRequest, mockHttpServletResponse);
@@ -654,8 +653,19 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		_createLayoutStructure(
-			assetListEntry.getAssetListEntryId(), layout,
+		_addCollectionStyledLayoutStructureItem(
+			JSONUtil.put(
+				"classNameId", _portal.getClassNameId(AssetListEntry.class)
+			).put(
+				"classPK", assetListEntry.getAssetListEntryId()
+			).put(
+				"itemType", JournalArticle.class.getName()
+			).put(
+				"type", InfoListItemSelectorReturnType.class.getName()
+			),
+			null, layout,
+			"com.liferay.journal.web.internal.info.list.renderer." +
+				"BulletedJournalArticleBasicInfoListRenderer",
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid()));
 
@@ -1454,6 +1464,26 @@ public class RenderLayoutStructureTagTest {
 		return itemId;
 	}
 
+	private void _addCollectionStyledLayoutStructureItem(
+			long assetListEntryId, Layout layout, long segmentsExperienceId)
+		throws Exception {
+
+		_addCollectionStyledLayoutStructureItem(
+			JSONUtil.put(
+				"classNameId", _portal.getClassNameId(AssetListEntry.class)
+			).put(
+				"classPK", assetListEntryId
+			).put(
+				"itemType", JournalArticle.class.getName()
+			).put(
+				"type", InfoListItemSelectorReturnType.class.getName()
+			),
+			null, layout,
+			"com.liferay.journal.web.internal.info.list.renderer." +
+				"BulletedJournalArticleBasicInfoListRenderer",
+			segmentsExperienceId);
+	}
+
 	private Layout _addDisplayPageWithFormAndGetLayout(InfoField... infoFields)
 		throws Exception {
 
@@ -1616,6 +1646,45 @@ public class RenderLayoutStructureTagTest {
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 	}
 
+	private long _addSegmentsExperience(Layout layout, long segmentsEntryId)
+		throws Exception {
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		MVCActionCommand addSegmentsExperienceMVCActionCommand =
+			ContentLayoutTestUtil.getMVCActionCommand(
+				"/layout_content_page_editor/add_segments_experience");
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
+				_companyLocalService.getCompany(_group.getCompanyId()), _group,
+				draftLayout);
+
+		mockLiferayPortletActionRequest.setParameter(
+			"groupId", String.valueOf(draftLayout.getGroupId()));
+		mockLiferayPortletActionRequest.setParameter(
+			"name", RandomTestUtil.randomString());
+		mockLiferayPortletActionRequest.setParameter(
+			"plid", String.valueOf(draftLayout.getPlid()));
+		mockLiferayPortletActionRequest.setParameter(
+			"segmentsEntryId", String.valueOf(segmentsEntryId));
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			addSegmentsExperienceMVCActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		JSONObject segmentsExperienceJSONObject = jsonObject.getJSONObject(
+			"segmentsExperience");
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.getSegmentsExperience(
+				segmentsExperienceJSONObject.getLong("segmentsExperienceId"));
+
+		return segmentsExperience.getSegmentsExperienceId();
+	}
+
 	private void _assertErrorMessage(
 		String content, String expectedErrorMessage) {
 
@@ -1669,26 +1738,6 @@ public class RenderLayoutStructureTagTest {
 			_assertInfoFieldInputJSONObject(
 				infoField, matcher.group(1), locale);
 		}
-	}
-
-	private void _createLayoutStructure(
-			long assetListEntryId, Layout layout, long segmentsExperienceId)
-		throws Exception {
-
-		_addCollectionStyledLayoutStructureItem(
-			JSONUtil.put(
-				"classNameId", _portal.getClassNameId(AssetListEntry.class)
-			).put(
-				"classPK", assetListEntryId
-			).put(
-				"itemType", JournalArticle.class.getName()
-			).put(
-				"type", InfoListItemSelectorReturnType.class.getName()
-			),
-			null, layout,
-			"com.liferay.journal.web.internal.info.list.renderer." +
-				"BulletedJournalArticleBasicInfoListRenderer",
-			segmentsExperienceId);
 	}
 
 	private DDMForm _deserialize(String content) {

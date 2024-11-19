@@ -99,7 +99,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 								String descriptiveName = curGroup.isOrganization() ? String.format("%s (%s)", curGroup.getDescriptiveName(locale), LanguageUtil.get(request, OrganizationConstants.TYPE_ORGANIZATION)) : curGroup.getDescriptiveName(locale);
 
-								KeyValuePair keyValuePair = new KeyValuePair(curGroup.getExternalReferenceCode(), descriptiveName);
+								KeyValuePair keyValuePair = new KeyValuePair(HtmlUtil.escape(curGroup.getExternalReferenceCode()), descriptiveName);
 
 								if (announcementsDisplayContext.isScopeGroupSelected(curGroup)) {
 									leftList.add(keyValuePair);
@@ -134,14 +134,14 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							for (Organization organization : organizations) {
 								if (announcementsDisplayContext.isScopeOrganizationSelected(organization)) {
-									leftList.add(new KeyValuePair(organization.getExternalReferenceCode(), organization.getName()));
+									leftList.add(new KeyValuePair(HtmlUtil.escape(organization.getExternalReferenceCode()), organization.getName()));
 								}
 							}
 
 							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
 							for (Organization organization : organizations) {
-								KeyValuePair tempKeyValuePair = new KeyValuePair(organization.getExternalReferenceCode(), organization.getName());
+								KeyValuePair tempKeyValuePair = new KeyValuePair(HtmlUtil.escape(organization.getExternalReferenceCode()), organization.getName());
 
 								if (!leftList.contains(tempKeyValuePair)) {
 									rightList.add(tempKeyValuePair);
@@ -173,14 +173,14 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							for (UserGroup userGroup : userGroups) {
 								if (announcementsDisplayContext.isScopeUserGroupSelected(userGroup)) {
-									leftList.add(new KeyValuePair(userGroup.getExternalReferenceCode(), userGroup.getName()));
+									leftList.add(new KeyValuePair(HtmlUtil.escape(userGroup.getExternalReferenceCode()), userGroup.getName()));
 								}
 							}
 
 							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
 							for (UserGroup userGroup : userGroups) {
-								KeyValuePair tempKeyValuePair = new KeyValuePair(userGroup.getExternalReferenceCode(), userGroup.getName());
+								KeyValuePair tempKeyValuePair = new KeyValuePair(HtmlUtil.escape(userGroup.getExternalReferenceCode()), userGroup.getName());
 
 								if (!leftList.contains(tempKeyValuePair)) {
 									rightList.add(tempKeyValuePair);
@@ -212,14 +212,14 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							for (Role role : roles) {
 								if (announcementsDisplayContext.isScopeRoleSelected(role)) {
-									leftList.add(new KeyValuePair(role.getExternalReferenceCode(), role.getTitle(locale)));
+									leftList.add(new KeyValuePair(HtmlUtil.escape(role.getExternalReferenceCode()), role.getTitle(locale)));
 								}
 							}
 
 							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
 							for (Role role : roles) {
-								KeyValuePair tempKeyValuePair = new KeyValuePair(role.getExternalReferenceCode(), role.getTitle(locale));
+								KeyValuePair tempKeyValuePair = new KeyValuePair(HtmlUtil.escape(role.getExternalReferenceCode()), role.getTitle(locale));
 
 								if (!leftList.contains(tempKeyValuePair)) {
 									rightList.add(tempKeyValuePair);
@@ -363,9 +363,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 			) {
 				selectedScopeGroupExternalReferenceCodes.setAttribute(
 					'value',
-					Liferay.Util.getSelectedOptionValues(
-						currentScopeGroupExternalReferenceCodes
-					)
+					getSelectedOptionValues(currentScopeGroupExternalReferenceCodes)
 				);
 			}
 
@@ -384,7 +382,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 			) {
 				selectedScopeOrganizationExternalReferenceCodes.setAttribute(
 					'value',
-					Liferay.Util.getSelectedOptionValues(
+					getSelectedOptionValues(
 						currentScopeOrganizationExternalReferenceCodes
 					)
 				);
@@ -405,9 +403,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 			) {
 				selectedScopeRoleExternalReferenceCodes.setAttribute(
 					'value',
-					Liferay.Util.getSelectedOptionValues(
-						currentScopeRoleExternalReferenceCodes
-					)
+					getSelectedOptionValues(currentScopeRoleExternalReferenceCodes)
 				);
 			}
 
@@ -426,13 +422,21 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 			) {
 				selectedScopeUserGroupExternalReferenceCodes.setAttribute(
 					'value',
-					Liferay.Util.getSelectedOptionValues(
+					getSelectedOptionValues(
 						currentScopeUserGroupExternalReferenceCodes
 					)
 				);
 			}
 
 			submitForm(<portlet:namespace />form);
+		}
+
+		function getSelectedOptionValues(select) {
+			return JSON.stringify(
+				Array.from(select.getElementsByTagName('option')).map(
+					(item) => item.value
+				)
+			);
 		}
 	}
 </aui:script>

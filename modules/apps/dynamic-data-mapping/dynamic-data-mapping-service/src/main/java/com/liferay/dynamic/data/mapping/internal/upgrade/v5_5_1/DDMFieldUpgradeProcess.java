@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Alicia García
@@ -40,7 +41,29 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 		_upgrade();
 	}
 
+	private boolean _hasDDMFieldCompanyId0() throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select count(*) from DDMField where companyId = 0")) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					int count = resultSet.getInt(1);
+
+					if (count > 0) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+		}
+	}
+
 	private void _upgrade() throws Exception {
+		if (!_hasDDMFieldCompanyId0()) {
+			return;
+		}
+
 		processConcurrently(
 			SQLTransformer.transform(
 				StringBundler.concat(

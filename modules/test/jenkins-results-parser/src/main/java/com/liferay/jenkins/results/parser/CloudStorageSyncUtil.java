@@ -20,6 +20,9 @@ public class CloudStorageSyncUtil {
 	public static final String GCP_BUCKET_PATH_JENKINS_CI_DATA =
 		"gs://jenkins-ci-data";
 
+	public static final String GCP_BUCKET_PATH_PATCHER_SHARED =
+		"gs://patcher-shared";
+
 	public static final String GCP_BUCKET_PATH_TESTRAY_RESULTS =
 		"gs://testray-results";
 
@@ -36,6 +39,15 @@ public class CloudStorageSyncUtil {
 			sb.append(
 				_buildProperties.getProperty(
 					"google.application.crendential.file[jenkins]"));
+
+			commands.add(sb.toString());
+		}
+		else if (source.startsWith(GCP_BUCKET_PATH_PATCHER_SHARED) ||
+				 destination.startsWith(GCP_BUCKET_PATH_PATCHER_SHARED)) {
+
+			sb.append(
+				_buildProperties.getProperty(
+					"google.application.crendential.file[patcher]"));
 
 			commands.add(sb.toString());
 		}

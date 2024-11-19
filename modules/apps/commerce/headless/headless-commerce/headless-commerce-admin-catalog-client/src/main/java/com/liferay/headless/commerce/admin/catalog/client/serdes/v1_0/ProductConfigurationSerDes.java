@@ -125,6 +125,69 @@ public class ProductConfigurationSerDes {
 			sb.append(productConfiguration.getDisplayStockQuantity());
 		}
 
+		if (productConfiguration.getEntityExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"entityExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(productConfiguration.getEntityExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
+		if (productConfiguration.getEntityId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"entityId\": ");
+
+			sb.append(productConfiguration.getEntityId());
+		}
+
+		if (productConfiguration.getEntityType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"entityType\": ");
+
+			sb.append("\"");
+
+			sb.append(productConfiguration.getEntityType());
+
+			sb.append("\"");
+		}
+
+		if (productConfiguration.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productConfiguration.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
+		if (productConfiguration.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(productConfiguration.getId());
+		}
+
 		if (productConfiguration.getInventoryEngine() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -271,6 +334,50 @@ public class ProductConfigurationSerDes {
 				String.valueOf(productConfiguration.getDisplayStockQuantity()));
 		}
 
+		if (productConfiguration.getEntityExternalReferenceCode() == null) {
+			map.put("entityExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"entityExternalReferenceCode",
+				String.valueOf(
+					productConfiguration.getEntityExternalReferenceCode()));
+		}
+
+		if (productConfiguration.getEntityId() == null) {
+			map.put("entityId", null);
+		}
+		else {
+			map.put(
+				"entityId", String.valueOf(productConfiguration.getEntityId()));
+		}
+
+		if (productConfiguration.getEntityType() == null) {
+			map.put("entityType", null);
+		}
+		else {
+			map.put(
+				"entityType",
+				String.valueOf(productConfiguration.getEntityType()));
+		}
+
+		if (productConfiguration.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(
+					productConfiguration.getExternalReferenceCode()));
+		}
+
+		if (productConfiguration.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(productConfiguration.getId()));
+		}
+
 		if (productConfiguration.getInventoryEngine() == null) {
 			map.put("inventoryEngine", null);
 		}
@@ -372,6 +479,25 @@ public class ProductConfigurationSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "entityExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "entityId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "entityType")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "inventoryEngine")) {
 				return false;
 			}
@@ -445,6 +571,41 @@ public class ProductConfigurationSerDes {
 				if (jsonParserFieldValue != null) {
 					productConfiguration.setDisplayStockQuantity(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "entityExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					productConfiguration.setEntityExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "entityId")) {
+				if (jsonParserFieldValue != null) {
+					productConfiguration.setEntityId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "entityType")) {
+				if (jsonParserFieldValue != null) {
+					productConfiguration.setEntityType(
+						ProductConfiguration.EntityType.create(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					productConfiguration.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					productConfiguration.setId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "inventoryEngine")) {

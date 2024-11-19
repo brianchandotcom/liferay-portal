@@ -5,9 +5,12 @@
 
 package com.liferay.headless.commerce.admin.catalog.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -306,6 +309,228 @@ public class ProductConfiguration implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Boolean> _displayStockQuantitySupplier;
+
+	@Schema(example = "AB-34098-789-N")
+	public String getEntityExternalReferenceCode() {
+		if (_entityExternalReferenceCodeSupplier != null) {
+			entityExternalReferenceCode =
+				_entityExternalReferenceCodeSupplier.get();
+
+			_entityExternalReferenceCodeSupplier = null;
+		}
+
+		return entityExternalReferenceCode;
+	}
+
+	public void setEntityExternalReferenceCode(
+		String entityExternalReferenceCode) {
+
+		this.entityExternalReferenceCode = entityExternalReferenceCode;
+
+		_entityExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEntityExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			entityExternalReferenceCodeUnsafeSupplier) {
+
+		_entityExternalReferenceCodeSupplier = () -> {
+			try {
+				return entityExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String entityExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _entityExternalReferenceCodeSupplier;
+
+	@DecimalMin("0")
+	@Schema(example = "30130")
+	public Long getEntityId() {
+		if (_entityIdSupplier != null) {
+			entityId = _entityIdSupplier.get();
+
+			_entityIdSupplier = null;
+		}
+
+		return entityId;
+	}
+
+	public void setEntityId(Long entityId) {
+		this.entityId = entityId;
+
+		_entityIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEntityId(
+		UnsafeSupplier<Long, Exception> entityIdUnsafeSupplier) {
+
+		_entityIdSupplier = () -> {
+			try {
+				return entityIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long entityId;
+
+	@JsonIgnore
+	private Supplier<Long> _entityIdSupplier;
+
+	@JsonGetter("entityType")
+	@Schema(example = "product")
+	@Valid
+	public EntityType getEntityType() {
+		if (_entityTypeSupplier != null) {
+			entityType = _entityTypeSupplier.get();
+
+			_entityTypeSupplier = null;
+		}
+
+		return entityType;
+	}
+
+	@JsonIgnore
+	public String getEntityTypeAsString() {
+		EntityType entityType = getEntityType();
+
+		if (entityType == null) {
+			return null;
+		}
+
+		return entityType.toString();
+	}
+
+	public void setEntityType(EntityType entityType) {
+		this.entityType = entityType;
+
+		_entityTypeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEntityType(
+		UnsafeSupplier<EntityType, Exception> entityTypeUnsafeSupplier) {
+
+		_entityTypeSupplier = () -> {
+			try {
+				return entityTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected EntityType entityType;
+
+	@JsonIgnore
+	private Supplier<EntityType> _entityTypeSupplier;
+
+	@Schema(example = "AB-34098-789-N")
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
+
+			_externalReferenceCodeSupplier = null;
+		}
+
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+
+		_externalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		_externalReferenceCodeSupplier = () -> {
+			try {
+				return externalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String externalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _externalReferenceCodeSupplier;
+
+	@DecimalMin("0")
+	@Schema(example = "30130")
+	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+
+		_idSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long id;
+
+	@JsonIgnore
+	private Supplier<Long> _idSupplier;
 
 	@Schema(
 		description = "The inventory engine that will be used to manage the product inventory"
@@ -677,6 +902,78 @@ public class ProductConfiguration implements Serializable {
 			sb.append(displayStockQuantity);
 		}
 
+		String entityExternalReferenceCode = getEntityExternalReferenceCode();
+
+		if (entityExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"entityExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(entityExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		Long entityId = getEntityId();
+
+		if (entityId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"entityId\": ");
+
+			sb.append(entityId);
+		}
+
+		EntityType entityType = getEntityType();
+
+		if (entityType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"entityType\": ");
+
+			sb.append("\"");
+
+			sb.append(entityType);
+
+			sb.append("\"");
+		}
+
+		String externalReferenceCode = getExternalReferenceCode();
+
+		if (externalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		Long id = getId();
+
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(id);
+		}
+
 		String inventoryEngine = getInventoryEngine();
 
 		if (inventoryEngine != null) {
@@ -768,6 +1065,44 @@ public class ProductConfiguration implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("EntityType")
+	public static enum EntityType {
+
+		PRODUCT("product");
+
+		@JsonCreator
+		public static EntityType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (EntityType entityType : values()) {
+				if (Objects.equals(entityType.getValue(), value)) {
+					return entityType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private EntityType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

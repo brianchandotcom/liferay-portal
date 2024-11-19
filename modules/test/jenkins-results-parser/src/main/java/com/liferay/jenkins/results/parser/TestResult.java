@@ -46,6 +46,8 @@ public interface TestResult {
 
 	public boolean isFailing();
 
+	public boolean isSkipped();
+
 	public boolean isUniqueFailure();
 
 }

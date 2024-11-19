@@ -387,7 +387,7 @@ public class RenderLayoutStructureTagTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid());
 
-		_addCollectionStyledLayoutStructureItemAndGetLayoutStructure(
+		_addCollectionStyledLayoutStructureItem(
 			JSONUtil.put(
 				"fieldName", "Fieldset"
 			).put(
@@ -1328,18 +1328,15 @@ public class RenderLayoutStructureTagTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid());
 
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem =
-				_addCollectionStyledLayoutStructureItem(
-					assetListEntry, layout, _COUNT_INFO_LIST_ITEMS, "none",
-					segmentsExperienceId);
+		String itemId = _addCollectionStyledLayoutStructureItem(
+			assetListEntry, layout, _COUNT_INFO_LIST_ITEMS, "none",
+			segmentsExperienceId);
 
 		String content = _getRenderLayoutHTML(layout);
 
 		Assert.assertTrue(
 			content.contains(
-				"id=\"analytics-targetable-collection-" +
-					collectionStyledLayoutStructureItem.getItemId() + "\""));
+				"id=\"analytics-targetable-collection-" + itemId + "\""));
 	}
 
 	@Test
@@ -1390,53 +1387,38 @@ public class RenderLayoutStructureTagTest {
 		return assetEntries;
 	}
 
-	private CollectionStyledLayoutStructureItem
-			_addCollectionStyledLayoutStructureItem(
-				AssetListEntry assetListEntry, Layout layout,
-				int numberOfItemsPerPage, String paginationType,
-				long segmentsExperienceId,
-				FragmentEntryLink... fragmentEntryLinks)
+	private String _addCollectionStyledLayoutStructureItem(
+			AssetListEntry assetListEntry, Layout layout,
+			int numberOfItemsPerPage, String paginationType,
+			long segmentsExperienceId, FragmentEntryLink... fragmentEntryLinks)
 		throws Exception {
 
-		LayoutStructure layoutStructure =
-			_addCollectionStyledLayoutStructureItemAndGetLayoutStructure(
-				JSONUtil.put(
-					"classNameId", _portal.getClassNameId(AssetListEntry.class)
-				).put(
-					"classPK", assetListEntry.getAssetListEntryId()
-				).put(
-					"itemType", JournalArticle.class.getName()
-				).put(
-					"type", InfoListItemSelectorReturnType.class.getName()
-				),
-				JSONUtil.put(
-					"displayAllPages", true
-				).put(
-					"numberOfItemsPerPage", numberOfItemsPerPage
-				).put(
-					"paginationType", paginationType
-				).put(
-					"showAllItems", true
-				),
-				layout, null, segmentsExperienceId, fragmentEntryLinks);
-
-		List<CollectionStyledLayoutStructureItem>
-			collectionStyledLayoutStructureItems =
-				layoutStructure.getCollectionStyledLayoutStructureItems();
-
-		Assert.assertEquals(
-			collectionStyledLayoutStructureItems.toString(), 1,
-			collectionStyledLayoutStructureItems.size());
-
-		return collectionStyledLayoutStructureItems.get(0);
+		return _addCollectionStyledLayoutStructureItem(
+			JSONUtil.put(
+				"classNameId", _portal.getClassNameId(AssetListEntry.class)
+			).put(
+				"classPK", assetListEntry.getAssetListEntryId()
+			).put(
+				"itemType", JournalArticle.class.getName()
+			).put(
+				"type", InfoListItemSelectorReturnType.class.getName()
+			),
+			JSONUtil.put(
+				"displayAllPages", true
+			).put(
+				"numberOfItemsPerPage", numberOfItemsPerPage
+			).put(
+				"paginationType", paginationType
+			).put(
+				"showAllItems", true
+			),
+			layout, null, segmentsExperienceId, fragmentEntryLinks);
 	}
 
-	private LayoutStructure
-			_addCollectionStyledLayoutStructureItemAndGetLayoutStructure(
-				JSONObject collectionJSONObject,
-				JSONObject displayConfigJSONObject, Layout layout,
-				String listStyle, long segmentsExperienceId,
-				FragmentEntryLink... fragmentEntryLinks)
+	private String _addCollectionStyledLayoutStructureItem(
+			JSONObject collectionJSONObject, JSONObject displayConfigJSONObject,
+			Layout layout, String listStyle, long segmentsExperienceId,
+			FragmentEntryLink... fragmentEntryLinks)
 		throws Exception {
 
 		String itemId = ContentLayoutTestUtil.addCollectionDisplayToLayout(
@@ -1469,8 +1451,7 @@ public class RenderLayoutStructureTagTest {
 					layoutStructure.toString());
 		}
 
-		return _layoutStructureProvider.getLayoutStructure(
-			layout.getPlid(), segmentsExperienceId);
+		return itemId;
 	}
 
 	private Layout _addDisplayPageWithFormAndGetLayout(InfoField... infoFields)
@@ -1694,7 +1675,7 @@ public class RenderLayoutStructureTagTest {
 			long assetListEntryId, Layout layout, long segmentsExperienceId)
 		throws Exception {
 
-		_addCollectionStyledLayoutStructureItemAndGetLayoutStructure(
+		_addCollectionStyledLayoutStructureItem(
 			JSONUtil.put(
 				"classNameId", _portal.getClassNameId(AssetListEntry.class)
 			).put(

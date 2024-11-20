@@ -489,6 +489,58 @@ public class DataFactory {
 		field.set(_friendlyURLNormalizer, (Normalizer)s -> s);
 	}
 
+	public List<String> generateDynamicSQLs(
+		List<ObjectFieldModel> objectFieldModels, String dbTableName,
+		long objectEntryId, long fileEntryId, long relatedObjectEntryId) {
+
+		StringBundler sb = new StringBundler(
+			5 + (3 * objectFieldModels.size()));
+
+		sb.append("insert into ");
+		sb.append(dbTableName);
+		sb.append(" values (");
+		sb.append(objectEntryId);
+
+		for (ObjectFieldModel objectFieldModel : objectFieldModels) {
+			if (objectFieldModel.getSystem()) {
+				continue;
+			}
+
+			Object value = objectFieldModel.getName() + objectEntryId;
+
+			if (StringUtil.equals(
+					objectFieldModel.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				value = fileEntryId;
+			}
+			else if (StringUtil.equals(
+						objectFieldModel.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+				value = _defaultListTypeEntryKey;
+			}
+			else if (StringUtil.equals(
+						objectFieldModel.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+				value = (relatedObjectEntryId > 0) ? relatedObjectEntryId : 0;
+			}
+
+			sb.append(", '");
+			sb.append(value);
+			sb.append("'");
+		}
+
+		sb.append(");");
+
+		return ListUtil.fromArray(
+			sb.toString(),
+			StringBundler.concat(
+				"insert into ", dbTableName, "_x values (", objectEntryId,
+				");"));
+	}
+
 	public RoleModel getAdministratorRoleModel() {
 		return _administratorRoleModel;
 	}
@@ -667,68 +719,6 @@ public class DataFactory {
 
 	public RoleModel getGuestRoleModel() {
 		return _guestRoleModel;
-	}
-
-	public String getInsertIntoDynamicExtensionObjectDefinitionTable(
-		String dbTableName, long objectEntryId) {
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("insert into ");
-		sb.append(dbTableName);
-		sb.append("_x values (");
-		sb.append(objectEntryId);
-		sb.append(");");
-
-		return sb.toString();
-	}
-
-	public String getInsertIntoDynamicObjectDefinitionTable(
-		List<ObjectFieldModel> objectFieldModels, String dbTableName,
-		long objectEntryId, long fileEntryId, long relatedObjectEntryId) {
-
-		StringBundler sb = new StringBundler(
-			5 + (3 * objectFieldModels.size()));
-
-		sb.append("insert into ");
-		sb.append(dbTableName);
-		sb.append(" values (");
-		sb.append(objectEntryId);
-
-		for (ObjectFieldModel objectFieldModel : objectFieldModels) {
-			if (objectFieldModel.getSystem()) {
-				continue;
-			}
-
-			Object value = objectFieldModel.getName() + objectEntryId;
-
-			if (StringUtil.equals(
-					objectFieldModel.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
-
-				value = fileEntryId;
-			}
-			else if (StringUtil.equals(
-						objectFieldModel.getBusinessType(),
-						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-				value = _defaultListTypeEntryKey;
-			}
-			else if (StringUtil.equals(
-						objectFieldModel.getBusinessType(),
-						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
-
-				value = (relatedObjectEntryId > 0) ? relatedObjectEntryId : 0;
-			}
-
-			sb.append(", '");
-			sb.append(value);
-			sb.append("'");
-		}
-
-		sb.append(");");
-
-		return sb.toString();
 	}
 
 	public long getJournalArticleClassNameId() {

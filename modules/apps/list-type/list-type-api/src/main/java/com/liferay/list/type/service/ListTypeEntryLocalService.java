@@ -263,6 +263,9 @@ public interface ListTypeEntryLocalService
 		long listTypeDefinitionId, int start, int end,
 		OrderByComparator<ListTypeEntry> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ListTypeEntry> getListTypeEntries(long[] listTypeDefinitionIds);
+
 	/**
 	 * Returns the number of list type entries.
 	 *

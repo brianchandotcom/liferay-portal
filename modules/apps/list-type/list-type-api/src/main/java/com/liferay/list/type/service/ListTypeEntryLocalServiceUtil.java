@@ -308,6 +308,12 @@ public class ListTypeEntryLocalServiceUtil {
 			listTypeDefinitionId, start, end, orderByComparator);
 	}
 
+	public static List<ListTypeEntry> getListTypeEntries(
+		long[] listTypeDefinitionIds) {
+
+		return getService().getListTypeEntries(listTypeDefinitionIds);
+	}
+
 	/**
 	 * Returns the number of list type entries.
 	 *

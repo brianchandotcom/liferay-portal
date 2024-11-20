@@ -34,6 +34,10 @@ public class TestEntityBatchEngineTaskItemDelegateProblem
 			Collection<TestEntity> items, Map<String, Serializable> parameters)
 		throws Exception {
 
+		batchEngineImportStrategy.apply(items, item -> createTestEntityItem());
+	}
+
+	public TestEntity createTestEntityItem() throws Exception {
 		throw new TestEntityException("error message");
 	}
 

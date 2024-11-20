@@ -23,4 +23,41 @@ export class TagsAdminPage {
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.tagsAdmin}`
 		);
 	}
+
+	async deleteTags(titles: string[]) {
+		for (const i in titles) {
+			await this.selectTag(titles[i]);
+		}
+
+		await this.page
+			.getByRole('button', {exact: true, name: 'Actions'})
+			.click();
+
+		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
+	}
+
+	async mergeTags(titles: string[]) {
+		for (const i in titles) {
+			await this.selectTag(titles[i]);
+		}
+
+		await this.page
+			.getByRole('button', {exact: true, name: 'Actions'})
+			.click();
+
+		await this.page.getByRole('menuitem', {name: 'Merge'}).click();
+	}
+
+	async gotoEdit(title: string) {
+		await this.page
+			.getByRole('row', {name: 'Select ' + title + ' 0 Show Actions'})
+			.getByLabel('Show Actions')
+			.click();
+
+		await this.page.getByRole('menuitem', {name: 'Edit'}).click();
+	}
+
+	async selectTag(title: string) {
+		await this.page.getByLabel(title).check();
+	}
 }

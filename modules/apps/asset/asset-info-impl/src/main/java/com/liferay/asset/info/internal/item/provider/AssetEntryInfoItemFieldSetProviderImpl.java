@@ -15,7 +15,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
@@ -261,7 +261,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 		try {
 			groupsIds =
-				SiteConnectedGroupGroupProviderUtil.
+				_siteConnectedGroupGroupProvider.
 					getCurrentAndAncestorSiteAndDepotGroupIds(scopeGroupId);
 		}
 		catch (PortalException portalException) {
@@ -321,6 +321,9 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
+
+	@Reference
+	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 	private final InfoField<TagsInfoFieldType> _tagsInfoField =
 		InfoField.builder(

@@ -68,7 +68,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 		}
 
 		if (importCreatorStrategy.equals("KEEP_CREATOR") &&
-			FeatureFlagManagerUtil.isEnabled("LPD-19953")) {
+			FeatureFlagManagerUtil.isEnabled("LPD-11036")) {
 
 			keepCreatorInfo = true;
 		}

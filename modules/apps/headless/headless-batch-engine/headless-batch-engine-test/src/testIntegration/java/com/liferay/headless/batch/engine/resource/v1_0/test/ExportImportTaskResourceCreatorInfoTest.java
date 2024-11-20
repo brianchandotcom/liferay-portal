@@ -52,7 +52,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Vendel Toreki
  */
-@FeatureFlags("LPD-19953")
+@FeatureFlags("LPD-11036")
 @RunWith(Arquillian.class)
 public class ExportImportTaskResourceCreatorInfoTest {
 

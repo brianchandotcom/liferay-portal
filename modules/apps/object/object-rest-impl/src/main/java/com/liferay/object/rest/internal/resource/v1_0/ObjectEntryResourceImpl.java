@@ -98,7 +98,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			"importCreatorStrategy", "OVERWRITE_CREATOR");
 
 		if (importCreatorStrategy.equals("KEEP_CREATOR") &&
-			FeatureFlagManagerUtil.isEnabled("LPD-19953")) {
+			FeatureFlagManagerUtil.isEnabled("LPD-11036")) {
 
 			UnsafeFunction<ObjectEntry, ObjectEntry, Exception>
 				objectEntryUnsafeFunction = null;

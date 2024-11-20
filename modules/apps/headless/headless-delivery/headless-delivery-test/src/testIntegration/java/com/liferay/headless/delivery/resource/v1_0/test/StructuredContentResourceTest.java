@@ -428,6 +428,7 @@ public class StructuredContentResourceTest
 			false);
 		_testGetStructuredContentWithAllTypesOfContentFieldsAndAcceptAllLanguagesHeader(
 			true);
+		_testGetStructuredContentWithArticleFieldWithDifferentLocale();
 		_testGetStructuredContentWithDataDefinitionEmptyDefaultValue();
 		_testGetStructuredContentWithDateExpired();
 		_testGetStructuredContentWithDateExpiredNeverExpire();
@@ -1090,8 +1091,19 @@ public class StructuredContentResourceTest
 					).build())),
 			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.getDefault(), "test"
+		).put(
+			LocaleUtil.FRANCE, "test fr"
+		).build();
+
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			testGroup.getGroupId(), _journalFolder.getFolderId());
+			testGroup.getGroupId(), _journalFolder.getFolderId(),
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, titleMap, null,
+			titleMap, LocaleUtil.getSiteDefault(), false, true,
+			ServiceContextTestUtil.getServiceContext(
+				testCompany.getCompanyId(), testGroup.getGroupId(),
+				TestPropsValues.getUserId()));
 
 		StructuredContent structuredContent = super.randomStructuredContent();
 
@@ -1802,6 +1814,50 @@ public class StructuredContentResourceTest
 
 		assertEquals(postStructuredContent, getStructuredContent);
 		assertValid(getStructuredContent);
+	}
+
+	private void _testGetStructuredContentWithArticleFieldWithDifferentLocale()
+		throws Exception {
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(),
+				_randomCompleteStructuredContent(
+					_dlFileEntry.getFileEntryId(), false));
+
+		StructuredContentResource.Builder builder =
+			StructuredContentResource.builder();
+
+		StructuredContentResource frenchStructuredContentResource =
+			builder.authentication(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).locale(
+				LocaleUtil.FRANCE
+			).build();
+
+		StructuredContent getStructuredContent =
+			frenchStructuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		ContentField articleSelector = null;
+		String fieldName = "WebContent";
+
+		for (ContentField contentField :
+				getStructuredContent.getContentFields()) {
+
+			if (fieldName.equals(contentField.getName())) {
+				articleSelector = contentField;
+
+				break;
+			}
+		}
+
+		ContentFieldValue articleValue = articleSelector.getContentFieldValue();
+
+		StructuredContentLink structuredContent =
+			articleValue.getStructuredContentLink();
+
+		Assert.assertEquals("test fr", structuredContent.getTitle());
 	}
 
 	private void _testGetStructuredContentWithDataDefinitionEmptyDefaultValue()

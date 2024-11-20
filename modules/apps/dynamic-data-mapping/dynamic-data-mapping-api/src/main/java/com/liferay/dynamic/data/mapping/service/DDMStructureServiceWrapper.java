@@ -161,6 +161,15 @@ public class DDMStructureServiceWrapper
 			groupId, classNameId, structureKey, includeAncestorStructures);
 	}
 
+	@Override
+	public DDMStructure fetchStructureByExternalReferenceCode(
+			String externalReferenceCode, long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmStructureService.fetchStructureByExternalReferenceCode(
+			externalReferenceCode, groupId, classNameId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -232,6 +241,15 @@ public class DDMStructureServiceWrapper
 
 		return _ddmStructureService.getStructure(
 			groupId, classNameId, structureKey, includeAncestorStructures);
+	}
+
+	@Override
+	public DDMStructure getStructureByExternalReferenceCode(
+			String externalReferenceCode, long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmStructureService.getStructureByExternalReferenceCode(
+			externalReferenceCode, groupId, classNameId);
 	}
 
 	@Override

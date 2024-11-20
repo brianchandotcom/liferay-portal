@@ -154,6 +154,14 @@ public class DDMStructureServiceUtil {
 			groupId, classNameId, structureKey, includeAncestorStructures);
 	}
 
+	public static DDMStructure fetchStructureByExternalReferenceCode(
+			String externalReferenceCode, long groupId, long classNameId)
+		throws PortalException {
+
+		return getService().fetchStructureByExternalReferenceCode(
+			externalReferenceCode, groupId, classNameId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -220,6 +228,14 @@ public class DDMStructureServiceUtil {
 
 		return getService().getStructure(
 			groupId, classNameId, structureKey, includeAncestorStructures);
+	}
+
+	public static DDMStructure getStructureByExternalReferenceCode(
+			String externalReferenceCode, long groupId, long classNameId)
+		throws PortalException {
+
+		return getService().getStructureByExternalReferenceCode(
+			externalReferenceCode, groupId, classNameId);
 	}
 
 	public static List<DDMStructure> getStructures(

@@ -26,6 +26,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class JiraIssuesRestController extends BaseRestController {
 
 	@RequestMapping(
+		method = RequestMethod.GET, path = "/jira/securities/affects-version"
+	)
+	public ResponseEntity<String> get() throws Exception {
+		try {
+			return new ResponseEntity<>(
+				_jiraWebService.getJiraVersions("LSV"), HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@RequestMapping(
 		method = RequestMethod.GET, path = "/jira/securities/issue/{issueKey}"
 	)
 	public ResponseEntity<String> get(@PathVariable("issueKey") String issueKey)

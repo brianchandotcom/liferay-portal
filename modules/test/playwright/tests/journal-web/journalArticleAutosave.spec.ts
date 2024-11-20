@@ -329,7 +329,7 @@ autoSaveTest(
 	{
 		tag: '@LPD-26863',
 	},
-	async ({journalEditArticlePage, site}) => {
+	async ({journalEditArticlePage, page, site}) => {
 		const title = getRandomString();
 
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
@@ -349,6 +349,8 @@ autoSaveTest(
 		await expect(journalEditArticlePage.undoButton).toBeDisabled();
 
 		await expect(journalEditArticlePage.titleInput).toHaveValue('');
+
+		await waitForAlert(page, 'Info:Please complete all', {type: 'info'});
 
 		await journalEditArticlePage.redoButton.click();
 

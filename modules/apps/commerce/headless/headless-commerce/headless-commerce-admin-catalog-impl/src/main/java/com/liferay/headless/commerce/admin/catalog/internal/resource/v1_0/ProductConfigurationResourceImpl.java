@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -60,6 +59,25 @@ import org.osgi.service.component.annotations.ServiceScope;
 @CTAware
 public class ProductConfigurationResourceImpl
 	extends BaseProductConfigurationResourceImpl {
+
+	@Override
+	public void deleteProductConfiguration(Long id) throws Exception {
+		_cpConfigurationEntryService.deleteCPConfigurationEntry(id);
+	}
+
+	@Override
+	public void deleteProductConfigurationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CPConfigurationEntry cpConfigurationEntry =
+			_cpConfigurationEntryService.
+				getCPConfigurationEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		deleteProductConfiguration(
+			cpConfigurationEntry.getCPConfigurationEntryId());
+	}
 
 	@Override
 	public ProductConfiguration getProductByExternalReferenceCodeConfiguration(
@@ -142,6 +160,7 @@ public class ProductConfigurationResourceImpl
 				Field.ENTRY_CLASS_PK),
 			object -> {
 				SearchContext searchContext = (SearchContext)object;
+
 				searchContext.setAttribute(
 					CPField.CP_CONFIGURATION_LIST_ID,
 					cpConfigurationList.getCPConfigurationListId());
@@ -328,22 +347,6 @@ public class ProductConfigurationResourceImpl
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
-	}
-
-	@Override
-	public void deleteProductConfigurationByExternalReferenceCode(
-		String externalReferenceCode) throws Exception {
-		CPConfigurationEntry cpConfigurationEntry =
-			_cpConfigurationEntryService.
-				getCPConfigurationEntryByExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
-
-		deleteProductConfiguration(cpConfigurationEntry.getCPConfigurationEntryId());
-	}
-
-	@Override
-	public void deleteProductConfiguration(Long id) throws Exception {
-		_cpConfigurationEntryService.deleteCPConfigurationEntry(id);
 	}
 
 	@Override

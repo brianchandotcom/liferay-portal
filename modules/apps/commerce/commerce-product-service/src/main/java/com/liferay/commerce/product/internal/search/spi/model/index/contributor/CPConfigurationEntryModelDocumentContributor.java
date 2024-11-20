@@ -42,13 +42,14 @@ public class CPConfigurationEntryModelDocumentContributor
 			document.addKeyword(
 				CPField.CP_CONFIGURATION_LIST_ID,
 				cpConfigurationEntry.getCPConfigurationListId());
-			document.addKeyword(Field.CLASS_PK,
+			document.addKeyword(
+				Field.CLASS_PK,
 				cpConfigurationEntry.getCPConfigurationEntryId());
 			document.addNumber(CPField.DEPTH, cpConfigurationEntry.getDepth());
-			document.addText(Field.CLASS_NAME_ID,
-				cpConfigurationEntry.getClassName());
-			document.addKeyword(Field.ENTRY_CLASS_PK,
-				cpConfigurationEntry.getClassPK());
+			document.addText(
+				Field.CLASS_NAME_ID, cpConfigurationEntry.getClassName());
+			document.addKeyword(
+				Field.ENTRY_CLASS_PK, cpConfigurationEntry.getClassPK());
 			document.addNumber(
 				CPField.HEIGHT, cpConfigurationEntry.getHeight());
 			document.addKeyword(

@@ -65,14 +65,16 @@ public class CPConfigurationEntryServiceImpl
 	@Override
 	public void deleteCPConfigurationEntry(long cpConfigurationEntryId)
 		throws PortalException {
-			CPConfigurationEntry cpConfigurationEntry =
-				cpConfigurationEntryLocalService.getCPConfigurationEntry(
-					cpConfigurationEntryId);
 
-			_checkCommerceCatalog(
-				cpConfigurationEntry.getGroupId(), ActionKeys.VIEW);
+		CPConfigurationEntry cpConfigurationEntry =
+			cpConfigurationEntryLocalService.getCPConfigurationEntry(
+				cpConfigurationEntryId);
 
-			cpConfigurationEntryLocalService.deleteCPConfigurationEntry(cpConfigurationEntry);
+		_checkCommerceCatalog(
+			cpConfigurationEntry.getGroupId(), ActionKeys.VIEW);
+
+		cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
+			cpConfigurationEntry);
 	}
 
 	@Override

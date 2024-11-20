@@ -76,13 +76,15 @@ public class CPConfigurationEntryLocalServiceImpl
 
 	@Override
 	public void deleteCPConfigurationEntries(long cpConfigurationListId) {
-
 		List<CPConfigurationEntry> cpConfigurationEntries =
 			cpConfigurationEntryLocalService.getCPConfigurationEntries(
 				cpConfigurationListId);
 
-		for (CPConfigurationEntry cpConfigurationEntry: cpConfigurationEntries) {
-			cpConfigurationEntryLocalService.deleteCPConfigurationEntry(cpConfigurationEntry);
+		for (CPConfigurationEntry cpConfigurationEntry :
+				cpConfigurationEntries) {
+
+			cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
+				cpConfigurationEntry);
 		}
 	}
 

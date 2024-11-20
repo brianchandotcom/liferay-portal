@@ -13,12 +13,14 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.CPConfigurationListLocalService;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -37,7 +39,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,7 +72,6 @@ public class ProductConfigurationResourceTest
 		_masterCPConfigurationList =
 			_cpConfigurationListLocalService.getMasterCPConfigurationList(
 				_commerceCatalog.getGroupId());
-
 	}
 
 	@After
@@ -83,98 +83,20 @@ public class ProductConfigurationResourceTest
 			_masterCPConfigurationList.getCPConfigurationListId());
 	}
 
-
 	@FeatureFlags("LPD-10889")
 	@Override
 	@Test
-	public void testGetProductConfiguration() throws Exception {
-		super.testGetProductConfiguration();
+	public void testDeleteProductConfiguration() throws Exception {
+		super.testDeleteProductConfiguration();
 	}
 
 	@FeatureFlags("LPD-10889")
 	@Override
 	@Test
-	public void testGetProductConfigurationByExternalReferenceCode()
+	public void testDeleteProductConfigurationByExternalReferenceCode()
 		throws Exception {
-		super.testGetProductConfigurationByExternalReferenceCode();
-	}
 
-	@FeatureFlags("LPD-10889")
-	@Override
-	@Test
-	public void testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPage()
-		throws Exception {
-		super.testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPage();
-	}
-
-	@FeatureFlags("LPD-10889")
-	@Override
-	@Test
-	public void testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageWithPagination()
-		throws Exception {
-		super.testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageWithPagination();
-	}
-
-	@FeatureFlags("LPD-10889")
-	@Override
-	@Test
-	public void testGetProductConfigurationListIdProductConfigurationsPageWithPagination()
-		throws Exception {
-		super.testGetProductConfigurationListIdProductConfigurationsPageWithPagination();
-	}
-
-	@FeatureFlags("LPD-10889")
-	@Override
-	@Test
-	public void testGraphQLDeleteProductConfiguration() throws Exception {
-		super.testGraphQLDeleteProductConfiguration();
-	}
-
-	@FeatureFlags("LPD-10889")
-	@Override
-	@Test
-	public void testGraphQLGetProductConfiguration() throws Exception {
-		super.testGraphQLGetProductConfiguration();
-	}
-
-	@FeatureFlags("LPD-10889")
-	@Override
-	@Test
-	public void testGraphQLGetProductConfigurationByExternalReferenceCode()
-		throws Exception {
-		super.testGraphQLGetProductConfigurationByExternalReferenceCode();
-	}
-
-	@FeatureFlags("LPD-10889")
-	@Override
-	@Test
-	public void testPatchProductConfigurationByExternalReferenceCode()
-		throws Exception {
-		super.testPatchProductConfigurationByExternalReferenceCode();
-	}
-
-	@FeatureFlags("LPD-10889")
-	@Override
-	@Test
-	public void testPostProductConfigurationListIdProductConfiguration()
-		throws Exception {
-		super.testPostProductConfigurationListIdProductConfiguration();
-	}
-
-	@FeatureFlags("LPD-10889")
-	@Override
-	@Test
-	public void testPostProductConfigurationListByExternalReferenceCodeProductConfiguration()
-		throws Exception {
-		super.testPostProductConfigurationListByExternalReferenceCodeProductConfiguration();
-	}
-
-	@FeatureFlags("LPD-10889")
-	@Override
-	@Test
-	public void testGetProductConfigurationListIdProductConfigurationsPage()
-		throws Exception {
-		super.testGetProductConfigurationListIdProductConfigurationsPage();
+		super.testDeleteProductConfigurationByExternalReferenceCode();
 	}
 
 	@FeatureFlags("LPD-10889")
@@ -189,8 +111,70 @@ public class ProductConfigurationResourceTest
 	@FeatureFlags("LPD-10889")
 	@Override
 	@Test
+	public void testGetProductConfiguration() throws Exception {
+		super.testGetProductConfiguration();
+	}
+
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
+	public void testGetProductConfigurationByExternalReferenceCode()
+		throws Exception {
+
+		super.testGetProductConfigurationByExternalReferenceCode();
+	}
+
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
+	public void testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPage()
+		throws Exception {
+
+		super.
+			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPage();
+	}
+
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
+	public void testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageWithPagination()
+		throws Exception {
+
+		super.
+			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageWithPagination();
+	}
+
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
+	public void testGetProductConfigurationListIdProductConfigurationsPage()
+		throws Exception {
+
+		super.testGetProductConfigurationListIdProductConfigurationsPage();
+	}
+
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
+	public void testGetProductConfigurationListIdProductConfigurationsPageWithPagination()
+		throws Exception {
+
+		super.
+			testGetProductConfigurationListIdProductConfigurationsPageWithPagination();
+	}
+
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
 	public void testGetProductIdConfiguration() throws Exception {
 		super.testGetProductIdConfiguration();
+	}
+
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
+	public void testGraphQLDeleteProductConfiguration() throws Exception {
+		super.testGraphQLDeleteProductConfiguration();
 	}
 
 	@FeatureFlags("LPD-10889")
@@ -210,6 +194,22 @@ public class ProductConfigurationResourceTest
 
 		super.
 			testGraphQLGetProductByExternalReferenceCodeConfigurationNotFound();
+	}
+
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
+	public void testGraphQLGetProductConfiguration() throws Exception {
+		super.testGraphQLGetProductConfiguration();
+	}
+
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
+	public void testGraphQLGetProductConfigurationByExternalReferenceCode()
+		throws Exception {
+
+		super.testGraphQLGetProductConfigurationByExternalReferenceCode();
 	}
 
 	@FeatureFlags("LPD-10889")
@@ -236,50 +236,77 @@ public class ProductConfigurationResourceTest
 		ProductConfiguration randomProductConfiguration =
 			randomProductConfiguration();
 
-		productConfigurationResource.patchProductByExternalReferenceCodeConfiguration(
-			randomProductConfiguration.getEntityExternalReferenceCode(), randomProductConfiguration);
+		productConfigurationResource.
+			patchProductByExternalReferenceCodeConfiguration(
+				randomProductConfiguration.getEntityExternalReferenceCode(),
+				randomProductConfiguration);
 
 		ProductConfiguration productConfiguration =
-			productConfigurationResource.getProductByExternalReferenceCodeConfiguration(
-				randomProductConfiguration.getEntityExternalReferenceCode());
+			productConfigurationResource.
+				getProductByExternalReferenceCodeConfiguration(
+					randomProductConfiguration.
+						getEntityExternalReferenceCode());
 
-		Assert.assertTrue(equals(productConfiguration, randomProductConfiguration));
+		Assert.assertTrue(
+			equals(productConfiguration, randomProductConfiguration));
 
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
 				"LPD-10889", "true"
 			).build());
 
-		productConfigurationResource.patchProductByExternalReferenceCodeConfiguration(
-			randomProductConfiguration.getEntityExternalReferenceCode(), randomProductConfiguration);
+		productConfigurationResource.
+			patchProductByExternalReferenceCodeConfiguration(
+				randomProductConfiguration.getEntityExternalReferenceCode(),
+				randomProductConfiguration);
 
 		productConfiguration =
-			productConfigurationResource.getProductByExternalReferenceCodeConfiguration(
-				randomProductConfiguration.getEntityExternalReferenceCode());
+			productConfigurationResource.
+				getProductByExternalReferenceCodeConfiguration(
+					randomProductConfiguration.
+						getEntityExternalReferenceCode());
 
-		Assert.assertTrue(equals(productConfiguration, randomProductConfiguration));
+		Assert.assertTrue(
+			equals(productConfiguration, randomProductConfiguration));
 
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
 				"LPD-10889", "false"
 			).build());
+	}
+
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
+	public void testPatchProductConfiguration() throws Exception {
+		super.testPatchProductConfiguration();
+	}
+
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
+	public void testPatchProductConfigurationByExternalReferenceCode()
+		throws Exception {
+
+		super.testPatchProductConfigurationByExternalReferenceCode();
 	}
 
 	@Override
 	@Test
 	public void testPatchProductIdConfiguration() throws Exception {
-
 		ProductConfiguration randomProductConfiguration =
 			randomProductConfiguration();
 
 		productConfigurationResource.patchProductIdConfiguration(
-			randomProductConfiguration.getEntityId(), randomProductConfiguration);
+			randomProductConfiguration.getEntityId(),
+			randomProductConfiguration);
 
 		ProductConfiguration productConfiguration =
 			productConfigurationResource.getProductIdConfiguration(
 				randomProductConfiguration.getEntityId());
 
-		Assert.assertTrue(equals(productConfiguration, randomProductConfiguration));
+		Assert.assertTrue(
+			equals(productConfiguration, randomProductConfiguration));
 
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
@@ -287,13 +314,15 @@ public class ProductConfigurationResourceTest
 			).build());
 
 		productConfigurationResource.patchProductIdConfiguration(
-			randomProductConfiguration.getEntityId(), randomProductConfiguration);
+			randomProductConfiguration.getEntityId(),
+			randomProductConfiguration);
 
 		productConfiguration =
 			productConfigurationResource.getProductIdConfiguration(
 				randomProductConfiguration.getEntityId());
 
-		Assert.assertTrue(equals(productConfiguration, randomProductConfiguration));
+		Assert.assertTrue(
+			equals(productConfiguration, randomProductConfiguration));
 
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
@@ -301,42 +330,71 @@ public class ProductConfigurationResourceTest
 			).build());
 	}
 
+	@FeatureFlags("LPD-10889")
 	@Override
-	protected ProductConfiguration randomProductConfiguration() {
+	@Test
+	public void testPostProductConfigurationListByExternalReferenceCodeProductConfiguration()
+		throws Exception {
 
-		CPDefinition cpDefinition;
-		CProduct cProduct;
-		try {
-			 cpDefinition = CPTestUtil.addCPDefinition(
-				_commerceCatalog.getGroupId(), "simple");
-			cProduct = cpDefinition.getCProduct();
-		}
-		catch (PortalException e) {
-			throw new RuntimeException(e);
-		}
+		super.
+			testPostProductConfigurationListByExternalReferenceCodeProductConfiguration();
+	}
 
-		return new ProductConfiguration() {
-			{
-				allowBackOrder = RandomTestUtil.randomBoolean();
-				allowedOrderQuantities = new BigDecimal[0];
-				availabilityEstimateId = 0L;
-				entityExternalReferenceCode =
-					cProduct.getExternalReferenceCode();
-				entityId = cpDefinition.getCProductId();
-				externalReferenceCode = RandomTestUtil.randomString();
-				inventoryEngine = RandomTestUtil.randomString();
-				lowStockAction = RandomTestUtil.randomString();
-				maxOrderQuantity = BigDecimal.ONE;
-				minOrderQuantity = BigDecimal.ONE;
-				minStockQuantity = BigDecimal.ONE;
-				multipleOrderQuantity = BigDecimal.ONE;
-			}
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
+	public void testPostProductConfigurationListIdProductConfiguration()
+		throws Exception {
+
+		super.testPostProductConfigurationListIdProductConfiguration();
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {
+			"inventoryEngine", "lowStockAction", "maxOrderQuantity",
+			"minOrderQuantity", "minStockQuantity", "multipleOrderQuantity"
 		};
 	}
 
 	@Override
-	protected ProductConfiguration testGraphQLProductConfiguration_addProductConfiguration()
+	protected ProductConfiguration randomProductConfiguration() {
+		try {
+			CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
+				_commerceCatalog.getGroupId(), "simple");
+
+			CProduct cProduct = cpDefinition.getCProduct();
+
+			return new ProductConfiguration() {
+				{
+					allowBackOrder = RandomTestUtil.randomBoolean();
+					allowedOrderQuantities = new BigDecimal[0];
+					availabilityEstimateId = 0L;
+					entityExternalReferenceCode =
+						cProduct.getExternalReferenceCode();
+					entityId = cpDefinition.getCProductId();
+					externalReferenceCode = RandomTestUtil.randomString();
+					inventoryEngine = RandomTestUtil.randomString();
+					lowStockAction = RandomTestUtil.randomString();
+					maxOrderQuantity = BigDecimal.ONE;
+					minOrderQuantity = BigDecimal.ONE;
+					minStockQuantity = BigDecimal.ONE;
+					multipleOrderQuantity = BigDecimal.ONE;
+				}
+			};
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			throw new SystemException(portalException);
+		}
+	}
+
+	@Override
+	protected ProductConfiguration
+			testDeleteProductConfiguration_addProductConfiguration()
 		throws Exception {
+
 		ProductConfiguration productConfiguration =
 			randomProductConfiguration();
 
@@ -344,7 +402,112 @@ public class ProductConfigurationResourceTest
 			postProductConfigurationListIdProductConfiguration(
 				_masterCPConfigurationList.getCPConfigurationListId(),
 				productConfiguration);
+	}
 
+	@Override
+	protected ProductConfiguration
+			testDeleteProductConfigurationByExternalReferenceCode_addProductConfiguration()
+		throws Exception {
+
+		ProductConfiguration productConfiguration =
+			randomProductConfiguration();
+
+		return productConfigurationResource.
+			postProductConfigurationListIdProductConfiguration(
+				_masterCPConfigurationList.getCPConfigurationListId(),
+				productConfiguration);
+	}
+
+	@Override
+	protected ProductConfiguration
+			testGetProductByExternalReferenceCodeConfiguration_addProductConfiguration()
+		throws Exception {
+
+		ProductConfiguration productConfiguration =
+			randomProductConfiguration();
+
+		productConfigurationResource.
+			postProductConfigurationListIdProductConfiguration(
+				_masterCPConfigurationList.getCPConfigurationListId(),
+				productConfiguration);
+
+		return productConfiguration;
+	}
+
+	@Override
+	protected String
+			testGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
+				ProductConfiguration productConfiguration)
+		throws Exception {
+
+		return productConfiguration.getEntityExternalReferenceCode();
+	}
+
+	@Override
+	protected ProductConfiguration
+			testGetProductConfiguration_addProductConfiguration()
+		throws Exception {
+
+		ProductConfiguration productConfiguration =
+			randomProductConfiguration();
+
+		return productConfigurationResource.
+			postProductConfigurationListIdProductConfiguration(
+				_masterCPConfigurationList.getCPConfigurationListId(),
+				productConfiguration);
+	}
+
+	@Override
+	protected ProductConfiguration
+			testGetProductConfigurationByExternalReferenceCode_addProductConfiguration()
+		throws Exception {
+
+		ProductConfiguration productConfiguration =
+			randomProductConfiguration();
+
+		return productConfigurationResource.
+			postProductConfigurationListIdProductConfiguration(
+				_masterCPConfigurationList.getCPConfigurationListId(),
+				productConfiguration);
+	}
+
+	@Override
+	protected ProductConfiguration
+			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPage_addProductConfiguration(
+				String externalReferenceCode,
+				ProductConfiguration productConfiguration)
+		throws Exception {
+
+		return productConfigurationResource.
+			postProductConfigurationListByExternalReferenceCodeProductConfiguration(
+				externalReferenceCode, productConfiguration);
+	}
+
+	@Override
+	protected String
+			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _masterCPConfigurationList.getExternalReferenceCode();
+	}
+
+	@Override
+	protected ProductConfiguration
+			testGetProductConfigurationListIdProductConfigurationsPage_addProductConfiguration(
+				Long id, ProductConfiguration productConfiguration)
+		throws Exception {
+
+		return productConfigurationResource.
+			postProductConfigurationListIdProductConfiguration(
+				id, productConfiguration);
+	}
+
+	@Override
+	protected Long
+			testGetProductConfigurationListIdProductConfigurationsPage_getId()
+		throws Exception {
+
+		return _masterCPConfigurationList.getCPConfigurationListId();
 	}
 
 	@Override
@@ -364,163 +527,6 @@ public class ProductConfigurationResourceTest
 	}
 
 	@Override
-	protected ProductConfiguration testGetProductByExternalReferenceCodeConfiguration_addProductConfiguration()
-		throws Exception {
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
-		productConfigurationResource.
-			postProductConfigurationListIdProductConfiguration(
-				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
-
-		return productConfiguration;
-	}
-
-	@FeatureFlags("LPD-10889")
-	@Override
-	@Test
-	public void testDeleteProductConfigurationByExternalReferenceCode()
-		throws Exception {
-		super.testDeleteProductConfigurationByExternalReferenceCode();
-	}
-
-	@FeatureFlags("LPD-10889")
-	@Override
-	@Test
-	public void testDeleteProductConfiguration() throws Exception {
-		super.testDeleteProductConfiguration();
-	}
-
-	@Override
-	protected ProductConfiguration testDeleteProductConfiguration_addProductConfiguration()
-		throws Exception {
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
-		return productConfigurationResource.
-			postProductConfigurationListIdProductConfiguration(
-				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
-	}
-
-	@Override
-	protected ProductConfiguration testDeleteProductConfigurationByExternalReferenceCode_addProductConfiguration()
-		throws Exception {
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
-		return productConfigurationResource.
-			postProductConfigurationListIdProductConfiguration(
-				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
-	}
-
-	@Override
-	protected ProductConfiguration testGetProductConfiguration_addProductConfiguration()
-		throws Exception {
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
-		return productConfigurationResource.
-			postProductConfigurationListIdProductConfiguration(
-				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
-	}
-
-	@Override
-	protected ProductConfiguration testGetProductConfigurationByExternalReferenceCode_addProductConfiguration()
-		throws Exception {
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
-		return productConfigurationResource.
-			postProductConfigurationListIdProductConfiguration(
-				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
-	}
-
-	@Override
-	protected ProductConfiguration testPatchProductConfiguration_addProductConfiguration()
-		throws Exception {
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
-		return productConfigurationResource.
-			postProductConfigurationListIdProductConfiguration(
-				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
-	}
-
-	@FeatureFlags("LPD-10889")
-	@Override
-	@Test
-	public void testPatchProductConfiguration() throws Exception {
-		super.testPatchProductConfiguration();
-	}
-
-	@Override
-	protected ProductConfiguration testPatchProductConfigurationByExternalReferenceCode_addProductConfiguration()
-		throws Exception {
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
-		return productConfigurationResource.
-			postProductConfigurationListIdProductConfiguration(
-				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
-	}
-
-	@Override
-	protected ProductConfiguration testPostProductConfigurationListByExternalReferenceCodeProductConfiguration_addProductConfiguration(
-		ProductConfiguration productConfiguration) throws Exception {
-		return productConfigurationResource.
-			postProductConfigurationListIdProductConfiguration(
-				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
-	}
-
-	@Override
-	protected ProductConfiguration testPostProductConfigurationListIdProductConfiguration_addProductConfiguration(
-		ProductConfiguration productConfiguration) throws Exception {
-		return productConfigurationResource.
-			postProductConfigurationListIdProductConfiguration(
-				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
-	}
-
-	@Override
-	protected ProductConfiguration testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPage_addProductConfiguration(
-		String externalReferenceCode, ProductConfiguration productConfiguration)
-		throws Exception {
-		return productConfigurationResource.
-			postProductConfigurationListByExternalReferenceCodeProductConfiguration(
-				externalReferenceCode,
-				productConfiguration);
-	}
-
-	@Override
-	protected ProductConfiguration testGetProductConfigurationListIdProductConfigurationsPage_addProductConfiguration(
-		Long id, ProductConfiguration productConfiguration) throws Exception {
-		return productConfigurationResource.
-			postProductConfigurationListIdProductConfiguration(
-				id,
-				productConfiguration);
-	}
-
-	@Override
-	protected String testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPage_getExternalReferenceCode()
-		throws Exception {
-		return _masterCPConfigurationList.getExternalReferenceCode();
-	}
-
-	@Override
-	protected Long testGetProductConfigurationListIdProductConfigurationsPage_getId()
-		throws Exception {
-		return _masterCPConfigurationList.getCPConfigurationListId();
-	}
-
-	@Override
 	protected Long testGetProductIdConfiguration_getId(
 			ProductConfiguration productConfiguration)
 		throws Exception {
@@ -529,51 +535,112 @@ public class ProductConfigurationResourceTest
 	}
 
 	@Override
+	protected String
+			testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
+				ProductConfiguration productConfiguration)
+		throws Exception {
+
+		return productConfiguration.getEntityExternalReferenceCode();
+	}
+
+	@Override
 	protected Long testGraphQLGetProductIdConfiguration_getId(
-		ProductConfiguration productConfiguration) throws Exception {
+			ProductConfiguration productConfiguration)
+		throws Exception {
 
-			CProduct cProduct =
-				_cProductLocalService.getCProductByExternalReferenceCode(
-					productConfiguration.getEntityExternalReferenceCode(),
-					_masterCPConfigurationList.getCompanyId());
+		CProduct cProduct =
+			_cProductLocalService.getCProductByExternalReferenceCode(
+				productConfiguration.getEntityExternalReferenceCode(),
+				_masterCPConfigurationList.getCompanyId());
 
-			return cProduct.getCProductId();
-
+		return cProduct.getCProductId();
 	}
 
 	@Override
-	protected String testGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
-		ProductConfiguration productConfiguration) throws Exception {
-		return productConfiguration.getEntityExternalReferenceCode();
+	protected ProductConfiguration
+			testGraphQLProductConfiguration_addProductConfiguration()
+		throws Exception {
+
+		ProductConfiguration productConfiguration =
+			randomProductConfiguration();
+
+		return productConfigurationResource.
+			postProductConfigurationListIdProductConfiguration(
+				_masterCPConfigurationList.getCPConfigurationListId(),
+				productConfiguration);
 	}
 
 	@Override
-	protected String testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
-		ProductConfiguration productConfiguration) throws Exception {
-		return productConfiguration.getEntityExternalReferenceCode();
+	protected ProductConfiguration
+			testPatchProductConfiguration_addProductConfiguration()
+		throws Exception {
+
+		ProductConfiguration productConfiguration =
+			randomProductConfiguration();
+
+		return productConfigurationResource.
+			postProductConfigurationListIdProductConfiguration(
+				_masterCPConfigurationList.getCPConfigurationListId(),
+				productConfiguration);
 	}
 
 	@Override
-	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"inventoryEngine", "lowStockAction","maxOrderQuantity","minOrderQuantity","minStockQuantity","multipleOrderQuantity"};
+	protected ProductConfiguration
+			testPatchProductConfigurationByExternalReferenceCode_addProductConfiguration()
+		throws Exception {
+
+		ProductConfiguration productConfiguration =
+			randomProductConfiguration();
+
+		return productConfigurationResource.
+			postProductConfigurationListIdProductConfiguration(
+				_masterCPConfigurationList.getCPConfigurationListId(),
+				productConfiguration);
 	}
 
-	@Inject
-	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+	@Override
+	protected ProductConfiguration
+			testPostProductConfigurationListByExternalReferenceCodeProductConfiguration_addProductConfiguration(
+				ProductConfiguration productConfiguration)
+		throws Exception {
 
-	@Inject
-	private CProductLocalService _cProductLocalService;
+		return productConfigurationResource.
+			postProductConfigurationListIdProductConfiguration(
+				_masterCPConfigurationList.getCPConfigurationListId(),
+				productConfiguration);
+	}
 
-	@Inject
-	private CPConfigurationListLocalService _cpConfigurationListLocalService;
+	@Override
+	protected ProductConfiguration
+			testPostProductConfigurationListIdProductConfiguration_addProductConfiguration(
+				ProductConfiguration productConfiguration)
+		throws Exception {
 
-	private CPConfigurationList _masterCPConfigurationList;
+		return productConfigurationResource.
+			postProductConfigurationListIdProductConfiguration(
+				_masterCPConfigurationList.getCPConfigurationListId(),
+				productConfiguration);
+	}
 
-	private User _user;
+	private static final Log _log = LogFactoryUtil.getLog(
+		ProductConfigurationResourceTest.class);
 
 	@DeleteAfterTestRun
 	private CommerceCatalog _commerceCatalog;
 
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	@Inject
+	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+
+	@Inject
+	private CPConfigurationListLocalService _cpConfigurationListLocalService;
+
+	@Inject
+	private CProductLocalService _cProductLocalService;
+
+	private CPConfigurationList _masterCPConfigurationList;
+	private User _user;
+
 }

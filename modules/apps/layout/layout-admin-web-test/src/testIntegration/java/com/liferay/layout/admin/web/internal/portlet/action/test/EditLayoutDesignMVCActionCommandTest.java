@@ -113,7 +113,7 @@ public class EditLayoutDesignMVCActionCommandTest {
 				null, TestPropsValues.getUserId(), group.getGroupId(), 0,
 				_portal.getClassNameId(JournalArticle.class),
 				ddmStructure.getStructureId(), RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,
 				0, 0, WorkflowConstants.STATUS_DRAFT,
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 

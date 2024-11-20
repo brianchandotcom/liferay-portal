@@ -366,8 +366,6 @@ public class MirrorsGetTask extends Task {
 
 						_downloadFile(remoteURL, mirrorsCacheTempFile, 0);
 					}
-
-					mirrorsCacheTempFile.renameTo(mirrorsCacheFile);
 				}
 			}
 			else {
@@ -387,9 +385,9 @@ public class MirrorsGetTask extends Task {
 
 					_downloadFile(remoteURL, mirrorsCacheTempFile, 0);
 				}
-
-				mirrorsCacheTempFile.renameTo(mirrorsCacheFile);
 			}
+
+			_moveFile(mirrorsCacheTempFile, mirrorsCacheFile);
 		}
 
 		if (_dest.exists() && _dest.isDirectory()) {
@@ -768,6 +766,20 @@ public class MirrorsGetTask extends Task {
 		}
 
 		return false;
+	}
+
+	private void _moveFile(File sourceFile, File destFile) throws IOException {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Moving ");
+		sb.append(sourceFile.getPath());
+		sb.append(" to ");
+		sb.append(destFile.getPath());
+		sb.append(".");
+
+		System.out.println(sb.toString());
+
+		sourceFile.renameTo(destFile)
 	}
 
 	private URLConnection _openConnection(URL url) throws IOException {

@@ -3,7 +3,7 @@
 	listTypeDefinitionModel = dataFactory.newListTypeDefinitionModel()
 	listTypeEntryModels = dataFactory.newListTypeEntryModels(listTypeDefinitionModel.getListTypeDefinitionId())
 	objectDefinitionModel = dataFactory.newObjectDefinitionModel(objectFolderModel.getObjectFolderId())
-	objectFieldModels = dataFactory.newObjectFieldModels(listTypeDefinitionModel.getListTypeDefinitionId(), objectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getDBTableName())
+	objectFieldModels = dataFactory.newObjectFieldModels(objectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getDBTableName(), listTypeDefinitionModel.getListTypeDefinitionId())
 />
 
 ${dataFactory.toInsertSQL(objectDefinitionModel)}

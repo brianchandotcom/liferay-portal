@@ -5463,43 +5463,34 @@ public class DataFactory {
 		long listTypeDefinitionId, long objectDefinitionId,
 		String objectDefinitionDBTableName) {
 
-		List<ObjectFieldModel> objectFieldModels = new ArrayList<>();
-
-		objectFieldModels.add(
+		return ListUtil.fromArray(
 			newObjectFieldModel(
 				0, objectDefinitionId,
 				ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT, "description_",
 				objectDefinitionDBTableName, ObjectFieldConstants.DB_TYPE_CLOB,
-				"Description", "description", true, false, false));
-		objectFieldModels.add(
+				"Description", "description", true, false, false),
 			newObjectFieldModel(
 				0, objectDefinitionId, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				"subject_", objectDefinitionDBTableName,
 				ObjectFieldConstants.DB_TYPE_STRING, "Subject", "subject", true,
-				false, false));
-		objectFieldModels.add(
+				false, false),
 			newObjectFieldModel(
 				0, objectDefinitionId,
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT, "attachment_",
 				objectDefinitionDBTableName, ObjectFieldConstants.DB_TYPE_LONG,
-				"Attachment", "attachment", false, false, false));
-
-		objectFieldModels.add(
+				"Attachment", "attachment", false, false, false),
 			newObjectFieldModel(
 				listTypeDefinitionId, objectDefinitionId,
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "supportType_",
 				objectDefinitionDBTableName,
 				ObjectFieldConstants.DB_TYPE_STRING, "Support type",
-				"supportType", true, false, false));
-		objectFieldModels.add(
+				"supportType", true, false, false),
 			newObjectFieldModel(
 				listTypeDefinitionId, objectDefinitionId,
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "ticketStatus_",
 				objectDefinitionDBTableName,
 				ObjectFieldConstants.DB_TYPE_STRING, "Ticket Status",
 				"ticketStatus", true, true, false));
-
-		return objectFieldModels;
 	}
 
 	public ObjectFieldSettingModel newObjectFieldSettingModel(

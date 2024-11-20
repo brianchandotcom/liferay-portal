@@ -368,7 +368,8 @@ public class ContentFieldUtil {
 										() ->
 											journalArticle.
 												getResourcePrimKey());
-									setTitle(journalArticle::getTitle);
+									setTitle(
+										() -> journalArticle.getTitle(locale));
 								}
 							});
 					}

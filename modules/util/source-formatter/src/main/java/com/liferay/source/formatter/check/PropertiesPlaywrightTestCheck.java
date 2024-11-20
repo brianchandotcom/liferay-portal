@@ -173,12 +173,14 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 		}
 
 		for (String relevantRuleName : relevantRuleNames) {
-			String playwrightTestProjectPropertyName = StringBundler.concat(
-				"playwright.test.project[playwright-js-tomcat90-mysql57",
-				"][relevant][", relevantRuleName, "]");
+			String playwrightProjectsIncludesPropertyName =
+				StringBundler.concat(
+					"playwright.projects.includes",
+					"[playwright-js-tomcat90-mysql57][relevant][",
+					relevantRuleName, "]");
 
-			List<String> playwrightTestProjectList = ListUtil.fromString(
-				properties.getProperty(playwrightTestProjectPropertyName),
+			List<String> playwrightProjectsIncludesList = ListUtil.fromString(
+				properties.getProperty(playwrightProjectsIncludesPropertyName),
 				StringPool.COMMA);
 
 			String additionalMessage = "";
@@ -190,20 +192,20 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 					" in " + moduleTestPropertiesFilePath.substring(x + 1);
 			}
 
-			if (ListUtil.isEmpty(playwrightTestProjectList)) {
+			if (ListUtil.isEmpty(playwrightProjectsIncludesList)) {
 				addMessage(
 					fileName,
 					StringBundler.concat(
 						"Missing property \"",
-						playwrightTestProjectPropertyName, "\"",
+						playwrightProjectsIncludesPropertyName, "\"",
 						additionalMessage));
 			}
-			else if (!playwrightTestProjectList.contains(moduleName)) {
+			else if (!playwrightProjectsIncludesList.contains(moduleName)) {
 				addMessage(
 					fileName,
 					StringBundler.concat(
 						"Missing property value \"", moduleName, "\" in \"",
-						playwrightTestProjectPropertyName, "\"",
+						playwrightProjectsIncludesPropertyName, "\"",
 						additionalMessage));
 			}
 		}

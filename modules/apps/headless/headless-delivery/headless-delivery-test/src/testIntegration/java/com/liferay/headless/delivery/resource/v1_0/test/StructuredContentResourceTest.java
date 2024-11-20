@@ -1094,7 +1094,7 @@ public class StructuredContentResourceTest
 		Map<Locale, String> titleMap = HashMapBuilder.put(
 			LocaleUtil.getDefault(), RandomTestUtil.randomString()
 		).put(
-			LocaleUtil.FRANCE, "test fr"
+			LocaleUtil.FRANCE, _JOURNAL_ARTICLE_TITLE_FR
 		).build();
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -1857,7 +1857,8 @@ public class StructuredContentResourceTest
 		StructuredContentLink structuredContent =
 			articleValue.getStructuredContentLink();
 
-		Assert.assertEquals("test fr", structuredContent.getTitle());
+		Assert.assertEquals(
+			_JOURNAL_ARTICLE_TITLE_FR, structuredContent.getTitle());
 	}
 
 	private void _testGetStructuredContentWithDataDefinitionEmptyDefaultValue()
@@ -2363,6 +2364,9 @@ public class StructuredContentResourceTest
 	private static final String[] _COMPLETE_STRUCTURED_CONTENT_OPTIONS = {
 		"Option1", "Option2", "Option3"
 	};
+
+	private static final String _JOURNAL_ARTICLE_TITLE_FR =
+		RandomTestUtil.randomString();
 
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	private static DDMFormDeserializer _jsonDDMFormDeserializer;

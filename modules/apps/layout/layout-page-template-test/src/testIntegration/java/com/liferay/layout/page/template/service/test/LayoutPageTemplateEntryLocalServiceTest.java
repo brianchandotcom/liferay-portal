@@ -14,6 +14,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -161,6 +163,78 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateLayoutPageTemplateEntryDefaultTemplate()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		try {
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+
+			Assert.fail();
+		}
+		catch (LayoutPageTemplateEntryDefaultTemplateException
+					layoutPageTemplateEntryDefaultTemplateException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(layoutPageTemplateEntryDefaultTemplateException);
+			}
+		}
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.updateStatus(
+				TestPropsValues.getUserId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+
+		Assert.assertTrue(layoutPageTemplateEntry.isDefaultTemplate());
+
+		try {
+			_layoutPageTemplateEntryLocalService.updateStatus(
+				TestPropsValues.getUserId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				WorkflowConstants.STATUS_DRAFT);
+
+			Assert.fail();
+		}
+		catch (LayoutPageTemplateEntryDefaultTemplateException
+					layoutPageTemplateEntryDefaultTemplateException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(layoutPageTemplateEntryDefaultTemplateException);
+			}
+		}
+
+		try {
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				TestPropsValues.getUserId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT);
+
+			Assert.fail();
+		}
+		catch (LayoutPageTemplateEntryDefaultTemplateException
+					layoutPageTemplateEntryDefaultTemplateException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(layoutPageTemplateEntryDefaultTemplateException);
+			}
+		}
+	}
+
+	@Test
 	public void testUpdateLayoutPageTemplateEntryName() throws Exception {
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
@@ -223,6 +297,9 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 			styleBookEntry.getStyleBookEntryId(),
 			draftLayout.getStyleBookEntryId());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutPageTemplateEntryLocalServiceTest.class);
 
 	@DeleteAfterTestRun
 	private Group _group;

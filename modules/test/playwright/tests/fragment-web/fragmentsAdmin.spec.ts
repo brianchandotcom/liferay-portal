@@ -327,9 +327,11 @@ test(
 			page.getByRole('menuitem', {name: 'View Site Usages'})
 		).toHaveClass(/disabled/);
 
-		await page.locator('body').click();
-
 		// Add resource
+
+		await fragmentsPage.goto('/global');
+
+		await fragmentsPage.gotoFragmentSet(globalFragmentCollectionName);
 
 		const resources = page.getByRole('link', {name: 'Resources'});
 

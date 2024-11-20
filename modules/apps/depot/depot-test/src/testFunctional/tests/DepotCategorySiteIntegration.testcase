@@ -375,7 +375,7 @@ definition {
 
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
 
-		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
+		AssetCategorization.viewBlogsNoVocabularyField(vocabularyName = "Vocabulary Name");
 
 		DMNavigator.openToAddEntry(
 			groupName = "Site Name",

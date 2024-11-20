@@ -37,7 +37,7 @@ definition {
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Abstract Description");
 
@@ -299,7 +299,7 @@ definition {
 
 		BlogsEntry.addContent(entryContent = "Blogs Entry Content");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomAbstract(entryAbstractDescription = '''~!@#$%^&*''');
 
@@ -355,7 +355,7 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		AssertChecked(locator1 = "Radio#AUTOMATIC_URL");
 
@@ -616,7 +616,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.editDisplayDateYear();
 
@@ -628,7 +628,7 @@ definition {
 
 		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.editDisplayDate(minutesAdjustmentValue = "-2");
 
@@ -840,7 +840,7 @@ definition {
 
 		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Custom AbstractEdit");
 
@@ -1150,7 +1150,7 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
 
@@ -1177,7 +1177,7 @@ definition {
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Title");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		Click(locator1 = "Radio#CUSTOM_ABSTRACT");
 

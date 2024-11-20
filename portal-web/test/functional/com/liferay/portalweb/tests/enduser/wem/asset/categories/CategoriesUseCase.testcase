@@ -144,7 +144,7 @@ definition {
 
 			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
-			Panel.expandPanel(panel = "Categorization");
+			Blogs.expandPanel(panel = "Categorization");
 
 			AssetCategorization.addCategory(
 				categoryName = "Public Category Name",

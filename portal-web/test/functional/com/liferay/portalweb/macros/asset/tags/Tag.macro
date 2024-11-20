@@ -17,7 +17,7 @@ definition {
 			entryContent = ${entryContent},
 			entryTitle = ${entryTitle});
 
-		Panel.expandPanel(panel = "Categorization");
+		Blogs.expandPanel(panel = "Categorization");
 
 		Type.sendKeys(
 			locator1 = "AssetCategorization#TAGS_FIELD",

@@ -280,7 +280,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		Panel.expandPanel(panel = "Categorization");
+		Blogs.expandPanel(panel = "Categorization");
 
 		AssetCategorization.removeTag(tagName = "DXP");
 
@@ -364,7 +364,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		Panel.expandPanel(panel = "Categorization");
+		Blogs.expandPanel(panel = "Categorization");
 
 		FormFields.disableCheckbox(fieldName = "Update Auto Tags");
 

@@ -50,7 +50,9 @@ definition {
 				webContentTitle = ${entryTitle});
 		}
 
-		WebContent.editDisplayPage(pageName = ${pageName});
+		WebContent.editDisplayPage(
+			assetType = ${assetType},
+			pageName = ${pageName});
 
 		PortletEntry.publish();
 	}

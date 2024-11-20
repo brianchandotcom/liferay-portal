@@ -68,7 +68,7 @@ definition {
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Abstract Description");
 
@@ -382,7 +382,7 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		AssertChecked(locator1 = "Radio#AUTOMATIC_URL");
 
@@ -519,7 +519,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
 
@@ -537,7 +537,7 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
 
@@ -846,7 +846,7 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomURL(customURL = "this-should-redirect-to-the-previous-entry");
 
@@ -890,7 +890,8 @@ definition {
 
 			RelatedAssets.selectAsset(
 				assetTitle = "Blogs Entry1 Title",
-				assetType = "Blogs Entry");
+				assetType = "Blogs Entry",
+				scopeAssetType = "Blogs Entry");
 
 			PortletEntry.publish();
 		}

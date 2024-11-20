@@ -597,11 +597,12 @@ definition {
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title");
 
-			Panel.expandPanel(panel = "Related Assets");
+			Blogs.expandPanel(panel = "Related Assets");
 
 			RelatedAssets.selectAsset(
 				assetTitle = "WC WebContent Title",
-				assetType = "Basic Web Content");
+				assetType = "Basic Web Content",
+				scopeAssetType = "Blogs Entry");
 
 			PortletEntry.publish();
 		}

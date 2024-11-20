@@ -83,6 +83,7 @@ definition {
 			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
 			WebContent.editDisplayPage(
+				assetType = "Blogs Entry",
 				pageName = "Display Page Name",
 				pageType = "Display Page Templates");
 

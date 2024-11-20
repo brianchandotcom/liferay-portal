@@ -318,7 +318,8 @@ test(
 			autoClick: false,
 			target: page.getByRole('menuitem', {name: 'View Site Usages'}),
 			trigger: page
-				.locator(`//p[@title="${fragmentEntryName}"]/../..`)
+				.locator('.card-row')
+				.filter({hasText: fragmentEntryName})
 				.getByLabel('More actions'),
 		});
 
@@ -759,7 +760,8 @@ test(
 			autoClick: false,
 			target: viewUsagesAction,
 			trigger: page
-				.locator(`//p[@title="${basicFragmentEntryName}"]/../..`)
+				.locator('.card-row')
+				.filter({hasText: basicFragmentEntryName})
 				.getByLabel('More actions'),
 		});
 

@@ -5391,6 +5391,25 @@ public class DataFactory {
 			uuid);
 	}
 
+	public List<ObjectDefinitionModel> newObjectDefinitionModels(
+		long objectFolderId) {
+
+		return ListUtil.fromArray(
+			newObjectDefinitionModel(
+				_counter.get(), objectFolderId, _counter.get(),
+				CommerceOrder.class.getName(), "CommerceOrder", false, true,
+				false, _getLabel("Commerce Order"), false, "CommerceOrder",
+				null, "commerceOrderId", "commerceOrderId",
+				_getPluralLabel("Commerce Orders"), false, true,
+				"L_COMMERCE_ORDER", SequentialUUID.generate()),
+			newObjectDefinitionModel(
+				_counter.get(), objectFolderId, _counter.get(),
+				User.class.getName(), "User_", false, true, false,
+				_getLabel("User"), false, "User", null, "userId", "userId",
+				_getPluralLabel("Users"), false, true, "L_USER",
+				SequentialUUID.generate()));
+	}
+
 	public List<ObjectEntryModel> newObjectEntryModels(
 		long objectDefinitionId) {
 
@@ -6646,25 +6665,6 @@ public class DataFactory {
 	public SubscriptionModel newSubscriptionModel(WikiPageModel wikiPageModel) {
 		return newSubscriptionModel(
 			getClassNameId(WikiPage.class), wikiPageModel.getResourcePrimKey());
-	}
-
-	public List<ObjectDefinitionModel> newSystemObjectDefinitionModels(
-		long objectFolderId) {
-
-		return ListUtil.fromArray(
-			newObjectDefinitionModel(
-				_counter.get(), objectFolderId, _counter.get(),
-				CommerceOrder.class.getName(), "CommerceOrder", false, true,
-				false, _getLabel("Commerce Order"), false, "CommerceOrder",
-				null, "commerceOrderId", "commerceOrderId",
-				_getPluralLabel("Commerce Orders"), false, true,
-				"L_COMMERCE_ORDER", SequentialUUID.generate()),
-			newObjectDefinitionModel(
-				_counter.get(), objectFolderId, _counter.get(),
-				User.class.getName(), "User_", false, true, false,
-				_getLabel("User"), false, "User", null, "userId", "userId",
-				_getPluralLabel("Users"), false, true, "L_USER",
-				SequentialUUID.generate()));
 	}
 
 	public List<UserModel> newUserModels() {

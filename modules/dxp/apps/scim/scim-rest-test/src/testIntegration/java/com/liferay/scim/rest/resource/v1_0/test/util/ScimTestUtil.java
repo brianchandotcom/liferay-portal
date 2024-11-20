@@ -35,4 +35,21 @@ public class ScimTestUtil {
 			expandoColumn.getName(), classPK, RandomTestUtil.randomString());
 	}
 
+	public static void saveSCIMClientId(
+			String className, long classPK, long companyId,
+			String scimClientIdValue)
+		throws Exception {
+
+		ExpandoTable expandoTable = ExpandoTableLocalServiceUtil.getTable(
+			companyId, ClassNameLocalServiceUtil.getClassNameId(className),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		ExpandoColumn expandoColumn = ExpandoColumnLocalServiceUtil.getColumn(
+			expandoTable.getTableId(), "scimClientId");
+
+		ExpandoValueLocalServiceUtil.addValue(
+			companyId, className, ExpandoTableConstants.DEFAULT_TABLE_NAME,
+			expandoColumn.getName(), classPK, scimClientIdValue);
+	}
+
 }

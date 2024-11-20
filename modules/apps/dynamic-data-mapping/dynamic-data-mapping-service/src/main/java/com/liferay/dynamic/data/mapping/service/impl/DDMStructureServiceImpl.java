@@ -226,6 +226,23 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		return ddmStructure;
 	}
 
+	@Override
+	public DDMStructure fetchStructureByExternalReferenceCode(
+			String externalReferenceCode, long groupId, long classNameId)
+		throws PortalException {
+
+		DDMStructure ddmStructure =
+			ddmStructureLocalService.fetchStructureByExternalReferenceCode(
+				externalReferenceCode, groupId, classNameId);
+
+		if (ddmStructure != null) {
+			_ddmStructureModelResourcePermission.check(
+				getPermissionChecker(), ddmStructure, ActionKeys.VIEW);
+		}
+
+		return ddmStructure;
+	}
+
 	/**
 	 * Returns the structure with the ID.
 	 *
@@ -293,6 +310,21 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 		DDMStructure structure = ddmStructureLocalService.getStructure(
 			groupId, classNameId, structureKey, includeAncestorStructures);
+
+		_ddmStructureModelResourcePermission.check(
+			getPermissionChecker(), structure, ActionKeys.VIEW);
+
+		return structure;
+	}
+
+	@Override
+	public DDMStructure getStructureByExternalReferenceCode(
+			String externalReferenceCode, long groupId, long classNameId)
+		throws PortalException {
+
+		DDMStructure structure =
+			ddmStructureLocalService.getStructureByExternalReferenceCode(
+				externalReferenceCode, groupId, classNameId);
 
 		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structure, ActionKeys.VIEW);

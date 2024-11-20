@@ -7648,15 +7648,6 @@ public class ObjectEntryResourceTest {
 					).put(
 						"externalReferenceCode",
 						_objectEntry1.getExternalReferenceCode()
-					).put(
-						"status",
-						JSONUtil.put(
-							"code", 0
-						).put(
-							"label", "approved"
-						).put(
-							"label_i18n", "Approved"
-						)
 					)
 				).put(
 					StringBundler.concat(
@@ -7665,20 +7656,8 @@ public class ObjectEntryResourceTest {
 					Long.MAX_VALUE
 				).put(
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
-				).put(
-					"status",
-					JSONUtil.put(
-						"code", 0
-					).put(
-						"label", "approved"
-					).put(
-						"label_i18n", "Approved"
-					)
 				).toString(),
-				_objectDefinition2.getRESTContextPath(
-				).substring(
-					1
-				),
+				_objectDefinition2.getRESTContextPath(),
 				Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
@@ -7715,20 +7694,8 @@ public class ObjectEntryResourceTest {
 					RandomTestUtil.randomString()
 				).put(
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
-				).put(
-					"status",
-					JSONUtil.put(
-						"code", 0
-					).put(
-						"label", "approved"
-					).put(
-						"label_i18n", "Approved"
-					)
 				).toString(),
-				_objectDefinition2.getRESTContextPath(
-				).substring(
-					1
-				),
+				_objectDefinition2.getRESTContextPath(),
 				Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
@@ -7767,20 +7734,8 @@ public class ObjectEntryResourceTest {
 					_objectEntry1.getExternalReferenceCode()
 				).put(
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
-				).put(
-					"status",
-					JSONUtil.put(
-						"code", 0
-					).put(
-						"label", "approved"
-					).put(
-						"label_i18n", "Approved"
-					)
 				).toString(),
-				_objectDefinition2.getRESTContextPath(
-				).substring(
-					1
-				),
+				_objectDefinition2.getRESTContextPath(),
 				Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
@@ -7813,20 +7768,8 @@ public class ObjectEntryResourceTest {
 						Long.MAX_VALUE
 					).put(
 						_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
-					).put(
-						"status",
-						JSONUtil.put(
-							"code", 0
-						).put(
-							"label", "approved"
-						).put(
-							"label_i18n", "Approved"
-						)
 					).toString(),
-					_objectDefinition2.getRESTContextPath(
-					).substring(
-						1
-					),
+					_objectDefinition2.getRESTContextPath(),
 					Http.Method.POST
 				).getJSONObject(
 					"status"

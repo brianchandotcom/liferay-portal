@@ -10,6 +10,7 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
@@ -28,15 +29,19 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PrefsPropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -115,6 +120,95 @@ public class LoginActionTest {
 		).getQuery();
 
 		Assert.assertTrue(queryString.contains("p_p_state=exclusive"));
+	}
+
+	@Test
+	public void testLoginRedirectWithCustomContextFromAnUtilityPage()
+		throws Exception {
+
+		String context = "/mycontext";
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					_portal, "_pathFriendlyURLPublic",
+					context + _portal.getPathFriendlyURLPublic())) {
+
+			Group group = _groupLocalService.getGroup(
+				TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+
+			_layoutUtilityPageEntry =
+				_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+					null, _serviceContext.getUserId(), group.getGroupId(), 0, 0,
+					true, RandomTestUtil.randomString(),
+					LayoutUtilityPageEntryConstants.TYPE_LOGIN, 0,
+					_serviceContext);
+
+			UserTestUtil.setUser(
+				_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
+
+			URL url = new URL(
+				"http://localhost:8080/c/portal/login?p_l_id=" +
+					TestPropsValues.getPlid() + "&windowState=exclusive");
+
+			HttpURLConnection httpURLConnection =
+				(HttpURLConnection)url.openConnection();
+
+			httpURLConnection.setRequestMethod("GET");
+
+			Assert.assertEquals(200, httpURLConnection.getResponseCode());
+
+			String queryString = httpURLConnection.getURL(
+			).getQuery();
+
+			Assert.assertTrue(
+				queryString.contains(
+					"_com_liferay_login_web_portlet_LoginPortlet_redirect=" +
+						HtmlUtil.escapeURL(context) + "%2Fweb%2Fguest%2Fhome"));
+		}
+	}
+
+	@Test
+	public void testLoginRedirectWithNoDefaultSiteNameFromAnUtilityPage()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				PrefsPropsTestUtil.swapWithSafeCloseable(
+					TestPropsValues.getCompanyId(),
+					PropsKeys.VIRTUAL_HOSTS_DEFAULT_SITE_NAME,
+					StringPool.BLANK)) {
+
+			Group group = _groupLocalService.getGroup(
+				TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+
+			_layoutUtilityPageEntry =
+				_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+					null, _serviceContext.getUserId(), group.getGroupId(), 0, 0,
+					true, RandomTestUtil.randomString(),
+					LayoutUtilityPageEntryConstants.TYPE_LOGIN, 0,
+					_serviceContext);
+
+			UserTestUtil.setUser(
+				_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
+
+			URL url = new URL(
+				"http://localhost:8080/c/portal/login?p_l_id=" +
+					TestPropsValues.getPlid() + "&windowState=exclusive");
+
+			HttpURLConnection httpURLConnection =
+				(HttpURLConnection)url.openConnection();
+
+			httpURLConnection.setRequestMethod("GET");
+
+			Assert.assertEquals(200, httpURLConnection.getResponseCode());
+
+			String queryString = httpURLConnection.getURL(
+			).getQuery();
+
+			Assert.assertTrue(
+				queryString.contains(
+					"_com_liferay_login_web_portlet_LoginPortlet_redirect=" +
+						"%2Fweb%2Fguest%2Fhome"));
+		}
 	}
 
 	@Test

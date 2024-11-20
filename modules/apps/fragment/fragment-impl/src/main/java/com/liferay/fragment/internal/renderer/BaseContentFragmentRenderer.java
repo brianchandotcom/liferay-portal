@@ -58,6 +58,14 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 				jsonObject.getLong("classPK"));
 		}
 
+		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY);
+
+		if (assetEntry != null) {
+			return new Tuple(
+				assetEntry.getClassName(), assetEntry.getClassPK());
+		}
+
 		InfoItemReference infoItemReference =
 			fragmentRendererContext.getContextInfoItemReference();
 
@@ -89,9 +97,8 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 							classedModel.getModelClassName(), primaryKeyObj);
 					}
 
-					AssetEntry assetEntry =
-						assetEntryLocalService.fetchAssetEntry(
-							(Long)primaryKeyObj);
+					assetEntry = assetEntryLocalService.fetchAssetEntry(
+						(Long)primaryKeyObj);
 
 					if (assetEntry != null) {
 						return new Tuple(
@@ -105,14 +112,6 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 					_log.debug(noSuchInfoItemException);
 				}
 			}
-		}
-
-		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
-
-		if (assetEntry != null) {
-			return new Tuple(
-				assetEntry.getClassName(), assetEntry.getClassPK());
 		}
 
 		return new Tuple(

@@ -8,6 +8,7 @@ package com.liferay.layout.page.template.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryExternalReferenceCodeException;
+import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryDefaultTemplateException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -77,6 +78,39 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		Assert.assertTrue(
 			Validator.isNotNull(
 				layoutPageTemplateEntry.getExternalReferenceCode()));
+	}
+
+	@Test
+	public void testAddLayoutPageTemplateEntryWithDefaultTemplateAndApproved()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				0, 0, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, true, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		Assert.assertTrue(layoutPageTemplateEntry.isDefaultTemplate());
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Assert.assertTrue(layout.isPublished());
+	}
+
+	@Test(expected = LayoutPageTemplateEntryDefaultTemplateException.class)
+	public void testAddLayoutPageTemplateEntryWithDefaultTemplateAndDraft()
+		throws Exception {
+
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			0, 0, RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, true, 0, 0,
+			0, WorkflowConstants.STATUS_DRAFT, _serviceContext);
 	}
 
 	@Test(

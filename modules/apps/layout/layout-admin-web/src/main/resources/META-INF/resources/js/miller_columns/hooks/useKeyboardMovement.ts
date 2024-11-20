@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {navigate} from 'frontend-js-web';
 import {useCallback, useContext, useEffect} from 'react';
 
 import {DropPosition} from '../constants/dropPositions';
@@ -26,10 +25,6 @@ const ALLOWED_KEYS = [
 
 type AllowedKey = (typeof ALLOWED_KEYS)[number];
 
-function isAllowedKey(key: string): key is AllowedKey {
-	return ALLOWED_KEYS.includes(key as AllowedKey);
-}
-
 type Items = Map<string, MillerColumnItem>;
 
 export function useKeyboardMovement({
@@ -37,7 +32,6 @@ export function useKeyboardMovement({
 	item,
 	items,
 	onMove,
-	rtl,
 }: {
 	isPrivateLayoutsEnabled: boolean;
 	item: MillerColumnItem;
@@ -53,8 +47,7 @@ export function useKeyboardMovement({
 
 	const {
 		columnSizes,
-		redirectURL,
-		setListener,
+		setOnMove,
 		setRedirectURL,
 		setSources,
 		setTarget,
@@ -64,83 +57,6 @@ export function useKeyboardMovement({
 
 	const isTarget =
 		columnIndex === target?.columnIndex && itemIndex === target?.itemIndex;
-
-	useEffect(() => {
-		if (!sources.length) {
-			return;
-		}
-
-		const onKeyDown = (event: KeyboardEvent) => {
-			const key = getKey(event, rtl);
-
-			event.preventDefault();
-			event.stopPropagation();
-
-			if (!isAllowedKey(key)) {
-				return;
-			}
-
-			const disableMovement = () => {
-				setSources([]);
-				setTarget(null);
-
-				window.removeEventListener('keydown', onKeyDown, true);
-			};
-
-			if (key === 'Enter' && target) {
-				const targetItem = getMillerColumnsItem(
-					target.columnIndex,
-					target.itemIndex,
-					items
-				);
-
-				if (targetItem) {
-					onMove(sources, targetItem, target.position);
-				}
-
-				disableMovement();
-			}
-			else if (key === 'Escape') {
-				disableMovement();
-
-				if (redirectURL) {
-					navigate(redirectURL);
-				}
-			}
-			else {
-				const nextTarget = getNextTarget({
-					columnSizes,
-					isPrivateLayoutsEnabled,
-					items,
-					key,
-					sources,
-					target,
-				});
-
-				if (nextTarget) {
-					setTarget(nextTarget);
-				}
-			}
-		};
-
-		// We send the listener to the context so we add it or remove it there,
-		// this is needed because the component that is using this hook can be
-		// unmounted during the movement
-
-		setListener(() => onKeyDown);
-	}, [
-		columnSizes,
-		isPrivateLayoutsEnabled,
-		items,
-		onMove,
-		redirectURL,
-		rtl,
-		setListener,
-		setSources,
-		setTarget,
-		sources,
-		target,
-	]);
 
 	useEffect(() => {
 		if (isTarget && item.active) {
@@ -159,6 +75,7 @@ export function useKeyboardMovement({
 			});
 
 			if (initialTarget) {
+				setOnMove(() => onMove);
 				setSources(sources);
 				setTarget(initialTarget);
 			}
@@ -168,6 +85,8 @@ export function useKeyboardMovement({
 			isPrivateLayoutsEnabled,
 			item,
 			items,
+			onMove,
+			setOnMove,
 			setSources,
 			setTarget,
 		]
@@ -182,20 +101,6 @@ export function useKeyboardMovement({
 			itemIndex === target?.itemIndex,
 		position: target?.position,
 	};
-}
-
-function getKey(event: KeyboardEvent, rtl: boolean) {
-	const {key} = event;
-
-	if (!rtl) {
-		return event.key;
-	}
-
-	return key === 'ArrowRight'
-		? 'ArrowLeft'
-		: key === 'ArrowLeft'
-			? 'ArrowRight'
-			: key;
 }
 
 function getInitialTarget({

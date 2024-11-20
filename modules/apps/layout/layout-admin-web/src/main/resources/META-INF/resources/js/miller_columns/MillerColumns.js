@@ -285,7 +285,11 @@ const MillerColumns = ({
 
 	return (
 		<KeyboardNavigationProvider columnSizes={columnSizes}>
-			<KeyboardMovementProvider columnSizes={columnSizes}>
+			<KeyboardMovementProvider
+				columnSizes={columnSizes}
+				items={items}
+				rtl={rtl}
+			>
 				<DndProvider backend={HTML5Backend}>
 					<DragPreview getLabel={getDragPreviewLabel} />
 

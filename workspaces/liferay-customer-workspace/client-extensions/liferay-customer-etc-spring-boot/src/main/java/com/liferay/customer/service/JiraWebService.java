@@ -117,6 +117,45 @@ public class JiraWebService {
 		return null;
 	}
 
+	public String getJiraVersions(String project) throws Exception {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_URL_REST_API_2);
+		sb.append("/project/");
+		sb.append(project);
+		sb.append("/versions");
+
+		try {
+			JSONArray jsonArray = new JSONArray(
+				WebClient.create(
+					_jiraURL
+				).get(
+				).uri(
+					sb.toString()
+				).accept(
+					MediaType.APPLICATION_JSON
+				).header(
+					HttpHeaders.AUTHORIZATION, _getCredentials()
+				).retrieve(
+				).bodyToMono(
+					String.class
+				).block());
+
+			jsonArray = _processFieldsJSONArray(jsonArray);
+
+			return jsonArray.toString();
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to fetch Jira versions with project " + project,
+					exception);
+			}
+		}
+
+		return null;
+	}
+
 	private String _buildSecuritiesJQL(String keywords, String role) {
 		StringBundler sb = new StringBundler(10);
 

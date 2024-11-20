@@ -18,24 +18,31 @@ import javax.servlet.http.HttpServletRequest;
 public class CTCollectionTimelineUtil {
 
 	public static void setClassName(
-		RenderRequest renderRequest, Class<?> clazz) {
-
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(renderRequest);
+		HttpServletRequest httpServletRequest, Class<?> clazz) {
 
 		httpServletRequest.setAttribute(
 			CTTimelineKeys.CLASS_NAME, clazz.getName());
 	}
 
+	public static void setClassName(
+		RenderRequest renderRequest, Class<?> clazz) {
+
+		setClassName(PortalUtil.getHttpServletRequest(renderRequest), clazz);
+	}
+
+	public static void setCTTimelineKeys(
+		HttpServletRequest httpServletRequest, Class<?> clazz, long classPK) {
+
+		setClassName(httpServletRequest, clazz);
+
+		httpServletRequest.setAttribute(CTTimelineKeys.CLASS_PK, classPK);
+	}
+
 	public static void setCTTimelineKeys(
 		RenderRequest renderRequest, Class<?> clazz, long classPK) {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(renderRequest);
-
-		setClassName(renderRequest, clazz);
-
-		httpServletRequest.setAttribute(CTTimelineKeys.CLASS_PK, classPK);
+		setCTTimelineKeys(
+			PortalUtil.getHttpServletRequest(renderRequest), clazz, classPK);
 	}
 
 }

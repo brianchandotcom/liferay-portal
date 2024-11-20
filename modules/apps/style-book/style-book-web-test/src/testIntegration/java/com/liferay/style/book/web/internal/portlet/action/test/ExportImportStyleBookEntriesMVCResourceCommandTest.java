@@ -68,11 +68,11 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 
 	@Test
 	public void testExportImportMultipleStyleBookEntries() throws Exception {
+		String styleBookEntryKey1 = RandomTestUtil.randomString();
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_sourceGroup, TestPropsValues.getUserId());
-
-		String styleBookEntryKey1 = RandomTestUtil.randomString();
 
 		StyleBookEntry styleBookEntry1 =
 			_styleBookEntryLocalService.addStyleBookEntry(
@@ -118,15 +118,13 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 
 	@Test
 	public void testExportImportSingleStyleBookEntry() throws Exception {
+		String name = RandomTestUtil.randomString();
+		String styleBookEntryKey = RandomTestUtil.randomString();
+		String themeId = RandomTestUtil.randomString();
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_sourceGroup, TestPropsValues.getUserId());
-
-		String name = RandomTestUtil.randomString();
-
-		String styleBookEntryKey = RandomTestUtil.randomString();
-
-		String themeId = RandomTestUtil.randomString();
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
@@ -219,11 +217,11 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 	public void testExportImportSingleStyleBookEntryAndOverwrite()
 		throws Exception {
 
+		String styleBookEntryKey = RandomTestUtil.randomString();
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_sourceGroup, TestPropsValues.getUserId());
-
-		String styleBookEntryKey = RandomTestUtil.randomString();
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(

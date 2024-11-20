@@ -745,7 +745,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		String upstreamBranchName = gitWorkingDirectory.getUpstreamBranchName();
 
 		if (!upstreamBranchName.equals("master")) {
-			return 0L;
+			return 0;
 		}
 
 		JobProperty jobProperty = getJobProperty(
@@ -754,7 +754,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		String jobPropertyValue = jobProperty.getValue();
 
 		if ((jobPropertyValue == null) || !jobPropertyValue.matches("\\d+")) {
-			return 0L;
+			return 0;
 		}
 
 		recordJobProperty(jobProperty);
@@ -1011,13 +1011,13 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			"test.batch.default.test.duration");
 
 		if (jobProperty == null) {
-			return 0L;
+			return 0;
 		}
 
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
-			return 0L;
+			return 0;
 		}
 
 		recordJobProperty(jobProperty);
@@ -1030,13 +1030,13 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			"test.batch.default.test.overhead.duration");
 
 		if (jobProperty == null) {
-			return 0L;
+			return 0;
 		}
 
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
-			return 0L;
+			return 0;
 		}
 
 		recordJobProperty(jobProperty);
@@ -1049,13 +1049,13 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			"test.batch.default.test.task.duration");
 
 		if (jobProperty == null) {
-			return 0L;
+			return 0;
 		}
 
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
-			return 0L;
+			return 0;
 		}
 
 		recordJobProperty(jobProperty);

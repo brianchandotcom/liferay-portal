@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,6 +36,35 @@ public class ScanCodeProject {
 	public ScanCodeProject(String buildURL, String pipelineName) {
 		_buildURL = buildURL;
 		_pipelineName = pipelineName;
+	}
+
+	public void addFileInput(String filePath)
+		throws IOException, TimeoutException {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("curl ");
+		sb.append(_projectAPIURL);
+		sb.append("add_input/");
+		sb.append(" --form ");
+		sb.append("'upload_file=@");
+		sb.append(filePath);
+		sb.append("'");
+		sb.append(" --header ");
+		sb.append("\"Authorization:Token ");
+		sb.append(_API_KEY);
+		sb.append("\"");
+		sb.append(" --request POST ");
+
+		Process process = JenkinsResultsParserUtil.executeBashCommands(
+			sb.toString());
+
+		try {
+			JenkinsResultsParserUtil.readInputStream(process.getInputStream());
+		}
+		catch (IOException ioException) {
+			ioException.printStackTrace();
+		}
 	}
 
 	public void addPipeline(String pipelineName)
@@ -177,7 +207,7 @@ public class ScanCodeProject {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
-			"execute_now", true
+			"execute_now", false
 		).put(
 			"input_urls", "docker://liferay/" + dockerTag
 		).put(
@@ -292,6 +322,53 @@ public class ScanCodeProject {
 
 	public String getPipelineName() {
 		return _pipelineName;
+	}
+
+	public String getPipelineRunURL(String pipelineName) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("curl ");
+		sb.append(_projectAPIURL);
+		sb.append(" --header ");
+		sb.append(_CONTENT_TYPE);
+		sb.append(" --header ");
+		sb.append("\"Authorization:Token ");
+		sb.append(_API_KEY);
+		sb.append("\"");
+		sb.append(" --request GET ");
+
+		try {
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
+				new String[] {sb.toString()});
+
+			String output = JenkinsResultsParserUtil.readInputStream(
+				process.getInputStream());
+
+			output = output.trim();
+
+			JSONObject outputJSONObject = new JSONObject(output);
+
+			JSONArray runsJSONArray = outputJSONObject.getJSONArray("runs");
+
+			for (int i = 0; i < runsJSONArray.length(); i++) {
+				JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
+
+				if (!Objects.equals(
+						runJSONObject.get("pipeline_name"), pipelineName)) {
+
+					continue;
+				}
+
+				return runJSONObject.get(
+					"url"
+				).toString();
+			}
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+
+		return null;
 	}
 
 	public String getProjectID() {
@@ -447,6 +524,35 @@ public class ScanCodeProject {
 
 		_projectURL =
 			"https://liferay1.scancode.io/project/" + name + "-" + uid + "/";
+	}
+
+	public void startPipeline(String pipelineName) throws Exception {
+		String pipelineRunURL = getPipelineRunURL(pipelineName);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(pipelineRunURL)) {
+			throw new IOException("Unable to start " + pipelineName);
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("curl ");
+		sb.append(pipelineRunURL);
+		sb.append("start_pipeline/");
+		sb.append(" --header ");
+		sb.append("\"Authorization:Token ");
+		sb.append(_API_KEY);
+		sb.append("\"");
+		sb.append(" --request POST ");
+
+		Process process = JenkinsResultsParserUtil.executeBashCommands(
+			sb.toString());
+
+		try {
+			JenkinsResultsParserUtil.readInputStream(process.getInputStream());
+		}
+		catch (IOException ioException) {
+			ioException.printStackTrace();
+		}
 	}
 
 	public void uploadResultsToBucket(String tarGzFilePath) {

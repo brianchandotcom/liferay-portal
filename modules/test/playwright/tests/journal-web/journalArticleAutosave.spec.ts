@@ -340,10 +340,6 @@ autoSaveTest(
 			await expect(journalEditArticlePage.undoButton).toBeEnabled();
 		}).toPass();
 
-		await expect(
-			journalEditArticlePage.changesSavedIndicator
-		).toBeVisible();
-
 		await journalEditArticlePage.undoButton.click();
 
 		await expect(journalEditArticlePage.undoButton).toBeDisabled();

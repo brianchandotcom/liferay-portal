@@ -17,6 +17,8 @@ const ALLOWED_KEYS = [
 	'ArrowLeft',
 	'ArrowRight',
 	'ArrowUp',
+	'Home',
+	'End',
 ] as const;
 
 type AllowedKey = (typeof ALLOWED_KEYS)[number];
@@ -171,6 +173,12 @@ function getNextTarget({
 }): NavigationTarget | null {
 	const columnSize = columnSizes[columnIndex];
 
+	// Moving first
+
+	if (key === 'Home' && itemIndex !== 0) {
+		return {columnIndex, itemIndex: 0};
+	}
+
 	// Moving vertically
 
 	if (key === 'ArrowDown' || key === 'ArrowUp') {
@@ -182,6 +190,12 @@ function getNextTarget({
 		}
 
 		return {columnIndex, itemIndex: nextItemIndex};
+	}
+
+	// Moving last
+
+	if (key === 'End' && itemIndex !== columnSize - 1) {
+		return {columnIndex, itemIndex: columnSize - 1};
 	}
 
 	// Moving left to parent if it exists

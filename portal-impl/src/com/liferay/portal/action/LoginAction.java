@@ -8,6 +8,7 @@ package com.liferay.portal.action;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.kernel.provider.util.LayoutUtilityPageEntryLayoutProviderUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -96,7 +97,8 @@ public class LoginAction implements Action {
 			}
 
 			if (redirect.charAt(0) == CharPool.SLASH) {
-				String portalURL = themeDisplay.getURLPortal();
+				String portalURL = PortalUtil.getPortalURL(
+					httpServletRequest, httpServletRequest.isSecure());
 
 				if (Validator.isNotNull(portalURL)) {
 					redirect = portalURL.concat(redirect);
@@ -139,8 +141,14 @@ public class LoginAction implements Action {
 		}
 		else {
 			if (Validator.isNull(loginRedirect)) {
-				loginRedirect = themeDisplay.getLayoutFriendlyURL(
-					themeDisplay.getLayout());
+				Layout redirectLayout = themeDisplay.getLayout();
+
+				Group group = redirectLayout.getGroup();
+
+				loginRedirect =
+					themeDisplay.getPathFriendlyURLPublic() +
+						group.getFriendlyURL() +
+							themeDisplay.getLayoutFriendlyURL(redirectLayout);
 			}
 		}
 

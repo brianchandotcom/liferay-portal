@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.item.selector.criterion.DDMTemplateItemS
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
@@ -433,7 +432,7 @@ public class JournalContentDisplayContext {
 		}
 
 		try {
-			_ddmTemplates = DDMTemplateLocalServiceUtil.getTemplates(
+			_ddmTemplates = _ddmTemplateLocalService.getTemplates(
 				article.getGroupId(),
 				PortalUtil.getClassNameId(DDMStructure.class),
 				article.getDDMStructureId(), true);
@@ -1129,7 +1128,7 @@ public class JournalContentDisplayContext {
 			return null;
 		}
 
-		return DDMTemplateLocalServiceUtil.fetchTemplate(
+		return _ddmTemplateLocalService.fetchTemplate(
 			_themeDisplay.getScopeGroupId(),
 			_portal.getClassNameId(DDMStructure.class), ddmTemplateKey, true);
 	}

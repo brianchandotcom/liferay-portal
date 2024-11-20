@@ -25,7 +25,5 @@
 
 	<#include "system_object_definitions.ftl">
 
-	<#include "object_actions.ftl">
-
 	<#include "groups.ftl">
 </#list>

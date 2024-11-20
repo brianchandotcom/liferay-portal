@@ -27,3 +27,5 @@ ${dataFactory.getExtensionDynamicObjectDefinitionTableCreateSQL(userObjectDefini
 <#list dataFactory.newObjectFieldModels(userObjectDefinitionModel.getObjectDefinitionId(), userObjectDefinitionModel.getDBTableName(), 0, "userId") as objectFieldModel>
 	${dataFactory.toInsertSQL(objectFieldModel)}
 </#list>
+
+${dataFactory.toInsertSQL(dataFactory.newObjectActionModel(commerceOrderObjectDefinitionModel.objectDefinitionId, notificationTemplateModel.notificationTemplateId))}

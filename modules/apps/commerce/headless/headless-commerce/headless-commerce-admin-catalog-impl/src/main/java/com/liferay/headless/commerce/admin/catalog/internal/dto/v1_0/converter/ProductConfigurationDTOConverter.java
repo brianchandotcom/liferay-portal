@@ -17,7 +17,6 @@ import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -48,7 +47,7 @@ public class ProductConfigurationDTOConverter
 		ProductConfiguration productConfiguration = new ProductConfiguration();
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
-			CPConfigurationEntry cpConfigurationEntry = null;
+			CPConfigurationEntry cpConfigurationEntry;
 
 			if (dtoConverterContext.getId() != null) {
 				CPDefinition cpDefinition =
@@ -79,27 +78,27 @@ public class ProductConfigurationDTOConverter
 			productConfiguration.setAllowedOrderQuantities(
 				cpConfigurationEntry::getAllowedOrderQuantitiesArray);
 			productConfiguration.setEntityExternalReferenceCode(
-				_getEntityExternalReferenceCode(cpConfigurationEntry));
+				() -> _getEntityExternalReferenceCode(cpConfigurationEntry));
 			productConfiguration.setEntityId(cpConfigurationEntry::getClassPK);
 			productConfiguration.setExternalReferenceCode(
 				cpConfigurationEntry::getExternalReferenceCode);
 			productConfiguration.setId(
-				cpConfigurationEntry.getCPConfigurationEntryId());
+				cpConfigurationEntry::getCPConfigurationEntryId);
 			productConfiguration.setInventoryEngine(
 				cpConfigurationEntry::getCPDefinitionInventoryEngine);
 			productConfiguration.setLowStockAction(
 				cpConfigurationEntry::getLowStockActivity);
 			productConfiguration.setMaxOrderQuantity(
-				BigDecimalUtil.stripTrailingZeros(
+				() -> BigDecimalUtil.stripTrailingZeros(
 					cpConfigurationEntry.getMaxOrderQuantity()));
 			productConfiguration.setMinOrderQuantity(
-				BigDecimalUtil.stripTrailingZeros(
+				() -> BigDecimalUtil.stripTrailingZeros(
 					cpConfigurationEntry.getMinOrderQuantity()));
 			productConfiguration.setMinStockQuantity(
-				BigDecimalUtil.stripTrailingZeros(
+				() -> BigDecimalUtil.stripTrailingZeros(
 					cpConfigurationEntry.getMinStockQuantity()));
 			productConfiguration.setMultipleOrderQuantity(
-				BigDecimalUtil.stripTrailingZeros(
+				() -> BigDecimalUtil.stripTrailingZeros(
 					cpConfigurationEntry.getMultipleOrderQuantity()));
 		}
 		else {
@@ -147,16 +146,16 @@ public class ProductConfigurationDTOConverter
 				productConfiguration.setLowStockAction(
 					cpDefinitionInventory::getLowStockActivity);
 				productConfiguration.setMaxOrderQuantity(
-					BigDecimalUtil.stripTrailingZeros(
+					() -> BigDecimalUtil.stripTrailingZeros(
 						cpDefinitionInventory.getMaxOrderQuantity()));
 				productConfiguration.setMinOrderQuantity(
-					BigDecimalUtil.stripTrailingZeros(
+					() -> BigDecimalUtil.stripTrailingZeros(
 						cpDefinitionInventory.getMinOrderQuantity()));
 				productConfiguration.setMinStockQuantity(
-					BigDecimalUtil.stripTrailingZeros(
+					() -> BigDecimalUtil.stripTrailingZeros(
 						cpDefinitionInventory.getMinStockQuantity()));
 				productConfiguration.setMultipleOrderQuantity(
-					BigDecimalUtil.stripTrailingZeros(
+					() -> BigDecimalUtil.stripTrailingZeros(
 						cpDefinitionInventory.getMultipleOrderQuantity()));
 			}
 		}
@@ -164,12 +163,15 @@ public class ProductConfigurationDTOConverter
 		return productConfiguration;
 	}
 
-	private String _getEntityExternalReferenceCode(CPConfigurationEntry cpConfigurationEntry)
-		throws PortalException {
-		CPDefinition cpDefinition =
-			_cpDefinitionService.getCPDefinition(
-				cpConfigurationEntry.getClassPK());
+	private String _getEntityExternalReferenceCode(
+			CPConfigurationEntry cpConfigurationEntry)
+		throws Exception {
+
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpConfigurationEntry.getClassPK());
+
 		CProduct cProduct = cpDefinition.getCProduct();
+
 		return cProduct.getExternalReferenceCode();
 	}
 

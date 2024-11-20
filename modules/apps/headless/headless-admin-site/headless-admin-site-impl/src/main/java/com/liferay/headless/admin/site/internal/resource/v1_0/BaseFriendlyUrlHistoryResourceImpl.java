@@ -7,53 +7,30 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.resource.v1_0.FriendlyUrlHistoryResource;
-import com.liferay.petra.function.UnsafeBiConsumer;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
-import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
-import com.liferay.portal.odata.sort.SortField;
-import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 
-import java.io.Serializable;
-
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -63,8 +40,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
 public abstract class BaseFriendlyUrlHistoryResourceImpl
-	implements EntityModelResource, FriendlyUrlHistoryResource,
-			   VulcanBatchEngineTaskItemDelegate<FriendlyUrlHistory> {
+	implements FriendlyUrlHistoryResource {
 
 	/**
 	 * Invoke this method with the command line:
@@ -109,8 +85,8 @@ public abstract class BaseFriendlyUrlHistoryResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<FriendlyUrlHistory>
-			getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage(
+	public FriendlyUrlHistory
+			getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("siteExternalReferenceCode")
@@ -120,123 +96,11 @@ public abstract class BaseFriendlyUrlHistoryResourceImpl
 				String sitePageExternalReferenceCode)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@SuppressWarnings("PMD.UnusedLocalVariable")
-	public void create(
-			Collection<FriendlyUrlHistory> friendlyUrlHistories,
-			Map<String, Serializable> parameters)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Override
-	public void delete(
-			Collection<FriendlyUrlHistory> friendlyUrlHistories,
-			Map<String, Serializable> parameters)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
-	}
-
-	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray();
-	}
-
-	@Override
-	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
-		throws Exception {
-
-		return getEntityModel(
-			new MultivaluedHashMap<String, Object>(multivaluedMap));
-	}
-
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
-	public String getResourceName() {
-		return "FriendlyUrlHistory";
-	}
-
-	public String getVersion() {
-		return "v1.0";
-	}
-
-	@Override
-	public Page<FriendlyUrlHistory> read(
-			Filter filter, Pagination pagination, Sort[] sorts,
-			Map<String, Serializable> parameters, String search)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Override
-	public void setLanguageId(String languageId) {
-		this.contextAcceptLanguage = new AcceptLanguage() {
-
-			@Override
-			public List<Locale> getLocales() {
-				return null;
-			}
-
-			@Override
-			public String getPreferredLanguageId() {
-				return languageId;
-			}
-
-			@Override
-			public Locale getPreferredLocale() {
-				return LocaleUtil.fromLanguageId(languageId);
-			}
-
-		};
-	}
-
-	@Override
-	public void update(
-			Collection<FriendlyUrlHistory> friendlyUrlHistories,
-			Map<String, Serializable> parameters)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return new FriendlyUrlHistory();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
-	}
-
-	public void setContextBatchUnsafeBiConsumer(
-		UnsafeBiConsumer
-			<Collection<FriendlyUrlHistory>,
-			 UnsafeFunction<FriendlyUrlHistory, FriendlyUrlHistory, Exception>,
-			 Exception> contextBatchUnsafeBiConsumer) {
-
-		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
-	}
-
-	public void setContextBatchUnsafeConsumer(
-		UnsafeBiConsumer
-			<Collection<FriendlyUrlHistory>,
-			 UnsafeConsumer<FriendlyUrlHistory, Exception>, Exception>
-				contextBatchUnsafeConsumer) {
-
-		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -301,87 +165,6 @@ public abstract class BaseFriendlyUrlHistoryResourceImpl
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider) {
 		this.sortParserProvider = sortParserProvider;
-	}
-
-	public void setVulcanBatchEngineExportTaskResource(
-		VulcanBatchEngineExportTaskResource
-			vulcanBatchEngineExportTaskResource) {
-
-		this.vulcanBatchEngineExportTaskResource =
-			vulcanBatchEngineExportTaskResource;
-	}
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource) {
-
-		this.vulcanBatchEngineImportTaskResource =
-			vulcanBatchEngineImportTaskResource;
-	}
-
-	@Override
-	public Filter toFilter(
-		String filterString, Map<String, List<String>> multivaluedMap) {
-
-		try {
-			EntityModel entityModel = getEntityModel(multivaluedMap);
-
-			FilterParser filterParser = filterParserProvider.provide(
-				entityModel);
-
-			com.liferay.portal.odata.filter.Filter oDataFilter =
-				new com.liferay.portal.odata.filter.Filter(
-					filterParser.parse(filterString));
-
-			return expressionConvert.convert(
-				oDataFilter.getExpression(),
-				contextAcceptLanguage.getPreferredLocale(), entityModel);
-		}
-		catch (Exception exception) {
-			_log.error("Invalid filter " + filterString, exception);
-
-			return null;
-		}
-	}
-
-	@Override
-	public Sort[] toSorts(String sortString) {
-		if (Validator.isNull(sortString)) {
-			return null;
-		}
-
-		try {
-			SortParser sortParser = sortParserProvider.provide(
-				getEntityModel(Collections.emptyMap()));
-
-			if (sortParser == null) {
-				return null;
-			}
-
-			com.liferay.portal.odata.sort.Sort oDataSort =
-				new com.liferay.portal.odata.sort.Sort(
-					sortParser.parse(sortString));
-
-			List<SortField> sortFields = oDataSort.getSortFields();
-
-			Sort[] sorts = new Sort[sortFields.size()];
-
-			for (int i = 0; i < sortFields.size(); i++) {
-				SortField sortField = sortFields.get(i);
-
-				sorts[i] = new Sort(
-					sortField.getSortableFieldName(
-						contextAcceptLanguage.getPreferredLocale()),
-					!sortField.isAscending());
-			}
-
-			return sorts;
-		}
-		catch (Exception exception) {
-			_log.error("Invalid sort " + sortString, exception);
-
-			return new Sort[0];
-		}
 	}
 
 	protected Map<String, String> addAction(
@@ -493,14 +276,6 @@ public abstract class BaseFriendlyUrlHistoryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
-	protected UnsafeBiConsumer
-		<Collection<FriendlyUrlHistory>,
-		 UnsafeFunction<FriendlyUrlHistory, FriendlyUrlHistory, Exception>,
-		 Exception> contextBatchUnsafeBiConsumer;
-	protected UnsafeBiConsumer
-		<Collection<FriendlyUrlHistory>,
-		 UnsafeConsumer<FriendlyUrlHistory, Exception>, Exception>
-			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
@@ -514,10 +289,6 @@ public abstract class BaseFriendlyUrlHistoryResourceImpl
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
 	protected SortParserProvider sortParserProvider;
-	protected VulcanBatchEngineExportTaskResource
-		vulcanBatchEngineExportTaskResource;
-	protected VulcanBatchEngineImportTaskResource
-		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseFriendlyUrlHistoryResourceImpl.class);

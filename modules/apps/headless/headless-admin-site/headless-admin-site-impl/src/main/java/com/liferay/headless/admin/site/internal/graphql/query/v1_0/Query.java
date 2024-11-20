@@ -514,12 +514,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodeSitePageFriendlyUrlHistory(siteExternalReferenceCode: ___, sitePageExternalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodeSitePageFriendlyUrlHistory(siteExternalReferenceCode: ___, sitePageExternalReferenceCode: ___){friendlyUrlPath_i18n}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves the history of previously used URLs for a page."
 	)
-	public FriendlyUrlHistoryPage
+	public FriendlyUrlHistory
 			siteByExternalReferenceCodeSitePageFriendlyUrlHistory(
 				@GraphQLName("siteExternalReferenceCode") String
 					siteExternalReferenceCode,
@@ -530,11 +530,11 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_friendlyUrlHistoryResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			friendlyUrlHistoryResource -> new FriendlyUrlHistoryPage(
+			friendlyUrlHistoryResource ->
 				friendlyUrlHistoryResource.
-					getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage(
+					getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
 						siteExternalReferenceCode,
-						sitePageExternalReferenceCode)));
+						sitePageExternalReferenceCode));
 	}
 
 	/**

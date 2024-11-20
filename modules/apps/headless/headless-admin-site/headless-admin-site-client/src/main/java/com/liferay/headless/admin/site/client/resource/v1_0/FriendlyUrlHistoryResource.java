@@ -7,7 +7,6 @@ package com.liferay.headless.admin.site.client.resource.v1_0;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.http.HttpInvoker;
-import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.serdes.v1_0.FriendlyUrlHistorySerDes;
 
@@ -33,14 +32,14 @@ public interface FriendlyUrlHistoryResource {
 		return new Builder();
 	}
 
-	public Page<FriendlyUrlHistory>
-			getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage(
+	public FriendlyUrlHistory
+			getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
 				String siteExternalReferenceCode,
 				String sitePageExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPageHttpResponse(
+			getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryHttpResponse(
 				String siteExternalReferenceCode,
 				String sitePageExternalReferenceCode)
 		throws Exception;
@@ -154,14 +153,14 @@ public interface FriendlyUrlHistoryResource {
 	public static class FriendlyUrlHistoryResourceImpl
 		implements FriendlyUrlHistoryResource {
 
-		public Page<FriendlyUrlHistory>
-				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage(
+		public FriendlyUrlHistory
+				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
 					String siteExternalReferenceCode,
 					String sitePageExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPageHttpResponse(
+				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryHttpResponse(
 					siteExternalReferenceCode, sitePageExternalReferenceCode);
 
 			String content = httpResponse.getContent();
@@ -212,7 +211,7 @@ public interface FriendlyUrlHistoryResource {
 			}
 
 			try {
-				return Page.of(content, FriendlyUrlHistorySerDes::toDTO);
+				return FriendlyUrlHistorySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -224,7 +223,7 @@ public interface FriendlyUrlHistoryResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPageHttpResponse(
+				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryHttpResponse(
 					String siteExternalReferenceCode,
 					String sitePageExternalReferenceCode)
 			throws Exception {

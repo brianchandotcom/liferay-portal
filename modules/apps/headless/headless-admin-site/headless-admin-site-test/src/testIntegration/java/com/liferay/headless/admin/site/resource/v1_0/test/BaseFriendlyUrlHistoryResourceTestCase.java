@@ -175,129 +175,24 @@ public abstract class BaseFriendlyUrlHistoryResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage()
+	public void testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory()
 		throws Exception {
 
-		String siteExternalReferenceCode =
-			testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_getSiteExternalReferenceCode();
-		String irrelevantSiteExternalReferenceCode =
-			testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_getIrrelevantSiteExternalReferenceCode();
-		String sitePageExternalReferenceCode =
-			testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_getSitePageExternalReferenceCode();
-		String irrelevantSitePageExternalReferenceCode =
-			testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_getIrrelevantSitePageExternalReferenceCode();
-
-		Page<FriendlyUrlHistory> page =
-			friendlyUrlHistoryResource.
-				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage(
-					siteExternalReferenceCode, sitePageExternalReferenceCode);
-
-		long totalCount = page.getTotalCount();
-
-		if ((irrelevantSiteExternalReferenceCode != null) &&
-			(irrelevantSitePageExternalReferenceCode != null)) {
-
-			FriendlyUrlHistory irrelevantFriendlyUrlHistory =
-				testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_addFriendlyUrlHistory(
-					irrelevantSiteExternalReferenceCode,
-					irrelevantSitePageExternalReferenceCode,
-					randomIrrelevantFriendlyUrlHistory());
-
-			page =
-				friendlyUrlHistoryResource.
-					getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage(
-						irrelevantSiteExternalReferenceCode,
-						irrelevantSitePageExternalReferenceCode);
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantFriendlyUrlHistory,
-				(List<FriendlyUrlHistory>)page.getItems());
-			assertValid(
-				page,
-				testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_getExpectedActions(
-					irrelevantSiteExternalReferenceCode,
-					irrelevantSitePageExternalReferenceCode));
-		}
-
-		FriendlyUrlHistory friendlyUrlHistory1 =
-			testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_addFriendlyUrlHistory(
-				siteExternalReferenceCode, sitePageExternalReferenceCode,
-				randomFriendlyUrlHistory());
-
-		FriendlyUrlHistory friendlyUrlHistory2 =
-			testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_addFriendlyUrlHistory(
-				siteExternalReferenceCode, sitePageExternalReferenceCode,
-				randomFriendlyUrlHistory());
-
-		page =
-			friendlyUrlHistoryResource.
-				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage(
-					siteExternalReferenceCode, sitePageExternalReferenceCode);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(
-			friendlyUrlHistory1, (List<FriendlyUrlHistory>)page.getItems());
-		assertContains(
-			friendlyUrlHistory2, (List<FriendlyUrlHistory>)page.getItems());
-		assertValid(
-			page,
-			testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_getExpectedActions(
-				siteExternalReferenceCode, sitePageExternalReferenceCode));
+		Assert.assertTrue(false);
 	}
 
-	protected Map<String, Map<String, String>>
-			testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_getExpectedActions(
-				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode)
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory()
 		throws Exception {
 
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
+		Assert.assertTrue(true);
 	}
 
-	protected FriendlyUrlHistory
-			testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_addFriendlyUrlHistory(
-				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode,
-				FriendlyUrlHistory friendlyUrlHistory)
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryNotFound()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_getSiteExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_getIrrelevantSiteExternalReferenceCode()
-		throws Exception {
-
-		return null;
-	}
-
-	protected String
-			testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_getSitePageExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage_getIrrelevantSitePageExternalReferenceCode()
-		throws Exception {
-
-		return null;
+		Assert.assertTrue(true);
 	}
 
 	protected void assertContains(

@@ -633,7 +633,7 @@ public class ServletDataImpl implements ServletData {
 						"query#siteByExternalReferenceCodeSitePageFriendlyUrlHistory",
 						new ObjectValuePair<>(
 							FriendlyUrlHistoryResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage"));
+							"getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory"));
 					put(
 						"query#siteByExternalReferenceCodeMasterPages",
 						new ObjectValuePair<>(

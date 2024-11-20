@@ -21,33 +21,31 @@ ${dataFactory.toInsertSQL(listTypeDefinitionModel)}
 <#list objectFieldModels as objectFieldModel>
 	${dataFactory.toInsertSQL(objectFieldModel)}
 
-	<#list dataFactory.newObjectFieldSettingModels(objectFieldModel) as objectFieldSettingModel>
-		${dataFactory.toInsertSQL(objectFieldSettingModel)}
-	</#list>
-
-	<#if objectFieldModel.getState()>
-		<#assign
-			objectStateFlowModel = dataFactory.newObjectStateFlowModel(objectFieldModel.getObjectFieldId())
-			objectStates = dataFactory.newObjectStateModels(listTypeEntryModels, objectStateFlowModel.getObjectStateFlowId())
-		 />
-
-		${dataFactory.toInsertSQL(objectStateFlowModel)}
-
-		<#list objectStates as objectStateModel>
-			${dataFactory.toInsertSQL(objectStateModel)}
+	<#if !objectFieldModel.getSystem()>
+		<#list dataFactory.newObjectFieldSettingModels(objectFieldModel) as objectFieldSettingModel>
+			${dataFactory.toInsertSQL(objectFieldSettingModel)}
 		</#list>
 
-		<#list dataFactory.newObjectStateTransitionModels(objectStates) as objectStateTransitionModel>
-			${dataFactory.toInsertSQL(objectStateTransitionModel)}
-		</#list>
+		<#if objectFieldModel.getState()>
+			<#assign
+				objectStateFlowModel = dataFactory.newObjectStateFlowModel(objectFieldModel.getObjectFieldId())
+				objectStates = dataFactory.newObjectStateModels(listTypeEntryModels, objectStateFlowModel.getObjectStateFlowId())
+			 />
+
+			${dataFactory.toInsertSQL(objectStateFlowModel)}
+
+			<#list objectStates as objectStateModel>
+				${dataFactory.toInsertSQL(objectStateModel)}
+			</#list>
+
+			<#list dataFactory.newObjectStateTransitionModels(objectStates) as objectStateTransitionModel>
+				${dataFactory.toInsertSQL(objectStateTransitionModel)}
+			</#list>
+		</#if>
 	</#if>
 </#list>
 
 ${dataFactory.toInsertSQL(dataFactory.newObjectRelationshipModel(userObjectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getObjectDefinitionId()))}
-
-<#list dataFactory.newSystemObjectFieldModels(objectDefinitionModel.getObjectDefinitionId(), "ObjectEntry", "objectEntryId") as systemObjectFieldModel>
-	${dataFactory.toInsertSQL(systemObjectFieldModel)}
-</#list>
 
 ${dataFactory.toInsertSQL(dlFolderModel)}
 

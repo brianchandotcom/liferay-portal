@@ -38,7 +38,7 @@ export default function EditObjectRelationship({
 	const [alert, setAlert] = useState<Alert>({
 		displayType: 'info',
 		message: Liferay.Language.get(
-			'when-enabled-the-child-object-is-bound-to-the-parent'
+			'when-enabled-the-child-is-bound-to-the-parent'
 		),
 	});
 

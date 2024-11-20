@@ -26,7 +26,7 @@ export class ObjectRelationshipsPage {
 			name: 'Delete',
 		});
 		this.inheritanceModalHeader = page.getByRole('heading', {
-			name: 'Disable Inheritance?',
+			name: 'Disable Inheritance Confirmation',
 		});
 		this.inheritanceModalDisableButton = page.getByRole('button', {
 			name: 'Disable',

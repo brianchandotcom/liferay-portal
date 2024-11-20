@@ -71,7 +71,7 @@ export function ObjectRelationshipInheritanceCheckbox({
 					}
 				>
 					{Liferay.Language.get(
-						'enable-inheritance-to-share-settings-across-related-data-models'
+						'enable-inheritance-to-share-settings-between-related-data-models'
 					)}
 				</ClayPopover>
 			</div>

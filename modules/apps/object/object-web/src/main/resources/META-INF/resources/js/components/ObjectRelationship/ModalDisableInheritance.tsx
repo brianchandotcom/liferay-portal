@@ -19,15 +19,12 @@ function ModalDisableInheritance() {
 	});
 
 	const warningMessages = [
-		Liferay.Language.get('permissions-are-copied-from-the-old-parent'),
+		Liferay.Language.get('permissions-are-copied-from-the-previous-parent'),
 		Liferay.Language.get(
 			'rest-endpoints-are-created-for-the-new-parent-with-the-endpoints-of-remaining-children-grouped-under-it'
 		),
 		Liferay.Language.get(
-			'an-object-action-trigger-for-updating-child-objects-is-created'
-		),
-		Liferay.Language.get(
-			'options-for-showing-the-widget-in-the-page-builder-and-for-configuring-the-panel-link-become-available'
+			'an-action-trigger-for-updating-child-objects-is-created'
 		),
 	];
 
@@ -56,13 +53,15 @@ function ModalDisableInheritance() {
 				<ClayModalProvider>
 					<ClayModal center observer={observer} status="warning">
 						<ClayModal.Header>
-							{Liferay.Language.get('disable-inheritance')}
+							{Liferay.Language.get(
+								'disable-inheritance-confirmation'
+							)}
 						</ClayModal.Header>
 
 						<ClayModal.Body className="c-gap-4 d-flex flex-column">
 							<Text>
 								{Liferay.Language.get(
-									'when-you-disconnect-a-parent-from-inheritance-the-first-child-object-becomes-the-new-parent'
+									'when-you-disable-inheritance-the-first-child-object-is-updated-with-options-for-showing-the-widget-in-the-page-builder-and-for-configuring-the-panel-link'
 								)}
 							</Text>
 

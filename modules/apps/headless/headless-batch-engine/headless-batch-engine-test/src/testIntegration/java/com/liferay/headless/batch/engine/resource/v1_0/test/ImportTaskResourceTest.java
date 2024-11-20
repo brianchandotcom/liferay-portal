@@ -13,8 +13,10 @@ import com.liferay.headless.batch.engine.client.serdes.v1_0.ImportTaskSerDes;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -48,19 +50,19 @@ public class ImportTaskResourceTest {
 
 		JSONArray bodyJSONArray = JSONUtil.putAll(
 			JSONUtil.put(
-				"intValue", 12
+				"intValue", RandomTestUtil.randomInt()
 			).put(
-				"textValue", "text"
+				"textValue", RandomTestUtil.randomString()
 			),
 			JSONUtil.put(
-				"intValue", 12
+				"intValue", RandomTestUtil.randomInt()
 			).put(
-				"textValue", "text"
+				"textValue", RandomTestUtil.randomString()
 			),
 			JSONUtil.put(
-				"intValue", 12
+				"intValue", RandomTestUtil.randomInt()
 			).put(
-				"textValue", "text"
+				"textValue", RandomTestUtil.randomString()
 			));
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -112,8 +114,13 @@ public class ImportTaskResourceTest {
 			Assert.assertEquals(3, (int)importTask.getProcessedItemsCount());
 
 			for (FailedItem failedItem : importTask.getFailedItems()) {
+				JSONObject jsonObject = (JSONObject)bodyJSONArray.get(
+					failedItem.getItemIndex() - 1);
+
 				Assert.assertEquals(
-					"Modified error message", failedItem.getMessage());
+					"Modified error message for TestEntity '" +
+						jsonObject.getString("textValue") + "'",
+					failedItem.getMessage());
 			}
 		}
 	}

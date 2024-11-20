@@ -619,7 +619,8 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 	}
 
 	public static LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-		long layoutPageTemplateEntryId, boolean defaultTemplate) {
+			long layoutPageTemplateEntryId, boolean defaultTemplate)
+		throws PortalException {
 
 		return getService().updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntryId, defaultTemplate);

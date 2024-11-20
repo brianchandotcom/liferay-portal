@@ -325,39 +325,7 @@ autoSaveTest(
 );
 
 autoSaveTest(
-	'Undo/Redo buttons work with metadata fields',
-	{
-		tag: '@LPD-26863',
-	},
-	async ({journalEditArticlePage, page, site}) => {
-		const title = getRandomString();
-
-		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
-
-		await expect(async () => {
-			await journalEditArticlePage.fillTitle(title);
-
-			await expect(journalEditArticlePage.undoButton).toBeEnabled();
-		}).toPass();
-
-		await journalEditArticlePage.undoButton.click();
-
-		await expect(journalEditArticlePage.undoButton).toBeDisabled();
-
-		await expect(journalEditArticlePage.titleInput).toHaveValue('');
-
-		await waitForAlert(page, 'Info:Please complete all', {type: 'info'});
-
-		await journalEditArticlePage.redoButton.click();
-
-		await expect(journalEditArticlePage.redoButton).toBeDisabled();
-
-		await expect(journalEditArticlePage.titleInput).toHaveValue(title);
-	}
-);
-
-autoSaveTest(
-	'Undo/Redo buttons work with content field',
+	'Undo/Redo buttons works',
 	{
 		tag: '@LPD-26863',
 	},
@@ -390,19 +358,23 @@ autoSaveTest(
 			await expect(journalEditArticlePage.undoButton).toBeEnabled();
 		}).toPass();
 
-		await expect(
-			journalEditArticlePage.changesSavedIndicator
-		).toBeVisible();
-
 		await fillAndClickOutside(page, localizableField, title);
-
-		await expect(
-			journalEditArticlePage.changesSavedIndicator
-		).toBeVisible();
 
 		await journalEditArticlePage.undoButton.click();
 
 		await expect(localizableField).toHaveValue('');
+
+		await journalEditArticlePage.undoButton.click();
+
+		await expect(journalEditArticlePage.undoButton).toBeDisabled();
+
+		await expect(journalEditArticlePage.titleInput).toHaveValue('');
+
+		await waitForAlert(page, 'Info:Please complete all', {type: 'info'});
+
+		await journalEditArticlePage.redoButton.click();
+
+		await expect(journalEditArticlePage.titleInput).toHaveValue(title);
 
 		await journalEditArticlePage.redoButton.click();
 

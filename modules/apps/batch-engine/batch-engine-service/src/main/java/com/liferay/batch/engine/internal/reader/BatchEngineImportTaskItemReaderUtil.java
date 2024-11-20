@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -111,7 +110,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 						}
 					};
 
-					objectMapper.addMixIn(Creator.class, CreatorMixin.class);
+					objectMapper.addMixIn(field.getType(), CreatorMixin.class);
 				}
 				else {
 					objectMapper = _getObjectMapper(field);

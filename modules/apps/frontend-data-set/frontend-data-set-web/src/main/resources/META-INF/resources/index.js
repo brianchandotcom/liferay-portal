@@ -12,6 +12,7 @@ export {default as DateTimeRenderer} from './cell_renderers/DateTimeRenderer';
 // Renderers API
 
 export {INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS} from './cell_renderers/InternalCellRenderer';
+
 export {default as StatusRenderer} from './cell_renderers/StatusRenderer';
 export {getInternalCellRenderer as getFDSInternalCellRenderer} from './cell_renderers/getInternalCellRenderer';
 
@@ -27,3 +28,7 @@ export {
 // Data Set Events API
 
 export {default as FDS_EVENT} from './utils/eventsDefinitions';
+
+// Frontend Data Set Views
+
+export {Card} from './views/cards/Cards';

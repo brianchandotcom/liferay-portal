@@ -56,7 +56,7 @@ definition {
 			site = "false",
 			siteURLKey = "site-name-staging");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomURL(customURL = "custom-url");
 
@@ -108,7 +108,7 @@ definition {
 			site = "false",
 			siteURLKey = "site-name-staging");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomURL(customURL = "custom-url");
 
@@ -164,7 +164,7 @@ definition {
 			site = "false",
 			siteURLKey = "site-name-staging");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomURL(customURL = "custom-url");
 

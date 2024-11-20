@@ -122,7 +122,7 @@ definition {
 			entrySubtitle = ${entrySubtitle},
 			entryTitle = ${entryTitle});
 
-		Panel.expandPanel(panel = "Categorization");
+		Blogs.expandPanel(panel = "Categorization");
 
 		AssetCategorization.addCategory(
 			categoryName = ${categoryName},
@@ -166,7 +166,7 @@ definition {
 			entrySubtitle = ${entrySubtitle},
 			entryTitle = ${entryTitle});
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomURL(customURL = ${customURL});
 
@@ -197,7 +197,7 @@ definition {
 			entrySubtitle = ${entrySubtitle},
 			entryTitle = ${entryTitle});
 
-		Panel.expandPanel(panel = "Permissions");
+		Blogs.expandPanel(panel = "Permissions");
 
 		BlogsEntry.entryAddPermissions(viewableBy = ${viewableBy});
 
@@ -213,7 +213,7 @@ definition {
 			entrySubtitle = ${entrySubtitle},
 			entryTitle = ${entryTitle});
 
-		Panel.expandPanel(panel = "Categorization");
+		Blogs.expandPanel(panel = "Categorization");
 
 		AssetCategorization.addTag(tagName = ${tagName});
 
@@ -231,7 +231,7 @@ definition {
 			entrySubtitle = ${entrySubtitle},
 			entryTitle = ${entryTitle});
 
-		Panel.expandPanel(panel = "Categorization");
+		Blogs.expandPanel(panel = "Categorization");
 
 		for (var tagName : list ${tagNameList}) {
 			AssetCategorization.addTag(tagName = ${tagName});
@@ -391,7 +391,7 @@ definition {
 			entrySubtitle = ${entrySubtitle},
 			entryTitle = ${entryTitle});
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomAbstract(entryAbstractDescription = ${entryAbstractDescription});
 
@@ -406,7 +406,7 @@ definition {
 			entryContent = ${entryContent},
 			entryTitle = ${entryTitle});
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomAbstract(entryAbstractDescription = ${entryAbstractDescription});
 
@@ -422,7 +422,7 @@ definition {
 			entrySubtitle = ${entrySubtitle},
 			entryTitle = ${entryTitle});
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		AssertChecked(
 			locator1 = "Radio#FIRST_400_ABSTRACT",
@@ -603,7 +603,7 @@ definition {
 		}
 
 		if (${sendEmailEntryUpdated} == "true") {
-			Panel.expandPanel(panel = "Configuration");
+			Blogs.expandPanel(panel = "Configuration");
 
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Send Email Entry Updated",
@@ -649,6 +649,23 @@ definition {
 		}
 
 		IFrame.saveConfiguration();
+	}
+
+	@summary = "Default summary"
+	macro expandPanel(panel = null) {
+		var key_panel = ${panel};
+
+		AssertVisible(
+			key_panel = ${panel},
+			locator1 = "Panel#PANEL");
+
+		if ((IsElementPresent(locator1 = "Panel#PANEL_COLLAPSED")) && (IsVisible(locator1 = "Panel#PANEL_COLLAPSED"))) {
+			AssertClick(
+				locator1 = "Panel#PANEL_COLLAPSED",
+				value1 = ${panel});
+		}
+
+		AssertElementPresent(locator1 = "Panel#PANEL_EXPANDED");
 	}
 
 	@summary = "Default summary"

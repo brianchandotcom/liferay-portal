@@ -250,6 +250,15 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro viewBlogsNoVocabularyField(vocabularyName = null) {
+		Blogs.expandPanel(panel = "Categorization");
+
+		AssertElementNotPresent(
+			key_vocabularyName = ${vocabularyName},
+			locator1 = "AssetCategorization#CATEGORIES_FIELD");
+	}
+
+	@summary = "Default summary"
 	macro viewCategory(categoryName = null) {
 		AssertTextEquals(
 			key_categoryName = ${categoryName},

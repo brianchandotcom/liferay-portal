@@ -351,7 +351,7 @@ definition {
 		task ("Remove the first and third tag in Blogs Entry") {
 			BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
 
-			Panel.expandPanel(panel = "Categorization");
+			Blogs.expandPanel(panel = "Categorization");
 
 			for (var i : list "1,3") {
 				AssetCategorization.removeTag(tagName = "tagname${i}");

@@ -323,7 +323,7 @@ definition {
 			site = "false",
 			siteURLKey = "site-name-staging");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.editCustomURL(customURL = "");
 

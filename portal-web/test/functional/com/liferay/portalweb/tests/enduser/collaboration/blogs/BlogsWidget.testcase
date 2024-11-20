@@ -105,7 +105,8 @@ definition {
 
 		RelatedAssets.selectAsset(
 			assetTitle = "Blogs Entry1 Title",
-			assetType = "Blogs Entry");
+			assetType = "Blogs Entry",
+			scopeAssetType = "Blogs Entry");
 
 		PortletEntry.publish();
 
@@ -273,7 +274,7 @@ definition {
 
 			BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
 
-			Panel.expandPanel(panel = "Configuration");
+			Blogs.expandPanel(panel = "Configuration");
 
 			BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Abstract Description");
 
@@ -391,7 +392,7 @@ definition {
 
 		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Abstract Description");
 

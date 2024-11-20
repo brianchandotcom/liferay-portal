@@ -187,7 +187,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addRelatedAsset(depotName = null, assetTitle = null, assetType = null) {
-		Panel.expandPanel(panel = "Related Assets");
+		Blogs.expandPanel(panel = "Related Assets");
 
 		AssertClick(
 			locator1 = "AssetRelatedAssets#RELATED_ASSETS_SELECT",
@@ -230,7 +230,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addSmallImage(navTab = null, depotName = null, uploadFileName = null, imageFileName = null) {
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		if (isSet(browseImage)) {
 			Click(locator1 = "BlogsEntry#SMALL_IMAGE_BROWSE_IMAGE");
@@ -307,7 +307,7 @@ definition {
 			entryContent = ${entryContent2},
 			entryTitle = ${entryTitle2});
 
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		Type(
 			locator1 = "TextInput#TRACKBACKS",
@@ -791,7 +791,7 @@ definition {
 
 	@summary = "Default summary"
 	macro removeSmallImage(uploadFileName = null) {
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		if (isSet(images)) {
 			Click(locator1 = "Button#REMOVE_IMAGE_LAST");
@@ -862,7 +862,7 @@ definition {
 
 	@summary = "Default summary"
 	macro scheduleBlogEntry() {
-		Panel.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Configuration");
 
 		var displayDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
 
@@ -1161,7 +1161,7 @@ definition {
 		}
 
 		if (isSet(entrySmallImage)) {
-			Panel.expandPanel(panel = "Configuration");
+			Blogs.expandPanel(panel = "Configuration");
 
 			AssertVisible(
 				key_smallImage = ${entrySmallImage},

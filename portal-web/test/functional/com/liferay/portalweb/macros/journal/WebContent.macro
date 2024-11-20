@@ -1241,8 +1241,13 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDisplayPage(pageType = null, pageName = null) {
-		Panel.expandPanel(panel = "Display Page");
+	macro editDisplayPage(pageType = null, pageName = null, assetType = null) {
+		if (${assetType} == "Blogs Entry") {
+			Blogs.expandPanel(panel = "Display Page");
+		}
+		else {
+			Panel.expandPanel(panel = "Display Page");
+		}
 
 		if (!(isSet(displayPageTemplateType))) {
 			var displayPageTemplateType = "Specific";

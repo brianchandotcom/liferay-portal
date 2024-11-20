@@ -274,7 +274,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		Panel.expandPanel(panel = "Categorization");
+		Blogs.expandPanel(panel = "Categorization");
 
 		AssetCategorization.removeTag(tagName = "Computers");
 

@@ -46,8 +46,13 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectAsset(scopeSite = null, depotName = null, otherSite = null, assetTitle = null, assetType = null) {
-		Panel.expandPanel(panel = "Related Assets");
+	macro selectAsset(scopeSite = null, depotName = null, otherSite = null, assetTitle = null, assetType = null, scopeAssetType = null) {
+		if (isSet(scopeAssetType) && (${scopeAssetType} == "Blogs Entry")) {
+			Blogs.expandPanel(panel = "Related Assets");
+		}
+		else {
+			Panel.expandPanel(panel = "Related Assets");
+		}
 
 		RelatedAssets._selectAssetType(assetType = ${assetType});
 

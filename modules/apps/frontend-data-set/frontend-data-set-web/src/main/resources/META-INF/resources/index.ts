@@ -225,3 +225,5 @@ export {
 	FDS_NESTED_FIELD_NAME_DELIMITER,
 	FDS_NESTED_FIELD_NAME_PARENT_SUFFIX,
 } from './constants';
+
+export {Card, ICardSchema} from './views/cards/Cards';

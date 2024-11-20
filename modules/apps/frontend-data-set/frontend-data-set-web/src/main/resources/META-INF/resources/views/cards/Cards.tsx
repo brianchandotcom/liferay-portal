@@ -19,7 +19,7 @@ import getRandomId from '../../utils/getRandomId';
 import isLink from '../../utils/isLink';
 import imagePropsTransformer from '../utils/imagePropsTransformer';
 
-interface ICardSchema {
+export interface ICardSchema {
 	description: string;
 	image: string;
 	link: string;
@@ -142,4 +142,5 @@ const Cards = ({items, schema}: {items: Array<any>; schema: ICardSchema}) => {
 	);
 };
 
+export {Card};
 export default Cards;

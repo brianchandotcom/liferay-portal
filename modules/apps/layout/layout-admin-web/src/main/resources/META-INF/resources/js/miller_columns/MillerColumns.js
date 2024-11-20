@@ -77,9 +77,9 @@ const MillerColumns = ({
 	isPrivateLayoutsEnabled,
 	namespace,
 	onColumnsChange = noop,
-	onItemMove = noop,
 	onItemStayHover,
 	rtl,
+	saveData = noop,
 	searchContainer,
 }) => {
 	const ref = useRef();
@@ -261,13 +261,13 @@ const MillerColumns = ({
 
 			setItems(newItems);
 
-			onItemMove(
+			saveData(
 				getMovedItems(sources, newParentId, targetIndex),
 				newParentId,
 				sources[0].url
 			);
 		},
-		[getMovedItems, items, onItemMove]
+		[getMovedItems, items, saveData]
 	);
 
 	const getDragPreviewLabel = (item) => {

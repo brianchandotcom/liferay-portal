@@ -89,6 +89,7 @@ function KeyboardMovementProvider({
 			if (!sources.length) {
 				return;
 			}
+
 			const key = getKey(event, rtl);
 
 			event.preventDefault();
@@ -101,8 +102,6 @@ function KeyboardMovementProvider({
 			const disableMovement = () => {
 				setSources([]);
 				setTarget(null);
-
-				window.removeEventListener('keydown', onKeyDown, true);
 			};
 
 			if (key === 'Enter' && target) {

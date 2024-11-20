@@ -277,6 +277,10 @@ public class DDMStructureTestUtil {
 			"en_US");
 	}
 
+	public static DDMStructure updateStructure(DDMStructure ddmStructure) {
+		return DDMStructureLocalServiceUtil.updateDDMStructure(ddmStructure);
+	}
+
 	protected static Document createDocumentContent(
 		String availableLocales, String defaultLocale) {
 

@@ -12,7 +12,6 @@ import com.liferay.headless.builder.internal.util.OpenAPIUtil;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;

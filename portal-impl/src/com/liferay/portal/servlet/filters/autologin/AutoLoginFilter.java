@@ -53,9 +53,8 @@ public class AutoLoginFilter extends BasePortalFilter {
 		}
 
 		String jUserName = credentials[0];
-		String jPassword = credentials[1];
 
-		if (Validator.isNull(jUserName) || Validator.isNull(jPassword)) {
+		if (Validator.isNull(jUserName)) {
 			return null;
 		}
 
@@ -82,19 +81,25 @@ public class AutoLoginFilter extends BasePortalFilter {
 
 		httpSession.setAttribute("j_username", jUserName);
 
-		// Not having access to the unencrypted password will not allow you to
-		// connect to external resources that require it (mail server)
+		String jPassword = credentials[1];
 
-		if (GetterUtil.getBoolean(credentials[2])) {
-			httpSession.setAttribute("j_password", jPassword);
-		}
-		else {
-			httpSession.setAttribute(
-				"j_password",
-				PasswordEncryptorUtil.encrypt(jPassword, user.getPassword()));
+		if (Validator.isNotNull(jPassword)) {
 
-			if (PropsValues.SESSION_STORE_PASSWORD) {
-				httpSession.setAttribute(WebKeys.USER_PASSWORD, jPassword);
+			// Not having access to the unencrypted password will not allow you
+			// to connect to external resources that require it (mail server)
+
+			if (GetterUtil.getBoolean(credentials[2])) {
+				httpSession.setAttribute("j_password", jPassword);
+			}
+			else {
+				httpSession.setAttribute(
+					"j_password",
+					PasswordEncryptorUtil.encrypt(
+						jPassword, user.getPassword()));
+
+				if (PropsValues.SESSION_STORE_PASSWORD) {
+					httpSession.setAttribute(WebKeys.USER_PASSWORD, jPassword);
+				}
 			}
 		}
 

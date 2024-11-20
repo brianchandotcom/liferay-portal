@@ -36,7 +36,8 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 					getRelevantPlaywrightJobProperties();
 
 			List<JobProperty> playwrightTestProjectJobProperties =
-				_getJobProperties("playwright.test.project", jobProperties);
+				_getJobProperties(
+					"playwright.projects.includes", jobProperties);
 
 			String playwrightTestProjectProperty = _concatPropertyValues(
 				playwrightTestProjectJobProperties, " ");
@@ -49,7 +50,7 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 		else {
 			JobProperty jobProperty =
 				playwrightBatchTestClassGroup.getJobProperty(
-					"playwright.test.project",
+					"playwright.projects.includes",
 					playwrightBatchTestClassGroup.testSuiteName,
 					playwrightBatchTestClassGroup.batchName);
 

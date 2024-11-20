@@ -216,10 +216,10 @@ public class FrontendTokenDefinitionRegistryImpl
 
 			Matcher matcher = _themeIdPattern.matcher(xml);
 
+			String servletContextName = getServletContextName(bundle);
+
 			while (matcher.find()) {
 				String themeId = matcher.group(1);
-
-				String servletContextName = getServletContextName(bundle);
 
 				if (servletContextName != null) {
 					themeId =

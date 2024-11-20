@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
-import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
+import com.liferay.change.tracking.spi.history.util.CTCollectionTimelineUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -47,10 +47,9 @@ public abstract class BaseFileEntryMVCRenderCommand
 				checkPermissions(
 					themeDisplay.getPermissionChecker(), fileEntry);
 
-				renderRequest.setAttribute(
-					CTTimelineKeys.CLASS_NAME, DLFileEntry.class.getName());
-				renderRequest.setAttribute(
-					CTTimelineKeys.CLASS_PK, fileEntry.getFileEntryId());
+				CTCollectionTimelineUtil.setCTTimelineKeys(
+					renderRequest, DLFileEntry.class,
+					fileEntry.getFileEntryId());
 			}
 
 			renderRequest.setAttribute(

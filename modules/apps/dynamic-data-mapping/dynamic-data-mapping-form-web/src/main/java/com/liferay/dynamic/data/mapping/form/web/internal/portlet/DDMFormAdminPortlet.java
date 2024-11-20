@@ -5,7 +5,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet;
 
-import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
+import com.liferay.change.tracking.spi.history.util.CTCollectionTimelineUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializer;
@@ -53,8 +53,6 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -141,9 +139,6 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
 		String currentTab = ParamUtil.getString(
 			renderRequest, "currentTab", "forms");
 
@@ -167,8 +162,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmStructureService, _jsonFactory, _npmResolver,
 					_objectDefinitionLocalService, _portal));
 
-			httpServletRequest.setAttribute(
-				CTTimelineKeys.CLASS_NAME, DDMStructure.class.getName());
+			CTCollectionTimelineUtil.setClassName(
+				renderRequest, DDMStructure.class);
 		}
 		else {
 			renderRequest.setAttribute(
@@ -190,8 +185,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmStructureService, _jsonFactory, _npmResolver,
 					_objectDefinitionLocalService, _portal));
 
-			httpServletRequest.setAttribute(
-				CTTimelineKeys.CLASS_NAME, DDMFormInstance.class.getName());
+			CTCollectionTimelineUtil.setClassName(
+				renderRequest, DDMFormInstance.class);
 		}
 	}
 

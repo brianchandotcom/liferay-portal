@@ -5,7 +5,7 @@
 
 package com.liferay.dynamic.data.mapping.data.provider.web.internal.portlet;
 
-import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
+import com.liferay.change.tracking.spi.history.util.CTCollectionTimelineUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRegistry;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.display.context.DDMDataProviderDisplayContext;
@@ -16,7 +16,6 @@ import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -27,8 +26,6 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,11 +65,8 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
-		httpServletRequest.setAttribute(
-			CTTimelineKeys.CLASS_NAME, DDMDataProviderInstance.class.getName());
+		CTCollectionTimelineUtil.setClassName(
+			renderRequest, DDMDataProviderInstance.class);
 
 		if (Objects.equals(
 				getPath(renderRequest, renderResponse),
@@ -81,8 +75,9 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 			long dataProviderInstanceId = ParamUtil.getLong(
 				renderRequest, "dataProviderInstanceId");
 
-			httpServletRequest.setAttribute(
-				CTTimelineKeys.CLASS_PK, dataProviderInstanceId);
+			CTCollectionTimelineUtil.setCTTimelineKeys(
+				renderRequest, DDMDataProviderInstance.class,
+				dataProviderInstanceId);
 		}
 
 		DDMDataProviderDisplayContext ddmDataProviderDisplayContext =
@@ -108,9 +103,6 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -5,8 +5,9 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
-import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
+import com.liferay.change.tracking.spi.history.util.CTCollectionTimelineUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -14,8 +15,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,11 +45,8 @@ public class EditElementSetMVCRenderCommand implements MVCRenderCommand {
 		long structureId = ParamUtil.getLong(renderRequest, "structureId");
 
 		if (structureId > 0) {
-			HttpServletRequest httpServletRequest =
-				portal.getHttpServletRequest(renderRequest);
-
-			httpServletRequest.setAttribute(
-				CTTimelineKeys.CLASS_PK, structureId);
+			CTCollectionTimelineUtil.setCTTimelineKeys(
+				renderRequest, DDMStructure.class, structureId);
 		}
 
 		return "/admin/edit_element_set.jsp";

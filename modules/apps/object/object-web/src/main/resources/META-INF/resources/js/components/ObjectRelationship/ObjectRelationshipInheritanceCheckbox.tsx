@@ -28,9 +28,7 @@ export function ObjectRelationshipInheritanceCheckbox({
 			<div className="form-group lfr__object-relationship-inheritance-container">
 				<ClayCheckbox
 					checked={!!values.edge}
-					label={Liferay.Language.get(
-						'enable-inheritance-including-shared-permissions-and-grouped-apis'
-					)}
+					label={Liferay.Language.get('enable-inheritance')}
 					onChange={({target}) => {
 						if (target.checked) {
 							setValues({
@@ -71,7 +69,7 @@ export function ObjectRelationshipInheritanceCheckbox({
 					}
 				>
 					{Liferay.Language.get(
-						'enable-inheritance-to-share-settings-across-related-data-models'
+						'enable-inheritance-to-share-settings-between-related-data-models'
 					)}
 				</ClayPopover>
 			</div>

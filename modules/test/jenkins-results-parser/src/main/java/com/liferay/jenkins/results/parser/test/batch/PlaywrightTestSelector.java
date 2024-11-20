@@ -30,16 +30,10 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 
 		validate();
 
-		JobProperty jobProperty = getJobProperty(
-			"playwright.test.project", JobProperty.Type.MODULE_TEST_DIR);
-
-		if (jobProperty.getValue() == null) {
-			jobProperty = getJobProperty(
+		_playwrightJobProperties.add(
+			getJobProperty(
 				"playwright.projects.includes",
-				JobProperty.Type.MODULE_TEST_DIR);
-		}
-
-		_playwrightJobProperties.add(jobProperty);
+				JobProperty.Type.MODULE_TEST_DIR));
 	}
 
 	public JobProperty getPlaywrightExcludesJobProperty() {
@@ -72,30 +66,7 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 
 	@Override
 	public void validate() throws RelevantRuleConfigurationException {
-		if ((getProperty("playwright.projects.includes") == null) &&
-			(getProperty("playwright.test.project") == null)) {
-
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Unable to create batch ");
-			sb.append(getBatchName());
-			sb.append(" since playwright.projects.includes[");
-			sb.append(getRelevantRuleName());
-			sb.append("][");
-			sb.append(getTestSuiteName());
-			sb.append("][");
-			sb.append(getBatchName());
-			sb.append("] or playwright.test.project[");
-			sb.append(getRelevantRuleName());
-			sb.append("][");
-			sb.append(getTestSuiteName());
-			sb.append("][");
-			sb.append(getBatchName());
-			sb.append("] is not set in ");
-			sb.append(getPropertiesFile());
-
-			throw new RelevantRuleConfigurationException(sb.toString());
-		}
+		validate("playwright.projects.includes");
 	}
 
 	private final Set<JobProperty> _playwrightJobProperties = new HashSet<>();

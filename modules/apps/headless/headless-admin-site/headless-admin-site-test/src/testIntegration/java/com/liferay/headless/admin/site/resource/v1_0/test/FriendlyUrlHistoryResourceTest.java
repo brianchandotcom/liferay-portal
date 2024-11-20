@@ -7,12 +7,15 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
-import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -31,7 +34,7 @@ public class FriendlyUrlHistoryResourceTest
 
 	@Override
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage()
+	public void testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory()
 		throws Exception {
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
@@ -45,14 +48,25 @@ public class FriendlyUrlHistoryResourceTest
 				"/" + RandomTestUtil.randomString(), defaultLanguageId);
 		}
 
-		Page<FriendlyUrlHistory> friendlyUrlHistoryPage =
+		FriendlyUrlHistory friendlyUrlHistory =
 			friendlyUrlHistoryResource.
-				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage(
+				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
 					testGroup.getExternalReferenceCode(),
 					layout.getExternalReferenceCode());
 
-		Assert.assertEquals(4, friendlyUrlHistoryPage.getPageSize());
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			GetterUtil.getString(friendlyUrlHistory.getFriendlyUrlPath_i18n()));
+
+		Assert.assertEquals(1, jsonObject.length());
+
+		JSONArray jsonArray = jsonObject.getJSONArray(
+			LocaleUtil.toBCP47LanguageId(defaultLanguageId));
+
+		Assert.assertEquals(4, jsonArray.length());
 	}
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

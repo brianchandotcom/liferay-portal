@@ -330,6 +330,7 @@
 		<exception>DuplicateLayoutPageTemplateCollectionType</exception>
 		<exception>DuplicateLayoutPageTemplateEntry</exception>
 		<exception>LayoutPageTemplateCollectionName</exception>
+		<exception>LayoutPageTemplateEntryDefaultTemplate</exception>
 		<exception>LayoutPageTemplateEntryName</exception>
 		<exception>RequiredLayoutPageTemplateEntry</exception>
 	</exceptions>

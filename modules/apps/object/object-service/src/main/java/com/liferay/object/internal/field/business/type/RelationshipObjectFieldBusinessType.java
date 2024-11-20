@@ -91,7 +91,7 @@ public class RelationshipObjectFieldBusinessType
 			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
-		String objectRelationshipObjectFieldName = StringUtil.split(
+		String relationshipName = StringUtil.split(
 			objectField.getName(), CharPool.UNDERLINE
 		).get(
 			1
@@ -100,10 +100,10 @@ public class RelationshipObjectFieldBusinessType
 		if (Objects.equals(
 				objectField.getRelationshipType(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
-			values.containsKey(objectRelationshipObjectFieldName)) {
+			values.containsKey(relationshipName)) {
 
 			Map<String, Object> nestedField = (Map<String, Object>)values.get(
-				objectRelationshipObjectFieldName);
+				relationshipName);
 
 			String externalReferenceCode = (String)nestedField.get(
 				"externalReferenceCode");
@@ -113,7 +113,7 @@ public class RelationshipObjectFieldBusinessType
 					_objectRelationshipLocalService.
 						fetchObjectRelationshipByObjectDefinitionId(
 							objectField.getObjectDefinitionId(),
-							objectRelationshipObjectFieldName);
+							relationshipName);
 
 				if (objectRelationship == null) {
 					return 0;

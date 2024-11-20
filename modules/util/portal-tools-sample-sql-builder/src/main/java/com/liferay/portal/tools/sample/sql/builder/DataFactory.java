@@ -5468,42 +5468,39 @@ public class DataFactory {
 
 	public List<ObjectFieldModel> newObjectFieldModels(
 		long listTypeDefinitionId, long objectDefinitionId,
-		String objectDefinitionDBTableName) {
+		String dbTableName) {
 
 		return ListUtil.fromArray(
 			newObjectFieldModel(
 				0, objectDefinitionId,
 				ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT, "description_",
-				objectDefinitionDBTableName, ObjectFieldConstants.DB_TYPE_CLOB,
-				"Description", "description", true, false, false),
+				dbTableName, ObjectFieldConstants.DB_TYPE_CLOB, "Description",
+				"description", true, false, false),
 			newObjectFieldModel(
 				0, objectDefinitionId, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				"subject_", objectDefinitionDBTableName,
-				ObjectFieldConstants.DB_TYPE_STRING, "Subject", "subject", true,
-				false, false),
+				"subject_", dbTableName, ObjectFieldConstants.DB_TYPE_STRING,
+				"Subject", "subject", true, false, false),
 			newObjectFieldModel(
 				0, objectDefinitionId,
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT, "attachment_",
-				objectDefinitionDBTableName, ObjectFieldConstants.DB_TYPE_LONG,
-				"Attachment", "attachment", false, false, false),
+				dbTableName, ObjectFieldConstants.DB_TYPE_LONG, "Attachment",
+				"attachment", false, false, false),
 			newObjectFieldModel(
 				0, objectDefinitionId,
 				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP,
-				"r_userTicket_userId", objectDefinitionDBTableName,
+				"r_userTicket_userId", dbTableName,
 				ObjectFieldConstants.DB_TYPE_LONG, "Assignee",
 				"r_userTicket_userId", false, false, false),
 			newObjectFieldModel(
 				listTypeDefinitionId, objectDefinitionId,
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "supportType_",
-				objectDefinitionDBTableName,
-				ObjectFieldConstants.DB_TYPE_STRING, "Support type",
-				"supportType", true, false, false),
+				dbTableName, ObjectFieldConstants.DB_TYPE_STRING,
+				"Support type", "supportType", true, false, false),
 			newObjectFieldModel(
 				listTypeDefinitionId, objectDefinitionId,
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "ticketStatus_",
-				objectDefinitionDBTableName,
-				ObjectFieldConstants.DB_TYPE_STRING, "Ticket Status",
-				"ticketStatus", true, true, false));
+				dbTableName, ObjectFieldConstants.DB_TYPE_STRING,
+				"Ticket Status", "ticketStatus", true, true, false));
 	}
 
 	public ObjectFieldSettingModel newObjectFieldSettingModel(

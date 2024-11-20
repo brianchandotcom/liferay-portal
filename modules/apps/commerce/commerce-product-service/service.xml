@@ -360,7 +360,7 @@
 		<finder name="CPConfigurationListId" return-type="Collection">
 			<finder-column name="CPConfigurationListId" />
 		</finder>
-		<finder name="C_C_C" return-type="CPConfigurationEntry">
+		<finder name="C_C_C" return-type="CPConfigurationEntry" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="CPConfigurationListId" />

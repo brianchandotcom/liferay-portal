@@ -5484,22 +5484,20 @@ public class DataFactory {
 				objectDefinitionDBTableName, ObjectFieldConstants.DB_TYPE_LONG,
 				"Attachment", "attachment", false, false, false));
 
-		if (listTypeDefinitionId > 0) {
-			objectFieldModels.add(
-				newObjectFieldModel(
-					listTypeDefinitionId, objectDefinitionId,
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "supportType_",
-					objectDefinitionDBTableName,
-					ObjectFieldConstants.DB_TYPE_STRING, "Support type",
-					"supportType", true, false, false));
-			objectFieldModels.add(
-				newObjectFieldModel(
-					listTypeDefinitionId, objectDefinitionId,
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-					"ticketStatus_", objectDefinitionDBTableName,
-					ObjectFieldConstants.DB_TYPE_STRING, "Ticket Status",
-					"ticketStatus", true, true, false));
-		}
+		objectFieldModels.add(
+			newObjectFieldModel(
+				listTypeDefinitionId, objectDefinitionId,
+				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "supportType_",
+				objectDefinitionDBTableName,
+				ObjectFieldConstants.DB_TYPE_STRING, "Support type",
+				"supportType", true, false, false));
+		objectFieldModels.add(
+			newObjectFieldModel(
+				listTypeDefinitionId, objectDefinitionId,
+				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "ticketStatus_",
+				objectDefinitionDBTableName,
+				ObjectFieldConstants.DB_TYPE_STRING, "Ticket Status",
+				"ticketStatus", true, true, false));
 
 		return objectFieldModels;
 	}

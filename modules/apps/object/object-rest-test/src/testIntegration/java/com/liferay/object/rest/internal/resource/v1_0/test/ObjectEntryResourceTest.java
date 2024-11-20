@@ -59,6 +59,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -107,6 +108,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -126,9 +128,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -136,6 +140,11 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.filter.InvalidFilterException;
+import com.liferay.portal.spring.aop.AopInvocationHandler;
+import com.liferay.portal.spring.hibernate.PortalTransactionManager;
+import com.liferay.portal.spring.hibernate.PortletTransactionManager;
+import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -167,11 +176,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Stack;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Feature;
+
+import org.hibernate.SessionFactory;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -190,6 +203,8 @@ import org.osgi.framework.ServiceRegistration;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+
+import org.springframework.transaction.support.DefaultTransactionStatus;
 
 /**
  * @author Luis Miguel Barcos
@@ -5060,6 +5075,45 @@ public class ObjectEntryResourceTest {
 					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2)
 			},
 			Type.ONE_TO_MANY);
+
+		// No transactions
+
+		try (TransactionCounter transactionCounter = new TransactionCounter(
+				_objectEntryLocalService, _objectEntryService)) {
+
+			_testGetNestedFieldDetailsInRelationships(
+				_objectRelationship1.getName(), 6,
+				_objectRelationship1.getName(), _objectDefinition1,
+				new String[][] {
+					{
+						_OBJECT_FIELD_NAME_1,
+						String.valueOf(_OBJECT_FIELD_VALUE_1)
+					},
+					{
+						_OBJECT_FIELD_NAME_2,
+						String.valueOf(_OBJECT_FIELD_VALUE_2)
+					},
+					{
+						_OBJECT_FIELD_NAME_1,
+						String.valueOf(_OBJECT_FIELD_VALUE_1)
+					},
+					{
+						_OBJECT_FIELD_NAME_2,
+						String.valueOf(_OBJECT_FIELD_VALUE_2)
+					},
+					{
+						_OBJECT_FIELD_NAME_1,
+						String.valueOf(_OBJECT_FIELD_VALUE_1)
+					},
+					{
+						_OBJECT_FIELD_NAME_2,
+						String.valueOf(_OBJECT_FIELD_VALUE_2)
+					}
+				},
+				Type.ONE_TO_MANY);
+
+			Assert.assertEquals(0, transactionCounter.getCount());
+		}
 	}
 
 	@Test
@@ -15033,6 +15087,9 @@ public class ObjectEntryResourceTest {
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
+	private ObjectEntryService _objectEntryService;
+
+	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	private ObjectRelationship _objectRelationship1;
@@ -15110,6 +15167,64 @@ public class ObjectEntryResourceTest {
 		}
 
 		private List<Long> _objectEntryIds = new ArrayList<>();
+
+	}
+
+	private static class TransactionCounter implements AutoCloseable {
+
+		public TransactionCounter(Object... services) {
+			for (Object service : services) {
+				TransactionInterceptor transactionInterceptor =
+					ReflectionTestUtil.getFieldValue(
+						ProxyUtil.fetchInvocationHandler(
+							service, AopInvocationHandler.class),
+						"_transactionInterceptor");
+
+				TransactionExecutor transactionExecutor =
+					ReflectionTestUtil.getFieldValue(
+						transactionInterceptor, "_transactionExecutor");
+
+				PortletTransactionManager portletTransactionManager =
+					ReflectionTestUtil.getFieldValue(
+						transactionExecutor, "_platformTransactionManager");
+
+				_autoCloseables.push(
+					ReflectionTestUtil.setFieldValueWithAutoCloseable(
+						portletTransactionManager, "_portalTransactionManager",
+						new PortalTransactionManager(
+							InfrastructureUtil.getDataSource(),
+							(SessionFactory)
+								InfrastructureUtil.getSessionFactory()) {
+
+							@Override
+							protected void doCommit(
+								DefaultTransactionStatus
+									defaultTransactionStatus) {
+
+								super.doCommit(defaultTransactionStatus);
+
+								_atomicInteger.incrementAndGet();
+							}
+
+						}));
+			}
+		}
+
+		@Override
+		public void close() throws Exception {
+			while (!_autoCloseables.isEmpty()) {
+				AutoCloseable autoCloseable = _autoCloseables.pop();
+
+				autoCloseable.close();
+			}
+		}
+
+		public int getCount() {
+			return _atomicInteger.get();
+		}
+
+		private final AtomicInteger _atomicInteger = new AtomicInteger(0);
+		private final Stack<AutoCloseable> _autoCloseables = new Stack<>();
 
 	}
 

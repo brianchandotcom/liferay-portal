@@ -379,7 +379,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 					file="${project.dir}/test.properties"
 				>
 					<replacetoken><![CDATA[test.batch.run.property.query[functional-tomcat-mysql57-jdk21_zulu][portal-release-acceptance]=\]]></replacetoken>
-					<replacevalue><![CDATA[playwright.test.project[playwright-js-tomcat90-mysql57-jdk21_zulu][portal-release-acceptance]=\
+					<replacevalue><![CDATA[playwright.projects.includes[playwright-js-tomcat90-mysql57-jdk21_zulu][portal-release-acceptance]=\
 
     test.batch.run.property.query[functional-tomcat-mysql57-jdk21_zulu][portal-release-acceptance]=\]]></replacevalue>
 				</replace>

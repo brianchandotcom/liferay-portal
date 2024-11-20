@@ -55,7 +55,6 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -112,8 +111,10 @@ import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.io.IOException;
 import java.io.Serializable;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -130,6 +131,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
@@ -1393,21 +1395,27 @@ public class DefaultObjectEntryManagerImpl
 		else if ((fileEntry.getFileSourceURL() != null) &&
 				 FeatureFlagManagerUtil.isEnabled("LPD-39967")) {
 
-			URL url = new URL(fileEntry.getFileSourceURL());
+			try {
+				URL url = new URL(fileEntry.getFileSourceURL());
 
-			if (Objects.equals(url.getProtocol(), "file")) {
+				if (Objects.equals(url.getProtocol(), "file")) {
+					throw new UnsupportedOperationException(
+						"Unsupported protocol");
+				}
 
-				// TODO Have a more specific Exception
+				URLConnection urlConnection = url.openConnection();
 
-				throw new SystemException("Unsupported URL protocol");
+				urlConnection.connect();
+
+				fileContent = StreamUtil.toByteArray(
+					urlConnection.getInputStream());
 			}
-
-			URLConnection urlConnection = url.openConnection();
-
-			urlConnection.connect();
-
-			fileContent = StreamUtil.toByteArray(
-				urlConnection.getInputStream());
+			catch (MalformedURLException malformedURLException) {
+				throw new IllegalArgumentException(malformedURLException);
+			}
+			catch (IOException ioException) {
+				throw new NotFoundException(ioException);
+			}
 		}
 
 		com.liferay.portal.kernel.repository.model.FileEntry

@@ -684,8 +684,8 @@ public class DataFactory {
 	}
 
 	public String getInsertIntoDynamicObjectDefinitionTable(
-		long fileEntryId, String dbTableName, long objectEntryId,
-		List<ObjectFieldModel> objectFieldModels, long relatedObjectEntryId) {
+		List<ObjectFieldModel> objectFieldModels, String dbTableName,
+		long objectEntryId, long fileEntryId, long relatedObjectEntryId) {
 
 		StringBundler sb = new StringBundler(
 			5 + (3 * objectFieldModels.size()));

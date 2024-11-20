@@ -1,31 +1,25 @@
 <#assign
 	objectFolderModel = dataFactory.newObjectFolderModel()
-	commerceOrderObjectDefinitionModel = dataFactory.newSystemObjectDefinitionModel("L_COMMERCE_ORDER", objectFolderModel.getObjectFolderId(), "CommerceOrder", "Commerce Order", "com.liferay.commerce.model.CommerceOrder", "CommerceOrder", "commerceOrderId")
-	userObjectDefinitionModel = dataFactory.newSystemObjectDefinitionModel("L_USER", objectFolderModel.getObjectFolderId(), "User_", "User", "com.liferay.portal.kernel.model.User", "User", "userId")
 />
 
 ${dataFactory.toInsertSQL(objectFolderModel)}
 
-${dataFactory.toInsertSQL(commerceOrderObjectDefinitionModel)}
+<#list dataFactory.newSystemObjectDefinitionModels(objectFolderModel.getObjectFolderId()) as systemObjectDefinitionModel>
+	${dataFactory.toInsertSQL(systemObjectDefinitionModel)}
 
-<#list dataFactory.newResourcePermissionModels(commerceOrderObjectDefinitionModel) as resourcePermissionModel>
-	${dataFactory.toInsertSQL(resourcePermissionModel)}
+	<#list dataFactory.newResourcePermissionModels(systemObjectDefinitionModel) as resourcePermissionModel>
+		${dataFactory.toInsertSQL(resourcePermissionModel)}
+	</#list>
+
+	<#list dataFactory.newObjectFieldModels(systemObjectDefinitionModel.getObjectDefinitionId(), systemObjectDefinitionModel.getDBTableName(), 0, systemObjectDefinitionModel.getPKObjectFieldName()) as objectFieldModel>
+		${dataFactory.toInsertSQL(objectFieldModel)}
+	</#list>
+
+	<#if systemObjectDefinitionModel.getDBTableName() == "CommerceOrder">
+		 ${dataFactory.toInsertSQL(dataFactory.newObjectActionModel(systemObjectDefinitionModel.objectDefinitionId, notificationTemplateModel.notificationTemplateId))}
+	</#if>
+
+	<#if systemObjectDefinitionModel.getDBTableName() == "User_">
+		${dataFactory.getExtensionDynamicObjectDefinitionTableCreateSQL(systemObjectDefinitionModel)}
+	</#if>
 </#list>
-
-<#list dataFactory.newObjectFieldModels(commerceOrderObjectDefinitionModel.getObjectDefinitionId(), commerceOrderObjectDefinitionModel.getDBTableName(), 0, "commerceOrderId") as objectFieldModel>
-	${dataFactory.toInsertSQL(objectFieldModel)}
-</#list>
-
-${dataFactory.toInsertSQL(userObjectDefinitionModel)}
-
-<#list dataFactory.newResourcePermissionModels(userObjectDefinitionModel) as resourcePermissionModel>
-	${dataFactory.toInsertSQL(resourcePermissionModel)}
-</#list>
-
-${dataFactory.getExtensionDynamicObjectDefinitionTableCreateSQL(userObjectDefinitionModel)}
-
-<#list dataFactory.newObjectFieldModels(userObjectDefinitionModel.getObjectDefinitionId(), userObjectDefinitionModel.getDBTableName(), 0, "userId") as objectFieldModel>
-	${dataFactory.toInsertSQL(objectFieldModel)}
-</#list>
-
-${dataFactory.toInsertSQL(dataFactory.newObjectActionModel(commerceOrderObjectDefinitionModel.objectDefinitionId, notificationTemplateModel.notificationTemplateId))}

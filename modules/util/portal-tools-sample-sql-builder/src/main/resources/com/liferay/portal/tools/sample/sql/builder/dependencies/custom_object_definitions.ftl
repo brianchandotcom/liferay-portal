@@ -45,7 +45,7 @@ ${dataFactory.toInsertSQL(listTypeDefinitionModel)}
 	</#if>
 </#list>
 
-${dataFactory.toInsertSQL(dataFactory.newObjectRelationshipModel(userObjectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getObjectDefinitionId()))}
+${dataFactory.toInsertSQL(dataFactory.newObjectRelationshipModel(objectDefinitionModel.getObjectDefinitionId()))}
 
 ${dataFactory.toInsertSQL(dlFolderModel)}
 

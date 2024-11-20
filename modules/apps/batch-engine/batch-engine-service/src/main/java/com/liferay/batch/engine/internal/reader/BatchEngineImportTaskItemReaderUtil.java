@@ -230,7 +230,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 	private static Set<String> _getRestrictedFieldNames(
 		BatchEngineImportTask batchEngineImportTask) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35944")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-29367")) {
 			return new HashSet<>();
 		}
 

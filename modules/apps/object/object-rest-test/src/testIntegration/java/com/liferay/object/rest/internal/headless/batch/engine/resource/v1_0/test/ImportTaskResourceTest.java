@@ -41,7 +41,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Mauricio Valdivia
  */
-@FeatureFlags("LPD-35944")
+@FeatureFlags("LPD-29367")
 @RunWith(Arquillian.class)
 public class ImportTaskResourceTest {
 

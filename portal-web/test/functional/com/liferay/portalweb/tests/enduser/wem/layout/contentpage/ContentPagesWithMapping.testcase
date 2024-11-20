@@ -730,7 +730,7 @@ definition {
 				webContentText = "https://www.liferay.com",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Image fragment to page") {
@@ -806,7 +806,7 @@ definition {
 				webContentText = "https://www.liferay.com",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Button fragment to page") {
@@ -882,7 +882,7 @@ definition {
 				webContentText = "https://www.liferay.com",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Heading fragment to page") {
@@ -1295,7 +1295,7 @@ definition {
 					webContentText = "https://www.liferay.com",
 					webContentTextFieldLabel = "Personal Web");
 
-				PortletEntry.publish();
+				WebContent.publishWithPermissions();
 			}
 
 			task ("Create a content page") {

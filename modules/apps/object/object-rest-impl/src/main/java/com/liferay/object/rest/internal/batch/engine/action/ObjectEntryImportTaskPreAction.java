@@ -6,6 +6,7 @@
 package com.liferay.object.rest.internal.batch.engine.action;
 
 import com.liferay.batch.engine.action.ImportTaskPreAction;
+import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -29,7 +30,9 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectEntryImportTaskPreAction implements ImportTaskPreAction {
 
 	@Override
-	public void run(BatchEngineImportTask batchEngineImportTask, Object item)
+	public void run(
+			BatchEngineImportTask batchEngineImportTask,
+			ImportTaskContext importTaskContext, Object item)
 		throws Exception {
 
 		if (!(item instanceof ObjectEntry)) {

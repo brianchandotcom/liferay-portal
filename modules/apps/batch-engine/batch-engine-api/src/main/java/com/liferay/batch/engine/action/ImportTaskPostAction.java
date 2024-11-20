@@ -5,6 +5,7 @@
 
 package com.liferay.batch.engine.action;
 
+import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 
 /**
@@ -13,7 +14,8 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 public interface ImportTaskPostAction {
 
 	public void run(
-			BatchEngineImportTask batchEngineImportTask, Object item,
+			BatchEngineImportTask batchEngineImportTask,
+			ImportTaskContext importTaskContext, Object item,
 			Object persistedItem)
 		throws Exception;
 

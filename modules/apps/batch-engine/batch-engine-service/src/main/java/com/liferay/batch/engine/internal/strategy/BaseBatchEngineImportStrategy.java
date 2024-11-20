@@ -7,6 +7,7 @@ package com.liferay.batch.engine.internal.strategy;
 
 import com.liferay.batch.engine.action.ImportTaskPostAction;
 import com.liferay.batch.engine.action.ImportTaskPreAction;
+import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
 import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
@@ -45,10 +46,14 @@ public abstract class BaseBatchEngineImportStrategy
 			importItem(
 				item,
 				element -> {
+					ImportTaskContext importTaskContext =
+						new ImportTaskContext();
+
 					for (ImportTaskPreAction importTaskPreAction :
 							importTaskPreActions) {
 
-						importTaskPreAction.run(batchEngineImportTask, element);
+						importTaskPreAction.run(
+							batchEngineImportTask, importTaskContext, element);
 					}
 
 					T persistedItem = unsafeFunction.apply(element);
@@ -61,7 +66,8 @@ public abstract class BaseBatchEngineImportStrategy
 							importTaskPostActions) {
 
 						importTaskPostAction.run(
-							batchEngineImportTask, element, persistedItem);
+							batchEngineImportTask, importTaskContext, element,
+							persistedItem);
 					}
 
 					return persistedItem;

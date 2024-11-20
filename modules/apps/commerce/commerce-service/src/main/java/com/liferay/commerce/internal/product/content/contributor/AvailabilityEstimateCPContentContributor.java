@@ -5,6 +5,9 @@
 
 package com.liferay.commerce.internal.product.content.contributor;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
@@ -72,10 +75,16 @@ public class AvailabilityEstimateCPContentContributor
 
 		boolean available = false;
 
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
+
 		BigDecimal stockQuantity = _commerceInventoryEngine.getStockQuantity(
-			cpInstance.getCompanyId(), cpInstance.getGroupId(),
-			commerceChannel.getGroupId(), cpInstance.getSku(),
-			StringPool.BLANK);
+			cpInstance.getCompanyId(), accountEntry.getAccountEntryId(),
+			cpInstance.getGroupId(), commerceChannel.getGroupId(),
+			cpInstance.getSku(), StringPool.BLANK);
 
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.

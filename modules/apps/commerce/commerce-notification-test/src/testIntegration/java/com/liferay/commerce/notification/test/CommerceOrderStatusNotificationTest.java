@@ -198,6 +198,7 @@ public class CommerceOrderStatusNotificationTest {
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
 				_commerceInventoryWarehouseLocalService.
 					getCommerceInventoryWarehouses(
+						_commerceOrder.getCommerceAccountId(),
 						_commerceChannel.getGroupId(),
 						commerceOrderItem.getSku());
 

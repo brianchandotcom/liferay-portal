@@ -114,6 +114,7 @@ public class CommerceShippableOrderItemsFDSDataProvider
 					new OrderItem(
 						_commerceInventoryEngine.getStockQuantity(
 							commerceOrderItem.getCompanyId(),
+							commerceOrder.getCommerceAccountId(),
 							commerceCatalogGroupId,
 							commerceOrderItem.getGroupId(),
 							commerceOrderItem.getSku(),

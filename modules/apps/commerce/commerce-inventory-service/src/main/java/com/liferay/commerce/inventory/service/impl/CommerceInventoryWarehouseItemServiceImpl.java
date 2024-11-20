@@ -254,7 +254,8 @@ public class CommerceInventoryWarehouseItemServiceImpl
 
 	@Override
 	public int getCommerceInventoryWarehouseItemsCount(
-			long companyId, long groupId, String sku, String unitOfMeasureKey)
+			long companyId, long accountEntryId, long groupId, String sku,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
@@ -267,7 +268,7 @@ public class CommerceInventoryWarehouseItemServiceImpl
 
 		return commerceInventoryWarehouseItemLocalService.
 			getCommerceInventoryWarehouseItemsCount(
-				companyId, groupId, sku, unitOfMeasureKey);
+				companyId, accountEntryId, groupId, sku, unitOfMeasureKey);
 	}
 
 	@Override
@@ -344,10 +345,11 @@ public class CommerceInventoryWarehouseItemServiceImpl
 
 	@Override
 	public BigDecimal getStockQuantity(
-		long companyId, long groupId, String sku, String unitOfMeasureKey) {
+		long companyId, long accountEntryId, long groupId, String sku,
+		String unitOfMeasureKey) {
 
 		return commerceInventoryWarehouseItemLocalService.getStockQuantity(
-			companyId, groupId, sku, unitOfMeasureKey);
+			companyId, accountEntryId, groupId, sku, unitOfMeasureKey);
 	}
 
 	@Override

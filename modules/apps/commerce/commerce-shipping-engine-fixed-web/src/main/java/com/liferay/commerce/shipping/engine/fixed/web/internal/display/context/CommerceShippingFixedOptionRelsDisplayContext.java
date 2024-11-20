@@ -99,7 +99,7 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 
 		return _commerceInventoryWarehouseService.
 			getCommerceInventoryWarehouses(
-				commerceShippingMethod.getCompanyId(),
+				commerceShippingMethod.getCompanyId(), 0,
 				commerceShippingMethod.getGroupId(), true);
 	}
 

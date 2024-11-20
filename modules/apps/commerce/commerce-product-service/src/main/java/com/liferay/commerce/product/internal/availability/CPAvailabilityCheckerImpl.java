@@ -29,12 +29,13 @@ public class CPAvailabilityCheckerImpl implements CPAvailabilityChecker {
 
 	@Override
 	public boolean check(
-			long commerceChannelGroupId, CPInstance cpInstance,
-			String unitOfMeasure, BigDecimal quantity)
+			long accountEntryId, long commerceChannelGroupId,
+			CPInstance cpInstance, String unitOfMeasure, BigDecimal quantity)
 		throws PortalException {
 
 		if (isAvailable(
-				commerceChannelGroupId, cpInstance, unitOfMeasure, quantity) &&
+				accountEntryId, commerceChannelGroupId, cpInstance,
+				unitOfMeasure, quantity) &&
 			isPurchasable(cpInstance)) {
 
 			return true;
@@ -45,8 +46,8 @@ public class CPAvailabilityCheckerImpl implements CPAvailabilityChecker {
 
 	@Override
 	public boolean isAvailable(
-			long commerceChannelGroupId, CPInstance cpInstance,
-			String unitOfMeasure, BigDecimal quantity)
+			long accountEntryId, long commerceChannelGroupId,
+			CPInstance cpInstance, String unitOfMeasure, BigDecimal quantity)
 		throws PortalException {
 
 		if (cpInstance == null) {
@@ -72,8 +73,9 @@ public class CPAvailabilityCheckerImpl implements CPAvailabilityChecker {
 
 		if (commerceChannelGroupId > 0) {
 			stockQuantity = _commerceInventoryEngine.getStockQuantity(
-				cpInstance.getCompanyId(), cpInstance.getGroupId(),
-				commerceChannelGroupId, cpInstance.getSku(), unitOfMeasure);
+				cpInstance.getCompanyId(), accountEntryId,
+				cpInstance.getGroupId(), commerceChannelGroupId,
+				cpInstance.getSku(), unitOfMeasure);
 		}
 		else {
 			stockQuantity = _commerceInventoryEngine.getStockQuantity(

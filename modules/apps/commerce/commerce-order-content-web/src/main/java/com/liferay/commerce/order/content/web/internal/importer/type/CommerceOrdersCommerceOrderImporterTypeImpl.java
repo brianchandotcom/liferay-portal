@@ -166,12 +166,14 @@ public class CommerceOrdersCommerceOrderImporterTypeImpl
 			_commerceOrderItemService.getCommerceOrderItems(
 				commerceOrder.getCommerceOrderId(), start, end),
 			commerceOrderItem -> _toCommerceOrderImporterItemImpl(
-				commerceChannelGroupId, commerceOrderItem),
+				commerceOrder.getCommerceAccountId(), commerceChannelGroupId,
+				commerceOrderItem),
 			CommerceOrderImporterItemImpl.class);
 	}
 
 	private CommerceOrderImporterItemImpl _toCommerceOrderImporterItemImpl(
-			long commerceChannelGroupId, CommerceOrderItem commerceOrderItem)
+			long accountEntryId, long commerceChannelGroupId,
+			CommerceOrderItem commerceOrderItem)
 		throws Exception {
 
 		CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =
@@ -189,12 +191,13 @@ public class CommerceOrdersCommerceOrderImporterTypeImpl
 		else {
 			CPInstance firstAvailableReplacementCPInstance =
 				_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
-					commerceChannelGroupId, cpInstance.getCPInstanceId());
+					accountEntryId, commerceChannelGroupId,
+					cpInstance.getCPInstanceId());
 
 			if ((firstAvailableReplacementCPInstance != null) &&
 				!_cpAvailabilityChecker.check(
-					commerceChannelGroupId, cpInstance, StringPool.BLANK,
-					commerceOrderItem.getQuantity())) {
+					accountEntryId, commerceChannelGroupId, cpInstance,
+					StringPool.BLANK, commerceOrderItem.getQuantity())) {
 
 				commerceOrderImporterItemImpl.setReplacingSKU(
 					cpInstance.getSku());

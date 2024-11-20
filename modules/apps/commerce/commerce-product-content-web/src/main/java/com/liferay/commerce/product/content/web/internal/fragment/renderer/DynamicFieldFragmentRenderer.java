@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.product.content.web.internal.fragment.renderer;
 
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
@@ -15,6 +17,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -220,6 +223,10 @@ public class DynamicFieldFragmentRenderer implements FragmentRenderer {
 				cpDefinition.getCPDefinitionId());
 
 			if (field.equals("availability.stockQuantity")) {
+				CommerceContext commerceContext =
+					(CommerceContext)httpServletRequest.getAttribute(
+						CommerceWebKeys.COMMERCE_CONTEXT);
+
 				CommerceChannel commerceChannel =
 					_commerceChannelLocalService.
 						fetchCommerceChannelBySiteGroupId(
@@ -230,7 +237,9 @@ public class DynamicFieldFragmentRenderer implements FragmentRenderer {
 
 				BigDecimal stockQuantity =
 					_commerceInventoryEngine.getStockQuantity(
-						cpInstance.getCompanyId(), commerceCatalog.getGroupId(),
+						cpInstance.getCompanyId(),
+						CommerceUtil.getCommerceAccountId(commerceContext),
+						commerceCatalog.getGroupId(),
 						commerceChannel.getGroupId(), cpInstance.getSku(),
 						StringPool.BLANK);
 

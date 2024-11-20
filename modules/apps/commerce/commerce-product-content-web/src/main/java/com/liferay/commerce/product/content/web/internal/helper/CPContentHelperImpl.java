@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.product.content.web.internal.helper;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
@@ -508,8 +509,11 @@ public class CPContentHelperImpl implements CPContentHelper {
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
+
 		CPInstance firstAvailableReplacementCPInstance =
 			_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
+				accountEntry.getAccountEntryId(),
 				commerceContext.getCommerceChannelGroupId(),
 				cpSku.getCPInstanceId());
 
@@ -669,8 +673,11 @@ public class CPContentHelperImpl implements CPContentHelper {
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
+
 		CPInstance firstAvailableReplacementCPInstance =
 			_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
+				accountEntry.getAccountEntryId(),
 				commerceContext.getCommerceChannelGroupId(),
 				cpSku.getCPInstanceId());
 

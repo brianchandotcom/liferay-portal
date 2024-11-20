@@ -16,13 +16,13 @@ import java.math.BigDecimal;
 public interface CPAvailabilityChecker {
 
 	public boolean check(
-			long commerceChannelGroupId, CPInstance cpInstance,
-			String unitOfMeasure, BigDecimal quantity)
+			long accountEntryId, long commerceChannelGroupId,
+			CPInstance cpInstance, String unitOfMeasure, BigDecimal quantity)
 		throws PortalException;
 
 	public boolean isAvailable(
-			long commerceChannelGroupId, CPInstance cpInstance,
-			String unitOfMeasure, BigDecimal quantity)
+			long accountEntryId, long commerceChannelGroupId,
+			CPInstance cpInstance, String unitOfMeasure, BigDecimal quantity)
 		throws PortalException;
 
 	public boolean isPurchasable(CPInstance cpInstance) throws PortalException;

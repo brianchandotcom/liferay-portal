@@ -154,7 +154,7 @@ public class AddToCartTag extends IncludeTag {
 				BigDecimal stockQuantity =
 					_commerceInventoryEngine.getStockQuantity(
 						PortalUtil.getCompanyId(httpServletRequest),
-						_cpCatalogEntry.getGroupId(),
+						_commerceAccountId, _cpCatalogEntry.getGroupId(),
 						commerceContext.getCommerceChannelGroupId(), sku,
 						StringPool.BLANK);
 

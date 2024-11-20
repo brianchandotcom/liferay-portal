@@ -32,12 +32,12 @@ public interface CommerceInventoryEngine {
 		throws PortalException;
 
 	public String getAvailabilityStatus(
-		long companyId, long commerceCatalogGroupId,
+		long companyId, long accountEntryId, long commerceCatalogGroupId,
 		long commerceChannelGroupId, BigDecimal minStockQuantity, String sku,
 		String unitOfMeasureKey);
 
 	public BigDecimal getStockQuantity(
-			long companyId, long commerceCatalogGroupId,
+			long companyId, long accountEntryId, long commerceCatalogGroupId,
 			long commerceChannelGroupId, String sku, String unitOfMeasureKey)
 		throws PortalException;
 

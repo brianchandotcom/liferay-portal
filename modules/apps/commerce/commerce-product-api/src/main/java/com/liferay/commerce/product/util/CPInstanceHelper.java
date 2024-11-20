@@ -45,7 +45,7 @@ public interface CPInstanceHelper {
 	public BigDecimal fetchCPInstanceUnitPromoPrice(CPInstance cpInstance);
 
 	public CPInstance fetchFirstAvailableReplacementCPInstance(
-			long commerceChannelGroupId, long cpInstanceId)
+			long accountEntryId, long commerceChannelGroupId, long cpInstanceId)
 		throws PortalException;
 
 	public CPInstance fetchReplacementCPInstance(

@@ -61,6 +61,7 @@ public class AvailabilityCommerceOrderValidatorImpl
 		}
 
 		if (!_cpAvailabilityChecker.isAvailable(
+				commerceOrder.getCommerceAccountId(),
 				commerceOrder.getGroupId(), cpInstance, StringPool.BLANK,
 				quantity)) {
 
@@ -94,7 +95,10 @@ public class AvailabilityCommerceOrderValidatorImpl
 
 		BigDecimal quantity = commerceOrderItem.getQuantity();
 
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
 		if (!_cpAvailabilityChecker.isAvailable(
+				commerceOrder.getCommerceAccountId(),
 				commerceOrderItem.getGroupId(), cpInstance,
 				commerceOrderItem.getUnitOfMeasureKey(), quantity) &&
 			(commerceInventoryBookedQuantity == null)) {

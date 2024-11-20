@@ -5,6 +5,9 @@
 
 package com.liferay.commerce.internal.product.content.contributor;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.inventory.constants.CommerceInventoryAvailabilityConstants;
@@ -80,10 +83,16 @@ public class AvailabilityCPContentContributor implements CPContentContributor {
 			cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance);
 
 		if (displayAvailability) {
+			CommerceContext commerceContext =
+				(CommerceContext)httpServletRequest.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT);
+
+			AccountEntry accountEntry = commerceContext.getAccountEntry();
+
 			String availabilityStatus =
 				_commerceInventoryEngine.getAvailabilityStatus(
-					cpInstance.getCompanyId(), cpInstance.getGroupId(),
-					commerceChannel.getGroupId(),
+					cpInstance.getCompanyId(), accountEntry.getAccountEntryId(),
+					cpInstance.getGroupId(), commerceChannel.getGroupId(),
 					cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance),
 					cpInstance.getSku(), StringPool.BLANK);
 

@@ -7657,8 +7657,7 @@ public class ObjectEntryResourceTest {
 				).put(
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
 				).toString(),
-				_objectDefinition2.getRESTContextPath(),
-				Http.Method.POST
+				_objectDefinition2.getRESTContextPath(), Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
 
@@ -7675,12 +7674,6 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
-					ObjectFieldSettingUtil.getValue(
-						ObjectFieldSettingConstants.
-							NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-						objectField),
-					_objectEntry1.getExternalReferenceCode()
-				).put(
 					StringBundler.concat(
 						"r_", _objectRelationship1.getName(), "_",
 						_objectDefinition1.getPKObjectFieldName()),
@@ -7695,8 +7688,7 @@ public class ObjectEntryResourceTest {
 				).put(
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
 				).toString(),
-				_objectDefinition2.getRESTContextPath(),
-				Http.Method.POST
+				_objectDefinition2.getRESTContextPath(), Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
 
@@ -7715,12 +7707,6 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
-					ObjectFieldSettingUtil.getValue(
-						ObjectFieldSettingConstants.
-							NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-						objectField),
-					_objectEntry1.getExternalReferenceCode()
-				).put(
 					StringBundler.concat(
 						"r_", _objectRelationship1.getName(),
 						_objectDefinition1.getPKObjectFieldName()),
@@ -7735,8 +7721,7 @@ public class ObjectEntryResourceTest {
 				).put(
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
 				).toString(),
-				_objectDefinition2.getRESTContextPath(),
-				Http.Method.POST
+				_objectDefinition2.getRESTContextPath(), Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
 
@@ -7769,8 +7754,7 @@ public class ObjectEntryResourceTest {
 					).put(
 						_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
 					).toString(),
-					_objectDefinition2.getRESTContextPath(),
-					Http.Method.POST
+					_objectDefinition2.getRESTContextPath(), Http.Method.POST
 				).getJSONObject(
 					"status"
 				).get(

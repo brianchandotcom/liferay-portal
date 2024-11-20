@@ -278,7 +278,7 @@ public class ExportTaskResourceTest {
 
 		ImportTask importTask = _importTaskResource.postImportTask(
 			classNamePartsMap.get("className"), null, "UPSERT", null, null,
-			null, classNamePartsMap.get("taskItemDelegateName"),
+			null, null ,classNamePartsMap.get("taskItemDelegateName"),
 			itemsJSONArray);
 
 		externalReferenceCode = importTask.getExternalReferenceCode();

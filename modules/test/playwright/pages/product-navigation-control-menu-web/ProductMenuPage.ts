@@ -99,16 +99,19 @@ export class ProductMenuPage {
 		await this.membershipsButton.click();
 	}
 
-	async goToPages(siteURL?: string) {
-		if (siteURL) {
-			await this.page.goto(
-				`/group${siteURL || '/guest'}${PORTLET_URLS.pages}`
-			);
-		}
-		else {
-			await this.siteBuilderButton.click();
-			await this.pagesButton.click();
-		}
+	async goToPages() {
+		await this.openProductMenuIfClosed();
+
+		const pagesLink = await this.page
+			.locator('#productMenuSidebar')
+			.getByRole('menuitem', {
+				exact: true,
+				includeHidden: true,
+				name: 'Pages',
+			})
+			.evaluate((element) => element.getAttribute('href'));
+
+		await this.page.goto(pagesLink);
 	}
 
 	async goToPublishingExport() {

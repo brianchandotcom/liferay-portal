@@ -88,7 +88,7 @@ test('LPD-35561 Preview StyleBook when edit StyleBook', async ({
 	});
 
 	await test.step('Add a content page', async () => {
-		await productMenuPage.goToPages('/guest');
+		await productMenuPage.goToPages();
 
 		await pagesAdminPage.createNewPage({
 			addButtonLabel: 'Page',
@@ -240,7 +240,7 @@ test('LPD-35560 PreviewStyleBookOnPages', async ({
 	);
 
 	await test.step('Add the first page with a Blogs widget', async () => {
-		await productMenuPage.goToPages('/guest');
+		await productMenuPage.goToPages();
 
 		await pagesAdminPage.createNewPage({
 			addButtonLabel: 'Page',
@@ -253,7 +253,7 @@ test('LPD-35560 PreviewStyleBookOnPages', async ({
 	});
 
 	await test.step('Add the second page with a My Sites widget', async () => {
-		await productMenuPage.goToPages('/guest');
+		await productMenuPage.goToPages();
 
 		await pagesAdminPage.createNewPage({
 			addButtonLabel: 'Page',
@@ -266,7 +266,7 @@ test('LPD-35560 PreviewStyleBookOnPages', async ({
 	});
 
 	await test.step('Add a paragraph fragment to the third page and publish', async () => {
-		await productMenuPage.goToPages('/guest');
+		await productMenuPage.goToPages();
 
 		await pagesAdminPage.createNewPage({
 			addButtonLabel: 'Page',

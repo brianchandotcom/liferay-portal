@@ -879,7 +879,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testCustomObjectNestedFieldOneToManyRelationshipPriorities()
+	public void testPostCustomObjectEntryWithManyToOneRelationshipPriorities()
 		throws Exception {
 
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(

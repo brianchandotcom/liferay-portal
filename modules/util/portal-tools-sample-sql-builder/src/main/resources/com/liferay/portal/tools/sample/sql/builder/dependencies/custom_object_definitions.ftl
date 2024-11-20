@@ -6,16 +6,37 @@
 	objectFieldModels = dataFactory.newObjectFieldModels(objectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getDBTableName(), listTypeDefinitionModel.getListTypeDefinitionId())
 />
 
-${dataFactory.toInsertSQL(objectDefinitionModel)}
+${dataFactory.toInsertSQL(dlFolderModel)}
 
-<#list dataFactory.newResourcePermissionModels(objectDefinitionModel) as resourcePermissionModel>
-	${dataFactory.toInsertSQL(resourcePermissionModel)}
-</#list>
+<@insertAssetEntry _entry = dlFolderModel />
 
 ${dataFactory.toInsertSQL(listTypeDefinitionModel)}
 
 <#list listTypeEntryModels as listTypeEntryModel>
 	${dataFactory.toInsertSQL(listTypeEntryModel)}
+</#list>
+
+${dataFactory.toInsertSQL(objectDefinitionModel)}
+
+<#list dataFactory.newObjectEntryModels(objectDefinitionModel.getObjectDefinitionId()) as objectEntryModel>
+	<#assign
+		dlFileEntryModel = dataFactory.newDLFileEntryModel(dlFolderModel, "FileEntry" + objectEntryModel.getObjectEntryId(), "txt", "text/plain", dataFactory.getCounterNext())
+		dlFileVersionModel = dataFactory.newDLFileVersionModel(dlFileEntryModel)
+	 />
+
+	${dataFactory.toInsertSQL(dlFileEntryModel)}
+
+	<@insertAssetEntry _entry = dlFileEntryModel />
+
+	${dataFactory.toInsertSQL(dlFileVersionModel)}
+
+	${dataFactory.toInsertSQL(objectEntryModel)}
+
+	<@insertAssetEntry _entry = objectEntryModel />
+
+	<#list dataFactory.generateDynamicSQLs(objectFieldModels, objectDefinitionModel.getDBTableName(), objectEntryModel.getObjectEntryId(), dlFileEntryModel.getFileEntryId(), objectEntryModel.getUserId()) as dynamicSQL>
+		${dynamicSQL}
+	</#list>
 </#list>
 
 <#list objectFieldModels as objectFieldModel>
@@ -47,31 +68,10 @@ ${dataFactory.toInsertSQL(listTypeDefinitionModel)}
 
 ${dataFactory.toInsertSQL(dataFactory.newObjectRelationshipModel(objectDefinitionModel.getObjectDefinitionId()))}
 
-${dataFactory.toInsertSQL(dlFolderModel)}
-
-<@insertAssetEntry _entry = dlFolderModel />
-
 ${dataFactory.getDynamicObjectDefinitionTableCreateSQL(objectDefinitionModel, objectFieldModels)}
 
 ${dataFactory.getExtensionDynamicObjectDefinitionTableCreateSQL(objectDefinitionModel)}
 
-<#list dataFactory.newObjectEntryModels(objectDefinitionModel.getObjectDefinitionId()) as objectEntryModel>
-	<#assign
-		dlFileEntryModel = dataFactory.newDLFileEntryModel(dlFolderModel, "FileEntry" + objectEntryModel.getObjectEntryId(), "txt", "text/plain", dataFactory.getCounterNext())
-		dlFileVersionModel = dataFactory.newDLFileVersionModel(dlFileEntryModel)
-	 />
-
-	${dataFactory.toInsertSQL(dlFileEntryModel)}
-
-	<@insertAssetEntry _entry = dlFileEntryModel />
-
-	${dataFactory.toInsertSQL(dlFileVersionModel)}
-
-	${dataFactory.toInsertSQL(objectEntryModel)}
-
-	<@insertAssetEntry _entry = objectEntryModel />
-
-	<#list dataFactory.generateDynamicSQLs(objectFieldModels, objectDefinitionModel.getDBTableName(), objectEntryModel.getObjectEntryId(), dlFileEntryModel.getFileEntryId(), objectEntryModel.getUserId()) as dynamicSQL>
-		${dynamicSQL}
-	</#list>
+<#list dataFactory.newResourcePermissionModels(objectDefinitionModel) as resourcePermissionModel>
+	${dataFactory.toInsertSQL(resourcePermissionModel)}
 </#list>

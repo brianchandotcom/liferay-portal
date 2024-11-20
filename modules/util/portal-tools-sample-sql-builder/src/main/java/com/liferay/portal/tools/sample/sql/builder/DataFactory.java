@@ -32,6 +32,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItemModel;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseModel;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseModelImpl;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.model.CommerceOrderModel;
 import com.liferay.commerce.model.CommerceShippingMethod;
@@ -5745,7 +5746,7 @@ public class DataFactory {
 	}
 
 	public ObjectRelationshipModel newObjectRelationshipModel(
-		long objectDefinitionId1, long objectDefinitionId2) {
+		long objectDefinitionId2) {
 
 		ObjectRelationshipModel objectRelationshipModel =
 			new ObjectRelationshipModelImpl();
@@ -5764,7 +5765,7 @@ public class DataFactory {
 
 		// Other fields
 
-		objectRelationshipModel.setObjectDefinitionId1(objectDefinitionId1);
+		objectRelationshipModel.setObjectDefinitionId1(_objectDefinitionId);
 		objectRelationshipModel.setObjectDefinitionId2(objectDefinitionId2);
 		objectRelationshipModel.setObjectFieldId2(_objectFieldId);
 		objectRelationshipModel.setParameterObjectFieldId(0);
@@ -5773,7 +5774,7 @@ public class DataFactory {
 		objectRelationshipModel.setEdge(false);
 
 		String name =
-			"ObjectRelationship" + objectDefinitionId1 + objectDefinitionId2;
+			"ObjectRelationship" + _objectDefinitionId + objectDefinitionId2;
 
 		objectRelationshipModel.setLabel(_getLabel(name));
 		objectRelationshipModel.setName(name);
@@ -6647,16 +6648,23 @@ public class DataFactory {
 			getClassNameId(WikiPage.class), wikiPageModel.getResourcePrimKey());
 	}
 
-	public ObjectDefinitionModel newSystemObjectDefinitionModel(
-		String externalReferenceCode, long objectFolderId, String dbTableName,
-		String label, String className, String name, String pkObjectFieldName) {
+	public List<ObjectDefinitionModel> newSystemObjectDefinitionModels(
+		long objectFolderId) {
 
-		return newObjectDefinitionModel(
-			_counter.get(), objectFolderId, _counter.get(), className,
-			dbTableName, false, true, false, _getLabel(label), false, name,
-			null, pkObjectFieldName, pkObjectFieldName,
-			_getPluralLabel(label + "s"), false, true, externalReferenceCode,
-			SequentialUUID.generate());
+		return ListUtil.fromArray(
+			newObjectDefinitionModel(
+				_counter.get(), objectFolderId, _counter.get(),
+				CommerceOrder.class.getName(), "CommerceOrder", false, true,
+				false, _getLabel("Commerce Order"), false, "CommerceOrder",
+				null, "commerceOrderId", "commerceOrderId",
+				_getPluralLabel("Commerce Orders"), false, true,
+				"L_COMMERCE_ORDER", SequentialUUID.generate()),
+			newObjectDefinitionModel(
+				_counter.get(), objectFolderId, _counter.get(),
+				User.class.getName(), "User_", false, true, false,
+				_getLabel("User"), false, "User", null, "userId", "userId",
+				_getPluralLabel("Users"), false, true, "L_USER",
+				SequentialUUID.generate()));
 	}
 
 	public List<UserModel> newUserModels() {
@@ -7905,6 +7913,10 @@ public class DataFactory {
 
 		objectDefinitionModel.setObjectDefinitionId(objectDefinitionId);
 
+		if (StringUtil.equals(dbTableName, "User_")) {
+			_objectDefinitionId = objectDefinitionId;
+		}
+
 		// Audit fields
 
 		objectDefinitionModel.setCompanyId(_companyId);
@@ -8914,6 +8926,7 @@ public class DataFactory {
 	private final String _layoutPageTemplateStructureRelData;
 	private final SimpleCounter _layoutPlidCounter;
 	private final SimpleCounter _layoutSetIdCounter;
+	private long _objectDefinitionId;
 	private long _objectFieldId;
 	private RoleModel _ownerRoleModel;
 	private final SimpleCounter _portletPreferenceValueIdCounter;

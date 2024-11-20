@@ -9,6 +9,7 @@
 
 .miller-columns-col {
 	margin: 0;
+	min-width: 286px;
 	padding: 0;
 
 	&:nth-child(-n + 2),

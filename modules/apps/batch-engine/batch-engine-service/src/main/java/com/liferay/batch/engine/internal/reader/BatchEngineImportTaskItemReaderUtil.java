@@ -29,6 +29,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -53,24 +54,8 @@ public class BatchEngineImportTaskItemReaderUtil {
 		Map<String, Serializable> extendedProperties = new HashMap<>();
 		T item = itemClass.newInstance();
 
-		Map<String, Serializable> parameters =
-			batchEngineImportTask.getParameters();
-
-		Serializable restrictedFieldNamesParam = parameters.get(
-			"restrictedFieldNames");
-
-		Set<String> restrictedFieldNames = new HashSet<>();
-
-		if (restrictedFieldNamesParam instanceof String) {
-			String restrictedFieldNamesStr = (String)restrictedFieldNamesParam;
-
-			String[] restrictedFieldNamesArray = restrictedFieldNamesStr.split(
-				",");
-
-			for (String fieldName : restrictedFieldNamesArray) {
-				restrictedFieldNames.add(fieldName.trim());
-			}
-		}
+		Set<String> restrictedFieldNames = _getRestrictedFieldNames(
+			batchEngineImportTask);
 
 		for (Map.Entry<String, Object> entry : fieldNameValueMap.entrySet()) {
 			String name = entry.getKey();
@@ -241,6 +226,37 @@ public class BatchEngineImportTaskItemReaderUtil {
 				registerModule(simpleModule);
 			}
 		};
+	}
+
+	private static Set<String> _getRestrictedFieldNames(
+		BatchEngineImportTask batchEngineImportTask) {
+
+		Map<String, Serializable> parameters =
+			batchEngineImportTask.getParameters();
+
+		if (parameters == null) {
+			parameters = Collections.emptyMap();
+		}
+
+		Serializable restrictedFieldNamesParam = parameters.get(
+			"restrictedFieldNames");
+
+		if (restrictedFieldNamesParam instanceof String) {
+			String restrictedFieldNamesStr = (String)restrictedFieldNamesParam;
+
+			String[] restrictedFieldNamesArray = restrictedFieldNamesStr.split(
+				",");
+
+			Set<String> restrictedFieldNames = new HashSet<>();
+
+			for (String fieldName : restrictedFieldNamesArray) {
+				restrictedFieldNames.add(fieldName.trim());
+			}
+
+			return restrictedFieldNames;
+		}
+
+		return Collections.emptySet();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

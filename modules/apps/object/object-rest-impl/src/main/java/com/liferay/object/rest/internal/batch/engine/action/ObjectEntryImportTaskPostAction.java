@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -8,8 +8,14 @@ package com.liferay.object.rest.internal.batch.engine.action;
 import com.liferay.batch.engine.action.ImportTaskPostAction;
 import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,9 +32,27 @@ public class ObjectEntryImportTaskPostAction implements ImportTaskPostAction {
 			Object persistedItem)
 		throws Exception {
 
-		PrincipalThreadLocal.setName(
-			PermissionThreadLocal.getPermissionChecker(
-			).getUserId());
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-11036") ||
+			!(item instanceof ObjectEntry)) {
+
+			return;
+		}
+
+		Map<String, Serializable> parameters =
+			batchEngineImportTask.getParameters();
+
+		String importCreatorStrategy = (String)parameters.getOrDefault(
+			"importCreatorStrategy", "OVERWRITE_CREATOR");
+
+		if (!importCreatorStrategy.equals("KEEP_CREATOR")) {
+			return;
+		}
+
+		if (Validator.isNotNull(importTaskContext.getOriginalUserId())) {
+			PrincipalThreadLocal.setName(importTaskContext.getOriginalUserId());
+
+			importTaskContext.setOriginalUserId(null);
+		}
 	}
 
 }

@@ -777,6 +777,13 @@ public class CPDefinitionWrapper
 		return model.getLastPublishDate();
 	}
 
+	@Override
+	public CPConfigurationEntry getMasterCPConfigurationEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getMasterCPConfigurationEntry();
+	}
+
 	/**
 	 * Returns the max subscription cycles of this cp definition.
 	 *

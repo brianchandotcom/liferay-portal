@@ -81,6 +81,9 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public java.util.Map<java.util.Locale, String> getDescriptionMap();
 
+	public CPConfigurationEntry getMasterCPConfigurationEntry()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public java.util.Map<java.util.Locale, String> getMetaDescriptionMap();
 
 	public java.util.Map<java.util.Locale, String> getMetaKeywordsMap();

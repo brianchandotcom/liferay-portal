@@ -343,6 +343,21 @@ public interface CPConfigurationEntryModel
 	public void setBackOrders(boolean backOrders);
 
 	/**
+	 * Returns the commerce availability estimate ID of this cp configuration entry.
+	 *
+	 * @return the commerce availability estimate ID of this cp configuration entry
+	 */
+	public long getCommerceAvailabilityEstimateId();
+
+	/**
+	 * Sets the commerce availability estimate ID of this cp configuration entry.
+	 *
+	 * @param commerceAvailabilityEstimateId the commerce availability estimate ID of this cp configuration entry
+	 */
+	public void setCommerceAvailabilityEstimateId(
+		long commerceAvailabilityEstimateId);
+
+	/**
 	 * Returns the cp definition inventory engine of this cp configuration entry.
 	 *
 	 * @return the cp definition inventory engine of this cp configuration entry

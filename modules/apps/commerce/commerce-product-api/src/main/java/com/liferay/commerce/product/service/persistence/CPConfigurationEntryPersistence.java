@@ -620,6 +620,66 @@ public interface CPConfigurationEntryPersistence
 	public int countByCPConfigurationListId(long CPConfigurationListId);
 
 	/**
+	 * Returns the cp configuration entry where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63; or throws a <code>NoSuchCPConfigurationEntryException</code> if it could not be found.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @return the matching cp configuration entry
+	 * @throws NoSuchCPConfigurationEntryException if a matching cp configuration entry could not be found
+	 */
+	public CPConfigurationEntry findByC_C_C(
+			long classNameId, long classPK, long CPConfigurationListId)
+		throws NoSuchCPConfigurationEntryException;
+
+	/**
+	 * Returns the cp configuration entry where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
+	 */
+	public CPConfigurationEntry fetchByC_C_C(
+		long classNameId, long classPK, long CPConfigurationListId);
+
+	/**
+	 * Returns the cp configuration entry where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
+	 */
+	public CPConfigurationEntry fetchByC_C_C(
+		long classNameId, long classPK, long CPConfigurationListId,
+		boolean useFinderCache);
+
+	/**
+	 * Removes the cp configuration entry where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63; from the database.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @return the cp configuration entry that was removed
+	 */
+	public CPConfigurationEntry removeByC_C_C(
+			long classNameId, long classPK, long CPConfigurationListId)
+		throws NoSuchCPConfigurationEntryException;
+
+	/**
+	 * Returns the number of cp configuration entries where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @return the number of matching cp configuration entries
+	 */
+	public int countByC_C_C(
+		long classNameId, long classPK, long CPConfigurationListId);
+
+	/**
 	 * Returns the cp configuration entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCPConfigurationEntryException</code> if it could not be found.
 	 *
 	 * @param externalReferenceCode the external reference code

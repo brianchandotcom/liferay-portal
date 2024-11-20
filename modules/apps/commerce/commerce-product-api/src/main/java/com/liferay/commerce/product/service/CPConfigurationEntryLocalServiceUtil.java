@@ -57,6 +57,7 @@ public class CPConfigurationEntryLocalServiceUtil {
 			String externalReferenceCode, long userId, long classNameId,
 			long classPK, long cpConfigurationListId,
 			String allowedOrderQuantities, boolean backOrders,
+			long commerceAvailabilityEstimateId,
 			String cpDefinitionInventoryEngine, boolean displayAvailability,
 			boolean displayStockQuantity, String lowStockActivity,
 			java.math.BigDecimal maxOrderQuantity,
@@ -68,9 +69,10 @@ public class CPConfigurationEntryLocalServiceUtil {
 		return getService().addCPConfigurationEntry(
 			externalReferenceCode, userId, classNameId, classPK,
 			cpConfigurationListId, allowedOrderQuantities, backOrders,
-			cpDefinitionInventoryEngine, displayAvailability,
-			displayStockQuantity, lowStockActivity, maxOrderQuantity,
-			minOrderQuantity, minStockQuantity, multipleOrderQuantity);
+			commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
+			displayAvailability, displayStockQuantity, lowStockActivity,
+			maxOrderQuantity, minOrderQuantity, minStockQuantity,
+			multipleOrderQuantity);
 	}
 
 	/**
@@ -311,6 +313,14 @@ public class CPConfigurationEntryLocalServiceUtil {
 		return getService().getCPConfigurationEntry(CPConfigurationEntryId);
 	}
 
+	public static CPConfigurationEntry getCPConfigurationEntry(
+			long classNameId, long classPK, long cpConfigurationListId)
+		throws PortalException {
+
+		return getService().getCPConfigurationEntry(
+			classNameId, classPK, cpConfigurationListId);
+	}
+
 	public static CPConfigurationEntry
 			getCPConfigurationEntryByExternalReferenceCode(
 				String externalReferenceCode, long companyId)
@@ -384,6 +394,26 @@ public class CPConfigurationEntryLocalServiceUtil {
 		CPConfigurationEntry cpConfigurationEntry) {
 
 		return getService().updateCPConfigurationEntry(cpConfigurationEntry);
+	}
+
+	public static CPConfigurationEntry updateCPConfigurationEntry(
+			String externalReferenceCode, long cpConfigurationEntryId,
+			String allowedOrderQuantities, boolean backOrders,
+			long commerceAvailabilityEstimateId,
+			String cpDefinitionInventoryEngine, boolean displayAvailability,
+			boolean displayStockQuantity, String lowStockActivity,
+			java.math.BigDecimal maxOrderQuantity,
+			java.math.BigDecimal minOrderQuantity,
+			java.math.BigDecimal minStockQuantity,
+			java.math.BigDecimal multipleOrderQuantity)
+		throws PortalException {
+
+		return getService().updateCPConfigurationEntry(
+			externalReferenceCode, cpConfigurationEntryId,
+			allowedOrderQuantities, backOrders, commerceAvailabilityEstimateId,
+			cpDefinitionInventoryEngine, displayAvailability,
+			displayStockQuantity, lowStockActivity, maxOrderQuantity,
+			minOrderQuantity, minStockQuantity, multipleOrderQuantity);
 	}
 
 	public static CPConfigurationEntryLocalService getService() {

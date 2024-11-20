@@ -79,6 +79,7 @@ public class CPConfigurationEntryModelImpl
 		{"CPTaxCategoryId", Types.BIGINT},
 		{"allowedOrderQuantities", Types.VARCHAR},
 		{"backOrders", Types.BOOLEAN},
+		{"commerceAvailabilityEstimateId", Types.BIGINT},
 		{"CPDefinitionInventoryEngine", Types.VARCHAR}, {"depth", Types.DOUBLE},
 		{"displayAvailability", Types.BOOLEAN},
 		{"displayStockQuantity", Types.BOOLEAN},
@@ -114,6 +115,7 @@ public class CPConfigurationEntryModelImpl
 		TABLE_COLUMNS_MAP.put("CPTaxCategoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("allowedOrderQuantities", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("backOrders", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("commerceAvailabilityEstimateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPDefinitionInventoryEngine", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("depth", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("displayAvailability", Types.BOOLEAN);
@@ -136,7 +138,7 @@ public class CPConfigurationEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPConfigurationEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPConfigurationEntryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,CPConfigurationListId LONG,CPTaxCategoryId LONG,allowedOrderQuantities VARCHAR(75) null,backOrders BOOLEAN,CPDefinitionInventoryEngine VARCHAR(75) null,depth DOUBLE,displayAvailability BOOLEAN,displayStockQuantity BOOLEAN,freeShipping BOOLEAN,height DOUBLE,lowStockActivity VARCHAR(75) null,maxOrderQuantity BIGDECIMAL null,minOrderQuantity BIGDECIMAL null,minStockQuantity BIGDECIMAL null,multipleOrderQuantity BIGDECIMAL null,purchasable BOOLEAN,shippable BOOLEAN,shippingExtraPrice DOUBLE,shipSeparately BOOLEAN,taxExempt BOOLEAN,visible BOOLEAN,weight DOUBLE,width DOUBLE,primary key (CPConfigurationEntryId, ctCollectionId))";
+		"create table CPConfigurationEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPConfigurationEntryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,CPConfigurationListId LONG,CPTaxCategoryId LONG,allowedOrderQuantities VARCHAR(75) null,backOrders BOOLEAN,commerceAvailabilityEstimateId LONG,CPDefinitionInventoryEngine VARCHAR(75) null,depth DOUBLE,displayAvailability BOOLEAN,displayStockQuantity BOOLEAN,freeShipping BOOLEAN,height DOUBLE,lowStockActivity VARCHAR(75) null,maxOrderQuantity BIGDECIMAL null,minOrderQuantity BIGDECIMAL null,minStockQuantity BIGDECIMAL null,multipleOrderQuantity BIGDECIMAL null,purchasable BOOLEAN,shippable BOOLEAN,shippingExtraPrice DOUBLE,shipSeparately BOOLEAN,taxExempt BOOLEAN,visible BOOLEAN,weight DOUBLE,width DOUBLE,primary key (CPConfigurationEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPConfigurationEntry";
@@ -163,26 +165,38 @@ public class CPConfigurationEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
+	public static final long CLASSPK_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long COMPANYID_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -330,6 +344,9 @@ public class CPConfigurationEntryModelImpl
 			attributeGetterFunctions.put(
 				"backOrders", CPConfigurationEntry::getBackOrders);
 			attributeGetterFunctions.put(
+				"commerceAvailabilityEstimateId",
+				CPConfigurationEntry::getCommerceAvailabilityEstimateId);
+			attributeGetterFunctions.put(
 				"CPDefinitionInventoryEngine",
 				CPConfigurationEntry::getCPDefinitionInventoryEngine);
 			attributeGetterFunctions.put(
@@ -455,6 +472,10 @@ public class CPConfigurationEntryModelImpl
 				"backOrders",
 				(BiConsumer<CPConfigurationEntry, Boolean>)
 					CPConfigurationEntry::setBackOrders);
+			attributeSetterBiConsumers.put(
+				"commerceAvailabilityEstimateId",
+				(BiConsumer<CPConfigurationEntry, Long>)
+					CPConfigurationEntry::setCommerceAvailabilityEstimateId);
 			attributeSetterBiConsumers.put(
 				"CPDefinitionInventoryEngine",
 				(BiConsumer<CPConfigurationEntry, String>)
@@ -788,6 +809,16 @@ public class CPConfigurationEntryModelImpl
 		_classNameId = classNameId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalClassNameId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
+	}
+
 	@JSON
 	@Override
 	public long getClassPK() {
@@ -801,6 +832,15 @@ public class CPConfigurationEntryModelImpl
 		}
 
 		_classPK = classPK;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalClassPK() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@JSON
@@ -882,6 +922,23 @@ public class CPConfigurationEntryModelImpl
 		}
 
 		_backOrders = backOrders;
+	}
+
+	@JSON
+	@Override
+	public long getCommerceAvailabilityEstimateId() {
+		return _commerceAvailabilityEstimateId;
+	}
+
+	@Override
+	public void setCommerceAvailabilityEstimateId(
+		long commerceAvailabilityEstimateId) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_commerceAvailabilityEstimateId = commerceAvailabilityEstimateId;
 	}
 
 	@JSON
@@ -1314,6 +1371,8 @@ public class CPConfigurationEntryModelImpl
 		cpConfigurationEntryImpl.setAllowedOrderQuantities(
 			getAllowedOrderQuantities());
 		cpConfigurationEntryImpl.setBackOrders(isBackOrders());
+		cpConfigurationEntryImpl.setCommerceAvailabilityEstimateId(
+			getCommerceAvailabilityEstimateId());
 		cpConfigurationEntryImpl.setCPDefinitionInventoryEngine(
 			getCPDefinitionInventoryEngine());
 		cpConfigurationEntryImpl.setDepth(getDepth());
@@ -1380,6 +1439,9 @@ public class CPConfigurationEntryModelImpl
 			this.<String>getColumnOriginalValue("allowedOrderQuantities"));
 		cpConfigurationEntryImpl.setBackOrders(
 			this.<Boolean>getColumnOriginalValue("backOrders"));
+		cpConfigurationEntryImpl.setCommerceAvailabilityEstimateId(
+			this.<Long>getColumnOriginalValue(
+				"commerceAvailabilityEstimateId"));
 		cpConfigurationEntryImpl.setCPDefinitionInventoryEngine(
 			this.<String>getColumnOriginalValue("CPDefinitionInventoryEngine"));
 		cpConfigurationEntryImpl.setDepth(
@@ -1579,6 +1641,9 @@ public class CPConfigurationEntryModelImpl
 
 		cpConfigurationEntryCacheModel.backOrders = isBackOrders();
 
+		cpConfigurationEntryCacheModel.commerceAvailabilityEstimateId =
+			getCommerceAvailabilityEstimateId();
+
 		cpConfigurationEntryCacheModel.CPDefinitionInventoryEngine =
 			getCPDefinitionInventoryEngine();
 
@@ -1717,6 +1782,7 @@ public class CPConfigurationEntryModelImpl
 	private long _CPTaxCategoryId;
 	private String _allowedOrderQuantities;
 	private boolean _backOrders;
+	private long _commerceAvailabilityEstimateId;
 	private String _CPDefinitionInventoryEngine;
 	private double _depth;
 	private boolean _displayAvailability;
@@ -1787,6 +1853,8 @@ public class CPConfigurationEntryModelImpl
 		_columnOriginalValues.put(
 			"allowedOrderQuantities", _allowedOrderQuantities);
 		_columnOriginalValues.put("backOrders", _backOrders);
+		_columnOriginalValues.put(
+			"commerceAvailabilityEstimateId", _commerceAvailabilityEstimateId);
 		_columnOriginalValues.put(
 			"CPDefinitionInventoryEngine", _CPDefinitionInventoryEngine);
 		_columnOriginalValues.put("depth", _depth);
@@ -1864,43 +1932,45 @@ public class CPConfigurationEntryModelImpl
 
 		columnBitmasks.put("backOrders", 32768L);
 
-		columnBitmasks.put("CPDefinitionInventoryEngine", 65536L);
+		columnBitmasks.put("commerceAvailabilityEstimateId", 65536L);
 
-		columnBitmasks.put("depth", 131072L);
+		columnBitmasks.put("CPDefinitionInventoryEngine", 131072L);
 
-		columnBitmasks.put("displayAvailability", 262144L);
+		columnBitmasks.put("depth", 262144L);
 
-		columnBitmasks.put("displayStockQuantity", 524288L);
+		columnBitmasks.put("displayAvailability", 524288L);
 
-		columnBitmasks.put("freeShipping", 1048576L);
+		columnBitmasks.put("displayStockQuantity", 1048576L);
 
-		columnBitmasks.put("height", 2097152L);
+		columnBitmasks.put("freeShipping", 2097152L);
 
-		columnBitmasks.put("lowStockActivity", 4194304L);
+		columnBitmasks.put("height", 4194304L);
 
-		columnBitmasks.put("maxOrderQuantity", 8388608L);
+		columnBitmasks.put("lowStockActivity", 8388608L);
 
-		columnBitmasks.put("minOrderQuantity", 16777216L);
+		columnBitmasks.put("maxOrderQuantity", 16777216L);
 
-		columnBitmasks.put("minStockQuantity", 33554432L);
+		columnBitmasks.put("minOrderQuantity", 33554432L);
 
-		columnBitmasks.put("multipleOrderQuantity", 67108864L);
+		columnBitmasks.put("minStockQuantity", 67108864L);
 
-		columnBitmasks.put("purchasable", 134217728L);
+		columnBitmasks.put("multipleOrderQuantity", 134217728L);
 
-		columnBitmasks.put("shippable", 268435456L);
+		columnBitmasks.put("purchasable", 268435456L);
 
-		columnBitmasks.put("shippingExtraPrice", 536870912L);
+		columnBitmasks.put("shippable", 536870912L);
 
-		columnBitmasks.put("shipSeparately", 1073741824L);
+		columnBitmasks.put("shippingExtraPrice", 1073741824L);
 
-		columnBitmasks.put("taxExempt", 2147483648L);
+		columnBitmasks.put("shipSeparately", 2147483648L);
 
-		columnBitmasks.put("visible", 4294967296L);
+		columnBitmasks.put("taxExempt", 4294967296L);
 
-		columnBitmasks.put("weight", 8589934592L);
+		columnBitmasks.put("visible", 8589934592L);
 
-		columnBitmasks.put("width", 17179869184L);
+		columnBitmasks.put("weight", 17179869184L);
+
+		columnBitmasks.put("width", 34359738368L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

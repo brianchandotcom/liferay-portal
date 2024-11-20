@@ -55,6 +55,7 @@ public class CPConfigurationEntryLocalServiceWrapper
 			String externalReferenceCode, long userId, long classNameId,
 			long classPK, long cpConfigurationListId,
 			String allowedOrderQuantities, boolean backOrders,
+			long commerceAvailabilityEstimateId,
 			String cpDefinitionInventoryEngine, boolean displayAvailability,
 			boolean displayStockQuantity, String lowStockActivity,
 			java.math.BigDecimal maxOrderQuantity,
@@ -66,9 +67,10 @@ public class CPConfigurationEntryLocalServiceWrapper
 		return _cpConfigurationEntryLocalService.addCPConfigurationEntry(
 			externalReferenceCode, userId, classNameId, classPK,
 			cpConfigurationListId, allowedOrderQuantities, backOrders,
-			cpDefinitionInventoryEngine, displayAvailability,
-			displayStockQuantity, lowStockActivity, maxOrderQuantity,
-			minOrderQuantity, minStockQuantity, multipleOrderQuantity);
+			commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
+			displayAvailability, displayStockQuantity, lowStockActivity,
+			maxOrderQuantity, minOrderQuantity, minStockQuantity,
+			multipleOrderQuantity);
 	}
 
 	/**
@@ -352,6 +354,15 @@ public class CPConfigurationEntryLocalServiceWrapper
 	}
 
 	@Override
+	public CPConfigurationEntry getCPConfigurationEntry(
+			long classNameId, long classPK, long cpConfigurationListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpConfigurationEntryLocalService.getCPConfigurationEntry(
+			classNameId, classPK, cpConfigurationListId);
+	}
+
+	@Override
 	public CPConfigurationEntry getCPConfigurationEntryByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -434,6 +445,27 @@ public class CPConfigurationEntryLocalServiceWrapper
 
 		return _cpConfigurationEntryLocalService.updateCPConfigurationEntry(
 			cpConfigurationEntry);
+	}
+
+	@Override
+	public CPConfigurationEntry updateCPConfigurationEntry(
+			String externalReferenceCode, long cpConfigurationEntryId,
+			String allowedOrderQuantities, boolean backOrders,
+			long commerceAvailabilityEstimateId,
+			String cpDefinitionInventoryEngine, boolean displayAvailability,
+			boolean displayStockQuantity, String lowStockActivity,
+			java.math.BigDecimal maxOrderQuantity,
+			java.math.BigDecimal minOrderQuantity,
+			java.math.BigDecimal minStockQuantity,
+			java.math.BigDecimal multipleOrderQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpConfigurationEntryLocalService.updateCPConfigurationEntry(
+			externalReferenceCode, cpConfigurationEntryId,
+			allowedOrderQuantities, backOrders, commerceAvailabilityEstimateId,
+			cpDefinitionInventoryEngine, displayAvailability,
+			displayStockQuantity, lowStockActivity, maxOrderQuantity,
+			minOrderQuantity, minStockQuantity, multipleOrderQuantity);
 	}
 
 	@Override

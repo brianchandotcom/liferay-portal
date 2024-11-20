@@ -476,7 +476,8 @@ public interface LayoutPageTemplateEntryLocalService
 		LayoutPageTemplateEntry layoutPageTemplateEntry);
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-		long layoutPageTemplateEntryId, boolean defaultTemplate);
+			long layoutPageTemplateEntryId, boolean defaultTemplate)
+		throws PortalException;
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long previewFileEntryId)

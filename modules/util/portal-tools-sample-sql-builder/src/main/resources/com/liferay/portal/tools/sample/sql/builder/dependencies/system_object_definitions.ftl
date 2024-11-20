@@ -4,22 +4,22 @@
 
 ${dataFactory.toInsertSQL(objectFolderModel)}
 
-<#list dataFactory.newSystemObjectDefinitionModels(objectFolderModel.getObjectFolderId()) as systemObjectDefinitionModel>
-	${dataFactory.toInsertSQL(systemObjectDefinitionModel)}
+<#list dataFactory.newObjectDefinitionModels(objectFolderModel.getObjectFolderId()) as objectDefinitionModel>
+	${dataFactory.toInsertSQL(objectDefinitionModel)}
 
-	<#list dataFactory.newResourcePermissionModels(systemObjectDefinitionModel) as resourcePermissionModel>
+	<#list dataFactory.newResourcePermissionModels(objectDefinitionModel) as resourcePermissionModel>
 		${dataFactory.toInsertSQL(resourcePermissionModel)}
 	</#list>
 
-	<#list dataFactory.newObjectFieldModels(systemObjectDefinitionModel.getObjectDefinitionId(), systemObjectDefinitionModel.getDBTableName(), 0, systemObjectDefinitionModel.getPKObjectFieldName()) as objectFieldModel>
+	<#list dataFactory.newObjectFieldModels(objectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getDBTableName(), 0, objectDefinitionModel.getPKObjectFieldName()) as objectFieldModel>
 		${dataFactory.toInsertSQL(objectFieldModel)}
 	</#list>
 
-	<#if systemObjectDefinitionModel.getDBTableName() == "CommerceOrder">
-		 ${dataFactory.toInsertSQL(dataFactory.newObjectActionModel(systemObjectDefinitionModel.objectDefinitionId, notificationTemplateModel.notificationTemplateId))}
+	<#if objectDefinitionModel.getDBTableName() == "CommerceOrder">
+		 ${dataFactory.toInsertSQL(dataFactory.newObjectActionModel(objectDefinitionModel.objectDefinitionId, notificationTemplateModel.notificationTemplateId))}
 	</#if>
 
-	<#if systemObjectDefinitionModel.getDBTableName() == "User_">
-		${dataFactory.getExtensionDynamicObjectDefinitionTableCreateSQL(systemObjectDefinitionModel)}
+	<#if objectDefinitionModel.getDBTableName() == "User_">
+		${dataFactory.getExtensionDynamicObjectDefinitionTableCreateSQL(objectDefinitionModel)}
 	</#if>
 </#list>

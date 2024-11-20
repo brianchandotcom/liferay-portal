@@ -3,7 +3,6 @@
 	listTypeDefinitionModel = dataFactory.newListTypeDefinitionModel()
 	listTypeEntryModels = dataFactory.newListTypeEntryModels(listTypeDefinitionModel.getListTypeDefinitionId())
 	objectDefinitionModel = dataFactory.newObjectDefinitionModel(objectFolderModel.getObjectFolderId())
-	relationshipObjectFieldModel = dataFactory.newObjectFieldModel(0, objectDefinitionModel.getObjectDefinitionId(), "Relationship", "r_userTicket_userId", objectDefinitionModel.getDBTableName(), "Long", "Assignee", "r_userTicket_userId", false, false, false)
 	objectFieldModels = dataFactory.newObjectFieldModels(listTypeDefinitionModel.getListTypeDefinitionId(), objectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getDBTableName())
 />
 
@@ -12,12 +11,6 @@ ${dataFactory.toInsertSQL(objectDefinitionModel)}
 <#list dataFactory.newResourcePermissionModels(objectDefinitionModel) as resourcePermissionModel>
 	${dataFactory.toInsertSQL(resourcePermissionModel)}
 </#list>
-
-${dataFactory.toInsertSQL(relationshipObjectFieldModel)}
-
-${dataFactory.toInsertSQL(dataFactory.newObjectFieldSettingModel(relationshipObjectFieldModel.getObjectFieldId(), "objectRelationshipERCObjectFieldName", "r_userTicket_userERC"))}
-
-${dataFactory.toInsertSQL(dataFactory.newObjectRelationshipModel(userObjectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getObjectDefinitionId(), relationshipObjectFieldModel.getObjectFieldId()))}
 
 ${dataFactory.toInsertSQL(listTypeDefinitionModel)}
 
@@ -50,13 +43,11 @@ ${dataFactory.toInsertSQL(listTypeDefinitionModel)}
 	</#if>
 </#list>
 
+${dataFactory.toInsertSQL(dataFactory.newObjectRelationshipModel(userObjectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getObjectDefinitionId()))}
+
 <#list dataFactory.newSystemObjectFieldModels(objectDefinitionModel.getObjectDefinitionId(), "ObjectEntry", "objectEntryId") as systemObjectFieldModel>
 	${dataFactory.toInsertSQL(systemObjectFieldModel)}
 </#list>
-
-<#assign
-	objectFieldModels = objectFieldModels + [relationshipObjectFieldModel]
-/>
 
 ${dataFactory.toInsertSQL(dlFolderModel)}
 

@@ -561,10 +561,8 @@ public interface UserLocalService
 	 * the confirmation email.
 	 *
 	 * @param user the user
-	 * @param serviceContext the service context to be applied. You can specify
-	 an unencrypted custom password for the user via attribute
-	 <code>passwordUnencrypted</code>. You automatically generate a
-	 password for the user by setting attribute
+	 * @param serviceContext the service context to be applied. You
+	 automatically generate a password for the user by setting attribute
 	 <code>autoPassword</code> to <code>true</code>. You can send a
 	 confirmation email to the user by setting attribute
 	 <code>sendEmail</code> to <code>true</code>.

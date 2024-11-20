@@ -271,7 +271,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		);
 
 		_importMapsMap.put(
-			companyId, _jsonFactory.looseSerializeDeep(jsonObject));
+			companyId, jsonObject.toString());
 	}
 
 	private JSImportMapsRegistration _register(

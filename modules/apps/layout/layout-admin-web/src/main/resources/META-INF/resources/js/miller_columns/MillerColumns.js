@@ -6,7 +6,7 @@
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import {DragPreview} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
@@ -168,101 +168,107 @@ const MillerColumns = ({
 		}
 	}, [searchContainer]);
 
-	const getMovedItems = (sources, newParentId, targetIndex) => {
-		const targetColumnItems = Array.from(items.values()).filter(
-			(item) => item.parentId === newParentId
-		);
+	const getMovedItems = useCallback(
+		(sources, newParentId, targetIndex) => {
+			const targetColumnItems = Array.from(items.values()).filter(
+				(item) => item.parentId === newParentId
+			);
 
-		// Return sources if target column has no items
+			// Return sources if target column has no items
 
-		if (!targetColumnItems.length) {
-			return sources.map((source, index) => ({
-				plid: source.id,
-				position: targetIndex + index,
-			}));
-		}
-
-		// Calculate all items of the target column that are changing position
-
-		const movedItems = new Map();
-
-		let previousSources = 0;
-
-		targetColumnItems.forEach((item, index) => {
-
-			// Iterating on target position. Insert sources into movedItems
-
-			if (index === targetIndex) {
-				sources.forEach((source, sourceIndex) => {
-					movedItems.set(source.id, {
-						plid: source.id,
-						position: index - previousSources + sourceIndex,
-					});
-				});
-
-				previousSources = sources.length - previousSources;
-			}
-
-			// Iterating on a source. Don't insert it into movedItems but we
-			// update previous sources counter
-
-			if (sources.some((source) => source.id === item.id)) {
-				previousSources =
-					index < targetIndex
-						? previousSources + 1
-						: previousSources - 1;
-			}
-
-			// Insert item that is not a source into movedItems if it has a new
-			// position
-
-			else if (previousSources) {
-				movedItems.set(item.id, {
-					plid: item.id,
-					position:
-						index < targetIndex
-							? index - previousSources
-							: index + previousSources,
-				});
-			}
-		});
-
-		// Insert sources into movedItems in the case we are targeting last
-		// position of column so the loop does not reach it
-
-		sources.forEach((source, index) => {
-			if (!movedItems.has(source.id)) {
-				movedItems.set(source.id, {
+			if (!targetColumnItems.length) {
+				return sources.map((source, index) => ({
 					plid: source.id,
 					position: targetIndex + index,
-				});
+				}));
 			}
-		});
 
-		return Array.from(movedItems.values());
-	};
+			// Calculate all items of the target column that are changing position
 
-	const onItemDrop = (sources, newParentId, targetIndex) => {
+			const movedItems = new Map();
 
-		// Update checked items to keep them selected after updating items
-		// with server response
+			let previousSources = 0;
 
-		const newItems = new Map(items);
+			targetColumnItems.forEach((item, index) => {
 
-		sources.forEach((source) => {
-			if (source.checked) {
-				newItems.set(source.id, source);
-			}
-		});
+				// Iterating on target position. Insert sources into movedItems
 
-		setItems(newItems);
+				if (index === targetIndex) {
+					sources.forEach((source, sourceIndex) => {
+						movedItems.set(source.id, {
+							plid: source.id,
+							position: index - previousSources + sourceIndex,
+						});
+					});
 
-		onItemMove(
-			getMovedItems(sources, newParentId, targetIndex),
-			newParentId,
-			sources[0].url
-		);
-	};
+					previousSources = sources.length - previousSources;
+				}
+
+				// Iterating on a source. Don't insert it into movedItems but we
+				// update previous sources counter
+
+				if (sources.some((source) => source.id === item.id)) {
+					previousSources =
+						index < targetIndex
+							? previousSources + 1
+							: previousSources - 1;
+				}
+
+				// Insert item that is not a source into movedItems if it has a new
+				// position
+
+				else if (previousSources) {
+					movedItems.set(item.id, {
+						plid: item.id,
+						position:
+							index < targetIndex
+								? index - previousSources
+								: index + previousSources,
+					});
+				}
+			});
+
+			// Insert sources into movedItems in the case we are targeting last
+			// position of column so the loop does not reach it
+
+			sources.forEach((source, index) => {
+				if (!movedItems.has(source.id)) {
+					movedItems.set(source.id, {
+						plid: source.id,
+						position: targetIndex + index,
+					});
+				}
+			});
+
+			return Array.from(movedItems.values());
+		},
+		[items]
+	);
+
+	const onItemDrop = useCallback(
+		(sources, newParentId, targetIndex) => {
+
+			// Update checked items to keep them selected after updating items
+			// with server response
+
+			const newItems = new Map(items);
+
+			sources.forEach((source) => {
+				if (source.checked) {
+					newItems.set(source.id, source);
+				}
+			});
+
+			setItems(newItems);
+
+			onItemMove(
+				getMovedItems(sources, newParentId, targetIndex),
+				newParentId,
+				sources[0].url
+			);
+		},
+		[getMovedItems, items, onItemMove]
+	);
 
 	const getDragPreviewLabel = (item) => {
 		const items = item?.items;

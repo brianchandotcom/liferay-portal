@@ -694,7 +694,7 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
-	@TestInfo({"LPS-149178", "LPS-123825"})
+	@TestInfo({"LPS-123825", "LPS-149178"})
 	public void testRenderCollectionStyledLayoutStructureItemWithPagination()
 		throws Exception {
 

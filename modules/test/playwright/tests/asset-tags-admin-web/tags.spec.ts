@@ -18,8 +18,85 @@ const test = mergeTests(
 	loginTest()
 );
 
-test('Add and edit tag', async ({page, site, tagsEditPage}) => {
-	await tagsEditPage.add('tag name', site.friendlyUrlPath);
+test('User can add and edit a tag', async ({
+	page,
+	site,
+	tagsAdminPage,
+	tagsEditPage,
+}) => {
+	await tagsEditPage.add('tag1', site.friendlyUrlPath);
 
 	await waitForAlert(page);
+
+	await tagsAdminPage.gotoEdit('tag1');
+
+	await tagsEditPage.nameInput.fill('tag1_edit');
+
+	await tagsEditPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await expect(
+		page.getByRole('cell', {exact: true, name: 'tag1_edit'})
+	).toBeVisible();
+});
+
+test('User can delete multiple tags', async ({
+	page,
+	site,
+	tagsAdminPage,
+	tagsEditPage,
+}) => {
+	await tagsEditPage.add('tag1', site.friendlyUrlPath);
+
+	await waitForAlert(page);
+
+	await tagsEditPage.add('tag2', site.friendlyUrlPath);
+
+	await tagsAdminPage.deleteTags(['tag1', 'tag2']);
+
+	await page
+		.getByLabel('Delete Tags')
+		.getByRole('button', {name: 'Delete'})
+		.click();
+
+	await expect(page.getByText('tag1')).not.toBeVisible();
+
+	await expect(page.getByText('tag2')).not.toBeVisible();
+});
+
+test('The user can Merge tags', async ({
+	page,
+	site,
+	tagsAdminPage,
+	tagsEditPage,
+}) => {
+	await tagsEditPage.add('tag1', site.friendlyUrlPath);
+
+	await waitForAlert(page);
+
+	await tagsAdminPage.mergeTags(['tag1']);
+
+	page.once('dialog', async (dialog) => {
+
+		// Expect to not be able to merge a single tag
+
+		expect(dialog.message()).toBe('Please choose at least 2 tags.');
+
+		await dialog.accept();
+	});
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await tagsEditPage.add('tag2', site.friendlyUrlPath);
+
+	await tagsAdminPage.mergeTags(['tag1', 'tag2']);
+
+	page.once('dialog', async (dialog) => {
+		await dialog.accept();
+	});
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await expect(page.getByText('tag2')).not.toBeVisible();
 });

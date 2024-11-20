@@ -76,6 +76,10 @@ public class CPConfigurationEntryTable
 	public final Column<CPConfigurationEntryTable, Boolean> backOrders =
 		createColumn(
 			"backOrders", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<CPConfigurationEntryTable, Long>
+		commerceAvailabilityEstimateId = createColumn(
+			"commerceAvailabilityEstimateId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<CPConfigurationEntryTable, String>
 		CPDefinitionInventoryEngine = createColumn(
 			"CPDefinitionInventoryEngine", String.class, Types.VARCHAR,

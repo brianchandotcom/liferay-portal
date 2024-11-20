@@ -57,6 +57,9 @@ public class CPConfigurationEntryWrapper
 		attributes.put("allowedOrderQuantities", getAllowedOrderQuantities());
 		attributes.put("backOrders", isBackOrders());
 		attributes.put(
+			"commerceAvailabilityEstimateId",
+			getCommerceAvailabilityEstimateId());
+		attributes.put(
 			"CPDefinitionInventoryEngine", getCPDefinitionInventoryEngine());
 		attributes.put("depth", getDepth());
 		attributes.put("displayAvailability", isDisplayAvailability());
@@ -180,6 +183,13 @@ public class CPConfigurationEntryWrapper
 
 		if (backOrders != null) {
 			setBackOrders(backOrders);
+		}
+
+		Long commerceAvailabilityEstimateId = (Long)attributes.get(
+			"commerceAvailabilityEstimateId");
+
+		if (commerceAvailabilityEstimateId != null) {
+			setCommerceAvailabilityEstimateId(commerceAvailabilityEstimateId);
 		}
 
 		String CPDefinitionInventoryEngine = (String)attributes.get(
@@ -320,6 +330,11 @@ public class CPConfigurationEntryWrapper
 		return model.getAllowedOrderQuantities();
 	}
 
+	@Override
+	public BigDecimal[] getAllowedOrderQuantitiesArray() {
+		return model.getAllowedOrderQuantitiesArray();
+	}
+
 	/**
 	 * Returns the back orders of this cp configuration entry.
 	 *
@@ -358,6 +373,16 @@ public class CPConfigurationEntryWrapper
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
+	}
+
+	/**
+	 * Returns the commerce availability estimate ID of this cp configuration entry.
+	 *
+	 * @return the commerce availability estimate ID of this cp configuration entry
+	 */
+	@Override
+	public long getCommerceAvailabilityEstimateId() {
+		return model.getCommerceAvailabilityEstimateId();
 	}
 
 	/**
@@ -478,6 +503,13 @@ public class CPConfigurationEntryWrapper
 	@Override
 	public boolean getFreeShipping() {
 		return model.getFreeShipping();
+	}
+
+	@Override
+	public long getGroupId()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getGroupId();
 	}
 
 	/**
@@ -828,6 +860,18 @@ public class CPConfigurationEntryWrapper
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
+	}
+
+	/**
+	 * Sets the commerce availability estimate ID of this cp configuration entry.
+	 *
+	 * @param commerceAvailabilityEstimateId the commerce availability estimate ID of this cp configuration entry
+	 */
+	@Override
+	public void setCommerceAvailabilityEstimateId(
+		long commerceAvailabilityEstimateId) {
+
+		model.setCommerceAvailabilityEstimateId(commerceAvailabilityEstimateId);
 	}
 
 	/**

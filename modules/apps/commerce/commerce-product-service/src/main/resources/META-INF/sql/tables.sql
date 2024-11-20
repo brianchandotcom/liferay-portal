@@ -66,6 +66,7 @@ create table CPConfigurationEntry (
 	CPTaxCategoryId LONG,
 	allowedOrderQuantities VARCHAR(75) null,
 	backOrders BOOLEAN,
+	commerceAvailabilityEstimateId LONG,
 	CPDefinitionInventoryEngine VARCHAR(75) null,
 	depth DOUBLE,
 	displayAvailability BOOLEAN,

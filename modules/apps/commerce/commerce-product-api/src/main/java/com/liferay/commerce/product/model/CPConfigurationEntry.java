@@ -51,4 +51,9 @@ public interface CPConfigurationEntry
 
 			};
 
+	public java.math.BigDecimal[] getAllowedOrderQuantitiesArray();
+
+	public long getGroupId()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

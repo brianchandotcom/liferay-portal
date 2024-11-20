@@ -78,12 +78,25 @@ public interface CPConfigurationListLocalService
 	public CPConfigurationList addCPConfigurationList(
 		CPConfigurationList cpConfigurationList);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CPConfigurationList addCPConfigurationList(
 			String externalReferenceCode, long groupId, long userId,
 			long parentCPConfigurationListId, boolean masterCPConfigurationList,
 			String name, double priority, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CPConfigurationList addOrUpdateCPConfigurationList(
+			String externalReferenceCode, long companyId, long groupId,
+			long userId, long parentCPConfigurationListId,
+			boolean masterCPConfigurationList, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire)
@@ -138,8 +151,7 @@ public interface CPConfigurationListLocalService
 			long CPConfigurationListId)
 		throws PortalException;
 
-	public void deleteCPConfigurationLists(long companyId)
-		throws PortalException;
+	public void deleteCPConfigurationLists(long companyId);
 
 	/**
 	 * @throws PortalException
@@ -369,6 +381,18 @@ public interface CPConfigurationListLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPConfigurationList updateCPConfigurationList(
 		CPConfigurationList cpConfigurationList);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CPConfigurationList updateCPConfigurationList(
+			String externalReferenceCode, long cpConfigurationListId,
+			long groupId, long userId, long parentCPConfigurationListId,
+			boolean masterCPConfigurationList, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire)
+		throws PortalException;
 
 	@Override
 	@Transactional(enabled = false)

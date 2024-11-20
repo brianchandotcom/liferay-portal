@@ -2303,6 +2303,223 @@ public class CPConfigurationEntryPersistenceImpl
 		_FINDER_COLUMN_CPCONFIGURATIONLISTID_CPCONFIGURATIONLISTID_2 =
 			"cpConfigurationEntry.CPConfigurationListId = ?";
 
+	private FinderPath _finderPathFetchByC_C_C;
+
+	/**
+	 * Returns the cp configuration entry where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63; or throws a <code>NoSuchCPConfigurationEntryException</code> if it could not be found.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @return the matching cp configuration entry
+	 * @throws NoSuchCPConfigurationEntryException if a matching cp configuration entry could not be found
+	 */
+	@Override
+	public CPConfigurationEntry findByC_C_C(
+			long classNameId, long classPK, long CPConfigurationListId)
+		throws NoSuchCPConfigurationEntryException {
+
+		CPConfigurationEntry cpConfigurationEntry = fetchByC_C_C(
+			classNameId, classPK, CPConfigurationListId);
+
+		if (cpConfigurationEntry == null) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("classNameId=");
+			sb.append(classNameId);
+
+			sb.append(", classPK=");
+			sb.append(classPK);
+
+			sb.append(", CPConfigurationListId=");
+			sb.append(CPConfigurationListId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCPConfigurationEntryException(sb.toString());
+		}
+
+		return cpConfigurationEntry;
+	}
+
+	/**
+	 * Returns the cp configuration entry where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
+	 */
+	@Override
+	public CPConfigurationEntry fetchByC_C_C(
+		long classNameId, long classPK, long CPConfigurationListId) {
+
+		return fetchByC_C_C(classNameId, classPK, CPConfigurationListId, true);
+	}
+
+	/**
+	 * Returns the cp configuration entry where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
+	 */
+	@Override
+	public CPConfigurationEntry fetchByC_C_C(
+		long classNameId, long classPK, long CPConfigurationListId,
+		boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CPConfigurationEntry.class)) {
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					classNameId, classPK, CPConfigurationListId
+				};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByC_C_C, finderArgs, this);
+			}
+
+			if (result instanceof CPConfigurationEntry) {
+				CPConfigurationEntry cpConfigurationEntry =
+					(CPConfigurationEntry)result;
+
+				if ((classNameId != cpConfigurationEntry.getClassNameId()) ||
+					(classPK != cpConfigurationEntry.getClassPK()) ||
+					(CPConfigurationListId !=
+						cpConfigurationEntry.getCPConfigurationListId())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append(_SQL_SELECT_CPCONFIGURATIONENTRY_WHERE);
+
+				sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
+
+				sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
+
+				sb.append(_FINDER_COLUMN_C_C_C_CPCONFIGURATIONLISTID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(classNameId);
+
+					queryPos.add(classPK);
+
+					queryPos.add(CPConfigurationListId);
+
+					List<CPConfigurationEntry> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByC_C_C, finderArgs, list);
+						}
+					}
+					else {
+						CPConfigurationEntry cpConfigurationEntry = list.get(0);
+
+						result = cpConfigurationEntry;
+
+						cacheResult(cpConfigurationEntry);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (CPConfigurationEntry)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the cp configuration entry where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63; from the database.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @return the cp configuration entry that was removed
+	 */
+	@Override
+	public CPConfigurationEntry removeByC_C_C(
+			long classNameId, long classPK, long CPConfigurationListId)
+		throws NoSuchCPConfigurationEntryException {
+
+		CPConfigurationEntry cpConfigurationEntry = findByC_C_C(
+			classNameId, classPK, CPConfigurationListId);
+
+		return remove(cpConfigurationEntry);
+	}
+
+	/**
+	 * Returns the number of cp configuration entries where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @return the number of matching cp configuration entries
+	 */
+	@Override
+	public int countByC_C_C(
+		long classNameId, long classPK, long CPConfigurationListId) {
+
+		CPConfigurationEntry cpConfigurationEntry = fetchByC_C_C(
+			classNameId, classPK, CPConfigurationListId);
+
+		if (cpConfigurationEntry == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_C_C_C_CLASSNAMEID_2 =
+		"cpConfigurationEntry.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_C_CLASSPK_2 =
+		"cpConfigurationEntry.classPK = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_C_CPCONFIGURATIONLISTID_2 =
+		"cpConfigurationEntry.CPConfigurationListId = ?";
+
 	private FinderPath _finderPathFetchByERC_C;
 
 	/**
@@ -2547,6 +2764,15 @@ public class CPConfigurationEntryPersistenceImpl
 				cpConfigurationEntry.getPrimaryKey(), cpConfigurationEntry);
 
 			finderCache.putResult(
+				_finderPathFetchByC_C_C,
+				new Object[] {
+					cpConfigurationEntry.getClassNameId(),
+					cpConfigurationEntry.getClassPK(),
+					cpConfigurationEntry.getCPConfigurationListId()
+				},
+				cpConfigurationEntry);
+
+			finderCache.putResult(
 				_finderPathFetchByERC_C,
 				new Object[] {
 					cpConfigurationEntry.getExternalReferenceCode(),
@@ -2645,6 +2871,15 @@ public class CPConfigurationEntryPersistenceImpl
 					cpConfigurationEntryModelImpl.getCtCollectionId())) {
 
 			Object[] args = new Object[] {
+				cpConfigurationEntryModelImpl.getClassNameId(),
+				cpConfigurationEntryModelImpl.getClassPK(),
+				cpConfigurationEntryModelImpl.getCPConfigurationListId()
+			};
+
+			finderCache.putResult(
+				_finderPathFetchByC_C_C, args, cpConfigurationEntryModelImpl);
+
+			args = new Object[] {
 				cpConfigurationEntryModelImpl.getExternalReferenceCode(),
 				cpConfigurationEntryModelImpl.getCompanyId()
 			};
@@ -3431,6 +3666,7 @@ public class CPConfigurationEntryPersistenceImpl
 		ctMergeColumnNames.add("CPTaxCategoryId");
 		ctMergeColumnNames.add("allowedOrderQuantities");
 		ctMergeColumnNames.add("backOrders");
+		ctMergeColumnNames.add("commerceAvailabilityEstimateId");
 		ctMergeColumnNames.add("CPDefinitionInventoryEngine");
 		ctMergeColumnNames.add("depth");
 		ctMergeColumnNames.add("displayAvailability");
@@ -3461,6 +3697,9 @@ public class CPConfigurationEntryPersistenceImpl
 			Collections.singleton("CPConfigurationEntryId"));
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"classNameId", "classPK", "CPConfigurationListId"});
 
 		_uniqueIndexColumnNames.add(
 			new String[] {"externalReferenceCode", "companyId"});
@@ -3561,6 +3800,14 @@ public class CPConfigurationEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCPConfigurationListId", new String[] {Long.class.getName()},
 			new String[] {"CPConfigurationListId"}, false);
+
+		_finderPathFetchByC_C_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"classNameId", "classPK", "CPConfigurationListId"},
+			true);
 
 		_finderPathFetchByERC_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",

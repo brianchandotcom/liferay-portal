@@ -82,6 +82,7 @@ public interface CPConfigurationEntryLocalService
 			String externalReferenceCode, long userId, long classNameId,
 			long classPK, long cpConfigurationListId,
 			String allowedOrderQuantities, boolean backOrders,
+			long commerceAvailabilityEstimateId,
 			String cpDefinitionInventoryEngine, boolean displayAvailability,
 			boolean displayStockQuantity, String lowStockActivity,
 			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
@@ -278,6 +279,11 @@ public interface CPConfigurationEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPConfigurationEntry getCPConfigurationEntry(
+			long classNameId, long classPK, long cpConfigurationListId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPConfigurationEntry getCPConfigurationEntryByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException;
@@ -330,6 +336,17 @@ public interface CPConfigurationEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPConfigurationEntry updateCPConfigurationEntry(
 		CPConfigurationEntry cpConfigurationEntry);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CPConfigurationEntry updateCPConfigurationEntry(
+			String externalReferenceCode, long cpConfigurationEntryId,
+			String allowedOrderQuantities, boolean backOrders,
+			long commerceAvailabilityEstimateId,
+			String cpDefinitionInventoryEngine, boolean displayAvailability,
+			boolean displayStockQuantity, String lowStockActivity,
+			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
+			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity)
+		throws PortalException;
 
 	@Override
 	@Transactional(enabled = false)

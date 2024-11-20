@@ -127,6 +127,7 @@
 		<field name="CPTaxCategoryId" type="long" />
 		<field name="allowedOrderQuantities" type="String" />
 		<field name="backOrders" type="boolean" />
+		<field name="commerceAvailabilityEstimateId" type="long" />
 		<field name="CPDefinitionInventoryEngine" type="String" />
 		<field name="depth" type="double" />
 		<field name="displayAvailability" type="boolean" />

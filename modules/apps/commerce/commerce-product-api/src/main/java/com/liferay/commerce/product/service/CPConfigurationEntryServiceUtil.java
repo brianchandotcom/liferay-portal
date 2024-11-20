@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.product.service;
 
+import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
@@ -26,6 +28,55 @@ public class CPConfigurationEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPConfigurationEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static CPConfigurationEntry addCPConfigurationEntry(
+			String externalReferenceCode, long classNameId, long classPK,
+			long cpConfigurationListId, String allowedOrderQuantities,
+			boolean backOrders, long commerceAvailabilityEstimateId,
+			String cpDefinitionInventoryEngine, boolean displayAvailability,
+			boolean displayStockQuantity, String lowStockActivity,
+			java.math.BigDecimal maxOrderQuantity,
+			java.math.BigDecimal minOrderQuantity,
+			java.math.BigDecimal minStockQuantity,
+			java.math.BigDecimal multipleOrderQuantity)
+		throws PortalException {
+
+		return getService().addCPConfigurationEntry(
+			externalReferenceCode, classNameId, classPK, cpConfigurationListId,
+			allowedOrderQuantities, backOrders, commerceAvailabilityEstimateId,
+			cpDefinitionInventoryEngine, displayAvailability,
+			displayStockQuantity, lowStockActivity, maxOrderQuantity,
+			minOrderQuantity, minStockQuantity, multipleOrderQuantity);
+	}
+
+	public static void deleteCPConfigurationEntry(long cpConfigurationEntryId)
+		throws PortalException {
+
+		getService().deleteCPConfigurationEntry(cpConfigurationEntryId);
+	}
+
+	public static CPConfigurationEntry getCPConfigurationEntry(
+			long cpConfigurationEntryId)
+		throws PortalException {
+
+		return getService().getCPConfigurationEntry(cpConfigurationEntryId);
+	}
+
+	public static CPConfigurationEntry getCPConfigurationEntry(
+			long classNameId, long classPK, long cpConfigurationListId)
+		throws PortalException {
+
+		return getService().getCPConfigurationEntry(
+			classNameId, classPK, cpConfigurationListId);
+	}
+
+	public static CPConfigurationEntry
+			getCPConfigurationEntryByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getCPConfigurationEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -34,6 +85,27 @@ public class CPConfigurationEntryServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static CPConfigurationEntry updateCPConfigurationEntry(
+			String externalReferenceCode, long cpConfigurationEntryId,
+			long cpConfigurationListId, String allowedOrderQuantities,
+			boolean backOrders, long commerceAvailabilityEstimateId,
+			String cpDefinitionInventoryEngine, boolean displayAvailability,
+			boolean displayStockQuantity, String lowStockActivity,
+			java.math.BigDecimal maxOrderQuantity,
+			java.math.BigDecimal minOrderQuantity,
+			java.math.BigDecimal minStockQuantity,
+			java.math.BigDecimal multipleOrderQuantity)
+		throws PortalException {
+
+		return getService().updateCPConfigurationEntry(
+			externalReferenceCode, cpConfigurationEntryId,
+			cpConfigurationListId, allowedOrderQuantities, backOrders,
+			commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
+			displayAvailability, displayStockQuantity, lowStockActivity,
+			maxOrderQuantity, minOrderQuantity, minStockQuantity,
+			multipleOrderQuantity);
 	}
 
 	public static CPConfigurationEntryService getService() {

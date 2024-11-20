@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>BREADCRUMB_ENTRY</td>
-	<td>//section[contains(@id,'content')]//div[contains(@class,'portlet-body')]//ul/li/a[contains(.,'${key_pageName}')]</td>
+	<td>//div[contains(@id,'content')]//div[contains(@class,'portlet-body')]//ul/li/a[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>

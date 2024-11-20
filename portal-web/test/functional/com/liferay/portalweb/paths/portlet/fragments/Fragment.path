@@ -15,7 +15,7 @@
 
 <tr>
 	<td>FRAGMENT_TEXT_IN_COLLECTION_DISPLAY</td>
-	<td>//section[contains(@id,'content')]//div[starts-with(@class,'row')][${row}]/div[contains(@class,'col')][not(.//label)][${column}]//*[not(contains(@class,'tbar'))][normalize-space(text())]</td>
+	<td>//div[contains(@id,'content')]//div[starts-with(@class,'row')][${row}]/div[contains(@class,'col')][not(.//label)][${column}]//*[not(contains(@class,'tbar'))][normalize-space(text())]</td>
 	<td></td>
 </tr>
 <tr>

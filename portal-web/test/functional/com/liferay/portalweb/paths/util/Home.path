@@ -132,12 +132,12 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE_ALERT_ERROR</td>
-	<td>//section[@id='content']//*[contains(@class, 'alert-danger')] | //div[@class='portlet-content']/h3[contains(@class, 'alert-danger')]</td>
+	<td>//div[@id='content']//*[contains(@class, 'alert-danger')] | //div[@class='portlet-content']/h3[contains(@class, 'alert-danger')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NODE_NAME</td>
-	<td>//section[@id='content']/div[contains(.,'${key_nodePort}')]</td>
+	<td>//div[@id='content']/div[contains(.,'${key_nodePort}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>PORTLET_CONTENT</td>
-	<td>//section[@id='content']//div[contains(@class,'portlet-content')]</td>
+	<td>//div[@id='content']//div[contains(@class,'portlet-content')]</td>
 	<td></td>
 </tr>
 <tr>

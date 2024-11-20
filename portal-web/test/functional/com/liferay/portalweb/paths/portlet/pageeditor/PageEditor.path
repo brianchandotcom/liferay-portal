@@ -367,7 +367,7 @@
 </tr>
 <tr>
 	<td>OUTSIDE_OF_DROP_ZONE</td>
-	<td>//section[contains(@id,'content')]</td>
+	<td>//div[contains(@id,'content')]</td>
 	<td></td>
 </tr>
 

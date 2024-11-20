@@ -23,6 +23,8 @@ const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPD-32075': true,
+		'LPD-40533': true,
+		'LPD-40534': true,
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,
@@ -201,7 +203,9 @@ test.describe('Menu Display Widget', () => {
 
 		const thirdLayout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([widgetDefinition]),
-			parentSitePage: {friendlyUrlPath: secondLayout.friendlyUrlPath},
+			parentSitePage: {
+				friendlyUrlPath: secondLayout.friendlyUrlPath,
+			},
 			siteId: site.id,
 			title: 'Third page',
 		});
@@ -225,3 +229,60 @@ test.describe('Menu Display Widget', () => {
 		).toBeVisible();
 	});
 });
+
+test(
+	'Check that the Sharing and Supported Clients features have the deprecation badge',
+	{
+		tag: ['@LPD-41722', '@LPD-41723'],
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a page with a Web Content Display Widget
+
+		const widgetId = getRandomString();
+
+		const widgetDefinition = getWidgetDefinition({
+			id: widgetId,
+			widgetName:
+				'com_liferay_journal_content_web_portlet_JournalContentPortlet',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([widgetDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Access to the widget configuration
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.selectFragment(widgetId);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.dropdown-menu.show')
+				.getByText('Configuration', {exact: true}),
+			trigger: page
+				.locator('.page-editor__topper__item')
+				.getByRole('button', {name: 'Options'}),
+		});
+
+		// Check the deprecated badges
+
+		const configurationIFrame = page.frameLocator(
+			'iframe[title="Configuration"]'
+		);
+
+		const navigationItem = configurationIFrame.getByRole('link');
+
+		await expect(navigationItem.filter({hasText: 'Sharing'})).toContainText(
+			/Deprecated/
+		);
+
+		await expect(
+			navigationItem.filter({hasText: 'Supported Clients'})
+		).toContainText(/Deprecated/);
+	}
+);

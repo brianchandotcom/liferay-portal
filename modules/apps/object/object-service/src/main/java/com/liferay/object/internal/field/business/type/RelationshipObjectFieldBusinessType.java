@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
@@ -105,8 +106,8 @@ public class RelationshipObjectFieldBusinessType
 			Map<String, Object> nestedField = (Map<String, Object>)values.get(
 				relationshipName);
 
-			String externalReferenceCode = (String)nestedField.get(
-				"externalReferenceCode");
+			String externalReferenceCode = MapUtil.getString(
+				nestedField, "externalReferenceCode");
 
 			if (Validator.isNotNull(externalReferenceCode)) {
 				ObjectRelationship objectRelationship =
@@ -200,8 +201,8 @@ public class RelationshipObjectFieldBusinessType
 				objectField);
 
 		if (values.containsKey(objectRelationshipERCObjectFieldName)) {
-			String externalReferenceCode = GetterUtil.getString(
-				values.get(objectRelationshipERCObjectFieldName));
+			String externalReferenceCode = MapUtil.getString(
+				values, objectRelationshipERCObjectFieldName);
 
 			ObjectDefinition objectDefinition = _getObjectDefinition(
 				objectField);

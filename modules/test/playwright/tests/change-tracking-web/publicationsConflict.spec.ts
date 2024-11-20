@@ -216,6 +216,8 @@ test('Resolve deletion modification conflict publications by restoring from recy
 
 	await page.getByRole('link', {name: 'Restore From Recycle Bin'}).click();
 
+	await waitForAlert(page, 'Success:Your request completed successfully.');
+
 	await journalPage.goto();
 
 	await expect(page.getByText(title)).toBeVisible();

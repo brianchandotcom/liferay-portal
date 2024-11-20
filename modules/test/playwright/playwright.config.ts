@@ -14,6 +14,7 @@ import {config as analyticsReportsJsComponentsWeb} from './tests/analytics-repor
 import {config as analyticsSettingsWebConfig} from './tests/analytics-settings-web/config';
 import {config as analyticsWebConfig} from './tests/analytics-web/config';
 import {config as announcementsWebConfig} from './tests/announcements-web/config';
+import {config as assetCategoriesAdminWebConfig} from './tests/asset-categories-admin-web/config';
 import {config as assetPublisherWebConfig} from './tests/asset-publisher-web/config';
 import {config as assetTagsAdminWebConfig} from './tests/asset-tags-admin-web/config';
 import {config as batchPlannerConfig} from './tests/batch-planner/config';
@@ -176,6 +177,7 @@ export default defineConfig({
 		headlessBuilderWebConfig,
 		iframeWebConfig,
 		itemSelectorTaglibConfig,
+		assetCategoriesAdminWebConfig,
 		jethr0Config,
 		journalWebConfig,
 		knowledgeBaseWebConfig,

@@ -7,7 +7,6 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaDeprecatedJavadocCheck" files=".*" />
-		<suppress checks="JavaLongLinesCheck" files="lang-builder/src/main/java/com/liferay/lang/builder/LangBuilder\.java" />
 		<suppress checks="JavaModuleTestCheck" files="pmd/src/test/java/com/liferay/pmd/rules/junit/AssertFailJUnitRuleTest\.java" />
 		<suppress checks="JavaVariableTypeCheck" files="css-builder/src/main/java/com/liferay/css/builder/maven/BuildCSSMojo\.java" />
 		<suppress checks="JavaVariableTypeCheck" files="portal-tools-soy-builder/src/main/java/com/liferay/portal/tools/soy/builder/maven/BaseSoyJsMojo\.java" />

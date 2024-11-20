@@ -99,30 +99,30 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 
 		String json = _include(_company1.getCompanyId());
 
-		Assert.assertTrue(
-			json,
-			json.matches(".*\"global\".*:.*\"http://localhost/global.js\".*"));
-		Assert.assertTrue(
-			json,
-			json.matches(
-				".*\"specifier\".*:.*\"http://localhost/" +
-					_company1.getCompanyId() + ".js\".*"));
 		Assert.assertFalse(
 			json,
 			json.matches(
 				".*\"specifier\".*:.*\"http://localhost/" +
 					_company2.getCompanyId() + ".js\".*"));
-
-		json = _include(_company2.getCompanyId());
-
 		Assert.assertTrue(
 			json,
 			json.matches(".*\"global\".*:.*\"http://localhost/global.js\".*"));
+		Assert.assertTrue(
+			json,
+			json.matches(
+				".*\"specifier\".*:.*\"http://localhost/" +
+					_company1.getCompanyId() + ".js\".*"));
+
+		json = _include(_company2.getCompanyId());
+
 		Assert.assertFalse(
 			json,
 			json.matches(
 				".*\"specifier\".*:.*\"http://localhost/" +
 					_company1.getCompanyId() + ".js\".*"));
+		Assert.assertTrue(
+			json,
+			json.matches(".*\"global\".*:.*\"http://localhost/global.js\".*"));
 		Assert.assertTrue(
 			json,
 			json.matches(
@@ -131,9 +131,6 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 
 		json = _include(_portal.getDefaultCompanyId());
 
-		Assert.assertTrue(
-			json,
-			json.matches(".*\"global\".*:.*\"http://localhost/global.js\".*"));
 		Assert.assertFalse(
 			json,
 			json.matches(
@@ -144,6 +141,9 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 			json.matches(
 				".*\"specifier\".*:.*\"http://localhost/" +
 					_company2.getCompanyId() + ".js\".*"));
+		Assert.assertTrue(
+			json,
+			json.matches(".*\"global\".*:.*\"http://localhost/global.js\".*"));
 	}
 
 	private String _include(long companyId) throws Exception {

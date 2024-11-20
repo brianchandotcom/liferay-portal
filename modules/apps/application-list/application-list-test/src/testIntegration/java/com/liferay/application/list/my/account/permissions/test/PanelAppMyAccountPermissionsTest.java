@@ -15,12 +15,12 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PortalInstances;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -94,26 +93,31 @@ public class PanelAppMyAccountPermissionsTest {
 	public void testPermissionsAddedForAllCompaniesFromNewPanelApp()
 		throws Exception {
 
-		_testCompany = addCompany();
+		Company company = CompanyTestUtil.addCompany(true);
 
-		_registerTestPortlet();
+		try {
+			_registerTestPortlet();
 
-		long defaultCompanyId = TestPropsValues.getCompanyId();
+			long defaultCompanyId = TestPropsValues.getCompanyId();
 
-		Assert.assertFalse(
-			_hasMyAccountPermission(defaultCompanyId, _testPortletId));
+			Assert.assertFalse(
+				_hasMyAccountPermission(defaultCompanyId, _testPortletId));
 
-		long testCompanyId = _testCompany.getCompanyId();
+			long testCompanyId = company.getCompanyId();
 
-		Assert.assertFalse(
-			_hasMyAccountPermission(testCompanyId, _testPortletId));
+			Assert.assertFalse(
+				_hasMyAccountPermission(testCompanyId, _testPortletId));
 
-		_registerTestPanelApp();
+			_registerTestPanelApp();
 
-		Assert.assertTrue(
-			_hasMyAccountPermission(defaultCompanyId, _testPortletId));
-		Assert.assertTrue(
-			_hasMyAccountPermission(testCompanyId, _testPortletId));
+			Assert.assertTrue(
+				_hasMyAccountPermission(defaultCompanyId, _testPortletId));
+			Assert.assertTrue(
+				_hasMyAccountPermission(testCompanyId, _testPortletId));
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	@Test
@@ -124,19 +128,16 @@ public class PanelAppMyAccountPermissionsTest {
 
 		_registerTestPanelApp();
 
-		_testCompany = addCompany();
+		Company company = CompanyTestUtil.addCompany(true);
 
-		Assert.assertTrue(
-			_hasMyAccountPermission(
-				_testCompany.getCompanyId(), _testPortletId));
-	}
-
-	protected Company addCompany() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		PortalInstances.initCompany(company);
-
-		return company;
+		try {
+			Assert.assertTrue(
+				_hasMyAccountPermission(
+					company.getCompanyId(), _testPortletId));
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	private boolean _hasMyAccountPermission(long companyId, String portletId)
@@ -174,14 +175,13 @@ public class PanelAppMyAccountPermissionsTest {
 	private static BundleContext _bundleContext;
 
 	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
 	private PortletLocalService _portletLocalService;
 
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new CopyOnWriteArrayList<>();
-
-	@DeleteAfterTestRun
-	private Company _testCompany;
-
 	private String _testPortletId;
 
 	private static class TestPanelApp extends BasePanelApp {

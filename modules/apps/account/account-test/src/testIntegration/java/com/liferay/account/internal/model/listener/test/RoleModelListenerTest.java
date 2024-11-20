@@ -139,16 +139,21 @@ public class RoleModelListenerTest {
 	public void testDeleteCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		List<Long> requiredRoleIds = TransformUtil.transformToList(
-			AccountRoleConstants.REQUIRED_ROLE_NAMES,
-			requiredRoleName -> {
-				Role role = _roleLocalService.fetchRole(
-					company.getCompanyId(), requiredRoleName);
+		List<Long> requiredRoleIds = null;
 
-				return role.getRoleId();
-			});
+		try {
+			requiredRoleIds = TransformUtil.transformToList(
+				AccountRoleConstants.REQUIRED_ROLE_NAMES,
+				requiredRoleName -> {
+					Role role = _roleLocalService.fetchRole(
+						company.getCompanyId(), requiredRoleName);
 
-		_companyLocalService.deleteCompany(company);
+					return role.getRoleId();
+				});
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 
 		for (long requiredRoleId : requiredRoleIds) {
 			Assert.assertNull(_roleLocalService.fetchRole(requiredRoleId));

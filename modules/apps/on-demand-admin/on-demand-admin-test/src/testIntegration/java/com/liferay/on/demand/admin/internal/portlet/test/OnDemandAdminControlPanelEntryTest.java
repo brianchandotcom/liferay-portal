@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -82,40 +83,48 @@ public class OnDemandAdminControlPanelEntryTest {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		User companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
+		try {
+			User companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
 
-		Assert.assertFalse(
-			_onDemandAdminControlPanelEntry.hasAccessPermission(
-				_permissionCheckerFactory.create(companyAdminUser), null,
-				_onDemandAdminPortlet));
+			Assert.assertFalse(
+				_onDemandAdminControlPanelEntry.hasAccessPermission(
+					_permissionCheckerFactory.create(companyAdminUser), null,
+					_onDemandAdminPortlet));
 
-		Group group = _groupLocalService.getGroup(
-			company.getCompanyId(), GroupConstants.CONTROL_PANEL);
-		User user = UserTestUtil.addUser(company);
+			Group group = _groupLocalService.getGroup(
+				company.getCompanyId(), GroupConstants.CONTROL_PANEL);
+			User user = UserTestUtil.addUser(company);
 
-		Assert.assertFalse(
-			_onDemandAdminControlPanelEntry.hasAccessPermission(
-				_permissionCheckerFactory.create(user), group,
-				_onDemandAdminPortlet));
+			Assert.assertFalse(
+				_onDemandAdminControlPanelEntry.hasAccessPermission(
+					_permissionCheckerFactory.create(user), group,
+					_onDemandAdminPortlet));
 
-		Role role = _roleLocalService.addRole(
-			RandomTestUtil.randomString(), companyAdminUser.getUserId(), null,
-			0, RandomTestUtil.randomString(), null, null,
-			RoleConstants.TYPE_REGULAR, null, null);
+			Role role = _roleLocalService.addRole(
+				RandomTestUtil.randomString(), companyAdminUser.getUserId(),
+				null, 0, RandomTestUtil.randomString(), null, null,
+				RoleConstants.TYPE_REGULAR, null, null);
 
-		RoleTestUtil.addResourcePermission(
-			role, OnDemandAdminPortletKeys.ON_DEMAND_ADMIN,
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(company.getCompanyId()),
-			ActionKeys.ACCESS_IN_CONTROL_PANEL);
+			RoleTestUtil.addResourcePermission(
+				role, OnDemandAdminPortletKeys.ON_DEMAND_ADMIN,
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(company.getCompanyId()),
+				ActionKeys.ACCESS_IN_CONTROL_PANEL);
 
-		_userLocalService.addRoleUser(role.getRoleId(), user);
+			_userLocalService.addRoleUser(role.getRoleId(), user);
 
-		Assert.assertFalse(
-			_onDemandAdminControlPanelEntry.hasAccessPermission(
-				_permissionCheckerFactory.create(user), group,
-				_onDemandAdminPortlet));
+			Assert.assertFalse(
+				_onDemandAdminControlPanelEntry.hasAccessPermission(
+					_permissionCheckerFactory.create(user), group,
+					_onDemandAdminPortlet));
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

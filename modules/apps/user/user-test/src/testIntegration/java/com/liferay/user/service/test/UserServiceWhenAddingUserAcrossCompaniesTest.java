@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -101,6 +102,8 @@ public class UserServiceWhenAddingUserAcrossCompaniesTest {
 				originalPermissionChecker);
 
 			PrincipalThreadLocal.setName(originalName);
+
+			_companyLocalService.deleteCompany(company);
 		}
 	}
 
@@ -117,6 +120,9 @@ public class UserServiceWhenAddingUserAcrossCompaniesTest {
 			0, true, 1, 1, 2000, null, null, null, null, null, true,
 			ServiceContextTestUtil.getServiceContext());
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;

@@ -74,33 +74,42 @@ public class LayoutsAdminDisplayContextTest {
 	public void testAvailableActions() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		Group group = _groupLocalService.getGroup(
-			company.getCompanyId(), GroupConstants.GUEST);
+		try {
+			Group group = _groupLocalService.getGroup(
+				company.getCompanyId(), GroupConstants.GUEST);
 
-		_layoutLocalService.deleteLayouts(
-			group.getGroupId(), false,
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId()));
+			_layoutLocalService.deleteLayouts(
+				group.getGroupId(), false,
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
 
-		Layout layout1 = LayoutTestUtil.addTypePortletLayout(group);
+			Layout layout1 = LayoutTestUtil.addTypePortletLayout(group);
 
-		Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
+			Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
 
-		List<String> availableActions = _getAvailableActions(group, layout2);
+			List<String> availableActions = _getAvailableActions(
+				group, layout2);
 
-		Assert.assertTrue(availableActions.contains("changePermissions"));
-		Assert.assertFalse(availableActions.contains("convertSelectedPages"));
-		Assert.assertTrue(availableActions.contains("deleteSelectedPages"));
-		Assert.assertTrue(availableActions.contains("exportTranslation"));
+			Assert.assertTrue(availableActions.contains("changePermissions"));
+			Assert.assertFalse(
+				availableActions.contains("convertSelectedPages"));
+			Assert.assertTrue(availableActions.contains("deleteSelectedPages"));
+			Assert.assertTrue(availableActions.contains("exportTranslation"));
 
-		_layoutLocalService.deleteLayout(layout2);
+			_layoutLocalService.deleteLayout(layout2);
 
-		availableActions = _getAvailableActions(group, layout1);
+			availableActions = _getAvailableActions(group, layout1);
 
-		Assert.assertTrue(availableActions.contains("changePermissions"));
-		Assert.assertTrue(availableActions.contains("convertSelectedPages"));
-		Assert.assertFalse(availableActions.contains("deleteSelectedPages"));
-		Assert.assertFalse(availableActions.contains("exportTranslation"));
+			Assert.assertTrue(availableActions.contains("changePermissions"));
+			Assert.assertTrue(
+				availableActions.contains("convertSelectedPages"));
+			Assert.assertFalse(
+				availableActions.contains("deleteSelectedPages"));
+			Assert.assertFalse(availableActions.contains("exportTranslation"));
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	@Test

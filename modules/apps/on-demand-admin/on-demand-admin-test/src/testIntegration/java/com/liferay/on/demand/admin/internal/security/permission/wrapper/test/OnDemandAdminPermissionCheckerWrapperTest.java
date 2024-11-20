@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -39,27 +40,35 @@ public class OnDemandAdminPermissionCheckerWrapperTest {
 	public void testHasPermission() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		User companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
+		try {
+			User companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			companyAdminUser);
+			PermissionChecker permissionChecker =
+				_permissionCheckerFactory.create(companyAdminUser);
 
-		User onDemandAdminUser = OnDemandAdminTestUtil.addOnDemandAdminUser(
-			company);
+			User onDemandAdminUser = OnDemandAdminTestUtil.addOnDemandAdminUser(
+				company);
 
-		Assert.assertFalse(
-			permissionChecker.hasPermission(
-				company.getGroupId(), User.class.getName(),
-				onDemandAdminUser.getUserId(), ActionKeys.DELETE));
-		Assert.assertFalse(
-			permissionChecker.hasPermission(
-				company.getGroupId(), User.class.getName(),
-				onDemandAdminUser.getUserId(), ActionKeys.UPDATE));
-		Assert.assertFalse(
-			permissionChecker.hasPermission(
-				company.getGroupId(), User.class.getName(),
-				onDemandAdminUser.getUserId(), ActionKeys.VIEW));
+			Assert.assertFalse(
+				permissionChecker.hasPermission(
+					company.getGroupId(), User.class.getName(),
+					onDemandAdminUser.getUserId(), ActionKeys.DELETE));
+			Assert.assertFalse(
+				permissionChecker.hasPermission(
+					company.getGroupId(), User.class.getName(),
+					onDemandAdminUser.getUserId(), ActionKeys.UPDATE));
+			Assert.assertFalse(
+				permissionChecker.hasPermission(
+					company.getGroupId(), User.class.getName(),
+					onDemandAdminUser.getUserId(), ActionKeys.VIEW));
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;

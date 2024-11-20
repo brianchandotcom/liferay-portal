@@ -92,127 +92,137 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 	public void testGetGroovyScriptUses() throws Exception {
 		Company company1 = CompanyTestUtil.addCompany("company1.com");
 
-		User user1 = UserTestUtil.addCompanyAdminUser(company1);
+		try {
+			User user1 = UserTestUtil.addCompanyAdminUser(company1);
 
-		ObjectDefinition objectDefinition1 = _createObjectDefinition(
-			user1.getUserId());
+			ObjectDefinition objectDefinition1 = _createObjectDefinition(
+				user1.getUserId());
 
-		_createObjectDefinitionGroovyScriptUses(
-			"company1", objectDefinition1, user1.getUserId());
+			_createObjectDefinitionGroovyScriptUses(
+				"company1", objectDefinition1, user1.getUserId());
 
-		_createWorkflowDefinitions(
-			company1.getCompanyId(), "company1", user1.getUserId());
+			_createWorkflowDefinitions(
+				company1.getCompanyId(), "company1", user1.getUserId());
 
-		Company company2 = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
+			Company company2 = _companyLocalService.getCompany(
+				TestPropsValues.getCompanyId());
 
-		User user2 = TestPropsValues.getUser();
+			User user2 = TestPropsValues.getUser();
 
-		ObjectDefinition objectDefinition2 = _createObjectDefinition(
-			user2.getUserId());
+			ObjectDefinition objectDefinition2 = _createObjectDefinition(
+				user2.getUserId());
 
-		_createObjectDefinitionGroovyScriptUses(
-			"liferay", objectDefinition2, user2.getUserId());
+			_createObjectDefinitionGroovyScriptUses(
+				"liferay", objectDefinition2, user2.getUserId());
 
-		_createWorkflowDefinitions(
-			company2.getCompanyId(), "liferay", user2.getUserId());
+			_createWorkflowDefinitions(
+				company2.getCompanyId(), "liferay", user2.getUserId());
 
-		Assert.assertEquals(
-			JSONFactoryUtil.createJSONArray(
-			).put(
-				JSONUtil.put(
-					"companyWebId", "company1.com"
+			Assert.assertEquals(
+				JSONFactoryUtil.createJSONArray(
 				).put(
-					"sourceName", "company1ActiveGroovyObjectAction"
+					JSONUtil.put(
+						"companyWebId", "company1.com"
+					).put(
+						"sourceName", "company1ActiveGroovyObjectAction"
+					).put(
+						"sourceURL",
+						ObjectDefinitionGroovyScriptUseSourceURLFactory.create(
+							company1, objectDefinition1.getObjectDefinitionId(),
+							_portal, "actions")
+					)
 				).put(
-					"sourceURL",
-					ObjectDefinitionGroovyScriptUseSourceURLFactory.create(
-						company1, objectDefinition1.getObjectDefinitionId(),
-						_portal, "actions")
-				)
-			).put(
-				JSONUtil.put(
-					"companyWebId", "company1.com"
+					JSONUtil.put(
+						"companyWebId", "company1.com"
+					).put(
+						"sourceName", "company1ActiveGroovyObjectValidation"
+					).put(
+						"sourceURL",
+						ObjectDefinitionGroovyScriptUseSourceURLFactory.create(
+							company1, objectDefinition1.getObjectDefinitionId(),
+							_portal, "validations")
+					)
 				).put(
-					"sourceName", "company1ActiveGroovyObjectValidation"
+					JSONUtil.put(
+						"companyWebId", "company1.com"
+					).put(
+						"sourceName",
+						"company1PublishedGroovyWorkflowDefinition"
+					).put(
+						"sourceURL",
+						WorkflowDefinitionGroovyScriptUseSourceURLFactory.
+							create(
+								company1, _portal,
+								"company1PublishedGroovyWorkflowDefinition", 1,
+								_workflowPortletTabRegistry)
+					)
 				).put(
-					"sourceURL",
-					ObjectDefinitionGroovyScriptUseSourceURLFactory.create(
-						company1, objectDefinition1.getObjectDefinitionId(),
-						_portal, "validations")
-				)
-			).put(
-				JSONUtil.put(
-					"companyWebId", "company1.com"
+					JSONUtil.put(
+						"companyWebId", "company1.com"
+					).put(
+						"sourceName", "company1PublishedJavaWorkflowDefinition"
+					).put(
+						"sourceURL",
+						WorkflowDefinitionGroovyScriptUseSourceURLFactory.
+							create(
+								company1, _portal,
+								"company1PublishedJavaWorkflowDefinition", 1,
+								_workflowPortletTabRegistry)
+					)
 				).put(
-					"sourceName", "company1PublishedGroovyWorkflowDefinition"
+					JSONUtil.put(
+						"companyWebId", "liferay.com"
+					).put(
+						"sourceName", "liferayActiveGroovyObjectAction"
+					).put(
+						"sourceURL",
+						ObjectDefinitionGroovyScriptUseSourceURLFactory.create(
+							company2, objectDefinition2.getObjectDefinitionId(),
+							_portal, "actions")
+					)
 				).put(
-					"sourceURL",
-					WorkflowDefinitionGroovyScriptUseSourceURLFactory.create(
-						company1, _portal,
-						"company1PublishedGroovyWorkflowDefinition", 1,
-						_workflowPortletTabRegistry)
-				)
-			).put(
-				JSONUtil.put(
-					"companyWebId", "company1.com"
+					JSONUtil.put(
+						"companyWebId", "liferay.com"
+					).put(
+						"sourceName", "liferayActiveGroovyObjectValidation"
+					).put(
+						"sourceURL",
+						ObjectDefinitionGroovyScriptUseSourceURLFactory.create(
+							company2, objectDefinition2.getObjectDefinitionId(),
+							_portal, "validations")
+					)
 				).put(
-					"sourceName", "company1PublishedJavaWorkflowDefinition"
+					JSONUtil.put(
+						"companyWebId", "liferay.com"
+					).put(
+						"sourceName", "liferayPublishedGroovyWorkflowDefinition"
+					).put(
+						"sourceURL",
+						WorkflowDefinitionGroovyScriptUseSourceURLFactory.
+							create(
+								company2, _portal,
+								"liferayPublishedGroovyWorkflowDefinition", 1,
+								_workflowPortletTabRegistry)
+					)
 				).put(
-					"sourceURL",
-					WorkflowDefinitionGroovyScriptUseSourceURLFactory.create(
-						company1, _portal,
-						"company1PublishedJavaWorkflowDefinition", 1,
-						_workflowPortletTabRegistry)
-				)
-			).put(
-				JSONUtil.put(
-					"companyWebId", "liferay.com"
-				).put(
-					"sourceName", "liferayActiveGroovyObjectAction"
-				).put(
-					"sourceURL",
-					ObjectDefinitionGroovyScriptUseSourceURLFactory.create(
-						company2, objectDefinition2.getObjectDefinitionId(),
-						_portal, "actions")
-				)
-			).put(
-				JSONUtil.put(
-					"companyWebId", "liferay.com"
-				).put(
-					"sourceName", "liferayActiveGroovyObjectValidation"
-				).put(
-					"sourceURL",
-					ObjectDefinitionGroovyScriptUseSourceURLFactory.create(
-						company2, objectDefinition2.getObjectDefinitionId(),
-						_portal, "validations")
-				)
-			).put(
-				JSONUtil.put(
-					"companyWebId", "liferay.com"
-				).put(
-					"sourceName", "liferayPublishedGroovyWorkflowDefinition"
-				).put(
-					"sourceURL",
-					WorkflowDefinitionGroovyScriptUseSourceURLFactory.create(
-						company2, _portal,
-						"liferayPublishedGroovyWorkflowDefinition", 1,
-						_workflowPortletTabRegistry)
-				)
-			).put(
-				JSONUtil.put(
-					"companyWebId", "liferay.com"
-				).put(
-					"sourceName", "liferayPublishedJavaWorkflowDefinition"
-				).put(
-					"sourceURL",
-					WorkflowDefinitionGroovyScriptUseSourceURLFactory.create(
-						company2, _portal,
-						"liferayPublishedJavaWorkflowDefinition", 1,
-						_workflowPortletTabRegistry)
-				)
-			).toString(),
-			_getGroovyScriptUsesJSONArrayString());
+					JSONUtil.put(
+						"companyWebId", "liferay.com"
+					).put(
+						"sourceName", "liferayPublishedJavaWorkflowDefinition"
+					).put(
+						"sourceURL",
+						WorkflowDefinitionGroovyScriptUseSourceURLFactory.
+							create(
+								company2, _portal,
+								"liferayPublishedJavaWorkflowDefinition", 1,
+								_workflowPortletTabRegistry)
+					)
+				).toString(),
+				_getGroovyScriptUsesJSONArrayString());
+		}
+		finally {
+			_companyLocalService.deleteCompany(company1);
+		}
 	}
 
 	private void _addObjectAction(

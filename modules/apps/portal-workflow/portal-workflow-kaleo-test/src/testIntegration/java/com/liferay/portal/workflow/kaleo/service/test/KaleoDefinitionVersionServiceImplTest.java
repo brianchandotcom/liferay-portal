@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
@@ -61,47 +62,54 @@ public class KaleoDefinitionVersionServiceImplTest {
 	public void testGetKaleoDefinitionVersion() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		PortalInstances.initCompany(company);
+		try {
+			PortalInstances.initCompany(company);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
 
-		KaleoDefinition kaleoDefinition =
-			_kaleoDefinitionLocalService.addKaleoDefinition(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				_read(), StringPool.BLANK, 1, serviceContext);
+			KaleoDefinition kaleoDefinition =
+				_kaleoDefinitionLocalService.addKaleoDefinition(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), _read(), StringPool.BLANK, 1,
+					serviceContext);
 
-		_kaleoDefinitionLocalService.activateKaleoDefinition(
-			kaleoDefinition.getKaleoDefinitionId(), serviceContext);
+			_kaleoDefinitionLocalService.activateKaleoDefinition(
+				kaleoDefinition.getKaleoDefinitionId(), serviceContext);
 
-		User user = UserTestUtil.addUser(
-			company.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(
-				NumericStringRandomizerBumper.INSTANCE,
-				UniqueStringRandomizerBumper.INSTANCE),
-			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new long[0], serviceContext);
+			User user = UserTestUtil.addUser(
+				company.getCompanyId(), TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(
+					NumericStringRandomizerBumper.INSTANCE,
+					UniqueStringRandomizerBumper.INSTANCE),
+				LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), new long[0], serviceContext);
 
-		_setUpPermissionThreadLocal(user);
+			_setUpPermissionThreadLocal(user);
 
-		AssertUtils.assertFailure(
-			PrincipalException.MustBeCompanyAdmin.class,
-			StringBundler.concat(
-				"User ", user.getUserId(), " must be the company ",
-				"administrator to perform the action"),
-			() -> _kaleoDefinitionVersionService.getKaleoDefinitionVersion(
-				kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
-				_getVersion(kaleoDefinition.getVersion())));
+			AssertUtils.assertFailure(
+				PrincipalException.MustBeCompanyAdmin.class,
+				StringBundler.concat(
+					"User ", user.getUserId(), " must be the company ",
+					"administrator to perform the action"),
+				() -> _kaleoDefinitionVersionService.getKaleoDefinitionVersion(
+					kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
+					_getVersion(kaleoDefinition.getVersion())));
 
-		User companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
+			User companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
 
-		_setUpPermissionThreadLocal(companyAdminUser);
+			_setUpPermissionThreadLocal(companyAdminUser);
 
-		Assert.assertNotNull(
-			_kaleoDefinitionVersionService.getKaleoDefinitionVersion(
-				kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
-				_getVersion(kaleoDefinition.getVersion())));
+			Assert.assertNotNull(
+				_kaleoDefinitionVersionService.getKaleoDefinitionVersion(
+					kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
+					_getVersion(kaleoDefinition.getVersion())));
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	private String _getVersion(int version) {
@@ -126,6 +134,9 @@ public class KaleoDefinitionVersionServiceImplTest {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;

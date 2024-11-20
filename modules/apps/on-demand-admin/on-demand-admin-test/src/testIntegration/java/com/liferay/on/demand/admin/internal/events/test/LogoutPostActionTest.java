@@ -10,6 +10,7 @@ import com.liferay.on.demand.admin.test.util.OnDemandAdminTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -46,13 +47,18 @@ public class LogoutPostActionTest {
 	public void testLogout() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		User user = OnDemandAdminTestUtil.addOnDemandAdminUser(company);
+		try {
+			User user = OnDemandAdminTestUtil.addOnDemandAdminUser(company);
 
-		AuthenticatedSessionManagerUtil.logout(
-			_getHttpServletRequest(company, user),
-			new MockHttpServletResponse());
+			AuthenticatedSessionManagerUtil.logout(
+				_getHttpServletRequest(company, user),
+				new MockHttpServletResponse());
 
-		Assert.assertNull(_userLocalService.fetchUser(user.getUserId()));
+			Assert.assertNull(_userLocalService.fetchUser(user.getUserId()));
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	private HttpServletRequest _getHttpServletRequest(
@@ -76,6 +82,9 @@ public class LogoutPostActionTest {
 
 		return mockHttpServletRequest;
 	}
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -42,34 +43,40 @@ public class FeatureFlagUpgradeProcessTest {
 	public void testDoUpgrade() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		PortalPreferences portalPreferences = _getPortalPreferences(
-			company.getCompanyId());
+		try {
+			PortalPreferences portalPreferences = _getPortalPreferences(
+				company.getCompanyId());
 
-		portalPreferences.setValue(
-			_OLD_NAMESPACE,
-			FeatureFlagConstants.PREFERENCE_KEY_DEPRECATION_PROCESSED, "false");
-
-		_portalPreferencesLocalService.updatePreferences(
-			company.getCompanyId(), PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-			portalPreferences);
-
-		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator, _CLASS_NAME);
-
-		upgradeProcess.upgrade();
-
-		portalPreferences = _getPortalPreferences(company.getCompanyId());
-
-		Assert.assertNull(
-			portalPreferences.getValue(
+			portalPreferences.setValue(
 				_OLD_NAMESPACE,
-				FeatureFlagConstants.PREFERENCE_KEY_DEPRECATION_PROCESSED));
-		Assert.assertTrue(
-			GetterUtil.getBoolean(
+				FeatureFlagConstants.PREFERENCE_KEY_DEPRECATION_PROCESSED,
+				"false");
+
+			_portalPreferencesLocalService.updatePreferences(
+				company.getCompanyId(), PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+				portalPreferences);
+
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator, _CLASS_NAME);
+
+			upgradeProcess.upgrade();
+
+			portalPreferences = _getPortalPreferences(company.getCompanyId());
+
+			Assert.assertNull(
 				portalPreferences.getValue(
-					FeatureFlagConstants.PREFERENCE_NAMESPACE,
-					FeatureFlagConstants.
-						PREFERENCE_KEY_DEPRECATION_PROCESSED)));
+					_OLD_NAMESPACE,
+					FeatureFlagConstants.PREFERENCE_KEY_DEPRECATION_PROCESSED));
+			Assert.assertTrue(
+				GetterUtil.getBoolean(
+					portalPreferences.getValue(
+						FeatureFlagConstants.PREFERENCE_NAMESPACE,
+						FeatureFlagConstants.
+							PREFERENCE_KEY_DEPRECATION_PROCESSED)));
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	private PortalPreferences _getPortalPreferences(long companyId) {
@@ -92,6 +99,9 @@ public class FeatureFlagUpgradeProcessTest {
 		filter = "(&(component.name=com.liferay.feature.flag.web.internal.upgrade.registry.FeatureFlagUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private PortalPreferencesLocalService _portalPreferencesLocalService;

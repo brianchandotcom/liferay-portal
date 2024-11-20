@@ -10,6 +10,7 @@ import com.liferay.on.demand.admin.manager.OnDemandAdminManager;
 import com.liferay.on.demand.admin.test.util.OnDemandAdminTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -39,19 +40,24 @@ public class OnDemandAdminManagerTest {
 	public void testCleanUpOnDemandAdminUsers() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		User user1 = OnDemandAdminTestUtil.addOnDemandAdminUser(company);
+		try {
+			User user1 = OnDemandAdminTestUtil.addOnDemandAdminUser(company);
 
-		_assertOnDemandAdminUser(user1);
+			_assertOnDemandAdminUser(user1);
 
-		User user2 = OnDemandAdminTestUtil.addOnDemandAdminUser(company);
+			User user2 = OnDemandAdminTestUtil.addOnDemandAdminUser(company);
 
-		_assertOnDemandAdminUser(user2);
+			_assertOnDemandAdminUser(user2);
 
-		_onDemandAdminManager.cleanUpOnDemandAdminUsers(
-			new Date(System.currentTimeMillis()));
+			_onDemandAdminManager.cleanUpOnDemandAdminUsers(
+				new Date(System.currentTimeMillis()));
 
-		_assertDeleted(user1.getUserId());
-		_assertDeleted(user2.getUserId());
+			_assertDeleted(user1.getUserId());
+			_assertDeleted(user2.getUserId());
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	private void _assertDeleted(long userId) {
@@ -62,6 +68,9 @@ public class OnDemandAdminManagerTest {
 		Assert.assertNotNull(_userLocalService.fetchUser(user.getUserId()));
 		Assert.assertTrue(_onDemandAdminManager.isOnDemandAdminUser(user));
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private OnDemandAdminManager _onDemandAdminManager;

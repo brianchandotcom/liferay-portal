@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
@@ -65,14 +66,17 @@ public class UserServiceTest {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		User user2 = UserTestUtil.addCompanyAdminUser(company);
-
-		Organization organization = _organizationLocalService.addOrganization(
-			user2.getUserId(),
-			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-			RandomTestUtil.randomString(), false);
+		User user2 = null;
 
 		try {
+			user2 = UserTestUtil.addCompanyAdminUser(company);
+
+			Organization organization =
+				_organizationLocalService.addOrganization(
+					user2.getUserId(),
+					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+					RandomTestUtil.randomString(), false);
+
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(user2));
 
@@ -93,6 +97,8 @@ public class UserServiceTest {
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
+
+			_companyLocalService.deleteCompany(company);
 		}
 	}
 
@@ -172,6 +178,9 @@ public class UserServiceTest {
 				originalPermissionChecker);
 		}
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;

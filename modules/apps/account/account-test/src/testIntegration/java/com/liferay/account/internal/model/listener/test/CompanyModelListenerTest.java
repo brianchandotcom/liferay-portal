@@ -45,24 +45,28 @@ public class CompanyModelListenerTest {
 	public void testCleanUp() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		User guestUser = company.getGuestUser();
+		try {
+			User guestUser = company.getGuestUser();
 
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			AccountEntryArgs.withOwner(guestUser));
+			AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withOwner(guestUser));
 
-		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			RandomTestUtil.randomString(), guestUser.getUserId(),
-			accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
-			null, null);
+			AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+				RandomTestUtil.randomString(), guestUser.getUserId(),
+				accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+				null, null);
 
-		_companyLocalService.deleteCompany(company);
+			Assert.assertNull(
+				_accountEntryLocalService.fetchAccountEntry(
+					accountEntry.getAccountEntryId()));
 
-		Assert.assertNull(
-			_accountEntryLocalService.fetchAccountEntry(
-				accountEntry.getAccountEntryId()));
-		Assert.assertNull(
-			_accountRoleLocalService.fetchAccountRole(
-				accountRole.getAccountRoleId()));
+			Assert.assertNull(
+				_accountRoleLocalService.fetchAccountRole(
+					accountRole.getAccountRoleId()));
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	@Inject

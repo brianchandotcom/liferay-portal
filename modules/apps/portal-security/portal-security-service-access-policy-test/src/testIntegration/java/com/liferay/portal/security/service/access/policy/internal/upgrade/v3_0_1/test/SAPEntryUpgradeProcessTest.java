@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -55,31 +56,36 @@ public class SAPEntryUpgradeProcessTest {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
-			company.getCompanyId(),
-			_sapConfiguration.systemRESTClientTemplateObjectSAPEntryName());
+		try {
+			SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
+				company.getCompanyId(),
+				_sapConfiguration.systemRESTClientTemplateObjectSAPEntryName());
 
-		if (sapEntry != null) {
-			_sapEntryLocalService.deleteSAPEntry(sapEntry);
+			if (sapEntry != null) {
+				_sapEntryLocalService.deleteSAPEntry(sapEntry);
+			}
+
+			_runUpgrade();
+
+			sapEntry = _sapEntryLocalService.fetchSAPEntry(
+				company.getCompanyId(),
+				_sapConfiguration.systemRESTClientTemplateObjectSAPEntryName());
+
+			Assert.assertNotNull(sapEntry);
+
+			Role role = RoleLocalServiceUtil.getRole(
+				company.getCompanyId(), RoleConstants.GUEST);
+
+			Assert.assertTrue(
+				_resourcePermissionLocalService.hasResourcePermission(
+					company.getCompanyId(), SAPEntry.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(sapEntry.getSapEntryId()), role.getRoleId(),
+					ActionKeys.VIEW));
 		}
-
-		_runUpgrade();
-
-		sapEntry = _sapEntryLocalService.fetchSAPEntry(
-			company.getCompanyId(),
-			_sapConfiguration.systemRESTClientTemplateObjectSAPEntryName());
-
-		Assert.assertNotNull(sapEntry);
-
-		Role role = RoleLocalServiceUtil.getRole(
-			company.getCompanyId(), RoleConstants.GUEST);
-
-		Assert.assertTrue(
-			_resourcePermissionLocalService.hasResourcePermission(
-				company.getCompanyId(), SAPEntry.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(sapEntry.getSapEntryId()), role.getRoleId(),
-				ActionKeys.VIEW));
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -101,6 +107,9 @@ public class SAPEntryUpgradeProcessTest {
 		filter = "(&(component.name=com.liferay.portal.security.service.access.policy.internal.upgrade.registry.SAPServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -24,6 +25,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -45,6 +47,11 @@ public class LanguageImplGetAvailableLocalesTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Test
@@ -98,6 +105,9 @@ public class LanguageImplGetAvailableLocalesTest {
 	}
 
 	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	@Inject
 	private static GroupLocalService _groupLocalService;

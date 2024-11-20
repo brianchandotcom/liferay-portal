@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -48,12 +49,15 @@ public class ExportUsersMVCResourceCommandTest {
 
 	@Test
 	public void testGetUserCSVWithExpando() throws Exception {
+		Company company1 = null;
+		Company company2 = null;
+
 		try (SafeCloseable safeCloseable1 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT",
 					false)) {
 
-			Company company1 = CompanyTestUtil.addCompany();
+			company1 = CompanyTestUtil.addCompany();
 
 			User user1 = UserTestUtil.addUser(company1);
 
@@ -84,7 +88,7 @@ public class ExportUsersMVCResourceCommandTest {
 						StringPool.NEW_LINE),
 					_getUserCSV(user1));
 
-				Company company2 = CompanyTestUtil.addCompany();
+				company2 = CompanyTestUtil.addCompany();
 
 				User user2 = UserTestUtil.addUser(company2);
 
@@ -95,6 +99,15 @@ public class ExportUsersMVCResourceCommandTest {
 					_getUserCSV(user2));
 			}
 		}
+		finally {
+			if (company1 != null) {
+				_companyLocalService.deleteCompany(company1);
+			}
+
+			if (company2 != null) {
+				_companyLocalService.deleteCompany(company2);
+			}
+		}
 	}
 
 	private String _getUserCSV(User user) {
@@ -102,6 +115,9 @@ public class ExportUsersMVCResourceCommandTest {
 			_mvcResourceCommand, "_getUserCSV", new Class<?>[] {User.class},
 			user);
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private ExpandoTableLocalService _expandoTableLocalService;

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -40,6 +41,7 @@ import java.util.List;
 import org.frutilla.FrutillaRule;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -64,6 +66,11 @@ public class CPDefinitionHelperTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Before
@@ -267,6 +274,9 @@ public class CPDefinitionHelperTest {
 	private static final int _CP_INSTANCES_COUNT = 10;
 
 	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	private CommerceCatalog _commerceCatalog;
 

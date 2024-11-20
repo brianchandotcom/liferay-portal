@@ -116,20 +116,26 @@ public class DepotEntryLocalServiceTest {
 	public void testDeleteCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		User user = UserTestUtil.addUser(company);
+		DepotEntry depotEntry = null;
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), "name"
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), "description"
-			).build(),
-			_getServiceContext(user));
+		try {
+			User user = UserTestUtil.addUser(company);
 
-		Assert.assertEquals(company.getCompanyId(), depotEntry.getCompanyId());
+			depotEntry = _depotEntryLocalService.addDepotEntry(
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), "name"
+				).build(),
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), "description"
+				).build(),
+				_getServiceContext(user));
 
-		_companyLocalService.deleteCompany(company);
+			Assert.assertEquals(
+				company.getCompanyId(), depotEntry.getCompanyId());
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 
 		Assert.assertNull(
 			_depotEntryLocalService.fetchDepotEntry(

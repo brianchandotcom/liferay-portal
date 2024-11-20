@@ -103,12 +103,12 @@ public class UpgradeCompanyIdTest {
 	public void testUpgradeNullValues() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		_upgradeProcess.runSQL(
-			StringBundler.concat(
-				"insert into ", _MAPPING_TABLE_NAME, " (", _COLUMN_NAME,
-				") values (", _COLUMN_VALUE - 1, ");"));
-
 		try {
+			_upgradeProcess.runSQL(
+				StringBundler.concat(
+					"insert into ", _MAPPING_TABLE_NAME, " (", _COLUMN_NAME,
+					") values (", _COLUMN_VALUE - 1, ");"));
+
 			_upgradeProcess.upgrade();
 
 			Assert.fail();
@@ -116,8 +116,9 @@ public class UpgradeCompanyIdTest {
 		catch (Exception exception) {
 			Assert.assertNotNull(exception);
 		}
-
-		_companyLocalService.deleteCompany(company);
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	private static final String _COLUMN_NAME = "id";

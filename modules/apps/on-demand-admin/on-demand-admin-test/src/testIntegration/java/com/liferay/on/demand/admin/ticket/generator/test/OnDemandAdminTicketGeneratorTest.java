@@ -18,9 +18,11 @@ import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -60,10 +62,10 @@ public class OnDemandAdminTicketGeneratorTest {
 
 		_userLocalService.addRoleUser(role.getRoleId(), user);
 
-		Company company = CompanyTestUtil.addCompany();
+		_company = CompanyTestUtil.addCompany();
 
 		Ticket ticket = _onDemandAdminTicketGenerator.generate(
-			company, null, user);
+			_company, null, user);
 
 		Assert.assertEquals(
 			TicketConstants.TYPE_ON_DEMAND_ADMIN_LOGIN, ticket.getType());
@@ -71,24 +73,30 @@ public class OnDemandAdminTicketGeneratorTest {
 		User onDemandAdminUser = _userLocalService.getUser(ticket.getClassPK());
 
 		Assert.assertEquals(
-			company.getCompanyId(), onDemandAdminUser.getCompanyId());
+			_company.getCompanyId(), onDemandAdminUser.getCompanyId());
 		Assert.assertTrue(
 			StringUtil.startsWith(
 				onDemandAdminUser.getScreenName(),
 				OnDemandAdminConstants.SCREEN_NAME_PREFIX_ON_DEMAND_ADMIN));
 		Assert.assertTrue(
 			_userLocalService.hasRoleUser(
-				company.getCompanyId(), RoleConstants.ADMINISTRATOR,
+				_company.getCompanyId(), RoleConstants.ADMINISTRATOR,
 				onDemandAdminUser.getUserId(), false));
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testGenerateWithoutPermission() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
+		_company = CompanyTestUtil.addCompany();
 		User user = UserTestUtil.addUser();
 
-		_onDemandAdminTicketGenerator.generate(company, null, user);
+		_onDemandAdminTicketGenerator.generate(_company, null, user);
 	}
+
+	@DeleteAfterTestRun
+	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private OnDemandAdminTicketGenerator _onDemandAdminTicketGenerator;

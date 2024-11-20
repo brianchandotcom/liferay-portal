@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -83,7 +84,9 @@ public class SetupAdminAutoLoginTest {
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
+
 		_safeCloseable.close();
 	}
 
@@ -171,6 +174,10 @@ public class SetupAdminAutoLoginTest {
 		SetupAdminAutoLoginTest.class);
 
 	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
 	private static String _emailAdressAdminUser;
 	private static SafeCloseable _safeCloseable;
 	private static User _user;

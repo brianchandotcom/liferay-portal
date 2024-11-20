@@ -1745,23 +1745,26 @@ public class JournalArticleLocalServiceTest {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		Group group = GroupTestUtil.addGroup();
+		try {
+			Group group = GroupTestUtil.addGroup();
 
-		JournalTestUtil.addArticle(
-			group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			JournalTestUtil.addArticle(
+				group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		calendar.add(Calendar.DATE, -1);
+			calendar.add(Calendar.DATE, -1);
 
-		List<JournalArticle> journalArticles =
-			_journalArticleLocalService.getArticlesByReviewDate(
-				_group.getCompanyId(), calendar.getTime(), new Date());
+			List<JournalArticle> journalArticles =
+				_journalArticleLocalService.getArticlesByReviewDate(
+					_group.getCompanyId(), calendar.getTime(), new Date());
 
-		Assert.assertEquals(
-			journalArticles.toString(), 1, journalArticles.size());
-		Assert.assertEquals(journalArticle, journalArticles.get(0));
-
-		_companyLocalService.deleteCompany(company);
+			Assert.assertEquals(
+				journalArticles.toString(), 1, journalArticles.size());
+			Assert.assertEquals(journalArticle, journalArticles.get(0));
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	@Test(expected = PortalException.class)

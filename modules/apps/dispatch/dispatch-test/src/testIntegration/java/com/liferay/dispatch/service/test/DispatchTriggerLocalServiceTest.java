@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -401,22 +402,28 @@ public class DispatchTriggerLocalServiceTest {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		User user2 = UserTestUtil.addUser(company);
+		try {
+			User user2 = UserTestUtil.addUser(company);
 
-		DispatchTrigger dispatchTrigger2 = _addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(
-				user2, _getRandomDispatchExecutorType(), 1));
+			DispatchTrigger dispatchTrigger2 = _addDispatchTrigger(
+				DispatchTriggerTestUtil.randomDispatchTrigger(
+					user2, _getRandomDispatchExecutorType(), 1));
 
-		Assert.assertEquals(
-			dispatchTrigger1.getName(), dispatchTrigger2.getName());
+			Assert.assertEquals(
+				dispatchTrigger1.getName(), dispatchTrigger2.getName());
 
-		dispatchTrigger2 = _dispatchTriggerLocalService.updateDispatchTrigger(
-			dispatchTrigger2.getDispatchTriggerId(),
-			dispatchTrigger1.getDispatchTaskSettingsUnicodeProperties(),
-			dispatchTrigger1.getName());
+			dispatchTrigger2 =
+				_dispatchTriggerLocalService.updateDispatchTrigger(
+					dispatchTrigger2.getDispatchTriggerId(),
+					dispatchTrigger1.getDispatchTaskSettingsUnicodeProperties(),
+					dispatchTrigger1.getName());
 
-		Assert.assertEquals(
-			dispatchTrigger1.getName(), dispatchTrigger2.getName());
+			Assert.assertEquals(
+				dispatchTrigger1.getName(), dispatchTrigger2.getName());
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	@Test
@@ -728,6 +735,9 @@ public class DispatchTriggerLocalServiceTest {
 
 		Assert.assertEquals(expectedCalendar, nextFireCalendar);
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private DispatchLogLocalService _dispatchLogLocalService;

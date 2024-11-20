@@ -13,13 +13,13 @@ import com.liferay.portal.kernel.model.CompanyInfo;
 import com.liferay.portal.kernel.service.CompanyInfoLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -39,6 +39,11 @@ public class CompanyInfoLocalServiceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -100,6 +105,8 @@ public class CompanyInfoLocalServiceTest {
 			_company.getKeyObj());
 	}
 
+	private static Company _company;
+
 	@Inject
 	private static CompanyInfoLocalService _companyInfoLocalService;
 
@@ -111,8 +118,5 @@ public class CompanyInfoLocalServiceTest {
 
 	@Inject
 	private static Encryptor _encryptor;
-
-	@DeleteAfterTestRun
-	private Company _company;
 
 }

@@ -548,10 +548,13 @@ public class ObjectRelatedModelsProviderTest {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		_testObjectEntry1toMObjectUnrelatedModelsProviderImpl(
-			company.getCompanyId());
-
-		_companyLocalService.deleteCompany(company);
+		try {
+			_testObjectEntry1toMObjectUnrelatedModelsProviderImpl(
+				company.getCompanyId());
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	@Test

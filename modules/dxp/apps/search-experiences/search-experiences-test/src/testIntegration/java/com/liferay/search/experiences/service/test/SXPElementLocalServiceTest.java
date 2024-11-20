@@ -83,12 +83,17 @@ public class SXPElementLocalServiceTest {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		User user = UserTestUtil.getAdminUser(company.getCompanyId());
+		SXPElement differentCompanySXPElement = null;
 
-		SXPElement differentCompanySXPElement = _addSXPElement(
-			sxpElement.getExternalReferenceCode(), user.getUserId());
+		try {
+			User user = UserTestUtil.getAdminUser(company.getCompanyId());
 
-		_companyLocalService.deleteCompany(company);
+			differentCompanySXPElement = _addSXPElement(
+				sxpElement.getExternalReferenceCode(), user.getUserId());
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 
 		Assert.assertEquals(
 			sxpElement.getExternalReferenceCode(),

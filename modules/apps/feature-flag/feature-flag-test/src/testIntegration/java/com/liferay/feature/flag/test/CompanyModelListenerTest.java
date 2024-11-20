@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -43,29 +44,37 @@ public class CompanyModelListenerTest {
 	public void testOnAfterCreate() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		PortalPreferencesWrapper portalPreferencesWrapper =
-			(PortalPreferencesWrapper)
-				_portalPreferencesLocalService.getPreferences(
+		try {
+			PortalPreferencesWrapper portalPreferencesWrapper =
+				(PortalPreferencesWrapper)
+					_portalPreferencesLocalService.getPreferences(
+						company.getCompanyId(),
+						PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+			PortalPreferences portalPreferences =
+				portalPreferencesWrapper.getPortalPreferencesImpl();
+
+			List<FeatureFlag> deprecationFeatureFlags =
+				_featureFlagManager.getFeatureFlags(
 					company.getCompanyId(),
-					PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+					FeatureFlagType.DEPRECATION.getPredicate());
 
-		PortalPreferences portalPreferences =
-			portalPreferencesWrapper.getPortalPreferencesImpl();
-
-		List<FeatureFlag> deprecationFeatureFlags =
-			_featureFlagManager.getFeatureFlags(
-				company.getCompanyId(),
-				FeatureFlagType.DEPRECATION.getPredicate());
-
-		for (FeatureFlag deprecationFeatureFlag : deprecationFeatureFlags) {
-			Assert.assertEquals(
-				"false",
-				portalPreferences.getValue(
-					FeatureFlagConstants.PREFERENCE_NAMESPACE,
-					deprecationFeatureFlag.getKey()));
-			Assert.assertFalse(deprecationFeatureFlag.isEnabled());
+			for (FeatureFlag deprecationFeatureFlag : deprecationFeatureFlags) {
+				Assert.assertEquals(
+					"false",
+					portalPreferences.getValue(
+						FeatureFlagConstants.PREFERENCE_NAMESPACE,
+						deprecationFeatureFlag.getKey()));
+				Assert.assertFalse(deprecationFeatureFlag.isEnabled());
+			}
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
 		}
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private FeatureFlagManager _featureFlagManager;

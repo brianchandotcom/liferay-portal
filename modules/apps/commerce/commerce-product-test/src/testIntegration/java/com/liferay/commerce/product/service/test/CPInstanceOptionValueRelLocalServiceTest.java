@@ -20,6 +20,7 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,6 +36,7 @@ import java.util.List;
 import org.frutilla.FrutillaRule;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -59,6 +61,11 @@ public class CPInstanceOptionValueRelLocalServiceTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Before
@@ -184,6 +191,9 @@ public class CPInstanceOptionValueRelLocalServiceTest {
 	public final FrutillaRule frutillaRule = new FrutillaRule();
 
 	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	private CommerceCatalog _commerceCatalog;
 

@@ -64,28 +64,33 @@ public class UserModelPreFilterContributorTest {
 	public void testSearchUsers() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		OnDemandAdminTestUtil.addOnDemandAdminUser(company);
-		OnDemandAdminTestUtil.addOnDemandAdminUser(company);
-		UserTestUtil.addUser(company);
-		UserTestUtil.addUser(company);
+		try {
+			OnDemandAdminTestUtil.addOnDemandAdminUser(company);
+			OnDemandAdminTestUtil.addOnDemandAdminUser(company);
+			UserTestUtil.addUser(company);
+			UserTestUtil.addUser(company);
 
-		BaseModelSearchResult<User> baseModelSearchResult =
-			_userLocalService.searchUsers(
-				company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-				new LinkedHashMap<String, Object>(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new Sort("userId", false));
+			BaseModelSearchResult<User> baseModelSearchResult =
+				_userLocalService.searchUsers(
+					company.getCompanyId(), null,
+					WorkflowConstants.STATUS_APPROVED,
+					new LinkedHashMap<String, Object>(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, new Sort("userId", false));
 
-		int companyUsersCount = _userLocalService.getCompanyUsersCount(
-			company.getCompanyId());
+			int companyUsersCount = _userLocalService.getCompanyUsersCount(
+				company.getCompanyId());
 
-		Assert.assertEquals(
-			companyUsersCount - 2, baseModelSearchResult.getLength());
+			Assert.assertEquals(
+				companyUsersCount - 2, baseModelSearchResult.getLength());
 
-		for (User user : baseModelSearchResult.getBaseModels()) {
-			Assert.assertFalse(_onDemandAdminManager.isOnDemandAdminUser(user));
+			for (User user : baseModelSearchResult.getBaseModels()) {
+				Assert.assertFalse(
+					_onDemandAdminManager.isOnDemandAdminUser(user));
+			}
 		}
-
-		_companyLocalService.deleteCompany(company);
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	@Inject

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkService;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -43,6 +44,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -79,6 +81,11 @@ public class WorkflowDefinitionLinkServiceImplTest {
 		_configuration = _configurationAdmin.getConfiguration(
 			WorkflowDefinitionConfiguration.class.getName(),
 			StringPool.QUESTION);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Before
@@ -262,6 +269,10 @@ public class WorkflowDefinitionLinkServiceImplTest {
 
 	private static Company _company;
 	private static User _companyAdminUser;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
 	private static Configuration _configuration;
 
 	@Inject

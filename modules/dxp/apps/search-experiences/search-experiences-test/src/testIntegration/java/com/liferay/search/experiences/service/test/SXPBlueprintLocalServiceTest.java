@@ -82,16 +82,21 @@ public class SXPBlueprintLocalServiceTest {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		User user = UserTestUtil.getAdminUser(company.getCompanyId());
+		SXPBlueprint differentCompanySXPBlueprint = null;
 
-		SXPBlueprint differentCompanySXPBlueprint = _addSXPBlueprint(
-			sxpBlueprint.getExternalReferenceCode(), user.getUserId(),
-			Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			ServiceContextTestUtil.getServiceContext());
+		try {
+			User user = UserTestUtil.getAdminUser(company.getCompanyId());
 
-		_companyLocalService.deleteCompany(company);
+			differentCompanySXPBlueprint = _addSXPBlueprint(
+				sxpBlueprint.getExternalReferenceCode(), user.getUserId(),
+				Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				ServiceContextTestUtil.getServiceContext());
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 
 		Assert.assertEquals(
 			sxpBlueprint.getExternalReferenceCode(),

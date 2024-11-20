@@ -5417,6 +5417,13 @@ public class DataFactory {
 
 		objectFieldModel.setObjectFieldId(_counter.get());
 
+		if (StringUtil.equals(
+				businessType,
+				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+			_objectFieldId = objectFieldModel.getObjectFieldId();
+		}
+
 		// Audit fields
 
 		objectFieldModel.setCompanyId(_companyId);
@@ -5479,6 +5486,12 @@ public class DataFactory {
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT, "attachment_",
 				objectDefinitionDBTableName, ObjectFieldConstants.DB_TYPE_LONG,
 				"Attachment", "attachment", false, false, false),
+			newObjectFieldModel(
+				0, objectDefinitionId,
+				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP,
+				"r_userTicket_userId", objectDefinitionDBTableName,
+				ObjectFieldConstants.DB_TYPE_LONG, "Assignee",
+				"r_userTicket_userId", false, false, false),
 			newObjectFieldModel(
 				listTypeDefinitionId, objectDefinitionId,
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "supportType_",
@@ -5573,6 +5586,15 @@ public class DataFactory {
 					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 					ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE));
 		}
+		else if (StringUtil.equals(
+					objectFieldModel.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+			objectFieldSettingModels.add(
+				newObjectFieldSettingModel(
+					objectFieldId, "objectRelationshipERCObjectFieldName",
+					"r_userTicket_userERC"));
+		}
 
 		return objectFieldSettingModels;
 	}
@@ -5656,8 +5678,7 @@ public class DataFactory {
 	}
 
 	public ObjectRelationshipModel newObjectRelationshipModel(
-		long objectDefinitionId1, long objectDefinitionId2,
-		long objectFieldId2) {
+		long objectDefinitionId1, long objectDefinitionId2) {
 
 		ObjectRelationshipModel objectRelationshipModel =
 			new ObjectRelationshipModelImpl();
@@ -5678,7 +5699,7 @@ public class DataFactory {
 
 		objectRelationshipModel.setObjectDefinitionId1(objectDefinitionId1);
 		objectRelationshipModel.setObjectDefinitionId2(objectDefinitionId2);
-		objectRelationshipModel.setObjectFieldId2(objectFieldId2);
+		objectRelationshipModel.setObjectFieldId2(_objectFieldId);
 		objectRelationshipModel.setParameterObjectFieldId(0);
 		objectRelationshipModel.setDeletionType(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE);
@@ -8858,6 +8879,7 @@ public class DataFactory {
 	private final String _layoutPageTemplateStructureRelData;
 	private final SimpleCounter _layoutPlidCounter;
 	private final SimpleCounter _layoutSetIdCounter;
+	private long _objectFieldId;
 	private RoleModel _ownerRoleModel;
 	private final SimpleCounter _portletPreferenceValueIdCounter;
 	private RoleModel _powerUserRoleModel;

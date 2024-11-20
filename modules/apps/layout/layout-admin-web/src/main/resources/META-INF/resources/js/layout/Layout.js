@@ -179,9 +179,9 @@ const Layout = ({
 				isSiteTemplate={isSiteTemplate}
 				namespace={namespace}
 				onColumnsChange={updateBreadcrumbs}
-				onItemMove={saveData}
 				onItemStayHover={getItemChildren}
 				rtl={Liferay.Language.direction[languageId] === 'rtl'}
+				saveData={saveData}
 				searchContainer={searchContainerElement}
 			/>
 		</div>

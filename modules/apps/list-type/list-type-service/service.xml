@@ -54,7 +54,7 @@
 			<finder-column arrayable-operator="OR" comparator="=" name="listTypeEntryId" />
 		</finder>
 		<finder name="ListTypeDefinitionId" return-type="Collection">
-			<finder-column name="listTypeDefinitionId" />
+			<finder-column arrayable-operator="OR" name="listTypeDefinitionId" />
 		</finder>
 		<finder name="LTDI_K" return-type="ListTypeEntry">
 			<finder-column name="listTypeDefinitionId" />

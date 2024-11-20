@@ -15,9 +15,6 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionServiceUtil;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.ArrayList;
@@ -78,26 +75,13 @@ public class CPSpecificationOptionImpl extends CPSpecificationOptionBaseImpl {
 
 	@Override
 	public List<ListTypeEntry> getListTypeEntries() {
-		List<CPSpecificationOptionListTypeDefinitionRel>
-			cpSpecificationOptionListTypeDefinitionRels =
+		return ListTypeEntryLocalServiceUtil.getListTypeEntries(
+			TransformUtil.transformToLongArray(
 				CPSpecificationOptionListTypeDefinitionRelLocalServiceUtil.
 					getCPSpecificationOptionListTypeDefinitionRels(
-						getCPSpecificationOptionId());
-
-		DynamicQuery dynamicQuery =
-			ListTypeEntryLocalServiceUtil.dynamicQuery();
-
-		Property listTypeDefinitionIdProperty = PropertyFactoryUtil.forName(
-			"listTypeDefinitionId");
-
-		dynamicQuery.add(
-			listTypeDefinitionIdProperty.in(
-				TransformUtil.transformToLongArray(
-					cpSpecificationOptionListTypeDefinitionRels,
-					CPSpecificationOptionListTypeDefinitionRel::
-						getListTypeDefinitionId)));
-
-		return ListTypeEntryLocalServiceUtil.dynamicQuery(dynamicQuery);
+						getCPSpecificationOptionId()),
+				CPSpecificationOptionListTypeDefinitionRel::
+					getListTypeDefinitionId));
 	}
 
 }

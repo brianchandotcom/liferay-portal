@@ -161,6 +161,14 @@ public class ListTypeEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<ListTypeEntry> getListTypeEntries(
+		long[] listTypeDefinitionIds) {
+
+		return listTypeEntryPersistence.findByListTypeDefinitionId(
+			listTypeDefinitionIds);
+	}
+
+	@Override
 	public int getListTypeEntriesCount(long listTypeDefinitionId) {
 		return listTypeEntryPersistence.countByListTypeDefinitionId(
 			listTypeDefinitionId);

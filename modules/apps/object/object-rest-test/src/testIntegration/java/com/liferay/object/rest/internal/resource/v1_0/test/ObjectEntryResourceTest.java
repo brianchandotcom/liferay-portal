@@ -7613,6 +7613,10 @@ public class ObjectEntryResourceTest {
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
 
+		ObjectEntry randomObjectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_1,
+			RandomTestUtil.randomString());
+
 		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
@@ -7620,13 +7624,28 @@ public class ObjectEntryResourceTest {
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			_objectRelationship1.getObjectFieldId2());
 
-		// nestedFields before ID
+		String objectFieldName = objectField.getName();
+
+		String objectRelationshipERCObjectFieldName =
+			ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.
+					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+				objectField);
+
+		String objectRelationshipName = _objectRelationship1.getName();
+
+		// priority(relationshipName) > priority(id) > priority(ERC)
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
 			).put(
-				_objectRelationship1.getName(),
+				objectFieldName, Long.valueOf(_objectEntry1.getObjectEntryId())
+			).put(
+				objectRelationshipERCObjectFieldName,
+				_objectEntry1.getExternalReferenceCode()
+			).put(
+				objectRelationshipName,
 				JSONUtil.put(
 					_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)
 				).put(
@@ -7636,130 +7655,135 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
-					ObjectFieldSettingUtil.getValue(
-						ObjectFieldSettingConstants.
-							NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-						objectField),
-					_objectEntry1.getExternalReferenceCode()
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
 				).put(
-					_objectRelationship1.getName(),
+					objectFieldName, randomObjectEntry.getObjectEntryId()
+				).put(
+					objectRelationshipERCObjectFieldName,
+					randomObjectEntry.getExternalReferenceCode()
+				).put(
+					objectRelationshipName,
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
 					).put(
 						"externalReferenceCode",
 						_objectEntry1.getExternalReferenceCode()
 					)
-				).put(
-					StringBundler.concat(
-						"r_", _objectRelationship1.getName(), "_",
-						_objectDefinition1.getPKObjectFieldName()),
-					Long.MAX_VALUE
-				).put(
-					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
 				).toString(),
 				_objectDefinition2.getRESTContextPath(), Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		//  ID before invalid ERC
+		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+			).put(
+				objectFieldName, _objectEntry1.getObjectEntryId()
+			).put(
+				objectRelationshipERCObjectFieldName,
+				_objectEntry1.getExternalReferenceCode()
+			).put(
+				objectRelationshipName,
+				JSONUtil.put(_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1)
+			).toString(),
+			_objectDefinition2.getRESTContextPath(), Http.Method.POST);
+
+		Assert.assertNotEquals(
+			_objectEntry1.getObjectEntryId(),
+			jsonObject1.getLong(objectFieldName));
+
+		Assert.assertNotEquals(
+			_objectEntry1.getExternalReferenceCode(),
+			jsonObject1.getString(objectRelationshipERCObjectFieldName));
+
+		//  priority(id) > priority(ERC)
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
 			).put(
-				StringBundler.concat(
-					"r_", _objectRelationship1.getName(), "_",
-					_objectDefinition1.getPKObjectFieldName()),
-				(Long)_objectEntry1.getObjectEntryId()
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					StringBundler.concat(
-						"r_", _objectRelationship1.getName(), "_",
-						_objectDefinition1.getPKObjectFieldName()),
-					_objectEntry1.getObjectEntryId()
-				).put(
-					StringUtil.replaceLast(
-						StringBundler.concat(
-							"r_", _objectRelationship1.getName(), "_",
-							_objectDefinition1.getPKObjectFieldName()),
-						"Id", "ERC"),
-					RandomTestUtil.randomString()
-				).put(
-					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
-				).toString(),
-				_objectDefinition2.getRESTContextPath(), Http.Method.POST
-			).toString(),
-			JSONCompareMode.LENIENT);
-
-		// nestedFields ERC after invalid ID
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
+				objectFieldName, Long.valueOf(_objectEntry1.getObjectEntryId())
 			).put(
-				StringUtil.replaceLast(
-					StringBundler.concat(
-						"r_", _objectRelationship1.getName(), "_",
-						_objectDefinition1.getPKObjectFieldName()),
-					"Id", "ERC"),
+				objectRelationshipERCObjectFieldName,
 				_objectEntry1.getExternalReferenceCode()
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
-					StringBundler.concat(
-						"r_", _objectRelationship1.getName(),
-						_objectDefinition1.getPKObjectFieldName()),
-					Long.MAX_VALUE
-				).put(
-					StringUtil.replaceLast(
-						StringBundler.concat(
-							"r_", _objectRelationship1.getName(), "_",
-							_objectDefinition1.getPKObjectFieldName()),
-						"Id", "ERC"),
-					_objectEntry1.getExternalReferenceCode()
-				).put(
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+				).put(
+					objectFieldName, _objectEntry1.getObjectEntryId()
+				).put(
+					objectRelationshipERCObjectFieldName,
+					randomObjectEntry.getExternalReferenceCode()
 				).toString(),
 				_objectDefinition2.getRESTContextPath(), Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// Incorrect nestedFields before ID
+		// priority(ERC) > priority(invalid id)
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
+			).put(
+				objectFieldName, Long.valueOf(_objectEntry1.getObjectEntryId())
+			).put(
+				objectRelationshipERCObjectFieldName,
+				_objectEntry1.getExternalReferenceCode()
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+				).put(
+					objectFieldName, RandomTestUtil.randomLong()
+				).put(
+					objectRelationshipERCObjectFieldName,
+					_objectEntry1.getExternalReferenceCode()
+				).toString(),
+				_objectDefinition2.getRESTContextPath(), Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
 					"WebApplicationExceptionMapper",
 				LoggerTestUtil.WARN)) {
 
-			Assert.assertEquals(
-				"approved",
+			// priority(invalid id) > priority(invalid ERC)
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					"status", "NOT_FOUND"
+				).toString(),
 				HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
-						ObjectFieldSettingUtil.getValue(
-							ObjectFieldSettingConstants.
-								NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-							objectField),
-						_objectEntry1.getExternalReferenceCode()
-					).put(
-						_objectRelationship1.getName(),
-						JSONUtil.put(
-							RandomTestUtil.randomString(),
-							RandomTestUtil.randomString())
-					).put(
-						StringBundler.concat(
-							"r_", _objectRelationship1.getName(), "_",
-							_objectDefinition1.getPKObjectFieldName()),
-						Long.MAX_VALUE
-					).put(
 						_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+					).put(
+						objectFieldName, RandomTestUtil.randomLong()
+					).put(
+						objectRelationshipERCObjectFieldName,
+						RandomTestUtil.randomString()
 					).toString(),
 					_objectDefinition2.getRESTContextPath(), Http.Method.POST
-				).getJSONObject(
-					"status"
-				).get(
-					"label"
-				));
+				).toString(),
+				JSONCompareMode.LENIENT);
+
+			// invalid ERC
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					"status", "NOT_FOUND"
+				).toString(),
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+					).put(
+						objectRelationshipERCObjectFieldName,
+						RandomTestUtil.randomString()
+					).toString(),
+					_objectDefinition2.getRESTContextPath(), Http.Method.POST
+				).toString(),
+				JSONCompareMode.LENIENT);
 		}
 	}
 

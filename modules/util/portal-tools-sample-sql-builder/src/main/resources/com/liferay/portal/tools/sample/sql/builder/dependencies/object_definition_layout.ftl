@@ -8,11 +8,11 @@ ${dataFactory.toInsertSQL(layoutModel)}
 
 ${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(layoutModel))}
 
-${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
-
 <#list fragmentEntryLinkModels as fragmentEntryLinkModel>
 	${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
 </#list>
+
+${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 
 ${dataFactory.toInsertSQL(dataFactory.newObjectDefinitionLayoutPageTemplateStructureRelModel(fragmentEntryLinkModels, layoutPageTemplateStructureModel, objectDefinitionModel))}
 

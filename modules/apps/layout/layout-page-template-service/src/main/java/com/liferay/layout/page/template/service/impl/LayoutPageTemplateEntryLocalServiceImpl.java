@@ -14,6 +14,7 @@ import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryDefaultTemplateException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
 import com.liferay.layout.page.template.internal.validator.LayoutPageTemplateEntryValidator;
@@ -125,7 +126,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		_validate(groupId, layoutPageTemplateCollectionId, name, type);
+		_validate(
+			defaultTemplate, groupId, layoutPageTemplateCollectionId, name,
+			status, type);
 
 		long layoutPageTemplateEntryId = counterLocalService.increment();
 
@@ -644,13 +647,20 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-		long layoutPageTemplateEntryId, boolean defaultTemplate) {
+			long layoutPageTemplateEntryId, boolean defaultTemplate)
+		throws PortalException {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
 		if (layoutPageTemplateEntry == null) {
 			return null;
+		}
+
+		if (layoutPageTemplateEntry.getStatus() !=
+				WorkflowConstants.STATUS_APPROVED) {
+
+			throw new LayoutPageTemplateEntryDefaultTemplateException();
 		}
 
 		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
@@ -734,9 +744,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		if (!Objects.equals(layoutPageTemplateEntry.getName(), name)) {
 			_validate(
+				layoutPageTemplateEntry.isDefaultTemplate(),
 				layoutPageTemplateEntry.getGroupId(),
 				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
-				name, layoutPageTemplateEntry.getType());
+				name, status, layoutPageTemplateEntry.getType());
 		}
 
 		layoutPageTemplateEntry.setModifiedDate(new Date());
@@ -828,11 +839,17 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			long userId, long layoutPageTemplateEntryId, int status)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			layoutPageTemplateEntryPersistence.findByPrimaryKey(
 				layoutPageTemplateEntryId);
+
+		if (layoutPageTemplateEntry.isDefaultTemplate() &&
+			(status != WorkflowConstants.STATUS_APPROVED)) {
+
+			throw new LayoutPageTemplateEntryDefaultTemplateException();
+		}
+
+		User user = _userLocalService.getUser(userId);
 
 		layoutPageTemplateEntry.setModifiedDate(new Date());
 		layoutPageTemplateEntry.setStatus(status);
@@ -1054,6 +1071,19 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 
 		return name;
+	}
+
+	private void _validate(
+			boolean defaultTemplate, long groupId,
+			long layoutPageTemplateCollectionId, String name, int status,
+			int type)
+		throws PortalException {
+
+		if (defaultTemplate && (status != WorkflowConstants.STATUS_APPROVED)) {
+			throw new LayoutPageTemplateEntryDefaultTemplateException();
+		}
+
+		_validate(groupId, layoutPageTemplateCollectionId, name, type);
 	}
 
 	private void _validate(long classNameId, long classTypeId, long groupId)

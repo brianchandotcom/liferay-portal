@@ -316,6 +316,10 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			String unitOfMeasureKey, Map<String, String> context)
 		throws PortalException {
 
+		if (commerceInventoryBookedQuantityId < 1) {
+			return null;
+		}
+
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 			commerceInventoryBookedQuantityPersistence.fetchByPrimaryKey(
 				commerceInventoryBookedQuantityId);

@@ -7766,7 +7766,7 @@ paths:
             # @review
             description:
                 Retrieves the history of previously used URLs for a page.
-            operationId: getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistoryPage
+            operationId: getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory
             parameters:
                 - in: path
                   name: siteExternalReferenceCode
@@ -7794,12 +7794,10 @@ paths:
                     content:
                         application/json:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/FriendlyUrlHistory"
+                                $ref: "#/components/schemas/FriendlyUrlHistory"
                         application/xml:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/FriendlyUrlHistory"
+                                $ref: "#/components/schemas/FriendlyUrlHistory"
             tags: ["FriendlyUrlHistory"]
     "/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/page-specifications":
         get:

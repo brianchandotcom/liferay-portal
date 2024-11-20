@@ -312,7 +312,7 @@ public class ViewConflictsDisplayContext {
 					PortletURLBuilder.createActionURL(
 						_renderResponse
 					).setActionName(
-						"/change_tracking/restore_from_trash"
+						"/change_tracking/restore_trash_entries"
 					).setRedirect(
 						_portal.getCurrentURL(_renderRequest)
 					).setParameter(

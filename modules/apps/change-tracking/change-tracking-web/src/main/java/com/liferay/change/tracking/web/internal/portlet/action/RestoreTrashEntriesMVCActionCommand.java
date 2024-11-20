@@ -28,11 +28,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
-		"mvc.command.name=/change_tracking/restore_from_trash"
+		"mvc.command.name=/change_tracking/restore_trash_entries"
 	},
 	service = MVCActionCommand.class
 )
-public class RestoreFromTrashMVCActionCommand extends BaseMVCActionCommand {
+public class RestoreTrashEntriesMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

@@ -14,7 +14,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {PageTemplateModal} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {fetch, navigate, sub} from 'frontend-js-web';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useDrag, useDragLayer, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
@@ -234,28 +234,6 @@ const MillerColumnsItem = ({
 		);
 	}, [quickActions]);
 
-	const onMove = useCallback(
-		(sources, target, position) => {
-			if (position === DROP_POSITIONS.middle) {
-				const newIndex = Array.from(items.values()).filter(
-					(item) => item.id === target.id
-				).length;
-
-				onItemDrop(sources, target.id, newIndex);
-			}
-			else {
-				let newIndex = target.itemIndex;
-
-				if (position === DROP_POSITIONS.bottom) {
-					newIndex = target.itemIndex + 1;
-				}
-
-				onItemDrop(sources, target.parentId, newIndex);
-			}
-		},
-		[items, onItemDrop]
-	);
-
 	const isDragging = useDragLayer((monitor) => monitor.isDragging());
 
 	const [{isDragging: isDragSource}, drag, previewRef] = useDrag({
@@ -305,7 +283,7 @@ const MillerColumnsItem = ({
 		}),
 		drop(source, monitor) {
 			if (monitor.canDrop()) {
-				onMove(source.items, item, dropPosition);
+				onItemDrop(source.items, item, dropPosition);
 			}
 		},
 		hover(source, monitor) {
@@ -333,7 +311,6 @@ const MillerColumnsItem = ({
 		isPrivateLayoutsEnabled,
 		item,
 		items,
-		onMove,
 		rtl,
 	});
 

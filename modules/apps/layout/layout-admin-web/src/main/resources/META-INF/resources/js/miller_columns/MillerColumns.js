@@ -11,6 +11,7 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import MillerColumnsColumn from './MillerColumnsColumn';
+import {DROP_POSITIONS} from './constants/dropPositions';
 import {KeyboardMovementProvider} from './contexts/KeyboardMovementContext';
 import {KeyboardNavigationProvider} from './contexts/KeyboardNavigationContext';
 
@@ -246,7 +247,26 @@ const MillerColumns = ({
 	);
 
 	const onItemDrop = useCallback(
-		(sources, newParentId, targetIndex) => {
+		(sources, target, position) => {
+			let targetId;
+			let targetIndex;
+
+			if (position === DROP_POSITIONS.middle) {
+				targetId = target.id;
+
+				targetIndex = Array.from(items.values()).filter(
+					(item) => item.id === target.id
+				).length;
+			}
+			else {
+				targetId = target.parentId;
+
+				targetIndex = target.itemIndex;
+
+				if (position === DROP_POSITIONS.bottom) {
+					targetIndex = target.itemIndex + 1;
+				}
+			}
 
 			// Update checked items to keep them selected after updating items
 			// with server response
@@ -262,8 +282,8 @@ const MillerColumns = ({
 			setItems(newItems);
 
 			saveData(
-				getMovedItems(sources, newParentId, targetIndex),
-				newParentId,
+				getMovedItems(sources, targetId, targetIndex),
+				targetId,
 				sources[0].url
 			);
 		},
@@ -294,6 +314,7 @@ const MillerColumns = ({
 			<KeyboardMovementProvider
 				columnSizes={columnSizes}
 				items={items}
+				onMove={onItemDrop}
 				rtl={rtl}
 			>
 				<DndProvider backend={HTML5Backend}>

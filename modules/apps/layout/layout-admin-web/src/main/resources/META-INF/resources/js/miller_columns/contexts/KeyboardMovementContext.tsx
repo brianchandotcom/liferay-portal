@@ -25,18 +25,9 @@ export type MovementTarget = {
 	position: DropPosition;
 } | null;
 
-type OnMove =
-	| ((
-			sources: MovementSources,
-			target: MillerColumnItem,
-			position: DropPosition
-	  ) => void)
-	| null;
-
 const KeyboardMovementContext = React.createContext<{
 	columnSizes: number[];
 	redirectURL: string | null;
-	setOnMove: Dispatch<SetStateAction<OnMove>>;
 	setRedirectURL: Dispatch<SetStateAction<string | null>>;
 	setSources: Dispatch<SetStateAction<MovementSources>>;
 	setTarget: Dispatch<SetStateAction<MovementTarget>>;
@@ -45,7 +36,6 @@ const KeyboardMovementContext = React.createContext<{
 }>({
 	columnSizes: [],
 	redirectURL: null,
-	setOnMove: () => {},
 	setRedirectURL: () => {},
 	setSources: () => {},
 	setTarget: () => {},
@@ -72,17 +62,22 @@ function KeyboardMovementProvider({
 	children,
 	columnSizes,
 	items,
+	onMove,
 	rtl,
 }: {
 	children: ReactNode;
 	columnSizes: number[];
 	items: Map<string, MillerColumnItem>;
+	onMove: (
+		sources: MovementSources,
+		target: MillerColumnItem,
+		position: DropPosition
+	) => void;
 	rtl: boolean;
 }) {
 	const [sources, setSources] = useState<MovementSources>([]);
 	const [target, setTarget] = useState<MovementTarget>(null);
 	const [redirectURL, setRedirectURL] = useState<string | null>(null);
-	const [onMove, setOnMove] = useState<OnMove>(null);
 
 	useEffect(() => {
 		const onKeyDown = (event: KeyboardEvent) => {
@@ -152,7 +147,6 @@ function KeyboardMovementProvider({
 			value={{
 				columnSizes,
 				redirectURL,
-				setOnMove,
 				setRedirectURL,
 				setSources,
 				setTarget,

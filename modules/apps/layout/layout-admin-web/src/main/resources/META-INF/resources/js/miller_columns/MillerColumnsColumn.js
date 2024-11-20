@@ -83,7 +83,7 @@ const MillerColumnsColumn = ({
 		}),
 		drop(source) {
 			if (canDrop) {
-				onItemDrop(source.items, parent.id, columnItems.length);
+				onItemDrop(source.items, parent, columnItems.length);
 			}
 		},
 		hover(source, monitor) {

@@ -5,7 +5,6 @@
 
 import {useCallback, useContext, useEffect} from 'react';
 
-import {DropPosition} from '../constants/dropPositions';
 import {
 	KeyboardMovementContext,
 	MovementSources,
@@ -31,23 +30,17 @@ export function useKeyboardMovement({
 	isPrivateLayoutsEnabled,
 	item,
 	items,
-	onMove,
 }: {
 	isPrivateLayoutsEnabled: boolean;
 	item: MillerColumnItem;
 	items: Items;
-	onMove: (
-		sources: MovementSources,
-		target: MillerColumnItem,
-		targetPosition: DropPosition
-	) => {};
+
 	rtl: boolean;
 }) {
 	const {columnIndex, itemIndex} = item;
 
 	const {
 		columnSizes,
-		setOnMove,
 		setRedirectURL,
 		setSources,
 		setTarget,
@@ -75,7 +68,6 @@ export function useKeyboardMovement({
 			});
 
 			if (initialTarget) {
-				setOnMove(() => onMove);
 				setSources(sources);
 				setTarget(initialTarget);
 			}
@@ -85,8 +77,6 @@ export function useKeyboardMovement({
 			isPrivateLayoutsEnabled,
 			item,
 			items,
-			onMove,
-			setOnMove,
 			setSources,
 			setTarget,
 		]

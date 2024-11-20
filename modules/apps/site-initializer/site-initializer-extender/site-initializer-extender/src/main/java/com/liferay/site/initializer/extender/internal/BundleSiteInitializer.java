@@ -1537,12 +1537,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray(
-			_replace(json, stringUtilReplaceValues));
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject blogPostingJSONObject = _jsonFactory.createJSONObject(
+				_replace(
+					String.valueOf(jsonArray.getJSONObject(i)),
+					stringUtilReplaceValues));
+
 			BlogPosting blogPosting = BlogPosting.toDTO(
-				String.valueOf(jsonArray.getJSONObject(i)));
+				String.valueOf(blogPostingJSONObject));
 
 			if (blogPosting == null) {
 				_log.error(
@@ -1555,6 +1559,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 				blogPostingResource.putSiteBlogPostingByExternalReferenceCode(
 					serviceContext.getScopeGroupId(),
 					blogPosting.getExternalReferenceCode(), blogPosting);
+
+			long blogPostingAssetEntryId = _assetEntryLocalService.getEntry(
+				"com.liferay.blogs.model.BlogsEntry", blogPosting.getId()
+			).getEntryId();
+
+			JSONArray relatedContentsJSONArray =
+				blogPostingJSONObject.getJSONArray("relatedContents");
+
+			for (int j = 0; j < relatedContentsJSONArray.length(); j++) {
+				JSONObject relatedContentJSONObject =
+					relatedContentsJSONArray.getJSONObject(j);
+
+				AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+					_contentTypes.get(
+						relatedContentJSONObject.getString("contentType")),
+					relatedContentJSONObject.getLong("id"));
+
+				if (assetEntry != null) {
+					_assetLinkLocalService.addLink(
+						serviceContext.getUserId(), blogPostingAssetEntryId,
+						assetEntry.getEntryId(), 0, 0);
+				}
+			}
 
 			stringUtilReplaceValues.put(
 				"BLOG_POSTING_ID:" + blogPosting.getExternalReferenceCode(),
@@ -5965,6 +5992,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private static final Snapshot<CommerceSiteInitializer>
 		_commerceSiteInitializerSnapshot = new Snapshot<>(
 			BundleSiteInitializer.class, CommerceSiteInitializer.class);
+	private static final Map<String, String> _contentTypes = HashMapBuilder.put(
+		"BlogPosting", "com.liferay.blogs.model.BlogsEntry"
+	).put(
+		"Document", "com.liferay.document.library.kernel.model.DLFileEntry"
+	).put(
+		"Document", "com.liferay.portal.kernel.repository.model.FileEntry"
+	).put(
+		"StructuredContent", "com.liferay.journal.model.JournalArticle"
+	).build();
 	private static final ThreadLocal<Set<String>> _initializedGroupIdAndKeys =
 		new CentralizedThreadLocal<>(
 			BundleSiteInitializer.class + "._initializedGroupIdAndKeys",

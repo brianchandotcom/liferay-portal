@@ -20,5 +20,20 @@
 		"friendlyUrlPath": "test-blog-posting-2",
 		"headline": "Test Headline 2",
 		"viewableBy": "Anyone"
+	},
+	{
+		"alternativeHeadline": "Test Blog Posting 3",
+		"articleBody": "<p>Test Article Body 3</p>",
+		"description": "Test Description 3",
+		"externalReferenceCode": "TESTBLOGPOSTING3",
+		"friendlyUrlPath": "test-blog-posting-3",
+		"headline": "Test Headline 3",
+		"relatedContents": [
+			{
+				"contentType": "BlogPosting",
+				"id": "[#BLOG_POSTING_ID:TESTBLOGPOSTING2#]"
+			}
+		],
+		"viewableBy": "Anyone"
 	}
 ]

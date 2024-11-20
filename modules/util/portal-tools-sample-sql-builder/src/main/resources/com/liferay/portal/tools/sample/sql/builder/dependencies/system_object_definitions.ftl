@@ -12,8 +12,8 @@ ${dataFactory.toInsertSQL(commerceOrderObjectDefinitionModel)}
 	${dataFactory.toInsertSQL(resourcePermissionModel)}
 </#list>
 
-<#list dataFactory.newSystemObjectFieldModels(commerceOrderObjectDefinitionModel.getObjectDefinitionId(), commerceOrderObjectDefinitionModel.getDBTableName(), "commerceOrderId") as systemObjectFieldModel>
-	${dataFactory.toInsertSQL(systemObjectFieldModel)}
+<#list dataFactory.newObjectFieldModels(commerceOrderObjectDefinitionModel.getObjectDefinitionId(), commerceOrderObjectDefinitionModel.getDBTableName(), 0, "commerceOrderId") as objectFieldModel>
+	${dataFactory.toInsertSQL(objectFieldModel)}
 </#list>
 
 ${dataFactory.toInsertSQL(userObjectDefinitionModel)}
@@ -24,6 +24,6 @@ ${dataFactory.toInsertSQL(userObjectDefinitionModel)}
 
 ${dataFactory.getExtensionDynamicObjectDefinitionTableCreateSQL(userObjectDefinitionModel)}
 
-<#list dataFactory.newSystemObjectFieldModels(userObjectDefinitionModel.getObjectDefinitionId(), userObjectDefinitionModel.getDBTableName(), "userId") as systemObjectFieldModel>
-	${dataFactory.toInsertSQL(systemObjectFieldModel)}
+<#list dataFactory.newObjectFieldModels(userObjectDefinitionModel.getObjectDefinitionId(), userObjectDefinitionModel.getDBTableName(), 0, "userId") as objectFieldModel>
+	${dataFactory.toInsertSQL(objectFieldModel)}
 </#list>

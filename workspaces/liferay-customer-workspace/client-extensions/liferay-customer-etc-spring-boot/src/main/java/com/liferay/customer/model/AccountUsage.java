@@ -101,8 +101,7 @@ public class AccountUsage {
 							NAME_LIFERAY_SAAS_ENTITLEMENTS_PREFIX) &&
 					 name.endsWith("APVs")) {
 
-				long curAnonymousPageViewsMax = _getAnonymousPageViewsMaxValue(
-					name);
+				long curAnonymousPageViewsMax = _getAnonymousPageViewsMax(name);
 
 				if (curAnonymousPageViewsMax > anonymousPageViewsMax) {
 					anonymousPageViewsMax = curAnonymousPageViewsMax;
@@ -114,7 +113,7 @@ public class AccountUsage {
 					 name.endsWith("MALUs")) {
 
 				long curMonthlyActiveLoggedInUsersMax =
-					_getMonthlyActiveLoggedInUsersMaxValue(name);
+					_getMonthlyActiveLoggedInUsersMax(name);
 
 				if (curMonthlyActiveLoggedInUsersMax >
 						monthlyActiveLoggedInUsersMax) {
@@ -174,7 +173,7 @@ public class AccountUsage {
 		return jsonObject;
 	}
 
-	private long _getAnonymousPageViewsMaxValue(String name) {
+	private long _getAnonymousPageViewsMax(String name) {
 		String anonymousPageViewsMaxString = name.substring(
 			ProductConstants.NAME_LIFERAY_SAAS_ENTITLEMENTS_PREFIX.length());
 
@@ -184,7 +183,7 @@ public class AccountUsage {
 		return GetterUtil.getLong(anonymousPageViewsMaxString);
 	}
 
-	private long _getMonthlyActiveLoggedInUsersMaxValue(String name) {
+	private long _getMonthlyActiveLoggedInUsersMax(String name) {
 		String monthlyActiveLoggedInUsersMaxString = name.substring(
 			ProductConstants.NAME_LIFERAY_SAAS_ENTITLEMENTS_PREFIX.length());
 

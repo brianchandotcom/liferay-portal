@@ -18,6 +18,8 @@ import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -141,6 +143,27 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, userResource.deleteV2UserHttpResponse("12345"));
+	}
+
+	@Test
+	public void testExactSearchBySCIMClientId() throws Exception {
+		User user1 = testDeleteV2User_addUser();
+		User user2 = testDeleteV2User_addUser();
+
+		_assertListResponse(userResource.getV2Users(5, 0), 2, 2, user1, user2);
+
+		long userId = GetterUtil.getLong(user2.getId());
+
+		ScimTestUtil.saveSCIMClientId(
+			com.liferay.portal.kernel.model.User.class.getName(), userId,
+			TestPropsValues.getCompanyId(),
+			"SCIM_scim-client-test" + RandomTestUtil.randomString());
+
+		_reindexUser(userId);
+
+		_assertListResponse(userResource.getV2Users(5, 0), 1, 1, user1);
+
+		ConfigurationTestUtil.deleteConfiguration(_pid);
 	}
 
 	@Override
@@ -464,6 +487,15 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		Object userObject = userResource.getV2UserById(userId);
 
 		return User.toDTO(userObject.toString());
+	}
+
+	private void _reindexUser(long userId) throws Exception {
+		Indexer<com.liferay.portal.kernel.model.User> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(
+				com.liferay.portal.kernel.model.User.class);
+
+		indexer.reindex(
+			com.liferay.portal.kernel.model.User.class.getName(), userId);
 	}
 
 	private static String _pid;

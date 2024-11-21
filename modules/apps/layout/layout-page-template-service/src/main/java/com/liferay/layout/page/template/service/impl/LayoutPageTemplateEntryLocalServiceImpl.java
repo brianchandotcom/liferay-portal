@@ -127,8 +127,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validate(
-			defaultTemplate, groupId, layoutPageTemplateCollectionId, name,
-			status, type);
+			groupId, layoutPageTemplateCollectionId, name, type,
+			defaultTemplate, status);
 
 		long layoutPageTemplateEntryId = counterLocalService.increment();
 
@@ -225,7 +225,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		// Layout page template entry
 
-		_validate(classNameId, classTypeId, groupId);
+		_validate(groupId, classNameId, classTypeId);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			addLayoutPageTemplateEntry(
@@ -744,10 +744,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		if (!Objects.equals(layoutPageTemplateEntry.getName(), name)) {
 			_validate(
-				layoutPageTemplateEntry.isDefaultTemplate(),
 				layoutPageTemplateEntry.getGroupId(),
 				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
-				name, status, layoutPageTemplateEntry.getType());
+				name, layoutPageTemplateEntry.getType(),
+				layoutPageTemplateEntry.isDefaultTemplate(), status);
 		}
 
 		layoutPageTemplateEntry.setModifiedDate(new Date());
@@ -1073,20 +1073,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return name;
 	}
 
-	private void _validate(
-			boolean defaultTemplate, long groupId,
-			long layoutPageTemplateCollectionId, String name, int status,
-			int type)
-		throws PortalException {
-
-		if (defaultTemplate && (status != WorkflowConstants.STATUS_APPROVED)) {
-			throw new LayoutPageTemplateEntryDefaultTemplateException();
-		}
-
-		_validate(groupId, layoutPageTemplateCollectionId, name, type);
-	}
-
-	private void _validate(long classNameId, long classTypeId, long groupId)
+	private void _validate(long groupId, long classNameId, long classTypeId)
 		throws PortalException {
 
 		String className = StringPool.BLANK;
@@ -1165,6 +1152,18 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			throw new LayoutPageTemplateEntryNameException.MustNotBeDuplicate(
 				groupId, name);
 		}
+	}
+
+	private void _validate(
+			long groupId, long layoutPageTemplateCollectionId, String name,
+			int type, boolean defaultTemplate, int status)
+		throws PortalException {
+
+		if (defaultTemplate && (status != WorkflowConstants.STATUS_APPROVED)) {
+			throw new LayoutPageTemplateEntryDefaultTemplateException();
+		}
+
+		_validate(groupId, layoutPageTemplateCollectionId, name, type);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

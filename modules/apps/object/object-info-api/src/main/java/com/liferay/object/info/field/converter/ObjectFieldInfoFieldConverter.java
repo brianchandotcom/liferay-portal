@@ -118,6 +118,8 @@ public class ObjectFieldInfoFieldConverter {
 				).values(
 					objectField.getLabelMap()
 				).build()
+			).localizable(
+				objectField.isLocalized()
 			).readOnly(
 				Objects.equals(
 					objectField.getReadOnly(),

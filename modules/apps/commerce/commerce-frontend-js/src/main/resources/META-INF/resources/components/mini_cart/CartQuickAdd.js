@@ -12,6 +12,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useContext, useRef, useState} from 'react';
 
 import {CHANNEL_RESOURCE_ENDPOINT} from '../../utilities/constants';
+import {CURRENT_ORDER_UPDATED} from '../../utilities/eventsDefinitions';
 import {addToCart} from '../add_to_cart/data';
 import InfiniteScroller from '../infinite_scroller/InfiniteScroller';
 import MiniCartContext from './MiniCartContext';
@@ -206,7 +207,9 @@ export default function CartQuickAdd() {
 				null,
 				CART_QUICK_ADD_NAMESPACE
 			)
-				.then(() => {})
+				.then((cart) => {
+					Liferay.fire(CURRENT_ORDER_UPDATED, {order: cart});
+				})
 				.catch((error) => {
 					Liferay.Util.openToast({
 						message:

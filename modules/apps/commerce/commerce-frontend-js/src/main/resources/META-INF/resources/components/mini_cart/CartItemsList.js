@@ -80,7 +80,7 @@ export default function CartItemsList({showPriceOnApplicationInfo = false}) {
 							return (
 								<CartViews.Item
 									index={index}
-									key={currentCartItem.id}
+									key={`${currentCartItem.id}_${currentCartItem.quantity}`}
 									updateCartItem={updateCartItem}
 									{...currentCartItem}
 								/>

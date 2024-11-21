@@ -84,6 +84,24 @@ export async function addToCart(
 		return newCart;
 	}
 
+	if (cpInstances.length === 1) {
+		await CartResource.createItemByCartId(
+			cartId,
+			formatCartItem(
+				cpInstances[0],
+				namespace,
+				skuOptions,
+				skuOptionsNamespace
+			)
+		);
+
+		const fetchedCart = await CartResource.getCartByIdWithItems(cartId);
+
+		Liferay.fire(CURRENT_ORDER_UPDATED, {order: fetchedCart});
+
+		return fetchedCart;
+	}
+
 	const fetchedCart = await CartResource.getCartByIdWithItems(cartId);
 
 	const removedItems = [];

@@ -566,6 +566,19 @@ public class RESTBuilder {
 				schemaYAMLString));
 	}
 
+	private void _appendPath(ProcessBuilder processBuilder, String newPath) {
+		Map<String, String> environment = processBuilder.environment();
+
+		String path = environment.get("PATH");
+
+		if (path != null) {
+			environment.put("PATH", newPath + File.pathSeparator + path);
+		}
+		else {
+			environment.put("PATH", newPath);
+		}
+	}
+
 	private void _checkOpenAPIYAMLFile(FreeMarkerTool freeMarkerTool, File file)
 		throws Exception {
 
@@ -1969,6 +1982,17 @@ public class RESTBuilder {
 		return endIndex;
 	}
 
+	private String _getNodeBinPathString() {
+		File portalDir = _getPortalDir(_configDir);
+
+		if (portalDir == null) {
+			return null;
+		}
+
+		return String.valueOf(
+			Paths.get(portalDir.getAbsolutePath(), "build", "node", "bin"));
+	}
+
 	private String _getNodePrefix() throws Exception {
 		Path tempPath = Paths.get(
 			System.getProperty("java.io.tmpdir"), RESTBuilder.class.getName());
@@ -1983,15 +2007,13 @@ public class RESTBuilder {
 	}
 
 	private String _getNPMPathString() {
-		File portalDir = _getPortalDir(_configDir);
+		String nodeBinPathString = _getNodeBinPathString();
 
-		if (portalDir == null) {
-			return "npm";
+		if (nodeBinPathString != null) {
+			return String.valueOf(Paths.get(nodeBinPathString, "npm"));
 		}
 
-		return String.valueOf(
-			Paths.get(
-				portalDir.getAbsolutePath(), "build", "node", "bin", "npm"));
+		return "npm";
 	}
 
 	private File _getPortalDir(File dir) {
@@ -2059,6 +2081,12 @@ public class RESTBuilder {
 				"generate", "--input-spec", openAPIYAMLFile.getPath(),
 				"--generator-name", "typescript-" + targetClientType,
 				"--output", outputPathString, "--skip-validate-spec"));
+
+		String nodeBinPathString = _getNodeBinPathString();
+
+		if (nodeBinPathString != null) {
+			_appendPath(processBuilder, nodeBinPathString);
+		}
 
 		Process process = processBuilder.start();
 

@@ -61,7 +61,7 @@ function ModalDisableInheritance() {
 						<ClayModal.Body className="c-gap-4 d-flex flex-column">
 							<Text>
 								{Liferay.Language.get(
-									'when-you-disable-inheritance-the-first-child-object-is-updated-with-options-for-showing-the-widget-in-the-page-builder-and-for-configuring-the-panel-link'
+									'when-you-disable-inheritance,-the-first-child-object-is-updated-with-options-for-showing-the-widget-in-the-page-builder-and-for-configuring-the-panel-link'
 								)}
 							</Text>
 

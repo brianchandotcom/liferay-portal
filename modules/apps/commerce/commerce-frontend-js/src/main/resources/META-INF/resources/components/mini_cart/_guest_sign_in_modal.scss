@@ -1,0 +1,31 @@
+#guest-sign-in-modal {
+	.loading-animation {
+		background-color: var(--white);
+		height: 100%;
+		opacity: 0;
+		position: absolute;
+		transition:
+			opacity 0.3s,
+			z-index 0s;
+		transition-delay: 500ms;
+		width: 100%;
+		z-index: -1;
+
+		&.is-loading {
+			opacity: 1;
+			transition:
+				opacity 0s,
+				z-index 0s;
+			transition-delay: 0ms;
+			z-index: 1;
+		}
+	}
+
+	.modal-dialog {
+		margin: 0 auto;
+	}
+
+	.sign-up-modal-view {
+		height: 60vh;
+	}
+}

@@ -14,12 +14,14 @@ import {DEFAULT_LABELS} from './util/labels';
  */
 export const DEFAULT_MINI_CART_CONTEXT_VALUE = {
 	CartViews: {},
+	accountId: 0,
 	actionURLs: {},
 	cartState: {},
 	closeCart: () => {},
 	displayDiscountLevels: false,
 	displayTotalItemsQuantity: false,
 	editedItem: null,
+	guestOrderEnabled: false,
 	isOpen: false,
 	isUpdating: false,
 	labels: DEFAULT_LABELS,

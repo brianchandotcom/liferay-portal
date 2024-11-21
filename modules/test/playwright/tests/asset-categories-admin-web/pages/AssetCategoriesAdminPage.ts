@@ -3,14 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 export class AssetCategoriesAdminPage {
-    readonly page: Page;
+	readonly newVocabularyButton: Locator;
+	readonly page: Page;
 
-    constructor(page: Page) {
+	constructor(page: Page) {
+		this.newVocabularyButton = page.getByLabel('Add New Vocabulary');
 		this.page = page;
 	}
 

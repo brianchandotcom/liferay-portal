@@ -6,11 +6,16 @@
 import {test} from '@playwright/test';
 
 import {AssetCategoriesAdminPage} from '../pages/AssetCategoriesAdminPage';
+import {VocabulariesEditPage} from '../pages/VocabulariesEditPage';
 
 export const assetCategoriesPagesTest = test.extend<{
 	assetCategoriesAdminPage: AssetCategoriesAdminPage;
+	vocabulariesEditPage: VocabulariesEditPage;
 }>({
 	assetCategoriesAdminPage: async ({page}, use) => {
 		await use(new AssetCategoriesAdminPage(page));
+	},
+	vocabulariesEditPage: async ({page}, use) => {
+		await use(new VocabulariesEditPage(page));
 	},
 });

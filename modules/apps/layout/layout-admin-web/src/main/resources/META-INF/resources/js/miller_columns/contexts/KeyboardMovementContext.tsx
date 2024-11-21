@@ -317,4 +317,8 @@ function getMillerColumnsItem(
 	);
 }
 
-export {KeyboardMovementContext, KeyboardMovementProvider};
+export {
+	KeyboardMovementContext,
+	KeyboardMovementProvider,
+	getNextTarget,
+};

@@ -126,12 +126,12 @@ public class RelationshipObjectFieldBusinessType
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
 
-			if (objectDefinition.isUnmodifiableSystemObject()) {
-				return _getPrimaryKeyObj(
-					externalReferenceCode, objectDefinition, 0L);
-			}
-
 			try {
+				if (objectDefinition.isUnmodifiableSystemObject()) {
+					return _getPrimaryKeyObj(
+						externalReferenceCode, objectDefinition, 0L);
+				}
+
 				ObjectEntry objectEntry =
 					_objectEntryLocalService.getObjectEntry(
 						externalReferenceCode,
@@ -168,11 +168,11 @@ public class RelationshipObjectFieldBusinessType
 			ObjectDefinition objectDefinition = _getObjectDefinition(
 				objectField);
 
-			if (objectDefinition.isUnmodifiableSystemObject()) {
-				return _getPrimaryKeyObj(null, objectDefinition, valueLong);
-			}
-
 			try {
+				if (objectDefinition.isUnmodifiableSystemObject()) {
+					return _getPrimaryKeyObj(null, objectDefinition, valueLong);
+				}
+
 				ObjectEntry objectEntry =
 					_objectEntryLocalService.getObjectEntry(valueLong);
 

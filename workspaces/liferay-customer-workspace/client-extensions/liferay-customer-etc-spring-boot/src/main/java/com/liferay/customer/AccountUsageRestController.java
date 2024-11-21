@@ -8,12 +8,14 @@ package com.liferay.customer;
 import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.customer.model.AccountUsage;
 import com.liferay.customer.service.GoogleCloudFunctionService;
-import com.liferay.headless.admin.user.client.dto.v1_0.Account;
+import com.liferay.customer.service.KoroneikiService;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
+import com.liferay.petra.string.StringPool;
 
 import java.net.URL;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -45,64 +47,20 @@ public class AccountUsageRestController extends BaseRestController {
 		throws Exception {
 
 		try {
-			AccountResource accountResource = _getAccountResource(jwt);
+			_checkPermission(jwt, externalReferenceCode);
 
-			Account account = accountResource.getAccountByExternalReferenceCode(
-				externalReferenceCode);
-
-			AccountUsage accountUsage = new AccountUsage();
-
-			accountUsage.setAccountId(account.getId());
+			List<ProductPurchase> productPurchases =
+				_koroneikiService.searchProductPurchases(
+					"accountKey eq '" + externalReferenceCode +
+						"' and state eq 'Active'",
+					1, 1000, StringPool.BLANK);
 
 			JSONObject jsonObject =
 				_googleCloudFunctionService.getCustomerAccountUsage(
 					externalReferenceCode);
 
-			ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
-
-			long anonymousPageViewsMax = jsonObject.getLong(
-				"totalAnonymousPageViewsCount");
-
-			accountUsage.setAnonymousPageViewsMax(anonymousPageViewsMax);
-			accountUsage.setAnonymousPageViewsUsed(
-				threadLocalRandom.nextLong(anonymousPageViewsMax));
-
-			long clientExtensionsCapacityCPUMax = jsonObject.getLong(
-				"totalClientExtensionsCapacityCPUCount");
-
-			accountUsage.setClientExtensionsCapacityCPUMax(
-				clientExtensionsCapacityCPUMax);
-			accountUsage.setClientExtensionsCapacityCPUUsed(
-				threadLocalRandom.nextLong(clientExtensionsCapacityCPUMax));
-
-			long clientExtensionsCapacityRAMMax = jsonObject.getLong(
-				"totalClientExtensionsCapacityRAM");
-
-			accountUsage.setClientExtensionsCapacityRAMMax(
-				clientExtensionsCapacityRAMMax);
-			accountUsage.setClientExtensionsCapacityRAMUsed(
-				threadLocalRandom.nextLong(clientExtensionsCapacityRAMMax));
-
-			long monthlyActiveLoggedInUsersMax = jsonObject.getLong(
-				"totalMonthlyActiveLoggedInUsersCount");
-
-			accountUsage.setMonthlyActiveLoggedInUsersMax(
-				monthlyActiveLoggedInUsersMax);
-			accountUsage.setMonthlyActiveLoggedInUsersUsed(
-				threadLocalRandom.nextLong(monthlyActiveLoggedInUsersMax));
-
-			long sitesMax = jsonObject.getLong("totalSitesCount");
-
-			accountUsage.setSitesMax(sitesMax);
-			accountUsage.setSitesUsed(threadLocalRandom.nextLong(sitesMax));
-
-			long storageCapacityDocumentLibraryMax = jsonObject.getLong(
-				"totalStorageCapacityDocumentLibrary");
-
-			accountUsage.setStorageCapacityDocumentLibraryMax(
-				storageCapacityDocumentLibraryMax);
-			accountUsage.setStorageCapacityDocumentLibraryUsed(
-				threadLocalRandom.nextLong(storageCapacityDocumentLibraryMax));
+			AccountUsage accountUsage = new AccountUsage(
+				productPurchases, jsonObject);
 
 			JSONObject accountUsageJSONObject = accountUsage.toJSONObject();
 
@@ -115,6 +73,15 @@ public class AccountUsageRestController extends BaseRestController {
 			return new ResponseEntity(
 				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	private void _checkPermission(Jwt jwt, String externalReferenceCode)
+		throws Exception {
+
+		AccountResource accountResource = _getAccountResource(jwt);
+
+		accountResource.getAccountByExternalReferenceCode(
+			externalReferenceCode);
 	}
 
 	private AccountResource _getAccountResource(Jwt jwt) throws Exception {
@@ -131,5 +98,8 @@ public class AccountUsageRestController extends BaseRestController {
 
 	@Autowired
 	private GoogleCloudFunctionService _googleCloudFunctionService;
+
+	@Autowired
+	private KoroneikiService _koroneikiService;
 
 }

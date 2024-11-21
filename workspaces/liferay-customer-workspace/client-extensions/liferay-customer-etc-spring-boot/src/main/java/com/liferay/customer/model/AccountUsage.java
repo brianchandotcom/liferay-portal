@@ -5,6 +5,16 @@
 
 package com.liferay.customer.model;
 
+import com.liferay.customer.constants.ProductConstants;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.List;
+import java.util.Map;
+
 import org.json.JSONObject;
 
 /**
@@ -12,73 +22,124 @@ import org.json.JSONObject;
  */
 public class AccountUsage {
 
-	public void setAccountId(long accountId) {
-		_accountId = accountId;
-	}
+	public AccountUsage(
+		List<ProductPurchase> productPurchases, JSONObject usageJSONObject) {
 
-	public void setAnonymousPageViewsMax(long anonymousPageViewsMax) {
+		int additionalCPUAndRAMMax = 0;
+		int additionalStorageCapacityDocumentLibraryMax = 0;
+		long anonymousPageViewsMax = 0;
+		Product liferaySaasPlanProduct = null;
+		long monthlyActiveLoggedInUsersMax = 0;
+
+		for (ProductPurchase productPurchase : productPurchases) {
+			Product product = productPurchase.getProduct();
+
+			String name = product.getName();
+
+			if (name.equals(
+					ProductConstants.
+						NAME_ADDITIONAL_EXTENSION_CAPACITY_1GB_1VCPU)) {
+
+				if (productPurchase.getQuantity() > additionalCPUAndRAMMax) {
+					additionalCPUAndRAMMax = productPurchase.getQuantity();
+				}
+			}
+			else if (name.equals(
+						ProductConstants.NAME_ADDITIONAL_STORAGE_100GB) ||
+					 name.equals(
+						 ProductConstants.
+							 NAME_LIFERAY_SAAS_100GB_EXTRA_STORAGE_DOCUMENT_LIBRARY)) {
+
+				if ((productPurchase.getQuantity() * 100) >
+						additionalStorageCapacityDocumentLibraryMax) {
+
+					additionalStorageCapacityDocumentLibraryMax =
+						productPurchase.getQuantity() * 100;
+				}
+			}
+			else if (name.equals(
+						ProductConstants.NAME_LIFERAY_SAAS_BUSINESS_PLAN)) {
+
+				if (liferaySaasPlanProduct == null) {
+					liferaySaasPlanProduct = product;
+				}
+				else {
+					String liferaySaasPlanName =
+						liferaySaasPlanProduct.getName();
+
+					if (liferaySaasPlanName.equals(
+							ProductConstants.NAME_LIFERAY_SAAS_PRO_PLAN)) {
+
+						liferaySaasPlanProduct = product;
+					}
+				}
+			}
+			else if (name.equals(
+						ProductConstants.NAME_LIFERAY_SAAS_CUSTOM_APVS)) {
+
+				if (productPurchase.getQuantity() > anonymousPageViewsMax) {
+					anonymousPageViewsMax = productPurchase.getQuantity();
+				}
+			}
+			else if (name.equals(
+						ProductConstants.NAME_LIFERAY_SAAS_CUSTOM_MALUS)) {
+
+				if (productPurchase.getQuantity() >
+						monthlyActiveLoggedInUsersMax) {
+
+					monthlyActiveLoggedInUsersMax =
+						productPurchase.getQuantity();
+				}
+			}
+			else if (name.equals(
+						ProductConstants.NAME_LIFERAY_SAAS_ENTERPRISE_PLAN)) {
+
+				liferaySaasPlanProduct = product;
+			}
+			else if (name.startsWith(
+						ProductConstants.
+							NAME_LIFERAY_SAAS_ENTITLEMENTS_PREFIX) &&
+					 name.endsWith("APVs")) {
+
+				long curAnonymousPageViewsMax = _getAnonymousPageViewsMaxValue(
+					name);
+
+				if (curAnonymousPageViewsMax > anonymousPageViewsMax) {
+					anonymousPageViewsMax = curAnonymousPageViewsMax;
+				}
+			}
+			else if (name.startsWith(
+						ProductConstants.
+							NAME_LIFERAY_SAAS_ENTITLEMENTS_PREFIX) &&
+					 name.endsWith("MALUs")) {
+
+				long curMonthlyActiveLoggedInUsersMax =
+					_getMonthlyActiveLoggedInUsersMaxValue(name);
+
+				if (curMonthlyActiveLoggedInUsersMax >
+						monthlyActiveLoggedInUsersMax) {
+
+					monthlyActiveLoggedInUsersMax =
+						curMonthlyActiveLoggedInUsersMax;
+				}
+			}
+			else if (name.equals(ProductConstants.NAME_LIFERAY_SAAS_PRO_PLAN)) {
+				if (liferaySaasPlanProduct == null) {
+					liferaySaasPlanProduct = product;
+				}
+			}
+		}
+
+		_initLiferaySaasPlan(liferaySaasPlanProduct);
+
 		_anonymousPageViewsMax = anonymousPageViewsMax;
-	}
-
-	public void setAnonymousPageViewsUsed(long anonymousPageViewsUsed) {
-		_anonymousPageViewsUsed = anonymousPageViewsUsed;
-	}
-
-	public void setClientExtensionsCapacityCPUMax(
-		long clientExtensionsCapacityCPUMax) {
-
-		_clientExtensionsCapacityCPUMax = clientExtensionsCapacityCPUMax;
-	}
-
-	public void setClientExtensionsCapacityCPUUsed(
-		long clientExtensionsCapacityCPUUsed) {
-
-		_clientExtensionsCapacityCPUUsed = clientExtensionsCapacityCPUUsed;
-	}
-
-	public void setClientExtensionsCapacityRAMMax(
-		long clientExtensionsCapacityRAMMax) {
-
-		_clientExtensionsCapacityRAMMax = clientExtensionsCapacityRAMMax;
-	}
-
-	public void setClientExtensionsCapacityRAMUsed(
-		long clientExtensionsCapacityRAMUsed) {
-
-		_clientExtensionsCapacityRAMUsed = clientExtensionsCapacityRAMUsed;
-	}
-
-	public void setMonthlyActiveLoggedInUsersMax(
-		long monthlyActiveLoggedInUsersMax) {
-
+		_clientExtensionsCapacityCPUMax += additionalCPUAndRAMMax;
+		_clientExtensionsCapacityRAMMax += additionalCPUAndRAMMax;
 		_monthlyActiveLoggedInUsersMax = monthlyActiveLoggedInUsersMax;
-	}
+		_storageCapacityDocumentLibraryMax +=
+			additionalStorageCapacityDocumentLibraryMax;
 
-	public void setMonthlyActiveLoggedInUsersUsed(
-		long monthlyActiveLoggedInUsersUsed) {
-
-		monthlyActiveLoggedInUsersUsed = monthlyActiveLoggedInUsersUsed;
-	}
-
-	public void setSitesMax(long sitesMax) {
-		_sitesMax = sitesMax;
-	}
-
-	public void setSitesUsed(long sitesUsed) {
-		_sitesUsed = sitesUsed;
-	}
-
-	public void setStorageCapacityDocumentLibraryMax(
-		long storageCapacityDocumentLibraryMax) {
-
-		_storageCapacityDocumentLibraryMax = storageCapacityDocumentLibraryMax;
-	}
-
-	public void setStorageCapacityDocumentLibraryUsed(
-		long storageCapacityDocumentLibraryUsed) {
-
-		_storageCapacityDocumentLibraryUsed =
-			storageCapacityDocumentLibraryUsed;
+		_initUsage(usageJSONObject);
 	}
 
 	public JSONObject toJSONObject() {
@@ -113,6 +174,26 @@ public class AccountUsage {
 		return jsonObject;
 	}
 
+	private long _getAnonymousPageViewsMaxValue(String name) {
+		String anonymousPageViewsMaxString = name.substring(
+			ProductConstants.NAME_LIFERAY_SAAS_ENTITLEMENTS_PREFIX.length());
+
+		anonymousPageViewsMaxString = StringUtil.removeSubstrings(
+			anonymousPageViewsMaxString, StringPool.COMMA, " APVs");
+
+		return GetterUtil.getLong(anonymousPageViewsMaxString);
+	}
+
+	private long _getMonthlyActiveLoggedInUsersMaxValue(String name) {
+		String monthlyActiveLoggedInUsersMaxString = name.substring(
+			ProductConstants.NAME_LIFERAY_SAAS_ENTITLEMENTS_PREFIX.length());
+
+		monthlyActiveLoggedInUsersMaxString = StringUtil.removeSubstrings(
+			monthlyActiveLoggedInUsersMaxString, StringPool.COMMA, " MALUs");
+
+		return GetterUtil.getLong(monthlyActiveLoggedInUsersMaxString);
+	}
+
 	private JSONObject _getUsageJSONObject(long usedCount, long maxCount) {
 		JSONObject jsonObject = new JSONObject();
 
@@ -125,18 +206,71 @@ public class AccountUsage {
 		return jsonObject;
 	}
 
-	private long _accountId;
-	private long _anonymousPageViewsMax;
+	private void _initLiferaySaasPlan(Product product) {
+		if (product == null) {
+			return;
+		}
+
+		Map<String, String> properties = product.getProperties();
+
+		_clientExtensionsCapacityCPUMax = GetterUtil.getInteger(
+			properties.get("vcpu"));
+
+		String clientExtensionsCapacityRAMMaxPropertyValue = properties.get(
+			"ram");
+
+		clientExtensionsCapacityRAMMaxPropertyValue =
+			StringUtil.removeSubstring(
+				clientExtensionsCapacityRAMMaxPropertyValue, " GB");
+
+		_clientExtensionsCapacityRAMMax = GetterUtil.getInteger(
+			clientExtensionsCapacityRAMMaxPropertyValue);
+
+		String sitesPropertyValue = properties.get("sites");
+
+		if (sitesPropertyValue.equals("Unlimited")) {
+			_sitesMax = -1;
+		}
+		else {
+			_sitesMax = GetterUtil.getInteger(sitesPropertyValue);
+		}
+
+		String storageCapacityDocumentLibraryMaxPropertyValue = properties.get(
+			"document-library-size");
+
+		storageCapacityDocumentLibraryMaxPropertyValue =
+			StringUtil.removeSubstring(
+				storageCapacityDocumentLibraryMaxPropertyValue, " GB");
+
+		_storageCapacityDocumentLibraryMax = GetterUtil.getInteger(
+			storageCapacityDocumentLibraryMaxPropertyValue);
+	}
+
+	private void _initUsage(JSONObject jsonObject) {
+		_anonymousPageViewsUsed = jsonObject.getLong(
+			"totalAnonymousPageViewsCount");
+		_clientExtensionsCapacityCPUUsed = jsonObject.getInt(
+			"totalClientExtensionsCapacityCPUCount");
+		_clientExtensionsCapacityRAMUsed = jsonObject.getInt(
+			"totalClientExtensionsCapacityRAM");
+		_monthlyActiveLoggedInUsersUsed = jsonObject.getLong(
+			"totalMonthlyActiveLoggedInUsersCount");
+		_sitesUsed = jsonObject.getInt("totalSitesCount");
+		_storageCapacityDocumentLibraryUsed = jsonObject.getInt(
+			"totalStorageCapacityDocumentLibrary");
+	}
+
+	private final long _anonymousPageViewsMax;
 	private long _anonymousPageViewsUsed;
-	private long _clientExtensionsCapacityCPUMax;
-	private long _clientExtensionsCapacityCPUUsed;
-	private long _clientExtensionsCapacityRAMMax;
-	private long _clientExtensionsCapacityRAMUsed;
-	private long _monthlyActiveLoggedInUsersMax;
+	private int _clientExtensionsCapacityCPUMax;
+	private int _clientExtensionsCapacityCPUUsed;
+	private int _clientExtensionsCapacityRAMMax;
+	private int _clientExtensionsCapacityRAMUsed;
+	private final long _monthlyActiveLoggedInUsersMax;
 	private long _monthlyActiveLoggedInUsersUsed;
-	private long _sitesMax;
-	private long _sitesUsed;
-	private long _storageCapacityDocumentLibraryMax;
-	private long _storageCapacityDocumentLibraryUsed;
+	private int _sitesMax;
+	private int _sitesUsed;
+	private int _storageCapacityDocumentLibraryMax;
+	private int _storageCapacityDocumentLibraryUsed;
 
 }

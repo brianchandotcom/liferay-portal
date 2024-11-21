@@ -35,7 +35,8 @@ public class DBPartitionInsertVirtualInstanceOperationTest
 			deployConfiguration(
 				_PID,
 				"newWebId=\"testNewWebId\"\npartitionCompanyId=L\"" +
-					PortalInstancePool.getDefaultCompanyId() + "\"\n");
+					PortalInstancePool.getDefaultCompanyId() + "\"\n",
+				false);
 
 			assertLog(
 				logCapture,

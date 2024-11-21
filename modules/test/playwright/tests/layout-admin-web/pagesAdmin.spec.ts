@@ -147,6 +147,22 @@ test.describe('Keyboard movement and navigation', () => {
 				getItem(0).locator('.miller-columns-item-mask')
 			).toBeFocused();
 
+			// Check we can go to last item with End key
+
+			await page.keyboard.press('End');
+
+			await expect(
+				getItem(4).locator('.miller-columns-item-mask')
+			).toBeFocused();
+
+			// Check we can go to first item with Home key
+
+			await page.keyboard.press('Home');
+
+			await expect(
+				getItem(0).locator('.miller-columns-item-mask')
+			).toBeFocused();
+
 			// Move to second and third item and check the focus moves well
 
 			await page.keyboard.press('ArrowDown');

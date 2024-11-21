@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import 'dotenv/config';
 import {defineConfig, devices} from '@playwright/test';
+
+import 'dotenv/config';
 
 import {config as accessibilityMenuWeb} from './tests/accessibility-menu-web/config';
 import {config as accountAdminWebConfig} from './tests/account-admin-web/config';

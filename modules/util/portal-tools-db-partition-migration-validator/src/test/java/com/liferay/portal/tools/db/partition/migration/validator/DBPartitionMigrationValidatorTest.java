@@ -394,15 +394,11 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		throws Exception {
 
 		try {
-			List<String> args = new ArrayList<>();
-
-			args.add("validate");
-			args.add("--source-file");
-			args.add(_getPathString(sourceFileName));
-			args.add("--target-file");
-			args.add(_getPathString(targetFileName));
-
-			_execute(args, Collections.emptyList());
+			_execute(
+				Arrays.asList(
+					"validate", "--source-file", _getPathString(sourceFileName),
+					"--target-file", _getPathString(targetFileName)),
+				Collections.emptyList());
 		}
 		catch (RuntimeException runtimeException) {
 			unsafeConsumer.accept(runtimeException);

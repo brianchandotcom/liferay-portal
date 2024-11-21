@@ -22,7 +22,7 @@ export class ObjectFieldsPage {
 		this.deleteObjectFieldOption = page.getByRole('menuitem', {
 			name: 'Delete',
 		});
-		this.fieldsTabItem = page.locator('.navbar-text-truncate').filter({
+		this.fieldsTabItem = page.locator('.nav-item .nav-link').filter({
 			hasText: 'Fields',
 		});
 		this.page = page;

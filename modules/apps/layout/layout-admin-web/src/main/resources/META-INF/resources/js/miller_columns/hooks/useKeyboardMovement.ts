@@ -10,6 +10,7 @@ import {
 	MovementSources,
 	MovementTarget,
 	getNextTarget,
+	setMovementText,
 } from '../contexts/KeyboardMovementContext';
 import {MillerColumnItem} from '../types/MillerColumnItem';
 
@@ -44,6 +45,7 @@ export function useKeyboardMovement({
 		setRedirectURL,
 		setSources,
 		setTarget,
+		setText,
 		sources,
 		target,
 	} = useContext(KeyboardMovementContext);
@@ -70,6 +72,13 @@ export function useKeyboardMovement({
 			if (initialTarget) {
 				setSources(sources);
 				setTarget(initialTarget);
+				setMovementText({
+					isInitialPosition: true,
+					items,
+					setText,
+					sources,
+					target: initialTarget,
+				});
 			}
 		},
 		[
@@ -77,6 +86,7 @@ export function useKeyboardMovement({
 			isPrivateLayoutsEnabled,
 			item,
 			items,
+			setText,
 			setSources,
 			setTarget,
 		]

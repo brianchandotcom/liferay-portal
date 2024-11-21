@@ -13,4 +13,5 @@ export type MillerColumnItem = {
 	parentIndex: number;
 	parentable: boolean;
 	url: string;
+	title: string;
 };

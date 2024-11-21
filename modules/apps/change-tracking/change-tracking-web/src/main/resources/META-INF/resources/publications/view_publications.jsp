@@ -11,6 +11,12 @@
 	navigationItems="<%= publicationsDisplayContext.getViewNavigationItems() %>"
 />
 
+<div>
+	<react:component
+		module="{PublicationsExpiredInfoPanel} from change-tracking-web"
+	/>
+</div>
+
 <clay:container-fluid>
 	<frontend-data-set:headless-display
 		apiURL="<%= publicationsDisplayContext.getAPIURL() %>"

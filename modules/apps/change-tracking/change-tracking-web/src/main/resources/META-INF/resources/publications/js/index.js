@@ -7,6 +7,7 @@ export {default as ChangeTrackingIndicator} from './components/ChangeTrackingInd
 export {default as ChangeTrackingNotifications} from './components/ChangeTrackingNotifications';
 export {default as DeletePublicationsFDSPropsTransformer} from './components/DeletePublicationsFDSPropsTransformer';
 export {default as PublicationHistoryPropsTransformer} from './components/PublicationHistoryPropsTransformer';
+export {default as PublicationsExpiredInfoPanel} from './components/PublicationsExpiredInfoPanel';
 export {default as StatusRenderer} from './components/StatusRenderer';
 export {default as ViewPublicationsDropdownMenu} from './components/ViewPublicationsDropdownMenu';
 export {default as ManageCollaborators} from './components/manage-collaborators-modal/ManageCollaborators';

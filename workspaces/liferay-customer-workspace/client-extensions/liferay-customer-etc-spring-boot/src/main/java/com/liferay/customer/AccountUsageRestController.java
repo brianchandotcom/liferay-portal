@@ -78,19 +78,15 @@ public class AccountUsageRestController extends BaseRestController {
 	private void _checkPermission(Jwt jwt, String externalReferenceCode)
 		throws Exception {
 
-		AccountResource accountResource = _getAccountResource(jwt);
-
-		accountResource.getAccountByExternalReferenceCode(
-			externalReferenceCode);
-	}
-
-	private AccountResource _getAccountResource(Jwt jwt) throws Exception {
-		return AccountResource.builder(
+		AccountResource accountResource = AccountResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).endpoint(
 			new URL(getWebClientBaseURL())
 		).build();
+
+		accountResource.getAccountByExternalReferenceCode(
+			externalReferenceCode);
 	}
 
 	private static final Log _log = LogFactory.getLog(

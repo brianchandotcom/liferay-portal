@@ -31,7 +31,12 @@ public class KoroneikiService {
 		throws Exception {
 
 		ProductPurchaseResource productPurchaseResource =
-			getProductPurchaseResource();
+			ProductPurchaseResource.builder(
+			).header(
+				"API_TOKEN", _koroneikiAuthToken
+			).endpoint(
+				new URL(_koroneikiURL)
+			).build();
 
 		Page<ProductPurchase> productPurchasesPage =
 			productPurchaseResource.getProductPurchasesPage(
@@ -45,17 +50,6 @@ public class KoroneikiService {
 		}
 
 		return Collections.emptyList();
-	}
-
-	protected ProductPurchaseResource getProductPurchaseResource()
-		throws Exception {
-
-		return ProductPurchaseResource.builder(
-		).header(
-			"API_TOKEN", _koroneikiAuthToken
-		).endpoint(
-			new URL(_koroneikiURL)
-		).build();
 	}
 
 	@Value("${liferay.customer.koroneiki.auth.token}")

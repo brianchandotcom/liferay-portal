@@ -184,6 +184,7 @@ public class OAuth2Manager {
 	@Deactivate
 	protected void deactivate() {
 		_googleAuthorizationCodeFlows.clear();
+
 		StoredCredentialStoreUtil.clear();
 	}
 

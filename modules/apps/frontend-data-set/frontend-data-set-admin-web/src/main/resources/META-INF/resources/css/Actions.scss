@@ -1,7 +1,7 @@
 @import 'atlas-variables';
 @import 'cadmin-variables';
 
-html#{$cadmin-selector} .cadmin {
+html#{$cadmin-selector} {
 	.dsm-actions-icon-selection-modal ul li {
 		color: $gray-600;
 		cursor: pointer;
@@ -13,7 +13,9 @@ html#{$cadmin-selector} .cadmin {
 			color: #272833;
 		}
 	}
+}
 
+html#{$cadmin-selector} .cadmin {
 	.panel-unstyled {
 		margin-bottom: 0;
 		padding: 1rem 1.5rem;

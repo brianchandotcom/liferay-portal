@@ -1,0 +1,83 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_8040 {
+
+	public void method() {
+		_http.hasProxyConfig();
+		_http.addParameter(null, null, null);
+		_http.decodePath(null);
+		_http.decodeURL(null);
+		_http.encodeParameters(null);
+		_http.encodePath(null);
+		_http.fixPath(null);
+		_http.getCompleteURL(null, null, null);
+		_http.getDomain(null);
+		_http.getIpAddress(null);
+		_http.getParameter(null, null);
+		_http.getParameterMap(null);
+		_http.getPath(null);
+		_http.getProtocol(null);
+		_http.getQueryString(null);
+		_http.getRequestURL(null);
+		_http.getURI(null);
+		_http.hasDomain(null);
+		_http.hasProtocol(null);
+		_http.isForwarded(null);
+		_http.isSecure(null);
+		_http.normalizePath(null);
+		_http.parameterMapFromString(null);
+		_http.protocolize(null, null);
+		_http.removeDomain(null);
+		_http.removeParameter(null);
+		_http.removePathParameters(null);
+		_http.removeProtocol(null);
+		_http.sanitizeHeader(null);
+		_http.setParameter(null, null, null);
+		_http.shortenURL(null);
+
+		HttpUtil.hasProxyConfig();
+		HttpUtil.addParameter(null, null, null);
+		HttpUtil.decodePath(null);
+		HttpUtil.decodeURL(null);
+		HttpUtil.encodeParameters(null);
+		HttpUtil.encodePath(null);
+		HttpUtil.fixPath(null);
+		HttpUtil.getCompleteURL(null, null, null);
+		HttpUtil.getDomain(null);
+		HttpUtil.getIpAddress(null);
+		HttpUtil.getParameter(null, null);
+		HttpUtil.getParameterMap(null);
+		HttpUtil.getPath(null);
+		HttpUtil.getProtocol(null);
+		HttpUtil.getQueryString(null);
+		HttpUtil.getRequestURL(null);
+		HttpUtil.getURI(null);
+		HttpUtil.hasDomain(null);
+		HttpUtil.hasProtocol(null);
+		HttpUtil.isForwarded(null);
+		HttpUtil.isSecure(null);
+		HttpUtil.normalizePath(null);
+		HttpUtil.parameterMapFromString(null);
+		HttpUtil.protocolize(null, null);
+		HttpUtil.removeDomain(null);
+		HttpUtil.removeParameter(null);
+		HttpUtil.removePathParameters(null);
+		HttpUtil.removeProtocol(null);
+		HttpUtil.sanitizeHeader(null);
+		HttpUtil.setParameter(null, null, null);
+		HttpUtil.shortenURL(null);
+	}
+
+	@Reference
+	private Http _http;
+}

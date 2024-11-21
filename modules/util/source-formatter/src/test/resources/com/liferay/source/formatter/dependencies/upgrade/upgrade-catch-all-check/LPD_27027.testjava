@@ -1,0 +1,66 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_27027 {
+
+	public void method() {
+		new CommerceCurrencyPriorityComparator();
+		new CommerceDiscountCommerceAccountGroupRelCreateDateComparator();
+		new CommerceDiscountCreateDateComparator();
+		new CommerceDiscountRelCreateDateComparator();
+		new CommerceDiscountRuleCreateDateComparator();
+		new CommerceInventoryReplenishmentItemAvailabilityDateComparator();
+		new CommerceInventoryWarehouseCityComparator();
+		new CommerceInventoryWarehouseItemQuantityComparator();
+		new CommerceInventoryWarehouseItemWarehouseNameComparator();
+		new CommerceInventoryWarehouseNameComparator();
+		new CommerceNotificationAttachmentCreateDateComparator();
+		new CommerceNotificationQueueEntryPriorityComparator();
+		new CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator();
+		new CommerceNotificationTemplateModifiedDateComparator();
+		new CommerceNotificationTemplateNameComparator();
+		new CommerceTaxFixedRateAddressRelCreateDateComparator();
+		new CommerceTaxFixedRateCreateDateComparator();
+		new CommerceVirtualOrderItemCreateDateComparator();
+		new CommerceWishListCreateDateComparator();
+		new CommerceWishListItemCreateDateComparator();
+		new CommerceWishListNameComparator();
+		new CPDefinitionGroupedEntryPriorityComparator();
+		new CPDefinitionGroupedEntryQuantityComparator();
+		new CPTaxCategoryNameComparator();
+	}
+
+	public void method(boolean showHiddenPages) {
+		new CommerceCurrencyPriorityComparator(showHiddenPages);
+		new CommerceDiscountCommerceAccountGroupRelCreateDateComparator(showHiddenPages);
+		new CommerceDiscountCreateDateComparator(showHiddenPages);
+		new CommerceDiscountRelCreateDateComparator(showHiddenPages);
+		new CommerceDiscountRuleCreateDateComparator(showHiddenPages);
+		new CommerceInventoryReplenishmentItemAvailabilityDateComparator(showHiddenPages);
+		new CommerceInventoryWarehouseCityComparator(showHiddenPages);
+		new CommerceInventoryWarehouseItemQuantityComparator(showHiddenPages);
+		new CommerceInventoryWarehouseItemWarehouseNameComparator(showHiddenPages);
+		new CommerceInventoryWarehouseNameComparator(showHiddenPages);
+		new CommerceNotificationAttachmentCreateDateComparator(showHiddenPages);
+		new CommerceNotificationQueueEntryPriorityComparator(showHiddenPages);
+		new CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator(showHiddenPages);
+		new CommerceNotificationTemplateModifiedDateComparator(showHiddenPages);
+		new CommerceNotificationTemplateNameComparator(showHiddenPages);
+		new CommerceTaxFixedRateAddressRelCreateDateComparator(showHiddenPages);
+		new CommerceTaxFixedRateCreateDateComparator(showHiddenPages);
+		new CommerceVirtualOrderItemCreateDateComparator(showHiddenPages);
+		new CommerceWishListCreateDateComparator(showHiddenPages);
+		new CommerceWishListItemCreateDateComparator(showHiddenPages);
+		new CommerceWishListNameComparator(showHiddenPages);
+		new CPDefinitionGroupedEntryPriorityComparator(showHiddenPages);
+		new CPDefinitionGroupedEntryQuantityComparator(showHiddenPages);
+		new CPTaxCategoryNameComparator(showHiddenPages);
+	}
+}

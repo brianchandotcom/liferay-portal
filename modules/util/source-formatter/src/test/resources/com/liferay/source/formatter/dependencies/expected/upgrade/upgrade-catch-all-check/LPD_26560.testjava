@@ -1,0 +1,40 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_26560 {
+
+	public void method() {
+		DLContentVersionComparator.getInstance(false);
+		EntryDisplayDateComparator.getInstance(false);
+		EntryIdComparator.getInstance(false);
+		EntryModifiedDateComparator.getInstance(false);
+		EntryTitleComparator.getInstance(false);
+		FriendlyURLEntryCreateDateComparator.getInstance(true);
+		FriendlyURLEntryLocalizationComparator.getInstance(false);
+		ObjectFieldCreateDateComparator.getInstance(false);
+		PushNotificationsDevicePlatformComparator.getInstance(true);
+		SAPEntryNameComparator.getInstance(false);
+		SubscriptionClassNameIdComparator.getInstance(false);
+	}
+
+	public void method(boolean showHiddenPages) {
+		DLContentVersionComparator.getInstance(showHiddenPages);
+		EntryDisplayDateComparator.getInstance(showHiddenPages);
+		EntryIdComparator.getInstance(showHiddenPages);
+		EntryModifiedDateComparator.getInstance(showHiddenPages);
+		EntryTitleComparator.getInstance(showHiddenPages);
+		FriendlyURLEntryCreateDateComparator.getInstance(showHiddenPages);
+		FriendlyURLEntryLocalizationComparator.getInstance(showHiddenPages);
+		ObjectFieldCreateDateComparator.getInstance(showHiddenPages);
+		PushNotificationsDevicePlatformComparator.getInstance(showHiddenPages);
+		SAPEntryNameComparator.getInstance(showHiddenPages);
+		SubscriptionClassNameIdComparator.getInstance(showHiddenPages);
+	}
+}

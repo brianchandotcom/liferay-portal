@@ -1,0 +1,44 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_27018 {
+
+	public void method() {
+		new AssetCategoryCreateDateComparator();
+		new AssetTagAssetCountComparator();
+		new AssetVocabularyCreateDateComparator();
+		new ExportImportConfigurationNameComparator();
+		new FragmentCollectionCreateDateComparator();
+		new FragmentCollectionNameComparator();
+		new FragmentCompositionFragmentEntryCreateDateComparator();
+		new FragmentCompositionFragmentEntryModifiedDateComparator();
+		new FragmentCompositionFragmentEntryNameComparator();
+		new FragmentEntryCreateDateComparator();
+		new FragmentEntryLinkLastPropagationDateComparator();
+		new FragmentEntryNameComparator();
+		new SXPBlueprintModifiedDateComparator();
+	}
+
+	public void method(boolean showHiddenPages) {
+		new AssetCategoryCreateDateComparator(showHiddenPages);
+		new AssetTagAssetCountComparator(showHiddenPages);
+		new AssetVocabularyCreateDateComparator(showHiddenPages);
+		new ExportImportConfigurationNameComparator(showHiddenPages);
+		new FragmentCollectionCreateDateComparator(showHiddenPages);
+		new FragmentCollectionNameComparator(showHiddenPages);
+		new FragmentCompositionFragmentEntryCreateDateComparator(showHiddenPages);
+		new FragmentCompositionFragmentEntryModifiedDateComparator(showHiddenPages);
+		new FragmentCompositionFragmentEntryNameComparator(showHiddenPages);
+		new FragmentEntryCreateDateComparator(showHiddenPages);
+		new FragmentEntryLinkLastPropagationDateComparator(showHiddenPages);
+		new FragmentEntryNameComparator(showHiddenPages);
+		new SXPBlueprintModifiedDateComparator(showHiddenPages);
+	}
+}

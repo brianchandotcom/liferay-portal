@@ -1,0 +1,66 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_25955 {
+
+	public void method() {
+		CalendarBookingStartTimeComparator.getInstance(false);
+		CalendarNameComparator.getInstance(false);
+		CalendarResourceCodeComparator.getInstance(false);
+		CalendarResourceNameComparator.getInstance(false);
+		DefinitionCreateDateComparator.getInstance(false);
+		EntryCreateDateComparator.getInstance(false);
+		EntryNameComparator.getInstance(false);
+		EntryPriorityComparator.getInstance(false);
+		EntryTypeComparator.getInstance(false);
+		EntryURLComparator.getInstance(false);
+		EntryUserNameComparator.getInstance(false);
+		NodeLastPostDateComparator.getInstance(false);
+		NodeNameComparator.getInstance(false);
+		PageCreateDateComparator.getInstance(false);
+		PageModifiedDateComparator.getInstance(false);
+		PageTitleComparator.getInstance(false);
+		PageVersionComparator.getInstance(false);
+		SiteNavigationMenuCreateDateComparator.getInstance(false);
+		SiteNavigationMenuItemOrderComparator.getInstance(true);
+		SiteNavigationMenuModifiedDateComparator.getInstance(false);
+		SiteNavigationMenuNameComparator.getInstance(false);
+		SourceCreateDateComparator.getInstance(false);
+		StyleBookEntryCreateDateComparator.getInstance(true);
+		StyleBookEntryNameComparator.getInstance(false);
+	}
+
+	public void method(boolean showHiddenPages) {
+		CalendarBookingStartTimeComparator.getInstance(showHiddenPages);
+		CalendarNameComparator.getInstance(showHiddenPages);
+		CalendarResourceCodeComparator.getInstance(showHiddenPages);
+		CalendarResourceNameComparator.getInstance(showHiddenPages);
+		DefinitionCreateDateComparator.getInstance(showHiddenPages);
+		EntryCreateDateComparator.getInstance(showHiddenPages);
+		EntryNameComparator.getInstance(showHiddenPages);
+		EntryPriorityComparator.getInstance(showHiddenPages);
+		EntryTypeComparator.getInstance(showHiddenPages);
+		EntryURLComparator.getInstance(showHiddenPages);
+		EntryUserNameComparator.getInstance(showHiddenPages);
+		NodeLastPostDateComparator.getInstance(showHiddenPages);
+		NodeNameComparator.getInstance(showHiddenPages);
+		PageCreateDateComparator.getInstance(showHiddenPages);
+		PageModifiedDateComparator.getInstance(showHiddenPages);
+		PageTitleComparator.getInstance(showHiddenPages);
+		PageVersionComparator.getInstance(showHiddenPages);
+		SiteNavigationMenuCreateDateComparator.getInstance(showHiddenPages);
+		SiteNavigationMenuItemOrderComparator.getInstance(showHiddenPages);
+		SiteNavigationMenuModifiedDateComparator.getInstance(showHiddenPages);
+		SiteNavigationMenuNameComparator.getInstance(showHiddenPages);
+		SourceCreateDateComparator.getInstance(showHiddenPages);
+		StyleBookEntryCreateDateComparator.getInstance(showHiddenPages);
+		StyleBookEntryNameComparator.getInstance(showHiddenPages);
+	}
+}

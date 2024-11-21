@@ -1,0 +1,70 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_26703 {
+
+	public void method() {
+		new CategoryModifiedDateComparator();
+		new CategoryTitleComparator();
+		new LayoutClassedModelUsageModifiedDateComparator();
+		new LayoutCreateDateComparator();
+		new LayoutModifiedDateComparator();
+		new LayoutPageTemplateCollectionCreateDateComparator();
+		new LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator();
+		new LayoutPageTemplateCollectionLayoutPageTemplateEntryModifiedDateComparator();
+		new LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator();
+		new LayoutPageTemplateCollectionModifiedDateComparator();
+		new LayoutPageTemplateCollectionNameComparator();
+		new LayoutPageTemplateEntryCreateDateComparator();
+		new LayoutPageTemplateEntryModifiedDateComparator();
+		new LayoutPageTemplateEntryNameComparator();
+		new LayoutRelevanceComparator();
+		new MBObjectsComparator();
+		new MBObjectsModifiedDateComparator();
+		new MBObjectsTitleComparator();
+		new MessageCreateDateComparator();
+		new MessageModifiedDateComparator();
+		new MessageSubjectComparator();
+		new MessageURLSubjectComparator();
+		new ThreadCreateDateComparator();
+		new ThreadLastPostDateComparator();
+		new ThreadModifiedDateComparator();
+		new ThreadTitleComparator();
+	}
+
+	public void method(boolean showHiddenPages) {
+		new CategoryModifiedDateComparator(showHiddenPages);
+		new CategoryTitleComparator(showHiddenPages);
+		new LayoutClassedModelUsageModifiedDateComparator(showHiddenPages);
+		new LayoutCreateDateComparator(showHiddenPages);
+		new LayoutModifiedDateComparator(showHiddenPages);
+		new LayoutPageTemplateCollectionCreateDateComparator(showHiddenPages);
+		new LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator(showHiddenPages);
+		new LayoutPageTemplateCollectionLayoutPageTemplateEntryModifiedDateComparator(showHiddenPages);
+		new LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator(showHiddenPages);
+		new LayoutPageTemplateCollectionModifiedDateComparator(showHiddenPages);
+		new LayoutPageTemplateCollectionNameComparator(showHiddenPages);
+		new LayoutPageTemplateEntryCreateDateComparator(showHiddenPages);
+		new LayoutPageTemplateEntryModifiedDateComparator(showHiddenPages);
+		new LayoutPageTemplateEntryNameComparator(showHiddenPages);
+		new LayoutRelevanceComparator(showHiddenPages);
+		new MBObjectsComparator(showHiddenPages);
+		new MBObjectsModifiedDateComparator(showHiddenPages);
+		new MBObjectsTitleComparator(showHiddenPages);
+		new MessageCreateDateComparator(showHiddenPages);
+		new MessageModifiedDateComparator(showHiddenPages);
+		new MessageSubjectComparator(showHiddenPages);
+		new MessageURLSubjectComparator(showHiddenPages);
+		new ThreadCreateDateComparator(showHiddenPages);
+		new ThreadLastPostDateComparator(showHiddenPages);
+		new ThreadModifiedDateComparator(showHiddenPages);
+		new ThreadTitleComparator(showHiddenPages);
+	}
+}

@@ -1,0 +1,66 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_25955 {
+
+	public void method() {
+		new CalendarBookingStartTimeComparator();
+		new CalendarNameComparator();
+		new CalendarResourceCodeComparator();
+		new CalendarResourceNameComparator();
+		new DefinitionCreateDateComparator();
+		new EntryCreateDateComparator();
+		new EntryNameComparator();
+		new EntryPriorityComparator();
+		new EntryTypeComparator();
+		new EntryURLComparator();
+		new EntryUserNameComparator();
+		new NodeLastPostDateComparator();
+		new NodeNameComparator();
+		new PageCreateDateComparator();
+		new PageModifiedDateComparator();
+		new PageTitleComparator();
+		new PageVersionComparator();
+		new SiteNavigationMenuCreateDateComparator();
+		new SiteNavigationMenuItemOrderComparator();
+		new SiteNavigationMenuModifiedDateComparator();
+		new SiteNavigationMenuNameComparator();
+		new SourceCreateDateComparator();
+		new StyleBookEntryCreateDateComparator();
+		new StyleBookEntryNameComparator();
+	}
+
+	public void method(boolean showHiddenPages) {
+		new CalendarBookingStartTimeComparator(showHiddenPages);
+		new CalendarNameComparator(showHiddenPages);
+		new CalendarResourceCodeComparator(showHiddenPages);
+		new CalendarResourceNameComparator(showHiddenPages);
+		new DefinitionCreateDateComparator(showHiddenPages);
+		new EntryCreateDateComparator(showHiddenPages);
+		new EntryNameComparator(showHiddenPages);
+		new EntryPriorityComparator(showHiddenPages);
+		new EntryTypeComparator(showHiddenPages);
+		new EntryURLComparator(showHiddenPages);
+		new EntryUserNameComparator(showHiddenPages);
+		new NodeLastPostDateComparator(showHiddenPages);
+		new NodeNameComparator(showHiddenPages);
+		new PageCreateDateComparator(showHiddenPages);
+		new PageModifiedDateComparator(showHiddenPages);
+		new PageTitleComparator(showHiddenPages);
+		new PageVersionComparator(showHiddenPages);
+		new SiteNavigationMenuCreateDateComparator(showHiddenPages);
+		new SiteNavigationMenuItemOrderComparator(showHiddenPages);
+		new SiteNavigationMenuModifiedDateComparator(showHiddenPages);
+		new SiteNavigationMenuNameComparator(showHiddenPages);
+		new SourceCreateDateComparator(showHiddenPages);
+		new StyleBookEntryCreateDateComparator(showHiddenPages);
+		new StyleBookEntryNameComparator(showHiddenPages);
+	}
+}

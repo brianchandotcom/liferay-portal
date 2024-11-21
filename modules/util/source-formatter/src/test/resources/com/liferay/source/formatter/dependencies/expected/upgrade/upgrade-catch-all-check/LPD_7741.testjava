@@ -1,0 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_7741 {
+
+	public void method(
+		long sourceCPDefinitionId, long groupId, int status) {
+
+		CPDefinitionLocalServiceUtil.copyCPDefinition(null, groupId);
+		CPDefinitionLocalServiceUtil.copyCPDefinition(sourceCPDefinitionId, groupId, WorkflowConstants.STATUS_DRAFT);
+		_cpDefinitionLocalService.copyCPDefinition(sourceCPDefinitionId, groupId, WorkflowConstants.STATUS_DRAFT);
+	}
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+}

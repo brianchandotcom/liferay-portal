@@ -1,0 +1,26 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_8003 {
+
+	public void method(
+		String searchEngineId, long companyId, Document document,
+		boolean commitImmediately) {
+
+		IndexWriterHelperUtil.updateDocument("test123", 123, null, null);
+		IndexWriterHelperUtil.updateDocument(companyId, document);
+		_indexWriterHelper.updateDocument(companyId, document);
+	}
+
+	@Reference
+	private IndexWriterHelper _indexWriterHelper;
+}

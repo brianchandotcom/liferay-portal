@@ -1,0 +1,50 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_26438 {
+
+	public void method() {
+		ArticleCreateDateComparator.getInstance(false);
+		ArticleDisplayDateComparator.getInstance(false);
+		ArticleIDComparator.getInstance(false);
+		ArticleModifiedDateComparator.getInstance(false);
+		ArticleResourcePKComparator.getInstance(true);
+		ArticleReviewDateComparator.getInstance(false);
+		ArticleTitleComparator.getInstance(false);
+		ArticleVersionComparator.getInstance(false);
+		FeedIDComparator.getInstance(false);
+		FeedNameComparator.getInstance(false);
+		FolderArticleArticleIdComparator.getInstance(false);
+		FolderArticleCreateDateComparator.getInstance(false);
+		FolderArticleDisplayDateComparator.getInstance(false);
+		FolderArticleModifiedDateComparator.getInstance(false);
+		FolderArticleTitleComparator.getInstance(false);
+		FolderIdComparator.getInstance(false);
+	}
+
+	public void method(boolean showHiddenPages) {
+		ArticleCreateDateComparator.getInstance(showHiddenPages);
+		ArticleDisplayDateComparator.getInstance(showHiddenPages);
+		ArticleIDComparator.getInstance(showHiddenPages);
+		ArticleModifiedDateComparator.getInstance(showHiddenPages);
+		ArticleResourcePKComparator.getInstance(showHiddenPages);
+		ArticleReviewDateComparator.getInstance(showHiddenPages);
+		ArticleTitleComparator.getInstance(showHiddenPages);
+		ArticleVersionComparator.getInstance(showHiddenPages);
+		FeedIDComparator.getInstance(showHiddenPages);
+		FeedNameComparator.getInstance(showHiddenPages);
+		FolderArticleArticleIdComparator.getInstance(showHiddenPages);
+		FolderArticleCreateDateComparator.getInstance(showHiddenPages);
+		FolderArticleDisplayDateComparator.getInstance(showHiddenPages);
+		FolderArticleModifiedDateComparator.getInstance(showHiddenPages);
+		FolderArticleTitleComparator.getInstance(showHiddenPages);
+		FolderIdComparator.getInstance(showHiddenPages);
+	}
+}

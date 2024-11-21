@@ -1,0 +1,64 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_26917 {
+
+	public void method() {
+		new DataProviderInstanceModifiedDateComparator();
+		new DataProviderInstanceNameComparator();
+		new DDLRecordCreateDateComparator();
+		new DDLRecordIdComparator();
+		new DDLRecordSetCreateDateComparator();
+		new DDLRecordSetNameComparator();
+		new DDMFormInstanceNameComparator();
+		new DDMFormInstanceRecordIdComparator();
+		new DEDataListViewCreateDateComparator();
+		new DEDataListViewNameComparator();
+		new KaleoDefinitionVersionActiveComparator();
+		new KaleoDefinitionVersionComparator();
+		new KaleoDefinitionVersionIdComparator();
+		new KaleoDefinitionVersionModifiedDateComparator();
+		new KaleoDefinitionVersionNameComparator();
+		new KaleoDefinitionVersionVersionComparator();
+		new StructureCreateDateComparator();
+		new StructureIdComparator();
+		new StructureLayoutCreateDateComparator();
+		new StructureLayoutNameComparator();
+		new StructureLinkStructureModifiedDateComparator();
+		new TemplateIdComparator();
+		new WorkflowMetricsSLADefinitionVersionIdComparator();
+	}
+
+	public void method(boolean showHiddenPages) {
+		new DataProviderInstanceModifiedDateComparator(showHiddenPages);
+		new DataProviderInstanceNameComparator(showHiddenPages);
+		new DDLRecordCreateDateComparator(showHiddenPages);
+		new DDLRecordIdComparator(showHiddenPages);
+		new DDLRecordSetCreateDateComparator(showHiddenPages);
+		new DDLRecordSetNameComparator(showHiddenPages);
+		new DDMFormInstanceNameComparator(showHiddenPages);
+		new DDMFormInstanceRecordIdComparator(showHiddenPages);
+		new DEDataListViewCreateDateComparator(showHiddenPages);
+		new DEDataListViewNameComparator(showHiddenPages);
+		new KaleoDefinitionVersionActiveComparator(showHiddenPages);
+		new KaleoDefinitionVersionComparator(showHiddenPages);
+		new KaleoDefinitionVersionIdComparator(showHiddenPages);
+		new KaleoDefinitionVersionModifiedDateComparator(showHiddenPages);
+		new KaleoDefinitionVersionNameComparator(showHiddenPages);
+		new KaleoDefinitionVersionVersionComparator(showHiddenPages);
+		new StructureCreateDateComparator(showHiddenPages);
+		new StructureIdComparator(showHiddenPages);
+		new StructureLayoutCreateDateComparator(showHiddenPages);
+		new StructureLayoutNameComparator(showHiddenPages);
+		new StructureLinkStructureModifiedDateComparator(showHiddenPages);
+		new TemplateIdComparator(showHiddenPages);
+		new WorkflowMetricsSLADefinitionVersionIdComparator(showHiddenPages);
+	}
+}

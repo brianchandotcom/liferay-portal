@@ -1,0 +1,64 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_26917 {
+
+	public void method() {
+		DataProviderInstanceModifiedDateComparator.getInstance(false);
+		DataProviderInstanceNameComparator.getInstance(false);
+		DDLRecordCreateDateComparator.getInstance(false);
+		DDLRecordIdComparator.getInstance(false);
+		DDLRecordSetCreateDateComparator.getInstance(false);
+		DDLRecordSetNameComparator.getInstance(false);
+		DDMFormInstanceNameComparator.getInstance(false);
+		DDMFormInstanceRecordIdComparator.getInstance(false);
+		DEDataListViewCreateDateComparator.getInstance(false);
+		DEDataListViewNameComparator.getInstance(false);
+		KaleoDefinitionVersionActiveComparator.getInstance(false);
+		KaleoDefinitionVersionComparator.getInstance(false);
+		KaleoDefinitionVersionIdComparator.getInstance(false);
+		KaleoDefinitionVersionModifiedDateComparator.getInstance(false);
+		KaleoDefinitionVersionNameComparator.getInstance(false);
+		KaleoDefinitionVersionVersionComparator.getInstance(false);
+		StructureCreateDateComparator.getInstance(false);
+		StructureIdComparator.getInstance(false);
+		StructureLayoutCreateDateComparator.getInstance(false);
+		StructureLayoutNameComparator.getInstance(true);
+		StructureLinkStructureModifiedDateComparator.getInstance(false);
+		TemplateIdComparator.getInstance(false);
+		WorkflowMetricsSLADefinitionVersionIdComparator.getInstance(false);
+	}
+
+	public void method(boolean showHiddenPages) {
+		DataProviderInstanceModifiedDateComparator.getInstance(showHiddenPages);
+		DataProviderInstanceNameComparator.getInstance(showHiddenPages);
+		DDLRecordCreateDateComparator.getInstance(showHiddenPages);
+		DDLRecordIdComparator.getInstance(showHiddenPages);
+		DDLRecordSetCreateDateComparator.getInstance(showHiddenPages);
+		DDLRecordSetNameComparator.getInstance(showHiddenPages);
+		DDMFormInstanceNameComparator.getInstance(showHiddenPages);
+		DDMFormInstanceRecordIdComparator.getInstance(showHiddenPages);
+		DEDataListViewCreateDateComparator.getInstance(showHiddenPages);
+		DEDataListViewNameComparator.getInstance(showHiddenPages);
+		KaleoDefinitionVersionActiveComparator.getInstance(showHiddenPages);
+		KaleoDefinitionVersionComparator.getInstance(showHiddenPages);
+		KaleoDefinitionVersionIdComparator.getInstance(showHiddenPages);
+		KaleoDefinitionVersionModifiedDateComparator.getInstance(showHiddenPages);
+		KaleoDefinitionVersionNameComparator.getInstance(showHiddenPages);
+		KaleoDefinitionVersionVersionComparator.getInstance(showHiddenPages);
+		StructureCreateDateComparator.getInstance(showHiddenPages);
+		StructureIdComparator.getInstance(showHiddenPages);
+		StructureLayoutCreateDateComparator.getInstance(showHiddenPages);
+		StructureLayoutNameComparator.getInstance(showHiddenPages);
+		StructureLinkStructureModifiedDateComparator.getInstance(showHiddenPages);
+		TemplateIdComparator.getInstance(showHiddenPages);
+		WorkflowMetricsSLADefinitionVersionIdComparator.getInstance(showHiddenPages);
+	}
+}

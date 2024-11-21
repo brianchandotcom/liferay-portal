@@ -1,0 +1,70 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_26703 {
+
+	public void method() {
+		CategoryModifiedDateComparator.getInstance(false);
+		CategoryTitleComparator.getInstance(false);
+		LayoutClassedModelUsageModifiedDateComparator.getInstance(true);
+		LayoutCreateDateComparator.getInstance(true);
+		LayoutModifiedDateComparator.getInstance(false);
+		LayoutPageTemplateCollectionCreateDateComparator.getInstance(true);
+		LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator.getInstance(false);
+		LayoutPageTemplateCollectionLayoutPageTemplateEntryModifiedDateComparator.getInstance(false);
+		LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator.getInstance(false);
+		LayoutPageTemplateCollectionModifiedDateComparator.getInstance(true);
+		LayoutPageTemplateCollectionNameComparator.getInstance(false);
+		LayoutPageTemplateEntryCreateDateComparator.getInstance(true);
+		LayoutPageTemplateEntryModifiedDateComparator.getInstance(true);
+		LayoutPageTemplateEntryNameComparator.getInstance(false);
+		LayoutRelevanceComparator.getInstance(true);
+		MBObjectsComparator.getInstance(false);
+		MBObjectsModifiedDateComparator.getInstance(false);
+		MBObjectsTitleComparator.getInstance(false);
+		MessageCreateDateComparator.getInstance(false);
+		MessageModifiedDateComparator.getInstance(false);
+		MessageSubjectComparator.getInstance(false);
+		MessageURLSubjectComparator.getInstance(false);
+		ThreadCreateDateComparator.getInstance(false);
+		ThreadLastPostDateComparator.getInstance(false);
+		ThreadModifiedDateComparator.getInstance(false);
+		ThreadTitleComparator.getInstance(false);
+	}
+
+	public void method(boolean showHiddenPages) {
+		CategoryModifiedDateComparator.getInstance(showHiddenPages);
+		CategoryTitleComparator.getInstance(showHiddenPages);
+		LayoutClassedModelUsageModifiedDateComparator.getInstance(showHiddenPages);
+		LayoutCreateDateComparator.getInstance(showHiddenPages);
+		LayoutModifiedDateComparator.getInstance(showHiddenPages);
+		LayoutPageTemplateCollectionCreateDateComparator.getInstance(showHiddenPages);
+		LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator.getInstance(showHiddenPages);
+		LayoutPageTemplateCollectionLayoutPageTemplateEntryModifiedDateComparator.getInstance(showHiddenPages);
+		LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator.getInstance(showHiddenPages);
+		LayoutPageTemplateCollectionModifiedDateComparator.getInstance(showHiddenPages);
+		LayoutPageTemplateCollectionNameComparator.getInstance(showHiddenPages);
+		LayoutPageTemplateEntryCreateDateComparator.getInstance(showHiddenPages);
+		LayoutPageTemplateEntryModifiedDateComparator.getInstance(showHiddenPages);
+		LayoutPageTemplateEntryNameComparator.getInstance(showHiddenPages);
+		LayoutRelevanceComparator.getInstance(showHiddenPages);
+		MBObjectsComparator.getInstance(showHiddenPages);
+		MBObjectsModifiedDateComparator.getInstance(showHiddenPages);
+		MBObjectsTitleComparator.getInstance(showHiddenPages);
+		MessageCreateDateComparator.getInstance(showHiddenPages);
+		MessageModifiedDateComparator.getInstance(showHiddenPages);
+		MessageSubjectComparator.getInstance(showHiddenPages);
+		MessageURLSubjectComparator.getInstance(showHiddenPages);
+		ThreadCreateDateComparator.getInstance(showHiddenPages);
+		ThreadLastPostDateComparator.getInstance(showHiddenPages);
+		ThreadModifiedDateComparator.getInstance(showHiddenPages);
+		ThreadTitleComparator.getInstance(showHiddenPages);
+	}
+}

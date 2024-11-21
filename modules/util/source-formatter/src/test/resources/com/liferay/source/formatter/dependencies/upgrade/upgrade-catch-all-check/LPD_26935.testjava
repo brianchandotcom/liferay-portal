@@ -1,0 +1,88 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_26935 {
+
+	public void method() {
+		new BackgroundTaskCompletionDateComparator();
+		new BackgroundTaskCreateDateComparator();
+		new BackgroundTaskNameComparator();
+		new DLFileVersionVersionComparator();
+		new FolderNameComparator();
+		new GroupFriendlyURLComparator();
+		new GroupIdComparator();
+		new GroupTypeComparator();
+		new KaleoProcessCreateDateComparator();
+		new KBArticleCreateDateComparator();
+		new KBArticleModifiedDateComparator();
+		new KBArticlePriorityComparator();
+		new KBArticleStatusComparator();
+		new KBArticleTitleComparator();
+		new KBArticleUserNameComparator();
+		new KBArticleVersionComparator();
+		new KBArticleViewCountComparator();
+		new KBCommentCreateDateComparator();
+		new KBCommentModifiedDateComparator();
+		new KBCommentStatusComparator();
+		new KBCommentUserNameComparator();
+		new KBFolderNameComparator();
+		new KBObjectsPriorityComparator();
+		new KBObjectsViewCountComparator();
+		new KBTemplateCreateDateComparator();
+		new KBTemplateModifiedDateComparator();
+		new KBTemplateTitleComparator();
+		new KBTemplateUserNameComparator();
+		new LayoutComparator();
+		new LayoutPrototypeCreateDateComparator();
+		new LayoutRevisionCreateDateComparator();
+		new LayoutRevisionIdComparator();
+		new LayoutRevisionModifiedDateComparator();
+		new LayoutSetBranchCreateDateComparator();
+		new LayoutSetPrototypeCreateDateComparator();
+	}
+
+	public void method(boolean showHiddenPages) {
+		new BackgroundTaskCompletionDateComparator(showHiddenPages);
+		new BackgroundTaskCreateDateComparator(showHiddenPages);
+		new BackgroundTaskNameComparator(showHiddenPages);
+		new DLFileVersionVersionComparator(showHiddenPages);
+		new FolderNameComparator(showHiddenPages);
+		new GroupFriendlyURLComparator(showHiddenPages);
+		new GroupIdComparator(showHiddenPages);
+		new GroupTypeComparator(showHiddenPages);
+		new KaleoProcessCreateDateComparator(showHiddenPages);
+		new KBArticleCreateDateComparator(showHiddenPages);
+		new KBArticleModifiedDateComparator(showHiddenPages);
+		new KBArticlePriorityComparator(showHiddenPages);
+		new KBArticleStatusComparator(showHiddenPages);
+		new KBArticleTitleComparator(showHiddenPages);
+		new KBArticleUserNameComparator(showHiddenPages);
+		new KBArticleVersionComparator(showHiddenPages);
+		new KBArticleViewCountComparator(showHiddenPages);
+		new KBCommentCreateDateComparator(showHiddenPages);
+		new KBCommentModifiedDateComparator(showHiddenPages);
+		new KBCommentStatusComparator(showHiddenPages);
+		new KBCommentUserNameComparator(showHiddenPages);
+		new KBFolderNameComparator(showHiddenPages);
+		new KBObjectsPriorityComparator(showHiddenPages);
+		new KBObjectsViewCountComparator(showHiddenPages);
+		new KBTemplateCreateDateComparator(showHiddenPages);
+		new KBTemplateModifiedDateComparator(showHiddenPages);
+		new KBTemplateTitleComparator(showHiddenPages);
+		new KBTemplateUserNameComparator(showHiddenPages);
+		new LayoutComparator(showHiddenPages);
+		new LayoutPrototypeCreateDateComparator(showHiddenPages);
+		new LayoutRevisionCreateDateComparator(showHiddenPages);
+		new LayoutRevisionIdComparator(showHiddenPages);
+		new LayoutRevisionModifiedDateComparator(showHiddenPages);
+		new LayoutSetBranchCreateDateComparator(showHiddenPages);
+		new LayoutSetPrototypeCreateDateComparator(showHiddenPages);
+	}
+}

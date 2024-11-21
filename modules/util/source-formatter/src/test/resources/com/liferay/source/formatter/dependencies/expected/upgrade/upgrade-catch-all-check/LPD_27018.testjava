@@ -1,0 +1,44 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_27018 {
+
+	public void method() {
+		AssetCategoryCreateDateComparator.getInstance(true);
+		AssetTagAssetCountComparator.getInstance(true);
+		AssetVocabularyCreateDateComparator.getInstance(true);
+		ExportImportConfigurationNameComparator.getInstance(false);
+		FragmentCollectionCreateDateComparator.getInstance(true);
+		FragmentCollectionNameComparator.getInstance(false);
+		FragmentCompositionFragmentEntryCreateDateComparator.getInstance(true);
+		FragmentCompositionFragmentEntryModifiedDateComparator.getInstance(true);
+		FragmentCompositionFragmentEntryNameComparator.getInstance(false);
+		FragmentEntryCreateDateComparator.getInstance(true);
+		FragmentEntryLinkLastPropagationDateComparator.getInstance(true);
+		FragmentEntryNameComparator.getInstance(false);
+		SXPBlueprintModifiedDateComparator.getInstance(false);
+	}
+
+	public void method(boolean showHiddenPages) {
+		AssetCategoryCreateDateComparator.getInstance(showHiddenPages);
+		AssetTagAssetCountComparator.getInstance(showHiddenPages);
+		AssetVocabularyCreateDateComparator.getInstance(showHiddenPages);
+		ExportImportConfigurationNameComparator.getInstance(showHiddenPages);
+		FragmentCollectionCreateDateComparator.getInstance(showHiddenPages);
+		FragmentCollectionNameComparator.getInstance(showHiddenPages);
+		FragmentCompositionFragmentEntryCreateDateComparator.getInstance(showHiddenPages);
+		FragmentCompositionFragmentEntryModifiedDateComparator.getInstance(showHiddenPages);
+		FragmentCompositionFragmentEntryNameComparator.getInstance(showHiddenPages);
+		FragmentEntryCreateDateComparator.getInstance(showHiddenPages);
+		FragmentEntryLinkLastPropagationDateComparator.getInstance(showHiddenPages);
+		FragmentEntryNameComparator.getInstance(showHiddenPages);
+		SXPBlueprintModifiedDateComparator.getInstance(showHiddenPages);
+	}
+}

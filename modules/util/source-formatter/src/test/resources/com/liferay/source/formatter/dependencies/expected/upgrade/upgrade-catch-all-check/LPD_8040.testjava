@@ -1,0 +1,85 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_8040 {
+
+	public void method() {
+		_http.hasProxyConfig();
+		HttpComponentsUtil.addParameter(null, null, null);
+		HttpComponentsUtil.decodePath(null);
+		HttpComponentsUtil.decodeURL(null);
+		HttpComponentsUtil.encodeParameters(null);
+		HttpComponentsUtil.encodePath(null);
+		HttpComponentsUtil.fixPath(null);
+		HttpComponentsUtil.getCompleteURL(null, null, null);
+		HttpComponentsUtil.getDomain(null);
+		HttpComponentsUtil.getIpAddress(null);
+		HttpComponentsUtil.getParameter(null, null);
+		HttpComponentsUtil.getParameterMap(null);
+		HttpComponentsUtil.getPath(null);
+		HttpComponentsUtil.getProtocol(null);
+		HttpComponentsUtil.getQueryString(null);
+		HttpComponentsUtil.getRequestURL(null);
+		HttpComponentsUtil.getURI(null);
+		HttpComponentsUtil.hasDomain(null);
+		HttpComponentsUtil.hasProtocol(null);
+		HttpComponentsUtil.isForwarded(null);
+		HttpComponentsUtil.isSecure(null);
+		HttpComponentsUtil.normalizePath(null);
+		HttpComponentsUtil.parameterMapFromString(null);
+		HttpComponentsUtil.protocolize(null, null);
+		HttpComponentsUtil.removeDomain(null);
+		HttpComponentsUtil.removeParameter(null);
+		HttpComponentsUtil.removePathParameters(null);
+		HttpComponentsUtil.removeProtocol(null);
+		HttpComponentsUtil.sanitizeHeader(null);
+		HttpComponentsUtil.setParameter(null, null, null);
+		HttpComponentsUtil.shortenURL(null);
+
+		HttpUtil.hasProxyConfig();
+		HttpComponentsUtil.addParameter(null, null, null);
+		HttpComponentsUtil.decodePath(null);
+		HttpComponentsUtil.decodeURL(null);
+		HttpComponentsUtil.encodeParameters(null);
+		HttpComponentsUtil.encodePath(null);
+		HttpComponentsUtil.fixPath(null);
+		HttpComponentsUtil.getCompleteURL(null, null, null);
+		HttpComponentsUtil.getDomain(null);
+		HttpComponentsUtil.getIpAddress(null);
+		HttpComponentsUtil.getParameter(null, null);
+		HttpComponentsUtil.getParameterMap(null);
+		HttpComponentsUtil.getPath(null);
+		HttpComponentsUtil.getProtocol(null);
+		HttpComponentsUtil.getQueryString(null);
+		HttpComponentsUtil.getRequestURL(null);
+		HttpComponentsUtil.getURI(null);
+		HttpComponentsUtil.hasDomain(null);
+		HttpComponentsUtil.hasProtocol(null);
+		HttpComponentsUtil.isForwarded(null);
+		HttpComponentsUtil.isSecure(null);
+		HttpComponentsUtil.normalizePath(null);
+		HttpComponentsUtil.parameterMapFromString(null);
+		HttpComponentsUtil.protocolize(null, null);
+		HttpComponentsUtil.removeDomain(null);
+		HttpComponentsUtil.removeParameter(null);
+		HttpComponentsUtil.removePathParameters(null);
+		HttpComponentsUtil.removeProtocol(null);
+		HttpComponentsUtil.sanitizeHeader(null);
+		HttpComponentsUtil.setParameter(null, null, null);
+		HttpComponentsUtil.shortenURL(null);
+	}
+
+	@Reference
+	private Http _http;
+}

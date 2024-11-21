@@ -1,0 +1,88 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_26935 {
+
+	public void method() {
+		BackgroundTaskCompletionDateComparator.getInstance(false);
+		BackgroundTaskCreateDateComparator.getInstance(false);
+		BackgroundTaskNameComparator.getInstance(false);
+		DLFileVersionVersionComparator.getInstance(false);
+		FolderNameComparator.getInstance(false);
+		GroupFriendlyURLComparator.getInstance(false);
+		GroupIdComparator.getInstance(false);
+		GroupTypeComparator.getInstance(false);
+		KaleoProcessCreateDateComparator.getInstance(false);
+		KBArticleCreateDateComparator.getInstance(false);
+		KBArticleModifiedDateComparator.getInstance(false);
+		KBArticlePriorityComparator.getInstance(false);
+		KBArticleStatusComparator.getInstance(false);
+		KBArticleTitleComparator.getInstance(false);
+		KBArticleUserNameComparator.getInstance(false);
+		KBArticleVersionComparator.getInstance(false);
+		KBArticleViewCountComparator.getInstance(false);
+		KBCommentCreateDateComparator.getInstance(false);
+		KBCommentModifiedDateComparator.getInstance(false);
+		KBCommentStatusComparator.getInstance(false);
+		KBCommentUserNameComparator.getInstance(false);
+		KBFolderNameComparator.getInstance(false);
+		KBObjectsPriorityComparator.getInstance(false);
+		KBObjectsViewCountComparator.getInstance(false);
+		KBTemplateCreateDateComparator.getInstance(false);
+		KBTemplateModifiedDateComparator.getInstance(false);
+		KBTemplateTitleComparator.getInstance(false);
+		KBTemplateUserNameComparator.getInstance(false);
+		LayoutComparator.getInstance(false);
+		LayoutPrototypeCreateDateComparator.getInstance(false);
+		LayoutRevisionCreateDateComparator.getInstance(false);
+		LayoutRevisionIdComparator.getInstance(false);
+		LayoutRevisionModifiedDateComparator.getInstance(false);
+		LayoutSetBranchCreateDateComparator.getInstance(false);
+		LayoutSetPrototypeCreateDateComparator.getInstance(false);
+	}
+
+	public void method(boolean showHiddenPages) {
+		BackgroundTaskCompletionDateComparator.getInstance(showHiddenPages);
+		BackgroundTaskCreateDateComparator.getInstance(showHiddenPages);
+		BackgroundTaskNameComparator.getInstance(showHiddenPages);
+		DLFileVersionVersionComparator.getInstance(showHiddenPages);
+		FolderNameComparator.getInstance(showHiddenPages);
+		GroupFriendlyURLComparator.getInstance(showHiddenPages);
+		GroupIdComparator.getInstance(showHiddenPages);
+		GroupTypeComparator.getInstance(showHiddenPages);
+		KaleoProcessCreateDateComparator.getInstance(showHiddenPages);
+		KBArticleCreateDateComparator.getInstance(showHiddenPages);
+		KBArticleModifiedDateComparator.getInstance(showHiddenPages);
+		KBArticlePriorityComparator.getInstance(showHiddenPages);
+		KBArticleStatusComparator.getInstance(showHiddenPages);
+		KBArticleTitleComparator.getInstance(showHiddenPages);
+		KBArticleUserNameComparator.getInstance(showHiddenPages);
+		KBArticleVersionComparator.getInstance(showHiddenPages);
+		KBArticleViewCountComparator.getInstance(showHiddenPages);
+		KBCommentCreateDateComparator.getInstance(showHiddenPages);
+		KBCommentModifiedDateComparator.getInstance(showHiddenPages);
+		KBCommentStatusComparator.getInstance(showHiddenPages);
+		KBCommentUserNameComparator.getInstance(showHiddenPages);
+		KBFolderNameComparator.getInstance(showHiddenPages);
+		KBObjectsPriorityComparator.getInstance(showHiddenPages);
+		KBObjectsViewCountComparator.getInstance(showHiddenPages);
+		KBTemplateCreateDateComparator.getInstance(showHiddenPages);
+		KBTemplateModifiedDateComparator.getInstance(showHiddenPages);
+		KBTemplateTitleComparator.getInstance(showHiddenPages);
+		KBTemplateUserNameComparator.getInstance(showHiddenPages);
+		LayoutComparator.getInstance(showHiddenPages);
+		LayoutPrototypeCreateDateComparator.getInstance(showHiddenPages);
+		LayoutRevisionCreateDateComparator.getInstance(showHiddenPages);
+		LayoutRevisionIdComparator.getInstance(showHiddenPages);
+		LayoutRevisionModifiedDateComparator.getInstance(showHiddenPages);
+		LayoutSetBranchCreateDateComparator.getInstance(showHiddenPages);
+		LayoutSetPrototypeCreateDateComparator.getInstance(showHiddenPages);
+	}
+}

@@ -1,0 +1,66 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_27027 {
+
+	public void method() {
+		CommerceCurrencyPriorityComparator.getInstance(false);
+		CommerceDiscountCommerceAccountGroupRelCreateDateComparator.getInstance(false);
+		CommerceDiscountCreateDateComparator.getInstance(false);
+		CommerceDiscountRelCreateDateComparator.getInstance(false);
+		CommerceDiscountRuleCreateDateComparator.getInstance(false);
+		CommerceInventoryReplenishmentItemAvailabilityDateComparator.getInstance(true);
+		CommerceInventoryWarehouseCityComparator.getInstance(false);
+		CommerceInventoryWarehouseItemQuantityComparator.getInstance(false);
+		CommerceInventoryWarehouseItemWarehouseNameComparator.getInstance(false);
+		CommerceInventoryWarehouseNameComparator.getInstance(false);
+		CommerceNotificationAttachmentCreateDateComparator.getInstance(false);
+		CommerceNotificationQueueEntryPriorityComparator.getInstance(false);
+		CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator.getInstance(false);
+		CommerceNotificationTemplateModifiedDateComparator.getInstance(false);
+		CommerceNotificationTemplateNameComparator.getInstance(false);
+		CommerceTaxFixedRateAddressRelCreateDateComparator.getInstance(false);
+		CommerceTaxFixedRateCreateDateComparator.getInstance(false);
+		CommerceVirtualOrderItemCreateDateComparator.getInstance(false);
+		CommerceWishListCreateDateComparator.getInstance(false);
+		CommerceWishListItemCreateDateComparator.getInstance(false);
+		CommerceWishListNameComparator.getInstance(false);
+		CPDefinitionGroupedEntryPriorityComparator.getInstance(false);
+		CPDefinitionGroupedEntryQuantityComparator.getInstance(false);
+		CPTaxCategoryNameComparator.getInstance(false);
+	}
+
+	public void method(boolean showHiddenPages) {
+		CommerceCurrencyPriorityComparator.getInstance(showHiddenPages);
+		CommerceDiscountCommerceAccountGroupRelCreateDateComparator.getInstance(showHiddenPages);
+		CommerceDiscountCreateDateComparator.getInstance(showHiddenPages);
+		CommerceDiscountRelCreateDateComparator.getInstance(showHiddenPages);
+		CommerceDiscountRuleCreateDateComparator.getInstance(showHiddenPages);
+		CommerceInventoryReplenishmentItemAvailabilityDateComparator.getInstance(showHiddenPages);
+		CommerceInventoryWarehouseCityComparator.getInstance(showHiddenPages);
+		CommerceInventoryWarehouseItemQuantityComparator.getInstance(showHiddenPages);
+		CommerceInventoryWarehouseItemWarehouseNameComparator.getInstance(showHiddenPages);
+		CommerceInventoryWarehouseNameComparator.getInstance(showHiddenPages);
+		CommerceNotificationAttachmentCreateDateComparator.getInstance(showHiddenPages);
+		CommerceNotificationQueueEntryPriorityComparator.getInstance(showHiddenPages);
+		CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator.getInstance(showHiddenPages);
+		CommerceNotificationTemplateModifiedDateComparator.getInstance(showHiddenPages);
+		CommerceNotificationTemplateNameComparator.getInstance(showHiddenPages);
+		CommerceTaxFixedRateAddressRelCreateDateComparator.getInstance(showHiddenPages);
+		CommerceTaxFixedRateCreateDateComparator.getInstance(showHiddenPages);
+		CommerceVirtualOrderItemCreateDateComparator.getInstance(showHiddenPages);
+		CommerceWishListCreateDateComparator.getInstance(showHiddenPages);
+		CommerceWishListItemCreateDateComparator.getInstance(showHiddenPages);
+		CommerceWishListNameComparator.getInstance(showHiddenPages);
+		CPDefinitionGroupedEntryPriorityComparator.getInstance(showHiddenPages);
+		CPDefinitionGroupedEntryQuantityComparator.getInstance(showHiddenPages);
+		CPTaxCategoryNameComparator.getInstance(showHiddenPages);
+	}
+}

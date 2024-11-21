@@ -1,0 +1,50 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_26438 {
+
+	public void method() {
+		new ArticleCreateDateComparator();
+		new ArticleDisplayDateComparator();
+		new ArticleIDComparator();
+		new ArticleModifiedDateComparator();
+		new ArticleResourcePKComparator();
+		new ArticleReviewDateComparator();
+		new ArticleTitleComparator();
+		new ArticleVersionComparator();
+		new FeedIDComparator();
+		new FeedNameComparator();
+		new FolderArticleArticleIdComparator();
+		new FolderArticleCreateDateComparator();
+		new FolderArticleDisplayDateComparator();
+		new FolderArticleModifiedDateComparator();
+		new FolderArticleTitleComparator();
+		new FolderIdComparator();
+	}
+
+	public void method(boolean showHiddenPages) {
+		new ArticleCreateDateComparator(showHiddenPages);
+		new ArticleDisplayDateComparator(showHiddenPages);
+		new ArticleIDComparator(showHiddenPages);
+		new ArticleModifiedDateComparator(showHiddenPages);
+		new ArticleResourcePKComparator(showHiddenPages);
+		new ArticleReviewDateComparator(showHiddenPages);
+		new ArticleTitleComparator(showHiddenPages);
+		new ArticleVersionComparator(showHiddenPages);
+		new FeedIDComparator(showHiddenPages);
+		new FeedNameComparator(showHiddenPages);
+		new FolderArticleArticleIdComparator(showHiddenPages);
+		new FolderArticleCreateDateComparator(showHiddenPages);
+		new FolderArticleDisplayDateComparator(showHiddenPages);
+		new FolderArticleModifiedDateComparator(showHiddenPages);
+		new FolderArticleTitleComparator(showHiddenPages);
+		new FolderIdComparator(showHiddenPages);
+	}
+}

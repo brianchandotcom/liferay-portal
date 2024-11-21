@@ -1,0 +1,25 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_26157 {
+
+	public void method() {
+		new AssetListEntryCreateDateComparator();
+		new AssetTagCountComparator();
+
+		StructureStructureKeyComparator.INSTANCE_ASCENDING;
+		StructureStructureKeyComparator.INSTANCE_DESCENDING;
+	}
+
+	public void method(boolean showHiddenPages) {
+		new AssetListEntryCreateDateComparator(showHiddenPages);
+		new AssetTagCountComparator(showHiddenPages);
+	}
+}

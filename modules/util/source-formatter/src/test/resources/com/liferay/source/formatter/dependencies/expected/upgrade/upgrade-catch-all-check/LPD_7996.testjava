@@ -1,0 +1,35 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.info.item.InfoItemReference;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_7996 {
+
+	public void method(
+		String className, long classPK, Locale locale,
+		ThemeDisplay themeDisplay) {
+
+		_assetDisplayPageFriendlyURLProvider.getFriendlyURL(new InfoItemReference(className, classPK), locale, themeDisplay);
+		_assetDisplayPageFriendlyURLProvider.getFriendlyURL("test123", 123, locale, themeDisplay);
+	}
+
+	public void method(
+		String className, long classPK, ThemeDisplay themeDisplay) {
+
+		_assetDisplayPageFriendlyURLProvider.getFriendlyURL(new InfoItemReference(className, classPK), themeDisplay);
+		_assetDisplayPageFriendlyURLProvider.getFriendlyURL("test123", 123, themeDisplay);
+	}
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider _assetDisplayPageFriendlyURLProvider;
+}
+

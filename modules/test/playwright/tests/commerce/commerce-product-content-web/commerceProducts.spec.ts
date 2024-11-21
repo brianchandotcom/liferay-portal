@@ -4,6 +4,8 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import {createReadStream} from 'fs';
+import path from 'node:path';
 
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
@@ -1018,4 +1020,134 @@ test('LPD-37780 Friendly URLs history for products', async ({
 	await page.goto(`/web/${site.name}/p/product2`);
 
 	await expect(page.getByText(product.name['en_US'])).toBeVisible();
+});
+
+function verifyDateFormat(date: string) {
+	const dateFormatPattern =
+		/\w{3} \d{1,2}, \d{2,4},? \d{1,2}:\d{2}:\d{2}\s?[AP]M/;
+
+	if (!dateFormatPattern.test(date)) {
+		throw new Error(`Date format is incorrect: ${date}`);
+	}
+}
+
+test('LPD-39067 Can product media and relation show correct date format', async ({
+	apiHelpers,
+	commerceAdminProductDetailsMediaPage,
+	commerceAdminProductDetailsPage,
+	commerceAdminProductDetailsProductRelationsPage,
+	commerceAdminProductPage,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const document1 = await apiHelpers.headlessDelivery.postDocument(
+		site.id,
+		createReadStream(path.join(__dirname, '/dependencies/attachment.txt')),
+		{
+			description: getRandomString(),
+			externalReferenceCode: getRandomString(),
+			fileName: getRandomString(),
+			title: getRandomString(),
+			viewableBy: 'Owner',
+		}
+	);
+
+	apiHelpers.data.push({id: document1.id, type: 'document'});
+
+	const document2 = await apiHelpers.headlessDelivery.postDocument(
+		site.id,
+		createReadStream(path.join(__dirname, '/dependencies/liferay.png')),
+		{
+			description: getRandomString(),
+			externalReferenceCode: getRandomString(),
+			fileName: getRandomString(),
+			title: getRandomString(),
+			viewableBy: 'Owner',
+		}
+	);
+
+	apiHelpers.data.push({id: document2.id, type: 'document'});
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	const simpleProduct =
+		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+			catalogId: catalog.id,
+			name: {en_US: 'Simple product'},
+		});
+
+	await apiHelpers.headlessCommerceAdminCatalog.postAttachment(
+		simpleProduct.productId,
+		document1.id,
+		document1.title
+	);
+
+	await apiHelpers.headlessCommerceAdminCatalog.postImage(
+		simpleProduct.productId,
+		document2.id,
+		document2.title
+	);
+
+	const relationProduct =
+		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+			catalogId: catalog.id,
+			name: {en_US: 'Relation product'},
+		});
+
+	await apiHelpers.headlessCommerceAdminCatalog.postProductRelatedProduct(
+		simpleProduct.productId,
+		{productId: relationProduct.productId, type: 'up-sell'}
+	);
+
+	await commerceAdminProductPage.gotoProduct(simpleProduct.name['en_US']);
+	await commerceAdminProductDetailsPage.productMediaLink.click();
+
+	await expect(
+		commerceAdminProductDetailsMediaPage.addImageButton
+	).toBeVisible();
+
+	const imagesTableModifiedDate =
+		await commerceAdminProductDetailsMediaPage.tableRowModifiedDateField(
+			document2.title,
+			commerceAdminProductDetailsMediaPage.mediaImagesTable
+		);
+
+	verifyDateFormat(await imagesTableModifiedDate.textContent());
+
+	const attachmentsTableModifiedDate =
+		await commerceAdminProductDetailsMediaPage.tableRowModifiedDateField(
+			document1.title,
+			commerceAdminProductDetailsMediaPage.mediaAttachmentsTable
+		);
+
+	verifyDateFormat(await attachmentsTableModifiedDate.textContent());
+
+	await commerceAdminProductDetailsPage.productRelationsLink.click();
+
+	await expect(
+		commerceAdminProductDetailsProductRelationsPage.creationMenuNewButton
+	).toBeVisible();
+
+	const createDate =
+		await commerceAdminProductDetailsProductRelationsPage.tableRowCreateDateField(
+			relationProduct.name['en_US']
+		);
+
+	verifyDateFormat(await createDate.textContent());
+
+	await commerceAdminProductDetailsProductRelationsPage.creationMenuNewButton.click();
+	await commerceAdminProductDetailsProductRelationsPage.addUpSellProductMenuButton.click();
+
+	const newProductRelationFrameTableModifiedDate =
+		await commerceAdminProductDetailsProductRelationsPage.addNewProductFrameTableRowModifiedDateField(
+			relationProduct.name['en_US']
+		);
+
+	verifyDateFormat(
+		await newProductRelationFrameTableModifiedDate.textContent()
+	);
 });

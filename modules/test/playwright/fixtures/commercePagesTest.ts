@@ -30,6 +30,7 @@ import {ProductDetailsPage} from '../pages/commerce/commerce-product-content-web
 import {ProductPublisherPage} from '../pages/commerce/commerce-product-content-web/productPublisherPage';
 import {AttachmentsPage} from '../pages/commerce/commerce-product-definitions-web/attachmentsPage';
 import {CommerceAdminProductDetailsDiagramPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductDetailsDiagramPage';
+import {CommerceAdminProductDetailsMediaPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductDetailsMediaPage';
 import {CommerceAdminProductDetailsPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductDetailsPage';
 import {CommerceAdminProductDetailsProductOptionsPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductDetailsProductOptionsPage';
 import {CommerceAdminProductDetailsProductRelationsPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductDetailsProductRelationsPage';
@@ -57,6 +58,7 @@ const commercePagesTest = test.extend<{
 	commerceAdminOrderDetailsPage: CommerceAdminOrderDetailsPage;
 	commerceAdminOrdersPage: CommerceAdminOrdersPage;
 	commerceAdminProductDetailsDiagramPage: CommerceAdminProductDetailsDiagramPage;
+	commerceAdminProductDetailsMediaPage: CommerceAdminProductDetailsMediaPage;
 	commerceAdminProductDetailsPage: CommerceAdminProductDetailsPage;
 	commerceAdminProductDetailsProductOptionsPage: CommerceAdminProductDetailsProductOptionsPage;
 	commerceAdminProductDetailsProductRelationsPage: CommerceAdminProductDetailsProductRelationsPage;
@@ -118,6 +120,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminProductDetailsDiagramPage: async ({page}, use) => {
 		await use(new CommerceAdminProductDetailsDiagramPage(page));
+	},
+	commerceAdminProductDetailsMediaPage: async ({page}, use) => {
+		await use(new CommerceAdminProductDetailsMediaPage(page));
 	},
 	commerceAdminProductDetailsPage: async ({page}, use) => {
 		await use(new CommerceAdminProductDetailsPage(page));

@@ -396,6 +396,24 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		return catalog;
 	}
 
+	async postImage(
+		productId: number,
+		fileEntryId: number,
+		title: string = 'Image' + getRandomInt()
+	) {
+		const postImage = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/images`,
+			{
+				data: {
+					fileEntryId,
+					title: {en_US: title},
+				},
+			}
+		);
+
+		return postImage;
+	}
+
 	async postOption(
 		fieldType: string = 'select',
 		key: string = 'key-' + getRandomInt(),

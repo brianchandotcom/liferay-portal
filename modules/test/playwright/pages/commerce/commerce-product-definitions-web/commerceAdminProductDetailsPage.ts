@@ -9,6 +9,7 @@ export class CommerceAdminProductDetailsPage {
 	readonly page: Page;
 	readonly productDetailsInput: (inputName: string) => Promise<Locator>;
 	readonly productDiagramLink: Locator;
+	readonly productMediaLink: Locator;
 	readonly productOptionsLink: Locator;
 	readonly productRelationsLink: Locator;
 	readonly productSkusLink: Locator;
@@ -21,6 +22,9 @@ export class CommerceAdminProductDetailsPage {
 			page.getByLabel(inputName);
 		this.productDiagramLink = page.getByRole('link', {
 			name: 'Diagram',
+		});
+		this.productMediaLink = page.getByRole('link', {
+			name: 'Media',
 		});
 		this.productOptionsLink = page.getByRole('link', {
 			name: 'Options',

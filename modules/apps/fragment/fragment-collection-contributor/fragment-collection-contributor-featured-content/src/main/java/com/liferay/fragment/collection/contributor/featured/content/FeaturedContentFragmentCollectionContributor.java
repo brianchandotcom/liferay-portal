@@ -33,6 +33,11 @@ public class FeaturedContentFragmentCollectionContributor
 		return _servletContext;
 	}
 
+	@Override
+	public boolean isDeprecated() {
+		return true;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.fragment.collection.contributor.featured.content)"
 	)

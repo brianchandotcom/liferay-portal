@@ -35,6 +35,8 @@ public class JspTaglibIDUtil {
 			publicIdsMap, XmlIdentifiers.TLD_12_PUBLIC,
 			"web-jsptaglibrary_1_2.dtd", false);
 
+		servletApiPublicIdsMap = Collections.unmodifiableMap(publicIdsMap);
+
 		Map<String, String> systemIdsMap = HashMapBuilder.putAll(
 			DigesterFactory.SERVLET_API_SYSTEM_IDS
 		).build();
@@ -50,7 +52,6 @@ public class JspTaglibIDUtil {
 		_resolveId(systemIdsMap, "jsp_2_2.xsd", "jsp_2_2.xsd", true);
 		_resolveId(systemIdsMap, "jsp_2_3.xsd", "jsp_2_3.xsd", true);
 
-		servletApiPublicIdsMap = Collections.unmodifiableMap(publicIdsMap);
 		servletApiSystemIdsMap = Collections.unmodifiableMap(systemIdsMap);
 	}
 

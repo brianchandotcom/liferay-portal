@@ -138,15 +138,13 @@ public class AccountEntryOrganizationRelModelListenerTest {
 
 			reindexed.set(false);
 
-			accountEntry =
-				_accountEntryLocalService.addAccountEntry(
-					TestPropsValues.getUserId(), 0L,
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(), null, null, null,
-					RandomTestUtil.randomString(),
-					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-					WorkflowConstants.STATUS_APPROVED,
-					ServiceContextTestUtil.getServiceContext());
+			accountEntry = _accountEntryLocalService.addAccountEntry(
+				TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null, null, null,
+				RandomTestUtil.randomString(),
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext());
 
 			AccountEntryOrganizationRel accountEntryOrganizationRel =
 				_accountEntryOrganizationRelLocalService.

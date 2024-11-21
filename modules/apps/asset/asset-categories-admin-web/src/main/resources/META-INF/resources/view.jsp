@@ -47,6 +47,7 @@
 										%>
 
 										<clay:link
+											aria-label='<%= LanguageUtil.get(request, "add-new-vocabulary") %>'
 											borderless="<%= true %>"
 											cssClass="component-action"
 											href="<%= editVocabularyURL.toString() %>"

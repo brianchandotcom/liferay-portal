@@ -24,13 +24,13 @@ public class ScimExpandoFieldQueryBuilderFactory
 	@Override
 	public FieldQueryBuilder getQueryBuilder(String fieldName) {
 		if (fieldName.contains("scimClientId")) {
-			return _scimExpandoFieldQueryBuilder;
+			return _scimClientIdFieldQueryBuilder;
 		}
 
 		return null;
 	}
 
 	@Reference(target = "(query.builder.type=scimClientId)")
-	private FieldQueryBuilder _scimExpandoFieldQueryBuilder;
+	private FieldQueryBuilder _scimClientIdFieldQueryBuilder;
 
 }

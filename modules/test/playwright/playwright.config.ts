@@ -51,6 +51,7 @@ import {config as frontendEditorCKEditorWebConfig} from './tests/frontend-editor
 import {config as frontendJsSpaWebConfig} from './tests/frontend-js-spa-web/config';
 import {config as frontendTaglibClayConfig} from './tests/frontend-taglib-clay/config';
 import {config as frontendTaglibConfig} from './tests/frontend-taglib/config';
+import {config as frontendTheme} from './tests/frontend-theme/config';
 import {config as headlessBuilderImplConfig} from './tests/headless-builder-impl/config';
 import {config as headlessBuilderWebConfig} from './tests/headless-builder-web/config';
 import {config as iframeWebConfig} from './tests/iframe-web/config';
@@ -167,6 +168,7 @@ export default defineConfig({
 		frontendJsSpaWebConfig,
 		frontendTaglibClayConfig,
 		frontendTaglibConfig,
+		frontendTheme,
 		headlessBuilderImplConfig,
 		headlessBuilderWebConfig,
 		iframeWebConfig,

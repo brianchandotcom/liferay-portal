@@ -7632,6 +7632,54 @@ public class ObjectEntryResourceTest {
 					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
 				objectField);
 
+		// priority(ERC) > priority(invalid id)
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
+			).put(
+				objectFieldName, Long.valueOf(_objectEntry1.getObjectEntryId())
+			).put(
+				objectRelationshipERCObjectFieldName,
+				_objectEntry1.getExternalReferenceCode()
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+				).put(
+					objectFieldName, RandomTestUtil.randomLong()
+				).put(
+					objectRelationshipERCObjectFieldName,
+					_objectEntry1.getExternalReferenceCode()
+				).toString(),
+				_objectDefinition2.getRESTContextPath(), Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		//  priority(id) > priority(ERC)
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
+			).put(
+				objectFieldName, Long.valueOf(_objectEntry1.getObjectEntryId())
+			).put(
+				objectRelationshipERCObjectFieldName,
+				_objectEntry1.getExternalReferenceCode()
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+				).put(
+					objectFieldName, _objectEntry1.getObjectEntryId()
+				).put(
+					objectRelationshipERCObjectFieldName,
+					randomObjectEntry.getExternalReferenceCode()
+				).toString(),
+				_objectDefinition2.getRESTContextPath(), Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+
 		String objectRelationshipName = _objectRelationship1.getName();
 
 		// priority(relationshipName) > priority(id) > priority(ERC)
@@ -7696,58 +7744,27 @@ public class ObjectEntryResourceTest {
 			_objectEntry1.getExternalReferenceCode(),
 			jsonObject1.getString(objectRelationshipERCObjectFieldName));
 
-		//  priority(id) > priority(ERC)
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
-			).put(
-				objectFieldName, Long.valueOf(_objectEntry1.getObjectEntryId())
-			).put(
-				objectRelationshipERCObjectFieldName,
-				_objectEntry1.getExternalReferenceCode()
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
-				).put(
-					objectFieldName, _objectEntry1.getObjectEntryId()
-				).put(
-					objectRelationshipERCObjectFieldName,
-					randomObjectEntry.getExternalReferenceCode()
-				).toString(),
-				_objectDefinition2.getRESTContextPath(), Http.Method.POST
-			).toString(),
-			JSONCompareMode.LENIENT);
-
-		// priority(ERC) > priority(invalid id)
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
-			).put(
-				objectFieldName, Long.valueOf(_objectEntry1.getObjectEntryId())
-			).put(
-				objectRelationshipERCObjectFieldName,
-				_objectEntry1.getExternalReferenceCode()
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
-				).put(
-					objectFieldName, RandomTestUtil.randomLong()
-				).put(
-					objectRelationshipERCObjectFieldName,
-					_objectEntry1.getExternalReferenceCode()
-				).toString(),
-				_objectDefinition2.getRESTContextPath(), Http.Method.POST
-			).toString(),
-			JSONCompareMode.LENIENT);
-
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
 					"WebApplicationExceptionMapper",
 				LoggerTestUtil.WARN)) {
+
+			// invalid ERC
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					"status", "NOT_FOUND"
+				).toString(),
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+					).put(
+						objectRelationshipERCObjectFieldName,
+						RandomTestUtil.randomString()
+					).toString(),
+					_objectDefinition2.getRESTContextPath(), Http.Method.POST
+				).toString(),
+				JSONCompareMode.LENIENT);
 
 			// priority(invalid id) > priority(invalid ERC)
 
@@ -7760,23 +7777,6 @@ public class ObjectEntryResourceTest {
 						_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
 					).put(
 						objectFieldName, RandomTestUtil.randomLong()
-					).put(
-						objectRelationshipERCObjectFieldName,
-						RandomTestUtil.randomString()
-					).toString(),
-					_objectDefinition2.getRESTContextPath(), Http.Method.POST
-				).toString(),
-				JSONCompareMode.LENIENT);
-
-			// invalid ERC
-
-			JSONAssert.assertEquals(
-				JSONUtil.put(
-					"status", "NOT_FOUND"
-				).toString(),
-				HTTPTestUtil.invokeToJSONObject(
-					JSONUtil.put(
-						_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
 					).put(
 						objectRelationshipERCObjectFieldName,
 						RandomTestUtil.randomString()

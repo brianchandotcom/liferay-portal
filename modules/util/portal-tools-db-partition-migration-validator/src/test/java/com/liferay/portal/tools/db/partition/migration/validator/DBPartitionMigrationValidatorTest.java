@@ -53,14 +53,14 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 
 	@Before
 	public void setUp() {
-		_errorTempFile = new File(StringUtil.randomString());
-		_outputTempFile = new File(StringUtil.randomString());
+		_errorFile = new File(StringUtil.randomString());
+		_outputFile = new File(StringUtil.randomString());
 	}
 
 	@After
 	public void tearDown() {
-		_errorTempFile.delete();
-		_outputTempFile.delete();
+		_errorFile.delete();
+		_outputFile.delete();
 	}
 
 	@Test
@@ -138,7 +138,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 				Assert.assertEquals("1", runtimeException.getMessage());
 
 				String outputFileContent = new String(
-					Files.readAllBytes(_outputTempFile.toPath()),
+					Files.readAllBytes(_outputFile.toPath()),
 					StringPool.UTF8);
 
 				for (String message : messages) {
@@ -157,9 +157,9 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 				"0", runtimeException.getMessage()),
 			() -> {
 				Assert.assertEquals(
-					0, Files.readAllBytes(_errorTempFile.toPath()).length);
+					0, Files.readAllBytes(_errorFile.toPath()).length);
 				Assert.assertEquals(
-					0, Files.readAllBytes(_outputTempFile.toPath()).length);
+					0, Files.readAllBytes(_outputFile.toPath()).length);
 			});
 	}
 
@@ -169,7 +169,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 			"source-success.json", "target-nondefault.json",
 			runtimeException -> {
 				String errorFileContent = new String(
-					Files.readAllBytes(_errorTempFile.toPath()),
+					Files.readAllBytes(_errorFile.toPath()),
 					StringPool.UTF8);
 
 				Assert.assertEquals("1", runtimeException.getMessage());
@@ -177,7 +177,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 					errorFileContent.contains(
 						"Target is not the default partition"));
 				Assert.assertEquals(
-					0, Files.readAllBytes(_outputTempFile.toPath()).length);
+					0, Files.readAllBytes(_outputFile.toPath()).length);
 			},
 			() -> {
 			});
@@ -273,9 +273,9 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		Process process = new ProcessBuilder(
 			command
 		).redirectOutput(
-			_outputTempFile
+				_outputFile
 		).redirectError(
-			_errorTempFile
+				_errorFile
 		).start();
 
 		process.waitFor();
@@ -384,7 +384,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		}
 		catch (RuntimeException runtimeException) {
 			String errorFileContent = new String(
-				Files.readAllBytes(_errorTempFile.toPath()), StringPool.UTF8);
+				Files.readAllBytes(_errorFile.toPath()), StringPool.UTF8);
 
 			if (companyIds.size() > 1) {
 				Assert.assertTrue(
@@ -499,7 +499,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		new Release(Version.parseVersion("14.2.4"), "module1", 0, true),
 		new Release(Version.parseVersion("2.0.1"), "module2", 1, false));
 
-	private File _errorTempFile;
-	private File _outputTempFile;
+	private File _errorFile;
+	private File _outputFile;
 
 }

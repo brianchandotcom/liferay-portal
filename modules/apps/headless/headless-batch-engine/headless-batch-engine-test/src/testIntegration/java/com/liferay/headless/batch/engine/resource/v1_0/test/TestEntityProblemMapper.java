@@ -10,8 +10,6 @@ import com.liferay.portal.vulcan.problem.ProblemMapper;
 
 import java.util.Locale;
 
-import javax.ws.rs.core.Response;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -31,8 +29,8 @@ public class TestEntityProblemMapper
 			}
 
 			@Override
-			public Response.Status getStatus(Locale locale) {
-				return Response.Status.BAD_REQUEST;
+			public Status getStatus(Locale locale) {
+				return Status.BAD_REQUEST;
 			}
 
 			@Override

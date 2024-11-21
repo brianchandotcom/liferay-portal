@@ -7,8 +7,6 @@ package com.liferay.portal.vulcan.problem;
 
 import java.util.Locale;
 
-import javax.ws.rs.core.Response;
-
 /**
  * @author Alejandro Tardín
  */
@@ -16,10 +14,37 @@ public interface Problem {
 
 	public String getDetail(Locale locale);
 
-	public Response.Status getStatus(Locale locale);
+	public Status getStatus(Locale locale);
 
 	public String getTitle(Locale locale);
 
 	public String getType();
+
+	public static enum Status {
+
+		BAD_REQUEST(400, "Bad Request");
+
+		public String getReason() {
+			return toString();
+		}
+
+		public int getStatusCode() {
+			return _code;
+		}
+
+		public String toString() {
+			return _reason;
+		}
+
+		private Status(int statusCode, String reason) {
+			_reason = reason;
+
+			_code = statusCode;
+		}
+
+		private final int _code;
+		private final String _reason;
+
+	}
 
 }

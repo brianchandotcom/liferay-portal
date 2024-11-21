@@ -18,8 +18,6 @@ import com.liferay.portal.vulcan.problem.ProblemMapper;
 import java.util.List;
 import java.util.Locale;
 
-import javax.ws.rs.core.Response;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -48,8 +46,8 @@ public class ObjectValidationRuleEngineProblemMapper
 				}
 
 				@Override
-				public Response.Status getStatus(Locale locale) {
-					return Response.Status.BAD_REQUEST;
+				public Status getStatus(Locale locale) {
+					return Status.BAD_REQUEST;
 				}
 
 				@Override
@@ -90,8 +88,8 @@ public class ObjectValidationRuleEngineProblemMapper
 			}
 
 			@Override
-			public Response.Status getStatus(Locale locale) {
-				return Response.Status.BAD_REQUEST;
+			public Status getStatus(Locale locale) {
+				return Status.BAD_REQUEST;
 			}
 
 			@Override

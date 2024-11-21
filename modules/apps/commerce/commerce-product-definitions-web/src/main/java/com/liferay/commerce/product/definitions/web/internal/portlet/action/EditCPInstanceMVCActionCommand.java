@@ -131,7 +131,8 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				throwable instanceof CPInstanceSkuException ||
 				throwable instanceof DuplicateCPInstanceException ||
 				throwable instanceof
-					NoSuchSkuContributorCPDefinitionOptionRelException) {
+					NoSuchSkuContributorCPDefinitionOptionRelException ||
+				throwable instanceof NumberFormatException) {
 
 				SessionErrors.add(
 					actionRequest, throwable.getClass(), throwable);

@@ -57,6 +57,8 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 		<liferay-ui:message arguments="<%= CommercePriceConstants.PRICE_VALUE_MIN %>" key="price-min-value-is-x" />
 	</liferay-ui:error>
 
+	<liferay-ui:error exception="<%= NumberFormatException.class %>" message="please-enter-a-valid-number" />
+
 	<div class="row">
 		<div class="col-12 col-xl-8">
 			<commerce-ui:panel

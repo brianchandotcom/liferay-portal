@@ -32,6 +32,7 @@ Date requestedDeliveryDate = commerceOrderItem.getRequestedDeliveryDate();
 		<liferay-ui:error exception="<%= CommerceOrderItemRequestedDeliveryDateException.class %>" message="please-enter-a-valid-requested-delivery-date" />
 
 		<liferay-ui:error exception="<%= CommerceOrderValidatorException.class %>">
+			<liferay-ui:error exception="<%= NumberFormatException.class %>" message="please-enter-a-valid-number" />
 
 			<%
 			CommerceOrderValidatorException commerceOrderValidatorException = (CommerceOrderValidatorException)errorException;

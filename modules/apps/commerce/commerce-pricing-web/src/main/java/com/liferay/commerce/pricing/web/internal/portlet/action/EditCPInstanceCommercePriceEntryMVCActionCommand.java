@@ -144,7 +144,8 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 					 exception instanceof
 						 CommercePriceListMinPriceValueException ||
 					 exception instanceof
-						 DuplicateCommercePriceEntryException) {
+						 DuplicateCommercePriceEntryException ||
+					 exception instanceof NumberFormatException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);

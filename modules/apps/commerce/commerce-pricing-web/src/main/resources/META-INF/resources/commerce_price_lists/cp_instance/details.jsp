@@ -29,6 +29,8 @@ boolean priceOnApplication = BeanParamUtil.getBoolean(commercePriceEntry, reques
 	<aui:input name="commercePriceEntryId" type="hidden" value="<%= commercePriceEntryId %>" />
 	<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstanceCommercePriceEntryDisplayContext.getCPInstanceId() %>" />
 
+	<liferay-ui:error exception="<%= NumberFormatException.class %>" message="please-enter-a-valid-number" />
+
 	<aui:model-context bean="<%= commercePriceEntry %>" model="<%= CommercePriceEntry.class %>" />
 
 	<div class="row">

@@ -103,52 +103,53 @@ public class RelationshipObjectFieldBusinessType
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
 			values.containsKey(relationshipName)) {
 
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.
+					fetchObjectRelationshipByObjectDefinitionId(
+						objectField.getObjectDefinitionId(), relationshipName);
+
+			if (objectRelationship == null) {
+				return 0;
+			}
+
 			Map<String, Object> nestedField = (Map<String, Object>)values.get(
 				relationshipName);
 
 			String externalReferenceCode = MapUtil.getString(
 				nestedField, "externalReferenceCode");
 
-			if (Validator.isNotNull(externalReferenceCode)) {
-				ObjectRelationship objectRelationship =
-					_objectRelationshipLocalService.
-						fetchObjectRelationshipByObjectDefinitionId(
-							objectField.getObjectDefinitionId(),
-							relationshipName);
+			if (Validator.isNull(externalReferenceCode)) {
+				return 0;
+			}
 
-				if (objectRelationship == null) {
-					return 0;
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+
+			if (objectDefinition.isUnmodifiableSystemObject()) {
+				return _getPrimaryKeyObj(
+					externalReferenceCode, objectDefinition, 0L);
+			}
+
+			try {
+				ObjectEntry objectEntry =
+					_objectEntryLocalService.getObjectEntry(
+						externalReferenceCode,
+						objectDefinition.getObjectDefinitionId());
+
+				if (!Objects.equals(
+						objectDefinition.getObjectDefinitionId(),
+						objectEntry.getObjectDefinitionId())) {
+
+					throw new ObjectEntryValuesException.InvalidValue(
+						objectField.getName());
 				}
 
-				ObjectDefinition objectDefinition =
-					_objectDefinitionLocalService.getObjectDefinition(
-						objectRelationship.getObjectDefinitionId1());
-
-				if (objectDefinition.isUnmodifiableSystemObject()) {
-					return _getPrimaryKeyObj(
-						externalReferenceCode, objectDefinition, 0L);
-				}
-
-				try {
-					ObjectEntry objectEntry =
-						_objectEntryLocalService.getObjectEntry(
-							externalReferenceCode,
-							objectDefinition.getObjectDefinitionId());
-
-					if (!Objects.equals(
-							objectDefinition.getObjectDefinitionId(),
-							objectEntry.getObjectDefinitionId())) {
-
-						throw new ObjectEntryValuesException.InvalidValue(
-							objectField.getName());
-					}
-
-					return objectEntry.getObjectEntryId();
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
+				return objectEntry.getObjectEntryId();
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
 				}
 			}
 

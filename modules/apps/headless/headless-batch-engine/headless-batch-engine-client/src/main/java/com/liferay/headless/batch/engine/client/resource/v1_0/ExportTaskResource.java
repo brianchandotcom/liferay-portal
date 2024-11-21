@@ -53,13 +53,13 @@ public interface ExportTaskResource {
 	public ExportTask postExportTask(
 			String className, String contentType, String callbackURL,
 			String externalReferenceCode, String fieldNames,
-			String taskItemDelegateName)
+			String nestedFieldNames, String taskItemDelegateName)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postExportTaskHttpResponse(
 			String className, String contentType, String callbackURL,
 			String externalReferenceCode, String fieldNames,
-			String taskItemDelegateName)
+			String nestedFieldNames, String taskItemDelegateName)
 		throws Exception;
 
 	public ExportTask getExportTask(Long exportTaskId) throws Exception;
@@ -385,12 +385,12 @@ public interface ExportTaskResource {
 		public ExportTask postExportTask(
 				String className, String contentType, String callbackURL,
 				String externalReferenceCode, String fieldNames,
-				String taskItemDelegateName)
+				String nestedFieldNames, String taskItemDelegateName)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = postExportTaskHttpResponse(
 				className, contentType, callbackURL, externalReferenceCode,
-				fieldNames, taskItemDelegateName);
+				fieldNames, nestedFieldNames, taskItemDelegateName);
 
 			String content = httpResponse.getContent();
 
@@ -454,7 +454,7 @@ public interface ExportTaskResource {
 		public HttpInvoker.HttpResponse postExportTaskHttpResponse(
 				String className, String contentType, String callbackURL,
 				String externalReferenceCode, String fieldNames,
-				String taskItemDelegateName)
+				String nestedFieldNames, String taskItemDelegateName)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -493,6 +493,11 @@ public interface ExportTaskResource {
 
 			if (fieldNames != null) {
 				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
+			}
+
+			if (nestedFieldNames != null) {
+				httpInvoker.parameter(
+					"nestedFieldNames", String.valueOf(nestedFieldNames));
 			}
 
 			if (taskItemDelegateName != null) {

@@ -146,6 +146,10 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFieldNames"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "taskItemDelegateName"
 			)
 		}
@@ -175,6 +179,9 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("fieldNames")
 			String fieldNames,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("nestedFieldNames")
+			String nestedFieldNames,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("taskItemDelegateName")
 			String taskItemDelegateName)

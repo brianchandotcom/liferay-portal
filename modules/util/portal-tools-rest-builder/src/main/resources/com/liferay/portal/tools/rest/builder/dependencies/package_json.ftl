@@ -1,7 +1,6 @@
 {
 	"dependencies": {
-		"@types/node-fetch": "^2.6.11",
-		"node-fetch": "^2.7.0"
+		"@types/request": "2.48.12"
 	},
 	"name": "@liferay/${clientName}",
 	"private": true,

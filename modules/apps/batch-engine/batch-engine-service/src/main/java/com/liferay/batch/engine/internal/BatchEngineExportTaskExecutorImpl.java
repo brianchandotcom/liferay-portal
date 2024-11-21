@@ -27,6 +27,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -140,19 +141,23 @@ public class BatchEngineExportTaskExecutorImpl
 		Map<String, Serializable> parameters = _getParameters(
 			batchEngineExportTask);
 
-		String nestedFieldNames = (String)parameters.get("nestedFieldNames");
+		if (FeatureFlagManagerUtil.isEnabled("LPD-29367")) {
+			String nestedFieldNames = (String)parameters.get(
+				"nestedFieldNames");
 
-		int depth = Math.max(
-			Math.min(
-				GetterUtil.getInteger(parameters.get("nestedFieldsDepth"), 1),
-				PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH),
-			1);
+			int depth = Math.max(
+				Math.min(
+					GetterUtil.getInteger(
+						parameters.get("nestedFieldsDepth"), 1),
+					PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH),
+				1);
 
-		NestedFieldsContext nestedFieldsContext = new NestedFieldsContext(
-			depth, _toList(nestedFieldNames));
+			NestedFieldsContext nestedFieldsContext = new NestedFieldsContext(
+				depth, _toList(nestedFieldNames));
 
-		NestedFieldsContextThreadLocal.setNestedFieldsContext(
-			nestedFieldsContext);
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				nestedFieldsContext);
+		}
 
 		try (BatchEngineExportTaskItemWriter batchEngineExportTaskItemWriter =
 				_getBatchEngineExportTaskItemWriter(

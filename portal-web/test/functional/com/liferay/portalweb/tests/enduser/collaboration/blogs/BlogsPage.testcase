@@ -382,7 +382,7 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		AssertChecked(locator1 = "Radio#AUTOMATIC_URL");
 
@@ -519,7 +519,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
 
@@ -846,7 +846,7 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		BlogsEntry.addCustomURL(customURL = "this-should-redirect-to-the-previous-entry");
 

@@ -61,7 +61,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		BlogsEntry.addCustomURL(customURL = "custom-url");
 
@@ -116,7 +116,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		BlogsEntry.addCustomURL(customURL = "custom-url");
 
@@ -175,7 +175,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		BlogsEntry.addCustomURL(customURL = "custom-url");
 

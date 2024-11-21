@@ -355,7 +355,7 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		AssertChecked(locator1 = "Radio#AUTOMATIC_URL");
 
@@ -1150,7 +1150,7 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
 

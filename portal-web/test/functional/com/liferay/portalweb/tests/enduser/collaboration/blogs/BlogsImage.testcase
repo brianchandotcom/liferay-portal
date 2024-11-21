@@ -82,7 +82,7 @@ definition {
 			entryContent = "Blog Entry Content New",
 			entryTitle = "Blog Entry Title New");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		BlogsEntry.addCustomURL(customURL = "my-custom-url");
 

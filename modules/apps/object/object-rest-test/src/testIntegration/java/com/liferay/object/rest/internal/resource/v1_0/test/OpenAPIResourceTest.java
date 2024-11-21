@@ -193,59 +193,70 @@ public class OpenAPIResourceTest {
 
 	@Test
 	public void testGetOpenAPIInDifferentCompany() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"domain", "able.com"
-			).put(
-				"portalInstanceId", "able.com"
-			).put(
-				"virtualHost", "www.able.com"
-			).toString(),
-			"headless-portal-instances/v1.0/portal-instances",
-			Http.Method.POST);
+		long companyId = 0;
 
-		HTTPTestUtil.customize(
-		).withBaseURL(
-			"http://www.able.com:8080"
-		).withCredentials(
-			"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-		).apply(
-			() -> {
-				User user = UserTestUtil.addUser(
-					_companyLocalService.getCompany(
-						jsonObject.getLong("companyId")));
+		try {
+			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"domain", "able.com"
+				).put(
+					"portalInstanceId", "able.com"
+				).put(
+					"virtualHost", "www.able.com"
+				).toString(),
+				"headless-portal-instances/v1.0/portal-instances",
+				Http.Method.POST);
 
-				ObjectDefinition companyObjectDefinition =
-					ObjectDefinitionTestUtil.publishObjectDefinition(
-						"Object1",
-						Collections.singletonList(
-							ObjectFieldUtil.createObjectField(
-								ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-								ObjectFieldConstants.DB_TYPE_STRING, true, true,
-								null, "field", "field", false)),
-						ObjectDefinitionConstants.SCOPE_COMPANY,
-						user.getUserId());
+			companyId = jsonObject.getLong("companyId");
+			HTTPTestUtil.customize(
+			).withBaseURL(
+				"http://www.able.com:8080"
+			).withCredentials(
+				"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).apply(
+				() -> {
+					User user = UserTestUtil.addUser(
+						_companyLocalService.getCompany(
+							jsonObject.getLong("companyId")));
 
-				Assert.assertEquals(
-					200,
-					HTTPTestUtil.invokeToHttpCode(
-						null, companyObjectDefinition.getRESTContextPath(),
-						Http.Method.GET));
+					ObjectDefinition companyObjectDefinition =
+						ObjectDefinitionTestUtil.publishObjectDefinition(
+							"Object1",
+							Collections.singletonList(
+								ObjectFieldUtil.createObjectField(
+									ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+									ObjectFieldConstants.DB_TYPE_STRING, true,
+									true, null, "field", "field", false)),
+							ObjectDefinitionConstants.SCOPE_COMPANY,
+							user.getUserId());
 
-				JSONObject openAPIJSONObject = HTTPTestUtil.invokeToJSONObject(
-					null, "/openapi", Http.Method.GET);
+					Assert.assertEquals(
+						200,
+						HTTPTestUtil.invokeToHttpCode(
+							null, companyObjectDefinition.getRESTContextPath(),
+							Http.Method.GET));
 
-				JSONArray jsonArray = openAPIJSONObject.getJSONArray(
-					companyObjectDefinition.getRESTContextPath());
+					JSONObject openAPIJSONObject =
+						HTTPTestUtil.invokeToJSONObject(
+							null, "/openapi", Http.Method.GET);
 
-				Assert.assertEquals(1, jsonArray.length());
-				Assert.assertEquals(
-					"http://www.able.com:8080/o" +
+					JSONArray jsonArray = openAPIJSONObject.getJSONArray(
+						companyObjectDefinition.getRESTContextPath());
+
+					Assert.assertEquals(1, jsonArray.length());
+					Assert.assertEquals(
+						"http://www.able.com:8080/o" +
 						companyObjectDefinition.getRESTContextPath() +
-							"/openapi.yaml",
-					jsonArray.get(0));
+						"/openapi.yaml",
+						jsonArray.get(0));
+				}
+			);
+		}
+		finally {
+			if (companyId != 0) {
+				_companyLocalService.deleteCompany(companyId);
 			}
-		);
+		}
 	}
 
 	@FeatureFlags("LPS-180090")
@@ -311,25 +322,29 @@ public class OpenAPIResourceTest {
 			"relationMToM", false,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
+		String jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				jaxRsApplicationDescriptor.getApplicationPath(),
+				StringPool.SLASH, jaxRsApplicationDescriptor.getVersion(),
+				"/openapi.json"),
+			Http.Method.GET
+		).toString();
+
+		String relationshipString = new String(
+			FileUtil.getBytes(
+				getClass(),
+				"dependencies" +
+				"/expected_openapi_system_object_relationship.json"));
+
 		JSONAssert.assertEquals(
-			new String(
-				FileUtil.getBytes(
-					getClass(),
-					"dependencies" +
-						"/expected_openapi_system_object_relationship.json")),
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				StringBundler.concat(
-					jaxRsApplicationDescriptor.getApplicationPath(),
-					StringPool.SLASH, jaxRsApplicationDescriptor.getVersion(),
-					"/openapi.json"),
-				Http.Method.GET
-			).toString(),
+			relationshipString,
+			jsonObject,
 			JSONCompareMode.LENIENT);
 	}
 
 	private void _assertOpenAPI(
-			String fileName, ObjectDefinition objectDefinition)
+		String fileName, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		JSONAssert.assertEquals(

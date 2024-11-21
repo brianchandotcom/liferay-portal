@@ -7,6 +7,7 @@ package com.liferay.batch.engine.internal.upgrade.registry;
 
 import com.liferay.batch.engine.internal.upgrade.v4_5_0.util.BatchEngineImportTaskErrorTable;
 import com.liferay.batch.engine.internal.upgrade.v4_6_1.BatchEngineTaskConfigurationUpgradeProcess;
+import com.liferay.batch.engine.internal.upgrade.v4_6_4.DeleteUnlinkedBatchEngineDataUpgradeProcess;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -110,21 +111,8 @@ public class BatchEngineServiceUpgradeStepRegistrator
 
 		registry.register(
 			"4.6.3", "4.6.4",
-			UpgradeProcessFactory.runSQL(
-				String.format(
-					_DELETE_UNLINKED_COMPANY_ID_ROWS_SQL,
-					"BatchEngineExportTask"),
-				String.format(
-					_DELETE_UNLINKED_COMPANY_ID_ROWS_SQL,
-					"BatchEngineImportTask"),
-				String.format(
-					_DELETE_UNLINKED_COMPANY_ID_ROWS_SQL,
-					"BatchEngineImportTaskError")));
+			new DeleteUnlinkedBatchEngineDataUpgradeProcess());
 	}
-
-	private static final String _DELETE_UNLINKED_COMPANY_ID_ROWS_SQL =
-		"delete from %s where not exists (select 1 from Company where " +
-			"Company.companyId = %1$s.companyId)";
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

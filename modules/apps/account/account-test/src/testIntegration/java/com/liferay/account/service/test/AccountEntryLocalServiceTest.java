@@ -21,6 +21,11 @@ import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
@@ -33,9 +38,11 @@ import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporaryS
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -64,17 +71,22 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.security.script.management.test.rule.ScriptManagementConfigurationTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,12 +96,19 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Drew Brokke
@@ -103,7 +122,24 @@ public class AccountEntryLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE,
 			ScriptManagementConfigurationTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(
+			AccountEntryLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			ModelListener.class, _testAccountEntryModelListener, null);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceRegistration.unregister();
+	}
 
 	@Test
 	public void testAccountEntryAssetTags() throws Exception {
@@ -1029,33 +1065,15 @@ public class AccountEntryLocalServiceTest {
 	public void testUpdateAccountEntry() throws Exception {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
-		String[] expectedDomains = {"update1.com", "update2.com"};
+		String[] domains = {"update1.com", "update2.com"};
 
-		accountEntry = _accountEntryLocalService.updateAccountEntry(
-			accountEntry.getAccountEntryId(),
-			accountEntry.getParentAccountEntryId(), accountEntry.getName(),
-			accountEntry.getDescription(), false, expectedDomains,
-			accountEntry.getEmailAddress(), null, accountEntry.getTaxIdNumber(),
-			accountEntry.getStatus(),
-			ServiceContextTestUtil.getServiceContext());
+		// Domains as non-null
 
-		Assert.assertArrayEquals(
-			expectedDomains, accountEntry.getDomainsArray());
+		_testUpdateAccountEntry(accountEntry, domains, domains);
 
-		accountEntry = _accountEntryLocalService.updateAccountEntry(
-			accountEntry.getAccountEntryId(),
-			accountEntry.getParentAccountEntryId(), accountEntry.getName(),
-			accountEntry.getDescription(), false, null,
-			accountEntry.getEmailAddress(), null, accountEntry.getTaxIdNumber(),
-			accountEntry.getStatus(),
-			ServiceContextTestUtil.getServiceContext());
+		// Domains as null after setting domains as non-null
 
-		Assert.assertArrayEquals(
-			expectedDomains, accountEntry.getDomainsArray());
-
-		_assertStatus(
-			accountEntry, WorkflowConstants.STATUS_APPROVED,
-			TestPropsValues.getUser());
+		_testUpdateAccountEntry(accountEntry, null, domains);
 	}
 
 	@Test
@@ -1384,6 +1402,53 @@ public class AccountEntryLocalServiceTest {
 		}
 	}
 
+	private void _testUpdateAccountEntry(
+			AccountEntry accountEntry, String[] domains,
+			String[] expectedDomains)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		String columnName = RandomTestUtil.randomString();
+
+		serviceContext.setExpandoBridgeAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				() -> {
+					ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+						ExpandoTestUtil.addTable(
+							PortalUtil.getClassNameId(AccountEntry.class),
+							ExpandoTableConstants.DEFAULT_TABLE_NAME),
+						columnName, ExpandoColumnConstants.STRING);
+
+					return expandoColumn.getName();
+				},
+				"customFieldValue"
+			).build());
+
+		accountEntry = _accountEntryLocalService.updateAccountEntry(
+			accountEntry.getAccountEntryId(),
+			accountEntry.getParentAccountEntryId(), accountEntry.getName(),
+			accountEntry.getDescription(), false, domains,
+			accountEntry.getEmailAddress(), null, accountEntry.getTaxIdNumber(),
+			accountEntry.getStatus(), serviceContext);
+
+		Assert.assertArrayEquals(
+			expectedDomains, accountEntry.getDomainsArray());
+
+		_assertStatus(
+			accountEntry, WorkflowConstants.STATUS_APPROVED,
+			TestPropsValues.getUser());
+
+		accountEntry = _testAccountEntryModelListener.getModel();
+
+		ExpandoBridge expandoBridge = accountEntry.getExpandoBridge();
+
+		Assert.assertEquals(
+			"customFieldValue",
+			GetterUtil.getString(expandoBridge.getAttribute(columnName)));
+	}
+
 	private static final Comparator<AccountEntry> _accountEntryNameComparator =
 		(accountEntry1, accountEntry2) -> {
 			String name1 = accountEntry1.getName();
@@ -1394,6 +1459,10 @@ public class AccountEntryLocalServiceTest {
 
 	@Inject
 	private static ListTypeLocalService _listTypeLocalService;
+
+	private static ServiceRegistration<?> _serviceRegistration;
+	private static final TestAccountEntryModelListener
+		_testAccountEntryModelListener = new TestAccountEntryModelListener();
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
@@ -1434,5 +1503,24 @@ public class AccountEntryLocalServiceTest {
 
 	@Inject
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
+
+	private static class TestAccountEntryModelListener
+		extends BaseModelListener<AccountEntry> {
+
+		public AccountEntry getModel() {
+			return _model;
+		}
+
+		@Override
+		public void onAfterUpdate(
+				AccountEntry originalModel, AccountEntry model)
+			throws ModelListenerException {
+
+			_model = model;
+		}
+
+		private AccountEntry _model;
+
+	}
 
 }

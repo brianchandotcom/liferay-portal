@@ -117,12 +117,14 @@ public class CPSpecificationOptionLocalServiceImpl
 
 		if (listTypeDefinitionIds != null) {
 			for (long listTypeDefinitionId : listTypeDefinitionIds) {
-				if (listTypeDefinitionId > 0) {
-					_cpSpecificationOptionListTypeDefinitionRelLocalService.
-						addCPSpecificationOptionListTypeDefinitionRel(
-							cpSpecificationOption.getCPSpecificationOptionId(),
-							listTypeDefinitionId);
+				if (listTypeDefinitionId <= 0) {
+					continue;
 				}
+
+				_cpSpecificationOptionListTypeDefinitionRelLocalService.
+					addCPSpecificationOptionListTypeDefinitionRel(
+						cpSpecificationOption.getCPSpecificationOptionId(),
+						listTypeDefinitionId);
 			}
 		}
 
@@ -270,12 +272,14 @@ public class CPSpecificationOptionLocalServiceImpl
 					cpSpecificationOption.getCPSpecificationOptionId());
 
 			for (long listTypeDefinitionId : listTypeDefinitionIds) {
-				if (listTypeDefinitionId > 0) {
-					_cpSpecificationOptionListTypeDefinitionRelLocalService.
-						addCPSpecificationOptionListTypeDefinitionRel(
-							cpSpecificationOption.getCPSpecificationOptionId(),
-							listTypeDefinitionId);
+				if (listTypeDefinitionId <= 0) {
+					continue;
 				}
+
+				_cpSpecificationOptionListTypeDefinitionRelLocalService.
+					addCPSpecificationOptionListTypeDefinitionRel(
+						cpSpecificationOption.getCPSpecificationOptionId(),
+						listTypeDefinitionId);
 			}
 		}
 

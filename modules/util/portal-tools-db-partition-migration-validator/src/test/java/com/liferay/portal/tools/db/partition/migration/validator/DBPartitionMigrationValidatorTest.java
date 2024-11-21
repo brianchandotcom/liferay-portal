@@ -184,7 +184,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	private static <T> T _deserializeObjectBase64(
+	private static <T> T _deserialize(
 			String string, TypeReference<T> typeReference)
 		throws Exception {
 
@@ -444,11 +444,11 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 
 		public static void main(String[] args) throws Exception {
 			if (args[0].equals("export")) {
-				List<Company> companies = _deserializeObjectBase64(
+				List<Company> companies = _deserialize(
 					System.getProperty(_SYSTEM_PROPERTY_KEY_COMPANIES),
 					new TypeReference<List<Company>>() {
 					});
-				List<Long> companyIds = _deserializeObjectBase64(
+				List<Long> companyIds = _deserialize(
 					System.getProperty(_SYSTEM_PROPERTY_KEY_COMPANY_IDS),
 					new TypeReference<List<Long>>() {
 					});

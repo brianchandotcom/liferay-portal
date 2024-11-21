@@ -304,9 +304,9 @@ public class DLOpenerGoogleDriveManagerTest {
 
 		String accessToken = jsonObject.getString("access_token");
 
-		if (accessToken.isEmpty()) {
+		if (Validator.isNull(accessToken)) {
 			throw new Exception(
-				"The JSON response does not include an Access Token: " +
+				"JSON response does not contain an access token: " +
 					jsonObject);
 		}
 

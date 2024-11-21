@@ -5,12 +5,14 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 export class FDSSamplePage {
+	private readonly apiHelpers: ApiHelpers;
 	readonly customViewsActionsButton: Locator;
 	readonly customViewsDeleteAlert: Locator;
 	readonly customViewsSaveModal: Locator;
@@ -21,6 +23,7 @@ export class FDSSamplePage {
 	readonly tablist: Locator;
 
 	constructor(page: Page) {
+		this.apiHelpers = new ApiHelpers(page);
 		this.customViewsActionsButton = page.getByLabel('Show View Actions', {
 			exact: true,
 		});
@@ -39,21 +42,22 @@ export class FDSSamplePage {
 		this.tablist = page.getByRole('tablist');
 	}
 
-	async selectTab(tabName: string) {
-		const tabHeading = this.tablist.getByText(tabName);
-		await expect(tabHeading).toBeInViewport();
+	async selectTab(label: string) {
+		const navLink = this.page.locator('.nav-link').filter({hasText: label});
 
-		await tabHeading.click();
+		await navLink.click();
+
+		await expect(navLink).toHaveClass(/active/);
 	}
 
-	async setupFDSSampleWidget({apiHelpers, site}) {
+	async setupFDSSampleWidget({site}) {
 		const widgetDefinition = getWidgetDefinition({
 			id: getRandomString(),
 			widgetName:
 				'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet',
 		});
 
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
+		const layout = await this.apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([widgetDefinition]),
 			siteId: site.id,
 			title: getRandomString(),

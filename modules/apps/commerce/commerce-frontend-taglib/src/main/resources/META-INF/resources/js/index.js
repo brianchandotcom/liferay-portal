@@ -244,6 +244,7 @@ export function cart({
 		detachedOpener,
 		displayDiscountLevels,
 		displayTotalItemsQuantity,
+		guestOrderEnabled,
 		itemsQuantity: Number(itemsQuantity),
 		labels,
 		orderId: Number(orderId),

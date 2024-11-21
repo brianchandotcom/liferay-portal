@@ -65,7 +65,7 @@ test('User can delete multiple tags', async ({
 	await expect(page.getByText('tag2')).not.toBeVisible();
 });
 
-test('The user can Merge tags', async ({
+test('User can Merge tags', async ({
 	page,
 	site,
 	tagsAdminPage,
@@ -78,12 +78,11 @@ test('The user can Merge tags', async ({
 	await tagsAdminPage.mergeTags(['tag1']);
 
 	page.once('dialog', async (dialog) => {
+		await test.step('User cannot merge a single tag', async () => {
+			expect(dialog.message()).toBe('Please choose at least 2 tags.');
 
-		// Expect to not be able to merge a single tag
-
-		expect(dialog.message()).toBe('Please choose at least 2 tags.');
-
-		await dialog.accept();
+			await dialog.accept();
+		});
 	});
 
 	await page.getByRole('button', {name: 'Save'}).click();

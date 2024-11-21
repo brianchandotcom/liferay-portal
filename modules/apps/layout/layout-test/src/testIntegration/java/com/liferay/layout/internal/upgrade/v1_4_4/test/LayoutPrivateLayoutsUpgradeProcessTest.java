@@ -92,7 +92,7 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 		Assert.assertEquals(
 			value,
 			portalPreferences.getValue(
-				FeatureFlagConstants.FEATURE_FLAG, "LPD-38869", null));
+				FeatureFlagConstants.PREFERENCE_NAMESPACE, "LPD-38869", null));
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -118,12 +118,12 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 			portalPreferencesWrapper.getPortalPreferencesImpl();
 
 		String previousValue = portalPreferences.getValue(
-			FeatureFlagConstants.FEATURE_FLAG, "LPD-38869", null);
+			FeatureFlagConstants.PREFERENCE_NAMESPACE, "LPD-38869", null);
 
 		portalPreferences = portalPreferencesWrapper.getPortalPreferencesImpl();
 
 		portalPreferences.setValue(
-			FeatureFlagConstants.FEATURE_FLAG, "LPD-38869", value);
+			FeatureFlagConstants.PREFERENCE_NAMESPACE, "LPD-38869", value);
 
 		_portalPreferencesLocalService.updatePreferences(
 			TestPropsValues.getCompanyId(),

@@ -241,7 +241,7 @@ public class JspCompiler {
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
 
 		_initClassPath();
-		_initTLDMappings(servletContext, options);
+		_initTLDMappings(options, servletContext);
 	}
 
 	public void saveClassFile(String className, String classFileName) {
@@ -382,8 +382,8 @@ public class JspCompiler {
 			}
 
 			_populateTldMappings(
-				tldResourcePaths, taglibXmls,
-				StringPool.SLASH.concat(resourcePath), url);
+				StringPool.SLASH.concat(resourcePath), taglibXmls,
+				tldResourcePaths, url);
 		}
 
 		List<URL> urls = new ArrayList<>(
@@ -396,7 +396,7 @@ public class JspCompiler {
 
 		for (URL url : urls) {
 			_populateTldMappings(
-				tldResourcePaths, taglibXmls, url.getPath(), url);
+				url.getPath(), taglibXmls, tldResourcePaths, url);
 		}
 	}
 
@@ -416,7 +416,7 @@ public class JspCompiler {
 
 	@SuppressWarnings("unchecked")
 	private void _initTLDMappings(
-		ServletContext servletContext, Options options) {
+		Options options, ServletContext servletContext) {
 
 		Map<String, TldResourcePath> tldResourcePaths = new HashMap<>();
 		Map<TldResourcePath, TaglibXml> taglibXmls = new HashMap<>();
@@ -472,37 +472,38 @@ public class JspCompiler {
 	}
 
 	private void _populateTldMappings(
-			Map<String, TldResourcePath> tldResourcePaths,
+			String absoluteResourcePath,
 			Map<TldResourcePath, TaglibXml> taglibXmls,
-			String absoluteResourcePath, URL url)
+			Map<String, TldResourcePath> tldResourcePaths, URL url)
 		throws IOException {
 
 		String uri = TldURIUtil.getTldURI(url);
 
-		if ((uri != null) && !tldResourcePaths.containsKey(uri)) {
-			uri = uri.trim();
+		if ((uri == null) || tldResourcePaths.containsKey(uri)) {
+			return;
+		}
 
-			try {
-				TldResourcePath tldResourcePath = new TldResourcePath(
-					url, absoluteResourcePath);
+		uri = uri.trim();
 
-				tldResourcePaths.put(uri, tldResourcePath);
+		try {
+			TldResourcePath tldResourcePath = new TldResourcePath(
+				url, absoluteResourcePath);
 
-				TldParser tldParser = new TldParser(true, false, true);
+			tldResourcePaths.put(uri, tldResourcePath);
 
-				Digester digester = (Digester)_digesterField.get(tldParser);
+			TldParser tldParser = new TldParser(true, false, true);
 
-				digester.setEntityResolver(
-					new LocalResolver(
-						JspTaglibIDUtil.servletApiPublicIdsMap,
-						JspTaglibIDUtil.servletApiSystemIdsMap, true));
+			Digester digester = (Digester)_digesterField.get(tldParser);
 
-				taglibXmls.put(
-					tldResourcePath, tldParser.parse(tldResourcePath));
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
+			digester.setEntityResolver(
+				new LocalResolver(
+					JspTaglibIDUtil.servletApiPublicIdsMap,
+					JspTaglibIDUtil.servletApiSystemIdsMap, true));
+
+			taglibXmls.put(tldResourcePath, tldParser.parse(tldResourcePath));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 	}
 

@@ -8,6 +8,7 @@ package com.liferay.friendly.url.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationTable;
 import com.liferay.friendly.url.model.FriendlyURLEntryMappingTable;
 import com.liferay.friendly.url.model.FriendlyURLEntryTable;
@@ -29,7 +30,10 @@ public class FriendlyURLEntryTableReferenceDefinition
 		ChildTableReferenceInfoBuilder<FriendlyURLEntryTable>
 			childTableReferenceInfoBuilder) {
 
-		childTableReferenceInfoBuilder.referenceInnerJoin(
+		childTableReferenceInfoBuilder.assetEntryReference(
+			FriendlyURLEntryTable.INSTANCE.friendlyURLEntryId,
+			FriendlyURLEntry.class
+		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				FriendlyURLEntryMappingTable.INSTANCE
 			).innerJoinON(

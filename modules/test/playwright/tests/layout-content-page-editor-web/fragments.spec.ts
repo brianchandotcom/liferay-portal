@@ -2201,6 +2201,8 @@ test.describe('Dropzone', () => {
 
 			await page.getByRole('button', {name: 'Save'}).click();
 
+			await waitForAlert(page, 'The fragment was created successfully.');
+
 			// Check the composition has been saved
 
 			await fragmentsPage.goto(site.friendlyUrlPath);

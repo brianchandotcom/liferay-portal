@@ -187,7 +187,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 						batchPlannerPlan.getBatchPlannerPlanId()),
 					BatchPlannerMappingModel::getInternalFieldName),
 				StringPool.COMMA),
-			batchPlannerPlan.getTaskItemDelegateName());
+			null, batchPlannerPlan.getTaskItemDelegateName());
 	}
 
 	private void _submitImportTask(BatchPlannerPlan batchPlannerPlan)

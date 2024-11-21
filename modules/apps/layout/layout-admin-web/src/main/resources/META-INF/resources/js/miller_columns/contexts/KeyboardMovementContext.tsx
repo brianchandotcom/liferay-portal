@@ -4,7 +4,7 @@
  */
 
 import {ScreenReaderAnnouncer} from '@liferay/layout-js-components-web';
-import {navigate} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 import React, {
 	Dispatch,
 	ReactNode,
@@ -15,7 +15,7 @@ import React, {
 	useState,
 } from 'react';
 
-import {DropPosition} from '../constants/dropPositions';
+import {DROP_POSITIONS, DropPosition} from '../constants/dropPositions';
 import {isValidMovement} from '../utils/isValidMovement';
 
 import type {MillerColumnItem} from '../types/MillerColumnItem';
@@ -122,6 +122,13 @@ function KeyboardMovementProvider({
 
 				if (targetItem && onMove) {
 					onMove(sources, targetItem, target.position);
+					setMovementText({
+						isFinalPosition: true,
+						items,
+						setText,
+						sources,
+						target,
+					});
 				}
 
 				disableMovement();
@@ -145,6 +152,12 @@ function KeyboardMovementProvider({
 
 				if (nextTarget) {
 					setTarget(nextTarget);
+					setMovementText({
+						items,
+						setText,
+						sources,
+						target: nextTarget,
+					});
 				}
 			}
 		};
@@ -154,7 +167,16 @@ function KeyboardMovementProvider({
 		return () => {
 			window.removeEventListener('keydown', onKeyDown, true);
 		};
-	}, [columnSizes, items, redirectURL, sources, onMove, rtl, target]);
+	}, [
+		columnSizes,
+		items,
+		redirectURL,
+		setText,
+		sources,
+		onMove,
+		rtl,
+		target,
+	]);
 
 	return (
 		<KeyboardMovementContext.Provider
@@ -326,9 +348,67 @@ function getNextTarget({
 	});
 }
 
+function setMovementText({
+	isFinalPosition = false,
+	isInitialPosition = false,
+	items,
+	setText,
+	sources,
+	target,
+}: {
+	isFinalPosition?: boolean;
+	isInitialPosition?: boolean;
+	items: Map<string, MillerColumnItem>;
+	setText: (value: string) => void;
+	sources: MillerColumnItem[];
+	target: MovementTarget;
+}) {
+	const targetItem = getMillerColumnsItem(
+		target?.columnIndex,
+		target?.itemIndex,
+		items
+	);
+	const message = [];
+
+	if (isInitialPosition) {
+		message.push(
+			Liferay.Language.get(
+				'use-arrows-to-move-it-and-press-enter-to-select-the-new-position-press-esc-to-cancel'
+			)
+		);
+	}
+
+	message.push(
+		isFinalPosition
+			? sub(Liferay.Language.get('page-x-placed'), sources[0].title)
+			: sub(Liferay.Language.get('move-page-x'), sources[0].title)
+	);
+
+	const targetTitle = targetItem?.title || '';
+
+	if (target?.position === DROP_POSITIONS.top) {
+		message.push(
+			sub(Liferay.Language.get('at-the-top-of-the-page-x'), targetTitle)
+		);
+	}
+	else if (target?.position === DROP_POSITIONS.middle) {
+		message.push(sub(Liferay.Language.get('inside-page-x'), targetTitle));
+	}
+	else if (target?.position === DROP_POSITIONS.bottom) {
+		message.push(
+			sub(
+				Liferay.Language.get('at-the-bottom-of-the-page-x'),
+				targetTitle
+			)
+		);
+	}
+
+	setText(message.join(' '));
+}
+
 function getMillerColumnsItem(
-	columnIndex: number,
-	itemIndex: number,
+	columnIndex: number | undefined,
+	itemIndex: number | undefined,
 	items: Map<string, MillerColumnItem>
 ) {
 	return Array.from(items.values()).find(
@@ -337,4 +417,9 @@ function getMillerColumnsItem(
 	);
 }
 
-export {KeyboardMovementContext, KeyboardMovementProvider, getNextTarget};
+export {
+	KeyboardMovementContext,
+	KeyboardMovementProvider,
+	getNextTarget,
+	setMovementText,
+};

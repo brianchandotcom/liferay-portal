@@ -184,8 +184,7 @@ public class JspPrecompileTest {
 			outputStream.write(classWriter.toByteArray());
 		}
 
-		Files.setLastModifiedTime(
-			jspClassPath, _precompileServletJSPLastModifiedTime);
+		Files.setLastModifiedTime(jspClassPath, _fileTime);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME_JSP_COMPILER, LoggerTestUtil.DEBUG)) {
@@ -299,11 +298,10 @@ public class JspPrecompileTest {
 				ZipEntry zipEntry = new ZipEntry(
 					"META-INF/resources/".concat(_PRECOMPILE_JSP_FILE_NAME));
 
-				_precompileServletJSPLastModifiedTime = FileTime.from(
+				_fileTime = FileTime.from(
 					System.currentTimeMillis() / 1000, TimeUnit.SECONDS);
 
-				zipEntry.setLastModifiedTime(
-					_precompileServletJSPLastModifiedTime);
+				zipEntry.setLastModifiedTime(_fileTime);
 
 				jarOutputStream.putNextEntry(zipEntry);
 
@@ -393,7 +391,7 @@ public class JspPrecompileTest {
 	private static final String _RUNTIME_COMPILE_JSP_FILE_NAME = "runtime.jsp";
 
 	private static Bundle _bundle;
-	private static FileTime _precompileServletJSPLastModifiedTime;
+	private static FileTime _fileTime;
 	private static Path _workDirPath;
 
 	private Group _group;

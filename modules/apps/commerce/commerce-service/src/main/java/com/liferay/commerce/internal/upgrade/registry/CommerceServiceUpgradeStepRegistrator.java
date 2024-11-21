@@ -741,8 +741,8 @@ public class CommerceServiceUpgradeStepRegistrator
 				"commerceCurrencyCode VARCHAR(75) null"),
 			UpgradeProcessFactory.runSQL(
 				StringBundler.concat(
-					"UPDATE CommerceOrder SET commerceCurrencyCode = (SELECT ",
-					"code_ FROM CommerceCurrency WHERE ",
+					"update CommerceOrder set commerceCurrencyCode = (select ",
+					"code_ from CommerceCurrency where ",
 					"CommerceCurrency.commerceCurrencyId = ",
 					"CommerceOrder.commerceCurrencyId)")),
 			UpgradeProcessFactory.dropColumns(

@@ -384,6 +384,8 @@ public class FragmentCollectionManager {
 			fragmentCollectionContributorMaps.put(
 				fragmentCollectionContributor.getFragmentCollectionKey(),
 				HashMapBuilder.<String, Object>put(
+					"deprecated", fragmentCollectionContributor.isDeprecated()
+				).put(
 					"fragmentCollectionId",
 					fragmentCollectionContributor.getFragmentCollectionKey()
 				).put(

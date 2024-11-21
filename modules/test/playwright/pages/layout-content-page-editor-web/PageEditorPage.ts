@@ -715,12 +715,20 @@ export class PageEditorPage {
 
 		await this.page.keyboard.type(value);
 
-		await this.page
-			.getByLabel('Configuration Panel')
-			.getByRole('heading', {name: editableId})
-			.click();
+		// Make sure the editable gets the new value
 
-		await this.waitForChangesSaved();
+		await expect(async () => {
+			await this.page
+				.getByLabel('Configuration Panel')
+				.getByRole('heading', {name: editableId})
+				.click();
+
+			const editable = this.page.getByText(value);
+
+			await expect(editable).toHaveClass(/page-editor__editable/, {
+				timeout: 1000,
+			});
+		}).toPass();
 	}
 
 	async editExperienceName(name: string, newName: string) {

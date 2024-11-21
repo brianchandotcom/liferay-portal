@@ -92,7 +92,9 @@ public class DBPartitionCopyVirtualInstanceOperation
 				}
 
 				return _companyLocalService.copyDBPartitionCompany(
-					sourcePartitionCompanyId, destinationPartitionCompanyId,
+					sourcePartitionCompanyId,
+					(destinationPartitionCompanyId > 0) ?
+						destinationPartitionCompanyId : null,
 					dBPartitionCopyVirtualInstanceConfiguration.name(),
 					dBPartitionCopyVirtualInstanceConfiguration.
 						virtualHostname(),

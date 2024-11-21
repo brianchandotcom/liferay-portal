@@ -4,6 +4,7 @@
  */
 
 const CHECK_AND_FIX_GLOBS = [
+	'!copyright.js',
 	'!settings.json',
 	'!tsconfig.json',
 	'/{,dxp/}*.{mjs,js,ts}',

@@ -85,7 +85,7 @@ const config = {
 		'notice/notice': [
 			'error',
 			{
-				nonMatchingTolerance: 0.7,
+				nonMatchingTolerance: 0.95,
 				onNonMatchingHeader: 'replace',
 				templateFile: path.join(__dirname, 'copyright.js'),
 			},

@@ -85,3 +85,8 @@
     #
     dxp/apps/osb/osb-faro/osb-faro-web
     dxp/apps/osb/osb-faro/osb-faro-theme
+
+    #
+    # Ignore the copyright template file.
+    #
+    copyright.js

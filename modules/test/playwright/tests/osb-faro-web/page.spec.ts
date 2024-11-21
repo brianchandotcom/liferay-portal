@@ -1148,9 +1148,7 @@ test(
 
 		await test.step('Add static member and save segment', async () => {
 			await addStaticMember({
-				memberNames: [
-					`test`,
-				],
+				memberNames: [`test`],
 				page,
 			});
 
@@ -1189,17 +1187,22 @@ test(
 			});
 		});
 
-		const filterLabel = page.locator('span').filter({ hasText: 'Test Static Segment' }).first();
+		const filterLabel = page
+			.locator('span')
+			.filter({hasText: 'Test Static Segment'})
+			.first();
 
 		await test.step('Add filter with created segment', async () => {
-			await page.getByRole('button', { name: 'Filter' }).click();
+			await page.getByRole('button', {name: 'Filter'}).click();
 
-			await page.getByRole('menuitem', {name: 'Test Static Segment'}).click();
+			await page
+				.getByRole('menuitem', {name: 'Test Static Segment'})
+				.click();
 
 			expect(filterLabel).toBeVisible();
 		});
 
-		const numberOfViews = page.getByText('1', { exact: true }).first();
+		const numberOfViews = page.getByText('1', {exact: true}).first();
 
 		await test.step('Check the number of views with the filter', async () => {
 			expect(numberOfViews).toBeVisible();

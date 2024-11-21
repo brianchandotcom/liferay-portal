@@ -88,12 +88,10 @@ public class CompanyModelListenerTest {
 			0,
 			_batchEngineExportTaskLocalService.getBatchEngineExportTasksCount(
 				company.getCompanyId()));
-
 		Assert.assertEquals(
 			0,
 			_batchEngineImportTaskLocalService.getBatchEngineImportTasksCount(
 				company.getCompanyId()));
-
 		Assert.assertEquals(
 			0,
 			_batchEngineImportTaskErrorLocalService.dslQueryCount(

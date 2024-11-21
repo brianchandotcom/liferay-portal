@@ -24,14 +24,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public class StoredCredentialUtil {
 
 	public static void add(
-		long companyId, String userId, StoredCredential storedCredential) {
+		long companyId, String key, StoredCredential storedCredential) {
 
-		_add(companyId, userId, storedCredential);
+		_add(companyId, key, storedCredential);
 
 		if (ClusterExecutorUtil.isEnabled()) {
 			_executeOnCluster(
 				new MethodHandler(
-					_addMethodKey, companyId, userId, storedCredential));
+					_addMethodKey, companyId, key, storedCredential));
 		}
 	}
 
@@ -52,11 +52,11 @@ public class StoredCredentialUtil {
 		}
 	}
 
-	public static boolean containsKey(long companyId, String userId) {
+	public static boolean containsKey(long companyId, String key) {
 		Map<String, StoredCredential> storedCredentials =
 			_storedCredentials.getOrDefault(companyId, new HashMap<>());
 
-		return storedCredentials.containsKey(userId);
+		return storedCredentials.containsKey(key);
 	}
 
 	public static boolean containsValue(
@@ -68,20 +68,20 @@ public class StoredCredentialUtil {
 		return storedCredentials.containsValue(storedCredential);
 	}
 
-	public static void delete(long companyId, String userId) {
-		_delete(companyId, userId);
+	public static void delete(long companyId, String key) {
+		_delete(companyId, key);
 
 		if (ClusterExecutorUtil.isEnabled()) {
 			_executeOnCluster(
-				new MethodHandler(_deleteMethodKey, companyId, userId));
+				new MethodHandler(_deleteMethodKey, companyId, key));
 		}
 	}
 
-	public static StoredCredential get(long companyId, String userId) {
+	public static StoredCredential get(long companyId, String key) {
 		Map<String, StoredCredential> storedCredentials =
 			_storedCredentials.getOrDefault(companyId, new HashMap<>());
 
-		return storedCredentials.get(userId);
+		return storedCredentials.get(key);
 	}
 
 	public static boolean isEmpty(long companyId) {
@@ -113,13 +113,13 @@ public class StoredCredentialUtil {
 	}
 
 	private static void _add(
-		long companyId, String userId, StoredCredential storedCredential) {
+		long companyId, String key, StoredCredential storedCredential) {
 
 		Map<String, StoredCredential> storedCredentials =
 			_storedCredentials.computeIfAbsent(
 				companyId, key -> new ConcurrentHashMap<>());
 
-		storedCredentials.put(userId, storedCredential);
+		storedCredentials.put(key, storedCredential);
 	}
 
 	private static void _clear() {
@@ -134,12 +134,12 @@ public class StoredCredentialUtil {
 		storedCredentials.clear();
 	}
 
-	private static void _delete(long companyId, String userId) {
+	private static void _delete(long companyId, String key) {
 		Map<String, StoredCredential> storedCredentials =
 			_storedCredentials.computeIfAbsent(
 				companyId, key -> new ConcurrentHashMap<>());
 
-		storedCredentials.remove(userId);
+		storedCredentials.remove(key);
 	}
 
 	private static void _executeOnCluster(MethodHandler methodHandler) {

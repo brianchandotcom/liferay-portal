@@ -6,6 +6,7 @@
 package com.liferay.feature.flag.web.internal.upgrade.v1_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -39,14 +40,14 @@ public class FeatureFlagUpgradeProcessTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testDeprecationFeatureFlagPortalPreference() throws Exception {
+	public void testDoUpgrade() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
 		PortalPreferences portalPreferences = _getPortalPreferences(
 			company.getCompanyId());
 
 		portalPreferences.setValue(
-			FeatureFlagConstants.FEATURE_FLAG,
+			_OLD_NAMESPACE,
 			FeatureFlagConstants.PREFERENCE_KEY_DEPRECATION_PROCESSED, "false");
 
 		_portalPreferencesLocalService.updatePreferences(
@@ -60,10 +61,15 @@ public class FeatureFlagUpgradeProcessTest {
 
 		portalPreferences = _getPortalPreferences(company.getCompanyId());
 
+		Assert.assertNull(
+			portalPreferences.getValue(
+				_OLD_NAMESPACE,
+				FeatureFlagConstants.PREFERENCE_KEY_DEPRECATION_PROCESSED));
+
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				portalPreferences.getValue(
-					FeatureFlagConstants.FEATURE_FLAG,
+					FeatureFlag.class.getName(),
 					FeatureFlagConstants.
 						PREFERENCE_KEY_DEPRECATION_PROCESSED)));
 	}
@@ -80,6 +86,9 @@ public class FeatureFlagUpgradeProcessTest {
 	private static final String _CLASS_NAME =
 		"com.liferay.feature.flag.web.internal.upgrade.v1_0_0." +
 			"FeatureFlagUpgradeProcess";
+
+	private static final String _OLD_NAMESPACE =
+		FeatureFlagConstants.FEATURE_FLAG;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.feature.flag.web.internal.upgrade.registry.FeatureFlagUpgradeStepRegistrator))"

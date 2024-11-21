@@ -5,7 +5,7 @@
 
 package com.liferay.layout.internal.upgrade.v1_4_4;
 
-import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
+import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -61,8 +61,7 @@ public class LayoutPrivateLayoutsUpgradeProcess extends UpgradeProcess {
 							portalPreferencesWrapper.getPortalPreferencesImpl();
 
 						portalPreferences.setValue(
-							FeatureFlagConstants.FEATURE_FLAG, "LPD-38869",
-							value);
+							FeatureFlag.class.getName(), "LPD-38869", value);
 
 						_portalPreferencesLocalService.updatePreferences(
 							companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,

@@ -8,7 +8,7 @@ package com.liferay.layout.internal.upgrade.v1_4_4.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
+import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -92,7 +92,7 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 		Assert.assertEquals(
 			value,
 			portalPreferences.getValue(
-				FeatureFlagConstants.FEATURE_FLAG, "LPD-38869", null));
+				FeatureFlag.class.getName(), "LPD-38869", null));
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -118,12 +118,12 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 			portalPreferencesWrapper.getPortalPreferencesImpl();
 
 		String previousValue = portalPreferences.getValue(
-			FeatureFlagConstants.FEATURE_FLAG, "LPD-38869", null);
+			FeatureFlag.class.getName(), "LPD-38869", null);
 
 		portalPreferences = portalPreferencesWrapper.getPortalPreferencesImpl();
 
 		portalPreferences.setValue(
-			FeatureFlagConstants.FEATURE_FLAG, "LPD-38869", value);
+			FeatureFlag.class.getName(), "LPD-38869", value);
 
 		_portalPreferencesLocalService.updatePreferences(
 			TestPropsValues.getCompanyId(),

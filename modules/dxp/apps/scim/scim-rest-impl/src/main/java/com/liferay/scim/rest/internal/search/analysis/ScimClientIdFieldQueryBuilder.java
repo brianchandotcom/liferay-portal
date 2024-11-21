@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "query.builder.type=scimClientId",
 	service = FieldQueryBuilder.class
 )
-public class ScimExpandoFieldQueryBuilder implements FieldQueryBuilder {
+public class ScimClientIdFieldQueryBuilder implements FieldQueryBuilder {
 
 	@Override
 	public Query build(String field, String keywords) {

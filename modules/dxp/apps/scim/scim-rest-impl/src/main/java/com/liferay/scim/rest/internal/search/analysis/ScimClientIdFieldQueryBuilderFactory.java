@@ -18,7 +18,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "service.ranking:Integer=1",
 	service = FieldQueryBuilderFactory.class
 )
-public class ScimExpandoFieldQueryBuilderFactory
+public class ScimClientIdFieldQueryBuilderFactory
 	implements FieldQueryBuilderFactory {
 
 	@Override

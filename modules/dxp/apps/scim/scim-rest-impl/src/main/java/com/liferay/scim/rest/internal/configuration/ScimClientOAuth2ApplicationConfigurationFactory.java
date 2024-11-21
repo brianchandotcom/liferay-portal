@@ -14,7 +14,6 @@ import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -61,10 +60,6 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 		ConfigurationFactoryUtil.executeAsCompany(
 			_companyLocalService, properties,
 			companyId -> {
-				if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPS-96845")) {
-					return;
-				}
-
 				ScimClientOAuth2ApplicationConfiguration
 					scimClientOAuth2ApplicationConfiguration =
 						ConfigurableUtil.createConfigurable(

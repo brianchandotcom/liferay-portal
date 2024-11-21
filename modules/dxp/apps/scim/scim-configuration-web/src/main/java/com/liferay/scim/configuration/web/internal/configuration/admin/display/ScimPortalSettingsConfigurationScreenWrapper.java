@@ -15,7 +15,6 @@ import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -120,15 +119,6 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 		@Override
 		public ServletContext getServletContext() {
 			return _servletContext;
-		}
-
-		@Override
-		public boolean isVisible() {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-96845")) {
-				return false;
-			}
-
-			return true;
 		}
 
 		@Override

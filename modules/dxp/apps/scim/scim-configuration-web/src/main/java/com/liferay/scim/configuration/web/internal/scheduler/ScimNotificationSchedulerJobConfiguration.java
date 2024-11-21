@@ -11,7 +11,6 @@ import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,9 +53,7 @@ public class ScimNotificationSchedulerJobConfiguration
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> _companyLocalService.forEachCompany(
 			company -> {
-				if (!FeatureFlagManagerUtil.isEnabled("LPS-96845") ||
-					!company.isActive()) {
-
+				if (!company.isActive()) {
 					return;
 				}
 

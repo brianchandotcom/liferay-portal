@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.scim.rest.client.dto.v1_0.MultiValuedAttribute;
@@ -61,7 +60,6 @@ import org.junit.runner.RunWith;
  * @author Olivér Kecskeméty
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
-@FeatureFlags("LPS-96845")
 @RunWith(Arquillian.class)
 public class UserResourceTest extends BaseUserResourceTestCase {
 

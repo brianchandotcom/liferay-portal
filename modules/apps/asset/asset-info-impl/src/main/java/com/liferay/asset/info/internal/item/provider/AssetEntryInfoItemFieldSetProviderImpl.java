@@ -257,7 +257,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 	private List<AssetVocabulary> _getNoninternalAssetVocabularies(
 		String itemClassName, long itemClassTypeId, long scopeGroupId) {
 
-		long[] groupsIds;
+		long[] groupsIds = null;
 
 		try {
 			groupsIds =

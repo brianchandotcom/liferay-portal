@@ -143,7 +143,9 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	}
 
 	@Test
-	public void testGetInfoFieldSetAssetLibraryVocabulary() throws Exception {
+	public void testGetInfoFieldSetAssetLibraryAssetVocabulary()
+		throws Exception {
+
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), _depotEntry.getGroupId(),

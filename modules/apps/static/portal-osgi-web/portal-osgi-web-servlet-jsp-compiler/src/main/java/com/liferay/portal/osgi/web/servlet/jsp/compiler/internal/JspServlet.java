@@ -201,7 +201,7 @@ public class JspServlet extends HttpServlet {
 
 		scratchDir.mkdirs();
 
-		final Map<String, String> defaults = HashMapBuilder.put(
+		Map<String, String> defaults = HashMapBuilder.put(
 			_INIT_PARAMETER_NAME_SCRATCH_DIR, scratchDir.getPath()
 		).put(
 			"compilerClassName",
@@ -445,7 +445,7 @@ public class JspServlet extends HttpServlet {
 					throw classNotFoundException;
 				}
 
-				// preload inner classes
+				// Preload inner classes
 
 				List<URL> innerClassURLs = _getInnerClassURLs(
 					url, resourceName);

@@ -28,16 +28,16 @@ public class JspTaglibIDUtil {
 			DigesterFactory.SERVLET_API_PUBLIC_IDS
 		).build();
 
-		Map<String, String> systemIdsMap = HashMapBuilder.putAll(
-			DigesterFactory.SERVLET_API_SYSTEM_IDS
-		).build();
-
 		_resolveId(
 			publicIdsMap, XmlIdentifiers.TLD_11_PUBLIC,
 			"web-jsptaglibrary_1_1.dtd", false);
 		_resolveId(
 			publicIdsMap, XmlIdentifiers.TLD_12_PUBLIC,
 			"web-jsptaglibrary_1_2.dtd", false);
+
+		Map<String, String> systemIdsMap = HashMapBuilder.putAll(
+			DigesterFactory.SERVLET_API_SYSTEM_IDS
+		).build();
 
 		_resolveId(
 			systemIdsMap, XmlIdentifiers.TLD_20_XSD,

@@ -186,7 +186,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	public static class MockedDBPartitionMigrationValidator {
+	private static class MockedDBPartitionMigrationValidator {
 
 		public static void main(String[] args) throws Exception {
 			if (args[0].equals("export")) {

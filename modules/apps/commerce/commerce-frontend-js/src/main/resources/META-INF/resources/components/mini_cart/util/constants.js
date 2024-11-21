@@ -67,8 +67,10 @@ export const SUMMARY = 'Summary';
  */
 export const ADD_PRODUCT = 'Add a product to the cart';
 export const ORDER_IS_EMPTY = 'Your order is empty';
+export const PROCEED_AS_GUEST = 'Proceed as Guest';
 export const REMOVE_ALL_ITEMS = 'Remove all items';
 export const REVIEW_ORDER = 'Review order';
+export const SIGN_IN_TO_CHECKOUT = 'Sign In to Checkout';
 export const SUBMIT_ORDER = 'Submit order';
 export const VIEW_DETAILS = 'View details';
 export const YOUR_ORDER = 'Your order';

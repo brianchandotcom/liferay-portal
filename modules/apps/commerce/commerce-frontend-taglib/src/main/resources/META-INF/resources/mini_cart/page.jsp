@@ -33,6 +33,8 @@
 				).put(
 					"groupId", commerceChannelGroupId
 				).put(
+					"guestOrderEnabled", guestOrderEnabled
+				).put(
 					"id", commerceChannelId
 				).put(
 					"itemsQuantity", itemsQuantity
@@ -48,6 +50,8 @@
 					"productURLSeparator", productURLSeparator
 				).put(
 					"requestQuoteEnabled", requestCodeEnabled
+				).put(
+					"signInURL", signInURL
 				).put(
 					"siteDefaultURL", siteDefaultURL
 				).put(

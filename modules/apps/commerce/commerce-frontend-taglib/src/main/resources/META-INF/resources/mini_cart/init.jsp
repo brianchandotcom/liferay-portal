@@ -31,12 +31,14 @@ String commerceCurrencyCode = (String)request.getAttribute("liferay-commerce:car
 String cssClasses = (String)request.getAttribute("liferay-commerce:cart:cssClasses");
 boolean displayDiscountLevels = (boolean)request.getAttribute("liferay-commerce:cart:displayDiscountLevels");
 boolean displayTotalItemsQuantity = (boolean)request.getAttribute("liferay-commerce:cart:displayTotalItemsQuantity");
+boolean guestOrderEnabled = (boolean)request.getAttribute("liferay-commerce:cart:guestOrderEnabled");
 int itemsQuantity = (int)request.getAttribute("liferay-commerce:cart:itemsQuantity");
 Map<String, String> labels = (Map<String, String>)request.getAttribute("liferay-commerce:cart:labels");
 String orderDetailURL = (String)request.getAttribute("liferay-commerce:cart:orderDetailURL");
 long orderId = (long)request.getAttribute("liferay-commerce:cart:orderId");
 String productURLSeparator = (String)request.getAttribute("liferay-commerce:cart:productURLSeparator");
 boolean requestCodeEnabled = (boolean)request.getAttribute("liferay-commerce:cart:requestQuoteEnabled");
+String signInURL = (String)request.getAttribute("liferay-commerce:cart:signInURL");
 String siteDefaultURL = (String)request.getAttribute("liferay-commerce:cart:siteDefaultURL");
 boolean toggleable = (boolean)request.getAttribute("liferay-commerce:cart:toggleable");
 

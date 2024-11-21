@@ -37,7 +37,7 @@ import org.mockito.Mockito;
 /**
  * @author Marco Galluzzi
  */
-public class StoredCredentialStoreUtilTest {
+public class StoredCredentialUtilTest {
 
 	@ClassRule
 	@Rule
@@ -79,48 +79,47 @@ public class StoredCredentialStoreUtilTest {
 	public void tearDown() {
 		Map<Long, Map<Long, StoredCredential>> storedCredentials =
 			ReflectionTestUtil.getFieldValue(
-				StoredCredentialStoreUtil.class, "_storedCredentials");
+				StoredCredentialUtil.class, "_storedCredentials");
 
 		storedCredentials.clear();
 	}
 
 	@Test
 	public void testAdd() throws Exception {
-		_forEachUser(StoredCredentialStoreUtil::add);
+		_forEachUser(StoredCredentialUtil::add);
 
 		_forEachUser(
 			(companyId, userId, storedCredential) -> Assert.assertEquals(
-				storedCredential,
-				StoredCredentialStoreUtil.get(companyId, userId)));
+				storedCredential, StoredCredentialUtil.get(companyId, userId)));
 	}
 
 	@Test
 	public void testClear() throws Exception {
-		_forEachUser(StoredCredentialStoreUtil::add);
+		_forEachUser(StoredCredentialUtil::add);
 
-		StoredCredentialStoreUtil.clear();
+		StoredCredentialUtil.clear();
 
 		_forEachUser(
 			(companyId, userId, storedCredential) -> Assert.assertNull(
-				StoredCredentialStoreUtil.get(companyId, userId)));
+				StoredCredentialUtil.get(companyId, userId)));
 	}
 
 	@Test
 	public void testClearCompany() throws Exception {
-		_forEachUser(StoredCredentialStoreUtil::add);
+		_forEachUser(StoredCredentialUtil::add);
 
-		StoredCredentialStoreUtil.clear(_companyIds[0]);
+		StoredCredentialUtil.clear(_companyIds[0]);
 
 		_forEachUser(
 			(companyId, userId, storedCredential) -> {
 				if (companyId == _companyIds[0]) {
 					Assert.assertNull(
-						StoredCredentialStoreUtil.get(companyId, userId));
+						StoredCredentialUtil.get(companyId, userId));
 				}
 				else {
 					Assert.assertEquals(
 						storedCredential,
-						StoredCredentialStoreUtil.get(companyId, userId));
+						StoredCredentialUtil.get(companyId, userId));
 				}
 			});
 	}
@@ -129,35 +128,35 @@ public class StoredCredentialStoreUtilTest {
 	public void testContainsKey() throws Exception {
 		_forEachUser(
 			(companyId, userId, storedCredential) -> Assert.assertFalse(
-				StoredCredentialStoreUtil.containsKey(companyId, userId)));
+				StoredCredentialUtil.containsKey(companyId, userId)));
 
-		_forEachUser(StoredCredentialStoreUtil::add);
+		_forEachUser(StoredCredentialUtil::add);
 
 		_forEachUser(
 			(companyId, userId, storedCredential) -> Assert.assertTrue(
-				StoredCredentialStoreUtil.containsKey(companyId, userId)));
+				StoredCredentialUtil.containsKey(companyId, userId)));
 	}
 
 	@Test
 	public void testContainsValue() throws Exception {
 		_forEachUser(
 			(companyId, userId, storedCredential) -> Assert.assertFalse(
-				StoredCredentialStoreUtil.containsValue(
+				StoredCredentialUtil.containsValue(
 					companyId, storedCredential)));
 
-		_forEachUser(StoredCredentialStoreUtil::add);
+		_forEachUser(StoredCredentialUtil::add);
 
 		_forEachUser(
 			(companyId, userId, storedCredential) -> Assert.assertTrue(
-				StoredCredentialStoreUtil.containsValue(
+				StoredCredentialUtil.containsValue(
 					companyId, storedCredential)));
 	}
 
 	@Test
 	public void testDelete() throws Exception {
-		_forEachUser(StoredCredentialStoreUtil::add);
+		_forEachUser(StoredCredentialUtil::add);
 
-		StoredCredentialStoreUtil.delete(_companyIds[0], _userIds[0]);
+		StoredCredentialUtil.delete(_companyIds[0], _userIds[0]);
 
 		_forEachUser(
 			(companyId, userId, storedCredential) -> {
@@ -165,12 +164,12 @@ public class StoredCredentialStoreUtilTest {
 					Objects.equals(userId, _userIds[0])) {
 
 					Assert.assertNull(
-						StoredCredentialStoreUtil.get(companyId, userId));
+						StoredCredentialUtil.get(companyId, userId));
 				}
 				else {
 					Assert.assertEquals(
 						storedCredential,
-						StoredCredentialStoreUtil.get(companyId, userId));
+						StoredCredentialUtil.get(companyId, userId));
 				}
 			});
 	}
@@ -178,7 +177,7 @@ public class StoredCredentialStoreUtilTest {
 	@Test
 	public void testGetNonexistentStoredCredential() {
 		Assert.assertNull(
-			StoredCredentialStoreUtil.get(
+			StoredCredentialUtil.get(
 				RandomTestUtil.randomLong(),
 				String.valueOf(RandomTestUtil.randomLong())));
 	}
@@ -187,44 +186,43 @@ public class StoredCredentialStoreUtilTest {
 	public void testIsEmpty() throws Exception {
 		_forEachCompany(
 			companyId -> Assert.assertTrue(
-				StoredCredentialStoreUtil.isEmpty(companyId)));
+				StoredCredentialUtil.isEmpty(companyId)));
 
-		_forEachUser(StoredCredentialStoreUtil::add);
+		_forEachUser(StoredCredentialUtil::add);
 
 		_forEachCompany(
 			companyId -> Assert.assertFalse(
-				StoredCredentialStoreUtil.isEmpty(companyId)));
+				StoredCredentialUtil.isEmpty(companyId)));
 	}
 
 	@Test
 	public void testKeySet() throws Exception {
 		_forEachCompany(
 			companyId -> {
-				Set<String> keySet = StoredCredentialStoreUtil.keySet(
-					companyId);
+				Set<String> keySet = StoredCredentialUtil.keySet(companyId);
 
 				Assert.assertTrue(keySet.isEmpty());
 			});
 
-		_forEachUser(StoredCredentialStoreUtil::add);
+		_forEachUser(StoredCredentialUtil::add);
 
 		_forEachCompany(
 			companyId -> Assert.assertEquals(
 				_getCompanyKeySet(companyId),
-				StoredCredentialStoreUtil.keySet(companyId)));
+				StoredCredentialUtil.keySet(companyId)));
 	}
 
 	@Test
 	public void testSize() throws Exception {
 		_forEachCompany(
 			companyId -> Assert.assertEquals(
-				0, StoredCredentialStoreUtil.size(companyId)));
+				0, StoredCredentialUtil.size(companyId)));
 
-		_forEachUser(StoredCredentialStoreUtil::add);
+		_forEachUser(StoredCredentialUtil::add);
 
 		_forEachCompany(
 			companyId -> Assert.assertEquals(
-				_USER_COUNT, StoredCredentialStoreUtil.size(companyId)));
+				_USER_COUNT, StoredCredentialUtil.size(companyId)));
 	}
 
 	@Test
@@ -250,18 +248,18 @@ public class StoredCredentialStoreUtilTest {
 		_forEachCompany(
 			companyId -> {
 				Collection<StoredCredential> values =
-					StoredCredentialStoreUtil.values(companyId);
+					StoredCredentialUtil.values(companyId);
 
 				Assert.assertTrue(values.isEmpty());
 			});
 
-		_forEachUser(StoredCredentialStoreUtil::add);
+		_forEachUser(StoredCredentialUtil::add);
 
 		_forEachCompany(
 			companyId -> Assert.assertEquals(
 				_getCompanyValues(companyId),
 				new HashSet<StoredCredential>(
-					StoredCredentialStoreUtil.values(companyId))));
+					StoredCredentialUtil.values(companyId))));
 	}
 
 	private StoredCredential _addStoredCredential() {

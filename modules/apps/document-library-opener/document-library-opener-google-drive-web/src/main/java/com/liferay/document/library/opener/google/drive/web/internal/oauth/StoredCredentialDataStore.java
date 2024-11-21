@@ -30,7 +30,7 @@ public class StoredCredentialDataStore implements DataStore<StoredCredential> {
 
 	@Override
 	public DataStore<StoredCredential> clear() throws IOException {
-		StoredCredentialStoreUtil.clear(_companyId);
+		StoredCredentialUtil.clear(_companyId);
 
 		return this;
 	}
@@ -41,7 +41,7 @@ public class StoredCredentialDataStore implements DataStore<StoredCredential> {
 			return false;
 		}
 
-		return StoredCredentialStoreUtil.containsKey(_companyId, key);
+		return StoredCredentialUtil.containsKey(_companyId, key);
 	}
 
 	@Override
@@ -50,13 +50,13 @@ public class StoredCredentialDataStore implements DataStore<StoredCredential> {
 			return false;
 		}
 
-		return StoredCredentialStoreUtil.containsValue(_companyId, value);
+		return StoredCredentialUtil.containsValue(_companyId, value);
 	}
 
 	@Override
 	public DataStore<StoredCredential> delete(String key) throws IOException {
 		if (key != null) {
-			StoredCredentialStoreUtil.delete(_companyId, key);
+			StoredCredentialUtil.delete(_companyId, key);
 		}
 
 		return this;
@@ -64,7 +64,7 @@ public class StoredCredentialDataStore implements DataStore<StoredCredential> {
 
 	@Override
 	public StoredCredential get(String key) throws IOException {
-		return StoredCredentialStoreUtil.get(_companyId, key);
+		return StoredCredentialUtil.get(_companyId, key);
 	}
 
 	@Override
@@ -79,33 +79,33 @@ public class StoredCredentialDataStore implements DataStore<StoredCredential> {
 
 	@Override
 	public boolean isEmpty() throws IOException {
-		return StoredCredentialStoreUtil.isEmpty(_companyId);
+		return StoredCredentialUtil.isEmpty(_companyId);
 	}
 
 	@Override
 	public Set<String> keySet() throws IOException {
 		return Collections.unmodifiableSet(
-			StoredCredentialStoreUtil.keySet(_companyId));
+			StoredCredentialUtil.keySet(_companyId));
 	}
 
 	@Override
 	public DataStore<StoredCredential> set(String key, StoredCredential value)
 		throws IOException {
 
-		StoredCredentialStoreUtil.add(_companyId, key, value);
+		StoredCredentialUtil.add(_companyId, key, value);
 
 		return this;
 	}
 
 	@Override
 	public int size() throws IOException {
-		return StoredCredentialStoreUtil.size(_companyId);
+		return StoredCredentialUtil.size(_companyId);
 	}
 
 	@Override
 	public Collection<StoredCredential> values() throws IOException {
 		return Collections.unmodifiableCollection(
-			StoredCredentialStoreUtil.values(_companyId));
+			StoredCredentialUtil.values(_companyId));
 	}
 
 	private final long _companyId;

@@ -185,7 +185,7 @@ public class OAuth2Manager {
 	protected void deactivate() {
 		_googleAuthorizationCodeFlows.clear();
 
-		StoredCredentialStoreUtil.clear();
+		StoredCredentialUtil.clear();
 	}
 
 	private DLGoogleDriveCompanyConfiguration

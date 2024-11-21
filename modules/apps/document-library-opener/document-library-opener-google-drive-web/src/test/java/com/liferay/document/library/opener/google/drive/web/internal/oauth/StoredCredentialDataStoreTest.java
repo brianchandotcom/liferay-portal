@@ -79,7 +79,7 @@ public class StoredCredentialDataStoreTest {
 	public void tearDown() {
 		Map<Long, Map<Long, StoredCredential>> storedCredentials =
 			ReflectionTestUtil.getFieldValue(
-				StoredCredentialStoreUtil.class, "_storedCredentials");
+				StoredCredentialUtil.class, "_storedCredentials");
 
 		storedCredentials.clear();
 	}

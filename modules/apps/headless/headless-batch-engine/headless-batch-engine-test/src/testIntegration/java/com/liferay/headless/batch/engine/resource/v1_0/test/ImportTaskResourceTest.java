@@ -17,13 +17,16 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -65,51 +68,21 @@ public class ImportTaskResourceTest {
 				"textValue", RandomTestUtil.randomString()
 			));
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+		List<String> queryParameters = new ArrayList<>();
 
-		httpInvoker.body(bodyJSONArray.toString(), "application/json");
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		queryParameters.add("createStrategy=INSERT");
+		queryParameters.add("importStrategy=ON_ERROR_CONTINUE");
 
-		httpInvoker.path(
-			StringBundler.concat(
-				"http://localhost:8080/o/headless-batch-engine/v1.0/import-",
-				"task/com.liferay.headless.batch.engine.resource.v1_0.test.",
-				"TestEntity?createStrategy=INSERT&importStrategy=ON_ERROR_C",
-				"ONTINUE&taskItemDelegateName=export-import-problem-thrower"));
-
-		httpInvoker.userNameAndPassword(
-			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
+		HttpInvoker httpInvoker = _getHttpInvoker(
+			bodyJSONArray, TestEntity.class.getName(), queryParameters,
+			"export-import-problem-thrower");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal.strategy." +
 					"OnErrorContinueBatchEngineImportStrategy",
 				LoggerTestUtil.ERROR)) {
 
-			HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-			ImportTask importTask = ImportTaskSerDes.toDTO(
-				httpResponse.getContent());
-
-			String externalReferenceCode =
-				importTask.getExternalReferenceCode();
-
-			while (true) {
-				importTask = ImportTaskSerDes.toDTO(
-					_invoke(
-						"http://localhost:8080/o/headless-batch-engine/v1.0" +
-							"/import-task/by-external-reference-code/" +
-								externalReferenceCode));
-
-				String executeStatus = importTask.getExecuteStatusAsString();
-
-				Assert.assertNotEquals("FAILED", executeStatus);
-
-				if (Objects.equals(
-						importTask.getExecuteStatusAsString(), "COMPLETED")) {
-
-					break;
-				}
-			}
+			ImportTask importTask = _postImportTask("COMPLETED", httpInvoker);
 
 			Assert.assertEquals(3, (int)importTask.getProcessedItemsCount());
 
@@ -127,58 +100,54 @@ public class ImportTaskResourceTest {
 
 	@Test
 	public void testPostImportTaskWithTestEntityFailing() throws Exception {
-		JSONArray bodyJSONArray = JSONUtil.putAll(
-			JSONFactoryUtil.createJSONObject());
-
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(bodyJSONArray.toString(), "application/json");
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			StringBundler.concat(
-				"http://localhost:8080/o/headless-batch-engine/v1.0/import-",
-				"task/com.liferay.headless.batch.engine.resource.v1_0.test.",
-				"TestEntity?createStrategy=INSERT&taskItemDelegateName=export-",
-				"import-problem-thrower"));
-
-		httpInvoker.userNameAndPassword(
-			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
+		HttpInvoker httpInvoker = _getHttpInvoker(
+			JSONUtil.putAll(JSONFactoryUtil.createJSONObject()),
+			TestEntity.class.getName(),
+			ListUtil.fromArray("createStrategy=INSERT"),
+			"export-import-problem-thrower");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal." +
 					"BatchEngineImportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
-			HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-			ImportTask importTask = ImportTaskSerDes.toDTO(
-				httpResponse.getContent());
-
-			String externalReferenceCode =
-				importTask.getExternalReferenceCode();
-
-			while (true) {
-				importTask = ImportTaskSerDes.toDTO(
-					_invoke(
-						"http://localhost:8080/o/headless-batch-engine/v1.0" +
-							"/import-task/by-external-reference-code/" +
-								externalReferenceCode));
-
-				String executeStatus = importTask.getExecuteStatusAsString();
-
-				Assert.assertNotEquals("COMPLETED", executeStatus);
-
-				if (Objects.equals(
-						importTask.getExecuteStatusAsString(), "FAILED")) {
-
-					break;
-				}
-			}
+			ImportTask importTask = _postImportTask("FAILED", httpInvoker);
 
 			Assert.assertEquals(
 				"Modified error message", importTask.getErrorMessage());
 		}
+	}
+
+	private HttpInvoker _getHttpInvoker(
+			JSONArray bodyJSONArray, String className,
+			List<String> queryParameters, String taskItemDelegateName)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(bodyJSONArray.toString(), "application/json");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("http://localhost:8080/o/headless-batch-engine/v1.0");
+		sb.append("/import-task/");
+		sb.append(className);
+		sb.append("?");
+
+		for (String queryParameter : queryParameters) {
+			sb.append(queryParameter);
+			sb.append("&");
+		}
+
+		sb.append("taskItemDelegateName=");
+		sb.append(taskItemDelegateName);
+
+		httpInvoker.path(sb.toString());
+		httpInvoker.userNameAndPassword(
+			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
+
+		return httpInvoker;
 	}
 
 	private String _invoke(String url) throws Exception {
@@ -194,6 +163,40 @@ public class ImportTaskResourceTest {
 		Assert.assertEquals(200, httpResponse.getStatusCode());
 
 		return httpResponse.getContent();
+	}
+
+	private ImportTask _postImportTask(
+			String expectedExecuteStatus, HttpInvoker httpInvoker)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		ImportTask importTask = ImportTaskSerDes.toDTO(
+			httpResponse.getContent());
+
+		String externalReferenceCode = importTask.getExternalReferenceCode();
+
+		String actualExecuteStatus = null;
+
+		while (true) {
+			importTask = ImportTaskSerDes.toDTO(
+				_invoke(
+					"http://localhost:8080/o/headless-batch-engine/v1.0" +
+						"/import-task/by-external-reference-code/" +
+							externalReferenceCode));
+
+			actualExecuteStatus = importTask.getExecuteStatusAsString();
+
+			if (StringUtil.equals(actualExecuteStatus, "COMPLETED") ||
+				StringUtil.equals(actualExecuteStatus, "FAILED")) {
+
+				break;
+			}
+		}
+
+		Assert.assertEquals(expectedExecuteStatus, actualExecuteStatus);
+
+		return importTask;
 	}
 
 }

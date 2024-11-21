@@ -134,6 +134,10 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "batchNestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "callbackURL"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -166,6 +170,9 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("contentType")
 			String contentType,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("batchNestedFields")
+			String batchNestedFields,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,

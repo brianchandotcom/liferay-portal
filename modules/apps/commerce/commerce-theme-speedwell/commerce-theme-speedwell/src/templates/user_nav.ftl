@@ -42,9 +42,33 @@
 		</div>
 	<#elseif show_sign_in>
 		<div class="speedwell-user-nav__sign-in">
-			<a class="main-link" href="${sign_in_url}">
+			<a class="main-link sign-in" href="${sign_in_url}">
 				<div class="main-link__label">${sign_in_text}</div>
 			</a>
+
+			<script ${nonceAttribute}>
+				const setGuestOrderEnabled = ({guestOrderEnabled}) => {
+					const signInLink = document.querySelector('.speedwell-user-nav__sign-in .sign-in');
+
+					if (signInLink && guestOrderEnabled) {
+						signInLink.href = '#';
+
+						const performGuestSignIn = (event) => {
+							event.preventDefault();
+
+							window.Liferay.fire('perform-sign-in');
+
+							return false;
+						};
+
+						signInLink.addEventListener('click', performGuestSignIn);
+					}
+
+					window.Liferay.detach('guest-order-enabled', setGuestOrderEnabled);
+				};
+
+				window.Liferay.on('guest-order-enabled', setGuestOrderEnabled);
+			</script>
 		</div>
 	</#if>
 </div>

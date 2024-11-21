@@ -17,7 +17,7 @@
 							"cssClasses": [
 								"commerce-aside"
 							],
-							"customCSS": ".[$FRAGMENT_CLASS$] {\n\tbackground-color: var(--dark);\n\tborder-bottom: 1px solid var(--gray-300);\ncolor: var(--gray-400);\nheight: calc(100vh - var(--control-menu-container-height, 0));\nwidth: var(--commerce-side-bar);\n}",
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n\tbackground-color: var(--dark);\n\tborder-bottom: 1px solid var(--gray-300);\ncolor: var(--gray-400);\nheight: calc(100vh - var(--control-menu-container-height, 0px));\nwidth: var(--commerce-side-bar);\n}",
 							"htmlProperties": {
 								"htmlTag": "Aside"
 							},
@@ -137,7 +137,7 @@
 							"cssClasses": [
 								"commerce-main"
 							],
-							"customCSS": ":root  {\n--commerce-header-user-height: 34px;\n}\n\n.commerce-main {\n\tbackground-color: var(--gray-100);\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-between;\n\tmin-height: calc(100vh - var(--control-menu-height, 0px));\n\toverflow-x: hidden;\n\tposition: relative;\nwidth: calc(100vw - var(--commerce-side-bar, 0));\n}\n\n.signed-out .commerce-main {\n\tmin-height: 100vh;\n}\n\n.commerce-main .lfr-layout-structure-item-row {\noverflow: unset;\n}",
+							"customCSS": ":root  {\n--commerce-header-user-height: 34px;\n}\n\n.commerce-main {\n\tbackground-color: var(--gray-100);\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-between;\n\tmin-height: calc(100vh - var(--control-menu-container-height, 0px));\n\toverflow-x: hidden;\n\tposition: relative;\nwidth: calc(100vw - var(--commerce-side-bar, 0));\n}\n\n.signed-out .commerce-main {\n\tmin-height: 100vh;\n}\n\n.commerce-main .lfr-layout-structure-item-row {\noverflow: unset;\n}",
 							"indexed": true,
 							"layout": {
 							}
@@ -286,7 +286,7 @@
 										"flex-fill",
 										"pb-5"
 									],
-									"customCSS": ".[$FRAGMENT_CLASS$] {\n\tmax-height: calc(100vh - var(--commerce-header-user-height) - var(--control-menu-height, 0));\n  overflow-y: auto;\n}",
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n\tmax-height: calc(100vh - var(--commerce-header-user-height) - var(--control-menu-container-height, 0px));\n  overflow-y: auto;\n}",
 									"htmlProperties": {
 										"htmlTag": "Main"
 									},

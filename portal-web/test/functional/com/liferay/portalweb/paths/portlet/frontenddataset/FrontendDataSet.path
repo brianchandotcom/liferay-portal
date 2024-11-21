@@ -217,11 +217,6 @@
 <!--CUSTOM VIEWS-->
 
 <tr>
-	<td>SELECT_CUSTOM_VIEW</td>
-	<td>//span[contains(@class,'navbar-text-truncate') and contains(text(),'${key_name}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_OPTION_CUSTOM_VIEW</td>
 	<td>//button[@class='dropdown-item'][normalize-space(text())='${key_itemName}']</td>
 	<td></td>

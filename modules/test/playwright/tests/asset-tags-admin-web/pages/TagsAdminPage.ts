@@ -48,6 +48,10 @@ export class TagsAdminPage {
 		await this.page.getByRole('menuitem', {name: 'Merge'}).click();
 	}
 
+	async gotoAdd() {
+		await this.newButton.click();
+	}
+
 	async gotoEdit(title: string) {
 		await this.page
 			.getByRole('row', {name: 'Select ' + title + ' 0 Show Actions'})

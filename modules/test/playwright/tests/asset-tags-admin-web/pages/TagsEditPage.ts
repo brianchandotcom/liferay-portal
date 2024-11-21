@@ -5,29 +5,26 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {TagsAdminPage} from './TagsAdminPage';
 
 export class TagsEditPage {
 	readonly nameInput: Locator;
 	readonly saveButton: Locator;
 	readonly page: Page;
+	readonly tagsAdminPage: TagsAdminPage;
 
 	constructor(page: Page) {
 		this.nameInput = page.getByPlaceholder('Name');
 		this.saveButton = page.getByRole('button', {
 			name: 'Save',
 		});
+		this.tagsAdminPage = new TagsAdminPage(page);
 		this.page = page;
 	}
 
-	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(
-			`/group${siteUrl || '/guest'}${PORTLET_URLS.tagsAdmin}/new`
-		);
-	}
-
 	async add(title: string, siteUrl?: Site['friendlyUrlPath']) {
-		await this.goto(siteUrl);
+		await this.tagsAdminPage.goto(siteUrl);
+		await this.tagsAdminPage.gotoAdd();
 
 		await this.nameInput.fill(title);
 		await this.saveButton.click();

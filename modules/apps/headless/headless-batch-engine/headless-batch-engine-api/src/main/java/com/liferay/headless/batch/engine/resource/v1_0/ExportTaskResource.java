@@ -55,7 +55,7 @@ public interface ExportTaskResource {
 	public ExportTask postExportTask(
 			String className, String contentType, String callbackURL,
 			String externalReferenceCode, String fieldNames,
-			String taskItemDelegateName)
+			String nestedFieldNames, String taskItemDelegateName)
 		throws Exception;
 
 	public ExportTask getExportTask(Long exportTaskId) throws Exception;

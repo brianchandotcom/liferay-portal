@@ -29,17 +29,15 @@ export class FragmentsPage {
 	}
 
 	async gotoFragmentSet(name: string) {
-		await this.page
-			.getByRole('menuitem', {
+		await clickAndExpectToBeVisible({
+			target: this.page
+				.locator('.sheet-title')
+				.getByText(name, {exact: true}),
+			trigger: this.page.getByRole('menuitem', {
 				exact: true,
 				name,
-			})
-			.click();
-
-		await this.page
-			.locator('.sheet-title')
-			.getByText(name, {exact: true})
-			.waitFor();
+			}),
+		});
 	}
 
 	async selectDefaultFormFragment({

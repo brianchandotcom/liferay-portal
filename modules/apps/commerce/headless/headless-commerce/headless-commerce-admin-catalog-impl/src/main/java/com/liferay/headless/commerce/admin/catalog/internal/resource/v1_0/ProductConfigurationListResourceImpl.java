@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -112,12 +111,6 @@ public class ProductConfigurationListResourceImpl
 
 					searchContext.setGroupIds(commerceCatalogGroupIds);
 				}
-
-				searchContext.setAttribute(
-					Field.STATUS, WorkflowConstants.STATUS_ANY);
-
-				searchContext.setLocale(
-					contextAcceptLanguage.getPreferredLocale());
 			},
 			sorts,
 			document -> _toProductConfigurationList(
@@ -160,10 +153,7 @@ public class ProductConfigurationListResourceImpl
 				cpConfigurationList.getCPConfigurationListId(),
 				cpConfigurationList.getGroupId(),
 				cpConfigurationList.getParentCPConfigurationListId(),
-				GetterUtil.getBoolean(
-					productConfigurationList.
-						getMasterProductConfigurationList(),
-					cpConfigurationList.isMasterCPConfigurationList()),
+				cpConfigurationList.isMasterCPConfigurationList(),
 				GetterUtil.getString(
 					productConfigurationList.getName(),
 					cpConfigurationList.getName()),

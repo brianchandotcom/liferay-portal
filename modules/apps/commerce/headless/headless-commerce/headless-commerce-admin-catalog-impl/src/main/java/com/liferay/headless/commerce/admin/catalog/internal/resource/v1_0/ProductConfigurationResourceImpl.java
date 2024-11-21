@@ -23,7 +23,6 @@ import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.P
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductConfigurationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationResource;
 import com.liferay.portal.kernel.change.tracking.CTAware;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -289,52 +288,48 @@ public class ProductConfigurationResourceImpl
 				"Unable to find product with ID " + id);
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
-			CPConfigurationEntry masterCPConfigurationEntry =
-				cpDefinition.getMasterCPConfigurationEntry();
+		CPConfigurationEntry masterCPConfigurationEntry =
+			cpDefinition.getMasterCPConfigurationEntry();
 
-			_cpConfigurationEntryService.updateCPConfigurationEntry(
-				GetterUtil.getString(
-					productConfiguration.getExternalReferenceCode(),
-					masterCPConfigurationEntry.getExternalReferenceCode()),
-				masterCPConfigurationEntry.getCPConfigurationEntryId(),
-				masterCPConfigurationEntry.getCPConfigurationListId(),
-				ProductConfigurationUtil.getAllowedOrderQuantities(
-					productConfiguration.getAllowedOrderQuantities(),
-					masterCPConfigurationEntry.getAllowedOrderQuantities()),
-				GetterUtil.getBoolean(
-					productConfiguration.getAllowBackOrder(),
-					masterCPConfigurationEntry.isBackOrders()),
-				GetterUtil.getLong(
-					productConfiguration.getAvailabilityEstimateId(),
-					masterCPConfigurationEntry.
-						getCommerceAvailabilityEstimateId()),
-				GetterUtil.getString(
-					productConfiguration.getInventoryEngine(),
-					masterCPConfigurationEntry.
-						getCPDefinitionInventoryEngine()),
-				GetterUtil.getBoolean(
-					productConfiguration.getDisplayAvailability(),
-					masterCPConfigurationEntry.isDisplayAvailability()),
-				GetterUtil.getBoolean(
-					productConfiguration.getDisplayStockQuantity(),
-					masterCPConfigurationEntry.isDisplayStockQuantity()),
-				GetterUtil.getString(
-					productConfiguration.getLowStockAction(),
-					masterCPConfigurationEntry.getLowStockActivity()),
-				BigDecimalUtil.get(
-					productConfiguration.getMaxOrderQuantity(),
-					masterCPConfigurationEntry.getMaxOrderQuantity()),
-				BigDecimalUtil.get(
-					productConfiguration.getMinOrderQuantity(),
-					masterCPConfigurationEntry.getMinOrderQuantity()),
-				BigDecimalUtil.get(
-					productConfiguration.getMinStockQuantity(),
-					masterCPConfigurationEntry.getMinStockQuantity()),
-				BigDecimalUtil.get(
-					productConfiguration.getMultipleOrderQuantity(),
-					masterCPConfigurationEntry.getMultipleOrderQuantity()));
-		}
+		_cpConfigurationEntryService.updateCPConfigurationEntry(
+			GetterUtil.getString(
+				productConfiguration.getExternalReferenceCode(),
+				masterCPConfigurationEntry.getExternalReferenceCode()),
+			masterCPConfigurationEntry.getCPConfigurationEntryId(),
+			masterCPConfigurationEntry.getCPConfigurationListId(),
+			ProductConfigurationUtil.getAllowedOrderQuantities(
+				productConfiguration.getAllowedOrderQuantities(),
+				masterCPConfigurationEntry.getAllowedOrderQuantities()),
+			GetterUtil.getBoolean(
+				productConfiguration.getAllowBackOrder(),
+				masterCPConfigurationEntry.isBackOrders()),
+			GetterUtil.getLong(
+				productConfiguration.getAvailabilityEstimateId(),
+				masterCPConfigurationEntry.getCommerceAvailabilityEstimateId()),
+			GetterUtil.getString(
+				productConfiguration.getInventoryEngine(),
+				masterCPConfigurationEntry.getCPDefinitionInventoryEngine()),
+			GetterUtil.getBoolean(
+				productConfiguration.getDisplayAvailability(),
+				masterCPConfigurationEntry.isDisplayAvailability()),
+			GetterUtil.getBoolean(
+				productConfiguration.getDisplayStockQuantity(),
+				masterCPConfigurationEntry.isDisplayStockQuantity()),
+			GetterUtil.getString(
+				productConfiguration.getLowStockAction(),
+				masterCPConfigurationEntry.getLowStockActivity()),
+			BigDecimalUtil.get(
+				productConfiguration.getMaxOrderQuantity(),
+				masterCPConfigurationEntry.getMaxOrderQuantity()),
+			BigDecimalUtil.get(
+				productConfiguration.getMinOrderQuantity(),
+				masterCPConfigurationEntry.getMinOrderQuantity()),
+			BigDecimalUtil.get(
+				productConfiguration.getMinStockQuantity(),
+				masterCPConfigurationEntry.getMinStockQuantity()),
+			BigDecimalUtil.get(
+				productConfiguration.getMultipleOrderQuantity(),
+				masterCPConfigurationEntry.getMultipleOrderQuantity()));
 
 		ProductConfigurationUtil.updateCPDefinitionInventory(
 			_cpDefinitionInventoryService, productConfiguration,

@@ -275,14 +275,21 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	public CPConfigurationEntry getMasterCPConfigurationEntry()
 		throws PortalException {
 
+		if (_cpConfigurationEntry != null) {
+			return _cpConfigurationEntry;
+		}
+
 		CPConfigurationList cpConfigurationList =
 			CPConfigurationListLocalServiceUtil.getMasterCPConfigurationList(
 				getGroupId());
 
-		return CPConfigurationEntryLocalServiceUtil.getCPConfigurationEntry(
-			PortalUtil.getClassNameId(CPDefinition.class.getName()),
-			getCPDefinitionId(),
-			cpConfigurationList.getCPConfigurationListId());
+		_cpConfigurationEntry =
+			CPConfigurationEntryLocalServiceUtil.getCPConfigurationEntry(
+				PortalUtil.getClassNameId(CPDefinition.class.getName()),
+				getCPDefinitionId(),
+				cpConfigurationList.getCPConfigurationListId());
+
+		return _cpConfigurationEntry;
 	}
 
 	@Override
@@ -482,6 +489,7 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionImpl.class);
 
+	private CPConfigurationEntry _cpConfigurationEntry;
 	private UnicodeProperties
 		_deliverySubscriptionTypeSettingsUnicodeProperties;
 	private Map<Locale, String> _descriptionMap;

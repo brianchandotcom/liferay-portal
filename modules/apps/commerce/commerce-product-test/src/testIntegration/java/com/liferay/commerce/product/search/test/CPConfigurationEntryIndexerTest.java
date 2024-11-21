@@ -102,7 +102,7 @@ public class CPConfigurationEntryIndexerTest {
 		Document document = HitsAssert.assertOnlyOne(hits);
 
 		Assert.assertEquals(
-			String.valueOf(cpConfigurationEntry.getCPConfigurationEntryId()),
+			String.valueOf(cpConfigurationEntry.getClassPK()),
 			document.get(Field.ENTRY_CLASS_PK));
 	}
 

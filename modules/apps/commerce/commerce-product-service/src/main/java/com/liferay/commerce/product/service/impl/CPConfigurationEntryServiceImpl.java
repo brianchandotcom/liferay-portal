@@ -71,7 +71,7 @@ public class CPConfigurationEntryServiceImpl
 				cpConfigurationEntryId);
 
 		_checkCommerceCatalog(
-			cpConfigurationEntry.getGroupId(), ActionKeys.VIEW);
+			cpConfigurationEntry.getGroupId(), ActionKeys.UPDATE);
 
 		cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
 			cpConfigurationEntry);

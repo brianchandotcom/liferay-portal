@@ -23,6 +23,8 @@ CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
+		<liferay-ui:error exception="<%= NumberFormatException.class %>" message="please-enter-a-valid-number" />
+
 		<aui:input label="subtotal" name="subtotal" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="currency" value="<%= commerceOrderEditDisplayContext.getFormattedValue(commerceOrder.getSubtotal()) %>" wrapperCssClass="form-group-item">
 			<aui:validator name="min">0</aui:validator>
 			<aui:validator name="number" />

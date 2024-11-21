@@ -115,7 +115,8 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 			else if (exception instanceof
 						CommerceTierPriceEntryMinQuantityException ||
 					 exception instanceof
-						 DuplicateCommerceTierPriceEntryException) {
+						 DuplicateCommerceTierPriceEntryException ||
+					 exception instanceof NumberFormatException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);

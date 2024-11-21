@@ -28,6 +28,8 @@ CPInstance cpInstance = commercePriceEntryDisplayContext.getCPInstance();
 		<aui:input name="commercePriceEntryId" type="hidden" value="<%= commercePriceEntryId %>" />
 		<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceEntryDisplayContext.getCommercePriceListId() %>" />
 
+		<liferay-ui:error exception="<%= NumberFormatException.class %>" message="please-enter-a-valid-number" />
+
 		<aui:model-context bean="<%= commercePriceEntry %>" model="<%= CommercePriceEntry.class %>" />
 
 		<div class="row">

@@ -85,7 +85,8 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 				exception instanceof CPDefinitionOptionValueRelKeyException ||
 				exception instanceof CPDefinitionOptionValueRelPriceException ||
 				exception instanceof
-					CPDefinitionOptionValueRelQuantityException) {
+					CPDefinitionOptionValueRelQuantityException ||
+				exception instanceof NumberFormatException) {
 
 				hideDefaultErrorMessage(actionRequest);
 

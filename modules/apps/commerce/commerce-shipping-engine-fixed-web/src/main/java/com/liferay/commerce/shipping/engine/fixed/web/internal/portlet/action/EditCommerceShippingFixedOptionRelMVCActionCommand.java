@@ -58,6 +58,7 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchShippingFixedOptionRelException ||
+				exception instanceof NumberFormatException ||
 				exception instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());

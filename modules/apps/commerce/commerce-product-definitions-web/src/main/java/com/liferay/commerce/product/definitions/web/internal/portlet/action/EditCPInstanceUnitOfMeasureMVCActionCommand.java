@@ -91,7 +91,8 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 					CPInstanceUnitOfMeasureIncrementalOrderQuantityException ||
 				throwable instanceof CPInstanceUnitOfMeasureRateException ||
 				throwable instanceof
-					DuplicateCPInstanceUnitOfMeasureKeyException) {
+					DuplicateCPInstanceUnitOfMeasureKeyException ||
+				throwable instanceof NumberFormatException) {
 
 				SessionErrors.add(
 					actionRequest, throwable.getClass(), throwable);

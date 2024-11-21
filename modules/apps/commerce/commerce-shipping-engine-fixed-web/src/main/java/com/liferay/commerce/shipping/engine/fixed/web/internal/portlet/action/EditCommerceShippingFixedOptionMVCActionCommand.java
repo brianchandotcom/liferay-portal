@@ -72,7 +72,9 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof CommerceShippingFixedOptionKeyException) {
+			if (exception instanceof CommerceShippingFixedOptionKeyException ||
+				exception instanceof NumberFormatException) {
+
 				SessionErrors.add(actionRequest, exception.getClass());
 
 				hideDefaultErrorMessage(actionRequest);

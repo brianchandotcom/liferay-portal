@@ -31,6 +31,7 @@ CPInstance cpInstance = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInst
 
 		<liferay-ui:error exception="<%= CommerceTierPriceEntryMinQuantityException.class %>" message="the-specified-quantity-is-not-allowed" />
 		<liferay-ui:error exception="<%= DuplicateCommerceTierPriceEntryException.class %>" message="there-is-already-a-tier-price-entry-with-the-same-minimum-quantity" />
+		<liferay-ui:error exception="<%= NumberFormatException.class %>" message="please-enter-a-valid-number" />
 
 		<div class="row">
 			<div class="col-12">

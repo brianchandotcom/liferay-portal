@@ -34,6 +34,8 @@ if (commerceShippingFixedOptionRel != null) {
 		<aui:input name="commerceShippingFixedOptionRelId" type="hidden" value="<%= commerceShippingFixedOptionRelId %>" />
 		<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
 
+		<liferay-ui:error exception="<%= NumberFormatException.class %>" message="please-enter-a-valid-number" />
+
 		<div class="alert alert-info">
 			<liferay-ui:message key="commerce-shipping-fixed-option-rel-info" />
 		</div>

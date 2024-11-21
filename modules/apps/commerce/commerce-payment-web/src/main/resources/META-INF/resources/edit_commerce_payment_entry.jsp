@@ -60,6 +60,7 @@ portletDisplay.setURLBack(backURL);
 		<liferay-ui:error embed="<%= false %>" exception="<%= CommercePaymentEntryPaymentIntegrationTypeException.class %>" message="the-payment-integration-type-is-invalid" />
 		<liferay-ui:error embed="<%= false %>" exception="<%= CommercePaymentEntryPaymentStatusException.class %>" message="the-payment-status-is-invalid" />
 		<liferay-ui:error embed="<%= false %>" exception="<%= CommercePaymentEntryReasonKeyException.class %>" message="please-select-a-valid-reason" />
+		<liferay-ui:error embed="<%= false %>" exception="<%= NumberFormatException.class %>" message="please-enter-a-valid-number" />
 
 		<aui:model-context bean="<%= commercePaymentEntry %>" model="<%= CommercePaymentEntry.class %>" />
 

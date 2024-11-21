@@ -24,6 +24,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 <liferay-ui:error exception="<%= CPDefinitionOptionValueRelKeyException.class %>" message="that-key-is-already-being-used" />
 <liferay-ui:error exception="<%= CPDefinitionOptionValueRelPriceException.class %>" message="please-enter-a-valid-price" />
 <liferay-ui:error exception="<%= CPDefinitionOptionValueRelQuantityException.class %>" message="please-enter-a-valid-quantity" />
+<liferay-ui:error exception="<%= NumberFormatException.class %>" message="please-enter-a-valid-number" />
 
 <c:choose>
 	<c:when test="<%= cpDefinitionOptionValueRelDisplayContext.isCPDefinitionOptionRelSelectDate() %>">

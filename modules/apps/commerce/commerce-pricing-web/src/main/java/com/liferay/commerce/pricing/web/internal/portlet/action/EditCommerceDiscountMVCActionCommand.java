@@ -74,7 +74,8 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 			else if (throwable instanceof
 						CommerceDiscountMaxPriceValueException ||
 					 throwable instanceof
-						 CommerceDiscountMinPriceValueException) {
+						 CommerceDiscountMinPriceValueException ||
+					 throwable instanceof NumberFormatException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);

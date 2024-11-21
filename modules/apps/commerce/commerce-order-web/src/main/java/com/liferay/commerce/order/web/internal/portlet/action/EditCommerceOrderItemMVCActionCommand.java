@@ -89,7 +89,8 @@ public class EditCommerceOrderItemMVCActionCommand
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (throwable instanceof
-						CommerceOrderItemRequestedDeliveryDateException) {
+						CommerceOrderItemRequestedDeliveryDateException ||
+					 throwable instanceof NumberFormatException) {
 
 				SessionErrors.add(
 					actionRequest, throwable.getClass(), throwable);

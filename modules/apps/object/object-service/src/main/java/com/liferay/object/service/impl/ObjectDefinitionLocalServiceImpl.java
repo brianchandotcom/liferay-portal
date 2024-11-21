@@ -1991,6 +1991,11 @@ public class ObjectDefinitionLocalServiceImpl
 							"There must be no unrelated object entries when ",
 							"both object definitions are published so that ",
 							"the object relationship can be an edge to a root ",
+							"context"),
+						StringBundler.concat(
+							"there-must-be-no-unrelated-object-entries-when-",
+							"both-object-definitions-are-published-so-that-",
+							"the-object-relationship-can-be-an-edge-to-a-root",
 							"context"));
 				}
 			}

@@ -6,12 +6,18 @@
 package com.liferay.object.admin.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
+import com.liferay.object.jaxrs.exception.mapper.util.ObjectExceptionMapperUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Feliphe Marinho
@@ -31,7 +37,18 @@ public class ObjectRelationshipEdgeExceptionMapper
 	protected Problem getProblem(
 		ObjectRelationshipEdgeException objectRelationshipEdgeException) {
 
-		return new Problem(objectRelationshipEdgeException);
+		return new Problem(
+			Response.Status.BAD_REQUEST,
+			ObjectExceptionMapperUtil.getTitle(
+				_acceptLanguage, null, _language,
+				objectRelationshipEdgeException.getMessage(),
+				objectRelationshipEdgeException.getMessageKey()));
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Reference
+	private Language _language;
 
 }

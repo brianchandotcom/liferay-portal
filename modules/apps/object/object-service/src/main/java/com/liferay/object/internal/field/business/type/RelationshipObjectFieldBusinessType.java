@@ -149,8 +149,6 @@ public class RelationshipObjectFieldBusinessType
 					if (_log.isDebugEnabled()) {
 						_log.debug(exception);
 					}
-
-					return 0;
 				}
 			}
 

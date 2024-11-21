@@ -15,7 +15,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.DataStore;
-import com.google.api.client.util.store.MemoryDataStoreFactory;
 import com.google.api.services.drive.DriveScopes;
 
 import com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration;
@@ -185,6 +184,7 @@ public class OAuth2Manager {
 	@Deactivate
 	protected void deactivate() {
 		_googleAuthorizationCodeFlows.clear();
+		StoredCredentialStoreUtil.clear();
 	}
 
 	private DLGoogleDriveCompanyConfiguration
@@ -245,7 +245,7 @@ public class OAuth2Manager {
 
 			googleAuthorizationCodeFlowBuilder =
 				googleAuthorizationCodeFlowBuilder.setDataStoreFactory(
-					MemoryDataStoreFactory.getDefaultInstance());
+					new StoredCredentialDataStoreFactory(companyId));
 
 			GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
 				googleAuthorizationCodeFlowBuilder.build();

@@ -1029,11 +1029,27 @@ public class CommerceOrderLocalServiceImpl
 			shippingAddressId = shippingAddress.getCommerceAddressId();
 		}
 
+		String commerceCurrencyCode = commerceOrder.getCommerceCurrencyCode();
+
+		boolean recalculate = false;
+
+		CommerceCurrency commerceContextCommerceCurrency =
+			commerceContext.getCommerceCurrency();
+
+		if ((commerceContextCommerceCurrency != null) &&
+			!Objects.equals(
+				commerceContextCommerceCurrency.getCode(),
+				commerceCurrencyCode)) {
+
+			commerceCurrencyCode = commerceContextCommerceCurrency.getCode();
+
+			recalculate = true;
+		}
+
 		CommerceOrder newCommerceOrder =
 			commerceOrderLocalService.addCommerceOrder(
 				userId, commerceOrder.getGroupId(), billingAddressId,
-				commerceOrder.getCommerceAccountId(),
-				commerceOrder.getCommerceCurrencyCode(),
+				commerceOrder.getCommerceAccountId(), commerceCurrencyCode,
 				commerceOrder.getCommerceOrderTypeId(),
 				commerceOrder.getCommerceShippingMethodId(), shippingAddressId,
 				commerceOrder.getCommercePaymentMethodKey(),
@@ -1067,6 +1083,18 @@ public class CommerceOrderLocalServiceImpl
 				commerceOrderItem.getReplacedCPInstanceId(), BigDecimal.ZERO,
 				commerceOrderItem.getUnitOfMeasureKey(), commerceContext,
 				serviceContext);
+		}
+
+		if (recalculate) {
+			newCommerceOrder =
+				commerceOrderLocalService.updateCommerceShippingMethod(
+					newCommerceOrder.getCommerceOrderId(),
+					commerceOrder.getCommerceShippingMethodId(),
+					commerceOrder.getShippingOptionName(), commerceContext,
+					serviceContext.getLocale());
+
+			newCommerceOrder = commerceOrderLocalService.recalculatePrice(
+				newCommerceOrder.getCommerceOrderId(), commerceContext);
 		}
 
 		return newCommerceOrder;

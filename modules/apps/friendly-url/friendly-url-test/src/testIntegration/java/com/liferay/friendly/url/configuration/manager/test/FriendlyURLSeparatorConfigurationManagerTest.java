@@ -9,9 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -32,7 +31,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
@@ -80,33 +78,26 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 		JSONObject friendlyURLSeparatorsJSONObject = JSONUtil.put(
 			JournalArticle.class.getName(), "/test1/");
 
-		ConfigurationTestUtil.updateConfiguration(
-			FriendlyURLSeparatorCompanyConfiguration.class.getName(),
-			() -> {
-				_configurationProvider.saveCompanyConfiguration(
-					FriendlyURLSeparatorCompanyConfiguration.class, _companyId,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"friendlyURLSeparatorsJSON",
-						friendlyURLSeparatorsJSONObject.toString()
-					).build());
-
-				Configuration configuration =
-					_configurationAdmin.getConfiguration(
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						_companyId,
 						FriendlyURLSeparatorCompanyConfiguration.class.
 							getName(),
-						StringPool.QUESTION);
+						HashMapDictionaryBuilder.<String, Object>put(
+							"friendlyURLSeparatorsJSON",
+							friendlyURLSeparatorsJSONObject.toString()
+						).build())) {
 
-				configuration.update();
-			});
+			String friendlyURLSeparatorsJSON =
+				_friendlyURLSeparatorConfigurationManager.
+					getFriendlyURLSeparatorsJSON(_companyId);
 
-		String friendlyURLSeparatorsJSON =
-			_friendlyURLSeparatorConfigurationManager.
-				getFriendlyURLSeparatorsJSON(_companyId);
-
-		Assert.assertNotNull(friendlyURLSeparatorsJSON);
-		Assert.assertEquals(
-			friendlyURLSeparatorsJSONObject.toString(),
-			friendlyURLSeparatorsJSON);
+			Assert.assertNotNull(friendlyURLSeparatorsJSON);
+			Assert.assertEquals(
+				friendlyURLSeparatorsJSONObject.toString(),
+				friendlyURLSeparatorsJSON);
+		}
 	}
 
 	@Test
@@ -116,32 +107,29 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 		JSONObject friendlyURLSeparatorsJSONObject = JSONUtil.put(
 			JournalArticle.class.getName(), "/test1/");
 
-		ConfigurationTestUtil.updateConfiguration(
-			FriendlyURLSeparatorCompanyConfiguration.class.getName(),
-			() -> {
-				_friendlyURLSeparatorConfigurationManager.
-					updateFriendlyURLSeparatorCompanyConfiguration(
-						_companyId, friendlyURLSeparatorsJSONObject.toString());
-
-				Configuration configuration =
-					_configurationAdmin.getConfiguration(
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						_companyId,
 						FriendlyURLSeparatorCompanyConfiguration.class.
 							getName(),
-						StringPool.QUESTION);
+						HashMapDictionaryBuilder.<String, Object>put(
+							"friendlyURLSeparatorsJSON",
+							friendlyURLSeparatorsJSONObject.toString()
+						).build())) {
 
-				configuration.update();
-			});
+			FriendlyURLSeparatorCompanyConfiguration
+				friendlyURLSeparatorCompanyConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						FriendlyURLSeparatorCompanyConfiguration.class,
+						_companyId);
 
-		FriendlyURLSeparatorCompanyConfiguration
-			friendlyURLSeparatorCompanyConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					FriendlyURLSeparatorCompanyConfiguration.class, _companyId);
-
-		Assert.assertNotNull(friendlyURLSeparatorCompanyConfiguration);
-		Assert.assertEquals(
-			friendlyURLSeparatorsJSONObject.toString(),
-			friendlyURLSeparatorCompanyConfiguration.
-				friendlyURLSeparatorsJSON());
+			Assert.assertNotNull(friendlyURLSeparatorCompanyConfiguration);
+			Assert.assertEquals(
+				friendlyURLSeparatorsJSONObject.toString(),
+				friendlyURLSeparatorCompanyConfiguration.
+					friendlyURLSeparatorsJSON());
+		}
 	}
 
 	@Inject

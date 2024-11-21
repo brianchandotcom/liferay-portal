@@ -431,37 +431,49 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			Map<String, String> friendlyURLSeparators)
 		throws Exception {
 
-		ConfigurationTestUtil.updateConfiguration(
-			FriendlyURLSeparatorCompanyConfiguration.class.getName(),
-			() -> {
-				_mvcActionCommand.processAction(
-					_getMockLiferayPortletActionRequest(friendlyURLSeparators),
-					new MockLiferayPortletActionResponse());
-
-				Configuration configuration =
-					_configurationAdmin.getConfiguration(
-						FriendlyURLSeparatorCompanyConfiguration.class.
-							getName(),
-						StringPool.QUESTION);
-
-				configuration.update();
-			});
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
+		String originalFriendlyURLSeparatorsJSON =
 			_friendlyURLSeparatorConfigurationManager.
-				getFriendlyURLSeparatorsJSON(_company.getCompanyId()));
+				getFriendlyURLSeparatorsJSON(_company.getCompanyId());
 
-		for (Map.Entry<String, String> friendlyURLSeparator :
-				friendlyURLSeparators.entrySet()) {
+		try {
+			ConfigurationTestUtil.updateConfiguration(
+				FriendlyURLSeparatorCompanyConfiguration.class.getName(),
+				() -> {
+					_mvcActionCommand.processAction(
+						_getMockLiferayPortletActionRequest(
+							friendlyURLSeparators),
+						new MockLiferayPortletActionResponse());
 
-			String normalizedFriendlyURLSeparator =
-				_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
-					friendlyURLSeparator.getValue());
+					Configuration configuration =
+						_configurationAdmin.getConfiguration(
+							FriendlyURLSeparatorCompanyConfiguration.class.
+								getName(),
+							StringPool.QUESTION);
 
-			Assert.assertEquals(
-				StringPool.SLASH + normalizedFriendlyURLSeparator +
-					StringPool.SLASH,
-				jsonObject.get(friendlyURLSeparator.getKey()));
+					configuration.update();
+				});
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				_friendlyURLSeparatorConfigurationManager.
+					getFriendlyURLSeparatorsJSON(_company.getCompanyId()));
+
+			for (Map.Entry<String, String> friendlyURLSeparator :
+					friendlyURLSeparators.entrySet()) {
+
+				String normalizedFriendlyURLSeparator =
+					_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+						friendlyURLSeparator.getValue());
+
+				Assert.assertEquals(
+					StringPool.SLASH + normalizedFriendlyURLSeparator +
+						StringPool.SLASH,
+					jsonObject.get(friendlyURLSeparator.getKey()));
+			}
+		}
+		finally {
+			_friendlyURLSeparatorConfigurationManager.
+				updateFriendlyURLSeparatorCompanyConfiguration(
+					_company.getCompanyId(), originalFriendlyURLSeparatorsJSON);
 		}
 	}
 

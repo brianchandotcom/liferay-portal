@@ -8,39 +8,82 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "customized");
-
-String tabs1Names = "classic,controlled,customized,minimum,react,empty,custom_internal_view";
-
-PortletURL portletURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setTabs1(
-	tabs1
-).buildPortletURL();
+String navigation = ParamUtil.getString(request, "navigation", "customized");
 %>
 
-<clay:container-fluid>
-	<liferay-ui:tabs
-		names="<%= tabs1Names %>"
-		url="<%= portletURL.toString() %>"
-		value="<%= tabs1 %>"
-	>
-
-		<%
-		String[] sections = tabs1Names.split(StringPool.COMMA);
-
-		for (int i = 0; i < sections.length; i++) {
-		%>
-
-			<liferay-ui:section>
-				<c:if test="<%= tabs1.equals(sections[i]) %>">
-					<liferay-util:include page='<%= "/partials/" + tabs1 + ".jsp" %>' servletContext="<%= pageContext.getServletContext() %>" />
-				</c:if>
-			</liferay-ui:section>
-
-		<%
+<clay:navigation-bar
+	navigationItems='<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(navigation.equals("customized"));
+						navigationItem.setHref(renderResponse.createRenderURL());
+						navigationItem.setLabel("Customized");
+					});
+				add(
+					navigationItem -> {
+						navigationItem.setActive(navigation.equals("classic"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "classic");
+						navigationItem.setLabel("Classic");
+					});
+				add(
+					navigationItem -> {
+						navigationItem.setActive(navigation.equals("controlled"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "controlled");
+						navigationItem.setLabel("Classic");
+					});
+				add(
+					navigationItem -> {
+						navigationItem.setActive(navigation.equals("custom-internal-view"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "custom-internal-view");
+						navigationItem.setLabel("Custom Internal View");
+					});
+				add(
+					navigationItem -> {
+						navigationItem.setActive(navigation.equals("empty"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "empty");
+						navigationItem.setLabel("Empty");
+					});
+				add(
+					navigationItem -> {
+						navigationItem.setActive(navigation.equals("minimum"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "minimum");
+						navigationItem.setLabel("Minimum");
+					});
+				add(
+					navigationItem -> {
+						navigationItem.setActive(navigation.equals("react"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "react");
+						navigationItem.setLabel("React");
+					});
+			}
 		}
-		%>
+	%>'
+/>
 
-	</liferay-ui:tabs>
+<clay:container-fluid>
+	<c:choose>
+		<c:when test='<%= navigation.equals("classic") %>'>
+			<liferay-util:include page="/partials/classic.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= navigation.equals("controlled") %>'>
+			<liferay-util:include page="/partials/controlled.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= navigation.equals("custom-internal-view") %>'>
+			<liferay-util:include page="/partials/custom_internal_view.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= navigation.equals("empty") %>'>
+			<liferay-util:include page="/partials/empty.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= navigation.equals("minimum") %>'>
+			<liferay-util:include page="/partials/minimum.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= navigation.equals("react") %>'>
+			<liferay-util:include page="/partials/react.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:otherwise>
+			<liferay-util:include page="/partials/customized.jsp" servletContext="<%= application %>" />
+		</c:otherwise>
+	</c:choose>
 </clay:container-fluid>

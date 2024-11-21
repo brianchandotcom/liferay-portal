@@ -234,3 +234,10 @@ Team team = usersDisplayContext.getTeam();
 <aui:form cssClass="hide" method="post" name="editUserGroupRoleFm">
 	<aui:input name="tabs1" type="hidden" value="users" />
 </aui:form>
+
+<portlet:actionURL name="unassignUserGroupRole" var="unassignUserGroupRoleURL" />
+
+<aui:form action="<%= unassignUserGroupRoleURL %>" cssClass="hide" name="unassignUserGroupRoleFm">
+	<aui:input name="tabs1" type="hidden" value="users" />
+	<aui:input name="userId" type="hidden" />
+</aui:form>

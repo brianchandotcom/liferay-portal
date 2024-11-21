@@ -5,6 +5,7 @@
 
 package com.liferay.site.memberships.web.internal.display.context;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -17,7 +18,9 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -125,6 +128,14 @@ public class UserRolesDisplayContext {
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 			new Integer[] {_getRoleType()}, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, roleSearch.getOrderByComparator());
+
+		List<Role> selectedRoles = _getSelectedRoles();
+
+		roles = ListUtil.filter(
+			roles,
+			role ->
+				(_isAssignRoles() && !selectedRoles.contains(role)) ||
+				(!_isAssignRoles() && selectedRoles.contains(role)));
 
 		if (group.isDepot()) {
 			roles = DepotRolesUtil.filterGroupRoles(
@@ -238,6 +249,13 @@ public class UserRolesDisplayContext {
 		return _roleType;
 	}
 
+	private List<Role> _getSelectedRoles() throws PortalException {
+		return TransformUtil.transform(
+			UserGroupRoleLocalServiceUtil.getUserGroupRoles(_getUserId()),
+			userGroupRole -> RoleLocalServiceUtil.fetchRole(
+				userGroupRole.getRoleId()));
+	}
+
 	private long _getUserId() throws PortalException {
 		User selUser = PortalUtil.getSelectedUser(_httpServletRequest, false);
 
@@ -248,6 +266,18 @@ public class UserRolesDisplayContext {
 		return 0;
 	}
 
+	private boolean _isAssignRoles() {
+		if (_assignRoles != null) {
+			return _assignRoles;
+		}
+
+		_assignRoles = ParamUtil.getBoolean(
+			_httpServletRequest, "assignRoles", true);
+
+		return _assignRoles;
+	}
+
+	private Boolean _assignRoles;
 	private String _displayStyle;
 	private String _eventName;
 	private Long _groupId;

@@ -12,6 +12,7 @@ import FrontendDataSetContext, {
 } from '../../FrontendDataSetContext';
 import {IItemsActions} from '../../index';
 import filterItemActions from '../../utils/actionItems/filterItemActions';
+import formatActionURL from '../../utils/actionItems/formatActionURL';
 import handleActionClick from '../../utils/actionItems/handleActionClick';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import getRandomId from '../../utils/getRandomId';
@@ -61,14 +62,16 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 	const localizedTitle = getLocalizedValue(item, schema.title)?.value || '';
 	const selectedItemKey = selectedItemsKey && item[selectedItemsKey];
 	const formattedActions =
-		actionsRef.current &&
-		(filterItemActions(actionsRef.current, item) as any);
+		actionsRef?.current &&
+		(filterItemActions(actionsRef?.current, item) as any);
 
 	return (
 		<ClayCardWithInfo
 			actions={formattedActions?.map((action: IItemsActions) => ({
 				...action,
-				href: isLink(action.target, null) ? action.href : null,
+				href: isLink(action.target, null)
+					? formatActionURL(action.href, item, action.target)
+					: null,
 				onClick: (event: Event) => {
 					handleActionClick({
 						action,

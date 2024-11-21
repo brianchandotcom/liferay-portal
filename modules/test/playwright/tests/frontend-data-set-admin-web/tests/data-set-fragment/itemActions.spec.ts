@@ -222,9 +222,8 @@ test.describe('Item Actions in Data Set fragment', () => {
 					exact: true,
 					name: 'Actions',
 				});
-				const dropdownId = await button.evaluate((node) =>
-					node.getAttribute('aria-controls')
-				);
+
+				const dropdownId = await button.getAttribute('aria-controls');
 
 				await button.click();
 
@@ -248,9 +247,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				name: 'Actions',
 			});
 
-			const dropdownId = await button.evaluate((node) =>
-				node.getAttribute('aria-controls')
-			);
+			const dropdownId = await button.getAttribute('aria-controls');
 
 			await button.click();
 
@@ -286,9 +283,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				name: 'Actions',
 			});
 
-			const dropdownId = await button.evaluate((node) =>
-				node.getAttribute('aria-controls')
-			);
+			const dropdownId = await button.getAttribute('aria-controls');
 
 			await button.click();
 
@@ -322,6 +317,138 @@ test.describe('Item Actions in Data Set fragment', () => {
 			await page.keyboard.press('Escape');
 
 			await expect(sidePanel).not.toBeInViewport();
+		});
+	});
+
+	test('Link item action works in Cards, List and Visualization modes', async ({
+		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
+		layout,
+		page,
+	}) => {
+		await test.step('Create sample data for the data set cards and list', async () => {
+			await dataSetManagerApiHelpers.createDataSetCardsSection({
+				dataSetERC,
+				fieldName: 'id',
+				name: 'title',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetListSection({
+				dataSetERC,
+				fieldName: 'id',
+				name: 'title',
+			});
+		});
+
+		await test.step('Create a link Item Action with an interpolated argument', async () => {
+			await dataSetManagerApiHelpers.createDataSetItemAction({
+				dataSetERC,
+				label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
+				target: EItemActionTarget.LINK,
+				url: '/detail/{id}',
+			});
+		});
+
+		await test.step('Configure Data Set in the page', async () => {
+			await dataSetFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step('Action is visible in the Cards visualization mode', async () => {
+			await dataSetFragmentPage.cardsWrapper.waitFor({
+				state: 'visible',
+			});
+
+			await expect(dataSetFragmentPage.cardsWrapper).toBeInViewport();
+
+			await dataSetFragmentPage.page.locator('.card').first().waitFor();
+
+			const firstCard = dataSetFragmentPage.page.locator('.card').first();
+
+			const itemId = await firstCard
+				.locator('.card-title')
+				.allInnerTexts();
+
+			const cardActionsDropdownId = await firstCard
+				.getByLabel('More Actions')
+				.getAttribute('aria-controls');
+
+			await firstCard.getByLabel('More Actions').click();
+
+			await page
+				.locator(`#${cardActionsDropdownId}`)
+				.filter({has: page.getByRole('menu')})
+				.waitFor();
+
+			const itemAction = await page
+				.locator(`#${cardActionsDropdownId}`)
+				.getByRole('menuitem', {name: LINK_ITEM_ACTION_NAME});
+
+			await expect(
+				(await itemAction.getAttribute('href')).valueOf()
+			).toContain(`/detail/${itemId}`);
+		});
+
+		await test.step('Change visualization mode to List', async () => {
+			await dataSetFragmentPage.changeVisualizationMode('List');
+		});
+
+		await test.step('Action is visible in the List visualization mode', async () => {
+			await dataSetFragmentPage.listWrapper.waitFor({
+				state: 'visible',
+			});
+
+			await expect(dataSetFragmentPage.listWrapper).toBeInViewport();
+
+			await dataSetFragmentPage.page
+				.locator('.list-group-item')
+				.first()
+				.waitFor();
+
+			const firstListItem = dataSetFragmentPage.page
+				.locator('.list-group-item')
+				.first();
+
+			const itemId = await firstListItem
+				.locator('.list-group-title')
+				.allInnerTexts();
+
+			const listActionLink = await firstListItem.getByLabel(
+				LINK_ITEM_ACTION_NAME
+			);
+
+			await expect(
+				(await listActionLink.getAttribute('href')).valueOf()
+			).toContain(`/detail/${itemId}`);
+		});
+
+		await test.step('Change visualization mode to Table', async () => {
+			await dataSetFragmentPage.changeVisualizationMode('Table');
+		});
+
+		await test.step('Action is visible in the Table visualization mode', async () => {
+			await dataSetFragmentPage.tableWrapper.waitFor({
+				state: 'visible',
+			});
+
+			await expect(dataSetFragmentPage.tableWrapper).toBeInViewport();
+
+			const tableRow = page.locator('.dnd-td.item-actions').first();
+
+			const itemId = await tableRow
+				.locator('.dnd-td')
+				.first()
+				.allInnerTexts();
+
+			const tableActionLink = await tableRow.getByLabel(
+				LINK_ITEM_ACTION_NAME
+			);
+
+			await expect(
+				(await tableActionLink.getAttribute('href')).valueOf()
+			).toContain(`/detail/${itemId}`);
 		});
 	});
 
@@ -380,15 +507,13 @@ test.describe('Item Actions in Data Set fragment', () => {
 						exact: true,
 						name: 'Actions',
 					})
-				).toBeVisible;
+				).toBeVisible();
 
 				const button = await tableRow.getByRole('button', {
 					exact: true,
 					name: 'Actions',
 				});
-				const dropdownId = await button.evaluate((node) =>
-					node.getAttribute('aria-controls')
-				);
+				const dropdownId = await button.getAttribute('aria-controls');
 
 				await button.click();
 
@@ -426,9 +551,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				name: 'Actions',
 			});
 
-			const dropdownId = await button.evaluate((node) =>
-				node.getAttribute('aria-controls')
-			);
+			const dropdownId = await button.getAttribute('aria-controls');
 
 			await button.click();
 
@@ -458,9 +581,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				name: 'Actions',
 			});
 
-			const dropdownId = await button.evaluate((node) =>
-				node.getAttribute('aria-controls')
-			);
+			const dropdownId = await button.getAttribute('aria-controls');
 
 			await button.click();
 
@@ -534,9 +655,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				exact: true,
 				name: 'Actions',
 			});
-			const dropdownId = await button.evaluate((node) =>
-				node.getAttribute('aria-controls')
-			);
+			const dropdownId = await button.getAttribute('aria-controls');
 
 			await button.click();
 
@@ -568,9 +687,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				name: 'Actions',
 			});
 
-			const dropdownId = await button.evaluate((node) =>
-				node.getAttribute('aria-controls')
-			);
+			const dropdownId = await button.getAttribute('aria-controls');
 
 			await button.click();
 
@@ -606,9 +723,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				name: 'Actions',
 			});
 
-			const dropdownId = await button.evaluate((node) =>
-				node.getAttribute('aria-controls')
-			);
+			const dropdownId = await button.getAttribute('aria-controls');
 
 			await button.click();
 

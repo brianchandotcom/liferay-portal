@@ -11,7 +11,7 @@
 
 #commerce-components-group .cart-root .mini-cart.is-open {
 	height: calc(
-			100vh - var(--control-menu-container-height, 0) - var(--commerce-header-user-height) -
+			100vh - var(--control-menu-container-height, 0px) - var(--commerce-header-user-height) -
 			12px
 	);
 }
@@ -35,9 +35,9 @@
 }
 
 #commerce-components-group .cart-root .mini-cart.is-open .mini-cart-overlay {
-	height: calc(100vh - var(--control-menu-container-height, 0));
+	height: calc(100vh - var(--control-menu-container-height, 0px));
 	position: fixed;
-	top: var(--control-menu-container-height, 0);
+	top: var(--control-menu-container-height, 0px);
 	transform: translate3d(0, 0, 0);
 	transition-delay: 0ms;
 	width: 100vw;
@@ -50,9 +50,9 @@
 
 #commerce-components-group .cart-root .mini-cart.is-open .mini-cart-wrapper {
 	background-color: var(--white);
-	height: calc(100vh - var(--control-menu-container-height, 0));
+	height: calc(100vh - var(--control-menu-container-height, 0px));
 	position: fixed;
-	top: var(--control-menu-container-height, 0);
+	top: var(--control-menu-container-height, 0px);
 	transform: translate3d(0, 0, 0);
 	z-index: 1000;
 }

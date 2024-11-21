@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 export class TagsAdminPage {
@@ -29,11 +30,14 @@ export class TagsAdminPage {
 			await this.selectTag(titles[i]);
 		}
 
-		await this.page
-			.getByRole('button', {exact: true, name: 'Actions'})
-			.click();
-
-		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Delete'}),
+			trigger: this.page.getByRole('button', {
+				exact: true,
+				name: 'Actions',
+			}),
+		});
 	}
 
 	async mergeTags(titles: string[]) {
@@ -41,11 +45,14 @@ export class TagsAdminPage {
 			await this.selectTag(titles[i]);
 		}
 
-		await this.page
-			.getByRole('button', {exact: true, name: 'Actions'})
-			.click();
-
-		await this.page.getByRole('menuitem', {name: 'Merge'}).click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Merge'}),
+			trigger: this.page.getByRole('button', {
+				exact: true,
+				name: 'Actions',
+			}),
+		});
 	}
 
 	async gotoAdd() {
@@ -53,12 +60,13 @@ export class TagsAdminPage {
 	}
 
 	async gotoEdit(title: string) {
-		await this.page
-			.getByRole('row', {name: 'Select ' + title + ' 0 Show Actions'})
-			.getByLabel('Show Actions')
-			.click();
-
-		await this.page.getByRole('menuitem', {name: 'Edit'}).click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Edit'}),
+			trigger: this.page
+				.getByRole('row', {name: title})
+				.getByLabel('Show Actions'),
+		});
 	}
 
 	async selectTag(title: string) {

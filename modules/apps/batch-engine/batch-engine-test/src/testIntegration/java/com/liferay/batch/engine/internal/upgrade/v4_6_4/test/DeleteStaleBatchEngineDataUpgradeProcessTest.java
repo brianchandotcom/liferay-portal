@@ -46,7 +46,7 @@ import org.junit.runner.RunWith;
  * @author Carlos Correa
  */
 @RunWith(Arquillian.class)
-public class DeleteUnlinkedBatchEngineDataUpgradeProcessTest {
+public class DeleteStaleBatchEngineDataUpgradeProcessTest {
 
 	@ClassRule
 	@Rule

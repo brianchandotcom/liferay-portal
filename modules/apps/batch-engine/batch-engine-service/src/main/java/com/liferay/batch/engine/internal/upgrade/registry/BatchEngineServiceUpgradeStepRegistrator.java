@@ -7,7 +7,7 @@ package com.liferay.batch.engine.internal.upgrade.registry;
 
 import com.liferay.batch.engine.internal.upgrade.v4_5_0.util.BatchEngineImportTaskErrorTable;
 import com.liferay.batch.engine.internal.upgrade.v4_6_1.BatchEngineTaskConfigurationUpgradeProcess;
-import com.liferay.batch.engine.internal.upgrade.v4_6_4.DeleteUnlinkedBatchEngineDataUpgradeProcess;
+import com.liferay.batch.engine.internal.upgrade.v4_6_4.DeleteStaleBatchEngineDataUpgradeProcess;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -110,8 +110,7 @@ public class BatchEngineServiceUpgradeStepRegistrator
 				"BatchEngineImportTask", "callbackURL", "VARCHAR(255) null"));
 
 		registry.register(
-			"4.6.3", "4.6.4",
-			new DeleteUnlinkedBatchEngineDataUpgradeProcess());
+			"4.6.3", "4.6.4", new DeleteStaleBatchEngineDataUpgradeProcess());
 	}
 
 	@Reference

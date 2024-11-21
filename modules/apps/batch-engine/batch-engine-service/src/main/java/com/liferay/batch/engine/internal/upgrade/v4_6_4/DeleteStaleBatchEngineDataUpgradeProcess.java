@@ -11,8 +11,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Carlos Correa
  */
-public class DeleteUnlinkedBatchEngineDataUpgradeProcess
-	extends UpgradeProcess {
+public class DeleteStaleBatchEngineDataUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

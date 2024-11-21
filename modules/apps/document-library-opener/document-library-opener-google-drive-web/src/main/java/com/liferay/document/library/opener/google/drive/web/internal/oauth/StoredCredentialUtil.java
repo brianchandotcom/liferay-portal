@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Marco Galluzzi
  */
-public class StoredCredentialStoreUtil {
+public class StoredCredentialUtil {
 
 	public static void add(
 		long companyId, String userId, StoredCredential storedCredential) {
@@ -152,14 +152,14 @@ public class StoredCredentialStoreUtil {
 	}
 
 	private static final MethodKey _addMethodKey = new MethodKey(
-		StoredCredentialStoreUtil.class, "_add", long.class, String.class,
+		StoredCredentialUtil.class, "_add", long.class, String.class,
 		StoredCredential.class);
 	private static final MethodKey _clearCompanyMethodKey = new MethodKey(
-		StoredCredentialStoreUtil.class, "_clear", long.class);
+		StoredCredentialUtil.class, "_clear", long.class);
 	private static final MethodKey _clearMethodKey = new MethodKey(
-		StoredCredentialStoreUtil.class, "_clear");
+		StoredCredentialUtil.class, "_clear");
 	private static final MethodKey _deleteMethodKey = new MethodKey(
-		StoredCredentialStoreUtil.class, "_delete", long.class, String.class);
+		StoredCredentialUtil.class, "_delete", long.class, String.class);
 	private static final Map<Long, Map<String, StoredCredential>>
 		_storedCredentials = new ConcurrentHashMap<>();
 

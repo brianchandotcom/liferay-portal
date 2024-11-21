@@ -73,7 +73,7 @@ test('User can Merge tags', async ({
 }) => {
 	await tagsEditPage.add('tag1', site.friendlyUrlPath);
 
-	await waitForAlert(page);
+	await expect(tagsAdminPage.newButton).toBeVisible();
 
 	await tagsAdminPage.mergeTags(['tag1']);
 
@@ -96,6 +96,8 @@ test('User can Merge tags', async ({
 	});
 
 	await page.getByRole('button', {name: 'Save'}).click();
+
+	await expect(tagsAdminPage.newButton).toBeVisible();
 
 	await expect(page.getByText('tag2')).not.toBeVisible();
 });

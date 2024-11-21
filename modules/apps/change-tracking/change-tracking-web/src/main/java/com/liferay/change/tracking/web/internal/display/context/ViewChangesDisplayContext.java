@@ -1294,6 +1294,27 @@ public class ViewChangesDisplayContext {
 				));
 		}
 
+		if ((_ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED) &&
+			CTCollectionPermission.contains(
+				_themeDisplay.getPermissionChecker(), _ctCollection,
+				CTActionKeys.PUBLISH)) {
+
+			jsonArray.put(
+				JSONUtil.put(
+					"href",
+					PublicationsPortletURLUtil.getHref(
+						_renderResponse.createActionURL(),
+						ActionRequest.ACTION_NAME,
+						"/change_tracking/reactivate_ct_collection", "redirect",
+						_themeDisplay.getURLCurrent(), "ctCollectionId",
+						String.valueOf(_ctCollection.getCtCollectionId()))
+				).put(
+					"label", _language.get(_httpServletRequest, "reactivate")
+				).put(
+					"symbolLeft", "reset"
+				));
+		}
+
 		if (CTCollectionPermission.contains(
 				permissionChecker, _ctCollection, ActionKeys.DELETE)) {
 

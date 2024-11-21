@@ -440,6 +440,19 @@ public class PublicationsDisplayContext {
 				_language.get(_httpServletRequest, "permissions"), "get",
 				"permissions", "modal-permissions"),
 			new FDSActionDropdownItem(
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/change_tracking/reactivate_ct_collection"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionId", "{id}"
+				).buildString(),
+				"reset", "reactivate",
+				_language.get(_httpServletRequest, "reactivate"), "post",
+				"reactivate", null),
+			new FDSActionDropdownItem(
 				null, "times-circle", "delete",
 				_language.get(_httpServletRequest, "delete"), null, "delete",
 				null),

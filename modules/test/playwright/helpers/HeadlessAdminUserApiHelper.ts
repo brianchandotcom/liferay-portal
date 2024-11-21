@@ -154,6 +154,12 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async deleteRole(roleId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/roles/${roleId}`
+		);
+	}
+
 	async deleteUserAccount(userAccountId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/user-accounts/${userAccountId}`

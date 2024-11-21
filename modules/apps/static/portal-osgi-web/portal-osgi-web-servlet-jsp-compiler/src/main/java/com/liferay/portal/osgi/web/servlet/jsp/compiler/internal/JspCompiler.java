@@ -360,9 +360,9 @@ public class JspCompiler {
 	}
 
 	private void _collectTLDMappings(
-			Map<String, TldResourcePath> tldResourcePaths,
+			Bundle bundle,
 			Map<TldResourcePath, TaglibXml> taglibXmls,
-			Bundle bundle)
+			Map<String, TldResourcePath> tldResourcePaths)
 		throws IOException {
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
@@ -427,7 +427,7 @@ public class JspCompiler {
 		try {
 			for (Bundle bundle : _allParticipatingBundles) {
 				_collectTLDMappings(
-					tldResourcePaths, taglibXmls, bundle);
+					bundle, taglibXmls, tldResourcePaths );
 			}
 		}
 		catch (Exception exception) {

@@ -51,14 +51,14 @@ public interface ExportTaskResource {
 		throws Exception;
 
 	public ExportTask postExportTask(
-			String className, String contentType, String callbackURL,
-			String externalReferenceCode, String fieldNames,
+			String className, String contentType, String batchNestedFields,
+			String callbackURL, String externalReferenceCode, String fieldNames,
 			String taskItemDelegateName)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postExportTaskHttpResponse(
-			String className, String contentType, String callbackURL,
-			String externalReferenceCode, String fieldNames,
+			String className, String contentType, String batchNestedFields,
+			String callbackURL, String externalReferenceCode, String fieldNames,
 			String taskItemDelegateName)
 		throws Exception;
 
@@ -383,14 +383,14 @@ public interface ExportTaskResource {
 		}
 
 		public ExportTask postExportTask(
-				String className, String contentType, String callbackURL,
-				String externalReferenceCode, String fieldNames,
-				String taskItemDelegateName)
+				String className, String contentType, String batchNestedFields,
+				String callbackURL, String externalReferenceCode,
+				String fieldNames, String taskItemDelegateName)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = postExportTaskHttpResponse(
-				className, contentType, callbackURL, externalReferenceCode,
-				fieldNames, taskItemDelegateName);
+				className, contentType, batchNestedFields, callbackURL,
+				externalReferenceCode, fieldNames, taskItemDelegateName);
 
 			String content = httpResponse.getContent();
 
@@ -452,9 +452,9 @@ public interface ExportTaskResource {
 		}
 
 		public HttpInvoker.HttpResponse postExportTaskHttpResponse(
-				String className, String contentType, String callbackURL,
-				String externalReferenceCode, String fieldNames,
-				String taskItemDelegateName)
+				String className, String contentType, String batchNestedFields,
+				String callbackURL, String externalReferenceCode,
+				String fieldNames, String taskItemDelegateName)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -479,6 +479,11 @@ public interface ExportTaskResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (batchNestedFields != null) {
+				httpInvoker.parameter(
+					"batchNestedFields", String.valueOf(batchNestedFields));
+			}
 
 			if (callbackURL != null) {
 				httpInvoker.parameter(

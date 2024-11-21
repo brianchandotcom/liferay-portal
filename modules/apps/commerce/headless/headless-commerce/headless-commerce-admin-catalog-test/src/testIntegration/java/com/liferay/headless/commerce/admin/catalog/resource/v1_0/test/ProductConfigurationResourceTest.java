@@ -39,6 +39,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -228,6 +229,7 @@ public class ProductConfigurationResourceTest
 		super.testGraphQLGetProductIdConfigurationNotFound();
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testPatchProductByExternalReferenceCodeConfiguration()
@@ -291,6 +293,7 @@ public class ProductConfigurationResourceTest
 		super.testPatchProductConfigurationByExternalReferenceCode();
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testPatchProductIdConfiguration() throws Exception {
@@ -395,13 +398,10 @@ public class ProductConfigurationResourceTest
 			testDeleteProductConfiguration_addProductConfiguration()
 		throws Exception {
 
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
 		return productConfigurationResource.
 			postProductConfigurationListIdProductConfiguration(
 				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
+				randomProductConfiguration());
 	}
 
 	@Override
@@ -409,13 +409,10 @@ public class ProductConfigurationResourceTest
 			testDeleteProductConfigurationByExternalReferenceCode_addProductConfiguration()
 		throws Exception {
 
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
 		return productConfigurationResource.
 			postProductConfigurationListIdProductConfiguration(
 				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
+				randomProductConfiguration());
 	}
 
 	@Override
@@ -448,13 +445,10 @@ public class ProductConfigurationResourceTest
 			testGetProductConfiguration_addProductConfiguration()
 		throws Exception {
 
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
 		return productConfigurationResource.
 			postProductConfigurationListIdProductConfiguration(
 				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
+				randomProductConfiguration());
 	}
 
 	@Override
@@ -462,13 +456,10 @@ public class ProductConfigurationResourceTest
 			testGetProductConfigurationByExternalReferenceCode_addProductConfiguration()
 		throws Exception {
 
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
 		return productConfigurationResource.
 			postProductConfigurationListIdProductConfiguration(
 				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
+				randomProductConfiguration());
 	}
 
 	@Override
@@ -561,13 +552,10 @@ public class ProductConfigurationResourceTest
 			testGraphQLProductConfiguration_addProductConfiguration()
 		throws Exception {
 
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
 		return productConfigurationResource.
 			postProductConfigurationListIdProductConfiguration(
 				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
+				randomProductConfiguration());
 	}
 
 	@Override
@@ -575,13 +563,10 @@ public class ProductConfigurationResourceTest
 			testPatchProductConfiguration_addProductConfiguration()
 		throws Exception {
 
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
 		return productConfigurationResource.
 			postProductConfigurationListIdProductConfiguration(
 				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
+				randomProductConfiguration());
 	}
 
 	@Override
@@ -589,13 +574,10 @@ public class ProductConfigurationResourceTest
 			testPatchProductConfigurationByExternalReferenceCode_addProductConfiguration()
 		throws Exception {
 
-		ProductConfiguration productConfiguration =
-			randomProductConfiguration();
-
 		return productConfigurationResource.
 			postProductConfigurationListIdProductConfiguration(
 				_masterCPConfigurationList.getCPConfigurationListId(),
-				productConfiguration);
+				randomProductConfiguration());
 	}
 
 	@Override

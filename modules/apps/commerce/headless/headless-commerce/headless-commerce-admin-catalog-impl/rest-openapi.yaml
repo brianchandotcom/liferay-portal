@@ -6676,7 +6676,7 @@ paths:
                 - BearerAuth: []
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
-            summary: Gets a list of product configurations by external reference code.
+            summary: Gets a list of product configurations by product configuration list external reference code.
             tags: ["ProductConfiguration"]
         post:
             operationId: postProductConfigurationListByExternalReferenceCodeProductConfiguration
@@ -7029,7 +7029,7 @@ paths:
                 - BearerAuth: []
                 - OAuth2:
                       - HeadlessCommerceAdminCatalog.read
-            summary: Gets a list of product configurations.
+            summary: Gets a list of product configurations of a product configuration list.
             tags: ["ProductConfiguration"]
         post:
             operationId: postProductConfigurationListIdProductConfiguration

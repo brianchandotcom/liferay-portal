@@ -458,7 +458,8 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 						"anytime"),
 				subject, EmailUtil.getLiferayIconURL(),
 				_language.format(
-					resourceBundle, "x-has-requested-to-join-the-x-workspace",
+					resourceBundle,
+					"x-has-requested-to-join-the-analytics-cloud-x-workspace",
 					new String[] {
 						StringBundler.concat(
 							senderUser.getFullName(), "(",

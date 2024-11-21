@@ -45,9 +45,9 @@ public class ScanCodeProject {
 
 		sb.append("curl ");
 		sb.append(_projectAPIURL);
-		sb.append("add_input/ --form 'upload_file=@");
+		sb.append("add_input/ --form \"upload_file=@");
 		sb.append(filePath);
-		sb.append("' --header \"Authorization:Token ");
+		sb.append("\" --header \"Authorization:Token ");
 		sb.append(_API_KEY);
 		sb.append("\" --request POST ");
 

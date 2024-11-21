@@ -113,7 +113,7 @@ test.beforeEach(async ({apiHelpers, page}) => {
 });
 
 test.afterEach(async ({apiHelpers, page}) => {
-	await test.step('Delete channel and delete site on de DXP side', async () => {
+	await test.step('Delete channel and delete site on the DXP side', async () => {
 		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
 			`[${channel.id}]`,
 			project.groupId
@@ -1105,6 +1105,114 @@ test(
 			await expect(page.getByText(pageTitle2).first()).toBeVisible();
 
 			await expect(page.getByText('Drop Offs')).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Remove segments from the filter',
+	{
+		tag: '@LRAC-14836',
+	},
+
+	async ({page}) => {
+		await test.step('Go to created Page', async () => {
+			await navigateToSitePage({
+				page,
+				pageName: pageTitle,
+				siteName,
+			});
+			await page.waitForTimeout(10000);
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACWorkspace({page});
+			await switchChannel({
+				channelName,
+				page,
+			});
+		});
+
+		await test.step('Go to Segments Dashboard and create a Static Segment', async () => {
+			await navigateToACPageViaURL({
+				acPage: ACPage.segmentPage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+
+			await createStaticSegment(page);
+
+			await setSegmentName({page, segmentName: 'Test Static Segment'});
+		});
+
+		await test.step('Add static member and save segment', async () => {
+			await addStaticMember({
+				memberNames: [
+					`test`,
+				],
+				page,
+			});
+
+			await saveSegment(page);
+		});
+
+		await test.step('Go to Pages Tab', async () => {
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+
+			await navigateTo({
+				page,
+				pageName: 'Pages',
+			});
+		});
+
+		await test.step('Change the time filter to Last 24 hours', async () => {
+			await changeTimeFilter({
+				page,
+				timeFilterPeriod: 'Last 24 hours',
+			});
+		});
+
+		await test.step('Access one of the pages on the list > Go to Path Tab', async () => {
+			await navigateTo({
+				page,
+				pageName: pageTitle,
+			});
+			await navigateTo({
+				page,
+				pageName: 'Path',
+			});
+		});
+
+		const filterLabel = page.locator('span').filter({ hasText: 'Test Static Segment' }).first();
+
+		await test.step('Add filter with created segment', async () => {
+			await page.getByRole('button', { name: 'Filter' }).click();
+
+			await page.getByRole('menuitem', {name: 'Test Static Segment'}).click();
+
+			expect(filterLabel).toBeVisible();
+		});
+
+		const numberOfViews = page.getByText('1', { exact: true }).first();
+
+		await test.step('Check the number of views with the filter', async () => {
+			expect(numberOfViews).toBeVisible();
+		});
+
+		await test.step('Remove segment from filter', async () => {
+			await page.getByLabel('Close').click();
+
+			expect(filterLabel).not.toBeVisible();
+		});
+
+		await test.step('Check the number of views without the filter', async () => {
+			expect(numberOfViews).toBeVisible();
 		});
 	}
 );

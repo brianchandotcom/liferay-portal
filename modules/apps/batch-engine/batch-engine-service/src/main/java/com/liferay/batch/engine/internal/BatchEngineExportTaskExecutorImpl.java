@@ -35,15 +35,23 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.fields.NestedFieldsContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -131,6 +139,20 @@ public class BatchEngineExportTaskExecutorImpl
 
 		Map<String, Serializable> parameters = _getParameters(
 			batchEngineExportTask);
+
+		String nestedFieldNames = (String)parameters.get("nestedFieldNames");
+
+		int depth = Math.max(
+			Math.min(
+				GetterUtil.getInteger(parameters.get("nestedFieldsDepth"), 1),
+				PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH),
+			1);
+
+		NestedFieldsContext nestedFieldsContext = new NestedFieldsContext(
+			depth, _toList(nestedFieldNames));
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(
+			nestedFieldsContext);
 
 		try (BatchEngineExportTaskItemWriter batchEngineExportTaskItemWriter =
 				_getBatchEngineExportTaskItemWriter(
@@ -285,6 +307,14 @@ public class BatchEngineExportTaskExecutorImpl
 		zipOutputStream.putNextEntry(zipEntry);
 
 		return zipOutputStream;
+	}
+
+	private List<String> _toList(String fieldNamesString) {
+		if (Validator.isNull(fieldNamesString)) {
+			return Collections.emptyList();
+		}
+
+		return Arrays.asList(StringUtil.split(fieldNamesString, ','));
 	}
 
 	private void _updateBatchEngineExportTask(

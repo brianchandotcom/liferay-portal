@@ -2,9 +2,9 @@
 	.bar-container {
 		background-color: var(--color-neutral-2);
 		border-radius: var(--border-radius-sm);
-		
+
 		.bar-content {
-			background-color: var(--color-action-primary-active);
+			background-color: var(--color-brand-primary-lighten-1);
 			border-radius: var(--border-radius-sm);
 			height: var(--label-lg-icon-size);
 		}

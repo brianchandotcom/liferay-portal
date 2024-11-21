@@ -1,0 +1,6 @@
+.chart-content {
+	.chart-max-text {
+		color: var(--color-neutral-8);
+		font-weight: var(--font-weight-normal);
+	}
+}

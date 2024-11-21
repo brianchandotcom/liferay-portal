@@ -9,59 +9,122 @@ import {Liferay} from '~/common/services/liferay';
 import {useCustomerPortal} from '~/routes/customer-portal/context';
 
 export enum SiteAndUserDataEnum {
-	APVS = 'apvs',
-	MALUS = 'malus',
+	ANONYMOUS_PAGE_VIEWS = 'anonymousPageViews',
+	CLIENT_EXTENSIONS_CAPACITY_CPU = 'clientExtensionsCapacityCPU',
+	CLIENT_EXTENSIONS_CAPACITY_RAM = 'clientExtensionsCapacityRAM',
+	MONTHLY_ACTIVE_LOGGED_IN_USERS = 'monthlyActiveLoggedInUsers',
 	SITES = 'sites',
+	STORAGE_CAPACITY_DOCUMENT_LIBRARY = 'storageCapacityDocumentLibrary',
 }
 
-interface IProps {
+interface IData {
 	infoText: string;
 	maxCount: number;
 	title: string;
 	usedCount: number;
 }
 
+export interface IChartData extends IData {
+	dataSizeUnits?: string;
+	maxCountText: string;
+}
+
+interface IUsageData {
+	resourceUsage: IChartData[];
+	siteAndUsers: IData[];
+}
+
 const useProjectUsageData = () => {
-	const [siteAndUsersData, setSiteAndUsersData] = useState<IProps[]>([]);
+	const [usageData, setUsageData] = useState<IUsageData>();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const [{project}] = useCustomerPortal();
 
 	const getSiteAndUsers = useCallback(async () => {
+		setIsLoading(true);
+
 		if (project?.id) {
 			const response =
 				await Liferay.OAuth2Client.FromUserAgentApplication(
 					'liferay-customer-etc-spring-boot-oaua'
 				)
 					.fetch(`/accounts/${project?.id}/usage`)
-					.then((response) => response.json());
+					.then((response) => response.json())
+					.catch(console.error);
 
-			const formatedData = [
-				{
-					...response[SiteAndUserDataEnum.SITES],
-					infoText: i18n.translate('number-of-sites'),
-					title: i18n.translate('number-of-sites'),
-				},
-				{
-					...response[SiteAndUserDataEnum.MALUS],
-					infoText: i18n.translate('authenticated-logins-malus'),
-					title: i18n.translate('authenticated-logins-malus'),
-				},
-				{
-					...response[SiteAndUserDataEnum.APVS],
-					infoText: i18n.translate('anonymous-page-views-apv'),
-					title: i18n.translate('anonymous-page-views-apv'),
-				},
-			];
+			if (response) {
+				const formatedData = {
+					resourceUsage: [
+						{
+							...response[
+								SiteAndUserDataEnum
+									.CLIENT_EXTENSIONS_CAPACITY_RAM
+							],
+							dataSizeUnits: 'GB',
+							infoText: i18n.translate('extension-capacity-ram'),
+							maxCountText: 'RAM',
+							title: i18n.translate('extension-capacity-ram'),
+						},
+						{
+							...response[
+								SiteAndUserDataEnum
+									.CLIENT_EXTENSIONS_CAPACITY_CPU
+							],
+							infoText: i18n.translate('extension-capacity-vcpu'),
+							maxCountText: 'vCPU',
+							title: i18n.translate('extension-capacity-vcpu'),
+						},
+						{
+							...response[
+								SiteAndUserDataEnum
+									.STORAGE_CAPACITY_DOCUMENT_LIBRARY
+							],
+							dataSizeUnits: 'GB',
+							infoText: i18n.translate('storage-capacity'),
+							maxCountText: 'Storage',
+							title: i18n.translate('storage-capacity'),
+						},
+					],
+					siteAndUsers: [
+						{
+							...response[SiteAndUserDataEnum.SITES],
+							infoText: i18n.translate('number-of-sites'),
+							title: i18n.translate('number-of-sites'),
+						},
+						{
+							...response[
+								SiteAndUserDataEnum
+									.MONTHLY_ACTIVE_LOGGED_IN_USERS
+							],
+							infoText: i18n.translate(
+								'authenticated-logins-malus'
+							),
+							title: i18n.translate('authenticated-logins-malus'),
+						},
+						{
+							...response[
+								SiteAndUserDataEnum.ANONYMOUS_PAGE_VIEWS
+							],
+							infoText: i18n.translate(
+								'anonymous-page-views-apv'
+							),
+							title: i18n.translate('anonymous-page-views-apv'),
+						},
+					],
+				};
 
-			setSiteAndUsersData(formatedData);
+				setUsageData(formatedData);
+			}
 		}
-	}, [project?.id, setSiteAndUsersData]);
+
+		setIsLoading(false);
+	}, [project?.id, setUsageData]);
 
 	useEffect(() => {
 		getSiteAndUsers();
 	}, [getSiteAndUsers]);
 
-	return {siteAndUsersData};
+	return {isLoading, usageData};
 };
 
 export default useProjectUsageData;

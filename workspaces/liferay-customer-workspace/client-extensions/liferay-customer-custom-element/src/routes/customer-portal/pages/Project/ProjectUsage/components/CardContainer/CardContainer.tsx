@@ -9,31 +9,35 @@ import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconBu
 import './CardContainer.css';
 
 interface IProps {
-	children: ReactNode;
+	children?: ReactNode;
 	className?: string;
+	classNameCard?: string;
 	infoButtonText?: string;
 }
 
 const CardContainer: React.FC<IProps> = ({
 	children,
 	className,
+	classNameCard,
 	infoButtonText,
 }) => {
 	return (
-		<div
-			className={`card-container px-3 py-4 position-relative rounded ${className}`}
-		>
-			{infoButtonText && (
-				<div className="align-items-center d-flex info-button justify-content-center position-absolute">
-					<PopoverIconButton
-						iconSize="xs"
-						isSubscriptionCard
-						popoverText={infoButtonText}
-					/>
-				</div>
-			)}
+		<div className={`col-12 col-md-6 col-xl-4 mb-3 ${className}`}>
+			<div
+				className={`card-container px-3 py-4 position-relative rounded ${classNameCard}`}
+			>
+				{infoButtonText && (
+					<div className="align-items-center d-flex info-button justify-content-center position-absolute">
+						<PopoverIconButton
+							iconSize="xs"
+							isSubscriptionCard
+							popoverText={infoButtonText}
+						/>
+					</div>
+				)}
 
-			{children}
+				{children}
+			</div>
 		</div>
 	);
 };

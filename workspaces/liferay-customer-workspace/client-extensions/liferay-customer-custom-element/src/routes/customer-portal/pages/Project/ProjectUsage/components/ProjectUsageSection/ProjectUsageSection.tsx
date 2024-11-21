@@ -5,22 +5,34 @@
 
 import React, {ReactNode} from 'react';
 
+import CardContainer from '../CardContainer';
+
 interface IProps {
 	children?: ReactNode;
 	className?: string;
+	isLoading?: boolean;
 	title?: string;
 }
+
+const CONTENT_SKELETON_QUANTITY = 3;
 
 const ProjectUsageSection: React.FC<IProps> = ({
 	children,
 	className,
+	isLoading,
 	title,
 }) => {
 	return (
 		<div className={`${className}`}>
 			<h3 className="mb-3">{title}</h3>
 
-			<div className="col-lg-12 col-xl-11 mx-0 px-0 row">{children}</div>
+			<div className="col-12 col-xl-11 mx-0 px-0 row">
+				{isLoading
+					? [...Array(CONTENT_SKELETON_QUANTITY)].map((_, index) => (
+							<CardContainer key={`${title}-${index}-loading`} />
+						))
+					: children}
+			</div>
 		</div>
 	);
 };

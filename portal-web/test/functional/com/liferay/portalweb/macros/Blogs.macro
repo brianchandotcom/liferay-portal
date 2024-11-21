@@ -166,7 +166,7 @@ definition {
 			entrySubtitle = ${entrySubtitle},
 			entryTitle = ${entryTitle});
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		BlogsEntry.addCustomURL(customURL = ${customURL});
 

@@ -69,7 +69,7 @@ definition {
 				groupName = "Site Name",
 				siteURLKey = "site-name");
 
-			Blogs.expandPanel(panel = "Configuration");
+			Blogs.expandPanel(panel = "Friendly URL");
 
 			BlogsEntry.addCustomURL(customURL = ${customURL});
 
@@ -114,7 +114,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		BlogsEntry.addCustomURL(customURL = "custom&");
 
@@ -158,7 +158,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		BlogsEntry.addCustomURL(customURL = "custom-url");
 
@@ -172,7 +172,7 @@ definition {
 			entryContent = "Blogs Entry Content 2nd",
 			entryTitle = "Blogs Entry Title 2nd");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		BlogsEntry.addCustomURL(customURL = "blogs-entry-title");
 
@@ -198,7 +198,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		BlogsEntry.addCustomURL(customURL = "custom-url");
 
@@ -236,7 +236,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		BlogsEntry.addCustomURL(customURL = "custom-url");
 
@@ -279,7 +279,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		Blogs.expandPanel(panel = "Configuration");
+		Blogs.expandPanel(panel = "Friendly URL");
 
 		AssertVisible(locator1 = "Icon#FRIENDLY_URL_HISTORY_DISABLED");
 

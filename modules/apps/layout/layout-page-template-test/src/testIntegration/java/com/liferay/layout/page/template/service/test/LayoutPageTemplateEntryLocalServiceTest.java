@@ -80,13 +80,15 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		Assert.assertTrue(
 			Validator.isNotNull(
 				layoutPageTemplateEntry.getExternalReferenceCode()));
-	}
 
-	@Test
-	public void testAddLayoutPageTemplateEntryWithDefaultTemplateAndApproved()
-		throws Exception {
+		Assert.assertFalse(layoutPageTemplateEntry.isDefaultTemplate());
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Assert.assertFalse(layout.isPublished());
+
+		layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				_layoutPageTemplateCollection.
@@ -95,24 +97,35 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, true, 0,
 				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
+		Assert.assertTrue(
+			Validator.isNotNull(
+				layoutPageTemplateEntry.getExternalReferenceCode()));
+
 		Assert.assertTrue(layoutPageTemplateEntry.isDefaultTemplate());
 
-		Layout layout = _layoutLocalService.getLayout(
+		layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
 		Assert.assertTrue(layout.isPublished());
-	}
 
-	@Test(expected = LayoutPageTemplateEntryDefaultTemplateException.class)
-	public void testAddLayoutPageTemplateEntryWithDefaultTemplateAndDraft()
-		throws Exception {
+		try {
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				0, 0, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, true, 0,
+				0, 0, WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
-		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			0, 0, RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, true, 0, 0,
-			0, WorkflowConstants.STATUS_DRAFT, _serviceContext);
+			Assert.fail();
+		}
+		catch (LayoutPageTemplateEntryDefaultTemplateException
+					layoutPageTemplateEntryDefaultTemplateException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(layoutPageTemplateEntryDefaultTemplateException);
+			}
+		}
 	}
 
 	@Test(

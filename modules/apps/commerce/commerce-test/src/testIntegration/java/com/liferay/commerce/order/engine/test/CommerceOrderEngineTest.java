@@ -348,8 +348,7 @@ public class CommerceOrderEngineTest {
 			_commerceInventoryWarehouseLocalService.
 				getCommerceInventoryWarehouses(
 					_commerceOrder.getCommerceAccountId(),
-					_commerceChannel.getGroupId(),
-					commerceOrderItem.getSku());
+					_commerceChannel.getGroupId(), commerceOrderItem.getSku());
 
 		Assert.assertFalse(commerceInventoryWarehouses.isEmpty());
 

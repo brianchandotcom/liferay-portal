@@ -67,13 +67,8 @@ public class LayoutStructureItemJSONSerializerImpl
 		dtoConverterContext.setAttribute(
 			"saveMappingConfiguration", saveMappingConfiguration);
 
-		DTOConverter<LayoutStructureItem, PageElement> pageElementDTOConverter =
-			(DTOConverter<LayoutStructureItem, PageElement>)
-				_dtoConverterRegistry.getDTOConverter(
-					LayoutStructureItem.class.getName());
-
 		try {
-			PageElement pageElement = pageElementDTOConverter.toDTO(
+			PageElement pageElement = _pageElementDTOConverter.toDTO(
 				dtoConverterContext,
 				layoutStructure.getLayoutStructureItem(layoutStructureItemId));
 
@@ -112,5 +107,11 @@ public class LayoutStructureItemJSONSerializerImpl
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.delivery.internal.dto.v1_0.converter.PageElementDTOConverter)"
+	)
+	private DTOConverter<LayoutStructureItem, PageElement>
+		_pageElementDTOConverter;
 
 }

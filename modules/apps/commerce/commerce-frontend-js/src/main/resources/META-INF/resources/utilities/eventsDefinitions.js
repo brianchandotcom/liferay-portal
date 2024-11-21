@@ -24,6 +24,7 @@ export const CURRENT_ORDER_UPDATED = 'current-order-updated';
 export const CURRENT_PRODUCT_STATUS_CHANGED = 'current-product-status-changed';
 export const CURRENT_PRODUCT_UPDATED = 'current-product-updated';
 export const IFRAME_LOADED = 'iframe-loaded';
+export const GUEST_ORDER_ENABLED = 'guest-order-enabled';
 export const IS_LOADING_MODAL = 'is-loading-modal';
 export const ITEM_REMOVED_FROM_COMPARE = 'item-removed-from-compare';
 export const OPEN_MINI_CART = 'open-cart';
@@ -36,6 +37,7 @@ export const PRODUCT_OPTIONS_CHANGED = 'product-options-changed';
 export const PRODUCT_REMOVED_FROM_CART = 'product-removed-from-cart';
 export const SELECTED_RETURNABLE_ITEMS = 'selected-returnable-items';
 export const SIDE_PANEL_CLOSED = 'side-panel-closed';
+export const PERFORM_SIGN_IN = 'perform-sign-in';
 export const TOGGLE_ITEM_IN_PRODUCT_COMPARISON = 'toggle-item-in-compare';
 
 const FDS_UPDATE_DISPLAY = FDS_EVENT.UPDATE_DISPLAY;

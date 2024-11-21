@@ -9,13 +9,11 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
-import getRandomString from '../../utils/getRandomString';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {fdsSamplePageTest} from './fixtures/fdsSamplePageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	fdsSamplePageTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 		'LPS-193005': true,
@@ -24,139 +22,91 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test('Sort columns', {tag: '@LPS-193005'}, async ({apiHelpers, page, site}) => {
-	let layout: Layout;
+test.beforeEach(async ({fdsSamplePage, site}) => {
+	await fdsSamplePage.setupFDSSampleWidget({site});
 
-	await test.step('Create a content site and the frontend data set sample widget', async () => {
-		const widgetDefinition = getWidgetDefinition({
-			id: getRandomString(),
-			widgetName:
-				'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet',
-		});
-
-		layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([widgetDefinition]),
-			siteId: site.id,
-			title: getRandomString(),
-		});
-	});
-
-	await test.step('Open Customized tab ', async () => {
-		await page.goto(
-			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-		);
-
-		const tabHeading = page.getByRole('tablist').getByText('Customized');
-
-		await expect(tabHeading).toBeInViewport();
-	});
-
-	await test.step('Sorting ID and Title column in ascending order', async () => {
-		const idColumnHeader = page.getByRole('columnheader').getByText('ID');
-
-		await expect(idColumnHeader).toBeInViewport();
-
-		const cells = await page.locator('td').allInnerTexts();
-
-		await expect(page.locator('td').nth(1)).toHaveText(cells[1]);
-		await expect(page.locator('td').nth(11)).toHaveText(cells[11]);
-		await expect(page.locator('td').nth(21)).toHaveText(cells[21]);
-		await expect(page.locator('td').nth(31)).toHaveText(cells[31]);
-
-		await idColumnHeader.click();
-
-		const ascendingIDCells = [
-			cells[1],
-			cells[11],
-			cells[21],
-			cells[31],
-			cells[41],
-			cells[51],
-			cells[61],
-			cells[71],
-			cells[81],
-			cells[91],
-		].sort();
-
-		await expect(page.locator('td').nth(1)).toHaveText(ascendingIDCells[0]);
-		await expect(page.locator('td').nth(11)).toHaveText(
-			ascendingIDCells[1]
-		);
-		await expect(page.locator('td').nth(21)).toHaveText(
-			ascendingIDCells[2]
-		);
-		await expect(page.locator('td').nth(31)).toHaveText(
-			ascendingIDCells[3]
-		);
-
-		const titleColumnHeader = page
-			.getByRole('columnheader')
-			.getByText('Title');
-
-		await titleColumnHeader.click();
-
-		const ascendingTitleCells = [
-			cells[2],
-			cells[12],
-			cells[22],
-			cells[32],
-			cells[42],
-			cells[52],
-			cells[62],
-			cells[72],
-			cells[82],
-			cells[92],
-		].sort((a, b) =>
-			new Intl.Collator('en', {numeric: true}).compare(a, b)
-		);
-
-		await expect(page.locator('td').nth(2)).toHaveText(
-			ascendingTitleCells[0]
-		);
-		await expect(page.locator('td').nth(12)).toHaveText(
-			ascendingTitleCells[1]
-		);
-		await expect(page.locator('td').nth(22)).toHaveText(
-			ascendingTitleCells[2]
-		);
-		await expect(page.locator('td').nth(32)).toHaveText(
-			ascendingTitleCells[3]
-		);
-	});
+	await fdsSamplePage.selectTab('Customized');
 });
 
 test(
-	'Assert columns visibility',
+	'Sort columns and assert vilibility',
 	{tag: '@LPS-193005'},
-	async ({apiHelpers, page, site}) => {
-		let layout: Layout;
+	async ({page}) => {
+		await test.step('Sorting ID and Title column in ascending order', async () => {
+			const idColumnHeader = page
+				.getByRole('columnheader')
+				.getByText('ID');
 
-		await test.step('Create a content site and the frontend data set sample widget', async () => {
-			const widgetDefinition = getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet',
-			});
+			await expect(idColumnHeader).toBeInViewport();
 
-			layout = await apiHelpers.headlessDelivery.createSitePage({
-				pageDefinition: getPageDefinition([widgetDefinition]),
-				siteId: site.id,
-				title: getRandomString(),
-			});
-		});
+			const cells = await page.locator('td').allInnerTexts();
 
-		await test.step('Select Customized tab ', async () => {
-			await page.goto(
-				`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			await expect(page.locator('td').nth(1)).toHaveText(cells[1]);
+			await expect(page.locator('td').nth(11)).toHaveText(cells[11]);
+			await expect(page.locator('td').nth(21)).toHaveText(cells[21]);
+			await expect(page.locator('td').nth(31)).toHaveText(cells[31]);
+
+			await idColumnHeader.click();
+
+			const ascendingIDCells = [
+				cells[1],
+				cells[11],
+				cells[21],
+				cells[31],
+				cells[41],
+				cells[51],
+				cells[61],
+				cells[71],
+				cells[81],
+				cells[91],
+			].sort();
+
+			await expect(page.locator('td').nth(1)).toHaveText(
+				ascendingIDCells[0]
+			);
+			await expect(page.locator('td').nth(11)).toHaveText(
+				ascendingIDCells[1]
+			);
+			await expect(page.locator('td').nth(21)).toHaveText(
+				ascendingIDCells[2]
+			);
+			await expect(page.locator('td').nth(31)).toHaveText(
+				ascendingIDCells[3]
 			);
 
-			const tabHeading = page
-				.getByRole('tablist')
-				.getByText('Customized');
+			const titleColumnHeader = page
+				.getByRole('columnheader')
+				.getByText('Title');
 
-			await expect(tabHeading).toBeInViewport();
+			await titleColumnHeader.click();
 
-			await tabHeading.click();
+			const ascendingTitleCells = [
+				cells[2],
+				cells[12],
+				cells[22],
+				cells[32],
+				cells[42],
+				cells[52],
+				cells[62],
+				cells[72],
+				cells[82],
+				cells[92],
+			].sort((a, b) =>
+				new Intl.Collator('en', {numeric: true}).compare(a, b)
+			);
+
+			await expect(page.locator('td').nth(2)).toHaveText(
+				ascendingTitleCells[0]
+			);
+			await expect(page.locator('td').nth(12)).toHaveText(
+				ascendingTitleCells[1]
+			);
+			await expect(page.locator('td').nth(22)).toHaveText(
+				ascendingTitleCells[2]
+			);
+			await expect(page.locator('td').nth(32)).toHaveText(
+				ascendingTitleCells[3]
+			);
 		});
 
 		await test.step('Hide the Title column', async () => {

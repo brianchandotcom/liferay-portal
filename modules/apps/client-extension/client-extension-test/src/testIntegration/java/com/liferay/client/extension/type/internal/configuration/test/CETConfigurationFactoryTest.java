@@ -6,6 +6,9 @@
 package com.liferay.client.extension.type.internal.configuration.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.model.ClientExtensionEntryRel;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.feature.flag.test.util.FeatureFlagTestHelper;
@@ -14,18 +17,34 @@ import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.TimeoutException;
@@ -107,6 +126,109 @@ public class CETConfigurationFactoryTest {
 
 			SystemProperties.set("liferay.mode", liferayMode);
 		}
+	}
+
+	@Test
+	public void testControlPanelThemeCSSCET() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		String pid1 = ConfigurationTestUtil.createFactoryConfiguration(
+			_PID, _getThemeCSSConfigurationProperties(company.getCompanyId()));
+
+		String pid2 = null;
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.client.extension.type.internal.configuration." +
+					"CETConfigurationFactory",
+				LoggerTestUtil.ERROR)) {
+
+			Layout layout = _getControlPanelLayout(company.getCompanyId());
+
+			List<ClientExtensionEntryRel> clientExtensionEntryRels =
+				_clientExtensionEntryRelLocalService.
+					getClientExtensionEntryRels(
+						_portal.getClassNameId(Layout.class), layout.getPlid(),
+						ClientExtensionEntryConstants.TYPE_THEME_CSS);
+
+			Assert.assertEquals(
+				clientExtensionEntryRels.toString(), 1,
+				clientExtensionEntryRels.size());
+
+			pid2 = ConfigurationTestUtil.createFactoryConfiguration(
+				_PID,
+				_getThemeCSSConfigurationProperties(company.getCompanyId()));
+
+			clientExtensionEntryRels =
+				_clientExtensionEntryRelLocalService.
+					getClientExtensionEntryRels(
+						_portal.getClassNameId(Layout.class), layout.getPlid(),
+						ClientExtensionEntryConstants.TYPE_THEME_CSS);
+
+			Assert.assertEquals(
+				clientExtensionEntryRels.toString(), 2,
+				clientExtensionEntryRels.size());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"Only one theme CSS client extension can be applied at a " +
+					"time. To avoid conflicts, none of them will be applied.",
+				logEntry.getMessage());
+		}
+		finally {
+			ConfigurationTestUtil.deleteConfiguration(pid1);
+			ConfigurationTestUtil.deleteConfiguration(pid2);
+		}
+	}
+
+	private Layout _getControlPanelLayout(long companyId)
+		throws PortalException {
+
+		Group group = _groupLocalService.fetchGroup(
+			companyId, GroupConstants.CONTROL_PANEL);
+
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			group.getGroupId(), true);
+
+		if (ListUtil.isEmpty(layouts)) {
+			throw new NoSuchLayoutException(
+				"Unable to get control panel layout");
+		}
+
+		return layouts.get(0);
+	}
+
+	private HashMapDictionary<String, Object>
+			_getThemeCSSConfigurationProperties(long companyId)
+		throws Exception {
+
+		String name = RandomTestUtil.randomString();
+
+		return HashMapDictionaryBuilder.<String, Object>put(
+			"baseURL", "${portalURL}/o/" + name
+		).put(
+			"companyId", companyId
+		).put(
+			"name", name
+		).put(
+			"projectId", name
+		).put(
+			"projectName", name
+		).put(
+			"service.pid", _PID + "~" + name
+		).put(
+			"type", ClientExtensionEntryConstants.TYPE_THEME_CSS
+		).put(
+			"typeSettings", Collections.singletonList("scope=controlPanel")
+		).put(
+			"userId", TestPropsValues.getUserId()
+		).put(
+			"webContextPath", "/" + name
+		).build();
 	}
 
 	private void _testActivate() throws Exception {
@@ -199,6 +321,9 @@ public class CETConfigurationFactoryTest {
 		}
 	}
 
+	private static final String _PID =
+		"com.liferay.client.extension.type.configuration.CETConfiguration";
+
 	private static final String _VIRTUAL_HOSTNAME =
 		RandomTestUtil.randomString() + ".localtest.me";
 
@@ -211,5 +336,18 @@ public class CETConfigurationFactoryTest {
 
 	@Inject
 	private CETManager _cetManager;
+
+	@Inject
+	private ClientExtensionEntryRelLocalService
+		_clientExtensionEntryRelLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private Portal _portal;
 
 }

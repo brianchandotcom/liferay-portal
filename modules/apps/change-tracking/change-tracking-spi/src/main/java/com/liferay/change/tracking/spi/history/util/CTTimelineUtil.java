@@ -27,7 +27,10 @@ public class CTTimelineUtil {
 	public static void setClassName(
 		RenderRequest renderRequest, Class<?> clazz) {
 
-		setClassName(PortalUtil.getHttpServletRequest(renderRequest), clazz);
+		setClassName(
+			PortalUtil.getOriginalServletRequest(
+				PortalUtil.getHttpServletRequest(renderRequest)),
+			clazz);
 	}
 
 	public static void setCTTimelineKeys(
@@ -42,7 +45,9 @@ public class CTTimelineUtil {
 		RenderRequest renderRequest, Class<?> clazz, long classPK) {
 
 		setCTTimelineKeys(
-			PortalUtil.getHttpServletRequest(renderRequest), clazz, classPK);
+			PortalUtil.getOriginalServletRequest(
+				PortalUtil.getHttpServletRequest(renderRequest)),
+			clazz, classPK);
 	}
 
 }

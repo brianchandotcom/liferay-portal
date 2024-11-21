@@ -205,8 +205,13 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 			List<JobProperty> playwrightTestProjectJobProperties =
 				getJobProperties(
-					modifiedFile, "playwright.projects.includes",
+					modifiedFile, "playwright.test.project",
 					JobProperty.Type.MODULE_TEST_DIR, null);
+
+			playwrightTestProjectJobProperties.addAll(
+				getJobProperties(
+					modifiedFile, "playwright.projects.includes",
+					JobProperty.Type.MODULE_TEST_DIR, null));
 
 			for (JobProperty playwrightTestProjectJobProperty :
 					playwrightTestProjectJobProperties) {
@@ -421,9 +426,21 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 	private JobProperty _getPlaywrightProjectsIncludesJobProperty() {
 		JobProperty playwrightProjectsIncludesJobProperty = getJobProperty(
-			"playwright.projects.includes", testSuiteName, batchName);
+			"playwright.test.project", testSuiteName, batchName);
 
 		String playwrightProjectsIncludesJobPropertyValue =
+			playwrightProjectsIncludesJobProperty.getValue();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(
+				playwrightProjectsIncludesJobPropertyValue)) {
+
+			return playwrightProjectsIncludesJobProperty;
+		}
+
+		playwrightProjectsIncludesJobProperty = getJobProperty(
+			"playwright.projects.includes", testSuiteName, batchName);
+
+		playwrightProjectsIncludesJobPropertyValue =
 			playwrightProjectsIncludesJobProperty.getValue();
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(

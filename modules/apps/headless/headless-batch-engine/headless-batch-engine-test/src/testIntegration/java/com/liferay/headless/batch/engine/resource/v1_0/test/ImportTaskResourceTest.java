@@ -47,9 +47,23 @@ public class ImportTaskResourceTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testPostImportTaskWithMultipleTestEntitiesFailing()
-		throws Exception {
+	public void testPostFailingImportTask() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR)) {
 
+			ImportTask importTask = _testPostFailingImportTask(
+				JSONUtil.putAll(JSONFactoryUtil.createJSONObject()), "FAILED",
+				ListUtil.fromArray("createStrategy=INSERT"));
+
+			Assert.assertEquals(
+				"Modified error message", importTask.getErrorMessage());
+		}
+	}
+
+	@Test
+	public void testPostImportTaskWithMultipleFailures() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal.strategy." +
 					"OnErrorContinueBatchEngineImportStrategy",
@@ -92,22 +106,6 @@ public class ImportTaskResourceTest {
 		}
 	}
 
-	@Test
-	public void testPostImportTaskWithTestEntityFailing() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal." +
-					"BatchEngineImportTaskExecutorImpl",
-				LoggerTestUtil.ERROR)) {
-
-			ImportTask importTask = _testPostFailingImportTask(
-				JSONUtil.putAll(JSONFactoryUtil.createJSONObject()), "FAILED",
-				ListUtil.fromArray("createStrategy=INSERT"));
-
-			Assert.assertEquals(
-				"Modified error message", importTask.getErrorMessage());
-		}
-	}
-
 	private ImportTask _testPostFailingImportTask(
 			JSONArray bodyJSONArray, String expectedExecuteStatus,
 			List<String> queryParameters)
@@ -130,7 +128,7 @@ public class ImportTaskResourceTest {
 			sb.append("&");
 		}
 
-		sb.append("taskItemDelegateName=export-import-problem-thrower");
+		sb.append("taskItemDelegateName=export-import-exception-thrower");
 
 		httpInvoker.path(sb.toString());
 		httpInvoker.userNameAndPassword(

@@ -289,6 +289,10 @@ public class ViewConflictsDisplayContext {
 				ctEntry.getCtCollectionId(), ctEntry),
 			ctEntry.getModelClassNameId(), conflictInfo.getSourcePrimaryKey());
 
+		if (model == null) {
+			return;
+		}
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
 

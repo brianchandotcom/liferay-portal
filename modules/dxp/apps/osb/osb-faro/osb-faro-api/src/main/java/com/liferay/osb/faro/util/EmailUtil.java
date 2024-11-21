@@ -17,65 +17,65 @@ public class EmailUtil {
 
 	public static String getCheckIconURL() {
 		return FaroPropsValues.FARO_URL.concat(
-			"/o/osb-faro-web/images/email/icon-check.png");
+			"/o/osb-faro-web/images/email/icon_check.png");
 	}
 
 	public static String getEmailBannerURL(String frequency) {
 		if (Objects.equals(frequency, "daily")) {
 			return FaroPropsValues.FARO_URL.concat(
-				"/o/osb-faro-web/images/email/ac-email-banner-daily.png");
+				"/o/osb-faro-web/images/email/ac_email_banner_daily.png");
 		}
 		else if (Objects.equals(frequency, "monthly")) {
 			return FaroPropsValues.FARO_URL.concat(
-				"/o/osb-faro-web/images/email/ac-email-banner-monthly.png");
+				"/o/osb-faro-web/images/email/ac_email_banner_monthly.png");
 		}
 
 		return FaroPropsValues.FARO_URL.concat(
-			"/o/osb-faro-web/images/email/ac-email-banner-weekly.png");
+			"/o/osb-faro-web/images/email/ac_email_banner_weekly.png");
 	}
 
 	public static String getEmailHeaderURL() {
 		return FaroPropsValues.FARO_URL.concat(
-			"/o/osb-faro-web/images/email/email-header.png");
+			"/o/osb-faro-web/images/email/email_header.png");
 	}
 
 	public static String getLiferayIconURL() {
 		return FaroPropsValues.FARO_URL.concat(
-			"/o/osb-faro-web/images/email/liferay-logo-1.png");
+			"/o/osb-faro-web/images/email/liferay_logo_1.png");
 	}
 
 	public static String getLiferayLogoIconURL() {
 		return FaroPropsValues.FARO_URL.concat(
-			"/o/osb-faro-web/images/email/liferay-logo.png");
+			"/o/osb-faro-web/images/email/liferay_logo.png");
 	}
 
 	public static String getLogoIconURL() {
 		return FaroPropsValues.FARO_URL.concat(
-			"/o/osb-faro-web/images/email/ac-chart.png");
+			"/o/osb-faro-web/images/email/ac_chart.png");
 	}
 
 	public static String getShareIconURL() {
 		return FaroPropsValues.FARO_URL.concat(
-			"/o/osb-faro-web/images/email/icon-share.png");
+			"/o/osb-faro-web/images/email/icon_share.png");
 	}
 
 	public static String getTitleIconURL() {
 		return FaroPropsValues.FARO_URL.concat(
-			"/o/osb-faro-web/images/email/ac-title.png");
+			"/o/osb-faro-web/images/email/ac_title.png");
 	}
 
 	public static String getTrendIconURL(String trend) {
 		if (Objects.equals(trend, "NEGATIVE")) {
 			return FaroPropsValues.FARO_URL.concat(
-				"/o/osb-faro-web/images/email/icon-order-arrow-down.png");
+				"/o/osb-faro-web/images/email/icon_order_arrow_down.png");
 		}
 		else if (Objects.equals(trend, "POSITIVE")) {
 			return FaroPropsValues.FARO_URL.concat(
-				"/o/osb-faro-web/images/email/icon-order-arrow-up.png");
+				"/o/osb-faro-web/images/email/icon_order_arrow_up.png");
 		}
 
 		return FaroPropsValues.FARO_URL.concat(
-			"/o/osb-faro-web/images/email/icon-empty.png");
+			"/o/osb-faro-web/images/email/icon_empty.png");
 	}
 
 	public static String getWorkspaceURL(Group group) {

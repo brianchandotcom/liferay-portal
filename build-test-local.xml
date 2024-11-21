@@ -487,7 +487,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 							<replaceregexp
 								file="${project.dir}/test.properties"
 								flags="g"
-								match="(playwright\.test\.project\[playwright-js-tomcat90-mysql57-jdk21_zulu\]\[portal-release-acceptance\]=\\\n)"
+								match="(playwright\.projects\.includes\[playwright-js-tomcat90-mysql57-jdk21_zulu\]\[portal-release-acceptance\]=\\\n)"
 								replace="\1        ${testcase.file.name},\\\\${line.separator}"
 							/>
 						</then>

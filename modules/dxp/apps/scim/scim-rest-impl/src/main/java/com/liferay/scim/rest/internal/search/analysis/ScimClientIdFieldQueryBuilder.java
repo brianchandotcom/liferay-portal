@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -30,9 +28,7 @@ public class ScimClientIdFieldQueryBuilder implements FieldQueryBuilder {
 	public Query build(String field, String keywords) {
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
-		List<String> tokens = keywordTokenizer.tokenize(keywords);
-
-		for (String token : tokens) {
+		for (String token : keywordTokenizer.tokenize(keywords)) {
 			booleanQueryImpl.add(
 				new MatchQuery(field, token), BooleanClauseOccur.SHOULD);
 		}

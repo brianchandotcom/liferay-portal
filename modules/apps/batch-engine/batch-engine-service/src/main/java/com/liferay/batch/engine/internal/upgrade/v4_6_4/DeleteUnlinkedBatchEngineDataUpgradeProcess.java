@@ -5,6 +5,7 @@
 
 package com.liferay.batch.engine.internal.upgrade.v4_6_4;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -15,20 +16,17 @@ public class DeleteUnlinkedBatchEngineDataUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL(
-			String.format(
-				_DELETE_UNLINKED_COMPANY_ID_ROWS_SQL, "BatchEngineExportTask"));
-		runSQL(
-			String.format(
-				_DELETE_UNLINKED_COMPANY_ID_ROWS_SQL, "BatchEngineImportTask"));
-		runSQL(
-			String.format(
-				_DELETE_UNLINKED_COMPANY_ID_ROWS_SQL,
-				"BatchEngineImportTaskError"));
+		_delete("BatchEngineExportTask");
+		_delete("BatchEngineImportTask");
+		_delete("BatchEngineImportTaskError");
 	}
 
-	private static final String _DELETE_UNLINKED_COMPANY_ID_ROWS_SQL =
-		"delete from %s where not exists (select 1 from Company where " +
-			"Company.companyId = %1$s.companyId)";
+	private void _delete(String tableName) throws Exception {
+		runSQL(
+			StringBundler.concat(
+				"delete from ", tableName,
+				" where not exists (select 1 from Company where ",
+				"Company.companyId = ", tableName, ".companyId)"));
+	}
 
 }

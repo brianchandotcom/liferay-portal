@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<checkstyle>
-		<suppress checks="UpgradeProcessCheck" files="src/main/java/com/liferay/batch/engine/internal/upgrade/v4_6_4/DeleteUnlinkedBatchEngineDataUpgradeProcess\.java" />
-	</checkstyle>
-</suppressions>

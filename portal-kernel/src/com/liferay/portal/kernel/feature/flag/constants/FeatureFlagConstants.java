@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.feature.flag.constants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 /**
@@ -19,6 +20,9 @@ public class FeatureFlagConstants {
 
 	public static final String PREFERENCE_KEY_DEPRECATION_PROCESSED =
 		"deprecationProcessed";
+
+	public static final String PREFERENCE_NAMESPACE =
+		FeatureFlag.class.getName();
 
 	public static String getKey(String... parts) {
 		if (ArrayUtil.isEmpty(parts)) {

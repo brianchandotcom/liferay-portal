@@ -61,8 +61,8 @@ public class LayoutPrivateLayoutsUpgradeProcess extends UpgradeProcess {
 							portalPreferencesWrapper.getPortalPreferencesImpl();
 
 						portalPreferences.setValue(
-							FeatureFlagConstants.FEATURE_FLAG, "LPD-38869",
-							value);
+							FeatureFlagConstants.PREFERENCE_NAMESPACE,
+							"LPD-38869", value);
 
 						_portalPreferencesLocalService.updatePreferences(
 							companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,

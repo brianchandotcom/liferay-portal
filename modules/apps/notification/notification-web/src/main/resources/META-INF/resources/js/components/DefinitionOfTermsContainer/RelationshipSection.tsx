@@ -97,6 +97,7 @@ export default function RelationshipSection({
 					itemsActions={[
 						{
 							href: 'copyTerm',
+							icon: 'copy',
 							id: 'copyTerm',
 							label: Liferay.Language.get('copy'),
 							onClick: copyTerm,

@@ -50,6 +50,7 @@ export function GeneralTerms({baseResourceURL}: GeneralTermsProps) {
 					itemsActions={[
 						{
 							href: 'copyTerm',
+							icon: 'copy',
 							id: 'copyTerm',
 							label: Liferay.Language.get('copy'),
 							onClick: copyTerm,

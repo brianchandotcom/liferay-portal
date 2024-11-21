@@ -3,76 +3,26 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useState} from 'react';
 import i18n from '~/common/I18n';
 
 import SVFilter from '../../components/SVFilter';
 import SVSearch from '../../components/SVSearch';
 import SVTable from '../../components/SVTable';
-import {IRow} from '../../components/SVTable/SVTable';
-import {ITicket} from '../../interfaces/ITicket';
 
 import './SecurityVulnerabilitiesList.css';
-import useJiraData from '../../hooks/useJiraData';
-import {FILTER_OPTIONS} from '../../utils/constants/filtersOptions';
 
-export interface IFilters {
-	affectedVersions: string[];
-	categories: string[];
-	classifications: string[];
-	fixVersions: string[];
-	search: string;
-	severities: string[];
-	sort: string;
-}
+import {useMemo} from 'react';
+
+import {IRow} from '../../components/SVTable/SVTable';
+import {IJiraIssue} from '../../hooks/useJiraIssue';
+import useJiraSearch from '../../hooks/useJiraSearch';
+import {FILTER_OPTIONS} from '../../utils/constants/filterOptions';
+import {JiraEnum} from '../../utils/constants/jiraEnum';
+import {SORT_OPTIONS} from '../../utils/constants/sortOptions';
 
 const SecurityVulnerabilitiesList = () => {
-	const [filters, setFilters] = useState<IFilters>({
-		affectedVersions: [],
-		categories: [],
-		classifications: [],
-		fixVersions: [],
-		search: '',
-		severities: [],
-		sort: '',
-	});
-
-	const {jiraData} = useJiraData();
-	const [rows, setRows] = useState<IRow[]>([]);
-
-	useEffect(() => {
-		if (jiraData) {
-			const newRows = jiraData.map((ticket: ITicket) => ({
-				affectedVersions: ticket.affectedVersions?.join(', '),
-				category: ticket.category,
-				classification: ticket.classification,
-				prioritySummary: (
-					<div className="sv-priority-summary">
-						<div className="mr-1 px-2 sv-severity text-center">
-							{ticket.severity}
-						</div>
-						<div className="sv-summary">{ticket.summary}</div>
-					</div>
-				),
-				publishedDate: ticket.publishedDate,
-			}));
-			setRows(newRows);
-		}
-	}, [jiraData]);
-
-	const handleFilterChange = (newFilters: IFilters) => {
-		setFilters((prevFilters) => ({
-			...prevFilters,
-			...newFilters,
-		}));
-	};
-
-	const handleSearchChange = (term: string) => {
-		setFilters((prevFilters) => ({
-			...prevFilters,
-			search: term,
-		}));
-	};
+	const {jiraSearch, loading, searchParams, updateSearchParams} =
+		useJiraSearch();
 
 	const columns = [
 		{
@@ -92,10 +42,38 @@ const SecurityVulnerabilitiesList = () => {
 			label: i18n.translate('affected-versions'),
 		},
 		{
-			columnKey: 'publishedDate',
+			columnKey: 'published',
 			label: i18n.translate('published'),
 		},
 	];
+
+	const rows = useMemo(() => {
+		if (jiraSearch?.[JiraEnum.ISSUES]) {
+			return jiraSearch?.[JiraEnum.ISSUES].map((issue: IJiraIssue) => ({
+				affectedVersions:
+					issue[JiraEnum.FIELDS]?.[JiraEnum.AFFECTED_VERSIONS]?.join(
+						', '
+					),
+				category: issue[JiraEnum.FIELDS]?.[JiraEnum.CATEGORY],
+				classification:
+					issue[JiraEnum.FIELDS]?.[JiraEnum.CLASSIFICATION],
+				prioritySummary: (
+					<div className="sv-priority-summary">
+						<div className="mr-1 px-2 sv-severity text-center">
+							{issue[JiraEnum.FIELDS]?.[JiraEnum.SEVERITY]}
+						</div>
+						<div className="sv-summary">
+							{issue[JiraEnum.FIELDS]?.[JiraEnum.SUMMARY]}
+						</div>
+					</div>
+				),
+				published: issue[JiraEnum.FIELDS]?.[JiraEnum.PUBLISHED_DATE],
+			}));
+		}
+		else {
+			return undefined;
+		}
+	}, [jiraSearch]);
 
 	return (
 		<>
@@ -104,8 +82,10 @@ const SecurityVulnerabilitiesList = () => {
 					<h1 className="my-4">{i18n.translate('cve-reports')}</h1>
 
 					<SVSearch
-						onChange={handleSearchChange}
-						term={filters.search}
+						keywords={searchParams.get(JiraEnum.KEYWORDS) || ''}
+						onChange={(keywords) =>
+							updateSearchParams({[JiraEnum.KEYWORDS]: keywords})
+						}
 					/>
 				</div>
 			</div>
@@ -114,16 +94,22 @@ const SecurityVulnerabilitiesList = () => {
 				<div className="col-3">
 					<SVFilter
 						filterOptions={FILTER_OPTIONS}
-						filters={filters}
-						onChange={handleFilterChange}
+						onChange={(params) => updateSearchParams(params)}
+						params={searchParams}
+						sortOptions={SORT_OPTIONS}
 					/>
 				</div>
 
-				<div className="col">
-					{rows.length ? (
-						<SVTable columns={columns} rows={rows} />
+				<div className="col-9">
+					{loading ? (
+						<span className="cp-spinner ml-2 spinner-border spinner-border-sm"></span>
+					) : rows?.length ? (
+						<SVTable
+							columns={columns}
+							rows={rows as unknown as IRow[]}
+						/>
 					) : (
-						<p>Loading...</p>
+						<p>{i18n.translate('no-results')}</p>
 					)}
 				</div>
 			</div>

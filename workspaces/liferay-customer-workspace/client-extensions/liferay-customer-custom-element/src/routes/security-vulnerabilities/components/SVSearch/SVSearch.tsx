@@ -5,26 +5,44 @@
 
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {useState} from 'react';
 import i18n from '~/common/I18n';
 
 import './SVSearch.css';
 
 interface IProps {
-	onChange: (term: string) => void;
-	term: string;
+	keywords?: string;
+	onChange: (keywords: string) => void;
 }
 
-const SVSearch = ({onChange, term}: IProps) => {
+const SVSearch = ({keywords, onChange}: IProps) => {
+	const [localKeywords, setLocalKeywords] = useState(keywords || '');
+	const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout>();
+
+	const handleSearchChange = (newKeywords: string) => {
+		setLocalKeywords(newKeywords);
+
+		if (debounceTimeout) {
+			clearTimeout(debounceTimeout);
+		}
+
+		setDebounceTimeout(
+			setTimeout(() => {
+				onChange(newKeywords);
+			}, 500)
+		);
+	};
+
 	return (
 		<div className="flex-grow-1 mr-3 position-relative sv-search">
 			<ClayInput
 				className="border border-brand-primary-lighten-4 font-weight-semi-bold px-5 py-3 rounded-pill shadow-lg sv-search-input"
-				onChange={(event) => onChange(event.target.value)}
+				onChange={(event) => handleSearchChange(event.target.value)}
 				placeholder={i18n.translate(
 					'search-for-sves-by-keyword-or-cve-id'
 				)}
 				type="text"
-				value={term}
+				value={localKeywords} // Use the localKeywords state
 			/>
 
 			<ClayIcon

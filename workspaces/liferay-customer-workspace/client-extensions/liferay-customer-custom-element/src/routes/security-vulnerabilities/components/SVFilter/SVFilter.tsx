@@ -7,53 +7,81 @@ import {Button as ClayButton} from '@clayui/core';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import i18n from '~/common/I18n';
 
-import {IFilters} from '../../pages/SecurityVulnerabilitiesList/SecurityVulnerabilitiesList';
-import {IProps as IFilterOptions} from '../../utils/constants/filtersOptions';
+import {IProps as IJiraSearch} from '../../hooks/useJiraSearch';
+import {IProps as IFilterOptions} from '../../utils/constants/filterOptions';
+import {JiraEnum} from '../../utils/constants/jiraEnum';
+import {IProps as ISortOptions} from '../../utils/constants/sortOptions';
 
 import './SVFilter.css';
 
 interface IProps {
 	filterOptions: IFilterOptions;
-	filters: IFilters;
-	onChange: (filters: IFilters) => void;
+	onChange: (params: IJiraSearch) => void;
+	params: URLSearchParams;
+	sortOptions: ISortOptions;
 }
 
-const SVFilter = ({filterOptions, filters, onChange}: IProps) => {
-	const toggleFilterValue = (filter: keyof IFilters, value: string) => {
-		const currentFilterValues = filters[filter];
-
-		if (Array.isArray(currentFilterValues)) {
-			if (currentFilterValues.includes(value)) {
-				onChange({
-					...filters,
-					[filter]: currentFilterValues.filter((v) => v !== value),
-				});
-			}
-			else {
-				onChange({
-					...filters,
-					[filter]: [...currentFilterValues, value],
-				});
-			}
-		}
-		else {
-			onChange({
-				...filters,
-				[filter]: value,
-			});
-		}
-	};
-
-	const updateFilterValues = (
-		filterKey: keyof IFilters,
-		values: string[] | null
+const SVFilter = ({filterOptions, onChange, params, sortOptions}: IProps) => {
+	const handleFilterChange = (
+		param: keyof IFilterOptions,
+		value: string[]
 	) => {
-		const newFilters = {...filters, [filterKey]: values ?? []};
+		const newFilters = {[param]: value};
+
 		onChange({
-			...filters,
-			...newFilters,
+			[JiraEnum.FILTERS]: {
+				...params
+					.getAll(JiraEnum.FILTERS)
+					.reduce((acc, curr) => ({...acc, ...JSON.parse(curr)}), {}),
+				...newFilters,
+			},
 		});
 	};
+
+	const renderFilterSection = (
+		filterKey: keyof IFilterOptions,
+		languageKey: string
+	) => (
+		<div className="sv-filter-box">
+			<h5>{i18n.translate(languageKey)}</h5>
+
+			<div className="d-flex my-2">
+				<ClayButton
+					aria-label={i18n.translate('select-all')}
+					className="mr-3 p-0 sv-select-all-button"
+					displayType="link"
+					onClick={() =>
+						handleFilterChange(
+							filterKey,
+							filterOptions[filterKey] as string[]
+						)
+					}
+				>
+					{i18n.translate('select-all')}
+				</ClayButton>
+
+				<ClayButton
+					aria-label={i18n.translate('clear')}
+					className="p-0 sv-clear-button"
+					displayType="link"
+					onClick={() => handleFilterChange(filterKey, [])}
+				>
+					{i18n.translate('clear')}
+				</ClayButton>
+			</div>
+
+			{(filterOptions[filterKey] as string[])?.map((value) => (
+				<ClayCheckbox
+					aria-label={i18n.translate(value)}
+					checked={params.getAll(filterKey).includes(value)}
+					key={value}
+					label={i18n.translate(value)}
+					onChange={() => handleFilterChange(filterKey, [value])}
+					value={value}
+				/>
+			))}
+		</div>
+	);
 
 	return (
 		<div className="sv-filter-content">
@@ -61,194 +89,41 @@ const SVFilter = ({filterOptions, filters, onChange}: IProps) => {
 				<h5 className="pb-2">{i18n.translate('sort-by')}</h5>
 
 				<div className="align-items-center justify-content-center">
-					{filterOptions.sorts.map((sort) => (
+					{sortOptions.sorts.map((sortOption) => (
 						<ClayRadio
-							aria-label={sort}
-							checked={filters.sort === sort}
-							key="sort"
-							label={i18n.translate(sort)}
+							aria-label={i18n.translate(sortOption.key)}
+							checked={
+								params.get(JiraEnum.SORT_BY) ===
+									sortOption[JiraEnum.SORT_BY] &&
+								params.get(JiraEnum.SORT_ORDER) ===
+									sortOption[JiraEnum.SORT_ORDER]
+							}
+							key={sortOption.key}
+							label={i18n.translate(sortOption.key)}
 							onChange={() => {
-								toggleFilterValue('sort', sort);
+								onChange({
+									[JiraEnum.SORT_BY]:
+										sortOption[JiraEnum.SORT_BY],
+									[JiraEnum.SORT_ORDER]:
+										sortOption[JiraEnum.SORT_ORDER],
+								});
 							}}
-							value={sort}
+							value={sortOption.key}
 						/>
 					))}
 				</div>
 			</div>
 
-			<div className="sv-filter-box sv-severities">
-				<h5>{i18n.translate('severity')}</h5>
-
-				<div className="d-flex my-2">
-					<ClayButton
-						aria-label="Select All"
-						className="mr-3 p-0 sv-select-all-button"
-						displayType="link"
-						onClick={() =>
-							updateFilterValues('severities', [
-								...filterOptions.severities,
-							])
-						}
-					>
-						{i18n.translate('select-all')}
-					</ClayButton>
-
-					<ClayButton
-						aria-label="Clear"
-						className="p-0 sv-clear-button"
-						displayType="link"
-						onClick={() => updateFilterValues('severities', null)}
-					>
-						{i18n.translate('clear')}
-					</ClayButton>
-				</div>
-
-				{filterOptions.severities.map((severity) => (
-					<ClayCheckbox
-						aria-label={severity}
-						checked={filters.severities.includes(severity)}
-						key={severity}
-						label={severity}
-						onChange={() => {
-							toggleFilterValue('severities', severity);
-						}}
-					/>
-				))}
-			</div>
-
-			<div className="sv-categories sv-filter-box">
-				<h5>{i18n.translate('category')}</h5>
-
-				<div className="d-flex my-2">
-					<ClayButton
-						aria-label="Select All"
-						className="mr-3 p-0 sv-select-all-button"
-						displayType="link"
-						onClick={() =>
-							updateFilterValues('categories', [
-								...filterOptions.categories,
-							])
-						}
-					>
-						{i18n.translate('select-all')}
-					</ClayButton>
-
-					<ClayButton
-						aria-label="Clear"
-						className="p-0 sv-clear-button"
-						displayType="link"
-						onClick={() => updateFilterValues('categories', null)}
-					>
-						{i18n.translate('clear')}
-					</ClayButton>
-				</div>
-
-				{filterOptions.categories.map((category) => (
-					<ClayCheckbox
-						aria-label={category}
-						checked={filters.categories.includes(category)}
-						key={category}
-						label={category}
-						onChange={() => {
-							toggleFilterValue('categories', category);
-						}}
-					/>
-				))}
-			</div>
-
-			<div className="sv-classifications sv-filter-box">
-				<h5>{i18n.translate('issue-classification')}</h5>
-
-				<div className="d-flex my-2">
-					<ClayButton
-						aria-label="Select All"
-						className="mr-3 p-0 sv-select-all-button"
-						displayType="link"
-						onClick={() =>
-							updateFilterValues('classifications', [
-								...filterOptions.classifications,
-							])
-						}
-					>
-						{i18n.translate('select-all')}
-					</ClayButton>
-
-					<ClayButton
-						aria-label="Clear"
-						className="p-0 sv-clear-button"
-						displayType="link"
-						onClick={() =>
-							updateFilterValues('classifications', null)
-						}
-					>
-						{i18n.translate('clear')}
-					</ClayButton>
-				</div>
-
-				{filterOptions.classifications.map((classification) => (
-					<ClayCheckbox
-						aria-label={classification}
-						checked={filters.classifications.includes(
-							classification
-						)}
-						key={classification}
-						label={classification}
-						onChange={() => {
-							toggleFilterValue(
-								'classifications',
-								classification
-							);
-						}}
-					/>
-				))}
-			</div>
-
-			<div className="sv-filter-box sv-versions">
-				<h5>{i18n.translate('affected-version')}</h5>
-
-				<div className="d-flex my-2">
-					<ClayButton
-						aria-label="Select All"
-						className="mr-3 p-0 sv-select-all-button"
-						displayType="link"
-						onClick={() =>
-							updateFilterValues('affectedVersions', [
-								...filterOptions.affectedVersions,
-							])
-						}
-					>
-						{i18n.translate('select-all')}
-					</ClayButton>
-
-					<ClayButton
-						aria-label="Clear"
-						className="p-0 sv-clear-button"
-						displayType="link"
-						onClick={() =>
-							updateFilterValues('affectedVersions', null)
-						}
-					>
-						{i18n.translate('clear')}
-					</ClayButton>
-				</div>
-
-				{filterOptions.affectedVersions.map((affectedVersion) => (
-					<ClayCheckbox
-						aria-label={affectedVersion}
-						checked={filters.affectedVersions.includes(
-							affectedVersion
-						)}
-						key={affectedVersion}
-						label={affectedVersion}
-						onChange={() => {
-							toggleFilterValue(
-								'affectedVersions',
-								affectedVersion
-							);
-						}}
-					/>
-				))}
-			</div>
+			{renderFilterSection(JiraEnum.SEVERITY, 'severity')}
+			{renderFilterSection(JiraEnum.CATEGORY, 'category')}
+			{renderFilterSection(
+				JiraEnum.CLASSIFICATION,
+				'issue-classification'
+			)}
+			{renderFilterSection(
+				JiraEnum.AFFECTED_VERSIONS,
+				'affected-version'
+			)}
 		</div>
 	);
 };

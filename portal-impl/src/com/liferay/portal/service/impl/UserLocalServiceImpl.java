@@ -267,16 +267,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException {
 
 		long creatorUserId = 0;
+
 		boolean autoPassword = false;
-
 		boolean passwordReset = _isPasswordReset(companyId);
-
-		boolean sendEmail = false;
 
 		if (Validator.isNull(password)) {
 			autoPassword = true;
 			passwordReset = true;
-			sendEmail = true;
 		}
 
 		boolean autoScreenName = false;
@@ -318,6 +315,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long[] roleIds = {adminRole.getRoleId(), powerUserRole.getRoleId()};
 
 		long[] userGroupIds = null;
+
+		boolean sendEmail = false;
+
+		if (Validator.isNull(password)) {
+			sendEmail = true;
+		}
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		Company company = _companyLocalService.getCompany(companyId);

@@ -12,6 +12,8 @@ import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.FriendlyUrlHistoryResource;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -49,12 +51,27 @@ public class FriendlyUrlHistoryResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		return _toFriendlyUrlHistory(
-			_layoutLocalService.getLayoutByExternalReferenceCode(
-				sitePageExternalReferenceCode,
-				GroupUtil.getGroupId(
-					true, contextCompany.getCompanyId(),
-					siteExternalReferenceCode)));
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode,
+			GroupUtil.getGroupId(
+				true, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
+
+		if (layout.isDraftLayout() || layout.isTypeAssetDisplay() ||
+			layout.isTypeUtility()) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry != null) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _toFriendlyUrlHistory(layout);
 	}
 
 	private JSONObject _getFriendlyUrlPathJSONObject(Layout layout)
@@ -107,5 +124,9 @@ public class FriendlyUrlHistoryResourceImpl
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 }

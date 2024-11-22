@@ -20,6 +20,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,10 +46,16 @@ public class FriendlyUrlHistoryResourceTest
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
+		List<String> list = new ArrayList<>();
+
+		list.add(layout.getFriendlyURL(LocaleUtil.getSiteDefault()));
+
 		for (int i = 0; i < 3; i++) {
-			_layoutLocalService.updateFriendlyURL(
+			layout = _layoutLocalService.updateFriendlyURL(
 				TestPropsValues.getUserId(), layout.getPlid(),
 				"/" + RandomTestUtil.randomString(), defaultLanguageId);
+
+			list.add(layout.getFriendlyURL(LocaleUtil.getSiteDefault()));
 		}
 
 		FriendlyUrlHistory friendlyUrlHistory =
@@ -63,6 +73,12 @@ public class FriendlyUrlHistoryResourceTest
 			LocaleUtil.toBCP47LanguageId(defaultLanguageId));
 
 		Assert.assertEquals(4, jsonArray.length());
+
+		Collections.reverse(list);
+
+		for (int i = 0; i < list.size(); i++) {
+			Assert.assertEquals(list.get(i), jsonArray.getString(i));
+		}
 	}
 
 	@Inject

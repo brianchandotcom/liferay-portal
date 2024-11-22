@@ -121,7 +121,7 @@ public class JspCompiler {
 			}
 
 			if (compilationTask.call()) {
-				saveClassFile(
+				_saveClassFile(
 					_jspCompilationContext.getFQCN(),
 					_jspCompilationContext.getClassFileName());
 
@@ -236,41 +236,6 @@ public class JspCompiler {
 
 		_addDependenciesToClassPath();
 		_initTLDMappings(options, servletContext);
-	}
-
-	public void saveClassFile(String className, String classFileName) {
-		for (BytecodeJavaFileObject bytecodeJavaFileObject :
-				_bytecodeJavaFileObjects) {
-
-			String bytecodeFileClassName =
-				bytecodeJavaFileObject.getClassName();
-			String outputFileName = classFileName;
-
-			if (!className.equals(bytecodeFileClassName)) {
-				outputFileName = outputFileName.substring(
-					0, outputFileName.lastIndexOf(File.separator) + 1);
-
-				outputFileName = outputFileName.concat(
-					bytecodeFileClassName.substring(
-						bytecodeFileClassName.lastIndexOf(CharPool.PERIOD) + 1)
-				).concat(
-					".class"
-				);
-			}
-
-			try (FileOutputStream fileOutputStream = new FileOutputStream(
-					outputFileName)) {
-
-				StreamUtil.transfer(
-					bytecodeJavaFileObject.openInputStream(), fileOutputStream);
-			}
-			catch (IOException ioException) {
-				ServletContext servletContext =
-					_jspCompilationContext.getServletContext();
-
-				servletContext.log("Unable to save class file", ioException);
-			}
-		}
 	}
 
 	private static Set<String> _collectPackageNames(BundleWiring bundleWiring) {
@@ -486,6 +451,41 @@ public class JspCompiler {
 		}
 		catch (Exception exception) {
 			_log.error(exception);
+		}
+	}
+
+	private void _saveClassFile(String className, String classFileName) {
+		for (BytecodeJavaFileObject bytecodeJavaFileObject :
+				_bytecodeJavaFileObjects) {
+
+			String bytecodeFileClassName =
+				bytecodeJavaFileObject.getClassName();
+			String outputFileName = classFileName;
+
+			if (!className.equals(bytecodeFileClassName)) {
+				outputFileName = outputFileName.substring(
+					0, outputFileName.lastIndexOf(File.separator) + 1);
+
+				outputFileName = outputFileName.concat(
+					bytecodeFileClassName.substring(
+						bytecodeFileClassName.lastIndexOf(CharPool.PERIOD) + 1)
+				).concat(
+					".class"
+				);
+			}
+
+			try (FileOutputStream fileOutputStream = new FileOutputStream(
+					outputFileName)) {
+
+				StreamUtil.transfer(
+					bytecodeJavaFileObject.openInputStream(), fileOutputStream);
+			}
+			catch (IOException ioException) {
+				ServletContext servletContext =
+					_jspCompilationContext.getServletContext();
+
+				servletContext.log("Unable to save class file", ioException);
+			}
 		}
 	}
 

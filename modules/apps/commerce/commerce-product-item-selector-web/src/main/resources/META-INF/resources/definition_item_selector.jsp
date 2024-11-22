@@ -86,7 +86,6 @@ String itemSelectedEventName = cpDefinitionItemSelectorViewDisplayContext.getIte
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
 				name="modified-date"
-				property="modifiedDate"
 				value="<%= cpDefinitionItemSelectorViewDisplayContext.getModifiedDate(cpDefinition, themeDisplay) %>"
 			/>
 

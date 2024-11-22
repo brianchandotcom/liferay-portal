@@ -22,6 +22,8 @@ import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.change.tracking.spi.history.util.CTTimelineUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -102,6 +104,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 				ASSET_DISPLAY_PAGE_FRIENDLY_URL_PROVIDER,
 			_assetDisplayPageFriendlyURLProvider);
 		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
+
+		CTTimelineUtil.setClassName(renderRequest, AssetCategory.class);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

@@ -58,6 +58,7 @@ public interface ObjectEntryService extends BaseService {
 			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkModelResourcePermission(
 			long objectDefinitionId, long objectEntryId, String actionId)
 		throws PortalException;

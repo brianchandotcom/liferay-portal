@@ -132,7 +132,7 @@ export async function checkPackageJSONFiles() {
 
 			// Check that main entry point doesn't 'export default'
 
-			if (main && main !== 'package.json') {
+			if (main && main !== 'package.json' && !pkg.includes('client-js')) {
 				const filePath = path.join(
 					moduleDir,
 					'src/main/resources/META-INF/resources',

@@ -8,7 +8,7 @@ import {resolve} from 'path';
 
 import {backendPageTest} from '../../../fixtures/backendPageTest';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {PAGE_MANAGEMENT_SITE_ERC} from './constants';
+import {PAGE_MANAGEMENT_SITE_ERC} from './constants/site';
 
 export const test = mergeTests(backendPageTest);
 

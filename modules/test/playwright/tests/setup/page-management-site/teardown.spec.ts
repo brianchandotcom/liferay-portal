@@ -8,13 +8,8 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {backendPageTest} from '../../../fixtures/backendPageTest';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {
-	ALL_FIELDS_OBJECT_ERC,
-	LEMON_BASKET_OBJECT_ERC,
-	LEMON_OBJECT_ERC,
-	PAGE_MANAGEMENT_SITE_ERC,
-	POTATO_OBJECT_ERC,
-} from './constants';
+import {OBJECT_ENTITIES} from './constants/objects';
+import {PAGE_MANAGEMENT_SITE_ERC} from './constants/site';
 
 export const test = mergeTests(backendPageTest);
 
@@ -35,12 +30,9 @@ test('Teardown: Delete site and data for Page Management tests', async ({
 
 	// Delete object definitions
 
-	for (const ERC of [
-		ALL_FIELDS_OBJECT_ERC,
-		LEMON_OBJECT_ERC,
-		LEMON_BASKET_OBJECT_ERC,
-		POTATO_OBJECT_ERC,
-	]) {
+	const ERCs = Object.values(OBJECT_ENTITIES).map((entity) => entity.ERC);
+
+	for (const ERC of ERCs) {
 		const objectDefinitionApiClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 

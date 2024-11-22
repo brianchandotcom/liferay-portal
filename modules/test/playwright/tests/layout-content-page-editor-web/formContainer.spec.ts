@@ -22,13 +22,8 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
-import {
-	ALL_FIELDS_OBJECT_ERC,
-	LEMON_OBJECT_ERC,
-	POTATO_OBJECT_ERC,
-} from '../setup/page-management-site/constants';
-import {deleteObjectEntries} from '../setup/page-management-site/utils/deleteObjectEntries';
-import {gotoObjectEntries} from '../setup/page-management-site/utils/gotoObjectEntries';
+import {getObjectERC} from '../setup/page-management-site/utils/getObjectERC';
+import {goToObjectEntity} from '../setup/page-management-site/utils/goToObjectEntity';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -277,7 +272,7 @@ test.describe('Captcha Fragment', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					LEMON_OBJECT_ERC
+					getObjectERC('Lemon')
 				)
 			).body;
 
@@ -344,7 +339,7 @@ test.describe('Checkbox Fragment', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					ALL_FIELDS_OBJECT_ERC
+					getObjectERC('All Fields')
 				)
 			).body;
 
@@ -438,7 +433,7 @@ test.describe('Checkbox Fragment', () => {
 
 			const {body: objectValidationRule} =
 				await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
-					ALL_FIELDS_OBJECT_ERC,
+					getObjectERC('All Fields'),
 					{
 						active: true,
 						engine: 'ddm',
@@ -470,7 +465,7 @@ test.describe('Checkbox Fragment', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					ALL_FIELDS_OBJECT_ERC
+					getObjectERC('All Fields')
 				)
 			).body;
 
@@ -539,7 +534,7 @@ test.describe('Date Fragment', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					ALL_FIELDS_OBJECT_ERC
+					getObjectERC('All Fields')
 				)
 			).body;
 
@@ -631,7 +626,7 @@ test.describe('Date Fragment', () => {
 
 			const {body: objectValidationRule} =
 				await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
-					ALL_FIELDS_OBJECT_ERC,
+					getObjectERC('All Fields'),
 					{
 						active: true,
 						engine: 'ddm',
@@ -663,7 +658,7 @@ test.describe('Date Fragment', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					ALL_FIELDS_OBJECT_ERC
+					getObjectERC('All Fields')
 				)
 			).body;
 
@@ -743,7 +738,7 @@ test.describe('Date and Time Fragment', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					ALL_FIELDS_OBJECT_ERC
+					getObjectERC('All Fields')
 				)
 			).body;
 
@@ -853,7 +848,7 @@ test.describe('Date and Time Fragment', () => {
 
 			// Go to custom object admin
 
-			await gotoObjectEntries({
+			await goToObjectEntity({
 				entityName: 'All Fields',
 				page,
 			});
@@ -912,7 +907,7 @@ test.describe('Form Localization', () => {
 
 		// Map the form to the All Fields object and publish the page
 
-		await pageEditorPage.mapFormFragment(formId, 'All Fields Object');
+		await pageEditorPage.mapFormFragment(formId, 'All Fields');
 
 		await pageEditorPage.publishPage();
 
@@ -965,7 +960,7 @@ test.describe('Form Localization', () => {
 
 		// Go to custom object admin an check the values
 
-		await gotoObjectEntries({
+		await goToObjectEntity({
 			entityName: 'All Fields',
 			page,
 		});
@@ -1552,8 +1547,8 @@ test.describe('Submit button', () => {
 
 				// Go to entity
 
-				await gotoObjectEntries({
-					entityName: 'Lemons',
+				await goToObjectEntity({
+					entityName: 'Lemon',
 					page,
 				});
 
@@ -2178,7 +2173,7 @@ test.describe('Rich Text Fragment', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					ALL_FIELDS_OBJECT_ERC
+					getObjectERC('All Fields')
 				)
 			).body;
 
@@ -2272,7 +2267,7 @@ test.describe('Rich Text Fragment', () => {
 
 			const {body: objectValidationRule} =
 				await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
-					ALL_FIELDS_OBJECT_ERC,
+					getObjectERC('All Fields'),
 					{
 						active: true,
 						engine: 'ddm',
@@ -2304,7 +2299,7 @@ test.describe('Rich Text Fragment', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					ALL_FIELDS_OBJECT_ERC
+					getObjectERC('All Fields')
 				)
 			).body;
 
@@ -2631,7 +2626,7 @@ test.describe('Multistep', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					LEMON_OBJECT_ERC
+					getObjectERC('Lemon')
 				)
 			).body;
 
@@ -2711,7 +2706,7 @@ test.describe('Multistep', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					LEMON_OBJECT_ERC
+					getObjectERC('Lemon')
 				)
 			).body;
 
@@ -2808,7 +2803,7 @@ test.describe('Multistep', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					LEMON_OBJECT_ERC
+					getObjectERC('Lemon')
 				)
 			).body;
 
@@ -2884,7 +2879,7 @@ test.describe('Multistep', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					LEMON_OBJECT_ERC
+					getObjectERC('Lemon')
 				)
 			).body;
 
@@ -3015,7 +3010,7 @@ test.describe('Multistep', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					LEMON_OBJECT_ERC
+					getObjectERC('Lemon')
 				)
 			).body;
 
@@ -3111,7 +3106,7 @@ test.describe('Multistep', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					LEMON_OBJECT_ERC
+					getObjectERC('Lemon')
 				)
 			).body;
 
@@ -3179,7 +3174,7 @@ test.describe('Multistep', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					LEMON_OBJECT_ERC
+					getObjectERC('Lemon')
 				)
 			).body;
 
@@ -3258,7 +3253,7 @@ test.describe('Multistep', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					LEMON_OBJECT_ERC
+					getObjectERC('Lemon')
 				)
 			).body;
 
@@ -3365,7 +3360,7 @@ test.describe('Multistep', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					POTATO_OBJECT_ERC
+					getObjectERC('Potato')
 				)
 			).body;
 
@@ -3511,7 +3506,7 @@ test.describe('Multistep', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					LEMON_OBJECT_ERC
+					getObjectERC('Lemon')
 				)
 			).body;
 
@@ -3729,7 +3724,7 @@ test.describe('Edit mode form errors', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					LEMON_OBJECT_ERC
+					getObjectERC('Lemon')
 				)
 			).body;
 
@@ -3778,7 +3773,7 @@ test.describe('Edit mode form errors', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					LEMON_OBJECT_ERC
+					getObjectERC('Lemon')
 				)
 			).body;
 

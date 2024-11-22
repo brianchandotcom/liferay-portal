@@ -14,7 +14,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../utils/getRandomString';
-import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants';
+import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants/animals';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';

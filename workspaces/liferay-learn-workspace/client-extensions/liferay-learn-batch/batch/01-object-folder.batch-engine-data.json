@@ -1,0 +1,21 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectFolder",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"label": {
+				"en_US": "P2S3 Learning Management System"
+			},
+			"name": "P2S3LearningManagementSystem"
+		}
+	]
+}

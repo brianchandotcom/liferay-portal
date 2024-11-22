@@ -205,8 +205,7 @@ public class JspServlet extends HttpServlet {
 			_INIT_PARAMETER_NAME_SCRATCH_DIR, scratchDir.getPath()
 		).put(
 			"compilerClassName",
-			"com.liferay.portal.osgi.web.servlet.jsp.compiler.internal." +
-				"CompilerWrapper"
+			"com.liferay.portal.jsp.engine.internal.compiler.BridgeCompiler"
 		).put(
 			"compilerSourceVM", "1.8"
 		).put(

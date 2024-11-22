@@ -424,30 +424,30 @@ function prepare_additional_bundles {
 
 		local leading_port_number=$((8 + ${app_server_bundles_size}))
 
-		local test_app_server_parent_dir="${LIFERAY_HOME}-${app_server_bundles_size}"
+		local liferay_home="${LIFERAY_HOME}-${app_server_bundles_size}"
 
-		if [[ -d ${test_app_server_parent_dir} ]]
+		if [[ -d ${liferay_home} ]]
 		then
-			rm -fr ${test_app_server_parent_dir}
+			rm -fr ${liferay_home}
 		fi
 
-		cp -r ${LIFERAY_HOME} ${test_app_server_parent_dir}
+		cp -r ${LIFERAY_HOME} ${liferay_home}
 
-		local test_app_server_dir=$(get_tomcat_dir ${test_app_server_parent_dir})
+		local tomcat_dir=$(get_tomcat_dir ${liferay_home})
 
-		echo ${test_app_server_dir}
+		echo ${tomcat_dir}
 
-		sed -i "s/=\"8\([0-9]\{3\}\)\"/=\"${leading_port_number}\1\"/g" "${test_app_server_dir}/conf/server.xml"
+		sed -i "s/=\"8\([0-9]\{3\}\)\"/=\"${leading_port_number}\1\"/g" "${tomcat_dir}/conf/server.xml"
 
-		sed -i "s/channel-logic-name/channel-logic-name-${app_server_bundles_size}/g" "${test_app_server_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
+		sed -i "s/channel-logic-name/channel-logic-name-${app_server_bundles_size}/g" "${tomcat_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
 
-		sed -i "s|liferay.home=${LIFERAY_HOME}|liferay.home=${test_app_server_parent_dir}|g" "${test_app_server_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
+		sed -i "s|liferay.home=${LIFERAY_HOME}|liferay.home=${liferay_home}|g" "${tomcat_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
 
 		local osgi_console_port=$((11312 + ${app_server_bundles_size}))
 
-		sed -i "s/11312/${osgi_console_port}/g" "${test_app_server_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
+		sed -i "s/11312/${osgi_console_port}/g" "${tomcat_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
 
-		chmod a+x ${test_app_server_dir}
+		chmod a+x ${tomcat_dir}
 	done
 }
 
@@ -463,13 +463,13 @@ function start_additional_bundles {
 	do
 		local app_server_bundles_size=$((1 + ${i}))
 
-		local test_app_server_parent_dir="${LIFERAY_HOME}-${app_server_bundles_size}"
+		local liferay_home="${LIFERAY_HOME}-${app_server_bundles_size}"
 
 		local leading_port_number=$((8 + ${app_server_bundles_size}))
 
-		local additional_portal_url="${LIFERAY_PORTAL_URL/\:8/\:"$leading_port_number"}"
+		local liferay_portal_url="${LIFERAY_PORTAL_URL/\:8/\:"$leading_port_number"}"
 
-		start_app_server ${test_app_server_parent_dir} ${additional_portal_url}
+		start_app_server ${liferay_home} ${liferay_portal_url}
 	done
 }
 
@@ -557,13 +557,13 @@ function stop_additional_bundles {
 	do
 		local app_server_bundles_size=$((1 + ${i}))
 
-		local test_app_server_parent_dir=${LIFERAY_HOME}-${app_server_bundles_size}
+		local liferay_home=${LIFERAY_HOME}-${app_server_bundles_size}
 
 		local leading_port_number=$((8 + ${app_server_bundles_size}))
 
-		local additional_portal_url="${LIFERAY_PORTAL_URL/\:8/\:"$leading_port_number"}"
+		local liferay_portal_url="${LIFERAY_PORTAL_URL/\:8/\:"$leading_port_number"}"
 
-		stop_app_server ${test_app_server_parent_dir} ${additional_portal_url}
+		stop_app_server ${liferay_home} ${liferay_portal_url}
 	done
 }
 

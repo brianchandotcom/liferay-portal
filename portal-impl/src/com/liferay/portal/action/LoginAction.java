@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -141,14 +142,9 @@ public class LoginAction implements Action {
 		}
 		else {
 			if (Validator.isNull(loginRedirect)) {
-				Layout redirectLayout = themeDisplay.getLayout();
-
-				Group group = redirectLayout.getGroup();
-
-				loginRedirect =
-					themeDisplay.getPathFriendlyURLPublic() +
-						group.getFriendlyURL() +
-							themeDisplay.getLayoutFriendlyURL(redirectLayout);
+				loginRedirect = GetterUtil.getString(
+					PortalUtil.getLayoutFullURL(
+						themeDisplay.getLayout(), themeDisplay));
 			}
 		}
 

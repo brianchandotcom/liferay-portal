@@ -62,8 +62,8 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 	const localizedTitle = getLocalizedValue(item, schema.title)?.value || '';
 	const selectedItemKey = selectedItemsKey && item[selectedItemsKey];
 	const formattedActions =
-		actionsRef?.current &&
-		(filterItemActions(actionsRef?.current, item) as any);
+		actionsRef.current &&
+		(filterItemActions(actionsRef.current, item) as any);
 
 	return (
 		<ClayCardWithInfo

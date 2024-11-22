@@ -55,6 +55,8 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 				classLoader.getResourceAsStream(
 					"dependencies/replacements.json")));
 
+		List<String> jsonArrayIssueKeys = new ArrayList<>();
+
 		for (Object object : jsonArray) {
 			JSONObject jsonObject = (JSONObject)object;
 
@@ -66,6 +68,10 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 				continue;
 			}
 
+			if (jsonArrayIssueKeys.contains(issueKey)) {
+				continue;
+			}
+
 			String[] fileTypes = _getValidExtensions(jsonObject);
 
 			for (String fileType : fileTypes) {
@@ -73,6 +79,8 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 					objectsArray.add(new Object[] {issueKey, fileType});
 				}
 			}
+
+			jsonArrayIssueKeys.add(issueKey);
 		}
 
 		return objectsArray;

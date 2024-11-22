@@ -1413,10 +1413,6 @@ definition {
 			IFrame.closeFrame();
 		}
 
-		task ("View the warning message shown in Web Content Display") {
-			Alert.viewWarningSpecific(warningMessage = "Web Content Title is scheduled and will be displayed on 1/1/00 1:01 AM.");
-		}
-
 		task ("Access to web content editor via warning message link") {
 			Click(
 				key_warningMessage = "Web Content Title is scheduled and will be displayed on 1/1/00 1:01 AM.",

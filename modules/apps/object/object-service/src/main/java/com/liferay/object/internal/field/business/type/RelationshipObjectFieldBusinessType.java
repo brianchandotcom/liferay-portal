@@ -112,11 +112,15 @@ public class RelationshipObjectFieldBusinessType
 				return 0;
 			}
 
-			Map<String, Object> nestedField = (Map<String, Object>)values.get(
-				relationshipName);
+			Object relatedElement = values.get(relationshipName);
+
+			if (!(relatedElement instanceof Map)) {
+				return 0;
+			}
 
 			String externalReferenceCode = MapUtil.getString(
-				nestedField, "externalReferenceCode");
+				(Map<String, Object>)values.get(relationshipName),
+				"externalReferenceCode");
 
 			if (Validator.isNull(externalReferenceCode)) {
 				return 0;

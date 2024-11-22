@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getNumberOfWords, isTrackable} from '../../src/utils/assets';
+import {
+	getNumberOfWords,
+	isTrackable,
+	transformAssetTypeToSelector,
+} from '../../src/utils/assets';
 
 describe('getNumberOfWords()', () => {
 	let document;
@@ -83,5 +87,46 @@ describe('isTrackable', () => {
 		element.dataset.analyticsCustomName = 'assetCustomNameAttr';
 
 		expect(isTrackable(element, ['analyticsCustomName'])).toBeTruthy();
+	});
+});
+
+describe('transformAssetTypeToSelector', () => {
+	it('transforms a single asset type to a selector', () => {
+		expect(transformAssetTypeToSelector('web-content')).toEqual(
+			'[data-analytics-asset-type="web-content"]'
+		);
+	});
+
+	it('transforms multiple asset types to a selector', () => {
+		expect(
+			transformAssetTypeToSelector([
+				'web-content',
+				'com.liferay.journal.model.JournalArticle',
+			])
+		).toEqual(
+			'[data-analytics-asset-type="web-content"], [data-analytics-asset-type="com.liferay.journal.model.JournalArticle"]'
+		);
+	});
+
+	it('transforms a single asset type with suffix to a selector', () => {
+		expect(
+			transformAssetTypeToSelector(
+				'web-content',
+				':not([data-analytics-asset-viewed="true"])'
+			)
+		).toEqual(
+			'[data-analytics-asset-type="web-content"]:not([data-analytics-asset-viewed="true"])'
+		);
+	});
+
+	it('transforms multiple asset types with suffix to a selector', () => {
+		expect(
+			transformAssetTypeToSelector(
+				['web-content', 'com.liferay.journal.model.JournalArticle'],
+				':not([data-analytics-asset-viewed="true"])'
+			)
+		).toEqual(
+			'[data-analytics-asset-type="web-content"]:not([data-analytics-asset-viewed="true"]), [data-analytics-asset-type="com.liferay.journal.model.JournalArticle"]:not([data-analytics-asset-viewed="true"])'
+		);
 	});
 });

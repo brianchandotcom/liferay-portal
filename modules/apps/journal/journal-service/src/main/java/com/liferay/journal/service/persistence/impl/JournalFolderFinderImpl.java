@@ -71,7 +71,17 @@ public class JournalFolderFinderImpl
 		QueryDefinition<?> queryDefinition) {
 
 		return doCountF_A_ByG_F_DDMSI(
-			groupId, folderId, ddmStructureId, queryDefinition, false);
+			groupId, folderId, ddmStructureId, queryDefinition, false, false);
+	}
+
+	@Override
+	public int countF_A_ByG_F_DDMSI(
+		long groupId, long folderId, long ddmStructureId,
+		QueryDefinition<?> queryDefinition, boolean excludeExpired) {
+
+		return doCountF_A_ByG_F_DDMSI(
+			groupId, folderId, ddmStructureId, queryDefinition, false,
+			excludeExpired);
 	}
 
 	@Override
@@ -80,7 +90,17 @@ public class JournalFolderFinderImpl
 		QueryDefinition<?> queryDefinition) {
 
 		return doCountF_A_ByG_F_DDMSI(
-			groupId, folderId, ddmStructureId, queryDefinition, true);
+			groupId, folderId, ddmStructureId, queryDefinition, true, false);
+	}
+
+	@Override
+	public int filterCountF_A_ByG_F_DDMSI(
+		long groupId, long folderId, long ddmStructureId,
+		QueryDefinition<?> queryDefinition, boolean excludeExpired) {
+
+		return doCountF_A_ByG_F_DDMSI(
+			groupId, folderId, ddmStructureId, queryDefinition, true,
+			excludeExpired);
 	}
 
 	@Override
@@ -89,7 +109,17 @@ public class JournalFolderFinderImpl
 		QueryDefinition<?> queryDefinition) {
 
 		return doFindF_A_ByG_F_DDMSI(
-			groupId, folderId, ddmStructureId, queryDefinition, true);
+			groupId, folderId, ddmStructureId, queryDefinition, true, false);
+	}
+
+	@Override
+	public List<Object> filterFindF_A_ByG_F_DDMSI(
+		long groupId, long folderId, long ddmStructureId,
+		QueryDefinition<?> queryDefinition, boolean excludeExpired) {
+
+		return doFindF_A_ByG_F_DDMSI(
+			groupId, folderId, ddmStructureId, queryDefinition, true,
+			excludeExpired);
 	}
 
 	@Override
@@ -98,7 +128,18 @@ public class JournalFolderFinderImpl
 		QueryDefinition<?> queryDefinition) {
 
 		return doFindF_A_ByG_F_DDMSI_L(
-			groupId, folderId, ddmStructureId, locale, queryDefinition, true);
+			groupId, folderId, ddmStructureId, locale, queryDefinition, true,
+			false);
+	}
+
+	@Override
+	public List<Object> filterFindF_A_ByG_F_DDMSI_L(
+		long groupId, long folderId, long ddmStructureId, Locale locale,
+		QueryDefinition<?> queryDefinition, boolean excludeExpired) {
+
+		return doFindF_A_ByG_F_DDMSI_L(
+			groupId, folderId, ddmStructureId, locale, queryDefinition, true,
+			excludeExpired);
 	}
 
 	@Override
@@ -107,7 +148,17 @@ public class JournalFolderFinderImpl
 		QueryDefinition<?> queryDefinition) {
 
 		return doFindF_A_ByG_F_DDMSI(
-			groupId, folderId, ddmStructureId, queryDefinition, false);
+			groupId, folderId, ddmStructureId, queryDefinition, false, false);
+	}
+
+	@Override
+	public List<Object> findF_A_ByG_F_DDMSI(
+		long groupId, long folderId, long ddmStructureId,
+		QueryDefinition<?> queryDefinition, boolean excludeExpired) {
+
+		return doFindF_A_ByG_F_DDMSI(
+			groupId, folderId, ddmStructureId, queryDefinition, false,
+			excludeExpired);
 	}
 
 	@Override
@@ -140,12 +191,19 @@ public class JournalFolderFinderImpl
 
 	protected int doCountF_A_ByG_F_DDMSI(
 		long groupId, long folderId, long ddmStructureId,
-		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
+		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper,
+		boolean excludeExpired) {
 
 		Session session = null;
 
 		try {
 			session = openSession();
+
+			String articleSQLId = COUNT_A_BY_G_U_F_DDMSI;
+
+			if (excludeExpired) {
+				articleSQLId += "_ExcludeExpired";
+			}
 
 			String sql = updateSQL(
 				StringBundler.concat(
@@ -155,7 +213,7 @@ public class JournalFolderFinderImpl
 						inlineSQLHelper),
 					") UNION ALL (",
 					getArticlesSQL(
-						COUNT_A_BY_G_U_F_DDMSI, groupId, queryDefinition,
+						articleSQLId, groupId, queryDefinition,
 						inlineSQLHelper),
 					StringPool.CLOSE_PARENTHESIS),
 				folderId, ddmStructureId);
@@ -214,12 +272,19 @@ public class JournalFolderFinderImpl
 
 	protected List<Object> doFindF_A_ByG_F_DDMSI(
 		long groupId, long folderId, long ddmStructureId,
-		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
+		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper,
+		boolean excludeExpired) {
 
 		Session session = null;
 
 		try {
 			session = openSession();
+
+			String articleSQLId = FIND_A_BY_G_U_F_DDMSI;
+
+			if (excludeExpired) {
+				articleSQLId += "_ExcludeExpired";
+			}
 
 			String sql = updateSQL(
 				StringBundler.concat(
@@ -229,7 +294,7 @@ public class JournalFolderFinderImpl
 						inlineSQLHelper),
 					") UNION ALL (",
 					getArticlesSQL(
-						FIND_A_BY_G_U_F_DDMSI, groupId, queryDefinition,
+						articleSQLId, groupId, queryDefinition,
 						inlineSQLHelper),
 					StringPool.CLOSE_PARENTHESIS),
 				folderId, ddmStructureId);
@@ -311,12 +376,19 @@ public class JournalFolderFinderImpl
 
 	protected List<Object> doFindF_A_ByG_F_DDMSI_L(
 		long groupId, long folderId, long ddmStructureId, Locale locale,
-		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
+		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper,
+		boolean excludeExpired) {
 
 		Session session = null;
 
 		try {
 			session = openSession();
+
+			String articleSQLId = FIND_A_BY_G_U_F_DDMSI_L;
+
+			if (excludeExpired) {
+				articleSQLId += "_ExcludeExpired";
+			}
 
 			String sql = updateSQL(
 				StringBundler.concat(
@@ -326,7 +398,7 @@ public class JournalFolderFinderImpl
 						inlineSQLHelper),
 					") UNION ALL (",
 					getArticlesSQL(
-						FIND_A_BY_G_U_F_DDMSI_L, groupId, queryDefinition,
+						articleSQLId, groupId, queryDefinition,
 						inlineSQLHelper),
 					StringPool.CLOSE_PARENTHESIS),
 				folderId, ddmStructureId);

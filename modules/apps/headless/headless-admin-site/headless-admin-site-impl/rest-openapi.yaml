@@ -330,6 +330,12 @@ components:
                     description:
                         The display page template's external reference code.
                     type: string
+                friendlyUrlHistory:
+                    $ref: "#/components/schemas/FriendlyUrlHistory"
+                    # @review
+                    description:
+                        The history of previously used URLs to the display page template's rendered content. This field
+                        is not returned by default. It can be requested via nestedFields.
                 friendlyUrlPath_i18n:
                     additionalProperties:
                         type: string

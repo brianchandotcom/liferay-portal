@@ -16,6 +16,10 @@ import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -116,8 +120,12 @@ public class WidgetPageWidgetInstanceResourceImpl
 
 		return new WidgetPageWidgetInstance() {
 			{
-				setParentSectionId(StringPool.BLANK);
-				setPosition(0);
+				setParentSectionId(
+					() -> _getParentSectionId(
+						layout, widgetInstanceExternalReferenceCode));
+				setPosition(
+					() -> _getPosition(
+						layout, widgetInstanceExternalReferenceCode));
 				setWidgetInstanceId(
 					() -> PortletIdCodec.decodeInstanceId(
 						widgetInstanceExternalReferenceCode));
@@ -126,6 +134,39 @@ public class WidgetPageWidgetInstanceResourceImpl
 						widgetInstanceExternalReferenceCode));
 			}
 		};
+	}
+
+	private String _getParentSectionId(Layout layout, String portletId) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		return layoutTypePortlet.getColumn(portletId);
+	}
+
+	private int _getPosition(Layout layout, String portletId) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		List<String> columns = layoutTypePortlet.getColumns();
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		for (String columnId : columns) {
+			String columnValue = typeSettingsUnicodeProperties.getProperty(
+				columnId, StringPool.BLANK);
+
+			List<String> portletIds = ListUtil.fromString(
+				columnValue, StringPool.COMMA);
+
+			int position = portletIds.indexOf(portletId);
+
+			if (position >= 0) {
+				return position;
+			}
+		}
+
+		return 0;
 	}
 
 	@Reference

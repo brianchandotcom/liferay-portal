@@ -420,34 +420,34 @@ function reverse {
 function prepare_additional_bundles {
 	for ((i = 0 ; i < $1 ; i++ ))
 	do
-		appServerBundlesSize=$((1+ ${i}))
+		local app_server_bundles_size=$((1+ ${i}))
 
-		leadingPortNumber=$((8 + ${appServerBundlesSize}))
+		local leading_port_number=$((8 + ${app_server_bundles_size}))
 
-		testAppServerParentDir="${LIFERAY_HOME}-${appServerBundlesSize}"
+		local test_app_server_parent_dir="${LIFERAY_HOME}-${app_server_bundles_size}"
 
-		if [ -d "${testAppServerParentDir}" ]
+		if [ -d "${test_app_server_parent_dir}" ]
 		then
-			rm -rf "${testAppServerParentDir}"
+			rm -rf "${test_app_server_parent_dir}"
 		fi
 
-		cp -r "${LIFERAY_HOME}" "${testAppServerParentDir}"
+		cp -r "${LIFERAY_HOME}" "${test_app_server_parent_dir}"
 
-		testAppServerDir=$(find ${testAppServerParentDir} -type d -name "tomcat*")
+		local test_app_server_dir=$(find ${test_app_server_parent_dir} -type d -name "tomcat*")
 
-		echo "${testAppServerDir}"
+		echo "${test_app_server_dir}"
 
-		sed -i "s/=\"8\([0-9]\{3\}\)\"/=\"${leadingPortNumber}\1\"/g" "${testAppServerDir}/conf/server.xml"
+		sed -i "s/=\"8\([0-9]\{3\}\)\"/=\"${leading_port_number}\1\"/g" "${test_app_server_dir}/conf/server.xml"
 
-		sed -i "s/channel-logic-name/channel-logic-name-${appServerBundlesSize}/g" "${testAppServerDir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
+		sed -i "s/channel-logic-name/channel-logic-name-${app_server_bundles_size}/g" "${test_app_server_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
 
-		sed -i "s|liferay.home=${LIFERAY_HOME}|liferay.home=${testAppServerParentDir}|g" "${testAppServerDir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
+		sed -i "s|liferay.home=${LIFERAY_HOME}|liferay.home=${test_app_server_parent_dir}|g" "${test_app_server_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
 
-		osgiConsolePort=$((11312 + ${appServerBundlesSize}))
+		local osgi_console_port=$((11312 + ${app_server_bundles_size}))
 
-		sed -i "s/11312/${osgiConsolePort}/g" "${testAppServerDir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
+		sed -i "s/11312/${osgi_console_port}/g" "${test_app_server_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
 
-		chmod a+x "${testAppServerDir}"
+		chmod a+x "${test_app_server_dir}"
 	done
 }
 
@@ -461,28 +461,28 @@ function set_variables {
 function start_additional_bundles {
 	for ((i = 0 ; i < $1 ; i++ ))
 	do
-		appServerBundlesSize=$((1+ ${i}))
+		local app_server_bundles_size=$((1+ ${i}))
 
-		leadingPortNumber=$((8 + ${appServerBundlesSize}))
+		local leading_port_number=$((8 + ${app_server_bundles_size}))
 
-		testAppServerParentDir="${LIFERAY_HOME}-${appServerBundlesSize}"
+		local test_app_server_parent_dir="${LIFERAY_HOME}-${app_server_bundles_size}"
 
-		additionalPortalURL="${LIFERAY_PORTAL_URL/\:8/\:"$leadingPortNumber"}"
+		local additional_portal_url="${LIFERAY_PORTAL_URL/\:8/\:"$leading_port_number"}"
 
-		testAppServerDir=$(find ${testAppServerParentDir} -type d -name "tomcat*")
+		local test_app_server_dir=$(find ${test_app_server_parent_dir} -type d -name "tomcat*")
 
-		cd ${testAppServerDir}/bin
+		cd ${test_app_server_dir}/bin
 
 		/bin/bash catalina.sh run &
 
-		while ! curl --output /dev/null --silent --head --fail ${additionalPortalURL}
+		while ! curl --output /dev/null --silent --head --fail ${additional_portal_url}
 		do
 			sleep 5
 		done
 
-		wait_for_portal_log_inactivity ${testAppServerParentDir}
+		wait_for_portal_log_inactivity ${test_app_server_parent_dir}
 
-		echo "${additionalPortalURL} is now available."
+		echo "${additional_portal_url} is now available."
 	done
 }
 
@@ -568,26 +568,26 @@ function start_default_app_server {
 function stop_additional_bundles {
 	for ((i = 0 ; i < $1 ; i++ ))
 	do
-		appServerBundlesSize=$((1+ ${i}))
+		local app_server_bundles_size=$((1+ ${i}))
 
-		testAppServerParentDir=${LIFERAY_HOME}-${appServerBundlesSize}
+		local test_app_server_parent_dir=${LIFERAY_HOME}-${app_server_bundles_size}
 
-		testAppServerDir=$(find ${testAppServerParentDir} -type d -name "tomcat*")
+		local test_app_server_dir=$(find ${test_app_server_parent_dir} -type d -name "tomcat*")
 
-		leadingPortNumber=$((8 + ${appServerBundlesSize}))
+		local leading_port_number=$((8 + ${app_server_bundles_size}))
 
-		additionalPortalURL="${LIFERAY_PORTAL_URL/\:8/\:"$leadingPortNumber"}"
+		local additional_portal_url="${LIFERAY_PORTAL_URL/\:8/\:"$leading_port_number"}"
 
-		cd "${testAppServerDir}/bin"
+		cd "${test_app_server_dir}/bin"
 
 		/bin/bash shutdown.sh &
 
-		while curl --output /dev/null --silent --head --fail ${additionalPortalURL}
+		while curl --output /dev/null --silent --head --fail ${additional_portal_url}
 		do
 			sleep 5
 		done
 
-		echo "${additionalPortalURL} is no longer available."
+		echo "${additional_portal_url} is no longer available."
 	done
 }
 

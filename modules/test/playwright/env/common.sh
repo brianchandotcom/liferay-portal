@@ -418,9 +418,9 @@ function reverse {
 }
 
 function prepare_additional_bundles {
-	for ((i = 0 ; i < $1 ; i++ ))
+	for ((i = 0 ; i < ${1} ; i++ ))
 	do
-		local app_server_bundles_size=$((1+ ${i}))
+		local app_server_bundles_size=$((1 + ${i}))
 
 		local leading_port_number=$((8 + ${app_server_bundles_size}))
 
@@ -433,7 +433,7 @@ function prepare_additional_bundles {
 
 		cp -r "${LIFERAY_HOME}" "${test_app_server_parent_dir}"
 
-		local test_app_server_dir=$(find ${test_app_server_parent_dir} -type d -name "tomcat*")
+		local test_app_server_dir=$(get_tomcat_dir ${test_app_server_parent_dir})
 
 		echo "${test_app_server_dir}"
 
@@ -459,30 +459,17 @@ function set_variables {
 }
 
 function start_additional_bundles {
-	for ((i = 0 ; i < $1 ; i++ ))
+	for ((i = 0 ; i < ${1} ; i++ ))
 	do
-		local app_server_bundles_size=$((1+ ${i}))
-
-		local leading_port_number=$((8 + ${app_server_bundles_size}))
+		local app_server_bundles_size=$((1 + ${i}))
 
 		local test_app_server_parent_dir="${LIFERAY_HOME}-${app_server_bundles_size}"
 
+		local leading_port_number=$((8 + ${app_server_bundles_size}))
+
 		local additional_portal_url="${LIFERAY_PORTAL_URL/\:8/\:"$leading_port_number"}"
 
-		local test_app_server_dir=$(find ${test_app_server_parent_dir} -type d -name "tomcat*")
-
-		cd ${test_app_server_dir}/bin
-
-		/bin/bash catalina.sh run &
-
-		while ! curl --output /dev/null --silent --head --fail ${additional_portal_url}
-		do
-			sleep 5
-		done
-
-		wait_for_portal_log_inactivity ${test_app_server_parent_dir}
-
-		echo "${additional_portal_url} is now available."
+		start_app_server ${test_app_server_parent_dir} ${additional_portal_url}
 	done
 }
 
@@ -566,28 +553,17 @@ function start_default_app_server {
 }
 
 function stop_additional_bundles {
-	for ((i = 0 ; i < $1 ; i++ ))
+	for ((i = 0 ; i < ${1} ; i++ ))
 	do
-		local app_server_bundles_size=$((1+ ${i}))
+		local app_server_bundles_size=$((1 + ${i}))
 
 		local test_app_server_parent_dir=${LIFERAY_HOME}-${app_server_bundles_size}
-
-		local test_app_server_dir=$(find ${test_app_server_parent_dir} -type d -name "tomcat*")
 
 		local leading_port_number=$((8 + ${app_server_bundles_size}))
 
 		local additional_portal_url="${LIFERAY_PORTAL_URL/\:8/\:"$leading_port_number"}"
 
-		cd "${test_app_server_dir}/bin"
-
-		/bin/bash shutdown.sh &
-
-		while curl --output /dev/null --silent --head --fail ${additional_portal_url}
-		do
-			sleep 5
-		done
-
-		echo "${additional_portal_url} is no longer available."
+		stop_app_server ${test_app_server_parent_dir} ${additional_portal_url}
 	done
 }
 

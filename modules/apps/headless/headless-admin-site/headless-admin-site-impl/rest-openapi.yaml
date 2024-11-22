@@ -2825,6 +2825,19 @@ components:
                     description:
                         The utility page's external reference code.
                     type: string
+                friendlyUrlHistory:
+                    $ref: "#/components/schemas/FriendlyUrlHistory"
+                    # @review
+                    description:
+                        The history of previously used URLs to the utility page's rendered content. This field is not
+                        returned by default. It can be requested via nestedFields.
+                friendlyUrlPath_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized relative URLs to the utility page's rendered content.
+                    type: object
                 markedAsDefault:
                     # @review
                     description:

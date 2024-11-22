@@ -410,8 +410,8 @@ export class ApplicationsMenuPage {
 		await this.commerceSpecificationsMenuItem.click();
 	}
 
-	async goToPayments() {
-		await this.goToCommercePanel();
+	async goToPayments(checkTabVisibility = true) {
+		await this.goToCommercePanel(checkTabVisibility);
 		await this.paymentsMenuItem.click();
 	}
 

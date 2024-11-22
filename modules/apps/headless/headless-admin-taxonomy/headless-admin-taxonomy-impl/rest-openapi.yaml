@@ -204,6 +204,11 @@ components:
                     description:
                         The category's parent category, if it exists.
                     properties:
+                        externalReferenceCode:
+                            # @review
+                            description:
+                                The parent taxonomy category's external reference code.
+                            type: string
                         id:
                             format: int64
                             type: integer
@@ -218,6 +223,11 @@ components:
                     description:
                         The parent category's `TaxonomyVocabulary`, if such a parent category exists.
                     properties:
+                        externalReferenceCode:
+                            # @review
+                            description:
+                                The parent category's `TaxonomyVocabulary` external reference code.
+                            type: string
                         id:
                             format: int64
                             type: integer
@@ -264,6 +274,11 @@ components:
             description:
                 Key value pair to associate detailed information with a category.
             properties:
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The taxonomy category's external reference code.
+                    type: string
                 key:
                     # @review
                     description:

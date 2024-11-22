@@ -1065,15 +1065,71 @@ public class AccountEntryLocalServiceTest {
 	public void testUpdateAccountEntry() throws Exception {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
-		String[] domains = {"update1.com", "update2.com"};
+		String[] expectedDomains = {"update1.com", "update2.com"};
 
-		// Domains as non-null
+		accountEntry = _accountEntryLocalService.updateAccountEntry(
+			accountEntry.getAccountEntryId(),
+			accountEntry.getParentAccountEntryId(), accountEntry.getName(),
+			accountEntry.getDescription(), false, expectedDomains,
+			accountEntry.getEmailAddress(), null, accountEntry.getTaxIdNumber(),
+			accountEntry.getStatus(),
+			ServiceContextTestUtil.getServiceContext());
 
-		_testUpdateAccountEntry(accountEntry, domains, domains);
+		Assert.assertArrayEquals(
+			expectedDomains, accountEntry.getDomainsArray());
 
-		// Domains as null after setting domains as non-null
+		accountEntry = _accountEntryLocalService.updateAccountEntry(
+			accountEntry.getAccountEntryId(),
+			accountEntry.getParentAccountEntryId(), accountEntry.getName(),
+			accountEntry.getDescription(), false, null,
+			accountEntry.getEmailAddress(), null, accountEntry.getTaxIdNumber(),
+			accountEntry.getStatus(),
+			ServiceContextTestUtil.getServiceContext());
 
-		_testUpdateAccountEntry(accountEntry, null, domains);
+		Assert.assertArrayEquals(
+			expectedDomains, accountEntry.getDomainsArray());
+
+		_assertStatus(
+			accountEntry, WorkflowConstants.STATUS_APPROVED,
+			TestPropsValues.getUser());
+	}
+
+	@Test
+	public void testUpdateAccountEntryWithCustomFields() throws Exception {
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setExpandoBridgeAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				() -> {
+					ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+						ExpandoTestUtil.addTable(
+							PortalUtil.getClassNameId(AccountEntry.class),
+							ExpandoTableConstants.DEFAULT_TABLE_NAME),
+						"customFieldName", ExpandoColumnConstants.STRING);
+
+					return expandoColumn.getName();
+				},
+				"customFieldValue"
+			).build());
+
+		_accountEntryLocalService.updateAccountEntry(
+			accountEntry.getAccountEntryId(),
+			accountEntry.getParentAccountEntryId(), accountEntry.getName(),
+			accountEntry.getDescription(), false, null,
+			accountEntry.getEmailAddress(), null, accountEntry.getTaxIdNumber(),
+			accountEntry.getStatus(), serviceContext);
+
+		accountEntry = _testAccountEntryModelListener.getModel();
+
+		ExpandoBridge expandoBridge = accountEntry.getExpandoBridge();
+
+		Assert.assertEquals(
+			"customFieldValue",
+			GetterUtil.getString(
+				expandoBridge.getAttribute("customFieldName")));
 	}
 
 	@Test
@@ -1400,53 +1456,6 @@ public class AccountEntryLocalServiceTest {
 				WorkflowConstants.STATUS_APPROVED,
 				userAccountEntry.getStatus());
 		}
-	}
-
-	private void _testUpdateAccountEntry(
-			AccountEntry accountEntry, String[] domains,
-			String[] expectedDomains)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		String columnName = RandomTestUtil.randomString();
-
-		serviceContext.setExpandoBridgeAttributes(
-			HashMapBuilder.<String, Serializable>put(
-				() -> {
-					ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
-						ExpandoTestUtil.addTable(
-							PortalUtil.getClassNameId(AccountEntry.class),
-							ExpandoTableConstants.DEFAULT_TABLE_NAME),
-						columnName, ExpandoColumnConstants.STRING);
-
-					return expandoColumn.getName();
-				},
-				"customFieldValue"
-			).build());
-
-		accountEntry = _accountEntryLocalService.updateAccountEntry(
-			accountEntry.getAccountEntryId(),
-			accountEntry.getParentAccountEntryId(), accountEntry.getName(),
-			accountEntry.getDescription(), false, domains,
-			accountEntry.getEmailAddress(), null, accountEntry.getTaxIdNumber(),
-			accountEntry.getStatus(), serviceContext);
-
-		Assert.assertArrayEquals(
-			expectedDomains, accountEntry.getDomainsArray());
-
-		_assertStatus(
-			accountEntry, WorkflowConstants.STATUS_APPROVED,
-			TestPropsValues.getUser());
-
-		accountEntry = _testAccountEntryModelListener.getModel();
-
-		ExpandoBridge expandoBridge = accountEntry.getExpandoBridge();
-
-		Assert.assertEquals(
-			"customFieldValue",
-			GetterUtil.getString(expandoBridge.getAttribute(columnName)));
 	}
 
 	private static final Comparator<AccountEntry> _accountEntryNameComparator =

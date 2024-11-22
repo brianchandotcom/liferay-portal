@@ -6,9 +6,9 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {
-	ObjectAdminRestClient,
+	ObjectDefinitionApi,
 	ObjectField,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
@@ -66,15 +66,15 @@ test('Select from list with multiple selections allowed is auto-filled by data p
 	test.slow();
 
 	const baseObjectField: Partial<ObjectField> = {
-		DBType: 'String',
-		businessType: 'Text',
+		businessType: ObjectField.BusinessTypeEnum.Text,
+		dBType: ObjectField.DBTypeEnum.String,
 		indexed: true,
 		indexedAsKeyword: false,
 		indexedLanguageId: '',
 		localized: false,
 		required: false,
 		system: false,
-		type: 'String',
+		type: ObjectField.TypeEnum.String,
 	};
 
 	const objectFields = [
@@ -95,30 +95,27 @@ test('Select from list with multiple selections allowed is auto-filled by data p
 	const objectDefinitionExternalReferenceCode =
 		'ObjectDefinition' + getRandomInt();
 
-	const objectAdminRestClient = await apiHelpers.buildRestClient(
-		ObjectAdminRestClient
-	);
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-	const objectDefinition =
-		await objectAdminRestClient.objectDefinition.postObjectDefinition({
-			requestBody: {
-				active: true,
-				enableLocalization: false,
-				externalReferenceCode: objectDefinitionExternalReferenceCode,
-				label: {
-					en_US: objectDefinitionExternalReferenceCode,
-				},
-				name: objectDefinitionExternalReferenceCode,
-				objectFields,
-				objectFolderExternalReferenceCode: 'default',
-				pluralLabel: {
-					en_US: objectDefinitionExternalReferenceCode,
-				},
-				portlet: true,
-				scope: 'company',
-				status: {code: 0},
-				titleObjectFieldName: 'country',
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition({
+			active: true,
+			enableLocalization: false,
+			externalReferenceCode: objectDefinitionExternalReferenceCode,
+			label: {
+				en_US: objectDefinitionExternalReferenceCode,
 			},
+			name: objectDefinitionExternalReferenceCode,
+			objectFields,
+			objectFolderExternalReferenceCode: 'default',
+			pluralLabel: {
+				en_US: objectDefinitionExternalReferenceCode,
+			},
+			portlet: true,
+			scope: 'company',
+			status: {code: 0},
+			titleObjectFieldName: 'country',
 		});
 
 	apiHelpers.data.push({

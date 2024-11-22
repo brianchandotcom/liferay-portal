@@ -33,8 +33,8 @@ const stockObjectDefinition: ObjectDefinition = {
 	name: 'Stock',
 	objectFields: [
 		{
+			DBType: ObjectField.DBTypeEnum.String,
 			businessType: ObjectField.BusinessTypeEnum.Text,
-			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'nameERC',
 			indexed: true,
 			indexedAsKeyword: true,
@@ -195,8 +195,8 @@ test('can export as JSON with all field types mapped', async ({
 			name: 'Stock',
 			objectFields: [
 				{
+					DBType: ObjectField.DBTypeEnum.String,
 					businessType: ObjectField.BusinessTypeEnum.Text,
-					dBType: ObjectField.DBTypeEnum.String,
 					externalReferenceCode: 'nameERC',
 					indexed: true,
 					indexedAsKeyword: true,
@@ -207,8 +207,8 @@ test('can export as JSON with all field types mapped', async ({
 					required: true,
 				},
 				{
+					DBType: ObjectField.DBTypeEnum.Boolean,
 					businessType: ObjectField.BusinessTypeEnum.Boolean,
-					dBType: ObjectField.DBTypeEnum.Boolean,
 					externalReferenceCode: 'customBoolean',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -221,8 +221,8 @@ test('can export as JSON with all field types mapped', async ({
 					type: ObjectField.TypeEnum.Boolean,
 				},
 				{
+					DBType: ObjectField.DBTypeEnum.Clob,
 					businessType: ObjectField.BusinessTypeEnum.LongText,
-					dBType: ObjectField.DBTypeEnum.Clob,
 					externalReferenceCode: 'customLongText',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -235,8 +235,8 @@ test('can export as JSON with all field types mapped', async ({
 					type: ObjectField.TypeEnum.Clob,
 				},
 				{
+					DBType: ObjectField.DBTypeEnum.BigDecimal,
 					businessType: ObjectField.BusinessTypeEnum.PrecisionDecimal,
-					dBType: ObjectField.DBTypeEnum.BigDecimal,
 					externalReferenceCode: 'customPrecisionDecimal',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -249,8 +249,8 @@ test('can export as JSON with all field types mapped', async ({
 					type: ObjectField.TypeEnum.BigDecimal,
 				},
 				{
+					DBType: ObjectField.DBTypeEnum.String,
 					businessType: ObjectField.BusinessTypeEnum.Picklist,
-					dBType: ObjectField.DBTypeEnum.String,
 					externalReferenceCode: 'customPicklist',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -265,8 +265,8 @@ test('can export as JSON with all field types mapped', async ({
 					state: false,
 				},
 				{
+					DBType: ObjectField.DBTypeEnum.Long,
 					businessType: ObjectField.BusinessTypeEnum.Attachment,
-					dBType: ObjectField.DBTypeEnum.Long,
 					indexed: true,
 					indexedAsKeyword: false,
 					label: {

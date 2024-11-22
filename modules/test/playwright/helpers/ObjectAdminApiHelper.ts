@@ -61,8 +61,8 @@ export class ObjectAdminApiHelper {
 			name: objectDefinitionExternalReferenceCode,
 			objectFields: objectFields ?? [
 				{
+					DBType: ObjectField.DBTypeEnum.String,
 					businessType: ObjectField.BusinessTypeEnum.Text,
-					dBType: ObjectField.DBTypeEnum.String,
 					externalReferenceCode: 'textField',
 					indexed: true,
 					indexedAsKeyword: false,

@@ -41,8 +41,8 @@ const objectDefinitionData: ObjectDefinition = {
 	name: `ObjectDefinition`,
 	objectFields: [
 		{
+			DBType: ObjectField.DBTypeEnum.String,
 			businessType: ObjectField.BusinessTypeEnum.Text,
-			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'ObjectFieldERC',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -77,8 +77,8 @@ const objectDefinition1Data: ObjectDefinition = {
 	name: `ObjectDefinition1`,
 	objectFields: [
 		{
+			DBType: ObjectField.DBTypeEnum.String,
 			businessType: ObjectField.BusinessTypeEnum.Text,
-			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'ObjectField1ERC',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -205,8 +205,8 @@ testFeatureFlagsDisabled(
 					name: `ObjectDefinition${i}`,
 					objectFields: [
 						{
+							DBType: ObjectField.DBTypeEnum.String,
 							businessType: ObjectField.BusinessTypeEnum.Text,
-							dBType: ObjectField.DBTypeEnum.String,
 							externalReferenceCode: 'ObjectFieldERC',
 							indexed: true,
 							indexedAsKeyword: false,

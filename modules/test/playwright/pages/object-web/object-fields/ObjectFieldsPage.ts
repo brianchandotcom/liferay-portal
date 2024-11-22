@@ -6,8 +6,8 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ObjectField} from '../../../../../apps/object/object-admin-rest-client-js';
+import {CreateObjectField} from '../../../helpers/ObjectAdminApiHelper';
 import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
-import { CreateObjectField } from '../../../helpers/ObjectAdminApiHelper';
 
 export class ObjectFieldsPage {
 	readonly addObjectFieldButton: Locator;

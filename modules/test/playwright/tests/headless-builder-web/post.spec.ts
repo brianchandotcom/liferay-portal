@@ -156,8 +156,8 @@ test('can create post endpoint with different request and response schema', asyn
 			name: 'Subject',
 			objectFields: [
 				{
+					DBType: ObjectField.DBTypeEnum.String,
 					businessType: ObjectField.BusinessTypeEnum.Text,
-					dBType: ObjectField.DBTypeEnum.String,
 					externalReferenceCode: 'subject-name-field',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -197,8 +197,8 @@ test('can create post endpoint with different request and response schema', asyn
 			name: 'Student',
 			objectFields: [
 				{
+					DBType: ObjectField.DBTypeEnum.String,
 					businessType: ObjectField.BusinessTypeEnum.Text,
-					dBType: ObjectField.DBTypeEnum.String,
 					externalReferenceCode: 'student-name-field',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -230,8 +230,8 @@ test('can create post endpoint with different request and response schema', asyn
 					objectDefinitionName2: 'Subject',
 					objectDefinitionSystem2: false,
 					objectField: {
+						DBType: ObjectField.DBTypeEnum.Long,
 						businessType: ObjectField.BusinessTypeEnum.Relationship,
-						dBType: ObjectField.DBTypeEnum.Long,
 						externalReferenceCode:
 							'student-subjects-relationship-field',
 						indexed: true,

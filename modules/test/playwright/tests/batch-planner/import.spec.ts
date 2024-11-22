@@ -36,8 +36,8 @@ const companyObjectDefinition: ObjectDefinition = {
 	name: 'Test',
 	objectFields: [
 		{
+			DBType: ObjectField.DBTypeEnum.String,
 			businessType: ObjectField.BusinessTypeEnum.Aggregation,
-			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-AggregationField',
 			indexed: false,
 			indexedAsKeyword: false,
@@ -57,8 +57,8 @@ const companyObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.String,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.String,
 			businessType: ObjectField.BusinessTypeEnum.AutoIncrement,
-			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-AutoIncrementField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -76,8 +76,8 @@ const companyObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.String,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Boolean,
 			businessType: ObjectField.BusinessTypeEnum.Boolean,
-			dBType: ObjectField.DBTypeEnum.Boolean,
 			externalReferenceCode: 'Test-BooleanField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -90,8 +90,8 @@ const companyObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Boolean,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Date,
 			businessType: ObjectField.BusinessTypeEnum.Date,
-			dBType: ObjectField.DBTypeEnum.Date,
 			externalReferenceCode: 'Test-DateField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -104,8 +104,8 @@ const companyObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Date,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.DateTime,
 			businessType: ObjectField.BusinessTypeEnum.DateTime,
-			dBType: ObjectField.DBTypeEnum.DateTime,
 			externalReferenceCode: 'Test-DateTimeField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -121,8 +121,8 @@ const companyObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.DateTime,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Double,
 			businessType: ObjectField.BusinessTypeEnum.Decimal,
-			dBType: ObjectField.DBTypeEnum.Double,
 			externalReferenceCode: 'Test-DecimalField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -135,8 +135,8 @@ const companyObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Double,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.String,
 			businessType: ObjectField.BusinessTypeEnum.Formula,
-			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-FormulaField',
 			indexed: false,
 			indexedAsKeyword: false,
@@ -153,8 +153,8 @@ const companyObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.String,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Integer,
 			businessType: ObjectField.BusinessTypeEnum.Integer,
-			dBType: ObjectField.DBTypeEnum.Integer,
 			externalReferenceCode: 'Test-IntegerField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -167,8 +167,8 @@ const companyObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Integer,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Long,
 			businessType: ObjectField.BusinessTypeEnum.LongInteger,
-			dBType: ObjectField.DBTypeEnum.Long,
 			externalReferenceCode: 'Test-LongIntegerField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -181,8 +181,8 @@ const companyObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Long,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Clob,
 			businessType: ObjectField.BusinessTypeEnum.LongText,
-			dBType: ObjectField.DBTypeEnum.Clob,
 			externalReferenceCode: 'Test-LongTextField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -195,8 +195,8 @@ const companyObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Clob,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.BigDecimal,
 			businessType: ObjectField.BusinessTypeEnum.PrecisionDecimal,
-			dBType: ObjectField.DBTypeEnum.BigDecimal,
 			externalReferenceCode: 'Test-PrecisionDecimalField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -209,8 +209,8 @@ const companyObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.BigDecimal,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Clob,
 			businessType: ObjectField.BusinessTypeEnum.RichText,
-			dBType: ObjectField.DBTypeEnum.Clob,
 			externalReferenceCode: 'Test-RichTextField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -223,8 +223,8 @@ const companyObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Clob,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.String,
 			businessType: ObjectField.BusinessTypeEnum.Text,
-			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-TextField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -269,8 +269,8 @@ const siteObjectDefinition: ObjectDefinition = {
 	name: 'Test',
 	objectFields: [
 		{
+			DBType: ObjectField.DBTypeEnum.String,
 			businessType: ObjectField.BusinessTypeEnum.Aggregation,
-			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-AggregationField',
 			indexed: false,
 			indexedAsKeyword: false,
@@ -290,8 +290,8 @@ const siteObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.String,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.String,
 			businessType: ObjectField.BusinessTypeEnum.AutoIncrement,
-			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-AutoIncrementField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -309,8 +309,8 @@ const siteObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.String,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Boolean,
 			businessType: ObjectField.BusinessTypeEnum.Boolean,
-			dBType: ObjectField.DBTypeEnum.Boolean,
 			externalReferenceCode: 'Test-BooleanField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -323,8 +323,8 @@ const siteObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Boolean,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Date,
 			businessType: ObjectField.BusinessTypeEnum.Date,
-			dBType: ObjectField.DBTypeEnum.Date,
 			externalReferenceCode: 'Test-DateField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -337,8 +337,8 @@ const siteObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Date,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.DateTime,
 			businessType: ObjectField.BusinessTypeEnum.DateTime,
-			dBType: ObjectField.DBTypeEnum.DateTime,
 			externalReferenceCode: 'Test-DateTimeField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -354,8 +354,8 @@ const siteObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.DateTime,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Double,
 			businessType: ObjectField.BusinessTypeEnum.Decimal,
-			dBType: ObjectField.DBTypeEnum.Double,
 			externalReferenceCode: 'Test-DecimalField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -368,8 +368,8 @@ const siteObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Double,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.String,
 			businessType: ObjectField.BusinessTypeEnum.Formula,
-			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-FormulaField',
 			indexed: false,
 			indexedAsKeyword: false,
@@ -386,8 +386,8 @@ const siteObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.String,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Integer,
 			businessType: ObjectField.BusinessTypeEnum.Integer,
-			dBType: ObjectField.DBTypeEnum.Integer,
 			externalReferenceCode: 'Test-IntegerField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -400,8 +400,8 @@ const siteObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Integer,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Long,
 			businessType: ObjectField.BusinessTypeEnum.LongInteger,
-			dBType: ObjectField.DBTypeEnum.Long,
 			externalReferenceCode: 'Test-LongIntegerField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -414,8 +414,8 @@ const siteObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Long,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Clob,
 			businessType: ObjectField.BusinessTypeEnum.LongText,
-			dBType: ObjectField.DBTypeEnum.Clob,
 			externalReferenceCode: 'Test-LongTextField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -428,8 +428,8 @@ const siteObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Clob,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.BigDecimal,
 			businessType: ObjectField.BusinessTypeEnum.PrecisionDecimal,
-			dBType: ObjectField.DBTypeEnum.BigDecimal,
 			externalReferenceCode: 'Test-PrecisionDecimalField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -442,8 +442,8 @@ const siteObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.BigDecimal,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.Clob,
 			businessType: ObjectField.BusinessTypeEnum.RichText,
-			dBType: ObjectField.DBTypeEnum.Clob,
 			externalReferenceCode: 'Test-RichTextField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -456,8 +456,8 @@ const siteObjectDefinition: ObjectDefinition = {
 			type: ObjectField.TypeEnum.Clob,
 		},
 		{
+			DBType: ObjectField.DBTypeEnum.String,
 			businessType: ObjectField.BusinessTypeEnum.Text,
-			dBType: ObjectField.DBTypeEnum.String,
 			externalReferenceCode: 'Test-TextField',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -1352,8 +1352,8 @@ test('can see correct custom object name in dropdown', async ({
 			name: 'Stock',
 			objectFields: [
 				{
+					DBType: ObjectField.DBTypeEnum.String,
 					businessType: ObjectField.BusinessTypeEnum.Text,
-					dBType: ObjectField.DBTypeEnum.String,
 					externalReferenceCode: 'nameERC',
 					indexed: true,
 					indexedAsKeyword: true,
@@ -1440,8 +1440,8 @@ test.describe('can rely on anyOf form validation', () => {
 		name: 'Student',
 		objectFields: [
 			{
+				DBType: ObjectField.DBTypeEnum.String,
 				businessType: ObjectField.BusinessTypeEnum.Text,
-				dBType: ObjectField.DBTypeEnum.String,
 				externalReferenceCode: 'student-name-field',
 				indexed: true,
 				indexedAsKeyword: false,
@@ -1471,8 +1471,8 @@ test.describe('can rely on anyOf form validation', () => {
 				objectDefinitionName2: 'Subject',
 				objectDefinitionSystem2: false,
 				objectField: {
+					DBType: ObjectField.DBTypeEnum.Long,
 					businessType: ObjectField.BusinessTypeEnum.Relationship,
-					dBType: ObjectField.DBTypeEnum.Long,
 					externalReferenceCode:
 						'student-subjects-relationship-field-1',
 					indexed: true,
@@ -1510,8 +1510,8 @@ test.describe('can rely on anyOf form validation', () => {
 				objectDefinitionName2: 'Subject',
 				objectDefinitionSystem2: false,
 				objectField: {
+					DBType: ObjectField.DBTypeEnum.Long,
 					businessType: ObjectField.BusinessTypeEnum.Relationship,
-					dBType: ObjectField.DBTypeEnum.Long,
 					externalReferenceCode:
 						'student-subjects-relationship-field-2',
 					indexed: true,
@@ -1549,8 +1549,8 @@ test.describe('can rely on anyOf form validation', () => {
 				objectDefinitionName2: 'Subject',
 				objectDefinitionSystem2: false,
 				objectField: {
+					DBType: ObjectField.DBTypeEnum.Long,
 					businessType: ObjectField.BusinessTypeEnum.Relationship,
-					dBType: ObjectField.DBTypeEnum.Long,
 					externalReferenceCode:
 						'student-subjects-relationship-field-3',
 					indexed: true,
@@ -1597,8 +1597,8 @@ test.describe('can rely on anyOf form validation', () => {
 		name: 'Subject',
 		objectFields: [
 			{
+				DBType: ObjectField.DBTypeEnum.String,
 				businessType: ObjectField.BusinessTypeEnum.Text,
-				dBType: ObjectField.DBTypeEnum.String,
 				externalReferenceCode: 'subject-name-field',
 				indexed: true,
 				indexedAsKeyword: false,

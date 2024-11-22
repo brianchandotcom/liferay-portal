@@ -45,79 +45,79 @@ type ObjectFieldBusinessTypes =
 
 const objectFieldbusinessTypeInfo: {
 	[K in ObjectFieldBusinessTypes]: {
+		['DBType']: ObjectField['DBType'];
 		['businessType']: ObjectField['businessType'];
-		['dBType']: ObjectField['dBType'];
 		['type']: ObjectField['type'];
 	};
 } = {
 	attachment: {
+		DBType: ObjectField.DBTypeEnum.Long,
 		businessType: ObjectField.BusinessTypeEnum.Attachment,
-		dBType: ObjectField.DBTypeEnum.Long,
 		type: ObjectField.TypeEnum.Long,
 	},
 	autoIncrement: {
+		DBType: ObjectField.DBTypeEnum.String,
 		businessType: ObjectField.BusinessTypeEnum.AutoIncrement,
-		dBType: ObjectField.DBTypeEnum.String,
 		type: ObjectField.TypeEnum.String,
 	},
 	boolean: {
+		DBType: ObjectField.DBTypeEnum.Boolean,
 		businessType: ObjectField.BusinessTypeEnum.Boolean,
-		dBType: ObjectField.DBTypeEnum.Boolean,
 		type: ObjectField.TypeEnum.Boolean,
 	},
 	date: {
+		DBType: ObjectField.DBTypeEnum.Date,
 		businessType: ObjectField.BusinessTypeEnum.Date,
-		dBType: ObjectField.DBTypeEnum.Date,
 		type: ObjectField.TypeEnum.Date,
 	},
 	decimal: {
+		DBType: ObjectField.DBTypeEnum.Double,
 		businessType: ObjectField.BusinessTypeEnum.Decimal,
-		dBType: ObjectField.DBTypeEnum.Double,
 		type: ObjectField.TypeEnum.Double,
 	},
 	encrypted: {
+		DBType: ObjectField.DBTypeEnum.Clob,
 		businessType: ObjectField.BusinessTypeEnum.Encrypted,
-		dBType: ObjectField.DBTypeEnum.Clob,
 		type: ObjectField.TypeEnum.Clob,
 	},
 	integer: {
+		DBType: ObjectField.DBTypeEnum.Integer,
 		businessType: ObjectField.BusinessTypeEnum.Integer,
-		dBType: ObjectField.DBTypeEnum.Integer,
 		type: ObjectField.TypeEnum.Integer,
 	},
 	longInteger: {
+		DBType: ObjectField.DBTypeEnum.Long,
 		businessType: ObjectField.BusinessTypeEnum.LongInteger,
-		dBType: ObjectField.DBTypeEnum.Long,
 		type: ObjectField.TypeEnum.Long,
 	},
 	longText: {
+		DBType: ObjectField.DBTypeEnum.Clob,
 		businessType: ObjectField.BusinessTypeEnum.LongText,
-		dBType: ObjectField.DBTypeEnum.Clob,
 		type: ObjectField.TypeEnum.Clob,
 	},
 	multiselectPicklist: {
+		DBType: ObjectField.DBTypeEnum.String,
 		businessType: ObjectField.BusinessTypeEnum.MultiselectPicklist,
-		dBType: ObjectField.DBTypeEnum.String,
 		type: ObjectField.TypeEnum.String,
 	},
 	picklist: {
+		DBType: ObjectField.DBTypeEnum.String,
 		businessType: ObjectField.BusinessTypeEnum.Picklist,
-		dBType: ObjectField.DBTypeEnum.String,
 		type: ObjectField.TypeEnum.String,
 	},
 	precisionDecimal: {
+		DBType: ObjectField.DBTypeEnum.BigDecimal,
 		businessType: ObjectField.BusinessTypeEnum.PrecisionDecimal,
-		dBType: ObjectField.DBTypeEnum.BigDecimal,
 		type: ObjectField.TypeEnum.BigDecimal,
 	},
 	richText: {
+		DBType: ObjectField.DBTypeEnum.Clob,
 		businessType: ObjectField.BusinessTypeEnum.RichText,
-		dBType: ObjectField.DBTypeEnum.Clob,
 		type: ObjectField.TypeEnum.Clob,
 	},
 	text: {
+		DBType: ObjectField.DBTypeEnum.String,
 		businessType: ObjectField.BusinessTypeEnum.Text,
-		dBType: ObjectField.DBTypeEnum.String,
 		type: ObjectField.TypeEnum.String,
 	},
 };
@@ -140,8 +140,8 @@ export function createObjectField(
 	};
 
 	return {
+		DBType: objectFieldbusinessTypeInfo[businessType].DBType,
 		businessType: objectFieldbusinessTypeInfo[businessType].businessType,
-		dBType: objectFieldbusinessTypeInfo[businessType].dBType,
 		label: {
 			en_US: objectFieldBusinessTypeLabelName.label,
 		},

@@ -10,12 +10,15 @@ import com.liferay.friendly.url.util.comparator.FriendlyURLEntryLocalizationComp
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
+import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.FriendlyUrlHistoryResource;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -102,6 +105,30 @@ public class FriendlyUrlHistoryResourceImpl
 		return _toFriendlyUrlHistory(layout);
 	}
 
+	@NestedField(parentClass = UtilityPage.class, value = "friendlyUrlHistory")
+	@Override
+	public FriendlyUrlHistory
+			getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory(
+				String siteExternalReferenceCode,
+				String utilityPageExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					utilityPageExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode));
+
+		return _toFriendlyUrlHistory(
+			_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()));
+	}
+
 	private JSONObject _getFriendlyUrlPathJSONObject(Layout layout)
 		throws Exception {
 
@@ -159,5 +186,8 @@ public class FriendlyUrlHistoryResourceImpl
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private LayoutUtilityPageEntryService _layoutUtilityPageEntryService;
 
 }

@@ -160,6 +160,8 @@ public class RelationshipObjectFieldBusinessType
 			return 0;
 		}
 
+		Exception exception1 = null;
+
 		if (values.containsKey(objectField.getName())) {
 			Object value = values.get(objectField.getName());
 
@@ -190,10 +192,12 @@ public class RelationshipObjectFieldBusinessType
 
 				return objectEntry.getObjectEntryId();
 			}
-			catch (Exception exception) {
+			catch (Exception exception2) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
+					_log.debug(exception2);
 				}
+
+				exception1 = exception2;
 			}
 		}
 
@@ -215,13 +219,27 @@ public class RelationshipObjectFieldBusinessType
 					externalReferenceCode, objectDefinition, 0L);
 			}
 
-			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-				externalReferenceCode,
-				objectDefinition.getObjectDefinitionId());
+			try {
+				ObjectEntry objectEntry =
+					_objectEntryLocalService.getObjectEntry(
+						externalReferenceCode,
+						objectDefinition.getObjectDefinitionId());
 
-			if (objectEntry != null) {
-				return objectEntry.getObjectEntryId();
+				if (objectEntry != null) {
+					return objectEntry.getObjectEntryId();
+				}
 			}
+			catch (Exception exception2) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception2);
+				}
+
+				exception1 = exception2;
+			}
+		}
+
+		if (exception1 != null) {
+			throw new PortalException(exception1);
 		}
 
 		return null;

@@ -358,9 +358,33 @@ public class PoshiReleasePortalTopLevelBuildRunner
 	private String _getDistPortalBundlesBuildSHA(String upstreamBranchName)
 		throws IOException {
 
-		String distPortalBundlesBuildURL =
-			JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(
-				upstreamBranchName);
+		String distPortalBundlesBuildURL = null;
+
+		try {
+			distPortalBundlesBuildURL =
+				JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(
+					upstreamBranchName);
+		}
+		catch (Exception exception) {
+			System.out.println("WARNING: Unable to get a dist portal bundle");
+		}
+
+		if (!JenkinsResultsParserUtil.isURL(distPortalBundlesBuildURL)) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("https://github.com/liferay/liferay-portal");
+
+			if (!upstreamBranchName.equals("master")) {
+				sb.append("-ee");
+			}
+
+			sb.append("/tree/");
+			sb.append(upstreamBranchName);
+
+			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(sb.toString());
+
+			return remoteGitRef.getSHA();
+		}
 
 		String distPortalBundlesBuildSHA = JenkinsResultsParserUtil.toString(
 			distPortalBundlesBuildURL + "/git-hash");

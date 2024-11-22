@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.List;
 
@@ -79,6 +80,42 @@ public class WidgetPageWidgetInstanceResourceImpl
 		_layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
+	}
+
+	@Override
+	public Page<WidgetPageWidgetInstance>
+			getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPage(
+				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode,
+			GroupUtil.getGroupId(
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutType layoutType = layout.getLayoutType();
+
+		if (!(layoutType instanceof LayoutTypePortlet)) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		return Page.of(
+			transform(
+				layoutTypePortlet.getPortletIds(),
+				portletId -> _toWidgetPageWidgetInstance(layout, portletId)));
 	}
 
 	@Override

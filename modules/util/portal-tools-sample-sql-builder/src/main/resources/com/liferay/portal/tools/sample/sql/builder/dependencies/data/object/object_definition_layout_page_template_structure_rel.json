@@ -10,7 +10,7 @@
 				"collection": {
 					"itemSubtype": "597",
 					"itemType": "${objectDefinitionClassName}",
-					"key": "com.liferay.object.web.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_${companyId}_${objectDefinitionName}",
+					"key": "${objectDefinitionClassName}",
 					"title": "Ticket",
 					"type": "com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType"
 				},

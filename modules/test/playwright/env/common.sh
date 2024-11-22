@@ -439,13 +439,12 @@ function prepare_additional_bundles {
 
 		sed -i "s/=\"8\([0-9]\{3\}\)\"/=\"${leading_port_number}\1\"/g" "${tomcat_dir}/conf/server.xml"
 
-		sed -i "s/channel-logic-name/channel-logic-name-${app_server_bundles_size}/g" "${tomcat_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
-
-		sed -i "s|liferay.home=${LIFERAY_HOME}|liferay.home=${liferay_home}|g" "${tomcat_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
-
 		local osgi_console_port=$((11312 + ${app_server_bundles_size}))
 
 		sed -i "s/11312/${osgi_console_port}/g" "${tomcat_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
+
+		sed -i "s/channel-logic-name/channel-logic-name-${app_server_bundles_size}/g" "${tomcat_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
+		sed -i "s|liferay.home=${LIFERAY_HOME}|liferay.home=${liferay_home}|g" "${tomcat_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
 
 		chmod a+x ${tomcat_dir}
 	done

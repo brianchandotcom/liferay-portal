@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/core": "3.121.0",
-		"@clayui/drop-down": "3.121.0",
-		"@clayui/form": "3.119.0",
+		"@clayui/core": "3.123.0",
+		"@clayui/drop-down": "3.123.0",
+		"@clayui/form": "3.122.0",
 		"@clayui/shared": "3.119.0",
 		"react": "16.12.0"
 	},

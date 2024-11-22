@@ -2,9 +2,9 @@
 	"dependencies": {
 		"@clayui/alert": "3.111.0",
 		"@clayui/button": "3.116.0",
-		"@clayui/core": "3.121.0",
-		"@clayui/drop-down": "3.121.0",
-		"@clayui/form": "3.119.0",
+		"@clayui/core": "3.123.0",
+		"@clayui/drop-down": "3.123.0",
+		"@clayui/form": "3.122.0",
 		"@clayui/icon": "3.111.0",
 		"@clayui/sticker": "3.111.0",
 		"@clayui/tooltip": "3.119.0",

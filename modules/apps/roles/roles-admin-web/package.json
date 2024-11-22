@@ -1,10 +1,10 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.116.0",
-		"@clayui/form": "3.119.0",
+		"@clayui/form": "3.122.0",
 		"@clayui/icon": "3.111.0",
 		"@clayui/label": "3.111.0",
-		"@clayui/nav": "3.121.0",
+		"@clayui/nav": "3.123.0",
 		"@clayui/shared": "3.119.0",
 		"frontend-js-web": "*",
 		"react": "16.12.0"

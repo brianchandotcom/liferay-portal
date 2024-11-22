@@ -26,9 +26,7 @@ import java.lang.reflect.Field;
 
 import java.net.URL;
 
-import java.security.AccessController;
 import java.security.CodeSource;
-import java.security.PrivilegedAction;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
@@ -236,7 +234,7 @@ public class JspCompiler {
 
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
 
-		_initClassPath();
+		_addDependenciesToClassPath();
 		_initTLDMappings(options, servletContext);
 	}
 
@@ -393,20 +391,6 @@ public class JspCompiler {
 		for (URL url : urls) {
 			_populateTldMappings(
 				url.getPath(), taglibXmls, tldResourcePaths, url);
-		}
-	}
-
-	private void _initClassPath() {
-		if (System.getSecurityManager() != null) {
-			AccessController.doPrivileged(
-				(PrivilegedAction<Void>)() -> {
-					_addDependenciesToClassPath();
-
-					return null;
-				});
-		}
-		else {
-			_addDependenciesToClassPath();
 		}
 	}
 

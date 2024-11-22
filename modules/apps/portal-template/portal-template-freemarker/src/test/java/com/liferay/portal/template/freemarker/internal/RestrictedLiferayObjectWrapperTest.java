@@ -282,6 +282,42 @@ public class RestrictedLiferayObjectWrapperTest
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
+	public void testWrapWithCompanyRestrictForFalse() throws Exception {
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
+
+		TransactionInvokerUtil transactionInvokerUtil =
+			new TransactionInvokerUtil();
+
+		transactionInvokerUtil.setTransactionInvoker(
+			new TestTransactionInvoker());
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "TEMPLATE_ENGINE_FREEMARKER_COMPANY_RESTRICT",
+			false);
+
+		_testWrap();
+	}
+
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@Test
+	public void testWrapWithCompanyRestrictForTrue() throws Exception {
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
+
+		TransactionInvokerUtil transactionInvokerUtil =
+			new TransactionInvokerUtil();
+
+		transactionInvokerUtil.setTransactionInvoker(
+			new TestTransactionInvoker());
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "TEMPLATE_ENGINE_FREEMARKER_COMPANY_RESTRICT",
+			true);
+
+		_testWrap();
+	}
+
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@Test
 	public void testWrapWithTransactionStrictReadOnlyForFalse()
 		throws Exception {
 
@@ -422,16 +458,28 @@ public class RestrictedLiferayObjectWrapperTest
 
 				// Base model with wrong company ID
 
-				try {
-					objectWrapper.wrap(new TestBaseModel(123L));
+				boolean companyRestrict = ReflectionTestUtil.getFieldValue(
+					PropsValues.class,
+					"TEMPLATE_ENGINE_FREEMARKER_COMPANY_RESTRICT");
 
-					Assert.fail();
+				if (companyRestrict) {
+					try {
+						objectWrapper.wrap(new TestBaseModel(123L));
+
+						Assert.fail();
+					}
+					catch (TemplateModelException templateModelException) {
+						Assert.assertEquals(
+							"Denied access to model object as it does not " +
+								"belong to current company 1",
+							templateModelException.getMessage());
+					}
 				}
-				catch (TemplateModelException templateModelException) {
-					Assert.assertEquals(
-						"Denied access to model object as it does not belong " +
-							"to current company 1",
-						templateModelException.getMessage());
+				else {
+					assertTemplateModel(
+						"123", stringModel -> stringModel.getAsString(),
+						StringModel.class.cast(
+							objectWrapper.wrap(new TestBaseModel(123L))));
 				}
 
 				// Base model with wrong company ID and disabled checking

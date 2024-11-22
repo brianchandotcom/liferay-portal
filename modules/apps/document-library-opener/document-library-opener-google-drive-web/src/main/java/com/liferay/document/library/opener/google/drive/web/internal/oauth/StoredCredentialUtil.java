@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -54,7 +54,11 @@ public class StoredCredentialUtil {
 
 	public static boolean containsKey(long companyId, String key) {
 		Map<String, StoredCredential> storedCredentials =
-			_storedCredentials.getOrDefault(companyId, new HashMap<>());
+			_storedCredentials.get(companyId);
+
+		if (storedCredentials == null) {
+			return false;
+		}
 
 		return storedCredentials.containsKey(key);
 	}
@@ -63,7 +67,11 @@ public class StoredCredentialUtil {
 		long companyId, StoredCredential storedCredential) {
 
 		Map<String, StoredCredential> storedCredentials =
-			_storedCredentials.getOrDefault(companyId, new HashMap<>());
+			_storedCredentials.get(companyId);
+
+		if (storedCredentials == null) {
+			return false;
+		}
 
 		return storedCredentials.containsValue(storedCredential);
 	}
@@ -79,35 +87,55 @@ public class StoredCredentialUtil {
 
 	public static StoredCredential get(long companyId, String key) {
 		Map<String, StoredCredential> storedCredentials =
-			_storedCredentials.getOrDefault(companyId, new HashMap<>());
+			_storedCredentials.get(companyId);
+
+		if (storedCredentials == null) {
+			return null;
+		}
 
 		return storedCredentials.get(key);
 	}
 
 	public static boolean isEmpty(long companyId) {
 		Map<String, StoredCredential> storedCredentials =
-			_storedCredentials.getOrDefault(companyId, new HashMap<>());
+			_storedCredentials.get(companyId);
+
+		if (storedCredentials == null) {
+			return true;
+		}
 
 		return storedCredentials.isEmpty();
 	}
 
 	public static Set<String> keySet(long companyId) {
 		Map<String, StoredCredential> storedCredentials =
-			_storedCredentials.getOrDefault(companyId, new HashMap<>());
+			_storedCredentials.get(companyId);
+
+		if (storedCredentials == null) {
+			return Collections.emptySet();
+		}
 
 		return storedCredentials.keySet();
 	}
 
 	public static int size(long companyId) {
 		Map<String, StoredCredential> storedCredentials =
-			_storedCredentials.getOrDefault(companyId, new HashMap<>());
+			_storedCredentials.get(companyId);
+
+		if (storedCredentials == null) {
+			return 0;
+		}
 
 		return storedCredentials.size();
 	}
 
 	public static Collection<StoredCredential> values(long companyId) {
 		Map<String, StoredCredential> storedCredentials =
-			_storedCredentials.getOrDefault(companyId, new HashMap<>());
+			_storedCredentials.get(companyId);
+
+		if (storedCredentials == null) {
+			return Collections.emptyList();
+		}
 
 		return storedCredentials.values();
 	}

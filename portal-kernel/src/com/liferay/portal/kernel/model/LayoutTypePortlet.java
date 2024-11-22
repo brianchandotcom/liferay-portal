@@ -72,6 +72,10 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public List<Portlet> getAllPortlets(String columnId);
 
+	public String getColumn(String portletId);
+
+	public List<String> getColumns();
+
 	public List<Portlet> getEmbeddedPortlets();
 
 	public List<Portlet> getExplicitlyAddedPortlets();

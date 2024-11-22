@@ -345,6 +345,61 @@ public class LayoutTypePortletImpl
 	}
 
 	@Override
+	public String getColumn(String portletId) {
+		String portletIdColumnId = StringPool.BLANK;
+
+		List<String> columnIds = getColumns();
+
+		for (String columnId : columnIds) {
+			String[] portletIds = StringUtil.split(getColumnValue(columnId));
+
+			for (String columnPortletId : portletIds) {
+				if (columnPortletId.equals(portletId)) {
+					return columnId;
+				}
+
+				if (Validator.isNull(portletIdColumnId) &&
+					Objects.equals(
+						PortletIdCodec.decodePortletName(columnPortletId),
+						PortletIdCodec.decodePortletName(portletId))) {
+
+					portletIdColumnId = columnId;
+				}
+			}
+		}
+
+		return portletIdColumnId;
+	}
+
+	@Override
+	public List<String> getColumns() {
+		List<String> columns = new ArrayList<>();
+
+		Layout layout = getLayout();
+
+		if (layout.isTypePortlet()) {
+			if (Objects.equals(
+					layout.getType(),
+					LayoutConstants.TYPE_FULL_PAGE_APPLICATION)) {
+
+				columns.add("fullPageApplicationPortlet");
+			}
+			else {
+				LayoutTemplate layoutTemplate = getLayoutTemplate();
+
+				columns.addAll(layoutTemplate.getColumns());
+
+				Collections.addAll(columns, getNestedColumns());
+			}
+		}
+		else if (layout.isTypePanel()) {
+			columns.add("panelSelectedPortlets");
+		}
+
+		return columns;
+	}
+
+	@Override
 	public List<Portlet> getEmbeddedPortlets() {
 		Layout layout = getLayout();
 
@@ -1720,59 +1775,6 @@ public class LayoutTypePortletImpl
 			ResourcePermissionLocalServiceUtil.addResourcePermission(
 				resourcePermission);
 		}
-	}
-
-	protected String getColumn(String portletId) {
-		String portletIdColumnId = StringPool.BLANK;
-
-		List<String> columnIds = getColumns();
-
-		for (String columnId : columnIds) {
-			String[] portletIds = StringUtil.split(getColumnValue(columnId));
-
-			for (String columnPortletId : portletIds) {
-				if (columnPortletId.equals(portletId)) {
-					return columnId;
-				}
-
-				if (Validator.isNull(portletIdColumnId) &&
-					Objects.equals(
-						PortletIdCodec.decodePortletName(columnPortletId),
-						PortletIdCodec.decodePortletName(portletId))) {
-
-					portletIdColumnId = columnId;
-				}
-			}
-		}
-
-		return portletIdColumnId;
-	}
-
-	protected List<String> getColumns() {
-		List<String> columns = new ArrayList<>();
-
-		Layout layout = getLayout();
-
-		if (layout.isTypePortlet()) {
-			if (Objects.equals(
-					layout.getType(),
-					LayoutConstants.TYPE_FULL_PAGE_APPLICATION)) {
-
-				columns.add("fullPageApplicationPortlet");
-			}
-			else {
-				LayoutTemplate layoutTemplate = getLayoutTemplate();
-
-				columns.addAll(layoutTemplate.getColumns());
-
-				Collections.addAll(columns, getNestedColumns());
-			}
-		}
-		else if (layout.isTypePanel()) {
-			columns.add("panelSelectedPortlets");
-		}
-
-		return columns;
 	}
 
 	protected String getColumnValue(String columnId) {

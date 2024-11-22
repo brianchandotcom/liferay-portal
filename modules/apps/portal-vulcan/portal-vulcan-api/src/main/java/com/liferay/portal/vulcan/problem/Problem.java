@@ -24,26 +24,25 @@ public interface Problem {
 
 		BAD_REQUEST(400, "Bad Request");
 
-		public String getReason() {
+		public String getReasonPhrase() {
 			return toString();
 		}
 
 		public int getStatusCode() {
-			return _code;
+			return _statusCode;
 		}
 
 		public String toString() {
-			return _reason;
+			return _reasonPhrase;
 		}
 
-		private Status(int statusCode, String reason) {
-			_reason = reason;
-
-			_code = statusCode;
+		private Status(int statusCode, String reasonPhrase) {
+			_statusCode = statusCode;
+			_reasonPhrase = reasonPhrase;
 		}
 
-		private final int _code;
-		private final String _reason;
+		private final String _reasonPhrase;
+		private final int _statusCode;
 
 	}
 

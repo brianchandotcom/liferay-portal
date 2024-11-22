@@ -132,7 +132,7 @@ public class WikiPageDTOConverter
 					() -> TransformUtil.transformToArray(
 						_assetCategoryLocalService.getCategories(
 							com.liferay.wiki.model.WikiPage.class.getName(),
-							wikiPage.getPageId()),
+							wikiPage.getResourcePrimKey()),
 						assetCategory ->
 							TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
 								assetCategory,

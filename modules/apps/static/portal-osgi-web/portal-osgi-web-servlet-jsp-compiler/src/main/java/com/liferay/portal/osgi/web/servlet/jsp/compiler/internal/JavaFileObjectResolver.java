@@ -46,11 +46,10 @@ import org.osgi.framework.wiring.BundleWiring;
 public class JavaFileObjectResolver {
 
 	public JavaFileObjectResolver(
-		BundleWiring bundleWiring, BundleWiring jspBundleWiring,
+		BundleWiring bundleWiring,
 		Map<BundleWiring, Set<String>> bundleWiringPackageNames) {
 
 		_bundleWiring = bundleWiring;
-		_jspBundleWiring = jspBundleWiring;
 		_bundleWiringPackageNames = bundleWiringPackageNames;
 	}
 
@@ -64,12 +63,6 @@ public class JavaFileObjectResolver {
 		if (recurse) {
 			options = BundleWiring.LISTRESOURCES_RECURSE;
 		}
-
-		javaFileObjects.addAll(
-			_toJavaFileObjects(
-				_jspBundleWiring.getBundle(),
-				_jspBundleWiring.listResources(
-					packagePath, "*.class", options)));
 
 		javaFileObjects.addAll(
 			_toJavaFileObjects(
@@ -285,6 +278,5 @@ public class JavaFileObjectResolver {
 	private final Map<String, Collection<JavaFileObject>> _javaFileObjects =
 		new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.SOFT_REFERENCE_FACTORY);
-	private final BundleWiring _jspBundleWiring;
 
 }

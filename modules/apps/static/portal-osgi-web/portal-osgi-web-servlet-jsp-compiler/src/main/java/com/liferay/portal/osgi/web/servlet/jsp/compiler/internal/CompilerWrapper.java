@@ -521,7 +521,7 @@ public class CompilerWrapper extends Compiler {
 
 			_javaFileObjectResolvers.add(
 				new JavaFileObjectResolver(
-					bundleWiring, _jspBundleWiring, _bundleWiringPackageNames));
+					bundleWiring, _bundleWiringPackageNames));
 		}
 
 		if (_log.isInfoEnabled()) {
@@ -704,7 +704,6 @@ public class CompilerWrapper extends Compiler {
 				FinalizeManager.SOFT_REFERENCE_FACTORY),
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final Field _digesterField;
-	private static final BundleWiring _jspBundleWiring;
 	private static final Map<BundleWiring, Set<String>>
 		_jspBundleWiringPackageNames = new HashMap<>();
 	private static final Map<String, String> _servletApiPublicIdsMap;
@@ -713,9 +712,9 @@ public class CompilerWrapper extends Compiler {
 	static {
 		Bundle jspBundle = FrameworkUtil.getBundle(CompilerWrapper.class);
 
-		_jspBundleWiring = jspBundle.adapt(BundleWiring.class);
+		BundleWiring jspBundleWiring = jspBundle.adapt(BundleWiring.class);
 
-		for (BundleWire bundleWire : _jspBundleWiring.getRequiredWires(null)) {
+		for (BundleWire bundleWire : jspBundleWiring.getRequiredWires(null)) {
 			BundleWiring providedBundleWiring = bundleWire.getProviderWiring();
 
 			Set<String> packageNames = _collectPackageNames(

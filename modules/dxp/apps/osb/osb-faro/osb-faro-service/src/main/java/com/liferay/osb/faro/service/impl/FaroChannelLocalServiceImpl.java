@@ -118,7 +118,8 @@ public class FaroChannelLocalServiceImpl
 				new long[] {role.getRoleId()});
 
 			try {
-				_sendEmail(faroChannel, invitedUserId, userId);
+				_sendEmail(
+					faroChannel, invitedUserId, role.getRoleId(), userId);
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -233,7 +234,8 @@ public class FaroChannelLocalServiceImpl
 	}
 
 	private void _sendEmail(
-			FaroChannel faroChannel, long invitedUserId, long userId)
+			FaroChannel faroChannel, long invitedUserId, long roleId,
+			long userId)
 		throws Exception {
 
 		User user = _userLocalService.getUser(userId);
@@ -250,6 +252,19 @@ public class FaroChannelLocalServiceImpl
 			"content.Language", invitedUser.getLocale(), getClass());
 
 		String subject = _language.get(resourceBundle, "new-property-access");
+
+		String roleName = null;
+
+		Role role = _roleLocalService.getRole(roleId);
+
+		if (StringUtil.equals(
+				role.getName(), RoleConstants.SITE_ADMINISTRATOR)) {
+
+			roleName = "administrator-fragment";
+		}
+		else {
+			roleName = "member-fragment";
+		}
 
 		String body = StringUtil.replace(
 			StringUtil.read(
@@ -286,10 +301,10 @@ public class FaroChannelLocalServiceImpl
 				subject, EmailUtil.getLiferayIconURL(),
 				_language.format(
 					resourceBundle,
-					"you-have-been-added-as-a-team-member-on-the-analytics-" +
-						"cloud-x-workspace-property-by-x",
+					"you-have-been-added-as-a-team-x-on-the-analytics-cloud-" +
+						"x-workspace-property-by-x",
 					new String[] {
-						faroChannel.getName(), user.getEmailAddress()
+						roleName, faroChannel.getName(), user.getEmailAddress()
 					}),
 				_language.get(
 					resourceBundle,

@@ -2071,8 +2071,7 @@ public class RESTBuilder {
 		throws Exception {
 
 		String outputPathString = StringBundler.concat(
-			baseClientJSDir.getPath(),
-			"/src/main/resources/META-INF/resources/", targetClientType);
+			baseClientJSDir.getPath(), "/src/", targetClientType);
 
 		ProcessBuilder processBuilder = new ProcessBuilder(
 			Arrays.asList(

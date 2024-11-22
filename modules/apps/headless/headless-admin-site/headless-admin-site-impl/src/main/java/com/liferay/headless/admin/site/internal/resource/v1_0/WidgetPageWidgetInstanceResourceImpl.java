@@ -118,22 +118,8 @@ public class WidgetPageWidgetInstanceResourceImpl
 			throw new NoSuchPortletException();
 		}
 
-		return new WidgetPageWidgetInstance() {
-			{
-				setParentSectionId(
-					() -> _getParentSectionId(
-						layout, widgetInstanceExternalReferenceCode));
-				setPosition(
-					() -> _getPosition(
-						layout, widgetInstanceExternalReferenceCode));
-				setWidgetInstanceId(
-					() -> PortletIdCodec.decodeInstanceId(
-						widgetInstanceExternalReferenceCode));
-				setWidgetName(
-					() -> PortletIdCodec.decodePortletName(
-						widgetInstanceExternalReferenceCode));
-			}
-		};
+		return _toWidgetPageWidgetInstance(
+			layout, widgetInstanceExternalReferenceCode);
 	}
 
 	private String _getParentSectionId(Layout layout, String portletId) {
@@ -167,6 +153,22 @@ public class WidgetPageWidgetInstanceResourceImpl
 		}
 
 		return 0;
+	}
+
+	private WidgetPageWidgetInstance _toWidgetPageWidgetInstance(
+		Layout layout, String portletId) {
+
+		return new WidgetPageWidgetInstance() {
+			{
+				setParentSectionId(
+					() -> _getParentSectionId(layout, portletId));
+				setPosition(() -> _getPosition(layout, portletId));
+				setWidgetInstanceId(
+					() -> PortletIdCodec.decodeInstanceId(portletId));
+				setWidgetName(
+					() -> PortletIdCodec.decodePortletName(portletId));
+			}
+		};
 	}
 
 	@Reference

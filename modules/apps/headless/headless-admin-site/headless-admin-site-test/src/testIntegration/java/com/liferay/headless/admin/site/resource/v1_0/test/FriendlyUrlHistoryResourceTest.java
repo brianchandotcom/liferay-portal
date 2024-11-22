@@ -53,6 +53,39 @@ public class FriendlyUrlHistoryResourceTest
 
 	@Override
 	@Test
+	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getDisplayPageLayoutPageTemplateEntry(serviceContext);
+
+		List<String> list = _updateFriendlyURL(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()));
+
+		FriendlyUrlHistory friendlyUrlHistory =
+			friendlyUrlHistoryResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory(
+					testGroup.getExternalReferenceCode(),
+					layoutPageTemplateEntry.getExternalReferenceCode());
+
+		_assertFriendlyUrlHistoryJSONObject(
+			_jsonFactory.createJSONObject(
+				GetterUtil.getString(
+					friendlyUrlHistory.getFriendlyUrlPath_i18n())),
+			list);
+
+		_assertProblemException(
+			_getBasicLayoutPageTemplateEntry(serviceContext));
+		_assertProblemException(
+			_getMasterLayoutPageTemplateEntry(serviceContext));
+	}
+
+	@Override
+	@Test
 	public void testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory()
 		throws Exception {
 
@@ -141,7 +174,27 @@ public class FriendlyUrlHistoryResourceTest
 		}
 	}
 
-	private Layout _getBasicLayoutPageTemplateEntryLayout(
+	private void _assertProblemException(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws Exception {
+
+		try {
+			friendlyUrlHistoryResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory(
+					testGroup.getExternalReferenceCode(),
+					layoutPageTemplateEntry.getExternalReferenceCode());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	private LayoutPageTemplateEntry _getBasicLayoutPageTemplateEntry(
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -157,17 +210,37 @@ public class FriendlyUrlHistoryResourceTest
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					serviceContext);
 
+		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.BASIC, 0,
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+	}
+
+	private Layout _getBasicLayoutPageTemplateEntryLayout(
+			ServiceContext serviceContext)
+		throws Exception {
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(),
-				serviceContext.getScopeGroupId(),
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.BASIC, 0,
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
+			_getBasicLayoutPageTemplateEntry(serviceContext);
 
 		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
+	}
+
+	private LayoutPageTemplateEntry _getDisplayPageLayoutPageTemplateEntry(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			_portal.getClassNameId(
+				"com.liferay.asset.kernel.model.AssetCategory"),
+			0, RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 	private Layout _getDisplayPageLayoutPageTemplateEntryLayout(
@@ -175,16 +248,7 @@ public class FriendlyUrlHistoryResourceTest
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(),
-				serviceContext.getScopeGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_portal.getClassNameId(
-					"com.liferay.asset.kernel.model.AssetCategory"),
-				0, RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
+			_getDisplayPageLayoutPageTemplateEntry(serviceContext);
 
 		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
 	}
@@ -210,19 +274,25 @@ public class FriendlyUrlHistoryResourceTest
 		return _layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid());
 	}
 
+	private LayoutPageTemplateEntry _getMasterLayoutPageTemplateEntry(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+	}
+
 	private Layout _getMasterLayoutPageTemplateEntryLayout(
 			ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(),
-				serviceContext.getScopeGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
+			_getMasterLayoutPageTemplateEntry(serviceContext);
 
 		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
 	}

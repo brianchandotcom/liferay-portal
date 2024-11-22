@@ -6,13 +6,8 @@
 package com.liferay.object.rest.internal.headless.batch.engine.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.field.util.ObjectFieldUtil;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
-import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -22,19 +17,12 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.Collections;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -43,32 +31,17 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlags("LPD-29367")
 @RunWith(Arquillian.class)
-public class ImportTaskResourceTest {
-
-	@ClassRule
-	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
+public class ImportTaskResourceTest extends BaseTaskResourceTest {
 
 	@Test
 	public void testPostImportTask() throws Exception {
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						_OBJECT_FIELD_NAME_TEXT)),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				TestPropsValues.getUserId());
-
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, _OBJECT_FIELD_NAME_TEXT, "TestObject1");
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject1");
 
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, _OBJECT_FIELD_NAME_TEXT, "TestObject2");
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject2");
 
 		JSONObject object1BeforeImportJSONObject =
 			HTTPTestUtil.invokeToJSONObject(
@@ -102,61 +75,28 @@ public class ImportTaskResourceTest {
 			String.valueOf(objectEntry1.getPrimaryKey()), role.getRoleId(),
 			new String[] {ActionKeys.VIEW});
 
-		JSONObject importResponse1JSONObject = HTTPTestUtil.invokeToJSONObject(
-			StringBundler.concat("[", object1BeforeImportJSONObject, "]"),
-			StringBundler.concat(
-				"headless-batch-engine/v1.0/import-task",
-				"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
-				"?taskItemDelegateName=", objectDefinition.getName(),
-				"&createStrategy=UPSERT"),
-			Http.Method.POST);
+		waitForFinish(
+			"COMPLETED", true,
+			HTTPTestUtil.invokeToJSONObject(
+				StringBundler.concat("[", object1BeforeImportJSONObject, "]"),
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/import-task",
+					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					"?taskItemDelegateName=", objectDefinition.getName(),
+					"&createStrategy=UPSERT"),
+				Http.Method.POST));
 
-		JSONObject importResponse2JSONObject = HTTPTestUtil.invokeToJSONObject(
-			StringBundler.concat("[", object2BeforeImportJSONObject, "]"),
-			StringBundler.concat(
-				"headless-batch-engine/v1.0/import-task",
-				"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
-				"?taskItemDelegateName=", objectDefinition.getName(),
-				"&createStrategy=UPSERT&restrictedFieldNames=permissions,",
-				_OBJECT_FIELD_NAME_TEXT),
-			Http.Method.POST);
-
-		String actualExecuteStatus1;
-		String actualExecuteStatus2;
-
-		while (true) {
-			JSONObject importStatusJSONObject = HTTPTestUtil.invokeToJSONObject(
-				null,
-				"headless-batch-engine/v1.0/import-task/" +
-					importResponse1JSONObject.getString("id"),
-				Http.Method.GET);
-
-			actualExecuteStatus1 = importStatusJSONObject.getString(
-				"executeStatus");
-
-			if (StringUtil.equals(actualExecuteStatus1, "COMPLETED") ||
-				StringUtil.equals(actualExecuteStatus1, "FAILED")) {
-
-				break;
-			}
-		}
-
-		while (true) {
-			JSONObject importStatusJSONObject = HTTPTestUtil.invokeToJSONObject(
-				null,
-				"headless-batch-engine/v1.0/import-task/" +
-					importResponse2JSONObject.getString("id"),
-				Http.Method.GET);
-
-			actualExecuteStatus2 = importStatusJSONObject.getString(
-				"executeStatus");
-
-			if (StringUtil.equals(actualExecuteStatus2, "COMPLETED") ||
-				StringUtil.equals(actualExecuteStatus2, "FAILED")) {
-
-				break;
-			}
-		}
+		waitForFinish(
+			"COMPLETED", true,
+			HTTPTestUtil.invokeToJSONObject(
+				StringBundler.concat("[", object2BeforeImportJSONObject, "]"),
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/import-task",
+					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					"?taskItemDelegateName=", objectDefinition.getName(),
+					"&createStrategy=UPSERT&restrictedFieldNames=permissions,",
+					OBJECT_FIELD_NAME_TEXT),
+				Http.Method.POST));
 
 		JSONObject object1AfterImportJSONObject =
 			HTTPTestUtil.invokeToJSONObject(
@@ -241,8 +181,5 @@ public class ImportTaskResourceTest {
 
 		Assert.assertTrue(roleFound);
 	}
-
-	private static final String _OBJECT_FIELD_NAME_TEXT =
-		"x" + RandomTestUtil.randomString();
 
 }

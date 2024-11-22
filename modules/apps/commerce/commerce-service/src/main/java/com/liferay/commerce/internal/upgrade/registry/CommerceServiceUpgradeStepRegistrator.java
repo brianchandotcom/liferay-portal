@@ -14,6 +14,8 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.internal.upgrade.v11_5_1.SupplierRoleUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v11_5_2.CommerceChannelRepositoryUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v13_0_3.CPConfigurationUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v13_0_4.CPConfigurationListEligibilityUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v1_2_0.CommerceSubscriptionUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v2_0_0.CommercePaymentMethodUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v2_1_0.CPDAvailabilityEstimateUpgradeProcess;
@@ -45,6 +47,9 @@ import com.liferay.commerce.model.impl.CommerceOrderItemModelImpl;
 import com.liferay.commerce.model.impl.CommerceOrderModelImpl;
 import com.liferay.commerce.model.impl.CommerceShipmentItemModelImpl;
 import com.liferay.commerce.model.impl.CommerceShippingMethodModelImpl;
+import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
+import com.liferay.commerce.product.service.CPConfigurationListLocalService;
+import com.liferay.commerce.product.service.CPConfigurationListRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
@@ -55,6 +60,7 @@ import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.AddressLocalService;
@@ -80,6 +86,7 @@ import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portlet.display.template.upgrade.BaseUpgradePortletPreferences;
 
@@ -824,6 +831,20 @@ public class CommerceServiceUpgradeStepRegistrator
 
 			});
 
+		registry.register(
+			"13.0.2", "13.0.3",
+			new CPConfigurationUpgradeProcess(
+				_classNameLocalService, _cpConfigurationEntryLocalService,
+				_cpConfigurationListLocalService, _language));
+
+		registry.register(
+			"13.0.3", "13.0.4",
+			new CPConfigurationListEligibilityUpgradeProcess(
+				_commerceChannelRelLocalService,
+				_cpConfigurationEntryLocalService,
+				_cpConfigurationListLocalService,
+				_cpConfigurationListRelLocalService, _portal));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}
@@ -880,6 +901,16 @@ public class CommerceServiceUpgradeStepRegistrator
 	private CountryLocalService _countryLocalService;
 
 	@Reference
+	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+
+	@Reference
+	private CPConfigurationListLocalService _cpConfigurationListLocalService;
+
+	@Reference
+	private CPConfigurationListRelLocalService
+		_cpConfigurationListRelLocalService;
+
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
@@ -898,6 +929,9 @@ public class CommerceServiceUpgradeStepRegistrator
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference
@@ -905,6 +939,9 @@ public class CommerceServiceUpgradeStepRegistrator
 
 	@Reference
 	private PhoneLocalService _phoneLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private RegionLocalService _regionLocalService;

@@ -2287,6 +2287,11 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.TEMPLATE_ENGINE_CACHE_ENABLED));
 
+	public static final boolean TEMPLATE_ENGINE_FREEMARKER_COMPANY_RESTRICT =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.TEMPLATE_ENGINE_FREEMARKER_COMPANY_RESTRICT));
+
 	public static final boolean
 		TEMPLATE_ENGINE_FREEMARKER_TRANSACTION_READ_ONLY =
 			GetterUtil.getBoolean(

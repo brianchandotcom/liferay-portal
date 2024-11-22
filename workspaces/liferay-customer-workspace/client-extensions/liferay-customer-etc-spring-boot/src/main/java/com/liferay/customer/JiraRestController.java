@@ -6,9 +6,10 @@
 package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot.BaseRestController;
-import com.liferay.customer.service.JiraService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -18,15 +19,17 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Jenny Chen
@@ -36,8 +39,8 @@ public class JiraRestController extends BaseRestController {
 
 	public JiraRestController() {
 		_securityVulnerabilitiesIssueFields = new String[] {
-			_JIRA_FIELD_COMPONENTS, _JIRA_FIELD_FIX_VERSIONS,
-			_JIRA_FIELD_ISSUE_KEY, _JIRA_FIELD_VERSIONS,
+			_FIELD_COMPONENTS, _FIELD_FIX_VERSIONS, _FIELD_ISSUE_KEY,
+			_FIELD_VERSIONS,
 			_jiraSecurityVulnerabilityFieldAffectedVersionsDetails,
 			_jiraSecurityVulnerabilityFieldCategory,
 			_jiraSecurityVulnerabilityFieldCustomerPortalDescription,
@@ -60,7 +63,7 @@ public class JiraRestController extends BaseRestController {
 	)
 	public ResponseEntity<String> get() throws Exception {
 		try {
-			JSONArray jsonArray = _jiraService.getVersions(
+			JSONArray jsonArray = _getVersionsJSONArray(
 				_jiraSecurityVulnerabilityProject);
 
 			JSONArray responseJSONArray = _flattenJSONArray(jsonArray);
@@ -85,7 +88,7 @@ public class JiraRestController extends BaseRestController {
 				throw new PrincipalException();
 			}
 
-			JSONObject jsonObject = _jiraService.getIssue(issueKey);
+			JSONObject jsonObject = _getIssueJSONObject(issueKey);
 
 			JSONObject responseJSONObject = _translateIssue(jsonObject);
 
@@ -130,7 +133,7 @@ public class JiraRestController extends BaseRestController {
 				sb.append(")");
 			}
 
-			JSONObject jsonObject = _jiraService.search(
+			JSONObject jsonObject = _search(
 				sb.toString(), _securityVulnerabilitiesIssueFields);
 
 			JSONObject responseJSONObject = _translateSearchResults(jsonObject);
@@ -160,9 +163,73 @@ public class JiraRestController extends BaseRestController {
 		return flattenedJSONArray;
 	}
 
+	private String _getCredentials() {
+		String jiraUserNameAndJiraApiToken =
+			_jiraAPIEmailAddress + StringPool.COLON + _jiraAPIToken;
+
+		return "Basic " + Base64.encode(jiraUserNameAndJiraApiToken.getBytes());
+	}
+
+	private JSONObject _getIssueJSONObject(String issueKey) throws Exception {
+		try {
+			return new JSONObject(
+				WebClient.create(
+					_jiraURL
+				).get(
+				).uri(
+					StringBundler.concat(_URL_REST_API_2, "/issue/", issueKey)
+				).accept(
+					MediaType.APPLICATION_JSON
+				).header(
+					HttpHeaders.AUTHORIZATION, _getCredentials()
+				).retrieve(
+				).bodyToMono(
+					String.class
+				).block());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to fetch Jira issue with key " + issueKey,
+					exception);
+			}
+		}
+
+		return null;
+	}
+
 	private String _getJSONObjectFieldValue(JSONObject jsonObject) {
 		if (jsonObject != null) {
 			return jsonObject.optString("value");
+		}
+
+		return null;
+	}
+
+	private JSONArray _getVersionsJSONArray(String project) throws Exception {
+		try {
+			return new JSONArray(
+				WebClient.create(
+					_jiraURL
+				).get(
+				).uri(
+					StringBundler.concat(
+						_URL_REST_API_2, "/project/", project, "/versions")
+				).accept(
+					MediaType.APPLICATION_JSON
+				).header(
+					HttpHeaders.AUTHORIZATION, _getCredentials()
+				).retrieve(
+				).bodyToMono(
+					String.class
+				).block());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to fetch Jira versions with project " + project,
+					exception);
+			}
 		}
 
 		return null;
@@ -172,30 +239,61 @@ public class JiraRestController extends BaseRestController {
 		return true;
 	}
 
-	private JSONObject _translateIssue(JSONObject issueJSONObject) {
-		JSONObject jsonObject = new JSONObject();
+	private JSONObject _search(String jql, String[] returnFields)
+		throws Exception {
 
-		jsonObject.put(
+		try {
+			return new JSONObject(
+				WebClient.create(
+					_jiraURL
+				).get(
+				).uri(
+					uriBuilder -> uriBuilder.path(
+						_URL_REST_API_2 + "/search"
+					).queryParam(
+						"jql", jql
+					).queryParam(
+						"fields", StringUtil.merge(returnFields)
+					).build()
+				).accept(
+					MediaType.APPLICATION_JSON
+				).header(
+					HttpHeaders.AUTHORIZATION, _getCredentials()
+				).retrieve(
+				).bodyToMono(
+					String.class
+				).block());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to fetch Jira issues with jql " + jql, exception);
+			}
+		}
+
+		return null;
+	}
+
+	private JSONObject _translateIssue(JSONObject issueJSONObject) {
+		return new JSONObject(
+		).put(
 			"fields",
 			_translateIssueFields(issueJSONObject.getJSONObject("fields"))
 		).put(
-			"key", issueJSONObject.getString(_JIRA_FIELD_ISSUE_KEY)
+			"key", issueJSONObject.getString(_FIELD_ISSUE_KEY)
 		);
-
-		return jsonObject;
 	}
 
 	private JSONObject _translateIssueFields(JSONObject issueFieldsJSONObject) {
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put(
+		return new JSONObject(
+		).put(
 			"affectedVersionsDetails",
 			issueFieldsJSONObject.optString(
 				_jiraSecurityVulnerabilityFieldAffectedVersionsDetails)
 		).put(
 			"affectsVersion",
 			_flattenJSONArray(
-				issueFieldsJSONObject.getJSONArray(_JIRA_FIELD_VERSIONS))
+				issueFieldsJSONObject.getJSONArray(_FIELD_VERSIONS))
 		).put(
 			"category",
 			_getJSONObjectFieldValue(
@@ -204,7 +302,7 @@ public class JiraRestController extends BaseRestController {
 		).put(
 			"components",
 			_flattenJSONArray(
-				issueFieldsJSONObject.getJSONArray(_JIRA_FIELD_COMPONENTS))
+				issueFieldsJSONObject.getJSONArray(_FIELD_COMPONENTS))
 		).put(
 			"customerPortalDescription",
 			issueFieldsJSONObject.optString(
@@ -236,7 +334,7 @@ public class JiraRestController extends BaseRestController {
 		).put(
 			"fixVersions",
 			_flattenJSONArray(
-				issueFieldsJSONObject.getJSONArray(_JIRA_FIELD_FIX_VERSIONS))
+				issueFieldsJSONObject.getJSONArray(_FIELD_FIX_VERSIONS))
 		).put(
 			"issueClassification",
 			_getJSONObjectFieldValue(
@@ -257,13 +355,9 @@ public class JiraRestController extends BaseRestController {
 				issueFieldsJSONObject.optJSONObject(
 					_jiraSecurityVulnerabilityFieldSeverity))
 		);
-
-		return jsonObject;
 	}
 
 	private JSONObject _translateSearchResults(JSONObject resultsJSONObject) {
-		JSONObject jsonObject = new JSONObject();
-
 		JSONArray jsonArray = new JSONArray();
 
 		JSONArray issuesJSONArray = resultsJSONObject.getJSONArray("issues");
@@ -274,7 +368,8 @@ public class JiraRestController extends BaseRestController {
 			jsonArray.put(_translateIssue(issueJSONObject));
 		}
 
-		jsonObject.put(
+		return new JSONObject(
+		).put(
 			"issues", jsonArray
 		).put(
 			"page", resultsJSONObject.getInt("startAt") + 1
@@ -283,19 +378,25 @@ public class JiraRestController extends BaseRestController {
 		).put(
 			"total", resultsJSONObject.getInt("total")
 		);
-
-		return jsonObject;
 	}
 
-	private static final String _JIRA_FIELD_COMPONENTS = "components";
+	private static final String _FIELD_COMPONENTS = "components";
 
-	private static final String _JIRA_FIELD_FIX_VERSIONS = "fixVersions";
+	private static final String _FIELD_FIX_VERSIONS = "fixVersions";
 
-	private static final String _JIRA_FIELD_ISSUE_KEY = "key";
+	private static final String _FIELD_ISSUE_KEY = "key";
 
-	private static final String _JIRA_FIELD_VERSIONS = "versions";
+	private static final String _FIELD_VERSIONS = "versions";
+
+	private static final String _URL_REST_API_2 = "/rest/api/2";
 
 	private static final Log _log = LogFactory.getLog(JiraRestController.class);
+
+	@Value("${liferay.customer.jira.api.email.address}")
+	private String _jiraAPIEmailAddress;
+
+	@Value("${liferay.customer.jira.api.token}")
+	private String _jiraAPIToken;
 
 	@Value(
 		"${liferay.customer.jira.security.vulnerability.field.affected.versions.details}"
@@ -357,8 +458,8 @@ public class JiraRestController extends BaseRestController {
 	@Value("${liferay.customer.jira.security.vulnerability.project}")
 	private String _jiraSecurityVulnerabilityProject;
 
-	@Autowired
-	private JiraService _jiraService;
+	@Value("${liferay.customer.jira.url}")
+	private String _jiraURL;
 
 	private final String[] _securityVulnerabilitiesIssueFields;
 

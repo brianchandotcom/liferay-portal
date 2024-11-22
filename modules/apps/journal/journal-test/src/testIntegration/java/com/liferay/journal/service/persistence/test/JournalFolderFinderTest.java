@@ -68,6 +68,12 @@ public class JournalFolderFinderTest {
 
 		JournalArticleLocalServiceUtil.moveArticleToTrash(
 			TestPropsValues.getUserId(), article);
+
+		article = JournalTestUtil.addArticle(
+			_group.getGroupId(), _folder1.getFolderId(), "Article 3",
+			StringPool.BLANK);
+
+		JournalTestUtil.expireArticle(_group.getGroupId(), article);
 	}
 
 	@Test
@@ -77,7 +83,7 @@ public class JournalFolderFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(
-			3,
+			4,
 			_journalFolderFinder.countF_A_ByG_F_DDMSI(
 				_group.getGroupId(), _folder1.getFolderId(), 0,
 				queryDefinition));
@@ -93,7 +99,7 @@ public class JournalFolderFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 
 		Assert.assertEquals(
-			2,
+			3,
 			_journalFolderFinder.countF_A_ByG_F_DDMSI(
 				_group.getGroupId(), _folder1.getFolderId(), 0,
 				queryDefinition));
@@ -108,7 +114,42 @@ public class JournalFolderFinderTest {
 		List<Object> results = _journalFolderFinder.findF_A_ByG_F_DDMSI(
 			_group.getGroupId(), _folder1.getFolderId(), 0, queryDefinition);
 
+		Assert.assertEquals(results.toString(), 4, results.size());
+
+		int count = _journalFolderFinder.countF_A_ByG_F_DDMSI(
+			_group.getGroupId(), _folder1.getFolderId(), 0, queryDefinition);
+
+		Assert.assertEquals(4, count);
+
+		for (Object result : results) {
+			if (result instanceof JournalFolder) {
+				JournalFolder folder = (JournalFolder)result;
+
+				Assert.assertEquals("Folder 2", folder.getName());
+			}
+			else if (result instanceof JournalArticle) {
+				JournalArticle article = (JournalArticle)result;
+
+				String title = article.getTitleCurrentValue();
+
+				Assert.assertTrue(
+					title,
+					title.equals("Article 1") || title.equals("Article 2") ||
+					title.equals("Article 3"));
+			}
+		}
+
+		results = _journalFolderFinder.findF_A_ByG_F_DDMSI(
+			_group.getGroupId(), _folder1.getFolderId(), 0, queryDefinition,
+			true);
+
 		Assert.assertEquals(results.toString(), 3, results.size());
+
+		count = _journalFolderFinder.countF_A_ByG_F_DDMSI(
+			_group.getGroupId(), _folder1.getFolderId(), 0, queryDefinition,
+			true);
+
+		Assert.assertEquals(3, count);
 
 		for (Object result : results) {
 			if (result instanceof JournalFolder) {
@@ -153,7 +194,7 @@ public class JournalFolderFinderTest {
 		results = _journalFolderFinder.findF_A_ByG_F_DDMSI(
 			_group.getGroupId(), _folder1.getFolderId(), 0, queryDefinition);
 
-		Assert.assertEquals(results.toString(), 2, results.size());
+		Assert.assertEquals(results.toString(), 3, results.size());
 
 		for (Object result : results) {
 			if (result instanceof JournalFolder) {
@@ -164,8 +205,11 @@ public class JournalFolderFinderTest {
 			else if (result instanceof JournalArticle) {
 				JournalArticle article = (JournalArticle)result;
 
-				Assert.assertEquals(
-					"Article 1", article.getTitleCurrentValue());
+				String title = article.getTitleCurrentValue();
+
+				Assert.assertTrue(
+					title,
+					title.equals("Article 1") || title.equals("Article 3"));
 			}
 		}
 	}

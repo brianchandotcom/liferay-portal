@@ -51,7 +51,7 @@ function combine_properties_files {
 function default_set_up {
 	update_portal_ext_properties
 
-	start_app_server
+	start_default_app_server
 
 	deploy_parent_project_osgi_modules
 
@@ -71,7 +71,7 @@ function default_set_up {
 }
 
 function default_tear_down {
-	stop_app_server
+	stop_default_app_server
 }
 
 function deploy_client_extensions {
@@ -373,7 +373,7 @@ function get_project_client_extension_workspace_portal_ext_properties_files {
 }
 
 function get_tomcat_dir {
-	find ${LIFERAY_HOME} -type d -name "tomcat*"
+	find ${1} -type d -name "tomcat*"
 }
 
 function get_tomcat_portal_ext_properties_file {
@@ -493,18 +493,24 @@ function start_analytics_cloud {
 }
 
 function start_app_server {
-	cd $(get_tomcat_dir)/bin
+	local liferay_home=${1}
+
+	local tomcat_dir=$(get_tomcat_dir ${liferay_home})
+
+	cd ${tomcat_dir}/bin
 
 	/bin/bash catalina.sh run &
 
-	while ! curl --output /dev/null --silent --head --fail ${LIFERAY_PORTAL_URL}
+	local liferay_portal_url=${2}
+
+	while ! curl --output /dev/null --silent --head --fail ${liferay_portal_url}
 	do
 		sleep 5
 	done
 
-	wait_for_portal_log_inactivity ${LIFERAY_HOME}
+	wait_for_portal_log_inactivity ${liferay_home}
 
-	echo "${LIFERAY_PORTAL_URL} is now available."
+	echo "${liferay_portal_url} is now available."
 }
 
 function start_client_extension_spring_boot_application {
@@ -555,6 +561,10 @@ function start_client_extension_spring_boot_application {
 	fi
 }
 
+function start_default_app_server {
+	start_app_server ${LIFERAY_HOME} ${LIFERAY_PORTAL_URL}
+}
+
 function stop_additional_bundles {
 	for ((i = 0 ; i < $1 ; i++ ))
 	do
@@ -588,16 +598,20 @@ function stop_analytics_cloud {
 }
 
 function stop_app_server {
-	cd $(get_tomcat_dir)/bin
+	local liferay_home=${1}
+
+	cd $(get_tomcat_dir ${liferay_home})/bin
 
 	/bin/bash shutdown.sh &
 
-	while curl --output /dev/null --silent --head --fail ${LIFERAY_PORTAL_URL}
+	local portal_url=${2}
+
+	while curl --output /dev/null --silent --head --fail ${portal_url}
 	do
 		sleep 5
 	done
 
-	echo "${LIFERAY_PORTAL_URL} is no longer available."
+	echo "${portal_url} is no longer available."
 }
 
 function stop_client_extension_spring_boot_application {
@@ -634,6 +648,10 @@ function stop_client_extension_spring_boot_application {
 	else
 		echo "The directory ${client_extension_dir} does not exist."
 	fi
+}
+
+function stop_default_app_server {
+	stop_app_server ${LIFERAY_HOME} ${LIFERAY_PORTAL_URL}
 }
 
 function update_portal_ext_properties {

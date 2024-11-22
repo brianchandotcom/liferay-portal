@@ -427,6 +427,12 @@ test('A user with only "View" permission', async ({
 			page.getByRole('menuitem', {name: 'Permissions'})
 		).not.toBeVisible();
 	});
+
+	await test.step('Check that "Delete" is not visible', async () => {
+		await expect(
+			page.getByRole('menuitem', {name: 'Permissions'})
+		).not.toBeVisible();
+	});
 });
 
 test('A user without "View" permission on Data Set items', async ({
@@ -465,5 +471,65 @@ test('A user without "View" permission on Data Set items', async ({
 
 	await test.step('Assert that no data sets appear on the table', async () => {
 		assertTableRowsCount(page, 0);
+	});
+});
+
+test('A user with "Delete" permission', async ({
+	apiHelpers,
+	dataSetManagerApiHelpers,
+	dataSetsPage,
+	page,
+	roleDefinePermissionsPage,
+	rolePage,
+	rolesPage,
+}) => {
+	await test.step('Create a data set', async () => {
+		const blogPostDataSetERC = getRandomString();
+		createdDataSetERCs.push(blogPostDataSetERC);
+
+		await dataSetManagerApiHelpers.createDataSet({
+			...blogPostsDataSetConfig,
+			erc: blogPostDataSetERC,
+			label: blogPostsDataSetConfig.name,
+		});
+	});
+
+	await test.step('Setup user role and login as user', async () => {
+		await setupUserRoleAndLoginAsUser({
+			apiHelpers,
+			dataSetResourcePermissions: [
+				{
+					actions: ['Delete', 'View'],
+					name: 'Data Set',
+				},
+			],
+			page,
+			roleDefinePermissionsPage,
+			rolePage,
+			rolesPage,
+		});
+	});
+
+	await test.step('Go to Data Sets', async () => {
+		await dataSetsPage.goto({checkTabVisibility: false});
+	});
+
+	await test.step('Open actions dropdown', async () => {
+		const dataSetRows = page
+			.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
+			.filter({
+				hasText: blogPostsDataSetConfig.name,
+			});
+
+		await dataSetRows
+			.first()
+			.getByRole('button', {name: 'Actions'})
+			.click();
+	});
+
+	await test.step('Check that "Delete" is visible', async () => {
+		await expect(
+			page.getByRole('menuitem', {name: 'Delete'})
+		).toBeVisible();
 	});
 });

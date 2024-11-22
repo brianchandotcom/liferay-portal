@@ -418,11 +418,11 @@ public class JournalArticleItemSelectorViewDisplayContext {
 					_themeDisplay.getLocale(),
 					articleAndFolderSearchContainer.getStart(),
 					articleAndFolderSearchContainer.getEnd(),
-					folderOrderByComparator);
+					folderOrderByComparator, true);
 			},
 			JournalFolderServiceUtil.getFoldersAndArticlesCount(
 				_getGroupId(), 0, _getFolderId(), _getDDMStructureId(),
-				_infoItemItemSelectorCriterion.getStatus()));
+				_infoItemItemSelectorCriterion.getStatus(), true));
 
 		_articleSearchContainer = articleAndFolderSearchContainer;
 

@@ -418,7 +418,7 @@ function reverse {
 }
 
 function prepare_additional_bundles {
-	for ((i = 0 ; i < ${1} ; i++ ))
+	for ((i = 0 ; i < ${1} ; i++))
 	do
 		local app_server_bundles_size=$((1 + ${i}))
 
@@ -426,16 +426,16 @@ function prepare_additional_bundles {
 
 		local test_app_server_parent_dir="${LIFERAY_HOME}-${app_server_bundles_size}"
 
-		if [ -d "${test_app_server_parent_dir}" ]
+		if [[ -d ${test_app_server_parent_dir} ]]
 		then
-			rm -rf "${test_app_server_parent_dir}"
+			rm -fr ${test_app_server_parent_dir}
 		fi
 
-		cp -r "${LIFERAY_HOME}" "${test_app_server_parent_dir}"
+		cp -r ${LIFERAY_HOME} ${test_app_server_parent_dir}
 
 		local test_app_server_dir=$(get_tomcat_dir ${test_app_server_parent_dir})
 
-		echo "${test_app_server_dir}"
+		echo ${test_app_server_dir}
 
 		sed -i "s/=\"8\([0-9]\{3\}\)\"/=\"${leading_port_number}\1\"/g" "${test_app_server_dir}/conf/server.xml"
 
@@ -447,7 +447,7 @@ function prepare_additional_bundles {
 
 		sed -i "s/11312/${osgi_console_port}/g" "${test_app_server_dir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
 
-		chmod a+x "${test_app_server_dir}"
+		chmod a+x ${test_app_server_dir}
 	done
 }
 
@@ -553,7 +553,7 @@ function start_default_app_server {
 }
 
 function stop_additional_bundles {
-	for ((i = 0 ; i < ${1} ; i++ ))
+	for ((i = 0 ; i < ${1} ; i++))
 	do
 		local app_server_bundles_size=$((1 + ${i}))
 

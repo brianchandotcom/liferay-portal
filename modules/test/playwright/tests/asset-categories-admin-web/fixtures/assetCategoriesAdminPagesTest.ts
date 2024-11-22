@@ -6,14 +6,19 @@
 import {test} from '@playwright/test';
 
 import {AssetCategoriesAdminPage} from '../pages/AssetCategoriesAdminPage';
+import {AssetCategoriesEditPage} from '../pages/AssetCategoriesEditPage';
 import {VocabulariesEditPage} from '../pages/VocabulariesEditPage';
 
 export const assetCategoriesPagesTest = test.extend<{
 	assetCategoriesAdminPage: AssetCategoriesAdminPage;
+	assetCategoriesEditPage: AssetCategoriesEditPage;
 	vocabulariesEditPage: VocabulariesEditPage;
 }>({
 	assetCategoriesAdminPage: async ({page}, use) => {
 		await use(new AssetCategoriesAdminPage(page));
+	},
+	assetCategoriesEditPage: async ({page}, use) => {
+		await use(new AssetCategoriesEditPage(page));
 	},
 	vocabulariesEditPage: async ({page}, use) => {
 		await use(new VocabulariesEditPage(page));

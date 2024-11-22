@@ -189,17 +189,24 @@ public class WidgetPageWidgetInstanceResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
 		String portletId = PortletIdCodec.encode(
 			widgetPageWidgetInstance.getWidgetName(),
 			widgetPageWidgetInstance.getWidgetInstanceId());
 
-		String addedPortletId = layoutTypePortlet.addPortletId(
-			contextUser.getUserId(), portletId,
-			widgetPageWidgetInstance.getParentSectionId(),
+		return _addPortletId(
+			widgetPageWidgetInstance.getParentSectionId(), layout, portletId,
 			widgetPageWidgetInstance.getPosition());
+	}
+
+	private WidgetPageWidgetInstance _addPortletId(
+			String columnId, Layout layout, String portletId, int position)
+		throws Exception {
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		String addedPortletId = layoutTypePortlet.addPortletId(
+			contextUser.getUserId(), portletId, columnId, position);
 
 		if (addedPortletId == null) {
 			throw new PortalException(
@@ -207,6 +214,10 @@ public class WidgetPageWidgetInstanceResourceImpl
 					"Portlet ", portletId, " cannot be added to layout ",
 					layout.getPlid(), " by user ", contextUser.getUserId()));
 		}
+
+		layout = _layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 
 		return _toWidgetPageWidgetInstance(layout, addedPortletId);
 	}

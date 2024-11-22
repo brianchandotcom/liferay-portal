@@ -62,30 +62,35 @@ public interface WidgetPageWidgetInstanceResource {
 	public void
 			deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
 				String widgetInstanceExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCodeHttpResponse(
 				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
 				String widgetInstanceExternalReferenceCode)
 		throws Exception;
 
 	public WidgetPageWidgetInstance
 			getSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
 				String widgetInstanceExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCodeHttpResponse(
 				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
 				String widgetInstanceExternalReferenceCode)
 		throws Exception;
 
 	public WidgetPageWidgetInstance
 			patchSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
 				String widgetInstanceExternalReferenceCode,
 				WidgetPageWidgetInstance widgetPageWidgetInstance)
 		throws Exception;
@@ -93,6 +98,7 @@ public interface WidgetPageWidgetInstanceResource {
 	public HttpInvoker.HttpResponse
 			patchSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCodeHttpResponse(
 				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
 				String widgetInstanceExternalReferenceCode,
 				WidgetPageWidgetInstance widgetPageWidgetInstance)
 		throws Exception;
@@ -100,6 +106,7 @@ public interface WidgetPageWidgetInstanceResource {
 	public WidgetPageWidgetInstance
 			putSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
 				String widgetInstanceExternalReferenceCode,
 				WidgetPageWidgetInstance widgetPageWidgetInstance)
 		throws Exception;
@@ -107,6 +114,7 @@ public interface WidgetPageWidgetInstanceResource {
 	public HttpInvoker.HttpResponse
 			putSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCodeHttpResponse(
 				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
 				String widgetInstanceExternalReferenceCode,
 				WidgetPageWidgetInstance widgetPageWidgetInstance)
 		throws Exception;
@@ -453,12 +461,13 @@ public interface WidgetPageWidgetInstanceResource {
 		public void
 				deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 					String siteExternalReferenceCode,
+					String sitePageExternalReferenceCode,
 					String widgetInstanceExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCodeHttpResponse(
-					siteExternalReferenceCode,
+					siteExternalReferenceCode, sitePageExternalReferenceCode,
 					widgetInstanceExternalReferenceCode);
 
 			String content = httpResponse.getContent();
@@ -523,6 +532,7 @@ public interface WidgetPageWidgetInstanceResource {
 		public HttpInvoker.HttpResponse
 				deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCodeHttpResponse(
 					String siteExternalReferenceCode,
+					String sitePageExternalReferenceCode,
 					String widgetInstanceExternalReferenceCode)
 			throws Exception {
 
@@ -550,10 +560,12 @@ public interface WidgetPageWidgetInstanceResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"sitePageExternalReferenceCode", sitePageExternalReferenceCode);
 			httpInvoker.path(
 				"widgetInstanceExternalReferenceCode",
 				widgetInstanceExternalReferenceCode);
@@ -567,12 +579,13 @@ public interface WidgetPageWidgetInstanceResource {
 		public WidgetPageWidgetInstance
 				getSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 					String siteExternalReferenceCode,
+					String sitePageExternalReferenceCode,
 					String widgetInstanceExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCodeHttpResponse(
-					siteExternalReferenceCode,
+					siteExternalReferenceCode, sitePageExternalReferenceCode,
 					widgetInstanceExternalReferenceCode);
 
 			String content = httpResponse.getContent();
@@ -637,6 +650,7 @@ public interface WidgetPageWidgetInstanceResource {
 		public HttpInvoker.HttpResponse
 				getSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCodeHttpResponse(
 					String siteExternalReferenceCode,
+					String sitePageExternalReferenceCode,
 					String widgetInstanceExternalReferenceCode)
 			throws Exception {
 
@@ -664,10 +678,12 @@ public interface WidgetPageWidgetInstanceResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"sitePageExternalReferenceCode", sitePageExternalReferenceCode);
 			httpInvoker.path(
 				"widgetInstanceExternalReferenceCode",
 				widgetInstanceExternalReferenceCode);
@@ -681,13 +697,14 @@ public interface WidgetPageWidgetInstanceResource {
 		public WidgetPageWidgetInstance
 				patchSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 					String siteExternalReferenceCode,
+					String sitePageExternalReferenceCode,
 					String widgetInstanceExternalReferenceCode,
 					WidgetPageWidgetInstance widgetPageWidgetInstance)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				patchSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCodeHttpResponse(
-					siteExternalReferenceCode,
+					siteExternalReferenceCode, sitePageExternalReferenceCode,
 					widgetInstanceExternalReferenceCode,
 					widgetPageWidgetInstance);
 
@@ -753,6 +770,7 @@ public interface WidgetPageWidgetInstanceResource {
 		public HttpInvoker.HttpResponse
 				patchSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCodeHttpResponse(
 					String siteExternalReferenceCode,
+					String sitePageExternalReferenceCode,
 					String widgetInstanceExternalReferenceCode,
 					WidgetPageWidgetInstance widgetPageWidgetInstance)
 			throws Exception {
@@ -784,10 +802,12 @@ public interface WidgetPageWidgetInstanceResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"sitePageExternalReferenceCode", sitePageExternalReferenceCode);
 			httpInvoker.path(
 				"widgetInstanceExternalReferenceCode",
 				widgetInstanceExternalReferenceCode);
@@ -801,13 +821,14 @@ public interface WidgetPageWidgetInstanceResource {
 		public WidgetPageWidgetInstance
 				putSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 					String siteExternalReferenceCode,
+					String sitePageExternalReferenceCode,
 					String widgetInstanceExternalReferenceCode,
 					WidgetPageWidgetInstance widgetPageWidgetInstance)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCodeHttpResponse(
-					siteExternalReferenceCode,
+					siteExternalReferenceCode, sitePageExternalReferenceCode,
 					widgetInstanceExternalReferenceCode,
 					widgetPageWidgetInstance);
 
@@ -873,6 +894,7 @@ public interface WidgetPageWidgetInstanceResource {
 		public HttpInvoker.HttpResponse
 				putSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCodeHttpResponse(
 					String siteExternalReferenceCode,
+					String sitePageExternalReferenceCode,
 					String widgetInstanceExternalReferenceCode,
 					WidgetPageWidgetInstance widgetPageWidgetInstance)
 			throws Exception {
@@ -904,10 +926,12 @@ public interface WidgetPageWidgetInstanceResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"sitePageExternalReferenceCode", sitePageExternalReferenceCode);
 			httpInvoker.path(
 				"widgetInstanceExternalReferenceCode",
 				widgetInstanceExternalReferenceCode);

@@ -1904,6 +1904,8 @@ public class Mutation {
 			deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 				@GraphQLName("siteExternalReferenceCode") String
 					siteExternalReferenceCode,
+				@GraphQLName("sitePageExternalReferenceCode") String
+					sitePageExternalReferenceCode,
 				@GraphQLName("widgetInstanceExternalReferenceCode") String
 					widgetInstanceExternalReferenceCode)
 		throws Exception {
@@ -1915,6 +1917,7 @@ public class Mutation {
 				widgetPageWidgetInstanceResource.
 					deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 						siteExternalReferenceCode,
+						sitePageExternalReferenceCode,
 						widgetInstanceExternalReferenceCode));
 
 		return true;
@@ -1927,6 +1930,8 @@ public class Mutation {
 			patchSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 				@GraphQLName("siteExternalReferenceCode") String
 					siteExternalReferenceCode,
+				@GraphQLName("sitePageExternalReferenceCode") String
+					sitePageExternalReferenceCode,
 				@GraphQLName("widgetInstanceExternalReferenceCode") String
 					widgetInstanceExternalReferenceCode,
 				@GraphQLName("widgetPageWidgetInstance")
@@ -1940,6 +1945,7 @@ public class Mutation {
 				widgetPageWidgetInstanceResource.
 					patchSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 						siteExternalReferenceCode,
+						sitePageExternalReferenceCode,
 						widgetInstanceExternalReferenceCode,
 						widgetPageWidgetInstance));
 	}
@@ -1951,6 +1957,8 @@ public class Mutation {
 			updateSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 				@GraphQLName("siteExternalReferenceCode") String
 					siteExternalReferenceCode,
+				@GraphQLName("sitePageExternalReferenceCode") String
+					sitePageExternalReferenceCode,
 				@GraphQLName("widgetInstanceExternalReferenceCode") String
 					widgetInstanceExternalReferenceCode,
 				@GraphQLName("widgetPageWidgetInstance")
@@ -1964,6 +1972,7 @@ public class Mutation {
 				widgetPageWidgetInstanceResource.
 					putSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 						siteExternalReferenceCode,
+						sitePageExternalReferenceCode,
 						widgetInstanceExternalReferenceCode,
 						widgetPageWidgetInstance));
 	}

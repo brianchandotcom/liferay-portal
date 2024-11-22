@@ -8,7 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {
 	TestEntity,
 	TestEntityApi,
-} from '../../../../util/portal-tools-rest-builder-test-client-js/src/main/resources/META-INF/resources/node/api';
+} from '../../../../util/portal-tools-rest-builder-test-client-js';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 

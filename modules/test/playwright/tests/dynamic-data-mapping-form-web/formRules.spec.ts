@@ -8,7 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {
 	ObjectDefinitionApi,
 	ObjectField,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
+} from '../../../../apps/object/object-admin-rest-client-js';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {formsPagesTest} from '../../fixtures/formsPagesTest';

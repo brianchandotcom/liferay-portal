@@ -6,7 +6,7 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
-import {ObjectDefinitionApi} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
+import {ObjectDefinitionApi} from '../../../../apps/object/object-admin-rest-client-js';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';

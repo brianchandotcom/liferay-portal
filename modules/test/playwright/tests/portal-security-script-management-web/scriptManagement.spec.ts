@@ -11,7 +11,7 @@ import {
 	ObjectDefinitionApi,
 	ObjectValidationRule,
 	ObjectValidationRuleApi,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
+} from '../../../../apps/object/object-admin-rest-client-js';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {scriptManagementPagesTest} from '../../fixtures/scriptManagementPagesTest';

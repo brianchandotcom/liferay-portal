@@ -9,7 +9,7 @@ import {
 	ObjectField,
 	ObjectFolder,
 	ObjectFolderApi,
-} from '../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
+} from '../../../apps/object/object-admin-rest-client-js';
 import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers} from './ApiHelpers';
 

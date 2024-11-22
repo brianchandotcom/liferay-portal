@@ -1974,14 +1974,6 @@ test.describe('Tags Fragment', () => {
 		await apiHelpers.headlessAdminTaxonomy.deleteKeyword({
 			id: globalTag.id,
 		});
-
-		// Delete Lemon entry
-
-		await deleteObjectEntries({
-			apiHelpers,
-			entityName: 'lemons',
-			site: pageManagementSite,
-		});
 	});
 
 	test('Checks that an info message appears when categorization is disabled', async ({

@@ -1,0 +1,224 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "SL23_ACCESS_TYPE",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "anyoneSignedIn",
+					"key": "anyoneSignedIn",
+					"name": "Anyone Signed In",
+					"name_i18n": {
+						"en-US": "Anyone Signed In"
+					}
+				},
+				{
+					"externalReferenceCode": "enrolledOnly",
+					"key": "enrolledOnly",
+					"name": "Enrolled Only",
+					"name_i18n": {
+						"en-US": "Enrolled Only"
+					}
+				},
+				{
+					"externalReferenceCode": "guest",
+					"key": "guest",
+					"name": "Guest",
+					"name_i18n": {
+						"en-US": "Guest"
+					}
+				}
+			],
+			"name": "SL23 Access Type",
+			"name_i18n": {
+				"en-US": "Access Type"
+			},
+			"system": false
+		},
+		{
+			"externalReferenceCode": "SL23_EXPERTISE_LEVELS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "beginner",
+					"key": "beginner",
+					"name": "Beginner",
+					"name_i18n": {
+						"en-US": "Beginner"
+					}
+				},
+				{
+					"externalReferenceCode": "expert",
+					"key": "expert",
+					"name": "Expert",
+					"name_i18n": {
+						"en-US": "Expert"
+					}
+				},
+				{
+					"externalReferenceCode": "intermediate",
+					"key": "intermediate",
+					"name": "Intermediate",
+					"name_i18n": {
+						"en-US": "Intermediate"
+					}
+				}
+			],
+			"name": "SL23 Expertise Levels",
+			"name_i18n": {
+				"en-US": "Expertise Levels"
+			},
+			"system": false
+		},
+		{
+			"externalReferenceCode": "SL23_PERSONAS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "administrator",
+					"key": "administrator",
+					"name": "Administrator",
+					"name_i18n": {
+						"en-US": "Administrator"
+					}
+				},
+				{
+					"externalReferenceCode": "architect",
+					"key": "architect",
+					"name": "Architect",
+					"name_i18n": {
+						"en-US": "Architect"
+					}
+				},
+				{
+					"externalReferenceCode": "cloudArchitect",
+					"key": "cloudArchitect",
+					"name": "Cloud Architect",
+					"name_i18n": {
+						"en-US": "Cloud Architect"
+					}
+				},
+				{
+					"externalReferenceCode": "developer",
+					"key": "developer",
+					"name": "Developer",
+					"name_i18n": {
+						"en-US": "Developer"
+					}
+				},
+				{
+					"externalReferenceCode": "internalEmployee",
+					"key": "internalEmployee",
+					"name": "Internal Employee",
+					"name_i18n": {
+						"en-US": "Internal Employee"
+					}
+				},
+				{
+					"externalReferenceCode": "partner",
+					"key": "partner",
+					"name": "Partner",
+					"name_i18n": {
+						"en-US": "Partner"
+					}
+				},
+				{
+					"externalReferenceCode": "practitioner",
+					"key": "practitioner",
+					"name": "Practitioner",
+					"name_i18n": {
+						"en-US": "Practitioner"
+					}
+				},
+				{
+					"externalReferenceCode": "sales",
+					"key": "sales",
+					"name": "Sales",
+					"name_i18n": {
+						"en-US": "Sales"
+					}
+				}
+			],
+			"name": "SL23 Personas",
+			"name_i18n": {
+				"en-US": "Personas"
+			},
+			"system": false
+		},
+		{
+			"externalReferenceCode": "SL23_QUIZ_QUESTION_TYPE",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "freeText",
+					"key": "freeText",
+					"name": "Free Text",
+					"name_i18n": {
+						"en-US": "Free Text"
+					}
+				},
+				{
+					"externalReferenceCode": "selectMultipleChoice",
+					"key": "selectMultipleChoice",
+					"name": "Select Multiple Choice",
+					"name_i18n": {
+						"en-US": "Select Multiple Choice"
+					}
+				},
+				{
+					"externalReferenceCode": "selectSingleChoice",
+					"key": "selectSingleChoice",
+					"name": "Select Single Choice",
+					"name_i18n": {
+						"en-US": "Select Single Choice"
+					}
+				}
+			],
+			"name": "SL23 Quiz Question Type",
+			"name_i18n": {
+				"en-US": "Quiz Question Type"
+			},
+			"system": false
+		},
+		{
+			"externalReferenceCode": "SL23_STEP_TYPE",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "content",
+					"key": "content",
+					"name": "content",
+					"name_i18n": {
+						"en-US": "Content"
+					}
+				},
+				{
+					"externalReferenceCode": "course",
+					"key": "course",
+					"name": "course",
+					"name_i18n": {
+						"en-US": "Course"
+					}
+				},
+				{
+					"externalReferenceCode": "video",
+					"key": "video",
+					"name": "video",
+					"name_i18n": {
+						"en-US": "Video"
+					}
+				}
+			],
+			"name": "SL23 Step Type",
+			"name_i18n": {
+				"en-US": "Step Type"
+			},
+			"system": false
+		}
+	]
+}

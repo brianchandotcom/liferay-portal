@@ -120,8 +120,14 @@ export class CustomDataSetsPage {
 		await this.newDataSetModal.heading.isHidden();
 	}
 
-	async goto(dataSetsType: string = 'Custom Data Sets') {
-		await this.applicationsMenuPage.goToDataSetManager();
+	async goto({
+		checkTabVisibility,
+		dataSetsType = 'Custom Data Sets',
+	}: {
+		checkTabVisibility?: boolean;
+		dataSetsType?: string;
+	} = {}) {
+		await this.applicationsMenuPage.goToDataSetManager(checkTabVisibility);
 
 		if (dataSetsType === 'System Data Sets') {
 			await this.systemDataSetsTab.click();

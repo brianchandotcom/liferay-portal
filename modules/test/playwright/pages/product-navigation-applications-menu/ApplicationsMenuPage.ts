@@ -255,8 +255,8 @@ export class ApplicationsMenuPage {
 		await this.announcementsItem.click();
 	}
 
-	async goToDataSetManager() {
-		await this.goToControlPanel();
+	async goToDataSetManager(checkTabVisibility = true) {
+		await this.goToControlPanel(checkTabVisibility);
 		await this.dataSetManagerMenuItem.click();
 	}
 
@@ -452,8 +452,8 @@ export class ApplicationsMenuPage {
 		await this.page.getByRole('link', {exact: true, name}).click();
 	}
 
-	async goToControlPanel() {
-		await this.goto();
+	async goToControlPanel(checkTabVisibility = true) {
+		await this.goto(checkTabVisibility);
 		await this.controlPanelButton.click();
 	}
 

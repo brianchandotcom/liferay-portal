@@ -2,9 +2,9 @@
 	"enableLocalization": true,
 	"externalReferenceCode": "all-fields-object-erc",
 	"label": {
-		"en_US": "All Fields Object"
+		"en_US": "All Fields"
 	},
-	"name": "AllFieldsObject",
+	"name": "AllFields",
 	"objectFields": [
 		{
 			"DBType": "Boolean",
@@ -97,7 +97,7 @@
 	],
 	"panelCategoryKey": "site_administration.content",
 	"pluralLabel": {
-		"en_US": "All Fields Objet"
+		"en_US": "All Fields"
 	},
 	"scope": "site"
 }

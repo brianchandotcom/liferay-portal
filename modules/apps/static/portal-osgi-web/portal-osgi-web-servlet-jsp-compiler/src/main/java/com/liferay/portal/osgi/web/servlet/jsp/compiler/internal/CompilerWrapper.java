@@ -47,7 +47,6 @@ import javax.servlet.ServletContext;
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
-import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
@@ -356,8 +355,6 @@ public class CompilerWrapper extends Compiler {
 			String className, ErrorDispatcher errorDispatcher)
 		throws Exception {
 
-		_bytecodeJavaFileObjects = new ArrayList<>();
-
 		JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
 
 		if (javaCompiler == null) {
@@ -381,13 +378,14 @@ public class CompilerWrapper extends Compiler {
 			throw new JasperException(ioException);
 		}
 
-		try (JavaFileManager javaFileManager = new BundleJavaFileManager(
-				_bytecodeJavaFileObjects, _classLoader, standardJavaFileManager,
-				_javaFileObjectResolvers)) {
+		try (BundleJavaFileManager bundleJavaFileManager =
+				new BundleJavaFileManager(
+					_classLoader, standardJavaFileManager,
+					_javaFileObjectResolvers)) {
 
 			JavaCompiler.CompilationTask compilationTask = javaCompiler.getTask(
-				null, javaFileManager, diagnosticCollector, _compilerOptions,
-				null,
+				null, bundleJavaFileManager, diagnosticCollector,
+				_compilerOptions, null,
 				Collections.singletonList(
 					new StringJavaFileObject(
 						className.substring(
@@ -402,10 +400,9 @@ public class CompilerWrapper extends Compiler {
 
 			if (compilationTask.call()) {
 				_saveClassFile(
+					bundleJavaFileManager.getBytecodeJavaFileObjects(),
 					_jspCompilationContext.getFQCN(),
 					_jspCompilationContext.getClassFileName());
-
-				_bytecodeJavaFileObjects = null;
 
 				return null;
 			}
@@ -654,9 +651,12 @@ public class CompilerWrapper extends Compiler {
 		}
 	}
 
-	private void _saveClassFile(String className, String classFileName) {
+	private void _saveClassFile(
+		List<BytecodeJavaFileObject> bytecodeJavaFileObjects, String className,
+		String classFileName) {
+
 		for (BytecodeJavaFileObject bytecodeJavaFileObject :
-				_bytecodeJavaFileObjects) {
+				bytecodeJavaFileObjects) {
 
 			String bytecodeFileClassName =
 				bytecodeJavaFileObject.getClassName();
@@ -767,7 +767,6 @@ public class CompilerWrapper extends Compiler {
 	private Bundle[] _allParticipatingBundles;
 	private final Map<BundleWiring, Set<String>> _bundleWiringPackageNames =
 		new HashMap<>(_jspBundleWiringPackageNames);
-	private List<BytecodeJavaFileObject> _bytecodeJavaFileObjects;
 	private ClassLoader _classLoader;
 	private final List<File> _classPath = new ArrayList<>();
 	private final List<String> _compilerOptions = new ArrayList<>();

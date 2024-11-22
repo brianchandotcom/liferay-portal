@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -40,15 +41,17 @@ public class BundleJavaFileManager
 	public static final String OPT_VERBOSE = "-verbose";
 
 	public BundleJavaFileManager(
-		List<BytecodeJavaFileObject> bytecodeJavaFileObjects,
 		ClassLoader classLoader, JavaFileManager javaFileManager,
 		List<JavaFileObjectResolver> javaFileObjectResolvers) {
 
 		super(javaFileManager);
 
-		_bytecodeJavaFileObjects = bytecodeJavaFileObjects;
 		_classLoader = classLoader;
 		_javaFileObjectResolvers = javaFileObjectResolvers;
+	}
+
+	public List<BytecodeJavaFileObject> getBytecodeJavaFileObjects() {
+		return _bytecodeJavaFileObjects;
 	}
 
 	@Override
@@ -165,7 +168,8 @@ public class BundleJavaFileManager
 	private static final Set<JavaFileObject.Kind> _kinds = EnumSet.of(
 		JavaFileObject.Kind.CLASS);
 
-	private final List<BytecodeJavaFileObject> _bytecodeJavaFileObjects;
+	private final List<BytecodeJavaFileObject> _bytecodeJavaFileObjects =
+		new ArrayList<>();
 	private final ClassLoader _classLoader;
 	private final List<JavaFileObjectResolver> _javaFileObjectResolvers;
 	private final Map<String, Map<String, JavaFileObject>> _javaFileObjectsMap =

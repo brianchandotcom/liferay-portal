@@ -309,7 +309,7 @@ public class ScanCodeProject {
 				portalReleaseVersion, " Scan-",
 				_simpleDateFormat.format(new Date()))
 		).put(
-			"pipeline", _pipelineName
+			"pipeline", _pipelineName + ":Java,Javascript"
 		);
 
 		return jsonObject;

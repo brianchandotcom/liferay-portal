@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.FriendlyUrlHistoryResource;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
@@ -65,6 +66,12 @@ public class FriendlyUrlHistoryResourceImpl
 					GroupUtil.getGroupId(
 						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode));
+
+		if (layoutPageTemplateEntry.getType() !=
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		return _toFriendlyUrlHistory(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()));

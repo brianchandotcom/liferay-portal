@@ -16,7 +16,7 @@ import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants';
+import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants/animals';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getContainerDefinition from './utils/getContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';

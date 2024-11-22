@@ -17,7 +17,7 @@ import getRandomString from '../../utils/getRandomString';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
-import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants';
+import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants/animals';
 import createPageWithCollectionAndFilterCollection from './utils/createPageWithCollectionAndFilterCollection';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';

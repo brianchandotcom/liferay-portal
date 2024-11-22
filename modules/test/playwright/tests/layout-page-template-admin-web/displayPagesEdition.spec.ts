@@ -18,7 +18,7 @@ import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 import {
 	ANIMAL_01_FRIENDLY_URL,
 	ANIMAL_DDM_STRUCTURE_KEY,
-} from '../setup/page-management-site/constants';
+} from '../setup/page-management-site/constants/animals';
 
 const test = mergeTests(
 	apiHelpersTest,

@@ -42,6 +42,7 @@ import com.liferay.scim.rest.client.dto.v1_0.User;
 import com.liferay.scim.rest.client.dto.v1_0.UserSchemaExtension;
 import com.liferay.scim.rest.client.http.HttpInvoker;
 import com.liferay.scim.rest.resource.v1_0.test.util.ScimTestUtil;
+import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -187,7 +188,8 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		ScimTestUtil.saveSCIMClientId(
 			com.liferay.portal.kernel.model.User.class.getName(), userId,
 			TestPropsValues.getCompanyId(),
-			"SCIM_scim-client-test" + RandomTestUtil.randomString());
+			ScimClientUtil.generateScimClientId(
+				"scim-client-test" + RandomTestUtil.randomString()));
 
 		_reindexUser(userId);
 

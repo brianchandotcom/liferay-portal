@@ -15,10 +15,11 @@ export class ObjectEntryApiHelper {
 
 	async deleteObjectEntryByExternalReferenceCode(
 		applicationName: string,
+		scopeKey: string,
 		externalReferenceCode: string
 	) {
 		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${applicationName}/by-external-reference-code/${externalReferenceCode}`
+			`${this.apiHelpers.baseUrl}${applicationName}/scopes/${scopeKey}/by-external-reference-code/${externalReferenceCode}`
 		);
 	}
 

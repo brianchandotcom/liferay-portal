@@ -985,8 +985,8 @@ test.describe('Manage object relationships through Model Builder', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			publishedObjectDefinition2.externalReferenceCode,
 			{
+				DBType: ObjectField.DBTypeEnum.String,
 				businessType: ObjectField.BusinessTypeEnum.Text,
-				dBType: ObjectField.DBTypeEnum.String,
 				indexed: true,
 				indexedAsKeyword: false,
 				indexedLanguageId: '',

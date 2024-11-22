@@ -218,7 +218,7 @@ test.describe('Manage object fields through Model Builder', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
-				dBType: ObjectField.DBTypeEnum.Integer,
+				DBType: ObjectField.DBTypeEnum.Integer,
 				label: {
 					en_US: 'intField',
 				},
@@ -293,8 +293,8 @@ test.describe('Manage object fields through Model Builder', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			draftObjectDefinition.externalReferenceCode,
 			{
+				DBType: ObjectField.DBTypeEnum.String,
 				businessType: ObjectField.BusinessTypeEnum.Picklist,
-				dBType: ObjectField.DBTypeEnum.String,
 				externalReferenceCode: picklistFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -523,8 +523,8 @@ test.describe('Manage object fields through Model Builder', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
+				DBType: ObjectField.DBTypeEnum.Integer,
 				businessType: ObjectField.BusinessTypeEnum.Integer,
-				dBType: ObjectField.DBTypeEnum.Integer,
 				externalReferenceCode: integerFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -543,8 +543,8 @@ test.describe('Manage object fields through Model Builder', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
+				DBType: ObjectField.DBTypeEnum.Date,
 				businessType: ObjectField.BusinessTypeEnum.Date,
-				dBType: ObjectField.DBTypeEnum.Date,
 				externalReferenceCode: dateFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -604,8 +604,8 @@ test.describe('Manage object fields through Model Builder', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
+				DBType: ObjectField.DBTypeEnum.Integer,
 				businessType: ObjectField.BusinessTypeEnum.Integer,
-				dBType: ObjectField.DBTypeEnum.Integer,
 				externalReferenceCode: integerFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -893,8 +893,8 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
+				DBType: ObjectField.DBTypeEnum.Integer,
 				businessType: ObjectField.BusinessTypeEnum.Integer,
-				dBType: ObjectField.DBTypeEnum.Integer,
 				externalReferenceCode: integerFieldName,
 				indexed: true,
 				indexedAsKeyword: false,

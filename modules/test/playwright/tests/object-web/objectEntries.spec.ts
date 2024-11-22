@@ -51,8 +51,8 @@ test.describe('Manage object entries through Page Templates', () => {
 	}) => {
 		const objectFields: ObjectField[] = [
 			{
+				DBType: ObjectField.DBTypeEnum.String,
 				businessType: ObjectField.BusinessTypeEnum.Text,
-				dBType: ObjectField.DBTypeEnum.String,
 				externalReferenceCode: 'textField',
 				indexed: true,
 				indexedAsKeyword: false,

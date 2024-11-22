@@ -70,8 +70,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
+				DBType: ObjectField.DBTypeEnum.Integer,
 				businessType: ObjectField.BusinessTypeEnum.Integer,
-				dBType: ObjectField.DBTypeEnum.Integer,
 				externalReferenceCode: 'integerField',
 				indexed: true,
 				indexedAsKeyword: false,
@@ -128,8 +128,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
+				DBType: ObjectField.DBTypeEnum.Integer,
 				businessType: ObjectField.BusinessTypeEnum.Integer,
-				dBType: ObjectField.DBTypeEnum.Integer,
 				externalReferenceCode: integerFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -253,8 +253,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
+				DBType: ObjectField.DBTypeEnum.String,
 				businessType: ObjectField.BusinessTypeEnum.AutoIncrement,
-				dBType: ObjectField.DBTypeEnum.String,
 				externalReferenceCode: autoIncrementFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -279,8 +279,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
+				DBType: ObjectField.DBTypeEnum.Date,
 				businessType: ObjectField.BusinessTypeEnum.Date,
-				dBType: ObjectField.DBTypeEnum.Date,
 				externalReferenceCode: dateFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -299,8 +299,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
+				DBType: ObjectField.DBTypeEnum.Integer,
 				businessType: ObjectField.BusinessTypeEnum.Integer,
-				dBType: ObjectField.DBTypeEnum.Integer,
 				externalReferenceCode: integerFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -344,8 +344,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
+				DBType: ObjectField.DBTypeEnum.String,
 				businessType: ObjectField.BusinessTypeEnum.Picklist,
-				dBType: ObjectField.DBTypeEnum.String,
 				externalReferenceCode: picklistFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -411,8 +411,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
+				DBType: ObjectField.DBTypeEnum.Integer,
 				businessType: ObjectField.BusinessTypeEnum.Integer,
-				dBType: ObjectField.DBTypeEnum.Integer,
 				externalReferenceCode: 'integerField',
 				indexed: true,
 				indexedAsKeyword: false,

@@ -2079,7 +2079,9 @@ public class RESTBuilder {
 				"--yes", "@openapitools/openapi-generator-cli", "--",
 				"generate", "--input-spec", openAPIYAMLFile.getPath(),
 				"--generator-name", "typescript-" + targetClientType,
-				"--output", outputPathString, "--skip-validate-spec"));
+				"--output", outputPathString, "--skip-validate-spec",
+				"--additional-properties=modelPropertyNaming=original," +
+					"paramNaming=original"));
 
 		String nodeBinPathString = _getNodeBinPathString();
 

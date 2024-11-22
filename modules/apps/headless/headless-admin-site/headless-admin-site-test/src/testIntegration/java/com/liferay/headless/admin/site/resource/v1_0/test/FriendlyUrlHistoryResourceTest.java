@@ -83,6 +83,47 @@ public class FriendlyUrlHistoryResourceTest
 			_getLayoutUtilityPageEntryLayout(serviceContext));
 	}
 
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory()
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_getLayoutUtilityPageEntry(
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		List<String> list = _updateFriendlyURL(
+			_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()));
+
+		FriendlyUrlHistory friendlyUrlHistory =
+			friendlyUrlHistoryResource.
+				getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory(
+					testGroup.getExternalReferenceCode(),
+					layoutUtilityPageEntry.getExternalReferenceCode());
+
+		_assertFriendlyUrlHistoryJSONObject(
+			_jsonFactory.createJSONObject(
+				GetterUtil.getString(
+					friendlyUrlHistory.getFriendlyUrlPath_i18n())),
+			list);
+	}
+
+	private void _assertFriendlyUrlHistoryJSONObject(
+		JSONObject jsonObject, List<String> list) {
+
+		Assert.assertEquals(1, jsonObject.length());
+
+		JSONArray jsonArray = jsonObject.getJSONArray(
+			LocaleUtil.toBCP47LanguageId(LocaleUtil.getSiteDefault()));
+
+		Assert.assertEquals(4, jsonArray.length());
+
+		for (int i = 0; i < list.size(); i++) {
+			Assert.assertEquals(list.get(i), jsonArray.getString(i));
+		}
+	}
+
 	private void _assertProblemException(Layout layout) throws Exception {
 		try {
 			friendlyUrlHistoryResource.
@@ -148,17 +189,23 @@ public class FriendlyUrlHistoryResourceTest
 		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
 	}
 
+	private LayoutUtilityPageEntry _getLayoutUtilityPageEntry(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			0, 0, false, RandomTestUtil.randomString(),
+			LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR, 0,
+			serviceContext);
+	}
+
 	private Layout _getLayoutUtilityPageEntryLayout(
 			ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				null, TestPropsValues.getUserId(),
-				serviceContext.getScopeGroupId(), 0, 0, false,
-				RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR,
-				0, serviceContext);
+			_getLayoutUtilityPageEntry(serviceContext);
 
 		return _layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid());
 	}
@@ -185,10 +232,26 @@ public class FriendlyUrlHistoryResourceTest
 				Layout layout)
 		throws Exception {
 
+		List<String> list = _updateFriendlyURL(layout);
+
+		FriendlyUrlHistory friendlyUrlHistory =
+			friendlyUrlHistoryResource.
+				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
+					testGroup.getExternalReferenceCode(),
+					layout.getExternalReferenceCode());
+
+		_assertFriendlyUrlHistoryJSONObject(
+			_jsonFactory.createJSONObject(
+				GetterUtil.getString(
+					friendlyUrlHistory.getFriendlyUrlPath_i18n())),
+			list);
+	}
+
+	private List<String> _updateFriendlyURL(Layout layout) throws Exception {
+		List<String> list = new ArrayList<>();
+
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
-
-		List<String> list = new ArrayList<>();
 
 		list.add(layout.getFriendlyURL(LocaleUtil.getSiteDefault()));
 
@@ -200,27 +263,9 @@ public class FriendlyUrlHistoryResourceTest
 			list.add(layout.getFriendlyURL(LocaleUtil.getSiteDefault()));
 		}
 
-		FriendlyUrlHistory friendlyUrlHistory =
-			friendlyUrlHistoryResource.
-				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
-					testGroup.getExternalReferenceCode(),
-					layout.getExternalReferenceCode());
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			GetterUtil.getString(friendlyUrlHistory.getFriendlyUrlPath_i18n()));
-
-		Assert.assertEquals(1, jsonObject.length());
-
-		JSONArray jsonArray = jsonObject.getJSONArray(
-			LocaleUtil.toBCP47LanguageId(defaultLanguageId));
-
-		Assert.assertEquals(4, jsonArray.length());
-
 		Collections.reverse(list);
 
-		for (int i = 0; i < list.size(); i++) {
-			Assert.assertEquals(list.get(i), jsonArray.getString(i));
-		}
+		return list;
 	}
 
 	@Inject

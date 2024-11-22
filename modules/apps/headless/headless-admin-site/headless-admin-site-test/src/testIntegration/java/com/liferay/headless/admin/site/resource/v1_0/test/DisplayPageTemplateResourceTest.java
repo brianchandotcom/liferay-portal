@@ -19,6 +19,7 @@ import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -228,6 +230,10 @@ public class DisplayPageTemplateResourceTest
 		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			postDisplayPageTemplate.getExternalReferenceCode(), null,
 			Boolean.FALSE);
+
+		_updateLayoutPageTemplateEntryStatus(
+			postDisplayPageTemplate.getExternalReferenceCode());
+
 		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			postDisplayPageTemplate.getExternalReferenceCode(), null,
 			Boolean.TRUE);
@@ -679,6 +685,21 @@ public class DisplayPageTemplateResourceTest
 		Assert.assertEquals(
 			layoutPageTemplateCollection.getExternalReferenceCode(),
 			curDisplayPageTemplateFolder.getExternalReferenceCode());
+	}
+
+	private void _updateLayoutPageTemplateEntryStatus(
+			String externalReferenceCode)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					externalReferenceCode, testGroup.getGroupId());
+
+		_layoutPageTemplateEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Inject

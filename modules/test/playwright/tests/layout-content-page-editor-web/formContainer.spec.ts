@@ -1500,7 +1500,7 @@ test.describe('Submit button', () => {
 
 			await page.getByLabel('Publish', {exact: true}).click();
 
-			expect(
+			await expect(
 				page.getByText(
 					'form does not allow creating entries as draft. Review the button configuration and set it to approved to generate valid entries.'
 				)

@@ -9,6 +9,10 @@
 
 <%
 long categoryId = ParamUtil.getLong(request, "categoryId");
+
+if (categoryId > 0) {
+	CTTimelineUtil.setCTTimelineKeys(renderRequest, AssetCategory.class, categoryId);
+}
 %>
 
 <liferay-ui:success key="categoryAdded" message='<%= GetterUtil.getString(MultiSessionMessages.get(renderRequest, "categoryAdded")) %>' />

@@ -5,7 +5,7 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {ObjectDefinitionApi} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
+import {ObjectDefinitionApi} from '../../../../apps/object/object-admin-rest-client-js';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';

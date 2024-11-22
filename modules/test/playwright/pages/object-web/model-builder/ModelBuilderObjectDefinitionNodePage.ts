@@ -8,7 +8,7 @@ import {expect} from '@playwright/test';
 import {
 	ObjectField,
 	ObjectRelationship,
-} from '../../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
+} from '../../../../../apps/object/object-admin-rest-client-js';
 import {
 	CreateObjectField,
 	CreateObjectRelationship,

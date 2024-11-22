@@ -10,7 +10,7 @@ import {
 	ObjectField,
 	ObjectRelationship,
 	ObjectRelationshipApi,
-} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
+} from '../../../../apps/object/object-admin-rest-client-js';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';

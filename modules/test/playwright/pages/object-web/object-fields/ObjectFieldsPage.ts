@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ObjectField} from '../../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
+import {ObjectField} from '../../../../../apps/object/object-admin-rest-client-js';
 import {CreateObjectField} from '../../../types/object';
 import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
 

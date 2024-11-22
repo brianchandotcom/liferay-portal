@@ -7,7 +7,7 @@ import {
 	ObjectDefinition,
 	ObjectField,
 	ObjectRelationship,
-} from '../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node/api';
+} from '../../../apps/object/object-admin-rest-client-js';
 
 interface Actions {
 	create?: HTTPMethod;

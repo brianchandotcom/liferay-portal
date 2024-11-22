@@ -467,7 +467,7 @@ function start_additional_bundles {
 
 		local leading_port_number=$((8 + ${app_server_bundles_size}))
 
-		local liferay_portal_url="${LIFERAY_PORTAL_URL/\:8/\:"$leading_port_number"}"
+		local liferay_portal_url="${LIFERAY_PORTAL_URL/\:8/\:"${leading_port_number}"}"
 
 		start_app_server ${liferay_home} ${liferay_portal_url}
 	done
@@ -667,7 +667,7 @@ function validate_environment_variables {
 }
 
 function wait_for_portal_log_inactivity {
-	local portal_log_file_size=$(get_portal_log_file_size $1)
+	local portal_log_file_size=$(get_portal_log_file_size ${1})
 
 	local sleep_interval=15
 	local sleep_duration=180
@@ -675,9 +675,9 @@ function wait_for_portal_log_inactivity {
 
 	sleep ${sleep_interval}
 
-	while [[ ${portal_log_file_size} != $(get_portal_log_file_size $1) ]]
+	while [[ ${portal_log_file_size} != $(get_portal_log_file_size ${1}) ]]
 	do
-		portal_log_file_size=$(get_portal_log_file_size $1)
+		portal_log_file_size=$(get_portal_log_file_size ${1})
 
 		if [[ ${total_duration} -ge ${sleep_duration} ]]
 		then

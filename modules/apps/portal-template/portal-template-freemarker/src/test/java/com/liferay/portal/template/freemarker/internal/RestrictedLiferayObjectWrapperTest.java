@@ -489,7 +489,10 @@ public class RestrictedLiferayObjectWrapperTest
 							setInitializingPortalInstanceWithSafeCloseable(
 								true)) {
 
-					objectWrapper.wrap(new TestBaseModel(123L));
+					assertTemplateModel(
+						"123", stringModel -> stringModel.getAsString(),
+						StringModel.class.cast(
+							objectWrapper.wrap(new TestBaseModel(123L))));
 				}
 			}
 			finally {

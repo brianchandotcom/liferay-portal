@@ -201,7 +201,7 @@ public class JspCompiler {
 			}
 
 			_javaFileObjectResolvers.add(
-				new JspJavaFileObjectResolver(
+				new JavaFileObjectResolver(
 					bundleWiring, _jspBundleWiring, _bundleWiringPackageNames));
 		}
 

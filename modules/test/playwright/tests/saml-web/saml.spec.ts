@@ -677,6 +677,76 @@ test('LPD-32187 AC1 TC1: Verify IdP initiated SSO with provided RelayState param
 	);
 });
 
+test('LPD-32187 AC2 TC2: Verify unsuccessful IdP initiated SSO with provided RelayState parameter redirects the user to the login page.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create a new page on the SP Instance
+
+	const pagesAdminPage = new PagesAdminPage(spAdminPage);
+
+	await pagesAdminPage.goto();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: pageTitle,
+	});
+
+	const spNewPagePath = '/web/guest/' + pageTitle;
+
+	// Execute unsuccessful IdP initiated SSO
+
+	const idpInstancePage = await browser.newPage({
+		baseURL: DEFAULT_IDP_URL,
+	});
+
+	await idpInstancePage.goto(
+		`${DEFAULT_IDP_URL}/c/portal/saml/sso?entityId=${DEFAULT_SP_NAME}&RelayState=${spNewPagePath}`
+	);
+
+	await idpInstancePage
+		.getByLabel('Email Address')
+		.waitFor({timeout: 30 * 1000});
+
+	// Attempt authentication, but provide invalid email address
+
+	await idpInstancePage.waitForTimeout(1000);
+	await idpInstancePage
+		.getByLabel('Email Address')
+		.fill('invalidEmail@liferay.com');
+	await idpInstancePage.getByLabel('Password').fill('test');
+	await idpInstancePage.getByRole('button', {name: 'Sign In'}).click();
+
+	// Assert failed authentication and still on IdP login page
+
+	await expect(await idpInstancePage.getByText('Error:')).toBeVisible();
+
+	await expect(
+		await idpInstancePage.getByLabel('Email Address')
+	).toBeVisible();
+
+	await expect(await idpInstancePage.url()).toContain(DEFAULT_IDP_URL);
+});
+
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({
 	browser,
 }) => {

@@ -8380,6 +8380,44 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/UtilityPage"
             tags: ["UtilityPage"]
+    "/sites/{siteExternalReferenceCode}/utility-pages/{utilityPageExternalReferenceCode}/friendly-url-history":
+        get:
+            # @review
+            description:
+                Retrieves the history of previously used URLs for a utility page.
+            operationId: getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: utilityPageExternalReferenceCode
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/FriendlyUrlHistory"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/FriendlyUrlHistory"
+            tags: ["FriendlyUrlHistory"]
     "/sites/{siteExternalReferenceCode}/utility-pages/{utilityPageExternalReferenceCode}/page-specifications":
         get:
             # @review

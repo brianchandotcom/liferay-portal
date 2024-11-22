@@ -8,6 +8,7 @@ package com.liferay.client.extension.type.item.selector.web.internal.item.select
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.GlobalJSCET;
+import com.liferay.client.extension.type.ThemeCSSCET;
 import com.liferay.client.extension.type.item.selector.CETItemSelectorReturnType;
 import com.liferay.client.extension.type.item.selector.criterion.CETItemSelectorCriterion;
 import com.liferay.client.extension.type.manager.CETManager;
@@ -18,13 +19,14 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -79,24 +81,7 @@ public class CETItemSelectorViewDescriptor
 			_cetItemSelectorCriterion.getType(),
 			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null);
 
-		if (Objects.equals(
-				_cetItemSelectorCriterion.getType(),
-				ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
-
-			List<CET> filteredCETs = new ArrayList<>();
-
-			for (CET cet : cets) {
-				GlobalJSCET globalJSCET = (GlobalJSCET)cet;
-
-				if (!StringUtil.equalsIgnoreCase(
-						globalJSCET.getScope(), "company")) {
-
-					filteredCETs.add(cet);
-				}
-			}
-
-			cets = filteredCETs;
-		}
+		cets = _filterCETs(cets, _cetItemSelectorCriterion.getType());
 
 		searchContainer.setResultsAndTotal(cets);
 
@@ -111,6 +96,41 @@ public class CETItemSelectorViewDescriptor
 	@Override
 	public boolean isShowBreadcrumb() {
 		return false;
+	}
+
+	private List<CET> _filterCETs(List<CET> cets, String type) {
+		Predicate<CET> filterPredicate = _getFilterPredicate(type);
+
+		if (filterPredicate == null) {
+			return cets;
+		}
+
+		return ListUtil.filter(cets, filterPredicate);
+	}
+
+	private Predicate<CET> _getFilterPredicate(String type) {
+		if (Objects.equals(
+				type, ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
+
+			return cet -> {
+				GlobalJSCET globalJSCET = (GlobalJSCET)cet;
+
+				return !StringUtil.equalsIgnoreCase(
+					globalJSCET.getScope(), "company");
+			};
+		}
+		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_THEME_CSS)) {
+
+			return cet -> {
+				ThemeCSSCET themeCSSCET = (ThemeCSSCET)cet;
+
+				return !StringUtil.equalsIgnoreCase(
+					themeCSSCET.getScope(), "controlPanel");
+			};
+		}
+
+		return null;
 	}
 
 	private static final ItemSelectorReturnType

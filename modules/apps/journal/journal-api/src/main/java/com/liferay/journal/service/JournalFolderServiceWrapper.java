@@ -154,6 +154,17 @@ public class JournalFolderServiceWrapper
 
 	@Override
 	public java.util.List<Object> getFoldersAndArticles(
+		long groupId, long folderId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator,
+		boolean excludeExpired) {
+
+		return _journalFolderService.getFoldersAndArticles(
+			groupId, folderId, status, start, end, orderByComparator,
+			excludeExpired);
+	}
+
+	@Override
+	public java.util.List<Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
 
@@ -169,6 +180,18 @@ public class JournalFolderServiceWrapper
 
 		return _journalFolderService.getFoldersAndArticles(
 			groupId, userId, folderId, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<Object> getFoldersAndArticles(
+		long groupId, long userId, long folderId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator,
+		boolean excludeExpire) {
+
+		return _journalFolderService.getFoldersAndArticles(
+			groupId, userId, folderId, status, start, end, orderByComparator,
+			excludeExpire);
 	}
 
 	@Override
@@ -191,6 +214,18 @@ public class JournalFolderServiceWrapper
 		return _journalFolderService.getFoldersAndArticles(
 			groupId, userId, folderId, ddmStructureId, status, locale, start,
 			end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<Object> getFoldersAndArticles(
+		long groupId, long userId, long folderId, long ddmStructureId,
+		int status, java.util.Locale locale, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator,
+		boolean excludeExpired) {
+
+		return _journalFolderService.getFoldersAndArticles(
+			groupId, userId, folderId, ddmStructureId, status, locale, start,
+			end, orderByComparator, excludeExpired);
 	}
 
 	@Override
@@ -230,6 +265,15 @@ public class JournalFolderServiceWrapper
 
 		return _journalFolderService.getFoldersAndArticlesCount(
 			groupId, userId, folderId, ddmStructureId, status);
+	}
+
+	@Override
+	public int getFoldersAndArticlesCount(
+		long groupId, long userId, long folderId, long ddmStructureId,
+		int status, boolean excludeExpired) {
+
+		return _journalFolderService.getFoldersAndArticlesCount(
+			groupId, userId, folderId, ddmStructureId, status, excludeExpired);
 	}
 
 	@Override

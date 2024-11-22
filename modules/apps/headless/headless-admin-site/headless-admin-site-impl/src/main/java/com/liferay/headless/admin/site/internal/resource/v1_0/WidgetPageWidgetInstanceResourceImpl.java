@@ -5,13 +5,16 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.WidgetPageWidgetInstanceResource;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchPortletException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -72,6 +75,57 @@ public class WidgetPageWidgetInstanceResourceImpl
 		_layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
+	}
+
+	@Override
+	public WidgetPageWidgetInstance
+			getSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
+				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
+				String widgetInstanceExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode,
+			GroupUtil.getGroupId(
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutType layoutType = layout.getLayoutType();
+
+		if (!(layoutType instanceof LayoutTypePortlet)) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		if (!layoutTypePortlet.hasPortletId(
+				widgetInstanceExternalReferenceCode)) {
+
+			throw new NoSuchPortletException();
+		}
+
+		return new WidgetPageWidgetInstance() {
+			{
+				setParentSectionId(StringPool.BLANK);
+				setPosition(0);
+				setWidgetInstanceId(
+					() -> PortletIdCodec.decodeInstanceId(
+						widgetInstanceExternalReferenceCode));
+				setWidgetName(
+					() -> PortletIdCodec.decodePortletName(
+						widgetInstanceExternalReferenceCode));
+			}
+		};
 	}
 
 	@Reference

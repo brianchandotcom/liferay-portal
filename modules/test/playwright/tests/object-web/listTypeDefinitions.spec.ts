@@ -17,7 +17,6 @@ import {listTypeDefinitionsPagesTest} from '../../fixtures/listTypeDefinitionsPa
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {siteSettingsPagesTest} from '../../fixtures/siteSettingsPagesTest';
-import {ListTypeDefinition, ListTypeEntry} from '../../types/object';
 import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(

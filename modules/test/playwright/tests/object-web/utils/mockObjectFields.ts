@@ -5,7 +5,6 @@
 
 import {ObjectField} from '../../../../../apps/object/object-admin-rest-client-js';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {LabelNameObject, ListTypeDefinition} from '../../../types/object';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {

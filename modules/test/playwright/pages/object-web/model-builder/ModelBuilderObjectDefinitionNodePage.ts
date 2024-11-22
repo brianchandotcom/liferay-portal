@@ -9,12 +9,9 @@ import {
 	ObjectField,
 	ObjectRelationship,
 } from '../../../../../apps/object/object-admin-rest-client-js';
-import {
-	CreateObjectField,
-	CreateObjectRelationship,
-} from '../../../types/object';
 
 import type {Locator, Page} from '@playwright/test';
+import { CreateObjectField } from '../../../helpers/ObjectAdminApiHelper';
 
 export class ModelBuilderObjectDefinitionNodePage {
 	readonly addObjectFieldButton: Locator;
@@ -164,7 +161,13 @@ export class ModelBuilderObjectDefinitionNodePage {
 		objectDefinitionNodes,
 		objectRelationshipLabel,
 		objectRelationshipType,
-	}: CreateObjectRelationship): Promise<ObjectRelationship> {
+	}: {
+		manyRecordsOf: string;
+		objectDefinitionLabel: string;
+		objectDefinitionNodes: unknown;
+		objectRelationshipLabel: string;
+		objectRelationshipType: ObjectRelationship.TypeEnum;
+	}): Promise<ObjectRelationship> {
 		await this.openAddNewObjectFieldOrRelationshipModal(
 			objectDefinitionLabel,
 			objectDefinitionNodes,

@@ -3,37 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	ObjectDefinition,
-	ObjectField,
-	ObjectRelationship,
-} from '../../../apps/object/object-admin-rest-client-js';
-
 interface Actions {
 	create?: HTTPMethod;
 	delete?: HTTPMethod;
 	get?: HTTPMethod;
 	permissions?: HTTPMethod;
 	update?: HTTPMethod;
-}
-
-interface CreateObjectField {
-	attachmentSource?: string;
-	listTypeDefinitionName?: string;
-	mandatory?: boolean;
-	objectDefinitionLabel?: string;
-
-	objectDefinitionNodes: unknown;
-	objectFieldBusinessType: ObjectField.BusinessTypeEnum;
-	objectFieldLabel: string;
-}
-
-interface CreateObjectRelationship {
-	manyRecordsOf: string;
-	objectDefinitionLabel: string;
-	objectDefinitionNodes: unknown;
-	objectRelationshipLabel: string;
-	objectRelationshipType: ObjectRelationship.TypeEnum;
 }
 
 interface DataObject {
@@ -93,18 +68,6 @@ interface NameValueObject {
 	value: string;
 }
 
-interface ObjectDefinitionNodeData
-	extends Omit<ObjectDefinition, 'objectFields'> {
-	hasObjectDefinitionDeleteResourcePermission: boolean;
-	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
-	hasObjectDefinitionUpdateResourcePermission: boolean;
-	hasObjectDefinitionViewResourcePermission: boolean;
-	linkedObjectDefinition: boolean;
-	objectFields: ObjectFieldNodeRow[];
-	selected: boolean;
-	showAllObjectFields: boolean;
-}
-
 interface ObjectEntry {
 
 	// replace with model generated with object-rest-impl
@@ -142,9 +105,3 @@ type ObjectFieldFilterSetting = {
 		| IncludesFilterOperator
 		| string;
 };
-
-interface ObjectFieldNodeRow extends Partial<ObjectField> {
-	primaryKey: boolean;
-	required: boolean;
-	selected: boolean;
-}

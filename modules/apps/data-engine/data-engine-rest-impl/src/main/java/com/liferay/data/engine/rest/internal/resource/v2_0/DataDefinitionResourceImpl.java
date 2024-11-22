@@ -80,7 +80,6 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTAware;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -261,10 +260,6 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			Long siteId, String contentType, String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-34651")) {
-			throw new UnsupportedOperationException();
-		}
-
 		DDMStructure ddmStructure =
 			_ddmStructureLocalService.fetchStructureByExternalReferenceCode(
 				externalReferenceCode, siteId,
@@ -387,10 +382,6 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			getSiteDataDefinitionByContentTypeByExternalReferenceCode(
 				Long siteId, String contentType, String externalReferenceCode)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-34651")) {
-			throw new UnsupportedOperationException();
-		}
 
 		DDMStructure ddmStructure =
 			_ddmStructureLocalService.getStructureByExternalReferenceCode(
@@ -572,10 +563,6 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				Long siteId, String contentType, String externalReferenceCode,
 				DataDefinition dataDefinition)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-34651")) {
-			throw new UnsupportedOperationException();
-		}
 
 		DDMStructure ddmStructure =
 			_ddmStructureLocalService.fetchStructureByExternalReferenceCode(

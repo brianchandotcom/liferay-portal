@@ -2076,7 +2076,7 @@ public class RESTBuilder {
 		ProcessBuilder processBuilder = new ProcessBuilder(
 			Arrays.asList(
 				_getNPMPathString(), "exec", "--prefix", _getNodePrefix(),
-				"--yes", "@openapitools/openapi-generator-cli", "--",
+				"--yes", "@openapitools/openapi-generator-cli@2.15.3", "--",
 				"generate", "--input-spec", openAPIYAMLFile.getPath(),
 				"--generator-name", "typescript-" + targetClientType,
 				"--output", outputPathString, "--skip-validate-spec",

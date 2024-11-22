@@ -24,10 +24,6 @@ public class BytecodeJavaFileObject extends BaseJavaFileObject {
 		super(Kind.CLASS, className);
 	}
 
-	public byte[] getBytecode() {
-		return _bytecode;
-	}
-
 	@Override
 	public InputStream openInputStream() {
 		return new ByteArrayInputStream(_bytecode);

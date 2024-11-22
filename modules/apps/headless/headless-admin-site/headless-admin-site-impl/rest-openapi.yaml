@@ -4147,6 +4147,44 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/DisplayPageTemplate"
             tags: ["DisplayPageTemplate"]
+    "/sites/{siteExternalReferenceCode}/display-page-templates/{displayPageTemplateExternalReferenceCode}/friendly-url-history":
+        get:
+            # @review
+            description:
+                Retrieves the history of previously used URLs for a display page template.
+            operationId: getSiteSiteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: displayPageTemplateExternalReferenceCode
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/FriendlyUrlHistory"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/FriendlyUrlHistory"
+            tags: ["FriendlyUrlHistory"]
     "/sites/{siteExternalReferenceCode}/display-page-templates/{displayPageTemplateExternalReferenceCode}/page-specifications":
         get:
             # @review

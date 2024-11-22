@@ -106,12 +106,13 @@ public class LoginPostAction extends Action {
 					userId = PortalUtil.getUserId(httpServletRequest);
 				}
 
-				boolean reindex = false;
+				boolean reindex = UserLocalServiceUtil.addDefaultGroups(userId);
 
-				if (UserLocalServiceUtil.addDefaultGroups(userId) ||
-					UserLocalServiceUtil.addDefaultRoles(userId) ||
-					UserLocalServiceUtil.addDefaultUserGroups(userId)) {
-
+				if (UserLocalServiceUtil.addDefaultRoles(userId)) {
+					UserLocalServiceUtil.addDefaultUserGroups(userId);
+					reindex = true;
+				}
+				else if (UserLocalServiceUtil.addDefaultUserGroups(userId)) {
 					reindex = true;
 				}
 

@@ -20,11 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -32,17 +28,12 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 import java.util.zip.ZipInputStream;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -53,26 +44,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Carolina Barbosa
  */
 @RunWith(Arquillian.class)
-public class ExportTaskResourceTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@Before
-	public void setUp() throws Exception {
-		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING,
-					_OBJECT_FIELD_NAME_TEXT)),
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			TestPropsValues.getUserId());
-	}
+public class ExportTaskResourceTest extends BaseTaskResourceTest {
 
 	@Test
 	public void testPostExportTask() throws Exception {
@@ -83,7 +55,7 @@ public class ExportTaskResourceTest {
 					"BatchEngineExportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
-			_testPostExportTask("COMPLETED", null, _objectDefinition);
+			_testPostExportTask("COMPLETED", null, objectDefinition);
 
 			JSONObject companyJSONObject = HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -106,7 +78,7 @@ public class ExportTaskResourceTest {
 						ObjectFieldUtil.createObjectField(
 							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 							ObjectFieldConstants.DB_TYPE_STRING,
-							_OBJECT_FIELD_NAME_TEXT)),
+							OBJECT_FIELD_NAME_TEXT)),
 					ObjectDefinitionConstants.SCOPE_COMPANY, user.getUserId());
 
 			_testPostExportTask("FAILED", null, objectDefinition2);
@@ -119,7 +91,7 @@ public class ExportTaskResourceTest {
 			).apply(
 				() -> {
 					_testPostExportTask("COMPLETED", null, objectDefinition2);
-					_testPostExportTask("FAILED", null, _objectDefinition);
+					_testPostExportTask("FAILED", null, objectDefinition);
 				}
 			);
 		}
@@ -133,19 +105,19 @@ public class ExportTaskResourceTest {
 	@Test
 	public void testPostExportTaskWithFilter() throws Exception {
 		ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition, _OBJECT_FIELD_NAME_TEXT, "Object3");
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "Object3");
 
 		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition, _OBJECT_FIELD_NAME_TEXT, "TestObject1");
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject1");
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition, _OBJECT_FIELD_NAME_TEXT, "TestObject2");
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject2");
 
 		String filterString =
-			"contains(" + _OBJECT_FIELD_NAME_TEXT + ", 'Test')";
+			"contains(" + OBJECT_FIELD_NAME_TEXT + ", 'Test')";
 
 		JSONObject jsonObject = _testPostExportTask(
 			"COMPLETED", "filter=" + URLCodec.encodeURL(filterString),
-			_objectDefinition);
+			objectDefinition);
 
 		Assert.assertEquals(2, jsonObject.getInt("processedItemsCount"));
 
@@ -186,45 +158,22 @@ public class ExportTaskResourceTest {
 			endpoint = endpoint + "&" + queryParameters;
 		}
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, endpoint, Http.Method.POST);
+		JSONObject jsonObject = waitForFinish(
+			expectedExecuteStatus, false,
+			HTTPTestUtil.invokeToJSONObject(null, endpoint, Http.Method.POST));
 
-		String actualExecuteStatus = null;
-
-		while (true) {
-			jsonObject = HTTPTestUtil.invokeToJSONObject(
-				null,
-				StringBundler.concat(
-					"headless-batch-engine/v1.0/export-task",
-					"/by-external-reference-code/",
-					jsonObject.getString("externalReferenceCode")),
-				Http.Method.GET);
-
-			actualExecuteStatus = jsonObject.getString("executeStatus");
-
-			if (StringUtil.equals(actualExecuteStatus, "COMPLETED") ||
-				StringUtil.equals(actualExecuteStatus, "FAILED")) {
-
-				break;
-			}
-		}
-
-		Assert.assertEquals(expectedExecuteStatus, actualExecuteStatus);
-
-		return jsonObject;
+		return HTTPTestUtil.invokeToJSONObject(
+			null,
+			BATCH_ENGINE_API_EXPORT_TASK_BY_ERC_ENDPOINT +
+				jsonObject.getString("externalReferenceCode"),
+			Http.Method.GET);
 	}
-
-	private static final String _OBJECT_FIELD_NAME_TEXT =
-		"x" + RandomTestUtil.randomString();
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private JSONFactory _jsonFactory;
-
-	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

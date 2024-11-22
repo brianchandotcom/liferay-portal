@@ -69,7 +69,6 @@ import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
@@ -239,10 +238,8 @@ public class DDMStructureLocalServiceImpl
 			}
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34651")) {
-			_validateExternalReferenceCode(
-				externalReferenceCode, 0, groupId, classNameId);
-		}
+		_validateExternalReferenceCode(
+			externalReferenceCode, 0, groupId, classNameId);
 
 		_validate(
 			groupId, parentStructureId, classNameId, structureKey, nameMap,
@@ -319,12 +316,10 @@ public class DDMStructureLocalServiceImpl
 
 		DDMStructure structure = ddmStructurePersistence.create(structureId);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34651")) {
-			_validateExternalReferenceCode(
-				externalReferenceCode, 0, groupId, classNameId);
+		_validateExternalReferenceCode(
+			externalReferenceCode, 0, groupId, classNameId);
 
-			structure.setExternalReferenceCode(externalReferenceCode);
-		}
+		structure.setExternalReferenceCode(externalReferenceCode);
 
 		structure.setUuid(serviceContext.getUuid());
 		structure.setGroupId(groupId);
@@ -748,10 +743,6 @@ public class DDMStructureLocalServiceImpl
 	public DDMStructure fetchStructureByExternalReferenceCode(
 		String externalReferenceCode, long groupId, long classNameId) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-34651")) {
-			throw new UnsupportedOperationException();
-		}
-
 		return ddmStructurePersistence.fetchByERC_G_C(
 			externalReferenceCode, groupId, classNameId);
 	}
@@ -962,10 +953,6 @@ public class DDMStructureLocalServiceImpl
 	public DDMStructure getStructureByExternalReferenceCode(
 			String externalReferenceCode, long groupId, long classNameId)
 		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-34651")) {
-			throw new UnsupportedOperationException();
-		}
 
 		return ddmStructurePersistence.findByERC_G_C(
 			externalReferenceCode, groupId, classNameId);
@@ -1599,12 +1586,10 @@ public class DDMStructureLocalServiceImpl
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34651")) {
-			_validateExternalReferenceCode(
-				externalReferenceCode, structureId, groupId, classNameId);
+		_validateExternalReferenceCode(
+			externalReferenceCode, structureId, groupId, classNameId);
 
-			structure.setExternalReferenceCode(externalReferenceCode);
-		}
+		structure.setExternalReferenceCode(externalReferenceCode);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -1675,9 +1660,7 @@ public class DDMStructureLocalServiceImpl
 
 		DDMStructure structure = ddmStructurePersistence.create(structureId);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34651")) {
-			structure.setExternalReferenceCode(externalReferenceCode);
-		}
+		structure.setExternalReferenceCode(externalReferenceCode);
 
 		structure.setUuid(serviceContext.getUuid());
 		structure.setGroupId(groupId);

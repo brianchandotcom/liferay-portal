@@ -24,6 +24,7 @@ import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 
 import './InformLicensingTermsPage.scss';
+import {PRODUCT_SPECIFICATION_KEY} from '../../../../../../enums/Product';
 
 type InformLicensingTermsPageProps = {
 	onClickBack: () => void;
@@ -64,14 +65,17 @@ export function InformLicensingTermsPage({
 		if (appLicense.id) {
 			return updateProductSpecification({
 				body: {
-					specificationKey: 'license-type',
+					specificationKey:
+						PRODUCT_SPECIFICATION_KEY.APP_LICENSING_TYPE,
 					value,
 				},
 				id: appLicense.id,
 			});
 		}
 
-		const dataSpecification = await getSpecification('license-type');
+		const dataSpecification = await getSpecification(
+			PRODUCT_SPECIFICATION_KEY.APP_LICENSING_TYPE
+		);
 
 		const {id} = await createProductSpecification({
 			body: {

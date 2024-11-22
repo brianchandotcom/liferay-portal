@@ -23,6 +23,7 @@ import './DefineAppProfilePage.scss';
 import MultiSelect from '../../../../../../components/MultiSelect/MultiSelect';
 import UploadLogo from '../../../../../../components/UploadLogo/UploadLogo';
 import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
+import {PRODUCT_SPECIFICATION_KEY} from '../../../../../../enums/Product';
 import i18n from '../../../../../../i18n';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {getRandomID} from '../../../../../../utils/string';
@@ -135,7 +136,8 @@ export function DefineAppProfilePage({
 				],
 				productSpecifications: [
 					{
-						specificationKey: 'developer-name',
+						specificationKey:
+							PRODUCT_SPECIFICATION_KEY.APP_LICENSING_TYPE,
 						value: {en_US: catalog?.name},
 					},
 				],

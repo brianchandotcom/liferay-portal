@@ -1,6 +1,14 @@
 [
 	{
 		"categoryKey": "product-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-DOWNLOADABLE-CLOUD",
+		"description": "Download Cloud Apps",
+		"facetable": false,
+		"key": "downloadable-cloud-app",
+		"title": "Downloadable Cloud"
+	},
+	{
+		"categoryKey": "product-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-TYPE",
 		"description": "",
 		"facetable": false,

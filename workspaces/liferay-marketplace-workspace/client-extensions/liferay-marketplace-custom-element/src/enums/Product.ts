@@ -38,6 +38,7 @@ export enum PRODUCT_SPECIFICATION_KEY {
 	APP_BUILD_CLOUD_COMPATIBLE = 'type',
 	APP_BUILD_NUMBER_OF_CPUS = 'cpu',
 	APP_BUILD_RAM_IN_GBS = 'ram',
+	APP_DEVELOPER_NAME = 'developer-name',
 	APP_LICENSING_TYPE = 'license-type',
 	APP_PRICING_MODEL = 'price-model',
 	APP_SUPPORT_DOCUMENTATION_URL = 'appdocumentationurl',
@@ -49,8 +50,9 @@ export enum PRODUCT_SPECIFICATION_KEY {
 	APP_SUPPORT_USAGE_TERMS_URL = 'appusagetermsurl',
 	APP_VERSION = 'latest-version',
 	APP_VERSION_NOTES = 'product-notes',
+	DOWNLOADABLE_CLOUD_APP = 'downloadable-cloud-app',
+	LIFERAY_VERSION = 'liferay-version',
 	SOLUTION_COMPANY_DESCRIPTION = 'solution-company-description',
-	SOLUTION_TYPE = 'solution-type',
 	SOLUTION_COMPANY_EMAIL = 'solution-company-email',
 	SOLUTION_COMPANY_PHONE = 'solution-company-phone',
 	SOLUTION_COMPANY_WEBSITE = 'solution-company-website',
@@ -60,6 +62,7 @@ export enum PRODUCT_SPECIFICATION_KEY {
 	SOLUTION_HEADER_TITLE = 'solution-header-title',
 	SOLUTION_HEADER_VIDEO_DESCRIPTION = 'solution-header-video-description',
 	SOLUTION_HEADER_VIDEO_URL = 'solution-header-video-url',
+	SOLUTION_TYPE = 'solution-type',
 }
 
 export enum PRODUCT_SUPPORT_SPECIFICATION_KEY {

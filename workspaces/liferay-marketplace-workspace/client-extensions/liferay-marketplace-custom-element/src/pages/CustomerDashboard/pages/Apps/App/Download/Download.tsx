@@ -10,7 +10,10 @@ import {useOutletContext} from 'react-router-dom';
 import useSWR from 'swr';
 
 import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
-import {PRODUCT_CATEGORIES} from '../../../../../../enums/Product';
+import {
+	PRODUCT_CATEGORIES,
+	PRODUCT_SPECIFICATION_KEY,
+} from '../../../../../../enums/Product';
 import useGetProductByOrderId from '../../../../../../hooks/useGetProductByOrderId';
 import HeadlessCommerceDeliveryCatalogImpl from '../../../../../../services/rest/HeadlessCommerceDeliveryCatalog';
 import {getProductCategoriesByVocabularyName} from '../../../../../../utils/productUtils';
@@ -34,7 +37,8 @@ const Download = () => {
 	const latestVersionSpecification =
 		outletContext?.product.productSpecifications.find(
 			(specification) =>
-				specification.specificationKey === 'latest-version'
+				specification.specificationKey ===
+				PRODUCT_SPECIFICATION_KEY.APP_VERSION
 		);
 
 	const {data: skus = [], isLoading} = useSWR(

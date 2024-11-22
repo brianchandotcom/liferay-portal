@@ -2626,6 +2626,9 @@ public interface PropsKeys {
 	public static final String TEMPLATE_ENGINE_CACHE_ENABLED =
 		"template.engine.cache.enabled";
 
+	public static final String TEMPLATE_ENGINE_FREEMARKER_COMPANY_RESTRICT =
+		"template.engine.freemarker.company.restrict";
+
 	public static final String
 		TEMPLATE_ENGINE_FREEMARKER_TRANSACTION_READ_ONLY =
 			"template.engine.freemarker.transaction.read.only";

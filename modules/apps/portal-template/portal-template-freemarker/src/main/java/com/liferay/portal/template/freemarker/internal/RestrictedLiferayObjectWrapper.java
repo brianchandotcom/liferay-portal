@@ -170,7 +170,8 @@ public class RestrictedLiferayObjectWrapper extends LiferayObjectWrapper {
 
 		Class<?> clazz = object.getClass();
 
-		if ((object instanceof BaseModel) &&
+		if (PropsValues.TEMPLATE_ENGINE_FREEMARKER_COMPANY_RESTRICT &&
+			(object instanceof BaseModel) &&
 			!CompanyThreadLocal.isInitializingPortalInstance()) {
 
 			long currentCompanyId = CompanyThreadLocal.getCompanyId();

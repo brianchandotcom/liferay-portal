@@ -53,6 +53,9 @@ public class ObjectFieldFDSFilterFactoryRegistry {
 					objectFieldFilterContributorRegistry);
 
 		_objectFieldBusinessTypeKeyMap.put(
+			ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
+			listTypeEntryObjectFieldFDSFilterFactory);
+		_objectFieldBusinessTypeKeyMap.put(
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 			listTypeEntryObjectFieldFDSFilterFactory);
 		_objectFieldBusinessTypeKeyMap.put(

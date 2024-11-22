@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Map;
 
@@ -54,6 +55,9 @@ public class UtilityPageDTOConverter
 				setDatePublished(layout::getPublishDate);
 				setExternalReferenceCode(
 					layoutUtilityPageEntry::getExternalReferenceCode);
+				setFriendlyUrlPath_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						true, layout.getFriendlyURLMap()));
 				setMarkedAsDefault(
 					layoutUtilityPageEntry::isDefaultLayoutUtilityPageEntry);
 				setName(layoutUtilityPageEntry::getName);

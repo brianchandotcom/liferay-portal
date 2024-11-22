@@ -93,7 +93,7 @@ public class JavaFileObjectResolver {
 		return javaFileObjects;
 	}
 
-	protected String getClassName(String classResourceName) {
+	private String _getClassName(String classResourceName) {
 		classResourceName = classResourceName.substring(
 			0, classResourceName.length() - 6);
 
@@ -106,7 +106,7 @@ public class JavaFileObjectResolver {
 
 		String protocol = resourceURL.getProtocol();
 
-		String className = getClassName(resourceName);
+		String className = _getClassName(resourceName);
 
 		if (protocol.equals("bundle") || protocol.equals("bundleresource")) {
 			return new BundleJavaFileObject(className, resourceURL);
@@ -222,7 +222,7 @@ public class JavaFileObjectResolver {
 
 							javaFileObjects.add(
 								new JarJavaFileObject(
-									getClassName(entryPathString), file,
+									_getClassName(entryPathString), file,
 									entryPathString));
 						}
 					}

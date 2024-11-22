@@ -121,13 +121,12 @@ public class NotificationUtil {
 
 			Transport transport = session.getTransport();
 
-			Properties buildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
-
 			transport.connect(
-				buildProperties.getProperty("email.smtp.server"),
-				buildProperties.getProperty("email.smtp.username"),
-				buildProperties.getProperty("email.smtp.password"));
+				JenkinsResultsParserUtil.getBuildProperty("email.smtp.server"),
+				JenkinsResultsParserUtil.getBuildProperty(
+					"email.smtp.username"),
+				JenkinsResultsParserUtil.getBuildProperty(
+					"email.smtp.password"));
 
 			transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
 

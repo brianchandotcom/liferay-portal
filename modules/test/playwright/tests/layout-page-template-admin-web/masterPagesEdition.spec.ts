@@ -147,14 +147,6 @@ test(
 
 		await expect(page.getByText('Cats')).toBeVisible();
 		await expect(page.getByText('Dogs')).toBeVisible();
-
-		// Delete entries
-
-		await deleteObjectEntries({
-			apiHelpers,
-			entityName: 'lemons',
-			site: pageManagementSite,
-		});
 	}
 );
 

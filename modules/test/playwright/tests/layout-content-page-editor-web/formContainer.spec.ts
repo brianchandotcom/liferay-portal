@@ -136,14 +136,6 @@ test.describe('Form Configuration', () => {
 					'Thank you. Your information was successfully received.'
 				)
 				.waitFor();
-
-			// Delete entries
-
-			await deleteObjectEntries({
-				apiHelpers,
-				entityName: 'lemons',
-				site: pageManagementSite,
-			});
 		}
 	);
 
@@ -245,14 +237,6 @@ test.describe('Form Configuration', () => {
 				expect(firstAlertDisappears).toBe(true);
 				expect(moreAlertsAppear).toBe(false);
 			}).toPass();
-
-			// Delete Lemon entry
-
-			await deleteObjectEntries({
-				apiHelpers,
-				entityName: 'lemons',
-				site: pageManagementSite,
-			});
 		}
 	);
 });
@@ -861,14 +845,6 @@ test.describe('Date and Time Fragment', () => {
 				.last();
 
 			await expect(row).toContainText('Oct 10, 2022, 10:10 AM');
-
-			// Delete entries
-
-			await deleteObjectEntries({
-				apiHelpers,
-				entityName: 'allfieldsobjects',
-				site: pageManagementSite,
-			});
 		}
 	);
 });
@@ -999,14 +975,6 @@ test.describe('Form Localization', () => {
 				.getByText('rich text español')
 		).toBeVisible();
 		await expect(page.getByText('text español')).toBeVisible();
-
-		// Delete entries
-
-		await deleteObjectEntries({
-			apiHelpers,
-			entityName: 'allfieldsobjects',
-			site: pageManagementSite,
-		});
 	});
 });
 
@@ -1184,12 +1152,6 @@ test.describe('Numeric input field', () => {
 				'Thank you. Your information was successfully received.'
 			)
 		).toBeVisible();
-
-		await deleteObjectEntries({
-			apiHelpers,
-			entityName: 'lemons',
-			site: pageManagementSite,
-		});
 	});
 });
 
@@ -1832,14 +1794,6 @@ test.describe('Submit button', () => {
 				// Check the saved value
 
 				await checkObjectEntryStatus('300', 'Approved');
-			});
-
-			// Delete previously created object entries
-
-			await deleteObjectEntries({
-				apiHelpers,
-				entityName: 'lemons',
-				site: pageManagementSite,
 			});
 		}
 	);

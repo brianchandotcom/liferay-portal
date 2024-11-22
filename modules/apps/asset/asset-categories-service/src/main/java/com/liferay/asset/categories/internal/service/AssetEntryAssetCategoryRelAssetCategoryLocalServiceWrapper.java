@@ -16,6 +16,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -64,6 +65,12 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 		}
 
 		return _getAssetCategoriesByEntryId(entry.getEntryId());
+	}
+
+	@Override
+	public List<AssetCategory> getCategories(String className, long classPK) {
+		return getCategories(
+			_classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
@@ -173,5 +180,8 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 }

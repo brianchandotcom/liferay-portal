@@ -26,6 +26,7 @@ type TOrder = {
 	shippingAmount?: number;
 	shippingMethod?: string;
 	shippingOption?: string;
+	total?: number;
 };
 
 type TOrderItem = {

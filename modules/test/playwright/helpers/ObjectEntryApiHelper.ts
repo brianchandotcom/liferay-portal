@@ -4,7 +4,6 @@
  */
 
 import {liferayConfig} from '../liferay.config';
-import {DataObject, ObjectEntry} from '../types/object';
 import {ApiHelpers} from './ApiHelpers';
 
 export class ObjectEntryApiHelper {

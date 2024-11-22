@@ -63,7 +63,7 @@ public class FriendlyUrlHistoryResourceTest
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getDisplayPageLayoutPageTemplateEntry(serviceContext);
 
-		List<String> list = _updateFriendlyURL(
+		List<String> friendlyURLs = _updateFriendlyURL(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()));
 
 		FriendlyUrlHistory friendlyUrlHistory =
@@ -76,7 +76,7 @@ public class FriendlyUrlHistoryResourceTest
 			_jsonFactory.createJSONObject(
 				GetterUtil.getString(
 					friendlyUrlHistory.getFriendlyUrlPath_i18n())),
-			list);
+			friendlyURLs);
 
 		_assertProblemException(
 			_getBasicLayoutPageTemplateEntry(serviceContext));
@@ -126,7 +126,7 @@ public class FriendlyUrlHistoryResourceTest
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId()));
 
-		List<String> list = _updateFriendlyURL(
+		List<String> friendlyURLs = _updateFriendlyURL(
 			_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()));
 
 		FriendlyUrlHistory friendlyUrlHistory =
@@ -139,11 +139,11 @@ public class FriendlyUrlHistoryResourceTest
 			_jsonFactory.createJSONObject(
 				GetterUtil.getString(
 					friendlyUrlHistory.getFriendlyUrlPath_i18n())),
-			list);
+			friendlyURLs);
 	}
 
 	private void _assertFriendlyUrlHistoryJSONObject(
-		JSONObject jsonObject, List<String> list) {
+		JSONObject jsonObject, List<String> friendlyURLs) {
 
 		Assert.assertEquals(1, jsonObject.length());
 
@@ -152,8 +152,8 @@ public class FriendlyUrlHistoryResourceTest
 
 		Assert.assertEquals(4, jsonArray.length());
 
-		for (int i = 0; i < list.size(); i++) {
-			Assert.assertEquals(list.get(i), jsonArray.getString(i));
+		for (int i = 0; i < friendlyURLs.size(); i++) {
+			Assert.assertEquals(friendlyURLs.get(i), jsonArray.getString(i));
 		}
 	}
 
@@ -240,7 +240,7 @@ public class FriendlyUrlHistoryResourceTest
 				"com.liferay.asset.kernel.model.AssetCategory"),
 			0, RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private Layout _getDisplayPageLayoutPageTemplateEntryLayout(
@@ -302,7 +302,7 @@ public class FriendlyUrlHistoryResourceTest
 				Layout layout)
 		throws Exception {
 
-		List<String> list = _updateFriendlyURL(layout);
+		List<String> friendlyURLs = _updateFriendlyURL(layout);
 
 		FriendlyUrlHistory friendlyUrlHistory =
 			friendlyUrlHistoryResource.
@@ -314,28 +314,29 @@ public class FriendlyUrlHistoryResourceTest
 			_jsonFactory.createJSONObject(
 				GetterUtil.getString(
 					friendlyUrlHistory.getFriendlyUrlPath_i18n())),
-			list);
+			friendlyURLs);
 	}
 
 	private List<String> _updateFriendlyURL(Layout layout) throws Exception {
-		List<String> list = new ArrayList<>();
+		List<String> friendlyURLs = new ArrayList<>();
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
-		list.add(layout.getFriendlyURL(LocaleUtil.getSiteDefault()));
+		friendlyURLs.add(layout.getFriendlyURL(LocaleUtil.getSiteDefault()));
 
 		for (int i = 0; i < 3; i++) {
 			layout = _layoutLocalService.updateFriendlyURL(
 				TestPropsValues.getUserId(), layout.getPlid(),
 				"/" + RandomTestUtil.randomString(), defaultLanguageId);
 
-			list.add(layout.getFriendlyURL(LocaleUtil.getSiteDefault()));
+			friendlyURLs.add(
+				layout.getFriendlyURL(LocaleUtil.getSiteDefault()));
 		}
 
-		Collections.reverse(list);
+		Collections.reverse(friendlyURLs);
 
-		return list;
+		return friendlyURLs;
 	}
 
 	@Inject

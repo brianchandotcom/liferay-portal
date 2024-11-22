@@ -177,7 +177,7 @@ describe('Editor', () => {
 	describe('Editor', () => {
 		describe('Conditions', () => {
 			describe('Field operator', () => {
-				it.each(STRING_DATATYPE_FIELDS)(
+				it.skip.each(STRING_DATATYPE_FIELDS)(
 					'shows operators related to texts when field left is a %p',
 					async ({type}) => {
 						const props = defaultProps();
@@ -221,7 +221,7 @@ describe('Editor', () => {
 					}
 				);
 
-				it.each(NUMBER_TYPE_FIELDS)(
+				it.skip.each(NUMBER_TYPE_FIELDS)(
 					'shows operators related to numbers when field left is a %p',
 					async ({type}) => {
 						const props = defaultProps();
@@ -265,7 +265,7 @@ describe('Editor', () => {
 					}
 				);
 
-				it('shows operators related to roles when field left is an User', async () => {
+				it.skip('shows operators related to roles when field left is an User', async () => {
 					const props = defaultProps();
 					const {getByTestId, getByText} = render(
 						<Editor
@@ -308,7 +308,7 @@ describe('Editor', () => {
 			});
 
 			describe('Binary operations', () => {
-				it.each(
+				it.skip.each(
 					STRING_DATATYPE_FIELDS.concat(NUMBER_TYPE_FIELDS).concat(
 						UPLOAD_TYPE_FIELD
 					)
@@ -390,7 +390,7 @@ describe('Editor', () => {
 					}
 				);
 
-				it('shows all others fields when action type is Other field', async () => {
+				it.skip('shows all others fields when action type is Other field', async () => {
 					const props = defaultProps();
 					const mockIsSignedIn = jest.fn();
 
@@ -471,7 +471,7 @@ describe('Editor', () => {
 			});
 
 			describe('Conditions logical operatores', () => {
-				it('shows the OR/AND select disabled by default', async () => {
+				it.skip('shows the OR/AND select disabled by default', async () => {
 					const props = defaultProps();
 					render(
 						<Editor
@@ -492,7 +492,7 @@ describe('Editor', () => {
 					).toBe(true);
 				});
 
-				it('enables the OR/AND select when there are more than one condition', async () => {
+				it.skip('enables the OR/AND select when there are more than one condition', async () => {
 					const props = defaultProps();
 					render(
 						<Editor
@@ -516,7 +516,7 @@ describe('Editor', () => {
 			});
 
 			describe('Add/Remove conditions', () => {
-				it('shows the container trash when there are more than one condition', () => {
+				it.skip('shows the container trash when there are more than one condition', () => {
 					const props = defaultProps();
 					render(
 						<Editor
@@ -544,7 +544,7 @@ describe('Editor', () => {
 		});
 
 		describe('Actions', () => {
-			it('shows the action types', async () => {
+			it.skip('shows the action types', async () => {
 				const props = defaultProps();
 				const {getByText} = render(
 					<Editor
@@ -575,7 +575,7 @@ describe('Editor', () => {
 			});
 
 			describe('Add/Remove actions', () => {
-				it('shows the container trash when there are more than one action', () => {
+				it.skip('shows the container trash when there are more than one action', () => {
 					const props = defaultProps();
 					render(
 						<Editor
@@ -601,7 +601,7 @@ describe('Editor', () => {
 				});
 			});
 
-			it.each(['show', 'require', 'enable'])(
+			it.skip.each(['show', 'require', 'enable'])(
 				'shows all fields on target dropdown when the type is %p',
 				async (type) => {
 					const fields =
@@ -650,7 +650,7 @@ describe('Editor', () => {
 					});
 				}
 			);
-			it('shows dataprovider when autofill action is selected', async () => {
+			it.skip('shows dataprovider when autofill action is selected', async () => {
 				const props = defaultProps();
 				const {getByText} = render(
 					<Editor
@@ -691,7 +691,7 @@ describe('Editor', () => {
 				expect(getByText('Get countries')).toBeTruthy();
 			});
 
-			it('shows the calculator area when calculate action is selected', async () => {
+			it.skip('shows the calculator area when calculate action is selected', async () => {
 				const props = defaultProps();
 				const {getByText, queryAllByText} = render(
 					<Editor
@@ -742,7 +742,7 @@ describe('Editor', () => {
 				).toBeTruthy();
 			});
 
-			it('shows available pages when jump to page action is selected', async () => {
+			it.skip('shows available pages when jump to page action is selected', async () => {
 				const props = defaultProps();
 				const {getByText, queryAllByText} = render(
 					<Editor

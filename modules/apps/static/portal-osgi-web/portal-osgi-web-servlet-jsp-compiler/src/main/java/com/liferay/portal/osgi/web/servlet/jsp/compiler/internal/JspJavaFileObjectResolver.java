@@ -39,7 +39,6 @@ import javax.tools.JavaFileObject;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Raymond Augé
@@ -48,14 +47,11 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 	public JspJavaFileObjectResolver(
 		BundleWiring bundleWiring, BundleWiring jspBundleWiring,
-		Map<BundleWiring, Set<String>> bundleWiringPackageNames,
-		ServiceTracker<Map<String, List<URL>>, Map<String, List<URL>>>
-			serviceTracker) {
+		Map<BundleWiring, Set<String>> bundleWiringPackageNames) {
 
 		_bundleWiring = bundleWiring;
 		_jspBundleWiring = jspBundleWiring;
 		_bundleWiringPackageNames = bundleWiringPackageNames;
-		_serviceTracker = serviceTracker;
 	}
 
 	@Override
@@ -150,35 +146,26 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 		List<URL> urls = null;
 
-		Map<String, List<URL>> extraPackageMap = _serviceTracker.getService();
+		ClassLoader classLoader = bundleWiring.getClassLoader();
 
-		if (extraPackageMap != null) {
-			urls = extraPackageMap.get(StringUtil.replace(path, '/', '.'));
+		try {
+			Enumeration<URL> enumeration = classLoader.getResources(path);
+
+			if ((enumeration == null) ||
+				((enumeration != null) && !enumeration.hasMoreElements())) {
+
+				// This is a fallback so that WebSphere can find resources
+				// during the JSP compilation process
+
+				enumeration = classLoader.getResources(path + StringPool.SLASH);
+			}
+
+			if ((enumeration != null) && enumeration.hasMoreElements()) {
+				urls = Collections.list(enumeration);
+			}
 		}
-
-		if (ListUtil.isEmpty(urls)) {
-			ClassLoader classLoader = bundleWiring.getClassLoader();
-
-			try {
-				Enumeration<URL> enumeration = classLoader.getResources(path);
-
-				if ((enumeration == null) ||
-					((enumeration != null) && !enumeration.hasMoreElements())) {
-
-					// This is a fallback so that WebSphere can find resources
-					// during the JSP compilation process
-
-					enumeration = classLoader.getResources(
-						path + StringPool.SLASH);
-				}
-
-				if ((enumeration != null) && enumeration.hasMoreElements()) {
-					urls = Collections.list(enumeration);
-				}
-			}
-			catch (IOException ioException) {
-				_log.error(ioException);
-			}
+		catch (IOException ioException) {
+			_log.error(ioException);
 		}
 
 		if (ListUtil.isEmpty(urls)) {
@@ -300,7 +287,5 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.SOFT_REFERENCE_FACTORY);
 	private final BundleWiring _jspBundleWiring;
-	private final ServiceTracker<Map<String, List<URL>>, Map<String, List<URL>>>
-		_serviceTracker;
 
 }

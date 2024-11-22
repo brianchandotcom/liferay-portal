@@ -94,3 +94,28 @@ test('LPD-40224: Check if the export audit events request body has all the searc
 
 	await menuItem.click();
 });
+
+test("LPS-192555: Assert that the page's URL with advanced search doesn't get over 2048 characters", async ({
+	applicationsMenuPage,
+	page,
+}) => {
+	await applicationsMenuPage.goToAudit();
+
+	await page.locator('#toggle_id_audit_event_searchtoggleAdvanced').click();
+
+	await page
+		.locator(`#${AUDIT_PORTLET_NAMESPACE}userName:visible`)
+		.fill('test test');
+
+	await page
+		.locator(`#${AUDIT_PORTLET_NAMESPACE}eventType:visible`)
+		.fill('LOGIN');
+
+	await page.locator('.lexicon-icon-search').click();
+
+	await page.waitForTimeout(500);
+
+	const pageURL = page.url();
+
+	expect(pageURL.length).toBeLessThan(2048);
+});

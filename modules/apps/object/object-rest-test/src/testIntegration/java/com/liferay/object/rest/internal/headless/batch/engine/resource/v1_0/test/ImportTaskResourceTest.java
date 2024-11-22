@@ -11,20 +11,19 @@ import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Mauricio Valdivia
@@ -35,61 +34,27 @@ public class ImportTaskResourceTest extends BaseTaskResourceTest {
 
 	@Test
 	public void testPostImportTask() throws Exception {
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
+
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject1");
+		JSONObject beforeImportJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				objectDefinition.getRESTContextPath(),
+				"/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(),
+				"?nestedFields=permissions"),
+			Http.Method.GET);
 
-		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject2");
-
-		JSONObject object1BeforeImportJSONObject =
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				StringBundler.concat(
-					objectDefinition.getRESTContextPath(),
-					"/by-external-reference-code/",
-					objectEntry1.getExternalReferenceCode(),
-					"?nestedFields=permissions"),
-				Http.Method.GET);
-
-		JSONObject object2BeforeImportJSONObject =
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				StringBundler.concat(
-					objectDefinition.getRESTContextPath(),
-					"/by-external-reference-code/",
-					objectEntry2.getExternalReferenceCode(),
-					"?nestedFields=permissions"),
-				Http.Method.GET);
-
-		ResourcePermissionLocalServiceUtil.setResourcePermissions(
-			TestPropsValues.getCompanyId(), objectEntry2.getModelClassName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(objectEntry2.getPrimaryKey()), role.getRoleId(),
-			new String[] {ActionKeys.VIEW});
-
-		ResourcePermissionLocalServiceUtil.setResourcePermissions(
-			TestPropsValues.getCompanyId(), objectEntry2.getModelClassName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(objectEntry1.getPrimaryKey()), role.getRoleId(),
-			new String[] {ActionKeys.VIEW});
+		// With 'restrictedFieldNames' query parameter
 
 		waitForFinish(
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(
-				StringBundler.concat("[", object1BeforeImportJSONObject, "]"),
 				StringBundler.concat(
-					"headless-batch-engine/v1.0/import-task",
-					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
-					"?taskItemDelegateName=", objectDefinition.getName(),
-					"&createStrategy=UPSERT"),
-				Http.Method.POST));
-
-		waitForFinish(
-			"COMPLETED", true,
-			HTTPTestUtil.invokeToJSONObject(
-				StringBundler.concat("[", object2BeforeImportJSONObject, "]"),
+					"[", _addViewPermission(beforeImportJSONObject, role), "]"),
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task",
 					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -98,88 +63,83 @@ public class ImportTaskResourceTest extends BaseTaskResourceTest {
 					OBJECT_FIELD_NAME_TEXT),
 				Http.Method.POST));
 
-		JSONObject object1AfterImportJSONObject =
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				StringBundler.concat(
-					objectDefinition.getRESTContextPath(),
-					"/by-external-reference-code/",
-					objectEntry1.getExternalReferenceCode(),
-					"?nestedFields=permissions"),
-				Http.Method.GET);
+		JSONObject afterImport1JSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				objectDefinition.getRESTContextPath(),
+				"/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(),
+				"?nestedFields=permissions"),
+			Http.Method.GET);
 
-		JSONObject object2AfterImportJSONObject =
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				StringBundler.concat(
-					objectDefinition.getRESTContextPath(),
-					"/by-external-reference-code/",
-					objectEntry2.getExternalReferenceCode(),
-					"?nestedFields=permissions"),
-				Http.Method.GET);
-
-		Assert.assertNotEquals(
-			object1AfterImportJSONObject.get("permissions"),
-			object2AfterImportJSONObject.get("permissions"));
-
-		Assert.assertEquals(
-			object1AfterImportJSONObject.get(
-				"permissions"
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"permissions",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"actionIds",
+						JSONUtil.putAll(
+							"DELETE", "PERMISSIONS", "UPDATE", "VIEW")
+					).put(
+						"roleName", "Owner"
+					))
 			).toString(),
-			object1BeforeImportJSONObject.get(
-				"permissions"
-			).toString());
+			afterImport1JSONObject.toString(), JSONCompareMode.LENIENT);
 
-		Assert.assertNotEquals(
-			object2BeforeImportJSONObject.get("permissions"),
-			object2AfterImportJSONObject.get("permissions"));
-		Assert.assertEquals(
-			1,
-			object1AfterImportJSONObject.getJSONArray(
-				"permissions"
-			).length());
+		// Without 'restrictedFieldNames' query parameter
 
-		Assert.assertEquals(
-			2,
-			object2AfterImportJSONObject.getJSONArray(
-				"permissions"
-			).length());
-		Assert.assertEquals(
-			object1AfterImportJSONObject.getJSONArray(
-				"permissions"
-			).getJSONObject(
-				0
-			).get(
-				"roleName"
-			),
-			RoleConstants.OWNER);
+		waitForFinish(
+			"COMPLETED", true,
+			HTTPTestUtil.invokeToJSONObject(
+				StringBundler.concat(
+					"[", _addViewPermission(beforeImportJSONObject, role), "]"),
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/import-task",
+					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					"?taskItemDelegateName=", objectDefinition.getName(),
+					"&createStrategy=UPSERT"),
+				Http.Method.POST));
 
-		_testRoleExistInPermissions(
-			object2AfterImportJSONObject.getJSONArray("permissions"),
-			role.getName());
+		JSONObject afterImport2JSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				objectDefinition.getRESTContextPath(),
+				"/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(),
+				"?nestedFields=permissions"),
+			Http.Method.GET);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"permissions",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"actionIds",
+						JSONUtil.putAll(
+							"DELETE", "PERMISSIONS", "UPDATE", "VIEW")
+					).put(
+						"roleName", "Owner"
+					),
+					JSONUtil.put(
+						"actionIds", JSONUtil.putAll("VIEW")
+					).put(
+						"roleName", role.getName()
+					))
+			).toString(),
+			afterImport2JSONObject.toString(), JSONCompareMode.LENIENT);
 	}
 
-	private void _testRoleExistInPermissions(
-		JSONArray permissionsJSONArray, String expectedRoleName) {
+	private JSONObject _addViewPermission(JSONObject jsonObject, Role role) {
+		JSONArray permissionsJSONArray = jsonObject.getJSONArray("permissions");
 
-		boolean roleFound = false;
+		permissionsJSONArray.put(
+			JSONUtil.put(
+				"actionIds", JSONUtil.putAll("VIEW")
+			).put(
+				"roleName", role.getName()
+			));
 
-		for (int i = 0; i < permissionsJSONArray.length(); i++) {
-			JSONObject permissionJSONObject =
-				permissionsJSONArray.getJSONObject(i);
-
-			if (permissionJSONObject.has("roleName")) {
-				String roleName = permissionJSONObject.getString("roleName");
-
-				if (expectedRoleName.equals(roleName)) {
-					roleFound = true;
-
-					break;
-				}
-			}
-		}
-
-		Assert.assertTrue(roleFound);
+		return jsonObject;
 	}
 
 }

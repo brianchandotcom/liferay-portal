@@ -1795,6 +1795,15 @@ test.describe('Submit button', () => {
 
 				await checkObjectEntryStatus('300', 'Approved');
 			});
+
+			await test.step('Restore default value', async () => {
+				await objectDetailsPage.goto('Lemon');
+
+				await objectDetailsPage.updateConfiguration({
+					fieldLabel: 'Allow Users to Save Entries as Draft',
+					value: false,
+				});
+			});
 		}
 	);
 });

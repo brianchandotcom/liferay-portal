@@ -348,6 +348,7 @@ public class DisplayPageTemplateResourceTest
 
 		displayPageTemplate.setContentTypeReference(
 			_getRandomClassSubtypeReference());
+		displayPageTemplate.setMarkedAsDefault(Boolean.FALSE);
 
 		return displayPageTemplate;
 	}

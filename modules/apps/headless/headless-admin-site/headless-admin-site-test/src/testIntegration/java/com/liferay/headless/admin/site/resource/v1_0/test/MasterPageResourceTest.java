@@ -290,6 +290,15 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	}
 
 	@Override
+	protected MasterPage randomMasterPage() throws Exception {
+		MasterPage masterPage = super.randomMasterPage();
+
+		masterPage.setMarkedAsDefault(Boolean.FALSE);
+
+		return masterPage;
+	}
+
+	@Override
 	protected MasterPage
 			testGetSiteSiteByExternalReferenceCodeMasterPagesPage_addMasterPage(
 				String siteExternalReferenceCode, MasterPage masterPage)

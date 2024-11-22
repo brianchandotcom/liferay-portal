@@ -14,7 +14,7 @@ import { RequestFile } from './models';
 import { ObjectFieldSetting } from './objectFieldSetting';
 
 export class ObjectField {
-    'dBType'?: ObjectField.DBTypeEnum;
+    'DBType'?: ObjectField.DBTypeEnum;
     'actions'?: { [key: string]: { [key: string]: string; }; };
     'businessType'?: ObjectField.BusinessTypeEnum;
     /**
@@ -50,7 +50,7 @@ export class ObjectField {
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "dBType",
+            "name": "DBType",
             "baseName": "DBType",
             "type": "ObjectField.DBTypeEnum"
         },

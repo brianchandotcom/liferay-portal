@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 export class UnreferencedTestEntity {
     'description'?: string;
     'id'?: number;
-    'propertyWithHyphens'?: string;
+    'property_with_hyphens'?: string;
 
     static discriminator: string | undefined = undefined;
 
@@ -31,7 +31,7 @@ export class UnreferencedTestEntity {
             "type": "number"
         },
         {
-            "name": "propertyWithHyphens",
+            "name": "property_with_hyphens",
             "baseName": "property-with-hyphens",
             "type": "string"
         }    ];

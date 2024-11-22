@@ -161,9 +161,9 @@ export class ObjectViewApi {
      * @param pageSize 
      * @param search 
      * @param sort 
-     * @param acceptLanguage 
+     * @param Accept_Language 
      */
-    public async getObjectDefinitionByExternalReferenceCodeObjectViewsPage (externalReferenceCode: string, page?: number, pageSize?: number, search?: string, sort?: string, acceptLanguage?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectView;  }> {
+    public async getObjectDefinitionByExternalReferenceCodeObjectViewsPage (externalReferenceCode: string, page?: number, pageSize?: number, search?: string, sort?: string, Accept_Language?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectView;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-views'
             .replace('{' + 'externalReferenceCode' + '}', encodeURIComponent(String(externalReferenceCode)));
         let localVarQueryParameters: any = {};
@@ -198,7 +198,7 @@ export class ObjectViewApi {
             localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
         }
 
-        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(acceptLanguage, "string");
+        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(Accept_Language, "string");
         (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
@@ -251,9 +251,9 @@ export class ObjectViewApi {
      * @param pageSize 
      * @param search 
      * @param sort 
-     * @param acceptLanguage 
+     * @param Accept_Language 
      */
-    public async getObjectDefinitionObjectViewsPage (objectDefinitionId: number, page?: number, pageSize?: number, search?: string, sort?: string, acceptLanguage?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectView;  }> {
+    public async getObjectDefinitionObjectViewsPage (objectDefinitionId: number, page?: number, pageSize?: number, search?: string, sort?: string, Accept_Language?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectView;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-views'
             .replace('{' + 'objectDefinitionId' + '}', encodeURIComponent(String(objectDefinitionId)));
         let localVarQueryParameters: any = {};
@@ -288,7 +288,7 @@ export class ObjectViewApi {
             localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
         }
 
-        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(acceptLanguage, "string");
+        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(Accept_Language, "string");
         (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
@@ -405,9 +405,9 @@ export class ObjectViewApi {
     /**
      * 
      * @param externalReferenceCode 
-     * @param objectView 
+     * @param ObjectView 
      */
-    public async postObjectDefinitionByExternalReferenceCodeObjectView (externalReferenceCode: string, objectView?: ObjectView, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectView;  }> {
+    public async postObjectDefinitionByExternalReferenceCodeObjectView (externalReferenceCode: string, ObjectView?: ObjectView, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectView;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-views'
             .replace('{' + 'externalReferenceCode' + '}', encodeURIComponent(String(externalReferenceCode)));
         let localVarQueryParameters: any = {};
@@ -437,7 +437,7 @@ export class ObjectViewApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectView, "ObjectView")
+            body: ObjectSerializer.serialize(ObjectView, "ObjectView")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -475,9 +475,9 @@ export class ObjectViewApi {
     /**
      * 
      * @param objectDefinitionId 
-     * @param objectView 
+     * @param ObjectView 
      */
-    public async postObjectDefinitionObjectView (objectDefinitionId: number, objectView?: ObjectView, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectView;  }> {
+    public async postObjectDefinitionObjectView (objectDefinitionId: number, ObjectView?: ObjectView, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectView;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-views'
             .replace('{' + 'objectDefinitionId' + '}', encodeURIComponent(String(objectDefinitionId)));
         let localVarQueryParameters: any = {};
@@ -507,7 +507,7 @@ export class ObjectViewApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectView, "ObjectView")
+            body: ObjectSerializer.serialize(ObjectView, "ObjectView")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -613,9 +613,9 @@ export class ObjectViewApi {
     /**
      * 
      * @param objectViewId 
-     * @param objectView 
+     * @param ObjectView 
      */
-    public async putObjectView (objectViewId: number, objectView?: ObjectView, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectView;  }> {
+    public async putObjectView (objectViewId: number, ObjectView?: ObjectView, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectView;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-views/{objectViewId}'
             .replace('{' + 'objectViewId' + '}', encodeURIComponent(String(objectViewId)));
         let localVarQueryParameters: any = {};
@@ -645,7 +645,7 @@ export class ObjectViewApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectView, "ObjectView")
+            body: ObjectSerializer.serialize(ObjectView, "ObjectView")
         };
 
         let authenticationPromise = Promise.resolve();

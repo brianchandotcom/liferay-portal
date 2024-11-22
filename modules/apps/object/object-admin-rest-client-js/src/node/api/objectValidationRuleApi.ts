@@ -161,9 +161,9 @@ export class ObjectValidationRuleApi {
      * @param pageSize 
      * @param search 
      * @param sort 
-     * @param acceptLanguage 
+     * @param Accept_Language 
      */
-    public async getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage (externalReferenceCode: string, page?: number, pageSize?: number, search?: string, sort?: string, acceptLanguage?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: Array<ObjectValidationRule>;  }> {
+    public async getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage (externalReferenceCode: string, page?: number, pageSize?: number, search?: string, sort?: string, Accept_Language?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: Array<ObjectValidationRule>;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-validation-rules'
             .replace('{' + 'externalReferenceCode' + '}', encodeURIComponent(String(externalReferenceCode)));
         let localVarQueryParameters: any = {};
@@ -198,7 +198,7 @@ export class ObjectValidationRuleApi {
             localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
         }
 
-        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(acceptLanguage, "string");
+        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(Accept_Language, "string");
         (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
@@ -251,9 +251,9 @@ export class ObjectValidationRuleApi {
      * @param pageSize 
      * @param search 
      * @param sort 
-     * @param acceptLanguage 
+     * @param Accept_Language 
      */
-    public async getObjectDefinitionObjectValidationRulesPage (objectDefinitionId: number, page?: number, pageSize?: number, search?: string, sort?: string, acceptLanguage?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectValidationRule;  }> {
+    public async getObjectDefinitionObjectValidationRulesPage (objectDefinitionId: number, page?: number, pageSize?: number, search?: string, sort?: string, Accept_Language?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectValidationRule;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-validation-rules'
             .replace('{' + 'objectDefinitionId' + '}', encodeURIComponent(String(objectDefinitionId)));
         let localVarQueryParameters: any = {};
@@ -288,7 +288,7 @@ export class ObjectValidationRuleApi {
             localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
         }
 
-        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(acceptLanguage, "string");
+        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(Accept_Language, "string");
         (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
@@ -405,9 +405,9 @@ export class ObjectValidationRuleApi {
     /**
      * 
      * @param objectValidationRuleId 
-     * @param objectValidationRule 
+     * @param ObjectValidationRule 
      */
-    public async patchObjectValidationRule (objectValidationRuleId: number, objectValidationRule?: ObjectValidationRule, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectValidationRule;  }> {
+    public async patchObjectValidationRule (objectValidationRuleId: number, ObjectValidationRule?: ObjectValidationRule, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectValidationRule;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-validation-rules/{objectValidationRuleId}'
             .replace('{' + 'objectValidationRuleId' + '}', encodeURIComponent(String(objectValidationRuleId)));
         let localVarQueryParameters: any = {};
@@ -437,7 +437,7 @@ export class ObjectValidationRuleApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectValidationRule, "ObjectValidationRule")
+            body: ObjectSerializer.serialize(ObjectValidationRule, "ObjectValidationRule")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -475,9 +475,9 @@ export class ObjectValidationRuleApi {
     /**
      * 
      * @param externalReferenceCode 
-     * @param objectValidationRule 
+     * @param ObjectValidationRule 
      */
-    public async postObjectDefinitionByExternalReferenceCodeObjectValidationRule (externalReferenceCode: string, objectValidationRule?: ObjectValidationRule, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectValidationRule;  }> {
+    public async postObjectDefinitionByExternalReferenceCodeObjectValidationRule (externalReferenceCode: string, ObjectValidationRule?: ObjectValidationRule, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectValidationRule;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-validation-rules'
             .replace('{' + 'externalReferenceCode' + '}', encodeURIComponent(String(externalReferenceCode)));
         let localVarQueryParameters: any = {};
@@ -507,7 +507,7 @@ export class ObjectValidationRuleApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectValidationRule, "ObjectValidationRule")
+            body: ObjectSerializer.serialize(ObjectValidationRule, "ObjectValidationRule")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -545,9 +545,9 @@ export class ObjectValidationRuleApi {
     /**
      * 
      * @param objectDefinitionId 
-     * @param objectValidationRule 
+     * @param ObjectValidationRule 
      */
-    public async postObjectDefinitionObjectValidationRule (objectDefinitionId: number, objectValidationRule?: ObjectValidationRule, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectValidationRule;  }> {
+    public async postObjectDefinitionObjectValidationRule (objectDefinitionId: number, ObjectValidationRule?: ObjectValidationRule, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectValidationRule;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-validation-rules'
             .replace('{' + 'objectDefinitionId' + '}', encodeURIComponent(String(objectDefinitionId)));
         let localVarQueryParameters: any = {};
@@ -577,7 +577,7 @@ export class ObjectValidationRuleApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectValidationRule, "ObjectValidationRule")
+            body: ObjectSerializer.serialize(ObjectValidationRule, "ObjectValidationRule")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -615,9 +615,9 @@ export class ObjectValidationRuleApi {
     /**
      * 
      * @param objectValidationRuleId 
-     * @param objectValidationRule 
+     * @param ObjectValidationRule 
      */
-    public async putObjectValidationRule (objectValidationRuleId: number, objectValidationRule?: ObjectValidationRule, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectValidationRule;  }> {
+    public async putObjectValidationRule (objectValidationRuleId: number, ObjectValidationRule?: ObjectValidationRule, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectValidationRule;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-validation-rules/{objectValidationRuleId}'
             .replace('{' + 'objectValidationRuleId' + '}', encodeURIComponent(String(objectValidationRuleId)));
         let localVarQueryParameters: any = {};
@@ -647,7 +647,7 @@ export class ObjectValidationRuleApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectValidationRule, "ObjectValidationRule")
+            body: ObjectSerializer.serialize(ObjectValidationRule, "ObjectValidationRule")
         };
 
         let authenticationPromise = Promise.resolve();

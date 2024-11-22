@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 export class Status {
     'code'?: number;
     'label'?: string;
-    'labelI18n'?: string;
+    'label_i18n'?: string;
 
     static discriminator: string | undefined = undefined;
 
@@ -31,7 +31,7 @@ export class Status {
             "type": "string"
         },
         {
-            "name": "labelI18n",
+            "name": "label_i18n",
             "baseName": "label_i18n",
             "type": "string"
         }    ];

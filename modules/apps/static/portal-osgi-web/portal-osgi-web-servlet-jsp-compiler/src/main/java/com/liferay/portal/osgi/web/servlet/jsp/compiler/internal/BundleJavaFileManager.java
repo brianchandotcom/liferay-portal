@@ -68,17 +68,12 @@ public class BundleJavaFileManager
 		String packageName = className.substring(
 			0, className.lastIndexOf(CharPool.PERIOD));
 
-		Map<String, JavaFileObject> javaFileObjects = _javaFileObjectsMap.get(
-			packageName);
+		Map<String, JavaFileObject> javaFileObjects =
+			_javaFileObjectsMap.computeIfAbsent(
+				packageName, key -> new ConcurrentHashMap<>());
 
 		BytecodeJavaFileObject bytecodeJavaFileObject =
 			new BytecodeJavaFileObject(className);
-
-		if (javaFileObjects == null) {
-			javaFileObjects = new ConcurrentHashMap<>();
-
-			_javaFileObjectsMap.put(packageName, javaFileObjects);
-		}
 
 		javaFileObjects.put(className, bytecodeJavaFileObject);
 

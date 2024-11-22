@@ -147,3 +147,70 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Confirm roles are unassign from users tab',
+	{
+		tag: '@LPD-42500',
+	},
+	async ({apiHelpers, membershipsPage, page}) => {
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await membershipsPage.goto();
+
+		await page.waitForTimeout(500);
+
+		await membershipsPage.assignAllUsersSiteMembership();
+
+		await membershipsPage.assignAllRolesToUser(userAccount.alternateName);
+
+		await membershipsPage.unassignAllRolesFromUser(
+			userAccount.alternateName
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Unassign Roles'}),
+			timeout: 500,
+			trigger: page
+				.locator(
+					'[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users_' +
+						userAccount.alternateName +
+						'"]'
+				)
+				.getByLabel('More actions'),
+		});
+
+		await expect(
+			page
+				.frameLocator('iframe[title="Unassign Roles"]')
+				.locator(
+					'[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_userGroupRoleRole_1"] label div'
+				)
+				.first()
+		).not.toBeVisible();
+
+		await expect(
+			page
+				.frameLocator('iframe[title="Unassign Roles"]')
+				.locator(
+					'[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_userGroupRoleRole_2"] label div'
+				)
+				.first()
+		).not.toBeVisible();
+
+		await expect(
+			page
+				.frameLocator('iframe[title="Unassign Roles"]')
+				.locator(
+					'[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_userGroupRoleRole_3"] label div'
+				)
+				.first()
+		).not.toBeVisible();
+
+		await apiHelpers.headlessAdminUser.deleteUserAccount(
+			Number(userAccount.id)
+		);
+	}
+);

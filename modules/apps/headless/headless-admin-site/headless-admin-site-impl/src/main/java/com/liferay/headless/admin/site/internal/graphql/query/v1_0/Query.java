@@ -290,7 +290,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodeDisplayPageTemplate(displayPageTemplateExternalReferenceCode: ___, siteExternalReferenceCode: ___){contentTypeReference, creator, creatorExternalReferenceCode, dateCreated, dateModified, datePublished, displayPageTemplateSettings, externalReferenceCode, friendlyUrlPath_i18n, key, markedAsDefault, name, pageSpecifications, parentFolder, thumbnail, uuid}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodeDisplayPageTemplate(displayPageTemplateExternalReferenceCode: ___, siteExternalReferenceCode: ___){contentTypeReference, creator, creatorExternalReferenceCode, dateCreated, dateModified, datePublished, displayPageTemplateSettings, externalReferenceCode, friendlyUrlHistory, friendlyUrlPath_i18n, key, markedAsDefault, name, pageSpecifications, parentFolder, thumbnail, uuid}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves a specific display page template of a site."
@@ -514,6 +514,32 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory(displayPageTemplateExternalReferenceCode: ___, siteExternalReferenceCode: ___){friendlyUrlPath_i18n}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the history of previously used URLs for a display page template."
+	)
+	public FriendlyUrlHistory
+			siteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory(
+				@GraphQLName("siteExternalReferenceCode") String
+					siteExternalReferenceCode,
+				@GraphQLName("displayPageTemplateExternalReferenceCode") String
+					displayPageTemplateExternalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_friendlyUrlHistoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			friendlyUrlHistoryResource ->
+				friendlyUrlHistoryResource.
+					getSiteSiteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory(
+						siteExternalReferenceCode,
+						displayPageTemplateExternalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodeSitePageFriendlyUrlHistory(siteExternalReferenceCode: ___, sitePageExternalReferenceCode: ___){friendlyUrlPath_i18n}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -535,6 +561,32 @@ public class Query {
 					getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
 						siteExternalReferenceCode,
 						sitePageExternalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodeUtilityPageFriendlyUrlHistory(siteExternalReferenceCode: ___, utilityPageExternalReferenceCode: ___){friendlyUrlPath_i18n}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the history of previously used URLs for a utility page."
+	)
+	public FriendlyUrlHistory
+			siteByExternalReferenceCodeUtilityPageFriendlyUrlHistory(
+				@GraphQLName("siteExternalReferenceCode") String
+					siteExternalReferenceCode,
+				@GraphQLName("utilityPageExternalReferenceCode") String
+					utilityPageExternalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_friendlyUrlHistoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			friendlyUrlHistoryResource ->
+				friendlyUrlHistoryResource.
+					getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory(
+						siteExternalReferenceCode,
+						utilityPageExternalReferenceCode));
 	}
 
 	/**
@@ -1462,7 +1514,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodeUtilityPage(siteExternalReferenceCode: ___, utilityPageExternalReferenceCode: ___){creator, creatorExternalReferenceCode, dateCreated, dateModified, datePublished, externalReferenceCode, markedAsDefault, name, pageSpecifications, thumbnail, type, utilityPageSettings, uuid}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodeUtilityPage(siteExternalReferenceCode: ___, utilityPageExternalReferenceCode: ___){creator, creatorExternalReferenceCode, dateCreated, dateModified, datePublished, externalReferenceCode, friendlyUrlHistory, friendlyUrlPath_i18n, markedAsDefault, name, pageSpecifications, thumbnail, type, utilityPageSettings, uuid}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves a specific utility page of a site.")
 	public UtilityPage siteByExternalReferenceCodeUtilityPage(

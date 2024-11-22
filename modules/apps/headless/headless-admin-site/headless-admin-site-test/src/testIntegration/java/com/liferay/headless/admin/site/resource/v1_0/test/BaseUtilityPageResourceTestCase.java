@@ -987,6 +987,26 @@ public abstract class BaseUtilityPageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"friendlyUrlHistory", additionalAssertFieldName)) {
+
+				if (utilityPage.getFriendlyUrlHistory() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"friendlyUrlPath_i18n", additionalAssertFieldName)) {
+
+				if (utilityPage.getFriendlyUrlPath_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("markedAsDefault", additionalAssertFieldName)) {
 				if (utilityPage.getMarkedAsDefault() == null) {
 					valid = false;
@@ -1257,6 +1277,32 @@ public abstract class BaseUtilityPageResourceTestCase {
 				if (!Objects.deepEquals(
 						utilityPage1.getExternalReferenceCode(),
 						utilityPage2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"friendlyUrlHistory", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						utilityPage1.getFriendlyUrlHistory(),
+						utilityPage2.getFriendlyUrlHistory())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"friendlyUrlPath_i18n", additionalAssertFieldName)) {
+
+				if (!equals(
+						(Map)utilityPage1.getFriendlyUrlPath_i18n(),
+						(Map)utilityPage2.getFriendlyUrlPath_i18n())) {
 
 					return false;
 				}
@@ -1667,6 +1713,16 @@ public abstract class BaseUtilityPageResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("friendlyUrlHistory")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("friendlyUrlPath_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("markedAsDefault")) {

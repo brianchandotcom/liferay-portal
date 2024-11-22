@@ -136,6 +136,26 @@ public class UtilityPageSerDes {
 			sb.append("\"");
 		}
 
+		if (utilityPage.getFriendlyUrlHistory() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrlHistory\": ");
+
+			sb.append(String.valueOf(utilityPage.getFriendlyUrlHistory()));
+		}
+
+		if (utilityPage.getFriendlyUrlPath_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrlPath_i18n\": ");
+
+			sb.append(_toJSON(utilityPage.getFriendlyUrlPath_i18n()));
+		}
+
 		if (utilityPage.getMarkedAsDefault() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -305,6 +325,24 @@ public class UtilityPageSerDes {
 				String.valueOf(utilityPage.getExternalReferenceCode()));
 		}
 
+		if (utilityPage.getFriendlyUrlHistory() == null) {
+			map.put("friendlyUrlHistory", null);
+		}
+		else {
+			map.put(
+				"friendlyUrlHistory",
+				String.valueOf(utilityPage.getFriendlyUrlHistory()));
+		}
+
+		if (utilityPage.getFriendlyUrlPath_i18n() == null) {
+			map.put("friendlyUrlPath_i18n", null);
+		}
+		else {
+			map.put(
+				"friendlyUrlPath_i18n",
+				String.valueOf(utilityPage.getFriendlyUrlPath_i18n()));
+		}
+
 		if (utilityPage.getMarkedAsDefault() == null) {
 			map.put("markedAsDefault", null);
 		}
@@ -400,6 +438,16 @@ public class UtilityPageSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "friendlyUrlHistory")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "friendlyUrlPath_i18n")) {
+
+				return true;
+			}
 			else if (Objects.equals(jsonParserFieldName, "markedAsDefault")) {
 				return false;
 			}
@@ -472,6 +520,23 @@ public class UtilityPageSerDes {
 				if (jsonParserFieldValue != null) {
 					utilityPage.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "friendlyUrlHistory")) {
+
+				if (jsonParserFieldValue != null) {
+					utilityPage.setFriendlyUrlHistory(
+						FriendlyUrlHistorySerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "friendlyUrlPath_i18n")) {
+
+				if (jsonParserFieldValue != null) {
+					utilityPage.setFriendlyUrlPath_i18n(
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "markedAsDefault")) {

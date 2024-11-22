@@ -206,6 +206,28 @@ public class DisplayPageTemplate implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
+	public FriendlyUrlHistory getFriendlyUrlHistory() {
+		return friendlyUrlHistory;
+	}
+
+	public void setFriendlyUrlHistory(FriendlyUrlHistory friendlyUrlHistory) {
+		this.friendlyUrlHistory = friendlyUrlHistory;
+	}
+
+	public void setFriendlyUrlHistory(
+		UnsafeSupplier<FriendlyUrlHistory, Exception>
+			friendlyUrlHistoryUnsafeSupplier) {
+
+		try {
+			friendlyUrlHistory = friendlyUrlHistoryUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FriendlyUrlHistory friendlyUrlHistory;
+
 	public Map<String, String> getFriendlyUrlPath_i18n() {
 		return friendlyUrlPath_i18n;
 	}

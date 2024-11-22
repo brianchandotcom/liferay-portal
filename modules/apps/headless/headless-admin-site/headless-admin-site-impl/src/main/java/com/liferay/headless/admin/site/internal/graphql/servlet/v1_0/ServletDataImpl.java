@@ -630,10 +630,20 @@ public class ServletDataImpl implements ServletData {
 							FragmentCompositionResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeFragmentComposition"));
 					put(
+						"query#siteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory",
+						new ObjectValuePair<>(
+							FriendlyUrlHistoryResourceImpl.class,
+							"getSiteSiteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory"));
+					put(
 						"query#siteByExternalReferenceCodeSitePageFriendlyUrlHistory",
 						new ObjectValuePair<>(
 							FriendlyUrlHistoryResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory"));
+					put(
+						"query#siteByExternalReferenceCodeUtilityPageFriendlyUrlHistory",
+						new ObjectValuePair<>(
+							FriendlyUrlHistoryResourceImpl.class,
+							"getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory"));
 					put(
 						"query#siteByExternalReferenceCodeMasterPages",
 						new ObjectValuePair<>(

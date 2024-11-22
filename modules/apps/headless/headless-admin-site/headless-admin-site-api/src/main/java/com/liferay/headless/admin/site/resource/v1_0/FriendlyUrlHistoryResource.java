@@ -44,9 +44,21 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface FriendlyUrlHistoryResource {
 
 	public FriendlyUrlHistory
+			getSiteSiteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory(
+				String siteExternalReferenceCode,
+				String displayPageTemplateExternalReferenceCode)
+		throws Exception;
+
+	public FriendlyUrlHistory
 			getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
 				String siteExternalReferenceCode,
 				String sitePageExternalReferenceCode)
+		throws Exception;
+
+	public FriendlyUrlHistory
+			getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory(
+				String siteExternalReferenceCode,
+				String utilityPageExternalReferenceCode)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

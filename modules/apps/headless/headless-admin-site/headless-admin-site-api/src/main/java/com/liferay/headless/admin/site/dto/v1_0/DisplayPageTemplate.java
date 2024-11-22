@@ -430,6 +430,53 @@ public class DisplayPageTemplate implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema(
+		description = "The history of previously used URLs to the display page template's rendered content. This field is not returned by default. It can be requested via nestedFields."
+	)
+	@Valid
+	public FriendlyUrlHistory getFriendlyUrlHistory() {
+		if (_friendlyUrlHistorySupplier != null) {
+			friendlyUrlHistory = _friendlyUrlHistorySupplier.get();
+
+			_friendlyUrlHistorySupplier = null;
+		}
+
+		return friendlyUrlHistory;
+	}
+
+	public void setFriendlyUrlHistory(FriendlyUrlHistory friendlyUrlHistory) {
+		this.friendlyUrlHistory = friendlyUrlHistory;
+
+		_friendlyUrlHistorySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFriendlyUrlHistory(
+		UnsafeSupplier<FriendlyUrlHistory, Exception>
+			friendlyUrlHistoryUnsafeSupplier) {
+
+		_friendlyUrlHistorySupplier = () -> {
+			try {
+				return friendlyUrlHistoryUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The history of previously used URLs to the display page template's rendered content. This field is not returned by default. It can be requested via nestedFields."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FriendlyUrlHistory friendlyUrlHistory;
+
+	@JsonIgnore
+	private Supplier<FriendlyUrlHistory> _friendlyUrlHistorySupplier;
+
+	@Schema(
 		description = "The localized relative URLs to the display page template's rendered content."
 	)
 	@Valid
@@ -922,6 +969,18 @@ public class DisplayPageTemplate implements Serializable {
 			sb.append(_escape(externalReferenceCode));
 
 			sb.append("\"");
+		}
+
+		FriendlyUrlHistory friendlyUrlHistory = getFriendlyUrlHistory();
+
+		if (friendlyUrlHistory != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrlHistory\": ");
+
+			sb.append(String.valueOf(friendlyUrlHistory));
 		}
 
 		Map<String, String> friendlyUrlPath_i18n = getFriendlyUrlPath_i18n();

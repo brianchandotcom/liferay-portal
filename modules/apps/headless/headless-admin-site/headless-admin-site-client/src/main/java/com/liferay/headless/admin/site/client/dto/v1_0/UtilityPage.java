@@ -11,6 +11,7 @@ import com.liferay.headless.admin.site.client.serdes.v1_0.UtilityPageSerDes;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -155,6 +156,52 @@ public class UtilityPage implements Cloneable, Serializable {
 	}
 
 	protected String externalReferenceCode;
+
+	public FriendlyUrlHistory getFriendlyUrlHistory() {
+		return friendlyUrlHistory;
+	}
+
+	public void setFriendlyUrlHistory(FriendlyUrlHistory friendlyUrlHistory) {
+		this.friendlyUrlHistory = friendlyUrlHistory;
+	}
+
+	public void setFriendlyUrlHistory(
+		UnsafeSupplier<FriendlyUrlHistory, Exception>
+			friendlyUrlHistoryUnsafeSupplier) {
+
+		try {
+			friendlyUrlHistory = friendlyUrlHistoryUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FriendlyUrlHistory friendlyUrlHistory;
+
+	public Map<String, String> getFriendlyUrlPath_i18n() {
+		return friendlyUrlPath_i18n;
+	}
+
+	public void setFriendlyUrlPath_i18n(
+		Map<String, String> friendlyUrlPath_i18n) {
+
+		this.friendlyUrlPath_i18n = friendlyUrlPath_i18n;
+	}
+
+	public void setFriendlyUrlPath_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			friendlyUrlPath_i18nUnsafeSupplier) {
+
+		try {
+			friendlyUrlPath_i18n = friendlyUrlPath_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> friendlyUrlPath_i18n;
 
 	public Boolean getMarkedAsDefault() {
 		return markedAsDefault;

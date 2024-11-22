@@ -5335,13 +5335,9 @@ public class DataFactory {
 		String data = _readFile(
 			"object/object_definition_layout_page_template_structure_rel.json");
 
-		data = StringUtil.replaceFirst(
-			data, "${companyId}", String.valueOf(_companyId));
-		data = StringUtil.replaceFirst(
+		data = StringUtil.replace(
 			data, "${objectDefinitionClassName}",
 			objectDefinition.getClassName());
-		data = StringUtil.replaceFirst(
-			data, "${objectDefinitionName}", objectDefinition.getName());
 
 		for (FragmentEntryLinkModel fragmentEntryLinkModel :
 				fragmentEntryLinkModels) {

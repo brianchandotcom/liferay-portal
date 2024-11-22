@@ -6,6 +6,7 @@
 import {ReactNode, createContext, useContext, useMemo, useReducer} from 'react';
 import {useNavigate} from 'react-router-dom';
 
+import {PRODUCT_SPECIFICATION_KEY} from '../../enums/Product';
 import {useDeliveryProduct} from '../../hooks/data/useProduct';
 import zodSchema from '../../schema/zod';
 import {getUrlParam} from '../../utils/getUrlParam';
@@ -256,7 +257,9 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 	const isFreeApp =
 		product?.productSpecifications.some(
 			({specificationKey, value}) =>
-				specificationKey === 'price-model' && value === 'Free'
+				specificationKey ===
+					PRODUCT_SPECIFICATION_KEY.APP_PRICING_MODEL &&
+				value === 'Free'
 		) ?? false;
 
 	const steps = useMemo(

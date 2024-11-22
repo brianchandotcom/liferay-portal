@@ -22,6 +22,7 @@ import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel'
 import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
 
 import './App.scss';
+import {PRODUCT_SPECIFICATION_KEY} from '../../../../../enums/Product';
 
 type ProductAndOrderPayload = NonNullable<
 	ReturnType<typeof useGetProductByOrderId>['data']
@@ -113,8 +114,22 @@ const AppOutlet = () => {
 					placedOrder.orderTypeExternalReferenceCode ===
 					OrderType.CLOUD
 				) {
+					const isDownloadableCloud =
+						product?.productSpecifications.some(
+							(specification) =>
+								specification.specificationKey ===
+								PRODUCT_SPECIFICATION_KEY.DOWNLOADABLE_CLOUD_APP
+						);
+
 					return [
 						...tabs,
+						{
+							name: i18n.translate('download'),
+							path: 'download',
+							visible:
+								isCompletedOrderWithVirtualItems &&
+								isDownloadableCloud,
+						},
 						{
 							name: i18n.translate('app-provisioning'),
 							path: 'cloud-provisioning',

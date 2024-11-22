@@ -14,6 +14,7 @@ import {
 
 import './ChoosePricingModelPage.scss';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
+import {PRODUCT_SPECIFICATION_KEY} from '../../../../../../enums/Product';
 import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 
@@ -78,7 +79,8 @@ export function ChoosePricingModelPage({
 						if (priceModel.id) {
 							updateProductSpecification({
 								body: {
-									specificationKey: 'price-model',
+									specificationKey:
+										PRODUCT_SPECIFICATION_KEY.APP_PRICING_MODEL,
 									value:
 										priceModel.value === 'Free'
 											? {en_US: 'Free'}

@@ -20,7 +20,10 @@ import {App, supportAndHelpMap} from './ReviewAndSubmitAppPageUtil';
 
 import './ReviewAndSubmitAppPage.scss';
 import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
-import {PRODUCT_CATEGORIES} from '../../../../../../enums/Product';
+import {
+	PRODUCT_CATEGORIES,
+	PRODUCT_SPECIFICATION_KEY,
+} from '../../../../../../enums/Product';
 import {Liferay} from '../../../../../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {getProductCategoriesByVocabularyName} from '../../../../../../utils/productUtils';
@@ -79,7 +82,8 @@ export function ReviewAndSubmitAppPage({
 			const isCloud =
 				productSpecifications.some(
 					({specificationKey, value}) =>
-						specificationKey === 'type' &&
+						specificationKey ===
+							PRODUCT_SPECIFICATION_KEY.APP_BUILD_CLOUD_COMPATIBLE &&
 						(value.en_US === 'cloud' ||
 							(value as unknown as string) === 'cloud')
 				) ?? false;

@@ -13,6 +13,7 @@ import useSWR from 'swr';
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import SearchBuilder from '../../../../../core/SearchBuilder';
 import {ORDER_TYPES} from '../../../../../enums/Order';
+import {PRODUCT_SPECIFICATION_KEY} from '../../../../../enums/Product';
 import useDebounce from '../../../../../hooks/useDebounce';
 import {Liferay} from '../../../../../liferay/liferay';
 import trialOAuth2 from '../../../../../services/oauth/Trial';
@@ -71,7 +72,9 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({
 
 		const isDXP = selectedTrial.product?.productSpecifications?.some(
 			(spec) =>
-				spec.specificationKey === 'type' && spec.value.en_US === 'dxp'
+				spec.specificationKey ===
+					PRODUCT_SPECIFICATION_KEY.APP_BUILD_CLOUD_COMPATIBLE &&
+				spec.value.en_US === 'dxp'
 		);
 
 		if (isDXP) {

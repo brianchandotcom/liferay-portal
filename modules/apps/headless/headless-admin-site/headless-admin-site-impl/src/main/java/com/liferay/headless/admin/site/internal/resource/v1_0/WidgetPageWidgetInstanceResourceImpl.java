@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -196,6 +197,64 @@ public class WidgetPageWidgetInstanceResourceImpl
 		return _addPortletId(
 			widgetPageWidgetInstance.getParentSectionId(), layout, portletId,
 			widgetPageWidgetInstance.getPosition());
+	}
+
+	@Override
+	public WidgetPageWidgetInstance
+			putSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
+				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
+				String widgetInstanceExternalReferenceCode,
+				WidgetPageWidgetInstance widgetPageWidgetInstance)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode,
+			GroupUtil.getGroupId(
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutType layoutType = layout.getLayoutType();
+
+		if (!(layoutType instanceof LayoutTypePortlet)) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		String portletId = PortletIdCodec.encode(
+			widgetPageWidgetInstance.getWidgetName(),
+			widgetPageWidgetInstance.getWidgetInstanceId());
+
+		if (!layoutTypePortlet.hasPortletId(portletId)) {
+			return _addPortletId(
+				widgetPageWidgetInstance.getParentSectionId(), layout,
+				portletId, widgetPageWidgetInstance.getPosition());
+		}
+
+		if (!Objects.equals(
+				widgetPageWidgetInstance.getParentSectionId(),
+				_getParentSectionId(layout, portletId)) ||
+			!Objects.equals(
+				widgetPageWidgetInstance.getPosition(),
+				_getPosition(layout, portletId))) {
+
+			layoutTypePortlet.movePortletId(
+				contextUser.getUserId(), portletId,
+				widgetPageWidgetInstance.getParentSectionId(),
+				widgetPageWidgetInstance.getPosition());
+		}
+
+		return _toWidgetPageWidgetInstance(layout, portletId);
 	}
 
 	private WidgetPageWidgetInstance _addPortletId(

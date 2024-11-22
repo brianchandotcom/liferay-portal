@@ -31,6 +31,7 @@ Import-Package:\
 	javax.xml.transform.stream,\
 	javax.xml.validation,\
 	\
+	org.apache.jasper.compiler.tagplugin,\
 	org.apache.taglibs.standard;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.extra.spath;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.functions;version='[1.2.3,2.0)',\

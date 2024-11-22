@@ -12,10 +12,3 @@ export const ANIMALS_COLLECTION_NAME = 'Animals';
 
 export const ANIMAL_01_FRIENDLY_URL = 'animal-01-dogs-and-cats-categories';
 export const ANIMAL_02_FRIENDLY_URL = 'animal-02-dogs-category';
-
-export const ALL_FIELDS_OBJECT_ERC = 'all-fields-object-erc';
-export const LEMON_OBJECT_ERC = 'lemon-object-erc';
-export const LEMON_BASKET_OBJECT_ERC = 'lemon-basket-object-erc';
-export const POTATO_OBJECT_ERC = 'potato-object-erc';
-
-export const PAGE_MANAGEMENT_SITE_ERC = 'page-management-site-erc';

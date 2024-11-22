@@ -5,14 +5,21 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.friendly.url.util.comparator.FriendlyURLEntryLocalizationComparator;
 import com.liferay.headless.admin.site.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.FriendlyUrlHistoryResource;
+import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,7 +49,7 @@ public class FriendlyUrlHistoryResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		return _friendlyURLHistoryDTOConverter.toDTO(
+		return _toFriendlyUrlHistory(
 			_layoutLocalService.getLayoutByExternalReferenceCode(
 				sitePageExternalReferenceCode,
 				GroupUtil.getGroupId(
@@ -50,11 +57,53 @@ public class FriendlyUrlHistoryResourceImpl
 					siteExternalReferenceCode)));
 	}
 
-	@Reference(
-		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.FriendlyURLHistoryDTOConverter)"
-	)
-	private DTOConverter<Layout, FriendlyUrlHistory>
-		_friendlyURLHistoryDTOConverter;
+	private JSONObject _getFriendlyUrlPathJSONObject(Layout layout)
+		throws Exception {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		long classNameId = _layoutFriendlyURLEntryHelper.getClassNameId(
+			layout.isPrivateLayout());
+
+		for (String languageId : layout.getAvailableLanguageIds()) {
+			jsonObject.put(
+				LocaleUtil.toBCP47LanguageId(languageId),
+				JSONUtil.toJSONArray(
+					_friendlyURLEntryLocalService.
+						getFriendlyURLEntryLocalizations(
+							layout.getGroupId(), classNameId, layout.getPlid(),
+							languageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+							_friendlyURLEntryLocalizationComparator),
+					friendlyURLEntryLocalization ->
+						friendlyURLEntryLocalization.getUrlTitle()));
+		}
+
+		return jsonObject;
+	}
+
+	private FriendlyUrlHistory _toFriendlyUrlHistory(Layout layout)
+		throws Exception {
+
+		return new FriendlyUrlHistory() {
+			{
+				setFriendlyUrlPath_i18n(
+					() -> _getFriendlyUrlPathJSONObject(layout));
+			}
+		};
+	}
+
+	private final FriendlyURLEntryLocalizationComparator
+		_friendlyURLEntryLocalizationComparator =
+			FriendlyURLEntryLocalizationComparator.getInstance(false);
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

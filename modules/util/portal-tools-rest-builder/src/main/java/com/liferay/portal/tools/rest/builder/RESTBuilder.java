@@ -2102,6 +2102,17 @@ public class RESTBuilder {
 					"Unable to generate client JS: " + scanner.next());
 			}
 		}
+
+		Files.deleteIfExists(Paths.get("./openapitools.json"));
+		Files.deleteIfExists(Paths.get(outputPathString, ".gitignore"));
+		Files.deleteIfExists(
+			Paths.get(outputPathString, ".openapi-generator", "FILES"));
+		Files.deleteIfExists(
+			Paths.get(outputPathString, ".openapi-generator", "VERSION"));
+		Files.deleteIfExists(Paths.get(outputPathString, ".openapi-generator"));
+		Files.deleteIfExists(
+			Paths.get(outputPathString, ".openapi-generator-ignore"));
+		Files.deleteIfExists(Paths.get(outputPathString, "git_push.sh"));
 	}
 
 	private void _invokeClientJSGenerator(String openAPIYAMLString)
@@ -2130,8 +2141,6 @@ public class RESTBuilder {
 		_invokeClientJSGenerator(baseClientJSDir, openAPIYAMLFile, "node");
 
 		Files.delete(openAPIYAMLFile.toPath());
-
-		Files.delete(Paths.get("./openapitools.json"));
 	}
 
 	private OpenAPIYAML _loadOpenAPIYAML(String yamlString) {

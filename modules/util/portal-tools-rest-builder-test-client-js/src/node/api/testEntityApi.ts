@@ -281,9 +281,9 @@ export class TestEntityApi {
      * 
      * @param testEntityId 
      * @param optionalParameter 
-     * @param testEntity 
+     * @param TestEntity 
      */
-    public async patchTestEntity (testEntityId: number, optionalParameter?: number, testEntity?: TestEntity, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: TestEntity;  }> {
+    public async patchTestEntity (testEntityId: number, optionalParameter?: number, TestEntity?: TestEntity, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: TestEntity;  }> {
         const localVarPath = this.basePath + '/test/v1.0/test-entities/{testEntityId}'
             .replace('{' + 'testEntityId' + '}', encodeURIComponent(String(testEntityId)));
         let localVarQueryParameters: any = {};
@@ -317,7 +317,7 @@ export class TestEntityApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(testEntity, "TestEntity")
+            body: ObjectSerializer.serialize(TestEntity, "TestEntity")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -414,9 +414,9 @@ export class TestEntityApi {
     }
     /**
      * 
-     * @param testEntity 
+     * @param TestEntity 
      */
-    public async postTestEntity (testEntity?: TestEntity, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: TestEntity;  }> {
+    public async postTestEntity (TestEntity?: TestEntity, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: TestEntity;  }> {
         const localVarPath = this.basePath + '/test/v1.0/test-entities';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -440,7 +440,7 @@ export class TestEntityApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(testEntity, "TestEntity")
+            body: ObjectSerializer.serialize(TestEntity, "TestEntity")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -479,9 +479,9 @@ export class TestEntityApi {
      * 
      * @param testEntityId 
      * @param optionalParameter 
-     * @param testEntity 
+     * @param TestEntity 
      */
-    public async putTestEntity (testEntityId: number, optionalParameter?: number, testEntity?: TestEntity, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: TestEntity;  }> {
+    public async putTestEntity (testEntityId: number, optionalParameter?: number, TestEntity?: TestEntity, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: TestEntity;  }> {
         const localVarPath = this.basePath + '/test/v1.0/test-entities/{testEntityId}'
             .replace('{' + 'testEntityId' + '}', encodeURIComponent(String(testEntityId)));
         let localVarQueryParameters: any = {};
@@ -515,7 +515,7 @@ export class TestEntityApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(testEntity, "TestEntity")
+            body: ObjectSerializer.serialize(TestEntity, "TestEntity")
         };
 
         let authenticationPromise = Promise.resolve();

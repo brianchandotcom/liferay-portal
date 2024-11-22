@@ -401,9 +401,9 @@ export class ObjectActionApi {
     /**
      * 
      * @param objectActionId 
-     * @param objectAction 
+     * @param ObjectAction 
      */
-    public async patchObjectAction (objectActionId: number, objectAction?: ObjectAction, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectAction;  }> {
+    public async patchObjectAction (objectActionId: number, ObjectAction?: ObjectAction, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectAction;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-actions/{objectActionId}'
             .replace('{' + 'objectActionId' + '}', encodeURIComponent(String(objectActionId)));
         let localVarQueryParameters: any = {};
@@ -433,7 +433,7 @@ export class ObjectActionApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectAction, "ObjectAction")
+            body: ObjectSerializer.serialize(ObjectAction, "ObjectAction")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -471,9 +471,9 @@ export class ObjectActionApi {
     /**
      * 
      * @param externalReferenceCode 
-     * @param objectAction 
+     * @param ObjectAction 
      */
-    public async postObjectDefinitionByExternalReferenceCodeObjectAction (externalReferenceCode: string, objectAction?: ObjectAction, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectAction;  }> {
+    public async postObjectDefinitionByExternalReferenceCodeObjectAction (externalReferenceCode: string, ObjectAction?: ObjectAction, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectAction;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-actions'
             .replace('{' + 'externalReferenceCode' + '}', encodeURIComponent(String(externalReferenceCode)));
         let localVarQueryParameters: any = {};
@@ -503,7 +503,7 @@ export class ObjectActionApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectAction, "ObjectAction")
+            body: ObjectSerializer.serialize(ObjectAction, "ObjectAction")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -541,9 +541,9 @@ export class ObjectActionApi {
     /**
      * 
      * @param objectDefinitionId 
-     * @param objectAction 
+     * @param ObjectAction 
      */
-    public async postObjectDefinitionObjectAction (objectDefinitionId: number, objectAction?: ObjectAction, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectAction;  }> {
+    public async postObjectDefinitionObjectAction (objectDefinitionId: number, ObjectAction?: ObjectAction, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectAction;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-actions'
             .replace('{' + 'objectDefinitionId' + '}', encodeURIComponent(String(objectDefinitionId)));
         let localVarQueryParameters: any = {};
@@ -573,7 +573,7 @@ export class ObjectActionApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectAction, "ObjectAction")
+            body: ObjectSerializer.serialize(ObjectAction, "ObjectAction")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -611,9 +611,9 @@ export class ObjectActionApi {
     /**
      * 
      * @param objectActionId 
-     * @param objectAction 
+     * @param ObjectAction 
      */
-    public async putObjectAction (objectActionId: number, objectAction?: ObjectAction, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectAction;  }> {
+    public async putObjectAction (objectActionId: number, ObjectAction?: ObjectAction, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectAction;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-actions/{objectActionId}'
             .replace('{' + 'objectActionId' + '}', encodeURIComponent(String(objectActionId)));
         let localVarQueryParameters: any = {};
@@ -643,7 +643,7 @@ export class ObjectActionApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectAction, "ObjectAction")
+            body: ObjectSerializer.serialize(ObjectAction, "ObjectAction")
         };
 
         let authenticationPromise = Promise.resolve();

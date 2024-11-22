@@ -295,9 +295,9 @@ export class ObjectFolderApi {
      * @param page 
      * @param pageSize 
      * @param search 
-     * @param acceptLanguage 
+     * @param Accept_Language 
      */
-    public async getObjectFoldersPage (page?: number, pageSize?: number, search?: string, acceptLanguage?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectFolder;  }> {
+    public async getObjectFoldersPage (page?: number, pageSize?: number, search?: string, Accept_Language?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectFolder;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-folders';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -322,7 +322,7 @@ export class ObjectFolderApi {
             localVarQueryParameters['search'] = ObjectSerializer.serialize(search, "string");
         }
 
-        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(acceptLanguage, "string");
+        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(Accept_Language, "string");
         (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
@@ -371,9 +371,9 @@ export class ObjectFolderApi {
     /**
      * 
      * @param objectFolderId 
-     * @param objectFolder 
+     * @param ObjectFolder 
      */
-    public async patchObjectFolder (objectFolderId: number, objectFolder?: ObjectFolder, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectFolder;  }> {
+    public async patchObjectFolder (objectFolderId: number, ObjectFolder?: ObjectFolder, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectFolder;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-folders/{objectFolderId}'
             .replace('{' + 'objectFolderId' + '}', encodeURIComponent(String(objectFolderId)));
         let localVarQueryParameters: any = {};
@@ -403,7 +403,7 @@ export class ObjectFolderApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectFolder, "ObjectFolder")
+            body: ObjectSerializer.serialize(ObjectFolder, "ObjectFolder")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -440,9 +440,9 @@ export class ObjectFolderApi {
     }
     /**
      * 
-     * @param objectFolder 
+     * @param ObjectFolder 
      */
-    public async postObjectFolder (objectFolder?: ObjectFolder, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectFolder;  }> {
+    public async postObjectFolder (ObjectFolder?: ObjectFolder, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectFolder;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-folders';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -466,7 +466,7 @@ export class ObjectFolderApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectFolder, "ObjectFolder")
+            body: ObjectSerializer.serialize(ObjectFolder, "ObjectFolder")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -504,9 +504,9 @@ export class ObjectFolderApi {
     /**
      * 
      * @param objectFolderId 
-     * @param objectFolder 
+     * @param ObjectFolder 
      */
-    public async putObjectFolder (objectFolderId: number, objectFolder?: ObjectFolder, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectFolder;  }> {
+    public async putObjectFolder (objectFolderId: number, ObjectFolder?: ObjectFolder, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectFolder;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-folders/{objectFolderId}'
             .replace('{' + 'objectFolderId' + '}', encodeURIComponent(String(objectFolderId)));
         let localVarQueryParameters: any = {};
@@ -536,7 +536,7 @@ export class ObjectFolderApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectFolder, "ObjectFolder")
+            body: ObjectSerializer.serialize(ObjectFolder, "ObjectFolder")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -574,9 +574,9 @@ export class ObjectFolderApi {
     /**
      * 
      * @param externalReferenceCode 
-     * @param objectFolder 
+     * @param ObjectFolder 
      */
-    public async putObjectFolderByExternalReferenceCode (externalReferenceCode: string, objectFolder?: ObjectFolder, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectFolder;  }> {
+    public async putObjectFolderByExternalReferenceCode (externalReferenceCode: string, ObjectFolder?: ObjectFolder, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectFolder;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-folders/by-external-reference-code/{externalReferenceCode}'
             .replace('{' + 'externalReferenceCode' + '}', encodeURIComponent(String(externalReferenceCode)));
         let localVarQueryParameters: any = {};
@@ -606,7 +606,7 @@ export class ObjectFolderApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectFolder, "ObjectFolder")
+            body: ObjectSerializer.serialize(ObjectFolder, "ObjectFolder")
         };
 
         let authenticationPromise = Promise.resolve();

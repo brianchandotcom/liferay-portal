@@ -411,9 +411,9 @@ export class ObjectRelationshipApi {
     /**
      * 
      * @param externalReferenceCode 
-     * @param objectRelationship 
+     * @param ObjectRelationship 
      */
-    public async postObjectDefinitionByExternalReferenceCodeObjectRelationship (externalReferenceCode: string, objectRelationship?: ObjectRelationship, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectRelationship;  }> {
+    public async postObjectDefinitionByExternalReferenceCodeObjectRelationship (externalReferenceCode: string, ObjectRelationship?: ObjectRelationship, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectRelationship;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-relationships'
             .replace('{' + 'externalReferenceCode' + '}', encodeURIComponent(String(externalReferenceCode)));
         let localVarQueryParameters: any = {};
@@ -443,7 +443,7 @@ export class ObjectRelationshipApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectRelationship, "ObjectRelationship")
+            body: ObjectSerializer.serialize(ObjectRelationship, "ObjectRelationship")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -481,9 +481,9 @@ export class ObjectRelationshipApi {
     /**
      * 
      * @param objectDefinitionId 
-     * @param objectRelationship 
+     * @param ObjectRelationship 
      */
-    public async postObjectDefinitionObjectRelationship (objectDefinitionId: number, objectRelationship?: ObjectRelationship, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectRelationship;  }> {
+    public async postObjectDefinitionObjectRelationship (objectDefinitionId: number, ObjectRelationship?: ObjectRelationship, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectRelationship;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-relationships'
             .replace('{' + 'objectDefinitionId' + '}', encodeURIComponent(String(objectDefinitionId)));
         let localVarQueryParameters: any = {};
@@ -513,7 +513,7 @@ export class ObjectRelationshipApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectRelationship, "ObjectRelationship")
+            body: ObjectSerializer.serialize(ObjectRelationship, "ObjectRelationship")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -551,9 +551,9 @@ export class ObjectRelationshipApi {
     /**
      * 
      * @param objectRelationshipId 
-     * @param objectRelationship 
+     * @param ObjectRelationship 
      */
-    public async putObjectRelationship (objectRelationshipId: number, objectRelationship?: ObjectRelationship, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectRelationship;  }> {
+    public async putObjectRelationship (objectRelationshipId: number, ObjectRelationship?: ObjectRelationship, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectRelationship;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-relationships/{objectRelationshipId}'
             .replace('{' + 'objectRelationshipId' + '}', encodeURIComponent(String(objectRelationshipId)));
         let localVarQueryParameters: any = {};
@@ -583,7 +583,7 @@ export class ObjectRelationshipApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectRelationship, "ObjectRelationship")
+            body: ObjectSerializer.serialize(ObjectRelationship, "ObjectRelationship")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -621,9 +621,9 @@ export class ObjectRelationshipApi {
     /**
      * 
      * @param externalReferenceCode 
-     * @param objectRelationship 
+     * @param ObjectRelationship 
      */
-    public async putObjectRelationshipByExternalReferenceCode (externalReferenceCode: string, objectRelationship?: ObjectRelationship, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectRelationship;  }> {
+    public async putObjectRelationshipByExternalReferenceCode (externalReferenceCode: string, ObjectRelationship?: ObjectRelationship, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectRelationship;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-relationships/by-external-reference-code/{externalReferenceCode}'
             .replace('{' + 'externalReferenceCode' + '}', encodeURIComponent(String(externalReferenceCode)));
         let localVarQueryParameters: any = {};
@@ -653,7 +653,7 @@ export class ObjectRelationshipApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectRelationship, "ObjectRelationship")
+            body: ObjectSerializer.serialize(ObjectRelationship, "ObjectRelationship")
         };
 
         let authenticationPromise = Promise.resolve();

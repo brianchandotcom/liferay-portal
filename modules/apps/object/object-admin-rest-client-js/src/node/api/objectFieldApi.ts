@@ -411,9 +411,9 @@ export class ObjectFieldApi {
     /**
      * 
      * @param objectFieldId 
-     * @param objectField 
+     * @param ObjectField 
      */
-    public async patchObjectField (objectFieldId: number, objectField?: ObjectField, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectField;  }> {
+    public async patchObjectField (objectFieldId: number, ObjectField?: ObjectField, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectField;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-fields/{objectFieldId}'
             .replace('{' + 'objectFieldId' + '}', encodeURIComponent(String(objectFieldId)));
         let localVarQueryParameters: any = {};
@@ -443,7 +443,7 @@ export class ObjectFieldApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectField, "ObjectField")
+            body: ObjectSerializer.serialize(ObjectField, "ObjectField")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -481,9 +481,9 @@ export class ObjectFieldApi {
     /**
      * 
      * @param externalReferenceCode 
-     * @param objectField 
+     * @param ObjectField 
      */
-    public async postObjectDefinitionByExternalReferenceCodeObjectField (externalReferenceCode: string, objectField?: ObjectField, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectField;  }> {
+    public async postObjectDefinitionByExternalReferenceCodeObjectField (externalReferenceCode: string, ObjectField?: ObjectField, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectField;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields'
             .replace('{' + 'externalReferenceCode' + '}', encodeURIComponent(String(externalReferenceCode)));
         let localVarQueryParameters: any = {};
@@ -513,7 +513,7 @@ export class ObjectFieldApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectField, "ObjectField")
+            body: ObjectSerializer.serialize(ObjectField, "ObjectField")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -551,9 +551,9 @@ export class ObjectFieldApi {
     /**
      * 
      * @param objectDefinitionId 
-     * @param objectField 
+     * @param ObjectField 
      */
-    public async postObjectDefinitionObjectField (objectDefinitionId: number, objectField?: ObjectField, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectField;  }> {
+    public async postObjectDefinitionObjectField (objectDefinitionId: number, ObjectField?: ObjectField, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectField;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-fields'
             .replace('{' + 'objectDefinitionId' + '}', encodeURIComponent(String(objectDefinitionId)));
         let localVarQueryParameters: any = {};
@@ -583,7 +583,7 @@ export class ObjectFieldApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectField, "ObjectField")
+            body: ObjectSerializer.serialize(ObjectField, "ObjectField")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -621,9 +621,9 @@ export class ObjectFieldApi {
     /**
      * 
      * @param objectFieldId 
-     * @param objectField 
+     * @param ObjectField 
      */
-    public async putObjectField (objectFieldId: number, objectField?: ObjectField, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectField;  }> {
+    public async putObjectField (objectFieldId: number, ObjectField?: ObjectField, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectField;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-fields/{objectFieldId}'
             .replace('{' + 'objectFieldId' + '}', encodeURIComponent(String(objectFieldId)));
         let localVarQueryParameters: any = {};
@@ -653,7 +653,7 @@ export class ObjectFieldApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectField, "ObjectField")
+            body: ObjectSerializer.serialize(ObjectField, "ObjectField")
         };
 
         let authenticationPromise = Promise.resolve();

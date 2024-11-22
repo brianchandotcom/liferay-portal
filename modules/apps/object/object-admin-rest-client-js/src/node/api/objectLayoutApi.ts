@@ -161,9 +161,9 @@ export class ObjectLayoutApi {
      * @param pageSize 
      * @param search 
      * @param sort 
-     * @param acceptLanguage 
+     * @param Accept_Language 
      */
-    public async getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage (externalReferenceCode: string, page?: number, pageSize?: number, search?: string, sort?: string, acceptLanguage?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectLayout;  }> {
+    public async getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage (externalReferenceCode: string, page?: number, pageSize?: number, search?: string, sort?: string, Accept_Language?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectLayout;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-layouts'
             .replace('{' + 'externalReferenceCode' + '}', encodeURIComponent(String(externalReferenceCode)));
         let localVarQueryParameters: any = {};
@@ -198,7 +198,7 @@ export class ObjectLayoutApi {
             localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
         }
 
-        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(acceptLanguage, "string");
+        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(Accept_Language, "string");
         (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
@@ -251,9 +251,9 @@ export class ObjectLayoutApi {
      * @param pageSize 
      * @param search 
      * @param sort 
-     * @param acceptLanguage 
+     * @param Accept_Language 
      */
-    public async getObjectDefinitionObjectLayoutsPage (objectDefinitionId: number, page?: number, pageSize?: number, search?: string, sort?: string, acceptLanguage?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectLayout;  }> {
+    public async getObjectDefinitionObjectLayoutsPage (objectDefinitionId: number, page?: number, pageSize?: number, search?: string, sort?: string, Accept_Language?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectLayout;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-layouts'
             .replace('{' + 'objectDefinitionId' + '}', encodeURIComponent(String(objectDefinitionId)));
         let localVarQueryParameters: any = {};
@@ -288,7 +288,7 @@ export class ObjectLayoutApi {
             localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
         }
 
-        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(acceptLanguage, "string");
+        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(Accept_Language, "string");
         (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
@@ -405,9 +405,9 @@ export class ObjectLayoutApi {
     /**
      * 
      * @param externalReferenceCode 
-     * @param objectLayout 
+     * @param ObjectLayout 
      */
-    public async postObjectDefinitionByExternalReferenceCodeObjectLayout (externalReferenceCode: string, objectLayout?: ObjectLayout, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectLayout;  }> {
+    public async postObjectDefinitionByExternalReferenceCodeObjectLayout (externalReferenceCode: string, ObjectLayout?: ObjectLayout, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectLayout;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-layouts'
             .replace('{' + 'externalReferenceCode' + '}', encodeURIComponent(String(externalReferenceCode)));
         let localVarQueryParameters: any = {};
@@ -437,7 +437,7 @@ export class ObjectLayoutApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectLayout, "ObjectLayout")
+            body: ObjectSerializer.serialize(ObjectLayout, "ObjectLayout")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -475,9 +475,9 @@ export class ObjectLayoutApi {
     /**
      * 
      * @param objectDefinitionId 
-     * @param objectLayout 
+     * @param ObjectLayout 
      */
-    public async postObjectDefinitionObjectLayout (objectDefinitionId: number, objectLayout?: ObjectLayout, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectLayout;  }> {
+    public async postObjectDefinitionObjectLayout (objectDefinitionId: number, ObjectLayout?: ObjectLayout, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectLayout;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-layouts'
             .replace('{' + 'objectDefinitionId' + '}', encodeURIComponent(String(objectDefinitionId)));
         let localVarQueryParameters: any = {};
@@ -507,7 +507,7 @@ export class ObjectLayoutApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectLayout, "ObjectLayout")
+            body: ObjectSerializer.serialize(ObjectLayout, "ObjectLayout")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -545,9 +545,9 @@ export class ObjectLayoutApi {
     /**
      * 
      * @param objectLayoutId 
-     * @param objectLayout 
+     * @param ObjectLayout 
      */
-    public async putObjectLayout (objectLayoutId: number, objectLayout?: ObjectLayout, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectLayout;  }> {
+    public async putObjectLayout (objectLayoutId: number, ObjectLayout?: ObjectLayout, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectLayout;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-layouts/{objectLayoutId}'
             .replace('{' + 'objectLayoutId' + '}', encodeURIComponent(String(objectLayoutId)));
         let localVarQueryParameters: any = {};
@@ -577,7 +577,7 @@ export class ObjectLayoutApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectLayout, "ObjectLayout")
+            body: ObjectSerializer.serialize(ObjectLayout, "ObjectLayout")
         };
 
         let authenticationPromise = Promise.resolve();

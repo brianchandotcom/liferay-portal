@@ -298,9 +298,9 @@ export class ObjectDefinitionApi {
      * @param pageSize 
      * @param search 
      * @param sort 
-     * @param acceptLanguage 
+     * @param Accept_Language 
      */
-    public async getObjectDefinitionsPage (aggregationTerms?: Array<string>, filter?: string, page?: number, pageSize?: number, search?: string, sort?: string, acceptLanguage?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectDefinition;  }> {
+    public async getObjectDefinitionsPage (aggregationTerms?: Array<string>, filter?: string, page?: number, pageSize?: number, search?: string, sort?: string, Accept_Language?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PageObjectDefinition;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -337,7 +337,7 @@ export class ObjectDefinitionApi {
             localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
         }
 
-        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(acceptLanguage, "string");
+        localVarHeaderParams['Accept-Language'] = ObjectSerializer.serialize(Accept_Language, "string");
         (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
@@ -386,9 +386,9 @@ export class ObjectDefinitionApi {
     /**
      * 
      * @param objectDefinitionId 
-     * @param objectDefinition 
+     * @param ObjectDefinition 
      */
-    public async patchObjectDefinition (objectDefinitionId: number, objectDefinition?: ObjectDefinition, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectDefinition;  }> {
+    public async patchObjectDefinition (objectDefinitionId: number, ObjectDefinition?: ObjectDefinition, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectDefinition;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/{objectDefinitionId}'
             .replace('{' + 'objectDefinitionId' + '}', encodeURIComponent(String(objectDefinitionId)));
         let localVarQueryParameters: any = {};
@@ -418,7 +418,7 @@ export class ObjectDefinitionApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectDefinition, "ObjectDefinition")
+            body: ObjectSerializer.serialize(ObjectDefinition, "ObjectDefinition")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -455,9 +455,9 @@ export class ObjectDefinitionApi {
     }
     /**
      * 
-     * @param objectDefinition 
+     * @param ObjectDefinition 
      */
-    public async postObjectDefinition (objectDefinition?: ObjectDefinition, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectDefinition;  }> {
+    public async postObjectDefinition (ObjectDefinition?: ObjectDefinition, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectDefinition;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -481,7 +481,7 @@ export class ObjectDefinitionApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectDefinition, "ObjectDefinition")
+            body: ObjectSerializer.serialize(ObjectDefinition, "ObjectDefinition")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -587,9 +587,9 @@ export class ObjectDefinitionApi {
     /**
      * 
      * @param objectDefinitionId 
-     * @param objectDefinition 
+     * @param ObjectDefinition 
      */
-    public async putObjectDefinition (objectDefinitionId: number, objectDefinition?: ObjectDefinition, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectDefinition;  }> {
+    public async putObjectDefinition (objectDefinitionId: number, ObjectDefinition?: ObjectDefinition, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectDefinition;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/{objectDefinitionId}'
             .replace('{' + 'objectDefinitionId' + '}', encodeURIComponent(String(objectDefinitionId)));
         let localVarQueryParameters: any = {};
@@ -619,7 +619,7 @@ export class ObjectDefinitionApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectDefinition, "ObjectDefinition")
+            body: ObjectSerializer.serialize(ObjectDefinition, "ObjectDefinition")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -657,9 +657,9 @@ export class ObjectDefinitionApi {
     /**
      * 
      * @param externalReferenceCode 
-     * @param objectDefinition 
+     * @param ObjectDefinition 
      */
-    public async putObjectDefinitionByExternalReferenceCode (externalReferenceCode: string, objectDefinition?: ObjectDefinition, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectDefinition;  }> {
+    public async putObjectDefinitionByExternalReferenceCode (externalReferenceCode: string, ObjectDefinition?: ObjectDefinition, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ObjectDefinition;  }> {
         const localVarPath = this.basePath + '/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}'
             .replace('{' + 'externalReferenceCode' + '}', encodeURIComponent(String(externalReferenceCode)));
         let localVarQueryParameters: any = {};
@@ -689,7 +689,7 @@ export class ObjectDefinitionApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(objectDefinition, "ObjectDefinition")
+            body: ObjectSerializer.serialize(ObjectDefinition, "ObjectDefinition")
         };
 
         let authenticationPromise = Promise.resolve();

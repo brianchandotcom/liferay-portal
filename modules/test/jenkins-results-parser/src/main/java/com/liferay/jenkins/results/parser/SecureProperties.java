@@ -86,7 +86,7 @@ public class SecureProperties extends Properties {
 		previousKeys.add(key);
 
 		if (!containsKey(key)) {
-			return null;
+			return key;
 		}
 
 		String value = JenkinsResultsParserUtil.getFilteredPropertyValue(

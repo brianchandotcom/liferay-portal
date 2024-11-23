@@ -5,7 +5,11 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Yoo
@@ -37,7 +41,7 @@ public class SecureProperties extends Properties {
 	}
 
 	public synchronized Object get(Object key, boolean getSecret) {
-		String value = (String)super.get(key);
+		String value = _getReferencedValue(new ArrayList<>(), (String)key);
 
 		if (!getSecret) {
 			return value;
@@ -58,5 +62,56 @@ public class SecureProperties extends Properties {
 	public String getProperty(String key) {
 		return (String)get(key);
 	}
+
+	private String _getReferencedValue(List<String> previousKeys, String key) {
+		if (previousKeys.contains(key)) {
+			if (previousKeys.size() > 1) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Circular property reference chain found\n");
+
+				for (String previousKey : previousKeys) {
+					sb.append(previousKey);
+					sb.append(" -> ");
+				}
+
+				sb.append(key);
+
+				throw new IllegalStateException(sb.toString());
+			}
+
+			return JenkinsResultsParserUtil.combine("${", key, "}");
+		}
+
+		previousKeys.add(key);
+
+		if (!containsKey(key)) {
+			return null;
+		}
+
+		String value = JenkinsResultsParserUtil.getFilteredPropertyValue(
+			(String)super.get(key));
+
+		Matcher matcher = _nestedPropertyPattern.matcher(value);
+
+		String newValue = value;
+
+		while (matcher.find()) {
+			String propertyGroup = matcher.group(0);
+			String propertyName = matcher.group(1);
+
+			if (containsKey(propertyName)) {
+				newValue = newValue.replace(
+					propertyGroup,
+					_getReferencedValue(
+						new ArrayList<>(previousKeys), propertyName));
+			}
+		}
+
+		return newValue;
+	}
+
+	private static final Pattern _nestedPropertyPattern = Pattern.compile(
+		"\\$\\{([^\\}]+)\\}");
 
 }

@@ -6084,6 +6084,22 @@ public class JenkinsResultsParserUtil {
 
 	}
 
+	protected static String getFilteredPropertyValue(String propertyValue) {
+		if (propertyValue == null) {
+			return null;
+		}
+
+		List<String> propertyValues = new ArrayList<>();
+
+		for (String value : propertyValue.split("\\s*,\\s*")) {
+			if (!value.startsWith("#")) {
+				propertyValues.add(value);
+			}
+		}
+
+		return join(",", propertyValues);
+	}
+
 	protected static String initCacheURL() {
 		String cacheDirPath = System.getenv("CACHE_DIR");
 
@@ -6401,22 +6417,6 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	private static String _getFilteredPropertyValue(String propertyValue) {
-		if (propertyValue == null) {
-			return null;
-		}
-
-		List<String> propertyValues = new ArrayList<>();
-
-		for (String value : propertyValue.split("\\s*,\\s*")) {
-			if (!value.startsWith("#")) {
-				propertyValues.add(value);
-			}
-		}
-
-		return join(",", propertyValues);
-	}
-
 	private static synchronized JSONArray _getGitDirectoriesJSONArray() {
 		if (_gitDirectoriesJSONArray != null) {
 			return _gitDirectoriesJSONArray;
@@ -6705,7 +6705,7 @@ public class JenkinsResultsParserUtil {
 			return null;
 		}
 
-		String value = _getFilteredPropertyValue(properties.getProperty(name));
+		String value = getFilteredPropertyValue(properties.getProperty(name));
 
 		Matcher matcher = _nestedPropertyPattern.matcher(value);
 

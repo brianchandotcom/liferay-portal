@@ -138,24 +138,13 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 					_ctCollectionHistoryProviderRegistry.
 						getCTCollectionHistoryProvider(classNameId);
 
-				if (ctCollectionHistoryProvider != null) {
-					UnsafeConsumer<SearchUtil.SearchContext, Exception>
-						unsafeConsumer =
-							ctCollectionHistoryProvider.
-								getSearchContextUnsafeConsumer(
-									classNameId, GetterUtil.getLong(classPK));
+				UnsafeConsumer<SearchUtil.SearchContext, Exception>
+					unsafeConsumer =
+						ctCollectionHistoryProvider.
+							getSearchContextUnsafeConsumer(
+								classNameId, GetterUtil.getLong(classPK));
 
-					unsafeConsumer.accept(searchContext);
-				}
-				else {
-					searchContext.setAttribute(
-						"modelClassNameId", new Long[] {classNameId});
-
-					if (classPK != null) {
-						searchContext.setAttribute(
-							"modelClassPK", new Long[] {classPK});
-					}
-				}
+				unsafeConsumer.accept(searchContext);
 
 				if (siteId != null) {
 					searchContext.setAttribute(

@@ -30,6 +30,13 @@ public interface CTCollectionHistoryProvider<T> {
 		getSearchContextUnsafeConsumer(long classNameId, long classPK) {
 
 		return searchContext -> {
+			searchContext.setAttribute(
+				"modelClassNameId", new Long[] {classNameId});
+
+			if (classPK > 0) {
+				searchContext.setAttribute(
+					"modelClassPK", new Long[] {classPK});
+			}
 		};
 	}
 

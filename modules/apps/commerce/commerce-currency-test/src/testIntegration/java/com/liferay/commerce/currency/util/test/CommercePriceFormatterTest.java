@@ -136,6 +136,38 @@ public class CommercePriceFormatterTest {
 			regexMatcher);
 	}
 
+	@Test(expected = NumberFormatException.class)
+	public void testParsePriceBigDecimal() throws Exception {
+		_commerceCurrency.setFormatPattern("$###,##0.00", LocaleUtil.ITALY);
+
+		String expectedParsedPrice = "1234567.890";
+
+		String inputPrice1 = "1,234,567.890";
+		String inputPrice2 = "1.234.567,890";
+		String inputPrice3 = "1234567.890";
+		String inputPrice4 = "1234567,890";
+
+		String invalidPrice = "1,234,0";
+
+		Assert.assertEquals(
+			expectedParsedPrice,
+			_commercePriceFormatter.parse(inputPrice1, LocaleUtil.ITALY));
+
+		Assert.assertEquals(
+			expectedParsedPrice,
+			_commercePriceFormatter.parse(inputPrice2, LocaleUtil.ITALY));
+
+		Assert.assertEquals(
+			expectedParsedPrice,
+			_commercePriceFormatter.parse(inputPrice3, LocaleUtil.ITALY));
+
+		Assert.assertEquals(
+			expectedParsedPrice,
+			_commercePriceFormatter.parse(inputPrice4, LocaleUtil.ITALY));
+
+		_commercePriceFormatter.parse(invalidPrice, LocaleUtil.ITALY);
+	}
+
 	private static final String _SYMBOLS = "€$¥£R$₹";
 
 	@DeleteAfterTestRun

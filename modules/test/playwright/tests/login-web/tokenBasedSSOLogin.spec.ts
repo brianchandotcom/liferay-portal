@@ -37,7 +37,7 @@ const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 const DEFAULT_VIRTUAL_INSTANCE_URL = `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`;
 
 test.describe('Users could login using Token Based SSO.  See LRQA-27622.', () => {
-	test('Verify token based login with default user', async ({page}) => {
+	test('Verify token based login with default instance', async ({page}) => {
 		const systemSettingsPage = new SystemSettingsPage(page);
 
 		await resetSSOConfiguration(systemSettingsPage);
@@ -51,7 +51,10 @@ test.describe('Users could login using Token Based SSO.  See LRQA-27622.', () =>
 		await resetSSOConfiguration(systemSettingsPage);
 	});
 
-	test('Verify token based login with able.com', async ({browser, page}) => {
+	test('Verify token based login with virtual instance', async ({
+		browser,
+		page,
+	}) => {
 		const virtualInstancesPage = new VirtualInstancesPage(page);
 
 		await virtualInstancesPage.addNewVirtualInstance(

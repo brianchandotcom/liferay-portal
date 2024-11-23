@@ -5,6 +5,7 @@
 				"externalReferenceCode": "ERC-001"
 			}
 		],
+		"alternateName": "customer",
 		"emailAddress": "customer@customer.com",
 		"externalReferenceCode": "USER_CUSTOMER",
 		"familyName": "Customer",
@@ -17,6 +18,7 @@
 				"externalReferenceCode": "ERC-001"
 			}
 		],
+		"alternateName": "partner",
 		"emailAddress": "partner@partner.com",
 		"externalReferenceCode": "USER_PARTNER",
 		"familyName": "Partner",

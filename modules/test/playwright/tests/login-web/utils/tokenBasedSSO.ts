@@ -5,11 +5,12 @@
 
 import {Page, expect, request} from '@playwright/test';
 
+import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
 import {VirtualInstancesPage} from '../../../pages/portal-instances-web/VirtualInstancesPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
-export async function clickButton(page) {
+export async function clickButton(page: Page) {
 	const updateButton = page.getByRole('button', {
 		name: 'Update',
 	});
@@ -34,7 +35,9 @@ export async function deleteVirtualInstance(name: string, page: Page) {
 	await virtualInstancesPage.deleteVirtualInstance(name);
 }
 
-export async function enableTokenBasedSSO(systemSettingsPage) {
+export async function enableTokenBasedSSO(
+	systemSettingsPage: SystemSettingsPage
+) {
 	await systemSettingsPage.goToSystemSetting('SSO', 'Token Based SSO');
 
 	await systemSettingsPage.page.waitForLoadState();
@@ -58,7 +61,9 @@ export async function enableTokenBasedSSO(systemSettingsPage) {
 	await clickButton(tokenBasedSSOPage);
 }
 
-export async function resetSSOConfiguration(systemSettingsPage) {
+export async function resetSSOConfiguration(
+	systemSettingsPage: SystemSettingsPage
+) {
 	await systemSettingsPage.goToSystemSetting('SSO', 'Token Based SSO');
 
 	await systemSettingsPage.page.waitForLoadState();

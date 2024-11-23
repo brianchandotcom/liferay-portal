@@ -36,19 +36,33 @@ const defaultBaseUrl = liferayConfig.environment.baseUrl;
 const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 const DEFAULT_VIRTUAL_INSTANCE_URL = `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`;
 
+test.afterAll(async ({browser}) => {
+	const page = await browser.newPage();
+
+	await performLogin(page, 'test');
+
+	const systemSettingsPage = new SystemSettingsPage(page);
+
+	await resetSSOConfiguration(systemSettingsPage);
+});
+
+test.beforeAll(async ({browser}) => {
+	const page = await browser.newPage();
+
+	await performLogin(page, 'test');
+
+	const systemSettingsPage = new SystemSettingsPage(page);
+
+	await resetSSOConfiguration(systemSettingsPage);
+
+	await enableTokenBasedSSO(systemSettingsPage);
+});
+
 test.describe('Users could login using Token Based SSO.  See LRQA-27622.', () => {
-	test('Verify token based login with default instance', async ({page}) => {
-		const systemSettingsPage = new SystemSettingsPage(page);
-
-		await resetSSOConfiguration(systemSettingsPage);
-
-		await enableTokenBasedSSO(systemSettingsPage);
-
+	test('Verify token based login with default instance', async () => {
 		const token = 'test@liferay.com';
 
 		await verifyTokenBasedSSO(token, defaultBaseUrl);
-
-		await resetSSOConfiguration(systemSettingsPage);
 	});
 
 	test('Verify token based login with virtual instance', async ({
@@ -100,9 +114,5 @@ test.describe('Users could login using Token Based SSO.  See LRQA-27622.', () =>
 		await virtualInstancesPage.deleteVirtualInstance(
 			DEFAULT_VIRTUAL_INSTANCE_NAME
 		);
-
-		const systemSettingsPage = new SystemSettingsPage(page);
-
-		await resetSSOConfiguration(systemSettingsPage);
 	});
 });

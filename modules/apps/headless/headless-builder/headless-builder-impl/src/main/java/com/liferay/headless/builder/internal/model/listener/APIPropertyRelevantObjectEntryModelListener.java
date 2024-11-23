@@ -238,23 +238,22 @@ public class APIPropertyRelevantObjectEntryModelListener
 				}
 			}
 
-			if (ListUtil.isNotEmpty(
-					_objectEntryLocalService.getPrimaryKeys(
-						objectEntry.getGroupId(), objectEntry.getCompanyId(),
-						objectEntry.getUserId(),
-						objectEntry.getObjectDefinitionId(),
-						_filterFactory.create(
-							StringBundler.concat(
-								"id ne '", objectEntry.getObjectEntryId(),
-								"' and name eq '", values.get("name"), "' and ",
-								"r_apiPropertyToAPIProperties_l_apiPropertyId ",
-								"eq '", parentAPIPropertyId, "' and ",
-								"r_apiSchemaToAPIProperties_l_apiSchemaId eq '",
-								apiSchemaId, "'"),
-							_objectDefinitionLocalService.getObjectDefinition(
-								objectEntry.getObjectDefinitionId())),
-						null, 0, 1, null))) {
+			int count = _objectEntryLocalService.getValuesListCount(
+				objectEntry.getGroupId(), objectEntry.getCompanyId(),
+				objectEntry.getUserId(), objectEntry.getObjectDefinitionId(),
+				_filterFactory.create(
+					StringBundler.concat(
+						"id ne '", objectEntry.getObjectEntryId(),
+						"' and name eq '", values.get("name"), "' and ",
+						"r_apiPropertyToAPIProperties_l_apiPropertyId eq '",
+						parentAPIPropertyId, "' and ",
+						"r_apiSchemaToAPIProperties_l_apiSchemaId eq '",
+						apiSchemaId, "'"),
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectEntry.getObjectDefinitionId())),
+				null);
 
+			if (count > 0) {
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null, "API property name must be unique",
 					"api-property-name-must-be-unique");

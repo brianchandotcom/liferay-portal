@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -195,16 +194,14 @@ public class APIEndpointRelevantObjectEntryModelListener
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectEntry.getObjectDefinitionId());
 
-			Predicate predicate = _filterFactory.create(
-				filterString, apiEndpointObjectDefinition);
+			int count = _objectEntryLocalService.getValuesListCount(
+				objectEntry.getGroupId(), objectEntry.getCompanyId(),
+				objectEntry.getUserId(), objectEntry.getObjectDefinitionId(),
+				_filterFactory.create(
+					filterString, apiEndpointObjectDefinition),
+				null);
 
-			if (ListUtil.isNotEmpty(
-					_objectEntryLocalService.getPrimaryKeys(
-						objectEntry.getGroupId(), objectEntry.getCompanyId(),
-						objectEntry.getUserId(),
-						objectEntry.getObjectDefinitionId(), predicate, null,
-						-1, -1, null))) {
-
+			if (count > 0) {
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,
 					"There is an API endpoint with the same HTTP method and " +

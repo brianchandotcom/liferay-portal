@@ -5,4 +5,9 @@
 		height: var(--spacer-3);
 		width: var(--spacer-3);
 	}
+
+	.d-grid {
+		grid-gap: var(--spacer-3);
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	}
 }

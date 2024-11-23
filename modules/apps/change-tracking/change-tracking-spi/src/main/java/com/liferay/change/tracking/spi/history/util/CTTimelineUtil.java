@@ -20,34 +20,34 @@ public class CTTimelineUtil {
 	public static void setClassName(
 		HttpServletRequest httpServletRequest, Class<?> clazz) {
 
-		httpServletRequest.setAttribute(
-			CTTimelineKeys.CLASS_NAME, clazz.getName());
+		setCTTimelineKeys(httpServletRequest, clazz, 0);
 	}
 
 	public static void setClassName(
 		RenderRequest renderRequest, Class<?> clazz) {
 
-		setClassName(
-			PortalUtil.getOriginalServletRequest(
-				PortalUtil.getHttpServletRequest(renderRequest)),
-			clazz);
+		setCTTimelineKeys(renderRequest, clazz, 0);
 	}
 
 	public static void setCTTimelineKeys(
 		HttpServletRequest httpServletRequest, Class<?> clazz, long classPK) {
 
-		setClassName(httpServletRequest, clazz);
+		httpServletRequest = PortalUtil.getOriginalServletRequest(
+			httpServletRequest);
 
-		httpServletRequest.setAttribute(CTTimelineKeys.CLASS_PK, classPK);
+		httpServletRequest.setAttribute(
+			CTTimelineKeys.CLASS_NAME, clazz.getName());
+
+		if (classPK > 0) {
+			httpServletRequest.setAttribute(CTTimelineKeys.CLASS_PK, classPK);
+		}
 	}
 
 	public static void setCTTimelineKeys(
 		RenderRequest renderRequest, Class<?> clazz, long classPK) {
 
 		setCTTimelineKeys(
-			PortalUtil.getOriginalServletRequest(
-				PortalUtil.getHttpServletRequest(renderRequest)),
-			clazz, classPK);
+			PortalUtil.getHttpServletRequest(renderRequest), clazz, classPK);
 	}
 
 }

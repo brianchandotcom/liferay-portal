@@ -12,11 +12,13 @@ import com.liferay.commerce.currency.configuration.RoundingTypeConfiguration;
 import com.liferay.commerce.currency.constants.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -25,6 +27,9 @@ import java.math.RoundingMode;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 
@@ -113,6 +118,37 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			price = BigDecimal.ZERO.toString();
 		}
 
+		if (!_validateCommaDecimalPattern(price) &&
+			!_validatePeriodDecimalPattern(price)) {
+
+			throw new NumberFormatException("Unable to parse " + price);
+		}
+
+		DecimalFormatSymbols decimalFormatSymbols =
+			DecimalFormatSymbols.getInstance(locale);
+
+		if (Objects.equals(
+				decimalFormatSymbols.getDecimalSeparator(), CharPool.PERIOD) &&
+			_validateCommaDecimalPattern(price)) {
+
+			price = StringUtil.replace(
+				price, CharPool.PERIOD, StringPool.BLANK);
+
+			price = StringUtil.replace(price, CharPool.COMMA, CharPool.PERIOD);
+		}
+		else if ((Objects.equals(
+					decimalFormatSymbols.getDecimalSeparator(),
+					CharPool.COMMA) ||
+				  Objects.equals(
+					  decimalFormatSymbols.getDecimalSeparator(),
+					  CharPool.ARABIC_DECIMAL_SEPARATOR)) &&
+				 _validatePeriodDecimalPattern(price)) {
+
+			price = StringUtil.replace(price, CharPool.COMMA, StringPool.BLANK);
+
+			price = StringUtil.replace(price, CharPool.PERIOD, CharPool.COMMA);
+		}
+
 		DecimalFormat decimalFormat = _getDecimalFormat(null, locale);
 
 		return decimalFormat.parse(
@@ -166,6 +202,24 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 		return decimalFormat;
 	}
+
+	private boolean _validateCommaDecimalPattern(String price) {
+		Matcher matcher = _commaDecimalPattern.matcher(price);
+
+		return matcher.find();
+	}
+
+	private boolean _validatePeriodDecimalPattern(String price) {
+		Matcher matcher = _periodDecimalPattern.matcher(price);
+
+		return matcher.find();
+	}
+
+	private static final Pattern _commaDecimalPattern = Pattern.compile(
+		"^\\d{1,3}(?:\\.\\d{3})*(?:,\\d+)?$|^\\d+(?:,\\d+)?$");
+	private static final Pattern _periodDecimalPattern = Pattern.compile(
+		"((^\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?$)|(^\\d{1,2}(?:,\\d{2})*" +
+			"(?:,\\d{3})(?:\\.\\d+)?$))|^\\d+(?:\\.\\d+)?$");
 
 	private volatile RoundingTypeConfiguration _roundingTypeConfiguration;
 

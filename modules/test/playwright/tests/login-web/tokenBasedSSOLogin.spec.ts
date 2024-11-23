@@ -15,7 +15,7 @@ import {liferayConfig} from '../../liferay.config';
 import {InstanceSettingsPage} from '../../pages/configuration-admin-web/InstanceSettingsPage';
 import {SystemSettingsPage} from '../../pages/configuration-admin-web/SystemSettingsPage';
 import {VirtualInstancesPage} from '../../pages/portal-instances-web/VirtualInstancesPage';
-import performLogin, {performLogout} from '../../utils/performLogin';
+import performLogin from '../../utils/performLogin';
 import {
 	clickButton,
 	enableTokenBasedSSO,
@@ -49,13 +49,9 @@ test.describe('Users could login using Token Based SSO.  See LRQA-27622.', () =>
 		await verifyTokenBasedSSO(token, defaultBaseUrl);
 
 		await resetSSOConfiguration(systemSettingsPage);
-
-		await performLogout(page);
 	});
 
 	test('Verify token based login with able.com', async ({browser, page}) => {
-		await performLogin(page, 'test');
-
 		const virtualInstancesPage = new VirtualInstancesPage(page);
 
 		await virtualInstancesPage.addNewVirtualInstance(
@@ -95,8 +91,6 @@ test.describe('Users could login using Token Based SSO.  See LRQA-27622.', () =>
 		const url = `${DEFAULT_VIRTUAL_INSTANCE_URL}/web/guest`;
 
 		await verifyTokenBasedSSO(token, url);
-
-		await performLogout(newPage);
 
 		liferayConfig.environment.baseUrl = defaultBaseUrl;
 

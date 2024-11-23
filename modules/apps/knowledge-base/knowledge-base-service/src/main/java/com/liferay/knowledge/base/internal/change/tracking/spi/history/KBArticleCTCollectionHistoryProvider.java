@@ -16,10 +16,13 @@ import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBArticleTable;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.List;
 
@@ -119,6 +122,42 @@ public class KBArticleCTCollectionHistoryProvider
 	@Override
 	public Class<KBArticle> getModelClass() {
 		return KBArticle.class;
+	}
+
+	@Override
+	public UnsafeConsumer<SearchUtil.SearchContext, Exception>
+		getSearchContextUnsafeConsumer(long classNameId, long classPK) {
+
+		KBArticle kbArticle = _kbArticleLocalService.fetchKBArticle(classPK);
+
+		return searchContext -> {
+			searchContext.setAttribute(
+				"modelClassNameId", new Long[] {classNameId});
+
+			if (kbArticle == null) {
+				return;
+			}
+
+			List<Long> modelClassPKs = _ctCollectionLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					CTEntryTable.INSTANCE.modelClassPK
+				).from(
+					CTEntryTable.INSTANCE
+				).where(
+					CTEntryTable.INSTANCE.modelClassPK.in(
+						DSLQueryFactoryUtil.select(
+							KBArticleTable.INSTANCE.kbArticleId
+						).from(
+							KBArticleTable.INSTANCE
+						).where(
+							KBArticleTable.INSTANCE.resourcePrimKey.eq(
+								kbArticle.getResourcePrimKey())
+						))
+				));
+
+			searchContext.setAttribute(
+				"modelClassPK", ArrayUtil.toLongArray(modelClassPKs));
+		};
 	}
 
 	@Reference

@@ -528,9 +528,10 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 	(function () {
 		var pageIterator = document.getElementById('<%= namespace + id %>');
 		if (pageIterator) {
-			var button = pageIterator.querySelector('.dropdown-toggle');
-			var list = pageIterator.querySelector('.dropdown-menu');
-			var options = list.querySelectorAll('.dropdown-item');
+			var button = pageIterator.querySelector('.pagination .dropdown-toggle');
+			var list = pageIterator.querySelector('.pagination .dropdown-menu');
+			var options = list.querySelectorAll('.pagination .dropdown-item');
+
 			function onButtonKeyDown(event) {
 				if (
 					event.key === 'ArrowDown' ||

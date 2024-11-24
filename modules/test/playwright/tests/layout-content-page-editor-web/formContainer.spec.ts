@@ -2262,7 +2262,7 @@ test.describe('Relationships', () => {
 test.describe('Multiselect', () => {
 	test(
 		'Page designer can define number of options of multiselect fragment',
-		{tag: '@LPS-169936'},
+		{tag: ['@LPS-169936', '@LPS-182728']},
 		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 
 			// Create a page with a Form fragment
@@ -2292,9 +2292,39 @@ test.describe('Multiselect', () => {
 				'Lemon Dimensions',
 			]);
 
-			// Change number of options configuration
+			// Assert help text
+
+			await expect(page.getByText('Lemon Dimensions')).toBeVisible();
 
 			const inputId = await pageEditorPage.getFragmentId('Multiselect');
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Help Text',
+				fragmentId: inputId,
+				tab: 'General',
+				value: true,
+			});
+
+			await expect(
+				page.getByText('Add your help text here.')
+			).toBeVisible();
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Help Text',
+				fragmentId: inputId,
+				tab: 'General',
+				value: 'Preferences',
+			});
+
+			await expect(page.getByText('Preferences')).toBeVisible();
+
+			// Assert mandatory symbol
+
+			await expect(
+				page.locator('.custom-checkbox .lexicon-icon-asterisk')
+			).toBeVisible();
+
+			// Change number of options configuration
 
 			await pageEditorPage.selectFragment(inputId);
 

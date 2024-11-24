@@ -1171,3 +1171,100 @@ test(
 		await expect(page.getByText('Test Fragment New')).toBeVisible();
 	}
 );
+
+test(
+	'View site usages of global fragments',
+	{
+		tag: '@LPS-100540',
+	},
+	async ({apiHelpers, fragmentsPage, page, site}) => {
+
+		// Create global fragment set
+
+		const globalSiteId = await getGlobalSiteId(apiHelpers);
+
+		const globalFragmentCollectionName = getRandomString();
+
+		const globalFragmentCollection =
+			await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+				{
+					groupId: globalSiteId,
+					name: globalFragmentCollectionName,
+				}
+			);
+
+		// Create global fragment
+
+		const fragmentEntryName = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId: globalFragmentCollection.fragmentCollectionId,
+			groupId: globalSiteId,
+			html: '<div class="fragment-name">Custom Fragment</div>',
+			name: fragmentEntryName,
+		});
+
+		// Add layout with global fragment
+
+		const globalFragmentDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: fragmentEntryName,
+		});
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([globalFragmentDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Create new site
+
+		const siteName = getRandomString();
+
+		const newSite = await apiHelpers.headlessSite.createSite({
+			name: siteName,
+		});
+
+		// Add layout with global fragment to new site
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([globalFragmentDefinition]),
+			siteId: newSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to global site
+
+		await fragmentsPage.goto('/global');
+
+		await fragmentsPage.gotoFragmentSet(globalFragmentCollectionName);
+
+		// Assert usages
+
+		await fragmentsPage.clickAction('View Site Usages', fragmentEntryName);
+
+		await expect(page.getByRole('row', {name: site.name})).toContainText(
+			'2'
+		);
+		await expect(page.getByRole('row', {name: newSite.name})).toContainText(
+			'2'
+		);
+
+		// Clean up
+
+		await expect(
+			await apiHelpers.headlessSite.deleteSite(newSite.id)
+		).toBeOK();
+
+		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
+
+		expect(
+			await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+				globalFragmentCollection.fragmentCollectionId
+			)
+		).toHaveProperty(
+			'fragmentCollectionId',
+			globalFragmentCollection.fragmentCollectionId
+		);
+	}
+);

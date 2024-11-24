@@ -1173,11 +1173,11 @@ test(
 );
 
 test(
-	'View site usages of global fragments',
+	'View site usages and propagate changes of global fragments',
 	{
 		tag: '@LPS-100540',
 	},
-	async ({apiHelpers, fragmentsPage, page, site}) => {
+	async ({apiHelpers, fragmentEditorPage, fragmentsPage, page, site}) => {
 
 		// Create global fragment set
 
@@ -1211,11 +1211,17 @@ test(
 			key: fragmentEntryName,
 		});
 
-		await apiHelpers.headlessDelivery.createSitePage({
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([globalFragmentDefinition]),
 			siteId: site.id,
 			title: getRandomString(),
 		});
+
+		// Assert custom fragment in view mode
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await expect(page.getByText('Custom Fragment')).toBeVisible();
 
 		// Create new site
 
@@ -1227,17 +1233,37 @@ test(
 
 		// Add layout with global fragment to new site
 
-		await apiHelpers.headlessDelivery.createSitePage({
+		const newSiteLayout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([globalFragmentDefinition]),
 			siteId: newSite.id,
 			title: getRandomString(),
 		});
+
+		// Assert custom fragment in view mode for new site
+
+		await page.goto(
+			`/web${newSite.friendlyUrlPath}${newSiteLayout.friendlyUrlPath}`
+		);
+
+		await expect(page.getByText('Custom Fragment')).toBeVisible();
 
 		// Go to global site
 
 		await fragmentsPage.goto('/global');
 
 		await fragmentsPage.gotoFragmentSet(globalFragmentCollectionName);
+
+		// Edit custom fragment
+
+		await fragmentsPage.clickAction('Edit', fragmentEntryName);
+
+		await fragmentEditorPage.addHTML(` 
+			<div class="fragment-name">
+				Edited Custom Fragment
+			</div>
+		`);
+
+		await fragmentEditorPage.publish();
 
 		// Assert usages
 
@@ -1249,6 +1275,28 @@ test(
 		await expect(page.getByRole('row', {name: newSite.name})).toContainText(
 			'2'
 		);
+
+		// Propagate changes
+
+		await page.getByLabel('Select All Items on the Page').check();
+
+		await page.getByRole('button', {name: 'Propagate'}).click();
+
+		await waitForAlert(page);
+
+		// Assert custom fragment in view mode
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await expect(page.getByText('Edited Custom Fragment')).toBeVisible();
+
+		// Assert custom fragment in view mode for new site
+
+		await page.goto(
+			`/web${newSite.friendlyUrlPath}${newSiteLayout.friendlyUrlPath}`
+		);
+
+		await expect(page.getByText('Edited Custom Fragment')).toBeVisible();
 
 		// Clean up
 

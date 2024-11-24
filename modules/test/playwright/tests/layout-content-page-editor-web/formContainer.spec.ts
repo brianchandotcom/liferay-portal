@@ -2259,6 +2259,125 @@ test.describe('Relationships', () => {
 	});
 });
 
+test.describe('Multiselect', () => {
+	test(
+		'Page designer can define number of options of multiselect fragment',
+		{tag: '@LPS-169936'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Map the form to object and select fields
+
+			await pageEditorPage.mapFormFragment(formId, 'Lemon Basket', [
+				'Lemon Dimensions',
+			]);
+
+			// Change number of options configuration
+
+			const inputId = await pageEditorPage.getFragmentId('Multiselect');
+
+			await pageEditorPage.selectFragment(inputId);
+
+			await expect(
+				page.getByLabel('Number of Options', {exact: true})
+			).toHaveValue('5');
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Number of Options',
+				fragmentId: inputId,
+				tab: 'General',
+				value: '2',
+			});
+
+			// Assert options in edit mode
+
+			const multiselect = page.locator(
+				'.custom-checkbox .custom-control-label'
+			);
+
+			await expect(multiselect.nth(0).getByText('Large')).toBeVisible();
+			await expect(multiselect.nth(1).getByText('Medium')).toBeVisible();
+			await expect(
+				multiselect.nth(2).getByText('Small')
+			).not.toBeVisible();
+
+			await pageEditorPage.publishPage();
+
+			// Assert options in view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await expect(multiselect.nth(0).getByText('Large')).toBeVisible();
+			await expect(multiselect.nth(1).getByText('Medium')).toBeVisible();
+			await expect(
+				multiselect.nth(2).getByText('Small')
+			).not.toBeVisible();
+
+			// Click show all
+
+			await page.getByRole('button', {name: 'Show All'}).click();
+
+			await expect(multiselect.nth(0).getByText('Large')).toBeVisible();
+			await expect(multiselect.nth(1).getByText('Medium')).toBeVisible();
+			await expect(multiselect.nth(2).getByText('Small')).toBeVisible();
+
+			// Go to edit mode and update show all options configuration
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show All Options',
+				fragmentId: inputId,
+				tab: 'General',
+				value: true,
+			});
+
+			// Assert options in edit mode
+
+			await expect(multiselect.nth(0).getByText('Large')).toBeVisible();
+			await expect(multiselect.nth(1).getByText('Medium')).toBeVisible();
+			await expect(multiselect.nth(2).getByText('Small')).toBeVisible();
+
+			await pageEditorPage.publishPage();
+
+			// Assert options in view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await expect(multiselect.nth(0).getByText('Large')).toBeVisible();
+			await expect(multiselect.nth(1).getByText('Medium')).toBeVisible();
+			await expect(multiselect.nth(2).getByText('Small')).toBeVisible();
+		}
+	);
+});
+
 test.describe('Multistep', () => {
 	test(
 		'Change to multistep when adding a stepper fragment and remove it when changing to simple',

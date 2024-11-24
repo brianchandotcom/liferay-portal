@@ -291,4 +291,5 @@ public class KaleoDefinitionServiceImplTest {
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
 	private ServiceContext _serviceContext;
+
 }

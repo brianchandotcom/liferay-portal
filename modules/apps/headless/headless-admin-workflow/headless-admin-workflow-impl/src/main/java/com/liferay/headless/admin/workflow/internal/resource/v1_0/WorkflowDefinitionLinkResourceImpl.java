@@ -85,7 +85,7 @@ public class WorkflowDefinitionLinkResourceImpl
 					ModelResourcePermissionRegistryUtil.
 						getModelResourcePermission(
 							"com.liferay.portal.workflow.kaleo.model." +
-							"KaleoDefinition"))
+								"KaleoDefinition"))
 			).build(),
 			transform(
 				ListUtil.subList(

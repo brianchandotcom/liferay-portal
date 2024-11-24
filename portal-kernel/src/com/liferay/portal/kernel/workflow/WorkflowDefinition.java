@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.workflow;
 
-
 import java.io.InputStream;
 
 import java.util.Date;

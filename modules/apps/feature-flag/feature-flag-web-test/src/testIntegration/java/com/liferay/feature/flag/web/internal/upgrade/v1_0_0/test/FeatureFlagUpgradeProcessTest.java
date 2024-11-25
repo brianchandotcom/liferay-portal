@@ -64,7 +64,6 @@ public class FeatureFlagUpgradeProcessTest {
 			portalPreferences.getValue(
 				_OLD_NAMESPACE,
 				FeatureFlagConstants.PREFERENCE_KEY_DEPRECATION_PROCESSED));
-
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				portalPreferences.getValue(

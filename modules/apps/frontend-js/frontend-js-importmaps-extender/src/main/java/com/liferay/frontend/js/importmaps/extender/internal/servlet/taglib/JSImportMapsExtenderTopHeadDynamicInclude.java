@@ -53,6 +53,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class JSImportMapsExtenderTopHeadDynamicInclude
 	extends BaseDynamicInclude {
 
+	private static final long _COMPANY_ID_ALL = 0;
+
 	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
@@ -113,6 +115,49 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 	public void rebuildImportMaps() {
 		_rebuildImportMaps(_COMPANY_ID_ALL);
+	}
+
+	private synchronized void _rebuildImportMaps(long companyId) {
+		if (companyId == _COMPANY_ID_ALL) {
+			_companyLocalService.forEachCompanyId(this::_rebuildImportMaps);
+
+			return;
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		jsonObject.put(
+			"imports",
+			() -> {
+				JSONObject importsJSONObject = _jsonFactory.createJSONObject();
+
+				_putImports(
+					importsJSONObject,
+					_getGlobalImportMapsJSONObjects(_COMPANY_ID_ALL));
+				_putImports(
+					importsJSONObject,
+					_getGlobalImportMapsJSONObjects(companyId));
+
+				return importsJSONObject;
+			}
+		).put(
+			"scopes",
+			() -> {
+				JSONObject scopesJSONObject = _jsonFactory.createJSONObject();
+
+				_putScopes(
+					scopesJSONObject,
+					_getScopedImportMapJSONObjects(_COMPANY_ID_ALL));
+				_putScopes(
+					scopesJSONObject,
+					_getScopedImportMapJSONObjects(companyId));
+
+				return scopesJSONObject;
+			}
+		);
+
+		_importMapsMap.put(
+			companyId, _jsonFactory.looseSerializeDeep(jsonObject));
 	}
 
 	@Override
@@ -228,49 +273,6 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		}
 	}
 
-	private synchronized void _rebuildImportMaps(long companyId) {
-		if (companyId == _COMPANY_ID_ALL) {
-			_companyLocalService.forEachCompanyId(this::_rebuildImportMaps);
-
-			return;
-		}
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		jsonObject.put(
-			"imports",
-			() -> {
-				JSONObject importsJSONObject = _jsonFactory.createJSONObject();
-
-				_putImports(
-					importsJSONObject,
-					_getGlobalImportMapsJSONObjects(_COMPANY_ID_ALL));
-				_putImports(
-					importsJSONObject,
-					_getGlobalImportMapsJSONObjects(companyId));
-
-				return importsJSONObject;
-			}
-		).put(
-			"scopes",
-			() -> {
-				JSONObject scopesJSONObject = _jsonFactory.createJSONObject();
-
-				_putScopes(
-					scopesJSONObject,
-					_getScopedImportMapJSONObjects(_COMPANY_ID_ALL));
-				_putScopes(
-					scopesJSONObject,
-					_getScopedImportMapJSONObjects(companyId));
-
-				return scopesJSONObject;
-			}
-		);
-
-		_importMapsMap.put(
-			companyId, _jsonFactory.looseSerializeDeep(jsonObject));
-	}
-
 	private JSImportMapsRegistration _register(
 		long companyId, String scope, JSONObject jsonObject) {
 
@@ -296,8 +298,6 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 		return () -> scopedImportMapJSONObjects.remove(scope);
 	}
-
-	private static final long _COMPANY_ID_ALL = 0;
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;

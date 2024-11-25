@@ -5,7 +5,7 @@
 
 package com.liferay.portlet.social.util;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.security.auth.CentralizedCompanyThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Stack;
@@ -61,7 +61,7 @@ public class SocialActivityHierarchyEntryThreadLocal {
 	}
 
 	private static final ThreadLocal<Stack<SocialActivityHierarchyEntry>>
-		_activityHierarchyEntries = new CentralizedThreadLocal<>(
+		_activityHierarchyEntries = new CentralizedCompanyThreadLocal<>(
 			SocialActivityHierarchyEntryThreadLocal.class +
 				"._activityHierarchyEntries",
 			Stack::new);

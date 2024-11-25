@@ -6,6 +6,7 @@
 package com.liferay.object.entry.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.security.auth.CentralizedCompanyThreadLocal;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -91,7 +92,7 @@ public class ObjectEntryThreadLocal {
 					"._skipReadOnlyObjectFieldsValidationThreadLocal",
 				() -> false);
 	private static final ThreadLocal<Set<Long>> _validatedObjectEntryIds =
-		new CentralizedThreadLocal<>(
+		new CentralizedCompanyThreadLocal<>(
 			ObjectEntryThreadLocal.class + "._validatedObjectEntryIds",
 			HashSet::new);
 

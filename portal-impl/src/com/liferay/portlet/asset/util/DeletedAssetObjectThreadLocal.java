@@ -7,6 +7,7 @@ package com.liferay.portlet.asset.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.security.auth.CentralizedCompanyThreadLocal;
 
 import java.util.AbstractMap;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class DeletedAssetObjectThreadLocal {
 	}
 
 	private static final CentralizedThreadLocal<Map.Entry<Long, Long>>
-		_assetObjectThreadLocal = new CentralizedThreadLocal<>(
+		_assetObjectThreadLocal = new CentralizedCompanyThreadLocal<>(
 			DeletedAssetObjectThreadLocal.class + "._assetObjectThreadLocal");
 
 }

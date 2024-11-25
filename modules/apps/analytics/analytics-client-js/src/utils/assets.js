@@ -3,19 +3,30 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+function transformAssetTypeToSelector(assetType, suffix = '') {
+	if (typeof assetType === 'object') {
+		return assetType
+			.map((type) => `[data-analytics-asset-type="${type}"]${suffix}`)
+			.join(', ');
+	}
+
+	return `[data-analytics-asset-type="${assetType}"]${suffix}`;
+}
+
 /**
  * Returns first webContent element ancestor of given element.
  * @param {Object} element The DOM element
  * @returns {Object} The webContent element
  */
 function getClosestAssetElement(element, assetType) {
-	return closest(element, `[data-analytics-asset-type="${assetType}"]`);
+	return closest(element, transformAssetTypeToSelector(assetType));
 }
 
 function closest(element, selector) {
 	if (element.closest) {
 		return element.closest(selector);
 	}
+
 	if (!document.documentElement.contains(element)) {
 		return null;
 	}
@@ -54,7 +65,13 @@ function isTrackable(element, customDatasetList) {
 	);
 }
 
-export {closest, getClosestAssetElement, getNumberOfWords, isTrackable};
+export {
+	closest,
+	getClosestAssetElement,
+	getNumberOfWords,
+	isTrackable,
+	transformAssetTypeToSelector,
+};
 
 /**
  * Polyfill for .matches in IE11

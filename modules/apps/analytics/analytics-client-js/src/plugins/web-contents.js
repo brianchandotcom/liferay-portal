@@ -3,13 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getNumberOfWords, isTrackable} from '../utils/assets';
+import {
+	getNumberOfWords,
+	isTrackable,
+	transformAssetTypeToSelector,
+} from '../utils/assets';
 import {WEB_CONTENT} from '../utils/constants';
 import {debounce} from '../utils/debounce';
 import {clickEvent, onEvents, onReady} from '../utils/events';
 import {isPartiallyInViewport} from '../utils/scroll';
 
 const applicationId = WEB_CONTENT;
+
+export const webContentTypes = [
+	'web-content',
+	'com.liferay.journal.model.JournalArticle',
+];
 
 /**
  * Returns analytics payload with WebContent information.
@@ -21,8 +30,16 @@ function getWebContentPayload({dataset}) {
 		articleId: dataset.analyticsAssetId.trim(),
 	};
 
+	if (dataset.analyticsAssetSubtype) {
+		Object.assign(payload, {subtype: dataset.analyticsAssetSubtype.trim()});
+	}
+
 	if (dataset.analyticsAssetTitle) {
 		Object.assign(payload, {title: dataset.analyticsAssetTitle.trim()});
+	}
+
+	if (dataset.analyticsAssetType) {
+		Object.assign(payload, {type: dataset.analyticsAssetType.trim()});
 	}
 
 	if (dataset.analyticsWebContentResourcePk) {
@@ -45,23 +62,25 @@ function trackWebContentClicked(analytics) {
 		eventType: 'webContentClicked',
 		getPayload: getWebContentPayload,
 		isTrackable,
-		type: 'web-content',
+		type: webContentTypes,
 	});
 }
 
 /**
  * Sends information the first time a WebContent enters into the viewport.
- * @param {Object} The Analytics client instance
+ * @param {Object} analytics: The Analytics client instance
+ * @param {Object} props: {action: 'view' | 'impression', eventId: string}
  */
-function trackWebContentViewed(analytics) {
+function trackWebContent(analytics, {eventId, isTrackable}) {
+	const selector = transformAssetTypeToSelector(
+		webContentTypes,
+		`:not([data-analytics-asset-viewed="true"])`
+	);
+
 	const markViewedElements = debounce(() => {
 		const elements = Array.prototype.slice
-			.call(
-				document.querySelectorAll(
-					'[data-analytics-asset-type="web-content"]:not([data-analytics-asset-viewed="true"]'
-				)
-			)
-			.filter((element) => isTrackable(element));
+			.call(document.querySelectorAll(selector))
+			.filter(isTrackable);
 
 		elements.forEach((element) => {
 			if (isPartiallyInViewport(element)) {
@@ -73,7 +92,7 @@ function trackWebContentViewed(analytics) {
 
 				element.dataset.analyticsAssetViewed = true;
 
-				analytics.send('webContentViewed', applicationId, payload);
+				analytics.send(eventId, applicationId, payload);
 			}
 		});
 	}, 250);
@@ -96,10 +115,23 @@ function trackWebContentViewed(analytics) {
  */
 function webContent(analytics) {
 	const stopTrackingWebContentClicked = trackWebContentClicked(analytics);
-	const stopTrackingWebContentViewed = trackWebContentViewed(analytics);
+	const stopTrackingWebContentImpressionMade = trackWebContent(analytics, {
+		eventId: 'webContentImpressionMade',
+		isTrackable: (element) =>
+			isTrackable(element) &&
+			element.dataset?.analyticsAssetAction === 'impression',
+	});
+	const stopTrackingWebContentViewed = trackWebContent(analytics, {
+		eventId: 'webContentViewed',
+		isTrackable: (element) =>
+			isTrackable(element) &&
+			(!element.dataset?.analyticsAssetAction ||
+				element.dataset?.analyticsAssetAction === 'view'),
+	});
 
 	return () => {
 		stopTrackingWebContentClicked();
+		stopTrackingWebContentImpressionMade();
 		stopTrackingWebContentViewed();
 	};
 }

@@ -12,7 +12,7 @@ final String navigation = ParamUtil.getString(request, "navigation", "search-ite
 %>
 
 <clay:navigation-bar
-	navigationItems="<%= frontendSampleDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= sampleDisplayContext.getNavigationItems() %>"
 />
 
 <c:choose>

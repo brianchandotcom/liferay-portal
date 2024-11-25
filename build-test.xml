@@ -1225,18 +1225,14 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<propertycopy from="java.jdk.opts[@{version}][@{architecture}][@{type}]" property="java.jdk.opts" silent="true" />
 
-			<property name="java.jdk.opts" value="${java.home}" />
-
-			<if>
-				<not>
-					<available file="${java.jdk.opts}" />
-				</not>
-				<then>
-					<var name="java.jdk.opts" unset="true" />
-
-					<property name="java.jdk.opts" value="${java.home}" />
-				</then>
-			</if>
+			<condition property="java.jdk.opts" value="${java.jdk.opts.default.runtime}">
+				<and>
+					<not>
+						<isset property="java.jdk.opts" />
+					</not>
+					<isset property="java.jdk.opts.default.runtime" />
+				</and>
+			</condition>
 		</sequential>
 	</macrodef>
 
@@ -7422,6 +7418,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<get-java-jdk-bundle-type test.batch.name="${test.batch.name}" />
 
 					<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
+					<get-java-jdk-opts type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
 
 					<get-operating-system-property property.name="operating.system.docker.image" />
 

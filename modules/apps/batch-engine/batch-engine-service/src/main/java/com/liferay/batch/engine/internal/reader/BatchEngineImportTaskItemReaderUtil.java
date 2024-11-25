@@ -83,30 +83,8 @@ public class BatchEngineImportTaskItemReaderUtil {
 			if (field != null) {
 				field.setAccessible(true);
 
-				ObjectMapper objectMapper = null;
-
-				if (keepCreatorInfo &&
-					field.getName(
-					).equalsIgnoreCase(
-						"creator"
-					)) {
-
-					objectMapper = new ObjectMapper() {
-						{
-							SimpleModule simpleModule = new SimpleModule();
-
-							simpleModule.addDeserializer(
-								Map.class, new MapStdDeserializer());
-
-							registerModule(simpleModule);
-						}
-					};
-
-					objectMapper.addMixIn(field.getType(), CreatorMixin.class);
-				}
-				else {
-					objectMapper = _getObjectMapper(field);
-				}
+				ObjectMapper objectMapper = _getObjectMapper(
+					field, keepCreatorInfo);
 
 				field.set(
 					item,
@@ -236,8 +214,26 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 	}
 
-	private static ObjectMapper _getObjectMapper(Field field)
+	private static ObjectMapper _getObjectMapper(
+			Field field, boolean keepCreatorInfo)
 		throws IllegalAccessException, InstantiationException {
+
+		if (keepCreatorInfo &&
+			StringUtil.equalsIgnoreCase(field.getName(), "creator")) {
+
+			return new ObjectMapper() {
+				{
+					addMixIn(field.getType(), CreatorMixin.class);
+
+					SimpleModule simpleModule = new SimpleModule();
+
+					simpleModule.addDeserializer(
+						Map.class, new MapStdDeserializer());
+
+					registerModule(simpleModule);
+				}
+			};
+		}
 
 		JsonDeserialize[] jsonDeserializes = field.getAnnotationsByType(
 			JsonDeserialize.class);

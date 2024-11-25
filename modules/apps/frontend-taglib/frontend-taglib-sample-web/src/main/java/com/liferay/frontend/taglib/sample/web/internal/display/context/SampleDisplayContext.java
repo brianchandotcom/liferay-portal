@@ -19,9 +19,9 @@ import javax.portlet.RenderResponse;
 /**
  * @author Antonio Ortega
  */
-public class FrontendSampleDisplayContext {
+public class SampleDisplayContext {
 
-	public FrontendSampleDisplayContext(
+	public SampleDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_renderRequest = renderRequest;

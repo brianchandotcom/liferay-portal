@@ -212,7 +212,7 @@ public class WidgetPageWidgetInstanceResourceTest
 			widgetName + "_INSTANCE_" + widgetInstanceId);
 
 		widgetPageWidgetInstance.setParentSectionId("column-1");
-		widgetPageWidgetInstance.setPosition(0);
+		widgetPageWidgetInstance.setPosition(_position++);
 		widgetPageWidgetInstance.setWidgetName(widgetName);
 
 		widgetPageWidgetInstance.setWidgetInstanceId(widgetInstanceId);
@@ -274,5 +274,7 @@ public class WidgetPageWidgetInstanceResourceTest
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	private int _position;
 
 }

@@ -104,7 +104,7 @@
 
 		<!-- Other fields -->
 
-		<column name="commerceCurrencyId" type="long" />
+		<column name="commerceCurrencyCode" type="String" />
 		<column name="parentCommercePriceListId" type="long" />
 		<column name="catalogBasePriceList" type="boolean" />
 		<column name="netPrice" type="boolean" />
@@ -132,8 +132,8 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="CommerceCurrencyId" return-type="Collection">
-			<finder-column name="commerceCurrencyId" />
+		<finder name="CommerceCurrencyCode" return-type="Collection">
+			<finder-column name="commerceCurrencyCode" />
 		</finder>
 		<finder name="ParentCommercePriceListId" return-type="CommercePriceList">
 			<finder-column name="parentCommercePriceListId" />

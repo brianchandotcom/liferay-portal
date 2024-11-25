@@ -39,7 +39,7 @@ export function LocalizationSelect({
 			onSelectionChange={(id) => {
 				onSelectedLocaleChange(id);
 
-				Liferay.fire('languageSelect:localeChanged', {
+				Liferay.fire('localizationSelect:localeChanged', {
 					languageId: id,
 				});
 			}}

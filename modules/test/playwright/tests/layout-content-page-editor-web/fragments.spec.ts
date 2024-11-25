@@ -1253,7 +1253,7 @@ test.describe('Localization Select Fragment', () => {
 		expect(languageSelect).toBeVisible();
 
 		await page.evaluate(() => {
-			Liferay.on('languageSelect:localeChanged', (event) => {
+			Liferay.on('localizationSelect:localeChanged', (event) => {
 				(window as any).TEST_LANGUAGE_SELECTED = event.languageId;
 			});
 		});

@@ -386,9 +386,10 @@ public class ObjectDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectDefinition
-		fetchSystemObjectDefinition(String name) {
+		fetchSystemObjectDefinition(long companyId, String name) {
 
-		return _objectDefinitionLocalService.fetchSystemObjectDefinition(name);
+		return _objectDefinitionLocalService.fetchSystemObjectDefinition(
+			companyId, name);
 	}
 
 	@Override

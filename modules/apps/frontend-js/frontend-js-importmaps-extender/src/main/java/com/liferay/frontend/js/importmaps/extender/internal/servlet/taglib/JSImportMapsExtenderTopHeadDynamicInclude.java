@@ -202,28 +202,6 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		return scopedImportMapsJSONObjects1;
 	}
 
-	private void _putImports(
-		JSONObject importsJSONObject,
-		Map<Long, JSONObject> globalImportMapsJSONObjects) {
-
-		for (JSONObject jsonObject : globalImportMapsJSONObjects.values()) {
-			for (String key : jsonObject.keySet()) {
-				importsJSONObject.put(key, jsonObject.getString(key));
-			}
-		}
-	}
-
-	private void _putScopes(
-		JSONObject scopesJSONObject,
-		Map<String, JSONObject> scopedImportMapJSONObjects) {
-
-		for (Map.Entry<String, JSONObject> entry :
-				scopedImportMapJSONObjects.entrySet()) {
-
-			scopesJSONObject.put(entry.getKey(), entry.getValue());
-		}
-	}
-
 	private synchronized void _rebuildImportMaps(long companyId) {
 		if (companyId == _ALL_COMPANIES) {
 			_companyLocalService.forEachCompanyId(this::_rebuildImportMaps);
@@ -233,17 +211,46 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
+		ConcurrentMap<Long, JSONObject> allCompaniesGlobalImportMapJSONObjects =
+			_getGlobalImportMapsJSONObjects(_ALL_COMPANIES);
+		ConcurrentMap<Long, JSONObject> companyGlobalImportMapJSONObjects =
+			_getGlobalImportMapsJSONObjects(companyId);
+
+		ConcurrentMap<String, JSONObject>
+			allCompaniesScopedImportMapJSONObjects =
+				_getScopedImportMapJSONObjects(_ALL_COMPANIES);
+		ConcurrentMap<String, JSONObject> companyScopedImportMapJSONObjects =
+			_getScopedImportMapJSONObjects(companyId);
+
 		jsonObject.put(
 			"imports",
 			() -> {
 				JSONObject importsJSONObject = _jsonFactory.createJSONObject();
 
-				_putImports(
-					importsJSONObject,
-					_getGlobalImportMapsJSONObjects(_ALL_COMPANIES));
-				_putImports(
-					importsJSONObject,
-					_getGlobalImportMapsJSONObjects(companyId));
+				for (JSONObject allCompaniesGlobalImportMapJSONObject :
+						allCompaniesGlobalImportMapJSONObjects.values()) {
+
+					for (String key :
+							allCompaniesGlobalImportMapJSONObject.keySet()) {
+
+						importsJSONObject.put(
+							key,
+							allCompaniesGlobalImportMapJSONObject.getString(
+								key));
+					}
+				}
+
+				for (JSONObject companyGlobalImportMapJSONObject :
+						companyGlobalImportMapJSONObjects.values()) {
+
+					for (String key :
+							companyGlobalImportMapJSONObject.keySet()) {
+
+						importsJSONObject.put(
+							key,
+							companyGlobalImportMapJSONObject.getString(key));
+					}
+				}
 
 				return importsJSONObject;
 			}
@@ -252,12 +259,17 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 			() -> {
 				JSONObject scopesJSONObject = _jsonFactory.createJSONObject();
 
-				_putScopes(
-					scopesJSONObject,
-					_getScopedImportMapJSONObjects(_ALL_COMPANIES));
-				_putScopes(
-					scopesJSONObject,
-					_getScopedImportMapJSONObjects(companyId));
+				for (Map.Entry<String, JSONObject> entry :
+						allCompaniesScopedImportMapJSONObjects.entrySet()) {
+
+					scopesJSONObject.put(entry.getKey(), entry.getValue());
+				}
+
+				for (Map.Entry<String, JSONObject> entry :
+						companyScopedImportMapJSONObjects.entrySet()) {
+
+					scopesJSONObject.put(entry.getKey(), entry.getValue());
+				}
 
 				return scopesJSONObject;
 			}

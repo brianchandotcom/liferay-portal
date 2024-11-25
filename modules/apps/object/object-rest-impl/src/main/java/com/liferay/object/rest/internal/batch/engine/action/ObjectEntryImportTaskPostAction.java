@@ -6,6 +6,7 @@
 package com.liferay.object.rest.internal.batch.engine.action;
 
 import com.liferay.batch.engine.action.ImportTaskPostAction;
+import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -34,7 +35,8 @@ public class ObjectEntryImportTaskPostAction implements ImportTaskPostAction {
 			!StringUtil.equals(
 				batchEngineImportTask.getParameterValue(
 					"importCreatorStrategy"),
-				"KEEP_CREATOR")) {
+				BatchEngineImportTaskConstants.
+					IMPORT_CREATOR_STRATEGY_KEEP_CREATOR)) {
 
 			return;
 		}

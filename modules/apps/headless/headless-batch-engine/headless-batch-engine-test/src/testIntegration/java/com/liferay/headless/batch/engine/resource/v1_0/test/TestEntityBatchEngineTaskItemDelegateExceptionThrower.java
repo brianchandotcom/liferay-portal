@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 
 import java.io.Serializable;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
@@ -32,15 +31,7 @@ public class TestEntityBatchEngineTaskItemDelegateExceptionThrower
 	extends BaseBatchEngineTaskItemDelegate<TestEntity> {
 
 	@Override
-	public void create(
-			Collection<TestEntity> items, Map<String, Serializable> parameters)
-		throws Exception {
-
-		batchEngineImportStrategy.apply(
-			items, testEntity -> createTestEntityItem(testEntity, parameters));
-	}
-
-	public TestEntity createTestEntityItem(
+	public TestEntity createItem(
 			TestEntity testEntity, Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -58,9 +49,8 @@ public class TestEntityBatchEngineTaskItemDelegateExceptionThrower
 
 	@Override
 	public Page<TestEntity> read(
-			Filter filter, Pagination pagination, Sort[] sorts,
-			Map<String, Serializable> parameters, String search)
-		throws Exception {
+		Filter filter, Pagination pagination, Sort[] sorts,
+		Map<String, Serializable> parameters, String search) {
 
 		return null;
 	}

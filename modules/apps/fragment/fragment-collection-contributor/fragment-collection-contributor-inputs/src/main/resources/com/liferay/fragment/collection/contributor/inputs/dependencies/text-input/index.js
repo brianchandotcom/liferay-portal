@@ -11,7 +11,7 @@ const lengthWarningText = document.getElementById(
 );
 const inputElement = document.getElementById(`${fragmentNamespace}-text-input`);
 
-function enableLenghtWarning() {
+function enableLengthWarning() {
 	formGroup.classList.add('has-error');
 	lengthInfo.classList.add('text-danger', 'font-weight-semi-bold');
 	lengthWarning.classList.remove('sr-only');
@@ -43,7 +43,7 @@ function onInputKeyup(event) {
 	currentLength.innerText = length;
 
 	if (length > input.attributes.maxLength) {
-		enableLenghtWarning();
+		enableLengthWarning();
 	}
 	else if (formGroup.classList.contains('has-error')) {
 		disableLengthWarning();
@@ -60,7 +60,7 @@ function main() {
 		currentLength.innerText = inputElement.value.length;
 
 		if (inputElement.value.length > input.attributes.maxLength) {
-			enableLenghtWarning();
+			enableLengthWarning();
 		}
 
 		inputElement.addEventListener('keyup', onInputKeyup);

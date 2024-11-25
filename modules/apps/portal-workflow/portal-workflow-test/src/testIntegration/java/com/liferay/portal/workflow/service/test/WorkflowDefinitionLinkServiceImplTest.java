@@ -112,8 +112,6 @@ public class WorkflowDefinitionLinkServiceImplTest {
 		_kaleoDefinitionLocalService.activateKaleoDefinition(
 			kaleoDefinition.getKaleoDefinitionId(), _serviceContext);
 
-		// Administrator with "company.administrator.can.publish" disabled
-
 		_setUpPermissionThreadLocal(_companyAdminUser);
 
 		AssertUtils.assertFailure(
@@ -125,8 +123,6 @@ public class WorkflowDefinitionLinkServiceImplTest {
 				_companyAdminUser.getUserId(), TestPropsValues.getCompanyId(),
 				TestPropsValues.getGroupId(), BlogsEntry.class.getName(), 0, 0,
 				kaleoDefinition.getName(), 1));
-
-		// Administrator with "company.administrator.can.publish" enabled
 
 		ConfigurationTestUtil.saveConfiguration(
 			_configuration,
@@ -177,7 +173,6 @@ public class WorkflowDefinitionLinkServiceImplTest {
 		Assert.assertEquals(
 			workflowDefinitionLink1.getClassName(),
 			workflowDefinitionLink2.getClassName());
-
 		Assert.assertEquals(
 			workflowDefinitionLink1.getWorkflowDefinitionName(),
 			workflowDefinitionLink2.getWorkflowDefinitionName());

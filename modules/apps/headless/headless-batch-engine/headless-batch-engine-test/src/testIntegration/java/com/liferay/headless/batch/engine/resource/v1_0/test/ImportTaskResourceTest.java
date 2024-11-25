@@ -12,7 +12,6 @@ import com.liferay.headless.batch.engine.client.http.HttpInvoker;
 import com.liferay.headless.batch.engine.client.serdes.v1_0.ImportTaskSerDes;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -54,11 +53,11 @@ public class ImportTaskResourceTest {
 				LoggerTestUtil.ERROR)) {
 
 			ImportTask importTask = _testPostFailingImportTask(
-				JSONUtil.putAll(JSONFactoryUtil.createJSONObject()), "FAILED",
+				JSONUtil.putAll(JSONUtil.put("textValue", "test")), "FAILED",
 				ListUtil.fromArray("createStrategy=INSERT"));
 
 			Assert.assertEquals(
-				"Modified error message for TestEntity 'null'",
+				"Modified error message for TestEntity 'test'",
 				importTask.getErrorMessage());
 		}
 	}

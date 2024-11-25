@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldId;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,7 +53,8 @@ public class FriendlyUrlHistoryResourceImpl
 	public FriendlyUrlHistory
 			getSiteSiteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory(
 				String siteExternalReferenceCode,
-				String displayPageTemplateExternalReferenceCode)
+				@NestedFieldId(value = "externalReferenceCode") String
+					displayPageTemplateExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -82,7 +84,8 @@ public class FriendlyUrlHistoryResourceImpl
 	public FriendlyUrlHistory
 			getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode)
+				@NestedFieldId(value = "externalReferenceCode") String
+					sitePageExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -117,7 +120,8 @@ public class FriendlyUrlHistoryResourceImpl
 	public FriendlyUrlHistory
 			getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory(
 				String siteExternalReferenceCode,
-				String utilityPageExternalReferenceCode)
+				@NestedFieldId(value = "externalReferenceCode") String
+					utilityPageExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {

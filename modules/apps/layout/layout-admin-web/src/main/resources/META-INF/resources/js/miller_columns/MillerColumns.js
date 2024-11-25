@@ -320,7 +320,11 @@ const MillerColumns = ({
 				<DndProvider backend={HTML5Backend}>
 					<DragPreview getLabel={getDragPreviewLabel} />
 
-					<div className="bg-white miller-columns-row" ref={ref}>
+					<div
+						className="bg-white miller-columns-row"
+						ref={ref}
+						role="application"
+					>
 						{columns.map((column, index) => (
 							<MillerColumnsColumn
 								columnItems={column.items}

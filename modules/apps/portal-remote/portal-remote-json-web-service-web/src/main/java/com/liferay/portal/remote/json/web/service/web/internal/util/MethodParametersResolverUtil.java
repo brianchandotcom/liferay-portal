@@ -9,12 +9,12 @@ import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.MethodParameter;
 
+import java.io.IOException;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentMap;
-
-import jodd.paramo.Paramo;
 
 /**
  * @author Igor Spasic
@@ -34,15 +34,15 @@ public class MethodParametersResolverUtil {
 
 		Class<?>[] methodParameterTypes = method.getParameterTypes();
 
-		jodd.paramo.MethodParameter[] joddMethodParameters =
-			Paramo.resolveParameters(method);
+		List<ExtractedParameter> extractedParameterList =
+			MethodParameterExtractor.getMethodParameters(clazz, method);
 
-		methodParameters = new MethodParameter[joddMethodParameters.length];
+		methodParameters = new MethodParameter[extractedParameterList.size()];
 
-		for (int i = 0; i < joddMethodParameters.length; i++) {
+		for (int i = 0; i < extractedParameterList.size(); i++) {
 			methodParameters[i] = new MethodParameter(
-				classLoader, joddMethodParameters[i].getName(),
-				joddMethodParameters[i].getSignature(),
+				classLoader, extractedParameterList.get(i).getName(),
+				extractedParameterList.get(i).getSignature(),
 				methodParameterTypes[i]);
 		}
 

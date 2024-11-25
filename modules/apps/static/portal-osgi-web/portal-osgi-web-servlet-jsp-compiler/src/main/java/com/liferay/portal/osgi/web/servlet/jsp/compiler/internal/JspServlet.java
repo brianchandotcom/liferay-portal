@@ -211,7 +211,7 @@ public class JspServlet extends HttpServlet {
 		).put(
 			"compilerTargetVM", "1.8"
 		).put(
-			"development", String.valueOf(PropsValues.WORK_DIR_OVERRIDE_ENABLED)
+			"development", "false"
 		).put(
 			"keepgenerated", "false"
 		).put(

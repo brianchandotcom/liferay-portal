@@ -212,13 +212,7 @@ public class JSPServletFactoryImpl implements JSPServletFactory {
 					_WORK_DIR, bundle.getSymbolicName(), StringPool.DASH,
 					bundle.getVersion());
 
-				if (PropsValues.WORK_DIR_OVERRIDE_ENABLED &&
-					_log.isInfoEnabled()) {
-
-					_log.info(
-						"Deleting JSP class files from ".concat(scratchDir));
-				}
-				else if (_log.isDebugEnabled()) {
+				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Deleting JSP class files from ".concat(scratchDir));
 				}

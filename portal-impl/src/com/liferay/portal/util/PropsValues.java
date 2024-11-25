@@ -2602,10 +2602,6 @@ public class PropsValues {
 	public static final String WIDGET_SERVLET_MAPPING = PropsUtil.get(
 		PropsKeys.WIDGET_SERVLET_MAPPING);
 
-	public static final boolean WORK_DIR_OVERRIDE_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.WORK_DIR_OVERRIDE_ENABLED));
-
 	public static final int XML_RPC_MAX_PARAMETERS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.XML_RPC_MAX_PARAMETERS), 50);
 

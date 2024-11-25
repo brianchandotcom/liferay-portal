@@ -10,13 +10,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 
 import java.util.Enumeration;
@@ -171,73 +168,51 @@ public class CompilerWrapper extends Compiler {
 	}
 
 	private URL _getClassURL(String className) {
+		Options options = ctxt.getOptions();
+
+		EmbeddedServletOptions embeddedServletOptions =
+			(EmbeddedServletOptions)options;
+
+		if (Boolean.valueOf(
+				embeddedServletOptions.getProperty("hasFragment"))) {
+
+			return null;
+		}
+
+		JSPClassInfo jspClassInfo = _jspClassInfos.get(className);
+
+		if ((jspClassInfo != null) && jspClassInfo.isOverride()) {
+			_jspClassInfos.remove(className);
+		}
+
+		JspRuntimeContext jspRuntimeContext = ctxt.getRuntimeContext();
+
+		ClassLoader classLoader = jspRuntimeContext.getParentClassLoader();
+
+		try {
+			Enumeration<URL> enumeration = classLoader.getResources(
+				"/META-INF/resources" + ctxt.getJspFile());
+
+			if (enumeration.hasMoreElements()) {
+				enumeration.nextElement();
+
+				if (enumeration.hasMoreElements()) {
+					return null;
+				}
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+
 		String classNamePath = StringUtil.replace(
 			className, CharPool.PERIOD, File.separatorChar);
 
 		classNamePath = classNamePath.concat(".class");
 
-		Options options = ctxt.getOptions();
-		URL url = null;
-
-		if (PropsValues.WORK_DIR_OVERRIDE_ENABLED) {
-			File classFile = new File(options.getScratchDir(), classNamePath);
-
-			if (classFile.exists()) {
-				URI uri = classFile.toURI();
-
-				try {
-					url = uri.toURL();
-				}
-				catch (MalformedURLException malformedURLException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(malformedURLException);
-					}
-				}
-			}
-		}
-
-		if (url == null) {
-			EmbeddedServletOptions embeddedServletOptions =
-				(EmbeddedServletOptions)options;
-
-			if (Boolean.valueOf(
-					embeddedServletOptions.getProperty("hasFragment"))) {
-
-				return null;
-			}
-
-			JSPClassInfo jspClassInfo = _jspClassInfos.get(className);
-
-			if ((jspClassInfo != null) && jspClassInfo.isOverride()) {
-				_jspClassInfos.remove(className);
-			}
-
-			JspRuntimeContext jspRuntimeContext = ctxt.getRuntimeContext();
-
-			ClassLoader classLoader = jspRuntimeContext.getParentClassLoader();
-
-			try {
-				Enumeration<URL> enumeration = classLoader.getResources(
-					"/META-INF/resources" + ctxt.getJspFile());
-
-				if (enumeration.hasMoreElements()) {
-					enumeration.nextElement();
-
-					if (enumeration.hasMoreElements()) {
-						return null;
-					}
-				}
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(exception);
-				}
-			}
-
-			url = classLoader.getResource(classNamePath);
-		}
-
-		return url;
+		return classLoader.getResource(classNamePath);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -28,8 +28,8 @@ import org.osgi.service.component.annotations.Reference;
 public class AuthorizationServerMetadataResolver {
 
 	public OIDCProviderMetadata resolveOIDCProviderMetadata(
-			String authServerWellKnownURI, long oAuthClientEntryId,
-			int metadataCacheInSecs)
+			String authServerWellKnownURI, int metadataCacheInSecs,
+			long oAuthClientEntryId)
 		throws Exception {
 
 		if (authServerWellKnownURI.endsWith("local")) {

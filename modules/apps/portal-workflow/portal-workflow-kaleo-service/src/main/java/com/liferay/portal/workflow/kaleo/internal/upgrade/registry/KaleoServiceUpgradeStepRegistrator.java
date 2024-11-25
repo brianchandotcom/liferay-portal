@@ -107,7 +107,7 @@ public class KaleoServiceUpgradeStepRegistrator
 		registry.register(
 			"1.4.2", "2.0.0",
 			new BaseSQLServerDatetimeUpgradeProcess(
-				new Class<?>[]{
+				new Class<?>[] {
 					KaleoActionTable.class, KaleoConditionTable.class,
 					KaleoDefinitionTable.class,
 					KaleoDefinitionVersionTable.class, KaleoInstanceTable.class,
@@ -186,7 +186,7 @@ public class KaleoServiceUpgradeStepRegistrator
 
 				@Override
 				protected String[][] getTableAndPrimaryKeyColumnNames() {
-					return new String[][]{
+					return new String[][] {
 						{"KaleoDefinition", "kaleoDefinitionId"}
 					};
 				}
@@ -195,11 +195,11 @@ public class KaleoServiceUpgradeStepRegistrator
 
 		registry.register(
 			"4.1.0", "4.2.0",
-			new BaseUuidUpgradeProcess() {	
+			new BaseUuidUpgradeProcess() {
 
 				@Override
 				protected String[][] getTableAndPrimaryKeyColumnNames() {
-					return new String[][]{
+					return new String[][] {
 						{"KaleoDefinition", "kaleoDefinitionId"}
 					};
 				}

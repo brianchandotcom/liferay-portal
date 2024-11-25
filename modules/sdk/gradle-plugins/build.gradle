@@ -23,7 +23,7 @@ dependencies {
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.lang.builder", version: "3.0.37"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "8.1.1"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.rest.builder", version: "1.1.252"
-	api group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "4.0.167"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "4.0.168"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "5.2.176"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.test.integration", version: "4.0.6"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.tld.formatter", version: "1.0.15"

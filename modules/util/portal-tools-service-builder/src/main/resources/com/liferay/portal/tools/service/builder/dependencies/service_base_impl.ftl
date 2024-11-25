@@ -1662,7 +1662,6 @@ import org.osgi.service.component.annotations.Reference;
 
 						) {
 
-
 						_useTempFile = true;
 					}
 				</#if>

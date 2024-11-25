@@ -191,6 +191,14 @@ public class WidgetPageWidgetInstanceResourceTest
 	}
 
 	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {
+			"externalReferenceCode", "parentSectionId", "position",
+			"widgetInstanceId", "widgetName"
+		};
+	}
+
+	@Override
 	protected WidgetPageWidgetInstance randomWidgetPageWidgetInstance()
 		throws Exception {
 

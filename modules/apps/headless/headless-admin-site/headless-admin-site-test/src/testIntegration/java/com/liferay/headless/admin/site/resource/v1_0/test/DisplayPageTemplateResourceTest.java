@@ -11,8 +11,12 @@ import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassSubtypeReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder;
+import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.pagination.Page;
+import com.liferay.headless.admin.site.client.pagination.Pagination;
 import com.liferay.headless.admin.site.client.problem.Problem;
+import com.liferay.headless.admin.site.client.resource.v1_0.DisplayPageTemplateResource;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
@@ -23,10 +27,21 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -36,6 +51,9 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -134,6 +152,9 @@ public class DisplayPageTemplateResourceTest
 
 		_testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			displayPageTemplate);
+
+		_testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateWithNestedFields(
+			displayPageTemplate);
 	}
 
 	@Ignore
@@ -144,6 +165,16 @@ public class DisplayPageTemplateResourceTest
 
 		super.
 			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage();
+	}
+
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage()
+		throws Exception {
+
+		super.testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage();
+
+		_testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithNestedFields();
 	}
 
 	@Ignore
@@ -440,6 +471,40 @@ public class DisplayPageTemplateResourceTest
 			testGroup.getExternalReferenceCode(), displayPageTemplate);
 	}
 
+	private void _assertNestedFields(DisplayPageTemplate displayPageTemplate)
+		throws Exception {
+
+		FriendlyUrlHistory friendlyUrlHistory =
+			displayPageTemplate.getFriendlyUrlHistory();
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			GetterUtil.getString(friendlyUrlHistory.getFriendlyUrlPath_i18n()));
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					displayPageTemplate.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
+
+		Assert.assertEquals(
+			jsonObject.toString(), friendlyURLMap.size(), jsonObject.length());
+
+		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
+			String key = LocaleUtil.toBCP47LanguageId(entry.getKey());
+
+			JSONArray jsonArray = jsonObject.getJSONArray(key);
+
+			Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
+			Assert.assertEquals(
+				jsonArray.toString(), entry.getValue(), jsonArray.getString(0));
+		}
+	}
+
 	private void _assertProblemException(
 			String status, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
@@ -462,6 +527,42 @@ public class DisplayPageTemplateResourceTest
 			TestPropsValues.getUserId(), testGroup, true, false,
 			ServiceContextTestUtil.getServiceContext(
 				testGroup, TestPropsValues.getUserId()));
+	}
+
+	private DisplayPageTemplate _getDisplayPageTemplate(
+		List<DisplayPageTemplate> displayPageTemplates,
+		String externalReferenceCode) {
+
+		for (DisplayPageTemplate displayPageTemplate : displayPageTemplates) {
+			if (Objects.equals(
+					displayPageTemplate.getExternalReferenceCode(),
+					externalReferenceCode)) {
+
+				return displayPageTemplate;
+			}
+		}
+
+		return null;
+	}
+
+	private DisplayPageTemplateResource _getDisplayPageTemplateResource()
+		throws Exception {
+
+		User omniadminUser = UserTestUtil.addOmniadminUser();
+
+		String password = RandomTestUtil.randomString();
+
+		_userLocalService.updatePassword(
+			omniadminUser.getUserId(), password, password, false, true);
+
+		return DisplayPageTemplateResource.builder(
+		).authentication(
+			omniadminUser.getEmailAddress(), password
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "friendlyUrlHistory"
+		).build();
 	}
 
 	private String _getLayoutPageTemplateCollectionExternalReferenceCode(
@@ -537,6 +638,54 @@ public class DisplayPageTemplateResourceTest
 
 		assertEquals(displayPageTemplate, getDisplayPageTemplate);
 		assertValid(getDisplayPageTemplate);
+	}
+
+	private void _testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithNestedFields()
+		throws Exception {
+
+		Page<DisplayPageTemplate> page =
+			displayPageTemplateResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage(
+					testGroup.getExternalReferenceCode(), null, null, null,
+					Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		DisplayPageTemplate displayPageTemplate =
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage_addDisplayPageTemplate(
+				testGroup.getExternalReferenceCode(),
+				randomDisplayPageTemplate());
+
+		DisplayPageTemplateResource curDisplayPageTemplateResource =
+			_getDisplayPageTemplateResource();
+
+		page =
+			curDisplayPageTemplateResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage(
+					testGroup.getExternalReferenceCode(), null, null, null,
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+		_assertNestedFields(
+			_getDisplayPageTemplate(
+				(List<DisplayPageTemplate>)page.getItems(),
+				displayPageTemplate.getExternalReferenceCode()));
+	}
+
+	private void
+			_testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateWithNestedFields(
+				DisplayPageTemplate displayPageTemplate)
+		throws Exception {
+
+		DisplayPageTemplateResource curDisplayPageTemplateResource =
+			_getDisplayPageTemplateResource();
+
+		_assertNestedFields(
+			curDisplayPageTemplateResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplate.getExternalReferenceCode()));
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
@@ -707,6 +856,12 @@ public class DisplayPageTemplateResourceTest
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Inject
+	private JSONFactory _jsonFactory;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
 
@@ -715,6 +870,12 @@ public class DisplayPageTemplateResourceTest
 		_layoutPageTemplateEntryLocalService;
 
 	@Inject
+	private Portal _portal;
+
+	@Inject
 	private StagingLocalService _stagingLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

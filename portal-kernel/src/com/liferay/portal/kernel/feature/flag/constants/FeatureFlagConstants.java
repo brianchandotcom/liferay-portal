@@ -16,7 +16,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
  */
 public class FeatureFlagConstants {
 
-	public static final String FEATURE_FLAG = "feature.flag";
+	public static final String PORTAL_PROPERTY_KEY_FEATURE_FLAG =
+		"feature.flag";
 
 	public static final String PREFERENCE_KEY_DEPRECATION_PROCESSED =
 		"deprecationProcessed";
@@ -26,11 +27,11 @@ public class FeatureFlagConstants {
 
 	public static String getKey(String... parts) {
 		if (ArrayUtil.isEmpty(parts)) {
-			return FEATURE_FLAG;
+			return PORTAL_PROPERTY_KEY_FEATURE_FLAG;
 		}
 
 		return StringBundler.concat(
-			FEATURE_FLAG, StringPool.PERIOD,
+			PORTAL_PROPERTY_KEY_FEATURE_FLAG, StringPool.PERIOD,
 			StringUtil.merge(parts, StringPool.PERIOD));
 	}
 

@@ -33,7 +33,9 @@ public class FeatureFlagTestRuleTest {
 	public static void setUpClass() throws PortalException {
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
-				FeatureFlagConstants.FEATURE_FLAG + ".METHOD-456", "true"
+				FeatureFlagConstants.PORTAL_PROPERTY_KEY_FEATURE_FLAG +
+					".METHOD-456",
+				"true"
 			).build());
 	}
 

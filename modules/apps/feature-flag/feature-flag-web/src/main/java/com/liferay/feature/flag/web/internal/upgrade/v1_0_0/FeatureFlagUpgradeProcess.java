@@ -68,7 +68,7 @@ public class FeatureFlagUpgradeProcess extends UpgradeProcess {
 	}
 
 	private static final String _OLD_NAMESPACE =
-		FeatureFlagConstants.FEATURE_FLAG;
+		FeatureFlagConstants.PORTAL_PROPERTY_KEY_FEATURE_FLAG;
 
 	private final CompanyLocalService _companyLocalService;
 	private final PortalPreferencesLocalService _portalPreferencesLocalService;

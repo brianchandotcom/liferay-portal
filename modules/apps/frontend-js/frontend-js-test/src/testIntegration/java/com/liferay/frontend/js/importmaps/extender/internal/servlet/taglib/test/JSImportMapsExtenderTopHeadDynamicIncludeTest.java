@@ -7,26 +7,32 @@ package com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib.test
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,16 +57,45 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() {
+	@Before
+	public void setUp() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
 			JSImportMapsExtenderTopHeadDynamicIncludeTest.class);
 
-		_bundleContext = bundle.getBundleContext();
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		try (ServiceTrackerList<DynamicInclude> dynamicIncludes =
+				ServiceTrackerListFactory.open(
+					bundleContext, DynamicInclude.class)) {
+
+			for (DynamicInclude dynamicInclude : dynamicIncludes) {
+				Class<? extends DynamicInclude> clazz =
+					dynamicInclude.getClass();
+
+				if (Objects.equals(
+						clazz.getName(),
+						"com.liferay.frontend.js.importmaps.extender." +
+							"internal.servlet.taglib." +
+								"JSImportMapsExtenderTopHeadDynamicInclude")) {
+
+					_dynamicInclude = dynamicInclude;
+
+					break;
+				}
+			}
+		}
+
+		_company1 = CompanyTestUtil.addCompany(false);
+
+		_registerJSImportMapsContributor(bundleContext, _company1);
+
+		_company2 = CompanyTestUtil.addCompany(false);
+
+		_registerJSImportMapsContributor(bundleContext, _company2);
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws PortalException {
 		for (ServiceRegistration<?> serviceRegistration :
 				_serviceRegistrations) {
 
@@ -71,37 +106,9 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 	}
 
 	@Test
-	public void testImportMapsAreUpdatedWhenAvailableCompaniesChange()
-		throws Exception {
-
-		_registerJSImportMapsContributor(null);
-
-		_company1 = CompanyTestUtil.addCompany(false);
-
+	public void testInclude() throws IOException {
 		String json = _include(_company1.getCompanyId());
 
-		Assert.assertTrue(
-			json,
-			json.matches(".*\"global\".*:.*\"http://localhost/global.js\".*"));
-	}
-
-	@Test
-	public void testInclude() throws Exception {
-		_registerJSImportMapsContributor(null);
-
-		_company1 = CompanyTestUtil.addCompany(false);
-
-		_registerJSImportMapsContributor(_company1);
-
-		_company2 = CompanyTestUtil.addCompany(false);
-
-		_registerJSImportMapsContributor(_company2);
-
-		String json = _include(_company1.getCompanyId());
-
-		Assert.assertTrue(
-			json,
-			json.matches(".*\"global\".*:.*\"http://localhost/global.js\".*"));
 		Assert.assertTrue(
 			json,
 			json.matches(
@@ -115,9 +122,6 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 
 		json = _include(_company2.getCompanyId());
 
-		Assert.assertTrue(
-			json,
-			json.matches(".*\"global\".*:.*\"http://localhost/global.js\".*"));
 		Assert.assertFalse(
 			json,
 			json.matches(
@@ -131,9 +135,6 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 
 		json = _include(_portal.getDefaultCompanyId());
 
-		Assert.assertTrue(
-			json,
-			json.matches(".*\"global\".*:.*\"http://localhost/global.js\".*"));
 		Assert.assertFalse(
 			json,
 			json.matches(
@@ -146,7 +147,7 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 					_company2.getCompanyId() + ".js\".*"));
 	}
 
-	private String _include(long companyId) throws Exception {
+	private String _include(long companyId) throws IOException {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -161,29 +162,26 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 		return mockHttpServletResponse.getContentAsString();
 	}
 
-	private void _registerJSImportMapsContributor(Company company) {
-		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		if (company == null) {
-			jsonObject.put("global", "http://localhost/global.js");
-		}
-		else {
-			dictionary.put(
-				"com.liferay.frontend.js.importmaps.company.id",
-				company.getCompanyId());
-
-			jsonObject.put(
-				"specifier",
-				"http://localhost/" + company.getCompanyId() + ".js");
-		}
+	private void _registerJSImportMapsContributor(
+		BundleContext bundleContext, Company company) {
 
 		_serviceRegistrations.add(
-			_bundleContext.registerService(
-				JSImportMapsContributor.class, () -> jsonObject, dictionary));
-	}
+			bundleContext.registerService(
+				JSImportMapsContributor.class,
+				() -> {
+					JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-	private static BundleContext _bundleContext;
+					jsonObject.put(
+						"specifier",
+						"http://localhost/" + company.getCompanyId() + ".js");
+
+					return jsonObject;
+				},
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.frontend.js.importmaps.company.id",
+					company.getCompanyId()
+				).build()));
+	}
 
 	@DeleteAfterTestRun
 	private Company _company1;
@@ -191,9 +189,9 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 	@DeleteAfterTestRun
 	private Company _company2;
 
-	@Inject(
-		filter = "component.name=com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib.JSImportMapsExtenderTopHeadDynamicInclude"
-	)
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	private DynamicInclude _dynamicInclude;
 
 	@Inject

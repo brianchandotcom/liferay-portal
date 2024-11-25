@@ -71,7 +71,9 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 	}
 
 	@Test
-	public void testInclude() throws Exception {
+	public void testImportMapsAreUpdatedWhenAvailableCompaniesChange()
+		throws Exception {
+
 		_registerJSImportMapsContributor(null);
 
 		_company1 = CompanyTestUtil.addCompany(false);
@@ -81,6 +83,13 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 		Assert.assertTrue(
 			json,
 			json.matches(".*\"global\".*:.*\"http://localhost/global.js\".*"));
+	}
+
+	@Test
+	public void testInclude() throws Exception {
+		_registerJSImportMapsContributor(null);
+
+		_company1 = CompanyTestUtil.addCompany(false);
 
 		_registerJSImportMapsContributor(_company1);
 
@@ -88,7 +97,7 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 
 		_registerJSImportMapsContributor(_company2);
 
-		json = _include(_company1.getCompanyId());
+		String json = _include(_company1.getCompanyId());
 
 		Assert.assertFalse(
 			json,

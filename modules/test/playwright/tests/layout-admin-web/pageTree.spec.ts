@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import getRandomString from '../../utils/getRandomString';
 import {performUserSwitch} from '../../utils/performLogin';
@@ -24,6 +25,73 @@ const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
 	pagesPagesTest
+);
+
+test(
+	'Check back button',
+	{
+		tag: ['@LPS-112992', '@LPS-116618', '@LPS-148241'],
+	},
+	async ({apiHelpers, page, pageTreePage, site}) => {
+
+		// Create a new page
+
+		const layoutTitle = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: layoutTitle,
+		});
+
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/en/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		// Open the Product Menu
+
+		await openProductMenu(page);
+
+		// Open tree if it's not already open
+
+		await pageTreePage.open();
+
+		// Configure page
+
+		await page.getByRole('link', {name: layoutTitle}).hover();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Configure'}),
+			trigger: page
+				.getByRole('treeitem')
+				.filter({hasText: layoutTitle})
+				.locator('button.dropdown-toggle'),
+		});
+
+		// Click back button
+
+		await page.getByRole('link', {name: `Go to ${layoutTitle}`}).click();
+
+		// Assert page
+
+		await expect(
+			page.getByRole('heading', {name: layoutTitle})
+		).toBeVisible();
+
+		// Configure pages
+
+		await page.getByLabel('Configure Pages').click();
+
+		// Click back button
+
+		await page.getByRole('link', {name: 'Go to Pages'}).click();
+
+		// Assert page
+
+		await expect(
+			page.getByRole('heading', {name: layoutTitle})
+		).toBeVisible();
+	}
 );
 
 test('Checks the correct label for restricted page in the Page Tree', async ({

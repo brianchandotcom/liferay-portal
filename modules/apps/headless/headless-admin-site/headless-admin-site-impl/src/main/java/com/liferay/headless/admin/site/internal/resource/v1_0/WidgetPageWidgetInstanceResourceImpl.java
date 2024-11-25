@@ -299,6 +299,7 @@ public class WidgetPageWidgetInstanceResourceImpl
 
 		return new WidgetPageWidgetInstance() {
 			{
+				setExternalReferenceCode(() -> portletId);
 				setParentSectionId(
 					() -> _getParentSectionId(layout, portletId));
 				setPosition(() -> _getPosition(layout, portletId));

@@ -2094,11 +2094,11 @@ public class RESTBuilder {
 
 		Files.deleteIfExists(Paths.get("./openapitools.json"));
 		Files.deleteIfExists(Paths.get(outputPathString, ".gitignore"));
+		Files.deleteIfExists(Paths.get(outputPathString, ".openapi-generator"));
 		Files.deleteIfExists(
 			Paths.get(outputPathString, ".openapi-generator", "FILES"));
 		Files.deleteIfExists(
 			Paths.get(outputPathString, ".openapi-generator", "VERSION"));
-		Files.deleteIfExists(Paths.get(outputPathString, ".openapi-generator"));
 		Files.deleteIfExists(
 			Paths.get(outputPathString, ".openapi-generator-ignore"));
 		Files.deleteIfExists(Paths.get(outputPathString, "git_push.sh"));

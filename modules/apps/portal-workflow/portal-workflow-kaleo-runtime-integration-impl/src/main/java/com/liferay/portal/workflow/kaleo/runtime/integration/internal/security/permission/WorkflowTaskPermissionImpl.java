@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -68,22 +67,19 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 			return true;
 		}
 
-		boolean assignableUser = false;
+		boolean notifiableUser = false;
 
 		try {
-			List<User> assignableUsers =
-				_workflowTaskManager.getAssignableUsers(
-					workflowTask.getWorkflowTaskId());
-
-			assignableUser = assignableUsers.contains(
-				permissionChecker.getUser());
+			notifiableUser = _workflowTaskManager.isNotifiableUser(
+				permissionChecker.getUserId(),
+				workflowTask.getWorkflowTaskId());
 		}
-		catch (WorkflowException workflowException) {
-			_log.error(workflowException);
+		catch (PortalException portalException) {
+			_log.error(portalException);
 		}
 
 		if (hasAssetViewPermission(workflowTask, permissionChecker) &&
-			(assignableUser ||
+			(notifiableUser ||
 			 (workflowTask.isCompleted() &&
 			  (workflowTask.getAssigneeUserId() ==
 				  permissionChecker.getUserId())))) {

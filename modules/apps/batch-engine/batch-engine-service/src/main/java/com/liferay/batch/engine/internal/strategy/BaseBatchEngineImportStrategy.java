@@ -88,7 +88,8 @@ public abstract class BaseBatchEngineImportStrategy
 						addBatchEngineImportTaskError(
 							companyId, userId, batchEngineImportTaskId, item,
 							itemIndex,
-							ErrorMessageUtil.getErrorMessage(exception));
+							ErrorMessageUtil.getErrorMessage(
+								exception, userId));
 
 					return null;
 				});

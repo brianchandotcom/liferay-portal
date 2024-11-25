@@ -301,7 +301,9 @@ public class BatchEngineImportTaskExecutorImpl
 			batchEngineImportTask.getCompanyId(),
 			batchEngineImportTask.getUserId(),
 			batchEngineImportTask.getBatchEngineImportTaskId(), null,
-			processedItemsCount, ErrorMessageUtil.getErrorMessage(exception));
+			processedItemsCount,
+			ErrorMessageUtil.getErrorMessage(
+				exception, batchEngineImportTask.getUserId()));
 
 		if (batchEngineImportTask.getImportStrategy() ==
 				BatchEngineImportTaskConstants.
@@ -421,7 +423,8 @@ public class BatchEngineImportTaskExecutorImpl
 
 		batchEngineImportTask.setEndTime(new Date());
 		batchEngineImportTask.setErrorMessage(
-			ErrorMessageUtil.getErrorMessage(throwable));
+			ErrorMessageUtil.getErrorMessage(
+				throwable, batchEngineImportTask.getUserId()));
 		batchEngineImportTask.setExecuteStatus(
 			batchEngineTaskExecuteStatus.toString());
 

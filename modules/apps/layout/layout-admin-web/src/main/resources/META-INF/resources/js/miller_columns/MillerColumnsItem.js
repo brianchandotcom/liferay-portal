@@ -13,6 +13,7 @@ import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {PageTemplateModal} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import {fetch, navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useDrag, useDragLayer, useDrop} from 'react-dnd';
@@ -366,6 +367,15 @@ const MillerColumnsItem = ({
 				'there-is-a-page-with-the-same-friendly-url-in-the-site-template'
 			);
 
+	const groupId = useId();
+
+	const ariaProps = hasChild
+		? {
+				'aria-controls': `miller-columns-list-${itemId}`,
+				'aria-expanded': active,
+			}
+		: {};
+
 	return (
 		<ClayLayout.ContentRow
 			className={classNames('list-group-item-flex miller-columns-item', {
@@ -384,8 +394,10 @@ const MillerColumnsItem = ({
 			verticalAlign="center"
 		>
 			<a
-				aria-controls={itemId}
-				aria-haspopup={true}
+				{...ariaProps}
+				aria-current={active}
+				aria-label={item.title}
+				aria-owns={groupId}
 				className="miller-columns-item-mask"
 				href={url}
 				onKeyDown={(event) => {
@@ -406,244 +418,256 @@ const MillerColumnsItem = ({
 				<span className="c-inner sr-only">{title}</span>
 			</a>
 
-			{draggable && (
-				<ClayLayout.ContentCol className="c-pl-0 miller-columns-item-drag-handler">
-					<ClayButton
-						aria-label={sub(Liferay.Language.get('move-x'), [
-							title,
-						])}
-						displayType="unstyled"
-						onClick={(event) => {
-							if (
-								Liferay.FeatureFlags['LPD-35220'] &&
-								event.detail === 0
-							) {
-								const sources = checked
-									? Array.from(items.values()).filter(
-											(item) => item.checked
-										)
-									: [item];
-
-								enableMovement(sources);
-							}
-						}}
-						tabIndex={tabIndex}
-						title={sub(Liferay.Language.get('move-x'), [title])}
-					>
-						<ClayIcon symbol="drag" />
-					</ClayButton>
-				</ClayLayout.ContentCol>
-			)}
-
-			{selectable && (
-				<ClayLayout.ContentCol data-qa-id="selectLayout">
-					<ClayCheckbox
-						aria-label={sub(
-							Liferay.Language.get('select-x'),
-							title
-						)}
-						className="c-mb-0"
-						defaultChecked={checked}
-						name={`${namespace}rowIds`}
-						tabIndex={tabIndex}
-						value={itemId}
-					/>
-				</ClayLayout.ContentCol>
-			)}
-
-			<ClayLayout.ContentCol className="c-pl-1" expand>
-				<div
-					className="align-items-center list-group-title text-truncate-inline"
-					data-qa-id="layoutHref"
-				>
-					{viewUrl ? (
-						<ClayLink
-							aria-label={(() => {
-								if (!hasGuestViewPermission) {
-									return `${title}. ${Liferay.Language.get(
-										'restricted-page'
-									)}`;
-								}
-
+			<span
+				className="autofit-row autofit-row-center"
+				id={groupId}
+				role="menuitem"
+			>
+				{draggable && (
+					<ClayLayout.ContentCol className="c-pl-0 miller-columns-item-drag-handler">
+						<ClayButton
+							aria-label={sub(Liferay.Language.get('move-x'), [
+								title,
+							])}
+							displayType="unstyled"
+							onClick={(event) => {
 								if (
-									Liferay.FeatureFlags['LPS-174417'] &&
-									hasDuplicatedFriendlyURL
+									Liferay.FeatureFlags['LPD-35220'] &&
+									event.detail === 0
 								) {
-									return `${title}. ${warningMessage}`;
+									const sources = checked
+										? Array.from(items.values()).filter(
+												(item) => item.checked
+											)
+										: [item];
+
+									enableMovement(sources);
 								}
-
-								return title;
-							})()}
-							className={classNames({
-								'text-truncate':
-									!Liferay.FeatureFlags['LPD-35220'],
-							})}
-							href={viewUrl}
+							}}
 							tabIndex={tabIndex}
-							target={target}
+							title={sub(Liferay.Language.get('move-x'), [title])}
 						>
-							{title}
-						</ClayLink>
-					) : (
-						<span
-							className={classNames({
-								'text-truncate':
-									!Liferay.FeatureFlags['LPD-35220'],
-							})}
-						>
-							{title}
-						</span>
-					)}
+							<ClayIcon symbol="drag" />
+						</ClayButton>
+					</ClayLayout.ContentCol>
+				)}
 
-					{!hasGuestViewPermission && (
-						<ClayIcon
-							className="c-ml-2 c-mt-0 lfr-portal-tooltip miller-columns-item--restricted__icon text-4 text-secondary"
-							data-title={Liferay.Language.get('restricted-page')}
-							symbol="password-policies"
+				{selectable && (
+					<ClayLayout.ContentCol data-qa-id="selectLayout">
+						<ClayCheckbox
+							aria-label={sub(
+								Liferay.Language.get('select-x'),
+								title
+							)}
+							className="c-mb-0"
+							defaultChecked={checked}
+							name={`${namespace}rowIds`}
+							tabIndex={tabIndex}
+							value={itemId}
 						/>
-					)}
+					</ClayLayout.ContentCol>
+				)}
 
-					{Liferay.FeatureFlags['LPS-174417'] &&
-					hasDuplicatedFriendlyURL ? (
-						<ClayIcon
-							className="align-self-center c-ml-2 flex-shrink-0 icon-warning lfr-portal-tooltip text-warning"
-							data-title={warningMessage}
-							symbol="warning-full"
-						/>
-					) : null}
-				</div>
+				<ClayLayout.ContentCol className="c-pl-1" expand>
+					<div
+						className="align-items-center list-group-title text-truncate-inline"
+						data-qa-id="layoutHref"
+					>
+						{viewUrl ? (
+							<ClayLink
+								aria-label={(() => {
+									if (!hasGuestViewPermission) {
+										return `${title}. ${Liferay.Language.get(
+											'restricted-page'
+										)}`;
+									}
 
-				{description && (
-					<div className="d-flex h5 list-group-subtitle small">
-						<span
-							className={classNames({
-								'text-truncate':
-									!Liferay.FeatureFlags['LPD-35220'],
-							})}
-						>
-							{description}
-						</span>
+									if (
+										Liferay.FeatureFlags['LPS-174417'] &&
+										hasDuplicatedFriendlyURL
+									) {
+										return `${title}. ${warningMessage}`;
+									}
 
-						{states.map((state) => (
-							<ClayLabel
-								className={classNames('inline-item-after', {
+									return title;
+								})()}
+								className={classNames({
 									'text-truncate':
 										!Liferay.FeatureFlags['LPD-35220'],
 								})}
-								displayType={ITEM_STATES_COLORS[state.id]}
-								key={state.id}
+								href={viewUrl}
+								tabIndex={tabIndex}
+								target={target}
 							>
-								{state.label}
-							</ClayLabel>
-						))}
+								{title}
+							</ClayLink>
+						) : (
+							<span
+								className={classNames({
+									'text-truncate':
+										!Liferay.FeatureFlags['LPD-35220'],
+								})}
+							>
+								{title}
+							</span>
+						)}
+
+						{!hasGuestViewPermission && (
+							<ClayIcon
+								className="c-ml-2 c-mt-0 lfr-portal-tooltip miller-columns-item--restricted__icon text-4 text-secondary"
+								data-title={Liferay.Language.get(
+									'restricted-page'
+								)}
+								symbol="password-policies"
+							/>
+						)}
+
+						{Liferay.FeatureFlags['LPS-174417'] &&
+						hasDuplicatedFriendlyURL ? (
+							<ClayIcon
+								className="align-self-center c-ml-2 flex-shrink-0 icon-warning lfr-portal-tooltip text-warning"
+								data-title={warningMessage}
+								symbol="warning-full"
+							/>
+						) : null}
 					</div>
-				)}
-			</ClayLayout.ContentCol>
 
-			{!!layoutActions.length && (
-				<ClayLayout.ContentCol className="miller-columns-item-actions">
-					<ClayDropDown
-						active={layoutActionsActive}
-						onActiveChange={setLayoutActionsActive}
-						renderMenuOnClick
-						trigger={
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get(
-									'add-child-page'
-								)}
-								borderless
-								displayType="secondary"
-								size="sm"
-								symbol="plus"
-								tabIndex={tabIndex}
-								title={Liferay.Language.get('add-child-page')}
-							/>
-						}
-					>
-						<ClayDropDown.ItemList>
-							{layoutActions.map((action) => (
-								<ClayDropDown.Item
-									disabled={!action.url}
-									href={action.url}
-									id={action.id}
-									key={action.id}
-									onClick={action.handler}
+					{description && (
+						<div className="d-flex h5 list-group-subtitle small">
+							<span
+								className={classNames({
+									'text-truncate':
+										!Liferay.FeatureFlags['LPD-35220'],
+								})}
+							>
+								{description}
+							</span>
+
+							{states.map((state) => (
+								<ClayLabel
+									className={classNames('inline-item-after', {
+										'text-truncate':
+											!Liferay.FeatureFlags['LPD-35220'],
+									})}
+									displayType={ITEM_STATES_COLORS[state.id]}
+									key={state.id}
 								>
-									{action.label}
-								</ClayDropDown.Item>
+									{state.label}
+								</ClayLabel>
 							))}
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
-				</ClayLayout.ContentCol>
-			)}
-
-			{normalizedQuickActions.map((action) => (
-				<ClayLayout.ContentCol
-					className="miller-columns-item-quick-action"
-					key={action.id}
-				>
-					<ClayLink
-						borderless
-						displayType="secondary"
-						href={action.url}
-						monospaced
-						outline
-					>
-						<ClayIcon symbol={action.icon} />
-					</ClayLink>
-				</ClayLayout.ContentCol>
-			))}
-
-			{!!getItemActionsURL && itemId !== '0' ? (
-				<ClayLayout.ContentCol className="miller-columns-item-actions">
-					<ClayDropDownWithItems
-						caption={
-							!loadPromiseRef.current ? (
-								<ClayLoadingIndicator />
-							) : (
-								''
-							)
-						}
-						items={dropdownActions}
-						trigger={
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get(
-									'open-page-options-menu'
-								)}
-								borderless
-								displayType="secondary"
-								onClick={loadDropdownActions}
-								size="sm"
-								symbol="ellipsis-v"
-								tabIndex={tabIndex}
-								title={Liferay.Language.get(
-									'open-page-options-menu'
-								)}
-							/>
-						}
-					/>
-
-					<span aria-live="polite" className="sr-only">
-						{loadMessage}
-					</span>
-
-					{openModal && (
-						<PageTemplateModal
-							createTemplateURL={createPageTemplateURL}
-							getCollectionsURL={getPageTemplateCollectionsURL}
-							layoutId={itemId}
-							namespace={namespace}
-							onClose={onClose}
-						/>
+						</div>
 					)}
 				</ClayLayout.ContentCol>
-			) : null}
 
-			{hasChild && (
-				<ClayLayout.ContentCol className="miller-columns-item-child-indicator text-secondary">
-					<ClayIcon symbol={rtl ? 'caret-left' : 'caret-right'} />
-				</ClayLayout.ContentCol>
-			)}
+				{!!layoutActions.length && (
+					<ClayLayout.ContentCol className="miller-columns-item-actions">
+						<ClayDropDown
+							active={layoutActionsActive}
+							onActiveChange={setLayoutActionsActive}
+							renderMenuOnClick
+							trigger={
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'add-child-page'
+									)}
+									borderless
+									displayType="secondary"
+									size="sm"
+									symbol="plus"
+									tabIndex={tabIndex}
+									title={Liferay.Language.get(
+										'add-child-page'
+									)}
+								/>
+							}
+						>
+							<ClayDropDown.ItemList>
+								{layoutActions.map((action) => (
+									<ClayDropDown.Item
+										disabled={!action.url}
+										href={action.url}
+										id={action.id}
+										key={action.id}
+										onClick={action.handler}
+									>
+										{action.label}
+									</ClayDropDown.Item>
+								))}
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
+					</ClayLayout.ContentCol>
+				)}
+
+				{normalizedQuickActions.map((action) => (
+					<ClayLayout.ContentCol
+						className="miller-columns-item-quick-action"
+						key={action.id}
+					>
+						<ClayLink
+							borderless
+							displayType="secondary"
+							href={action.url}
+							monospaced
+							outline
+						>
+							<ClayIcon symbol={action.icon} />
+						</ClayLink>
+					</ClayLayout.ContentCol>
+				))}
+
+				{!!getItemActionsURL && itemId !== '0' ? (
+					<ClayLayout.ContentCol className="miller-columns-item-actions">
+						<ClayDropDownWithItems
+							caption={
+								!loadPromiseRef.current ? (
+									<ClayLoadingIndicator />
+								) : (
+									''
+								)
+							}
+							items={dropdownActions}
+							trigger={
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'open-page-options-menu'
+									)}
+									borderless
+									displayType="secondary"
+									onClick={loadDropdownActions}
+									size="sm"
+									symbol="ellipsis-v"
+									tabIndex={tabIndex}
+									title={Liferay.Language.get(
+										'open-page-options-menu'
+									)}
+								/>
+							}
+						/>
+
+						<span aria-live="polite" className="sr-only">
+							{loadMessage}
+						</span>
+
+						{openModal && (
+							<PageTemplateModal
+								createTemplateURL={createPageTemplateURL}
+								getCollectionsURL={
+									getPageTemplateCollectionsURL
+								}
+								layoutId={itemId}
+								namespace={namespace}
+								onClose={onClose}
+							/>
+						)}
+					</ClayLayout.ContentCol>
+				) : null}
+
+				{hasChild && (
+					<ClayLayout.ContentCol className="miller-columns-item-child-indicator text-secondary">
+						<ClayIcon symbol={rtl ? 'caret-left' : 'caret-right'} />
+					</ClayLayout.ContentCol>
+				)}
+			</span>
 		</ClayLayout.ContentRow>
 	);
 };

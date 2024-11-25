@@ -123,7 +123,7 @@ const MillerColumnsColumn = ({
 					}
 				)}
 				containerElement="ul"
-				id={columnItems[0]?.parentId}
+				id={`miller-columns-list-${columnItems[0]?.parentId}`}
 				ref={ref}
 				role="menu"
 				{...sizeProps}

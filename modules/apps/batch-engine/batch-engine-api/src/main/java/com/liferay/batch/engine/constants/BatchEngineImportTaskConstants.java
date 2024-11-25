@@ -10,6 +10,9 @@ package com.liferay.batch.engine.constants;
  */
 public class BatchEngineImportTaskConstants {
 
+	public static final String IMPORT_CREATOR_STRATEGY_KEEP_CREATOR =
+		"KEEP_CREATOR";
+
 	public static final int IMPORT_STRATEGY_ON_ERROR_CONTINUE = 1;
 
 	public static final int IMPORT_STRATEGY_ON_ERROR_FAIL = 2;

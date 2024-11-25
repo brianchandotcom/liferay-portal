@@ -334,7 +334,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 							serviceReference) {
 
 						Long companyId = (Long)serviceReference.getProperty(
-							"com.liferay.frontend.js.importmaps.company.id");
+							"com.liferay.importmaps.company");
 
 						if (companyId == null) {
 							companyId = Long.valueOf(_ALL_COMPANIES);

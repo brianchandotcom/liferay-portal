@@ -33,7 +33,7 @@ public class ClientExtensionJSImportMapsContributor
 	@Override
 	public Dictionary<String, Object> getDictionary() {
 		return HashMapDictionaryBuilder.<String, Object>put(
-			"com.liferay.frontend.js.importmaps.company.id", _companyId
+			"com.liferay.importmaps.company", _companyId
 		).build();
 	}
 

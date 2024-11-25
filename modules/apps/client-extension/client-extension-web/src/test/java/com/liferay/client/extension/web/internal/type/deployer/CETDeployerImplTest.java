@@ -67,9 +67,7 @@ public class CETDeployerImplTest {
 			Mockito.isA(JSImportMapsContributor.class),
 			Mockito.argThat(
 				dictionary -> Objects.equals(
-					dictionary.get(
-						"com.liferay.frontend.js.importmaps.company.id"),
-					1234L))
+					dictionary.get("com.liferay.importmaps.company"), 1234L))
 		);
 	}
 

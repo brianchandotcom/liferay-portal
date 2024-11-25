@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CentralizedCompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.TimeZone;
@@ -44,7 +45,7 @@ public class TimeZoneThreadLocal {
 	}
 
 	private static final CentralizedThreadLocal<TimeZone> _defaultTimeZone =
-		new CentralizedThreadLocal<>(
+		new CentralizedCompanyThreadLocal<>(
 			TimeZoneThreadLocal.class + "._defaultTimeZone",
 			() -> {
 				User guestUser = CompanyThreadLocal.fetchGuestUser();

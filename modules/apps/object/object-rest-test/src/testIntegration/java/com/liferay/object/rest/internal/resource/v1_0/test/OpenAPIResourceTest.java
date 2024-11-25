@@ -246,8 +246,8 @@ public class OpenAPIResourceTest {
 					Assert.assertEquals(1, jsonArray.length());
 					Assert.assertEquals(
 						"http://www.able.com:8080/o" +
-						companyObjectDefinition.getRESTContextPath() +
-						"/openapi.yaml",
+							companyObjectDefinition.getRESTContextPath() +
+								"/openapi.yaml",
 						jsonArray.get(0));
 				}
 			);
@@ -322,7 +322,7 @@ public class OpenAPIResourceTest {
 			"relationMToM", false,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
-		String jsonObject = HTTPTestUtil.invokeToJSONObject(
+		String jsonObjectString = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getApplicationPath(),
@@ -335,16 +335,14 @@ public class OpenAPIResourceTest {
 			FileUtil.getBytes(
 				getClass(),
 				"dependencies" +
-				"/expected_openapi_system_object_relationship.json"));
+					"/expected_openapi_system_object_relationship.json"));
 
 		JSONAssert.assertEquals(
-			relationshipString,
-			jsonObject,
-			JSONCompareMode.LENIENT);
+			relationshipString, jsonObjectString, JSONCompareMode.LENIENT);
 	}
 
 	private void _assertOpenAPI(
-		String fileName, ObjectDefinition objectDefinition)
+			String fileName, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		JSONAssert.assertEquals(

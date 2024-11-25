@@ -53,9 +53,9 @@ public class CommercePriceListTable extends BaseTable<CommercePriceListTable> {
 	public final Column<CommercePriceListTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<CommercePriceListTable, Long> commerceCurrencyId =
+	public final Column<CommercePriceListTable, String> commerceCurrencyCode =
 		createColumn(
-			"commerceCurrencyId", Long.class, Types.BIGINT,
+			"commerceCurrencyCode", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
 	public final Column<CommercePriceListTable, Long>
 		parentCommercePriceListId = createColumn(

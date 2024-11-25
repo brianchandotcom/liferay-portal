@@ -64,7 +64,7 @@ create table CommercePriceList (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	commerceCurrencyId LONG,
+	commerceCurrencyCode VARCHAR(75) null,
 	parentCommercePriceListId LONG,
 	catalogBasePriceList BOOLEAN,
 	netPrice BOOLEAN,

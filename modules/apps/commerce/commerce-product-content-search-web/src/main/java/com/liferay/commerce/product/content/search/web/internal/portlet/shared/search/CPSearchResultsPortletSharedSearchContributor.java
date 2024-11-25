@@ -16,6 +16,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -182,23 +183,34 @@ public class CPSearchResultsPortletSharedSearchContributor
 		if (paginationDeltaParameterValue != null) {
 			portletSharedSearchSettings.setPaginationDelta(
 				Integer.valueOf(paginationDeltaParameterValue));
+		}
+		else {
+			int configurationPaginationDelta =
+				cpSearchResultsPortletInstanceConfiguration.paginationDelta();
 
-			return;
+			PortletPreferences portletPreferences =
+				portletSharedSearchSettings.getPortletPreferences();
+
+			if (portletPreferences != null) {
+				configurationPaginationDelta = GetterUtil.getInteger(
+					portletPreferences.getValue("paginationDelta", null));
+			}
+
+			portletSharedSearchSettings.setPaginationDelta(
+				configurationPaginationDelta);
 		}
 
-		int configurationPaginationDelta =
-			cpSearchResultsPortletInstanceConfiguration.paginationDelta();
+		SearchContext searchContext =
+			portletSharedSearchSettings.getSearchContext();
 
-		PortletPreferences portletPreferences =
-			portletSharedSearchSettings.getPortletPreferences();
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			GetterUtil.getInteger(
+				portletSharedSearchSettings.getPaginationStart()),
+			GetterUtil.getInteger(
+				portletSharedSearchSettings.getPaginationDelta()));
 
-		if (portletPreferences != null) {
-			configurationPaginationDelta = GetterUtil.getInteger(
-				portletPreferences.getValue("paginationDelta", null));
-		}
-
-		portletSharedSearchSettings.setPaginationDelta(
-			configurationPaginationDelta);
+		searchContext.setEnd(startAndEnd[1]);
+		searchContext.setStart(startAndEnd[0]);
 	}
 
 	@Reference

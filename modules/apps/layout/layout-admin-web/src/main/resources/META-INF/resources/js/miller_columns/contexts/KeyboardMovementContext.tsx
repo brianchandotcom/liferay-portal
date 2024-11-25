@@ -3,12 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ScreenReaderAnnouncer} from '@liferay/layout-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React, {
 	Dispatch,
 	ReactNode,
 	SetStateAction,
+	useCallback,
 	useEffect,
+	useRef,
 	useState,
 } from 'react';
 
@@ -31,6 +34,7 @@ const KeyboardMovementContext = React.createContext<{
 	setRedirectURL: Dispatch<SetStateAction<string | null>>;
 	setSources: Dispatch<SetStateAction<MovementSources>>;
 	setTarget: Dispatch<SetStateAction<MovementTarget>>;
+	setText: (text: any) => void;
 	sources: MovementSources;
 	target: MovementTarget;
 }>({
@@ -39,6 +43,7 @@ const KeyboardMovementContext = React.createContext<{
 	setRedirectURL: () => {},
 	setSources: () => {},
 	setTarget: () => {},
+	setText: () => {},
 	sources: [],
 	target: null,
 });
@@ -78,6 +83,15 @@ function KeyboardMovementProvider({
 	const [sources, setSources] = useState<MovementSources>([]);
 	const [target, setTarget] = useState<MovementTarget>(null);
 	const [redirectURL, setRedirectURL] = useState<string | null>(null);
+	const screenReaderAnnouncerRef = useRef<any>();
+
+	const setText = useCallback((text) => {
+		const ref = screenReaderAnnouncerRef;
+
+		if (ref.current) {
+			ref.current?.sendMessage(text);
+		}
+	}, []);
 
 	useEffect(() => {
 		const onKeyDown = (event: KeyboardEvent) => {
@@ -150,10 +164,16 @@ function KeyboardMovementProvider({
 				setRedirectURL,
 				setSources,
 				setTarget,
+				setText,
 				sources,
 				target,
 			}}
 		>
+			<ScreenReaderAnnouncer
+				aria-live="assertive"
+				ref={screenReaderAnnouncerRef}
+			/>
+
 			{children}
 		</KeyboardMovementContext.Provider>
 	);
@@ -317,8 +337,4 @@ function getMillerColumnsItem(
 	);
 }
 
-export {
-	KeyboardMovementContext,
-	KeyboardMovementProvider,
-	getNextTarget,
-};
+export {KeyboardMovementContext, KeyboardMovementProvider, getNextTarget};

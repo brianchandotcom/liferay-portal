@@ -632,6 +632,7 @@ const MillerColumnsItem = ({
 										'open-page-options-menu'
 									)}
 									borderless
+									className="btn-options"
 									displayType="secondary"
 									onClick={loadDropdownActions}
 									size="sm"

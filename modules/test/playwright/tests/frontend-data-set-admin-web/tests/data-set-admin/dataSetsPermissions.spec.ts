@@ -703,3 +703,90 @@ test('Check "Edit" permission', async({
     });
 
 });
+
+test('A user with "Add Object Entry" permission', async({
+    apiHelpers,
+	dataSetsPage,
+	page,
+	roleDefinePermissionsPage,
+	rolePage,
+	rolesPage,
+}) => {
+	await test.step('Setup user role and login as user with "Add Object Entry"', async () => {
+		await setupUserRoleAndLoginAsUser({
+			apiHelpers,
+			dataSetResourcePermissions: [
+				{
+					actions: ['Add Object Entry'],
+					name: 'Data Sets',
+				},
+			],
+			page,
+			roleDefinePermissionsPage,
+			rolePage,
+			rolesPage,
+		});
+	});
+
+    await test.step('Go to Data Sets', async () => {
+		await dataSetsPage.goto({checkTabVisibility: false});
+	});
+
+	await test.step('Confirm that the user can create a Data Set', async() => {
+		await expect(dataSetsPage.newDataSetButton).toBeVisible();
+
+		await dataSetsPage.createDataSet(blogPostsDataSetConfig);
+
+		await waitForAlert(page);
+	});
+
+	await test.step('Delete Data Set', async () => {
+		const datasetTestRow = await dataSetsPage.page
+			.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
+			.filter({hasText: blogPostsDataSetConfig.name});
+
+		await datasetTestRow
+			.first()
+			.getByRole('button', {name: 'Actions'})
+			.click();
+
+		await dataSetsPage.page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		const deleteModal = await dataSetsPage.page.getByRole('dialog');
+
+		await deleteModal.getByRole('button', {name: 'Delete'}).click();
+	});
+});
+
+test('A user without "Add Object Entry" permission', async({
+    apiHelpers,
+	dataSetsPage,
+	page,
+	roleDefinePermissionsPage,
+	rolePage,
+	rolesPage,
+}) => {
+	await test.step('Setup user role and login as user with "View" permission', async () => {
+		await setupUserRoleAndLoginAsUser({
+			apiHelpers,
+			dataSetResourcePermissions: [
+				{
+					actions: ['View'],
+					name: 'Data Set',
+				},
+			],
+			page,
+			roleDefinePermissionsPage,
+			rolePage,
+			rolesPage,
+		});
+	});
+
+	await test.step('Go to Data Sets', async () => {
+		await dataSetsPage.goto({checkTabVisibility: false});
+	});
+
+	await test.step('Confirm that the user can not create a Data Set', async() => {
+		await expect(dataSetsPage.newDataSetButton).not.toBeVisible();
+	});
+});

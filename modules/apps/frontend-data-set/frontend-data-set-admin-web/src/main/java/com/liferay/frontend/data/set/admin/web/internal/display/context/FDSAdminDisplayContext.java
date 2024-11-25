@@ -13,6 +13,8 @@ import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortle
 import com.liferay.frontend.data.set.admin.web.internal.portlet.FDSAdminPortlet;
 import com.liferay.frontend.data.set.resolver.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.resolver.FDSAPIURLResolverRegistry;
+import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.definition.security.permission.resource.ObjectDefinitionPortletResourcePermissionRegistryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -24,6 +26,8 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -240,6 +244,17 @@ public class FDSAdminDisplayContext {
 			).put(
 				"title", systemFDSEntry.getTitle()
 			));
+	}
+
+	public boolean hasAddObjectEntryPermission() {
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+		PortletResourcePermission portletResourcePermission =
+			ObjectDefinitionPortletResourcePermissionRegistryUtil.getService(
+				_dataSetObjectDefinition.getResourceName());
+
+		return portletResourcePermission.contains(
+			permissionChecker, 0, ObjectActionKeys.ADD_OBJECT_ENTRY);
 	}
 
 	private final CETManager _cetManager;

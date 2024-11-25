@@ -1,0 +1,81 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"externalReferenceCode": "userBadge",
+			"label": {
+				"en_US": "User Badge"
+			},
+			"modifiable": true,
+			"name": "UserBadge",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "badgeId",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Badge Id"
+					},
+					"localized": false,
+					"name": "badgeId",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "Long",
+					"unique": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "quizId",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Quiz Id"
+					},
+					"localized": false,
+					"name": "quizId",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "Long",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "learningManagementSystem",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "User Badges"
+			},
+			"restContextPath": "/o/c/userbadges",
+			"scope": "site",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		}
+	]
+}

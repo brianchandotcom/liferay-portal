@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -96,6 +97,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPS-158746")
 	public void testUpdateFragmentsHighlightedConfigurationAssertOwnerByUser()
 		throws Exception {
 

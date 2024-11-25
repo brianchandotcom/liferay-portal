@@ -26,6 +26,7 @@ interface ResizerProps {
 	resizeStep: number;
 	setWidth: Function;
 	style: React.CSSProperties;
+	tabIndex: number;
 	targetRef: React.RefObject<HTMLDivElement>;
 	width: number;
 }
@@ -38,8 +39,10 @@ export default function Resizer({
 	minWidth,
 	resizeStep,
 	setWidth,
+	tabIndex = 0,
 	targetRef,
 	width,
+	...props
 }: ResizerProps) {
 	const [resizing, setResizing] = useStateSafe(false);
 
@@ -180,7 +183,8 @@ export default function Resizer({
 			onKeyDown={handleKeyDown}
 			ref={resizerRef}
 			role="separator"
-			tabIndex={0}
+			tabIndex={tabIndex}
+			{...props}
 		/>
 	);
 }

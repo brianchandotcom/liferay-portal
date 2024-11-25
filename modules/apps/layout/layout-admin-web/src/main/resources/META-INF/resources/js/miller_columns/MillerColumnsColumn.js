@@ -7,7 +7,7 @@ import ClayLayout from '@clayui/layout';
 import {Resizer} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {useSessionState} from 'frontend-js-components-web';
-import {throttle} from 'frontend-js-web';
+import {sub, throttle} from 'frontend-js-web';
 import React, {useEffect, useRef} from 'react';
 import {useDrop} from 'react-dnd';
 
@@ -150,11 +150,16 @@ const MillerColumnsColumn = ({
 
 			{Liferay.FeatureFlags['LPD-35220'] && (
 				<Resizer
-					ariaLabel={Liferay.Language.get('resize-column')}
+					ariaLabel={sub(
+						Liferay.Language.get('resize-column-x'),
+						index + 1
+					)}
+					id={`resize-${index}`}
 					maxWidth={COLUMN_MAX_WIDTH}
 					minWidth={COLUMN_MIN_WIDTH}
 					resizeStep={COLUMN_WIDTH_RESIZE_STEP}
 					setWidth={setColumnWidth}
+					tabIndex={-1}
 					targetRef={ref}
 					width={columnWidth}
 				/>

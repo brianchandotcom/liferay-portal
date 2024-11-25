@@ -309,6 +309,49 @@ const MillerColumns = ({
 		.filter((col) => col.length)
 		.map((col) => col.length);
 
+	const onKeyDown = (event) => {
+		if (!Liferay.FeatureFlags['LPD-35220']) {
+			return;
+		}
+
+		const activeElement = document.activeElement;
+		const resizes = document.querySelectorAll('[id*="resize"]');
+
+		// Modify the semantic order of the page by placing the resizers last
+
+		if (
+			event.key === 'Tab' &&
+			event.shiftKey &&
+			activeElement.id === 'resize-0'
+		) {
+			event.preventDefault();
+
+			[...resizes].forEach((resize) => {
+				resize.tabIndex = -1;
+			});
+
+			document
+				.querySelector(
+					'.miller-columns-item-mask[role="menuitem"][tabindex="0"]'
+				)
+				.parentElement.querySelector('.btn-options')
+				?.focus();
+		}
+
+		if (
+			event.key === 'Tab' &&
+			!event.shiftKey &&
+			activeElement.classList.contains('btn-options')
+		) {
+			event.preventDefault();
+
+			[...resizes].forEach((resize) => {
+				resize.tabIndex = 1;
+			});
+			document.getElementById('resize-0')?.focus();
+		}
+	};
+
 	return (
 		<KeyboardNavigationProvider columnSizes={columnSizes}>
 			<KeyboardMovementProvider
@@ -322,6 +365,7 @@ const MillerColumns = ({
 
 					<div
 						className="bg-white miller-columns-row"
+						onKeyDown={onKeyDown}
 						ref={ref}
 						role="application"
 					>

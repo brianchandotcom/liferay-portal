@@ -62,13 +62,10 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 
 			String issueKey = jsonObject.getString("issueKey");
 
-			if (ArrayUtil.isNotEmpty(issueKeys) &&
-				!ArrayUtil.contains(issueKeys, issueKey)) {
+			if ((ArrayUtil.isNotEmpty(issueKeys) &&
+				 !ArrayUtil.contains(issueKeys, issueKey)) ||
+				jsonArrayIssueKeys.contains(issueKey)) {
 
-				continue;
-			}
-
-			if (jsonArrayIssueKeys.contains(issueKey)) {
 				continue;
 			}
 

@@ -26,6 +26,7 @@ import java.io.PrintWriter;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.http.HttpServletRequest;
@@ -161,14 +162,14 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 				"module");
 	}
 
-	private Map<Long, JSONObject> _getGlobalImportMapsJSONObjects(
+	private ConcurrentMap<Long, JSONObject> _getGlobalImportMapsJSONObjects(
 		Long companyId) {
 
-		Map<Long, JSONObject> globalImportMapsJSONObjects1 =
+		ConcurrentMap<Long, JSONObject> globalImportMapsJSONObjects1 =
 			_globalImportMapJSONObjectsMap.get(companyId);
 
 		if (globalImportMapsJSONObjects1 == null) {
-			Map<Long, JSONObject> globalImportMapsJSONObjects2 =
+			ConcurrentMap<Long, JSONObject> globalImportMapsJSONObjects2 =
 				new ConcurrentHashMap<>();
 
 			globalImportMapsJSONObjects1 =
@@ -183,14 +184,14 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		return globalImportMapsJSONObjects1;
 	}
 
-	private Map<String, JSONObject> _getScopedImportMapJSONObjects(
+	private ConcurrentMap<String, JSONObject> _getScopedImportMapJSONObjects(
 		Long companyId) {
 
-		Map<String, JSONObject> scopedImportMapsJSONObjects1 =
+		ConcurrentMap<String, JSONObject> scopedImportMapsJSONObjects1 =
 			_scopedImportMapJSONObjectsMap.get(companyId);
 
 		if (scopedImportMapsJSONObjects1 == null) {
-			Map<String, JSONObject> scopedImportMapsJSONObjects2 =
+			ConcurrentMap<String, JSONObject> scopedImportMapsJSONObjects2 =
 				new ConcurrentHashMap<>();
 
 			scopedImportMapsJSONObjects1 =
@@ -274,7 +275,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		long companyId, String scope, JSONObject jsonObject) {
 
 		if (scope == null) {
-			Map<Long, JSONObject> globalImportMapsJSONObjects =
+			ConcurrentMap<Long, JSONObject> globalImportMapsJSONObjects =
 				_getGlobalImportMapsJSONObjects(companyId);
 
 			long globalId = _nextGlobalId.getAndIncrement();
@@ -286,7 +287,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 			return () -> globalImportMapsJSONObjects.remove(globalId);
 		}
 
-		Map<String, JSONObject> scopedImportMapJSONObjects =
+		ConcurrentMap<String, JSONObject> scopedImportMapJSONObjects =
 			_getScopedImportMapJSONObjects(companyId);
 
 		scopedImportMapJSONObjects.put(scope, jsonObject);
@@ -306,9 +307,10 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private final Map<Long, Map<Long, JSONObject>>
+	private final ConcurrentMap<Long, ConcurrentMap<Long, JSONObject>>
 		_globalImportMapJSONObjectsMap = new ConcurrentHashMap<>();
-	private final Map<Long, String> _importMapsMap = new ConcurrentHashMap<>();
+	private final ConcurrentMap<Long, String> _importMapsMap =
+		new ConcurrentHashMap<>();
 	private volatile JSImportMapsConfiguration _jsImportMapsConfiguration;
 
 	@Reference
@@ -319,7 +321,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 	@Reference
 	private Portal _portal;
 
-	private final Map<Long, Map<String, JSONObject>>
+	private final ConcurrentMap<Long, ConcurrentMap<String, JSONObject>>
 		_scopedImportMapJSONObjectsMap = new ConcurrentHashMap<>();
 	private ServiceTracker<JSImportMapsContributor, JSImportMapsRegistration>
 		_serviceTracker;

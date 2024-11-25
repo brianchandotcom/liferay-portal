@@ -198,13 +198,13 @@ public class AnnouncementsDisplayContext {
 	}
 
 	public List<Group> getGroups() throws PortalException {
-		return _getEntries(
+		return _getModels(
 			AnnouncementsUtil::getGroups, this::_getSelectedScopeGroups,
 			GroupPermissionUtil::contains);
 	}
 
 	public List<Organization> getOrganizations() throws PortalException {
-		return _getEntries(
+		return _getModels(
 			AnnouncementsUtil::getOrganizations,
 			this::_getSelectedScopeOrganizations,
 			OrganizationPermissionUtil::contains);
@@ -220,7 +220,7 @@ public class AnnouncementsDisplayContext {
 	}
 
 	public List<Role> getRoles() throws PortalException {
-		return _getEntries(
+		return _getModels(
 			AnnouncementsUtil::getRoles, this::_getSelectedScopeRoles,
 			(permissionChecker, role, actionKey) ->
 				AnnouncementsUtil.hasManageAnnouncementsPermission(
@@ -267,7 +267,7 @@ public class AnnouncementsDisplayContext {
 	}
 
 	public List<UserGroup> getUserGroups() throws PortalException {
-		return _getEntries(
+		return _getModels(
 			AnnouncementsUtil::getUserGroups, this::_getSelectedScopeUserGroups,
 			(permissionChecker, userGroup, actionKey) ->
 				UserGroupPermissionUtil.contains(
@@ -389,7 +389,18 @@ public class AnnouncementsDisplayContext {
 		return false;
 	}
 
-	private <T> List<T> _getEntries(
+	private int _getFlag() {
+		if (_flag != null) {
+			return _flag;
+		}
+
+		_flag = isShowReadEntries() ? AnnouncementsFlagConstants.HIDDEN :
+			AnnouncementsFlagConstants.NOT_HIDDEN;
+
+		return _flag;
+	}
+
+	private <T> List<T> _getModels(
 			UnsafeFunction<ThemeDisplay, List<T>, PortalException>
 				unsafeFunction,
 			UnsafeSupplier<List<T>, PortalException> unsafeSupplier,
@@ -419,17 +430,6 @@ public class AnnouncementsDisplayContext {
 		}
 
 		return selectedEntries;
-	}
-
-	private int _getFlag() {
-		if (_flag != null) {
-			return _flag;
-		}
-
-		_flag = isShowReadEntries() ? AnnouncementsFlagConstants.HIDDEN :
-			AnnouncementsFlagConstants.NOT_HIDDEN;
-
-		return _flag;
 	}
 
 	private PortletURL _getPortletURL() {

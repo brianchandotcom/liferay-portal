@@ -484,7 +484,7 @@ public class AnnouncementsDisplayContext {
 
 		return _getSelectedScopeExternalReferenceCodes(
 			"selectedScopeGroupExternalReferenceCodes",
-			AnnouncementsUtil.toJSONArrayString(
+			AnnouncementsUtil.toJSON(
 				Collections.singletonList(group.getExternalReferenceCode())));
 	}
 

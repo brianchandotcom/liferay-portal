@@ -269,19 +269,16 @@ public class AnnouncementsUtil {
 		return false;
 	}
 
-	public static String toJSONArrayString(List<String> stringList) {
+	public static String toJSON(List<String> stringList) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			TransformUtil.transform(stringList, HtmlUtil::escape));
 
 		return jsonArray.toString();
 	}
 
-	public static List<String> toStringList(String jsonArrayString)
-		throws JSONException {
-
+	public static List<String> toStringList(String json) throws JSONException {
 		return TransformUtil.transform(
-			JSONUtil.toStringList(
-				JSONFactoryUtil.createJSONArray(jsonArrayString)),
+			JSONUtil.toStringList(JSONFactoryUtil.createJSONArray(json)),
 			HtmlUtil::unescape);
 	}
 

@@ -208,15 +208,14 @@ public class UpgradePortletPreferencesTest {
 			RandomTestUtil.randomLong());
 
 		_testUpgrade(
-			_toJSONArrayString(groups, _GROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
+			_toJSON(groups, _GROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			selectedScopeGroupIds + ',' + randomSelectedScopeId,
-			_toJSONArrayString(
+			_toJSON(
 				organizations, _ORGANIZATION_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			selectedScopeOrganizationIds + ',' + randomSelectedScopeId,
-			_toJSONArrayString(roles, _ROLE_EXTERNAL_REFERENCE_CODE_ACCESSOR),
+			_toJSON(roles, _ROLE_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			selectedScopeRoleIds + ',' + randomSelectedScopeId,
-			_toJSONArrayString(
-				userGroups, _USERGROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
+			_toJSON(userGroups, _USERGROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			selectedScopeUserGroupIds + ',' + randomSelectedScopeId);
 	}
 
@@ -320,16 +319,15 @@ public class UpgradePortletPreferencesTest {
 		throws Exception {
 
 		_testUpgrade(
-			_toJSONArrayString(groups, _GROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
+			_toJSON(groups, _GROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			ListUtil.toString(groups, Group.GROUP_ID_ACCESSOR),
-			_toJSONArrayString(
+			_toJSON(
 				organizations, _ORGANIZATION_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			ListUtil.toString(
 				organizations, Organization.ORGANIZATION_ID_ACCESSOR),
-			_toJSONArrayString(roles, _ROLE_EXTERNAL_REFERENCE_CODE_ACCESSOR),
+			_toJSON(roles, _ROLE_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			ListUtil.toString(roles, Role.ROLE_ID_ACCESSOR),
-			_toJSONArrayString(
-				userGroups, _USERGROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
+			_toJSON(userGroups, _USERGROUP_EXTERNAL_REFERENCE_CODE_ACCESSOR),
 			ListUtil.toString(userGroups, UserGroup.USER_GROUP_ID_ACCESSOR));
 	}
 
@@ -390,9 +388,7 @@ public class UpgradePortletPreferencesTest {
 			).build());
 	}
 
-	private <T> String _toJSONArrayString(
-		List<T> list, Accessor<T, String> accessor) {
-
+	private <T> String _toJSON(List<T> list, Accessor<T, String> accessor) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			TransformUtil.transform(
 				ListUtil.toList(list, accessor), HtmlUtil::escape));

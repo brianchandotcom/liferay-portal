@@ -6,12 +6,32 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPage;
+import com.liferay.headless.admin.site.client.pagination.Page;
+import com.liferay.headless.admin.site.client.pagination.Pagination;
 import com.liferay.headless.admin.site.client.problem.Problem;
+import com.liferay.headless.admin.site.client.resource.v1_0.UtilityPageResource;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -96,6 +116,14 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
 			Assert.assertNull(problem.getTitle());
 		}
+
+		UtilityPageResource curUtilityPageResource = _getUtilityPageResource();
+
+		_assertNestedFields(
+			curUtilityPageResource.
+				getSiteSiteByExternalReferenceCodeUtilityPage(
+					testGroup.getExternalReferenceCode(),
+					postUtilityPage.getExternalReferenceCode()));
 	}
 
 	@Ignore
@@ -106,6 +134,16 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		super.
 			testGetSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage();
+	}
+
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeUtilityPagesPage()
+		throws Exception {
+
+		super.testGetSiteSiteByExternalReferenceCodeUtilityPagesPage();
+
+		_testGetSiteSiteByExternalReferenceCodeUtilityPagesPageWithNestedFields();
 	}
 
 	@Ignore
@@ -298,6 +336,38 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			testGroup.getExternalReferenceCode(), utilityPage);
 	}
 
+	private void _assertNestedFields(UtilityPage utilityPage) throws Exception {
+		FriendlyUrlHistory friendlyUrlHistory =
+			utilityPage.getFriendlyUrlHistory();
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			GetterUtil.getString(friendlyUrlHistory.getFriendlyUrlPath_i18n()));
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					utilityPage.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
+
+		Assert.assertEquals(
+			jsonObject.toString(), friendlyURLMap.size(), jsonObject.length());
+
+		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
+			String key = LocaleUtil.toBCP47LanguageId(entry.getKey());
+
+			JSONArray jsonArray = jsonObject.getJSONArray(key);
+
+			Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
+			Assert.assertEquals(
+				jsonArray.toString(), entry.getValue(), jsonArray.getString(0));
+		}
+	}
+
 	private UtilityPage _getUtilityPage(
 			Boolean markedAsDefault, String masterPageExternalReferenceCode)
 		throws Exception {
@@ -308,6 +378,70 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		utilityPage.setMarkedAsDefault(markedAsDefault);
 
 		return utilityPage;
+	}
+
+	private UtilityPage _getUtilityPage(
+		String externalReferenceCode, List<UtilityPage> utilityPages) {
+
+		for (UtilityPage utilityPage : utilityPages) {
+			if (Objects.equals(
+					utilityPage.getExternalReferenceCode(),
+					externalReferenceCode)) {
+
+				return utilityPage;
+			}
+		}
+
+		return null;
+	}
+
+	private UtilityPageResource _getUtilityPageResource() throws Exception {
+		User omniadminUser = UserTestUtil.addOmniadminUser();
+
+		String password = RandomTestUtil.randomString();
+
+		_userLocalService.updatePassword(
+			omniadminUser.getUserId(), password, password, false, true);
+
+		return UtilityPageResource.builder(
+		).authentication(
+			omniadminUser.getEmailAddress(), password
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "friendlyUrlHistory"
+		).build();
+	}
+
+	private void _testGetSiteSiteByExternalReferenceCodeUtilityPagesPageWithNestedFields()
+		throws Exception {
+
+		Page<UtilityPage> page =
+			utilityPageResource.
+				getSiteSiteByExternalReferenceCodeUtilityPagesPage(
+					testGroup.getExternalReferenceCode(), null, null, null,
+					Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		UtilityPage utilityPage =
+			testGetSiteSiteByExternalReferenceCodeUtilityPagesPage_addUtilityPage(
+				testGroup.getExternalReferenceCode(), randomUtilityPage());
+
+		UtilityPageResource curUtilityPageResource = _getUtilityPageResource();
+
+		page =
+			curUtilityPageResource.
+				getSiteSiteByExternalReferenceCodeUtilityPagesPage(
+					testGroup.getExternalReferenceCode(), null, null, null,
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+		_assertNestedFields(
+			_getUtilityPage(
+				utilityPage.getExternalReferenceCode(),
+				(List<UtilityPage>)page.getItems()));
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodeUtilityPage(
@@ -340,7 +474,16 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	}
 
 	@Inject
+	private JSONFactory _jsonFactory;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -22,6 +22,8 @@ import com.liferay.notification.service.persistence.NotificationTemplateAttachme
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -187,11 +189,16 @@ public class NotificationTemplateLocalServiceImpl
 	public void deleteCompanyNotificationTemplates(long companyId)
 		throws PortalException {
 
-		for (NotificationTemplate notificationTemplate :
-				notificationTemplatePersistence.findByCompanyId(companyId)) {
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
 
-			deleteNotificationTemplate(notificationTemplate);
-		}
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> RestrictionsFactoryUtil.eq("companyId", companyId));
+		actionableDynamicQuery.setPerformActionMethod(
+			(NotificationTemplate notificationTemplate) ->
+				deleteNotificationTemplate(notificationTemplate));
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override

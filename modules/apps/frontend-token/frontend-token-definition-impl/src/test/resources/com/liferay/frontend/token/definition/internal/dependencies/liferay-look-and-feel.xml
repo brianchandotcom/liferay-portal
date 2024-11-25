@@ -7,4 +7,6 @@
 	</compatibility>
 	<theme id="classic" name="Classic">
 	</theme>
+	<theme id="modern" name="Modern">
+	</theme>
 </look-and-feel>

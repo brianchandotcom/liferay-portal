@@ -7,6 +7,7 @@ package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -30,7 +31,6 @@ import com.liferay.roles.admin.search.RoleSearch;
 import com.liferay.roles.admin.search.RoleSearchTerms;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 import com.liferay.site.memberships.web.internal.util.DepotRolesUtil;
-import com.liferay.site.search.UserGroupRoleRoleChecker;
 
 import java.util.List;
 
@@ -147,10 +147,7 @@ public class UserRolesDisplayContext {
 		}
 
 		roleSearch.setResultsAndTotal(roles);
-		roleSearch.setRowChecker(
-			new UserGroupRoleRoleChecker(
-				_renderResponse,
-				PortalUtil.getSelectedUser(_httpServletRequest, false), group));
+		roleSearch.setRowChecker(new EmptyOnClickRowChecker(_renderResponse));
 
 		_roleSearch = roleSearch;
 

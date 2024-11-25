@@ -11,11 +11,8 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.io.Serializable;
-
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,18 +30,12 @@ public class ObjectEntryImportTaskPostAction implements ImportTaskPostAction {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-11036") ||
-			!(item instanceof ObjectEntry)) {
+			!(item instanceof ObjectEntry) ||
+			!StringUtil.equals(
+				batchEngineImportTask.getParameterValue(
+					"importCreatorStrategy"),
+				"KEEP_CREATOR")) {
 
-			return;
-		}
-
-		Map<String, Serializable> parameters =
-			batchEngineImportTask.getParameters();
-
-		String importCreatorStrategy = (String)parameters.getOrDefault(
-			"importCreatorStrategy", "OVERWRITE_CREATOR");
-
-		if (!importCreatorStrategy.equals("KEEP_CREATOR")) {
 			return;
 		}
 

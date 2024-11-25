@@ -64,14 +64,14 @@ public class StoredCredentialUtilTest {
 			_companyIds[i] = RandomTestUtil.randomLong();
 		}
 
-		for (int i = 0; i < _USERS_COUNT; i++) {
-			_userIds[i] = String.valueOf(RandomTestUtil.randomLong());
-		}
-
 		for (int i = 0; i < _COMPANIES_COUNT; i++) {
 			for (int j = 0; j < _USERS_COUNT; j++) {
 				_storedCredentials[i][j] = _addStoredCredential();
 			}
+		}
+
+		for (int i = 0; i < _USERS_COUNT; i++) {
+			_userIds[i] = String.valueOf(RandomTestUtil.randomLong());
 		}
 	}
 

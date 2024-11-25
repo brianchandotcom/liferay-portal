@@ -304,21 +304,34 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		assertHttpResponseStatusCode(
 			404, userResource.putV2UserHttpResponse(user1.getId(), user1));
 
+		// Update an existing user provided by another SCIM client
+
 		User user2 = testDeleteV2User_addUser();
+
+		ScimTestUtil.saveSCIMClientId(
+			com.liferay.portal.kernel.model.User.class.getName(),
+			GetterUtil.getLong(user2.getId()), TestPropsValues.getCompanyId(),
+			ScimClientUtil.generateScimClientId(
+				"scim-client-test" + RandomTestUtil.randomString()));
+
+		assertHttpResponseStatusCode(
+			409, userResource.putV2UserHttpResponse(user2.getId(), user2));
+
+		User user3 = testDeleteV2User_addUser();
 
 		String newTitle = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
-		user2.setTitle(newTitle);
+		user3.setTitle(newTitle);
 
 		HttpInvoker.HttpResponse httpResponse =
-			userResource.putV2UserHttpResponse(user2.getId(), user2);
+			userResource.putV2UserHttpResponse(user3.getId(), user3);
 
-		assertEquals(user2, User.toDTO(httpResponse.getContent()));
+		assertEquals(user3, User.toDTO(httpResponse.getContent()));
 
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
 		assertHttpResponseStatusCode(
-			404, userResource.putV2UserHttpResponse(user2.getId(), user2));
+			404, userResource.putV2UserHttpResponse(user3.getId(), user3));
 	}
 
 	@Override

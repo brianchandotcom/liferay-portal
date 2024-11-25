@@ -870,8 +870,16 @@ public class FriendlyURLServlet extends HttpServlet {
 			requestURI);
 
 		if (groupFriendlyURLIndex != null) {
-			String originalRequestURI = _getRequestURI(
-				portal.getOriginalServletRequest(httpServletRequest));
+			String originalRequestURI = null;
+
+			if (HttpComponentsUtil.isForwarded(httpServletRequest)) {
+				originalRequestURI = (String)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI);
+			}
+			else {
+				originalRequestURI = _getRequestURI(
+					portal.getOriginalServletRequest(httpServletRequest));
+			}
 
 			if (httpServletRequest.getAttribute(WebKeys.I18N_PATH) != null) {
 				int pos = originalRequestURI.indexOf(StringPool.SLASH, 1);

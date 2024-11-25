@@ -50,6 +50,8 @@ function onInputKeyup(event) {
 	}
 }
 
+let currentLanguageId = themeDisplay.getDefaultLanguageId();
+
 function main() {
 	if (layoutMode === 'edit' && textarea) {
 		textarea.setAttribute('disabled', true);
@@ -62,7 +64,45 @@ function main() {
 		}
 
 		textarea.addEventListener('keyup', onInputKeyup);
+
+		if (input.attributes.localizable) {
+			Liferay.on('localizationSelect:localeChanged', (event) => {
+				currentLanguageId = event.languageId;
+
+				const translationInput =
+					getOrCreateTranslationInput(currentLanguageId);
+
+				if (translationInput.value) {
+					textarea.value = translationInput.value;
+				}
+			});
+
+			textarea.addEventListener('input', (event) => {
+				const value = event.target.value;
+
+				const translationInput =
+					getOrCreateTranslationInput(currentLanguageId);
+
+				translationInput.value = value;
+			});
+		}
 	}
+}
+
+function getOrCreateTranslationInput(languageId) {
+	const inputId = `${fragmentNamespace}${input.name}_${languageId}`;
+
+	let translationInput = document.getElementById(inputId);
+
+	if (!translationInput) {
+		translationInput = document.createElement('input');
+		translationInput.type = 'hidden';
+		translationInput.id = inputId;
+		translationInput.name = `${input.name}_${currentLanguageId}`;
+		textarea.parentNode.appendChild(translationInput);
+	}
+
+	return translationInput;
 }
 
 main();

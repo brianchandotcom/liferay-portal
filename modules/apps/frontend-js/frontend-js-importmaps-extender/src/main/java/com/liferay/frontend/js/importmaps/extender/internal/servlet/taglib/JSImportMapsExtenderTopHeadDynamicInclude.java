@@ -167,22 +167,20 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		Map<Long, JSONObject> globalImportMapsJSONObjects1 =
 			_globalImportMapJSONObjectsMap.get(companyId);
 
-		if (globalImportMapsJSONObjects1 != null) {
-			return globalImportMapsJSONObjects1;
+		if (globalImportMapsJSONObjects1 == null) {
+			Map<Long, JSONObject> globalImportMapsJSONObjects2 =
+				new ConcurrentHashMap<>();
+
+			globalImportMapsJSONObjects1 =
+				_globalImportMapJSONObjectsMap.putIfAbsent(
+					companyId, globalImportMapsJSONObjects2);
+
+			if (globalImportMapsJSONObjects1 == null) {
+				return globalImportMapsJSONObjects2;
+			}
 		}
 
-		Map<Long, JSONObject> globalImportMapsJSONObjects2 =
-			new ConcurrentHashMap<>();
-
-		globalImportMapsJSONObjects1 =
-			_globalImportMapJSONObjectsMap.putIfAbsent(
-				companyId, globalImportMapsJSONObjects2);
-
-		if (globalImportMapsJSONObjects1 != null) {
-			return globalImportMapsJSONObjects1;
-		}
-
-		return globalImportMapsJSONObjects2;
+		return globalImportMapsJSONObjects1;
 	}
 
 	private Map<String, JSONObject> _getScopedImportMapJSONObjects(
@@ -191,22 +189,20 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		Map<String, JSONObject> scopedImportMapsJSONObjects1 =
 			_scopedImportMapJSONObjectsMap.get(companyId);
 
-		if (scopedImportMapsJSONObjects1 != null) {
-			return scopedImportMapsJSONObjects1;
+		if (scopedImportMapsJSONObjects1 == null) {
+			Map<String, JSONObject> scopedImportMapsJSONObjects2 =
+				new ConcurrentHashMap<>();
+
+			scopedImportMapsJSONObjects1 =
+				_scopedImportMapJSONObjectsMap.putIfAbsent(
+					companyId, scopedImportMapsJSONObjects2);
+
+			if (scopedImportMapsJSONObjects1 == null) {
+				return scopedImportMapsJSONObjects2;
+			}
 		}
 
-		Map<String, JSONObject> scopedImportMapsJSONObjects2 =
-			new ConcurrentHashMap<>();
-
-		scopedImportMapsJSONObjects1 =
-			_scopedImportMapJSONObjectsMap.putIfAbsent(
-				companyId, scopedImportMapsJSONObjects2);
-
-		if (scopedImportMapsJSONObjects1 != null) {
-			return scopedImportMapsJSONObjects1;
-		}
-
-		return scopedImportMapsJSONObjects2;
+		return scopedImportMapsJSONObjects1;
 	}
 
 	private void _putImports(

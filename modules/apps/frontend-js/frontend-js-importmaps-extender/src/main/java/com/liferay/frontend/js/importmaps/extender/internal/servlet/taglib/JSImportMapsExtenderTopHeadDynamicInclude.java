@@ -12,12 +12,9 @@ import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNo
 import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
@@ -28,6 +25,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,13 +57,11 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		String importMaps = _importMapsMap.get(
-			_portal.getCompanyId(httpServletRequest));
-
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		if (_jsImportMapsConfiguration.enableImportMaps() &&
-			!Validator.isBlank(importMaps)) {
+			(!_globalImportMapJSONObjects.isEmpty() ||
+			 !_scopedImportMapJSONObjects.isEmpty())) {
 
 			printWriter.print("<script");
 			printWriter.write(
@@ -81,7 +77,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 			}
 
 			printWriter.print("\">");
-			printWriter.print(importMaps);
+			printWriter.print(_importMaps.get());
 			printWriter.print("</script>");
 		}
 
@@ -122,7 +118,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 		modified();
 
-		_rebuildImportMaps(_ALL_COMPANIES);
+		_rebuildImportMaps();
 
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, JSImportMapsContributor.class,
@@ -158,97 +154,20 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 				"module");
 	}
 
-	private ConcurrentMap<Long, JSONObject> _getGlobalImportMapsJSONObjects(
-		Long companyId) {
-
-		ConcurrentMap<Long, JSONObject> globalImportMapsJSONObjects1 =
-			_globalImportMapJSONObjectsMap.get(companyId);
-
-		if (globalImportMapsJSONObjects1 == null) {
-			ConcurrentMap<Long, JSONObject> globalImportMapsJSONObjects2 =
-				new ConcurrentHashMap<>();
-
-			globalImportMapsJSONObjects1 =
-				_globalImportMapJSONObjectsMap.putIfAbsent(
-					companyId, globalImportMapsJSONObjects2);
-
-			if (globalImportMapsJSONObjects1 == null) {
-				return globalImportMapsJSONObjects2;
-			}
-		}
-
-		return globalImportMapsJSONObjects1;
-	}
-
-	private ConcurrentMap<String, JSONObject> _getScopedImportMapJSONObjects(
-		Long companyId) {
-
-		ConcurrentMap<String, JSONObject> scopedImportMapsJSONObjects1 =
-			_scopedImportMapJSONObjectsMap.get(companyId);
-
-		if (scopedImportMapsJSONObjects1 == null) {
-			ConcurrentMap<String, JSONObject> scopedImportMapsJSONObjects2 =
-				new ConcurrentHashMap<>();
-
-			scopedImportMapsJSONObjects1 =
-				_scopedImportMapJSONObjectsMap.putIfAbsent(
-					companyId, scopedImportMapsJSONObjects2);
-
-			if (scopedImportMapsJSONObjects1 == null) {
-				return scopedImportMapsJSONObjects2;
-			}
-		}
-
-		return scopedImportMapsJSONObjects1;
-	}
-
-	private synchronized void _rebuildImportMaps(long companyId) {
-		if (companyId == _ALL_COMPANIES) {
-			_companyLocalService.forEachCompanyId(this::_rebuildImportMaps);
-
-			return;
-		}
-
+	private synchronized void _rebuildImportMaps() {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		ConcurrentMap<Long, JSONObject> allCompaniesGlobalImportMapJSONObjects =
-			_getGlobalImportMapsJSONObjects(_ALL_COMPANIES);
-		ConcurrentMap<Long, JSONObject> companyGlobalImportMapJSONObjects =
-			_getGlobalImportMapsJSONObjects(companyId);
-
-		ConcurrentMap<String, JSONObject>
-			allCompaniesScopedImportMapJSONObjects =
-				_getScopedImportMapJSONObjects(_ALL_COMPANIES);
-		ConcurrentMap<String, JSONObject> companyScopedImportMapJSONObjects =
-			_getScopedImportMapJSONObjects(companyId);
 
 		jsonObject.put(
 			"imports",
 			() -> {
 				JSONObject importsJSONObject = _jsonFactory.createJSONObject();
 
-				for (JSONObject allCompaniesGlobalImportMapJSONObject :
-						allCompaniesGlobalImportMapJSONObjects.values()) {
+				for (JSONObject globalImportMapJSONObject :
+						_globalImportMapJSONObjects.values()) {
 
-					for (String key :
-							allCompaniesGlobalImportMapJSONObject.keySet()) {
-
+					for (String key : globalImportMapJSONObject.keySet()) {
 						importsJSONObject.put(
-							key,
-							allCompaniesGlobalImportMapJSONObject.getString(
-								key));
-					}
-				}
-
-				for (JSONObject companyGlobalImportMapJSONObject :
-						companyGlobalImportMapJSONObjects.values()) {
-
-					for (String key :
-							companyGlobalImportMapJSONObject.keySet()) {
-
-						importsJSONObject.put(
-							key,
-							companyGlobalImportMapJSONObject.getString(key));
+							key, globalImportMapJSONObject.getString(key));
 					}
 				}
 
@@ -260,13 +179,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 				JSONObject scopesJSONObject = _jsonFactory.createJSONObject();
 
 				for (Map.Entry<String, JSONObject> entry :
-						allCompaniesScopedImportMapJSONObjects.entrySet()) {
-
-					scopesJSONObject.put(entry.getKey(), entry.getValue());
-				}
-
-				for (Map.Entry<String, JSONObject> entry :
-						companyScopedImportMapJSONObjects.entrySet()) {
+						_scopedImportMapJSONObjects.entrySet()) {
 
 					scopesJSONObject.put(entry.getKey(), entry.getValue());
 				}
@@ -275,76 +188,58 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 			}
 		);
 
-		_importMapsMap.put(
-			companyId, _jsonFactory.looseSerializeDeep(jsonObject));
+		_importMaps.set(_jsonFactory.looseSerializeDeep(jsonObject));
 	}
 
 	private JSImportMapsRegistration _register(
-		long companyId, String scope, JSONObject jsonObject) {
+		String scope, JSONObject jsonObject) {
 
 		if (scope == null) {
-			final ConcurrentMap<Long, JSONObject> globalImportMapsJSONObjects =
-				_getGlobalImportMapsJSONObjects(companyId);
-
 			long globalId = _nextGlobalId.getAndIncrement();
 
-			globalImportMapsJSONObjects.put(globalId, jsonObject);
+			_globalImportMapJSONObjects.put(globalId, jsonObject);
 
-			_rebuildImportMaps(companyId);
+			_rebuildImportMaps();
 
 			return new JSImportMapsRegistration() {
 
 				@Override
 				public void unregister() {
-					globalImportMapsJSONObjects.remove(globalId);
+					_globalImportMapJSONObjects.remove(globalId);
 				}
 
 			};
 		}
 
-		final ConcurrentMap<String, JSONObject> scopedImportMapJSONObjects =
-			_getScopedImportMapJSONObjects(companyId);
+		_scopedImportMapJSONObjects.put(scope, jsonObject);
 
-		scopedImportMapJSONObjects.put(scope, jsonObject);
-
-		_rebuildImportMaps(companyId);
+		_rebuildImportMaps();
 
 		return new JSImportMapsRegistration() {
 
 			@Override
 			public void unregister() {
-				scopedImportMapJSONObjects.remove(scope);
+				_scopedImportMapJSONObjects.remove(scope);
 			}
 
 		};
 	}
 
-	private static final long _ALL_COMPANIES = 0;
-
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private volatile BundleContext _bundleContext;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	private final ConcurrentMap<Long, ConcurrentMap<Long, JSONObject>>
-		_globalImportMapJSONObjectsMap = new ConcurrentHashMap<>();
-	private final ConcurrentMap<Long, String> _importMapsMap =
+	private final ConcurrentMap<Long, JSONObject> _globalImportMapJSONObjects =
 		new ConcurrentHashMap<>();
+	private final AtomicReference<String> _importMaps = new AtomicReference<>();
 	private volatile JSImportMapsConfiguration _jsImportMapsConfiguration;
 
 	@Reference
 	private JSONFactory _jsonFactory;
 
 	private final AtomicLong _nextGlobalId = new AtomicLong();
-
-	@Reference
-	private Portal _portal;
-
-	private final ConcurrentMap<Long, ConcurrentMap<String, JSONObject>>
-		_scopedImportMapJSONObjectsMap = new ConcurrentHashMap<>();
+	private final ConcurrentMap<String, JSONObject>
+		_scopedImportMapJSONObjects = new ConcurrentHashMap<>();
 	private ServiceTracker<JSImportMapsContributor, JSImportMapsRegistration>
 		_serviceTracker;
 
@@ -359,18 +254,11 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 						ServiceReference<JSImportMapsContributor>
 							serviceReference) {
 
-						Long companyId = (Long)serviceReference.getProperty(
-							"com.liferay.importmaps.company");
-
-						if (companyId == null) {
-							companyId = Long.valueOf(_ALL_COMPANIES);
-						}
-
 						JSImportMapsContributor jsImportMapsContributor =
 							_bundleContext.getService(serviceReference);
 
 						return _register(
-							companyId, jsImportMapsContributor.getScope(),
+							jsImportMapsContributor.getScope(),
 							jsImportMapsContributor.getImportMapsJSONObject());
 					}
 

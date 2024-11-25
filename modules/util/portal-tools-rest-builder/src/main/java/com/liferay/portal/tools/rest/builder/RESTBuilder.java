@@ -566,19 +566,6 @@ public class RESTBuilder {
 				schemaYAMLString));
 	}
 
-	private void _appendPath(ProcessBuilder processBuilder, String newPath) {
-		Map<String, String> environment = processBuilder.environment();
-
-		String path = environment.get("PATH");
-
-		if (path != null) {
-			environment.put("PATH", newPath + File.pathSeparator + path);
-		}
-		else {
-			environment.put("PATH", newPath);
-		}
-	}
-
 	private void _checkOpenAPIYAMLFile(FreeMarkerTool freeMarkerTool, File file)
 		throws Exception {
 
@@ -2077,16 +2064,17 @@ public class RESTBuilder {
 			Arrays.asList(
 				_getNPMPathString(), "exec", "--prefix", _getNodePrefix(),
 				"--yes", "@openapitools/openapi-generator-cli@2.15.3", "--",
-				"generate", "--input-spec", openAPIYAMLFile.getPath(),
-				"--generator-name", "typescript-" + targetClientType,
-				"--output", outputPathString, "--skip-validate-spec",
+				"generate",
 				"--additional-properties=modelPropertyNaming=original," +
-					"paramNaming=original"));
+					"paramNaming=original",
+				"--generator-name", "typescript-" + targetClientType,
+				"--input-spec", openAPIYAMLFile.getPath(), "--output",
+				outputPathString, "--skip-validate-spec"));
 
 		String nodeBinPathString = _getNodeBinPathString();
 
 		if (nodeBinPathString != null) {
-			_appendPath(processBuilder, nodeBinPathString);
+			_prependPath(processBuilder, nodeBinPathString);
 		}
 
 		Process process = processBuilder.start();
@@ -2256,6 +2244,19 @@ public class RESTBuilder {
 			}
 
 			return outputOpenAPIYAMLFile;
+		}
+	}
+
+	private void _prependPath(ProcessBuilder processBuilder, String newPath) {
+		Map<String, String> environment = processBuilder.environment();
+
+		String path = environment.get("PATH");
+
+		if (path != null) {
+			environment.put("PATH", newPath + File.pathSeparator + path);
+		}
+		else {
+			environment.put("PATH", newPath);
 		}
 	}
 

@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -32,8 +33,10 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -60,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ExportImportPortletPreferencesProcessor.class
 )
 public class JournalContentExportImportPortletPreferencesProcessor
-	implements ExportImportPortletPreferencesProcessor {
+	extends BaseExportImportPortletPreferencesProcessor {
 
 	@Override
 	public List<Capability> getExportCapabilities() {
@@ -136,6 +139,28 @@ public class JournalContentExportImportPortletPreferencesProcessor
 
 		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-27566")) {
 			articleGroupId = _getGroupId(companyId, portletPreferences);
+
+			try {
+				updateExportPortletPreferencesExternalReferenceCodes(
+					portletDataContext,
+					_portletLocalService.getPortletById(
+						portletDataContext.getCompanyId(), portletId),
+					portletPreferences, "groupExternalReferenceCode",
+					Group.class.getName());
+			}
+			catch (Exception exception) {
+				PortletDataException portletDataException =
+					new PortletDataException(
+						"Unable to update portlet preferences during export",
+						exception);
+
+				portletDataException.setPortletId(
+					JournalContentPortletKeys.JOURNAL_CONTENT);
+				portletDataException.setType(
+					PortletDataException.EXPORT_PORTLET_DATA);
+
+				throw portletDataException;
+			}
 		}
 		else {
 			articleGroupId = GetterUtil.getLong(
@@ -553,6 +578,25 @@ public class JournalContentExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
+	@Override
+	protected String getExportPortletPreferencesValue(
+			PortletDataContext portletDataContext, Portlet portlet,
+			String className, long primaryKeyLong)
+		throws Exception {
+
+		return "";
+	}
+
+	@Override
+	protected Long getImportPortletPreferencesNewValue(
+			PortletDataContext portletDataContext, Class<?> clazz,
+			long companyGroupId, Map<Long, Long> primaryKeys,
+			String portletPreferencesOldValue)
+		throws Exception {
+
+		return 0L;
+	}
+
 	private long _getCompanyId(PortletDataContext portletDataContext) {
 		if (portletDataContext != null) {
 			return portletDataContext.getCompanyId();
@@ -610,5 +654,8 @@ public class JournalContentExportImportPortletPreferencesProcessor
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 }

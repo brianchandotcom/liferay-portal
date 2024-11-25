@@ -28,6 +28,8 @@ import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -130,11 +132,16 @@ public class NotificationQueueEntryLocalServiceImpl
 	public void deleteCompanyNotificationQueueEntries(long companyId)
 		throws PortalException {
 
-		for (NotificationQueueEntry notificationQueueEntry :
-				notificationQueueEntryPersistence.findByCompanyId(companyId)) {
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
 
-			deleteNotificationQueueEntry(notificationQueueEntry);
-		}
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> RestrictionsFactoryUtil.eq("companyId", companyId));
+		actionableDynamicQuery.setPerformActionMethod(
+			(NotificationQueueEntry notificationQueueEntry) ->
+				deleteNotificationQueueEntry(notificationQueueEntry));
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override

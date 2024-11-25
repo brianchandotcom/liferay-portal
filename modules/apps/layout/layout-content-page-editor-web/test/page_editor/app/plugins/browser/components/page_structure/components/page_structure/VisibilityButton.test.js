@@ -8,6 +8,7 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
+import {KeyboardMovementContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/KeyboardMovementContext';
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateItemStyle from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/updateItemStyle';
 import VisibilityButton from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page_structure/components/VisibilityButton';
@@ -25,10 +26,12 @@ const renderComponent = () =>
 				selectedViewportSize: 'tablet',
 			})}
 		>
-			<VisibilityButton
-				node={{hidden: true, id: 'fragment01'}}
-				selectedViewportSize="tablet"
-			/>
+			<KeyboardMovementContextProvider>
+				<VisibilityButton
+					node={{hidden: true, id: 'fragment01'}}
+					selectedViewportSize="tablet"
+				/>
+			</KeyboardMovementContextProvider>
 		</StoreAPIContextProvider>
 	);
 

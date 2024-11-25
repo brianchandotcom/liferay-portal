@@ -17,12 +17,12 @@ import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../../../../../../../../src/main/res
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {ControlsProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
+import {KeyboardMovementContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/KeyboardMovementContext';
 import {ShortcutContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext';
 import {StoreAPIContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateItemConfig from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
 import {pageContentsAtom} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
 import PageStructureSidebar from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page_structure/components/PageStructureSidebar';
-
 jest.mock(
 	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
 	() => jest.fn()
@@ -254,9 +254,11 @@ const renderComponent = ({
 						selectedViewportSize: viewportSize,
 					})}
 				>
-					<ShortcutContextProvider>
-						<PageStructureSidebar />
-					</ShortcutContextProvider>
+					<KeyboardMovementContextProvider>
+						<ShortcutContextProvider>
+							<PageStructureSidebar />
+						</ShortcutContextProvider>
+					</KeyboardMovementContextProvider>
 				</StoreAPIContextProvider>
 			</ControlsProvider>
 		</DndProvider>

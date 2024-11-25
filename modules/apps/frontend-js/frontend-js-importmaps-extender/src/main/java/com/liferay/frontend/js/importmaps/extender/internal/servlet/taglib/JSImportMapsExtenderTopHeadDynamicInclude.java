@@ -275,7 +275,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 	}
 
 	private JSImportMapsRegistration _register(
-		long companyId, JSONObject jsonObject, String scope) {
+		long companyId, String scope, JSONObject jsonObject) {
 
 		if (scope == null) {
 			Map<Long, JSONObject> globalImportMapsJSONObjects =
@@ -350,9 +350,8 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 							_bundleContext.getService(serviceReference);
 
 						return _register(
-							companyId,
-							jsImportMapsContributor.getImportMapsJSONObject(),
-							jsImportMapsContributor.getScope());
+							companyId, jsImportMapsContributor.getScope(),
+							jsImportMapsContributor.getImportMapsJSONObject());
 					}
 
 					@Override

@@ -8,6 +8,7 @@ import {Page, expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {liferayConfig} from '../../../../liferay.config';
 import {rolesPagesTest} from '../../../../fixtures/rolesPagesTest';
 import {DataApiHelpers} from '../../../../helpers/ApiHelpers';
 import {RoleDefinePermissionsPage} from '../../../../pages/roles-admin-web/RoleDefinePermissionsPage';
@@ -36,8 +37,11 @@ export const test = mergeTests(
 const createdDataSetERCs = [];
 const createdRoleIds = [];
 const createdUserIds = [];
+const dataSetUserRoleName = `ds_user_${getRandomString()}`;
 
 let loggedInAsAdmin = true;
+let dataSetUserRole;
+let userAccount: TUserAccount;
 
 const blogPostsDataSetConfig = {
 	name: 'BlogPosting',
@@ -72,10 +76,11 @@ async function setupUserRoleAndLoginAsUser({
 	rolePage: RolePage;
 	rolesPage: RolesPage;
 }) {
-	const roleName = `ds_user_${getRandomString()}`;
+	// const roleName = `ds_user_${getRandomString()}`;
 
-	let dataSetUserRole;
-	let userAccount: TUserAccount;
+	// TODO: Fix this to make it work if extracted
+    // let dataSetUserRole;
+    // let userAccount: TUserAccount;
 
 	await test.step('Create Data Set user role', async () => {
 		const companyId = await page.evaluate(() => {
@@ -83,7 +88,7 @@ async function setupUserRoleAndLoginAsUser({
 		});
 
 		dataSetUserRole = await apiHelpers.headlessAdminUser.postRole({
-			name: roleName,
+			name: dataSetUserRoleName,
 			rolePermissions: [
 				{
 					actionIds: ['VIEW_CONTROL_PANEL'],
@@ -138,7 +143,7 @@ async function setupUserRoleAndLoginAsUser({
 		});
 
 		await test.step('Navigate to role edit page', async () => {
-			await page.getByRole('link', {exact: true, name: roleName}).click();
+			await page.getByRole('link', {exact: true, name: dataSetUserRoleName}).click();
 		});
 
 		await test.step('Navigate to "Define Permissions" > "Data Set" section', async () => {
@@ -532,4 +537,169 @@ test('A user with "Delete" permission', async ({
 			page.getByRole('menuitem', {name: 'Delete'})
 		).toBeVisible();
 	});
+});
+
+test('Check "Edit" permission', async({
+    apiHelpers,
+	dataSetManagerApiHelpers,
+	dataSetsPage,
+	page,
+	roleDefinePermissionsPage,
+	rolePage,
+	rolesPage,
+}) => {
+    const blogPostDataSetERC = getRandomString();
+
+    await test.step('Create a data set', async () => {
+		createdDataSetERCs.push(blogPostDataSetERC);
+
+		await dataSetManagerApiHelpers.createDataSet({
+			...blogPostsDataSetConfig,
+			erc: blogPostDataSetERC,
+			label: blogPostsDataSetConfig.name,
+		});
+	});
+
+    await test.step('Setup user role and login as user', async () => {
+		await setupUserRoleAndLoginAsUser({
+			apiHelpers,
+			dataSetResourcePermissions: [
+				{
+					actions: ['View'],
+					name: 'Data Set',
+				},
+			],
+			page,
+			roleDefinePermissionsPage,
+			rolePage,
+			rolesPage,
+		});
+	});
+
+    await test.step('Go to Data Sets', async () => {
+		await dataSetsPage.goto({checkTabVisibility: false});
+	});
+
+	await test.step('Open actions dropdown', async () => {
+		const dataSetRows = page
+			.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
+			.filter({
+				hasText: blogPostsDataSetConfig.name,
+			});
+
+		await dataSetRows
+			.first()
+			.getByRole('button', {name: 'Actions'})
+			.click();
+	});
+
+    await test.step('Check that "Edit" is not visible', async () => {
+		await expect(
+			page.getByRole('menuitem', {name: 'Edit'})
+		).not.toBeVisible();
+	});
+
+    await test.step('Check that the user can not enter to Data Set details pages', async() => {
+        const dataSetRows = page
+            .locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
+            .filter({
+                hasText: blogPostsDataSetConfig.name,
+            });
+        
+        await dataSetRows
+			.first()
+			.getByText(blogPostsDataSetConfig.name)
+            .first()
+			.click();
+
+        await expect(page.getByRole('button', { name: 'Details' })).not.toBeVisible();
+
+        await page
+            .goto(`${liferayConfig.environment.baseUrl}/group/guest/~/control_panel/manage?p_p_id=com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet&p_p_lifecycle=0&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_mvcRenderCommandName=%2Fedit_data_set&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_dataSetERC=${blogPostDataSetERC}&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_dataSetLabel=${blogPostsDataSetConfig.name}`)
+            
+        await waitForAlert(
+            page,
+            'Error:Your request failed to complete.',
+            {type: 'danger'}
+        );
+    });
+
+    await test.step('Do logout and login as administrator', async () => {
+        await performLogout(page);
+        await performLogin(page, 'test');
+    });
+
+    await test.step('Grant Data Sets Update permission for the new user', async () => {
+        await dataSetsPage.goto({checkTabVisibility: false});
+
+        const dataSetRow = await page
+            .locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
+            .filter({hasText: blogPostsDataSetConfig.name});
+
+        await dataSetRow
+            .first()
+            .getByRole('button', {name: 'Actions'})
+            .click();
+
+        await page.getByRole('menuitem', {name: 'Permissions'}).click();
+
+        const permissionsModalIframe = await page.frameLocator('iframe[title="Permissions"]');
+
+        const permissionsModalSearch = await permissionsModalIframe.getByPlaceholder('Search for');
+
+        await permissionsModalSearch.waitFor();
+
+        await permissionsModalIframe.locator(`#${dataSetUserRoleName}_ACTION_UPDATE`).waitFor({state: 'visible'});
+		await permissionsModalIframe.locator(`#${dataSetUserRoleName}_ACTION_UPDATE`).uncheck();
+        await permissionsModalIframe.locator(`#${dataSetUserRoleName}_ACTION_UPDATE`).check();
+
+
+        await permissionsModalIframe.getByRole('button', { name: 'Save' }).click();
+
+		await waitForAlert(permissionsModalIframe);
+    });
+
+    await test.step('Do logout and login with the new user', async () => {
+        await performLogout(page);
+        await performLogin(page, userAccount.alternateName);
+    });
+
+    await test.step('Navigate to Data Set page', async () => {
+        await dataSetsPage.goto({checkTabVisibility: false});
+    });
+
+    await test.step('Check that the user has only "Edit" option on actions menu', async () => {
+        await page.locator('.dnd-td.item-actions').first().waitFor();
+
+        await page
+            .locator('.dnd-td.item-actions')
+            .first()
+            .locator('.dropdown-toggle')
+            .click();
+
+        const tableItemActions = await page
+            .locator('.dropdown-menu')
+            .filter({has: page.locator('span.pr-2')})
+            .first()
+            .locator('.dropdown-item')
+            .allInnerTexts();
+
+        await expect(tableItemActions).toEqual(['Edit']);
+    });
+
+    await test.step('Check that the user can now edit the data set', async () => {
+        const dataSetRow = await page
+            .locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
+            .filter({hasText: blogPostsDataSetConfig.name});
+
+        await dataSetRow
+            .first()
+            .getByRole('button', {name: 'Actions'})
+            .click();
+
+        await page.getByRole('menuitem', {name: 'Edit'}).click();
+
+        await expect(page.getByRole('heading', { name: 'Details' })).toBeVisible();
+    });
+
 });

@@ -11,6 +11,8 @@
 portletDisplay.setBeta(true);
 %>
 
+<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+
 <c:choose>
 	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-37531") %>'>
 

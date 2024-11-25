@@ -749,6 +749,9 @@ public class TaxonomyCategoryResourceTest
 			patchTaxonomyCategory.getParentTaxonomyCategory();
 
 		Assert.assertEquals(
+			parentTaxonomyCategory.getExternalReferenceCode(),
+			patchParentTaxonomyCategory.getExternalReferenceCode());
+		Assert.assertEquals(
 			parentTaxonomyCategory.getId(),
 			Long.valueOf(patchParentTaxonomyCategory.getId()));
 	}

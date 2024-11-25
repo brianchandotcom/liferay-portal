@@ -68,7 +68,7 @@ public class SecureProperties extends Properties {
 			if (previousKeys.size() > 1) {
 				StringBuilder sb = new StringBuilder();
 
-				sb.append("Circular property reference chain found\n");
+				sb.append("Found circular property reference chain:\n");
 
 				for (String previousKey : previousKeys) {
 					sb.append(previousKey);

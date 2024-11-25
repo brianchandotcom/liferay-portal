@@ -46,6 +46,21 @@ public class ParentTaxonomyCategorySerDes {
 
 		sb.append("{");
 
+		if (parentTaxonomyCategory.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(parentTaxonomyCategory.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (parentTaxonomyCategory.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -101,6 +116,16 @@ public class ParentTaxonomyCategorySerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (parentTaxonomyCategory.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(
+					parentTaxonomyCategory.getExternalReferenceCode()));
+		}
+
 		if (parentTaxonomyCategory.getId() == null) {
 			map.put("id", null);
 		}
@@ -142,7 +167,10 @@ public class ParentTaxonomyCategorySerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -160,7 +188,13 @@ public class ParentTaxonomyCategorySerDes {
 			ParentTaxonomyCategory parentTaxonomyCategory,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				if (jsonParserFieldValue != null) {
+					parentTaxonomyCategory.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					parentTaxonomyCategory.setId(
 						Long.valueOf((String)jsonParserFieldValue));

@@ -9,10 +9,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -99,6 +100,8 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			_ddmStructureService.fetchStructureByExternalReferenceCode(
 				externalReferenceCode, structure.getGroupId(),
 				structure.getClassNameId()));
+
+		_ddmStructureService.deleteStructure(structure.getStructureId());
 	}
 
 	@Test
@@ -119,7 +122,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		Assert.assertEquals(
 			structure,
 			_ddmStructureService.getStructureByExternalReferenceCode(
-				structure.getExternalReferenceCode(), structure.getGroupId(),
+				externalReferenceCode, structure.getGroupId(),
 				structure.getClassNameId()));
 
 		_ddmStructureService.deleteStructure(structure.getStructureId());
@@ -545,15 +548,24 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	private DDMStructure _addStructure(String externalReferenceCode)
 		throws Exception {
 
-		DDMStructure ddmStructure = addStructure(
-			group, _classNameId, "Basic Structure");
+		DDMStructure structure = addStructure(
+			group, _classNameId, RandomTestUtil.randomString());
 
-		ddmStructure.setExternalReferenceCode(externalReferenceCode);
+		structure.setExternalReferenceCode(externalReferenceCode);
 
-		return DDMStructureTestUtil.updateStructure(ddmStructure);
+		return _ddmStructureLocalService.updateStructure(
+			externalReferenceCode, structure.getUserId(),
+			structure.getStructureId(), structure.getGroupId(),
+			structure.getParentStructureId(), structure.getClassNameId(),
+			structure.getStructureKey(), structure.getNameMap(),
+			structure.getDescriptionMap(), structure.getDefinition(),
+			ServiceContextTestUtil.getServiceContext(structure.getGroupId()));
 	}
 
 	private static long _classNameId;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@DeleteAfterTestRun
 	private final List<DDMStructure> _ddmStructures = new ArrayList<>();

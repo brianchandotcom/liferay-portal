@@ -514,12 +514,14 @@ const NewDataSetModalContent = ({
 
 const CustomDataSets = ({
 	editDataSetURL,
+	hasAddObjectEntryPermission,
 	namespace,
 	permissionsURL,
 	resolvedRESTSchemas,
 	restApplications,
 }: {
 	editDataSetURL: string;
+	hasAddObjectEntryPermission: boolean;
 	namespace: string;
 	permissionsURL: string;
 	resolvedRESTSchemas: Array<string>;
@@ -652,7 +654,9 @@ const CustomDataSets = ({
 			<FrontendDataSet
 				{...FDS_DEFAULT_PROPS}
 				apiURL={API_URL.DATA_SETS}
-				creationMenu={creationMenu}
+				creationMenu={
+					hasAddObjectEntryPermission ? creationMenu : undefined
+				}
 				emptyState={{
 					description: Liferay.Language.get(
 						'start-creating-one-to-show-your-data'

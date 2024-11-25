@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
@@ -138,16 +139,14 @@ public class FrontendTokenDefinitionRegistryImpl
 		_serviceTracker.close();
 	}
 
-	protected FrontendTokenDefinitionImpl getFrontendTokenDefinitionImpl(
+	protected List<FrontendTokenDefinitionImpl> getFrontendTokenDefinitionImpls(
 		Bundle bundle) {
 
 		String json = _getFrontendTokenDefinitionJSON(bundle);
 
 		if (json == null) {
-			return null;
+			return Collections.emptyList();
 		}
-
-		String themeId = getThemeId(bundle);
 
 		try {
 			ResourceBundleLoader resourceBundleLoader =
@@ -160,18 +159,28 @@ public class FrontendTokenDefinitionRegistryImpl
 					ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 			}
 
-			return new FrontendTokenDefinitionImpl(
-				jsonFactory.createJSONObject(json), jsonFactory,
-				resourceBundleLoader, themeId);
+			List<FrontendTokenDefinitionImpl> frontendTokenDefinitionImpls =
+				new ArrayList<>();
+
+			for (String themeId : getThemeIds(bundle)) {
+				frontendTokenDefinitionImpls.add(
+					new FrontendTokenDefinitionImpl(
+						jsonFactory.createJSONObject(json), jsonFactory,
+						resourceBundleLoader, themeId));
+			}
+
+			return frontendTokenDefinitionImpls;
 		}
 		catch (JSONException | RuntimeException exception) {
+			exception.printStackTrace();
+
 			_log.error(
-				"Unable to parse frontend token definitions for theme " +
-					themeId,
+				"Unable to parse frontend token definitions for bundle " +
+					bundle.getSymbolicName(),
 				exception);
 		}
 
-		return null;
+		return Collections.emptyList();
 	}
 
 	protected String getServletContextName(Bundle bundle) {
@@ -191,35 +200,37 @@ public class FrontendTokenDefinitionRegistryImpl
 		return webContextPath;
 	}
 
-	protected String getThemeId(Bundle bundle) {
+	protected List<String> getThemeIds(Bundle bundle) {
 		URL url = bundle.getEntry("WEB-INF/liferay-look-and-feel.xml");
 
 		if (url == null) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		try {
+			List<String> themeIds = new ArrayList<>();
+
 			String xml = URLUtil.toString(url);
 
 			xml = xml.replaceAll(StringPool.NEW_LINE, StringPool.SPACE);
 
 			Matcher matcher = _themeIdPattern.matcher(xml);
 
-			if (!matcher.matches()) {
-				return null;
+			while (matcher.find()) {
+				String themeId = matcher.group(1);
+
+				String servletContextName = getServletContextName(bundle);
+
+				if (servletContextName != null) {
+					themeId =
+						themeId + PortletConstants.WAR_SEPARATOR +
+							servletContextName;
+				}
+
+				themeIds.add(portal.getJsSafePortletId(themeId));
 			}
 
-			String themeId = matcher.group(1);
-
-			String servletContextName = getServletContextName(bundle);
-
-			if (servletContextName != null) {
-				themeId =
-					themeId + PortletConstants.WAR_SEPARATOR +
-						servletContextName;
-			}
-
-			return portal.getJsSafePortletId(themeId);
+			return themeIds;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -335,47 +346,58 @@ public class FrontendTokenDefinitionRegistryImpl
 		FrontendTokenDefinitionRegistryImpl.class);
 
 	private static final Pattern _themeIdPattern = Pattern.compile(
-		".*<theme id=\"([^\"]*)\"[^>]*>.*");
+		"<theme id=\"([^\"]*)\"[^>]*>");
 
-	private BundleTracker<FrontendTokenDefinitionImpl> _bundleTracker;
+	private BundleTracker<List<FrontendTokenDefinitionImpl>> _bundleTracker;
 
-	private final BundleTrackerCustomizer<FrontendTokenDefinitionImpl>
+	private final BundleTrackerCustomizer<List<FrontendTokenDefinitionImpl>>
 		_bundleTrackerCustomizer =
-			new BundleTrackerCustomizer<FrontendTokenDefinitionImpl>() {
+			new BundleTrackerCustomizer<List<FrontendTokenDefinitionImpl>>() {
 
 				@Override
-				public FrontendTokenDefinitionImpl addingBundle(
+				public List<FrontendTokenDefinitionImpl> addingBundle(
 					Bundle bundle, BundleEvent bundleEvent) {
 
-					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
-						getFrontendTokenDefinitionImpl(bundle);
+					List<FrontendTokenDefinitionImpl>
+						frontendTokenDefinitionImpls =
+							getFrontendTokenDefinitionImpls(bundle);
 
-					if ((frontendTokenDefinitionImpl != null) &&
-						(frontendTokenDefinitionImpl.getThemeId() != null)) {
+					for (FrontendTokenDefinitionImpl
+							frontendTokenDefinitionImpl :
+								frontendTokenDefinitionImpls) {
+
+						if (frontendTokenDefinitionImpl.getThemeId() == null) {
+							continue;
+						}
 
 						_frontendTokenDefinitions.put(
 							frontendTokenDefinitionImpl.getThemeId(),
 							frontendTokenDefinitionImpl);
-
-						return frontendTokenDefinitionImpl;
 					}
 
-					return null;
+					return frontendTokenDefinitionImpls;
 				}
 
 				@Override
 				public void modifiedBundle(
 					Bundle bundle, BundleEvent bundleEvent,
-					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl) {
+					List<FrontendTokenDefinitionImpl>
+						frontendTokenDefinitionImpls) {
 				}
 
 				@Override
 				public void removedBundle(
 					Bundle bundle, BundleEvent bundleEvent,
-					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl) {
+					List<FrontendTokenDefinitionImpl>
+						frontendTokenDefinitionImpls) {
 
-					_frontendTokenDefinitions.remove(
-						frontendTokenDefinitionImpl.getThemeId());
+					for (FrontendTokenDefinitionImpl
+							frontendTokenDefinitionImpl :
+								frontendTokenDefinitionImpls) {
+
+						_frontendTokenDefinitions.remove(
+							frontendTokenDefinitionImpl.getThemeId());
+					}
 				}
 
 			};

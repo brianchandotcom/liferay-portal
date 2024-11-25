@@ -13,6 +13,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchPortletException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -268,7 +270,7 @@ public class WidgetPageWidgetInstanceResourceImpl
 		return layoutTypePortlet.getColumn(portletId);
 	}
 
-	private int _getPosition(Layout layout, String portletId) {
+	private Integer _getPosition(Layout layout, String portletId) {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
@@ -291,7 +293,15 @@ public class WidgetPageWidgetInstanceResourceImpl
 			}
 		}
 
-		return 0;
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Position for portlet cannot be obtained since portlet ",
+					portletId, " cannot be found in layout ",
+					layout.getPlid()));
+		}
+
+		return null;
 	}
 
 	private WidgetPageWidgetInstance _toWidgetPageWidgetInstance(
@@ -310,6 +320,9 @@ public class WidgetPageWidgetInstanceResourceImpl
 			}
 		};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WidgetPageWidgetInstanceResourceImpl.class);
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

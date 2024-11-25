@@ -91,16 +91,17 @@ public class StoredCredentialDataStoreTest {
 		_storedCredentialDataStores[0].clear();
 
 		_forEachUser(
-			(dataStore, userId, storedCredential) -> {
+			(storedCredentialDataStore, userId, storedCredential) -> {
 				if (Objects.equals(
-						dataStore.getId(),
+						storedCredentialDataStore.getId(),
 						_storedCredentialDataStores[0].getId())) {
 
-					Assert.assertNull(dataStore.get(userId));
+					Assert.assertNull(storedCredentialDataStore.get(userId));
 				}
 				else {
 					Assert.assertEquals(
-						storedCredential, dataStore.get(userId));
+						storedCredential,
+						storedCredentialDataStore.get(userId));
 				}
 			});
 	}
@@ -108,27 +109,31 @@ public class StoredCredentialDataStoreTest {
 	@Test
 	public void testContainsKey() throws Exception {
 		_forEachUser(
-			(dataStore, userId, storedCredential) -> Assert.assertFalse(
-				dataStore.containsKey(userId)));
+			(storedCredentialDataStore, userId, storedCredential) ->
+				Assert.assertFalse(
+					storedCredentialDataStore.containsKey(userId)));
 
 		_forEachUser(StoredCredentialDataStore::set);
 
 		_forEachUser(
-			(dataStore, userId, storedCredential) -> Assert.assertTrue(
-				dataStore.containsKey(userId)));
+			(storedCredentialDataStore, userId, storedCredential) ->
+				Assert.assertTrue(
+					storedCredentialDataStore.containsKey(userId)));
 	}
 
 	@Test
 	public void testContainsValue() throws Exception {
 		_forEachUser(
-			(dataStore, userId, storedCredential) -> Assert.assertFalse(
-				dataStore.containsValue(storedCredential)));
+			(storedCredentialDataStore, userId, storedCredential) ->
+				Assert.assertFalse(
+					storedCredentialDataStore.containsValue(storedCredential)));
 
 		_forEachUser(StoredCredentialDataStore::set);
 
 		_forEachUser(
-			(dataStore, userId, storedCredential) -> Assert.assertTrue(
-				dataStore.containsValue(storedCredential)));
+			(storedCredentialDataStore, userId, storedCredential) ->
+				Assert.assertTrue(
+					storedCredentialDataStore.containsValue(storedCredential)));
 	}
 
 	@Test
@@ -138,51 +143,58 @@ public class StoredCredentialDataStoreTest {
 		_storedCredentialDataStores[0].delete(_userIds[0]);
 
 		_forEachUser(
-			(dataStore, userId, storedCredential) -> {
+			(storedCredentialDataStore, userId, storedCredential) -> {
 				if (Objects.equals(
-						dataStore.getId(),
+						storedCredentialDataStore.getId(),
 						_storedCredentialDataStores[0].getId()) &&
 					Objects.equals(userId, _userIds[0])) {
 
-					Assert.assertNull(dataStore.get(userId));
+					Assert.assertNull(storedCredentialDataStore.get(userId));
 				}
 				else {
 					Assert.assertEquals(
-						storedCredential, dataStore.get(userId));
+						storedCredential,
+						storedCredentialDataStore.get(userId));
 				}
 			});
 	}
 
 	@Test
 	public void testGet() throws Exception {
-		_forEachDataStore(
-			dataStore -> Assert.assertNull(
-				dataStore.get(String.valueOf(RandomTestUtil.randomLong()))));
+		_forEachStoredCredentialDataStore(
+			storedCredentialDataStore -> Assert.assertNull(
+				storedCredentialDataStore.get(
+					String.valueOf(RandomTestUtil.randomLong()))));
 	}
 
 	@Test
 	public void testIsEmpty() throws Exception {
-		_forEachDataStore(dataStore -> Assert.assertTrue(dataStore.isEmpty()));
+		_forEachStoredCredentialDataStore(
+			storedCredentialDataStore -> Assert.assertTrue(
+				storedCredentialDataStore.isEmpty()));
 
 		_forEachUser(StoredCredentialDataStore::set);
 
-		_forEachDataStore(dataStore -> Assert.assertFalse(dataStore.isEmpty()));
+		_forEachStoredCredentialDataStore(
+			storedCredentialDataStore -> Assert.assertFalse(
+				storedCredentialDataStore.isEmpty()));
 	}
 
 	@Test
 	public void testKeySet() throws Exception {
-		_forEachDataStore(
-			dataStore -> {
-				Set<String> keySet = dataStore.keySet();
+		_forEachStoredCredentialDataStore(
+			storedCredentialDataStore -> {
+				Set<String> keySet = storedCredentialDataStore.keySet();
 
 				Assert.assertTrue(keySet.isEmpty());
 			});
 
 		_forEachUser(StoredCredentialDataStore::set);
 
-		_forEachDataStore(
-			dataStore -> Assert.assertEquals(
-				_getCompanyKeySet(dataStore.getId()), dataStore.keySet()));
+		_forEachStoredCredentialDataStore(
+			storedCredentialDataStore -> Assert.assertEquals(
+				_getCompanyKeySet(storedCredentialDataStore.getId()),
+				storedCredentialDataStore.keySet()));
 	}
 
 	@Test
@@ -190,36 +202,41 @@ public class StoredCredentialDataStoreTest {
 		_forEachUser(StoredCredentialDataStore::set);
 
 		_forEachUser(
-			(dataStore, userId, storedCredential) -> Assert.assertEquals(
-				storedCredential, dataStore.get(userId)));
+			(storedCredentialDataStore, userId, storedCredential) ->
+				Assert.assertEquals(
+					storedCredential, storedCredentialDataStore.get(userId)));
 	}
 
 	@Test
 	public void testSize() throws Exception {
-		_forEachDataStore(
-			dataStore -> Assert.assertEquals(0, dataStore.size()));
+		_forEachStoredCredentialDataStore(
+			storedCredentialDataStore -> Assert.assertEquals(
+				0, storedCredentialDataStore.size()));
 
 		_forEachUser(StoredCredentialDataStore::set);
 
-		_forEachDataStore(
-			dataStore -> Assert.assertEquals(_USERS_COUNT, dataStore.size()));
+		_forEachStoredCredentialDataStore(
+			storedCredentialDataStore -> Assert.assertEquals(
+				_USERS_COUNT, storedCredentialDataStore.size()));
 	}
 
 	@Test
 	public void testValues() throws Exception {
-		_forEachDataStore(
-			dataStore -> {
-				Collection<StoredCredential> values = dataStore.values();
+		_forEachStoredCredentialDataStore(
+			storedCredentialDataStore -> {
+				Collection<StoredCredential> values =
+					storedCredentialDataStore.values();
 
 				Assert.assertTrue(values.isEmpty());
 			});
 
 		_forEachUser(StoredCredentialDataStore::set);
 
-		_forEachDataStore(
-			dataStore -> Assert.assertEquals(
-				_getCompanyValues(dataStore.getId()),
-				new HashSet<StoredCredential>(dataStore.values())));
+		_forEachStoredCredentialDataStore(
+			storedCredentialDataStore -> Assert.assertEquals(
+				_getCompanyValues(storedCredentialDataStore.getId()),
+				new HashSet<StoredCredential>(
+					storedCredentialDataStore.values())));
 	}
 
 	private StoredCredential _addStoredCredential() {
@@ -233,7 +250,7 @@ public class StoredCredentialDataStoreTest {
 		return storedCredential;
 	}
 
-	private void _forEachDataStore(
+	private void _forEachStoredCredentialDataStore(
 			UnsafeConsumer<StoredCredentialDataStore, Exception> unsafeConsumer)
 		throws Exception {
 
@@ -261,8 +278,8 @@ public class StoredCredentialDataStoreTest {
 		Set<String> keySet = new HashSet<>();
 
 		_forEachUser(
-			(dataStore, userId, storedCredential) -> {
-				if (Objects.equals(dataStore.getId(), id)) {
+			(storedCredentialDataStore, userId, storedCredential) -> {
+				if (Objects.equals(storedCredentialDataStore.getId(), id)) {
 					keySet.add(userId);
 				}
 			});
@@ -276,8 +293,8 @@ public class StoredCredentialDataStoreTest {
 		Set<StoredCredential> values = new HashSet<>();
 
 		_forEachUser(
-			(dataStore, userId, storedCredential) -> {
-				if (Objects.equals(dataStore.getId(), id)) {
+			(storedCredentialDataStore, userId, storedCredential) -> {
+				if (Objects.equals(storedCredentialDataStore.getId(), id)) {
 					values.add(storedCredential);
 				}
 			});

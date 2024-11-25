@@ -58,7 +58,8 @@ public class ImportTaskResourceTest {
 				ListUtil.fromArray("createStrategy=INSERT"));
 
 			Assert.assertEquals(
-				"Modified error message", importTask.getErrorMessage());
+				"Modified error message for TestEntity 'null'",
+				importTask.getErrorMessage());
 		}
 	}
 

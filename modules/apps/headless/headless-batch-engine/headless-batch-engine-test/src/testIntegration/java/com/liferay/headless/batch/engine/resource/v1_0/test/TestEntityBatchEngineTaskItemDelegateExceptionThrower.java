@@ -9,14 +9,12 @@ import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
-import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,16 +33,8 @@ public class TestEntityBatchEngineTaskItemDelegateExceptionThrower
 			TestEntity testEntity, Map<String, Serializable> parameters)
 		throws Exception {
 
-		if (Objects.equals(
-				parameters.get("importStrategy"),
-				ImportTask.ImportStrategy.ON_ERROR_CONTINUE.getValue())) {
-
-			throw new TestEntityException(
-				"error message for TestEntity '" + testEntity.getTextValue() +
-					"'");
-		}
-
-		throw new TestEntityException("error message");
+		throw new TestEntityException(
+			"error message for TestEntity '" + testEntity.getTextValue() + "'");
 	}
 
 	@Override

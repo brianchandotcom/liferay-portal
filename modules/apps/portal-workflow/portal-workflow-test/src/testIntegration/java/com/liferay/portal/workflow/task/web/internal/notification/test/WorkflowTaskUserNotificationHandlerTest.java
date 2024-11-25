@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -130,6 +131,8 @@ public class WorkflowTaskUserNotificationHandlerTest {
 					expectedPlid, PortletRequest.RENDER_PHASE)
 			).setMVCPath(
 				"/edit_workflow_task.jsp"
+			).setBackURL(
+				_CURRENT_URL
 			).setParameter(
 				"workflowTaskId",
 				() -> {
@@ -155,6 +158,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setSiteGroupId(group.getGroupId());
+		themeDisplay.setURLCurrent(_CURRENT_URL);
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
@@ -196,6 +200,8 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		return _userNotificationHandler.interpret(
 			userNotificationEvent, serviceContext);
 	}
+
+	private static final String _CURRENT_URL = RandomTestUtil.randomString();
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;

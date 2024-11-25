@@ -7,23 +7,32 @@ package com.liferay.user.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.LoginPostAction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -33,6 +42,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Christopher Kian
@@ -44,6 +56,62 @@ public class UserServiceWhenAddingUserWithDefaultRolesTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testMultipleDefaultAssociations() throws Exception {
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				company.getUserId(), true);
+
+		Group group = GroupTestUtil.addGroup();
+
+		portalPreferences.setValue(
+			"", PropsKeys.ADMIN_DEFAULT_GROUP_NAMES,
+			group.getDescriptiveName());
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		portalPreferences.setValue(
+			"", PropsKeys.ADMIN_DEFAULT_USER_GROUP_NAMES, userGroup.getName());
+
+		portalPreferences.setValue(
+			"", PropsKeys.ADMIN_SYNC_DEFAULT_ASSOCIATIONS, "true");
+
+		PortalPreferencesLocalServiceUtil.updatePreferences(
+			company.getCompanyId(), PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			PortletPreferencesFactoryUtil.toXML(portalPreferences));
+
+		_user = UserTestUtil.addUser(company);
+
+		_groupLocalService.deleteUserGroup(_user.getUserId(), group);
+
+		_userGroupLocalService.deleteUserUserGroup(
+			_user.getUserId(), userGroup);
+
+		_user = _userLocalService.getUser(_user.getUserId());
+
+		Assert.assertFalse(
+			ArrayUtil.contains(_user.getGroupIds(), group.getGroupId()));
+		Assert.assertFalse(
+			ArrayUtil.contains(
+				_user.getUserGroupIds(), userGroup.getUserGroupId()));
+
+		_mockHttpServletRequest.setAttribute(
+			WebKeys.USER_ID, _user.getUserId());
+
+		_loginPostAction.run(_mockHttpServletRequest, _mockHttpServletResponse);
+
+		_user = _userLocalService.getUser(_user.getUserId());
+
+		Assert.assertTrue(
+			ArrayUtil.contains(_user.getGroupIds(), group.getGroupId()));
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				_user.getUserGroupIds(), userGroup.getUserGroupId()));
+	}
 
 	@Test
 	public void testShouldAlwaysReceiveDefaultUserRole() throws Exception {
@@ -82,9 +150,24 @@ public class UserServiceWhenAddingUserWithDefaultRolesTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
+	private GroupLocalService _groupLocalService;
+
+	private final LoginPostAction _loginPostAction = new LoginPostAction();
+	private final MockHttpServletRequest _mockHttpServletRequest =
+		new MockHttpServletRequest();
+	private final MockHttpServletResponse _mockHttpServletResponse =
+		new MockHttpServletResponse();
+
+	@Inject
 	private PrefsProps _prefsProps;
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationModel;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.friendly.url.util.comparator.FriendlyURLEntryLocalizationComparator;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
@@ -22,6 +23,7 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -149,16 +151,18 @@ public class FriendlyUrlHistoryResourceImpl
 			layout.isPrivateLayout());
 
 		for (String languageId : layout.getAvailableLanguageIds()) {
-			jsonObject.put(
-				LocaleUtil.toBCP47LanguageId(languageId),
-				JSONUtil.toJSONArray(
-					_friendlyURLEntryLocalService.
-						getFriendlyURLEntryLocalizations(
-							layout.getGroupId(), classNameId, layout.getPlid(),
-							languageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-							_friendlyURLEntryLocalizationComparator),
-					friendlyURLEntryLocalization ->
-						friendlyURLEntryLocalization.getUrlTitle()));
+			JSONArray jsonArray = JSONUtil.toJSONArray(
+				_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
+					layout.getGroupId(), classNameId, layout.getPlid(),
+					languageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					_friendlyURLEntryLocalizationComparator),
+				FriendlyURLEntryLocalizationModel::getUrlTitle);
+
+			if (jsonArray.length() == 0) {
+				continue;
+			}
+
+			jsonObject.put(LocaleUtil.toBCP47LanguageId(languageId), jsonArray);
 		}
 
 		return jsonObject;

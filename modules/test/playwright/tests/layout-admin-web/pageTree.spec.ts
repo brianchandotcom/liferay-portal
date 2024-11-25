@@ -14,6 +14,7 @@ import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import getRandomString from '../../utils/getRandomString';
 import {performUserSwitch} from '../../utils/performLogin';
 import {openProductMenu} from '../../utils/productMenu';
+import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -21,12 +22,14 @@ const test = mergeTests(
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,
-	loginTest()
+	loginTest(),
+	pagesPagesTest
 );
 
 test('Checks the correct label for restricted page in the Page Tree', async ({
 	apiHelpers,
 	page,
+	pageTreePage,
 	site,
 }) => {
 
@@ -55,13 +58,7 @@ test('Checks the correct label for restricted page in the Page Tree', async ({
 
 	// Open tree if it's not already open
 
-	if (!(await page.locator('.treeview').isVisible())) {
-		await page
-			.getByRole('button', {exact: true, name: 'Page Tree'})
-			.click();
-
-		await page.locator('.treeview').waitFor();
-	}
+	await pageTreePage.open();
 
 	// Check the correct label for restricted page
 
@@ -80,7 +77,7 @@ test(
 	{
 		tag: '@LPS-129406',
 	},
-	async ({apiHelpers, page}) => {
+	async ({apiHelpers, page, pageTreePage}) => {
 		await page.goto('/');
 
 		// Open the Product Menu
@@ -89,21 +86,7 @@ test(
 
 		// Open tree if it's not already open
 
-		if (
-			!(await page
-				.getByLabel('Product Menu')
-				.locator('.treeview')
-				.isVisible())
-		) {
-			await page
-				.getByRole('button', {exact: true, name: 'Page Tree'})
-				.click();
-
-			await page
-				.getByLabel('Product Menu')
-				.locator('.treeview')
-				.waitFor();
-		}
+		await pageTreePage.open();
 
 		// Assert add page button is visible for admin user
 
@@ -149,21 +132,7 @@ test(
 
 		// Open tree if it's not already open
 
-		if (
-			!(await page
-				.getByLabel('Product Menu')
-				.locator('.treeview')
-				.isVisible())
-		) {
-			await page
-				.getByRole('button', {exact: true, name: 'Page Tree'})
-				.click();
-
-			await page
-				.getByLabel('Product Menu')
-				.locator('.treeview')
-				.waitFor();
-		}
+		await pageTreePage.open();
 
 		// Assert add page button is not visible
 

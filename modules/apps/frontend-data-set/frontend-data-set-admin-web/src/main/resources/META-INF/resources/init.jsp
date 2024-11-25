@@ -21,6 +21,7 @@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationI
 page import="com.liferay.learn.LearnMessageUtil" %><%@
 page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.security.auth.PrincipalException" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>
 

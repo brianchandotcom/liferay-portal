@@ -665,7 +665,7 @@ const CustomDataSets = ({
 					{
 						data: {
 							id: 'edit',
-							permissionKey: 'get',
+							permissionKey: 'update',
 						},
 						icon: 'pencil',
 						label: Liferay.Language.get('edit'),

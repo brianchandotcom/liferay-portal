@@ -116,8 +116,8 @@ public class FDSAdminDisplayContext {
 			PortletURLFactoryUtil.create(
 				_renderRequest, FDSAdminPortletKeys.FDS_ADMIN,
 				RenderRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/data_set.jsp"
+		).setMVCRenderCommandName(
+			"/edit_data_set"
 		).setBackURL(
 			_themeDisplay.getURLCurrent()
 		).buildString();

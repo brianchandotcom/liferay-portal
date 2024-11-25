@@ -62,16 +62,14 @@ public class StoredCredentialDataStoreTest {
 			_storedCredentialDataStores[i] = new StoredCredentialDataStore(
 				RandomTestUtil.randomLong(), null,
 				RandomTestUtil.randomString());
+
+			for (int j = 0; j < _KEYS_COUNT; j++) {
+				_storedCredentials[i][j] = _addStoredCredential();
+			}
 		}
 
 		for (int i = 0; i < _KEYS_COUNT; i++) {
 			_keys[i] = String.valueOf(RandomTestUtil.randomLong());
-		}
-
-		for (int i = 0; i < _COMPANIES_COUNT; i++) {
-			for (int j = 0; j < _KEYS_COUNT; j++) {
-				_storedCredentials[i][j] = _addStoredCredential();
-			}
 		}
 	}
 

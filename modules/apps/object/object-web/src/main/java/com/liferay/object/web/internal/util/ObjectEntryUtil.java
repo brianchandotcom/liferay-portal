@@ -11,7 +11,11 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.DateTimeInfoFieldType;
+import com.liferay.info.field.type.HTMLInfoFieldType;
+import com.liferay.info.field.type.LongTextInfoFieldType;
+import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -24,6 +28,7 @@ import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.web.internal.model.ProxyObjectEntry;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -184,6 +189,31 @@ public class ObjectEntryUtil {
 				properties.put(
 					infoField.getName(),
 					dateTimeFormatter.format((LocalDateTime)value));
+			}
+			else if ((Objects.equals(
+						HTMLInfoFieldType.INSTANCE,
+						infoField.getInfoFieldType()) ||
+					  Objects.equals(
+						  LongTextInfoFieldType.INSTANCE,
+						  infoField.getInfoFieldType()) ||
+					  Objects.equals(
+						  TextInfoFieldType.INSTANCE,
+						  infoField.getInfoFieldType())) &&
+					 infoField.isLocalizable() &&
+					 (value instanceof InfoLocalizedValue)) {
+
+				InfoLocalizedValue<String> infoLocalizedValue =
+					(InfoLocalizedValue<String>)value;
+
+				Map<String, String> map = new HashMap<>();
+
+				for (Locale locale : infoLocalizedValue.getAvailableLocales()) {
+					map.put(
+						LanguageUtil.getLanguageId(locale),
+						infoLocalizedValue.getValue(locale));
+				}
+
+				properties.put(infoField.getName() + "_i18n", map);
 			}
 			else {
 				properties.put(infoField.getName(), value);

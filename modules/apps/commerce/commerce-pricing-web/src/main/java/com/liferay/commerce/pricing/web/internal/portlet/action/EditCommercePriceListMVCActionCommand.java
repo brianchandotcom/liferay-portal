@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.price.list.exception.CommercePriceListCurrencyException;
 import com.liferay.commerce.price.list.exception.CommercePriceListParentPriceListGroupIdException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
@@ -226,6 +228,10 @@ public class EditCommercePriceListMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommercePriceList.class.getName(), actionRequest);
 
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.getCommerceCurrency(
+				commerceCurrencyId);
+
 		CommercePriceList commercePriceList;
 
 		if (commercePriceListId <= 0) {
@@ -234,9 +240,9 @@ public class EditCommercePriceListMVCActionCommand
 			String type = ParamUtil.getString(actionRequest, "type");
 
 			commercePriceList = _commercePriceListService.addCommercePriceList(
-				null, commerceCatalogGroupId, commerceCurrencyId, netPrice,
-				type, parentCommercePriceListId, false, name, priority,
-				displayDateMonth, displayDateDay, displayDateYear,
+				null, commerceCatalogGroupId, commerceCurrency.getCode(),
+				netPrice, type, parentCommercePriceListId, false, name,
+				priority, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, serviceContext);
@@ -244,7 +250,7 @@ public class EditCommercePriceListMVCActionCommand
 		else {
 			commercePriceList =
 				_commercePriceListService.updateCommercePriceList(
-					commercePriceListId, commerceCurrencyId, netPrice,
+					commercePriceListId, commerceCurrency.getCode(), netPrice,
 					parentCommercePriceListId, name, priority, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -254,6 +260,9 @@ public class EditCommercePriceListMVCActionCommand
 
 		return commercePriceList;
 	}
+
+	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;

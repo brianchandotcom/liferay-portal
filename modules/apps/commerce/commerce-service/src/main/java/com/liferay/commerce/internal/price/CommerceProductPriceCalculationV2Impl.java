@@ -779,7 +779,8 @@ public class CommerceProductPriceCalculationV2Impl
 
 		CommerceCurrency priceListCurrency =
 			_commerceCurrencyLocalService.getCommerceCurrency(
-				commercePriceList.getCommerceCurrencyId());
+				commercePriceList.getCompanyId(),
+				commercePriceList.getCommerceCurrencyCode());
 
 		if (priceListCurrency.getCommerceCurrencyId() !=
 				commerceCurrency.getCommerceCurrencyId()) {
@@ -819,7 +820,8 @@ public class CommerceProductPriceCalculationV2Impl
 
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.getCommerceCurrency(
-				commercePriceList.getCommerceCurrencyId());
+				commercePriceList.getCompanyId(),
+				commercePriceList.getCommerceCurrencyCode());
 
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
 			commercePriceEntry.getCProductId(),

@@ -2050,7 +2050,7 @@ public class DataFactory {
 	}
 
 	public CommercePriceListModel newCommercePriceListModel(
-		long groupId, long commerceCurrencyId, boolean catalogBasePriceList,
+		long groupId, String commerceCurrencyCode, boolean catalogBasePriceList,
 		boolean netPrice, String type) {
 
 		CommercePriceListModel commercePriceListModel =
@@ -2074,7 +2074,7 @@ public class DataFactory {
 
 		// Other fields
 
-		commercePriceListModel.setCommerceCurrencyId(commerceCurrencyId);
+		commercePriceListModel.setCommerceCurrencyCode(commerceCurrencyCode);
 		commercePriceListModel.setParentCommercePriceListId(0);
 		commercePriceListModel.setCatalogBasePriceList(catalogBasePriceList);
 		commercePriceListModel.setNetPrice(netPrice);
@@ -2100,7 +2100,7 @@ public class DataFactory {
 	}
 
 	public List<CommercePriceListModel> newCommercePriceListModels(
-		long groupId, long commerceCurrencyId, boolean catalogBasePriceList,
+		long groupId, String commerceCurrencyCode, boolean catalogBasePriceList,
 		boolean netPrice, String type) {
 
 		List<CommercePriceListModel> commercePriceListModels = new ArrayList<>(
@@ -2111,8 +2111,8 @@ public class DataFactory {
 
 			commercePriceListModels.add(
 				newCommercePriceListModel(
-					groupId, commerceCurrencyId, catalogBasePriceList, netPrice,
-					type));
+					groupId, commerceCurrencyCode, catalogBasePriceList,
+					netPrice, type));
 		}
 
 		return commercePriceListModels;

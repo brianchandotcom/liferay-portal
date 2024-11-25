@@ -6,7 +6,6 @@
 package com.liferay.commerce.test.util.price.list;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -232,15 +231,14 @@ public class CommercePriceListTestUtil {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
-			null, groupId, user.getUserId(),
-			commerceCurrency.getCommerceCurrencyId(), true, type, 0,
-			catalogBasePriceList, RandomTestUtil.randomString(), priority,
-			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
-			calendar.get(Calendar.MINUTE), calendar.get(Calendar.MONTH),
+			null, groupId, user.getUserId(), commerceCurrency.getCode(), true,
+			type, 0, catalogBasePriceList, RandomTestUtil.randomString(),
+			priority, calendar.get(Calendar.MONTH),
 			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
 			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
-			true, serviceContext);
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+			calendar.get(Calendar.MINUTE), true, serviceContext);
 	}
 
 	public static CommercePriceList addCommercePriceList(
@@ -283,9 +281,8 @@ public class CommercePriceListTestUtil {
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
 			externalReferenceCode, commerceCatalog.getGroupId(),
-			user.getUserId(),
-			_getCommerceCurrencyId(serviceContext.getCompanyId(), currency),
-			netPrice, CommercePriceListConstants.TYPE_PRICE_LIST,
+			user.getUserId(), currency, netPrice,
+			CommercePriceListConstants.TYPE_PRICE_LIST,
 			parentCommercePriceListId, false, name, priority,
 			displayDateElements.getMonth(), displayDateElements.getDay(),
 			displayDateElements.getYear(), displayDateElements.getHour(),
@@ -369,9 +366,8 @@ public class CommercePriceListTestUtil {
 
 		return CommercePriceListLocalServiceUtil.addOrUpdateCommercePriceList(
 			externalReferenceCode, commerceCatalog.getGroupId(),
-			user.getUserId(), commercePriceListId,
-			_getCommerceCurrencyId(serviceContext.getCompanyId(), currency),
-			true, CommercePriceListConstants.TYPE_PRICE_LIST,
+			user.getUserId(), commercePriceListId, currency, true,
+			CommercePriceListConstants.TYPE_PRICE_LIST,
 			parentCommercePriceListId, false, name, priority,
 			displayDateElements.getMonth(), displayDateElements.getDay(),
 			displayDateElements.getYear(), displayDateElements.getHour(),
@@ -425,26 +421,13 @@ public class CommercePriceListTestUtil {
 			expirationDate, defaultExpirationCalendar);
 
 		return CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePriceListId,
-			_getCommerceCurrencyId(serviceContext.getCompanyId(), currency),
-			true, parentCommercePriceListId, name, priority,
-			displayDateElements.getMonth(), displayDateElements.getDay(),
-			displayDateElements.getYear(), displayDateElements.getHour(),
-			displayDateElements.getMinute(), expirationDateElements.getMonth(),
-			expirationDateElements.getDay(), expirationDateElements.getYear(),
-			expirationDateElements.getHour(),
+			commercePriceListId, currency, true, parentCommercePriceListId,
+			name, priority, displayDateElements.getMonth(),
+			displayDateElements.getDay(), displayDateElements.getYear(),
+			displayDateElements.getHour(), displayDateElements.getMinute(),
+			expirationDateElements.getMonth(), expirationDateElements.getDay(),
+			expirationDateElements.getYear(), expirationDateElements.getHour(),
 			expirationDateElements.getMinute(), neverExpire, serviceContext);
-	}
-
-	private static long _getCommerceCurrencyId(
-			long groupId, String currencyCode)
-		throws PortalException {
-
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyLocalServiceUtil.getCommerceCurrency(
-				groupId, currencyCode);
-
-		return commerceCurrency.getCommerceCurrencyId();
 	}
 
 	private static class DateElements {

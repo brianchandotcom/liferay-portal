@@ -113,9 +113,8 @@ public class CPTestUtil {
 			}
 
 			CommercePriceListLocalServiceUtil.addCatalogBaseCommercePriceList(
-				groupId, serviceContext.getUserId(),
-				commerceCurrency.getCommerceCurrencyId(), type,
-				RandomTestUtil.randomString(), serviceContext);
+				groupId, serviceContext.getUserId(), commerceCurrency.getCode(),
+				type, RandomTestUtil.randomString(), serviceContext);
 		}
 	}
 

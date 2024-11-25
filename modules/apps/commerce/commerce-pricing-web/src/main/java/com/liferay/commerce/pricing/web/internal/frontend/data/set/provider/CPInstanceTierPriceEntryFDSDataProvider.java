@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend.data.set.provider;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -86,9 +87,12 @@ public class CPInstanceTierPriceEntryFDSDataProvider
 			CommercePriceList commercePriceList =
 				commercePriceEntry.getCommercePriceList();
 
+			CommerceCurrency commerceCurrency =
+				commercePriceList.getCommerceCurrency();
+
 			CommerceMoney priceCommerceMoney =
 				commerceTierPriceEntry.getPriceCommerceMoney(
-					commercePriceList.getCommerceCurrencyId());
+					commerceCurrency.getCommerceCurrencyId());
 
 			Date createDate = commerceTierPriceEntry.getCreateDate();
 

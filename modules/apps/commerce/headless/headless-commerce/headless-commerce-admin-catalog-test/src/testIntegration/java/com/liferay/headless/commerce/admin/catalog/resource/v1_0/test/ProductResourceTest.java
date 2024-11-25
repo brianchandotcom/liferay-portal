@@ -105,12 +105,12 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 		_commercePriceListLocalService.addCatalogBaseCommercePriceList(
 			_commerceCatalog.getGroupId(), user.getUserId(),
-			commerceCurrency.getCommerceCurrencyId(), "price-list",
+			commerceCurrency.getCode(), "price-list",
 			RandomTestUtil.randomString(), serviceContext);
 
 		_commercePriceListLocalService.addCatalogBaseCommercePriceList(
 			_commerceCatalog.getGroupId(), user.getUserId(),
-			commerceCurrency.getCommerceCurrencyId(), "promotion",
+			commerceCurrency.getCode(), "promotion",
 			RandomTestUtil.randomString(), serviceContext);
 	}
 

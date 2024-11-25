@@ -101,8 +101,8 @@ public class PlacedOrderItemShipmentResourceTest
 		_commercePriceList =
 			_commercePriceListLocalService.addCommercePriceList(
 				RandomTestUtil.randomString(), testGroup.getGroupId(),
-				_user.getUserId(), _commerceCurrency.getCommerceCurrencyId(),
-				true, CommercePriceListConstants.TYPE_PRICE_LIST, 0, true,
+				_user.getUserId(), _commerceCurrency.getCode(), true,
+				CommercePriceListConstants.TYPE_PRICE_LIST, 0, true,
 				RandomTestUtil.randomString(), RandomTestUtil.nextDouble(), 1,
 				1, 2022, 12, 0, 0, 0, 0, 0, 0, true, _serviceContext);
 

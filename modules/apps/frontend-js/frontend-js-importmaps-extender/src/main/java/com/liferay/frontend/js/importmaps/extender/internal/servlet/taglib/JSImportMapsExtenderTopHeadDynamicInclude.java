@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNo
 import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -239,39 +238,40 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 			return;
 		}
 
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		jsonObject.put(
+			"imports",
+			() -> {
+				JSONObject importsJSONObject = _jsonFactory.createJSONObject();
+
+				_putImports(
+					importsJSONObject,
+					_getGlobalImportMapsJSONObjects(_COMPANY_ID_ALL));
+				_putImports(
+					importsJSONObject,
+					_getGlobalImportMapsJSONObjects(companyId));
+
+				return importsJSONObject;
+			}
+		).put(
+			"scopes",
+			() -> {
+				JSONObject scopesJSONObject = _jsonFactory.createJSONObject();
+
+				_putScopes(
+					scopesJSONObject,
+					_getScopedImportMapsJSONObjects(_COMPANY_ID_ALL));
+				_putScopes(
+					scopesJSONObject,
+					_getScopedImportMapsJSONObjects(companyId));
+
+				return scopesJSONObject;
+			}
+		);
+
 		_importMapsMap.put(
-			companyId,
-			JSONUtil.put(
-				"imports",
-				() -> {
-					JSONObject importsJSONObject =
-						_jsonFactory.createJSONObject();
-
-					_putImports(
-						importsJSONObject,
-						_getGlobalImportMapsJSONObjects(_COMPANY_ID_ALL));
-					_putImports(
-						importsJSONObject,
-						_getGlobalImportMapsJSONObjects(companyId));
-
-					return importsJSONObject;
-				}
-			).put(
-				"scopes",
-				() -> {
-					JSONObject scopesJSONObject =
-						_jsonFactory.createJSONObject();
-
-					_putScopes(
-						scopesJSONObject,
-						_getScopedImportMapsJSONObjects(_COMPANY_ID_ALL));
-					_putScopes(
-						scopesJSONObject,
-						_getScopedImportMapsJSONObjects(companyId));
-
-					return scopesJSONObject;
-				}
-			).toString());
+			companyId, jsonObject.toString());
 	}
 
 	private JSImportMapsRegistration _register(

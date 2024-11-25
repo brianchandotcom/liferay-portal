@@ -338,8 +338,10 @@ public class ObjectDefinitionLocalServiceUtil {
 			uuid, companyId);
 	}
 
-	public static ObjectDefinition fetchSystemObjectDefinition(String name) {
-		return getService().fetchSystemObjectDefinition(name);
+	public static ObjectDefinition fetchSystemObjectDefinition(
+		long companyId, String name) {
+
+		return getService().fetchSystemObjectDefinition(companyId, name);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

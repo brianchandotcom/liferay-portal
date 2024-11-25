@@ -743,7 +743,7 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public ObjectDefinition fetchSystemObjectDefinition(String name) {
+	public ObjectDefinition fetchSystemObjectDefinition(long companyId, String name) {
 		for (ObjectDefinition systemObjectDefinition :
 				getSystemObjectDefinitions()) {
 

@@ -82,6 +82,8 @@ public class TaxonomyCategoryDTOConverter
 
 		return new ParentTaxonomyCategory() {
 			{
+				setExternalReferenceCode(
+					parentAssetCategory::getExternalReferenceCode);
 				setId(parentAssetCategory::getCategoryId);
 				setName(
 					() -> parentAssetCategory.getTitle(
@@ -163,6 +165,8 @@ public class TaxonomyCategoryDTOConverter
 
 						return new ParentTaxonomyVocabulary() {
 							{
+								setExternalReferenceCode(
+									assetVocabulary::getExternalReferenceCode);
 								setId(assetCategory::getVocabularyId);
 								setName(
 									() -> assetVocabulary.getTitle(

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AuthorizationServerMetadataResolver {
 
 	public OIDCProviderMetadata resolveOIDCProviderMetadata(
-			String authServerWellKnownURI, String clientId,
+			String authServerWellKnownURI, long oAuthClientEntryId,
 			int metadataCacheInSecs)
 		throws Exception {
 
@@ -42,7 +42,7 @@ public class AuthorizationServerMetadataResolver {
 		}
 
 		OIDCProviderMetadata oidcProviderMetadata =
-			_oidcProviderMetadataPortalCache.get(clientId);
+			_oidcProviderMetadataPortalCache.get(oAuthClientEntryId);
 
 		if (oidcProviderMetadata != null) {
 			return oidcProviderMetadata;
@@ -62,7 +62,7 @@ public class AuthorizationServerMetadataResolver {
 			httpResponse.getContent());
 
 		_oidcProviderMetadataPortalCache.put(
-			clientId, oidcProviderMetadata, metadataCacheInSecs);
+			oAuthClientEntryId, oidcProviderMetadata, metadataCacheInSecs);
 
 		return oidcProviderMetadata;
 	}
@@ -71,7 +71,7 @@ public class AuthorizationServerMetadataResolver {
 	private OAuthClientASLocalMetadataLocalService
 		_oAuthClientASLocalMetadataLocalService;
 
-	private final PortalCache<String, OIDCProviderMetadata>
+	private final PortalCache<Long, OIDCProviderMetadata>
 		_oidcProviderMetadataPortalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.SINGLE_VM,
 			AuthorizationServerMetadataResolver.class.getName());

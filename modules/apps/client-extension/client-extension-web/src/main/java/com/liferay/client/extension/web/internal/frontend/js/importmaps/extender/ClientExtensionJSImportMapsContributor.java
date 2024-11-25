@@ -9,7 +9,6 @@ import com.liferay.client.extension.web.internal.type.deployer.Registrable;
 import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Dictionary;
 
@@ -20,10 +19,7 @@ public class ClientExtensionJSImportMapsContributor
 	implements JSImportMapsContributor, Registrable {
 
 	public ClientExtensionJSImportMapsContributor(
-		String bareSpecifier, long companyId, JSONFactory jsonFactory,
-		String url) {
-
-		_companyId = companyId;
+		String bareSpecifier, JSONFactory jsonFactory, String url) {
 
 		_importMapsJSONObject = jsonFactory.createJSONObject();
 
@@ -32,9 +28,7 @@ public class ClientExtensionJSImportMapsContributor
 
 	@Override
 	public Dictionary<String, Object> getDictionary() {
-		return HashMapDictionaryBuilder.<String, Object>put(
-			"com.liferay.importmaps.company", _companyId
-		).build();
+		return null;
 	}
 
 	@Override
@@ -42,7 +36,6 @@ public class ClientExtensionJSImportMapsContributor
 		return _importMapsJSONObject;
 	}
 
-	private final long _companyId;
 	private final JSONObject _importMapsJSONObject;
 
 }

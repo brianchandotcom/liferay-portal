@@ -87,7 +87,7 @@ public class FeatureFlagUpgradeProcessTest {
 			"FeatureFlagUpgradeProcess";
 
 	private static final String _OLD_NAMESPACE =
-		FeatureFlagConstants.FEATURE_FLAG;
+		FeatureFlagConstants.PORTAL_PROPERTY_KEY_FEATURE_FLAG;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.feature.flag.web.internal.upgrade.registry.FeatureFlagUpgradeStepRegistrator))"

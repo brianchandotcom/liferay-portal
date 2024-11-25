@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.security.auth;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -76,8 +75,10 @@ public class PrincipalThreadLocal {
 		PrincipalThreadLocal.class);
 
 	private static final ThreadLocal<String> _name =
-		new CentralizedThreadLocal<>(PrincipalThreadLocal.class + "._name");
+		new CentralizedCompanyThreadLocal<>(
+			PrincipalThreadLocal.class + "._name");
 	private static final ThreadLocal<String> _password =
-		new CentralizedThreadLocal<>(PrincipalThreadLocal.class + "._password");
+		new CentralizedCompanyThreadLocal<>(
+			PrincipalThreadLocal.class + "._password");
 
 }

@@ -90,6 +90,6 @@ a dependency to the latest released version of Liferay REST Builder.
 
 ```gradle
 dependencies {
-	restBuilder group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.372"
+	restBuilder group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.373"
 }
 ```

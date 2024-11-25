@@ -117,7 +117,7 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			Company company = _portal.getCompany(httpServletRequest);
+			Company company = themeDisplay.getCompany();
 
 			String title = _layoutSEOLinkManager.getFullPageTitle(
 				themeDisplay.getLayout(), null, null, null, null,

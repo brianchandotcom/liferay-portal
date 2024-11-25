@@ -118,7 +118,7 @@ public class DDMFieldUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeProcessSeveralCompanies() throws Exception {
+	public void testUpgradeProcessManyCompanies() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
 		try {

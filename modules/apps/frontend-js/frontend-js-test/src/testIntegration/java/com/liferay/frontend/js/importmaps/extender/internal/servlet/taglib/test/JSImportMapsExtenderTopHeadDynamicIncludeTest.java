@@ -63,6 +63,10 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
+		_company1 = CompanyTestUtil.addCompany(false);
+
+		_company2 = CompanyTestUtil.addCompany(false);
+
 		try (ServiceTrackerList<DynamicInclude> dynamicIncludes =
 				ServiceTrackerListFactory.open(
 					bundleContext, DynamicInclude.class)) {
@@ -84,11 +88,7 @@ public class JSImportMapsExtenderTopHeadDynamicIncludeTest {
 			}
 		}
 
-		_company1 = CompanyTestUtil.addCompany(false);
-
 		_registerJSImportMapsContributor(bundleContext, _company1);
-
-		_company2 = CompanyTestUtil.addCompany(false);
 
 		_registerJSImportMapsContributor(bundleContext, _company2);
 	}

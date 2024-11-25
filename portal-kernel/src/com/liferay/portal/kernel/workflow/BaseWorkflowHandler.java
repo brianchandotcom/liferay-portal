@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -106,16 +107,19 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 					themeDisplay.getPlid());
 			}
 
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASK,
-				layout.getPlid(), PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("mvcPath", "/edit_workflow_task.jsp");
-			portletURL.setParameter(
-				"workflowTaskId", String.valueOf(workflowTaskId));
-			portletURL.setWindowState(WindowState.MAXIMIZED);
-
-			return portletURL.toString();
+			return PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASK,
+					layout.getPlid(), PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/edit_workflow_task.jsp"
+			).setBackURL(
+				themeDisplay.getURLCurrent()
+			).setParameter(
+				"workflowTaskId", String.valueOf(workflowTaskId)
+			).setWindowState(
+				WindowState.MAXIMIZED
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

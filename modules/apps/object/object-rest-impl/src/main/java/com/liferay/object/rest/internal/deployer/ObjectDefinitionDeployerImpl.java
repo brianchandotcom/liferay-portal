@@ -342,8 +342,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			).put(
 				"liferay.objects", true
 			).put(
-				"osgi.jaxrs.application.base",
-				objectDefinition.getRESTContextPath()
+				"osgi.jaxrs.application.base", restContextPath
 			).put(
 				"osgi.jaxrs.extension.select",
 				"(osgi.jaxrs.name=Liferay.Vulcan)"
@@ -399,8 +398,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								"openapi.resource.key",
 								objectDefinition.getName()
 							).put(
-								"openapi.resource.path",
-								objectDefinition.getRESTContextPath()
+								"openapi.resource.path", restContextPath
 							).build()),
 						_bundleContext.registerService(
 							ObjectEntryResource.class,
@@ -413,8 +411,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 										serviceRegistration) {
 
 									return _createObjectEntryResourceImpl(
-										objectDefinition,
-										objectDefinition.getRESTContextPath());
+										objectDefinition, restContextPath);
 								}
 
 								@Override
@@ -509,7 +506,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								serviceRegistration) {
 
 							return _createObjectEntryResourceImpl(
-								null, objectDefinition.getRESTContextPath());
+								null, restContextPath);
 						}
 
 						@Override
@@ -603,13 +600,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							_expressionConvert, _filterParserProvider,
 							_groupLocalService, objectDefinition,
 							() -> _createObjectEntryResourceImpl(
-								null, objectDefinition.getRESTContextPath()),
+								null, restContextPath),
 							_resourceActionLocalService,
 							_resourcePermissionLocalService, _roleLocalService,
 							_sortParserProvider, _userLocalService),
 						HashMapDictionaryBuilder.<String, Object>put(
 							"resource.locator.key",
-							objectDefinition.getRESTContextPath() + "/" +
+							restContextPath + "/" +
 								objectDefinition.getShortName()
 						).build())),
 				_registerExceptionMappers(osgiJaxRsName)));

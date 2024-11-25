@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.security.auth.CentralizedCompanyThreadLocal;
 
 import java.util.LinkedList;
 
@@ -39,8 +39,17 @@ public class ServiceContextThreadLocal {
 		serviceContextStack.push(serviceContext);
 	}
 
+	public static void remove() {
+		LinkedList<ServiceContext> serviceContextStack =
+			_serviceContextThreadLocal.get();
+
+		if (serviceContextStack != null) {
+			serviceContextStack.clear();
+		}
+	}
+
 	private static final ThreadLocal<LinkedList<ServiceContext>>
-		_serviceContextThreadLocal = new CentralizedThreadLocal<>(
+		_serviceContextThreadLocal = new CentralizedCompanyThreadLocal<>(
 			ServiceContextThreadLocal.class + "._serviceContextThreadLocal",
 			LinkedList::new,
 			serviceContexts -> {

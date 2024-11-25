@@ -33,7 +33,7 @@ public class PasswordModificationThreadLocal {
 			PrincipalThreadLocal.class + "._passwordModified",
 			() -> Boolean.FALSE);
 	private static final ThreadLocal<String> _passwordUnencrypted =
-		new CentralizedThreadLocal<>(
+		new CentralizedCompanyThreadLocal<>(
 			PrincipalThreadLocal.class + "._passwordUnencrypted");
 
 }

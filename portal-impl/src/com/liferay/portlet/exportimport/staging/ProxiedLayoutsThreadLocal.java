@@ -5,8 +5,8 @@
 
 package com.liferay.portlet.exportimport.staging;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.auth.CentralizedCompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
@@ -35,7 +35,7 @@ public class ProxiedLayoutsThreadLocal {
 
 	private static final ThreadLocal
 		<ObjectValuePair<ServiceContext, Map<Layout, Object>>> _proxiedLayouts =
-			new CentralizedThreadLocal<>(
+			new CentralizedCompanyThreadLocal<>(
 				ProxiedLayoutsThreadLocal.class + "._proxiedLayouts");
 
 }

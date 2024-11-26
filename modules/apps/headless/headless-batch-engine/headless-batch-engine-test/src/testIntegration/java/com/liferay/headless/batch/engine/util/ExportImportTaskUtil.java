@@ -12,6 +12,7 @@ import com.liferay.headless.batch.engine.client.serdes.v1_0.ImportTaskSerDes;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
@@ -28,18 +29,12 @@ public class ExportImportTaskUtil {
 			Map<String, String> parameters)
 		throws Exception {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("headless-batch-engine/v1.0/export-task/");
 		sb.append(className);
-		sb.append("/JSON?");
-
-		for (Map.Entry<String, String> entry : parameters.entrySet()) {
-			sb.append(entry.getKey());
-			sb.append("=");
-			sb.append(entry.getValue());
-			sb.append("&");
-		}
+		sb.append("/JSON");
+		sb.append(_getQueryString(parameters));
 
 		ExportTask exportTask = ExportTaskSerDes.toDTO(
 			HTTPTestUtil.invokeToString(null, sb.toString(), Http.Method.POST));
@@ -73,18 +68,11 @@ public class ExportImportTaskUtil {
 			Map<String, String> parameters)
 		throws Exception {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(3);
 
 		sb.append("headless-batch-engine/v1.0/import-task/");
 		sb.append(className);
-		sb.append("?");
-
-		for (Map.Entry<String, String> entry : parameters.entrySet()) {
-			sb.append(entry.getKey());
-			sb.append("=");
-			sb.append(entry.getValue());
-			sb.append("&");
-		}
+		sb.append(_getQueryString(parameters));
 
 		ImportTask importTask = ImportTaskSerDes.toDTO(
 			HTTPTestUtil.invokeToString(body, sb.toString(), Http.Method.POST));
@@ -111,6 +99,23 @@ public class ExportImportTaskUtil {
 		}
 
 		return importTask;
+	}
+
+	private static String _getQueryString(Map<String, String> parameters) {
+		StringBundler sb = new StringBundler();
+
+		if (MapUtil.isNotEmpty(parameters)) {
+			sb.append("?");
+		}
+
+		for (Map.Entry<String, String> entry : parameters.entrySet()) {
+			sb.append(entry.getKey());
+			sb.append("=");
+			sb.append(entry.getValue());
+			sb.append("&");
+		}
+
+		return sb.toString();
 	}
 
 }

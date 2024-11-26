@@ -433,7 +433,27 @@ definition {
 			var rssFeedURL = selenium.getAttribute("//div[contains(@class,'subscribe-action')]//a[contains(@href,'asset-publisher') and contains(.,'RSS')]@href");
 		}
 
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a RSS Publisher widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "RSS Publisher");
+		}
+
 		task ("Add a RSS Feed based on AP RSS Url") {
+			task ("Add a RSS Publisher to page") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Asset Publisher Page",
+					widgetName = "RSS Publisher");
+			}
+
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");

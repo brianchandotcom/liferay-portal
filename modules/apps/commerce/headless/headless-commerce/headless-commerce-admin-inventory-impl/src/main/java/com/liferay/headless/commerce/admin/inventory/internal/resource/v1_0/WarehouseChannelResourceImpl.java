@@ -79,12 +79,12 @@ public class WarehouseChannelResourceImpl
 				null, pagination.getStartPosition(),
 				pagination.getEndPosition());
 
-		int totalItems = _commerceChannelRelService.getCommerceChannelRelsCount(
+		int totalCount = _commerceChannelRelService.getCommerceChannelRelsCount(
 			CommerceInventoryWarehouse.class.getName(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 
 		return Page.of(
-			_toWarehouseChannels(commerceChannelRels), pagination, totalItems);
+			_toWarehouseChannels(commerceChannelRels), pagination, totalCount);
 	}
 
 	@NestedField(parentClass = Warehouse.class, value = "warehouseChannels")
@@ -107,11 +107,11 @@ public class WarehouseChannelResourceImpl
 				CommerceInventoryWarehouse.class.getName(), id, search,
 				pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems = _commerceChannelRelService.getCommerceChannelRelsCount(
+		int totalCount = _commerceChannelRelService.getCommerceChannelRelsCount(
 			CommerceInventoryWarehouse.class.getName(), id, search);
 
 		return Page.of(
-			_toWarehouseChannels(commerceChannelRel), pagination, totalItems);
+			_toWarehouseChannels(commerceChannelRel), pagination, totalCount);
 	}
 
 	@Override

@@ -79,11 +79,11 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 				commerceOrder.getCommerceOrderId(),
 				pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems = _commerceOrderNoteService.getCommerceOrderNotesCount(
+		int totalCount = _commerceOrderNoteService.getCommerceOrderNotesCount(
 			commerceOrder.getCommerceOrderId());
 
 		return Page.of(
-			_toOrderNotes(commerceOrderNotes), pagination, totalItems);
+			_toOrderNotes(commerceOrderNotes), pagination, totalCount);
 	}
 
 	@Override
@@ -95,11 +95,11 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 			_commerceOrderNoteService.getCommerceOrderNotes(
 				id, pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems = _commerceOrderNoteService.getCommerceOrderNotesCount(
+		int totalCount = _commerceOrderNoteService.getCommerceOrderNotesCount(
 			id);
 
 		return Page.of(
-			_toOrderNotes(commerceOrderNotes), pagination, totalItems);
+			_toOrderNotes(commerceOrderNotes), pagination, totalCount);
 	}
 
 	@Override

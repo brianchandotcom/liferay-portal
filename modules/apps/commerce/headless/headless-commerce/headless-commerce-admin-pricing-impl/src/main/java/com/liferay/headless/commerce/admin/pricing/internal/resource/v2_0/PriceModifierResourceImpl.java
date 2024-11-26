@@ -99,12 +99,12 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
 
-		int totalItems =
+		int totalCount =
 			_commercePriceModifierService.getCommercePriceModifiersCount(
 				commercePriceList.getCommercePriceListId());
 
 		return Page.of(
-			_toPriceModifiers(commercePriceModifiers), pagination, totalItems);
+			_toPriceModifiers(commercePriceModifiers), pagination, totalCount);
 	}
 
 	@Override
@@ -118,11 +118,11 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 				id, pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
 
-		int totalItems =
+		int totalCount =
 			_commercePriceModifierService.getCommercePriceModifiersCount(id);
 
 		return Page.of(
-			_toPriceModifiers(commercePriceModifiers), pagination, totalItems);
+			_toPriceModifiers(commercePriceModifiers), pagination, totalCount);
 	}
 
 	@Override

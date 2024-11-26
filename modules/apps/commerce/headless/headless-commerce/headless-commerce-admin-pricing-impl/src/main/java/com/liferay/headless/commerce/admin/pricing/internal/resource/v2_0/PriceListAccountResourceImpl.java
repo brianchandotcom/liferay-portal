@@ -75,14 +75,14 @@ public class PriceListAccountResourceImpl
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
 
-		int totalItems =
+		int totalCount =
 			_commercePriceListAccountRelService.
 				getCommercePriceListAccountRelsCount(
 					commercePriceList.getCommercePriceListId());
 
 		return Page.of(
 			_toPriceListAccounts(commercePriceListAccountRels), pagination,
-			totalItems);
+			totalCount);
 	}
 
 	@NestedField(parentClass = PriceList.class, value = "priceListAccounts")
@@ -97,13 +97,13 @@ public class PriceListAccountResourceImpl
 				id, search, pagination.getStartPosition(),
 				pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commercePriceListAccountRelService.
 				getCommercePriceListAccountRelsCount(id, search);
 
 		return Page.of(
 			_toPriceListAccounts(commercePriceListAccountRels), pagination,
-			totalItems);
+			totalCount);
 	}
 
 	@Override

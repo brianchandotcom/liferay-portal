@@ -79,7 +79,7 @@ public class WarehouseAccountResourceImpl
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null);
 
-		int totalItems =
+		int totalCount =
 			_commerceInventoryWarehouseRelService.
 				getCommerceInventoryWarehouseRelsCount(
 					AccountEntry.class.getName(),
@@ -88,7 +88,7 @@ public class WarehouseAccountResourceImpl
 
 		return Page.of(
 			_toWarehouseAccounts(commerceInventoryWarehouseRels), pagination,
-			totalItems);
+			totalCount);
 	}
 
 	@NestedField(parentClass = Warehouse.class, value = "warehouseAccounts")
@@ -104,13 +104,13 @@ public class WarehouseAccountResourceImpl
 					id, search, pagination.getStartPosition(),
 					pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commerceInventoryWarehouseRelService.
 				getAccountEntryCommerceInventoryWarehouseRelsCount(id, search);
 
 		return Page.of(
 			_toWarehouseAccounts(commerceInventoryWarehouseRels), pagination,
-			totalItems);
+			totalCount);
 	}
 
 	@Override

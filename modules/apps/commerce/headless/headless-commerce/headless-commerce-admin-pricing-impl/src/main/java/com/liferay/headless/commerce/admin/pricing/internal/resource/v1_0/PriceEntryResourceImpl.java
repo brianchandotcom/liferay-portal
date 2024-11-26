@@ -130,12 +130,12 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				commercePriceList.getCommercePriceListId(),
 				pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commercePriceEntryService.getCommercePriceEntriesCount(
 				commercePriceList.getCommercePriceListId());
 
 		return Page.of(
-			_toPriceEntries(commercePriceEntries), pagination, totalItems);
+			_toPriceEntries(commercePriceEntries), pagination, totalCount);
 	}
 
 	@Override
@@ -155,11 +155,11 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 			_commercePriceEntryService.getCommercePriceEntries(
 				id, pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commercePriceEntryService.getCommercePriceEntriesCount(id);
 
 		return Page.of(
-			_toPriceEntries(commercePriceEntries), pagination, totalItems);
+			_toPriceEntries(commercePriceEntries), pagination, totalCount);
 	}
 
 	@Override

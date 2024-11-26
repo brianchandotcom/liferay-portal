@@ -75,12 +75,12 @@ public class DiscountChannelResourceImpl
 				commerceDiscount.getCommerceDiscountId(), null,
 				pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems = _commerceChannelRelService.getCommerceChannelRelsCount(
+		int totalCount = _commerceChannelRelService.getCommerceChannelRelsCount(
 			CommerceDiscount.class.getName(),
 			commerceDiscount.getCommerceDiscountId());
 
 		return Page.of(
-			_toDiscountChannels(commerceChannelRels), pagination, totalItems);
+			_toDiscountChannels(commerceChannelRels), pagination, totalCount);
 	}
 
 	@NestedField(parentClass = Discount.class, value = "discountChannels")
@@ -102,11 +102,11 @@ public class DiscountChannelResourceImpl
 				CommerceDiscount.class.getName(), id, search,
 				pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems = _commerceChannelRelService.getCommerceChannelRelsCount(
+		int totalCount = _commerceChannelRelService.getCommerceChannelRelsCount(
 			CommerceDiscount.class.getName(), id, search);
 
 		return Page.of(
-			_toDiscountChannels(commerceChannelRel), pagination, totalItems);
+			_toDiscountChannels(commerceChannelRel), pagination, totalCount);
 	}
 
 	@Override

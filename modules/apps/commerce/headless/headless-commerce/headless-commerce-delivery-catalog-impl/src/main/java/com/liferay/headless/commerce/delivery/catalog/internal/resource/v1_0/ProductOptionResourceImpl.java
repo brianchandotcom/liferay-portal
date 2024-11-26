@@ -86,12 +86,12 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 				cpDefinition.getCPDefinitionId(), pagination.getStartPosition(),
 				pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
 				cpDefinition.getCPDefinitionId());
 
 		return Page.of(
-			_toProductOptions(cpDefinitionOptionRels), pagination, totalItems);
+			_toProductOptions(cpDefinitionOptionRels), pagination, totalCount);
 	}
 
 	private List<ProductOption> _toProductOptions(

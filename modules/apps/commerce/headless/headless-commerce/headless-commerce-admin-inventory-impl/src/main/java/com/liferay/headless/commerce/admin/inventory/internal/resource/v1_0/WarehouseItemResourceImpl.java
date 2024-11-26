@@ -107,7 +107,7 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 						getCommerceInventoryWarehouseId(),
 					pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commerceInventoryWarehouseItemService.
 				getCommerceInventoryWarehouseItemsCount(
 					commerceInventoryWarehouse.
@@ -115,7 +115,7 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 
 		return Page.of(
 			_toWarehouseItems(commerceInventoryWarehouseItems), pagination,
-			totalItems);
+			totalCount);
 	}
 
 	@NestedField(parentClass = Warehouse.class, value = "items")
@@ -130,13 +130,13 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 					id, pagination.getStartPosition(),
 					pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commerceInventoryWarehouseItemService.
 				getCommerceInventoryWarehouseItemsCount(id);
 
 		return Page.of(
 			_toWarehouseItems(commerceInventoryWarehouseItems), pagination,
-			totalItems);
+			totalCount);
 	}
 
 	@Override
@@ -194,14 +194,14 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 					contextCompany.getCompanyId(), start, end,
 					pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commerceInventoryWarehouseItemService.
 				getCommerceInventoryWarehouseItemsCountByModifiedDate(
 					contextCompany.getCompanyId(), start, end);
 
 		return Page.of(
 			_toWarehouseItems(commerceInventoryWarehouseItems), pagination,
-			totalItems);
+			totalCount);
 	}
 
 	@Override

@@ -76,14 +76,14 @@ public class PriceModifierProductGroupResourceImpl
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
 
-		int totalItems =
+		int totalCount =
 			_commercePriceModifierRelService.getCommercePriceModifierRelsCount(
 				commercePriceModifier.getCommercePriceModifierId(),
 				CommercePricingClass.class.getName());
 
 		return Page.of(
 			_toPriceModifierProductGroups(commercePriceModifierRels),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@NestedField(
@@ -102,14 +102,14 @@ public class PriceModifierProductGroupResourceImpl
 					id, search, pagination.getStartPosition(),
 					pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commercePriceModifierRelService.
 				getCommercePricingClassesCommercePriceModifierRelsCount(
 					id, search);
 
 		return Page.of(
 			_toPriceModifierProductGroups(commercePriceModifierRels),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@Override

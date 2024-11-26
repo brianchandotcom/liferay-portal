@@ -77,13 +77,13 @@ public class DiscountProductResourceImpl
 				CPDefinition.class.getName(), pagination.getStartPosition(),
 				pagination.getEndPosition(), null);
 
-		int totalItems =
+		int totalCount =
 			_commerceDiscountRelService.getCommerceDiscountRelsCount(
 				commerceDiscount.getCommerceDiscountId(),
 				CPDefinition.class.getName());
 
 		return Page.of(
-			_toDiscountProducts(commerceDiscountRels), pagination, totalItems);
+			_toDiscountProducts(commerceDiscountRels), pagination, totalCount);
 	}
 
 	@NestedField(parentClass = Discount.class, value = "discountProducts")
@@ -102,13 +102,13 @@ public class DiscountProductResourceImpl
 				id, search, languageId, pagination.getStartPosition(),
 				pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commerceDiscountRelService.
 				getCPDefinitionsByCommerceDiscountIdCount(
 					id, search, languageId);
 
 		return Page.of(
-			_toDiscountProducts(commerceDiscountRels), pagination, totalItems);
+			_toDiscountProducts(commerceDiscountRels), pagination, totalCount);
 	}
 
 	@Override

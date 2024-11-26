@@ -70,14 +70,14 @@ public class ProductGroupProductResourceImpl
 						pagination.getStartPosition(),
 						pagination.getEndPosition(), null);
 
-		int totalItems =
+		int totalCount =
 			_commercePricingClassCPDefinitionRelService.
 				getCommercePricingClassCPDefinitionRelsCount(
 					commercePricingClass.getCommercePricingClassId());
 
 		return Page.of(
 			_toProductGroupProducts(commercePricingClassCPDefinitionRels),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@Override
@@ -92,13 +92,13 @@ public class ProductGroupProductResourceImpl
 						id, pagination.getStartPosition(),
 						pagination.getEndPosition(), null);
 
-		int totalItems =
+		int totalCount =
 			_commercePricingClassCPDefinitionRelService.
 				getCommercePricingClassCPDefinitionRelsCount(id);
 
 		return Page.of(
 			_toProductGroupProducts(commercePricingClassCPDefinitionRels),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@Override

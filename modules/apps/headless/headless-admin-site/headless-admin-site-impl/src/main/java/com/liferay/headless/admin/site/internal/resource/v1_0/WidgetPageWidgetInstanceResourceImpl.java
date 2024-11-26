@@ -54,11 +54,15 @@ public class WidgetPageWidgetInstanceResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
 			GroupUtil.getGroupId(
 				false, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
 
 		LayoutType layoutType = layout.getLayoutType();
 
@@ -94,11 +98,15 @@ public class WidgetPageWidgetInstanceResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
 			GroupUtil.getGroupId(
 				false, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
 
 		LayoutType layoutType = layout.getLayoutType();
 
@@ -127,11 +135,15 @@ public class WidgetPageWidgetInstanceResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
 			GroupUtil.getGroupId(
 				false, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
 
 		LayoutType layoutType = layout.getLayoutType();
 
@@ -164,11 +176,15 @@ public class WidgetPageWidgetInstanceResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
 			GroupUtil.getGroupId(
 				false, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
 
 		LayoutType layoutType = layout.getLayoutType();
 
@@ -198,11 +214,15 @@ public class WidgetPageWidgetInstanceResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
 			GroupUtil.getGroupId(
 				false, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
 
 		LayoutType layoutType = layout.getLayoutType();
 

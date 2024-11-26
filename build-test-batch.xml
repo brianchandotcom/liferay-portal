@@ -20,43 +20,24 @@
 			<if>
 				<isset property="env.BUILD_URL" />
 				<then>
-					<var name="tstamp.value" unset="true" />
+					<beanshell>
+						<![CDATA[
+							import com.liferay.jenkins.results.parser.JenkinsConsoleTextLoader;
+							import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
-					<tstamp>
-						<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
-					</tstamp>
+							String jenkinsBuildURL = project.getProperty("env.BUILD_URL") + "/consoleText";
 
-					<propertyregex
-						input="${env.BUILD_URL}"
-						property="jenkins.build.url"
-						regexp="https:\/\/([^\.]+)\.[^\/]+"
-						replace="http://\1"
-					/>
+							JenkinsConsoleTextLoader jenkinsConsoleTextLoader = new JenkinsConsoleTextLoader(jenkinsBuildURL);
 
-					<propertyregex
-						input="${jenkins.build.url}"
-						override="true"
-						property="jenkins.build.url"
-						regexp="http:\/\/([^\/]+)\/(\d+)"
-						replace="http://\1-\2/\2"
-					/>
+							String consoleText = jenkinsConsoleTextLoader.getConsoleText();
 
-					<get
-						dest="${tstamp.value}.txt"
-						ignoreerrors="true"
-						src="${jenkins.build.url}/consoleText"
-					/>
+							if (consoleText == null) {
+								consoleText = "";
+							}
 
-					<var name="jenkins.console.txt" unset="true" />
-
-					<loadfile
-						property="jenkins.console.txt"
-						srcfile="${tstamp.value}.txt"
-					/>
-
-					<delete file="${tstamp.value}.txt" />
-
-					<var name="tstamp.value" unset="true" />
+							project.setProperty("jenkins.console.txt", consoleText);
+						]]>
+					</beanshell>
 
 					<var name="junit.failure.count" unset="true" />
 					<var name="junit.failure.message" unset="true" />

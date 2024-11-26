@@ -5,6 +5,7 @@
 
 import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {RichText} from 'dynamic-data-mapping-form-field-type';
 import React from 'react';
 
 import {Editor} from '../../../../../../src/main/resources/META-INF/resources/js/components/rules/editor/Editor.es';
@@ -99,6 +100,8 @@ const defaultProps = (fieldsList = FIELDS) => {
 	};
 };
 
+globalThis.RichText = RichText;
+
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
 	loadModule: jest.fn((fieldModule) => {
@@ -109,7 +112,6 @@ jest.mock('frontend-js-web', () => ({
 			Grid,
 			ImagePicker,
 			Numeric,
-			RichText,
 			Select,
 			Text,
 		} = jest.requireActual('dynamic-data-mapping-form-field-type');
@@ -133,7 +135,7 @@ jest.mock('frontend-js-web', () => ({
 				component = Numeric;
 				break;
 			case 'rich_text':
-				component = RichText;
+				component = globalThis.RichText;
 				break;
 			case 'select':
 				component = Select;
@@ -177,7 +179,7 @@ describe('Editor', () => {
 	describe('Editor', () => {
 		describe('Conditions', () => {
 			describe('Field operator', () => {
-				it.skip.each(STRING_DATATYPE_FIELDS)(
+				it.each(STRING_DATATYPE_FIELDS)(
 					'shows operators related to texts when field left is a %p',
 					async ({type}) => {
 						const props = defaultProps();
@@ -221,7 +223,7 @@ describe('Editor', () => {
 					}
 				);
 
-				it.skip.each(NUMBER_TYPE_FIELDS)(
+				it.each(NUMBER_TYPE_FIELDS)(
 					'shows operators related to numbers when field left is a %p',
 					async ({type}) => {
 						const props = defaultProps();
@@ -265,7 +267,7 @@ describe('Editor', () => {
 					}
 				);
 
-				it.skip('shows operators related to roles when field left is an User', async () => {
+				it('shows operators related to roles when field left is an User', async () => {
 					const props = defaultProps();
 					const {getByTestId, getByText} = render(
 						<Editor
@@ -308,7 +310,7 @@ describe('Editor', () => {
 			});
 
 			describe('Binary operations', () => {
-				it.skip.each(
+				it.each(
 					STRING_DATATYPE_FIELDS.concat(NUMBER_TYPE_FIELDS).concat(
 						UPLOAD_TYPE_FIELD
 					)
@@ -390,7 +392,7 @@ describe('Editor', () => {
 					}
 				);
 
-				it.skip('shows all others fields when action type is Other field', async () => {
+				it('shows all others fields when action type is Other field', async () => {
 					const props = defaultProps();
 					const mockIsSignedIn = jest.fn();
 
@@ -471,7 +473,7 @@ describe('Editor', () => {
 			});
 
 			describe('Conditions logical operatores', () => {
-				it.skip('shows the OR/AND select disabled by default', async () => {
+				it('shows the OR/AND select disabled by default', async () => {
 					const props = defaultProps();
 					render(
 						<Editor
@@ -492,7 +494,7 @@ describe('Editor', () => {
 					).toBe(true);
 				});
 
-				it.skip('enables the OR/AND select when there are more than one condition', async () => {
+				it('enables the OR/AND select when there are more than one condition', async () => {
 					const props = defaultProps();
 					render(
 						<Editor
@@ -516,7 +518,7 @@ describe('Editor', () => {
 			});
 
 			describe('Add/Remove conditions', () => {
-				it.skip('shows the container trash when there are more than one condition', () => {
+				it('shows the container trash when there are more than one condition', () => {
 					const props = defaultProps();
 					render(
 						<Editor
@@ -544,7 +546,7 @@ describe('Editor', () => {
 		});
 
 		describe('Actions', () => {
-			it.skip('shows the action types', async () => {
+			it('shows the action types', async () => {
 				const props = defaultProps();
 				const {getByText} = render(
 					<Editor
@@ -575,7 +577,7 @@ describe('Editor', () => {
 			});
 
 			describe('Add/Remove actions', () => {
-				it.skip('shows the container trash when there are more than one action', () => {
+				it('shows the container trash when there are more than one action', () => {
 					const props = defaultProps();
 					render(
 						<Editor
@@ -601,7 +603,7 @@ describe('Editor', () => {
 				});
 			});
 
-			it.skip.each(['show', 'require', 'enable'])(
+			it.each(['show', 'require', 'enable'])(
 				'shows all fields on target dropdown when the type is %p',
 				async (type) => {
 					const fields =
@@ -650,7 +652,7 @@ describe('Editor', () => {
 					});
 				}
 			);
-			it.skip('shows dataprovider when autofill action is selected', async () => {
+			it('shows dataprovider when autofill action is selected', async () => {
 				const props = defaultProps();
 				const {getByText} = render(
 					<Editor
@@ -691,7 +693,7 @@ describe('Editor', () => {
 				expect(getByText('Get countries')).toBeTruthy();
 			});
 
-			it.skip('shows the calculator area when calculate action is selected', async () => {
+			it('shows the calculator area when calculate action is selected', async () => {
 				const props = defaultProps();
 				const {getByText, queryAllByText} = render(
 					<Editor
@@ -742,7 +744,7 @@ describe('Editor', () => {
 				).toBeTruthy();
 			});
 
-			it.skip('shows available pages when jump to page action is selected', async () => {
+			it('shows available pages when jump to page action is selected', async () => {
 				const props = defaultProps();
 				const {getByText, queryAllByText} = render(
 					<Editor

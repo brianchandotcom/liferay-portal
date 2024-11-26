@@ -15,12 +15,10 @@ import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Javier Gamarra
@@ -61,24 +59,16 @@ public class PostalAddressUtil {
 					});
 				setAddressCountry_i18n(
 					() -> {
-						if (!acceptAllLanguages) {
+						Country country = address.getCountry();
+
+						if (country == null) {
 							return null;
 						}
 
-						Map<String, String> countryNames = new HashMap<>();
-
-						Country country = address.getCountry();
-
-						for (Locale locale :
-								LanguageUtil.getCompanyAvailableLocales(
-									companyId)) {
-
-							countryNames.put(
-								LocaleUtil.toBCP47LanguageId(locale),
-								country.getName());
-						}
-
-						return countryNames;
+						return LocalizedMapUtil.getI18nMap(
+							acceptAllLanguages,
+							LanguageUtil.getCompanyAvailableLocales(companyId),
+							country.getLanguageIdToTitleMap());
 					});
 				setAddressLocality(address::getCity);
 				setAddressRegion(

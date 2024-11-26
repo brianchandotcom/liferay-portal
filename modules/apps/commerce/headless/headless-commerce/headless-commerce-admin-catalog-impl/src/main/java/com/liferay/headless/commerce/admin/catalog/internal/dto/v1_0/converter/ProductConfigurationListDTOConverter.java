@@ -41,6 +41,7 @@ public class ProductConfigurationListDTOConverter
 
 		return new ProductConfigurationList() {
 			{
+				setActions(dtoConverterContext::getActions);
 				setExternalReferenceCode(
 					cpConfigurationList::getExternalReferenceCode);
 				setId(cpConfigurationList::getCPConfigurationListId);

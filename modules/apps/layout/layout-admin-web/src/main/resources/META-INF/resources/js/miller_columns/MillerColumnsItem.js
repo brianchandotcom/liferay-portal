@@ -115,7 +115,7 @@ const MillerColumnsItem = ({
 	items,
 	namespace,
 	onItemDrop = noop,
-	onItemStayHover = noop,
+	getItemChildren = noop,
 	rtl,
 }) => {
 	const {
@@ -330,7 +330,7 @@ const MillerColumnsItem = ({
 		) {
 			timeoutRef.current = setTimeout(() => {
 				if (isTarget) {
-					onItemStayHover(itemId);
+					getItemChildren(itemId);
 				}
 			}, ITEM_HOVER_TIMEOUT);
 		}
@@ -341,7 +341,7 @@ const MillerColumnsItem = ({
 			clearTimeout(timeoutRef.current);
 			timeoutRef.current = null;
 		}
-	}, [active, isTarget, itemId, onItemStayHover, targetPosition]);
+	}, [active, isTarget, itemId, getItemChildren, targetPosition]);
 
 	const warningMessage = isLayoutSetPrototype
 		? Liferay.Language.get(

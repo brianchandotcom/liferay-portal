@@ -168,13 +168,13 @@ const Layout = ({
 			<MillerColumns
 				createPageTemplateURL={createPageTemplateURL}
 				getItemActionsURL={getItemActionsURL}
+				getItemChildren={getItemChildren}
 				getPageTemplateCollectionsURL={getPageTemplateCollectionsURL}
 				initialColumns={layoutColumns}
 				isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
 				isSiteTemplate={isSiteTemplate}
 				namespace={namespace}
 				onColumnsChange={updateBreadcrumbs}
-				onItemStayHover={getItemChildren}
 				rtl={Liferay.Language.direction[languageId] === 'rtl'}
 				saveData={saveData}
 				searchContainer={searchContainerElement}

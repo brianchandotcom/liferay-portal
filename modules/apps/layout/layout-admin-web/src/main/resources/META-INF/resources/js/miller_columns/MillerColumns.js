@@ -78,7 +78,7 @@ const MillerColumns = ({
 	isPrivateLayoutsEnabled,
 	namespace,
 	onColumnsChange = noop,
-	onItemStayHover,
+	getItemChildren,
 	rtl,
 	saveData = noop,
 	searchContainer,
@@ -371,6 +371,7 @@ const MillerColumns = ({
 								columnsContainer={ref}
 								createPageTemplateURL={createPageTemplateURL}
 								getItemActionsURL={getItemActionsURL}
+								getItemChildren={getItemChildren}
 								getPageTemplateCollectionsURL={
 									getPageTemplateCollectionsURL
 								}
@@ -383,7 +384,6 @@ const MillerColumns = ({
 								key={index}
 								namespace={namespace}
 								onItemDrop={onItemDrop}
-								onItemStayHover={onItemStayHover}
 								parent={column.parent}
 								rtl={rtl}
 							/>

@@ -63,7 +63,7 @@ const MillerColumnsColumn = ({
 	items,
 	namespace,
 	onItemDrop,
-	onItemStayHover,
+	getItemChildren,
 	index,
 	parent,
 	rtl,
@@ -132,6 +132,7 @@ const MillerColumnsColumn = ({
 					<MillerColumnsItem
 						createPageTemplateURL={createPageTemplateURL}
 						getItemActionsURL={getItemActionsURL}
+						getItemChildren={getItemChildren}
 						getPageTemplateCollectionsURL={
 							getPageTemplateCollectionsURL
 						}
@@ -142,7 +143,6 @@ const MillerColumnsColumn = ({
 						key={item.key}
 						namespace={namespace}
 						onItemDrop={onItemDrop}
-						onItemStayHover={onItemStayHover}
 						rtl={rtl}
 					/>
 				))}

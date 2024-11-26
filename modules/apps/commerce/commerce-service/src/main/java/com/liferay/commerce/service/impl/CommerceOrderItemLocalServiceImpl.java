@@ -68,6 +68,9 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -1951,7 +1954,66 @@ public class CommerceOrderItemLocalServiceImpl
 			return true;
 		}
 
-		return false;
+		try {
+			JSONArray jsonArray1 = _jsonFactory.createJSONArray(json1);
+			JSONArray jsonArray2 = _jsonFactory.createJSONArray(json2);
+
+			if (jsonArray1.length() != jsonArray2.length()) {
+				return false;
+			}
+
+			for (int i = 0; i < jsonArray1.length(); i++) {
+				JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
+				JSONObject existingJSONObject = null;
+
+				for (int j = 0; j < jsonArray2.length(); j++) {
+					JSONObject jsonObject2 = jsonArray2.getJSONObject(j);
+
+					if (jsonObject1.has("skuOptionKey") &&
+						Objects.equals(
+							jsonObject1.get("skuOptionKey"),
+							jsonObject2.get("skuOptionKey"))) {
+
+						existingJSONObject = jsonObject2;
+
+						break;
+					}
+				}
+
+				if (existingJSONObject == null) {
+					return false;
+				}
+
+				Object value = jsonObject1.get("value");
+
+				if (value instanceof JSONArray) {
+					JSONArray valueJSONArray = (JSONArray)value;
+
+					if (valueJSONArray.length() != 0) {
+						return false;
+					}
+				}
+
+				if ((jsonObject1.has("value") &&
+					 !Objects.equals(existingJSONObject.get("value"), value)) ||
+					(jsonObject1.has("skuOptionValueKey") &&
+					 !Objects.equals(
+						 existingJSONObject.get("skuOptionValueKey"),
+						 jsonObject1.get("skuOptionValueKey")))) {
+
+					return false;
+				}
+			}
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private void _reindexCommerceInventoryBookedQuantity(
@@ -2639,6 +2701,9 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

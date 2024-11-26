@@ -302,6 +302,7 @@ const MillerColumnsItem = ({
 
 	const {isTarget: isNavigationTarget} = useKeyboardNavigation({
 		element: ref.current,
+		getItemChildren,
 		item,
 		rtl,
 	});

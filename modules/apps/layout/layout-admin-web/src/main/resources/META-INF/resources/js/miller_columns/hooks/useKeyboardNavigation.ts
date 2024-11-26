@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {navigate} from 'frontend-js-web';
 import {useCallback, useContext, useEffect, useMemo} from 'react';
 
 import {
@@ -30,14 +29,16 @@ function isAllowedKey(key: string): key is AllowedKey {
 
 export function useKeyboardNavigation({
 	element,
+	getItemChildren,
 	item,
 	rtl,
 }: {
 	element: HTMLLIElement;
+	getItemChildren: (id: string) => Promise<void>;
 	item: MillerColumnItem;
 	rtl: boolean;
 }) {
-	const {active, columnIndex, hasChild, itemIndex, url} = item;
+	const {active, columnIndex, hasChild, id, itemIndex} = item;
 
 	const {columnSizes, setTarget, target} = useContext(
 		KeyboardNavigationContext
@@ -67,7 +68,12 @@ export function useKeyboardNavigation({
 				hasChild &&
 				!active
 			) {
-				navigate(url);
+				getItemChildren(id).then(() =>
+					setTarget({
+						columnIndex: columnIndex + 1,
+						itemIndex: 0,
+					})
+				);
 			}
 
 			const nextTarget = getNextTarget({
@@ -80,7 +86,17 @@ export function useKeyboardNavigation({
 				setTarget(nextTarget);
 			}
 		},
-		[active, columnSizes, hasChild, item, rtl, setTarget, url]
+		[
+			active,
+			columnIndex,
+			columnSizes,
+			getItemChildren,
+			hasChild,
+			id,
+			item,
+			rtl,
+			setTarget,
+		]
 	);
 
 	// Add keyboard listeners when item is target

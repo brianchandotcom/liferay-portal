@@ -68,7 +68,7 @@ const Layout = ({
 
 		formData.append(`${namespace}plid`, parentId);
 
-		fetch(getItemChildrenURL, {
+		return fetch(getItemChildrenURL, {
 			body: formData,
 			method: 'POST',
 		})

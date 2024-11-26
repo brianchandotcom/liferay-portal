@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useContext, useEffect} from 'react';
+import {useCallback, useContext, useEffect, useMemo} from 'react';
 
-import {KeyboardMovementContext} from '../contexts/KeyboardMovementContext';
 import {
 	KeyboardContext,
 	NavigationTarget,
@@ -29,12 +28,10 @@ function isAllowedKey(key: string): key is AllowedKey {
 
 export function useKeyboardNavigation({
 	element,
-	isDragging,
 	item,
 	rtl,
 }: {
 	element: HTMLLIElement;
-	isDragging: boolean;
 	item: MillerColumnItem;
 	rtl: boolean;
 }) {
@@ -42,10 +39,12 @@ export function useKeyboardNavigation({
 
 	const {columnSizes, setTarget, target} = useContext(KeyboardContext);
 
-	const {sources: movementSources} = useContext(KeyboardMovementContext);
-
-	const isTarget =
-		columnIndex === target.columnIndex && itemIndex === target.itemIndex;
+	const isTarget = useMemo(
+		() =>
+			columnIndex === target.columnIndex &&
+			itemIndex === target.itemIndex,
+		[columnIndex, itemIndex, target.columnIndex, target.itemIndex]
+	);
 
 	const onKeyDown = useCallback(
 		(event) => {
@@ -77,12 +76,6 @@ export function useKeyboardNavigation({
 			return;
 		}
 
-		// Don't do anything if keyboard movement is enabled
-
-		if (movementSources.length || isDragging) {
-			return;
-		}
-
 		if (active) {
 			if (hasChild) {
 				setTarget({
@@ -97,28 +90,12 @@ export function useKeyboardNavigation({
 				});
 			}
 		}
-	}, [
-		active,
-		columnIndex,
-		hasChild,
-		itemIndex,
-		setTarget,
-		movementSources,
-		isDragging,
-	]);
+	}, [active, columnIndex, hasChild, itemIndex, setTarget]);
 
 	// Add keyboard listeners when item is target
 
 	useEffect(() => {
-
-		// Don't do anything if keyboard movement is enabled
-
-		if (
-			!Liferay.FeatureFlags['LPD-35220'] ||
-			movementSources.length ||
-			isDragging ||
-			!element
-		) {
+		if (!Liferay.FeatureFlags['LPD-35220'] || !element) {
 			return;
 		}
 
@@ -141,7 +118,7 @@ export function useKeyboardNavigation({
 		return () => {
 			element.removeEventListener('keydown', onKeyDown);
 		};
-	}, [element, isDragging, isTarget, movementSources.length, onKeyDown]);
+	}, [element, isTarget, onKeyDown]);
 
 	return {
 		isTarget,

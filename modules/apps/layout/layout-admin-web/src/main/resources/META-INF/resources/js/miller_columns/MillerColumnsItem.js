@@ -16,7 +16,7 @@ import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import {fetch, navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {useDrag, useDragLayer, useDrop} from 'react-dnd';
+import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import ACTIONS from '../actions';
@@ -235,8 +235,6 @@ const MillerColumnsItem = ({
 		);
 	}, [quickActions]);
 
-	const isDragging = useDragLayer((monitor) => monitor.isDragging());
-
 	const [{isDragging: isDragSource}, drag, previewRef] = useDrag({
 		canDrag: () => !isKeyboardMovementEnabled,
 		collect: (monitor) => ({
@@ -304,7 +302,6 @@ const MillerColumnsItem = ({
 
 	const {isTarget: isNavigationTarget} = useKeyboardNavigation({
 		element: ref.current,
-		isDragging,
 		item,
 		rtl,
 	});

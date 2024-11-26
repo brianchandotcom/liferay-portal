@@ -1318,3 +1318,39 @@ test(
 		);
 	}
 );
+
+const testDeprecatedFragmentSet = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-40529': true,
+	})
+);
+
+testDeprecatedFragmentSet(
+	'The deprecated label and button exist for the contributed Featured Content Fragment Set',
+	{
+		tag: '@LPD-42061',
+	},
+	async ({fragmentsPage, page, site}) => {
+
+		// Go to fragment administration and look for the label
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Featured Content Deprecated'})
+		).toBeVisible();
+
+		// Go to fragment set and look for the button
+
+		await fragmentsPage.gotoFragmentSet('Featured Content Deprecated');
+
+		await page.getByRole('button', {name: 'Deprecated'}).click();
+
+		await expect(
+			page.getByText(
+				'This feature is deprecated. Learn more about deprecated features.'
+			)
+		).toBeVisible();
+	}
+);

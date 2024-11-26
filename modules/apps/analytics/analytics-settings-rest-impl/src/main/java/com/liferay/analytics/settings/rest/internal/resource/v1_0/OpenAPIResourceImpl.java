@@ -105,6 +105,8 @@ public class OpenAPIResourceImpl {
 
 			add(FieldSummaryResourceImpl.class);
 
+			add(RecommendationConfigurationResourceImpl.class);
+
 			add(SiteResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

@@ -537,7 +537,9 @@ definition {
 	@description = "Assert a user can navigate to a Site's public or private pages via MySites widget"
 	@priority = 3
 	test ViewSitePages {
-		property custom.properties = "feature.flag.LPD-38869=true";
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		task ("Add a site with a public and private page") {
 			HeadlessSite.addSite(siteName = "Site Name");

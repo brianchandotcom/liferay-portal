@@ -570,9 +570,12 @@ definition {
 
 	@priority = 3
 	test PublishPrivatePage {
-		property custom.properties = "feature.flag.LPD-38869=true";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		JSONStaging.enableLocalStaging(
 			branchingPrivate = "true",

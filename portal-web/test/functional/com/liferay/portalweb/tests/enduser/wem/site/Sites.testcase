@@ -190,7 +190,11 @@ definition {
 	@description = "Deleting firiendly URL makes it not able to access page via fridely URL."
 	@priority = 4
 	test DeleteSiteFriendlyURL {
-		property custom.properties = "feature.flag.LPD-38869=true${line.separator}virtual.hosts.default.site.name=Guest";
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		task ("Add a site") {
 			HeadlessSite.addSite(siteName = ${randomSiteName});
@@ -272,7 +276,9 @@ definition {
 	@description = "Could edit friendly URL and access by it."
 	@priority = 4
 	test EditSiteFriendlyURL {
-		property custom.properties = "feature.flag.LPD-38869=true";
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		var portalURL = PropsUtil.get("portal.url");
 

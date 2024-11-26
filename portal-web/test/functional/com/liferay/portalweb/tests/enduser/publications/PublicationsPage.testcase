@@ -1140,7 +1140,9 @@ definition {
 
 	@priority = 4
 	test PublishPrivateContentPageWithFragment {
-		property custom.properties = "feature.flag.LPD-38869=true";
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 

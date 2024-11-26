@@ -1,13 +1,16 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "feature.flag.LPD-38869=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Order Management";
 
 	setUp {
 		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		task ("Setup: Create an account") {
 			JSONAccountEntry.addAccountEntry(

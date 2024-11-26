@@ -970,9 +970,12 @@ definition {
 	@description = "Verify is possible export/import a Private Page."
 	@priority = 3
 	test ExportImportPrivatePage {
-		property custom.properties = "feature.flag.LPD-38869=true";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		task ("Given: User adds a new private page") {
 			Navigator.openURL();

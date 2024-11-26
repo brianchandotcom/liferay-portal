@@ -490,9 +490,11 @@ definition {
 
 	@priority = 3
 	test LocaleNotAppendedToAlternateDefaultLocaleURL {
-		property custom.properties = "feature.flag.LPD-38869=true";
-
 		User.firstLoginPG();
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		HeadlessSite.addSite(siteName = "Test Site Name");
 

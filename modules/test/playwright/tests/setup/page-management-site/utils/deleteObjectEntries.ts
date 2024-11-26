@@ -19,10 +19,16 @@ export async function deleteObjectEntries({
 			site.key
 		);
 
+	const deleteObjectEntryPromises = [];
+
 	for (const entry of entries) {
-		apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-			`c/${entityName}`,
-			entry.externalReferenceCode
+		deleteObjectEntryPromises.push(
+			apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
+				`c/${entityName}`,
+				entry.externalReferenceCode
+			)
 		);
 	}
+
+	await Promise.all(deleteObjectEntryPromises);
 }

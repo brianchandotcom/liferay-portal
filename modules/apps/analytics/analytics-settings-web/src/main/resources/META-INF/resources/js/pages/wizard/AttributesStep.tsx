@@ -6,17 +6,13 @@
 import ClayButton from '@clayui/button';
 import React from 'react';
 
-import {EPageView, Events, useDispatch} from '../..';
 import BasePage from '../../components/BasePage';
 import Attributes from '../../components/attributes/Attributes';
-import {sync} from '../../utils/api';
 import {ESteps, IGenericStepProps} from './WizardPage';
 
 interface IStepProps extends IGenericStepProps {}
 
 const Step: React.FC<IStepProps> = ({onChangeStep}) => {
-	const dispatch = useDispatch();
-
 	return (
 		<BasePage
 			description={Liferay.Language.get('attributes-step-description')}
@@ -26,22 +22,9 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 
 			<BasePage.Footer>
 				<ClayButton
-					onClick={() => {
-						sync();
-
-						dispatch({
-							payload: EPageView.Default,
-							type: Events.ChangePageView,
-						});
-
-						Liferay.Util.openToast({
-							message: Liferay.Language.get(
-								'dxp-has-successfully-connected-to-analytics-cloud.-you-will-begin-to-see-data-as-activities-occur-on-your-sites'
-							),
-						});
-					}}
+					onClick={() => onChangeStep(ESteps.Recommendations)}
 				>
-					{Liferay.Language.get('finish')}
+					{Liferay.Language.get('next')}
 				</ClayButton>
 
 				<ClayButton

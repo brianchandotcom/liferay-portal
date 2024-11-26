@@ -378,10 +378,8 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Group group = _getGroup(actionRequest, actionResponse);
-
 		long userGroupId = ParamUtil.getLong(actionRequest, "userGroupId");
-
+		Group group = _getGroup(actionRequest, actionResponse);
 		long[] roleIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		_userGroupGroupRoleService.deleteUserGroupGroupRoles(
@@ -392,11 +390,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Group group = _getGroup(actionRequest, actionResponse);
-
-		long[] roleIds = ParamUtil.getLongValues(actionRequest, "rowIds");
-
 		long userId = ParamUtil.getLong(actionRequest, "userId");
+		Group group = _getGroup(actionRequest, actionResponse);
+		long[] roleIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		_userGroupRoleService.deleteUserGroupRoles(
 			userId, group.getGroupId(), roleIds);

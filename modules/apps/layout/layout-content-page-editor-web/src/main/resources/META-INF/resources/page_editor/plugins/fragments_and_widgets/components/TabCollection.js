@@ -170,12 +170,12 @@ function TabCollectionCollapse({
 				tabIndex={isTarget ? 0 : -1}
 				type="button"
 			>
-				<span className="panel-title text-truncate">
-					{title}
+				<span className="panel-title">
+					<span className="c-mr-2">{title}</span>
 
 					{deprecated && (
 						<ClayBadge
-							className="ml-2 text-uppercase"
+							className="text-uppercase"
 							displayType="warning"
 							label={Liferay.Language.get('deprecated')}
 							translucent

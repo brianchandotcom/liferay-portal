@@ -222,15 +222,11 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			return;
 		}
 
-		File[] files = dir.listFiles();
-
-		if (files != null) {
-			for (File file : files) {
-				_deleteEmptyDirs(file);
-			}
+		for (File file : dir.listFiles()) {
+			_deleteEmptyDirs(file);
 		}
 
-		files = dir.listFiles();
+		File[] files = dir.listFiles();
 
 		if (files.length == 0) {
 			boolean deleted = dir.delete();

@@ -71,7 +71,7 @@ public class CPConfigurationEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(73);
+		StringBundler sb = new StringBundler(75);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -83,6 +83,8 @@ public class CPConfigurationEntryCacheModel
 		sb.append(externalReferenceCode);
 		sb.append(", CPConfigurationEntryId=");
 		sb.append(CPConfigurationEntryId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -175,6 +177,7 @@ public class CPConfigurationEntryCacheModel
 
 		cpConfigurationEntryImpl.setCPConfigurationEntryId(
 			CPConfigurationEntryId);
+		cpConfigurationEntryImpl.setGroupId(groupId);
 		cpConfigurationEntryImpl.setCompanyId(companyId);
 		cpConfigurationEntryImpl.setUserId(userId);
 
@@ -269,6 +272,8 @@ public class CPConfigurationEntryCacheModel
 
 		CPConfigurationEntryId = objectInput.readLong();
 
+		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
 
 		userId = objectInput.readLong();
@@ -343,6 +348,8 @@ public class CPConfigurationEntryCacheModel
 		}
 
 		objectOutput.writeLong(CPConfigurationEntryId);
+
+		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
 
@@ -428,6 +435,7 @@ public class CPConfigurationEntryCacheModel
 	public String uuid;
 	public String externalReferenceCode;
 	public long CPConfigurationEntryId;
+	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;

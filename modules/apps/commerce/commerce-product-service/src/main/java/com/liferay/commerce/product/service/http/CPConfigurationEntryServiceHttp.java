@@ -44,9 +44,9 @@ public class CPConfigurationEntryServiceHttp {
 	public static com.liferay.commerce.product.model.CPConfigurationEntry
 			addCPConfigurationEntry(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long classNameId, long classPK, long cpConfigurationListId,
-				String allowedOrderQuantities, boolean backOrders,
-				long commerceAvailabilityEstimateId,
+				long groupId, long classNameId, long classPK,
+				long cpConfigurationListId, String allowedOrderQuantities,
+				boolean backOrders, long commerceAvailabilityEstimateId,
 				String cpDefinitionInventoryEngine, boolean displayAvailability,
 				boolean displayStockQuantity, String lowStockActivity,
 				java.math.BigDecimal maxOrderQuantity,
@@ -62,7 +62,7 @@ public class CPConfigurationEntryServiceHttp {
 				_addCPConfigurationEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, classNameId, classPK,
+				methodKey, externalReferenceCode, groupId, classNameId, classPK,
 				cpConfigurationListId, allowedOrderQuantities, backOrders,
 				commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
 				displayAvailability, displayStockQuantity, lowStockActivity,
@@ -328,11 +328,11 @@ public class CPConfigurationEntryServiceHttp {
 
 	private static final Class<?>[] _addCPConfigurationEntryParameterTypes0 =
 		new Class[] {
-			String.class, long.class, long.class, long.class, String.class,
-			boolean.class, long.class, String.class, boolean.class,
-			boolean.class, String.class, java.math.BigDecimal.class,
+			String.class, long.class, long.class, long.class, long.class,
+			String.class, boolean.class, long.class, String.class,
+			boolean.class, boolean.class, String.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class
+			java.math.BigDecimal.class, java.math.BigDecimal.class
 		};
 	private static final Class<?>[] _deleteCPConfigurationEntryParameterTypes1 =
 		new Class[] {long.class};

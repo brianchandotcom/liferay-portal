@@ -55,6 +55,7 @@ create table CPConfigurationEntry (
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	CPConfigurationEntryId LONG not null,
+	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,

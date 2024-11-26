@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
@@ -35,7 +36,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface CPConfigurationEntryModel
 	extends AttachedModel, BaseModel<CPConfigurationEntry>,
 			CTModel<CPConfigurationEntry>, ExternalReferenceCodeModel,
-			MVCCModel, ShardedModel, StagedAuditedModel {
+			GroupedModel, MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -138,6 +139,22 @@ public interface CPConfigurationEntryModel
 	 * @param CPConfigurationEntryId the cp configuration entry ID of this cp configuration entry
 	 */
 	public void setCPConfigurationEntryId(long CPConfigurationEntryId);
+
+	/**
+	 * Returns the group ID of this cp configuration entry.
+	 *
+	 * @return the group ID of this cp configuration entry
+	 */
+	@Override
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this cp configuration entry.
+	 *
+	 * @param groupId the group ID of this cp configuration entry
+	 */
+	@Override
+	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the company ID of this cp configuration entry.

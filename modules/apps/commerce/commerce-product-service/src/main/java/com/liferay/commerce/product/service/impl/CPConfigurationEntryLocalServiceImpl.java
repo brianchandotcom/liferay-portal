@@ -90,6 +90,14 @@ public class CPConfigurationEntryLocalServiceImpl
 	}
 
 	@Override
+	public CPConfigurationEntry fetchCPConfigurationEntry(
+		long classNameId, long classPK, long cpConfigurationListId) {
+
+		return cpConfigurationEntryPersistence.fetchByC_C_C(
+			classNameId, classPK, cpConfigurationListId);
+	}
+
+	@Override
 	public List<CPConfigurationEntry> getCPConfigurationEntries(
 		long cpConfigurationListId) {
 

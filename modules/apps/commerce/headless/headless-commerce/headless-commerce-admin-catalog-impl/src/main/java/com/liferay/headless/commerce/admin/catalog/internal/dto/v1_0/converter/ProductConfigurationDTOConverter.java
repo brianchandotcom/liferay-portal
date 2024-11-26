@@ -55,7 +55,7 @@ public class ProductConfigurationDTOConverter
 						(Long)dtoConverterContext.getId());
 
 				cpConfigurationEntry =
-					cpDefinition.getMasterCPConfigurationEntry();
+					cpDefinition.fetchMasterCPConfigurationEntry();
 			}
 			else {
 				ProductConfigurationDTOConverterContext

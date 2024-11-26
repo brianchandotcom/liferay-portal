@@ -149,6 +149,27 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public CPConfigurationEntry fetchMasterCPConfigurationEntry()
+		throws PortalException {
+
+		if (_cpConfigurationEntry != null) {
+			return _cpConfigurationEntry;
+		}
+
+		CPConfigurationList cpConfigurationList =
+			CPConfigurationListLocalServiceUtil.getMasterCPConfigurationList(
+				getGroupId());
+
+		_cpConfigurationEntry =
+			CPConfigurationEntryLocalServiceUtil.fetchCPConfigurationEntry(
+				PortalUtil.getClassNameId(CPDefinition.class.getName()),
+				getCPDefinitionId(),
+				cpConfigurationList.getCPConfigurationListId());
+
+		return _cpConfigurationEntry;
+	}
+
+	@Override
 	public String[] getAvailableLanguageIds() {
 		Set<String> availableLanguageIds = new TreeSet<>();
 
@@ -269,27 +290,6 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 				getCPDefinitionId());
 
 		return _descriptionMap;
-	}
-
-	@Override
-	public CPConfigurationEntry getMasterCPConfigurationEntry()
-		throws PortalException {
-
-		if (_cpConfigurationEntry != null) {
-			return _cpConfigurationEntry;
-		}
-
-		CPConfigurationList cpConfigurationList =
-			CPConfigurationListLocalServiceUtil.getMasterCPConfigurationList(
-				getGroupId());
-
-		_cpConfigurationEntry =
-			CPConfigurationEntryLocalServiceUtil.getCPConfigurationEntry(
-				PortalUtil.getClassNameId(CPDefinition.class.getName()),
-				getCPDefinitionId(),
-				cpConfigurationList.getCPConfigurationListId());
-
-		return _cpConfigurationEntry;
 	}
 
 	@Override

@@ -1109,9 +1109,8 @@ public class AccountEntryLocalServiceTest {
 			accountEntry, WorkflowConstants.STATUS_APPROVED,
 			TestPropsValues.getUser());
 
-		accountEntry = _testAccountEntryModelListener.getModel();
-
-		ExpandoBridge expandoBridge = accountEntry.getExpandoBridge();
+		ExpandoBridge expandoBridge =
+			_testAccountEntryModelListener._accountEntry.getExpandoBridge();
 
 		Assert.assertEquals(
 			"customFieldValue",
@@ -1503,19 +1502,15 @@ public class AccountEntryLocalServiceTest {
 	private static class TestAccountEntryModelListener
 		extends BaseModelListener<AccountEntry> {
 
-		public AccountEntry getModel() {
-			return _model;
-		}
-
 		@Override
 		public void onAfterUpdate(
-				AccountEntry originalModel, AccountEntry model)
+				AccountEntry originalAccountEntry, AccountEntry accountEntry)
 			throws ModelListenerException {
 
-			_model = model;
+			_accountEntry = accountEntry;
 		}
 
-		private AccountEntry _model;
+		private AccountEntry _accountEntry;
 
 	}
 

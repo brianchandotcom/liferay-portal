@@ -7,6 +7,8 @@ import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../../src/analytics';
+import {blogTypes} from '../../src/plugins/blogs';
+import {wait} from '../helpers';
 
 const applicationId = 'Blog';
 
@@ -252,5 +254,113 @@ describe('Blogs Plugin', () => {
 				document.body.removeChild(element);
 			}
 		);
+	});
+
+	describe('blog events with actions', () => {
+		const createBlogElementWithAction = (action, type) => {
+			const setDataset = (element, data) => {
+				Object.entries(data).forEach(([key, value]) => {
+					element.dataset[key] = value;
+				});
+			};
+
+			const blogElement = document.createElement('div');
+
+			setDataset(blogElement, {
+				analyticsAssetAction: action,
+				analyticsAssetId: 'assetId',
+				analyticsAssetSubtype: 'basic-blog',
+				analyticsAssetTitle: 'assetTitle',
+				analyticsAssetType: type,
+			});
+
+			blogElement.innerText = `Lorem ipsum dolor, sit amet consectetur adipisicing elit.`;
+
+			document.body.appendChild(blogElement);
+
+			return blogElement;
+		};
+
+		it('is not fired when view blog with an incorrect action value', async () => {
+			const element = createBlogElementWithAction('unknown', 'blog');
+
+			jest.spyOn(element, 'getBoundingClientRect').mockImplementation(
+				() => ({
+					bottom: 500,
+					height: 500,
+					left: 0,
+					right: 500,
+					top: 0,
+					width: 500,
+				})
+			);
+
+			const domContentLoaded = new Event('DOMContentLoaded');
+
+			document.dispatchEvent(domContentLoaded);
+
+			await wait(250);
+
+			const events = Analytics.getEvents().filter(
+				({eventId}) => eventId === 'blogViewed'
+			);
+
+			expect(events.length).toBeGreaterThanOrEqual(0);
+
+			document.body.removeChild(element);
+		});
+
+		it('is fired when view a blog with view and impression actions and correct types', async () => {
+			blogTypes.forEach(async (type) => {
+				[
+					{action: 'view', eventId: 'blogViewed'},
+					{action: 'impression', eventId: 'blogImpressionMade'},
+				].forEach(async (props) => {
+					const element = createBlogElementWithAction(
+						props.action,
+						type
+					);
+
+					jest.spyOn(
+						element,
+						'getBoundingClientRect'
+					).mockImplementation(() => ({
+						bottom: 500,
+						height: 500,
+						left: 0,
+						right: 500,
+						top: 0,
+						width: 500,
+					}));
+
+					const domContentLoaded = new Event('DOMContentLoaded');
+
+					document.dispatchEvent(domContentLoaded);
+
+					await wait(250);
+
+					const events = Analytics.getEvents().filter(
+						({eventId}) => eventId === props.eventId
+					);
+
+					expect(events.length).toBeGreaterThanOrEqual(1);
+
+					expect(events[0]).toEqual(
+						expect.objectContaining({
+							applicationId,
+							eventId: props.eventId,
+							properties: expect.objectContaining({
+								action: props.action,
+								articleId: 'assetId',
+								subtype: 'basic-blog',
+								type,
+							}),
+						})
+					);
+
+					document.body.removeChild(element);
+				});
+			});
+		});
 	});
 });

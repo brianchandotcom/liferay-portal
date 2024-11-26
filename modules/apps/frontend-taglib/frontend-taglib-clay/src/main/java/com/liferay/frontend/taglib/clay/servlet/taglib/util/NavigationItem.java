@@ -95,4 +95,8 @@ public class NavigationItem extends HashMap<String, Object> {
 		put("label", label);
 	}
 
+	public void setLocked(boolean locked) {
+		put("locked", locked);
+	}
+
 }

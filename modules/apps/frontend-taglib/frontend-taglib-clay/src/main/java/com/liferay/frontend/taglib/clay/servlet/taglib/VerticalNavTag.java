@@ -296,6 +296,16 @@ public class VerticalNavTag extends BaseContainerTag {
 			jspWriter.write(
 				HtmlUtil.escape((String)verticalNavItem.get("label")));
 
+			if (GetterUtil.getBoolean(verticalNavItem.get("locked"))) {
+				jspWriter.write("<svg title=\"\" class=\"lexicon-icon");
+				jspWriter.write(" lexicon-icon-lock c-ml-1 text-muted");
+				jspWriter.write(" role=\"presentation\">");
+				jspWriter.write(
+					"<use href=\"http://localhost:8080/o/admin-theme/");
+				jspWriter.write("images/clay/icons.svg#lock\">");
+				jspWriter.write("</use></svg>");
+			}
+
 			if (GetterUtil.getBoolean(verticalNavItem.get("deprecated"))) {
 				jspWriter.write("<span class=\"badge badge-warning c-ml-2");
 				jspWriter.write(" text-uppercase badge-translucent\">");

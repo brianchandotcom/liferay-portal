@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useState} from 'react';
 import {Body, Cell, Head, Row, Table, Text} from '@clayui/core';
 import {ClayToggle} from '@clayui/form';
+import React, {useState} from 'react';
+
 import {Job, jobs as initialJobs} from './jobs';
 
 const Recommendations: React.FC = () => {
@@ -27,10 +28,10 @@ const Recommendations: React.FC = () => {
 				</Cell>
 
 				<Cell
+					children={undefined}
 					key="toggle"
 					textValue={Liferay.Language.get('toggle')}
 					width="80px"
-					children={undefined}
 				/>
 			</Head>
 
@@ -38,7 +39,7 @@ const Recommendations: React.FC = () => {
 				{jobs.map(({active, description, id, title, type}, index) => (
 					<Row key={id}>
 						<Cell>
-							<Text weight="bold" size={3}>
+							<Text size={3} weight="bold">
 								{title}
 							</Text>
 						</Cell>
@@ -53,7 +54,6 @@ const Recommendations: React.FC = () => {
 
 						<Cell>
 							<ClayToggle
-								toggled={active}
 								onToggle={() => {
 									const updatedJobs = [...jobs];
 
@@ -64,6 +64,7 @@ const Recommendations: React.FC = () => {
 
 									setJobs(updatedJobs);
 								}}
+								toggled={active}
 							/>
 						</Cell>
 					</Row>

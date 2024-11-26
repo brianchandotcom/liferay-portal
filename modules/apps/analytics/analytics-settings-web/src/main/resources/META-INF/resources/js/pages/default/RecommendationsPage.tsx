@@ -4,9 +4,9 @@
  */
 
 import ClayLink from '@clayui/link';
+import BasePage from 'js/components/BasePage';
 import React from 'react';
 
-import BasePage from '../../components/BasePage';
 import Recommendations from '../.././components/recommendations/Recommendations';
 import {IGenericPageProps} from './DefaultPage';
 

@@ -64,6 +64,9 @@ public interface AnalyticsConfiguration {
 	public String liferayAnalyticsURL();
 
 	@Meta.AD(required = false)
+	public boolean mostPopularContentEnabled();
+
+	@Meta.AD(required = false)
 	public String publicKey();
 
 	@Meta.AD(required = false)
@@ -149,6 +152,9 @@ public interface AnalyticsConfiguration {
 
 	@Meta.AD(required = false)
 	public String token();
+
+	@Meta.AD(required = false)
+	public boolean userContentEnabled();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean wizardMode();

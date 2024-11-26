@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
-@FeatureFlags({"LPD-32247", "LPD-34651"})
+@FeatureFlags("LPD-34651")
 @RunWith(Arquillian.class)
 public class DocumentMetadataSetResourceTest
 	extends BaseDocumentMetadataSetResourceTestCase {

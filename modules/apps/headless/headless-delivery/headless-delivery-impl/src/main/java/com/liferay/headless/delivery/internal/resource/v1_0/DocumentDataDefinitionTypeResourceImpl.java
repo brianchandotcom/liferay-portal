@@ -14,7 +14,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.DocumentDataDefinitionType;
 import com.liferay.headless.delivery.resource.v1_0.DocumentDataDefinitionTypeResource;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -55,10 +54,6 @@ public class DocumentDataDefinitionTypeResourceImpl
 	public void deleteDocumentDataDefinitionType(
 			Long documentDataDefinitionTypeId)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
-			throw new UnsupportedOperationException();
-		}
 
 		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
 			_dataDefinitionResourceFactory.create();
@@ -108,10 +103,6 @@ public class DocumentDataDefinitionTypeResourceImpl
 			Long documentDataDefinitionTypeId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
-			throw new UnsupportedOperationException();
-		}
-
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeService.getFileEntryType(
 				documentDataDefinitionTypeId);
@@ -150,10 +141,6 @@ public class DocumentDataDefinitionTypeResourceImpl
 				DocumentDataDefinitionType documentDataDefinitionType)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
-			throw new UnsupportedOperationException();
-		}
-
 		return postSiteDocumentDataDefinitionType(
 			assetLibraryId, documentDataDefinitionType);
 	}
@@ -162,10 +149,6 @@ public class DocumentDataDefinitionTypeResourceImpl
 	public DocumentDataDefinitionType postSiteDocumentDataDefinitionType(
 			Long siteId, DocumentDataDefinitionType documentDataDefinitionType)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
-			throw new UnsupportedOperationException();
-		}
 
 		DataDefinitionResource.Builder builder =
 			_dataDefinitionResourceFactory.create();
@@ -232,10 +215,6 @@ public class DocumentDataDefinitionTypeResourceImpl
 			String search, Aggregation aggregation, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
-			throw new UnsupportedOperationException();
-		}
 
 		return SearchUtil.search(
 			actions,

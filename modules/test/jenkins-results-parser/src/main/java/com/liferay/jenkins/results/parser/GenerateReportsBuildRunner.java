@@ -68,6 +68,14 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				"Unable to delete directory: " + _TMP_BASE_DIR_PATH);
 		}
 
+		try {
+			_deleteStaleTestrayBuildReportJSONFiles();
+		}
+		catch (IOException | TimeoutException exception) {
+			System.out.println(
+				"Unable to delete stale build-report.json files");
+		}
+
 		super.tearDown();
 	}
 
@@ -206,6 +214,58 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				FileUtils.copyFile(nodeDataArchiveFile, nodeDataFile);
 			}
 		}
+	}
+
+	private void _deleteEmptyDirs(File dir) {
+		if (!dir.isDirectory()) {
+			return;
+		}
+
+		File[] files = dir.listFiles();
+
+		if (files != null) {
+			for (File file : files) {
+				_deleteEmptyDirs(file);
+			}
+		}
+
+		files = dir.listFiles();
+
+		if (files.length == 0) {
+			boolean deleted = dir.delete();
+
+			if (deleted) {
+				System.out.println(
+					"Deleted empty directory: " + dir.getAbsolutePath());
+			}
+			else {
+				System.out.println(
+					"Unable to delete empty directory: " +
+						dir.getAbsolutePath());
+			}
+		}
+	}
+
+	private void _deleteStaleTestrayBuildReportJSONFiles()
+		throws IOException, TimeoutException {
+
+		File testrayResultsBucketLocalDir = new File(
+			_getBuildProperty("google.cloud.bucket.local.dir[testray]"));
+
+		Process process = JenkinsResultsParserUtil.executeBashCommands(
+			true, testrayResultsBucketLocalDir, 1000 * 60 * 60,
+			JenkinsResultsParserUtil.combine(
+				"find ", testrayResultsBucketLocalDir.getCanonicalPath(),
+				"/*/*/*/*/build-report.json -mtime +60 -exec rm -frv {} \\;"));
+
+		if (process.exitValue() != 0) {
+			String error = JenkinsResultsParserUtil.readInputStream(
+				process.getErrorStream());
+
+			throw new RuntimeException(error);
+		}
+
+		_deleteEmptyDirs(testrayResultsBucketLocalDir);
 	}
 
 	private void _downloadTestrayBuildReportJSONFiles() {

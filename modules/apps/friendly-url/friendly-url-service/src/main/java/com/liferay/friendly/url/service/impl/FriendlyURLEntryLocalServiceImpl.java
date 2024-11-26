@@ -42,6 +42,8 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -801,18 +803,22 @@ public class FriendlyURLEntryLocalServiceImpl
 			return;
 		}
 
-		_assetEntryLocalService.updateEntry(
-			serviceContext.getUserId(), friendlyURLEntry.getGroupId(),
-			friendlyURLEntry.getCreateDate(),
-			friendlyURLEntry.getModifiedDate(),
-			FriendlyURLEntry.class.getName(),
-			friendlyURLEntry.getFriendlyURLEntryId(),
-			friendlyURLEntry.getUuid(), 0,
-			GetterUtil.getLongValues(
-				serviceContext.getAttribute("friendlyURLAssetCategoryIds")),
-			new String[0], true, false, null, null, null, null,
-			ContentTypes.TEXT_PLAIN, null, null, null, null, null, 0, 0,
-			serviceContext.getAssetPriority());
+		Map<String, Serializable> attributes = serviceContext.getAttributes();
+
+		if (attributes.containsKey("friendlyURLAssetCategoryIds")) {
+			_assetEntryLocalService.updateEntry(
+				serviceContext.getUserId(), friendlyURLEntry.getGroupId(),
+				friendlyURLEntry.getCreateDate(),
+				friendlyURLEntry.getModifiedDate(),
+				FriendlyURLEntry.class.getName(),
+				friendlyURLEntry.getFriendlyURLEntryId(),
+				friendlyURLEntry.getUuid(), 0,
+				GetterUtil.getLongValues(
+					serviceContext.getAttribute("friendlyURLAssetCategoryIds")),
+				new String[0], true, false, null, null, null, null,
+				ContentTypes.TEXT_PLAIN, null, null, null, null, null, 0, 0,
+				serviceContext.getAssetPriority());
+		}
 	}
 
 	private void _updateFriendlyURLEntryLocalizations(

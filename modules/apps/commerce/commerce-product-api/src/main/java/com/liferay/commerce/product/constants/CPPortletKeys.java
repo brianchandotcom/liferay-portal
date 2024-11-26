@@ -55,6 +55,10 @@ public class CPPortletKeys {
 		"com_liferay_commerce_product_content_web_internal_portlet_" +
 			"CPCompareContentPortlet";
 
+	public static final String CP_CONFIGURATION_LISTS =
+		"com_liferay_commerce_product_definitions_web_internal_portlet_" +
+			"CPConfigurationListsPortlet";
+
 	public static final String CP_CONTENT_WEB =
 		"com_liferay_commerce_product_content_web_internal_portlet_" +
 			"CPContentPortlet";

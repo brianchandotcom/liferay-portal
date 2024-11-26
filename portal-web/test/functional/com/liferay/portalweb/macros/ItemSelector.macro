@@ -1105,9 +1105,13 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		if (isSet(draft)) {
-			AssertElementPresent(
+			AssertElementNotPresent(
 				key_rowEntry = ${webContentTitle},
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No web content was found.");
 		}
 		else {
 			for (var webContentTitle : list ${webContentTitle}) {

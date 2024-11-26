@@ -1,13 +1,16 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "feature.flag.LPD-38869=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
 		CommerceConfiguration.commerceSetUp();
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 	}
 
 	tearDown {

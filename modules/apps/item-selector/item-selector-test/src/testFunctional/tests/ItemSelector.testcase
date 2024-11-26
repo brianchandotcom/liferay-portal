@@ -1479,7 +1479,11 @@ definition {
 	@priority = 4
 	@refactordone
 	test PrivateSiteShouldNotBeViewableWithoutPermissionsInCalendar {
-		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPD-38869=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.LPD-35013=true${line.separator}jsonws.web.service.paths.excludes=";
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		var portalURL = PropsUtil.get("portal.url");
 

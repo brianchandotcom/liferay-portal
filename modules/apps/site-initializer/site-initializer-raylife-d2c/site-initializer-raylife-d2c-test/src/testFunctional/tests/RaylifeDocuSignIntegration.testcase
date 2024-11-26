@@ -1,7 +1,6 @@
 @component-name = "portal-site-management"
 definition {
 
-	property custom.properties = "feature.flag.LPD-38869=true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
@@ -13,6 +12,10 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		PortalSettings.openInstanceSettingsAdmin();
 

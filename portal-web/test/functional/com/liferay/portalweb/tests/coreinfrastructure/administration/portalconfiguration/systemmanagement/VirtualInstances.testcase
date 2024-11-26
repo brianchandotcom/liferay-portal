@@ -336,9 +336,13 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test ViewVirtualHostPrivateSitePage {
-		property custom.properties = "feature.flag.LPD-35013=false${line.separator}feature.flag.LPD-38869=true${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com,www.charlie.com";
+		property custom.properties = "feature.flag.LPD-35013=false${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com,www.charlie.com";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",

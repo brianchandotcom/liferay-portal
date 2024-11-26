@@ -48,7 +48,7 @@ public class ObjectEntrySearchPermissionFilterContributorTest {
 		ObjectEntrySearchPermissionFilterContributor
 			objectEntrySearchPermissionFilterContributor =
 				_setUpObjectEntrySearchPermissionFilterContributor(
-					inactiveAccountEntryId, activeAccountEntryId, userId);
+					activeAccountEntryId, inactiveAccountEntryId, userId);
 
 		BooleanFilter booleanFilter = new BooleanFilter();
 
@@ -125,8 +125,8 @@ public class ObjectEntrySearchPermissionFilterContributorTest {
 				objectEntrySearchPermissionFilterContributor);
 
 		List<AccountEntryUserRel> accountEntryRelList = Arrays.asList(
-			_createAccountEntryRel(inactiveAccountEntryId, true),
-			_createAccountEntryRel(activeAccountEntryId, false));
+			_createAccountEntryRel(activeAccountEntryId, false),
+			_createAccountEntryRel(inactiveAccountEntryId, true));
 
 		Mockito.when(
 			accountEntryUserRelLocalService.
@@ -154,7 +154,7 @@ public class ObjectEntrySearchPermissionFilterContributorTest {
 
 	private ObjectEntrySearchPermissionFilterContributor
 			_setUpObjectEntrySearchPermissionFilterContributor(
-				long inactiveAccountEntryId, long activeAccountEntryId,
+				long activeAccountEntryId, long inactiveAccountEntryId,
 				long userId)
 		throws PortalException {
 
@@ -162,12 +162,12 @@ public class ObjectEntrySearchPermissionFilterContributorTest {
 			objectEntrySearchPermissionFilterContributor =
 				new ObjectEntrySearchPermissionFilterContributor();
 
+		_setUpAccountEntryRels(
+			activeAccountEntryId, inactiveAccountEntryId,
+			objectEntrySearchPermissionFilterContributor, userId);
 		_setUpObjectEntrySearchPermissionFilterContributor(
 			objectEntrySearchPermissionFilterContributor);
 		_setUpOrganizationLocalService(
-			objectEntrySearchPermissionFilterContributor, userId);
-		_setUpAccountEntryRels(
-			activeAccountEntryId, inactiveAccountEntryId,
 			objectEntrySearchPermissionFilterContributor, userId);
 
 		return objectEntrySearchPermissionFilterContributor;

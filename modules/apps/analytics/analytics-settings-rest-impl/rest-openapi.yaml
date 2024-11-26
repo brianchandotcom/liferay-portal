@@ -114,6 +114,12 @@ components:
                     type: integer
                 product:
                     type: integer
+        RecommendationConfiguration:
+            properties:
+                mostPopularContentEnabled:
+                    type: boolean
+                userContentEnabled:
+                    type: boolean
         Site:
             properties:
                 channelName:
@@ -682,6 +688,35 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["Field"]
+    "/recommendation/configuration":
+        get:
+            operationId: getRecommendationConfiguration
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/RecommendationConfiguration"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/RecommendationConfiguration"
+            tags: ["RecommendationConfiguration"]
+        put:
+            operationId: putRecommendationConfiguration
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/RecommendationConfiguration"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/RecommendationConfiguration"
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["RecommendationConfiguration"]
     "/sites":
         get:
             operationId: getSitesPage

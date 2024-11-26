@@ -61,7 +61,7 @@ public class WorkflowTaskPermissionImplTest {
 		_setUpGroupLocalService();
 		_setUpWorkflowHandlerRegistryUtil();
 
-		_mockWorkflowTaskManager(Collections.emptyList(), false);
+		_mockWorkflowTaskManager(false, Collections.emptyList());
 	}
 
 	@Test
@@ -203,7 +203,7 @@ public class WorkflowTaskPermissionImplTest {
 	@Test
 	public void testNotContentReviewerWithAssetViewPermissionHasPermissionOnCompletedTaskWithNotification() {
 		_mockAssetRendererHasViewPermission(true);
-		_mockWorkflowTaskManager(Collections.emptyList(), true);
+		_mockWorkflowTaskManager(true, Collections.emptyList());
 
 		Assert.assertTrue(
 			_workflowTaskPermissionChecker.contains(
@@ -216,7 +216,7 @@ public class WorkflowTaskPermissionImplTest {
 	@Test
 	public void testNotContentReviewerWithAssetViewPermissionHasPermissionOnPendingTaskWithNotification() {
 		_mockAssetRendererHasViewPermission(true);
-		_mockWorkflowTaskManager(Collections.emptyList(), true);
+		_mockWorkflowTaskManager(true, Collections.emptyList());
 
 		Assert.assertTrue(
 			_workflowTaskPermissionChecker.contains(
@@ -431,7 +431,7 @@ public class WorkflowTaskPermissionImplTest {
 	}
 
 	private void _mockWorkflowTaskManager(
-		List<User> users, boolean notifiableUser) {
+		boolean notifiableUser, List<User> users) {
 
 		ReflectionTestUtil.setFieldValue(
 			_workflowTaskPermissionChecker, "_workflowTaskManager",

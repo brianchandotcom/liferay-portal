@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect, mergeTests} from '@playwright/test';
+import {Locator, Page, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
-import {liferayConfig} from '../../../../liferay.config';
 import {rolesPagesTest} from '../../../../fixtures/rolesPagesTest';
 import {DataApiHelpers} from '../../../../helpers/ApiHelpers';
+import {liferayConfig} from '../../../../liferay.config';
 import {RoleDefinePermissionsPage} from '../../../../pages/roles-admin-web/RoleDefinePermissionsPage';
 import {RolePage} from '../../../../pages/roles-admin-web/RolePage';
 import {RolesPage} from '../../../../pages/roles-admin-web/RolesPage';
@@ -44,7 +44,7 @@ let dataSetUserRole;
 let userAccount: TUserAccount;
 
 const blogPostsDataSetConfig = {
-	name: 'BlogPosting',
+	name: 'BlogPost',
 	restApplication: '/headless-delivery/v1.0',
 	restEndpoint: '/v1.0/sites/{siteId}/blog-postings',
 	restSchema: 'BlogPosting',
@@ -56,6 +56,20 @@ async function assertTableRowsCount(page, rowsCount) {
 
 		expect(rows).toHaveCount(rowsCount);
 	});
+}
+
+async function openActionsDropdown({page, text}: {page: Page; text: string}) {
+	const table: Locator = page.locator('.data-set-content-wrapper');
+
+	const row = table.locator('.dnd-tbody .dnd-tr').filter({
+		has: page.getByText(text, {exact: true}).first(),
+	});
+
+	const actionsButton = row.locator('.cell-item-actions button');
+
+	await expect(actionsButton).toBeInViewport();
+
+	await actionsButton.click();
 }
 
 async function setupUserRoleAndLoginAsUser({
@@ -76,11 +90,12 @@ async function setupUserRoleAndLoginAsUser({
 	rolePage: RolePage;
 	rolesPage: RolesPage;
 }) {
+
 	// const roleName = `ds_user_${getRandomString()}`;
 
 	// TODO: Fix this to make it work if extracted
-    // let dataSetUserRole;
-    // let userAccount: TUserAccount;
+	// let dataSetUserRole;
+	// let userAccount: TUserAccount;
 
 	await test.step('Create Data Set user role', async () => {
 		const companyId = await page.evaluate(() => {
@@ -143,7 +158,9 @@ async function setupUserRoleAndLoginAsUser({
 		});
 
 		await test.step('Navigate to role edit page', async () => {
-			await page.getByRole('link', {exact: true, name: dataSetUserRoleName}).click();
+			await page
+				.getByRole('link', {exact: true, name: dataSetUserRoleName})
+				.click();
 		});
 
 		await test.step('Navigate to "Define Permissions" > "Data Set" section', async () => {
@@ -286,16 +303,10 @@ test('A user with "View" and "Permissions" permission', async ({
 	});
 
 	await test.step('Open actions dropdown', async () => {
-		const dataSetRows = page
-			.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
-			.filter({
-				hasText: blogPostsDataSetConfig.name,
-			});
-
-		await dataSetRows
-			.first()
-			.getByRole('button', {name: 'Actions'})
-			.click();
+		await openActionsDropdown({
+			page,
+			text: blogPostsDataSetConfig.name,
+		});
 	});
 
 	await test.step('Check that "Permissions" is visible', async () => {
@@ -308,40 +319,34 @@ test('A user with "View" and "Permissions" permission', async ({
 		await page.getByRole('menuitem', {name: 'Permissions'}).click();
 
 		await expect(
-			page
-				.frameLocator('iframe[title="Permissions"]')
-				.locator('#guest_ACTION_VIEW')
+			dataSetsPage.permissionsModal.locator('#guest_ACTION_VIEW')
 		).not.toBeChecked();
 	});
 
 	await test.step('Enable "View" permission for "User" role', async () => {
-		await page
-			.frameLocator('iframe[title="Permissions"]')
+		await dataSetsPage.permissionsModal
 			.locator('#guest_ACTION_VIEW')
 			.setChecked(true);
 
 		await expect(
-			page
-				.frameLocator('iframe[title="Permissions"]')
-				.locator('#guest_ACTION_VIEW')
+			dataSetsPage.permissionsModal.locator('#guest_ACTION_VIEW')
 		).toBeChecked();
 	});
 
 	await test.step('Save Permissions modal', async () => {
-		await page
-			.frameLocator('iframe[title="Permissions"]')
+		await dataSetsPage.permissionsModal
 			.getByRole('button', {name: 'Save'})
 			.click();
 
-		await waitForAlert(page.frameLocator('iframe[title="Permissions"]'));
+		await waitForAlert(dataSetsPage.permissionsModal);
 	});
 
 	await test.step('Click "Cancel" in the Permissions modal', async () => {
-		await page
-			.frameLocator('iframe[title="Permissions"]')
+		await dataSetsPage.permissionsModal
 			.getByRole('button', {name: 'Cancel'})
 			.click();
 	});
+
 	await test.step('Check that the Permissions modal is closed', async () => {
 		await expect(
 			page.getByRole('heading', {name: 'Permissions'})
@@ -349,16 +354,10 @@ test('A user with "View" and "Permissions" permission', async ({
 	});
 
 	await test.step('Open actions dropdown', async () => {
-		const dataSetRows = page
-			.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
-			.filter({
-				hasText: blogPostsDataSetConfig.name,
-			});
-
-		await dataSetRows
-			.first()
-			.getByRole('button', {name: 'Actions'})
-			.click();
+		await openActionsDropdown({
+			page,
+			text: blogPostsDataSetConfig.name,
+		});
 	});
 
 	await test.step('Open Permissions modal', async () => {
@@ -367,9 +366,7 @@ test('A user with "View" and "Permissions" permission', async ({
 
 	await test.step('Confirm "View" permission is persisted', async () => {
 		await expect(
-			page
-				.frameLocator('iframe[title="Permissions"]')
-				.locator('#guest_ACTION_VIEW')
+			dataSetsPage.permissionsModal.locator('#guest_ACTION_VIEW')
 		).toBeChecked();
 	});
 });
@@ -415,16 +412,10 @@ test('A user with only "View" permission', async ({
 	});
 
 	await test.step('Open actions dropdown', async () => {
-		const dataSetRows = page
-			.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
-			.filter({
-				hasText: blogPostsDataSetConfig.name,
-			});
-
-		await dataSetRows
-			.first()
-			.getByRole('button', {name: 'Actions'})
-			.click();
+		await openActionsDropdown({
+			page,
+			text: blogPostsDataSetConfig.name,
+		});
 	});
 
 	await test.step('Check that "Permissions" is not visible', async () => {
@@ -520,16 +511,10 @@ test('A user with "Delete" permission', async ({
 	});
 
 	await test.step('Open actions dropdown', async () => {
-		const dataSetRows = page
-			.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
-			.filter({
-				hasText: blogPostsDataSetConfig.name,
-			});
-
-		await dataSetRows
-			.first()
-			.getByRole('button', {name: 'Actions'})
-			.click();
+		await openActionsDropdown({
+			page,
+			text: blogPostsDataSetConfig.name,
+		});
 	});
 
 	await test.step('Check that "Delete" is visible', async () => {
@@ -539,8 +524,8 @@ test('A user with "Delete" permission', async ({
 	});
 });
 
-test('Check "Edit" permission', async({
-    apiHelpers,
+test('Check "Edit" permission', async ({
+	apiHelpers,
 	dataSetManagerApiHelpers,
 	dataSetsPage,
 	page,
@@ -548,9 +533,9 @@ test('Check "Edit" permission', async({
 	rolePage,
 	rolesPage,
 }) => {
-    const blogPostDataSetERC = getRandomString();
+	const blogPostDataSetERC = getRandomString();
 
-    await test.step('Create a data set', async () => {
+	await test.step('Create a data set', async () => {
 		createdDataSetERCs.push(blogPostDataSetERC);
 
 		await dataSetManagerApiHelpers.createDataSet({
@@ -560,7 +545,7 @@ test('Check "Edit" permission', async({
 		});
 	});
 
-    await test.step('Setup user role and login as user', async () => {
+	await test.step('Setup user role and login as user', async () => {
 		await setupUserRoleAndLoginAsUser({
 			apiHelpers,
 			dataSetResourcePermissions: [
@@ -576,11 +561,24 @@ test('Check "Edit" permission', async({
 		});
 	});
 
-    await test.step('Go to Data Sets', async () => {
+	await test.step('Go to Data Sets', async () => {
 		await dataSetsPage.goto({checkTabVisibility: false});
 	});
 
 	await test.step('Open actions dropdown', async () => {
+		await openActionsDropdown({
+			page,
+			text: blogPostsDataSetConfig.name,
+		});
+	});
+
+	await test.step('Check that "Edit" is not visible', async () => {
+		await expect(
+			page.getByRole('menuitem', {name: 'Edit'})
+		).not.toBeVisible();
+	});
+
+	await test.step('Check that the user can not enter to Data Set details pages', async () => {
 		const dataSetRows = page
 			.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
 			.filter({
@@ -589,123 +587,100 @@ test('Check "Edit" permission', async({
 
 		await dataSetRows
 			.first()
-			.getByRole('button', {name: 'Actions'})
+			.getByText(blogPostsDataSetConfig.name)
+			.first()
 			.click();
+
+		await expect(
+			page.getByRole('button', {name: 'Details'})
+		).not.toBeVisible();
+
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/group/guest/~/control_panel/manage?p_p_id=com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet&p_p_lifecycle=0&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_mvcRenderCommandName=%2Ffrontend_data_set_admin%2Fedit_data_set&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_dataSetERC=${blogPostDataSetERC}&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_dataSetLabel=${blogPostsDataSetConfig.name}`
+		);
+		await waitForAlert(page, 'Error:Your request failed to complete.', {
+			type: 'danger',
+		});
 	});
 
-    await test.step('Check that "Edit" is not visible', async () => {
+	await test.step('Do logout and login as administrator', async () => {
+		await performLogout(page);
+		await performLogin(page, 'test');
+	});
+
+	await test.step('Grant Data Sets "Update" permission for the new role', async () => {
+		await dataSetsPage.goto({checkTabVisibility: false});
+
+		await openActionsDropdown({
+			page,
+			text: blogPostsDataSetConfig.name,
+		});
+
+		await page.getByRole('menuitem', {name: 'Permissions'}).click();
+
+		await expect(
+			dataSetsPage.permissionsModal.locator(
+				`#${dataSetUserRoleName}_ACTION_UPDATE`
+			)
+		).not.toBeChecked();
+
+		await dataSetsPage.permissionsModal
+			.locator(`#${dataSetUserRoleName}_ACTION_UPDATE`)
+			.setChecked(true);
+
+		while (
+			await !dataSetsPage.permissionsModal
+				.locator(`#${dataSetUserRoleName}_ACTION_UPDATE`)
+				.isChecked()
+		) {
+			await dataSetsPage.permissionsModal
+				.locator(`#${dataSetUserRoleName}_ACTION_UPDATE`)
+				.setChecked(true);
+		}
+
+		await dataSetsPage.permissionsModal
+			.getByRole('button', {name: 'Save'})
+			.click();
+
+		await waitForAlert(dataSetsPage.permissionsModal);
+	});
+
+	await test.step('Do logout and login with the new user', async () => {
+		await performLogout(page);
+		await performLogin(page, userAccount.alternateName);
+	});
+
+	await test.step('Navigate to Data Set page', async () => {
+		await dataSetsPage.goto({checkTabVisibility: false});
+	});
+
+	await test.step('Check that the user has only "Edit" option on actions menu', async () => {
+		await openActionsDropdown({
+			page,
+			text: blogPostsDataSetConfig.name,
+		});
+
 		await expect(
 			page.getByRole('menuitem', {name: 'Edit'})
-		).not.toBeVisible();
+		).toBeVisible();
 	});
 
-    await test.step('Check that the user can not enter to Data Set details pages', async() => {
-        const dataSetRows = page
-            .locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
-            .filter({
-                hasText: blogPostsDataSetConfig.name,
-            });
-        
-        await dataSetRows
-			.first()
-			.getByText(blogPostsDataSetConfig.name)
-            .first()
-			.click();
+	await test.step('Check that the user can now edit the data set', async () => {
+		await openActionsDropdown({
+			page,
+			text: blogPostsDataSetConfig.name,
+		});
 
-        await expect(page.getByRole('button', { name: 'Details' })).not.toBeVisible();
+		await page.getByRole('menuitem', {name: 'Edit'}).click();
 
-        await page
-            .goto(`${liferayConfig.environment.baseUrl}/group/guest/~/control_panel/manage?p_p_id=com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet&p_p_lifecycle=0&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_mvcRenderCommandName=%2Fedit_data_set&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_dataSetERC=${blogPostDataSetERC}&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_dataSetLabel=${blogPostsDataSetConfig.name}`)
-            
-        await waitForAlert(
-            page,
-            'Error:Your request failed to complete.',
-            {type: 'danger'}
-        );
-    });
-
-    await test.step('Do logout and login as administrator', async () => {
-        await performLogout(page);
-        await performLogin(page, 'test');
-    });
-
-    await test.step('Grant Data Sets Update permission for the new user', async () => {
-        await dataSetsPage.goto({checkTabVisibility: false});
-
-        const dataSetRow = await page
-            .locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
-            .filter({hasText: blogPostsDataSetConfig.name});
-
-        await dataSetRow
-            .first()
-            .getByRole('button', {name: 'Actions'})
-            .click();
-
-        await page.getByRole('menuitem', {name: 'Permissions'}).click();
-
-        const permissionsModalIframe = await page.frameLocator('iframe[title="Permissions"]');
-
-        const permissionsModalSearch = await permissionsModalIframe.getByPlaceholder('Search for');
-
-        await permissionsModalSearch.waitFor();
-
-        await permissionsModalIframe.locator(`#${dataSetUserRoleName}_ACTION_UPDATE`).waitFor({state: 'visible'});
-		await permissionsModalIframe.locator(`#${dataSetUserRoleName}_ACTION_UPDATE`).uncheck();
-        await permissionsModalIframe.locator(`#${dataSetUserRoleName}_ACTION_UPDATE`).check();
-
-
-        await permissionsModalIframe.getByRole('button', { name: 'Save' }).click();
-
-		await waitForAlert(permissionsModalIframe);
-    });
-
-    await test.step('Do logout and login with the new user', async () => {
-        await performLogout(page);
-        await performLogin(page, userAccount.alternateName);
-    });
-
-    await test.step('Navigate to Data Set page', async () => {
-        await dataSetsPage.goto({checkTabVisibility: false});
-    });
-
-    await test.step('Check that the user has only "Edit" option on actions menu', async () => {
-        await page.locator('.dnd-td.item-actions').first().waitFor();
-
-        await page
-            .locator('.dnd-td.item-actions')
-            .first()
-            .locator('.dropdown-toggle')
-            .click();
-
-        const tableItemActions = await page
-            .locator('.dropdown-menu')
-            .filter({has: page.locator('span.pr-2')})
-            .first()
-            .locator('.dropdown-item')
-            .allInnerTexts();
-
-        await expect(tableItemActions).toEqual(['Edit']);
-    });
-
-    await test.step('Check that the user can now edit the data set', async () => {
-        const dataSetRow = await page
-            .locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
-            .filter({hasText: blogPostsDataSetConfig.name});
-
-        await dataSetRow
-            .first()
-            .getByRole('button', {name: 'Actions'})
-            .click();
-
-        await page.getByRole('menuitem', {name: 'Edit'}).click();
-
-        await expect(page.getByRole('heading', { name: 'Details' })).toBeVisible();
-    });
-
+		await expect(
+			page.getByRole('heading', {name: 'Details'})
+		).toBeVisible();
+	});
 });
 
-test('A user with "Add Object Entry" permission', async({
-    apiHelpers,
+test('A user with "Add Object Entry" permission', async ({
+	apiHelpers,
 	dataSetsPage,
 	page,
 	roleDefinePermissionsPage,
@@ -728,11 +703,11 @@ test('A user with "Add Object Entry" permission', async({
 		});
 	});
 
-    await test.step('Go to Data Sets', async () => {
+	await test.step('Go to Data Sets', async () => {
 		await dataSetsPage.goto({checkTabVisibility: false});
 	});
 
-	await test.step('Confirm that the user can create a Data Set', async() => {
+	await test.step('Confirm that the user can create a Data Set', async () => {
 		await expect(dataSetsPage.newDataSetButton).toBeVisible();
 
 		await dataSetsPage.createDataSet(blogPostsDataSetConfig);
@@ -741,14 +716,10 @@ test('A user with "Add Object Entry" permission', async({
 	});
 
 	await test.step('Delete Data Set', async () => {
-		const datasetTestRow = await dataSetsPage.page
-			.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
-			.filter({hasText: blogPostsDataSetConfig.name});
-
-		await datasetTestRow
-			.first()
-			.getByRole('button', {name: 'Actions'})
-			.click();
+		await openActionsDropdown({
+			page,
+			text: blogPostsDataSetConfig.name,
+		});
 
 		await dataSetsPage.page.getByRole('menuitem', {name: 'Delete'}).click();
 
@@ -758,8 +729,8 @@ test('A user with "Add Object Entry" permission', async({
 	});
 });
 
-test('A user without "Add Object Entry" permission', async({
-    apiHelpers,
+test('A user without "Add Object Entry" permission', async ({
+	apiHelpers,
 	dataSetsPage,
 	page,
 	roleDefinePermissionsPage,
@@ -786,7 +757,7 @@ test('A user without "Add Object Entry" permission', async({
 		await dataSetsPage.goto({checkTabVisibility: false});
 	});
 
-	await test.step('Confirm that the user can not create a Data Set', async() => {
+	await test.step('Confirm that the user can not create a Data Set', async () => {
 		await expect(dataSetsPage.newDataSetButton).not.toBeVisible();
 	});
 });

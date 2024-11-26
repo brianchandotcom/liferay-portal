@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../../helpers/ApiHelpers';
 import {ApplicationsMenuPage} from '../../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
@@ -32,6 +32,7 @@ export class CustomDataSetsPage {
 	};
 	readonly page: Page;
 	private readonly pageContainer: Locator;
+	readonly permissionsModal: FrameLocator;
 	readonly systemDataSetsTab: Locator;
 
 	constructor(page: Page) {
@@ -67,6 +68,9 @@ export class CustomDataSetsPage {
 		};
 		this.page = page;
 		this.pageContainer = page.locator('.data-sets');
+		this.permissionsModal = page.frameLocator(
+			'iframe[title="Permissions"]'
+		);
 		this.systemDataSetsTab = page
 			.locator('.nav-item')
 			.filter({hasText: 'System Data Sets'});

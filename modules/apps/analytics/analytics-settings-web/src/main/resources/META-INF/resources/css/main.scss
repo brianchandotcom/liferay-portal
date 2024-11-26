@@ -1,75 +1,128 @@
-.portlet-analytics-settings {
-	.contacts-link-disabled {
-		cursor: not-allowed;
-		opacity: 0.5;
+.analytics-settings-web {
+	.c-empty-state-animation {
+		max-width: none;
 	}
 
-	.empty-state-icon {
-		background-image: url(@theme_image_path@/states/empty_state.svg);
-		margin: auto;
-		max-width: 250px;
-		padding-top: 250px;
+	.compose-table.table-autofit td,
+	.compose-table.table-autofit th {
+		width: auto;
 	}
 
-	#channelManagementToolbar .management-bar {
-		.container-fluid,
-		.navbar-form {
-			padding: 0;
+	.compose-table.table thead tr td {
+		width: 40px;
+	}
+
+	.empty-state-border {
+		border: 1px solid #e7e7ed;
+		margin: 20px 0;
+	}
+
+	.list-group-item {
+		cursor: pointer;
+	}
+
+	.list-group-item-disabled {
+		.lexicon-icon,
+		.list-group-title,
+		.list-group-text {
+			color: #9e9ea6 !important;
 		}
 	}
 
-	.radio-buttons {
-		label {
-			cursor: pointer;
-		}
+	.loading-absolute {
+		bottom: 0;
+		left: 0;
+		margin: auto !important;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
 
-		small {
-			margin: 0 0 0 1.4rem;
-		}
+	.multi-step-indicator-label {
+		max-width: none !important;
+	}
+	.c-empty-state-animation {
+		max-width: none;
+	}
 
-		.radio {
-			margin-bottom: 0;
+	.compose-table.table-autofit td,
+	.compose-table.table-autofit th {
+		width: auto;
+	}
+
+	.compose-table.table thead tr td {
+		width: 40px;
+	}
+
+	.empty-state-border {
+		border: 1px solid #e7e7ed;
+		margin: 20px 0;
+	}
+
+	.list-group-item {
+		cursor: pointer;
+	}
+
+	.list-group-item-disabled {
+		.lexicon-icon,
+		.list-group-title,
+		.list-group-text {
+			color: #9e9ea6 !important;
 		}
 	}
-}
 
-// New CSS - Commerce Connections
-
-.c-empty-state-animation {
-	max-width: none;
-}
-
-.compose-table.table-autofit td,
-.compose-table.table-autofit th {
-	width: auto;
-}
-
-.compose-table.table thead tr td {
-	width: 40px;
-}
-
-.empty-state-border {
-	border: 1px solid #e7e7ed;
-	margin: 20px 0;
-}
-
-.list-group-item {
-	cursor: pointer;
-}
-
-.list-group-item-disabled {
-	.lexicon-icon,
-	.list-group-title,
-	.list-group-text {
-		color: #9e9ea6 !important;
+	.loading-absolute {
+		bottom: 0;
+		left: 0;
+		margin: auto !important;
+		position: absolute;
+		right: 0;
+		top: 0;
 	}
-}
 
-.loading-absolute {
-	bottom: 0;
-	left: 0;
-	margin: auto !important;
-	position: absolute;
-	right: 0;
-	top: 0;
+	.multi-step-indicator-label {
+		max-width: none !important;
+	}
+	.c-empty-state-animation {
+		max-width: none;
+	}
+
+	.compose-table.table-autofit td,
+	.compose-table.table-autofit th {
+		width: auto;
+	}
+
+	.compose-table.table thead tr td {
+		width: 40px;
+	}
+
+	.empty-state-border {
+		border: 1px solid #e7e7ed;
+		margin: 20px 0;
+	}
+
+	.list-group-item {
+		cursor: pointer;
+	}
+
+	.list-group-item-disabled {
+		.lexicon-icon,
+		.list-group-title,
+		.list-group-text {
+			color: #9e9ea6 !important;
+		}
+	}
+
+	.loading-absolute {
+		bottom: 0;
+		left: 0;
+		margin: auto !important;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	.multi-step-indicator-label {
+		max-width: none !important;
+	}
 }

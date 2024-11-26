@@ -4,7 +4,7 @@
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
-			"importStrategy": "ON_ERROR_FAIL",
+			"onErrorFail": "false",
 			"updateStrategy": "UPDATE"
 		},
 		"taskItemDelegateName": "DEFAULT"
@@ -14,211 +14,131 @@
 			"externalReferenceCode": "P2S3_ACCESS_TYPE",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "anyoneSignedIn",
+					"externalReferenceCode": "ANYONE_SIGNED_IN",
 					"key": "anyoneSignedIn",
-					"name": "Anyone Signed In",
-					"name_i18n": {
-						"en-US": "Anyone Signed In"
-					}
+					"name": "Anyone Signed In"
 				},
 				{
-					"externalReferenceCode": "enrolledOnly",
+					"externalReferenceCode": "ENROLLED_ONLY",
 					"key": "enrolledOnly",
-					"name": "Enrolled Only",
-					"name_i18n": {
-						"en-US": "Enrolled Only"
-					}
+					"name": "Enrolled Only"
 				},
 				{
-					"externalReferenceCode": "guest",
+					"externalReferenceCode": "GUEST",
 					"key": "guest",
-					"name": "Guest",
-					"name_i18n": {
-						"en-US": "Guest"
-					}
+					"name": "Guest"
 				}
 			],
-			"name": "P2S3 Access Type",
-			"name_i18n": {
-				"en-US": "Access Type"
-			},
-			"system": false
+			"name": "P2S3 Access Type"
 		},
 		{
 			"externalReferenceCode": "P2S3_EXPERTISE_LEVELS",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "beginner",
+					"externalReferenceCode": "BEGINNER",
 					"key": "beginner",
-					"name": "Beginner",
-					"name_i18n": {
-						"en-US": "Beginner"
-					}
+					"name": "Beginner"
 				},
 				{
-					"externalReferenceCode": "expert",
+					"externalReferenceCode": "EXPERT",
 					"key": "expert",
-					"name": "Expert",
-					"name_i18n": {
-						"en-US": "Expert"
-					}
+					"name": "Expert"
 				},
 				{
-					"externalReferenceCode": "intermediate",
+					"externalReferenceCode": "INTERMEDIATE",
 					"key": "intermediate",
-					"name": "Intermediate",
-					"name_i18n": {
-						"en-US": "Intermediate"
-					}
+					"name": "Intermediate"
 				}
 			],
-			"name": "P2S3 Expertise Levels",
-			"name_i18n": {
-				"en-US": "Expertise Levels"
-			},
-			"system": false
+			"name": "P2S3 Expertise Levels"
 		},
 		{
 			"externalReferenceCode": "P2S3_PERSONAS",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "administrator",
+					"externalReferenceCode": "ADMINISTRATOR",
 					"key": "administrator",
-					"name": "Administrator",
-					"name_i18n": {
-						"en-US": "Administrator"
-					}
+					"name": "Administrator"
 				},
 				{
-					"externalReferenceCode": "architect",
+					"externalReferenceCode": "ARCHITECT",
 					"key": "architect",
-					"name": "Architect",
-					"name_i18n": {
-						"en-US": "Architect"
-					}
+					"name": "Architect"
 				},
 				{
-					"externalReferenceCode": "cloudArchitect",
+					"externalReferenceCode": "CLOUD_ARCHITECT",
 					"key": "cloudArchitect",
-					"name": "Cloud Architect",
-					"name_i18n": {
-						"en-US": "Cloud Architect"
-					}
+					"name": "Cloud Architect"
 				},
 				{
-					"externalReferenceCode": "developer",
+					"externalReferenceCode": "DEVELOPER",
 					"key": "developer",
-					"name": "Developer",
-					"name_i18n": {
-						"en-US": "Developer"
-					}
+					"name": "Developer"
 				},
 				{
-					"externalReferenceCode": "internalEmployee",
+					"externalReferenceCode": "INTERNAL_EMPLOYEE",
 					"key": "internalEmployee",
-					"name": "Internal Employee",
-					"name_i18n": {
-						"en-US": "Internal Employee"
-					}
+					"name": "Internal Employee"
 				},
 				{
-					"externalReferenceCode": "partner",
+					"externalReferenceCode": "PARTNER",
 					"key": "partner",
-					"name": "Partner",
-					"name_i18n": {
-						"en-US": "Partner"
-					}
+					"name": "Partner"
 				},
 				{
-					"externalReferenceCode": "practitioner",
+					"externalReferenceCode": "PRACTITIONER",
 					"key": "practitioner",
-					"name": "Practitioner",
-					"name_i18n": {
-						"en-US": "Practitioner"
-					}
+					"name": "Practitioner"
 				},
 				{
-					"externalReferenceCode": "sales",
+					"externalReferenceCode": "SALES",
 					"key": "sales",
-					"name": "Sales",
-					"name_i18n": {
-						"en-US": "Sales"
-					}
+					"name": "Sales"
 				}
 			],
-			"name": "P2S3 Personas",
-			"name_i18n": {
-				"en-US": "Personas"
-			},
-			"system": false
+			"name": "P2S3 Personas"
 		},
 		{
 			"externalReferenceCode": "P2S3_QUIZ_QUESTION_TYPE",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "freeText",
+					"externalReferenceCode": "FREE_TEXT",
 					"key": "freeText",
-					"name": "Free Text",
-					"name_i18n": {
-						"en-US": "Free Text"
-					}
+					"name": "Free Text"
 				},
 				{
-					"externalReferenceCode": "selectMultipleChoice",
+					"externalReferenceCode": "SELECT_MULTIPLE_CHOICE",
 					"key": "selectMultipleChoice",
-					"name": "Select Multiple Choice",
-					"name_i18n": {
-						"en-US": "Select Multiple Choice"
-					}
+					"name": "Select Multiple Choice"
 				},
 				{
-					"externalReferenceCode": "selectSingleChoice",
+					"externalReferenceCode": "SELECT_SINGLE_CHOICE",
 					"key": "selectSingleChoice",
-					"name": "Select Single Choice",
-					"name_i18n": {
-						"en-US": "Select Single Choice"
-					}
+					"name": "Select Single Choice"
 				}
 			],
-			"name": "P2S3 Quiz Question Type",
-			"name_i18n": {
-				"en-US": "Quiz Question Type"
-			},
-			"system": false
+			"name": "P2S3 Quiz Question Type"
 		},
 		{
 			"externalReferenceCode": "P2S3_STEP_TYPE",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "content",
+					"externalReferenceCode": "CONTENT",
 					"key": "content",
-					"name": "content",
-					"name_i18n": {
-						"en-US": "Content"
-					}
+					"name": "Content"
 				},
 				{
-					"externalReferenceCode": "course",
+					"externalReferenceCode": "COURSE",
 					"key": "course",
-					"name": "course",
-					"name_i18n": {
-						"en-US": "Course"
-					}
+					"name": "Course"
 				},
 				{
-					"externalReferenceCode": "video",
+					"externalReferenceCode": "VIDEO",
 					"key": "video",
-					"name": "video",
-					"name_i18n": {
-						"en-US": "Video"
-					}
+					"name": "Video"
 				}
 			],
-			"name": "P2S3 Step Type",
-			"name_i18n": {
-				"en-US": "Step Type"
-			},
-			"system": false
+			"name": "P2S3 Step Type"
 		}
 	]
 }

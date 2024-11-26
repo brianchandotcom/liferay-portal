@@ -554,7 +554,7 @@ definition {
 
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "Custom Object");
+			ObjectPortlet.selectCustomObject(label = "Custom Object 176817");
 		}
 
 		task ("When managing Fields on Custom Object)") {
@@ -1205,7 +1205,7 @@ definition {
 				key_position = 2,
 				locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
 
-			Click(
+			DoubleClick(
 				key_orderColumn = "Create Date",
 				locator1 = "ObjectPortlet#ARROW_ORDER_COLUMN");
 
@@ -2591,7 +2591,7 @@ definition {
 				key_position = 2,
 				locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
 
-			Click(
+			DoubleClick(
 				key_orderColumn = "External Reference Code",
 				locator1 = "ObjectPortlet#ARROW_ORDER_COLUMN");
 
@@ -3053,7 +3053,7 @@ definition {
 				key_column = "External Reference Code",
 				locator1 = "ObjectPortlet#ENTRY_COLUMN");
 
-			var externalReferenceCodeId = selenium.getText("//div[contains(@class,'dnd-tbody')]//*[contains(text(),'Entry Test')]/parent::div/following-sibling::div//a");
+			var externalReferenceCodeId = selenium.getText("//tr[td/span[contains(text(), 'Entry Test')]]/td[@aria-colindex='2']");
 
 			ObjectPortlet.updateEntry(
 				entry = "Entry Test",
@@ -3719,7 +3719,7 @@ definition {
 	test FormulaFieldsIsNotMandatory {
 		task ("Given an Object with formula field") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 176829 ",
+				labelName = "Custom Object 176829",
 				objectName = "CustomObject176829",
 				pluralLabelName = "Custom Objects 176829");
 

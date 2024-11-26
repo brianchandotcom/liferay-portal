@@ -829,15 +829,13 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		}
 
 		while (
-			(await page.locator('.dnd-tbody > .dnd-tr').all()).length !==
+			(await page.locator('tbody > tr').all()).length !==
 			objectDefinition.objectFields.length + objectFieldsMock.length
 		) {
 			await page.waitForTimeout(1000);
 		}
 
-		const objectFieldTableRows = await page
-			.locator('.dnd-tbody > .dnd-tr')
-			.all();
+		const objectFieldTableRows = await page.locator('tbody > tr').all();
 
 		const asyncArray = new AsyncArray<Locator, boolean>();
 

@@ -72,6 +72,8 @@ definition {
 
 			Click(locator1 = "ObjectAdmin#SIDEBAR_ADVANCED_TAB");
 
+			WaitForVisible(locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Use Default Value",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");

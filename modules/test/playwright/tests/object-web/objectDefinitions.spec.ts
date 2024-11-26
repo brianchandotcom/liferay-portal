@@ -613,10 +613,10 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 
 		await viewObjectDefinitionsPage.goto();
 
-		await page.locator('.dnd-td.item-actions').first().waitFor();
+		await page.locator('.cell-select-item').first().waitFor();
 
 		await page
-			.locator('.dnd-td.item-actions')
+			.locator('.cell-select-item')
 			.last()
 			.locator('.dropdown-toggle')
 			.click();

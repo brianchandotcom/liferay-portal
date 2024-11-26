@@ -551,7 +551,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			}
 
 			await expect(
-				page.locator('.dnd-td').getByText(matchString, {exact: true})
+				page.locator('td').getByText(matchString, {exact: true})
 			).toBeVisible();
 		}
 	});

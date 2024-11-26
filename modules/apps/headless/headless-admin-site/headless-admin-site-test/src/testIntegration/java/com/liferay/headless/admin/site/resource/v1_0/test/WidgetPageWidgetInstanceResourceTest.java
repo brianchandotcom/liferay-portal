@@ -205,17 +205,17 @@ public class WidgetPageWidgetInstanceResourceTest
 		WidgetPageWidgetInstance widgetPageWidgetInstance =
 			new WidgetPageWidgetInstance();
 
-		String widgetName = AssetPublisherPortletKeys.ASSET_PUBLISHER;
-		String widgetInstanceId = RandomTestUtil.randomString();
+		String portletName = AssetPublisherPortletKeys.ASSET_PUBLISHER;
 
-		widgetPageWidgetInstance.setExternalReferenceCode(
-			widgetName + "_INSTANCE_" + widgetInstanceId);
+		String portletId = PortletIdCodec.encode(portletName);
+
+		widgetPageWidgetInstance.setExternalReferenceCode(portletId);
 
 		widgetPageWidgetInstance.setParentSectionId("column-1");
 		widgetPageWidgetInstance.setPosition(_position++);
-		widgetPageWidgetInstance.setWidgetName(widgetName);
-
-		widgetPageWidgetInstance.setWidgetInstanceId(widgetInstanceId);
+		widgetPageWidgetInstance.setWidgetInstanceId(
+			PortletIdCodec.decodeInstanceId(portletId));
+		widgetPageWidgetInstance.setWidgetName(portletName);
 
 		return widgetPageWidgetInstance;
 	}

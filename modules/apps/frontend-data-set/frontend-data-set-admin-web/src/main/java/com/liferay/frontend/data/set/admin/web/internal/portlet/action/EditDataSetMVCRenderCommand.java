@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + FDSAdminPortletKeys.FDS_ADMIN,
-		"mvc.command.name=/edit_data_set"
+		"mvc.command.name=/frontend_data_set_admin/edit_data_set"
 	},
 	service = MVCRenderCommand.class
 )

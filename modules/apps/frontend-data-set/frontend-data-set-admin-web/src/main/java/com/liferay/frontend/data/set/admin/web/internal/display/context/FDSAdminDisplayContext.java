@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -247,14 +246,13 @@ public class FDSAdminDisplayContext {
 	}
 
 	public boolean hasAddObjectEntryPermission() {
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
 		PortletResourcePermission portletResourcePermission =
 			ObjectDefinitionPortletResourcePermissionRegistryUtil.getService(
 				_dataSetObjectDefinition.getResourceName());
 
 		return portletResourcePermission.contains(
-			permissionChecker, 0, ObjectActionKeys.ADD_OBJECT_ENTRY);
+			_themeDisplay.getPermissionChecker(), 0,
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
 	}
 
 	private final CETManager _cetManager;

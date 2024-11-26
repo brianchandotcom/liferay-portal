@@ -607,6 +607,11 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 			});
 
+		registry.register(
+			"5.23.1", "5.24.0",
+			UpgradeProcessFactory.addColumns(
+				"CPConfigurationEntry", "groupId LONG"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

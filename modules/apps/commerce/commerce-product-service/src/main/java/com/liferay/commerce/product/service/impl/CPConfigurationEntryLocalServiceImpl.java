@@ -34,8 +34,8 @@ public class CPConfigurationEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPConfigurationEntry addCPConfigurationEntry(
-			String externalReferenceCode, long userId, long classNameId,
-			long classPK, long cpConfigurationListId,
+			String externalReferenceCode, long groupId, long userId,
+			long classNameId, long classPK, long cpConfigurationListId,
 			String allowedOrderQuantities, boolean backOrders,
 			long commerceAvailabilityEstimateId,
 			String cpDefinitionInventoryEngine, boolean displayAvailability,
@@ -51,6 +51,7 @@ public class CPConfigurationEntryLocalServiceImpl
 				counterLocalService.increment());
 
 		cpConfigurationEntry.setExternalReferenceCode(externalReferenceCode);
+		cpConfigurationEntry.setGroupId(groupId);
 		cpConfigurationEntry.setCompanyId(user.getCompanyId());
 		cpConfigurationEntry.setUserId(user.getUserId());
 		cpConfigurationEntry.setUserName(user.getFullName());

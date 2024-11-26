@@ -383,6 +383,7 @@ public class ProductConfigurationResourceImpl
 			_cpConfigurationEntryService.addCPConfigurationEntry(
 				GetterUtil.getString(
 					productConfiguration.getExternalReferenceCode()),
+				cpDefinition.getGroupId(),
 				_portal.getClassNameId(CPDefinition.class.getName()),
 				cpDefinition.getCPDefinitionId(), id,
 				ProductConfigurationUtil.getAllowedOrderQuantities(

@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.view.table;
 
-import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
+import com.liferay.commerce.product.definitions.web.internal.constants.CPConfigurationFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_CONFIGURATION_LISTS,
+	property = "frontend.data.set.name=" + CPConfigurationFDSNames.PRODUCT_CONFIGURATION_LISTS,
 	service = FDSView.class
 )
 public class CPConfigurationListTableFDSView extends BaseTableFDSView {
@@ -39,7 +39,8 @@ public class CPConfigurationListTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"priority", "priority"
+			"priority", "priority",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).build();
 	}
 

@@ -14,25 +14,29 @@ List<CommerceCatalog> commerceCatalogs = cpConfigurationListDisplayContext.getCo
 %>
 
 <aui:form cssClass="container-fluid" method="post" name="fm">
-	<aui:input name="name" required="<%= true %>" type="text" />
+	<div class="lfr-form-content">
+		<aui:model-context bean="<%= cpConfigurationListDisplayContext.getCPConfigurationList() %>" model="<%= CPConfigurationList.class %>" />
 
-	<aui:input name="priority" required="<%= true %>">
-		<aui:validator name="number" />
-	</aui:input>
+		<aui:input name="name" required="<%= true %>" type="text" />
 
-	<aui:select label="catalog" name="commerceCatalogId" required="<%= true %>" showEmptyOption="<%= true %>">
+		<aui:input name="priority" required="<%= true %>">
+			<aui:validator name="number" />
+		</aui:input>
 
-		<%
-		for (CommerceCatalog commerceCatalog : commerceCatalogs) {
-		%>
+		<aui:select label="catalog" name="commerceCatalogId" required="<%= true %>" showEmptyOption="<%= true %>">
 
-			<aui:option label="<%= commerceCatalog.getName() %>" value="<%= commerceCatalog.getCommerceCatalogId() %>" />
+			<%
+			for (CommerceCatalog commerceCatalog : commerceCatalogs) {
+			%>
 
-		<%
-		}
-		%>
+				<aui:option label="<%= commerceCatalog.getName() %>" value="<%= commerceCatalog.getCommerceCatalogId() %>" />
 
-	</aui:select>
+			<%
+			}
+			%>
+
+		</aui:select>
+	</div>
 </aui:form>
 
 <portlet:renderURL var="editProductDefinitionURL">

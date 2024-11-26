@@ -6,7 +6,7 @@
 package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
+import com.liferay.commerce.product.definitions.web.internal.constants.CPConfigurationFDSNames;
 import com.liferay.commerce.product.definitions.web.internal.model.ProductLink;
 import com.liferay.commerce.product.definitions.web.internal.security.permission.resource.CommerceCatalogPermission;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	property = "fds.data.provider.key=" + CommerceProductFDSNames.PRODUCT_CONFIGURATION_LISTS,
+	property = "fds.data.provider.key=" + CPConfigurationFDSNames.PRODUCT_CONFIGURATION_LISTS,
 	service = FDSActionProvider.class
 )
 public class CPConfigurationListFDSActionProvider implements FDSActionProvider {

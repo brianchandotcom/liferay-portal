@@ -83,7 +83,7 @@ public class CPConfigurationListDisplayContext {
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).put(
-			"ppState", LiferayWindowState.MAXIMIZED.toString()
+			"windowState", LiferayWindowState.MAXIMIZED.toString()
 		).build();
 	}
 

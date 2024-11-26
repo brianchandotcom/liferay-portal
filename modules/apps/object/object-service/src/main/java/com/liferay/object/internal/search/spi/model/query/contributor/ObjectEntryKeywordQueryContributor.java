@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
 
@@ -57,11 +58,13 @@ public class ObjectEntryKeywordQueryContributor
 	public ObjectEntryKeywordQueryContributor(
 		ObjectDefinition objectDefinition,
 		ObjectFieldLocalService objectFieldLocalService,
-		ObjectViewLocalService objectViewLocalService) {
+		ObjectViewLocalService objectViewLocalService,
+		SearchLocalizationHelper searchLocalizationHelper) {
 
 		_objectDefinition = objectDefinition;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectViewLocalService = objectViewLocalService;
+		_searchLocalizationHelper = searchLocalizationHelper;
 	}
 
 	@Override
@@ -473,6 +476,7 @@ public class ObjectEntryKeywordQueryContributor
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectViewLocalService _objectViewLocalService;
+	private final SearchLocalizationHelper _searchLocalizationHelper;
 
 	private class KeywordTokenizer {
 

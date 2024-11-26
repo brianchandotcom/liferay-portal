@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
@@ -132,6 +133,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		PortletLocalService portletLocalService,
 		ResourceActions resourceActions, UserLocalService userLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
+		SearchLocalizationHelper searchLocalizationHelper,
 		ModelPreFilterContributor workflowStatusModelPreFilterContributor,
 		UserGroupRoleLocalService userGroupRoleLocalService) {
 
@@ -163,6 +165,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_resourceActions = resourceActions;
 		_userLocalService = userLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
+		_searchLocalizationHelper = searchLocalizationHelper;
 		_workflowStatusModelPreFilterContributor =
 			workflowStatusModelPreFilterContributor;
 		_userGroupRoleLocalService = userGroupRoleLocalService;
@@ -210,7 +213,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					KeywordQueryContributor.class,
 					new ObjectEntryKeywordQueryContributor(
 						objectDefinition, _objectFieldLocalService,
-						_objectViewLocalService),
+						_objectViewLocalService, _searchLocalizationHelper),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"component.name",
 						ObjectEntryKeywordQueryContributor.class.getName()
@@ -521,6 +524,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final ResourceActions _resourceActions;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
+	private final SearchLocalizationHelper _searchLocalizationHelper;
 	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
 		new ConcurrentHashMap<>();
 	private final UserGroupRoleLocalService _userGroupRoleLocalService;

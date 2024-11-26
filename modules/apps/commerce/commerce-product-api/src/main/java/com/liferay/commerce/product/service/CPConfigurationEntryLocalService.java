@@ -79,8 +79,8 @@ public interface CPConfigurationEntryLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPConfigurationEntry addCPConfigurationEntry(
-			String externalReferenceCode, long userId, long classNameId,
-			long classPK, long cpConfigurationListId,
+			String externalReferenceCode, long groupId, long userId,
+			long classNameId, long classPK, long cpConfigurationListId,
 			String allowedOrderQuantities, boolean backOrders,
 			long commerceAvailabilityEstimateId,
 			String cpDefinitionInventoryEngine, boolean displayAvailability,
@@ -221,20 +221,24 @@ public interface CPConfigurationEntryLocalService
 		long CPConfigurationEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPConfigurationEntry fetchCPConfigurationEntry(
+		long classNameId, long classPK, long cpConfigurationListId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPConfigurationEntry
 		fetchCPConfigurationEntryByExternalReferenceCode(
 			String externalReferenceCode, long companyId);
 
 	/**
-	 * Returns the cp configuration entry with the matching UUID and company.
+	 * Returns the cp configuration entry matching the UUID and group.
 	 *
 	 * @param uuid the cp configuration entry's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPConfigurationEntry fetchCPConfigurationEntryByUuidAndCompanyId(
-		String uuid, long companyId);
+	public CPConfigurationEntry fetchCPConfigurationEntryByUuidAndGroupId(
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -257,6 +261,34 @@ public interface CPConfigurationEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPConfigurationEntry> getCPConfigurationEntries(
 		long cpConfigurationListId);
+
+	/**
+	 * Returns all the cp configuration entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the cp configuration entries
+	 * @param companyId the primary key of the company
+	 * @return the matching cp configuration entries, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPConfigurationEntry>
+		getCPConfigurationEntriesByUuidAndCompanyId(
+			String uuid, long companyId);
+
+	/**
+	 * Returns a range of cp configuration entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the cp configuration entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching cp configuration entries, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPConfigurationEntry>
+		getCPConfigurationEntriesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<CPConfigurationEntry> orderByComparator);
 
 	/**
 	 * Returns the number of cp configuration entries.
@@ -289,16 +321,16 @@ public interface CPConfigurationEntryLocalService
 		throws PortalException;
 
 	/**
-	 * Returns the cp configuration entry with the matching UUID and company.
+	 * Returns the cp configuration entry matching the UUID and group.
 	 *
 	 * @param uuid the cp configuration entry's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching cp configuration entry
 	 * @throws PortalException if a matching cp configuration entry could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPConfigurationEntry getCPConfigurationEntryByUuidAndCompanyId(
-			String uuid, long companyId)
+	public CPConfigurationEntry getCPConfigurationEntryByUuidAndGroupId(
+			String uuid, long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

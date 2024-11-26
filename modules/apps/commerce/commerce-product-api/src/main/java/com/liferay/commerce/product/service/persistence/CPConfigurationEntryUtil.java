@@ -285,6 +285,73 @@ public class CPConfigurationEntryUtil {
 	}
 
 	/**
+	 * Returns the cp configuration entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPConfigurationEntryException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching cp configuration entry
+	 * @throws NoSuchCPConfigurationEntryException if a matching cp configuration entry could not be found
+	 */
+	public static CPConfigurationEntry findByUUID_G(String uuid, long groupId)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPConfigurationEntryException {
+
+		return getPersistence().findByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the cp configuration entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
+	 */
+	public static CPConfigurationEntry fetchByUUID_G(
+		String uuid, long groupId) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the cp configuration entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
+	 */
+	public static CPConfigurationEntry fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
+	}
+
+	/**
+	 * Removes the cp configuration entry where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the cp configuration entry that was removed
+	 */
+	public static CPConfigurationEntry removeByUUID_G(String uuid, long groupId)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPConfigurationEntryException {
+
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the number of cp configuration entries where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching cp configuration entries
+	 */
+	public static int countByUUID_G(String uuid, long groupId) {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns all the cp configuration entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid

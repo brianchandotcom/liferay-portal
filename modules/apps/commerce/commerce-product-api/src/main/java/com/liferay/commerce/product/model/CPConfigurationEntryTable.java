@@ -43,6 +43,8 @@ public class CPConfigurationEntryTable
 		CPConfigurationEntryId = createColumn(
 			"CPConfigurationEntryId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
+	public final Column<CPConfigurationEntryTable, Long> groupId = createColumn(
+		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CPConfigurationEntryTable, Long> companyId =
 		createColumn(
 			"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

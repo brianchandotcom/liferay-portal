@@ -107,6 +107,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -3659,7 +3660,7 @@ public class ObjectEntryLocalServiceTest {
 
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.fetchSystemObjectDefinition(
-					"User");
+					CompanyThreadLocal.getCompanyId(), "User");
 
 			User user = UserTestUtil.addUser(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),

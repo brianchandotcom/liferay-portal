@@ -743,11 +743,16 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public ObjectDefinition fetchSystemObjectDefinition(long companyId, String name) {
+	public ObjectDefinition fetchSystemObjectDefinition(
+		long companyId, String name) {
+
 		for (ObjectDefinition systemObjectDefinition :
 				getSystemObjectDefinitions()) {
 
-			if (Objects.equals(systemObjectDefinition.getName(), name)) {
+			if (Objects.equals(systemObjectDefinition.getName(), name) &&
+				Objects.equals(
+					systemObjectDefinition.getCompanyId(), companyId)) {
+
 				return systemObjectDefinition;
 			}
 		}

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -129,6 +130,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		_userSystemObjectDefinition =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				CompanyThreadLocal.getCompanyId(),
 				_userSystemObjectDefinitionManager.getName());
 	}
 
@@ -767,6 +769,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		ObjectDefinition relatedObjectDefinition =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				CompanyThreadLocal.getCompanyId(),
 				_userSystemObjectDefinitionManager.getName());
 
 		// Many to many relationships
@@ -839,6 +842,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		ObjectDefinition relatedObjectDefinition =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				CompanyThreadLocal.getCompanyId(),
 				_userSystemObjectDefinitionManager.getName());
 
 		ObjectRelationship objectRelationship = _addObjectRelationship(
@@ -1311,6 +1315,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		ObjectDefinition relatedObjectDefinition =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				CompanyThreadLocal.getCompanyId(),
 				_userSystemObjectDefinitionManager.getName());
 
 		// Many to many relationship

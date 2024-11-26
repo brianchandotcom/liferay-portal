@@ -23,6 +23,7 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -69,7 +70,7 @@ public class AccountEntryOrganizationRelModelListenerTest {
 				_objectRelationshipLocalService.addObjectRelationship(
 					null, TestPropsValues.getUserId(),
 					_objectDefinitionLocalService.fetchSystemObjectDefinition(
-						"AccountEntry"
+						CompanyThreadLocal.getCompanyId(), "AccountEntry"
 					).getObjectDefinitionId(),
 					objectDefinition.getObjectDefinitionId(), 0,
 					ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,

@@ -64,16 +64,14 @@ public class DDMFormPortletPreferencesUpgradeProcess
 			_ddmFormInstanceLocalService.getFormInstance(
 				GetterUtil.getLong(formInstanceId));
 
-		DDMStructure ddmStructure =
-			_ddmStructureLocalService.getDDMStructure(
-				ddmFormInstance.getStructureId());
+		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
+			ddmFormInstance.getStructureId());
 
 		portletPreferences.setValue(
 			"ddmStructureExternalReferenceCode",
 			ddmStructure.getExternalReferenceCode());
 
-		Group group = _groupLocalService.getGroup(
-			ddmStructure.getGroupId());
+		Group group = _groupLocalService.getGroup(ddmStructure.getGroupId());
 
 		portletPreferences.setValue(
 			"groupExternalReferenceCode", group.getExternalReferenceCode());

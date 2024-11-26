@@ -52,7 +52,7 @@ public class CPConfigurationEntryLocalServiceWrapper
 
 	@Override
 	public CPConfigurationEntry addCPConfigurationEntry(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long userId, long groupId,
 			long classNameId, long classPK, long cpConfigurationListId,
 			String allowedOrderQuantities, boolean backOrders,
 			long commerceAvailabilityEstimateId,
@@ -65,7 +65,7 @@ public class CPConfigurationEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpConfigurationEntryLocalService.addCPConfigurationEntry(
-			externalReferenceCode, groupId, userId, classNameId, classPK,
+			externalReferenceCode, userId, groupId, classNameId, classPK,
 			cpConfigurationListId, allowedOrderQuantities, backOrders,
 			commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
 			displayAvailability, displayStockQuantity, lowStockActivity,

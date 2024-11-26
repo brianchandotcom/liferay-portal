@@ -54,7 +54,7 @@ public class CPConfigurationEntryLocalServiceUtil {
 	}
 
 	public static CPConfigurationEntry addCPConfigurationEntry(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long userId, long groupId,
 			long classNameId, long classPK, long cpConfigurationListId,
 			String allowedOrderQuantities, boolean backOrders,
 			long commerceAvailabilityEstimateId,
@@ -67,7 +67,7 @@ public class CPConfigurationEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().addCPConfigurationEntry(
-			externalReferenceCode, groupId, userId, classNameId, classPK,
+			externalReferenceCode, userId, groupId, classNameId, classPK,
 			cpConfigurationListId, allowedOrderQuantities, backOrders,
 			commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
 			displayAvailability, displayStockQuantity, lowStockActivity,

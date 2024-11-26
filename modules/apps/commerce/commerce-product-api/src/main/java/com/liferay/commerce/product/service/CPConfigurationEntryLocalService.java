@@ -79,7 +79,7 @@ public interface CPConfigurationEntryLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPConfigurationEntry addCPConfigurationEntry(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long userId, long groupId,
 			long classNameId, long classPK, long cpConfigurationListId,
 			String allowedOrderQuantities, boolean backOrders,
 			long commerceAvailabilityEstimateId,

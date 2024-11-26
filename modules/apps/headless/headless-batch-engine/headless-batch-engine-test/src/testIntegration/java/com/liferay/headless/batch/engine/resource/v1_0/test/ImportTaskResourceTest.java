@@ -54,7 +54,7 @@ public class ImportTaskResourceTest {
 					"BatchEngineImportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
-			ImportTask importTask = _testPostFailingImportTask(
+			ImportTask importTask = _postImportTask(
 				JSONUtil.putAll(JSONUtil.put("textValue", "test")), "FAILED",
 				ListUtil.fromArray("createStrategy=INSERT"));
 
@@ -85,7 +85,7 @@ public class ImportTaskResourceTest {
 					"textValue", RandomTestUtil.randomString()
 				));
 
-			ImportTask importTask = _testPostFailingImportTask(
+			ImportTask importTask = _postImportTask(
 				bodyJSONArray, "COMPLETED",
 				ListUtil.fromArray(
 					"createStrategy=INSERT",
@@ -110,7 +110,7 @@ public class ImportTaskResourceTest {
 		}
 	}
 
-	private ImportTask _testPostFailingImportTask(
+	private ImportTask _postImportTask(
 			JSONArray bodyJSONArray, String expectedExecuteStatus,
 			List<String> queryParameters)
 		throws Exception {

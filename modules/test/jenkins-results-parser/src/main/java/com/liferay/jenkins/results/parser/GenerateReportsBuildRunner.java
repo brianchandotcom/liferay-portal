@@ -491,6 +491,13 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 					"Unable to write " + reportName + " to " +
 						_getReportFilePath(reportName));
 
+				BuildData buildData = getBuildData();
+
+				NotificationUtil.sendSlackNotification(
+					buildData.getBuildURL() + " <@U04GTH03Q>",
+					"ci-notifications",
+					"Unable to generate " + reportName + " report");
+
 				continue;
 			}
 

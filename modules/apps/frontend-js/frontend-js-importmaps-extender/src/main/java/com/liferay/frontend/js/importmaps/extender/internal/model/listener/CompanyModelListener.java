@@ -26,7 +26,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			jsImportMapsExtenderTopHeadDynamicInclude =
 				(JSImportMapsExtenderTopHeadDynamicInclude)_dynamicInclude;
 
-		jsImportMapsExtenderTopHeadDynamicInclude.rebuildImportMaps();
+		jsImportMapsExtenderTopHeadDynamicInclude.invalidateCache();
 	}
 
 	@Override

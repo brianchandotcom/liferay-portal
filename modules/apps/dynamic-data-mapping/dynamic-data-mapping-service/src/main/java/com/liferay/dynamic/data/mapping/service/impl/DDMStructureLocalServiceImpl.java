@@ -318,8 +318,8 @@ public class DDMStructureLocalServiceImpl
 		DDMStructure structure = ddmStructurePersistence.create(
 			counterLocalService.increment());
 
-		structure.setExternalReferenceCode(externalReferenceCode);
 		structure.setUuid(serviceContext.getUuid());
+		structure.setExternalReferenceCode(externalReferenceCode);
 		structure.setGroupId(groupId);
 		structure.setCompanyId(user.getCompanyId());
 		structure.setUserId(user.getUserId());
@@ -1657,8 +1657,8 @@ public class DDMStructureLocalServiceImpl
 		DDMStructure structure = ddmStructurePersistence.create(
 			counterLocalService.increment());
 
-		structure.setExternalReferenceCode(externalReferenceCode);
 		structure.setUuid(serviceContext.getUuid());
+		structure.setExternalReferenceCode(externalReferenceCode);
 		structure.setGroupId(groupId);
 		structure.setCompanyId(user.getCompanyId());
 		structure.setUserId(user.getUserId());

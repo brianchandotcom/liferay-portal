@@ -21,7 +21,7 @@ export interface CreateObjectField {
 	objectDefinitionLabel?: string;
 
 	objectDefinitionNodes: unknown;
-	objectFieldBusinessType: ObjectField.BusinessTypeEnum;
+	objectFieldBusinessType: string;
 	objectFieldLabel: string;
 }
 

@@ -132,7 +132,7 @@ test('Can create, read, update, and delete object entries that use the client ex
 
 	await objectFieldsPage.addObjectField({
 		objectDefinitionNodes: modelBuilderDiagramPage.objectDefinitionNodes,
-		objectFieldBusinessType: businessType,
+		objectFieldBusinessType: String(businessType),
 		objectFieldLabel: label['en_US'],
 	});
 

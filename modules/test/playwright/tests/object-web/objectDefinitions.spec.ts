@@ -328,7 +328,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 			await apiHelpers.objectAdmin.postRandomObjectDefinition(
 				{code: 0},
 				undefined,
-				'default'
+				objectFolder.externalReferenceCode
 			);
 
 		const objectDefinition2 =

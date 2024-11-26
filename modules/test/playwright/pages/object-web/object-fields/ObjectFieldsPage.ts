@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectField} from '@liferay/object-admin-rest-client-js';
 import {Locator, Page} from '@playwright/test';
 
 import {CreateObjectField} from '../../../helpers/ObjectAdminApiHelper';
@@ -49,15 +48,10 @@ export class ObjectFieldsPage {
 		await this.objectFieldOptionsDropdown.click();
 
 		await this.page
-			.getByRole('option', {
-				exact: true,
-				name: String(objectFieldBusinessType),
-			})
+			.getByRole('option', {exact: true, name: objectFieldBusinessType})
 			.click();
 
-		if (
-			objectFieldBusinessType === ObjectField.BusinessTypeEnum.Attachment
-		) {
+		if (objectFieldBusinessType === 'Attachment') {
 			await this.objectFieldOptionsDropdown.click();
 			await this.page
 				.getByRole('option', {name: attachmentSource})
@@ -65,9 +59,8 @@ export class ObjectFieldsPage {
 		}
 
 		if (
-			objectFieldBusinessType ===
-				ObjectField.BusinessTypeEnum.MultiselectPicklist ||
-			objectFieldBusinessType === ObjectField.BusinessTypeEnum.Picklist
+			objectFieldBusinessType === 'Multiselect Picklist' ||
+			objectFieldBusinessType === 'Picklist'
 		) {
 			await this.objectFieldOptionsDropdown.click();
 			await this.page

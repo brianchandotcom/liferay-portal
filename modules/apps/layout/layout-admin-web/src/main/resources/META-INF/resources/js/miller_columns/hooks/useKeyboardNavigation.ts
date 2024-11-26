@@ -35,7 +35,7 @@ export function useKeyboardNavigation({
 	item: MillerColumnItem;
 	rtl: boolean;
 }) {
-	const {active, columnIndex, hasChild, itemIndex} = item;
+	const {columnIndex, itemIndex} = item;
 
 	const {columnSizes, setTarget, target} = useContext(KeyboardContext);
 
@@ -68,29 +68,6 @@ export function useKeyboardNavigation({
 		},
 		[columnSizes, item, rtl, setTarget]
 	);
-
-	// Set initial target
-
-	useEffect(() => {
-		if (!Liferay.FeatureFlags['LPD-35220']) {
-			return;
-		}
-
-		if (active) {
-			if (hasChild) {
-				setTarget({
-					columnIndex: columnIndex + 1,
-					itemIndex: 0,
-				});
-			}
-			else {
-				setTarget({
-					columnIndex,
-					itemIndex,
-				});
-			}
-		}
-	}, [active, columnIndex, hasChild, itemIndex, setTarget]);
 
 	// Add keyboard listeners when item is target
 

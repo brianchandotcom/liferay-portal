@@ -25,6 +25,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -95,7 +96,12 @@ public class ImportTaskResourceTest {
 
 			Assert.assertEquals(3, (int)importTask.getProcessedItemsCount());
 
-			for (FailedItem failedItem : importTask.getFailedItems()) {
+			FailedItem[] failedItems = importTask.getFailedItems();
+
+			Assert.assertEquals(
+				Arrays.toString(failedItems), 3, failedItems.length);
+
+			for (FailedItem failedItem : failedItems) {
 				JSONObject jsonObject = (JSONObject)bodyJSONArray.get(
 					failedItem.getItemIndex() - 1);
 

@@ -97,10 +97,13 @@ export class ApplicationsMenuPage {
 		this.commercePanelButton = page.getByRole('tab', {
 			name: 'Commerce',
 		});
-		this.commerceProductConfigurationListsMenuItem = page.getByRole('menuitem', {
-			exact: true,
-			name: 'Product Configurations',
-		});
+		this.commerceProductConfigurationListsMenuItem = page.getByRole(
+			'menuitem',
+			{
+				exact: true,
+				name: 'Product Configurations',
+			}
+		);
 		this.commerceReturnsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Returns',

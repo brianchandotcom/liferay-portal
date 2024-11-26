@@ -41,6 +41,7 @@ page import="com.liferay.commerce.product.constants.CPInstanceConstants" %><%@
 page import="com.liferay.commerce.product.constants.CPMeasurementUnitConstants" %><%@
 page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
 page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.constants.CPConfigurationFDSNames" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPConfigurationListDisplayContext" %><%@

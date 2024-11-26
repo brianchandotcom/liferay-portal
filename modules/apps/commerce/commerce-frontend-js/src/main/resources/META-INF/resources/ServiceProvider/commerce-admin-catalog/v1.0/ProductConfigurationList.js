@@ -15,7 +15,7 @@ function resolvePath(basePath = '', productConfigurationListId = '') {
 
 export default function ProductConfigurationList(basePath) {
 	return {
-		addProductConfigurationList: (json) => AJAX.POST(`${resolvePath(basePath)}`, json),
-
+		addProductConfigurationList: (json) =>
+			AJAX.POST(`${resolvePath(basePath)}`, json),
 	};
 }

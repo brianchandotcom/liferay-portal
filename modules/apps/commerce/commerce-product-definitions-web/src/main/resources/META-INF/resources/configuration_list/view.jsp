@@ -20,7 +20,7 @@ CPConfigurationListDisplayContext cpConfigurationListDisplayContext = (CPConfigu
 			creationMenu="<%= cpConfigurationListDisplayContext.getCreationMenu() %>"
 			fdsActionDropdownItems="<%= cpConfigurationListDisplayContext.getFDSActionDropdownItems() %>"
 			formName="fm"
-			id="<%= CommerceProductFDSNames.PRODUCT_CONFIGURATION_LISTS %>"
+			id="<%= CPConfigurationFDSNames.PRODUCT_CONFIGURATION_LISTS %>"
 			itemsPerPage="<%= 10 %>"
 			selectedItemsKey="id"
 			selectionType="multiple"

@@ -39,6 +39,7 @@ const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-10727': true,
+		'LPD-37927': true,
 		'LPS-178052': true,
 	}),
 	loginTest(),
@@ -875,6 +876,143 @@ test.describe('Date and Time Fragment', () => {
 			});
 		}
 	);
+});
+
+test.describe('Form Localization', () => {
+	test('Can translate form fields', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create a page with a Form fragment and a Localization Select fragment
+
+		const fragmentDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'localization-select',
+		});
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				fragmentDefinition,
+				formDefinition,
+			]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Map the form to the All Fields object and publish the page
+
+		await pageEditorPage.mapFormFragment(formId, 'All Fields Object');
+
+		await pageEditorPage.publishPage();
+
+		// Go to view mode and fill the form
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await page.locator('iframe[title="editor"]').waitFor();
+
+		await page.getByLabel('Long Text').fill('long text english');
+
+		await page.getByLabel('Text', {exact: true}).fill('text english');
+		await page.evaluate(() =>
+			(window as any).CKEDITOR.instances['richText'].setData(
+				'rich text english'
+			)
+		);
+
+		// Add translations
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {name: 'es-ES'}),
+			trigger: page.getByLabel(
+				'Select a language, current language: English (United States).'
+			),
+		});
+
+		await page.getByLabel('Long Text').fill('long text español');
+
+		await page.getByLabel('Text', {exact: true}).fill('text español');
+
+		await page.evaluate(() =>
+			(window as any).CKEDITOR.instances['richText'].setData(
+				'rich text español'
+			)
+		);
+
+		// Publish the form
+
+		await page.getByRole('button', {name: 'Submit'}).click();
+
+		expect(
+			page.getByText(
+				'Thank you. Your information was successfully received.'
+			)
+		).toBeVisible();
+
+		// Go to custom object admin an check the values
+
+		await gotoObjectEntries({
+			entityName: 'All Fields',
+			page,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				exact: true,
+				name: 'View',
+			}),
+			trigger: page.locator('.dnd-tbody .item-actions').last(),
+		});
+
+		await page.getByRole('textbox', {name: 'Long Text'}).waitFor();
+
+		await expect(page.getByText('long text english')).toBeVisible();
+		await expect(
+			page
+				.frameLocator('iframe[title="editor"]')
+				.getByText('rich text english')
+		).toBeVisible();
+		await expect(page.getByText('text english')).toBeVisible();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Español',
+			}),
+			trigger: page.getByTestId('triggerButton').first(),
+		});
+
+		await expect(page.getByText('long text español')).toBeVisible();
+		await expect(
+			page
+				.frameLocator('iframe[title="editor"]')
+				.getByText('rich text español')
+		).toBeVisible();
+		await expect(page.getByText('text español')).toBeVisible();
+
+		// Delete entries
+
+		await deleteObjectEntries({
+			apiHelpers,
+			entityName: 'allfieldsobjects',
+			site: pageManagementSite,
+		});
+	});
 });
 
 test.describe('Numeric input field', () => {

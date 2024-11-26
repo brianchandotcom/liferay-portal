@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {fetch, navigate, openToast} from 'frontend-js-web';
+import {fetch, openToast} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import Breadcrumbs from '../breadcrumbs/Breadcrumbs';
@@ -110,7 +110,7 @@ const Layout = ({
 			.catch();
 	};
 
-	const saveData = (movedItems, parentItemId, redirectURL) => {
+	const saveData = (movedItems, parentItemId) => {
 		const formData = new FormData();
 
 		formData.append(`${namespace}plids`, JSON.stringify(movedItems));
@@ -139,12 +139,7 @@ const Layout = ({
 						type: 'success',
 					});
 
-					if (Liferay.FeatureFlags['LPD-35220']) {
-						navigate(redirectURL);
-					}
-					else if (updatedLayoutColumns) {
-						setLayoutColumns(updatedLayoutColumns);
-					}
+					setLayoutColumns(updatedLayoutColumns);
 				}
 			});
 	};

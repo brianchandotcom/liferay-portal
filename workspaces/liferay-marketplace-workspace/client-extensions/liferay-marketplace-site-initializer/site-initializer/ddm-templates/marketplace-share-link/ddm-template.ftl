@@ -10,7 +10,8 @@
 	}
 </style>
 
-<a class="align-items-center copy-text d-flex font-weight-bold justify-content-between ml-1 text-decoration-none text-primary" href="#copy-share-link" onclick="copyToClipboard(Liferay.ThemeDisplay.getCanonicalURL())">	<span class="help-and-support-link-icon mr-1">
+<a class="align-items-center copy-text d-flex font-weight-bold justify-content-between ml-1 text-decoration-none text-primary" href="#copy-share-link" onclick="copyToClipboard(Liferay.ThemeDisplay.getCanonicalURL())">
+	<span class="help-and-support-link-icon mr-1">
 		<@clay["icon"] symbol="link" />
 	</span>
 

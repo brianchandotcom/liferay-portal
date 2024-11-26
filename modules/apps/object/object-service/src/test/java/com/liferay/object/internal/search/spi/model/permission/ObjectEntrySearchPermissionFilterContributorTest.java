@@ -124,7 +124,7 @@ public class ObjectEntrySearchPermissionFilterContributorTest {
 			_setUpAccountEntryUserRelLocalService(
 				objectEntrySearchPermissionFilterContributor);
 
-		List<AccountEntryUserRel> accountEntryRelList = Arrays.asList(
+		List<AccountEntryUserRel> accountEntryRels = Arrays.asList(
 			_createAccountEntryRel(activeAccountEntryId, false),
 			_createAccountEntryRel(inactiveAccountEntryId, true));
 
@@ -132,7 +132,7 @@ public class ObjectEntrySearchPermissionFilterContributorTest {
 			accountEntryUserRelLocalService.
 				getAccountEntryUserRelsByAccountUserId(userId)
 		).thenReturn(
-			accountEntryRelList
+			accountEntryRels
 		);
 	}
 
@@ -165,32 +165,12 @@ public class ObjectEntrySearchPermissionFilterContributorTest {
 		_setUpAccountEntryRels(
 			activeAccountEntryId, inactiveAccountEntryId,
 			objectEntrySearchPermissionFilterContributor, userId);
-		_setUpObjectEntrySearchPermissionFilterContributor(
-			objectEntrySearchPermissionFilterContributor);
 		_setUpOrganizationLocalService(
 			objectEntrySearchPermissionFilterContributor, userId);
+		_setUpSearchPermissionCheckerConfiguration(
+			objectEntrySearchPermissionFilterContributor);
 
 		return objectEntrySearchPermissionFilterContributor;
-	}
-
-	private void _setUpObjectEntrySearchPermissionFilterContributor(
-		ObjectEntrySearchPermissionFilterContributor
-			objectEntrySearchPermissionFilterContributor) {
-
-		SearchPermissionCheckerConfiguration
-			searchPermissionCheckerConfiguration = Mockito.mock(
-				SearchPermissionCheckerConfiguration.class);
-
-		ReflectionTestUtil.setFieldValue(
-			objectEntrySearchPermissionFilterContributor,
-			"_searchPermissionCheckerConfiguration",
-			searchPermissionCheckerConfiguration);
-
-		Mockito.when(
-			searchPermissionCheckerConfiguration.permissionTermsLimit()
-		).thenReturn(
-			2
-		);
 	}
 
 	private void _setUpOrganizationLocalService(
@@ -209,6 +189,26 @@ public class ObjectEntrySearchPermissionFilterContributorTest {
 			organizationLocalService.getUserOrganizations(userId)
 		).thenReturn(
 			Collections.emptyList()
+		);
+	}
+
+	private void _setUpSearchPermissionCheckerConfiguration(
+		ObjectEntrySearchPermissionFilterContributor
+			objectEntrySearchPermissionFilterContributor) {
+
+		SearchPermissionCheckerConfiguration
+			searchPermissionCheckerConfiguration = Mockito.mock(
+				SearchPermissionCheckerConfiguration.class);
+
+		ReflectionTestUtil.setFieldValue(
+			objectEntrySearchPermissionFilterContributor,
+			"_searchPermissionCheckerConfiguration",
+			searchPermissionCheckerConfiguration);
+
+		Mockito.when(
+			searchPermissionCheckerConfiguration.permissionTermsLimit()
+		).thenReturn(
+			2
 		);
 	}
 

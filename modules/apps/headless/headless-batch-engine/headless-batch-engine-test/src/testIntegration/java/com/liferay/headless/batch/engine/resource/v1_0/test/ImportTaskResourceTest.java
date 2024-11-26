@@ -48,7 +48,7 @@ public class ImportTaskResourceTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testPostFailingImportTask() throws Exception {
+	public void testPostImportTask() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal." +
 					"BatchEngineImportTaskExecutorImpl",
@@ -62,10 +62,7 @@ public class ImportTaskResourceTest {
 				"Modified error message for TestEntity 'test'",
 				importTask.getErrorMessage());
 		}
-	}
 
-	@Test
-	public void testPostImportTaskWithMultipleFailures() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal.strategy." +
 					"OnErrorContinueBatchEngineImportStrategy",

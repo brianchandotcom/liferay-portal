@@ -36,9 +36,15 @@ const AttributesStepContent = ({
 };
 
 describe('Attributes Step', () => {
+	afterAll(() => (window.Liferay.FeatureFlags['LPD-20640'] = false));
+
 	afterEach(() => {
 		jest.restoreAllMocks();
 	});
+
+	beforeAll(() => (window.Liferay.FeatureFlags['LPD-20640'] = true));
+
+	window.Liferay.FeatureFlags['LPD-20640'] = true;
 
 	it('render AttributesStep without crashing', async () => {
 		fetch
@@ -63,7 +69,7 @@ describe('Attributes Step', () => {
 		);
 
 		expect(data.pageView).toEqual('VIEW_WIZARD_MODE');
-		expect(getByText(/finish/i)).toBeInTheDocument();
+		expect(getByText(/next/i)).toBeInTheDocument();
 
 		const attributesStepTitle = getByText('attributes');
 
@@ -71,14 +77,14 @@ describe('Attributes Step', () => {
 			'attributes-step-description'
 		);
 
-		const finishButton = getByText(/finish/i);
+		const nextButton = getByText(/next/i);
 
 		await act(async () => {
-			await fireEvent.click(finishButton);
+			await fireEvent.click(nextButton);
 		});
 
-		expect(data.pageView).toEqual('VIEW_DEFAULT_MODE');
-		expect(onDataChange).toBeCalledTimes(2);
+		expect(data.pageView).toEqual('VIEW_WIZARD_MODE');
+		expect(onDataChange).toBeCalledTimes(1);
 
 		expect(attributesStepTitle).toBeInTheDocument();
 		expect(attributesStepDescription).toBeInTheDocument();

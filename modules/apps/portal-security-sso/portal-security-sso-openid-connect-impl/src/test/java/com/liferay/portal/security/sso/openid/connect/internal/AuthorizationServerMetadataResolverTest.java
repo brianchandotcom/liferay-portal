@@ -41,17 +41,19 @@ public class AuthorizationServerMetadataResolverTest {
 		String authServerWellKnownURI =
 			"https://accounts.google.com/.well-known/openid-configuration";
 
-		String clientId = RandomTestUtil.randomString();
-
 		int metadataCacheInSecs = 90;
+
+		long oAuthClientEntryId = RandomTestUtil.randomLong();
 
 		OIDCProviderMetadata oidcProviderMetadata1 =
 			_authorizationServerMetadataResolver.resolveOIDCProviderMetadata(
-				authServerWellKnownURI, clientId, metadataCacheInSecs);
+				authServerWellKnownURI, metadataCacheInSecs,
+				oAuthClientEntryId);
 
 		OIDCProviderMetadata oidcProviderMetadata2 =
 			_authorizationServerMetadataResolver.resolveOIDCProviderMetadata(
-				authServerWellKnownURI, clientId, metadataCacheInSecs);
+				authServerWellKnownURI, metadataCacheInSecs,
+				oAuthClientEntryId);
 
 		Assert.assertTrue(oidcProviderMetadata1 == oidcProviderMetadata2);
 	}

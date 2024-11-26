@@ -93,7 +93,7 @@ function deploy_client_extensions {
 
 			${gradlew} deploy -Pliferay.workspace.home.dir=${LIFERAY_HOME}
 
-			wait_for_portal_log_inactivity
+			wait_for_portal_log_inactivity ${LIFERAY_HOME}
 		else
 			echo "Unable to find client extension in ${client_extension_dir}."
 		fi
@@ -161,7 +161,7 @@ function deploy_osgi_modules {
 
 				${gradlew} deploy
 
-				wait_for_portal_log_inactivity
+				wait_for_portal_log_inactivity ${LIFERAY_HOME}
 			else
 				echo "Unable to find OSGi module in ${osgi_module_dir}."
 			fi

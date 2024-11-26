@@ -34,7 +34,7 @@ ${dataFactory.toInsertSQL(objectDefinitionModel)}
 
 	<@insertAssetEntry _entry = objectEntryModel />
 
-	<#list dataFactory.generateDynamicSQLs(objectFieldModels, objectDefinitionModel.getDBTableName(), objectEntryModel.getObjectEntryId(), dlFileEntryModel.getFileEntryId(), objectEntryModel.getUserId()) as dynamicSQL>
+	<#list dataFactory.generateDynamicSQLs(objectDefinitionModel.getDBTableName(), dlFileEntryModel.getFileEntryId(), objectEntryModel.getObjectEntryId(), objectFieldModels, objectEntryModel.getUserId()) as dynamicSQL>
 		${dynamicSQL}
 	</#list>
 </#list>

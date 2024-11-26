@@ -138,7 +138,7 @@ public class WidgetPageWidgetInstanceResourceTest
 			postWidgetPageWidgetInstance.getWidgetName(),
 			postWidgetPageWidgetInstance.getWidgetInstanceId());
 
-		WidgetPageWidgetInstance pathWidgetPageWidgetInstance =
+		WidgetPageWidgetInstance patchWidgetPageWidgetInstance =
 			widgetPageWidgetInstanceResource.
 				patchSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 					testGroup.getExternalReferenceCode(),
@@ -146,8 +146,8 @@ public class WidgetPageWidgetInstanceResourceTest
 					postWidgetPageWidgetInstance);
 
 		assertEquals(
-			postWidgetPageWidgetInstance, pathWidgetPageWidgetInstance);
-		assertValid(pathWidgetPageWidgetInstance);
+			postWidgetPageWidgetInstance, patchWidgetPageWidgetInstance);
+		assertValid(patchWidgetPageWidgetInstance);
 
 		try {
 			widgetPageWidgetInstanceResource.

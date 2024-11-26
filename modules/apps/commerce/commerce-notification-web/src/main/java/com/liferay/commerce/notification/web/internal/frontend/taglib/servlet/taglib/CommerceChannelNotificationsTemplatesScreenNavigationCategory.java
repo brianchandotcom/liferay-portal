@@ -49,6 +49,11 @@ public class CommerceChannelNotificationsTemplatesScreenNavigationCategory
 			SCREEN_NAVIGATION_KEY_COMMERCE_CHANNEL_GENERAL;
 	}
 
+	@Override
+	public boolean isDeprecated() {
+		return true;
+	}
+
 	@Reference
 	protected Language language;
 

@@ -40,17 +40,13 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -154,29 +150,16 @@ public class OrganizationResourceDTOConverter
 								});
 							setAddressCountry_i18n(
 								() -> {
-									if (!dtoConverterContext.
-											isAcceptAllLanguages() ||
-										(country == null)) {
-
+									if (country == null) {
 										return null;
 									}
 
-									Map<String, String> countryNames =
-										new HashMap<>();
-
-									for (Locale locale :
-											_language.
-												getCompanyAvailableLocales(
-													organization.
-														getCompanyId())) {
-
-										countryNames.put(
-											LocaleUtil.toBCP47LanguageId(
-												locale),
-											country.getName());
-									}
-
-									return countryNames;
+									return LocalizedMapUtil.getI18nMap(
+										dtoConverterContext.
+											isAcceptAllLanguages(),
+										_language.getCompanyAvailableLocales(
+											country.getCompanyId()),
+										country.getLanguageIdToTitleMap());
 								});
 							setAddressCountryCode(
 								() -> {

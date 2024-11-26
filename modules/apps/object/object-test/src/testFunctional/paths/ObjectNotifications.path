@@ -12,12 +12,12 @@
 <tbody>
 	<tr>
 		<td>NOTIFICATION_STATUS</td>
-		<td>//div[contains(@class,'dnd-td')]//strong[contains(.,'${key_statusName}')]</td>
+		<td>//td//strong[contains(.,'${key_statusName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>DELETE_NOTIFICATION_IN_QUEUE</td>
-		<td>//div[contains(@class,'dnd-td')][contains(.,'${key_text}')]//following-sibling::div//*[contains(@class, 'icon-trash')]</td>
+		<td>//td[contains(.,'${key_text}')]//following-sibling::td//*[contains(@class, 'icon-trash')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -37,12 +37,12 @@
 	</tr>
 	<tr>
 		<td>VIEW_NOTIFICATION_ENTRIES</td>
-		<td>//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entryLabel}')]/ancestor::div//*[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entryStatus}')]</td>
+		<td>//tbody//*[contains(text(),'${key_entryLabel}')]/ancestor::div//tbody//*[contains(text(),'${key_entryStatus}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ENTITY_TERMS</td>
-		<td>//div[contains(@class,'dnd-td') and contains(text(),'${key_termName}')]</td>
+		<td>//td[contains(text(),'${key_termName}')]</td>
 		<td></td>
 	</tr>
 </tbody>

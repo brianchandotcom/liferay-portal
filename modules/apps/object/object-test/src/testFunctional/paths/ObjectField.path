@@ -159,7 +159,7 @@
 	</tr>
 	<tr>
 		<td>SOURCE_FIELD</td>
-		<td>//div[contains(@class, 'dnd-tr') and contains(., '${key_label}') and contains(., '${key_source}')]</td>
+		<td>//tr[contains(., '${key_label}') and contains(., '${key_source}')]</td>
 		<td></td>
 	</tr>
 	<tr>

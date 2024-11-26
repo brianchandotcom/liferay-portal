@@ -27,12 +27,12 @@
 	</tr>
 	<tr>
 		<td>VIEW_PICKLIST</td>
-		<td>//div[contains(@class, 'dnd-td')]//a[text()='${key_picklistName}']</td>
+		<td>//td//a[text()='${key_picklistName}']</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>PICKLIST_KEBAB_MENU</td>
-		<td>//div[contains(@class, 'dnd-td') and contains(.,'${key_picklistName}')]/..//button</td>
+		<td>//td[contains(.,'${key_picklistName}')]/..//button</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -67,7 +67,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_PICKLIST_ITEM</td>
-		<td>//a[contains(.,'${key_picklistItemName}')]/../../..//div[contains(.,'${key_picklistItemKey}')]</td>
+		<td>//a[contains(.,'${key_picklistItemName}')]/../../..//td[contains(.,'${key_picklistItemKey}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -82,7 +82,7 @@
 	</tr>
 	<tr>
 		<td>PICKLIST_ITEM_KEBAB_MENU</td>
-		<td>//div[text()='${key_itemKey}']/following-sibling::div//button</td>
+		<td>//td[text()='${key_itemKey}']/following-sibling::td//button</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -147,12 +147,12 @@
 	</tr>
 	<tr>
 		<td>PICKLIST_NAME</td>
-		<td>//div[contains(@class, 'dnd-tbody')]//*[contains(text(), '${key_picklistItemName}')]</td>
+		<td>//tbody//*[contains(text(), '${key_picklistItemName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>PICKLIST_SOURCE</td>
-		<td>//*[contains(@class, 'dnd-tr')][contains(.,'${key_label}')] //*[contains(@class,'system')]</td>
+		<td>//tr[contains(.,'${key_label}')]//*[contains(@class,'system')]</td>
 		<td></td>
 	</tr>
 	<tr>

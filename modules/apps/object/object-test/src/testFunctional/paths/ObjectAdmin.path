@@ -242,7 +242,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_OBJECT</td>
-		<td>//div[contains(@class,'table-list-title') and contains (.,'${key_name}')]/../../div[contains(text(),'${key_system}')]</td>
+		<td>//div[contains(@class,'table-list-title')]//a[text()='${key_name}']/../../../td[contains(text(),'${key_system}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -322,32 +322,32 @@
 	</tr>
 	<tr>
 		<td>OBJECT_SCOPE</td>
-		<td>//a[text() = '${key_label}']/../../following-sibling::div[contains(text(),'${key_scope}')]</td>
+		<td>//a[text() = '${key_label}']/../../following-sibling::td[contains(text(),'${key_scope}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_STATUS</td>
-		<td>//*[contains(@class, 'dnd-tr')][contains(.,'${key_label}')] //*[contains(@class,'status')]</td>
+		<td>//tr[contains(.,'${key_label}')]//td[contains(@class, 'cell-status')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_SYSTEM</td>
-		<td>//a[text() = '${key_label}']/../../following-sibling::div[contains(text(),'${key_system}')]</td>
+		<td>//a[text() = '${key_label}']/../../following-sibling::td[contains(text(),'${key_system}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>GENERIC_LABEL_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th')]//button[contains(text(),'Label')]</td>
+		<td>//th[contains(@class, 'cell-label')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_SYSTEM_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th') and contains(text(),'System')]</td>
+		<td>//th[contains(@class, 'cell-system')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_STATUS_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th') and contains(text(),'Status')]</td>
+		<td>//th[contains(@class, 'cell-status')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -382,7 +382,7 @@
 	</tr>
 	<tr>
 		<td>TABLE_LIST_TITLE</td>
-		<td>//div[contains(@class,'table-list-title') and contains (.,'${key_name}')]</td>
+		<td>//div[contains(@class,'table-list-title')]//a[contains(.,'${key_name}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -412,7 +412,7 @@
 	</tr>
 	<tr>
 		<td>FIELDS_TYPE_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th') and contains(text(),'Type')]</td>
+		<td>//th[contains(@class,'cell-businessType')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -422,17 +422,17 @@
 	</tr>
 	<tr>
 		<td>VIEW_OBJECT_FIELD_LABEL</td>
-		<td>//div[contains(@class, 'dnd-td') and contains (.,'${key_fieldLabel}')]</td>
+		<td>//td[contains(.,'${key_fieldLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>VIEW_OBJECT_FIELD_TYPE</td>
-		<td>//div[contains(@class, 'dnd-td') and contains (.,'${key_fieldType}')]</td>
+		<td>//td[contains(.,'${key_fieldType}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>VIEW_OBJECT_LAYOUT_LABEL</td>
-		<td>//div[contains(@class, 'dnd-td') and contains (.,'${key_layoutLabel}')]</td>
+		<td>//td[contains(.,'${key_layoutLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -442,7 +442,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_KEBAB_MENU</td>
-		<td>//*[contains(text(),'${key_objectLabel}')]/ancestor::div[contains(@class,'dnd-tr')]//*[contains(@class,'lexicon-icon-ellipsis')]</td>
+		<td>//*[contains(text(),'${key_objectLabel}')]/ancestor::tr//*[contains(@class,'lexicon-icon-ellipsis')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -497,7 +497,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_ACTIONS_LABEL</td>
-		<td>//div[contains(@class, 'dnd-td') and contains(., '${key_actionLabel}')]</td>
+		<td>//td[contains(., '${key_actionLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>

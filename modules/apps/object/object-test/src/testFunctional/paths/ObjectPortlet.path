@@ -17,12 +17,12 @@
 	</tr>
 	<tr>
 		<td>ARROW_DOWN_ICON</td>
-		<td>//div[contains(@class,'dropdown ml-auto')]//button[contains(@class,'dropdown-toggle')]</td>
+		<td>//th//div[contains(@class,'dropdown')]//button[contains(@class,'dropdown-toggle')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>CHECK_UNCHECK_DROPDOWN_ITEM</td>
-		<td>//button[contains(@class,'dropdown-item')][contains(text(),'${key_dropdownItem}')]</td>
+		<td>//button[contains(@class,'dropdown-item') and contains(text(),'${key_dropdownItem}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -42,52 +42,52 @@
 	</tr>
 	<tr>
 		<td>DUPLICATED_ENTRY_VALUE</td>
-		<td>(//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')])[2]</td>
+		<td>(//tbody//*[contains(text(),'${key_entry}')])[2]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ENTRY_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th')]//*[contains(text(),'${key_column}')]</td>
+		<td>//th[contains(.,'${key_column}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ENTRY_ID</td>
-		<td>//div[contains(@class,'dnd-tbody')]//div[contains(@class,'table-list-title')]</td>
+		<td>//tbody//div[contains(@class,'table-list-title')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ENTRY_STATUS</td>
-		<td>//*[text()='${key_entry}']/../following-sibling::div//*[text()='${key_status}']</td>
+		<td>//*[text()='${key_entry}']/../following-sibling::td//*[text()='${key_status}']</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ENTRY_VALUE</td>
-		<td>//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')]</td>
+		<td>//tbody//*[contains(text(),'${key_entry}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ENTRY_VALUE_BY_POSITION</td>
-		<td>//div[contains(@class,'dnd-tbody')]//div[contains(@class, 'dnd-tr')][${key_order}]//*[contains(text(),'${key_entry}')]</td>
+		<td>//tbody//tr[${key_order}]//*[contains(text(),'${key_entry}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ENTRY_VALUE_WITH_ELLIPSIS</td>
-		<td>//div[contains(@class,'dnd-tbody')]//span[contains(@class,'text-truncate') and contains(text(),'${key_entry}')]</td>
+		<td>//tbody//span[contains(@class,'text-truncate') and contains(text(),'${key_entry}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ENTRY_VALUE_SPECIFIC_ORDER</td>
-		<td>//div[${resultOrder}]//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')]</td>
+		<td>//div[${resultOrder}]//tbody//*[contains(text(),'${key_entry}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ENTRY_KEBAB_MENU</td>
-		<td>//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')]/parent::div/following-sibling::div//button | //div[contains(@class, 'dnd-td') and contains(., '${key_entry}')]/following-sibling::div//button</td>
+		<td>//tbody//*[contains(text(),'${key_entry}')]/parent::td/following-sibling::td//button | //td[contains(., '${key_entry}')]/following-sibling::td//button</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>FIELD_ENTRY_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th')]//button[contains(@class,'btn-sortin')][contains(text(),'${key_fieldLabelName}')]</td>
+		<td>//th[contains(.,'${key_fieldLabelName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -97,7 +97,7 @@
 	</tr>
 	<tr>
 		<td>GENERIC_ENTRY_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th')]//button[contains(text(),'${key_fieldLabelName}')]</td>
+		<td>//th[contains(.,'${key_fieldLabelName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -142,7 +142,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_CUSTOM_OBJECT</td>
-		<td>//div[(@class='table-list-title') and contains (.,'${key_label}')]</td>
+		<td>//div[(@class='table-list-title')]//a[text()='${key_label}']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -162,12 +162,12 @@
 	</tr>
 	<tr>
 		<td>SELECT_SYSTEM_OBJECT</td>
-		<td>//div[(@class='table-list-title') and (.='${key_label}')]</td>
+		<td>//div[(@class='table-list-title')]//a[text()='${key_label}']</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>SORT_FIELD</td>
-		<td>//button[@class='btn-sorting inline-item text-nowrap text-truncate-inline btn btn-sm btn-unstyled' and contains(text(), '${key_sortFieldName}')]</td>
+		<td>//th//span[contains(text(), '${key_sortFieldName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -207,7 +207,7 @@
 	</tr>
 	<tr>
 		<td>ENTRY_CLOB_KEBAB_MENU</td>
-		<td>//div[contains(@class,'dnd-tbody')]//div[contains(.,'${key_entry}')]/following-sibling::div//button</td>
+		<td>//tbody//td[contains(.,'${key_entry}')]/following-sibling::td//button</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -247,12 +247,12 @@
 	</tr>
 	<tr>
 		<td>DELETE_RELATIONSHIP_ENTRY</td>
-		<td>//div[contains(text(),'${key_entryName}')]/..//a[@title = 'Delete']</td>
+		<td>//td[contains(text(),'${key_entryName}')]/..//a[@title = 'Delete']</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ARROW_ORDER_COLUMN</td>
-		<td>//button[contains(@class,'btn-sorting') and contains(.,'${key_orderColumn}')]//*[contains(@class,'lexicon-icon-order')]</td>
+		<td>//th[contains(.,'${key_orderColumn}')]//button[contains(@class,'component-action')]//*[contains(@class,'lexicon-icon-order')]</td>
 		<td></td>
 	</tr>
 	<tr>

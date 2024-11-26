@@ -27,7 +27,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_INFO_VALIDATION</td>
-		<td>//div[contains(@class, 'dnd-td') and contains(.,'${key_validationInfo}')]</td>
+		<td>//td[contains(.,'${key_validationInfo}')]</td>
 		<td></td>
 	</tr>
 	<tr>

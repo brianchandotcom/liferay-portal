@@ -13,6 +13,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Drew Brokke
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	property = {
@@ -22,6 +23,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = FriendlyURLMapper.class
 )
+@Deprecated
 public class ContactsFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 	@Override

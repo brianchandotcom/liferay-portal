@@ -7,7 +7,9 @@ package com.liferay.contacts.web.internal.constants;
 
 /**
  * @author Ryan Park
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public class ContactsPortletKeys {
 
 	public static final String CONTACTS_CENTER =

@@ -45,6 +45,9 @@ import {CommerceWishListPage} from '../pages/commerce/commerce-wish-list-web/com
 import {CommerceCatalogSystemSettingsPage} from '../pages/commerce/commerceCatalogSystemSettingsPage';
 import {CommerceInstanceSettingsPage} from '../pages/commerce/commerceInstanceSettingsPage';
 import {CommerceMiniCartPage} from '../pages/commerce/commerceMiniCartPage';
+import {
+	CommerceAdminProductConfigurationListsPage
+} from "../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationListsPage";
 
 const commercePagesTest = test.extend<{
 	attachmentsPage: AttachmentsPage;
@@ -57,6 +60,7 @@ const commercePagesTest = test.extend<{
 	commerceAdminDiscountsPage: CommerceAdminDiscountsPage;
 	commerceAdminOrderDetailsPage: CommerceAdminOrderDetailsPage;
 	commerceAdminOrdersPage: CommerceAdminOrdersPage;
+	commerceAdminProductConfigurationListsPage: CommerceAdminProductConfigurationListsPage;
 	commerceAdminProductDetailsDiagramPage: CommerceAdminProductDetailsDiagramPage;
 	commerceAdminProductDetailsMediaPage: CommerceAdminProductDetailsMediaPage;
 	commerceAdminProductDetailsPage: CommerceAdminProductDetailsPage;
@@ -117,6 +121,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminOrdersPage: async ({page}, use) => {
 		await use(new CommerceAdminOrdersPage(page));
+	},
+	commerceAdminProductConfigurationListsPage: async ({page}, use) => {
+		await use(new CommerceAdminProductConfigurationListsPage(page));
 	},
 	commerceAdminProductDetailsDiagramPage: async ({page}, use) => {
 		await use(new CommerceAdminProductDetailsDiagramPage(page));

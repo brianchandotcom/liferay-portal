@@ -13656,6 +13656,84 @@ public class ObjectEntryResourceTest {
 			testFileEntry, httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
 			useExternalReferenceCode);
+
+		// File with URL attachment
+
+		FileEntry customFileEntry = TempFileEntryUtil.addTempFileEntry(
+			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
+			StringUtil.randomString(),
+			TempFileEntryUtil.getTempFileName(
+				StringUtil.randomString() + ".txt"),
+			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
+			ContentTypes.TEXT_PLAIN);
+
+		String customFileEntryRelativeUrl = _dlURLHelper.getPreviewURL(
+			customFileEntry, customFileEntry.getFileVersion(), null, "", false,
+			true);
+
+		Company testCompany = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				_getFileEntryJSONObject(null, fileEntry, objectDefinition)),
+			_toFileEntry(
+				StringBundler.concat(
+					"http://", testCompany.getVirtualHostname(), ":8080",
+					customFileEntryRelativeUrl),
+				RandomTestUtil.randomString() + ".txt", null, null),
+			httpMethod, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+			useExternalReferenceCode);
+
+		// File with URL attachment and wrong url
+
+		String malformedUrl = StringBundler.concat(
+			"http//", testCompany.getVirtualHostname(), ":8080/",
+			RandomTestUtil.randomString());
+
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"java.net.MalformedURLException: no protocol: " + malformedUrl
+			),
+			_toFileEntry(
+				malformedUrl, RandomTestUtil.randomString() + ".txt", null,
+				null),
+			httpMethod, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+			useExternalReferenceCode);
+
+		// File with URL attachment and unsupported protocol
+
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title", "Unsupported protocol"
+			),
+			_toFileEntry(
+				StringBundler.concat(
+					"file://", testCompany.getVirtualHostname(), ":8080"),
+				RandomTestUtil.randomString() + ".txt", null, null),
+			httpMethod, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+			useExternalReferenceCode);
+
+		// File with URL attachment and resource not found
+
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put("status", "NOT_FOUND"),
+			_toFileEntry(
+				StringBundler.concat(
+					"http://", testCompany.getVirtualHostname(), ":8081"),
+				RandomTestUtil.randomString() + ".txt", null, null),
+			httpMethod, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+			useExternalReferenceCode);
 	}
 
 	private void _testPatchPutCustomObjectEntryWithAttachmentField(
@@ -14063,7 +14141,8 @@ public class ObjectEntryResourceTest {
 			customFileEntry, customFileEntry.getFileVersion(), null, "", false,
 			true);
 
-		Company testCompany = _companyLocalService.getCompany(TestPropsValues.getCompanyId());
+		Company testCompany = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
 
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -15292,13 +15371,14 @@ public class ObjectEntryResourceTest {
 	}
 
 	private com.liferay.object.rest.dto.v1_0.FileEntry _toFileEntry(
-		String attachmentURL,
+		Function<byte[], String> encodeFunction, String fileContent,
 		String fileName, String folderExternalReferenceCode,
 		Long folderSiteId) {
-		com.liferay.object.rest.dto.v1_0.FileEntry  fileEntry =
+
+		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry =
 			new com.liferay.object.rest.dto.v1_0.FileEntry();
 
-		fileEntry.setFileSourceURL(attachmentURL);
+		fileEntry.setFileBase64(encodeFunction.apply(fileContent.getBytes()));
 		fileEntry.setName(fileName);
 
 		if ((folderExternalReferenceCode != null) || (folderSiteId != null)) {
@@ -15314,14 +15394,13 @@ public class ObjectEntryResourceTest {
 	}
 
 	private com.liferay.object.rest.dto.v1_0.FileEntry _toFileEntry(
-		Function<byte[], String> encodeFunction, String fileContent,
-		String fileName, String folderExternalReferenceCode,
-		Long folderSiteId) {
+		String attachmentURL, String fileName,
+		String folderExternalReferenceCode, Long folderSiteId) {
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry =
 			new com.liferay.object.rest.dto.v1_0.FileEntry();
 
-		fileEntry.setFileBase64(encodeFunction.apply(fileContent.getBytes()));
+		fileEntry.setFileSourceURL(attachmentURL);
 		fileEntry.setName(fileName);
 
 		if ((folderExternalReferenceCode != null) || (folderSiteId != null)) {

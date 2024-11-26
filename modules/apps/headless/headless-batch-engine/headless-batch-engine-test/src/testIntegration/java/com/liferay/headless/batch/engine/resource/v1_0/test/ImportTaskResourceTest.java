@@ -8,25 +8,20 @@ package com.liferay.headless.batch.engine.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.batch.engine.client.dto.v1_0.FailedItem;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
-import com.liferay.headless.batch.engine.client.serdes.v1_0.ImportTaskSerDes;
 import com.liferay.headless.batch.engine.entity.TestEntity;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.headless.batch.engine.util.ExportImportTaskUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -54,9 +49,15 @@ public class ImportTaskResourceTest {
 					"BatchEngineImportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
-			ImportTask importTask = _postImportTask(
-				JSONUtil.putAll(JSONUtil.put("textValue", "test")), "FAILED",
-				ListUtil.fromArray("createStrategy=INSERT"));
+			ImportTask importTask = ExportImportTaskUtil.postImportTask(
+				JSONUtil.putAll(
+					JSONUtil.put("textValue", "test")
+				).toString(),
+				TestEntity.class.getName(), "FAILED",
+				ListUtil.fromArray(
+					"createStrategy=INSERT",
+					"taskItemDelegateName=" +
+						"export-import-task-resource-exception"));
 
 			Assert.assertEquals(
 				"Modified error message for TestEntity 'test'",
@@ -85,11 +86,13 @@ public class ImportTaskResourceTest {
 					"textValue", RandomTestUtil.randomString()
 				));
 
-			ImportTask importTask = _postImportTask(
-				bodyJSONArray, "COMPLETED",
+			ImportTask importTask = ExportImportTaskUtil.postImportTask(
+				bodyJSONArray.toString(), TestEntity.class.getName(),
+				"COMPLETED",
 				ListUtil.fromArray(
-					"createStrategy=INSERT",
-					"importStrategy=ON_ERROR_CONTINUE"));
+					"createStrategy=INSERT", "importStrategy=ON_ERROR_CONTINUE",
+					"taskItemDelegateName=" +
+						"export-import-task-resource-exception"));
 
 			Assert.assertEquals(3, (int)importTask.getProcessedItemsCount());
 
@@ -108,52 +111,6 @@ public class ImportTaskResourceTest {
 					failedItem.getMessage());
 			}
 		}
-	}
-
-	private ImportTask _postImportTask(
-			JSONArray bodyJSONArray, String expectedExecuteStatus,
-			List<String> queryParameters)
-		throws Exception {
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("headless-batch-engine/v1.0/import-task/");
-		sb.append(TestEntity.class.getName());
-		sb.append("?");
-
-		for (String queryParameter : queryParameters) {
-			sb.append(queryParameter);
-			sb.append("&");
-		}
-
-		sb.append("taskItemDelegateName=export-import-task-resource-exception");
-
-		ImportTask importTask = ImportTaskSerDes.toDTO(
-			HTTPTestUtil.invokeToString(
-				bodyJSONArray.toString(), sb.toString(), Http.Method.POST));
-
-		String externalReferenceCode = importTask.getExternalReferenceCode();
-
-		while (true) {
-			importTask = ImportTaskSerDes.toDTO(
-				HTTPTestUtil.invokeToString(
-					null,
-					"headless-batch-engine/v1.0/import-task/by-external-" +
-						"reference-code/" + externalReferenceCode,
-					Http.Method.GET));
-
-			if (!StringUtil.equals(
-					importTask.getExecuteStatusAsString(), "STARTED")) {
-
-				Assert.assertEquals(
-					expectedExecuteStatus,
-					importTask.getExecuteStatusAsString());
-
-				break;
-			}
-		}
-
-		return importTask;
 	}
 
 }

@@ -1,0 +1,112 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.headless.batch.engine.util;
+
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.serdes.v1_0.ExportTaskSerDes;
+import com.liferay.headless.batch.engine.client.serdes.v1_0.ImportTaskSerDes;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.List;
+
+import org.junit.Assert;
+
+/**
+ * @author Alberto Javier Moreno Lage
+ */
+public class ExportImportTaskUtil {
+
+	public static ExportTask postExportTask(
+			String className, String expectedExecuteStatus,
+			List<String> queryParameters)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("headless-batch-engine/v1.0/export-task/");
+		sb.append(className);
+		sb.append("/JSON?");
+
+		for (String queryParameter : queryParameters) {
+			sb.append(queryParameter);
+			sb.append("&");
+		}
+
+		ExportTask exportTask = ExportTaskSerDes.toDTO(
+			HTTPTestUtil.invokeToString(null, sb.toString(), Http.Method.POST));
+
+		String externalReferenceCode = exportTask.getExternalReferenceCode();
+
+		while (true) {
+			exportTask = ExportTaskSerDes.toDTO(
+				HTTPTestUtil.invokeToString(
+					null,
+					"headless-batch-engine/v1.0/export-task/by-external-" +
+						"reference-code/" + externalReferenceCode,
+					Http.Method.GET));
+
+			if (!StringUtil.equals(
+					exportTask.getExecuteStatusAsString(), "STARTED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus,
+					exportTask.getExecuteStatusAsString());
+
+				break;
+			}
+		}
+
+		return exportTask;
+	}
+
+	public static ImportTask postImportTask(
+			String body, String className, String expectedExecuteStatus,
+			List<String> queryParameters)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("headless-batch-engine/v1.0/import-task/");
+		sb.append(className);
+		sb.append("?");
+
+		for (String queryParameter : queryParameters) {
+			sb.append(queryParameter);
+			sb.append("&");
+		}
+
+		ImportTask importTask = ImportTaskSerDes.toDTO(
+			HTTPTestUtil.invokeToString(body, sb.toString(), Http.Method.POST));
+
+		String externalReferenceCode = importTask.getExternalReferenceCode();
+
+		while (true) {
+			importTask = ImportTaskSerDes.toDTO(
+				HTTPTestUtil.invokeToString(
+					null,
+					"headless-batch-engine/v1.0/import-task/by-external-" +
+						"reference-code/" + externalReferenceCode,
+					Http.Method.GET));
+
+			if (!StringUtil.equals(
+					importTask.getExecuteStatusAsString(), "STARTED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus,
+					importTask.getExecuteStatusAsString());
+
+				break;
+			}
+		}
+
+		return importTask;
+	}
+
+}

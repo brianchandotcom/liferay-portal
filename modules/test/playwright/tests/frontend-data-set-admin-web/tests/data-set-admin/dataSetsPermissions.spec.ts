@@ -50,7 +50,7 @@ const blogPostsDataSetConfig = {
 	restSchema: 'BlogPosting',
 };
 
-async function assertTableRowsCount(page, rowsCount) {
+async function assertTableRowsCount(page: Page, rowsCount: number) {
 	await test.step(`Assert table has ${rowsCount} rows`, async () => {
 		const rows = await page.locator('.dnd-table > .dnd-tbody > .dnd-tr');
 
@@ -611,16 +611,6 @@ test('Check "Edit" permission', async ({
 			.locator(`#${dataSetUserRoleName}_ACTION_UPDATE`)
 			.setChecked(true);
 
-		while (
-			await !dataSetsPage.permissionsModal
-				.locator(`#${dataSetUserRoleName}_ACTION_UPDATE`)
-				.isChecked()
-		) {
-			await dataSetsPage.permissionsModal
-				.locator(`#${dataSetUserRoleName}_ACTION_UPDATE`)
-				.setChecked(true);
-		}
-
 		await dataSetsPage.permissionsModal
 			.getByRole('button', {name: 'Save'})
 			.click();
@@ -704,7 +694,7 @@ test('A user with "Add Object Entry" permission', async ({
 
 		await dataSetsPage.dataSetDeleteAction.click();
 
-		const deleteModal = await dataSetsPage.page.getByRole('dialog');
+		const deleteModal = dataSetsPage.page.getByRole('dialog');
 
 		await deleteModal.getByRole('button', {name: 'Delete'}).click();
 	});

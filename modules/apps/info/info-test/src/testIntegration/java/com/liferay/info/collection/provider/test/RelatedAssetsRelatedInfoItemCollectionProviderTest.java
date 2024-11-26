@@ -355,7 +355,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				classNameId, classTypeId, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
-				0, 0, WorkflowConstants.STATUS_DRAFT, _serviceContext);
+				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
 	}

@@ -30,7 +30,7 @@ public class LayoutServiceWrapper
 	public Layout publishLayout(long plid) throws Exception {
 		Layout layout = _layoutLocalService.getLayout(plid);
 
-		if (!layout.isTypeContent() && !layout.isTypeAssetDisplay()) {
+		if (layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
 			throw new UnsupportedOperationException(
 				"Only layouts of type content can be published");
 		}

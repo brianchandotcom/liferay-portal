@@ -1,7 +1,6 @@
 assemble:
     - from: build/buildTheme/img
       into: static/img
-assemble:
     - from: build/buildTheme/images
       into: static/images
 liferay-sample-theme-css-2:

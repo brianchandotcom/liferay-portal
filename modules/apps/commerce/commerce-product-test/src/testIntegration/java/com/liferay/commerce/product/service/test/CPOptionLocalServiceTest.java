@@ -10,8 +10,10 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPOptionSKUContributorException;
 import com.liferay.commerce.product.exception.RequiredCPOptionException;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
@@ -29,7 +31,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
@@ -66,6 +70,13 @@ public class CPOptionLocalServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				_cpDefinitionOptionRels) {
+
+			_cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
+				cpDefinitionOptionRel);
+		}
+
 		_cpOptionLocalService.deleteCPOptions(_serviceContext.getCompanyId());
 	}
 
@@ -218,9 +229,16 @@ public class CPOptionLocalServiceTest {
 		CPOption cpOption = CPTestUtil.addCPOption(
 			commerceCatalog.getGroupId(), false);
 
-		CPTestUtil.addCPDefinitionOptionRel(
-			commerceCatalog.getGroupId(), cpDefinition.getCPDefinitionId(),
-			cpOption.getCPOptionId());
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
+				cpDefinition.getCPDefinitionId(), cpOption.getCPOptionId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+				RandomTestUtil.randomDouble(), false, true, true, false,
+				CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC, _serviceContext);
+
+		_cpDefinitionOptionRels.add(cpDefinitionOptionRel);
 
 		_cpOptionLocalService.deleteCPOption(cpOption);
 	}
@@ -247,6 +265,13 @@ public class CPOptionLocalServiceTest {
 
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	@Inject
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
+
+	private final List<CPDefinitionOptionRel> _cpDefinitionOptionRels =
+		new ArrayList<>();
 
 	@Inject
 	private CPOptionLocalService _cpOptionLocalService;

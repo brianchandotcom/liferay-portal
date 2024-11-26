@@ -8,6 +8,8 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -293,6 +295,15 @@ public class VerticalNavTag extends BaseContainerTag {
 
 			jspWriter.write(
 				HtmlUtil.escape((String)verticalNavItem.get("label")));
+
+			if (GetterUtil.getBoolean(verticalNavItem.get("deprecated"))) {
+				jspWriter.write("<span class=\"badge badge-warning c-ml-2");
+				jspWriter.write(" text-uppercase badge-translucent\">");
+				jspWriter.write("<span class=\"badge-item ");
+				jspWriter.write("badge-item-expand\">");
+				jspWriter.write(LanguageUtil.get(getRequest(), "deprecated"));
+				jspWriter.write("</span></span>");
+			}
 
 			if (items != null) {
 				IconTag iconTag = new IconTag();

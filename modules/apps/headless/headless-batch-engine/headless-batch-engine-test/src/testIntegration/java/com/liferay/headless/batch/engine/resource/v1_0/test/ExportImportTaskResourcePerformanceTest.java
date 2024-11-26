@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -39,10 +40,8 @@ import java.io.InputStream;
 
 import java.nio.file.Path;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.zip.ZipInputStream;
@@ -316,19 +315,23 @@ public class ExportImportTaskResourcePerformanceTest {
 				new TestEntityPerformanceTimer(
 					count, maxExportTime, className + "#export")) {
 
-			List<String> queryParameters = new ArrayList<>();
-
-			queryParameters.add("createStrategy=INSERT");
-
-			if (classNamePartsMap.containsKey("taskItemDelegateName")) {
-				queryParameters.add(
-					"taskItemDelegateName=" +
-						classNamePartsMap.get("taskItemDelegateName"));
-			}
-
 			ExportTask exportTask = ExportImportTaskUtil.postExportTask(
 				classNamePartsMap.get("className"), "COMPLETED",
-				queryParameters);
+				HashMapBuilder.put(
+					"createStrategy", "INSERT"
+				).put(
+					"taskItemDelegateName",
+					() -> {
+						if (classNamePartsMap.containsKey(
+								"taskItemDelegateName")) {
+
+							return classNamePartsMap.get(
+								"taskItemDelegateName");
+						}
+
+						return null;
+					}
+				).build());
 
 			externalReferenceCode = exportTask.getExternalReferenceCode();
 		}
@@ -369,19 +372,23 @@ public class ExportImportTaskResourcePerformanceTest {
 		try (Closeable closeable = new TestEntityPerformanceTimer(
 				count, maxTime, className)) {
 
-			List<String> queryParameters = new ArrayList<>();
-
-			queryParameters.add("createStrategy=INSERT");
-
-			if (classNamePartsMap.containsKey("taskItemDelegateName")) {
-				queryParameters.add(
-					"taskItemDelegateName=" +
-						classNamePartsMap.get("taskItemDelegateName"));
-			}
-
 			ImportTask importTask = ExportImportTaskUtil.postImportTask(
 				json, classNamePartsMap.get("className"), "COMPLETED",
-				queryParameters);
+				HashMapBuilder.put(
+					"createStrategy", "INSERT"
+				).put(
+					"taskItemDelegateName",
+					() -> {
+						if (classNamePartsMap.containsKey(
+								"taskItemDelegateName")) {
+
+							return classNamePartsMap.get(
+								"taskItemDelegateName");
+						}
+
+						return null;
+					}
+				).build());
 
 			Date endDate = importTask.getEndTime();
 			Date startDate = importTask.getStartTime();

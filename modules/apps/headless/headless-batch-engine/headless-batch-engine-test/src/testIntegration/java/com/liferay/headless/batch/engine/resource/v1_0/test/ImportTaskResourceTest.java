@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -54,10 +54,12 @@ public class ImportTaskResourceTest {
 					JSONUtil.put("textValue", "test")
 				).toString(),
 				TestEntity.class.getName(), "FAILED",
-				ListUtil.fromArray(
-					"createStrategy=INSERT",
-					"taskItemDelegateName=" +
-						"export-import-task-resource-exception"));
+				HashMapBuilder.put(
+					"createStrategy", "INSERT"
+				).put(
+					"taskItemDelegateName",
+					"export-import-task-resource-exception"
+				).build());
 
 			Assert.assertEquals(
 				"Modified error message for TestEntity 'test'",
@@ -89,10 +91,14 @@ public class ImportTaskResourceTest {
 			ImportTask importTask = ExportImportTaskUtil.postImportTask(
 				bodyJSONArray.toString(), TestEntity.class.getName(),
 				"COMPLETED",
-				ListUtil.fromArray(
-					"createStrategy=INSERT", "importStrategy=ON_ERROR_CONTINUE",
-					"taskItemDelegateName=" +
-						"export-import-task-resource-exception"));
+				HashMapBuilder.put(
+					"createStrategy", "INSERT"
+				).put(
+					"importStrategy", "ON_ERROR_CONTINUE"
+				).put(
+					"taskItemDelegateName",
+					"export-import-task-resource-exception"
+				).build());
 
 			Assert.assertEquals(3, (int)importTask.getProcessedItemsCount());
 

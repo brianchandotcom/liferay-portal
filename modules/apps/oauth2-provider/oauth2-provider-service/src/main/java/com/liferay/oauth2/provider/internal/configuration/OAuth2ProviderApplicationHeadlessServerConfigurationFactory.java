@@ -151,9 +151,6 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 
 		User user = userLocalService.getGuestUser(companyId);
 
-		User serviceUser = _getServiceUser(
-			companyId, oAuth2ProviderApplicationHeadlessServerConfiguration);
-
 		String clientId = OAuth2SecureRandomGenerator.generateClientId();
 		String clientSecret =
 			OAuth2SecureRandomGenerator.generateClientSecret();
@@ -163,12 +160,19 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 				fetchOAuth2ApplicationByExternalReferenceCode(
 					externalReferenceCode, companyId);
 
+		User serviceUser = null;
+
 		if (oAuth2Application != null) {
 			clientId = oAuth2Application.getClientId();
 			clientSecret = oAuth2Application.getClientSecret();
 
 			serviceUser = userLocalService.getUserById(
 				companyId, oAuth2Application.getClientCredentialUserId());
+		}
+		else {
+			serviceUser = _getServiceUser(
+				companyId,
+				oAuth2ProviderApplicationHeadlessServerConfiguration);
 		}
 
 		String homePageURL = getHomePageURL(

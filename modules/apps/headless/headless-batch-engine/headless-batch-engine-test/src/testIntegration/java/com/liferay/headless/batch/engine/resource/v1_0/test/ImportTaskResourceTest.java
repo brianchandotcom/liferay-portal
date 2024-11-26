@@ -8,7 +8,6 @@ package com.liferay.headless.batch.engine.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.batch.engine.client.dto.v1_0.FailedItem;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
-import com.liferay.headless.batch.engine.client.http.HttpInvoker;
 import com.liferay.headless.batch.engine.client.serdes.v1_0.ImportTaskSerDes;
 import com.liferay.headless.batch.engine.entity.TestEntity;
 import com.liferay.petra.string.StringBundler;
@@ -16,14 +15,15 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 
@@ -112,15 +112,9 @@ public class ImportTaskResourceTest {
 			List<String> queryParameters)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(bodyJSONArray.toString(), "application/json");
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
 		StringBundler sb = new StringBundler();
 
-		sb.append("http://localhost:8080/o/headless-batch-engine/v1.0");
-		sb.append("/import-task/");
+		sb.append("headless-batch-engine/v1.0/import-task/");
 		sb.append(TestEntity.class.getName());
 		sb.append("?");
 
@@ -131,35 +125,21 @@ public class ImportTaskResourceTest {
 
 		sb.append("taskItemDelegateName=export-import-task-resource-exception");
 
-		httpInvoker.path(sb.toString());
-		httpInvoker.userNameAndPassword(
-			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
 		ImportTask importTask = ImportTaskSerDes.toDTO(
-			httpResponse.getContent());
+			HTTPTestUtil.invokeToString(
+				bodyJSONArray.toString(), sb.toString(), Http.Method.POST));
 
 		String externalReferenceCode = importTask.getExternalReferenceCode();
 
 		String actualExecuteStatus;
 
 		while (true) {
-			httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-			httpInvoker.path(
-				"http://localhost:8080/o/headless-batch-engine/v1.0" +
-					"/import-task/by-external-reference-code/" +
-						externalReferenceCode);
-			httpInvoker.userNameAndPassword(
-				"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
-
-			httpResponse = httpInvoker.invoke();
-
-			Assert.assertEquals(200, httpResponse.getStatusCode());
-
-			importTask = ImportTaskSerDes.toDTO(httpResponse.getContent());
+			importTask = ImportTaskSerDes.toDTO(
+				HTTPTestUtil.invokeToString(
+					null,
+					"headless-batch-engine/v1.0/import-task/by-external-" +
+						"reference-code/" + externalReferenceCode,
+					Http.Method.GET));
 
 			actualExecuteStatus = importTask.getExecuteStatusAsString();
 

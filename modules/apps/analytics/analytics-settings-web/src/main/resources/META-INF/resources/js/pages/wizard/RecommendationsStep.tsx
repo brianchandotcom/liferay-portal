@@ -8,10 +8,10 @@ import ClayLink from '@clayui/link';
 import React from 'react';
 
 import BasePage from '../../components/BasePage';
-import {ESteps, IGenericStepProps} from './WizardPage';
-import {sync} from '../../utils/api';
-import {useDispatch, EPageView, Events} from '../../index';
 import Recommendations from '../../components/recommendations/Recommendations';
+import {EPageView, Events, useDispatch} from '../../index';
+import {sync} from '../../utils/api';
+import {ESteps, IGenericStepProps} from './WizardPage';
 
 const Step: React.FC<IGenericStepProps> = ({onChangeStep}) => {
 	const dispatch = useDispatch();

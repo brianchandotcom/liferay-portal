@@ -8,9 +8,9 @@ import React from 'react';
 
 import BasePage from '../../components/BasePage';
 import Attributes from '../../components/attributes/Attributes';
-import {ESteps, IGenericStepProps} from './WizardPage';
 import {EPageView, Events, useDispatch} from '../../index';
 import {sync} from '../../utils/api';
+import {ESteps, IGenericStepProps} from './WizardPage';
 
 interface IStepProps extends IGenericStepProps {}
 

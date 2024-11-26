@@ -28,7 +28,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -218,21 +217,13 @@ public class WarehouseAccountResourceImpl
 	}
 
 	private List<WarehouseAccount> _toWarehouseAccounts(
-			List<CommerceInventoryWarehouseRel> commerceInventoryWarehouseRels)
-		throws Exception {
+		List<CommerceInventoryWarehouseRel> commerceInventoryWarehouseRels) {
 
-		List<WarehouseAccount> warehouseAccountEntries = new ArrayList<>();
-
-		for (CommerceInventoryWarehouseRel commerceInventoryWarehouseRel :
-				commerceInventoryWarehouseRels) {
-
-			warehouseAccountEntries.add(
-				_toWarehouseAccount(
-					commerceInventoryWarehouseRel.
-						getCommerceInventoryWarehouseRelId()));
-		}
-
-		return warehouseAccountEntries;
+		return transform(
+			commerceInventoryWarehouseRels,
+			commerceInventoryWarehouseRel -> _toWarehouseAccount(
+				commerceInventoryWarehouseRel.
+					getCommerceInventoryWarehouseRelId()));
 	}
 
 	@Reference

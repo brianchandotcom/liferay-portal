@@ -208,3 +208,37 @@ test(
 		);
 	}
 );
+
+const testDeprecatedFragmentSet = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-40529': true,
+		'LPS-178052': true,
+	})
+);
+
+testDeprecatedFragmentSet(
+	'The deprecated label exist for the contributed Featured Content Fragment Set',
+	{
+		tag: '@LPD-42061',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a content page
+
+		const pageName = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: pageName,
+		});
+
+		// Go to edit mode and check deprecated Feature Content
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Featured Content Deprecated'})
+		).toBeVisible();
+	}
+);

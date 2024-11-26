@@ -491,8 +491,8 @@ public class DataFactory {
 	}
 
 	public List<String> generateDynamicSQLs(
-		List<ObjectFieldModel> objectFieldModels, String dbTableName,
-		long objectEntryId, long fileEntryId, long relatedObjectEntryId) {
+		String dbTableName, long dlFileEntryId, long objectEntryId,
+		List<ObjectFieldModel> objectFieldModels, long relatedObjectEntryId) {
 
 		StringBundler sb = new StringBundler(
 			5 + (3 * objectFieldModels.size()));
@@ -513,7 +513,7 @@ public class DataFactory {
 					objectFieldModel.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-				value = fileEntryId;
+				value = dlFileEntryId;
 			}
 			else if (StringUtil.equals(
 						objectFieldModel.getBusinessType(),

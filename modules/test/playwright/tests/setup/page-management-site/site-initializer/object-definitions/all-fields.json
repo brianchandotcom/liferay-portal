@@ -1,4 +1,5 @@
 {
+	"enableLocalization": true,
 	"externalReferenceCode": "all-fields-object-erc",
 	"label": {
 		"en_US": "All Fields Object"
@@ -13,6 +14,7 @@
 			"label": {
 				"en_US": "Boolean"
 			},
+			"localized": false,
 			"name": "boolean",
 			"required": false,
 			"type": "Boolean"
@@ -25,6 +27,7 @@
 			"label": {
 				"en_US": "Date And Time"
 			},
+			"localized": false,
 			"name": "dateAndTime",
 			"objectFieldSettings": [
 				{
@@ -44,18 +47,35 @@
 			"label": {
 				"en_US": "Date"
 			},
+			"localized": false,
 			"name": "date",
 			"required": false,
 			"type": "Date"
 		},
 		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "long-text-erc",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Long Text"
+			},
+			"localized": true,
+			"name": "longText",
+			"required": false,
+			"type": "Clob"
+		},
+		{
 			"DBType": "String",
+			"businessType": "Text",
 			"externalReferenceCode": "text-erc",
 			"indexed": true,
 			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Text"
 			},
+			"localized": true,
 			"name": "text",
 			"required": false,
 			"type": "String"
@@ -69,6 +89,7 @@
 			"label": {
 				"en_US": "Rich Text"
 			},
+			"localized": true,
 			"name": "richText",
 			"required": false,
 			"type": "Clob"

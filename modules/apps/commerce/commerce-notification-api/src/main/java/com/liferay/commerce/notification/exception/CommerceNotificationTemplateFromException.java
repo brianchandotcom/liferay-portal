@@ -9,7 +9,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class CommerceNotificationTemplateFromException extends PortalException {
 
 	public CommerceNotificationTemplateFromException() {

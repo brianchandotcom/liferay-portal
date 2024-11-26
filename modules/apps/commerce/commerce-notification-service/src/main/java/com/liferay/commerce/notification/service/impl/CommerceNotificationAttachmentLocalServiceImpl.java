@@ -23,11 +23,13 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	property = "model.class.name=com.liferay.commerce.notification.model.CommerceNotificationAttachment",
 	service = AopService.class
 )
+@Deprecated
 public class CommerceNotificationAttachmentLocalServiceImpl
 	extends CommerceNotificationAttachmentLocalServiceBaseImpl {
 

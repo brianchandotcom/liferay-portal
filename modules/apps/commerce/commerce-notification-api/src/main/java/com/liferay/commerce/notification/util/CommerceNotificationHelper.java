@@ -9,7 +9,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public interface CommerceNotificationHelper {
 
 	public void sendNotifications(

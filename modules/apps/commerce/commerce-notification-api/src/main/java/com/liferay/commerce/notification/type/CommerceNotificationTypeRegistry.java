@@ -9,7 +9,9 @@ import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public interface CommerceNotificationTypeRegistry {
 
 	public CommerceNotificationType getCommerceNotificationType(String key);

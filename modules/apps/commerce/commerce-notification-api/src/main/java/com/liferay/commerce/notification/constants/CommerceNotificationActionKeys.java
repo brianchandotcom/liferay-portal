@@ -7,7 +7,9 @@ package com.liferay.commerce.notification.constants;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public class CommerceNotificationActionKeys {
 
 	public static final String ADD_COMMERCE_NOTIFICATION_TEMPLATE =

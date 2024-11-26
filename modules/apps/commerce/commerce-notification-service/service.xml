@@ -4,7 +4,7 @@
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.commerce.notification">
 	<author>Alessio Antonio Rendina</author>
 	<namespace>Commerce</namespace>
-	<entity local-service="true" name="CommerceNotificationAttachment" remote-service="false" table="CNotificationAttachment" uuid="true">
+	<entity deprecated="true" local-service="true" name="CommerceNotificationAttachment" remote-service="false" table="CNotificationAttachment" uuid="true">
 
 		<!-- PK fields -->
 
@@ -40,7 +40,7 @@
 			<finder-column name="commerceNotificationQueueEntryId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CommerceNotificationQueueEntry" remote-service="true" uuid="false">
+	<entity deprecated="true" local-service="true" name="CommerceNotificationQueueEntry" remote-service="true" uuid="false">
 
 		<!-- PK fields -->
 
@@ -102,7 +102,7 @@
 			<finder-column name="sent" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CommerceNotificationTemplate" remote-service="true" uuid="true">
+	<entity deprecated="true" local-service="true" name="CommerceNotificationTemplate" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -156,7 +156,7 @@
 			<finder-column name="enabled" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CommerceNotificationTemplateCommerceAccountGroupRel" remote-service="true" table="CNTemplateCAccountGroupRel">
+	<entity deprecated="true" local-service="true" name="CommerceNotificationTemplateCommerceAccountGroupRel" remote-service="true" table="CNTemplateCAccountGroupRel">
 
 		<!-- PK fields -->
 

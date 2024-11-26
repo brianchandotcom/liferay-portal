@@ -9,7 +9,9 @@ import java.util.Locale;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public interface CommerceNotificationType {
 
 	public String getClassName(Object object);

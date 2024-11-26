@@ -19,11 +19,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  * @author Luca Pellizzon
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	property = "screen.navigation.category.order:Integer=30",
 	service = ScreenNavigationCategory.class
 )
+@Deprecated
 public class CommerceChannelNotificationsQueueScreenNavigationCategory
 	implements ScreenNavigationCategory {
 

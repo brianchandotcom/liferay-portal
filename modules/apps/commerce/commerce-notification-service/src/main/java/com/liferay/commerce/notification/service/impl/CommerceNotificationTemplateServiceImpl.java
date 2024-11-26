@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	property = {
@@ -34,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = AopService.class
 )
+@Deprecated
 public class CommerceNotificationTemplateServiceImpl
 	extends CommerceNotificationTemplateServiceBaseImpl {
 

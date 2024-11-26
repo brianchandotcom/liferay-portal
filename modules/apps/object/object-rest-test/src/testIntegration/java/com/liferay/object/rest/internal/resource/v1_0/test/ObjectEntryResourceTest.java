@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.delivery.dto.v1_0.Creator;
@@ -14049,6 +14050,79 @@ public class ObjectEntryResourceTest {
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
+		// File with URL attachment
+
+		FileEntry customFileEntry = TempFileEntryUtil.addTempFileEntry(
+			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
+			StringUtil.randomString(),
+			TempFileEntryUtil.getTempFileName(
+				StringUtil.randomString() + ".txt"),
+			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
+			ContentTypes.TEXT_PLAIN);
+
+		String customFileEntryRelativeUrl = _dlURLHelper.getPreviewURL(
+			customFileEntry, customFileEntry.getFileVersion(), null, "", false,
+			true);
+
+		Company testCompany = _companyLocalService.getCompany(TestPropsValues.getCompanyId());
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				_getFileEntryJSONObject(null, fileEntry, objectDefinition)),
+			_toFileEntry(
+				StringBundler.concat(
+					"http://", testCompany.getVirtualHostname(), ":8080",
+					customFileEntryRelativeUrl),
+				customFileEntry.getTitle(), null, _group.getGroupId()),
+			null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+		// File with URL attachment and wrong url
+
+		String malformedUrl = StringBundler.concat(
+			"http//", testCompany.getVirtualHostname(), ":8080/",
+			RandomTestUtil.randomString());
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"java.net.MalformedURLException: no protocol: " + malformedUrl
+			),
+			_toFileEntry(
+				malformedUrl, customFileEntry.getTitle(), null,
+				_group.getGroupId()),
+			null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+		// File with URL attachment and unsupported protocol
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title", "Unsupported protocol"
+			),
+			_toFileEntry(
+				StringBundler.concat(
+					"file://", testCompany.getVirtualHostname(), ":8080"),
+				customFileEntry.getTitle(), null, _group.getGroupId()),
+			null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+		// File with URL attachment and resource not found
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put("status", "NOT_FOUND"),
+			_toFileEntry(
+				StringBundler.concat(
+					"http://", testCompany.getVirtualHostname(), ":8081"),
+				customFileEntry.getTitle(), null, _group.getGroupId()),
+			null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
 		// File with a nonexistent name (user computer source)
 
 		_testPostCustomObjectEntryWithAttachmentField(
@@ -15219,6 +15293,28 @@ public class ObjectEntryResourceTest {
 	}
 
 	private com.liferay.object.rest.dto.v1_0.FileEntry _toFileEntry(
+		String attachmentURL,
+		String fileName, String folderExternalReferenceCode,
+		Long folderSiteId) {
+		com.liferay.object.rest.dto.v1_0.FileEntry  fileEntry =
+			new com.liferay.object.rest.dto.v1_0.FileEntry();
+
+		fileEntry.setFileSourceURL(attachmentURL);
+		fileEntry.setName(fileName);
+
+		if ((folderExternalReferenceCode != null) || (folderSiteId != null)) {
+			Folder folder = new Folder();
+
+			folder.setExternalReferenceCode(folderExternalReferenceCode);
+			folder.setSiteId(folderSiteId);
+
+			fileEntry.setFolder(folder);
+		}
+
+		return fileEntry;
+	}
+
+	private com.liferay.object.rest.dto.v1_0.FileEntry _toFileEntry(
 		Function<byte[], String> encodeFunction, String fileContent,
 		String fileName, String folderExternalReferenceCode,
 		Long folderSiteId) {
@@ -15394,6 +15490,9 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Inject
+	private DLURLHelper _dlURLHelper;
 
 	private Group _group;
 

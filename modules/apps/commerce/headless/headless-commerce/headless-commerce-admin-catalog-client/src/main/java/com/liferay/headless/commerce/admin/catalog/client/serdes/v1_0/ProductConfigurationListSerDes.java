@@ -55,6 +55,16 @@ public class ProductConfigurationListSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (productConfigurationList.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(productConfigurationList.getActions()));
+		}
+
 		if (productConfigurationList.getCatalogExternalReferenceCode() !=
 				null) {
 
@@ -269,6 +279,15 @@ public class ProductConfigurationListSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (productConfigurationList.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put(
+				"actions",
+				String.valueOf(productConfigurationList.getActions()));
+		}
+
 		if (productConfigurationList.getCatalogExternalReferenceCode() ==
 				null) {
 
@@ -417,8 +436,11 @@ public class ProductConfigurationListSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(
-					jsonParserFieldName, "catalogExternalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				return true;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "catalogExternalReferenceCode")) {
 
 				return false;
 			}
@@ -477,8 +499,14 @@ public class ProductConfigurationListSerDes {
 			ProductConfigurationList productConfigurationList,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "catalogExternalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					productConfigurationList.setActions(
+						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "catalogExternalReferenceCode")) {
 
 				if (jsonParserFieldValue != null) {
 					productConfigurationList.setCatalogExternalReferenceCode(

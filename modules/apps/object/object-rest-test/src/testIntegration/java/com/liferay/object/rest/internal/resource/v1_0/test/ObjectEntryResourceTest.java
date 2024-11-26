@@ -7614,13 +7614,17 @@ public class ObjectEntryResourceTest {
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
 			).toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+			_objectDefinition1.getRESTContextPath() +
+				"?fields=id,externalReferenceCode," + _OBJECT_FIELD_NAME_1,
+			Http.Method.POST);
 
 		JSONObject customObjectJSONObject2 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 			).toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+			_objectDefinition1.getRESTContextPath() +
+				"?fields=id,externalReferenceCode," + _OBJECT_FIELD_NAME_1,
+			Http.Method.POST);
 
 		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),

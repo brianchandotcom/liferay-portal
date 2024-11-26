@@ -17,8 +17,10 @@ import java.util.Date;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplateCommerceAccountGroupRel
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class CommerceNotificationTemplateCommerceAccountGroupRelTable
 	extends BaseTable
 		<CommerceNotificationTemplateCommerceAccountGroupRelTable> {

@@ -20,8 +20,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationAttachmentUtil
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface CommerceNotificationAttachmentPersistence
 	extends BasePersistence<CommerceNotificationAttachment> {

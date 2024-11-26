@@ -22,8 +22,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationQueueEntryUtil
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface CommerceNotificationQueueEntryPersistence
 	extends BasePersistence<CommerceNotificationQueueEntry> {

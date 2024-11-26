@@ -21,6 +21,7 @@ import org.osgi.service.component.annotations.Component;
  * The arguments resolver class for retrieving value from CommerceNotificationTemplate.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated
  * @generated
  */
 @Component(

@@ -16,8 +16,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplateCommerceAccountGroupRelModel
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ImplementationClassName(
 	"com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelImpl"
 )

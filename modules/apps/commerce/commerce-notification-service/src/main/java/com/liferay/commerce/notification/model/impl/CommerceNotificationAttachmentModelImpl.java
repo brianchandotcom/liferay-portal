@@ -50,8 +50,10 @@ import java.util.function.Function;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationAttachmentImpl
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class CommerceNotificationAttachmentModelImpl
 	extends BaseModelImpl<CommerceNotificationAttachment>
 	implements CommerceNotificationAttachmentModel {

@@ -18,8 +18,10 @@ import java.util.Date;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationQueueEntry
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class CommerceNotificationQueueEntryTable
 	extends BaseTable<CommerceNotificationQueueEntryTable> {
 

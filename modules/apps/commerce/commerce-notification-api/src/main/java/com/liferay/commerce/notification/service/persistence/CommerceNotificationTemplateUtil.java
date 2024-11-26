@@ -25,8 +25,10 @@ import java.util.Set;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplatePersistence
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class CommerceNotificationTemplateUtil {
 
 	/*

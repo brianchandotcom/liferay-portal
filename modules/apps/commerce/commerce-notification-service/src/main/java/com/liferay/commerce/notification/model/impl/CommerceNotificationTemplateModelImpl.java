@@ -58,8 +58,10 @@ import java.util.function.Function;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplateImpl
+ * @deprecated
  * @generated
  */
+@Deprecated
 @JSON(strict = true)
 public class CommerceNotificationTemplateModelImpl
 	extends BaseModelImpl<CommerceNotificationTemplate>

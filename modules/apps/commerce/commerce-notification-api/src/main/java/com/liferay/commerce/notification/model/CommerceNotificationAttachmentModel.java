@@ -25,8 +25,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationAttachment
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface CommerceNotificationAttachmentModel
 	extends BaseModel<CommerceNotificationAttachment>, GroupedModel, MVCCModel,

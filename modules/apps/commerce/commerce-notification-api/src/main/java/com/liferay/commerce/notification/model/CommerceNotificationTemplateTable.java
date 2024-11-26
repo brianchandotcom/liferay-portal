@@ -18,8 +18,10 @@ import java.util.Date;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplate
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class CommerceNotificationTemplateTable
 	extends BaseTable<CommerceNotificationTemplateTable> {
 

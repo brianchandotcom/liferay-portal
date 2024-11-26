@@ -13,8 +13,10 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplateLocalService
+ * @deprecated As of Cavanaugh (7.4.x)
  * @generated
  */
+@Deprecated
 public class CommerceNotificationTemplateLocalServiceWrapper
 	implements CommerceNotificationTemplateLocalService,
 			   ServiceWrapper<CommerceNotificationTemplateLocalService> {

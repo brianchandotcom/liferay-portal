@@ -50,8 +50,10 @@ import java.util.function.Function;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationQueueEntryImpl
+ * @deprecated
  * @generated
  */
+@Deprecated
 @JSON(strict = true)
 public class CommerceNotificationQueueEntryModelImpl
 	extends BaseModelImpl<CommerceNotificationQueueEntry>

@@ -22,8 +22,10 @@ import java.util.Date;
  * The cache model class for representing CommerceNotificationQueueEntry in entity cache.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class CommerceNotificationQueueEntryCacheModel
 	implements CacheModel<CommerceNotificationQueueEntry>, Externalizable,
 			   MVCCModel {

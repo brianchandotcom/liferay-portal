@@ -47,12 +47,15 @@ const PAGES: IPages<IGenericPageProps, EPages>[] = [
 		key: EPages.Attributes,
 		title: Liferay.Language.get('attributes'),
 	},
-	{
+];
+
+if (Liferay.FeatureFlags['LPD-20640']) {
+	PAGES.push({
 		Component: RecommendationsPage,
 		key: EPages.Recommendations,
 		title: Liferay.Language.get('recommendations'),
-	},
-];
+	});
+}
 
 const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [activePage, setActivePage] = useState(EPages.WorkspaceConnection);

@@ -56,13 +56,16 @@ const STEPS: IStepProps<IGenericStepProps, ESteps>[] = [
 		key: ESteps.Attributes,
 		title: Liferay.Language.get('attributes'),
 	},
-	{
+];
+
+if (Liferay.FeatureFlags['LPD-20640']) {
+	STEPS.push({
 		Component: RecommendationsStep,
 		available: false,
 		key: ESteps.Recommendations,
 		title: Liferay.Language.get('recommendations'),
-	},
-];
+	});
+}
 
 const WizardPage: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [step, setStep] = useState<ESteps>(ESteps.ConnectAC);

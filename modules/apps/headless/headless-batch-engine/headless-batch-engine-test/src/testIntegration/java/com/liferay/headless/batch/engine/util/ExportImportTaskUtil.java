@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 
@@ -25,7 +25,7 @@ public class ExportImportTaskUtil {
 
 	public static ExportTask postExportTask(
 			String className, String expectedExecuteStatus,
-			List<String> queryParameters)
+			Map<String, String> parameters)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -34,8 +34,10 @@ public class ExportImportTaskUtil {
 		sb.append(className);
 		sb.append("/JSON?");
 
-		for (String queryParameter : queryParameters) {
-			sb.append(queryParameter);
+		for (Map.Entry<String, String> entry : parameters.entrySet()) {
+			sb.append(entry.getKey());
+			sb.append("=");
+			sb.append(entry.getValue());
 			sb.append("&");
 		}
 
@@ -68,7 +70,7 @@ public class ExportImportTaskUtil {
 
 	public static ImportTask postImportTask(
 			String body, String className, String expectedExecuteStatus,
-			List<String> queryParameters)
+			Map<String, String> parameters)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -77,8 +79,10 @@ public class ExportImportTaskUtil {
 		sb.append(className);
 		sb.append("?");
 
-		for (String queryParameter : queryParameters) {
-			sb.append(queryParameter);
+		for (Map.Entry<String, String> entry : parameters.entrySet()) {
+			sb.append(entry.getKey());
+			sb.append("=");
+			sb.append(entry.getValue());
 			sb.append("&");
 		}
 

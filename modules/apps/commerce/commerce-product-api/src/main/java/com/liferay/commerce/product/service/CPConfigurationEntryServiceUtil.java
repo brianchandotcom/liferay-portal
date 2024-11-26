@@ -29,9 +29,10 @@ public class CPConfigurationEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPConfigurationEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CPConfigurationEntry addCPConfigurationEntry(
-			String externalReferenceCode, long classNameId, long classPK,
-			long cpConfigurationListId, String allowedOrderQuantities,
-			boolean backOrders, long commerceAvailabilityEstimateId,
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long cpConfigurationListId,
+			String allowedOrderQuantities, boolean backOrders,
+			long commerceAvailabilityEstimateId,
 			String cpDefinitionInventoryEngine, boolean displayAvailability,
 			boolean displayStockQuantity, String lowStockActivity,
 			java.math.BigDecimal maxOrderQuantity,
@@ -41,11 +42,12 @@ public class CPConfigurationEntryServiceUtil {
 		throws PortalException {
 
 		return getService().addCPConfigurationEntry(
-			externalReferenceCode, classNameId, classPK, cpConfigurationListId,
-			allowedOrderQuantities, backOrders, commerceAvailabilityEstimateId,
-			cpDefinitionInventoryEngine, displayAvailability,
-			displayStockQuantity, lowStockActivity, maxOrderQuantity,
-			minOrderQuantity, minStockQuantity, multipleOrderQuantity);
+			externalReferenceCode, groupId, classNameId, classPK,
+			cpConfigurationListId, allowedOrderQuantities, backOrders,
+			commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
+			displayAvailability, displayStockQuantity, lowStockActivity,
+			maxOrderQuantity, minOrderQuantity, minStockQuantity,
+			multipleOrderQuantity);
 	}
 
 	public static void deleteCPConfigurationEntry(long cpConfigurationEntryId)

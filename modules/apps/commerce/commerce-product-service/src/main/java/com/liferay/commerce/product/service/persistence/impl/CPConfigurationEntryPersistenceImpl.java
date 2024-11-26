@@ -656,6 +656,212 @@ public class CPConfigurationEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_UUID_3 =
 		"(cpConfigurationEntry.uuid IS NULL OR cpConfigurationEntry.uuid = '')";
 
+	private FinderPath _finderPathFetchByUUID_G;
+
+	/**
+	 * Returns the cp configuration entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPConfigurationEntryException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching cp configuration entry
+	 * @throws NoSuchCPConfigurationEntryException if a matching cp configuration entry could not be found
+	 */
+	@Override
+	public CPConfigurationEntry findByUUID_G(String uuid, long groupId)
+		throws NoSuchCPConfigurationEntryException {
+
+		CPConfigurationEntry cpConfigurationEntry = fetchByUUID_G(
+			uuid, groupId);
+
+		if (cpConfigurationEntry == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("uuid=");
+			sb.append(uuid);
+
+			sb.append(", groupId=");
+			sb.append(groupId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCPConfigurationEntryException(sb.toString());
+		}
+
+		return cpConfigurationEntry;
+	}
+
+	/**
+	 * Returns the cp configuration entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
+	 */
+	@Override
+	public CPConfigurationEntry fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the cp configuration entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
+	 */
+	@Override
+	public CPConfigurationEntry fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CPConfigurationEntry.class)) {
+
+			uuid = Objects.toString(uuid, "");
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {uuid, groupId};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByUUID_G, finderArgs, this);
+			}
+
+			if (result instanceof CPConfigurationEntry) {
+				CPConfigurationEntry cpConfigurationEntry =
+					(CPConfigurationEntry)result;
+
+				if (!Objects.equals(uuid, cpConfigurationEntry.getUuid()) ||
+					(groupId != cpConfigurationEntry.getGroupId())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_SELECT_CPCONFIGURATIONENTRY_WHERE);
+
+				boolean bindUuid = false;
+
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+				}
+				else {
+					bindUuid = true;
+
+					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+				}
+
+				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					queryPos.add(groupId);
+
+					List<CPConfigurationEntry> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByUUID_G, finderArgs, list);
+						}
+					}
+					else {
+						CPConfigurationEntry cpConfigurationEntry = list.get(0);
+
+						result = cpConfigurationEntry;
+
+						cacheResult(cpConfigurationEntry);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (CPConfigurationEntry)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the cp configuration entry where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the cp configuration entry that was removed
+	 */
+	@Override
+	public CPConfigurationEntry removeByUUID_G(String uuid, long groupId)
+		throws NoSuchCPConfigurationEntryException {
+
+		CPConfigurationEntry cpConfigurationEntry = findByUUID_G(uuid, groupId);
+
+		return remove(cpConfigurationEntry);
+	}
+
+	/**
+	 * Returns the number of cp configuration entries where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching cp configuration entries
+	 */
+	@Override
+	public int countByUUID_G(String uuid, long groupId) {
+		CPConfigurationEntry cpConfigurationEntry = fetchByUUID_G(
+			uuid, groupId);
+
+		if (cpConfigurationEntry == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
+		"cpConfigurationEntry.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
+		"(cpConfigurationEntry.uuid IS NULL OR cpConfigurationEntry.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
+		"cpConfigurationEntry.groupId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
@@ -2764,6 +2970,14 @@ public class CPConfigurationEntryPersistenceImpl
 				cpConfigurationEntry.getPrimaryKey(), cpConfigurationEntry);
 
 			finderCache.putResult(
+				_finderPathFetchByUUID_G,
+				new Object[] {
+					cpConfigurationEntry.getUuid(),
+					cpConfigurationEntry.getGroupId()
+				},
+				cpConfigurationEntry);
+
+			finderCache.putResult(
 				_finderPathFetchByC_C_C,
 				new Object[] {
 					cpConfigurationEntry.getClassNameId(),
@@ -2871,6 +3085,14 @@ public class CPConfigurationEntryPersistenceImpl
 					cpConfigurationEntryModelImpl.getCtCollectionId())) {
 
 			Object[] args = new Object[] {
+				cpConfigurationEntryModelImpl.getUuid(),
+				cpConfigurationEntryModelImpl.getGroupId()
+			};
+
+			finderCache.putResult(
+				_finderPathFetchByUUID_G, args, cpConfigurationEntryModelImpl);
+
+			args = new Object[] {
 				cpConfigurationEntryModelImpl.getClassNameId(),
 				cpConfigurationEntryModelImpl.getClassPK(),
 				cpConfigurationEntryModelImpl.getCPConfigurationListId()
@@ -3051,7 +3273,7 @@ public class CPConfigurationEntryPersistenceImpl
 				if (userId > 0) {
 					long companyId = cpConfigurationEntry.getCompanyId();
 
-					long groupId = 0;
+					long groupId = cpConfigurationEntry.getGroupId();
 
 					long classPK = 0;
 
@@ -3655,6 +3877,7 @@ public class CPConfigurationEntryPersistenceImpl
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
 		ctStrictColumnNames.add("externalReferenceCode");
+		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
@@ -3697,6 +3920,8 @@ public class CPConfigurationEntryPersistenceImpl
 			Collections.singleton("CPConfigurationEntryId"));
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
 
 		_uniqueIndexColumnNames.add(
 			new String[] {"classNameId", "classPK", "CPConfigurationListId"});
@@ -3742,6 +3967,11 @@ public class CPConfigurationEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
+
+		_finderPathFetchByUUID_G = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "groupId"}, true);
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",

@@ -45,6 +45,7 @@ public class CPConfigurationEntryWrapper
 		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("CPConfigurationEntryId", getCPConfigurationEntryId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -115,6 +116,12 @@ public class CPConfigurationEntryWrapper
 
 		if (CPConfigurationEntryId != null) {
 			setCPConfigurationEntryId(CPConfigurationEntryId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -505,10 +512,13 @@ public class CPConfigurationEntryWrapper
 		return model.getFreeShipping();
 	}
 
+	/**
+	 * Returns the group ID of this cp configuration entry.
+	 *
+	 * @return the group ID of this cp configuration entry
+	 */
 	@Override
-	public long getGroupId()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public long getGroupId() {
 		return model.getGroupId();
 	}
 
@@ -994,6 +1004,16 @@ public class CPConfigurationEntryWrapper
 	@Override
 	public void setFreeShipping(boolean freeShipping) {
 		model.setFreeShipping(freeShipping);
+	}
+
+	/**
+	 * Sets the group ID of this cp configuration entry.
+	 *
+	 * @param groupId the group ID of this cp configuration entry
+	 */
+	@Override
+	public void setGroupId(long groupId) {
+		model.setGroupId(groupId);
 	}
 
 	/**

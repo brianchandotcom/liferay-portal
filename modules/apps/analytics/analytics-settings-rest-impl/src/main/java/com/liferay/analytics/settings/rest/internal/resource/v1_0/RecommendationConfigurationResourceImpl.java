@@ -5,9 +5,14 @@
 
 package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.dto.v1_0.RecommendationConfiguration;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.RecommendationConfigurationResource;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -20,4 +25,33 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class RecommendationConfigurationResourceImpl
 	extends BaseRecommendationConfigurationResourceImpl {
+
+	@Override
+	public RecommendationConfiguration getRecommendationConfiguration()
+		throws Exception {
+
+		if (_recommendationConfiguration != null) {
+			return _recommendationConfiguration;
+		}
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId());
+
+		return new RecommendationConfiguration() {
+			{
+				setMostPopularContentEnabled(
+					analyticsConfiguration::mostPopularContentEnabled);
+
+				setUserContentEnabled(
+					analyticsConfiguration::userContentEnabled);
+			}
+		};
+	}
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	private RecommendationConfiguration _recommendationConfiguration;
+
 }

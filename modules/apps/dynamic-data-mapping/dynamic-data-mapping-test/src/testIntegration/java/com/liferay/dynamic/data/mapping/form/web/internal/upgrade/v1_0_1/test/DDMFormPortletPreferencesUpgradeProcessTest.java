@@ -78,6 +78,7 @@ public class DDMFormPortletPreferencesUpgradeProcessTest {
 		portletPreferences.setValue(
 			"formInstanceId",
 			String.valueOf(ddmFormInstance.getFormInstanceId()));
+
 		portletPreferences.setValue(
 			"groupId", String.valueOf(_group.getGroupId()));
 

@@ -12,6 +12,7 @@ import AttributesPage from './AttributesPage';
 import ConnectPage from './ConnectPage';
 import PeoplePage from './PeoplePage';
 import PropertiesPage from './PropertiesPage';
+import RecommendationsPage from './RecommendationsPage';
 
 export interface IGenericPageProps {
 	title: string;
@@ -21,6 +22,7 @@ enum EPages {
 	Attributes = 'ATTRIBUTES',
 	People = 'PEOPLE',
 	Properties = 'PROPERTIES',
+	Recommendations = 'RECOMMENDATIONS',
 	WorkspaceConnection = 'WORKSPACE_CONNECTION',
 }
 
@@ -44,6 +46,11 @@ const PAGES: IPages<IGenericPageProps, EPages>[] = [
 		Component: AttributesPage,
 		key: EPages.Attributes,
 		title: Liferay.Language.get('attributes'),
+	},
+	{
+		Component: RecommendationsPage,
+		key: EPages.Recommendations,
+		title: Liferay.Language.get('recommendations'),
 	},
 ];
 

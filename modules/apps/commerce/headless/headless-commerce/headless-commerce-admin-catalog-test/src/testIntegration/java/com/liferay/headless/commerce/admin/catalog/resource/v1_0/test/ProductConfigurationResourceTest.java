@@ -39,7 +39,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -229,7 +228,6 @@ public class ProductConfigurationResourceTest
 		super.testGraphQLGetProductIdConfigurationNotFound();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPatchProductByExternalReferenceCodeConfiguration()
@@ -293,7 +291,6 @@ public class ProductConfigurationResourceTest
 		super.testPatchProductConfigurationByExternalReferenceCode();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPatchProductIdConfiguration() throws Exception {

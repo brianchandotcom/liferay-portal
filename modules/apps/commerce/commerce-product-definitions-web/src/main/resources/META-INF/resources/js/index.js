@@ -5,6 +5,7 @@
 
 export {default as EditDisplayLayout} from './EditDisplayLayout';
 export {default as InstanceDetails} from './InstanceDetails';
+export {default as addCpConfigurationList} from './addCpConfigurationList';
 export {default as addCpDefinition} from './addCpDefinition';
 export {default as addCPDefinitionSpecificationOptionValue} from './add_cp_definition_specification_option_value';
 export {default as addCpInstanceUnitOfMeasure} from './add_cp_instance_unit_of_measure';

@@ -9,6 +9,7 @@ import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -108,33 +109,133 @@ public class JiraRestController extends BaseRestController {
 		path = "/jira/security-vulnerabilities/search"
 	)
 	public ResponseEntity<String> search(
-			@RequestParam(defaultValue = "", required = false) String keywords)
+			@RequestParam(defaultValue = "", required = false) String[]
+				filterAffectedVersions,
+			@RequestParam(defaultValue = "", required = false) String[]
+				filterCategories,
+			@RequestParam(defaultValue = "", required = false) String[]
+				filterClassifications,
+			@RequestParam(defaultValue = "", required = false) String[]
+				filterFixVersions,
+			@RequestParam(defaultValue = "", required = false) String[]
+				filterSeverities,
+			@RequestParam(defaultValue = "", required = false) String keywords,
+			@RequestParam(defaultValue = "1", required = false) int page,
+			@RequestParam(defaultValue = "15", required = false) int pageSize,
+			@RequestParam(defaultValue = "DESC", required = false) String
+				sortOrder)
 		throws Exception {
 
 		try {
-			StringBundler sb = new StringBundler(9);
+			StringBundler sb = new StringBundler(49);
 
 			sb.append("project = '");
 			sb.append(_jiraSecurityVulnerabilityProject);
-			sb.append("' AND 'Publishing Status' = 'Ready for Publishing'");
+			sb.append("' AND ");
+			sb.append(
+				_getJQLCustomField(
+					_jiraSecurityVulnerabilityFieldPublishingStatus));
+			sb.append(" = 'Ready for Publishing'");
 
 			if (_isPartner()) {
-				sb.append(" AND 'Partner Publishing Date' <= now()");
+				sb.append(" AND ");
+				sb.append(
+					_getJQLCustomField(
+						_jiraSecurityVulnerabilityFieldPartnerPublishingDate));
+				sb.append(" <= now()");
 			}
 			else {
-				sb.append(" AND 'Customer Publishing Date' <= now()");
+				sb.append(" AND ");
+				sb.append(
+					_getJQLCustomField(
+						_jiraSecurityVulnerabilityFieldCustomerPublishingDate));
+				sb.append(" <= now()");
+			}
+
+			if (ArrayUtil.isNotEmpty(filterAffectedVersions)) {
+				sb.append(" AND ");
+				sb.append(_FIELD_AFFECTED_VERSION);
+				sb.append(" in ('");
+				sb.append(StringUtil.merge(filterAffectedVersions, "','"));
+				sb.append("')");
+			}
+
+			if (ArrayUtil.isNotEmpty(filterCategories)) {
+				sb.append(" AND ");
+				sb.append(
+					_getJQLCustomField(
+						_jiraSecurityVulnerabilityFieldCategory));
+				sb.append(" in ('");
+				sb.append(StringUtil.merge(filterCategories, "','"));
+				sb.append("')");
+			}
+
+			if (ArrayUtil.isNotEmpty(filterClassifications)) {
+				sb.append(" AND ");
+				sb.append(
+					_getJQLCustomField(
+						_jiraSecurityVulnerabilityFieldIssueClassification));
+				sb.append(" in ('");
+				sb.append(StringUtil.merge(filterClassifications, "','"));
+				sb.append("')");
+			}
+
+			if (ArrayUtil.isNotEmpty(filterFixVersions)) {
+				sb.append(" AND ");
+				sb.append(_FIELD_FIX_VERSION);
+				sb.append(" in ('");
+				sb.append(StringUtil.merge(filterFixVersions, "','"));
+				sb.append("')");
+			}
+
+			if (ArrayUtil.isNotEmpty(filterSeverities)) {
+				sb.append(" AND ");
+				sb.append(
+					_getJQLCustomField(
+						_jiraSecurityVulnerabilityFieldSeverity));
+				sb.append(" in ('");
+				sb.append(StringUtil.merge(filterSeverities, "','"));
+				sb.append("')");
 			}
 
 			if (Validator.isNotNull(keywords)) {
-				sb.append(" AND ('Customer Portal Summary' ~ ");
+				sb.append(" AND (");
+				sb.append(
+					_getJQLCustomField(
+						_jiraSecurityVulnerabilityFieldCustomerPortalSummary));
+				sb.append(" ~ ");
 				sb.append(StringUtil.quote(keywords));
-				sb.append(" OR 'CVE IDs' ~ ");
+				sb.append(" OR ");
+				sb.append(
+					_getJQLCustomField(_jiraSecurityVulnerabilityFieldCVEIds));
+				sb.append(" ~ ");
 				sb.append(StringUtil.quote(keywords));
 				sb.append(")");
 			}
 
+			sb.append(" ORDER BY ");
+
+			if (_isPartner()) {
+				sb.append(
+					_getJQLCustomField(
+						_jiraSecurityVulnerabilityFieldPartnerPublishingDate));
+			}
+			else {
+				sb.append(
+					_getJQLCustomField(
+						_jiraSecurityVulnerabilityFieldCustomerPublishingDate));
+			}
+
+			sb.append(" ");
+			sb.append(sortOrder);
+			sb.append(", ");
+			sb.append(
+				_getJQLCustomField(_jiraSecurityVulnerabilityFieldSeverity));
+			sb.append(" ASC");
+
 			JSONObject jsonObject = _search(
-				sb.toString(), _securityVulnerabilitiesIssueFields);
+				sb.toString(), _securityVulnerabilitiesIssueFields,
+				_calculateStartAt(page, pageSize), pageSize);
 
 			JSONObject responseJSONObject = _transformSearchResults(jsonObject);
 
@@ -147,6 +248,14 @@ public class JiraRestController extends BaseRestController {
 			return new ResponseEntity(
 				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	private int _calculatePage(int startAt, int maxResults) {
+		return (startAt / maxResults) + 1;
+	}
+
+	private int _calculateStartAt(int page, int pageSize) {
+		return (page - 1) * pageSize;
 	}
 
 	private JSONArray _flattenJSONArray(JSONArray jsonArray) {
@@ -198,6 +307,12 @@ public class JiraRestController extends BaseRestController {
 		return null;
 	}
 
+	private String _getJQLCustomField(String customField) {
+		int pos = customField.indexOf(StringPool.UNDERLINE);
+
+		return "cf[" + customField.substring(pos + 1) + "]";
+	}
+
 	private String _getJSONObjectFieldValue(JSONObject jsonObject) {
 		if (jsonObject != null) {
 			return jsonObject.optString("value");
@@ -239,7 +354,8 @@ public class JiraRestController extends BaseRestController {
 		return true;
 	}
 
-	private JSONObject _search(String jql, String[] returnFields)
+	private JSONObject _search(
+			String jql, String[] returnFields, int startAt, int maxResults)
 		throws Exception {
 
 		try {
@@ -254,6 +370,10 @@ public class JiraRestController extends BaseRestController {
 						"jql", jql
 					).queryParam(
 						"fields", StringUtil.merge(returnFields)
+					).queryParam(
+						"maxResults", maxResults
+					).queryParam(
+						"startAt", startAt
 					).build()
 				).accept(
 					MediaType.APPLICATION_JSON
@@ -291,7 +411,7 @@ public class JiraRestController extends BaseRestController {
 			issueFieldsJSONObject.optString(
 				_jiraSecurityVulnerabilityFieldAffectedVersionsDetails)
 		).put(
-			"affectsVersion",
+			"affectedVersions",
 			_flattenJSONArray(
 				issueFieldsJSONObject.getJSONArray(_FIELD_VERSIONS))
 		).put(
@@ -372,7 +492,10 @@ public class JiraRestController extends BaseRestController {
 		).put(
 			"issues", jsonArray
 		).put(
-			"page", resultsJSONObject.getInt("startAt") + 1
+			"page",
+			_calculatePage(
+				resultsJSONObject.getInt("startAt"),
+				resultsJSONObject.getInt("maxResults"))
 		).put(
 			"pageSize", resultsJSONObject.getInt("maxResults")
 		).put(
@@ -380,7 +503,11 @@ public class JiraRestController extends BaseRestController {
 		);
 	}
 
+	private static final String _FIELD_AFFECTED_VERSION = "affectedVersion";
+
 	private static final String _FIELD_COMPONENTS = "components";
+
+	private static final String _FIELD_FIX_VERSION = "fixVersion";
 
 	private static final String _FIELD_FIX_VERSIONS = "fixVersions";
 

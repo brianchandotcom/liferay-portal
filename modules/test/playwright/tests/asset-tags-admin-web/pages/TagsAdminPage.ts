@@ -30,14 +30,7 @@ export class TagsAdminPage {
 			await this.selectTag(titles[i]);
 		}
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: 'Delete'}),
-			trigger: this.page.getByRole('button', {
-				exact: true,
-				name: 'Actions',
-			}),
-		});
+		this.page.getByRole('button', {name: 'Delete'}).click();
 	}
 
 	async mergeTags(titles: string[]) {
@@ -45,14 +38,7 @@ export class TagsAdminPage {
 			await this.selectTag(titles[i]);
 		}
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: 'Merge'}),
-			trigger: this.page.getByRole('button', {
-				exact: true,
-				name: 'Actions',
-			}),
-		});
+		this.page.getByRole('button', {name: 'Merge'}).click();
 	}
 
 	async gotoAdd() {

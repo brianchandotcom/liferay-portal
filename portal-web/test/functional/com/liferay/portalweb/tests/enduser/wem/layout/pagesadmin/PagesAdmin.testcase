@@ -640,6 +640,7 @@ definition {
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Web Content DPT",
 				groupName = ${randomSiteName},
+				statusKey = "APPROVED",
 				subType = "Basic Web Content");
 
 			JSONLayoutpagetemplate.publishLayout(

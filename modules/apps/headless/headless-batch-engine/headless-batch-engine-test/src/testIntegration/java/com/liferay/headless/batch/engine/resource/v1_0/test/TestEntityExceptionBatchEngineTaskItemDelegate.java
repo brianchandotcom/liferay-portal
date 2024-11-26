@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "batch.engine.task.item.delegate.name=export-import-exception-thrower",
 	service = BatchEngineTaskItemDelegate.class
 )
-public class TestEntityBatchEngineTaskItemDelegateExceptionThrower
+public class TestEntityExceptionBatchEngineTaskItemDelegate
 	extends BaseBatchEngineTaskItemDelegate<TestEntity> {
 
 	@Override

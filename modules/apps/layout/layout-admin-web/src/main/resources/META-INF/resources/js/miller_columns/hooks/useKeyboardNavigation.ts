@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {navigate} from 'frontend-js-web';
 import {useCallback, useContext, useEffect, useMemo} from 'react';
 
 import {
@@ -18,6 +19,7 @@ const ALLOWED_KEYS = [
 	'ArrowUp',
 	'Home',
 	'End',
+	'Enter',
 ] as const;
 
 type AllowedKey = (typeof ALLOWED_KEYS)[number];
@@ -35,7 +37,7 @@ export function useKeyboardNavigation({
 	item: MillerColumnItem;
 	rtl: boolean;
 }) {
-	const {columnIndex, itemIndex} = item;
+	const {active, columnIndex, hasChild, itemIndex, url} = item;
 
 	const {columnSizes, setTarget, target} = useContext(
 		KeyboardNavigationContext
@@ -58,6 +60,16 @@ export function useKeyboardNavigation({
 
 			event.preventDefault();
 
+			// Load children if pressing Arrow Right when item is active
+
+			if (
+				key === (rtl ? 'ArrowLeft' : 'ArrowRight') &&
+				hasChild &&
+				!active
+			) {
+				navigate(url);
+			}
+
 			const nextTarget = getNextTarget({
 				columnSizes,
 				item,
@@ -68,7 +80,7 @@ export function useKeyboardNavigation({
 				setTarget(nextTarget);
 			}
 		},
-		[columnSizes, item, rtl, setTarget]
+		[active, columnSizes, hasChild, item, rtl, setTarget, url]
 	);
 
 	// Add keyboard listeners when item is target

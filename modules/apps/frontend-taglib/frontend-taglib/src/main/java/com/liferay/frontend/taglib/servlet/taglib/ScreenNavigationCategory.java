@@ -18,4 +18,8 @@ public interface ScreenNavigationCategory {
 
 	public String getScreenNavigationKey();
 
+	public default boolean isDeprecated() {
+		return false;
+	}
+
 }

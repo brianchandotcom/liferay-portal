@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alberto Javier Moreno Lage
  */
 @Component(
-	property = "batch.engine.task.item.delegate.name=export-import-exception-thrower",
+	property = "batch.engine.task.item.delegate.name=export-import-task-resource-exception",
 	service = BatchEngineTaskItemDelegate.class
 )
 public class TestEntityExceptionBatchEngineTaskItemDelegate

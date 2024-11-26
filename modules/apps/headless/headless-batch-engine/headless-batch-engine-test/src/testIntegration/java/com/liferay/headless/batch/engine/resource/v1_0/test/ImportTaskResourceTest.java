@@ -128,7 +128,7 @@ public class ImportTaskResourceTest {
 			sb.append("&");
 		}
 
-		sb.append("taskItemDelegateName=export-import-exception-thrower");
+		sb.append("taskItemDelegateName=export-import-task-resource-exception");
 
 		httpInvoker.path(sb.toString());
 		httpInvoker.userNameAndPassword(

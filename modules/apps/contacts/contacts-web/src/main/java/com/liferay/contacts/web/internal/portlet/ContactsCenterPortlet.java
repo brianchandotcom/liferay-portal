@@ -112,6 +112,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ryan Park
  * @author Jonathan Lee
  * @author Eudaldo Alonso
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	configurationPid = "com.liferay.users.admin.configuration.UserFileUploadsConfiguration",
@@ -138,6 +139,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
+@Deprecated
 public class ContactsCenterPortlet extends MVCPortlet {
 
 	public void addSocialRelation(

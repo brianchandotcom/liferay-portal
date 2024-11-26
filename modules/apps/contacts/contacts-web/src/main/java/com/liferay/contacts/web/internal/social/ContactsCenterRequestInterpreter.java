@@ -26,11 +26,13 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Hai Yu
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	property = "javax.portlet.name=" + ContactsPortletKeys.CONTACTS_CENTER,
 	service = SocialRequestInterpreter.class
 )
+@Deprecated
 public class ContactsCenterRequestInterpreter
 	extends BaseSocialRequestInterpreter {
 

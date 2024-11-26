@@ -175,6 +175,11 @@ public class EditCommercePriceListMVCActionCommand
 
 		long commerceCurrencyId = ParamUtil.getLong(
 			actionRequest, "commerceCurrencyId");
+
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.getCommerceCurrency(
+				commerceCurrencyId);
+
 		boolean netPrice = ParamUtil.getBoolean(
 			actionRequest, "netPrice", true);
 		long parentCommercePriceListId = ParamUtil.getLong(
@@ -228,18 +233,12 @@ public class EditCommercePriceListMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommercePriceList.class.getName(), actionRequest);
 
-		CommerceCurrency commerceCurrency =
-			_commerceCurrencyLocalService.getCommerceCurrency(
-				commerceCurrencyId);
-
-		CommercePriceList commercePriceList;
-
 		if (commercePriceListId <= 0) {
 			long commerceCatalogGroupId = ParamUtil.getLong(
 				actionRequest, "commerceCatalogGroupId");
 			String type = ParamUtil.getString(actionRequest, "type");
 
-			commercePriceList = _commercePriceListService.addCommercePriceList(
+			return _commercePriceListService.addCommercePriceList(
 				null, commerceCatalogGroupId, commerceCurrency.getCode(),
 				netPrice, type, parentCommercePriceListId, false, name,
 				priority, displayDateMonth, displayDateDay, displayDateYear,
@@ -247,18 +246,14 @@ public class EditCommercePriceListMVCActionCommand
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, serviceContext);
 		}
-		else {
-			commercePriceList =
-				_commercePriceListService.updateCommercePriceList(
-					commercePriceListId, commerceCurrency.getCode(), netPrice,
-					parentCommercePriceListId, name, priority, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
-		}
 
-		return commercePriceList;
+		return _commercePriceListService.updateCommercePriceList(
+			commercePriceListId, commerceCurrency.getCode(), netPrice,
+			parentCommercePriceListId, name, priority, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Reference

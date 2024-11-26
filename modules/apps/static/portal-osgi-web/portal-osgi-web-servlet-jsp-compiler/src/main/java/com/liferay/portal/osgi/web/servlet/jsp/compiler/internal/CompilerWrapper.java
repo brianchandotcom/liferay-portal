@@ -47,9 +47,9 @@ public class CompilerWrapper extends Compiler {
 	public void compile(boolean compileClass) throws Exception {
 		String className = ctxt.getFQCN();
 
-		JSPClassInfo jspClassInfo = _jspClassInfos.get(className);
+		Long lastModifiedTime = _jspClassLastModifiedTimes.get(className);
 
-		if (jspClassInfo != null) {
+		if (lastModifiedTime != null) {
 			return;
 		}
 
@@ -83,19 +83,15 @@ public class CompilerWrapper extends Compiler {
 		try {
 			long lastModified = URLUtil.getLastModifiedTime(url);
 
-			JSPClassInfo jSPClassInfo = _jspClassInfos.get(className);
+			Long lastModifiedTime = _jspClassLastModifiedTimes.get(className);
 
-			if ((jSPClassInfo != null) &&
-				(lastModified <= jSPClassInfo.getLastModified())) {
+			if ((lastModifiedTime != null) &&
+				(lastModified <= lastModifiedTime)) {
 
 				return false;
 			}
 
-			String protocol = url.getProtocol();
-
-			_jspClassInfos.put(
-				className,
-				new JSPClassInfo(protocol.equals("file"), lastModified));
+			_jspClassLastModifiedTimes.put(className, lastModified);
 
 			return true;
 		}
@@ -110,9 +106,9 @@ public class CompilerWrapper extends Compiler {
 
 	@Override
 	public void removeGeneratedFiles() {
-		JSPClassInfo jspClassInfo = _jspClassInfos.get(ctxt.getFQCN());
+		Long lastModifiedTime = _jspClassLastModifiedTimes.get(ctxt.getFQCN());
 
-		if (jspClassInfo != null) {
+		if (lastModifiedTime != null) {
 			return;
 		}
 
@@ -179,12 +175,6 @@ public class CompilerWrapper extends Compiler {
 			return null;
 		}
 
-		JSPClassInfo jspClassInfo = _jspClassInfos.get(className);
-
-		if ((jspClassInfo != null) && jspClassInfo.isOverride()) {
-			_jspClassInfos.remove(className);
-		}
-
 		JspRuntimeContext jspRuntimeContext = ctxt.getRuntimeContext();
 
 		ClassLoader classLoader = jspRuntimeContext.getParentClassLoader();
@@ -218,28 +208,8 @@ public class CompilerWrapper extends Compiler {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompilerWrapper.class);
 
-	private final Map<String, JSPClassInfo> _jspClassInfos =
+	private final Map<String, Long> _jspClassLastModifiedTimes =
 		new ConcurrentHashMap<>();
 	private JspCompiler _jspCompiler;
-
-	private class JSPClassInfo {
-
-		public long getLastModified() {
-			return _lastModified;
-		}
-
-		public boolean isOverride() {
-			return _override;
-		}
-
-		private JSPClassInfo(boolean override, long lastModified) {
-			_override = override;
-			_lastModified = lastModified;
-		}
-
-		private final long _lastModified;
-		private final boolean _override;
-
-	}
 
 }

@@ -8,6 +8,13 @@ import React, {Dispatch, ReactNode, SetStateAction, useState} from 'react';
 export type NavigationTarget = {
 	columnIndex: number;
 	itemIndex: number;
+	preventFocus?: boolean;
+};
+
+const INITIAL_TARGET = {
+	columnIndex: 0,
+	itemIndex: 0,
+	preventFocus: true,
 };
 
 const KeyboardNavigationContext = React.createContext<{
@@ -17,10 +24,7 @@ const KeyboardNavigationContext = React.createContext<{
 }>({
 	columnSizes: [],
 	setTarget: () => {},
-	target: {
-		columnIndex: 0,
-		itemIndex: 0,
-	},
+	target: INITIAL_TARGET,
 });
 
 function KeyboardNavigationProvider({
@@ -30,10 +34,7 @@ function KeyboardNavigationProvider({
 	children: ReactNode;
 	columnSizes: number[];
 }) {
-	const [target, setTarget] = useState<NavigationTarget>({
-		columnIndex: 0,
-		itemIndex: 0,
-	});
+	const [target, setTarget] = useState<NavigationTarget>(INITIAL_TARGET);
 
 	return (
 		<KeyboardNavigationContext.Provider

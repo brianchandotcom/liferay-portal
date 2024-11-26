@@ -81,6 +81,12 @@ export function useKeyboardNavigation({
 		if (isTarget) {
 			element.addEventListener('keydown', onKeyDown);
 
+			// Return if focus is prevented
+
+			if (target.preventFocus) {
+				return;
+			}
+
 			// Focus the anchor element
 
 			element.querySelector('a')?.focus();
@@ -97,7 +103,7 @@ export function useKeyboardNavigation({
 		return () => {
 			element.removeEventListener('keydown', onKeyDown);
 		};
-	}, [element, isTarget, onKeyDown]);
+	}, [element, isTarget, onKeyDown, target.preventFocus]);
 
 	return {
 		isTarget,

@@ -2962,13 +2962,13 @@ public class DefaultObjectEntryManagerImplTest
 
 		Organization organization1 = OrganizationTestUtil.addOrganization();
 
-		_addAccountEntryOrganizationRel(accountEntry1, organization1);
-		_addAccountEntryOrganizationRel(accountEntry2, organization1);
-
 		_user = _addUser();
 
 		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), organization1.getOrganizationId());
+
+		_addAccountEntryOrganizationRel(accountEntry1, organization1);
+		_addAccountEntryOrganizationRel(accountEntry2, organization1);
 
 		_assertObjectEntriesSize2(2);
 

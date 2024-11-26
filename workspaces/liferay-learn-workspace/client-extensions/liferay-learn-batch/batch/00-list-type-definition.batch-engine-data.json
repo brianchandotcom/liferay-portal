@@ -11,7 +11,7 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "PS23_ACCESS_TYPE",
+			"externalReferenceCode": "P2S3_ACCESS_TYPE",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "anyoneSignedIn",
@@ -38,14 +38,14 @@
 					}
 				}
 			],
-			"name": "PS23 Access Type",
+			"name": "P2S3 Access Type",
 			"name_i18n": {
 				"en-US": "Access Type"
 			},
 			"system": false
 		},
 		{
-			"externalReferenceCode": "PS23_EXPERTISE_LEVELS",
+			"externalReferenceCode": "P2S3_EXPERTISE_LEVELS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "beginner",
@@ -72,14 +72,14 @@
 					}
 				}
 			],
-			"name": "PS23 Expertise Levels",
+			"name": "P2S3 Expertise Levels",
 			"name_i18n": {
 				"en-US": "Expertise Levels"
 			},
 			"system": false
 		},
 		{
-			"externalReferenceCode": "PS23_PERSONAS",
+			"externalReferenceCode": "P2S3_PERSONAS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "administrator",
@@ -146,14 +146,14 @@
 					}
 				}
 			],
-			"name": "PS23 Personas",
+			"name": "P2S3 Personas",
 			"name_i18n": {
 				"en-US": "Personas"
 			},
 			"system": false
 		},
 		{
-			"externalReferenceCode": "PS23_QUIZ_QUESTION_TYPE",
+			"externalReferenceCode": "P2S3_QUIZ_QUESTION_TYPE",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "freeText",
@@ -180,14 +180,14 @@
 					}
 				}
 			],
-			"name": "PS23 Quiz Question Type",
+			"name": "P2S3 Quiz Question Type",
 			"name_i18n": {
 				"en-US": "Quiz Question Type"
 			},
 			"system": false
 		},
 		{
-			"externalReferenceCode": "PS23_STEP_TYPE",
+			"externalReferenceCode": "P2S3_STEP_TYPE",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "content",
@@ -214,7 +214,7 @@
 					}
 				}
 			],
-			"name": "PS23 Step Type",
+			"name": "P2S3 Step Type",
 			"name_i18n": {
 				"en-US": "Step Type"
 			},

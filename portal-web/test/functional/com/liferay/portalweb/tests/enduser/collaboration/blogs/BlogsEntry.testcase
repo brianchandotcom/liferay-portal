@@ -357,7 +357,7 @@ definition {
 
 		Blogs.expandPanel(panel = "Friendly URL");
 
-		AssertChecked(locator1 = "Radio#AUTOMATIC_URL");
+		AssertChecked(locator1 = "Radio#DEFAULT_URL");
 
 		AssertTextEquals(
 			locator1 = "TextInput#BLOGS_ENTRY_URL",

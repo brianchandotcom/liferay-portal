@@ -384,7 +384,7 @@ definition {
 
 		Blogs.expandPanel(panel = "Friendly URL");
 
-		AssertChecked(locator1 = "Radio#AUTOMATIC_URL");
+		AssertChecked(locator1 = "Radio#DEFAULT_URL");
 
 		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
 
@@ -394,7 +394,7 @@ definition {
 			locator1 = "TextInput#BLOGS_ENTRY_URL",
 			value1 = "custom-url");
 
-		Check(locator1 = "Radio#AUTOMATIC_URL");
+		Check(locator1 = "Radio#DEFAULT_URL");
 
 		AssertTextEquals(
 			locator1 = "TextInput#BLOGS_ENTRY_URL",

@@ -71,6 +71,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEFAULT_URL</td>
+	<td>//label[contains(.,'Default')]/input[@type='radio']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_URL_DISABLED</td>
+	<td>//label[contains(.,'Default')]/input[@type='radio' and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEPOT_LANGUAGES_OPTION</td>
 	<td>//div[contains(@class,'custom-radio') and contains(.,'${key_languagesOption}')]//input</td>
 	<td></td>

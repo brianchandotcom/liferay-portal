@@ -120,7 +120,7 @@ public class FDSAdminDisplayContext {
 				_renderRequest, FDSAdminPortletKeys.FDS_ADMIN,
 				RenderRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
-			"/edit_data_set"
+			"/frontend_data_set_admin/edit_data_set"
 		).setBackURL(
 			_themeDisplay.getURLCurrent()
 		).buildString();

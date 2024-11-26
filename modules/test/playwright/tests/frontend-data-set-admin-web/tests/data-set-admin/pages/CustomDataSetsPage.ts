@@ -14,6 +14,9 @@ export class CustomDataSetsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly basePath: string;
 	readonly customDataSetsTab: Locator;
+	readonly dataSetDeleteAction: Locator;
+	readonly dataSetEditAction: Locator;
+	readonly dataSetPermissionsAction: Locator;
 	readonly dataSetsEmptyState: Locator;
 	readonly dataSetsTable: Locator;
 	readonly dataSetsTabs: Locator;
@@ -42,6 +45,11 @@ export class CustomDataSetsPage {
 		this.customDataSetsTab = page
 			.locator('.nav-item')
 			.filter({hasText: 'Custom Data Sets'});
+		this.dataSetDeleteAction = page.getByRole('menuitem', {name: 'Delete'});
+		this.dataSetEditAction = page.getByRole('menuitem', {name: 'Edit'});
+		this.dataSetPermissionsAction = page.getByRole('menuitem', {
+			name: 'Permissions',
+		});
 		this.dataSetsEmptyState = page.locator('.c-empty-state');
 		this.dataSetsTable = page.locator('.data-set > div:nth-child(2)');
 		this.dataSetsTabs = page

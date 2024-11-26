@@ -90,13 +90,6 @@ async function setupUserRoleAndLoginAsUser({
 	rolePage: RolePage;
 	rolesPage: RolesPage;
 }) {
-
-	// const roleName = `ds_user_${getRandomString()}`;
-
-	// TODO: Fix this to make it work if extracted
-	// let dataSetUserRole;
-	// let userAccount: TUserAccount;
-
 	await test.step('Create Data Set user role', async () => {
 		const companyId = await page.evaluate(() => {
 			return Liferay.ThemeDisplay.getCompanyId();
@@ -310,13 +303,11 @@ test('A user with "View" and "Permissions" permission', async ({
 	});
 
 	await test.step('Check that "Permissions" is visible', async () => {
-		await expect(
-			page.getByRole('menuitem', {name: 'Permissions'})
-		).toBeVisible();
+		await expect(dataSetsPage.dataSetPermissionsAction).toBeVisible();
 	});
 
 	await test.step('Open Permissions modal', async () => {
-		await page.getByRole('menuitem', {name: 'Permissions'}).click();
+		await dataSetsPage.dataSetPermissionsAction.click();
 
 		await expect(
 			dataSetsPage.permissionsModal.locator('#guest_ACTION_VIEW')
@@ -361,7 +352,7 @@ test('A user with "View" and "Permissions" permission', async ({
 	});
 
 	await test.step('Open Permissions modal', async () => {
-		await page.getByRole('menuitem', {name: 'Permissions'}).click();
+		await dataSetsPage.dataSetPermissionsAction.click();
 	});
 
 	await test.step('Confirm "View" permission is persisted', async () => {
@@ -419,15 +410,11 @@ test('A user with only "View" permission', async ({
 	});
 
 	await test.step('Check that "Permissions" is not visible', async () => {
-		await expect(
-			page.getByRole('menuitem', {name: 'Permissions'})
-		).not.toBeVisible();
+		await expect(dataSetsPage.dataSetPermissionsAction).not.toBeVisible();
 	});
 
 	await test.step('Check that "Delete" is not visible', async () => {
-		await expect(
-			page.getByRole('menuitem', {name: 'Permissions'})
-		).not.toBeVisible();
+		await expect(dataSetsPage.dataSetPermissionsAction).not.toBeVisible();
 	});
 });
 
@@ -518,9 +505,7 @@ test('A user with "Delete" permission', async ({
 	});
 
 	await test.step('Check that "Delete" is visible', async () => {
-		await expect(
-			page.getByRole('menuitem', {name: 'Delete'})
-		).toBeVisible();
+		await expect(dataSetsPage.dataSetDeleteAction).toBeVisible();
 	});
 });
 
@@ -573,9 +558,7 @@ test('Check "Edit" permission', async ({
 	});
 
 	await test.step('Check that "Edit" is not visible', async () => {
-		await expect(
-			page.getByRole('menuitem', {name: 'Edit'})
-		).not.toBeVisible();
+		await expect(dataSetsPage.dataSetEditAction).not.toBeVisible();
 	});
 
 	await test.step('Check that the user can not enter to Data Set details pages', async () => {
@@ -616,7 +599,7 @@ test('Check "Edit" permission', async ({
 			text: blogPostsDataSetConfig.name,
 		});
 
-		await page.getByRole('menuitem', {name: 'Permissions'}).click();
+		await dataSetsPage.dataSetPermissionsAction.click();
 
 		await expect(
 			dataSetsPage.permissionsModal.locator(
@@ -660,9 +643,7 @@ test('Check "Edit" permission', async ({
 			text: blogPostsDataSetConfig.name,
 		});
 
-		await expect(
-			page.getByRole('menuitem', {name: 'Edit'})
-		).toBeVisible();
+		await expect(dataSetsPage.dataSetEditAction).toBeVisible();
 	});
 
 	await test.step('Check that the user can now edit the data set', async () => {
@@ -671,7 +652,7 @@ test('Check "Edit" permission', async ({
 			text: blogPostsDataSetConfig.name,
 		});
 
-		await page.getByRole('menuitem', {name: 'Edit'}).click();
+		await dataSetsPage.dataSetEditAction.click();
 
 		await expect(
 			page.getByRole('heading', {name: 'Details'})
@@ -721,7 +702,7 @@ test('A user with "Add Object Entry" permission', async ({
 			text: blogPostsDataSetConfig.name,
 		});
 
-		await dataSetsPage.page.getByRole('menuitem', {name: 'Delete'}).click();
+		await dataSetsPage.dataSetDeleteAction.click();
 
 		const deleteModal = await dataSetsPage.page.getByRole('dialog');
 

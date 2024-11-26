@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -252,17 +253,19 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		File testrayResultsBucketLocalDir = new File(
 			_getBuildProperty("google.cloud.bucket.local.dir[testray]"));
 
-		Process process = JenkinsResultsParserUtil.executeBashCommands(
-			true, testrayResultsBucketLocalDir, 1000 * 60 * 60,
-			JenkinsResultsParserUtil.combine(
-				"find ", testrayResultsBucketLocalDir.getCanonicalPath(),
-				"/*/*/*/*/build-report.json -mtime +60 -exec rm -frv {} \\;"));
+		List<File> buildReportFiles = JenkinsResultsParserUtil.findFiles(
+			testrayResultsBucketLocalDir, Pattern.quote("build-report.json"));
 
-		if (process.exitValue() != 0) {
-			String error = JenkinsResultsParserUtil.readInputStream(
-				process.getErrorStream());
+		for (File buildReportFile : buildReportFiles) {
+			long millisSinceLastModification =
+				System.currentTimeMillis() - buildReportFile.lastModified();
 
-			throw new RuntimeException(error);
+			if ((millisSinceLastModification > TimeUnit.DAYS.toMillis(60)) &&
+				(buildReportFile.delete() == false)) {
+
+				throw new RuntimeException(
+					"Unable to delete file " + buildReportFile);
+			}
 		}
 
 		_deleteEmptyDirs(testrayResultsBucketLocalDir);

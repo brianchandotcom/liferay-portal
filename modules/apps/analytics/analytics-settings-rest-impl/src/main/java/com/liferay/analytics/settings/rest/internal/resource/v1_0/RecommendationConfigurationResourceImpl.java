@@ -49,6 +49,24 @@ public class RecommendationConfigurationResourceImpl
 		};
 	}
 
+	@Override
+	public void putRecommendationConfiguration(
+			RecommendationConfiguration recommendationConfiguration)
+		throws Exception {
+
+		_analyticsSettingsManager.updateCompanyConfiguration(
+			contextCompany.getCompanyId(),
+			HashMapBuilder.<String, Object>put(
+				"mostPopularContentEnabled",
+				recommendationConfiguration.getMostPopularContentEnabled()
+			).put(
+				"userContentEnabled",
+				recommendationConfiguration.getUserContentEnabled()
+			).build());
+
+		_recommendationConfiguration = recommendationConfiguration;
+	}
+
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
 

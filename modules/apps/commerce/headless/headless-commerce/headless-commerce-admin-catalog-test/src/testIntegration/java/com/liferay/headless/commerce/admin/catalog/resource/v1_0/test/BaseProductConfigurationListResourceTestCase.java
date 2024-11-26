@@ -1341,6 +1341,14 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (productConfigurationList.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"catalogExternalReferenceCode",
 					additionalAssertFieldName)) {
@@ -1580,6 +1588,17 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)productConfigurationList1.getActions(),
+						(Map)productConfigurationList2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals(
 					"catalogExternalReferenceCode",
@@ -1852,6 +1871,11 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("catalogExternalReferenceCode")) {
 			Object object =

@@ -11,6 +11,7 @@ import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.ProductCon
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -25,6 +26,28 @@ public class ProductConfigurationList implements Cloneable, Serializable {
 	public static ProductConfigurationList toDTO(String json) {
 		return ProductConfigurationListSerDes.toDTO(json);
 	}
+
+	public Map<String, Map<String, String>> getActions() {
+		return actions;
+	}
+
+	public void setActions(Map<String, Map<String, String>> actions) {
+		this.actions = actions;
+	}
+
+	public void setActions(
+		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
+			actionsUnsafeSupplier) {
+
+		try {
+			actions = actionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Map<String, String>> actions;
 
 	public String getCatalogExternalReferenceCode() {
 		return catalogExternalReferenceCode;

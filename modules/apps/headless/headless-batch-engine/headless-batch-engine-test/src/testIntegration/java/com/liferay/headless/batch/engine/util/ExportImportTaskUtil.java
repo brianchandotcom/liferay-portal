@@ -29,15 +29,13 @@ public class ExportImportTaskUtil {
 			Map<String, String> parameters)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("headless-batch-engine/v1.0/export-task/");
-		sb.append(className);
-		sb.append("/JSON");
-		sb.append(_getQueryString(parameters));
-
 		ExportTask exportTask = ExportTaskSerDes.toDTO(
-			HTTPTestUtil.invokeToString(null, sb.toString(), Http.Method.POST));
+			HTTPTestUtil.invokeToString(
+				null,
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/export-task/", className,
+					"/JSON", _getQueryString(parameters)),
+				Http.Method.POST));
 
 		String externalReferenceCode = exportTask.getExternalReferenceCode();
 
@@ -68,14 +66,13 @@ public class ExportImportTaskUtil {
 			Map<String, String> parameters)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("headless-batch-engine/v1.0/import-task/");
-		sb.append(className);
-		sb.append(_getQueryString(parameters));
-
 		ImportTask importTask = ImportTaskSerDes.toDTO(
-			HTTPTestUtil.invokeToString(body, sb.toString(), Http.Method.POST));
+			HTTPTestUtil.invokeToString(
+				body,
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/import-task/", className,
+					_getQueryString(parameters)),
+				Http.Method.POST));
 
 		String externalReferenceCode = importTask.getExternalReferenceCode();
 

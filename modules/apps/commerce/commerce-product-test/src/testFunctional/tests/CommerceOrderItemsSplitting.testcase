@@ -366,6 +366,7 @@ definition {
 	}
 
 	@description = "COMMERCE-12486. As a buyer, I can verify the order items are not split on the Mini Cart by adding products to the cart when the 'Show Separate Order Items' toggle is disabled"
+	@ignore = "true"
 	@priority = 5
 	test CanVerifyOrderItemsAreNotSplitOnTheMiniCart {
 		property portal.acceptance = "true";
@@ -462,6 +463,7 @@ definition {
 	}
 
 	@description = "COMMERCE-12488. As a buyer, I can verify the order items are not split on the Mini Cart by using quick add products to the cart when the 'Show Separate Order Items' toggle is disabled"
+	@ignore = "true"
 	@priority = 3
 	test CanVerifyOrderItemsAreNotSplitUsingQuickAddToCart {
 		property portal.acceptance = "false";

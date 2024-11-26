@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.headless.delivery.dto.v1_0.DocumentMetadataSet;
 import com.liferay.headless.delivery.resource.v1_0.DocumentMetadataSetResource;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -57,10 +56,6 @@ public class DocumentMetadataSetResourceImpl
 	public void deleteDocumentMetadataSet(Long documentMetadataSetId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
-			throw new UnsupportedOperationException();
-		}
-
 		DataDefinitionResource.Builder builder =
 			_dataDefinitionResourceFactory.create();
 
@@ -75,10 +70,6 @@ public class DocumentMetadataSetResourceImpl
 	public void deleteSiteDocumentMetadataSetByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
-			throw new UnsupportedOperationException();
-		}
 
 		DocumentMetadataSet documentMetadataSet =
 			getSiteDocumentMetadataSetByExternalReferenceCode(
@@ -101,10 +92,6 @@ public class DocumentMetadataSetResourceImpl
 	public Page<DocumentMetadataSet> getAssetLibraryDocumentMetadataSetsPage(
 			Long assetLibraryId, Pagination pagination)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
-			throw new UnsupportedOperationException();
-		}
 
 		return _getPage(
 			HashMapBuilder.put(
@@ -132,10 +119,6 @@ public class DocumentMetadataSetResourceImpl
 			Long documentMetadataSetId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
-			throw new UnsupportedOperationException();
-		}
-
 		return _toDocumentMetadataSet(
 			_ddmStructureService.getStructure(documentMetadataSetId));
 	}
@@ -145,10 +128,6 @@ public class DocumentMetadataSetResourceImpl
 			getSiteDocumentMetadataSetByExternalReferenceCode(
 				Long siteId, String externalReferenceCode)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
-			throw new UnsupportedOperationException();
-		}
 
 		return _toDocumentMetadataSet(
 			_ddmStructureService.getStructureByExternalReferenceCode(
@@ -161,10 +140,6 @@ public class DocumentMetadataSetResourceImpl
 	public Page<DocumentMetadataSet> getSiteDocumentMetadataSetsPage(
 			Long siteId, Pagination pagination)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
-			throw new UnsupportedOperationException();
-		}
 
 		return _getPage(
 			HashMapBuilder.put(
@@ -191,10 +166,6 @@ public class DocumentMetadataSetResourceImpl
 			Long assetLibraryId, DocumentMetadataSet documentMetadataSet)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
-			throw new UnsupportedOperationException();
-		}
-
 		return postSiteDocumentMetadataSet(assetLibraryId, documentMetadataSet);
 	}
 
@@ -202,10 +173,6 @@ public class DocumentMetadataSetResourceImpl
 	public DocumentMetadataSet postSiteDocumentMetadataSet(
 			Long siteId, DocumentMetadataSet documentMetadataSet)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
-			throw new UnsupportedOperationException();
-		}
 
 		return _addDocumentMetadataSet(siteId, documentMetadataSet);
 	}

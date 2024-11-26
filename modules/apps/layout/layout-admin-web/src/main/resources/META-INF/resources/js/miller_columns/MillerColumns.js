@@ -281,11 +281,7 @@ const MillerColumns = ({
 
 			setItems(newItems);
 
-			saveData(
-				getMovedItems(sources, targetId, targetIndex),
-				targetId,
-				sources[0].url
-			);
+			saveData(getMovedItems(sources, targetId, targetIndex), targetId);
 		},
 		[getMovedItems, items, saveData]
 	);

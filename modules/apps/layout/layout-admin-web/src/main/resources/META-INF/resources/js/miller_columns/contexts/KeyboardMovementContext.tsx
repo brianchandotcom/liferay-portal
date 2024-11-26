@@ -4,7 +4,7 @@
  */
 
 import {ScreenReaderAnnouncer} from '@liferay/layout-js-components-web';
-import {navigate, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 import React, {
 	Dispatch,
 	ReactNode,
@@ -30,8 +30,6 @@ export type MovementTarget = {
 
 const KeyboardMovementContext = React.createContext<{
 	columnSizes: number[];
-	redirectURL: string | null;
-	setRedirectURL: Dispatch<SetStateAction<string | null>>;
 	setSources: Dispatch<SetStateAction<MovementSources>>;
 	setTarget: Dispatch<SetStateAction<MovementTarget>>;
 	setText: (text: any) => void;
@@ -39,8 +37,6 @@ const KeyboardMovementContext = React.createContext<{
 	target: MovementTarget;
 }>({
 	columnSizes: [],
-	redirectURL: null,
-	setRedirectURL: () => {},
 	setSources: () => {},
 	setTarget: () => {},
 	setText: () => {},
@@ -82,7 +78,6 @@ function KeyboardMovementProvider({
 }) {
 	const [sources, setSources] = useState<MovementSources>([]);
 	const [target, setTarget] = useState<MovementTarget>(null);
-	const [redirectURL, setRedirectURL] = useState<string | null>(null);
 	const screenReaderAnnouncerRef = useRef<any>();
 
 	const setText = useCallback((text) => {
@@ -135,10 +130,6 @@ function KeyboardMovementProvider({
 			}
 			else if (key === 'Escape') {
 				disableMovement();
-
-				if (redirectURL) {
-					navigate(redirectURL);
-				}
 			}
 			else {
 				const nextTarget = getNextTarget({
@@ -167,23 +158,12 @@ function KeyboardMovementProvider({
 		return () => {
 			window.removeEventListener('keydown', onKeyDown, true);
 		};
-	}, [
-		columnSizes,
-		items,
-		redirectURL,
-		setText,
-		sources,
-		onMove,
-		rtl,
-		target,
-	]);
+	}, [columnSizes, items, setText, sources, onMove, rtl, target]);
 
 	return (
 		<KeyboardMovementContext.Provider
 			value={{
 				columnSizes,
-				redirectURL,
-				setRedirectURL,
 				setSources,
 				setTarget,
 				setText,
@@ -418,8 +398,8 @@ function getMillerColumnsItem(
 }
 
 export {
+	getNextTarget,
 	KeyboardMovementContext,
 	KeyboardMovementProvider,
-	getNextTarget,
 	setMovementText,
 };

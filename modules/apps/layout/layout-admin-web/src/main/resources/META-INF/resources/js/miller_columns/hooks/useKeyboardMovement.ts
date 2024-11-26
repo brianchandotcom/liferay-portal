@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useContext, useEffect} from 'react';
+import {useCallback, useContext} from 'react';
 
 import {
 	KeyboardMovementContext,
@@ -40,24 +40,8 @@ export function useKeyboardMovement({
 }) {
 	const {columnIndex, itemIndex} = item;
 
-	const {
-		columnSizes,
-		setRedirectURL,
-		setSources,
-		setTarget,
-		setText,
-		sources,
-		target,
-	} = useContext(KeyboardMovementContext);
-
-	const isTarget =
-		columnIndex === target?.columnIndex && itemIndex === target?.itemIndex;
-
-	useEffect(() => {
-		if (isTarget && item.active) {
-			setRedirectURL(item.url);
-		}
-	}, [isTarget, item.active, item.url, setRedirectURL]);
+	const {columnSizes, setSources, setTarget, setText, sources, target} =
+		useContext(KeyboardMovementContext);
 
 	const enableMovement = useCallback(
 		(sources) => {

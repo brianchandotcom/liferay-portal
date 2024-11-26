@@ -149,25 +149,23 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 			List<String> scopeAliasesList)
 		throws Exception {
 
-		User user = userLocalService.getGuestUser(companyId);
-
-		String clientId = OAuth2SecureRandomGenerator.generateClientId();
-		String clientSecret =
-			OAuth2SecureRandomGenerator.generateClientSecret();
-
 		OAuth2Application oAuth2Application =
 			oAuth2ApplicationLocalService.
 				fetchOAuth2ApplicationByExternalReferenceCode(
 					externalReferenceCode, companyId);
 
+		User user = userLocalService.getGuestUser(companyId);
+
 		User serviceUser = null;
+		String clientId = OAuth2SecureRandomGenerator.generateClientId();
+		String clientSecret =
+			OAuth2SecureRandomGenerator.generateClientSecret();
 
 		if (oAuth2Application != null) {
-			clientId = oAuth2Application.getClientId();
-			clientSecret = oAuth2Application.getClientSecret();
-
 			serviceUser = userLocalService.getUserById(
 				companyId, oAuth2Application.getClientCredentialUserId());
+			clientId = oAuth2Application.getClientId();
+			clientSecret = oAuth2Application.getClientSecret();
 		}
 		else {
 			serviceUser = _getServiceUser(

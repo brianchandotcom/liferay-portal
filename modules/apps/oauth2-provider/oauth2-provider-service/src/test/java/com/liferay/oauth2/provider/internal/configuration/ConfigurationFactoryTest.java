@@ -243,13 +243,13 @@ public class ConfigurationFactoryTest {
 		_userLocalService = Mockito.mock(UserLocalService.class);
 
 		Mockito.when(
-			_userLocalService.getUserById(Mockito.anyLong(), Mockito.anyLong())
+			_userLocalService.getGuestUser(_companyId)
 		).thenReturn(
 			_user
 		);
 
 		Mockito.when(
-			_userLocalService.getGuestUser(_companyId)
+			_userLocalService.getUserById(Mockito.anyLong(), Mockito.anyLong())
 		).thenReturn(
 			_user
 		);

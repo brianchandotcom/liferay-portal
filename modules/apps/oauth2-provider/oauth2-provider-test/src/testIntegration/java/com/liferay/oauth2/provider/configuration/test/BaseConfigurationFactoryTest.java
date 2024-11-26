@@ -76,7 +76,6 @@ public class BaseConfigurationFactoryTest {
 			properties,
 			_userLocalService.getUserByScreenName(
 				companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME));
-
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationUserAgentConfiguration.class.getName(),
 			properties, _userLocalService.getGuestUser(companyId));

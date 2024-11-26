@@ -20,8 +20,10 @@ import java.util.Map;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationAttachment
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class CommerceNotificationAttachmentWrapper
 	extends BaseModelWrapper<CommerceNotificationAttachment>
 	implements CommerceNotificationAttachment,

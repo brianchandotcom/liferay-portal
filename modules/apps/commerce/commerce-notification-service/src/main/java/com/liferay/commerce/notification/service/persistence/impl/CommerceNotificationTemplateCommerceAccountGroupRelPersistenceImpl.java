@@ -61,11 +61,13 @@ import org.osgi.service.component.annotations.Reference;
  * </p>
  *
  * @author Alessio Antonio Rendina
+ * @deprecated
  * @generated
  */
 @Component(
 	service = CommerceNotificationTemplateCommerceAccountGroupRelPersistence.class
 )
+@Deprecated
 public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	extends BasePersistenceImpl
 		<CommerceNotificationTemplateCommerceAccountGroupRel>

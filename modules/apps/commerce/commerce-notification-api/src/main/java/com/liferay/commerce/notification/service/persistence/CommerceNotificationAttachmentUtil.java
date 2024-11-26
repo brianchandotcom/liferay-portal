@@ -25,8 +25,10 @@ import java.util.Set;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationAttachmentPersistence
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class CommerceNotificationAttachmentUtil {
 
 	/*

@@ -23,8 +23,10 @@ import java.util.Map;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplateService
+ * @deprecated As of Cavanaugh (7.4.x)
  * @generated
  */
+@Deprecated
 public class CommerceNotificationTemplateServiceUtil {
 
 	/*

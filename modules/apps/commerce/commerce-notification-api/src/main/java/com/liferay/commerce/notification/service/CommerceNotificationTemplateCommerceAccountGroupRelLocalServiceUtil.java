@@ -27,8 +27,10 @@ import java.util.List;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplateCommerceAccountGroupRelLocalService
+ * @deprecated As of Cavanaugh (7.4.x)
  * @generated
  */
+@Deprecated
 public class
 	CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceUtil {
 

@@ -20,8 +20,10 @@ import java.util.Map;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplate
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class CommerceNotificationTemplateWrapper
 	extends BaseModelWrapper<CommerceNotificationTemplate>
 	implements CommerceNotificationTemplate,

@@ -26,8 +26,10 @@ import java.util.Set;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationQueueEntryPersistence
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class CommerceNotificationQueueEntryUtil {
 
 	/*

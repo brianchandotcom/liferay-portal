@@ -20,8 +20,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplateCommerceAccountGroupRelUtil
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 	extends BasePersistence

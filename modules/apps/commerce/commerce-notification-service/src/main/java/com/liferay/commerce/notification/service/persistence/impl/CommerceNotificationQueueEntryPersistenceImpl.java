@@ -63,9 +63,11 @@ import org.osgi.service.component.annotations.Reference;
  * </p>
  *
  * @author Alessio Antonio Rendina
+ * @deprecated
  * @generated
  */
 @Component(service = CommerceNotificationQueueEntryPersistence.class)
+@Deprecated
 public class CommerceNotificationQueueEntryPersistenceImpl
 	extends BasePersistenceImpl<CommerceNotificationQueueEntry>
 	implements CommerceNotificationQueueEntryPersistence {

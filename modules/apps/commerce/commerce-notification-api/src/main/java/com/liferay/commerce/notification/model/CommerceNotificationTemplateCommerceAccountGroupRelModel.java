@@ -24,8 +24,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplateCommerceAccountGroupRel
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface CommerceNotificationTemplateCommerceAccountGroupRelModel
 	extends BaseModel<CommerceNotificationTemplateCommerceAccountGroupRel>,

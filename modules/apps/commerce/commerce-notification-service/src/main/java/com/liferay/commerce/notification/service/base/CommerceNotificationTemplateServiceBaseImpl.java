@@ -34,8 +34,10 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Alessio Antonio Rendina
  * @see com.liferay.commerce.notification.service.impl.CommerceNotificationTemplateServiceImpl
+ * @deprecated As of Cavanaugh (7.4.x)
  * @generated
  */
+@Deprecated
 public abstract class CommerceNotificationTemplateServiceBaseImpl
 	extends BaseServiceImpl
 	implements AopService, CommerceNotificationTemplateService,

@@ -49,8 +49,10 @@ import java.util.function.Function;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplateCommerceAccountGroupRelImpl
+ * @deprecated
  * @generated
  */
+@Deprecated
 @JSON(strict = true)
 public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	extends BaseModelImpl<CommerceNotificationTemplateCommerceAccountGroupRel>

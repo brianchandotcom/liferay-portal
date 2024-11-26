@@ -18,8 +18,10 @@ import com.liferay.commerce.notification.service.CommerceNotificationTemplateCom
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplateCommerceAccountGroupRelImpl
  * @see CommerceNotificationTemplateCommerceAccountGroupRel
+ * @deprecated
  * @generated
  */
+@Deprecated
 public abstract class
 	CommerceNotificationTemplateCommerceAccountGroupRelBaseImpl
 		extends CommerceNotificationTemplateCommerceAccountGroupRelModelImpl

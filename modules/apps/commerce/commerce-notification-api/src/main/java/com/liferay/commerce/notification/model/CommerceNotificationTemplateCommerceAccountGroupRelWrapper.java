@@ -19,8 +19,10 @@ import java.util.Map;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceNotificationTemplateCommerceAccountGroupRel
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	extends BaseModelWrapper
 		<CommerceNotificationTemplateCommerceAccountGroupRel>

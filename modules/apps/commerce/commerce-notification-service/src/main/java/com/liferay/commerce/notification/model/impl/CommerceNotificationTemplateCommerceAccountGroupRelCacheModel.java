@@ -22,8 +22,10 @@ import java.util.Date;
  * The cache model class for representing CommerceNotificationTemplateCommerceAccountGroupRel in entity cache.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class CommerceNotificationTemplateCommerceAccountGroupRelCacheModel
 	implements CacheModel<CommerceNotificationTemplateCommerceAccountGroupRel>,
 			   Externalizable, MVCCModel {

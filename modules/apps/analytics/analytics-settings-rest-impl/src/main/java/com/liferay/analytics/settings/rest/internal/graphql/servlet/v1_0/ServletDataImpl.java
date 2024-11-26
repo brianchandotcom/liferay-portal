@@ -16,6 +16,7 @@ import com.liferay.analytics.settings.rest.internal.resource.v1_0.ContactUserGro
 import com.liferay.analytics.settings.rest.internal.resource.v1_0.DataSourceResourceImpl;
 import com.liferay.analytics.settings.rest.internal.resource.v1_0.FieldResourceImpl;
 import com.liferay.analytics.settings.rest.internal.resource.v1_0.FieldSummaryResourceImpl;
+import com.liferay.analytics.settings.rest.internal.resource.v1_0.RecommendationConfigurationResourceImpl;
 import com.liferay.analytics.settings.rest.internal.resource.v1_0.SiteResourceImpl;
 import com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.CommerceChannelResource;
@@ -26,6 +27,7 @@ import com.liferay.analytics.settings.rest.resource.v1_0.ContactUserGroupResourc
 import com.liferay.analytics.settings.rest.resource.v1_0.DataSourceResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.FieldResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.FieldSummaryResource;
+import com.liferay.analytics.settings.rest.resource.v1_0.RecommendationConfigurationResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.SiteResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -60,6 +62,8 @@ public class ServletDataImpl implements ServletData {
 			_dataSourceResourceComponentServiceObjects);
 		Mutation.setFieldResourceComponentServiceObjects(
 			_fieldResourceComponentServiceObjects);
+		Mutation.setRecommendationConfigurationResourceComponentServiceObjects(
+			_recommendationConfigurationResourceComponentServiceObjects);
 
 		Query.setChannelResourceComponentServiceObjects(
 			_channelResourceComponentServiceObjects);
@@ -77,6 +81,8 @@ public class ServletDataImpl implements ServletData {
 			_fieldResourceComponentServiceObjects);
 		Query.setFieldSummaryResourceComponentServiceObjects(
 			_fieldSummaryResourceComponentServiceObjects);
+		Query.setRecommendationConfigurationResourceComponentServiceObjects(
+			_recommendationConfigurationResourceComponentServiceObjects);
 		Query.setSiteResourceComponentServiceObjects(
 			_siteResourceComponentServiceObjects);
 	}
@@ -152,6 +158,11 @@ public class ServletDataImpl implements ServletData {
 						"mutation#patchFieldProduct",
 						new ObjectValuePair<>(
 							FieldResourceImpl.class, "patchFieldProduct"));
+					put(
+						"mutation#updateRecommendationConfiguration",
+						new ObjectValuePair<>(
+							RecommendationConfigurationResourceImpl.class,
+							"putRecommendationConfiguration"));
 
 					put(
 						"query#channels",
@@ -203,6 +214,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							FieldSummaryResourceImpl.class, "getField"));
 					put(
+						"query#recommendationConfiguration",
+						new ObjectValuePair<>(
+							RecommendationConfigurationResourceImpl.class,
+							"getRecommendationConfiguration"));
+					put(
 						"query#sites",
 						new ObjectValuePair<>(
 							SiteResourceImpl.class, "getSitesPage"));
@@ -224,6 +240,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FieldResource>
 		_fieldResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<RecommendationConfigurationResource>
+		_recommendationConfigurationResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<CommerceChannelResource>

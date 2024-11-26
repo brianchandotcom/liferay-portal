@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.batch.engine.resource.v1_0.test;
+package com.liferay.headless.batch.engine.batch.engine;
 
 import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
+import com.liferay.headless.batch.engine.entity.TestEntity;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
@@ -33,6 +34,20 @@ import org.osgi.service.component.annotations.Component;
 public class TestEntityBatchEngineTaskItemDelegate
 	extends BaseBatchEngineTaskItemDelegate<TestEntity> {
 
+	public void generate(int testEntitiesCount) {
+		for (int i = 0; i < testEntitiesCount; i++) {
+			TestEntity testEntity = new TestEntity();
+
+			testEntity.setIntValue(RandomTestUtil.nextInt());
+			testEntity.setTextValue(
+				RandomTestUtil.randomString(
+					NumericStringRandomizerBumper.INSTANCE,
+					UniqueStringRandomizerBumper.INSTANCE));
+
+			_testEntities.add(testEntity);
+		}
+	}
+
 	@Override
 	public Page<TestEntity> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
@@ -45,20 +60,6 @@ public class TestEntityBatchEngineTaskItemDelegate
 				Math.min(pagination.getEndPosition(), _testEntities.size())),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			_testEntities.size());
-	}
-
-	protected void generate(int testEntitiesCount) {
-		for (int i = 0; i < testEntitiesCount; i++) {
-			TestEntity testEntity = new TestEntity();
-
-			testEntity.setIntValue(RandomTestUtil.nextInt());
-			testEntity.setTextValue(
-				RandomTestUtil.randomString(
-					NumericStringRandomizerBumper.INSTANCE,
-					UniqueStringRandomizerBumper.INSTANCE));
-
-			_testEntities.add(testEntity);
-		}
 	}
 
 	private final List<TestEntity> _testEntities = new ArrayList<>();

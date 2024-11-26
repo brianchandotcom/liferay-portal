@@ -7,6 +7,7 @@ package com.liferay.headless.batch.engine.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
+import com.liferay.headless.batch.engine.batch.engine.TestEntityBatchEngineTaskItemDelegate;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.http.HttpInvoker;
@@ -151,7 +152,7 @@ public class ExportImportTaskResourcePerformanceTest {
 				)
 			).toString()
 		).put(
-			"com.liferay.headless.batch.engine.resource.v1_0.test.TestEntity",
+			"com.liferay.headless.batch.engine.entity.TestEntity",
 			JSONUtil.put(
 				"intValue", "[$INT_VALUE$]"
 			).put(
@@ -180,7 +181,7 @@ public class ExportImportTaskResourcePerformanceTest {
 		testEntityBatchEngineTaskItemDelegate.generate(count);
 
 		_testPostExportTask(
-			"com.liferay.headless.batch.engine.resource.v1_0.test.TestEntity#" +
+			"com.liferay.headless.batch.engine.entity.TestEntity#" +
 				"export-import-task-resource-performance-test-entities",
 			count,
 			GetterUtil.getLong(
@@ -209,7 +210,7 @@ public class ExportImportTaskResourcePerformanceTest {
 	@Test
 	public void testPostImportTaskWithTestEntity() throws Exception {
 		_testPostImportTask(
-			"com.liferay.headless.batch.engine.resource.v1_0.test.TestEntity#" +
+			"com.liferay.headless.batch.engine.entity.TestEntity#" +
 				"export-import-task-resource-performance-test-entities",
 			GetterUtil.getInteger(
 				_properties.getProperty("test.entities.count")),
@@ -282,9 +283,7 @@ public class ExportImportTaskResourcePerformanceTest {
 
 		return (TestEntityBatchEngineTaskItemDelegate)
 			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
-				0,
-				"com.liferay.headless.batch.engine.resource.v1_0.test." +
-					"TestEntity",
+				0, "com.liferay.headless.batch.engine.entity.TestEntity",
 				"export-import-task-resource-performance-test-entities");
 	}
 

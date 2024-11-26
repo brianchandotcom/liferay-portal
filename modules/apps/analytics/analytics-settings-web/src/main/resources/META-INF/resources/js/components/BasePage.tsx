@@ -6,7 +6,7 @@
 import React from 'react';
 
 interface IBasePageProps extends React.HTMLAttributes<HTMLElement> {
-	description?: string;
+	description?: string | JSX.Element;
 	title: string;
 }
 

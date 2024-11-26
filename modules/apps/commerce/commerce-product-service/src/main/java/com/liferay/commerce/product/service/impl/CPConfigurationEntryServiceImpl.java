@@ -48,7 +48,7 @@ public class CPConfigurationEntryServiceImpl
 		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
 
 		return cpConfigurationEntryLocalService.addCPConfigurationEntry(
-			externalReferenceCode, groupId, getUserId(), classNameId, classPK,
+			externalReferenceCode, getUserId(), groupId, classNameId, classPK,
 			cpConfigurationListId, allowedOrderQuantities, backOrders,
 			commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
 			displayAvailability, displayStockQuantity, lowStockActivity,

@@ -10,7 +10,7 @@ export type NavigationTarget = {
 	itemIndex: number;
 };
 
-const KeyboardContext = React.createContext<{
+const KeyboardNavigationContext = React.createContext<{
 	columnSizes: number[];
 	setTarget: Dispatch<SetStateAction<NavigationTarget>>;
 	target: NavigationTarget;
@@ -36,7 +36,7 @@ function KeyboardNavigationProvider({
 	});
 
 	return (
-		<KeyboardContext.Provider
+		<KeyboardNavigationContext.Provider
 			value={{
 				columnSizes,
 				setTarget,
@@ -44,8 +44,8 @@ function KeyboardNavigationProvider({
 			}}
 		>
 			{children}
-		</KeyboardContext.Provider>
+		</KeyboardNavigationContext.Provider>
 	);
 }
 
-export {KeyboardContext, KeyboardNavigationProvider};
+export {KeyboardNavigationContext, KeyboardNavigationProvider};

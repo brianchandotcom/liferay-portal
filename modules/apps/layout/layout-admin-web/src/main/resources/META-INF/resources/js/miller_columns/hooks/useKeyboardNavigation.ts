@@ -6,7 +6,7 @@
 import {useCallback, useContext, useEffect, useMemo} from 'react';
 
 import {
-	KeyboardContext,
+	KeyboardNavigationContext,
 	NavigationTarget,
 } from '../contexts/KeyboardNavigationContext';
 import {MillerColumnItem} from '../types/MillerColumnItem';
@@ -37,7 +37,9 @@ export function useKeyboardNavigation({
 }) {
 	const {columnIndex, itemIndex} = item;
 
-	const {columnSizes, setTarget, target} = useContext(KeyboardContext);
+	const {columnSizes, setTarget, target} = useContext(
+		KeyboardNavigationContext
+	);
 
 	const isTarget = useMemo(
 		() =>

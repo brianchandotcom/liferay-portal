@@ -131,8 +131,6 @@ public class ImportTaskResourceTest {
 
 		String externalReferenceCode = importTask.getExternalReferenceCode();
 
-		String actualExecuteStatus;
-
 		while (true) {
 			importTask = ImportTaskSerDes.toDTO(
 				HTTPTestUtil.invokeToString(
@@ -141,16 +139,16 @@ public class ImportTaskResourceTest {
 						"reference-code/" + externalReferenceCode,
 					Http.Method.GET));
 
-			actualExecuteStatus = importTask.getExecuteStatusAsString();
+			if (!StringUtil.equals(
+					importTask.getExecuteStatusAsString(), "STARTED")) {
 
-			if (StringUtil.equals(actualExecuteStatus, "COMPLETED") ||
-				StringUtil.equals(actualExecuteStatus, "FAILED")) {
+				Assert.assertEquals(
+					expectedExecuteStatus,
+					importTask.getExecuteStatusAsString());
 
 				break;
 			}
 		}
-
-		Assert.assertEquals(expectedExecuteStatus, actualExecuteStatus);
 
 		return importTask;
 	}

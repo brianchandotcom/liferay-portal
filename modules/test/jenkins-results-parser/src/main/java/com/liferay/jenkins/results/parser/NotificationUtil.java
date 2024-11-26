@@ -150,7 +150,8 @@ public class NotificationUtil {
 			sb.append(subject);
 			sb.append("\nBody: ");
 			sb.append(body);
-			sb.append("\nError: " + exception.getMessage());
+			sb.append("\nError: ");
+			sb.append(exception.getMessage());
 			sb.append("\n\n<@U04GTH03Q>");
 
 			sendSlackNotification(

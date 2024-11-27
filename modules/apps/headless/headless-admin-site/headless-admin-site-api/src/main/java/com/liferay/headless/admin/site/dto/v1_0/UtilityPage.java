@@ -498,7 +498,7 @@ public class UtilityPage implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
-		description = "The utility page's specifications. A utility page may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status."
+		description = "The utility page's specifications. A utility page may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@Valid
 	public PageSpecification[] getPageSpecifications() {
@@ -536,7 +536,7 @@ public class UtilityPage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The utility page's specifications. A utility page may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status."
+		description = "The utility page's specifications. A utility page may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageSpecification[] pageSpecifications;

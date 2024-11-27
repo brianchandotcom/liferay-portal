@@ -99,6 +99,13 @@ public class PageSpecificationSerDes {
 				"settings", String.valueOf(pageSpecification.getSettings()));
 		}
 
+		if (pageSpecification.getStatus() == null) {
+			map.put("status", null);
+		}
+		else {
+			map.put("status", String.valueOf(pageSpecification.getStatus()));
+		}
+
 		if (pageSpecification.getType() == null) {
 			map.put("type", null);
 		}
@@ -128,6 +135,9 @@ public class PageSpecificationSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "settings")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -177,6 +187,13 @@ public class PageSpecificationSerDes {
 				if (jsonParserFieldValue != null) {
 					pageSpecification.setSettings(
 						SettingsSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
+				if (jsonParserFieldValue != null) {
+					pageSpecification.setStatus(
+						PageSpecification.Status.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

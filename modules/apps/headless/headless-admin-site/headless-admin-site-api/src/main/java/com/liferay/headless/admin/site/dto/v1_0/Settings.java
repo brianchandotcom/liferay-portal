@@ -317,32 +317,35 @@ public class Settings implements Serializable {
 	private Supplier<String> _javascriptSupplier;
 
 	@Schema(
-		description = "The page specification's master page. This property is not applied if the page specification belongs to a master page."
+		description = "The page specification's master page external reference code. This property is not applied if the page specification belongs to a master page."
 	)
-	@Valid
-	public MasterPage getMasterPage() {
-		if (_masterPageSupplier != null) {
-			masterPage = _masterPageSupplier.get();
+	public String getMasterPageExternalReferenceCode() {
+		if (_masterPageExternalReferenceCodeSupplier != null) {
+			masterPageExternalReferenceCode =
+				_masterPageExternalReferenceCodeSupplier.get();
 
-			_masterPageSupplier = null;
+			_masterPageExternalReferenceCodeSupplier = null;
 		}
 
-		return masterPage;
+		return masterPageExternalReferenceCode;
 	}
 
-	public void setMasterPage(MasterPage masterPage) {
-		this.masterPage = masterPage;
+	public void setMasterPageExternalReferenceCode(
+		String masterPageExternalReferenceCode) {
 
-		_masterPageSupplier = null;
+		this.masterPageExternalReferenceCode = masterPageExternalReferenceCode;
+
+		_masterPageExternalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setMasterPage(
-		UnsafeSupplier<MasterPage, Exception> masterPageUnsafeSupplier) {
+	public void setMasterPageExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			masterPageExternalReferenceCodeUnsafeSupplier) {
 
-		_masterPageSupplier = () -> {
+		_masterPageExternalReferenceCodeSupplier = () -> {
 			try {
-				return masterPageUnsafeSupplier.get();
+				return masterPageExternalReferenceCodeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -354,13 +357,13 @@ public class Settings implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The page specification's master page. This property is not applied if the page specification belongs to a master page."
+		description = "The page specification's master page external reference code. This property is not applied if the page specification belongs to a master page."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected MasterPage masterPage;
+	protected String masterPageExternalReferenceCode;
 
 	@JsonIgnore
-	private Supplier<MasterPage> _masterPageSupplier;
+	private Supplier<String> _masterPageExternalReferenceCodeSupplier;
 
 	@Schema(
 		description = "The style book that is applied to the page specification."
@@ -733,16 +736,21 @@ public class Settings implements Serializable {
 			sb.append("\"");
 		}
 
-		MasterPage masterPage = getMasterPage();
+		String masterPageExternalReferenceCode =
+			getMasterPageExternalReferenceCode();
 
-		if (masterPage != null) {
+		if (masterPageExternalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"masterPage\": ");
+			sb.append("\"masterPageExternalReferenceCode\": ");
 
-			sb.append(String.valueOf(masterPage));
+			sb.append("\"");
+
+			sb.append(_escape(masterPageExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		StyleBook styleBook = getStyleBook();

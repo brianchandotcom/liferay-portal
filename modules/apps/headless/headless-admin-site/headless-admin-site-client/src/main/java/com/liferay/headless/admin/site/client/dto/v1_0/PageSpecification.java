@@ -67,6 +67,35 @@ public abstract class PageSpecification implements Cloneable, Serializable {
 
 	protected Settings settings;
 
+	public Status getStatus() {
+		return status;
+	}
+
+	public String getStatusAsString() {
+		if (status == null) {
+			return null;
+		}
+
+		return status.toString();
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public void setStatus(
+		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
+
+		try {
+			status = statusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Status status;
+
 	public Type getType() {
 		return type;
 	}
@@ -123,6 +152,39 @@ public abstract class PageSpecification implements Cloneable, Serializable {
 
 	public String toString() {
 		return PageSpecificationSerDes.toJSON(this);
+	}
+
+	public static enum Status {
+
+		APPROVED("Approved"), DRAFT("Draft");
+
+		public static Status create(String value) {
+			for (Status status : values()) {
+				if (Objects.equals(status.getValue(), value) ||
+					Objects.equals(status.name(), value)) {
+
+					return status;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Status(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 	public static enum Type {

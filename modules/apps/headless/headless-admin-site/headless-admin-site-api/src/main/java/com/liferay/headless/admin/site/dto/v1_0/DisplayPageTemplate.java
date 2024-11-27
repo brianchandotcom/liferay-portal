@@ -649,7 +649,7 @@ public class DisplayPageTemplate implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
-		description = "The display page template's specifications. A display page template may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status."
+		description = "The display page template's specifications. A display page template may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@Valid
 	public PageSpecification[] getPageSpecifications() {
@@ -687,7 +687,7 @@ public class DisplayPageTemplate implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The display page template's specifications. A display page template may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status."
+		description = "The display page template's specifications. A display page template may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageSpecification[] pageSpecifications;

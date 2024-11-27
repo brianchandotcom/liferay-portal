@@ -73,6 +73,7 @@ public class ProductConfigurationDTOConverter
 				return productConfiguration;
 			}
 
+			productConfiguration.setActions(dtoConverterContext::getActions);
 			productConfiguration.setAllowBackOrder(
 				cpConfigurationEntry::isBackOrders);
 			productConfiguration.setAllowedOrderQuantities(

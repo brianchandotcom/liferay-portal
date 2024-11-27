@@ -20,7 +20,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -128,7 +127,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 		ObjectDefinition userSystemObjectDefinition =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
-				CompanyThreadLocal.getCompanyId(), "User");
+				TestPropsValues.getCompanyId(), "User");
 
 		ObjectRelationship objectRelationship =
 			ObjectRelationshipTestUtil.addObjectRelationship(

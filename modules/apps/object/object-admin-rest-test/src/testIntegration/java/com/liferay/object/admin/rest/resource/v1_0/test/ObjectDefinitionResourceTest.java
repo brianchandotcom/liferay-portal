@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -460,7 +459,7 @@ public class ObjectDefinitionResourceTest
 		com.liferay.object.model.ObjectDefinition
 			serviceBuilderAccountEntryObjectDefinition =
 				_objectDefinitionLocalService.fetchSystemObjectDefinition(
-					CompanyThreadLocal.getCompanyId(),
+					TestPropsValues.getCompanyId(),
 					AccountEntry.class.getSimpleName());
 
 		_objectDefinitionLocalService.enableAccountEntryRestricted(

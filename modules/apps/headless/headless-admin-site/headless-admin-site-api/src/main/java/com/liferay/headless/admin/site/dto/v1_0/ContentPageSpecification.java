@@ -176,6 +176,22 @@ public class ContentPageSpecification
 			sb.append(String.valueOf(settings));
 		}
 
+		Status status = getStatus();
+
+		if (status != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append("\"");
+
+			sb.append(status);
+
+			sb.append("\"");
+		}
+
 		Type type = getType();
 
 		if (type != null) {

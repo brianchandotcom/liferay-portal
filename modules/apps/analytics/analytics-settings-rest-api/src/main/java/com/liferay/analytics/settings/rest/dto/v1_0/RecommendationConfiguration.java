@@ -51,33 +51,35 @@ public class RecommendationConfiguration implements Serializable {
 	}
 
 	@Schema
-	public Boolean getMostPopularContentEnabled() {
-		if (_mostPopularContentEnabledSupplier != null) {
-			mostPopularContentEnabled =
-				_mostPopularContentEnabledSupplier.get();
+	public Boolean getContentRecommenderMostPopularItemsEnabled() {
+		if (_contentRecommenderMostPopularItemsEnabledSupplier != null) {
+			contentRecommenderMostPopularItemsEnabled =
+				_contentRecommenderMostPopularItemsEnabledSupplier.get();
 
-			_mostPopularContentEnabledSupplier = null;
+			_contentRecommenderMostPopularItemsEnabledSupplier = null;
 		}
 
-		return mostPopularContentEnabled;
+		return contentRecommenderMostPopularItemsEnabled;
 	}
 
-	public void setMostPopularContentEnabled(
-		Boolean mostPopularContentEnabled) {
+	public void setContentRecommenderMostPopularItemsEnabled(
+		Boolean contentRecommenderMostPopularItemsEnabled) {
 
-		this.mostPopularContentEnabled = mostPopularContentEnabled;
+		this.contentRecommenderMostPopularItemsEnabled =
+			contentRecommenderMostPopularItemsEnabled;
 
-		_mostPopularContentEnabledSupplier = null;
+		_contentRecommenderMostPopularItemsEnabledSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setMostPopularContentEnabled(
+	public void setContentRecommenderMostPopularItemsEnabled(
 		UnsafeSupplier<Boolean, Exception>
-			mostPopularContentEnabledUnsafeSupplier) {
+			contentRecommenderMostPopularItemsEnabledUnsafeSupplier) {
 
-		_mostPopularContentEnabledSupplier = () -> {
+		_contentRecommenderMostPopularItemsEnabledSupplier = () -> {
 			try {
-				return mostPopularContentEnabledUnsafeSupplier.get();
+				return contentRecommenderMostPopularItemsEnabledUnsafeSupplier.
+					get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -90,35 +92,42 @@ public class RecommendationConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean mostPopularContentEnabled;
+	protected Boolean contentRecommenderMostPopularItemsEnabled;
 
 	@JsonIgnore
-	private Supplier<Boolean> _mostPopularContentEnabledSupplier;
+	private Supplier<Boolean>
+		_contentRecommenderMostPopularItemsEnabledSupplier;
 
 	@Schema
-	public Boolean getUserContentEnabled() {
-		if (_userContentEnabledSupplier != null) {
-			userContentEnabled = _userContentEnabledSupplier.get();
+	public Boolean getContentRecommenderUserPersonalizationEnabled() {
+		if (_contentRecommenderUserPersonalizationEnabledSupplier != null) {
+			contentRecommenderUserPersonalizationEnabled =
+				_contentRecommenderUserPersonalizationEnabledSupplier.get();
 
-			_userContentEnabledSupplier = null;
+			_contentRecommenderUserPersonalizationEnabledSupplier = null;
 		}
 
-		return userContentEnabled;
+		return contentRecommenderUserPersonalizationEnabled;
 	}
 
-	public void setUserContentEnabled(Boolean userContentEnabled) {
-		this.userContentEnabled = userContentEnabled;
+	public void setContentRecommenderUserPersonalizationEnabled(
+		Boolean contentRecommenderUserPersonalizationEnabled) {
 
-		_userContentEnabledSupplier = null;
+		this.contentRecommenderUserPersonalizationEnabled =
+			contentRecommenderUserPersonalizationEnabled;
+
+		_contentRecommenderUserPersonalizationEnabledSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setUserContentEnabled(
-		UnsafeSupplier<Boolean, Exception> userContentEnabledUnsafeSupplier) {
+	public void setContentRecommenderUserPersonalizationEnabled(
+		UnsafeSupplier<Boolean, Exception>
+			contentRecommenderUserPersonalizationEnabledUnsafeSupplier) {
 
-		_userContentEnabledSupplier = () -> {
+		_contentRecommenderUserPersonalizationEnabledSupplier = () -> {
 			try {
-				return userContentEnabledUnsafeSupplier.get();
+				return contentRecommenderUserPersonalizationEnabledUnsafeSupplier.
+					get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -131,10 +140,11 @@ public class RecommendationConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean userContentEnabled;
+	protected Boolean contentRecommenderUserPersonalizationEnabled;
 
 	@JsonIgnore
-	private Supplier<Boolean> _userContentEnabledSupplier;
+	private Supplier<Boolean>
+		_contentRecommenderUserPersonalizationEnabledSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -165,28 +175,30 @@ public class RecommendationConfiguration implements Serializable {
 
 		sb.append("{");
 
-		Boolean mostPopularContentEnabled = getMostPopularContentEnabled();
+		Boolean contentRecommenderMostPopularItemsEnabled =
+			getContentRecommenderMostPopularItemsEnabled();
 
-		if (mostPopularContentEnabled != null) {
+		if (contentRecommenderMostPopularItemsEnabled != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"mostPopularContentEnabled\": ");
+			sb.append("\"contentRecommenderMostPopularItemsEnabled\": ");
 
-			sb.append(mostPopularContentEnabled);
+			sb.append(contentRecommenderMostPopularItemsEnabled);
 		}
 
-		Boolean userContentEnabled = getUserContentEnabled();
+		Boolean contentRecommenderUserPersonalizationEnabled =
+			getContentRecommenderUserPersonalizationEnabled();
 
-		if (userContentEnabled != null) {
+		if (contentRecommenderUserPersonalizationEnabled != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"userContentEnabled\": ");
+			sb.append("\"contentRecommenderUserPersonalizationEnabled\": ");
 
-			sb.append(userContentEnabled);
+			sb.append(contentRecommenderUserPersonalizationEnabled);
 		}
 
 		sb.append("}");

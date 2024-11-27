@@ -50,27 +50,32 @@ public class RecommendationConfigurationSerDes {
 
 		sb.append("{");
 
-		if (recommendationConfiguration.getMostPopularContentEnabled() !=
-				null) {
+		if (recommendationConfiguration.
+				getContentRecommenderMostPopularItemsEnabled() != null) {
 
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"mostPopularContentEnabled\": ");
+			sb.append("\"contentRecommenderMostPopularItemsEnabled\": ");
 
 			sb.append(
-				recommendationConfiguration.getMostPopularContentEnabled());
+				recommendationConfiguration.
+					getContentRecommenderMostPopularItemsEnabled());
 		}
 
-		if (recommendationConfiguration.getUserContentEnabled() != null) {
+		if (recommendationConfiguration.
+				getContentRecommenderUserPersonalizationEnabled() != null) {
+
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"userContentEnabled\": ");
+			sb.append("\"contentRecommenderUserPersonalizationEnabled\": ");
 
-			sb.append(recommendationConfiguration.getUserContentEnabled());
+			sb.append(
+				recommendationConfiguration.
+					getContentRecommenderUserPersonalizationEnabled());
 		}
 
 		sb.append("}");
@@ -95,27 +100,30 @@ public class RecommendationConfigurationSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (recommendationConfiguration.getMostPopularContentEnabled() ==
-				null) {
+		if (recommendationConfiguration.
+				getContentRecommenderMostPopularItemsEnabled() == null) {
 
-			map.put("mostPopularContentEnabled", null);
+			map.put("contentRecommenderMostPopularItemsEnabled", null);
 		}
 		else {
 			map.put(
-				"mostPopularContentEnabled",
+				"contentRecommenderMostPopularItemsEnabled",
 				String.valueOf(
 					recommendationConfiguration.
-						getMostPopularContentEnabled()));
+						getContentRecommenderMostPopularItemsEnabled()));
 		}
 
-		if (recommendationConfiguration.getUserContentEnabled() == null) {
-			map.put("userContentEnabled", null);
+		if (recommendationConfiguration.
+				getContentRecommenderUserPersonalizationEnabled() == null) {
+
+			map.put("contentRecommenderUserPersonalizationEnabled", null);
 		}
 		else {
 			map.put(
-				"userContentEnabled",
+				"contentRecommenderUserPersonalizationEnabled",
 				String.valueOf(
-					recommendationConfiguration.getUserContentEnabled()));
+					recommendationConfiguration.
+						getContentRecommenderUserPersonalizationEnabled()));
 		}
 
 		return map;
@@ -137,12 +145,14 @@ public class RecommendationConfigurationSerDes {
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
 			if (Objects.equals(
-					jsonParserFieldName, "mostPopularContentEnabled")) {
+					jsonParserFieldName,
+					"contentRecommenderMostPopularItemsEnabled")) {
 
 				return false;
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "userContentEnabled")) {
+						jsonParserFieldName,
+						"contentRecommenderUserPersonalizationEnabled")) {
 
 				return false;
 			}
@@ -156,19 +166,23 @@ public class RecommendationConfigurationSerDes {
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(
-					jsonParserFieldName, "mostPopularContentEnabled")) {
+					jsonParserFieldName,
+					"contentRecommenderMostPopularItemsEnabled")) {
 
 				if (jsonParserFieldValue != null) {
-					recommendationConfiguration.setMostPopularContentEnabled(
-						(Boolean)jsonParserFieldValue);
+					recommendationConfiguration.
+						setContentRecommenderMostPopularItemsEnabled(
+							(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "userContentEnabled")) {
+						jsonParserFieldName,
+						"contentRecommenderUserPersonalizationEnabled")) {
 
 				if (jsonParserFieldValue != null) {
-					recommendationConfiguration.setUserContentEnabled(
-						(Boolean)jsonParserFieldValue);
+					recommendationConfiguration.
+						setContentRecommenderUserPersonalizationEnabled(
+							(Boolean)jsonParserFieldValue);
 				}
 			}
 		}

@@ -307,10 +307,12 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals(
-					"mostPopularContentEnabled", additionalAssertFieldName)) {
+					"contentRecommenderMostPopularItemsEnabled",
+					additionalAssertFieldName)) {
 
 				if (recommendationConfiguration.
-						getMostPopularContentEnabled() == null) {
+						getContentRecommenderMostPopularItemsEnabled() ==
+							null) {
 
 					valid = false;
 				}
@@ -319,10 +321,12 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"userContentEnabled", additionalAssertFieldName)) {
+					"contentRecommenderUserPersonalizationEnabled",
+					additionalAssertFieldName)) {
 
-				if (recommendationConfiguration.getUserContentEnabled() ==
-						null) {
+				if (recommendationConfiguration.
+						getContentRecommenderUserPersonalizationEnabled() ==
+							null) {
 
 					valid = false;
 				}
@@ -452,13 +456,14 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals(
-					"mostPopularContentEnabled", additionalAssertFieldName)) {
+					"contentRecommenderMostPopularItemsEnabled",
+					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
 						recommendationConfiguration1.
-							getMostPopularContentEnabled(),
+							getContentRecommenderMostPopularItemsEnabled(),
 						recommendationConfiguration2.
-							getMostPopularContentEnabled())) {
+							getContentRecommenderMostPopularItemsEnabled())) {
 
 					return false;
 				}
@@ -467,11 +472,14 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"userContentEnabled", additionalAssertFieldName)) {
+					"contentRecommenderUserPersonalizationEnabled",
+					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						recommendationConfiguration1.getUserContentEnabled(),
-						recommendationConfiguration2.getUserContentEnabled())) {
+						recommendationConfiguration1.
+							getContentRecommenderUserPersonalizationEnabled(),
+						recommendationConfiguration2.
+							getContentRecommenderUserPersonalizationEnabled())) {
 
 					return false;
 				}
@@ -589,12 +597,16 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("mostPopularContentEnabled")) {
+		if (entityFieldName.equals(
+				"contentRecommenderMostPopularItemsEnabled")) {
+
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("userContentEnabled")) {
+		if (entityFieldName.equals(
+				"contentRecommenderUserPersonalizationEnabled")) {
+
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -646,8 +658,10 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 
 		return new RecommendationConfiguration() {
 			{
-				mostPopularContentEnabled = RandomTestUtil.randomBoolean();
-				userContentEnabled = RandomTestUtil.randomBoolean();
+				contentRecommenderMostPopularItemsEnabled =
+					RandomTestUtil.randomBoolean();
+				contentRecommenderUserPersonalizationEnabled =
+					RandomTestUtil.randomBoolean();
 			}
 		};
 	}

@@ -67,7 +67,7 @@ public abstract class BaseRecommendationConfigurationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/analytics-settings-rest/v1.0/recommendation/configuration' -d $'{"mostPopularContentEnabled": ___, "userContentEnabled": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/analytics-settings-rest/v1.0/recommendation/configuration' -d $'{"contentRecommenderMostPopularItemsEnabled": ___, "contentRecommenderUserPersonalizationEnabled": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {

@@ -25,51 +25,58 @@ public class RecommendationConfiguration implements Cloneable, Serializable {
 		return RecommendationConfigurationSerDes.toDTO(json);
 	}
 
-	public Boolean getMostPopularContentEnabled() {
-		return mostPopularContentEnabled;
+	public Boolean getContentRecommenderMostPopularItemsEnabled() {
+		return contentRecommenderMostPopularItemsEnabled;
 	}
 
-	public void setMostPopularContentEnabled(
-		Boolean mostPopularContentEnabled) {
+	public void setContentRecommenderMostPopularItemsEnabled(
+		Boolean contentRecommenderMostPopularItemsEnabled) {
 
-		this.mostPopularContentEnabled = mostPopularContentEnabled;
+		this.contentRecommenderMostPopularItemsEnabled =
+			contentRecommenderMostPopularItemsEnabled;
 	}
 
-	public void setMostPopularContentEnabled(
+	public void setContentRecommenderMostPopularItemsEnabled(
 		UnsafeSupplier<Boolean, Exception>
-			mostPopularContentEnabledUnsafeSupplier) {
+			contentRecommenderMostPopularItemsEnabledUnsafeSupplier) {
 
 		try {
-			mostPopularContentEnabled =
-				mostPopularContentEnabledUnsafeSupplier.get();
+			contentRecommenderMostPopularItemsEnabled =
+				contentRecommenderMostPopularItemsEnabledUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean mostPopularContentEnabled;
+	protected Boolean contentRecommenderMostPopularItemsEnabled;
 
-	public Boolean getUserContentEnabled() {
-		return userContentEnabled;
+	public Boolean getContentRecommenderUserPersonalizationEnabled() {
+		return contentRecommenderUserPersonalizationEnabled;
 	}
 
-	public void setUserContentEnabled(Boolean userContentEnabled) {
-		this.userContentEnabled = userContentEnabled;
+	public void setContentRecommenderUserPersonalizationEnabled(
+		Boolean contentRecommenderUserPersonalizationEnabled) {
+
+		this.contentRecommenderUserPersonalizationEnabled =
+			contentRecommenderUserPersonalizationEnabled;
 	}
 
-	public void setUserContentEnabled(
-		UnsafeSupplier<Boolean, Exception> userContentEnabledUnsafeSupplier) {
+	public void setContentRecommenderUserPersonalizationEnabled(
+		UnsafeSupplier<Boolean, Exception>
+			contentRecommenderUserPersonalizationEnabledUnsafeSupplier) {
 
 		try {
-			userContentEnabled = userContentEnabledUnsafeSupplier.get();
+			contentRecommenderUserPersonalizationEnabled =
+				contentRecommenderUserPersonalizationEnabledUnsafeSupplier.
+					get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean userContentEnabled;
+	protected Boolean contentRecommenderUserPersonalizationEnabled;
 
 	@Override
 	public RecommendationConfiguration clone()

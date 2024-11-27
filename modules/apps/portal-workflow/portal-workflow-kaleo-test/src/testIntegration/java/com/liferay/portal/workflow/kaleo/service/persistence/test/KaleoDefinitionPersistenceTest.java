@@ -121,6 +121,8 @@ public class KaleoDefinitionPersistenceTest {
 
 		newKaleoDefinition.setCtCollectionId(RandomTestUtil.nextLong());
 
+		newKaleoDefinition.setUuid(RandomTestUtil.randomString());
+
 		newKaleoDefinition.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -161,6 +163,8 @@ public class KaleoDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingKaleoDefinition.getCtCollectionId(),
 			newKaleoDefinition.getCtCollectionId());
+		Assert.assertEquals(
+			existingKaleoDefinition.getUuid(), newKaleoDefinition.getUuid());
 		Assert.assertEquals(
 			existingKaleoDefinition.getExternalReferenceCode(),
 			newKaleoDefinition.getExternalReferenceCode());
@@ -224,6 +228,33 @@ public class KaleoDefinitionPersistenceTest {
 			kaleoDefinition.getExternalReferenceCode());
 
 		_persistence.update(newKaleoDefinition);
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -333,11 +364,11 @@ public class KaleoDefinitionPersistenceTest {
 	protected OrderByComparator<KaleoDefinition> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"KaleoDefinition", "mvccVersion", true, "ctCollectionId", true,
-			"externalReferenceCode", true, "kaleoDefinitionId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "name", true, "title",
-			true, "description", true, "scope", true, "version", true, "active",
-			true);
+			"uuid", true, "externalReferenceCode", true, "kaleoDefinitionId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "name",
+			true, "title", true, "description", true, "scope", true, "version",
+			true, "active", true);
 	}
 
 	@Test
@@ -608,6 +639,17 @@ public class KaleoDefinitionPersistenceTest {
 
 	private void _assertOriginalValues(KaleoDefinition kaleoDefinition) {
 		Assert.assertEquals(
+			kaleoDefinition.getUuid(),
+			ReflectionTestUtil.invoke(
+				kaleoDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
+		Assert.assertEquals(
+			Long.valueOf(kaleoDefinition.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				kaleoDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
 			Long.valueOf(kaleoDefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				kaleoDefinition, "getColumnOriginalValue",
@@ -670,6 +712,8 @@ public class KaleoDefinitionPersistenceTest {
 		kaleoDefinition.setMvccVersion(RandomTestUtil.nextLong());
 
 		kaleoDefinition.setCtCollectionId(RandomTestUtil.nextLong());
+
+		kaleoDefinition.setUuid(RandomTestUtil.randomString());
 
 		kaleoDefinition.setExternalReferenceCode(RandomTestUtil.randomString());
 

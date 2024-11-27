@@ -6,7 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import fillAndClickOutside from '../../../utils/fillAndClickOutside';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export class AssetCategoriesEditPage {
 	readonly page: Page;
@@ -33,24 +33,30 @@ export class AssetCategoriesEditPage {
 		await this.propertiesTab.waitFor();
 	}
 
-	async addProperty(key: string, value: string) {
+	async addProperties(properties: {[key: string]: string}) {
 		await this.propertiesTab.click();
 
 		const keyInputs = this.page.getByLabel('key');
 
-		const count = await keyInputs.count();
+		for (const [key, value] of Object.entries(properties)) {
+			if (await keyInputs.last().inputValue()) {
+				const count = await keyInputs.count();
 
-		if (await keyInputs.last().getAttribute('value')) {
-			await this.page.getByRole('button', {name: 'Add'}).last().click();
-			await keyInputs.nth(count).waitFor();
+				await this.page
+					.getByRole('button', {name: 'Add'})
+					.last()
+					.click();
+				await keyInputs.nth(count).waitFor();
+			}
+
+			const keyInput = keyInputs.last();
+			const valueInput = this.page.getByLabel('value').last();
+
+			await keyInput.fill(key);
+			await valueInput.fill(value);
 		}
 
-		const keyInput = keyInputs.last();
-		const valueInput = this.page.getByLabel('value').last();
-
-		await fillAndClickOutside(this.page, keyInput, key);
-		await fillAndClickOutside(this.page, valueInput, value);
-
 		await this.saveButton.click();
+		await waitForAlert(this.page);
 	}
 }

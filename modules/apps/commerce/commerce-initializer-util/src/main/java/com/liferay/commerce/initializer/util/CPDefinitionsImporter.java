@@ -21,6 +21,8 @@ import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
+import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -31,6 +33,7 @@ import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.model.CommerceChannelRel;
+import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
@@ -69,6 +72,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -587,15 +591,50 @@ public class CPDefinitionsImporter {
 				allowedOrderQuantities, multipleOrderQuantity);
 		}
 
+		CPConfigurationEntry cpConfigurationEntry =
+			cpDefinition.fetchMasterCPConfigurationEntry();
+
 		// Commerce product definition availability estimate
 
 		String availabilityEstimate = jsonObject.getString(
 			"availabilityEstimate");
 
+		long commerceAvailabilityEstimateId = 0;
+
 		if (Validator.isNotNull(availabilityEstimate)) {
-			_updateCPDAvailabilityEstimate(
-				cpDefinition.getCProductId(), availabilityEstimate,
-				serviceContext);
+			CPDAvailabilityEstimate cpdAvailabilityEstimate =
+				_updateCPDAvailabilityEstimate(
+					cpDefinition.getCProductId(), availabilityEstimate,
+					serviceContext);
+
+			commerceAvailabilityEstimateId =
+				cpdAvailabilityEstimate.getCommerceAvailabilityEstimateId();
+		}
+
+		if (cpConfigurationEntry == null) {
+			CPConfigurationList masterCPConfigurationList =
+				cpDefinition.getMasterCPConfigurationList();
+
+			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
+				null, serviceContext.getUserId(), cpDefinition.getGroupId(),
+				_portal.getClassNameId(CPDefinition.class),
+				cpDefinition.getCPDefinitionId(),
+				masterCPConfigurationList.getCPConfigurationListId(),
+				allowedOrderQuantities, backOrders,
+				commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
+				displayAvailability, displayStockQuantity, lowStockActivity,
+				maxOrderQuantity, minOrderQuantity, minStockQuantity,
+				multipleOrderQuantity);
+		}
+		else {
+			_cpConfigurationEntryLocalService.updateCPConfigurationEntry(
+				cpConfigurationEntry.getExternalReferenceCode(),
+				cpConfigurationEntry.getCPConfigurationEntryId(),
+				allowedOrderQuantities, backOrders,
+				commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
+				displayAvailability, displayStockQuantity, lowStockActivity,
+				maxOrderQuantity, minOrderQuantity, minStockQuantity,
+				multipleOrderQuantity);
 		}
 
 		// Commerce product images
@@ -993,6 +1032,9 @@ public class CPDefinitionsImporter {
 	private CPAttachmentFileEntryCreator _cpAttachmentFileEntryCreator;
 
 	@Reference
+	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+
+	@Reference
 	private CPDAvailabilityEstimateLocalService
 		_cpdAvailabilityEstimateLocalService;
 
@@ -1039,6 +1081,9 @@ public class CPDefinitionsImporter {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

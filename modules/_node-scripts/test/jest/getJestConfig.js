@@ -30,6 +30,7 @@ function getJestConfig({rootDir = '<rootDir>'}) {
 			'^react-dom/client$': 'react-dom/client',
 			'^react-dom/server$': 'react-dom-16/server',
 			'^react-dom/test-utils$': 'react-dom-16/test-utils',
+			'^react-test-renderer$': 'react-test-renderer-16.12.0',
 		};
 	}
 

@@ -34,13 +34,11 @@ const useLazy = (fieldModule) => {
 	if (!hasFieldInStorage) {
 		loadModule(fieldModule)
 			.then((instance) => {
-				setLoading(false);
-
-				if (!instance) {
-					return null;
+				if (instance) {
+					components.set(fieldModule, instance);
 				}
 
-				components.set(fieldModule, instance);
+				setLoading(false);
 			})
 			.catch((error) => {
 				components.delete(fieldModule);
@@ -110,7 +108,7 @@ const FieldLazy = ({
 
 	return loading ? (
 		<ClayLoadingIndicator />
-	) : (
+	) : !ComponentLazy ? null : (
 		<ComponentLazy
 			itemPath={itemPath}
 			onBlur={(event) => {

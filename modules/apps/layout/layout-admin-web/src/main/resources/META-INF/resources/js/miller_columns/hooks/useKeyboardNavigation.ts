@@ -109,11 +109,11 @@ export function useKeyboardNavigation({
 	// Focus element when it's target
 
 	useEffect(() => {
-		if (!Liferay.FeatureFlags['LPD-35220'] || !element) {
+		if (!Liferay.FeatureFlags['LPD-35220']) {
 			return;
 		}
 
-		if (isTarget) {
+		if (element && isTarget) {
 
 			// Return if focus is prevented
 
@@ -121,17 +121,7 @@ export function useKeyboardNavigation({
 				return;
 			}
 
-			// Focus the anchor element
-
-			element.querySelector('a')?.focus();
-
-			// Scroll to column
-
-			const column = element.closest('.miller-columns-col');
-
-			if (column) {
-				column.scrollIntoView({behavior: 'smooth', inline: 'center'});
-			}
+			focusElement(element);
 		}
 	}, [element, isTarget, target.preventFocus]);
 
@@ -204,4 +194,19 @@ function getNextTarget({
 	}
 
 	return null;
+}
+
+function focusElement(element: HTMLLIElement) {
+
+	// Focus the element
+
+	element.querySelector('a')?.focus();
+
+	// Scroll to column
+
+	const column = element.closest('.miller-columns-col');
+
+	if (column) {
+		column.scrollIntoView({behavior: 'smooth', inline: 'center'});
+	}
 }

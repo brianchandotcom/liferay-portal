@@ -7,6 +7,7 @@ package com.liferay.commerce.payment.method.mercanet.internal.servlet;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
+import com.liferay.commerce.payment.method.mercanet.internal.MercanetCommercePaymentMethod;
 import com.liferay.commerce.payment.method.mercanet.internal.configuration.MercanetGroupServiceConfiguration;
 import com.liferay.commerce.payment.method.mercanet.internal.connector.Environment;
 import com.liferay.commerce.payment.method.mercanet.internal.connector.PaypageClient;
@@ -34,6 +35,8 @@ import com.worldline.sips.model.ResponseCode;
 import com.worldline.sips.model.ResponseData;
 
 import java.io.IOException;
+
+import java.net.URL;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -116,10 +119,30 @@ public class MercanetServlet extends HttpServlet {
 				String redirect = ParamUtil.getString(
 					httpServletRequest, "redirect");
 
+				URL portalURL = new URL(
+					_portal.getPortalURL(httpServletRequest));
+
+				URL url = new URL(redirect);
+
+				if (!Objects.equals(portalURL.getHost(), url.getHost())) {
+					throw new ServletException();
+				}
+
 				if (!Objects.equals(parameterMap.get("responseCode"), "00")) {
 					String orderId = parameterMap.get("orderId");
 
 					long commerceOrderId = GetterUtil.getLong(orderId);
+
+					CommerceOrder commerceOrder =
+						_commerceOrderLocalService.getCommerceOrder(
+							commerceOrderId);
+
+					if (!Objects.equals(
+							commerceOrder.getCommercePaymentMethodKey(),
+							MercanetCommercePaymentMethod.KEY)) {
+
+						throw new ServletException();
+					}
 
 					String transactionReference = parameterMap.get(
 						"transactionReference");
@@ -139,6 +162,13 @@ public class MercanetServlet extends HttpServlet {
 				CommerceOrder commerceOrder =
 					_commerceOrderLocalService.getCommerceOrderByUuidAndGroupId(
 						uuid, groupId);
+
+				if (!Objects.equals(
+						commerceOrder.getCommercePaymentMethodKey(),
+						MercanetCommercePaymentMethod.KEY)) {
+
+					throw new ServletException();
+				}
 
 				MercanetGroupServiceConfiguration
 					mercanetGroupServiceConfiguration =
@@ -189,7 +219,8 @@ public class MercanetServlet extends HttpServlet {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception);
+			_portal.sendError(
+				exception, httpServletRequest, httpServletResponse);
 		}
 	}
 

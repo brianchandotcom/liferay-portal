@@ -7,6 +7,7 @@ package com.liferay.commerce.payment.method.authorize.net.internal.servlet;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
+import com.liferay.commerce.payment.method.authorize.net.internal.AuthorizeNetCommercePaymentMethod;
 import com.liferay.commerce.payment.method.authorize.net.internal.constants.AuthorizeNetCommercePaymentMethodConstants;
 import com.liferay.commerce.payment.util.CommercePaymentHttpHelper;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
@@ -14,6 +15,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
+
+import java.net.URL;
+
+import java.util.Objects;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -49,13 +54,28 @@ public class CompletePaymentAuthorizeNetServlet extends HttpServlet {
 					httpServletRequest.getSession());
 			}
 
+			String redirect = ParamUtil.getString(
+				httpServletRequest, "redirect");
+
+			URL portalURL = new URL(_portal.getPortalURL(httpServletRequest));
+
+			URL url = new URL(redirect);
+
+			if (!Objects.equals(portalURL.getHost(), url.getHost())) {
+				throw new ServletException();
+			}
+
 			CommerceOrder commerceOrder =
 				_commercePaymentHttpHelper.getCommerceOrder(httpServletRequest);
 
-			boolean cancel = ParamUtil.getBoolean(httpServletRequest, "cancel");
+			if (!Objects.equals(
+					commerceOrder.getCommercePaymentMethodKey(),
+					AuthorizeNetCommercePaymentMethod.KEY)) {
 
-			String redirect = ParamUtil.getString(
-				httpServletRequest, "redirect");
+				throw new ServletException();
+			}
+
+			boolean cancel = ParamUtil.getBoolean(httpServletRequest, "cancel");
 
 			if (cancel) {
 				_commercePaymentEngine.cancelPayment(

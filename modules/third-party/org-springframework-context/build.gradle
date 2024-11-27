@@ -1,0 +1,26 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	api group: "org.springframework", name: "spring-beans", version: "5.3.39"
+	api group: "org.springframework", name: "spring-context", version: "5.3.39"
+	api group: "org.springframework", name: "spring-core", version: "5.3.39"
+	api group: "org.springframework", name: "spring-expression", version: "5.3.39"
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/springframework/validation/DataBinder.java"
+
+	originalLibModuleName = "spring-context"
+}

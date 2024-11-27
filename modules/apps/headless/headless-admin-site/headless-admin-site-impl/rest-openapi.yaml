@@ -362,7 +362,8 @@ components:
                     # @review
                     description:
                         The display page template's specifications. A display page template may contain 0 or 1 page
-                        specifications in draft status and 0 or 1 page specifications in published status.
+                        specifications in draft status and 0 or 1 page specifications in published status. This field is
+                        not returned by default. It can be requested via nestedFields.
                     items:
                         $ref: "#/components/schemas/PageSpecification"
                     type: array
@@ -1201,7 +1202,8 @@ components:
                     # @review
                     description:
                         The master page's specifications. A master page may contain 0 or 1 page specifications in draft
-                        status and 0 or 1 page specifications in published status.
+                        status and 0 or 1 page specifications in published status. This field is not returned by
+                        default. It can be requested via nestedFields.
                     items:
                         $ref: "#/components/schemas/PageSpecification"
                     type: array
@@ -2249,7 +2251,8 @@ components:
                     description:
                         The page template's specifications. A page template of type content may contain 0 or 1 page
                         specifications in draft status and 0 or 1 page specifications in published status. A page
-                        template of type widget contains only 1 page specification in published status.
+                        template of type widget contains only 1 page specification in published status. This field is
+                        not returned by default. It can be requested via nestedFields.
                     items:
                         $ref: "#/components/schemas/PageSpecification"
                     type: array
@@ -2699,7 +2702,8 @@ components:
                     # @review
                     description:
                         The page's specifications. A page may contain 0 or 1 page specifications in draft status and 0
-                        or 1 page specifications in published status.
+                        or 1 page specifications in published status. This field is not returned by default. It can be
+                        requested via nestedFields.
                     items:
                         $ref: "#/components/schemas/PageSpecification"
                     type: array
@@ -2860,7 +2864,8 @@ components:
                     # @review
                     description:
                         The utility page's specifications. A utility page may contain 0 or 1 page specifications in
-                        draft status and 0 or 1 page specifications in published status.
+                        draft status and 0 or 1 page specifications in published status. This field is not returned by
+                        default. It can be requested via nestedFields.
                     items:
                         $ref: "#/components/schemas/PageSpecification"
                     type: array

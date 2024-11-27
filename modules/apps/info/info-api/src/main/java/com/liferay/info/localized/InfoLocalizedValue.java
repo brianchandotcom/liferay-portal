@@ -61,6 +61,16 @@ public interface InfoLocalizedValue<T> {
 
 	public T getValue(Locale locale);
 
+	public default Map<Locale, T> getValues() {
+		Map<Locale, T> values = new HashMap<>();
+
+		for (Locale locale : getAvailableLocales()) {
+			values.put(locale, getValue(locale));
+		}
+
+		return values;
+	}
+
 	public static class Builder<T> {
 
 		public InfoLocalizedValue<T> build() {
@@ -159,6 +169,11 @@ public interface InfoLocalizedValue<T> {
 			}
 
 			return value;
+		}
+
+		@Override
+		public Map<Locale, T> getValues() {
+			return _builder._values;
 		}
 
 		@Override

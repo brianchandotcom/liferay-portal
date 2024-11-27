@@ -31,7 +31,7 @@ import org.junit.Rule;
 /**
  * @author Carlos Correa
  */
-public class BaseTaskResourceTest {
+public abstract class BaseTaskResourceTestCase {
 
 	@ClassRule
 	@Rule

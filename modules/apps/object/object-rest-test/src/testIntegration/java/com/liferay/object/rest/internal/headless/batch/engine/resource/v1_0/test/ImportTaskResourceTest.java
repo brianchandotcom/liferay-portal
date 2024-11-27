@@ -30,7 +30,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  */
 @FeatureFlags("LPD-29367")
 @RunWith(Arquillian.class)
-public class ImportTaskResourceTest extends BaseTaskResourceTest {
+public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 
 	@Test
 	public void testPostImportTask() throws Exception {

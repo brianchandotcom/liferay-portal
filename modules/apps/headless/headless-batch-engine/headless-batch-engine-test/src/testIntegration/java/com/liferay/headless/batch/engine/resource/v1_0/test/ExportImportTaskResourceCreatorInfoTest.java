@@ -199,7 +199,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 	}
 
 	@Test
-	public void testImportWithUpsertAndKeepCreatorAndObjectEntriesDoNotExist()
+	public void testImportWithUpsertAndKeepCreatorAndObjectsDoNotExist()
 		throws Exception {
 
 		_executeImportTask("UPSERT", "KEEP_CREATOR");

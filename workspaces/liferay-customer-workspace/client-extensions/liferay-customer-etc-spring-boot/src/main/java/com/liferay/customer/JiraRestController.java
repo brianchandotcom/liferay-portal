@@ -6,6 +6,8 @@
 package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot.BaseRestController;
+import com.liferay.customer.constants.RoleConstants;
+import com.liferay.customer.service.UserAccountService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -14,17 +16,22 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -181,6 +188,7 @@ public class JiraRestController extends BaseRestController {
 		path = "/jira/security-vulnerabilities/search"
 	)
 	public ResponseEntity<String> search(
+			@AuthenticationPrincipal Jwt jwt,
 			@RequestParam(defaultValue = "", required = false) String[]
 				filterAffectedVersions,
 			@RequestParam(defaultValue = "", required = false) String[]
@@ -209,7 +217,7 @@ public class JiraRestController extends BaseRestController {
 					_jiraSecurityVulnerabilityFieldPublishingStatus));
 			sb.append(" = 'Ready for Publishing'");
 
-			if (_isPartner()) {
+			if (_isPartner(jwt)) {
 				sb.append(" AND ");
 				sb.append(
 					_getJQLCustomField(
@@ -287,7 +295,7 @@ public class JiraRestController extends BaseRestController {
 
 			sb.append(" ORDER BY ");
 
-			if (_isPartner()) {
+			if (_isPartner(jwt)) {
 				sb.append(
 					_getJQLCustomField(
 						_jiraSecurityVulnerabilityFieldPartnerPublishingDate));
@@ -422,8 +430,18 @@ public class JiraRestController extends BaseRestController {
 		return null;
 	}
 
-	private boolean _isPartner() {
-		return true;
+	private boolean _isPartner(Jwt jwt) {
+		ArrayList<String> userRoles = _userAccountService.getUserRoles(jwt);
+
+		if (userRoles.contains(RoleConstants.NAME_ADMINISTRATOR) ||
+			userRoles.contains(RoleConstants.NAME_LIFERAY_STAFF) ||
+			userRoles.contains(RoleConstants.NAME_PARTNER) ||
+			userRoles.contains(RoleConstants.NAME_PROVISIONING_ADMIN)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private JSONObject _search(
@@ -619,5 +637,8 @@ public class JiraRestController extends BaseRestController {
 	private String _jiraURL;
 
 	private final String[] _securityVulnerabilitiesIssueFields;
+
+	@Autowired
+	private UserAccountService _userAccountService;
 
 }

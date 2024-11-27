@@ -371,6 +371,8 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 		Build build = getBuild();
 
+		String testResultErrors;
+
 		if (testResult == null) {
 			if (build == null) {
 				return "Unable to run build on CI";
@@ -378,28 +380,28 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 			String result = build.getResult();
 
-			String failureMessage = "Failed prior to running test";
+			testResultErrors = "Failed prior to running test";
 
 			if (result == null) {
-				failureMessage = "Unable to finish build on CI";
+				testResultErrors = "Unable to finish build on CI";
 			}
 
 			if (result.equals("ABORTED")) {
-				failureMessage =
+				testResultErrors =
 					build.getJobName() + " timed out after 2 hours";
 			}
 
 			if (result.equals("SUCCESS") || result.equals("UNSTABLE")) {
-				failureMessage = "Unable to run test on CI";
+				testResultErrors = "Unable to run test on CI";
 			}
 
 			String buildFailureMessage = build.getFailureMessage();
 
-			if (buildFailureMessage == null) {
-				return failureMessage;
+			if (JenkinsResultsParserUtil.isNullOrEmpty(buildFailureMessage)) {
+				return testResultErrors;
 			}
 
-			return failureMessage + ": " + buildFailureMessage;
+			return testResultErrors + ": " + buildFailureMessage;
 		}
 
 		if (testResult.isSkipped()) {
@@ -410,28 +412,28 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			return null;
 		}
 
-		String errorMessage = testResult.getErrorDetails();
+		testResultErrors = testResult.getErrorDetails();
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
-			errorMessage = build.getFailureMessage();
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testResultErrors)) {
+			testResultErrors = build.getFailureMessage();
 		}
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testResultErrors)) {
 			return "Failed for unknown reason";
 		}
 
-		if (errorMessage.contains("\n")) {
-			errorMessage = errorMessage.substring(
-				0, errorMessage.indexOf("\n"));
+		if (testResultErrors.contains("\n")) {
+			testResultErrors = testResultErrors.substring(
+				0, testResultErrors.indexOf("\n"));
 		}
 
-		errorMessage = errorMessage.trim();
+		testResultErrors = testResultErrors.trim();
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testResultErrors)) {
 			return "Failed for unknown reason";
 		}
 
-		return errorMessage;
+		return testResultErrors;
 	}
 
 	protected Status getTestResultStatus() {

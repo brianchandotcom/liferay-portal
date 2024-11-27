@@ -49,17 +49,6 @@ public class OAuthClientEntryLocalServiceUtil {
 			tokenRequestParametersJSON);
 	}
 
-	public static OAuthClientEntry addOAuthClientEntry(
-			long userId, String authRequestParametersJSON,
-			String authServerWellKnownURI, String infoJSON,
-			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
-		throws PortalException {
-
-		return getService().addOAuthClientEntry(
-			userId, authRequestParametersJSON, authServerWellKnownURI, infoJSON,
-			oidcUserInfoMapperJSON, tokenRequestParametersJSON);
-	}
-
 	/**
 	 * Adds the o auth client entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -359,18 +348,6 @@ public class OAuthClientEntryLocalServiceUtil {
 			oAuthClientEntryId, authRequestParametersJSON,
 			authServerWellKnownURI, infoJSON, metadataCacheInMillis,
 			oidcUserInfoMapperJSON, tokenRequestParametersJSON);
-	}
-
-	public static OAuthClientEntry updateOAuthClientEntry(
-			long oAuthClientEntryId, String authRequestParametersJSON,
-			String authServerWellKnownURI, String infoJSON,
-			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
-		throws PortalException {
-
-		return getService().updateOAuthClientEntry(
-			oAuthClientEntryId, authRequestParametersJSON,
-			authServerWellKnownURI, infoJSON, oidcUserInfoMapperJSON,
-			tokenRequestParametersJSON);
 	}
 
 	/**

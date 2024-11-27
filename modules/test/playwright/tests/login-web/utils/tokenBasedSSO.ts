@@ -10,25 +10,6 @@ import {VirtualInstancesPage} from '../../../pages/portal-instances-web/VirtualI
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
-export async function clickButton(page: Page) {
-	const updateButton = page.getByRole('button', {
-		name: 'Update',
-	});
-
-	const saveButton = page.getByRole('button', {
-		name: 'Save',
-	});
-
-	if (await saveButton.isVisible()) {
-		await saveButton.click();
-	}
-	else if (await updateButton.isVisible()) {
-		await updateButton.click();
-	}
-
-	await waitForAlert(page);
-}
-
 export async function deleteVirtualInstance(name: string, page: Page) {
 	const virtualInstancesPage = new VirtualInstancesPage(page);
 
@@ -58,10 +39,10 @@ export async function enableTokenBasedSSO(
 	await tokenBasedSSOPage
 		.getByRole('option', {name: 'Request Header'})
 		.click();
-	await clickButton(tokenBasedSSOPage);
+	await saveOrUpdateTokenBasedSSOConfiguration(tokenBasedSSOPage);
 }
 
-export async function resetSSOConfiguration(
+export async function resetTokenBasedSSOConfiguration(
 	systemSettingsPage: SystemSettingsPage
 ) {
 	await systemSettingsPage.goToSystemSetting('SSO', 'Token Based SSO');
@@ -87,6 +68,25 @@ export async function resetSSOConfiguration(
 
 		await waitForAlert(tokenBasedSSOPage);
 	}
+}
+
+export async function saveOrUpdateTokenBasedSSOConfiguration(page: Page) {
+	const updateButton = page.getByRole('button', {
+		name: 'Update',
+	});
+
+	const saveButton = page.getByRole('button', {
+		name: 'Save',
+	});
+
+	if (await saveButton.isVisible()) {
+		await saveButton.click();
+	}
+	else if (await updateButton.isVisible()) {
+		await updateButton.click();
+	}
+
+	await waitForAlert(page);
 }
 
 export async function verifyTokenBasedSSO(token: string, url: string) {

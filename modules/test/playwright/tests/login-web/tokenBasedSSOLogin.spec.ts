@@ -17,9 +17,9 @@ import {SystemSettingsPage} from '../../pages/configuration-admin-web/SystemSett
 import {VirtualInstancesPage} from '../../pages/portal-instances-web/VirtualInstancesPage';
 import performLogin from '../../utils/performLogin';
 import {
-	clickButton,
 	enableTokenBasedSSO,
-	resetSSOConfiguration,
+	resetTokenBasedSSOConfiguration,
+	saveOrUpdateTokenBasedSSOConfiguration,
 	verifyTokenBasedSSO,
 } from './utils/tokenBasedSSO';
 
@@ -43,7 +43,7 @@ test.afterAll(async ({browser}) => {
 
 	const systemSettingsPage = new SystemSettingsPage(page);
 
-	await resetSSOConfiguration(systemSettingsPage);
+	await resetTokenBasedSSOConfiguration(systemSettingsPage);
 });
 
 test.beforeAll(async ({browser}) => {
@@ -53,7 +53,7 @@ test.beforeAll(async ({browser}) => {
 
 	const systemSettingsPage = new SystemSettingsPage(page);
 
-	await resetSSOConfiguration(systemSettingsPage);
+	await resetTokenBasedSSOConfiguration(systemSettingsPage);
 
 	await enableTokenBasedSSO(systemSettingsPage);
 });
@@ -99,7 +99,7 @@ test.describe('Users could login using Token Based SSO.  See LRQA-27622.', () =>
 		await tokenBasedSSOPage.waitForLoadState();
 		await tokenBasedSSOPage.getByLabel('Enabled').check();
 
-		await clickButton(tokenBasedSSOPage);
+		await saveOrUpdateTokenBasedSSOConfiguration(tokenBasedSSOPage);
 
 		await tokenBasedSSOPage.waitForLoadState();
 

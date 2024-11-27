@@ -5,8 +5,10 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -74,6 +76,27 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			});
 	}
 
+	private int _getTotal(
+		Role role, VerifiableResourcedModel verifiableResourcedModel) {
+
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				verifiableResourcedModel.getTableName());
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				_getVerifyResourcedModelSQL(
+					true, verifiableResourcedModel, role));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+
+			return 0;
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+	}
+
 	private String _getVerifyResourcedModelSQL(
 		boolean count, VerifiableResourcedModel verifiableResourcedModel,
 		Role role) {
@@ -123,27 +146,11 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			Role role, VerifiableResourcedModel verifiableResourcedModel)
 		throws Exception {
 
-		int total;
-
-		try (LoggingTimer loggingTimer = new LoggingTimer(
-				verifiableResourcedModel.getTableName());
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				_getVerifyResourcedModelSQL(
-					true, verifiableResourcedModel, role));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			if (resultSet.next()) {
-				total = resultSet.getInt(1);
-			}
-			else {
-				return;
-			}
-		}
-
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				verifiableResourcedModel.getTableName())) {
 
 			AtomicInteger atomicInteger = new AtomicInteger();
+			DCLSingleton<Integer> total = new DCLSingleton<>();
 
 			processConcurrently(
 				_getVerifyResourcedModelSQL(
@@ -168,7 +175,10 @@ public class VerifyResourcePermissions extends VerifyProcess {
 					if (_log.isInfoEnabled() && ((count % 100000) == 0)) {
 						_log.info(
 							StringBundler.concat(
-								"Processed ", count, " of ", total,
+								"Processed ", count, " of ",
+								total.getSingleton(
+									() -> _getTotal(
+										role, verifiableResourcedModel)),
 								" resource permissions for company ", companyId,
 								" and model ", modelName));
 					}

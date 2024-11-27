@@ -13,6 +13,7 @@ import React from 'react';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {useSelectItem} from '../../../../../app/contexts/ControlsContext';
 import {useSetMovementText} from '../../../../../app/contexts/KeyboardMovementContext';
+import {useSelector} from '../../../../../app/contexts/StoreContext';
 import {
 	FORM_ERROR_TYPES,
 	getFormErrorDescription,
@@ -25,12 +26,15 @@ export default function VisibilityButton({
 	disabled,
 	dispatch,
 	node,
-	selectedViewportSize,
 	visible,
 }) {
 	const hasRequiredChild = useHasRequiredChild(node.id);
 	const selectItem = useSelectItem();
 	const setText = useSetMovementText();
+
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 
 	return (
 		<ClayButton

@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.security.auth;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionIdSupplier;
+import com.liferay.portal.kernel.events.StartupHelperUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -19,9 +20,13 @@ import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
 import java.util.TimeZone;
 import java.util.function.Consumer;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 
@@ -39,6 +44,20 @@ public class CompanyThreadLocalTest {
 			ProxyFactory.newDummyInstance(CTCollectionIdSupplier.class), null);
 
 		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
+
+		_startupHelperUtilMockedStatic = Mockito.mockStatic(
+			StartupHelperUtil.class);
+
+		_startupHelperUtilMockedStatic.when(
+			StartupHelperUtil::isUpgrading
+		).thenReturn(
+			true
+		);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_startupHelperUtilMockedStatic.close();
 	}
 
 	@Test
@@ -85,5 +104,8 @@ public class CompanyThreadLocalTest {
 			Assert.assertNotNull(unsupportedOperationException);
 		}
 	}
+
+	private static MockedStatic<StartupHelperUtil>
+		_startupHelperUtilMockedStatic;
 
 }

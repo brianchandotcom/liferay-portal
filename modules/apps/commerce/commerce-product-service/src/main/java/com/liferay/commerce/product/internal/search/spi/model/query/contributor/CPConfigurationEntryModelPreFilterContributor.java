@@ -6,7 +6,9 @@
 package com.liferay.commerce.product.internal.search.spi.model.query.contributor;
 
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
@@ -44,6 +46,10 @@ public class CPConfigurationEntryModelPreFilterContributor
 					String.valueOf(cpConfigurationListId)),
 				BooleanClauseOccur.MUST);
 		}
+
+		booleanFilter.add(
+			new TermFilter(Field.ENTRY_CLASS_PK, StringPool.BLANK),
+			BooleanClauseOccur.MUST_NOT);
 	}
 
 }

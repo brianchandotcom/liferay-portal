@@ -17,6 +17,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -114,8 +115,28 @@ public class PageSpecificationResourceTest
 			LayoutConstants.TYPE_CONTENT, serviceContext);
 
 		_assertProblemException(layout);
-		_testGetSiteSiteByExternalReferenceCodePageSpecification(
-			layout.fetchDraftLayout());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(draftLayout);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertProblemException(draftLayout);
+
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
+
+		_layoutLocalService.updateStatus(
+			TestPropsValues.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(draftLayout);
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertProblemException(draftLayout);
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
 	}
 
 	@Ignore

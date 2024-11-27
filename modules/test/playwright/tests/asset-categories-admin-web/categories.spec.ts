@@ -9,7 +9,6 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {createCategories} from '../../helpers/CreateCategories';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {assetCategoriesPagesTest} from './fixtures/assetCategoriesAdminPagesTest';
 
@@ -27,53 +26,63 @@ test('Add, edit, delete properties in category.', async ({
 	page,
 	site,
 }) => {
-	const categories = await createCategories({
+	const categoryName = 'category-1';
+	await createCategories({
 		apiHelpers,
-		categoryNames: [{name: 'category-1'}],
+		categoryNames: [{name: categoryName}],
 		site,
 		vocabularyName: 'test vocabulary',
 	});
 
 	await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
 
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: page.getByRole('menuitem', {name: 'Edit'}),
-		trigger: page
-			.getByRole('row', {name: categories[0].name})
-			.getByLabel('Show Actions'),
-	});
-	await assetCategoriesEditPage.addProperty(
-		'key 1 - Category Property',
-		'value 1 - Category Property'
-	);
-	await waitForAlert(page);
+	await test.step('add', async () => {
+		await assetCategoriesEditPage.goto(categoryName);
+		await assetCategoriesEditPage.addProperty(
+			'key 1 - Category Property',
+			'value 1 - Category Property'
+		);
+		await waitForAlert(page);
 
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: page.getByRole('menuitem', {name: 'Edit'}),
-		trigger: page
-			.getByRole('row', {name: categories[0].name})
-			.getByLabel('Show Actions'),
-	});
-	await assetCategoriesEditPage.addProperty(
-		'key 2 - Category Property',
-		'value 2 - Category Property'
-	);
-	await waitForAlert(page);
+		await assetCategoriesEditPage.goto(categoryName);
+		await assetCategoriesEditPage.addProperty(
+			'key 2 - Category Property',
+			'value 2 - Category Property'
+		);
+		await waitForAlert(page);
 
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: page.getByRole('menuitem', {name: 'Edit'}),
-		trigger: page
-			.getByRole('row', {name: categories[0].name})
-			.getByLabel('Show Actions'),
+		await assetCategoriesEditPage.goto(categoryName);
+		await assetCategoriesEditPage.propertiesTab.click();
+		await expect(page.getByLabel('key').first()).toHaveValue(
+			'key 1 - Category Property'
+		);
+		await expect(page.getByLabel('value').nth(1)).toHaveValue(
+			'value 2 - Category Property'
+		);
 	});
-	await assetCategoriesEditPage.propertiesTab.click();
-	await expect(page.getByLabel('key').first()).toHaveValue(
-		'key 1 - Category Property'
-	);
-	await expect(page.getByLabel('value').first()).toHaveValue(
-		'value 1 - Category Property'
-	);
+
+	await test.step('edit', async () => {
+		await page
+			.getByLabel('value')
+			.nth(1)
+			.fill('value 2 - EDITED Category Property');
+		await assetCategoriesEditPage.saveButton.click();
+		await waitForAlert(page);
+
+		await assetCategoriesEditPage.goto(categoryName);
+		await assetCategoriesEditPage.propertiesTab.click();
+		await expect(page.getByLabel('value').nth(1)).toHaveValue(
+			'value 2 - EDITED Category Property'
+		);
+	});
+
+	await test.step('delete', async () => {
+		await page.getByRole('button', {name: 'Remove'}).nth(1).click();
+		await assetCategoriesEditPage.saveButton.click();
+		await waitForAlert(page);
+
+		await assetCategoriesEditPage.goto(categoryName);
+		await assetCategoriesEditPage.propertiesTab.click();
+		await expect(page.getByLabel('value')).toHaveCount(1);
+	});
 });

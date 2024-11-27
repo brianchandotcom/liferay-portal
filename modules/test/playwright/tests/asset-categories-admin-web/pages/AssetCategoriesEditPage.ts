@@ -5,15 +5,32 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 
 export class AssetCategoriesEditPage {
-	readonly propertiesTab: Locator;
 	readonly page: Page;
+	readonly propertiesTab: Locator;
+	readonly cancelButton: Locator;
+	readonly saveButton: Locator;
 
 	constructor(page: Page) {
 		this.propertiesTab = page.getByRole('link', {name: 'properties'});
+		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
+		this.saveButton = page.getByRole('button', {name: 'Save'});
+
 		this.page = page;
+	}
+
+	async goto(title: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Edit'}),
+			trigger: this.page
+				.getByRole('row', {name: title})
+				.getByLabel('Show Actions'),
+		});
+		await this.propertiesTab.waitFor();
 	}
 
 	async addProperty(key: string, value: string) {
@@ -34,6 +51,6 @@ export class AssetCategoriesEditPage {
 		await fillAndClickOutside(this.page, keyInput, key);
 		await fillAndClickOutside(this.page, valueInput, value);
 
-		await this.page.getByRole('button', {name: 'Save'}).click();
+		await this.saveButton.click();
 	}
 }

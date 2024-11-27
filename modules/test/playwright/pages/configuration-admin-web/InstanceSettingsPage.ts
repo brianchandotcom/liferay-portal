@@ -23,8 +23,8 @@ export class InstanceSettingsPage {
 			.or(page.getByRole('button', {name: 'Update'}));
 	}
 
-	async goto() {
-		await this.applicationsMenuPage.goToInstanceSettings();
+	async goto(forceReload = true) {
+		await this.applicationsMenuPage.goToInstanceSettings(forceReload);
 	}
 
 	async exportInstanceSetting() {
@@ -36,9 +36,10 @@ export class InstanceSettingsPage {
 	async goToInstanceSetting(
 		categoryKey: string,
 		configurationName: string,
+		forceReload = true,
 		sectionName?: string
 	) {
-		await this.goto();
+		await this.goto(forceReload);
 
 		await this.page
 			.getByRole('link', {

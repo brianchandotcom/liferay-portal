@@ -13,11 +13,17 @@ import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.client.dto.v1_0.StyleBook;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.problem.Problem;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,6 +38,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -111,32 +118,21 @@ public class PageSpecificationResourceTest
 		_testGetSiteSiteByExternalReferenceCodePageSpecification(
 			_addLayout(LayoutConstants.TYPE_PORTLET, serviceContext));
 
-		Layout layout = _addLayout(
-			LayoutConstants.TYPE_CONTENT, serviceContext);
+		_testGetSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+			_addLayout(LayoutConstants.TYPE_CONTENT, serviceContext),
+			serviceContext);
 
-		_assertProblemException(layout);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		_testGetSiteSiteByExternalReferenceCodePageSpecification(draftLayout);
-
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-		_assertProblemException(draftLayout);
-
-		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
-
-		_layoutLocalService.updateStatus(
-			TestPropsValues.getUserId(), draftLayout.getPlid(),
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
-
-		_testGetSiteSiteByExternalReferenceCodePageSpecification(draftLayout);
-		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
-
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-		_assertProblemException(draftLayout);
-		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
+		_testGetSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+			_getBasicLayoutPageTemplateEntryLayout(serviceContext),
+			serviceContext);
+		_testGetSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+			_getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
+			serviceContext);
+		_testGetSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+			_getLayoutUtilityPageEntryLayout(serviceContext), serviceContext);
+		_testGetSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+			_getMasterLayoutPageTemplateEntryLayout(serviceContext),
+			serviceContext);
 	}
 
 	@Ignore
@@ -354,6 +350,86 @@ public class PageSpecificationResourceTest
 		Assert.assertNull(widgetPageSpecification.getWidgetPageSections());
 	}
 
+	private Layout _getBasicLayoutPageTemplateEntryLayout(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(),
+					serviceContext.getScopeGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
+					serviceContext);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.BASIC, 0,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
+	}
+
+	private Layout _getDisplayPageLayoutPageTemplateEntryLayout(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_portal.getClassNameId(
+					"com.liferay.asset.kernel.model.AssetCategory"),
+				0, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
+	}
+
+	private Layout _getLayoutUtilityPageEntryLayout(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(), 0, 0, false,
+				RandomTestUtil.randomString(),
+				LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR,
+				0, serviceContext);
+
+		return _layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid());
+	}
+
+	private Layout _getMasterLayoutPageTemplateEntryLayout(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
+	}
+
 	private long _getMasterLayoutPlid(ServiceContext serviceContext)
 		throws Exception {
 
@@ -441,6 +517,36 @@ public class PageSpecificationResourceTest
 		}
 	}
 
+	private void
+			_testGetSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+				Layout layout, ServiceContext serviceContext)
+		throws Exception {
+
+		_assertProblemException(layout);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(draftLayout);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertProblemException(draftLayout);
+
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
+
+		_layoutLocalService.updateStatus(
+			TestPropsValues.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(draftLayout);
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertProblemException(draftLayout);
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
+	}
+
 	@Inject
 	private JSONFactory _jsonFactory;
 
@@ -448,8 +554,19 @@ public class PageSpecificationResourceTest
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
+
+	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private SegmentsExperienceService _segmentsExperienceService;

@@ -375,7 +375,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			String failureMessage = "Failed prior to running test";
 
 			if (build == null) {
-				failureMessage = "Unable to run build on CI";
+				return "Unable to run build on CI";
 			}
 
 			String result = build.getResult();

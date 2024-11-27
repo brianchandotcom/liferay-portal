@@ -60,6 +60,8 @@ public class AnalyticsAttributesUtil {
 		element.attr(
 			"data-analytics-asset-action",
 			_getAnalyticsAction(infoDisplaysFieldValues, infoItemFieldMapped));
+		element.attr(
+			"data-analytics-asset-field", infoItemFieldMapped.getFieldName());
 
 		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 			(ClassPKInfoItemIdentifier)infoItemIdentifier;

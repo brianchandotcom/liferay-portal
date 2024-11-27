@@ -27,8 +27,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"before-filter=Session Id Filter", "dispatcher=FORWARD",
-		"dispatcher=REQUEST",
+		"after-filter=Virtual Host Filter", "before-filter=Session Id Filter",
+		"dispatcher=FORWARD", "dispatcher=REQUEST",
 		"init-param.url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$",
 		"servlet-context-name=",
 		"servlet-filter-name=SP Session Termination SAML Portal Filter",

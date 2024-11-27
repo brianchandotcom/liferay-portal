@@ -14,7 +14,7 @@ exports[`DeleteChannelModal renders without data source alert message 1`] = `
         class="form-root"
       >
         <div
-          class="modal-header"
+          class="modal-header has-title"
         >
           <div
             class="h4 modal-title"

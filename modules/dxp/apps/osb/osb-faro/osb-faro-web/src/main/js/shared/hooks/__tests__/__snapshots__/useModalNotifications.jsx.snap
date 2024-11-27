@@ -19,7 +19,7 @@ exports[`useModalNotifications should open a notification modal 1`] = `
           class="modal-content"
         >
           <div
-            class="modal-header"
+            class="modal-header has-title"
           >
             <div
               class="h4 modal-title"

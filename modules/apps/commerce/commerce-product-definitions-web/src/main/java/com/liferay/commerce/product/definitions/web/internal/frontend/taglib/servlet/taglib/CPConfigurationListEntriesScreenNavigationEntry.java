@@ -57,7 +57,7 @@ public class CPConfigurationListEntriesScreenNavigationEntry
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/configuration_list/entries.jsp");
+			"/configuration_list/cp_configuration_entries.jsp");
 	}
 
 	@Reference

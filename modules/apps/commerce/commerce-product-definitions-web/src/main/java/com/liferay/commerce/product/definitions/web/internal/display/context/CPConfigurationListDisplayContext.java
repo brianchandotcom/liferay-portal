@@ -117,10 +117,6 @@ public class CPConfigurationListDisplayContext {
 			getCPConfigurationEntryFDSActionDropdownItems()
 		throws PortalException {
 
-		StringBundler sb = new StringBundler(
-			"/o/headless-commerce-admin-catalog/v1.0/product-configurations" +
-				"/{id}");
-
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
@@ -135,7 +131,9 @@ public class CPConfigurationListDisplayContext {
 				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
 				"get", null, "sidePanel"),
 			new FDSActionDropdownItem(
-				sb.toString(), "trash", "delete",
+				"/o/headless-commerce-admin-catalog/v1.0" +
+					"/product-configurations/{id}",
+				"trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), "delete",
 				"delete", "async"));
 	}
@@ -145,8 +143,7 @@ public class CPConfigurationListDisplayContext {
 	}
 
 	public CPConfigurationList getCPConfigurationList() throws PortalException {
-		long cpConfigurationListId = ParamUtil.getLong(
-			httpServletRequest, "cpConfigurationListId");
+		long cpConfigurationListId = getCPConfigurationEntryId();
 
 		if (cpConfigurationListId == 0) {
 			return null;

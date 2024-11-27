@@ -54,6 +54,10 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 	@Override
 	public boolean equals(Object object);
 
+	public CPConfigurationList getMasterCPConfigurationList()
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPConfigurationListException;
+
 	public CPConfigurationEntry fetchMasterCPConfigurationEntry()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

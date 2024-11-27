@@ -784,6 +784,14 @@ public class CPDefinitionWrapper
 		return model.getLastPublishDate();
 	}
 
+	@Override
+	public CPConfigurationList getMasterCPConfigurationList()
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPConfigurationListException {
+
+		return model.getMasterCPConfigurationList();
+	}
+
 	/**
 	 * Returns the max subscription cycles of this cp definition.
 	 *

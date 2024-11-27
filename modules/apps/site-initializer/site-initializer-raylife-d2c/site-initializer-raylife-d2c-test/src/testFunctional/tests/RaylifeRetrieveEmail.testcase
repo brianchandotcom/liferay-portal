@@ -62,7 +62,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Raylife Channel");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Notification Queue");
+		CommerceEntry.gotoMenuTab(menuTab = "Notification Queue DEPRECATED");
 
 		AssertElementPresent(
 			key_name = "Test",

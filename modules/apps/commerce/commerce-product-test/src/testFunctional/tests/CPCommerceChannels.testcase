@@ -462,7 +462,7 @@ definition {
 
 		var wrongChannelType = "Site";
 		var correctChannelType = "site";
-		var channelTabsList = "General,Type,Notification Queue,Notification Templates,Payment Restrictions,Shipping Restrictions";
+		var channelTabsList = "General,Type,Notification Queue DEPRECATED,Notification Templates DEPRECATED,Payment Restrictions,Shipping Restrictions";
 		var createChannelResponseWithError = CommerceJSONChannelsAPI._addChannel(
 			channelName = "Test Channel New",
 			channelType = ${wrongChannelType},
@@ -882,7 +882,7 @@ definition {
 		}
 
 		task ("And the user creates a new notifications template") {
-			CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
+			CommerceEntry.gotoMenuTab(menuTab = "Notification Templates DEPRECATED");
 
 			Click(locator1 = "Button#PLUS");
 
@@ -1277,7 +1277,7 @@ definition {
 			channelType = "Site",
 			siteName = "Guest");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
+		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates DEPRECATED");
 
 		Click(locator1 = "Button#PLUS");
 
@@ -1484,7 +1484,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
+		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates DEPRECATED");
 
 		Click(locator1 = "Button#PLUS");
 
@@ -1732,7 +1732,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
+		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates DEPRECATED");
 
 		Click(locator1 = "Button#PLUS");
 
@@ -1770,7 +1770,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Notification Queue");
+		CommerceEntry.gotoMenuTab(menuTab = "Notification Queue DEPRECATED");
 
 		Click(
 			key_value = "Test",
@@ -1790,7 +1790,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
+		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates DEPRECATED");
 
 		Click(locator1 = "Button#PLUS");
 
@@ -2718,7 +2718,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
+		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates DEPRECATED");
 
 		Click(locator1 = "Button#PLUS");
 
@@ -2756,7 +2756,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Notification Queue");
+		CommerceEntry.gotoMenuTab(menuTab = "Notification Queue DEPRECATED");
 
 		AssertElementPresent(
 			key_name = "Test",

@@ -323,6 +323,7 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		Company company = new CompanyImpl();
 
 		company.setCompanyId(0);
+		company.setGroupId(0);
 
 		themeDisplay.setCompany(company);
 

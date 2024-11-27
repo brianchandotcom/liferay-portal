@@ -62,6 +62,14 @@ public class PageSpecificationDTOConverter
 			{
 				setExternalReferenceCode(layout::getExternalReferenceCode);
 				setSettings(() -> _setSettings(layout));
+				setStatus(
+					() -> {
+						if (!layout.isDraftLayout()) {
+							return Status.APPROVED;
+						}
+
+						return Status.DRAFT;
+					});
 				setType(
 					() -> {
 						if (layout.isTypeAssetDisplay() ||

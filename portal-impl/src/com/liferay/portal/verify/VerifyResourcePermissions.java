@@ -76,7 +76,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			});
 	}
 
-	private int _getTotal(
+	private int _getVerifiableResourcedModelCount(
 		Role role, VerifiableResourcedModel verifiableResourcedModel) {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(
@@ -170,14 +170,16 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 					String modelName = verifiableResourcedModel.getModelName();
 
-					int count = atomicInteger.getAndIncrement();
+					int processedCount = atomicInteger.getAndIncrement();
 
-					if (_log.isInfoEnabled() && ((count % 100000) == 0)) {
+					if (_log.isInfoEnabled() &&
+						((processedCount % 100000) == 0)) {
+
 						_log.info(
 							StringBundler.concat(
-								"Processed ", count, " of ",
+								"Processed ", processedCount, " of ",
 								total.getSingleton(
-									() -> _getTotal(
+									() -> _getVerifiableResourcedModelCount(
 										role, verifiableResourcedModel)),
 								" resource permissions for company ", companyId,
 								" and model ", modelName));

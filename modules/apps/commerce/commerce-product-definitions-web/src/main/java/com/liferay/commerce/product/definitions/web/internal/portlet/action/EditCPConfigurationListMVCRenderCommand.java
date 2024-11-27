@@ -8,6 +8,9 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPConfigurationListDisplayContext;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
+import com.liferay.commerce.product.service.CPConfigurationEntryService;
+import com.liferay.commerce.product.service.CPConfigurationListService;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -44,7 +47,8 @@ public class EditCPConfigurationListMVCRenderCommand
 			CPConfigurationListDisplayContext
 				cpConfigurationListDisplayContext =
 					new CPConfigurationListDisplayContext(
-						_commerceCatalogService,
+						_commerceCatalogService, _cpConfigurationEntryService,
+						_cpConfigurationListService, _cpDefinitionService,
 						_portal.getHttpServletRequest(renderRequest));
 
 			renderRequest.setAttribute(
@@ -68,6 +72,15 @@ public class EditCPConfigurationListMVCRenderCommand
 
 	@Reference
 	private CommerceCatalogService _commerceCatalogService;
+
+	@Reference
+	private CPConfigurationEntryService _cpConfigurationEntryService;
+
+	@Reference
+	private CPConfigurationListService _cpConfigurationListService;
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private Portal _portal;

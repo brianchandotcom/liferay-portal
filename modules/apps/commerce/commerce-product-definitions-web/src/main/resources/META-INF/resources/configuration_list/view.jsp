@@ -18,7 +18,7 @@ CPConfigurationListDisplayContext cpConfigurationListDisplayContext = (CPConfigu
 		<frontend-data-set:headless-display
 			apiURL="/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists"
 			creationMenu="<%= cpConfigurationListDisplayContext.getCreationMenu() %>"
-			fdsActionDropdownItems="<%= cpConfigurationListDisplayContext.getFDSActionDropdownItems() %>"
+			fdsActionDropdownItems="<%= cpConfigurationListDisplayContext.getCPConfigurationListFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CPConfigurationFDSNames.PRODUCT_CONFIGURATION_LISTS %>"
 			itemsPerPage="<%= 10 %>"

@@ -66,7 +66,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 			keepCreatorInfo = true;
 		}
-		
+
 		Set<String> restrictedFieldNames = _getRestrictedFieldNames(
 			batchEngineImportTask);
 

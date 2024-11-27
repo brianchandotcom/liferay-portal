@@ -195,18 +195,18 @@ public class OpenAPIResourceTest {
 	public void testGetOpenAPIInDifferentCompany() throws Exception {
 		long companyId = 0;
 
-		try {
-			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"domain", "able.com"
-				).put(
-					"portalInstanceId", "able.com"
-				).put(
-					"virtualHost", "www.able.com"
-				).toString(),
-				"headless-portal-instances/v1.0/portal-instances",
-				Http.Method.POST);
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"domain", "able.com"
+			).put(
+				"portalInstanceId", "able.com"
+			).put(
+				"virtualHost", "www.able.com"
+			).toString(),
+			"headless-portal-instances/v1.0/portal-instances",
+			Http.Method.POST);
 
+		try {
 			companyId = jsonObject.getLong("companyId");
 			HTTPTestUtil.customize(
 			).withBaseURL(
@@ -323,15 +323,6 @@ public class OpenAPIResourceTest {
 			"relationMToM", false,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
-		String jsonObjectString = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getApplicationPath(),
-				StringPool.SLASH, jaxRsApplicationDescriptor.getVersion(),
-				"/openapi.json"),
-			Http.Method.GET
-		).toString();
-
 		String relationshipString = new String(
 			FileUtil.getBytes(
 				getClass(),
@@ -339,7 +330,14 @@ public class OpenAPIResourceTest {
 					"/expected_openapi_system_object_relationship.json"));
 
 		JSONAssert.assertEquals(
-			relationshipString, jsonObjectString, JSONCompareMode.LENIENT);
+			relationshipString, HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					jaxRsApplicationDescriptor.getApplicationPath(),
+					StringPool.SLASH, jaxRsApplicationDescriptor.getVersion(),
+					"/openapi.json"),
+				Http.Method.GET
+			).toString(), JSONCompareMode.LENIENT);
 	}
 
 	private void _assertOpenAPI(

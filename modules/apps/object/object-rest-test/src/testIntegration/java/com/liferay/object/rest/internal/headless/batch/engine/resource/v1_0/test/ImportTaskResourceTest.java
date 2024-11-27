@@ -59,15 +59,15 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					objectDefinition.getName()),
 				Http.Method.POST));
 
-		JSONObject afterImportJSONObject1 = _getJSONObject(
-			beforeImportJSONObject1.getString("externalReferenceCode"));
-
 		JSONAssert.assertEquals(
 			JSONUtil.merge(
 				beforeImportJSONObject1,
 				JSONUtil.put("permissions", JSONFactoryUtil.createJSONArray())
 			).toString(),
-			afterImportJSONObject1.toString(), JSONCompareMode.LENIENT);
+			_getJSONObject(
+				beforeImportJSONObject1.getString("externalReferenceCode")
+			).toString(),
+			JSONCompareMode.LENIENT);
 
 		// With no permissions
 
@@ -88,9 +88,6 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					objectDefinition.getName()),
 				Http.Method.POST));
 
-		JSONObject afterImportJSONObject2 = _getJSONObject(
-			beforeImportJSONObject2.getString("externalReferenceCode"));
-
 		JSONAssert.assertEquals(
 			JSONUtil.merge(
 				beforeImportJSONObject2,
@@ -105,7 +102,10 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 							"roleName", "Owner"
 						)))
 			).toString(),
-			afterImportJSONObject2.toString(), JSONCompareMode.LENIENT);
+			_getJSONObject(
+				beforeImportJSONObject2.getString("externalReferenceCode")
+			).toString(),
+			JSONCompareMode.LENIENT);
 
 		// With permissions
 
@@ -130,9 +130,6 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					objectDefinition.getName()),
 				Http.Method.POST));
 
-		JSONObject afterImportJSONObject3 = _getJSONObject(
-			beforeImportJSONObject3.getString("externalReferenceCode"));
-
 		JSONAssert.assertEquals(
 			JSONUtil.merge(
 				beforeImportJSONObject3,
@@ -145,7 +142,10 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 							"roleName", role.getName()
 						)))
 			).toString(),
-			afterImportJSONObject3.toString(), JSONCompareMode.LENIENT);
+			_getJSONObject(
+				beforeImportJSONObject3.getString("externalReferenceCode")
+			).toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	@Test
@@ -181,15 +181,15 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					objectDefinition.getName()),
 				Http.Method.POST));
 
-		JSONObject afterUpsertJSONObject1 = _getJSONObject(
-			jsonObject1.getString("externalReferenceCode"));
-
 		JSONAssert.assertEquals(
 			JSONUtil.merge(
 				jsonObject1,
 				JSONUtil.put("permissions", JSONFactoryUtil.createJSONArray())
 			).toString(),
-			afterUpsertJSONObject1.toString(), JSONCompareMode.LENIENT);
+			_getJSONObject(
+				jsonObject1.getString("externalReferenceCode")
+			).toString(),
+			JSONCompareMode.LENIENT);
 
 		// With no permissions
 
@@ -221,9 +221,6 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					objectDefinition.getName()),
 				Http.Method.POST));
 
-		JSONObject afterUpsertJSONObject2 = _getJSONObject(
-			jsonObject2.getString("externalReferenceCode"));
-
 		JSONAssert.assertEquals(
 			JSONUtil.merge(
 				jsonObject2,
@@ -238,7 +235,10 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 							"roleName", "Owner"
 						)))
 			).toString(),
-			afterUpsertJSONObject2.toString(), JSONCompareMode.LENIENT);
+			_getJSONObject(
+				jsonObject2.getString("externalReferenceCode")
+			).toString(),
+			JSONCompareMode.LENIENT);
 
 		// With permissions
 
@@ -272,9 +272,6 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					objectDefinition.getName()),
 				Http.Method.POST));
 
-		JSONObject afterUpsertJSONObject3 = _getJSONObject(
-			jsonObject3.getString("externalReferenceCode"));
-
 		JSONAssert.assertEquals(
 			JSONUtil.merge(
 				jsonObject3,
@@ -294,7 +291,10 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 							"roleName", role.getName()
 						)))
 			).toString(),
-			afterUpsertJSONObject3.toString(), JSONCompareMode.LENIENT);
+			_getJSONObject(
+				jsonObject3.getString("externalReferenceCode")
+			).toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	@Test
@@ -324,9 +324,6 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					OBJECT_FIELD_NAME_TEXT),
 				Http.Method.POST));
 
-		JSONObject afterImport1JSONObject = _getJSONObject(
-			objectEntry.getExternalReferenceCode());
-
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"permissions",
@@ -339,7 +336,10 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 						"roleName", "Owner"
 					))
 			).toString(),
-			afterImport1JSONObject.toString(), JSONCompareMode.LENIENT);
+			_getJSONObject(
+				objectEntry.getExternalReferenceCode()
+			).toString(),
+			JSONCompareMode.LENIENT);
 
 		// Without 'restrictedFieldNames' query parameter
 
@@ -354,9 +354,6 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					"?taskItemDelegateName=", objectDefinition.getName(),
 					"&createStrategy=UPSERT"),
 				Http.Method.POST));
-
-		JSONObject afterImport2JSONObject = _getJSONObject(
-			objectEntry.getExternalReferenceCode());
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -375,7 +372,10 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 						"roleName", role.getName()
 					))
 			).toString(),
-			afterImport2JSONObject.toString(), JSONCompareMode.LENIENT);
+			_getJSONObject(
+				objectEntry.getExternalReferenceCode()
+			).toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	private JSONObject _addViewPermission(JSONObject jsonObject, Role role) {

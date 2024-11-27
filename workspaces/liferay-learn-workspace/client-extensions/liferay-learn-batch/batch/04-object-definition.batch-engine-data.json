@@ -66,15 +66,15 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "COMPLETED_STEPS_IDS",
+					"externalReferenceCode": "COMPLETED_STEP_IDS",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Completed Steps Ids"
+						"en_US": "Completed Step Ids"
 					},
 					"localized": false,
-					"name": "completedStepsIds",
+					"name": "completedStepIds",
 					"objectFieldSettings": [
 						{
 							"name": "showCounter",

@@ -83,8 +83,7 @@ public abstract class BaseVirtualInstanceOperationTestCase
 		Assert.assertEquals(expectedMessage, logEntry.getMessage());
 	}
 
-	protected void deployConfiguration(
-			String pid, String content, boolean waitForCompany)
+	protected void deployConfiguration(String pid, String content)
 		throws Exception {
 
 		Assert.assertNull(
@@ -103,7 +102,7 @@ public abstract class BaseVirtualInstanceOperationTestCase
 				_configurationAdmin.listConfigurations(
 					"(service.pid=" + pid + ")"));
 
-			_countDownLatch.await(waitForCompany ? 180 : 10, TimeUnit.SECONDS);
+			_countDownLatch.await(180, TimeUnit.SECONDS);
 		}
 	}
 

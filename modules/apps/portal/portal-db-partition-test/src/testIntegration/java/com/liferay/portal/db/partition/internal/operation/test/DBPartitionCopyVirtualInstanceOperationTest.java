@@ -54,8 +54,7 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 					PortalInstancePool.getDefaultCompanyId(), "\"\n",
 					"name=\"testName\"\nsourcePartitionCompanyId=L\"",
 					_company.getCompanyId(), "\"\nvirtualHostname=",
-					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"),
-				false);
+					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
 			assertLog(
 				logCapture,
 				"Virtual instance with company ID " +
@@ -82,8 +81,7 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 				StringBundler.concat(
 					"name=\"testName\"\nsourcePartitionCompanyId=L\"",
 					_company.getCompanyId(), "\"\nvirtualHostname=",
-					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"),
-				true);
+					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
 
 			Assert.assertEquals(
 				companyIds.length + 1,

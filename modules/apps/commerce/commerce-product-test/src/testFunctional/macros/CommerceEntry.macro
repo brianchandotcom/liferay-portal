@@ -1515,8 +1515,10 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoMenuTab(menuTab = null) {
+		var menuTabKey = StringUtil.replace(${menuTab}, " DEPRECATED", "");
+
 		AssertClick(
-			key_menuTab = ${menuTab},
+			key_menuTab = ${menuTabKey},
 			locator1 = "CommerceEntry#MENU_TAB",
 			value1 = ${menuTab});
 	}

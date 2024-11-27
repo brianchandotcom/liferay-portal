@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayBadge from '@clayui/badge';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import {LinkOrButton} from '@clayui/shared';
+import {FeatureIndicator} from 'frontend-js-components-web';
 import React from 'react';
 
 export default function NavigationBar({
@@ -34,14 +34,9 @@ export default function NavigationBar({
 								<span>{label}</span>
 
 								{deprecated ? (
-									<ClayBadge
-										className="ml-2 text-uppercase"
-										displayType="warning"
-										label={Liferay.Language.get(
-											'deprecated'
-										)}
-										translucent
-									/>
+									<span className="ml-2">
+										<FeatureIndicator type="deprecated" />
+									</span>
 								) : null}
 							</LinkOrButton>
 						</ClayNavigationBar.Item>

@@ -13,18 +13,23 @@ import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageSpecificationResource;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
+import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -47,6 +52,29 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class PageSpecificationResourceImpl
 	extends BasePageSpecificationResourceImpl {
+
+	@Override
+	public void deleteSiteSiteByExternalReferenceCodePageSpecification(
+			String siteExternalReferenceCode,
+			String pageSpecificationExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
+			pageSpecificationExternalReferenceCode,
+			GroupUtil.getGroupId(
+				true, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
+
+		if (!layout.isDraftLayout()) {
+			throw new UnsupportedOperationException();
+		}
+
+		_discardDraftLayout(layout);
+	}
 
 	@NestedField(
 		parentClass = DisplayPageTemplate.class, value = "pageSpecifications"
@@ -240,6 +268,36 @@ public class PageSpecificationResourceImpl
 			_toPageSpecifications(
 				_layoutLocalService.getLayout(
 					layoutUtilityPageEntry.getPlid())));
+	}
+
+	private void _discardDraftLayout(Layout draftLayout) throws Exception {
+		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
+
+		try {
+			boolean published = layout.isPublished();
+
+			draftLayout = _layoutLocalService.copyLayoutContent(
+				layout, draftLayout);
+
+			ServiceContext serviceContext = ServiceContextBuilder.create(
+				layout.getGroupId(), contextHttpServletRequest, null
+			).build();
+
+			serviceContext.setAttribute(
+				LayoutTypeSettingsConstants.KEY_PUBLISHED, published);
+			serviceContext.setUserId(contextUser.getUserId());
+
+			_layoutLocalService.updateStatus(
+				contextUser.getUserId(), draftLayout.getPlid(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+		}
+		catch (Exception exception) {
+			if (!(exception instanceof LockedLayoutException) &&
+				!(exception.getCause() instanceof LockedLayoutException)) {
+
+				throw new UnsupportedOperationException();
+			}
+		}
 	}
 
 	private boolean _isPageSpecificationSupported(Layout layout) {

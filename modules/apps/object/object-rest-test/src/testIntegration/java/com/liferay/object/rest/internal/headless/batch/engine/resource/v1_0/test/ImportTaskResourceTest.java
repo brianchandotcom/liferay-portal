@@ -59,14 +59,8 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					objectDefinition.getName()),
 				Http.Method.POST));
 
-		JSONObject afterImportJSONObject1 = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"/by-external-reference-code/",
-				beforeImportJSONObject1.getString("externalReferenceCode"),
-				"?nestedFields=permissions"),
-			Http.Method.GET);
+		JSONObject afterImportJSONObject1 = _getJSONObject(
+			beforeImportJSONObject1.getString("externalReferenceCode"));
 
 		JSONAssert.assertEquals(
 			JSONUtil.merge(
@@ -94,14 +88,8 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					objectDefinition.getName()),
 				Http.Method.POST));
 
-		JSONObject afterImportJSONObject2 = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"/by-external-reference-code/",
-				beforeImportJSONObject2.getString("externalReferenceCode"),
-				"?nestedFields=permissions"),
-			Http.Method.GET);
+		JSONObject afterImportJSONObject2 = _getJSONObject(
+			beforeImportJSONObject2.getString("externalReferenceCode"));
 
 		JSONAssert.assertEquals(
 			JSONUtil.merge(
@@ -142,14 +130,8 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					objectDefinition.getName()),
 				Http.Method.POST));
 
-		JSONObject afterImportJSONObject3 = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"/by-external-reference-code/",
-				beforeImportJSONObject3.getString("externalReferenceCode"),
-				"?nestedFields=permissions"),
-			Http.Method.GET);
+		JSONObject afterImportJSONObject3 = _getJSONObject(
+			beforeImportJSONObject3.getString("externalReferenceCode"));
 
 		JSONAssert.assertEquals(
 			JSONUtil.merge(
@@ -199,14 +181,8 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					objectDefinition.getName()),
 				Http.Method.POST));
 
-		JSONObject afterUpsertJSONObject1 = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"/by-external-reference-code/",
-				jsonObject1.getString("externalReferenceCode"),
-				"?nestedFields=permissions"),
-			Http.Method.GET);
+		JSONObject afterUpsertJSONObject1 = _getJSONObject(
+			jsonObject1.getString("externalReferenceCode"));
 
 		JSONAssert.assertEquals(
 			JSONUtil.merge(
@@ -245,14 +221,8 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					objectDefinition.getName()),
 				Http.Method.POST));
 
-		JSONObject afterUpsertJSONObject2 = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"/by-external-reference-code/",
-				jsonObject2.getString("externalReferenceCode"),
-				"?nestedFields=permissions"),
-			Http.Method.GET);
+		JSONObject afterUpsertJSONObject2 = _getJSONObject(
+			jsonObject2.getString("externalReferenceCode"));
 
 		JSONAssert.assertEquals(
 			JSONUtil.merge(
@@ -302,14 +272,8 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					objectDefinition.getName()),
 				Http.Method.POST));
 
-		JSONObject afterUpsertJSONObject3 = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"/by-external-reference-code/",
-				jsonObject3.getString("externalReferenceCode"),
-				"?nestedFields=permissions"),
-			Http.Method.GET);
+		JSONObject afterUpsertJSONObject3 = _getJSONObject(
+			jsonObject3.getString("externalReferenceCode"));
 
 		JSONAssert.assertEquals(
 			JSONUtil.merge(
@@ -342,14 +306,8 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		JSONObject beforeImportJSONObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"/by-external-reference-code/",
-				objectEntry.getExternalReferenceCode(),
-				"?nestedFields=permissions"),
-			Http.Method.GET);
+		JSONObject beforeImportJSONObject = _getJSONObject(
+			objectEntry.getExternalReferenceCode());
 
 		// With "restrictedFieldNames" query parameter
 
@@ -366,14 +324,8 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					OBJECT_FIELD_NAME_TEXT),
 				Http.Method.POST));
 
-		JSONObject afterImport1JSONObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"/by-external-reference-code/",
-				objectEntry.getExternalReferenceCode(),
-				"?nestedFields=permissions"),
-			Http.Method.GET);
+		JSONObject afterImport1JSONObject = _getJSONObject(
+			objectEntry.getExternalReferenceCode());
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -403,14 +355,8 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					"&createStrategy=UPSERT"),
 				Http.Method.POST));
 
-		JSONObject afterImport2JSONObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"/by-external-reference-code/",
-				objectEntry.getExternalReferenceCode(),
-				"?nestedFields=permissions"),
-			Http.Method.GET);
+		JSONObject afterImport2JSONObject = _getJSONObject(
+			objectEntry.getExternalReferenceCode());
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -447,6 +393,18 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			));
 
 		return jsonObject;
+	}
+
+	private JSONObject _getJSONObject(String externalReferenceCode)
+		throws Exception {
+
+		return HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				objectDefinition.getRESTContextPath(),
+				"/by-external-reference-code/", externalReferenceCode,
+				"?nestedFields=permissions"),
+			Http.Method.GET);
 	}
 
 }

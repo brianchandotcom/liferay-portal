@@ -27,8 +27,10 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -40,6 +42,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.math.BigDecimal;
+
+import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
@@ -413,13 +417,38 @@ public class ProductConfigurationResourceImpl
 					BigDecimal.ONE)));
 	}
 
+	private Map<String, Map<String, String>> _getActions(
+		CPConfigurationEntry cpConfigurationEntry) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			() -> addAction(
+				"UPDATE", cpConfigurationEntry.getCPConfigurationEntryId(),
+				"deleteProductConfiguration",
+				_cpConfigurationEntryModelResourcePermission)
+		).put(
+			"get",
+			() -> addAction(
+				"VIEW", cpConfigurationEntry.getCPConfigurationEntryId(),
+				"getProductConfiguration",
+				_cpConfigurationEntryModelResourcePermission)
+		).put(
+			"update",
+			() -> addAction(
+				"UPDATE", cpConfigurationEntry.getCPConfigurationEntryId(),
+				"patchProductConfiguration",
+				_cpConfigurationEntryModelResourcePermission)
+		).build();
+	}
+
 	private ProductConfiguration _toProductConfiguration(
 			CPConfigurationEntry cpConfigurationEntry)
 		throws Exception {
 
 		return _productConfigurationDTOConverter.toDTO(
 			new ProductConfigurationDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				_getActions(cpConfigurationEntry),
 				cpConfigurationEntry.getCPConfigurationEntryId(),
 				_dtoConverterRegistry, null,
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
@@ -434,6 +463,12 @@ public class ProductConfigurationResourceImpl
 				_dtoConverterRegistry, cpDefinitionId,
 				contextAcceptLanguage.getPreferredLocale(), null, null));
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPConfigurationEntry)"
+	)
+	private ModelResourcePermission<CPConfigurationEntry>
+		_cpConfigurationEntryModelResourcePermission;
 
 	@Reference
 	private CPConfigurationEntryService _cpConfigurationEntryService;

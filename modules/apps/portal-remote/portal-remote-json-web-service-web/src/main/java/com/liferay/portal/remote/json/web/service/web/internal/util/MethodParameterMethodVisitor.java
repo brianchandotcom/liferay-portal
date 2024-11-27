@@ -1,9 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.remote.json.web.service.web.internal.util;
+
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -11,8 +13,6 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -20,8 +20,7 @@ import org.objectweb.asm.Opcodes;
 /**
  * @author Jorge Garcia Jimenez
  */
-public class MethodParameterMethodVisitor
-	extends MethodVisitor {
+public class MethodParameterMethodVisitor extends MethodVisitor {
 
 	public List<ExtractedParameter> getExtractedParameterList() {
 		return _extractedParameterList;
@@ -58,8 +57,8 @@ public class MethodParameterMethodVisitor
 						count)) {
 
 			if (signature != null) {
-				String parameterSignature = StringUtil.replace(signature,descriptor,
-					StringPool.BLANK);
+				String parameterSignature = StringUtil.removeSubstring(
+					signature, descriptor);
 
 				_extractedParameterList.add(
 					new ExtractedParameter(name, parameterSignature));

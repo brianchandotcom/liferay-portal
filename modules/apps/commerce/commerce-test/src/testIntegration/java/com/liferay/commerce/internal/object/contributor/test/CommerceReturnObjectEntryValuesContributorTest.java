@@ -27,7 +27,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -142,7 +142,7 @@ public class CommerceReturnObjectEntryValuesContributorTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
-				CompanyThreadLocal.getCompanyId(), "CommerceReturn");
+				TestPropsValues.getCompanyId(), "CommerceReturn");
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			_user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),

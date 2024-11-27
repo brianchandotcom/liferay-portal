@@ -154,7 +154,6 @@ import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -2675,7 +2674,7 @@ public class BundleSiteInitializerTest {
 
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
-				CompanyThreadLocal.getCompanyId(), "User");
+				TestPropsValues.getCompanyId(), "User");
 
 		Page<ObjectRelationship> page1 =
 			objectRelationshipResource.
@@ -2721,7 +2720,7 @@ public class BundleSiteInitializerTest {
 
 		objectDefinition =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
-				CompanyThreadLocal.getCompanyId(), "AccountEntry");
+				TestPropsValues.getCompanyId(), "AccountEntry");
 
 		Page<ObjectRelationship> page3 =
 			objectRelationshipResource.
@@ -2757,7 +2756,7 @@ public class BundleSiteInitializerTest {
 
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
-				CompanyThreadLocal.getCompanyId(), "User");
+				TestPropsValues.getCompanyId(), "User");
 
 		Page<ObjectRelationship> page1 =
 			objectRelationshipResource.
@@ -2803,7 +2802,7 @@ public class BundleSiteInitializerTest {
 
 		objectDefinition =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
-				CompanyThreadLocal.getCompanyId(), "AccountEntry");
+				TestPropsValues.getCompanyId(), "AccountEntry");
 
 		Page<ObjectRelationship> page3 =
 			objectRelationshipResource.

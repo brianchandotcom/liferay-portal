@@ -175,6 +175,13 @@ public class PageSpecificationResourceTest
 		super.testPutSiteSiteByExternalReferenceCodePageSpecification();
 	}
 
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {
+			"externalReferenceCode", "settings", "status", "type"
+		};
+	}
+
 	private Layout _addLayout(String type, ServiceContext serviceContext)
 		throws Exception {
 

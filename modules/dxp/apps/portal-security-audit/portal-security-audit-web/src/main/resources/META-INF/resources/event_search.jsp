@@ -8,8 +8,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AuditDisplayContext auditDisplayContext = (AuditDisplayContext)request.getAttribute(AuditDisplayContext.class.getName());
-
 SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("liferay-ui:search:searchContainer");
 %>
 

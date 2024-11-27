@@ -8,12 +8,12 @@
  /**
   * @author Charlotte Wong
   */
- public class DownstreamFailureMessageGenerator
+ public class UpgradeFailureMessageGenerator
      extends BaseFailureMessageGenerator {
  
      @Override
      public String getMessage(String consoleText) {
-        if !(consoleText.contains(_LIFERAY_UPGRADE_ERROR_TEXT)) {
+        if (!consoleText.contains(_LIFERAY_UPGRADE_ERROR_TEXT)) {
             return null;
         }
             
@@ -24,6 +24,5 @@
 		return getConsoleTextSnippetByStart(consoleText, start);
      }
  
+     private static final String _LIFERAY_UPGRADE_ERROR_TEXT = "Failed Liferay upgrade";
  }
-
- private static final String _LIFERAY_UPGRADE_ERROR_TEXT = "Failed Liferay upgrade";

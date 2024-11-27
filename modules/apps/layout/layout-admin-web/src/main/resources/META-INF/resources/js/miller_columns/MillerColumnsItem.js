@@ -14,7 +14,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {PageTemplateModal} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
-import {fetch, navigate, sub} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
@@ -385,18 +385,6 @@ const MillerColumnsItem = ({
 				aria-owns={groupId}
 				className="miller-columns-item-mask"
 				href={url}
-				onKeyDown={(event) => {
-					const key = rtl ? 'ArrowLeft' : 'ArrowRight';
-
-					if (
-						event.key === key &&
-						hasChild &&
-						!active &&
-						Liferay.FeatureFlags['LPD-35220']
-					) {
-						navigate(url);
-					}
-				}}
 				role="menuitem"
 				tabIndex={tabIndex}
 			>

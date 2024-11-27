@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.kaleo.model;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -37,6 +38,7 @@ public class KaleoDefinitionWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
+		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("kaleoDefinitionId", getKaleoDefinitionId());
 		attributes.put("groupId", getGroupId());
@@ -68,6 +70,12 @@ public class KaleoDefinitionWrapper
 
 		if (ctCollectionId != null) {
 			setCtCollectionId(ctCollectionId);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
 		}
 
 		String externalReferenceCode = (String)attributes.get(
@@ -436,6 +444,16 @@ public class KaleoDefinitionWrapper
 	}
 
 	/**
+	 * Returns the uuid of this kaleo definition.
+	 *
+	 * @return the uuid of this kaleo definition
+	 */
+	@Override
+	public String getUuid() {
+		return model.getUuid();
+	}
+
+	/**
 	 * Returns the version of this kaleo definition.
 	 *
 	 * @return the version of this kaleo definition
@@ -710,6 +728,16 @@ public class KaleoDefinitionWrapper
 	}
 
 	/**
+	 * Sets the uuid of this kaleo definition.
+	 *
+	 * @param uuid the uuid of this kaleo definition
+	 */
+	@Override
+	public void setUuid(String uuid) {
+		model.setUuid(uuid);
+	}
+
+	/**
 	 * Sets the version of this kaleo definition.
 	 *
 	 * @param version the version of this kaleo definition
@@ -736,6 +764,11 @@ public class KaleoDefinitionWrapper
 		getAttributeSetterBiConsumers() {
 
 		return model.getAttributeSetterBiConsumers();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return model.getStagedModelType();
 	}
 
 	@Override

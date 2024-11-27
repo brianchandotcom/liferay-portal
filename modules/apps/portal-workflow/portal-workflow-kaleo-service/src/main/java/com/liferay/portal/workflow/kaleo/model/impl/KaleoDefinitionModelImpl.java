@@ -7,6 +7,7 @@ package com.liferay.portal.workflow.kaleo.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,7 +72,7 @@ public class KaleoDefinitionModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"externalReferenceCode", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
 		{"kaleoDefinitionId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -86,6 +88,7 @@ public class KaleoDefinitionModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("kaleoDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -104,7 +107,7 @@ public class KaleoDefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoDefinition (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,externalReferenceCode VARCHAR(75) null,kaleoDefinitionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,title STRING null,description STRING null,content TEXT null,scope VARCHAR(75) null,version INTEGER,active_ BOOLEAN,primary key (kaleoDefinitionId, ctCollectionId))";
+		"create table KaleoDefinition (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,kaleoDefinitionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,title STRING null,description STRING null,content TEXT null,scope VARCHAR(75) null,version INTEGER,active_ BOOLEAN,primary key (kaleoDefinitionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoDefinition";
 
@@ -142,19 +145,31 @@ public class KaleoDefinitionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SCOPE_COLUMN_BITMASK = 16L;
+	public static final long NAME_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long VERSION_COLUMN_BITMASK = 32L;
+	public static final long SCOPE_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 64L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long VERSION_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -270,6 +285,7 @@ public class KaleoDefinitionModelImpl
 				"mvccVersion", KaleoDefinition::getMvccVersion);
 			attributeGetterFunctions.put(
 				"ctCollectionId", KaleoDefinition::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", KaleoDefinition::getUuid);
 			attributeGetterFunctions.put(
 				"externalReferenceCode",
 				KaleoDefinition::getExternalReferenceCode);
@@ -321,6 +337,9 @@ public class KaleoDefinitionModelImpl
 				"ctCollectionId",
 				(BiConsumer<KaleoDefinition, Long>)
 					KaleoDefinition::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<KaleoDefinition, String>)KaleoDefinition::setUuid);
 			attributeSetterBiConsumers.put(
 				"externalReferenceCode",
 				(BiConsumer<KaleoDefinition, String>)
@@ -415,6 +434,35 @@ public class KaleoDefinitionModelImpl
 
 	@JSON
 	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCode == null) {
 			return "";
@@ -470,6 +518,15 @@ public class KaleoDefinitionModelImpl
 		}
 
 		_groupId = groupId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalGroupId() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -854,6 +911,12 @@ public class KaleoDefinitionModelImpl
 	public void setContentAsXML(String contentAsXML) {
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(KaleoDefinition.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -978,6 +1041,7 @@ public class KaleoDefinitionModelImpl
 
 		kaleoDefinitionImpl.setMvccVersion(getMvccVersion());
 		kaleoDefinitionImpl.setCtCollectionId(getCtCollectionId());
+		kaleoDefinitionImpl.setUuid(getUuid());
 		kaleoDefinitionImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		kaleoDefinitionImpl.setKaleoDefinitionId(getKaleoDefinitionId());
@@ -1008,6 +1072,8 @@ public class KaleoDefinitionModelImpl
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		kaleoDefinitionImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		kaleoDefinitionImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
 		kaleoDefinitionImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		kaleoDefinitionImpl.setKaleoDefinitionId(
@@ -1129,6 +1195,14 @@ public class KaleoDefinitionModelImpl
 		kaleoDefinitionCacheModel.mvccVersion = getMvccVersion();
 
 		kaleoDefinitionCacheModel.ctCollectionId = getCtCollectionId();
+
+		kaleoDefinitionCacheModel.uuid = getUuid();
+
+		String uuid = kaleoDefinitionCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			kaleoDefinitionCacheModel.uuid = null;
+		}
 
 		kaleoDefinitionCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1287,6 +1361,7 @@ public class KaleoDefinitionModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
+	private String _uuid;
 	private String _externalReferenceCode;
 	private long _kaleoDefinitionId;
 	private long _groupId;
@@ -1337,6 +1412,7 @@ public class KaleoDefinitionModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
+		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("kaleoDefinitionId", _kaleoDefinitionId);
@@ -1360,6 +1436,7 @@ public class KaleoDefinitionModelImpl
 	static {
 		Map<String, String> attributeNames = new HashMap<>();
 
+		attributeNames.put("uuid_", "uuid");
 		attributeNames.put("active_", "active");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
@@ -1380,35 +1457,37 @@ public class KaleoDefinitionModelImpl
 
 		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("externalReferenceCode", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("kaleoDefinitionId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("kaleoDefinitionId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("title", 2048L);
+		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("description", 4096L);
+		columnBitmasks.put("title", 4096L);
 
-		columnBitmasks.put("content", 8192L);
+		columnBitmasks.put("description", 8192L);
 
-		columnBitmasks.put("scope", 16384L);
+		columnBitmasks.put("content", 16384L);
 
-		columnBitmasks.put("version", 32768L);
+		columnBitmasks.put("scope", 32768L);
 
-		columnBitmasks.put("active_", 65536L);
+		columnBitmasks.put("version", 65536L);
+
+		columnBitmasks.put("active_", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

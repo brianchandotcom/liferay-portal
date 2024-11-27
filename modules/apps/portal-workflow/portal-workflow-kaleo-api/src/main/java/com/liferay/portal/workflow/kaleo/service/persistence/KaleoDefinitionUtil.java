@@ -111,6 +111,427 @@ public class KaleoDefinitionUtil {
 	}
 
 	/**
+	 * Returns all the kaleo definitions where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching kaleo definitions
+	 */
+	public static List<KaleoDefinition> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the kaleo definitions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of kaleo definitions
+	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
+	 * @return the range of matching kaleo definitions
+	 */
+	public static List<KaleoDefinition> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo definitions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of kaleo definitions
+	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo definitions
+	 */
+	public static List<KaleoDefinition> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<KaleoDefinition> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo definitions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of kaleo definitions
+	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching kaleo definitions
+	 */
+	public static List<KaleoDefinition> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<KaleoDefinition> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUuid(
+			uuid, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first kaleo definition in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo definition
+	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
+	 */
+	public static KaleoDefinition findByUuid_First(
+			String uuid, OrderByComparator<KaleoDefinition> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.
+			NoSuchDefinitionException {
+
+		return getPersistence().findByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the first kaleo definition in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
+	 */
+	public static KaleoDefinition fetchByUuid_First(
+		String uuid, OrderByComparator<KaleoDefinition> orderByComparator) {
+
+		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last kaleo definition in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo definition
+	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
+	 */
+	public static KaleoDefinition findByUuid_Last(
+			String uuid, OrderByComparator<KaleoDefinition> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.
+			NoSuchDefinitionException {
+
+		return getPersistence().findByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last kaleo definition in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
+	 */
+	public static KaleoDefinition fetchByUuid_Last(
+		String uuid, OrderByComparator<KaleoDefinition> orderByComparator) {
+
+		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the kaleo definitions before and after the current kaleo definition in the ordered set where uuid = &#63;.
+	 *
+	 * @param kaleoDefinitionId the primary key of the current kaleo definition
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next kaleo definition
+	 * @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
+	 */
+	public static KaleoDefinition[] findByUuid_PrevAndNext(
+			long kaleoDefinitionId, String uuid,
+			OrderByComparator<KaleoDefinition> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.
+			NoSuchDefinitionException {
+
+		return getPersistence().findByUuid_PrevAndNext(
+			kaleoDefinitionId, uuid, orderByComparator);
+	}
+
+	/**
+	 * Removes all the kaleo definitions where uuid = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 */
+	public static void removeByUuid(String uuid) {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	 * Returns the number of kaleo definitions where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching kaleo definitions
+	 */
+	public static int countByUuid(String uuid) {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
+	 * Returns the kaleo definition where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching kaleo definition
+	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
+	 */
+	public static KaleoDefinition findByUUID_G(String uuid, long groupId)
+		throws com.liferay.portal.workflow.kaleo.exception.
+			NoSuchDefinitionException {
+
+		return getPersistence().findByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the kaleo definition where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
+	 */
+	public static KaleoDefinition fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the kaleo definition where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
+	 */
+	public static KaleoDefinition fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
+	}
+
+	/**
+	 * Removes the kaleo definition where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the kaleo definition that was removed
+	 */
+	public static KaleoDefinition removeByUUID_G(String uuid, long groupId)
+		throws com.liferay.portal.workflow.kaleo.exception.
+			NoSuchDefinitionException {
+
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the number of kaleo definitions where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching kaleo definitions
+	 */
+	public static int countByUUID_G(String uuid, long groupId) {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns all the kaleo definitions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching kaleo definitions
+	 */
+	public static List<KaleoDefinition> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the kaleo definitions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of kaleo definitions
+	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
+	 * @return the range of matching kaleo definitions
+	 */
+	public static List<KaleoDefinition> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo definitions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of kaleo definitions
+	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo definitions
+	 */
+	public static List<KaleoDefinition> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<KaleoDefinition> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo definitions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of kaleo definitions
+	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching kaleo definitions
+	 */
+	public static List<KaleoDefinition> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<KaleoDefinition> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first kaleo definition in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo definition
+	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
+	 */
+	public static KaleoDefinition findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<KaleoDefinition> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.
+			NoSuchDefinitionException {
+
+		return getPersistence().findByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first kaleo definition in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
+	 */
+	public static KaleoDefinition fetchByUuid_C_First(
+		String uuid, long companyId,
+		OrderByComparator<KaleoDefinition> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last kaleo definition in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo definition
+	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
+	 */
+	public static KaleoDefinition findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<KaleoDefinition> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.
+			NoSuchDefinitionException {
+
+		return getPersistence().findByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last kaleo definition in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
+	 */
+	public static KaleoDefinition fetchByUuid_C_Last(
+		String uuid, long companyId,
+		OrderByComparator<KaleoDefinition> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the kaleo definitions before and after the current kaleo definition in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param kaleoDefinitionId the primary key of the current kaleo definition
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next kaleo definition
+	 * @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
+	 */
+	public static KaleoDefinition[] findByUuid_C_PrevAndNext(
+			long kaleoDefinitionId, String uuid, long companyId,
+			OrderByComparator<KaleoDefinition> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.
+			NoSuchDefinitionException {
+
+		return getPersistence().findByUuid_C_PrevAndNext(
+			kaleoDefinitionId, uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the kaleo definitions where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	public static void removeByUuid_C(String uuid, long companyId) {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns the number of kaleo definitions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching kaleo definitions
+	 */
+	public static int countByUuid_C(String uuid, long companyId) {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
 	 * Returns all the kaleo definitions where companyId = &#63;.
 	 *
 	 * @param companyId the company ID

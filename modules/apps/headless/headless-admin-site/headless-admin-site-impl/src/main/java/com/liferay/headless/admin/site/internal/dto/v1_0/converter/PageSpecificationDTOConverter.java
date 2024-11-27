@@ -12,12 +12,17 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.admin.site.dto.v1_0.ClientExtension;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.dto.v1_0.StyleBook;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
@@ -31,6 +36,7 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
@@ -61,7 +67,7 @@ public class PageSpecificationDTOConverter
 		throws Exception {
 
 		if (layout.isTypeAssetDisplay() || layout.isTypeContent()) {
-			return _toContentPageSpecification(layout);
+			return _toContentPageSpecification(dtoConverterContext, layout);
 		}
 
 		return _toWidgetPageSpecification(layout);
@@ -131,6 +137,37 @@ public class PageSpecificationDTOConverter
 		}
 
 		return clientExtensions;
+	}
+
+	private PageExperience[] _getPageExperiences(
+			DTOConverterContext dtoConverterContext, Layout layout)
+		throws Exception {
+
+		return TransformUtil.transformToArray(
+			_segmentsExperienceService.getSegmentsExperiences(
+				layout.getGroupId(), layout.getPlid(), true),
+			segmentsExperience -> {
+				LayoutPageTemplateStructure layoutPageTemplateStructure =
+					_layoutPageTemplateStructureLocalService.
+						fetchLayoutPageTemplateStructure(
+							segmentsExperience.getGroupId(),
+							segmentsExperience.getPlid());
+
+				LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+					_layoutPageTemplateStructureRelLocalService.
+						fetchLayoutPageTemplateStructureRel(
+							layoutPageTemplateStructure.
+								getLayoutPageTemplateStructureId(),
+							segmentsExperience.getSegmentsExperienceId());
+
+				if (layoutPageTemplateStructureRel == null) {
+					throw new UnsupportedOperationException();
+				}
+
+				return _pageExperienceDTOConverter.toDTO(
+					dtoConverterContext, layoutPageTemplateStructureRel);
+			},
+			PageExperience.class);
 	}
 
 	private Settings _setSettings(Layout layout) throws Exception {
@@ -296,10 +333,14 @@ public class PageSpecificationDTOConverter
 		};
 	}
 
-	private PageSpecification _toContentPageSpecification(Layout layout) {
+	private PageSpecification _toContentPageSpecification(
+		DTOConverterContext dtoConverterContext, Layout layout) {
+
 		return new ContentPageSpecification() {
 			{
 				setExternalReferenceCode(layout::getExternalReferenceCode);
+				setPageExperiences(
+					() -> _getPageExperiences(dtoConverterContext, layout));
 				setSettings(() -> _setSettings(layout));
 				setStatus(
 					() -> {
@@ -337,7 +378,24 @@ public class PageSpecificationDTOConverter
 		_layoutPageTemplateEntryLocalService;
 
 	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureRelLocalService
+		_layoutPageTemplateStructureRelLocalService;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageExperienceDTOConverter)"
+	)
+	private DTOConverter<LayoutPageTemplateStructureRel, PageExperience>
+		_pageExperienceDTOConverter;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsExperienceService _segmentsExperienceService;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

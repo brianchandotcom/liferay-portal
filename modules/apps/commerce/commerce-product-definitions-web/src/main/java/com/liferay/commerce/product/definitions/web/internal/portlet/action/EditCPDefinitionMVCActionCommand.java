@@ -27,8 +27,11 @@ import com.liferay.commerce.product.exception.CPDefinitionNameDefaultLanguageExc
 import com.liferay.commerce.product.exception.CPDefinitionSubscriptionLengthException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
+import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPConfigurationEntryService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
@@ -64,6 +67,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -683,6 +687,38 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
 			cpdAvailabilityEstimateEntryId, cpDefinitionId,
 			commerceAvailabilityEstimateId);
+
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpDefinitionId);
+
+		CPConfigurationEntry cpConfigurationEntry =
+			cpDefinition.fetchMasterCPConfigurationEntry();
+
+		if (cpConfigurationEntry == null) {
+			CPConfigurationList masterCPConfigurationList =
+				cpDefinition.getMasterCPConfigurationList();
+
+			_cpConfigurationEntryService.addCPConfigurationEntry(
+				null, cpDefinition.getGroupId(),
+				_portal.getClassNameId(CPDefinition.class), cpDefinitionId,
+				masterCPConfigurationList.getCPConfigurationListId(),
+				allowedOrderQuantities, backOrders,
+				commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
+				displayAvailability, displayStockQuantity, lowStockActivity,
+				maxOrderQuantity, minOrderQuantity, minStockQuantity,
+				multipleOrderQuantity);
+		}
+		else {
+			_cpConfigurationEntryService.updateCPConfigurationEntry(
+				cpConfigurationEntry.getExternalReferenceCode(),
+				cpConfigurationEntry.getCPConfigurationEntryId(),
+				cpConfigurationEntry.getCPConfigurationListId(),
+				allowedOrderQuantities, backOrders,
+				commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
+				displayAvailability, displayStockQuantity, lowStockActivity,
+				maxOrderQuantity, minOrderQuantity, minStockQuantity,
+				multipleOrderQuantity);
+		}
 	}
 
 	private void _updateShippingInfo(
@@ -851,6 +887,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
+	private CPConfigurationEntryService _cpConfigurationEntryService;
+
+	@Reference
 	private CPDAvailabilityEstimateService _cpdAvailabilityEstimateService;
 
 	@Reference
@@ -861,6 +900,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private Portal _portal;
 
 	private class CPDefinitionCallable implements Callable<CPDefinition> {
 

@@ -6,8 +6,13 @@
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
+import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPConfigurationList;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPConfigurationEntryService;
+import com.liferay.commerce.product.service.CPConfigurationListService;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
@@ -25,6 +30,8 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -39,9 +46,15 @@ public class CPConfigurationListDisplayContext {
 
 	public CPConfigurationListDisplayContext(
 		CommerceCatalogService commerceCatalogService,
+		CPConfigurationEntryService cpConfigurationEntryService,
+		CPConfigurationListService cpConfigurationListService,
+		CPDefinitionService cpDefinitionService,
 		HttpServletRequest httpServletRequest) {
 
 		this.commerceCatalogService = commerceCatalogService;
+		this.cpConfigurationEntryService = cpConfigurationEntryService;
+		this.cpConfigurationListService = cpConfigurationListService;
+		this.cpDefinitionService = cpDefinitionService;
 		this.httpServletRequest = httpServletRequest;
 
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
@@ -87,25 +100,64 @@ public class CPConfigurationListDisplayContext {
 		).build();
 	}
 
-	public CPConfigurationList getCPConfigurationList() {
-		return null;
+	public CPConfigurationEntry getCPConfigurationEntry()
+		throws PortalException {
+
+		long cpConfigurationEntryId = getCPConfigurationEntryId();
+
+		if (cpConfigurationEntryId == 0) {
+			return null;
+		}
+
+		return cpConfigurationEntryService.getCPConfigurationEntry(
+			cpConfigurationEntryId);
 	}
 
-	public long getCPConfigurationListId() {
-		return 0;
+	public List<FDSActionDropdownItem>
+			getCPConfigurationEntryFDSActionDropdownItems()
+		throws PortalException {
+
+		StringBundler sb = new StringBundler(
+			"/o/headless-commerce-admin-catalog/v1.0/product-configurations" +
+				"/{id}");
+
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						httpServletRequest, CPConfigurationList.class.getName(),
+						PortletProvider.Action.MANAGE)
+				).setMVCRenderCommandName(
+					"/cp_configuration_lists/edit_cp_configuration_entry"
+				).setParameter(
+					"cpConfigurationEntryId", "{id}"
+				).buildString(),
+				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
+				"get", null, "sidePanel"),
+			new FDSActionDropdownItem(
+				sb.toString(), "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete", "async"));
 	}
 
-	public CreationMenu getCreationMenu() throws Exception {
-		return CreationMenuBuilder.addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setHref("addCPConfigurationList");
-				dropdownItem.setLabel("add-new-product-configuration");
-				dropdownItem.setTarget("event");
-			}
-		).build();
+	public long getCPConfigurationEntryId() {
+		return ParamUtil.getLong(httpServletRequest, "cpConfigurationEntryId");
 	}
 
-	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+	public CPConfigurationList getCPConfigurationList() throws PortalException {
+		long cpConfigurationListId = ParamUtil.getLong(
+			httpServletRequest, "cpConfigurationListId");
+
+		if (cpConfigurationListId == 0) {
+			return null;
+		}
+
+		return cpConfigurationListService.getCPConfigurationList(
+			cpConfigurationListId);
+	}
+
+	public List<FDSActionDropdownItem>
+			getCPConfigurationListFDSActionDropdownItems()
 		throws PortalException {
 
 		StringBundler sb = new StringBundler(
@@ -134,7 +186,34 @@ public class CPConfigurationListDisplayContext {
 				"delete", "async"));
 	}
 
+	public long getCPConfigurationListId() {
+		return ParamUtil.getLong(httpServletRequest, "cpConfigurationListId");
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("addCPConfigurationList");
+				dropdownItem.setLabel("add-new-product-configuration");
+				dropdownItem.setTarget("event");
+			}
+		).build();
+	}
+
+	public String getProductName() throws PortalException {
+		CPConfigurationEntry cpConfigurationEntry = getCPConfigurationEntry();
+
+		CPDefinition cpDefinition = cpDefinitionService.getCPDefinition(
+			cpConfigurationEntry.getClassPK());
+
+		return cpDefinition.getName(
+			LocaleUtil.toLanguageId(cpRequestHelper.getLocale()));
+	}
+
 	protected final CommerceCatalogService commerceCatalogService;
+	protected final CPConfigurationEntryService cpConfigurationEntryService;
+	protected final CPConfigurationListService cpConfigurationListService;
+	protected final CPDefinitionService cpDefinitionService;
 	protected final CPRequestHelper cpRequestHelper;
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;

@@ -172,21 +172,8 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 
 							<c:choose>
 								<c:when test="<%= (message != null) && (thread.getMessageCount() == 1) %>">
-
-									<%
-									String messageUserName = "anonymous";
-
-									if (!message.isAnonymous()) {
-										messageUserName = message.getUserName();
-									}
-
-									Date modifiedDate = message.getModifiedDate();
-
-									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-									%>
-
 									<div>
-										<liferay-ui:message arguments="<%= new String[] {messageUserName, modifiedDateDescription} %>" key="x-modified-x-ago" />
+										<%= HtmlUtil.escape(mbDisplayContext.getModifiedLabel(message)) %>
 									</div>
 								</c:when>
 								<c:otherwise>

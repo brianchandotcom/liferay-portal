@@ -45,17 +45,7 @@ User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 			>
 
 				<%
-				String messageUserName = "anonymous";
-
-				if (!message.isAnonymous()) {
-					messageUserName = message.getUserName();
-				}
-
-				Date modifiedDate = message.getModifiedDate();
-
-				String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-
-				String userDisplayText = LanguageUtil.format(request, "x-modified-x-ago", new Object[] {messageUserName, modifiedDateDescription});
+				String userDisplayText = mbDisplayContext.getModifiedLabel(message);
 				%>
 
 				<span class="message-user-display text-default" title="<%= HtmlUtil.escapeAttribute(userDisplayText) %>">

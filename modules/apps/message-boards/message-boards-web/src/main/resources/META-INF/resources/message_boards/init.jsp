@@ -97,6 +97,7 @@ page import="com.liferay.message.boards.web.internal.dao.search.MBResultRowSplit
 page import="com.liferay.message.boards.web.internal.display.MBCategoryDisplay" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.MBBannedUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.MBConfigurationDisplayContext" %><%@
+page import="com.liferay.message.boards.web.internal.display.context.MBDisplayContext" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.MBEditMessageDisplayContext" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.MBEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.MBNavigationDisplayContext" %><%@
@@ -231,6 +232,8 @@ Format dateFormat = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
 NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+
+MBDisplayContext mbDisplayContext = new MBDisplayContext(request);
 %>
 
 <%@ include file="/message_boards/init-ext.jsp" %>

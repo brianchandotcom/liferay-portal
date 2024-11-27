@@ -373,8 +373,17 @@ export class ApplicationsMenuPage {
 		await this.systemSettingsItem.click();
 	}
 
-	async goToInstanceSettings() {
-		await this.goToControlPanel();
+	async goToInstanceSettings(forceReload = true) {
+		if (forceReload) {
+			await this.goto();
+		}
+		else {
+			await this.homePage.openApplicationMenu();
+
+			await expect(this.applicationsMenuTabButton).toBeVisible();
+		}
+
+		await this.controlPanelButton.click();
 		await this.instanceSettingsMenuItem.click();
 	}
 

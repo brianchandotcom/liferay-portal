@@ -32,7 +32,7 @@ export const test = mergeTests(
 	serverAdministrationPageTest
 );
 
-const defaultBaseUrl = liferayConfig.environment.baseUrl;
+const DEFAULT_BASE_URL = liferayConfig.environment.baseUrl;
 const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 const DEFAULT_VIRTUAL_INSTANCE_URL = `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`;
 
@@ -60,7 +60,7 @@ test.beforeAll(async ({browser}) => {
 
 test.describe('Users could login using Token Based SSO.  See LRQA-27622.', () => {
 	test('Verify token based login with default instance', async () => {
-		await verifyTokenBasedSSO('test@liferay.com', defaultBaseUrl);
+		await verifyTokenBasedSSO('test@liferay.com', DEFAULT_BASE_URL);
 	});
 
 	test('Verify token based login with virtual instance', async ({
@@ -108,7 +108,7 @@ test.describe('Users could login using Token Based SSO.  See LRQA-27622.', () =>
 
 		await verifyTokenBasedSSO(token, url);
 
-		liferayConfig.environment.baseUrl = defaultBaseUrl;
+		liferayConfig.environment.baseUrl = DEFAULT_BASE_URL;
 
 		await virtualInstancesPage.deleteVirtualInstance(
 			DEFAULT_VIRTUAL_INSTANCE_NAME

@@ -25,6 +25,7 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -80,13 +81,39 @@ public class PageSpecificationResourceTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Ignore
 	@Override
 	@Test
 	public void testDeleteSiteSiteByExternalReferenceCodePageSpecification()
 		throws Exception {
 
-		super.testDeleteSiteSiteByExternalReferenceCodePageSpecification();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		Layout layout = _addLayout(
+			LayoutConstants.TYPE_PORTLET, serviceContext);
+
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					deleteSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layout.getExternalReferenceCode()));
+
+		_testDeleteSiteSiteByExternalReferenceCodePageSpecification(
+			_addLayout(LayoutConstants.TYPE_CONTENT, serviceContext),
+			serviceContext);
+		_testDeleteSiteSiteByExternalReferenceCodePageSpecification(
+			_getBasicLayoutPageTemplateEntryLayout(serviceContext),
+			serviceContext);
+		_testDeleteSiteSiteByExternalReferenceCodePageSpecification(
+			_getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
+			serviceContext);
+		_testDeleteSiteSiteByExternalReferenceCodePageSpecification(
+			_getLayoutUtilityPageEntryLayout(serviceContext), serviceContext);
+		_testDeleteSiteSiteByExternalReferenceCodePageSpecification(
+			_getMasterLayoutPageTemplateEntryLayout(serviceContext),
+			serviceContext);
 	}
 
 	@Override
@@ -291,6 +318,28 @@ public class PageSpecificationResourceTest
 			pageExperiences.length);
 	}
 
+	private void _assertDeleteSiteSiteByExternalReferenceCodePageSpecification(
+			Layout draftLayout)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
+
+		boolean published = layout.isPublished();
+
+		pageSpecificationResource.
+			deleteSiteSiteByExternalReferenceCodePageSpecification(
+				testGroup.getExternalReferenceCode(),
+				draftLayout.getExternalReferenceCode());
+
+		draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
+
+		Assert.assertTrue(draftLayout.isApproved());
+
+		layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
+
+		Assert.assertEquals(published, layout.isPublished());
+	}
+
 	private void _assertPageSpecification(
 			Layout layout, PageSpecification pageSpecification)
 		throws Exception {
@@ -416,13 +465,12 @@ public class PageSpecificationResourceTest
 		}
 	}
 
-	private void _assertProblemException(Layout layout) throws Exception {
-		try {
-			pageSpecificationResource.
-				getSiteSiteByExternalReferenceCodePageSpecification(
-					testGroup.getExternalReferenceCode(),
-					layout.getExternalReferenceCode());
+	private void _assertProblemException(
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
 
+		try {
+			unsafeRunnable.run();
 			Assert.fail();
 		}
 		catch (Problem.ProblemException problemException) {
@@ -605,6 +653,46 @@ public class PageSpecificationResourceTest
 		).buildString();
 	}
 
+	private void _testDeleteSiteSiteByExternalReferenceCodePageSpecification(
+			Layout layout, ServiceContext serviceContext)
+		throws Exception {
+
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					deleteSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layout.getExternalReferenceCode()));
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_assertDeleteSiteSiteByExternalReferenceCodePageSpecification(
+			draftLayout);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					deleteSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layout.getExternalReferenceCode()));
+
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					deleteSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						draftLayout.getExternalReferenceCode()));
+
+		_layoutLocalService.updateStatus(
+			TestPropsValues.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		_assertDeleteSiteSiteByExternalReferenceCodePageSpecification(
+			draftLayout);
+	}
+
 	private void _testGetSiteSiteByExternalReferenceCodePageSpecification(
 			Layout layout)
 		throws Exception {
@@ -647,7 +735,12 @@ public class PageSpecificationResourceTest
 				Layout layout, ServiceContext serviceContext)
 		throws Exception {
 
-		_assertProblemException(layout);
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					getSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layout.getExternalReferenceCode()));
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
@@ -655,7 +748,12 @@ public class PageSpecificationResourceTest
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
-		_assertProblemException(draftLayout);
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					getSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						draftLayout.getExternalReferenceCode()));
 
 		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
 
@@ -668,7 +766,12 @@ public class PageSpecificationResourceTest
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
-		_assertProblemException(draftLayout);
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					getSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						draftLayout.getExternalReferenceCode()));
 		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
 	}
 

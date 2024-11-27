@@ -21,9 +21,11 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.List;
@@ -47,7 +49,8 @@ public class JournalFolderFinderTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			new TransactionalTestRule(
-				Propagation.SUPPORTS, "com.liferay.journal.service"));
+				Propagation.SUPPORTS, "com.liferay.journal.service"),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -106,20 +109,23 @@ public class JournalFolderFinderTest {
 	}
 
 	@Test
-	public void testFindF_A_ByG_F_DDMSK() throws Exception {
+	public void testFindF_A_ByG_F_DDMSI_NotS() throws Exception {
 		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
-		List<Object> results = _journalFolderFinder.findF_A_ByG_F_DDMSI(
-			_group.getGroupId(), _folder1.getFolderId(), 0, queryDefinition);
-
-		Assert.assertEquals(results.toString(), 4, results.size());
-
-		int count = _journalFolderFinder.countF_A_ByG_F_DDMSI(
-			_group.getGroupId(), _folder1.getFolderId(), 0, queryDefinition);
+		int count = _journalFolderFinder.filterCountF_A_ByG_F_DDMSI_NotS(
+			_group.getGroupId(), _folder1.getFolderId(), 0, null,
+			queryDefinition);
 
 		Assert.assertEquals(4, count);
+
+		List<Object> results =
+			_journalFolderFinder.filterFindF_A_ByG_F_DDMSI_L_NotS(
+				_group.getGroupId(), _folder1.getFolderId(), 0,
+				LocaleUtil.getDefault(), null, queryDefinition);
+
+		Assert.assertEquals(results.toString(), 4, results.size());
 
 		for (Object result : results) {
 			if (result instanceof JournalFolder) {
@@ -139,15 +145,16 @@ public class JournalFolderFinderTest {
 			}
 		}
 
-		results = _journalFolderFinder.findF_A_ByG_F_DDMSI(
-			_group.getGroupId(), _folder1.getFolderId(), 0, queryDefinition,
-			true);
+		results = _journalFolderFinder.filterFindF_A_ByG_F_DDMSI_L_NotS(
+			_group.getGroupId(), _folder1.getFolderId(), 0,
+			LocaleUtil.getDefault(),
+			new int[] {WorkflowConstants.STATUS_EXPIRED}, queryDefinition);
 
 		Assert.assertEquals(results.toString(), 3, results.size());
 
-		count = _journalFolderFinder.countF_A_ByG_F_DDMSI(
-			_group.getGroupId(), _folder1.getFolderId(), 0, queryDefinition,
-			true);
+		count = _journalFolderFinder.filterCountF_A_ByG_F_DDMSI_NotS(
+			_group.getGroupId(), _folder1.getFolderId(), 0,
+			new int[] {WorkflowConstants.STATUS_EXPIRED}, queryDefinition);
 
 		Assert.assertEquals(3, count);
 
@@ -165,6 +172,41 @@ public class JournalFolderFinderTest {
 				Assert.assertTrue(
 					title,
 					title.equals("Article 1") || title.equals("Article 2"));
+			}
+		}
+	}
+
+	@Test
+	public void testFindF_A_ByG_F_DDMSK() throws Exception {
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		int count = _journalFolderFinder.countF_A_ByG_F_DDMSI(
+			_group.getGroupId(), _folder1.getFolderId(), 0, queryDefinition);
+
+		Assert.assertEquals(4, count);
+
+		List<Object> results = _journalFolderFinder.findF_A_ByG_F_DDMSI(
+			_group.getGroupId(), _folder1.getFolderId(), 0, queryDefinition);
+
+		Assert.assertEquals(results.toString(), 4, results.size());
+
+		for (Object result : results) {
+			if (result instanceof JournalFolder) {
+				JournalFolder folder = (JournalFolder)result;
+
+				Assert.assertEquals("Folder 2", folder.getName());
+			}
+			else if (result instanceof JournalArticle) {
+				JournalArticle article = (JournalArticle)result;
+
+				String title = article.getTitleCurrentValue();
+
+				Assert.assertTrue(
+					title,
+					title.equals("Article 1") || title.equals("Article 2") ||
+					title.equals("Article 3"));
 			}
 		}
 

@@ -70,6 +70,8 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 				_portletRequest, _portletURL, null,
 				"there-are-no-display-page-templates");
 
+		assetDisplayPageSearchContainer.setId(
+			"displayPages" + getLayoutPageTemplateCollectionId());
 		assetDisplayPageSearchContainer.setOrderByCol(_getOrderByCol());
 		assetDisplayPageSearchContainer.setOrderByComparator(
 			_getLayoutPageTemplateEntryOrderByComparator(

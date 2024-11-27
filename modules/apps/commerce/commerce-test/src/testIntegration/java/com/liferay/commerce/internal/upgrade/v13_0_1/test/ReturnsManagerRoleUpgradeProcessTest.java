@@ -120,11 +120,10 @@ public class ReturnsManagerRoleUpgradeProcessTest {
 			_group.getCompanyId(),
 			AccountRoleConstants.ROLE_NAME_RETURNS_MANAGER);
 
-		_resourcePermissionLocalService.removeResourcePermission(
-			_group.getCompanyId(), CommercePortletKeys.COMMERCE_PAYMENT,
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(_group.getCompanyId()), role.getRoleId(),
-			ActionKeys.ACCESS_IN_CONTROL_PANEL);
+		if (role == null) {
+			return;
+		}
+
 		_resourcePermissionLocalService.removeResourcePermission(
 			_group.getCompanyId(), CommerceChannel.class.getName(),
 			ResourceConstants.SCOPE_COMPANY,
@@ -135,6 +134,11 @@ public class ReturnsManagerRoleUpgradeProcessTest {
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(_group.getCompanyId()), role.getRoleId(),
 			ActionKeys.VIEW);
+		_resourcePermissionLocalService.removeResourcePermission(
+			_group.getCompanyId(), CommercePortletKeys.COMMERCE_PAYMENT,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_group.getCompanyId()), role.getRoleId(),
+			ActionKeys.ACCESS_IN_CONTROL_PANEL);
 		_resourcePermissionLocalService.removeResourcePermission(
 			_group.getCompanyId(), "com.liferay.commerce.currency",
 			ResourceConstants.SCOPE_COMPANY,

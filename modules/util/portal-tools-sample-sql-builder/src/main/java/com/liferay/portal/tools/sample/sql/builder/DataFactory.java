@@ -5487,27 +5487,60 @@ public class DataFactory {
 			return ListUtil.fromArray(
 				newObjectFieldModel(
 					0, objectDefinitionId,
-					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
-					"description_", dbTableName,
-					ObjectFieldConstants.DB_TYPE_CLOB, "Description",
-					"description", true, false, false),
-				newObjectFieldModel(
-					0, objectDefinitionId,
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT, "subject_",
-					dbTableName, ObjectFieldConstants.DB_TYPE_STRING, "Subject",
-					"subject", true, false, false),
-				newObjectFieldModel(
-					0, objectDefinitionId,
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 					"attachment_", dbTableName,
 					ObjectFieldConstants.DB_TYPE_LONG, "Attachment",
 					"attachment", false, false, false),
 				newObjectFieldModel(
 					0, objectDefinitionId,
+					ObjectFieldConstants.BUSINESS_TYPE_DATE, "createDate",
+					"ObjectEntry", ObjectFieldConstants.DB_TYPE_DATE,
+					"Create Date", "createDate", false, false, true),
+				newObjectFieldModel(
+					0, objectDefinitionId,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT, "userName",
+					"ObjectEntry", ObjectFieldConstants.DB_TYPE_STRING,
+					"Author", "creator", false, false, true),
+				newObjectFieldModel(
+					0, objectDefinitionId,
+					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
+					"description_", dbTableName,
+					ObjectFieldConstants.DB_TYPE_CLOB, "Description",
+					"description", true, false, false),
+				newObjectFieldModel(
+					0, objectDefinitionId,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					"externalReferenceCode", "ObjectEntry",
+					ObjectFieldConstants.DB_TYPE_STRING,
+					"External Reference Code", "externalReferenceCode", false,
+					false, true),
+				newObjectFieldModel(
+					0, objectDefinitionId,
+					ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+					"objectEntryId", "ObjectEntry",
+					ObjectFieldConstants.DB_TYPE_LONG, "ID", "id", false, false,
+					true),
+				newObjectFieldModel(
+					0, objectDefinitionId,
+					ObjectFieldConstants.BUSINESS_TYPE_DATE, "modifiedDate",
+					"ObjectEntry", ObjectFieldConstants.DB_TYPE_DATE,
+					"Modified Date", "modifiedDate", false, false, true),
+				newObjectFieldModel(
+					0, objectDefinitionId,
 					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP,
 					"r_userTicket_userId", dbTableName,
 					ObjectFieldConstants.DB_TYPE_LONG, "Assignee",
 					"r_userTicket_userId", false, false, false),
+				newObjectFieldModel(
+					0, objectDefinitionId,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT, "status",
+					"ObjectEntry", ObjectFieldConstants.DB_TYPE_STRING,
+					"Status", "status", false, false, true),
+				newObjectFieldModel(
+					0, objectDefinitionId,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT, "subject_",
+					dbTableName, ObjectFieldConstants.DB_TYPE_STRING, "Subject",
+					"subject", true, false, false),
 				newObjectFieldModel(
 					listTypeDefinitionId, objectDefinitionId,
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "supportType_",
@@ -5518,59 +5551,20 @@ public class DataFactory {
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 					"ticketStatus_", dbTableName,
 					ObjectFieldConstants.DB_TYPE_STRING, "Ticket Status",
-					"ticketStatus", true, true, false),
-				newObjectFieldModel(
-					0, objectDefinitionId,
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT, "userName",
-					"ObjectEntry", ObjectFieldConstants.DB_TYPE_STRING,
-					"Author", "creator", false, false, true),
-				newObjectFieldModel(
-					0, objectDefinitionId,
-					ObjectFieldConstants.BUSINESS_TYPE_DATE, "modifiedDate",
-					"ObjectEntry", ObjectFieldConstants.DB_TYPE_DATE,
-					"Modified Date", "modifiedDate", false, false, true),
-				newObjectFieldModel(
-					0, objectDefinitionId,
-					ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
-					"objectEntryId", "ObjectEntry",
-					ObjectFieldConstants.DB_TYPE_LONG, "ID", "id", false, false,
-					true),
-				newObjectFieldModel(
-					0, objectDefinitionId,
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					"externalReferenceCode", "ObjectEntry",
-					ObjectFieldConstants.DB_TYPE_STRING,
-					"External Reference Code", "externalReferenceCode", false,
-					false, true),
-				newObjectFieldModel(
-					0, objectDefinitionId,
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT, "status",
-					"ObjectEntry", ObjectFieldConstants.DB_TYPE_STRING,
-					"Status", "status", false, false, true),
-				newObjectFieldModel(
-					0, objectDefinitionId,
-					ObjectFieldConstants.BUSINESS_TYPE_DATE, "createDate",
-					"ObjectEntry", ObjectFieldConstants.DB_TYPE_DATE,
-					"Create Date", "createDate", false, false, true));
+					"ticketStatus", true, true, false));
 		}
 
 		return ListUtil.fromArray(
 			newObjectFieldModel(
 				listTypeDefinitionId, objectDefinitionId,
+				ObjectFieldConstants.BUSINESS_TYPE_DATE, "createDate",
+				dbTableName, ObjectFieldConstants.DB_TYPE_DATE, "Create Date",
+				"createDate", false, false, true),
+			newObjectFieldModel(
+				listTypeDefinitionId, objectDefinitionId,
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "userName",
 				dbTableName, ObjectFieldConstants.DB_TYPE_STRING, "Author",
 				"creator", false, false, true),
-			newObjectFieldModel(
-				listTypeDefinitionId, objectDefinitionId,
-				ObjectFieldConstants.BUSINESS_TYPE_DATE, "modifiedDate",
-				dbTableName, ObjectFieldConstants.DB_TYPE_DATE, "Modified Date",
-				"modifiedDate", false, false, true),
-			newObjectFieldModel(
-				listTypeDefinitionId, objectDefinitionId,
-				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
-				dbColumnNames[0], dbTableName,
-				ObjectFieldConstants.DB_TYPE_LONG, "ID", "id", false, false,
-				true),
 			newObjectFieldModel(
 				listTypeDefinitionId, objectDefinitionId,
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -5579,14 +5573,20 @@ public class DataFactory {
 				"externalReferenceCode", false, false, true),
 			newObjectFieldModel(
 				listTypeDefinitionId, objectDefinitionId,
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "status", dbTableName,
-				ObjectFieldConstants.DB_TYPE_STRING, "Status", "status", false,
-				false, true),
+				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+				dbColumnNames[0], dbTableName,
+				ObjectFieldConstants.DB_TYPE_LONG, "ID", "id", false, false,
+				true),
 			newObjectFieldModel(
 				listTypeDefinitionId, objectDefinitionId,
-				ObjectFieldConstants.BUSINESS_TYPE_DATE, "createDate",
-				dbTableName, ObjectFieldConstants.DB_TYPE_DATE, "Create Date",
-				"createDate", false, false, true));
+				ObjectFieldConstants.BUSINESS_TYPE_DATE, "modifiedDate",
+				dbTableName, ObjectFieldConstants.DB_TYPE_DATE, "Modified Date",
+				"modifiedDate", false, false, true),
+			newObjectFieldModel(
+				listTypeDefinitionId, objectDefinitionId,
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "status", dbTableName,
+				ObjectFieldConstants.DB_TYPE_STRING, "Status", "status", false,
+				false, true));
 	}
 
 	public ObjectFieldSettingModel newObjectFieldSettingModel(

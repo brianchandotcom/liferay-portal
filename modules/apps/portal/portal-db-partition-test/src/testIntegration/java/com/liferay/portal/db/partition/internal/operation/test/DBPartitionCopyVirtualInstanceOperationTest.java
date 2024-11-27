@@ -10,10 +10,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -23,6 +26,7 @@ import org.junit.runner.RunWith;
 /**
  * @author István András Dézsi
  */
+@DataGuard(scope = DataGuard.Scope.NONE)
 @RunWith(Arquillian.class)
 public class DBPartitionCopyVirtualInstanceOperationTest
 	extends BaseVirtualInstanceOperationTestCase {
@@ -44,17 +48,28 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 	public void testDeployConfiguration() throws Exception {
 		long[] companyIds = PortalInstancePool.getCompanyIds();
 
-		deployConfiguration(
-			_PID,
-			StringBundler.concat(
-				"name=\"testName\"\nsourcePartitionCompanyId=L\"",
-				_company.getCompanyId(), "\"\nvirtualHostname=",
-				"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
+		try {
+			deployConfiguration(
+				_PID,
+				StringBundler.concat(
+					"name=\"testName\"\nsourcePartitionCompanyId=L\"",
+					_company.getCompanyId(), "\"\nvirtualHostname=",
+					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
 
-		Assert.assertEquals(
-			companyIds.length + 1, PortalInstancePool.getCompanyIds().length);
+			Assert.assertEquals(
+				companyIds.length + 1,
+				PortalInstancePool.getCompanyIds().length);
 
-		assertConfigurationIsDeletedAfterDeploy(_PID);
+			assertConfigurationIsDeletedAfterDeploy(_PID);
+		}
+		finally {
+			Company company = _companyLocalService.fetchCompanyByVirtualHost(
+				"testVirtualHostname");
+
+			if (company != null) {
+				_companyLocalService.deleteCompany(company);
+			}
+		}
 	}
 
 	@Test
@@ -89,5 +104,8 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 			"DBPartitionCopyVirtualInstanceConfiguration";
 
 	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 }

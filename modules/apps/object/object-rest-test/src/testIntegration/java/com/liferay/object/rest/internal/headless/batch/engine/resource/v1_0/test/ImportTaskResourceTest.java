@@ -35,103 +35,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 
 	@Test
-	public void testPostImportTaskWithRestrictedFieldNamesParam() throws Exception {
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		JSONObject beforeImportJSONObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"/by-external-reference-code/",
-				objectEntry.getExternalReferenceCode(),
-				"?nestedFields=permissions"),
-			Http.Method.GET);
-
-		// With "restrictedFieldNames" query parameter
-
-		waitForFinish(
-			"COMPLETED", true,
-			HTTPTestUtil.invokeToJSONObject(
-				StringBundler.concat(
-					"[", _addViewPermission(beforeImportJSONObject, role), "]"),
-				StringBundler.concat(
-					"headless-batch-engine/v1.0/import-task",
-					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
-					"?taskItemDelegateName=", objectDefinition.getName(),
-					"&createStrategy=UPSERT&restrictedFieldNames=permissions,",
-					OBJECT_FIELD_NAME_TEXT),
-				Http.Method.POST));
-
-		JSONObject afterImport1JSONObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"/by-external-reference-code/",
-				objectEntry.getExternalReferenceCode(),
-				"?nestedFields=permissions"),
-			Http.Method.GET);
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"permissions",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"actionIds",
-						JSONUtil.putAll(
-							"DELETE", "PERMISSIONS", "UPDATE", "VIEW")
-					).put(
-						"roleName", "Owner"
-					))
-			).toString(),
-			afterImport1JSONObject.toString(), JSONCompareMode.LENIENT);
-
-		// Without "restrictedFieldNames" query parameter
-
-		waitForFinish(
-			"COMPLETED", true,
-			HTTPTestUtil.invokeToJSONObject(
-				StringBundler.concat(
-					"[", _addViewPermission(beforeImportJSONObject, role), "]"),
-				StringBundler.concat(
-					"headless-batch-engine/v1.0/import-task",
-					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
-					"?taskItemDelegateName=", objectDefinition.getName(),
-					"&createStrategy=UPSERT"),
-				Http.Method.POST));
-
-		JSONObject afterImport2JSONObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"/by-external-reference-code/",
-				objectEntry.getExternalReferenceCode(),
-				"?nestedFields=permissions"),
-			Http.Method.GET);
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"permissions",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"actionIds",
-						JSONUtil.putAll(
-							"DELETE", "PERMISSIONS", "UPDATE", "VIEW")
-					).put(
-						"roleName", "Owner"
-					),
-					JSONUtil.put(
-						"actionIds", JSONUtil.putAll("VIEW")
-					).put(
-						"roleName", role.getName()
-					))
-			).toString(),
-			afterImport2JSONObject.toString(), JSONCompareMode.LENIENT);
-	}
-
-	@Test
 	public void testPostImportTaskInsertCreateStrategyWithPermissions()
 		throws Exception {
 
@@ -428,6 +331,105 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 						)))
 			).toString(),
 			afterUpsertJSONObject3.toString(), JSONCompareMode.LENIENT);
+	}
+
+	@Test
+	public void testPostImportTaskWithRestrictedFieldNamesParam()
+		throws Exception {
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		JSONObject beforeImportJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				objectDefinition.getRESTContextPath(),
+				"/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(),
+				"?nestedFields=permissions"),
+			Http.Method.GET);
+
+		// With "restrictedFieldNames" query parameter
+
+		waitForFinish(
+			"COMPLETED", true,
+			HTTPTestUtil.invokeToJSONObject(
+				StringBundler.concat(
+					"[", _addViewPermission(beforeImportJSONObject, role), "]"),
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/import-task",
+					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					"?taskItemDelegateName=", objectDefinition.getName(),
+					"&createStrategy=UPSERT&restrictedFieldNames=permissions,",
+					OBJECT_FIELD_NAME_TEXT),
+				Http.Method.POST));
+
+		JSONObject afterImport1JSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				objectDefinition.getRESTContextPath(),
+				"/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(),
+				"?nestedFields=permissions"),
+			Http.Method.GET);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"permissions",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"actionIds",
+						JSONUtil.putAll(
+							"DELETE", "PERMISSIONS", "UPDATE", "VIEW")
+					).put(
+						"roleName", "Owner"
+					))
+			).toString(),
+			afterImport1JSONObject.toString(), JSONCompareMode.LENIENT);
+
+		// Without 'restrictedFieldNames' query parameter
+
+		waitForFinish(
+			"COMPLETED", true,
+			HTTPTestUtil.invokeToJSONObject(
+				StringBundler.concat(
+					"[", _addViewPermission(beforeImportJSONObject, role), "]"),
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/import-task",
+					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					"?taskItemDelegateName=", objectDefinition.getName(),
+					"&createStrategy=UPSERT"),
+				Http.Method.POST));
+
+		JSONObject afterImport2JSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				objectDefinition.getRESTContextPath(),
+				"/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(),
+				"?nestedFields=permissions"),
+			Http.Method.GET);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"permissions",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"actionIds",
+						JSONUtil.putAll(
+							"DELETE", "PERMISSIONS", "UPDATE", "VIEW")
+					).put(
+						"roleName", "Owner"
+					),
+					JSONUtil.put(
+						"actionIds", JSONUtil.putAll("VIEW")
+					).put(
+						"roleName", role.getName()
+					))
+			).toString(),
+			afterImport2JSONObject.toString(), JSONCompareMode.LENIENT);
 	}
 
 	private JSONObject _addViewPermission(JSONObject jsonObject, Role role) {

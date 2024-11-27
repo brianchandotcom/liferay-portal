@@ -7,6 +7,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPConfigurationListDisplayContext;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.service.CPConfigurationEntryService;
 import com.liferay.commerce.product.service.CPConfigurationListService;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -30,11 +31,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_CONFIGURATION_LISTS,
-		"mvc.command.name=/cp_configuration_lists/add_cp_configuration_list"
+		"mvc.command.name=/cp_configuration_lists/edit_cp_configuration_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class AddCPConfigurationListMVCRenderCommand
+public class EditCPConfigurationEntryMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -55,7 +56,9 @@ public class AddCPConfigurationListMVCRenderCommand
 				cpConfigurationListDisplayContext);
 		}
 		catch (Exception exception) {
-			if (exception instanceof PrincipalException) {
+			if (exception instanceof NoSuchCPDefinitionException ||
+				exception instanceof PrincipalException) {
+
 				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
@@ -64,7 +67,7 @@ public class AddCPConfigurationListMVCRenderCommand
 			throw new PortletException(exception);
 		}
 
-		return "/configuration_list/add_cp_configuration_list.jsp";
+		return "/configuration_list/edit_cp_configuration_entry.jsp";
 	}
 
 	@Reference

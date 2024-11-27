@@ -28,11 +28,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=10",
+	property = "screen.navigation.entry.order:Integer=30",
 	service = ScreenNavigationEntry.class
 )
-public class CPConfigurationListDetailsScreenNavigationEntry
-	extends CPConfigurationListDetailsScreenNavigationCategory
+public class CPConfigurationListEntriesScreenNavigationEntry
+	extends CPConfigurationListEntriesScreenNavigationCategory
 	implements ScreenNavigationEntry<CPConfigurationList> {
 
 	@Override
@@ -57,7 +57,7 @@ public class CPConfigurationListDetailsScreenNavigationEntry
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/configuration_list/details.jsp");
+			"/configuration_list/entries.jsp");
 	}
 
 	@Reference

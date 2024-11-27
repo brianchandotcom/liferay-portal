@@ -27,6 +27,9 @@ public class CommerceProductFDSNames {
 	public static final String PRODUCT_CONFIGURATION_LISTS =
 		CPPortletKeys.CP_CONFIGURATION_LISTS + "-productConfigurationLists";
 
+	public static final String PRODUCT_CONFIGURATIONS =
+		CPPortletKeys.CP_CONFIGURATION_LISTS + "-productConfigurations";
+
 	public static final String PRODUCT_DEFINITION_SPECIFICATIONS =
 		CPPortletKeys.CP_DEFINITIONS + "-productDefinitionSpecifications";
 

@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ScreenReaderAnnouncer} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 
 import {useItems} from '../contexts/ItemsContext';
 import {useDragLayer} from '../contexts/KeyboardDndContext';
@@ -67,28 +68,24 @@ export default function KeyboardMovementText() {
 
 	const items = getFlatItems(useItems());
 
-	const [internalText, setInternalText] = useState(() =>
-		getMovementText(dragLayer, items)
-	);
+	const screenReaderAnnouncerRef = useRef();
+
+	const sendMessage = useCallback((message) => {
+		const ref = screenReaderAnnouncerRef;
+
+		if (ref.current) {
+			ref.current?.sendMessage(message);
+		}
+	}, []);
 
 	useEffect(() => {
-		const addMessageHandler = setTimeout(() => {
-			setInternalText(getMovementText(dragLayer, items));
-		}, 100);
-
-		const removeMessageHandler = setTimeout(() => {
-			setInternalText(getMovementText(dragLayer, items));
-		}, 1000);
-
-		return () => {
-			clearTimeout(addMessageHandler);
-			clearTimeout(removeMessageHandler);
-		};
+		sendMessage(getMovementText(dragLayer, items));
 	}, [dragLayer]); //eslint-disable-line
 
 	return (
-		<span aria-live="assertive" className="sr-only">
-			{internalText}
-		</span>
+		<ScreenReaderAnnouncer
+			aria-live="assertive"
+			ref={screenReaderAnnouncerRef}
+		/>
 	);
 }

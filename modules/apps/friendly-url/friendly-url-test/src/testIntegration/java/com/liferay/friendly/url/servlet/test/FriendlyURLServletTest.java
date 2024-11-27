@@ -742,9 +742,7 @@ public class FriendlyURLServletTest {
 
 		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI, oldFriendlyURL);
-
 		mockHttpServletRequest.setPathInfo(oldPath);
-
 		mockHttpServletRequest.setRequestURI(
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING + oldPath);
 

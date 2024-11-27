@@ -2568,22 +2568,11 @@ components:
                         The page specification's master page external reference code. This property is not applied if
                         the page specification belongs to a master page.
                     type: string
-                styleBook:
+                styleBookReference:
+                    $ref: "#/components/schemas/ItemExternalReference"
                     # @review
                     description:
-                        The style book that is applied to the page specification.
-                    properties:
-                        key:
-                            # @review
-                            description:
-                                The style book's key.
-                            type: string
-                        name:
-                            # @review
-                            description:
-                                The style book's name.
-                            type: string
-                    type: object
+                        A reference to the style book that is applied to the page specification.
                 themeCSSClientExtension:
                     $ref: "#/components/schemas/ClientExtension"
                     # @review

@@ -47,33 +47,6 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 					"DBPartitionCopyVirtualInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
-			deployConfiguration(
-				_PID,
-				StringBundler.concat(
-					"destinationPartitionCompanyId=L\"",
-					PortalInstancePool.getDefaultCompanyId(), "\"\n",
-					"name=\"testName\"\nsourcePartitionCompanyId=L\"",
-					_company.getCompanyId(), "\"\nvirtualHostname=",
-					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
-			assertLog(
-				logCapture,
-				"Virtual instance with company ID " +
-					PortalInstancePool.getDefaultCompanyId() +
-						" already exists");
-		}
-
-		assertConfigurationIsDeletedAfterDeploy(_PID);
-	}
-
-	@Test
-	public void testDeployConfigurationWithoutDestinationCompanyId()
-		throws Exception {
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.db.partition.internal.operation." +
-					"DBPartitionCopyVirtualInstanceOperation",
-				LoggerTestUtil.ERROR)) {
-
 			long[] companyIds = PortalInstancePool.getCompanyIds();
 
 			deployConfiguration(
@@ -90,6 +63,33 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 			Assert.assertTrue(
 				logCapture.getLogEntries(
 				).isEmpty());
+		}
+
+		assertConfigurationIsDeletedAfterDeploy(_PID);
+	}
+
+	@Test
+	public void testDeployConfigurationExistingDestinationCompanyId()
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.db.partition.internal.operation." +
+					"DBPartitionCopyVirtualInstanceOperation",
+				LoggerTestUtil.ERROR)) {
+
+			deployConfiguration(
+				_PID,
+				StringBundler.concat(
+					"destinationPartitionCompanyId=L\"",
+					PortalInstancePool.getDefaultCompanyId(), "\"\n",
+					"name=\"testName\"\nsourcePartitionCompanyId=L\"",
+					_company.getCompanyId(), "\"\nvirtualHostname=",
+					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
+			assertLog(
+				logCapture,
+				"Virtual instance with company ID " +
+					PortalInstancePool.getDefaultCompanyId() +
+						" already exists");
 		}
 
 		assertConfigurationIsDeletedAfterDeploy(_PID);

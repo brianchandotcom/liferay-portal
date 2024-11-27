@@ -686,7 +686,7 @@ public class SitePage implements Serializable {
 	private Supplier<PageSettings> _pageSettingsSupplier;
 
 	@Schema(
-		description = "The page's specifications. A page may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status."
+		description = "The page's specifications. A page may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@Valid
 	public PageSpecification[] getPageSpecifications() {
@@ -724,7 +724,7 @@ public class SitePage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The page's specifications. A page may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status."
+		description = "The page's specifications. A page may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageSpecification[] pageSpecifications;

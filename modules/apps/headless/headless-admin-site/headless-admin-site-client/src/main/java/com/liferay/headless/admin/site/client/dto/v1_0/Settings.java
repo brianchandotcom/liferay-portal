@@ -157,26 +157,30 @@ public class Settings implements Cloneable, Serializable {
 
 	protected String javascript;
 
-	public MasterPage getMasterPage() {
-		return masterPage;
+	public String getMasterPageExternalReferenceCode() {
+		return masterPageExternalReferenceCode;
 	}
 
-	public void setMasterPage(MasterPage masterPage) {
-		this.masterPage = masterPage;
+	public void setMasterPageExternalReferenceCode(
+		String masterPageExternalReferenceCode) {
+
+		this.masterPageExternalReferenceCode = masterPageExternalReferenceCode;
 	}
 
-	public void setMasterPage(
-		UnsafeSupplier<MasterPage, Exception> masterPageUnsafeSupplier) {
+	public void setMasterPageExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			masterPageExternalReferenceCodeUnsafeSupplier) {
 
 		try {
-			masterPage = masterPageUnsafeSupplier.get();
+			masterPageExternalReferenceCode =
+				masterPageExternalReferenceCodeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected MasterPage masterPage;
+	protected String masterPageExternalReferenceCode;
 
 	public StyleBook getStyleBook() {
 		return styleBook;

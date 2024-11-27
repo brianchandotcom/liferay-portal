@@ -1018,6 +1018,14 @@ public abstract class BasePageSpecificationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (pageSpecification.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (pageSpecification.getType() == null) {
 					valid = false;
@@ -1194,6 +1202,17 @@ public abstract class BasePageSpecificationResourceTestCase {
 				if (!Objects.deepEquals(
 						pageSpecification1.getSettings(),
 						pageSpecification2.getSettings())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						pageSpecification1.getStatus(),
+						pageSpecification2.getStatus())) {
 
 					return false;
 				}
@@ -1407,6 +1426,11 @@ public abstract class BasePageSpecificationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("settings")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("status")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

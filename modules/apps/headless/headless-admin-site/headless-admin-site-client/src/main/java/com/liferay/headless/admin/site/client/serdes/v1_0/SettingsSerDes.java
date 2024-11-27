@@ -150,14 +150,18 @@ public class SettingsSerDes {
 			sb.append("\"");
 		}
 
-		if (settings.getMasterPage() != null) {
+		if (settings.getMasterPageExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"masterPage\": ");
+			sb.append("\"masterPageExternalReferenceCode\": ");
 
-			sb.append(String.valueOf(settings.getMasterPage()));
+			sb.append("\"");
+
+			sb.append(_escape(settings.getMasterPageExternalReferenceCode()));
+
+			sb.append("\"");
 		}
 
 		if (settings.getStyleBook() != null) {
@@ -288,11 +292,13 @@ public class SettingsSerDes {
 			map.put("javascript", String.valueOf(settings.getJavascript()));
 		}
 
-		if (settings.getMasterPage() == null) {
-			map.put("masterPage", null);
+		if (settings.getMasterPageExternalReferenceCode() == null) {
+			map.put("masterPageExternalReferenceCode", null);
 		}
 		else {
-			map.put("masterPage", String.valueOf(settings.getMasterPage()));
+			map.put(
+				"masterPageExternalReferenceCode",
+				String.valueOf(settings.getMasterPageExternalReferenceCode()));
 		}
 
 		if (settings.getStyleBook() == null) {
@@ -374,7 +380,10 @@ public class SettingsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "javascript")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "masterPage")) {
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"masterPageExternalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "styleBook")) {
@@ -469,10 +478,13 @@ public class SettingsSerDes {
 					settings.setJavascript((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "masterPage")) {
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"masterPageExternalReferenceCode")) {
+
 				if (jsonParserFieldValue != null) {
-					settings.setMasterPage(
-						MasterPageSerDes.toDTO((String)jsonParserFieldValue));
+					settings.setMasterPageExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "styleBook")) {

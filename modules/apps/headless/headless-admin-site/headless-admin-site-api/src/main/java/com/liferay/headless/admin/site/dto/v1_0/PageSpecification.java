@@ -161,6 +161,60 @@ public abstract class PageSpecification implements Serializable {
 	@JsonIgnore
 	private Supplier<Settings> _settingsSupplier;
 
+	@JsonGetter("status")
+	@Schema(description = "The status of the page specification.")
+	@Valid
+	public Status getStatus() {
+		if (_statusSupplier != null) {
+			status = _statusSupplier.get();
+
+			_statusSupplier = null;
+		}
+
+		return status;
+	}
+
+	@JsonIgnore
+	public String getStatusAsString() {
+		Status status = getStatus();
+
+		if (status == null) {
+			return null;
+		}
+
+		return status.toString();
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+
+		_statusSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setStatus(
+		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
+
+		_statusSupplier = () -> {
+			try {
+				return statusUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The status of the page specification.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Status status;
+
+	@JsonIgnore
+	private Supplier<Status> _statusSupplier;
+
 	@JsonGetter("type")
 	@Schema(description = "The type of the page specification.")
 	@Valid
@@ -268,6 +322,22 @@ public abstract class PageSpecification implements Serializable {
 			sb.append(String.valueOf(settings));
 		}
 
+		Status status = getStatus();
+
+		if (status != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append("\"");
+
+			sb.append(status);
+
+			sb.append("\"");
+		}
+
 		Type type = getType();
 
 		if (type != null) {
@@ -295,6 +365,44 @@ public abstract class PageSpecification implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Status")
+	public static enum Status {
+
+		APPROVED("Approved"), DRAFT("Draft");
+
+		@JsonCreator
+		public static Status create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Status status : values()) {
+				if (Objects.equals(status.getValue(), value)) {
+					return status;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Status(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	@GraphQLName("Type")
 	public static enum Type {

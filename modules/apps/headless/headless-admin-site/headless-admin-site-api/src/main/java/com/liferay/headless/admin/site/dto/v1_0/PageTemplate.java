@@ -507,7 +507,7 @@ public abstract class PageTemplate implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
-		description = "The page template's specifications. A page template of type content may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status. A page template of type widget contains only 1 page specification in published status."
+		description = "The page template's specifications. A page template of type content may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status. A page template of type widget contains only 1 page specification in published status. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@Valid
 	public PageSpecification[] getPageSpecifications() {
@@ -545,7 +545,7 @@ public abstract class PageTemplate implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The page template's specifications. A page template of type content may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status. A page template of type widget contains only 1 page specification in published status."
+		description = "The page template's specifications. A page template of type content may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status. A page template of type widget contains only 1 page specification in published status. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageSpecification[] pageSpecifications;

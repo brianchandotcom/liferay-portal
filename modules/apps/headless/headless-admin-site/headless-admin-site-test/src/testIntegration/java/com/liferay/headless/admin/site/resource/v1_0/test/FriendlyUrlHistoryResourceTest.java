@@ -22,6 +22,7 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServic
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -38,6 +39,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -63,7 +65,7 @@ public class FriendlyUrlHistoryResourceTest
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getDisplayPageLayoutPageTemplateEntry(serviceContext);
 
-		List<String> friendlyURLs = _updateFriendlyURL(
+		List<String> friendlyURLs = _updateLayout(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()));
 
 		FriendlyUrlHistory friendlyUrlHistory =
@@ -126,7 +128,7 @@ public class FriendlyUrlHistoryResourceTest
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId()));
 
-		List<String> friendlyURLs = _updateFriendlyURL(
+		List<String> friendlyURLs = _updateLayout(
 			_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()));
 
 		FriendlyUrlHistory friendlyUrlHistory =
@@ -302,7 +304,7 @@ public class FriendlyUrlHistoryResourceTest
 				Layout layout)
 		throws Exception {
 
-		List<String> friendlyURLs = _updateFriendlyURL(layout);
+		List<String> friendlyURLs = _updateLayout(layout);
 
 		FriendlyUrlHistory friendlyUrlHistory =
 			friendlyUrlHistoryResource.
@@ -317,7 +319,7 @@ public class FriendlyUrlHistoryResourceTest
 			friendlyURLs);
 	}
 
-	private List<String> _updateFriendlyURL(Layout layout) throws Exception {
+	private List<String> _updateLayout(Layout layout) throws Exception {
 		List<String> friendlyURLs = new ArrayList<>();
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(
@@ -334,6 +336,14 @@ public class FriendlyUrlHistoryResourceTest
 				layout.getFriendlyURL(LocaleUtil.getSiteDefault()));
 		}
 
+		for (Locale locale :
+				_language.getAvailableLocales(testGroup.getGroupId())) {
+
+			layout = _layoutLocalService.updateName(
+				layout, RandomTestUtil.randomString(),
+				LocaleUtil.toLanguageId(locale));
+		}
+
 		Collections.reverse(friendlyURLs);
 
 		return friendlyURLs;
@@ -341,6 +351,9 @@ public class FriendlyUrlHistoryResourceTest
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private Language _language;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

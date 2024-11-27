@@ -16,6 +16,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {checkAccessibility} from '../../utils/checkAccessibility';
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import {expandSection} from '../../utils/expandSection';
@@ -29,6 +30,7 @@ import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
+import getGridDefinition from './utils/getGridDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
 const test = mergeTests(
@@ -261,6 +263,72 @@ test.describe('Browser Panel', () => {
 
 		await pageEditorPage.waitForChangesSaved();
 	});
+
+	test(
+		'Hiding a fragment in smaller viewports does not affect Desktop',
+		{tag: ['@LPD-42984']},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a page with a Grid and a Heading fragment inside it
+
+			const headingId = getRandomString();
+			const headingDefinition = getFragmentDefinition({
+				id: headingId,
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const gridDefinition = getGridDefinition({
+				columns: [{pageElements: [headingDefinition], size: 12}],
+				id: getRandomString(),
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([gridDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode of page
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Select the Heading
+
+			await pageEditorPage.selectFragment(headingId);
+
+			// Go to Browser and hide the fragment
+
+			await pageEditorPage.goToSidebarTab('Browser');
+
+			const desktopHeading = pageEditorPage.getFragment(headingId);
+
+			await clickAndExpectToBeHidden({
+				target: desktopHeading,
+				trigger: page
+					.locator('.treeview-link')
+					.getByLabel('Hide Heading'),
+			});
+
+			// Change to Landscape Mobile and show it again
+
+			await pageEditorPage.switchViewport('Landscape Phone');
+
+			const mobileHeading = pageEditorPage.getFragment(headingId, false);
+
+			await clickAndExpectToBeVisible({
+				target: mobileHeading,
+				trigger: page
+					.locator('.treeview-link')
+					.getByLabel('Show Heading'),
+			});
+
+			// Change to Desktop again and check Heading is still hidden
+
+			await pageEditorPage.switchViewport('Desktop');
+
+			await expect(desktopHeading).toBeHidden();
+		}
+	);
 });
 
 test.describe('Fragments Panel', () => {

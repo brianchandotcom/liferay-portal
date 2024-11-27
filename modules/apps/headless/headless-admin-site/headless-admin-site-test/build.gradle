@@ -7,6 +7,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:headless:headless-admin-site:headless-admin-site-api")
 	testIntegrationImplementation project(":apps:headless:headless-admin-site:headless-admin-site-client")
 	testIntegrationImplementation project(":apps:info:info-api")
+	testIntegrationImplementation project(":apps:layout:layout-api")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
 	testIntegrationImplementation project(":apps:layout:layout-test-util")
 	testIntegrationImplementation project(":apps:layout:layout-utility-page-api")
@@ -15,5 +16,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationImplementation project(":apps:segments:segments-api")
 	testIntegrationImplementation project(":apps:segments:segments-test-util")
+	testIntegrationImplementation project(":apps:style-book:style-book-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.text.Format;
 
@@ -206,7 +207,8 @@ public class ObjectEntryUtil {
 
 				properties.put(
 					infoField.getName() + "_i18n",
-					infoLocalizedValue.getValues());
+					LocalizedMapUtil.getI18nMap(
+						infoLocalizedValue.getValues()));
 			}
 			else {
 				properties.put(infoField.getName(), value);

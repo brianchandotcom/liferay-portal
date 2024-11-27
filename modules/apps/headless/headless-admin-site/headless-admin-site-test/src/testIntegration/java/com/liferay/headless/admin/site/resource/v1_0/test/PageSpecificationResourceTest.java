@@ -304,7 +304,7 @@ public class PageSpecificationResourceTest
 		UnicodeProperties themeSettingsUnicodeProperties =
 			_getThemeSettingsUnicodeProperties(unicodeProperties);
 
-		if (themeSettingsUnicodeProperties.size() == 0) {
+		if (themeSettingsUnicodeProperties.isEmpty()) {
 			Assert.assertNull(settings.getThemeSettings());
 		}
 		else {

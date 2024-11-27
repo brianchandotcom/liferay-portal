@@ -384,7 +384,8 @@ public class AuditDisplayContext {
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + param,
 			ParamUtil.getInteger(
 				(HttpServletRequest)_servletRequestWrapper.getRequest(), param,
-				defaultValue));
+				ParamUtil.getInteger(
+					_httpServletRequest, param, defaultValue)));
 	}
 
 	private PortletURL _getPortletURL() throws Exception {

@@ -6,10 +6,13 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.client.dto.v1_0.StyleBook;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
+import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -24,6 +27,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -33,13 +37,19 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -51,27 +61,62 @@ import org.junit.runner.RunWith;
 public class PageSpecificationResourceTest
 	extends BasePageSpecificationResourceTestCase {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageSpecification()
 		throws Exception {
 
-		_testGetSiteSiteByExternalReferenceCodePageSpecification(_addLayout());
-	}
-
-	private Layout _addLayout() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(
+			_addLayout(LayoutConstants.TYPE_PORTLET, serviceContext));
+
+		Layout layout = _addLayout(
+			LayoutConstants.TYPE_CONTENT, serviceContext);
+
+		_assertProblemException(layout);
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(
+			layout.fetchDraftLayout());
+	}
+
+	private Layout _addLayout(String type, ServiceContext serviceContext)
+		throws Exception {
 
 		return _layoutLocalService.addLayout(
 			null, TestPropsValues.getUserId(), testGroup.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
 			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
 			Collections.emptyMap(), Collections.emptyMap(),
-			Collections.emptyMap(), LayoutConstants.TYPE_PORTLET,
-			_getTypeSettings(), false, false, Collections.emptyMap(),
-			_getMasterLayoutPlid(serviceContext), serviceContext);
+			Collections.emptyMap(), type, _getTypeSettings(), false, false,
+			Collections.emptyMap(), _getMasterLayoutPlid(serviceContext),
+			serviceContext);
+	}
+
+	private void _assertContentPageSpecification(
+			ContentPageSpecification contentPageSpecification, Layout layout)
+		throws Exception {
+
+		Assert.assertEquals(
+			PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
+			contentPageSpecification.getType());
+
+		PageExperience[] pageExperiences =
+			contentPageSpecification.getPageExperiences();
+
+		Assert.assertEquals(
+			Arrays.toString(pageExperiences),
+			_segmentsExperienceService.getSegmentsExperiencesCount(
+				layout.getGroupId(), layout.getPlid(), true),
+			pageExperiences.length);
 	}
 
 	private void _assertPageSpecificationSetting(
@@ -167,6 +212,23 @@ public class PageSpecificationResourceTest
 		}
 	}
 
+	private void _assertProblemException(Layout layout) throws Exception {
+		try {
+			pageSpecificationResource.
+				getSiteSiteByExternalReferenceCodePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					layout.getExternalReferenceCode());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
 	private void _assertWidgetPageSpecification(
 		WidgetPageSpecification widgetPageSpecification) {
 
@@ -254,8 +316,14 @@ public class PageSpecificationResourceTest
 				pageSpecification.getStatus());
 		}
 
-		_assertWidgetPageSpecification(
-			(WidgetPageSpecification)pageSpecification);
+		if (layout.isTypeAssetDisplay() || layout.isTypeContent()) {
+			_assertContentPageSpecification(
+				(ContentPageSpecification)pageSpecification, layout);
+		}
+		else {
+			_assertWidgetPageSpecification(
+				(WidgetPageSpecification)pageSpecification);
+		}
 	}
 
 	@Inject
@@ -267,6 +335,9 @@ public class PageSpecificationResourceTest
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private SegmentsExperienceService _segmentsExperienceService;
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

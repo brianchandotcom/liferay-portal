@@ -2162,6 +2162,14 @@ components:
                     type: string
                 settings:
                     $ref: "#/components/schemas/Settings"
+                status:
+                    # @review
+                    description:
+                        The status of the page specification.
+                    enum:
+                        - Approved
+                        - Draft
+                    type: string
                 type:
                     # @review
                     description:

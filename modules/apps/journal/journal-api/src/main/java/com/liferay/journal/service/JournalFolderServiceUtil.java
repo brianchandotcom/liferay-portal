@@ -138,15 +138,6 @@ public class JournalFolderServiceUtil {
 	}
 
 	public static List<Object> getFoldersAndArticles(
-		long groupId, long folderId, int status, int start, int end,
-		OrderByComparator<?> orderByComparator, boolean excludeExpired) {
-
-		return getService().getFoldersAndArticles(
-			groupId, folderId, status, start, end, orderByComparator,
-			excludeExpired);
-	}
-
-	public static List<Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
 		OrderByComparator<?> orderByComparator) {
 
@@ -160,16 +151,6 @@ public class JournalFolderServiceUtil {
 
 		return getService().getFoldersAndArticles(
 			groupId, userId, folderId, status, start, end, orderByComparator);
-	}
-
-	public static List<Object> getFoldersAndArticles(
-		long groupId, long userId, long folderId, int status, int start,
-		int end, OrderByComparator<?> orderByComparator,
-		boolean excludeExpire) {
-
-		return getService().getFoldersAndArticles(
-			groupId, userId, folderId, status, start, end, orderByComparator,
-			excludeExpire);
 	}
 
 	public static List<Object> getFoldersAndArticles(
@@ -194,12 +175,12 @@ public class JournalFolderServiceUtil {
 
 	public static List<Object> getFoldersAndArticles(
 		long groupId, long userId, long folderId, long ddmStructureId,
-		int status, java.util.Locale locale, int start, int end,
-		OrderByComparator<?> orderByComparator, boolean excludeExpired) {
+		int status, java.util.Locale locale, int[] excludedStatus, int start,
+		int end, OrderByComparator<?> orderByComparator) {
 
 		return getService().getFoldersAndArticles(
-			groupId, userId, folderId, ddmStructureId, status, locale, start,
-			end, orderByComparator, excludeExpired);
+			groupId, userId, folderId, ddmStructureId, status, locale,
+			excludedStatus, start, end, orderByComparator);
 	}
 
 	public static int getFoldersAndArticlesCount(
@@ -237,10 +218,10 @@ public class JournalFolderServiceUtil {
 
 	public static int getFoldersAndArticlesCount(
 		long groupId, long userId, long folderId, long ddmStructureId,
-		int status, boolean excludeExpired) {
+		int[] excludedStatus, int status) {
 
 		return getService().getFoldersAndArticlesCount(
-			groupId, userId, folderId, ddmStructureId, status, excludeExpired);
+			groupId, userId, folderId, ddmStructureId, excludedStatus, status);
 	}
 
 	public static int getFoldersCount(long groupId, long parentFolderId) {

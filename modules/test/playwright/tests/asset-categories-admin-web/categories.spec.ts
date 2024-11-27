@@ -9,7 +9,6 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {createCategories} from '../../helpers/CreateCategories';
-import {waitForAlert} from '../../utils/waitForAlert';
 import {assetCategoriesPagesTest} from './fixtures/assetCategoriesAdminPagesTest';
 
 const test = mergeTests(
@@ -19,7 +18,7 @@ const test = mergeTests(
 	loginTest()
 );
 
-test('Add, edit, delete properties in category.', async ({
+test('User can add, edit, delete properties in category.', async ({
 	apiHelpers,
 	assetCategoriesAdminPage,
 	assetCategoriesEditPage,
@@ -27,6 +26,11 @@ test('Add, edit, delete properties in category.', async ({
 	site,
 }) => {
 	const categoryName = 'category-1';
+	const properties = {
+		'key 1 - Category Property': 'value 1 - Category Property',
+		'key 2 - Category Property': 'value 2 - Category Property',
+		'key 3 - Category Property': 'value 3 - Category Property',
+	};
 	await createCategories({
 		apiHelpers,
 		categoryNames: [{name: categoryName}],
@@ -37,49 +41,37 @@ test('Add, edit, delete properties in category.', async ({
 	await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
 
 	await test.step('add', async () => {
-		const properties = {
-			'key 1 - Category Property': 'value 1 - Category Property',
-			'key 2 - Category Property': 'value 2 - Category Property',
-			'key 3 - Category Property': 'value 3 - Category Property',
-		};
-
 		await assetCategoriesEditPage.goto(categoryName);
 		await assetCategoriesEditPage.addProperties(properties);
 
-		await assetCategoriesEditPage.goto(categoryName);
-		await assetCategoriesEditPage.propertiesTab.click();
+		await assetCategoriesEditPage.goToPropertiesTab(categoryName);
 
 		await expect(page.getByLabel('key').first()).toHaveValue(
-			'key 1 - Category Property'
+			Object.keys(properties)[0]
 		);
 		await expect(page.getByLabel('value').nth(1)).toHaveValue(
-			'value 2 - Category Property'
+			Object.values(properties)[1]
 		);
 		await expect(page.getByLabel('value')).toHaveCount(3);
 	});
 
 	await test.step('edit', async () => {
-		await page
-			.getByLabel('value')
-			.nth(1)
-			.fill('value 2 - EDITED Category Property');
-		await assetCategoriesEditPage.saveButton.click();
-		await waitForAlert(page);
+		const editedValue = 'value 2 - EDITED Category Property';
+		await page.getByLabel('value').nth(1).fill(editedValue);
+		await assetCategoriesEditPage.save();
 
-		await assetCategoriesEditPage.goto(categoryName);
-		await assetCategoriesEditPage.propertiesTab.click();
-		await expect(page.getByLabel('value').nth(1)).toHaveValue(
-			'value 2 - EDITED Category Property'
-		);
+		await assetCategoriesEditPage.goToPropertiesTab(categoryName);
+		await expect(page.getByLabel('value').nth(1)).toHaveValue(editedValue);
 	});
 
 	await test.step('delete', async () => {
 		await page.getByRole('button', {name: 'Remove'}).nth(1).click();
-		await assetCategoriesEditPage.saveButton.click();
-		await waitForAlert(page);
+		await assetCategoriesEditPage.save();
 
-		await assetCategoriesEditPage.goto(categoryName);
-		await assetCategoriesEditPage.propertiesTab.click();
+		await assetCategoriesEditPage.goToPropertiesTab(categoryName);
+		await expect(page.getByLabel('value').nth(1)).toHaveValue(
+			Object.values(properties)[2]
+		);
 		await expect(page.getByLabel('value')).toHaveCount(2);
 	});
 });

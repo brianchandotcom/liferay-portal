@@ -30,7 +30,11 @@ export class AssetCategoriesEditPage {
 				.getByRole('row', {name: title})
 				.getByLabel('Show Actions'),
 		});
-		await this.propertiesTab.waitFor();
+	}
+
+	async goToPropertiesTab(title: string) {
+		await this.goto(title);
+		await this.propertiesTab.click();
 	}
 
 	async addProperties(properties: {[key: string]: string}) {
@@ -56,6 +60,11 @@ export class AssetCategoriesEditPage {
 			await valueInput.fill(value);
 		}
 
+		await this.saveButton.click();
+		await waitForAlert(this.page);
+	}
+
+	async save() {
 		await this.saveButton.click();
 		await waitForAlert(this.page);
 	}

@@ -115,6 +115,7 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
+
 	const layoutDataRef = useSelectorRef((store) => store.layoutData);
 
 	const [dragAndDropHoveredItemId, setDragAndDropHoveredItemId] =
@@ -228,7 +229,6 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 						}
 						dispatch={dispatch}
 						node={item}
-						selectedViewportSize={selectedViewportSize}
 						visible={item.hidden || isHovered || isSelected}
 					/>
 				)}

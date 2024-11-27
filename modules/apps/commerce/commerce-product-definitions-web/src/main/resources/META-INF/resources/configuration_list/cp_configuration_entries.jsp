@@ -22,7 +22,7 @@ long cpConfigurationListId = cpConfigurationListDisplayContext.getCPConfiguratio
 		apiURL='<%= "/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/" + cpConfigurationListId + "/product-configurations" %>'
 		fdsActionDropdownItems="<%= cpConfigurationListDisplayContext.getCPConfigurationEntryFDSActionDropdownItems() %>"
 		formName="fm"
-		id="<%= CommerceProductFDSNames.PRODUCT_CONFIGURATIONS %>"
+		id="<%= CPConfigurationFDSNames.PRODUCT_CONFIGURATIONS %>"
 		itemsPerPage="<%= 10 %>"
 		selectedItemsKey="id"
 		selectionType="multiple"

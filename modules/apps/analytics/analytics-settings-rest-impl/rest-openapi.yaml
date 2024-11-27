@@ -116,9 +116,9 @@ components:
                     type: integer
         RecommendationConfiguration:
             properties:
-                mostPopularContentEnabled:
+                contentRecommenderMostPopularItemsEnabled:
                     type: boolean
-                userContentEnabled:
+                contentRecommenderUserPersonalizationEnabled:
                     type: boolean
         Site:
             properties:

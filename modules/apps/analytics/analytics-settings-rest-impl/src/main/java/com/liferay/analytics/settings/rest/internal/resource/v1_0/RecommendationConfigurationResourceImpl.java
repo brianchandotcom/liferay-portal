@@ -40,11 +40,13 @@ public class RecommendationConfigurationResourceImpl
 
 		return new RecommendationConfiguration() {
 			{
-				setMostPopularContentEnabled(
-					analyticsConfiguration::mostPopularContentEnabled);
+				setContentRecommenderMostPopularItemsEnabled(
+					analyticsConfiguration::
+						contentRecommenderMostPopularItemsEnabled);
 
-				setUserContentEnabled(
-					analyticsConfiguration::userContentEnabled);
+				setContentRecommenderUserPersonalizationEnabled(
+					analyticsConfiguration::
+						contentRecommenderUserPersonalizationEnabled);
 			}
 		};
 	}
@@ -57,11 +59,13 @@ public class RecommendationConfigurationResourceImpl
 		_analyticsSettingsManager.updateCompanyConfiguration(
 			contextCompany.getCompanyId(),
 			HashMapBuilder.<String, Object>put(
-				"mostPopularContentEnabled",
-				recommendationConfiguration.getMostPopularContentEnabled()
+				"contentRecommenderMostPopularItemsEnabled",
+				recommendationConfiguration.
+					getContentRecommenderMostPopularItemsEnabled()
 			).put(
-				"userContentEnabled",
-				recommendationConfiguration.getUserContentEnabled()
+				"contentRecommenderUserPersonalizationEnabled",
+				recommendationConfiguration.
+					getContentRecommenderUserPersonalizationEnabled()
 			).build());
 
 		_recommendationConfiguration = recommendationConfiguration;

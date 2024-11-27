@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.internal.index;
 
-import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.events.StartupHelperUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 

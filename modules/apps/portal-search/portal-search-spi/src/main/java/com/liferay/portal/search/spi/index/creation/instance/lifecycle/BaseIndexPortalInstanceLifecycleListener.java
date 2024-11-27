@@ -7,8 +7,8 @@ package com.liferay.portal.search.spi.index.creation.instance.lifecycle;
 
 import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
-import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.events.StartupHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;

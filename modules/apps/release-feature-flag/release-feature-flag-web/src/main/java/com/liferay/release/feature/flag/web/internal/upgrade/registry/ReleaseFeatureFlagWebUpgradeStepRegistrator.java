@@ -5,7 +5,7 @@
 
 package com.liferay.release.feature.flag.web.internal.upgrade.registry;
 
-import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.events.StartupHelperUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

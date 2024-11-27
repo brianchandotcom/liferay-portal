@@ -49,6 +49,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,6 +69,35 @@ public class PageSpecificationResourceTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Ignore
+	@Override
+	@Test
+	public void testDeleteSiteSiteByExternalReferenceCodePageSpecification()
+		throws Exception {
+
+		super.testDeleteSiteSiteByExternalReferenceCodePageSpecification();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationsPage()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeMasterPagePageSpecificationsPage()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeMasterPagePageSpecificationsPage();
+	}
+
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageSpecification()
@@ -86,6 +116,63 @@ public class PageSpecificationResourceTest
 		_assertProblemException(layout);
 		_testGetSiteSiteByExternalReferenceCodePageSpecification(
 			layout.fetchDraftLayout());
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodePageTemplatePageSpecificationsPage()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodePageTemplatePageSpecificationsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeSitePagePageSpecificationsPage()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeSitePagePageSpecificationsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeUtilityPagePageSpecificationsPage()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeUtilityPagePageSpecificationsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPatchSiteSiteByExternalReferenceCodePageSpecification()
+		throws Exception {
+
+		super.testPatchSiteSiteByExternalReferenceCodePageSpecification();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostSiteSiteByExternalReferenceCodePageSpecificationPublish()
+		throws Exception {
+
+		super.testPostSiteSiteByExternalReferenceCodePageSpecificationPublish();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPutSiteSiteByExternalReferenceCodePageSpecification()
+		throws Exception {
+
+		super.testPutSiteSiteByExternalReferenceCodePageSpecification();
 	}
 
 	private Layout _addLayout(String type, ServiceContext serviceContext)

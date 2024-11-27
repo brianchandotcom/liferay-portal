@@ -5,14 +5,14 @@
 
 import {test} from '@playwright/test';
 
-import {DataSetsPage} from '../pages/DataSetsPage';
+import {CustomDataSetsPage} from '../pages/CustomDataSetsPage';
 
-const dataSetsPageTest = test.extend<{
-	dataSetsPage: DataSetsPage;
+const customDataSetsPageTest = test.extend<{
+	customDataSetsPage: CustomDataSetsPage;
 }>({
-	dataSetsPage: async ({page}, use) => {
-		await use(new DataSetsPage(page));
+	customDataSetsPage: async ({page}, use) => {
+		await use(new CustomDataSetsPage(page));
 	},
 });
 
-export {dataSetsPageTest};
+export {customDataSetsPageTest};

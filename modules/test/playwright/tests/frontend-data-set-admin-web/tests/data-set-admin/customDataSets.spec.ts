@@ -16,17 +16,9 @@ export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	dataSetsPageTest,
 	featureFlagsTest({
-		'LPD-37531': false,
 		'LPS-164563': true,
 	}),
 	loginTest()
-);
-
-const dataSetsTabsTest = mergeTests(
-	test,
-	featureFlagsTest({
-		'LPD-37531': true,
-	})
 );
 
 const dataSetERCs = [];
@@ -721,44 +713,6 @@ test(
 			await dataSetsPage.deleteDataSet(
 				tableSectionsWithSpecialCharactersDataSetConfig.name
 			);
-		});
-	}
-);
-
-dataSetsTabsTest(
-	'Check that there are two different tabs to navigate between Custom and System Data Sets',
-	{tag: '@LPD-37431'},
-	async ({dataSetsPage, page}) => {
-		await test.step('Navigate to Data Sets page, Custom Data Sets tab', async () => {
-			await dataSetsPage.goto();
-			await expect(
-				dataSetsPage.dataSetsEmptyState.locator('.c-empty-state-title')
-			).toContainText('No Data Sets Created');
-		});
-
-		await test.step('Create Data Set', async () => {
-			await dataSetsPage.createDataSet(tableSectionsDataSetConfig);
-		});
-
-		await assertTableColumnLabels(page);
-
-		await assertTableCellContent({
-			dataSetConfig: tableSectionsDataSetConfig,
-			page,
-		});
-
-		await assertTableActionLabels(page);
-
-		await test.step('Delete Data Set', async () => {
-			await dataSetsPage.deleteDataSet(tableSectionsDataSetConfig.name);
-		});
-
-		await test.step('Navigate to System Data Sets tab', async () => {
-			await dataSetsPage.goto('System Data Sets');
-
-			await expect(
-				dataSetsPage.dataSetsEmptyState.locator('.c-empty-state-title')
-			).toContainText('No System Data Sets Created');
 		});
 	}
 );

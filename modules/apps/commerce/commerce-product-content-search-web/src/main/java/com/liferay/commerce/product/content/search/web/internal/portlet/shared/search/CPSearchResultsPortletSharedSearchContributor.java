@@ -193,7 +193,8 @@ public class CPSearchResultsPortletSharedSearchContributor
 
 			if (portletPreferences != null) {
 				configurationPaginationDelta = GetterUtil.getInteger(
-					portletPreferences.getValue("paginationDelta", null));
+					portletPreferences.getValue("paginationDelta", null),
+					configurationPaginationDelta);
 			}
 
 			portletSharedSearchSettings.setPaginationDelta(

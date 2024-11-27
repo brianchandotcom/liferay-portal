@@ -127,16 +127,16 @@ public class ExportImportTaskResourceCreatorInfoTest {
 	}
 
 	@Test
-	public void testImportWithInsertAndKeepCreatorUserExistByERC()
+	public void testImportWithInsertAndKeepCreatorUserExistByExternalReferenceCode()
 		throws Exception {
 
-		String userERC = _user.getExternalReferenceCode();
+		String externalReferenceCode = _user.getExternalReferenceCode();
 
 		_userLocalService.deleteUser(_user);
 
 		_user = UserTestUtil.addUser();
 
-		_user.setExternalReferenceCode(userERC);
+		_user.setExternalReferenceCode(externalReferenceCode);
 
 		_user = _userLocalService.updateUser(_user);
 

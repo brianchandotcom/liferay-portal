@@ -292,15 +292,12 @@ public class ObjectEntryModelDocumentContributor
 				for (Map.Entry<String, String> localeMap :
 						localizedValues.entrySet()) {
 
-					String locale = LocaleUtil.fromLanguageId(
-						localeMap.getKey(), true, false
-					).toString();
-
-					String fieldName = objectField.getName();
-
 					_contribute(
-						document, fieldArray, fieldName,
-						localizedValues.get(localeMap.getKey()), locale,
+						document, fieldArray, objectField.getName(),
+						localizedValues.get(localeMap.getKey()),
+						LocaleUtil.fromLanguageId(
+							localeMap.getKey(), true, false
+						).toString(),
 						objectDefinition, objectEntry, objectField, sb, values);
 				}
 			}

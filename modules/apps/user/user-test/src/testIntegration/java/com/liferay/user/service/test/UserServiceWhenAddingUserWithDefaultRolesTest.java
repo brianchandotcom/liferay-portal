@@ -69,16 +69,18 @@ public class UserServiceWhenAddingUserWithDefaultRolesTest {
 		Group group = GroupTestUtil.addGroup();
 
 		portalPreferences.setValue(
-			"", PropsKeys.ADMIN_DEFAULT_GROUP_NAMES,
+			StringPool.BLANK, PropsKeys.ADMIN_DEFAULT_GROUP_NAMES,
 			group.getDescriptiveName());
 
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		portalPreferences.setValue(
-			"", PropsKeys.ADMIN_DEFAULT_USER_GROUP_NAMES, userGroup.getName());
+			StringPool.BLANK, PropsKeys.ADMIN_DEFAULT_USER_GROUP_NAMES,
+			userGroup.getName());
 
 		portalPreferences.setValue(
-			"", PropsKeys.ADMIN_SYNC_DEFAULT_ASSOCIATIONS, "true");
+			StringPool.BLANK, PropsKeys.ADMIN_SYNC_DEFAULT_ASSOCIATIONS,
+			"true");
 
 		PortalPreferencesLocalServiceUtil.updatePreferences(
 			company.getCompanyId(), PortletKeys.PREFS_OWNER_TYPE_COMPANY,
@@ -99,10 +101,15 @@ public class UserServiceWhenAddingUserWithDefaultRolesTest {
 			ArrayUtil.contains(
 				_user.getUserGroupIds(), userGroup.getUserGroupId()));
 
-		_mockHttpServletRequest.setAttribute(
-			WebKeys.USER_ID, _user.getUserId());
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
-		_loginPostAction.run(_mockHttpServletRequest, _mockHttpServletResponse);
+		mockHttpServletRequest.setAttribute(WebKeys.USER_ID, _user.getUserId());
+
+		LoginPostAction loginPostAction = new LoginPostAction();
+
+		loginPostAction.run(
+			mockHttpServletRequest, new MockHttpServletResponse());
 
 		_user = _userLocalService.getUser(_user.getUserId());
 
@@ -151,12 +158,6 @@ public class UserServiceWhenAddingUserWithDefaultRolesTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
-
-	private final LoginPostAction _loginPostAction = new LoginPostAction();
-	private final MockHttpServletRequest _mockHttpServletRequest =
-		new MockHttpServletRequest();
-	private final MockHttpServletResponse _mockHttpServletResponse =
-		new MockHttpServletResponse();
 
 	@Inject
 	private PrefsProps _prefsProps;

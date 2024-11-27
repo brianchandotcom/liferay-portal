@@ -1,38 +1,48 @@
-import BaseScreen from './BaseScreen';
 import ClayButton from '@clayui/button';
 import Modal from 'shared/components/modal';
 import React from 'react';
+import {Text} from '@clayui/core';
 
 interface IReadyToGoProps {
 	onClose: () => void;
 }
 
 const ReadyToGo: React.FC<IReadyToGoProps> = ({onClose}) => (
-	<BaseScreen className='ready-to-go' onClose={onClose}>
-		<Modal.Body className='d-flex flex-column align-items-center'>
+	<>
+		<Modal.Header onClose={onClose} />
+
+		<Modal.Body>
 			{/* TODO: LRAC-7427 Adjust SVGs with Linear Gradients */}
-			<div className='ac-ready-to-use' />
+			<div className='icon analytics-onboarding-ready-to-use' />
 
-			<span className='title d-flex justify-content-center'>
-				{Liferay.Language.get('you-are-ready-to-go')}
-			</span>
+			<div className='text-center mb-4'>
+				<Text size={10} weight='bold'>
+					{Liferay.Language.get('you-are-ready-to-go')}
+				</Text>
 
-			<div className='d-flex description flex-column text-center'>
-				<div className='h4 pb-3'>
-					{Liferay.Language.get('your-workspace-is-all-set-up')}
-				</div>
+				<p>
+					<Text color='secondary' size={6}>
+						{Liferay.Language.get('your-workspace-is-all-set-up')}
+					</Text>
+				</p>
+			</div>
 
-				<div className='h4 pb-3'>
-					{Liferay.Language.get(
-						'tracking-will-start-immediately-however-it-may-take-some-time-for-data-to-appear-in-your-workspace'
-					)}
-				</div>
+			<div className='text-center'>
+				<p>
+					<Text color='secondary'>
+						{Liferay.Language.get(
+							'tracking-will-start-immediately-however-it-may-take-some-time-for-data-to-appear-in-your-workspace'
+						)}
+					</Text>
+				</p>
 
-				<div className='h4'>
-					{Liferay.Language.get(
-						'make-sure-to-set-your-time-period-to-last-24-hours-to-see-if-your-data-is-coming-in-correctly'
-					)}
-				</div>
+				<p>
+					<Text color='secondary'>
+						{Liferay.Language.get(
+							'make-sure-to-set-your-time-period-to-last-24-hours-to-see-if-your-data-is-coming-in-correctly'
+						)}
+					</Text>
+				</p>
 			</div>
 		</Modal.Body>
 
@@ -42,10 +52,10 @@ const ReadyToGo: React.FC<IReadyToGoProps> = ({onClose}) => (
 				displayType='primary'
 				onClick={onClose}
 			>
-				{Liferay.Language.get('next')}
+				{Liferay.Language.get('done')}
 			</ClayButton>
 		</Modal.Footer>
-	</BaseScreen>
+	</>
 );
 
 export default ReadyToGo;

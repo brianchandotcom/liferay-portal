@@ -18,7 +18,12 @@ const Header: React.FC<IHeaderProps> = ({
 	onClose,
 	title
 }) => (
-	<div className={getCN('modal-header', className, {border})}>
+	<div
+		className={getCN('modal-header', className, {
+			border,
+			'has-title': title
+		})}
+	>
 		{title && (
 			<div className='h4 modal-title'>
 				{iconSymbol && (

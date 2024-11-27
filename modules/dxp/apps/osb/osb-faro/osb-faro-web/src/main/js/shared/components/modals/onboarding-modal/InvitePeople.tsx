@@ -1,5 +1,4 @@
 import * as API from 'shared/api';
-import BaseScreen from './BaseScreen';
 import ClayButton from '@clayui/button';
 import InfoPopover from 'shared/components/InfoPopover';
 import Input from 'shared/components/Input';
@@ -11,6 +10,7 @@ import React, {useState} from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {connect, ConnectedProps} from 'react-redux';
+import {Text} from '@clayui/core';
 import {UserRoleNames} from 'shared/util/constants';
 import {validateEmail} from 'shared/util/email-validators';
 
@@ -69,40 +69,50 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 	};
 
 	return (
-		<BaseScreen className='invite-people' onClose={onClose}>
-			<Modal.Body className='d-flex flex-column align-items-center flex-grow-1 justify-content-start'>
-				{/* TODO: LRAC-7427 Adjust SVGs with Linear Gradients */}
-				<div className='ac-invite' />
+		<>
+			<Modal.Header onClose={onClose} />
 
-				<span className='title d-flex justify-content-center'>
-					{sent
-						? Liferay.Language.get('your-invite-was-sent')
-						: Liferay.Language.get('invite-people-to-workspace')}
-				</span>
+			<Modal.Body>
+				{/* TODO: LRAC-7427 Adjust SVGs with Linear Gradients */}
+				<div className='analytics-invite-user-icon icon' />
+
+				<div className='text-center mb-4'>
+					<Text size={10} weight='bold'>
+						{sent
+							? Liferay.Language.get('your-invite-was-sent')
+							: Liferay.Language.get(
+									'invite-people-to-workspace'
+							  )}
+					</Text>
+				</div>
 
 				{sent ? (
-					<div className='description text-center'>
-						<div className='h4'>
+					<div className='text-center'>
+						<Text color='secondary' size={6}>
 							{Liferay.Language.get(
 								'you-can-see-the-new-members-invitation-status-and-role-permissions-under-user-management-in-settings'
 							)}
-						</div>
+						</Text>
 					</div>
 				) : (
-					<div className='add-emails'>
-						<Label>
-							{Liferay.Language.get('add-other-members')}
+					<div>
+						<div className='mb-2'>
+							<Label>
+								<Text size={6} weight='bold'>
+									{Liferay.Language.get('add-other-members')}
+								</Text>
 
-							<InfoPopover
-								className='ml-2'
-								content={Liferay.Language.get(
-									'each-users-role-can-be-set-under-user-management-in-settings'
-								)}
-								title={Liferay.Language.get(
-									'member-permissions'
-								)}
-							/>
-						</Label>
+								<InfoPopover
+									className='ml-2'
+									content={Liferay.Language.get(
+										'each-users-role-can-be-set-under-user-management-in-settings'
+									)}
+									title={Liferay.Language.get(
+										'member-permissions'
+									)}
+								/>
+							</Label>
+						</div>
 
 						<Input.Group>
 							<Input.GroupItem>
@@ -127,16 +137,18 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 							</Input.GroupItem>
 						</Input.Group>
 
-						<div className='secondary-info'>
-							{Liferay.Language.get(
-								'enter-email-addresses-separated-by-spaces-or-commas'
-							)}
+						<div className='mt-1'>
+							<Text color='secondary' size={3}>
+								{Liferay.Language.get(
+									'enter-email-addresses-separated-by-spaces-or-commas'
+								)}
+							</Text>
 						</div>
 					</div>
 				)}
 			</Modal.Body>
 
-			<Modal.Footer className='d-flex justify-content-end'>
+			<Modal.Footer>
 				<ClayButton
 					className='button-root'
 					disabled={sent}
@@ -147,7 +159,7 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 				</ClayButton>
 
 				<ClayButton
-					className='button-root'
+					className='button-root ml-2'
 					disabled={
 						(!inputValue && !emails.length) ||
 						(!!inputValue && !validateEmail(inputValue))
@@ -170,7 +182,7 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 						: Liferay.Language.get('send-invitations')}
 				</ClayButton>
 			</Modal.Footer>
-		</BaseScreen>
+		</>
 	);
 };
 

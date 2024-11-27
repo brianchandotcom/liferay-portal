@@ -43,30 +43,32 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 				"connect.internal.configuration." +
 					"OpenIdConnectProviderConfiguration)");
 
-		if (configurations != null) {
-			for (Configuration configuration : configurations) {
-				Dictionary<String, Object> properties =
-					configuration.getProperties();
+		if (configurations == null) {
+			return;
+		}
 
-				if (properties != null) {
-					String openIdConnectClientId = GetterUtil.getString(
-						properties.get("openIdConnectClientId"));
+		for (Configuration configuration : configurations) {
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
 
-					long discoveryEndPointCacheInMillis = GetterUtil.getLong(
-						properties.get("discoveryEndPointCacheInMillis"));
+			if (properties != null) {
+				String openIdConnectClientId = GetterUtil.getString(
+					properties.get("openIdConnectClientId"));
 
-					try (PreparedStatement preparedStatement =
-							connection.prepareStatement(
-								"update OAuthClientEntry set " +
-									"metadataCacheInMillis = ? where " +
-										"clientId = ?")) {
+				long discoveryEndPointCacheInMillis = GetterUtil.getLong(
+					properties.get("discoveryEndPointCacheInMillis"));
 
-						preparedStatement.setLong(
-							1, discoveryEndPointCacheInMillis);
-						preparedStatement.setString(2, openIdConnectClientId);
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							"update OAuthClientEntry set " +
+								"metadataCacheInMillis = ? where clientId = " +
+									"?")) {
 
-						preparedStatement.execute();
-					}
+					preparedStatement.setLong(
+						1, discoveryEndPointCacheInMillis);
+					preparedStatement.setString(2, openIdConnectClientId);
+
+					preparedStatement.execute();
 				}
 			}
 		}

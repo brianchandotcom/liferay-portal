@@ -11,6 +11,7 @@ import com.liferay.petra.io.Serializer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.events.StartupHelper;
 import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -53,9 +54,10 @@ import org.osgi.framework.ServiceRegistration;
  * @author Alexander Chow
  * @author Raymond Augé
  */
-public class StartupHelperUtil {
+public class StartupHelperImpl implements StartupHelper {
 
-	public static void initResourceActions() {
+	@Override
+	public void initResourceActions() {
 		try {
 			ResourceActionLocalServiceUtil.checkResourceActions();
 		}
@@ -65,7 +67,7 @@ public class StartupHelperUtil {
 
 		try {
 			ResourceActionsUtil.populateModelResources(
-				StartupHelperUtil.class.getClassLoader(),
+				StartupHelperImpl.class.getClassLoader(),
 				PropsValues.RESOURCE_ACTIONS_CONFIGS);
 		}
 		catch (ResourceActionsException resourceActionsException) {
@@ -73,24 +75,28 @@ public class StartupHelperUtil {
 		}
 	}
 
-	public static boolean isDBNew() {
+	@Override
+	public boolean isDBNew() {
 		return _dbNew;
 	}
 
-	public static boolean isDBWarmed() {
-		return _dbWarmedSCLSingleton.getSingleton(
-			StartupHelperUtil::_isDBWarmed);
+	@Override
+	public boolean isDBWarmed() {
+		return _dbWarmedSCLSingleton.getSingleton(this::_isDBWarmed);
 	}
 
-	public static boolean isNewRelease() {
+	@Override
+	public boolean isNewRelease() {
 		return _newRelease;
 	}
 
-	public static boolean isUpgrading() {
+	@Override
+	public boolean isUpgrading() {
 		return _upgrading;
 	}
 
-	public static void printPatchLevel() {
+	@Override
+	public void printPatchLevel() {
 		if (_log.isInfoEnabled()) {
 			String installedPatches = StringUtil.merge(
 				PatcherValues.INSTALLED_PATCH_NAMES,
@@ -106,7 +112,8 @@ public class StartupHelperUtil {
 		}
 	}
 
-	public static void setDBNew(boolean dbNew) {
+	@Override
+	public void setDBNew(boolean dbNew) {
 		if (dbNew != _dbNew) {
 			_dbWarmedSCLSingleton.destroy(null);
 
@@ -114,11 +121,13 @@ public class StartupHelperUtil {
 		}
 	}
 
-	public static void setNewRelease(boolean newRelease) {
+	@Override
+	public void setNewRelease(boolean newRelease) {
 		_newRelease = newRelease;
 	}
 
-	public static void setUpgrading(boolean upgrading) {
+	@Override
+	public void setUpgrading(boolean upgrading) {
 		if (upgrading != _upgrading) {
 			_dbWarmedSCLSingleton.destroy(null);
 
@@ -149,7 +158,8 @@ public class StartupHelperUtil {
 		}
 	}
 
-	public static void upgradeProcess(int buildNumber) throws UpgradeException {
+	@Override
+	public void upgradeProcess(int buildNumber) throws UpgradeException {
 		List<String> upgradeProcessClassNames = new ArrayList<>();
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-157670")) {
@@ -176,7 +186,8 @@ public class StartupHelperUtil {
 		UpgradeProcessUtil.upgradeProcess(buildNumber, upgradeProcesses);
 	}
 
-	public static void verifyRequiredSchemaVersion() throws Exception {
+	@Override
+	public void verifyRequiredSchemaVersion() throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Check the portal's required schema version");
 		}
@@ -212,7 +223,7 @@ public class StartupHelperUtil {
 		}
 	}
 
-	private static boolean _isDBWarmed() {
+	private boolean _isDBWarmed() {
 		boolean dbWarmed = true;
 
 		if (_dbNew || _upgrading ||
@@ -258,13 +269,13 @@ public class StartupHelperUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		StartupHelperUtil.class);
+		StartupHelperImpl.class);
 
-	private static volatile boolean _dbNew;
-	private static final DCLSingleton<Boolean> _dbWarmedSCLSingleton =
+	private volatile boolean _dbNew;
+	private final DCLSingleton<Boolean> _dbWarmedSCLSingleton =
 		new DCLSingleton<>();
-	private static boolean _newRelease;
-	private static volatile ServiceRegistration<?> _serviceRegistration;
-	private static volatile boolean _upgrading;
+	private boolean _newRelease;
+	private volatile ServiceRegistration<?> _serviceRegistration;
+	private volatile boolean _upgrading;
 
 }

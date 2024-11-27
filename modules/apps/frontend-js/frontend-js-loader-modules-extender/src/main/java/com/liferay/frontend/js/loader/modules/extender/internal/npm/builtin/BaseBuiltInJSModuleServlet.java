@@ -109,11 +109,10 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 			String pathInfo)
 		throws IOException {
 
-		JSPackage jsPackage = resourceDescriptor.getJsPackage();
+		InputStream inputStream = null;
 
 		String extension = FileUtil.getExtension(pathInfo);
-
-		InputStream inputStream = null;
+		JSPackage jsPackage = resourceDescriptor.getJsPackage();
 
 		String moduleName = resourceDescriptor.getPackagePath();
 

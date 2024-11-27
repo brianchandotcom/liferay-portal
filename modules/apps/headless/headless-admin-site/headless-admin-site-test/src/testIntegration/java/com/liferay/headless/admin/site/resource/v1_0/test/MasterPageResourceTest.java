@@ -229,7 +229,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 					patchSiteSiteByExternalReferenceCodeMasterPage(
 						testGroup.getExternalReferenceCode(),
 						liveGroupMasterPage.getExternalReferenceCode(),
-						liveGroupMasterPage));
+						_getMasterPage(
+							null,
+							liveGroupMasterPage.getExternalReferenceCode())));
 	}
 
 	@Ignore
@@ -263,7 +265,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			() ->
 				masterPageResource.putSiteSiteByExternalReferenceCodeMasterPage(
 					testGroup.getExternalReferenceCode(),
-					masterPage.getExternalReferenceCode(), masterPage));
+					masterPage.getExternalReferenceCode(),
+					_getMasterPage(
+						null, masterPage.getExternalReferenceCode())));
 	}
 
 	@Ignore

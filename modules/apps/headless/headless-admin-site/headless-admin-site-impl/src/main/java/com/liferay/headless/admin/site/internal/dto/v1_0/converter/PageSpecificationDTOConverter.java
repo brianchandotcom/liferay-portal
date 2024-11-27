@@ -10,10 +10,12 @@ import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.admin.site.dto.v1_0.ClientExtension;
+import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.dto.v1_0.StyleBook;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -58,30 +60,11 @@ public class PageSpecificationDTOConverter
 			DTOConverterContext dtoConverterContext, Layout layout)
 		throws Exception {
 
-		return new PageSpecification() {
-			{
-				setExternalReferenceCode(layout::getExternalReferenceCode);
-				setSettings(() -> _setSettings(layout));
-				setStatus(
-					() -> {
-						if (!layout.isDraftLayout()) {
-							return Status.APPROVED;
-						}
+		if (layout.isTypeAssetDisplay() || layout.isTypeContent()) {
+			return _toContentPageSpecification(layout);
+		}
 
-						return Status.DRAFT;
-					});
-				setType(
-					() -> {
-						if (layout.isTypeAssetDisplay() ||
-							layout.isTypeContent()) {
-
-							return Type.CONTENT_PAGE_SPECIFICATION;
-						}
-
-						return Type.WIDGET_PAGE_SPECIFICATION;
-					});
-			}
-		};
+		return _toWidgetPageSpecification(layout);
 	}
 
 	private ClientExtension _getClientExtension(
@@ -309,6 +292,35 @@ public class PageSpecificationDTOConverter
 					() -> _getClientExtension(
 						classNameId, layout.getPlid(),
 						ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP));
+			}
+		};
+	}
+
+	private PageSpecification _toContentPageSpecification(Layout layout) {
+		return new ContentPageSpecification() {
+			{
+				setExternalReferenceCode(layout::getExternalReferenceCode);
+				setSettings(() -> _setSettings(layout));
+				setStatus(
+					() -> {
+						if (!layout.isDraftLayout()) {
+							return Status.APPROVED;
+						}
+
+						return Status.DRAFT;
+					});
+				setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
+			}
+		};
+	}
+
+	private PageSpecification _toWidgetPageSpecification(Layout layout) {
+		return new WidgetPageSpecification() {
+			{
+				setExternalReferenceCode(layout::getExternalReferenceCode);
+				setSettings(() -> _setSettings(layout));
+				setStatus(() -> Status.APPROVED);
+				setType(() -> Type.WIDGET_PAGE_SPECIFICATION);
 			}
 		};
 	}

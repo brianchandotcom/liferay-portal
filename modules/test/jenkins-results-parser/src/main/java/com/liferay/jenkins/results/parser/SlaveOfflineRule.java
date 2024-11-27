@@ -156,7 +156,7 @@ public class SlaveOfflineRule {
 			!notificationRecipients.isEmpty()) {
 
 			NotificationUtil.sendEmail(
-				message, "jenkins", "Slave Offline", notificationRecipients);
+				message, "jenkins", "Slave offline", notificationRecipients);
 		}
 	}
 

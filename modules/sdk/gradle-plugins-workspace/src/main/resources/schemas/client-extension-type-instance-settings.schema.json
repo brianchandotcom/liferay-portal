@@ -145,6 +145,12 @@
 					},
 					"type": "array"
 				},
+				"contentRecommenderMostPopularItemsEnabled": {
+					"type": "boolean"
+				},
+				"contentRecommenderUserPersonalizationEnabled": {
+					"type": "boolean"
+				},
 				"firstSync": {
 					"default": true,
 					"type": "boolean"

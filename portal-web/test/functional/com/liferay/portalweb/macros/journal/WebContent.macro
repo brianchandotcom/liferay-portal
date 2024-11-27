@@ -1207,6 +1207,16 @@ definition {
 	macro editDisplayDate(displayDate = null) {
 		Panel.expandPanel(panel = "Schedule");
 
+		DoubleClick(locator1 = "TextInput#DISPLAY_DATE");
+
+		Type.sendKeys(
+			locator1 = "TextInput#DISPLAY_DATE",
+			value1 = "keys=CONTROL,a");
+
+		KeyPress(
+			locator1 = "TextInput#DISPLAY_DATE",
+			value1 = "\BACK_SPACE");
+
 		Type.clickAtType(
 			locator1 = "TextInput#DISPLAY_DATE",
 			value1 = ${displayDate});

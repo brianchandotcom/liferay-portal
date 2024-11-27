@@ -9,10 +9,12 @@
 
 <%
 AssetDisplayPagesItemSelectorCustomViewDisplayContext assetDisplayPagesItemSelectorCustomViewDisplayContext = (AssetDisplayPagesItemSelectorCustomViewDisplayContext)request.getAttribute(AssetDisplayPagesItemSelectorCustomViewDisplayContext.class.getName());
+
+AssetDisplayPagesItemSelectorCustomViewManagementToolbarDisplayContext assetDisplayPagesItemSelectorCustomViewManagementToolbarDisplayContext = new AssetDisplayPagesItemSelectorCustomViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetDisplayPagesItemSelectorCustomViewDisplayContext);
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new AssetDisplayPagesItemSelectorCustomViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetDisplayPagesItemSelectorCustomViewDisplayContext) %>"
+	managementToolbarDisplayContext="<%= assetDisplayPagesItemSelectorCustomViewManagementToolbarDisplayContext %>"
 />
 
 <clay:container-fluid>
@@ -64,35 +66,41 @@ AssetDisplayPagesItemSelectorCustomViewDisplayContext assetDisplayPagesItemSelec
 </clay:container-fluid>
 
 <aui:script sandbox="<%= true %>">
-	var selectItemHandler = Liferay.Util.delegate(
-		document.querySelector('#<portlet:namespace />displayPages'),
-		'click',
-		'.layout-page-template-entry',
-		(event) => {
-			var domElement = event.delegateTarget.closest('dd');
+	Liferay.componentReady(
+		'<portlet:namespace /><%= assetDisplayPagesItemSelectorCustomViewManagementToolbarDisplayContext.getSearchContainerId() %>'
+	).then(() => {
+		var selectItemHandler = Liferay.Util.delegate(
+			document.querySelector(
+				'#<portlet:namespace /><%= assetDisplayPagesItemSelectorCustomViewManagementToolbarDisplayContext.getSearchContainerId() %>'
+			),
+			'click',
+			'.layout-page-template-entry',
+			(event) => {
+				var domElement = event.delegateTarget.closest('dd');
 
-			var itemValue = '';
+				var itemValue = '';
 
-			if (domElement != null) {
-				itemValue = domElement.dataset.value;
-			}
-
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= assetDisplayPagesItemSelectorCustomViewDisplayContext.getItemSelectedEventName() %>',
-				{
-					data: {
-						returnType:
-							'<%= assetDisplayPagesItemSelectorCustomViewDisplayContext.getReturnType() %>',
-						value: itemValue,
-					},
+				if (domElement != null) {
+					itemValue = domElement.dataset.value;
 				}
-			);
-		}
-	);
 
-	Liferay.on('destroyPortlet', function removeListener() {
-		selectItemHandler.dispose();
+				Liferay.Util.getOpener().Liferay.fire(
+					'<%= assetDisplayPagesItemSelectorCustomViewDisplayContext.getItemSelectedEventName() %>',
+					{
+						data: {
+							returnType:
+								'<%= assetDisplayPagesItemSelectorCustomViewDisplayContext.getReturnType() %>',
+							value: itemValue,
+						},
+					}
+				);
+			}
+		);
 
-		Liferay.detach('destroyPortlet', removeListener);
+		Liferay.on('destroyPortlet', function removeListener() {
+			selectItemHandler.dispose();
+
+			Liferay.detach('destroyPortlet', removeListener);
+		});
 	});
 </aui:script>

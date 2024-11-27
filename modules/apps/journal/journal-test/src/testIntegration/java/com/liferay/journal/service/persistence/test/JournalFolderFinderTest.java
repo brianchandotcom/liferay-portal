@@ -48,9 +48,9 @@ public class JournalFolderFinderTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE,
 			new TransactionalTestRule(
-				Propagation.SUPPORTS, "com.liferay.journal.service"),
-			PermissionCheckerMethodTestRule.INSTANCE);
+				Propagation.SUPPORTS, "com.liferay.journal.service"));
 
 	@Before
 	public void setUp() throws Exception {
@@ -80,7 +80,7 @@ public class JournalFolderFinderTest {
 	}
 
 	@Test
-	public void testCountF_A_ByG_F_DDMSK() throws Exception {
+	public void testCountF_A_ByG_F_DDMSI() {
 		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
@@ -109,75 +109,7 @@ public class JournalFolderFinderTest {
 	}
 
 	@Test
-	public void testFindF_A_ByG_F_DDMSI_NotS() throws Exception {
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		int count = _journalFolderFinder.filterCountF_A_ByG_F_DDMSI_NotS(
-			_group.getGroupId(), _folder1.getFolderId(), 0, null,
-			queryDefinition);
-
-		Assert.assertEquals(4, count);
-
-		List<Object> results =
-			_journalFolderFinder.filterFindF_A_ByG_F_DDMSI_L_NotS(
-				_group.getGroupId(), _folder1.getFolderId(), 0,
-				LocaleUtil.getDefault(), null, queryDefinition);
-
-		Assert.assertEquals(results.toString(), 4, results.size());
-
-		for (Object result : results) {
-			if (result instanceof JournalFolder) {
-				JournalFolder folder = (JournalFolder)result;
-
-				Assert.assertEquals("Folder 2", folder.getName());
-			}
-			else if (result instanceof JournalArticle) {
-				JournalArticle article = (JournalArticle)result;
-
-				String title = article.getTitleCurrentValue();
-
-				Assert.assertTrue(
-					title,
-					title.equals("Article 1") || title.equals("Article 2") ||
-					title.equals("Article 3"));
-			}
-		}
-
-		results = _journalFolderFinder.filterFindF_A_ByG_F_DDMSI_L_NotS(
-			_group.getGroupId(), _folder1.getFolderId(), 0,
-			LocaleUtil.getDefault(),
-			new int[] {WorkflowConstants.STATUS_EXPIRED}, queryDefinition);
-
-		Assert.assertEquals(results.toString(), 3, results.size());
-
-		count = _journalFolderFinder.filterCountF_A_ByG_F_DDMSI_NotS(
-			_group.getGroupId(), _folder1.getFolderId(), 0,
-			new int[] {WorkflowConstants.STATUS_EXPIRED}, queryDefinition);
-
-		Assert.assertEquals(3, count);
-
-		for (Object result : results) {
-			if (result instanceof JournalFolder) {
-				JournalFolder folder = (JournalFolder)result;
-
-				Assert.assertEquals("Folder 2", folder.getName());
-			}
-			else if (result instanceof JournalArticle) {
-				JournalArticle article = (JournalArticle)result;
-
-				String title = article.getTitleCurrentValue();
-
-				Assert.assertTrue(
-					title,
-					title.equals("Article 1") || title.equals("Article 2"));
-			}
-		}
-	}
-
-	@Test
-	public void testFindF_A_ByG_F_DDMSK() throws Exception {
+	public void testFindF_A_ByG_F_DDMSI() {
 		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
@@ -252,6 +184,74 @@ public class JournalFolderFinderTest {
 				Assert.assertTrue(
 					title,
 					title.equals("Article 1") || title.equals("Article 3"));
+			}
+		}
+	}
+
+	@Test
+	public void testFindF_A_ByG_F_DDMSI_NotS() {
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		int count = _journalFolderFinder.filterCountF_A_ByG_F_DDMSI_NotS(
+			_group.getGroupId(), _folder1.getFolderId(), 0, null,
+			queryDefinition);
+
+		Assert.assertEquals(4, count);
+
+		List<Object> results =
+			_journalFolderFinder.filterFindF_A_ByG_F_DDMSI_L_NotS(
+				_group.getGroupId(), _folder1.getFolderId(), 0,
+				LocaleUtil.getDefault(), null, queryDefinition);
+
+		Assert.assertEquals(results.toString(), 4, results.size());
+
+		for (Object result : results) {
+			if (result instanceof JournalFolder) {
+				JournalFolder folder = (JournalFolder)result;
+
+				Assert.assertEquals("Folder 2", folder.getName());
+			}
+			else if (result instanceof JournalArticle) {
+				JournalArticle article = (JournalArticle)result;
+
+				String title = article.getTitleCurrentValue();
+
+				Assert.assertTrue(
+					title,
+					title.equals("Article 1") || title.equals("Article 2") ||
+					title.equals("Article 3"));
+			}
+		}
+
+		results = _journalFolderFinder.filterFindF_A_ByG_F_DDMSI_L_NotS(
+			_group.getGroupId(), _folder1.getFolderId(), 0,
+			LocaleUtil.getDefault(),
+			new int[] {WorkflowConstants.STATUS_EXPIRED}, queryDefinition);
+
+		Assert.assertEquals(results.toString(), 3, results.size());
+
+		count = _journalFolderFinder.filterCountF_A_ByG_F_DDMSI_NotS(
+			_group.getGroupId(), _folder1.getFolderId(), 0,
+			new int[] {WorkflowConstants.STATUS_EXPIRED}, queryDefinition);
+
+		Assert.assertEquals(3, count);
+
+		for (Object result : results) {
+			if (result instanceof JournalFolder) {
+				JournalFolder folder = (JournalFolder)result;
+
+				Assert.assertEquals("Folder 2", folder.getName());
+			}
+			else if (result instanceof JournalArticle) {
+				JournalArticle article = (JournalArticle)result;
+
+				String title = article.getTitleCurrentValue();
+
+				Assert.assertTrue(
+					title,
+					title.equals("Article 1") || title.equals("Article 2"));
 			}
 		}
 	}

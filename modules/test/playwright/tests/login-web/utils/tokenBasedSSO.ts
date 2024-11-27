@@ -71,10 +71,6 @@ export async function resetTokenBasedSSOConfiguration(
 }
 
 export async function saveOrUpdateTokenBasedSSOConfiguration(page: Page) {
-	const updateButton = page.getByRole('button', {
-		name: 'Update',
-	});
-
 	const saveButton = page.getByRole('button', {
 		name: 'Save',
 	});
@@ -82,8 +78,12 @@ export async function saveOrUpdateTokenBasedSSOConfiguration(page: Page) {
 	if (await saveButton.isVisible()) {
 		await saveButton.click();
 	}
-	else if (await updateButton.isVisible()) {
-		await updateButton.click();
+	else {
+		await page
+			.getByRole('button', {
+				name: 'Update',
+			})
+			.click();
 	}
 
 	await waitForAlert(page);

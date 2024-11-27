@@ -42,7 +42,6 @@ public class AuthorizationServerMetadataResolverTest {
 			"https://accounts.google.com/.well-known/openid-configuration";
 
 		int metadataCacheInSecs = 90;
-
 		long oAuthClientEntryId = RandomTestUtil.randomLong();
 
 		OIDCProviderMetadata oidcProviderMetadata1 =

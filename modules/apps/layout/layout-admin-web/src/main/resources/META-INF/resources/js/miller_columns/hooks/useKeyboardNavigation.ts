@@ -106,7 +106,7 @@ export function useKeyboardNavigation({
 		]
 	);
 
-	// Add keyboard listeners when item is target
+	// Focus element when it's target
 
 	useEffect(() => {
 		if (!Liferay.FeatureFlags['LPD-35220'] || !element) {
@@ -114,7 +114,6 @@ export function useKeyboardNavigation({
 		}
 
 		if (isTarget) {
-			element.addEventListener('keydown', onKeyDown);
 
 			// Return if focus is prevented
 
@@ -134,14 +133,11 @@ export function useKeyboardNavigation({
 				column.scrollIntoView({behavior: 'smooth', inline: 'center'});
 			}
 		}
-
-		return () => {
-			element.removeEventListener('keydown', onKeyDown);
-		};
-	}, [element, isTarget, onKeyDown, target.preventFocus]);
+	}, [element, isTarget, target.preventFocus]);
 
 	return {
 		isTarget,
+		onKeyDown,
 	};
 }
 

@@ -300,7 +300,7 @@ const MillerColumnsItem = ({
 		rtl,
 	});
 
-	const {isTarget: isNavigationTarget} = useKeyboardNavigation({
+	const {isTarget: isNavigationTarget, onKeyDown} = useKeyboardNavigation({
 		element: ref.current,
 		getItemChildren,
 		item,
@@ -374,6 +374,7 @@ const MillerColumnsItem = ({
 			})}
 			containerElement="li"
 			data-actions={bulkActions}
+			onKeyDown={onKeyDown}
 			ref={ref}
 			role="none"
 			verticalAlign="center"
@@ -415,6 +416,18 @@ const MillerColumnsItem = ({
 										: [item];
 
 									enableMovement(sources);
+								}
+							}}
+							onKeyDown={(event) => {
+								if (
+									![
+										'ArrowDown',
+										'ArrowLeft',
+										'ArrowRight',
+										'ArrowUp',
+									].includes(event.key)
+								) {
+									event.stopPropagation();
 								}
 							}}
 							tabIndex={tabIndex}

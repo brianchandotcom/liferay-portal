@@ -8,11 +8,12 @@ package com.liferay.portal.dao.init;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.dao.jdbc.util.DynamicDataSource;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
-import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.events.StartupHelperImpl;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
+import com.liferay.portal.kernel.events.StartupHelperUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -143,6 +144,10 @@ public class DBInitUtil {
 	}
 
 	private static void _init(DB db, Connection connection) throws Exception {
+		StartupHelperUtil startupHelperUtil = new StartupHelperUtil();
+
+		startupHelperUtil.setStartupHelper(new StartupHelperImpl());
+
 		if (_checkDefaultRelease(connection)) {
 			_setSupportsStringCaseSensitiveQuery(db, connection);
 

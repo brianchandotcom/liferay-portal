@@ -11,7 +11,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
-import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.events.StartupHelperImpl;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
+import com.liferay.portal.kernel.events.StartupHelperUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -152,6 +153,10 @@ public class DBUpgrader {
 
 		try {
 			_initUpgradeStopwatch();
+
+			StartupHelperUtil startupHelperUtil = new StartupHelperUtil();
+
+			startupHelperUtil.setStartupHelper(new StartupHelperImpl());
 
 			PortalClassPathUtil.initializeClassPaths(null);
 

@@ -6,7 +6,10 @@
 package com.liferay.saml.internal.servlet.filter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.saml.constants.SamlWebKeys;
@@ -37,17 +40,38 @@ public class SpSessionTerminationSamlPortalFilterTest {
 
 	@Test
 	public void testSpSessionTerminationHasCompanyIdSet() throws Exception {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+
 		SamlProviderConfigurationHelper samlProviderConfigurationHelper =
 			SamlProviderConfigurationHelperUtil.
 				getSamlProviderConfigurationHelper();
 
-		boolean enabled = samlProviderConfigurationHelper.isEnabled();
+		boolean enabledInstanceScope =
+			samlProviderConfigurationHelper.isEnabled();
 
 		samlProviderConfigurationHelper.updateProperties(
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
 				"saml.enabled", "true"
+			).build());
+
+		CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
+
+		samlProviderConfigurationHelper =
+			SamlProviderConfigurationHelperUtil.
+				getSamlProviderConfigurationHelper();
+
+		boolean enabledSystemScope =
+			samlProviderConfigurationHelper.isEnabled();
+
+		samlProviderConfigurationHelper.updateProperties(
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"saml.enabled", "false"
 			).build());
 
 		URL url = new URL("http://localhost:8080/c/portal/saml/acs");
@@ -79,12 +103,25 @@ public class SpSessionTerminationSamlPortalFilterTest {
 			SamlSpSessionLocalServiceUtil.fetchSamlSpSession(
 				samlSpSession.getSamlSpSessionId()));
 
+		CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
+
 		samlProviderConfigurationHelper.updateProperties(
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
-				"saml.enabled", String.valueOf(enabled)
+				"saml.enabled", String.valueOf(enabledSystemScope)
 			).build());
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+
+		samlProviderConfigurationHelper.updateProperties(
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"saml.enabled", String.valueOf(enabledInstanceScope)
+			).build());
+
+		CompanyThreadLocal.setCompanyId(companyId);
 	}
 
 }

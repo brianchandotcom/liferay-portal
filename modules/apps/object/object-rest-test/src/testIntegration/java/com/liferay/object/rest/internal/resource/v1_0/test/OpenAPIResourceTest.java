@@ -330,14 +330,16 @@ public class OpenAPIResourceTest {
 					"/expected_openapi_system_object_relationship.json"));
 
 		JSONAssert.assertEquals(
-			relationshipString, HTTPTestUtil.invokeToJSONObject(
+			relationshipString,
+			HTTPTestUtil.invokeToJSONObject(
 				null,
 				StringBundler.concat(
 					jaxRsApplicationDescriptor.getApplicationPath(),
 					StringPool.SLASH, jaxRsApplicationDescriptor.getVersion(),
 					"/openapi.json"),
 				Http.Method.GET
-			).toString(), JSONCompareMode.LENIENT);
+			).toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	private void _assertOpenAPI(

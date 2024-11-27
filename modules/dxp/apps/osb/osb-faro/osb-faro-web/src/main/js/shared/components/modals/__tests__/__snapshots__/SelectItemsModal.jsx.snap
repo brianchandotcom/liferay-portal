@@ -31,7 +31,7 @@ exports[`SelectItemsModal should render 1`] = `
       class="modal-content"
     >
       <div
-        class="modal-header"
+        class="modal-header has-title"
       >
         <div
           class="h4 modal-title"
@@ -170,7 +170,7 @@ exports[`SelectItemsModal should render items as an entity list 1`] = `
       class="modal-content"
     >
       <div
-        class="modal-header"
+        class="modal-header has-title"
       >
         <div
           class="h4 modal-title"
@@ -309,7 +309,7 @@ exports[`SelectItemsModal should render with a blank submit 1`] = `
       class="modal-content"
     >
       <div
-        class="modal-header"
+        class="modal-header has-title"
       >
         <div
           class="h4 modal-title"
@@ -460,7 +460,7 @@ exports[`SelectItemsModal should render with a custom submit message 1`] = `
       class="modal-content"
     >
       <div
-        class="modal-header"
+        class="modal-header has-title"
       >
         <div
           class="h4 modal-title"
@@ -599,7 +599,7 @@ exports[`SelectItemsModal should render with a custom title 1`] = `
       class="modal-content"
     >
       <div
-        class="modal-header"
+        class="modal-header has-title"
       >
         <div
           class="h4 modal-title"
@@ -738,7 +738,7 @@ exports[`SelectItemsModal should render with a successful submit 1`] = `
       class="modal-content"
     >
       <div
-        class="modal-header"
+        class="modal-header has-title"
       >
         <div
           class="h4 modal-title"
@@ -885,7 +885,7 @@ exports[`SelectItemsModal should render with an unsuccessful submit 1`] = `
       class="modal-content"
     >
       <div
-        class="modal-header"
+        class="modal-header has-title"
       >
         <div
           class="h4 modal-title"
@@ -1036,7 +1036,7 @@ exports[`SelectItemsModal should render with selectedItems 1`] = `
       class="modal-content"
     >
       <div
-        class="modal-header"
+        class="modal-header has-title"
       >
         <div
           class="h4 modal-title"
@@ -1175,7 +1175,7 @@ exports[`SelectItemsModal should render with selectedItems with the disable sele
       class="modal-content"
     >
       <div
-        class="modal-header"
+        class="modal-header has-title"
       >
         <div
           class="h4 modal-title"
@@ -1323,7 +1323,7 @@ exports[`SelectItemsModal should render without a toolbar 1`] = `
       class="modal-content"
     >
       <div
-        class="modal-header"
+        class="modal-header has-title"
       >
         <div
           class="h4 modal-title"
@@ -1390,7 +1390,7 @@ exports[`SelectItemsModal should render without the sort button 1`] = `
       class="modal-content"
     >
       <div
-        class="modal-header"
+        class="modal-header has-title"
       >
         <div
           class="h4 modal-title"

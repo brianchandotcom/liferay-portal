@@ -3,43 +3,41 @@
 exports[`InvitePeople renders 1`] = `
 <div>
   <div
-    class="onboarding-base-screen-root d-flex flex-column flex-grow-1 justify-content-between invite-people"
+    class="modal-header"
+  >
+    <button
+      aria-label="Close"
+      class="button-root close btn btn-secondary"
+      type="button"
+    >
+      <svg
+        class="lexicon-icon lexicon-icon-times icon-root"
+        role="presentation"
+      >
+        <use
+          href="#times"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="modal-body"
   >
     <div
-      class="header"
-    >
-      <div
-        class="d-flex justify-content-end"
-      >
-        <button
-          aria-label="Close"
-          class="button-root close btn btn-secondary"
-          type="button"
-        >
-          <svg
-            class="lexicon-icon lexicon-icon-times icon-root"
-            role="presentation"
-          >
-            <use
-              href="#times"
-            />
-          </svg>
-        </button>
-      </div>
-    </div>
+      class="analytics-invite-user-icon icon"
+    />
     <div
-      class="modal-body d-flex flex-column align-items-center flex-grow-1 justify-content-start"
+      class="text-center mb-4"
     >
-      <div
-        class="ac-invite"
-      />
       <span
-        class="title d-flex justify-content-center"
+        class="text-10 font-weight-bold"
       >
         Invite People to Workspace
       </span>
+    </div>
+    <div>
       <div
-        class="add-emails"
+        class="mb-2"
       >
         <label
           class="form-control-label label-root"
@@ -47,7 +45,11 @@ exports[`InvitePeople renders 1`] = `
           <span
             class="content-container"
           >
-            Add Other Members
+            <span
+              class="text-6 font-weight-bold"
+            >
+              Add Other Members
+            </span>
             <span
               class="info-popover-root ml-2"
             >
@@ -62,52 +64,56 @@ exports[`InvitePeople renders 1`] = `
             </span>
           </span>
         </label>
+      </div>
+      <div
+        class="input-group"
+      >
         <div
-          class="input-group"
+          class="input-group-item"
         >
           <div
-            class="input-group-item"
+            class="input-group-item input-list-root"
           >
             <div
-              class="input-group-item input-list-root"
+              class="form-control form-control-tag-group"
             >
-              <div
-                class="form-control form-control-tag-group"
-              >
-                <input
-                  class="form-control-inset"
-                  placeholder="Enter Email Address"
-                  type="text"
-                  value=""
-                />
-              </div>
+              <input
+                class="form-control-inset"
+                placeholder="Enter Email Address"
+                type="text"
+                value=""
+              />
             </div>
           </div>
         </div>
-        <div
-          class="secondary-info"
+      </div>
+      <div
+        class="mt-1"
+      >
+        <span
+          class="text-3 text-secondary"
         >
           Enter email addresses, separated by spaces or commas.
-        </div>
+        </span>
       </div>
     </div>
-    <div
-      class="modal-footer d-flex justify-content-end"
+  </div>
+  <div
+    class="modal-footer"
+  >
+    <button
+      class="button-root btn btn-secondary"
+      type="button"
     >
-      <button
-        class="button-root btn btn-secondary"
-        type="button"
-      >
-        Skip
-      </button>
-      <button
-        class="button-root btn btn-primary"
-        disabled=""
-        type="button"
-      >
-        Send Invitations
-      </button>
-    </div>
+      Skip
+    </button>
+    <button
+      class="button-root ml-2 btn btn-primary"
+      disabled=""
+      type="button"
+    >
+      Send Invitations
+    </button>
   </div>
 </div>
 `;

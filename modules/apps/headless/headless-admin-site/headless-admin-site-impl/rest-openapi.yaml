@@ -2559,12 +2559,12 @@ components:
                     description:
                         The page specification's JavaScript.
                     type: string
-                masterPage:
-                    $ref: "#/components/schemas/MasterPage"
+                masterPageExternalReferenceCode:
                     # @review
                     description:
-                        The page specification's master page. This property is not applied if the page specification
-                        belongs to a master page.
+                        The page specification's master page external reference code. This property is not applied if
+                        the page specification belongs to a master page.
+                    type: string
                 styleBook:
                     # @review
                     description:

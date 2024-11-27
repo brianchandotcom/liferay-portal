@@ -44,7 +44,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Carolina Barbosa
  */
 @RunWith(Arquillian.class)
-public class ExportTaskResourceTest extends BaseTaskResourceTest {
+public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 
 	@Test
 	public void testPostExportTask() throws Exception {

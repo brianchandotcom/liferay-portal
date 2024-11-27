@@ -10,22 +10,33 @@ import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.client.dto.v1_0.StyleBook;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -45,8 +56,22 @@ public class PageSpecificationResourceTest
 	public void testGetSiteSiteByExternalReferenceCodePageSpecification()
 		throws Exception {
 
-		_testGetSiteSiteByExternalReferenceCodePageSpecification(
-			LayoutTestUtil.addTypePortletLayout(testGroup));
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(_addLayout());
+	}
+
+	private Layout _addLayout() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		return _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(), testGroup.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
+			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
+			Collections.emptyMap(), Collections.emptyMap(),
+			Collections.emptyMap(), LayoutConstants.TYPE_PORTLET,
+			_getTypeSettings(), false, false, Collections.emptyMap(),
+			_getMasterLayoutPlid(serviceContext), serviceContext);
 	}
 
 	private void _assertPageSpecificationSetting(
@@ -152,6 +177,26 @@ public class PageSpecificationResourceTest
 		Assert.assertNull(widgetPageSpecification.getWidgetPageSections());
 	}
 
+	private long _getMasterLayoutPlid(ServiceContext serviceContext)
+		throws Exception {
+
+		if (RandomTestUtil.randomBoolean()) {
+			return 0;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		return layoutPageTemplateEntry.getPlid();
+	}
+
 	private UnicodeProperties _getThemeSettingsUnicodeProperties(
 		UnicodeProperties unicodeProperties) {
 
@@ -168,6 +213,18 @@ public class PageSpecificationResourceTest
 		}
 
 		return themeSettingsUnicodeProperties;
+	}
+
+	private String _getTypeSettings() throws Exception {
+		if (RandomTestUtil.randomBoolean()) {
+			return StringPool.BLANK;
+		}
+
+		return UnicodePropertiesBuilder.put(
+			"javascript", RandomTestUtil.randomString()
+		).put(
+			"lfr-theme:regular:show-maximize-minimize-application-links", true
+		).buildString();
 	}
 
 	private void _testGetSiteSiteByExternalReferenceCodePageSpecification(
@@ -203,6 +260,9 @@ public class PageSpecificationResourceTest
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

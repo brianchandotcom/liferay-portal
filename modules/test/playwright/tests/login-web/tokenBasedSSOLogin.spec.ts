@@ -99,9 +99,10 @@ test.describe('Users could login using Token Based SSO.  See LRQA-27622.', () =>
 		const tokenBasedSSOPage = instanceSettingsPage.page;
 
 		await tokenBasedSSOPage.waitForLoadState();
-
 		await tokenBasedSSOPage.getByLabel('Enabled').check();
+
 		await clickButton(tokenBasedSSOPage);
+
 		await tokenBasedSSOPage.waitForLoadState();
 
 		const token = `test@${DEFAULT_VIRTUAL_INSTANCE_NAME}.com`;

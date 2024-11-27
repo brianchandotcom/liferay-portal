@@ -2120,6 +2120,14 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (productConfiguration.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("allowBackOrder", additionalAssertFieldName)) {
 				if (productConfiguration.getAllowBackOrder() == null) {
 					valid = false;
@@ -2388,6 +2396,17 @@ public abstract class BaseProductConfigurationResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)productConfiguration1.getActions(),
+						(Map)productConfiguration2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("allowBackOrder", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -2703,6 +2722,11 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("allowBackOrder")) {
 			throw new IllegalArgumentException(

@@ -48,6 +48,16 @@ public class ProductConfigurationSerDes {
 
 		sb.append("{");
 
+		if (productConfiguration.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(productConfiguration.getActions()));
+		}
+
 		if (productConfiguration.getAllowBackOrder() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -277,6 +287,14 @@ public class ProductConfigurationSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (productConfiguration.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put(
+				"actions", String.valueOf(productConfiguration.getActions()));
+		}
+
 		if (productConfiguration.getAllowBackOrder() == null) {
 			map.put("allowBackOrder", null);
 		}
@@ -451,7 +469,10 @@ public class ProductConfigurationSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "allowBackOrder")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "allowBackOrder")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -527,7 +548,13 @@ public class ProductConfigurationSerDes {
 			ProductConfiguration productConfiguration,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "allowBackOrder")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					productConfiguration.setActions(
+						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "allowBackOrder")) {
 				if (jsonParserFieldValue != null) {
 					productConfiguration.setAllowBackOrder(
 						(Boolean)jsonParserFieldValue);

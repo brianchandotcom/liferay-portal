@@ -7,9 +7,11 @@ package com.liferay.portal.remote.json.web.service.web.internal.util;
 
 import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.memory.FinalizeManager;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 
-import java.io.IOException;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 
@@ -34,22 +36,38 @@ public class MethodParametersResolverUtil {
 
 		Class<?>[] methodParameterTypes = method.getParameterTypes();
 
-		List<ExtractedParameter> extractedParameterList =
-			MethodParameterExtractor.getMethodParameters(clazz, method);
+		List<ExtractedParameter> extractedParameterList = null;
 
-		methodParameters = new MethodParameter[extractedParameterList.size()];
+		try {
+			extractedParameterList =
+				MethodParameterExtractor.getMethodParameters(clazz, method);
 
-		for (int i = 0; i < extractedParameterList.size(); i++) {
-			methodParameters[i] = new MethodParameter(
-				classLoader, extractedParameterList.get(i).getName(),
-				extractedParameterList.get(i).getSignature(),
-				methodParameterTypes[i]);
+			methodParameters =
+				new MethodParameter[extractedParameterList.size()];
+
+			for (int i = 0; i < extractedParameterList.size(); i++) {
+				methodParameters[i] = new MethodParameter(
+					classLoader,
+					extractedParameterList.get(
+						i
+					).getName(),
+					extractedParameterList.get(
+						i
+					).getSignature(),
+					methodParameterTypes[i]);
+			}
+
+			_methodParameters.put(method, methodParameters);
 		}
-
-		_methodParameters.put(method, methodParameters);
+		catch (PortalException portalException) {
+			_log.error("Error extracting parameters ", portalException);
+		}
 
 		return methodParameters;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MethodParametersResolverUtil.class);
 
 	private static final ConcurrentMap<AccessibleObject, MethodParameter[]>
 		_methodParameters = new ConcurrentReferenceKeyHashMap<>(

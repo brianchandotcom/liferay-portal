@@ -9,12 +9,12 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
-import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
+import {customDataSetsPageTest} from './fixtures/customDataSetsPageTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
 
 const test = mergeTests(
 	dataSetManagerApiHelpersTest,
-	dataSetsPageTest,
+	customDataSetsPageTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),

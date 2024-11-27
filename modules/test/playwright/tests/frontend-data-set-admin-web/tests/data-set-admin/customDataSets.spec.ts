@@ -10,11 +10,11 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {API_ENDPOINT_PATH} from '../../utils/constants';
-import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
+import {customDataSetsPageTest} from './fixtures/customDataSetsPageTest';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
-	dataSetsPageTest,
+	customDataSetsPageTest,
 	featureFlagsTest({
 		'LPS-164563': true,
 	}),
@@ -155,16 +155,18 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 test(
 	'Create data set via UI',
 	{tag: '@LPS-178858'},
-	async ({dataSetsPage, page}) => {
+	async ({customDataSetsPage, page}) => {
 		await test.step('Navigate to Data Set page', async () => {
-			await dataSetsPage.goto();
+			await customDataSetsPage.goto();
 			await expect(
-				dataSetsPage.dataSetsEmptyState.locator('.c-empty-state-title')
+				customDataSetsPage.dataSetsEmptyState.locator(
+					'.c-empty-state-title'
+				)
 			).toContainText('No Data Sets Created');
 		});
 
 		await test.step('Create Data Set', async () => {
-			await dataSetsPage.createDataSet(tableSectionsDataSetConfig);
+			await customDataSetsPage.createDataSet(tableSectionsDataSetConfig);
 		});
 
 		await assertTableColumnLabels(page);
@@ -177,15 +179,17 @@ test(
 		await assertTableActionLabels(page);
 
 		await test.step('Delete Data Set', async () => {
-			await dataSetsPage.deleteDataSet(tableSectionsDataSetConfig.name);
+			await customDataSetsPage.deleteDataSet(
+				tableSectionsDataSetConfig.name
+			);
 		});
 	}
 );
 
-test('Create parameterized data set', async ({dataSetsPage, page}) => {
+test('Create parameterized data set', async ({customDataSetsPage, page}) => {
 	await test.step('Create Data Set', async () => {
-		await dataSetsPage.goto();
-		await dataSetsPage.createDataSet(blogPostsDataSetConfig);
+		await customDataSetsPage.goto();
+		await customDataSetsPage.createDataSet(blogPostsDataSetConfig);
 	});
 
 	await assertTableColumnLabels(page);
@@ -195,14 +199,14 @@ test('Create parameterized data set', async ({dataSetsPage, page}) => {
 	await assertTableActionLabels(page);
 
 	await test.step('Delete Data Set', async () => {
-		await dataSetsPage.deleteDataSet(blogPostsDataSetConfig.name);
+		await customDataSetsPage.deleteDataSet(blogPostsDataSetConfig.name);
 	});
 });
 
 test(
 	'Assert endpoint with resolved paramater is available as an option',
 	{tag: '@LPD-31177'},
-	async ({dataSetsPage}) => {
+	async ({customDataSetsPage}) => {
 		const cartDataSetConfig = {
 			name: 'Carts',
 			restApplication: '/headless-commerce-delivery-cart/v1.0',
@@ -211,12 +215,12 @@ test(
 			restSchema: 'Cart',
 		};
 
-		const modal = dataSetsPage.newDataSetModal;
+		const modal = customDataSetsPage.newDataSetModal;
 
 		await test.step('Go to Data Sets page and open "New" modal', async () => {
-			await dataSetsPage.goto();
+			await customDataSetsPage.goto();
 
-			await dataSetsPage.newDataSetButton.click();
+			await customDataSetsPage.newDataSetButton.click();
 
 			await expect(modal.nameInput).toBeVisible();
 		});
@@ -250,8 +254,8 @@ test(
 );
 
 test('Can paginate created Data Sets', async ({
+	customDataSetsPage,
 	dataSetManagerApiHelpers,
-	dataSetsPage,
 	page,
 }) => {
 	const testDataSetERCs = Array.from(Array(5).keys()).map(() =>
@@ -270,7 +274,7 @@ test('Can paginate created Data Sets', async ({
 	});
 
 	await test.step('Navigate to Data Sets page', async () => {
-		await dataSetsPage.goto();
+		await customDataSetsPage.goto();
 	});
 
 	await assertTableRowsCount(page, 5);
@@ -335,8 +339,8 @@ test('Can paginate created Data Sets', async ({
 });
 
 test('Sort data sets by different columns', async ({
+	customDataSetsPage,
 	dataSetManagerApiHelpers,
-	dataSetsPage,
 	page,
 }) => {
 	const productsDataSetERC = getRandomString();
@@ -379,7 +383,7 @@ test('Sort data sets by different columns', async ({
 	});
 
 	await test.step('Go to Data Sets', async () => {
-		await dataSetsPage.goto();
+		await customDataSetsPage.goto();
 	});
 
 	await assertTableRowsCount(page, 4);
@@ -408,7 +412,7 @@ test('Sort data sets by different columns', async ({
 	});
 
 	await test.step('Sort data sets by "Name" column', async () => {
-		await dataSetsPage.sortBy('Name');
+		await customDataSetsPage.sortBy('Name');
 
 		await assertTableCellContent({
 			dataSetConfig: blogPostsDataSetConfig,
@@ -431,7 +435,7 @@ test('Sort data sets by different columns', async ({
 			rowIndex: 3,
 		});
 
-		await dataSetsPage.sortBy('Name');
+		await customDataSetsPage.sortBy('Name');
 
 		await assertTableCellContent({
 			dataSetConfig: skusDataSetConfig,
@@ -461,7 +465,7 @@ test('Sort data sets by different columns', async ({
 
 		await page.reload();
 
-		await dataSetsPage.sortBy('REST Endpoint');
+		await customDataSetsPage.sortBy('REST Endpoint');
 
 		await assertTableCellContent({
 			dataSetConfig: catalogsDataSetConfig,
@@ -484,7 +488,7 @@ test('Sort data sets by different columns', async ({
 			rowIndex: 3,
 		});
 
-		await dataSetsPage.sortBy('REST Endpoint');
+		await customDataSetsPage.sortBy('REST Endpoint');
 
 		await assertTableCellContent({
 			dataSetConfig: skusDataSetConfig,
@@ -514,7 +518,7 @@ test('Sort data sets by different columns', async ({
 
 		await page.reload();
 
-		await dataSetsPage.sortBy('REST Schema');
+		await customDataSetsPage.sortBy('REST Schema');
 
 		await assertTableCellContent({
 			dataSetConfig: blogPostsDataSetConfig,
@@ -537,7 +541,7 @@ test('Sort data sets by different columns', async ({
 			rowIndex: 3,
 		});
 
-		await dataSetsPage.sortBy('REST Schema');
+		await customDataSetsPage.sortBy('REST Schema');
 
 		await assertTableCellContent({
 			dataSetConfig: skusDataSetConfig,
@@ -567,7 +571,7 @@ test('Sort data sets by different columns', async ({
 
 		await page.reload();
 
-		await dataSetsPage.sortBy('Modified Date');
+		await customDataSetsPage.sortBy('Modified Date');
 
 		await assertTableCellContent({
 			dataSetConfig: blogPostsDataSetConfig,
@@ -597,7 +601,7 @@ test('Sort data sets by different columns', async ({
 
 		await page.reload();
 
-		await dataSetsPage.sortBy('Modified Date');
+		await customDataSetsPage.sortBy('Modified Date');
 
 		await assertTableCellContent({
 			dataSetConfig: blogPostsDataSetConfig,
@@ -625,31 +629,33 @@ test('Sort data sets by different columns', async ({
 test(
 	'Check cancel in Data Set',
 	{tag: ['@LPS-175990', '@LPS-172398']},
-	async ({dataSetsPage, page}) => {
+	async ({customDataSetsPage, page}) => {
 		await test.step('Navigate to Data Set page', async () => {
-			await dataSetsPage.goto();
+			await customDataSetsPage.goto();
 		});
 
 		await test.step('Cannot create a Data Set without a name', async () => {
-			await dataSetsPage.newDataSetButton.click();
-			await dataSetsPage.newDataSetModal.nameInput.waitFor();
+			await customDataSetsPage.newDataSetButton.click();
+			await customDataSetsPage.newDataSetModal.nameInput.waitFor();
 
-			await dataSetsPage.newDataSetModal.nameInput.fill('');
-			await dataSetsPage.newDataSetModal.saveButton.click();
+			await customDataSetsPage.newDataSetModal.nameInput.fill('');
+			await customDataSetsPage.newDataSetModal.saveButton.click();
 
 			await expect(
 				page.getByText('This field is required.', {exact: true})
 			).toBeVisible();
 
-			await dataSetsPage.newDataSetModal.cancel.click();
+			await customDataSetsPage.newDataSetModal.cancel.click();
 
 			await expect(
-				dataSetsPage.dataSetsEmptyState.locator('.c-empty-state-title')
+				customDataSetsPage.dataSetsEmptyState.locator(
+					'.c-empty-state-title'
+				)
 			).toContainText('No Data Sets Created');
 		});
 
 		await test.step('Can create a Data Set using special characters', async () => {
-			await dataSetsPage.createDataSet(
+			await customDataSetsPage.createDataSet(
 				tableSectionsWithSpecialCharactersDataSetConfig
 			);
 		});
@@ -710,7 +716,7 @@ test(
 		});
 
 		await test.step('Delete Data Set', async () => {
-			await dataSetsPage.deleteDataSet(
+			await customDataSetsPage.deleteDataSet(
 				tableSectionsWithSpecialCharactersDataSetConfig.name
 			);
 		});

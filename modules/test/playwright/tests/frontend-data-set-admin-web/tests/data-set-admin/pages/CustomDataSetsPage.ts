@@ -9,7 +9,7 @@ import {ApiHelpers} from '../../../../../helpers/ApiHelpers';
 import {ApplicationsMenuPage} from '../../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {API_ENDPOINT_PATH, DEFAULT_LABEL} from '../../../utils/constants';
 
-export class DataSetsPage {
+export class CustomDataSetsPage {
 	readonly apiHelpers: ApiHelpers;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly basePath: string;

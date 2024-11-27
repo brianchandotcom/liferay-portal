@@ -11,12 +11,12 @@ import getRandomString from '../../../../utils/getRandomString';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import saveFromModal from '../../utils/saveFromModal';
-import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
+import {customDataSetsPageTest} from './fixtures/customDataSetsPageTest';
 import {sortingPageTest} from './fixtures/sortingPageTest';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
-	dataSetsPageTest,
+	customDataSetsPageTest,
 	featureFlagsTest({
 		'LPS-164563': true,
 		'LPS-178052': true,
@@ -660,7 +660,7 @@ test.describe('Sorting in Data Set Manager', () => {
 
 export const applicationPageTest = mergeTests(
 	dataSetManagerApiHelpersTest,
-	dataSetsPageTest,
+	customDataSetsPageTest,
 	featureFlagsTest({
 		'LPS-164563': true,
 		'LPS-178052': true,
@@ -673,8 +673,8 @@ applicationPageTest.describe(
 	() => {
 		applicationPageTest(
 			'When sorting configuration has no labels defined, the order dropdown is not displayed @LPD-19503',
-			async ({dataSetsPage, page}) => {
-				await dataSetsPage.goto();
+			async ({customDataSetsPage, page}) => {
+				await customDataSetsPage.goto();
 
 				await expect(
 					page.getByRole('button', {name: 'Order'})

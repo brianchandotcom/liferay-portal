@@ -8,10 +8,10 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {featureFlagPagesTest} from '../../../feature-flag-web/fixtures/featureFlagPagesTest';
-import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
+import {customDataSetsPageTest} from './fixtures/customDataSetsPageTest';
 
 export const test = mergeTests(
-	dataSetsPageTest,
+	customDataSetsPageTest,
 	featureFlagPagesTest,
 	featureFlagsTest({
 		'LPS-164563': true,
@@ -38,11 +38,11 @@ test.describe('Data Set Manager with Feature Flag Enabled', () => {
 	});
 
 	test('Confirm in the application menu, "Data Set" is in the "Object" category @LPS-188590', async ({
-		dataSetsPage,
+		customDataSetsPage,
 		page,
 	}) => {
 		await test.step('Open the application menu and go to the Control Panel tab', async () => {
-			await dataSetsPage.applicationsMenuPage.goToControlPanel();
+			await customDataSetsPage.applicationsMenuPage.goToControlPanel();
 		});
 
 		await test.step('Check that "Data Sets" is in the "Object" category', async () => {
@@ -57,11 +57,11 @@ test.describe('Data Set Manager with Feature Flag Enabled', () => {
 	});
 
 	test('Confirm in Client Extensions, Frontend Data Set Cell Renderer is displayed @LPS-188590', async ({
-		dataSetsPage,
+		customDataSetsPage,
 		page,
 	}) => {
 		await test.step('Navigate to Client Extensions page', async () => {
-			await dataSetsPage.applicationsMenuPage.goToClientExtensions();
+			await customDataSetsPage.applicationsMenuPage.goToClientExtensions();
 		});
 
 		await test.step('Open add menu', async () => {
@@ -101,7 +101,7 @@ test.describe('Data Set Manager with Feature Flag Enabled', () => {
 });
 
 export const disabledTest = mergeTests(
-	dataSetsPageTest,
+	customDataSetsPageTest,
 	featureFlagPagesTest,
 	featureFlagsTest({
 		'LPS-164563': false,
@@ -112,9 +112,9 @@ export const disabledTest = mergeTests(
 disabledTest.describe('Data Set Manager with Feature Flag Disabled', () => {
 	disabledTest(
 		'Confirm in the application menu, Data Set is not displayed @LPS-188590',
-		async ({dataSetsPage, page}) => {
+		async ({customDataSetsPage, page}) => {
 			await test.step('Open application menu and go to control panel tab', async () => {
-				await dataSetsPage.applicationsMenuPage.goToControlPanel();
+				await customDataSetsPage.applicationsMenuPage.goToControlPanel();
 			});
 
 			await test.step('Check that "Data Sets" is not displayed as a menu item', async () => {
@@ -130,9 +130,9 @@ disabledTest.describe('Data Set Manager with Feature Flag Disabled', () => {
 
 	disabledTest(
 		'Confirm in Client Extensions, Frontend Data Set Cell Renderer is not displayed @LPS-188590',
-		async ({dataSetsPage, page}) => {
+		async ({customDataSetsPage, page}) => {
 			await test.step('Navigate to Client Extensions page', async () => {
-				await dataSetsPage.applicationsMenuPage.goToClientExtensions();
+				await customDataSetsPage.applicationsMenuPage.goToClientExtensions();
 			});
 
 			await test.step('Open add menu', async () => {

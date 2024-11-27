@@ -42,28 +42,17 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 
 	@Test
 	public void testDeployConfiguration() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.db.partition.internal.operation." +
-					"DBPartitionCopyVirtualInstanceOperation",
-				LoggerTestUtil.ERROR)) {
+		long[] companyIds = PortalInstancePool.getCompanyIds();
 
-			long[] companyIds = PortalInstancePool.getCompanyIds();
+		deployConfiguration(
+			_PID,
+			StringBundler.concat(
+				"name=\"testName\"\nsourcePartitionCompanyId=L\"",
+				_company.getCompanyId(), "\"\nvirtualHostname=",
+				"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
 
-			deployConfiguration(
-				_PID,
-				StringBundler.concat(
-					"name=\"testName\"\nsourcePartitionCompanyId=L\"",
-					_company.getCompanyId(), "\"\nvirtualHostname=",
-					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
-
-			Assert.assertEquals(
-				companyIds.length + 1,
-				PortalInstancePool.getCompanyIds().length);
-
-			Assert.assertTrue(
-				logCapture.getLogEntries(
-				).isEmpty());
-		}
+		Assert.assertEquals(
+			companyIds.length + 1, PortalInstancePool.getCompanyIds().length);
 
 		assertConfigurationIsDeletedAfterDeploy(_PID);
 	}

@@ -28,7 +28,6 @@ import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.web.internal.model.ProxyObjectEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -205,15 +204,9 @@ public class ObjectEntryUtil {
 				InfoLocalizedValue<String> infoLocalizedValue =
 					(InfoLocalizedValue<String>)value;
 
-				Map<String, String> map = new HashMap<>();
-
-				for (Locale locale : infoLocalizedValue.getAvailableLocales()) {
-					map.put(
-						LanguageUtil.getLanguageId(locale),
-						infoLocalizedValue.getValue(locale));
-				}
-
-				properties.put(infoField.getName() + "_i18n", map);
+				properties.put(
+					infoField.getName() + "_i18n",
+					infoLocalizedValue.getValues());
 			}
 			else {
 				properties.put(infoField.getName(), value);

@@ -11,6 +11,7 @@ import com.liferay.headless.admin.site.resource.v1_0.PageSpecificationResource;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,12 +39,49 @@ public class PageSpecificationResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		return _pageSpecificationDTOConverter.toDTO(
-			_layoutService.getLayoutByExternalReferenceCode(
-				pageSpecificationExternalReferenceCode,
-				GroupUtil.getGroupId(
-					true, true, contextCompany.getCompanyId(),
-					siteExternalReferenceCode)));
+		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
+			pageSpecificationExternalReferenceCode,
+			GroupUtil.getGroupId(
+				true, true, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
+
+		if (!_isPageSpecificationSupported(layout)) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _pageSpecificationDTOConverter.toDTO(layout);
+	}
+
+	private boolean _isPageSpecificationSupported(Layout layout) {
+		if (_isPublished(layout)) {
+			if (!layout.isApproved() || !layout.isDraftLayout()) {
+				return true;
+			}
+
+			return false;
+		}
+
+		if (layout.isDraftLayout()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isPublished(Layout layout) {
+		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
+			return true;
+		}
+
+		if (layout.isDraftLayout()) {
+			return GetterUtil.getBoolean(
+				layout.getTypeSettingsProperty("published"));
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		return GetterUtil.getBoolean(
+			draftLayout.getTypeSettingsProperty("published"));
 	}
 
 	@Reference

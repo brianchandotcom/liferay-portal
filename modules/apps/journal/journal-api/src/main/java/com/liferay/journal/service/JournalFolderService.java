@@ -109,11 +109,6 @@ public interface JournalFolderService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Object> getFoldersAndArticles(
-		long groupId, long folderId, int status, int start, int end,
-		OrderByComparator<?> orderByComparator, boolean excludeExpired);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
 		OrderByComparator<?> orderByComparator);
 
@@ -121,11 +116,6 @@ public interface JournalFolderService extends BaseService {
 	public List<Object> getFoldersAndArticles(
 		long groupId, long userId, long folderId, int status, int start,
 		int end, OrderByComparator<?> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Object> getFoldersAndArticles(
-		long groupId, long userId, long folderId, int status, int start,
-		int end, OrderByComparator<?> orderByComparator, boolean excludeExpire);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Object> getFoldersAndArticles(
@@ -141,8 +131,8 @@ public interface JournalFolderService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Object> getFoldersAndArticles(
 		long groupId, long userId, long folderId, long ddmStructureId,
-		int status, Locale locale, int start, int end,
-		OrderByComparator<?> orderByComparator, boolean excludeExpired);
+		int status, Locale locale, int[] excludedStatus, int start, int end,
+		OrderByComparator<?> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndArticlesCount(
@@ -167,7 +157,7 @@ public interface JournalFolderService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndArticlesCount(
 		long groupId, long userId, long folderId, long ddmStructureId,
-		int status, boolean excludeExpired);
+		int[] excludedStatus, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersCount(long groupId, long parentFolderId);

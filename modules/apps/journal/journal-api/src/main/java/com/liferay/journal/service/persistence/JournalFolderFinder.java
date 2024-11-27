@@ -18,48 +18,31 @@ public interface JournalFolderFinder {
 		long groupId, long folderId, long ddmStructureId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public int countF_A_ByG_F_DDMSI(
-		long groupId, long folderId, long ddmStructureId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition,
-		boolean excludeExpired);
-
 	public int filterCountF_A_ByG_F_DDMSI(
 		long groupId, long folderId, long ddmStructureId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public int filterCountF_A_ByG_F_DDMSI(
-		long groupId, long folderId, long ddmStructureId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition,
-		boolean excludeExpired);
-
-	public java.util.List<Object> filterFindF_A_ByG_F_DDMSI(
-		long groupId, long folderId, long ddmStructureId,
+	public int filterCountF_A_ByG_F_DDMSI_NotS(
+		long groupId, long folderId, long ddmStructureId, int[] excludedStatus,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 	public java.util.List<Object> filterFindF_A_ByG_F_DDMSI(
 		long groupId, long folderId, long ddmStructureId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition,
-		boolean excludeExpired);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 	public java.util.List<Object> filterFindF_A_ByG_F_DDMSI_L(
 		long groupId, long folderId, long ddmStructureId,
 		java.util.Locale locale,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public java.util.List<Object> filterFindF_A_ByG_F_DDMSI_L(
+	public java.util.List<Object> filterFindF_A_ByG_F_DDMSI_L_NotS(
 		long groupId, long folderId, long ddmStructureId,
-		java.util.Locale locale,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition,
-		boolean excludeExpired);
-
-	public java.util.List<Object> findF_A_ByG_F_DDMSI(
-		long groupId, long folderId, long ddmStructureId,
+		java.util.Locale locale, int[] excludedStatus,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 	public java.util.List<Object> findF_A_ByG_F_DDMSI(
 		long groupId, long folderId, long ddmStructureId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition,
-		boolean excludeExpired);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 	public java.util.List<com.liferay.journal.model.JournalFolder>
 		findF_ByNoAssets();

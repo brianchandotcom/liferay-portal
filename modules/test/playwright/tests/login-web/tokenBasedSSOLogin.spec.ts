@@ -60,9 +60,7 @@ test.beforeAll(async ({browser}) => {
 
 test.describe('Users could login using Token Based SSO.  See LRQA-27622.', () => {
 	test('Verify token based login with default instance', async () => {
-		const token = 'test@liferay.com';
-
-		await verifyTokenBasedSSO(token, defaultBaseUrl);
+		await verifyTokenBasedSSO('test@liferay.com', defaultBaseUrl);
 	});
 
 	test('Verify token based login with virtual instance', async ({

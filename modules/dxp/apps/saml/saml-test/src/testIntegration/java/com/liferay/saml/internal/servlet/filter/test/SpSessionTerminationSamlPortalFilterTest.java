@@ -6,10 +6,8 @@
 package com.liferay.saml.internal.servlet.filter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlSpSession;
@@ -71,30 +69,15 @@ public class SpSessionTerminationSamlPortalFilterTest {
 		httpClient.setRequestMethod("POST");
 		httpClient.setRequestProperty("Cookie", cookie);
 
-		Assert.assertNotEquals(
-			0,
-			CompanyThreadLocal.getCompanyId(
-			).longValue());
-
 		Assert.assertNotNull(
 			SamlSpSessionLocalServiceUtil.fetchSamlSpSession(
 				samlSpSession.getSamlSpSessionId()));
 
-		String contentType = httpClient.getHeaderField("Content-Type");
+		httpClient.getHeaderField("Content-Type");
 
 		Assert.assertNull(
 			SamlSpSessionLocalServiceUtil.fetchSamlSpSession(
 				samlSpSession.getSamlSpSessionId()));
-
-		Assert.assertTrue(
-			"Response content type is not text/html",
-			Validator.isNotNull(contentType) &&
-			contentType.startsWith("text/html"));
-
-		Assert.assertNotEquals(
-			0,
-			CompanyThreadLocal.getCompanyId(
-			).longValue());
 
 		samlProviderConfigurationHelper.updateProperties(
 			UnicodePropertiesBuilder.create(

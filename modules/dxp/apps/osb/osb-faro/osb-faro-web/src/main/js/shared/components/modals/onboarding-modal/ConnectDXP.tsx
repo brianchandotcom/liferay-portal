@@ -1,8 +1,9 @@
 import * as API from 'shared/api';
-import BaseScreen from './BaseScreen';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
+import ClayList from '@clayui/list';
 import CopyButton from 'shared/components/CopyButton';
 import DataSourceQuery, {
 	DataSource,
@@ -16,7 +17,6 @@ import Label from 'shared/components/form/Label';
 import Modal from 'shared/components/modal';
 import React, {FC, useEffect, useRef, useState} from 'react';
 import Select from 'shared/components/Select';
-import StampLabel from 'shared/components/Label';
 import URLConstants from 'shared/util/url-constants';
 import {ActionType, useChannelContext} from 'shared/context/channel';
 import {compose} from 'redux';
@@ -32,6 +32,7 @@ import {get, noop, upperFirst} from 'lodash';
 import {getDefaultChannel} from 'shared/components/channels-menu';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
+import {Text} from '@clayui/core';
 import {useInterval} from 'shared/hooks/useInterval';
 import {useLazyQuery} from '@apollo/react-hooks';
 import {withHistory} from 'shared/hoc';
@@ -51,11 +52,11 @@ const DXP_VERSIONS = {
 
 const DATA_SOURCE_STATUSES = {
 	CONFIGURED: {
-		display: StampLabel.Displays.Success,
+		display: 'success',
 		label: Liferay.Language.get('configured')
 	},
 	UNCONFIGURED: {
-		display: StampLabel.Displays.Secondary,
+		display: 'secondary',
 		label: Liferay.Language.get('unconfigured')
 	}
 };
@@ -83,10 +84,6 @@ interface IConnectDXPWrapperProps {
 	isUpgrading: boolean;
 	onDxpConnected: (dxpConnected: boolean) => void;
 	onPrevious?: () => void;
-}
-
-interface IFooterProps {
-	data: DataSourceData;
 }
 
 interface ITokenInputProps {
@@ -189,9 +186,21 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 		};
 	}, []);
 
+	const getNavHref = () => {
+		const id = get(data, ['dataSources', 0, 'id'], null);
+
+		if (id) {
+			return toRoute(Routes.SETTINGS_DATA_SOURCE, {groupId, id});
+		}
+
+		return toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {groupId});
+	};
+
 	return (
-		<BaseScreen className='connect-dxp' onClose={onClose}>
-			<Modal.Body className='d-flex flex-column align-items-center flex-grow-1 justify-content-center'>
+		<>
+			<Modal.Header onClose={onClose} />
+
+			<Modal.Body>
 				<div className='analytics-to-dxp-container'>
 					<ClayIcon
 						className='icon-root icon-size-xl'
@@ -211,13 +220,17 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 					/>
 				</div>
 
-				<span className='title connect-to-dxp d-flex justify-content-center'>
-					{dxpConnected
-						? Liferay.Language.get(
-								'your-dxp-instance-is-connected-to-analytics-cloud'
-						  )
-						: Liferay.Language.get('connect-your-dxp-analytics')}
-				</span>
+				<div className='text-center mb-4'>
+					<Text size={10} weight='bold'>
+						{dxpConnected
+							? Liferay.Language.get(
+									'your-dxp-instance-is-connected-to-analytics-cloud'
+							  )
+							: Liferay.Language.get(
+									'connect-your-dxp-analytics'
+							  )}
+					</Text>
+				</div>
 
 				{!dxpConnected && (
 					<>
@@ -230,15 +243,35 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 				{dxpConnected && <DxpSyncTable />}
 			</Modal.Body>
 
-			<Footer
-				data={data}
-				dxpConnected={dxpConnected}
-				groupId={groupId}
-				onboarding={onboarding}
-				onClose={onClose}
-				onNext={onNext}
-			/>
-		</BaseScreen>
+			<Modal.Footer>
+				<div>
+					{!(dxpConnected && onboarding) && (
+						<ClayButton
+							className='button-root'
+							disabled={dxpConnected}
+							displayType='secondary'
+							onClick={onboarding ? () => onNext() : onClose}
+						>
+							{onboarding
+								? Liferay.Language.get('skip')
+								: Liferay.Language.get('cancel')}
+						</ClayButton>
+					)}
+
+					<ClayLink
+						button
+						className='button-root ml-2'
+						displayType='primary'
+						href={getNavHref()}
+						onClick={() => (onboarding ? onNext() : onClose())}
+					>
+						{onboarding
+							? Liferay.Language.get('next')
+							: Liferay.Language.get('done')}
+					</ClayLink>
+				</div>
+			</Modal.Footer>
+		</>
 	);
 };
 
@@ -284,87 +317,53 @@ const DxpSyncTable: FC<React.HTMLAttributes<HTMLElement>> = () => {
 	}, [data]);
 
 	return (
-		<div className='success-info w-100'>
-			<div className='container'>
-				<div className='row'>
-					<span className='col'>{Liferay.Language.get('sites')}</span>
+		<div>
+			<ClayList>
+				<ClayList.Item flex>
+					<ClayList.ItemField expand>
+						<Text size={3} weight='bold'>
+							{Liferay.Language.get('sites')}
+						</Text>
+					</ClayList.ItemField>
 
-					<div className='col'>
-						<StampLabel display={sitesDisplay}>
+					<ClayList.ItemField>
+						<ClayLabel
+							className='text-uppercase'
+							displayType={sitesDisplay as any}
+							large
+						>
 							{sitesLabel}
-						</StampLabel>
-					</div>
-				</div>
+						</ClayLabel>
+					</ClayList.ItemField>
+				</ClayList.Item>
 
-				<div className='row'>
-					<span className='col'>
-						{Liferay.Language.get('contacts')}
-					</span>
+				<ClayList.Item flex>
+					<ClayList.ItemField expand>
+						<Text size={3} weight='bold'>
+							{Liferay.Language.get('contacts')}
+						</Text>
+					</ClayList.ItemField>
 
-					<div className='col'>
-						<StampLabel display={contactsDisplay}>
+					<ClayList.ItemField>
+						<ClayLabel
+							className='text-uppercase'
+							displayType={contactsDisplay as any}
+							large
+						>
 							{contactslabel}
-						</StampLabel>
-					</div>
-				</div>
-			</div>
+						</ClayLabel>
+					</ClayList.ItemField>
+				</ClayList.Item>
+			</ClayList>
 
-			<div className='secondary-description mt-1 w-100'>
-				{Liferay.Language.get(
-					'you-can-check-your-data-source-syncing-status-under-settings-in-data-sources,-or-continue-configuring-your-data-source-on-your-dxp-instance'
-				)}
+			<div className='mt-2'>
+				<Text color='secondary' size={3}>
+					{Liferay.Language.get(
+						'you-can-check-your-data-source-syncing-status-under-settings-in-data-sources,-or-continue-configuring-your-data-source-on-your-dxp-instance'
+					)}
+				</Text>
 			</div>
 		</div>
-	);
-};
-
-const Footer: FC<IFooterProps & IConnectDXPProps> = ({
-	data,
-	dxpConnected,
-	groupId,
-	onboarding,
-	onClose,
-	onNext
-}) => {
-	const getNavHref = () => {
-		const id = get(data, ['dataSources', 0, 'id'], null);
-
-		if (id) {
-			return toRoute(Routes.SETTINGS_DATA_SOURCE, {groupId, id});
-		}
-
-		return toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {groupId});
-	};
-
-	return (
-		<Modal.Footer className='d-flex justify-content-end'>
-			<div>
-				{!(dxpConnected && onboarding) && (
-					<ClayButton
-						className='button-root'
-						disabled={dxpConnected}
-						displayType='secondary'
-						onClick={onboarding ? () => onNext() : onClose}
-					>
-						{onboarding
-							? Liferay.Language.get('skip')
-							: Liferay.Language.get('cancel')}
-					</ClayButton>
-				)}
-
-				<ClayLink
-					button
-					className='button-root'
-					displayType='primary'
-					href={getNavHref()}
-					onClick={() => (onboarding ? onNext() : onClose())}
-				>
-					{onboarding
-						? Liferay.Language.get('next')
-						: Liferay.Language.get('done')}
-				</ClayLink>
-			</div>
-		</Modal.Footer>
 	);
 };
 
@@ -374,41 +373,49 @@ const FixPackSelect: FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 	return (
 		<>
-			<div className='secondary-description w-100 ml-6 mt-1'>
-				{sub(
-					Liferay.Language.get(
-						'x-to-learn-how-to-connect-liferay-dxp-to-analytics-cloud'
-					),
-					[
-						<ClayLink
-							href={URLConstants.HelpConnectDxp}
-							key='helpConnectDxpText'
-							target='_blank'
-						>
-							{upperFirst(
-								Liferay.Language.get('click-here').toLowerCase()
-							)}
-						</ClayLink>
-					],
-					false
-				)}
+			<div className='mt-1'>
+				<Text color='secondary' size={3}>
+					{sub(
+						Liferay.Language.get(
+							'x-to-learn-how-to-connect-liferay-dxp-to-analytics-cloud'
+						),
+						[
+							<ClayLink
+								href={URLConstants.HelpConnectDxp}
+								key='helpConnectDxpText'
+								target='_blank'
+							>
+								{upperFirst(
+									Liferay.Language.get(
+										'click-here'
+									).toLowerCase()
+								)}
+							</ClayLink>
+						],
+						false
+					)}
+				</Text>
 			</div>
 
-			<div className='fix-pack-container'>
-				<div className='fix-pack-select'>
-					<Label>
+			<div className='mt-4 mb-1'>
+				<Label>
+					<Text size={6} weight='bold'>
 						{Liferay.Language.get('dxp-requirements')}
+					</Text>
 
-						<InfoPopover
-							className='ml-2'
-							content={Liferay.Language.get(
-								'minimum-fix-pack-version-required-for-full-functionality'
-							)}
-							title={Liferay.Language.get('dxp-requirements')}
-						/>
-					</Label>
+					<InfoPopover
+						className='ml-2'
+						content={Liferay.Language.get(
+							'minimum-fix-pack-version-required-for-full-functionality'
+						)}
+						title={Liferay.Language.get('dxp-requirements')}
+					/>
+				</Label>
+			</div>
+
+			<div className='d-flex align-items-center justify-content-between'>
+				<div className='flex-grow-1 mr-3'>
 					<Select
-						className='mt-1'
 						onChange={({target: {value}}) => setDxpVersion(value)}
 						value={dxpVersion}
 					>
@@ -420,9 +427,11 @@ const FixPackSelect: FC<React.HTMLAttributes<HTMLElement>> = () => {
 					</Select>
 				</div>
 
-				<div className='fix-pack-button'>
+				<div>
 					<ClayLink
-						className='btn btn-secondary button-root more-information-link mt-4'
+						button
+						className='button-root'
+						displayType='secondary'
 						href={DXP_VERSIONS[dxpVersion].url}
 						target='_blank'
 					>
@@ -446,20 +455,25 @@ const TokenInput: FC<ITokenInputProps> = ({token}) => {
 	});
 
 	const _inputRef = useRef<any>();
+
 	const selectAll = () => {
 		_inputRef.current && _inputRef.current.selectAll();
 	};
 
 	return (
 		<>
-			<div className='w-100 ml-6 mt-1 token-info'>
-				{Liferay.Language.get('copy-this-token-to-your-dxp-instance')}
+			<div className='mb-1'>
+				<Text weight='bold'>
+					{Liferay.Language.get(
+						'copy-this-token-to-your-dxp-instance'
+					)}
+				</Text>
 			</div>
 
 			<Input.Group>
 				<Input.GroupItem position='prepend'>
 					<Input
-						className={getCN('text-truncate', 'token-input', {
+						className={getCN('text-truncate', {
 							'input-success': tokenCopied
 						})}
 						inset='after'

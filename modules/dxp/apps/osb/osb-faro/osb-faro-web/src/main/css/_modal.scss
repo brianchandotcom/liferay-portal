@@ -15,6 +15,11 @@
 	}
 
 	.modal-header {
+		&:not(.has-title) {
+			display: flex;
+			justify-content: right;
+		}
+
 		.modal-title-indicator {
 			margin-right: 8px;
 		}

@@ -51,22 +51,26 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		return new String[] {"logoId", "name"};
 	}
 
+	@Override
 	protected Account testGetWarehouseAccountAccount_addAccount()
 		throws Exception {
 
 		return _addAccount();
 	}
 
+	@Override
 	protected Long testGetWarehouseAccountAccount_getWarehouseAccountId()
 		throws Exception {
 
 		return _getWarehouseAccountId();
 	}
 
+	@Override
 	protected Account testGraphQLAccount_addAccount() throws Exception {
 		return _addAccount();
 	}
 
+	@Override
 	protected Long testGraphQLGetWarehouseAccountAccount_getWarehouseAccountId()
 		throws Exception {
 

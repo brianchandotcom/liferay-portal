@@ -59,6 +59,7 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		return new String[] {"name"};
 	}
 
+	@Override
 	protected AccountGroup
 			testGetWarehouseAccountGroupAccountGroup_addAccountGroup()
 		throws Exception {
@@ -66,6 +67,7 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		return _addAccountGroup();
 	}
 
+	@Override
 	protected Long
 			testGetWarehouseAccountGroupAccountGroup_getWarehouseAccountGroupId()
 		throws Exception {
@@ -73,12 +75,14 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		return _getWarehouseAccountGroupId();
 	}
 
+	@Override
 	protected AccountGroup testGraphQLAccountGroup_addAccountGroup()
 		throws Exception {
 
 		return _addAccountGroup();
 	}
 
+	@Override
 	protected Long
 			testGraphQLGetWarehouseAccountGroupAccountGroup_getWarehouseAccountGroupId()
 		throws Exception {

@@ -208,6 +208,7 @@ public class OpenAPIResourceTest {
 
 		try {
 			companyId = jsonObject.getLong("companyId");
+
 			HTTPTestUtil.customize(
 			).withBaseURL(
 				"http://www.able.com:8080"
@@ -323,14 +324,12 @@ public class OpenAPIResourceTest {
 			"relationMToM", false,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
-		String relationshipString = new String(
-			FileUtil.getBytes(
-				getClass(),
-				"dependencies" +
-					"/expected_openapi_system_object_relationship.json"));
-
 		JSONAssert.assertEquals(
-			relationshipString,
+			new String(
+				FileUtil.getBytes(
+					getClass(),
+					"dependencies" +
+						"/expected_openapi_system_object_relationship.json")),
 			HTTPTestUtil.invokeToJSONObject(
 				null,
 				StringBundler.concat(

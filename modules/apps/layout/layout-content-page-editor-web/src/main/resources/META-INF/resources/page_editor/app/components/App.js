@@ -44,7 +44,6 @@ import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 import KeyboardMovementManager from './keyboard_movement/KeyboardMovementManager';
 import KeyboardMovementPreview from './keyboard_movement/KeyboardMovementPreview';
-import KeyboardMovementText from './keyboard_movement/KeyboardMovementText';
 
 export default function App({state}) {
 	const initialState = reducer(state, {type: INIT});
@@ -77,8 +76,6 @@ export default function App({state}) {
 														<KeyboardManager />
 
 														<KeyboardMovementPreview />
-
-														<KeyboardMovementText />
 
 														<PortletContentContextProvider>
 															<LocalConfigContextProvider>

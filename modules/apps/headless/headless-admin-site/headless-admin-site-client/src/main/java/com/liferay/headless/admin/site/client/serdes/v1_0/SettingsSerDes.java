@@ -164,14 +164,14 @@ public class SettingsSerDes {
 			sb.append("\"");
 		}
 
-		if (settings.getStyleBook() != null) {
+		if (settings.getStyleBookReference() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"styleBook\": ");
+			sb.append("\"styleBookReference\": ");
 
-			sb.append(String.valueOf(settings.getStyleBook()));
+			sb.append(String.valueOf(settings.getStyleBookReference()));
 		}
 
 		if (settings.getThemeCSSClientExtension() != null) {
@@ -301,11 +301,13 @@ public class SettingsSerDes {
 				String.valueOf(settings.getMasterPageExternalReferenceCode()));
 		}
 
-		if (settings.getStyleBook() == null) {
-			map.put("styleBook", null);
+		if (settings.getStyleBookReference() == null) {
+			map.put("styleBookReference", null);
 		}
 		else {
-			map.put("styleBook", String.valueOf(settings.getStyleBook()));
+			map.put(
+				"styleBookReference",
+				String.valueOf(settings.getStyleBookReference()));
 		}
 
 		if (settings.getThemeCSSClientExtension() == null) {
@@ -386,7 +388,9 @@ public class SettingsSerDes {
 
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "styleBook")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "styleBookReference")) {
+
 				return false;
 			}
 			else if (Objects.equals(
@@ -487,10 +491,13 @@ public class SettingsSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "styleBook")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "styleBookReference")) {
+
 				if (jsonParserFieldValue != null) {
-					settings.setStyleBook(
-						StyleBookSerDes.toDTO((String)jsonParserFieldValue));
+					settings.setStyleBookReference(
+						ItemExternalReferenceSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

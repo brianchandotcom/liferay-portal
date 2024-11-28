@@ -15,10 +15,7 @@ import {PackageVersionModal} from '../../../../../../components/PackageVersionMo
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
 import {ProductEditionOption} from '../../../../../../enums/ProductEditionOption';
-import {
-	ProductSpecification,
-	SpecificationKey,
-} from '../../../../../../enums/ProductSpecification';
+import {ProductSpecification} from '../../../../../../enums/ProductSpecification';
 import {ProductType} from '../../../../../../enums/ProductType';
 import {ProductUploadType} from '../../../../../../enums/ProductUploadType';
 import {ProductVersionOption} from '../../../../../../enums/ProductVersionOption';
@@ -41,7 +38,10 @@ import OfferingTypeCheckbox from './components/OfferingTypeCheckbox';
 import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
 
 import './ProvideAppBuildPage.scss';
-import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../../../enums/Product';
+import {
+	PRODUCT_SPECIFICATION_KEY,
+	PRODUCT_WORKFLOW_STATUS_CODE,
+} from '../../../../../../enums/Product';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {base64ToText, fileToBase64} from '../../../../../../utils/file';
 import ResourceRequirements from './ResourceRequirements';
@@ -245,7 +245,7 @@ export function ProvideAppBuildPage({
 		const filteredProductSpecifications = dataProductSpecifications.filter(
 			(specification) =>
 				specification.specificationKey !==
-				SpecificationKey.LIFERAY_VERSION
+				PRODUCT_SPECIFICATION_KEY.LIFERAY_VERSION
 		);
 
 		for (const versionKey in buildAppPackages) {
@@ -261,7 +261,7 @@ export function ProvideAppBuildPage({
 					version: versionKey,
 				});
 				liferayVersionSpecifications.push({
-					specificationKey: SpecificationKey.LIFERAY_VERSION,
+					specificationKey: PRODUCT_SPECIFICATION_KEY.LIFERAY_VERSION,
 					value: {
 						en_US: versionKey,
 					},

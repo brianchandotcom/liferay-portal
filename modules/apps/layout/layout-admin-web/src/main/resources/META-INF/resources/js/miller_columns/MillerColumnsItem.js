@@ -303,10 +303,8 @@ const MillerColumnsItem = ({
 		isTarget: isKeyboardMovementTarget,
 		position: keyboardMovementPosition,
 	} = useKeyboardMovement({
-		isPrivateLayoutsEnabled,
 		item,
 		items,
-		rtl,
 	});
 
 	const {isTarget: isNavigationTarget, onKeyDown} = useKeyboardNavigation({

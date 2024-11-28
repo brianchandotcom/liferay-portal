@@ -9,82 +9,54 @@ import {
 	KeyboardMovementContext,
 	MovementSources,
 	MovementTarget,
-	getNextTarget,
 	setMovementText,
 } from '../contexts/KeyboardMovementContext';
 import {LayoutColumnsContext} from '../contexts/LayoutColumnsContext';
 import {MillerColumnItem} from '../types/MillerColumnItem';
 
-const ALLOWED_KEYS = [
-	'ArrowDown',
-	'ArrowLeft',
-	'ArrowRight',
-	'ArrowUp',
-	'Enter',
-	'Escape',
-] as const;
-
-type AllowedKey = (typeof ALLOWED_KEYS)[number];
-
 type Items = Map<string, MillerColumnItem>;
 
 export function useKeyboardMovement({
-	isPrivateLayoutsEnabled,
 	item,
 	items,
 }: {
-	isPrivateLayoutsEnabled: boolean;
 	item: MillerColumnItem;
 	items: Items;
-
-	rtl: boolean;
 }) {
 	const {columnIndex, itemIndex} = item;
 
-	const {
-		columnSizes,
-		setInitialColumns,
-		setSources,
-		setTarget,
-		setText,
-		sources,
-		target,
-	} = useContext(KeyboardMovementContext);
+	const {setInitialColumns, setSources, setTarget, setText, sources, target} =
+		useContext(KeyboardMovementContext);
 
 	const {layoutColumns} = useContext(LayoutColumnsContext);
 
 	const enableMovement = useCallback(
 		(sources) => {
-			const initialTarget = getInitialTarget({
-				columnSizes,
-				isPrivateLayoutsEnabled,
-				item,
-				items,
-				sources,
-			});
+			const initialTarget: MovementTarget = {
+				columnIndex,
+				itemIndex,
+				position: 'bottom',
+			};
 
-			if (initialTarget) {
-				setInitialColumns(layoutColumns);
-				setSources(sources);
-				setTarget(initialTarget);
-				setMovementText({
-					isInitialPosition: true,
-					items,
-					setText,
-					sources,
-					target: initialTarget,
-				});
-			}
+			setInitialColumns(layoutColumns);
+			setSources(sources);
+			setTarget(initialTarget);
+			setMovementText({
+				isInitialPosition: true,
+				items,
+				setText,
+				sources,
+				target: initialTarget,
+			});
 		},
 		[
-			columnSizes,
-			isPrivateLayoutsEnabled,
-			item,
-			items,
+			columnIndex,
+			itemIndex,
 			setInitialColumns,
 			layoutColumns,
 			setSources,
 			setTarget,
+			items,
 			setText,
 		]
 	);
@@ -98,78 +70,6 @@ export function useKeyboardMovement({
 			itemIndex === target?.itemIndex,
 		position: target?.position,
 	};
-}
-
-function getInitialTarget({
-	columnSizes,
-	isPrivateLayoutsEnabled,
-	item,
-	items,
-	sources,
-}: {
-	columnSizes: number[];
-	isPrivateLayoutsEnabled: boolean;
-	item: MillerColumnItem;
-	items: Items;
-	sources: MovementSources;
-}) {
-	const props = {
-		columnSizes,
-		isPrivateLayoutsEnabled,
-		items,
-		key: 'ArrowDown' as AllowedKey,
-		sources,
-	};
-
-	// Try to find a valid initial target
-
-	return (
-
-		// Try in current column down to up
-
-		getNextTarget({
-			...props,
-			key: 'ArrowUp' as AllowedKey,
-			target: {
-				columnIndex: item.columnIndex,
-				itemIndex: item.itemIndex,
-				position: 'top',
-			},
-		}) ||
-
-		// Try in current column up to down
-
-		getNextTarget({
-			...props,
-			target: {
-				columnIndex: item.columnIndex,
-				itemIndex: item.itemIndex,
-				position: 'top',
-			},
-		}) ||
-
-		// Try in previous column
-
-		getNextTarget({
-			...props,
-			target: {
-				columnIndex: item.columnIndex - 1,
-				itemIndex: 0,
-				position: 'top',
-			},
-		}) ||
-
-		// Try in next column
-
-		getNextTarget({
-			...props,
-			target: {
-				columnIndex: item.columnIndex + 1,
-				itemIndex: 0,
-				position: 'top',
-			},
-		})
-	);
 }
 
 function isSource(

@@ -4,10 +4,14 @@
  */
 
 import {fetch, openToast} from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import Breadcrumbs from '../breadcrumbs/Breadcrumbs';
 import MillerColumns from '../miller_columns/MillerColumns';
+import {
+	LayoutColumnsContext,
+	LayoutColumnsProvider,
+} from '../miller_columns/contexts/LayoutColumnsContext';
 
 const Layout = ({
 	createPageTemplateURL,
@@ -15,7 +19,6 @@ const Layout = ({
 	getItemChildrenURL,
 	getPageTemplateCollectionsURL,
 	initialBreadcrumbEntries,
-	initialLayoutColumns,
 	isPrivateLayoutsEnabled,
 	isSiteTemplate,
 	languageId,
@@ -29,8 +32,9 @@ const Layout = ({
 	const [breadcrumbEntries, setBreadcrumbEntries] = useState(
 		initialBreadcrumbEntries
 	);
-	const [layoutColumns, setLayoutColumns] = useState(initialLayoutColumns);
 	const [searchContainerElement, setSearchContainerElement] = useState();
+
+	const {layoutColumns, setLayoutColumns} = useContext(LayoutColumnsContext);
 
 	useEffect(() => {
 		const A = new AUI();
@@ -170,7 +174,6 @@ const Layout = ({
 				getItemActionsURL={getItemActionsURL}
 				getItemChildren={getItemChildren}
 				getPageTemplateCollectionsURL={getPageTemplateCollectionsURL}
-				initialColumns={layoutColumns}
 				isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
 				isSiteTemplate={isSiteTemplate}
 				namespace={namespace}
@@ -200,19 +203,22 @@ export default function ({
 	},
 }) {
 	return (
-		<Layout
-			createPageTemplateURL={createLayoutPageTemplateEntryURL}
-			getItemActionsURL={getItemActionsURL}
-			getItemChildrenURL={getItemChildrenURL}
-			getPageTemplateCollectionsURL={getLayoutPageTemplateCollectionsURL}
-			initialBreadcrumbEntries={breadcrumbEntries}
-			initialLayoutColumns={layoutColumns}
-			isLayoutSetPrototype={isLayoutSetPrototype}
-			isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
-			languageId={languageId}
-			moveItemURL={moveItemURL}
-			namespace={namespace}
-			searchContainerId={searchContainerId}
-		/>
+		<LayoutColumnsProvider initialColumns={layoutColumns}>
+			<Layout
+				createPageTemplateURL={createLayoutPageTemplateEntryURL}
+				getItemActionsURL={getItemActionsURL}
+				getItemChildrenURL={getItemChildrenURL}
+				getPageTemplateCollectionsURL={
+					getLayoutPageTemplateCollectionsURL
+				}
+				initialBreadcrumbEntries={breadcrumbEntries}
+				isLayoutSetPrototype={isLayoutSetPrototype}
+				isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
+				languageId={languageId}
+				moveItemURL={moveItemURL}
+				namespace={namespace}
+				searchContainerId={searchContainerId}
+			/>
+		</LayoutColumnsProvider>
 	);
 }

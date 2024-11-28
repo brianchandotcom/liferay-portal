@@ -6,7 +6,14 @@
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import {DragPreview} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
@@ -14,6 +21,7 @@ import MillerColumnsColumn from './MillerColumnsColumn';
 import {DROP_POSITIONS} from './constants/dropPositions';
 import {KeyboardMovementProvider} from './contexts/KeyboardMovementContext';
 import {KeyboardNavigationProvider} from './contexts/KeyboardNavigationContext';
+import {LayoutColumnsContext} from './contexts/LayoutColumnsContext';
 
 const getItemsMap = (columns, oldItems = new Map()) => {
 	const map = new Map();
@@ -73,7 +81,6 @@ const MillerColumns = ({
 	createPageTemplateURL,
 	getPageTemplateCollectionsURL,
 	getItemActionsURL,
-	initialColumns = [],
 	isLayoutSetPrototype,
 	isPrivateLayoutsEnabled,
 	namespace,
@@ -85,7 +92,9 @@ const MillerColumns = ({
 }) => {
 	const ref = useRef();
 
-	const [items, setItems] = useState(() => getItemsMap(initialColumns));
+	const {layoutColumns} = useContext(LayoutColumnsContext);
+
+	const [items, setItems] = useState(() => getItemsMap(layoutColumns));
 
 	// Transform items map into a columns-like array.
 
@@ -124,13 +133,13 @@ const MillerColumns = ({
 	}, [items]);
 
 	const previousColumnsValue = usePrevious(columns);
-	const previousInitialColumnsValue = usePrevious(initialColumns);
+	const previousLayoutColumnsValue = usePrevious(layoutColumns);
 
 	useEffect(() => {
-		if (previousInitialColumnsValue !== initialColumns) {
-			setItems(getItemsMap(initialColumns, items));
+		if (previousLayoutColumnsValue !== layoutColumns) {
+			setItems(getItemsMap(layoutColumns, items));
 		}
-	}, [initialColumns, items, previousInitialColumnsValue]);
+	}, [layoutColumns, items, previousLayoutColumnsValue]);
 
 	useEffect(() => {
 		if (previousColumnsValue !== columns) {
@@ -301,7 +310,7 @@ const MillerColumns = ({
 		}
 	};
 
-	const columnSizes = initialColumns
+	const columnSizes = layoutColumns
 		.filter((col) => col.length)
 		.map((col) => col.length);
 

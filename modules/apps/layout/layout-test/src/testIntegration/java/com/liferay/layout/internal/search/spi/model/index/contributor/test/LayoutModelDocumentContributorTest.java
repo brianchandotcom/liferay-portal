@@ -30,9 +30,11 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -164,6 +166,35 @@ public class LayoutModelDocumentContributorTest {
 
 		Assert.assertEquals(spanishElementText, summary.getContent());
 		Assert.assertEquals(_layout.getName(_locale), summary.getTitle());
+	}
+
+	@Test
+	public void testReindexPublishedDraftLayoutWithLanguageKeyLocalization()
+		throws Exception {
+
+		String contentText = RandomTestUtil.randomString();
+
+		_locale = LocaleUtil.GERMANY;
+
+		_languageId = LocaleUtil.toLanguageId(_locale);
+
+		String languageKey = "success";
+
+		_addFragmentEntryLinkToLayout(
+			"{}",
+			StringBundler.concat(
+				contentText, "[@liferay.language key=\"", languageKey, "\" /]"),
+			_draftLayout);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		_layout = _layoutLocalService.getLayout(_layout.getPlid());
+
+		_assertSearch(contentText + LanguageUtil.get(_locale, languageKey));
+
+		_locale = _portal.getSiteDefaultLocale(_group);
+
+		_languageId = LocaleUtil.toLanguageId(_locale);
 	}
 
 	@Test

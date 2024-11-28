@@ -68,6 +68,7 @@ create index IX_F01F1EEA on ObjectLayoutTab (objectLayoutId);
 create index IX_4CC508B8 on ObjectLayoutTab (objectRelationshipId);
 create index IX_9D1A2542 on ObjectLayoutTab (uuid_[$COLUMN_LENGTH:75$]);
 
+create index IX_44505405 on ObjectRelationship (companyId, userId);
 create index IX_9FD90360 on ObjectRelationship (externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_97E37468 on ObjectRelationship (objectDefinitionId1, edge);
 create index IX_A71785B6 on ObjectRelationship (objectDefinitionId1, name[$COLUMN_LENGTH:75$]);

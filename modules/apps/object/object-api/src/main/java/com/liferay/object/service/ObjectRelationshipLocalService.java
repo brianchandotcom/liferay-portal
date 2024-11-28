@@ -428,4 +428,7 @@ public interface ObjectRelationshipLocalService
 			Map<Locale, String> labelMap, ObjectField objectField)
 		throws PortalException;
 
+	public void updateUserId(long companyId, long oldUserId, long newUserId)
+		throws PortalException;
+
 }

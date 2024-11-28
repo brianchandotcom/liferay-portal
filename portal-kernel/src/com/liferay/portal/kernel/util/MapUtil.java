@@ -222,14 +222,14 @@ public class MapUtil {
 		return GetterUtil.getShort(String.valueOf(value), defaultValue);
 	}
 
-	public static String getString(Map<String, ?> map, String key) {
+	public static <K, V> String getString(Map<K, V> map, K key) {
 		return getString(map, key, GetterUtil.DEFAULT_STRING);
 	}
 
-	public static String getString(
-		Map<String, ?> map, String key, String defaultValue) {
+	public static <K, V> String getString(
+		Map<K, V> map, K key, String defaultValue) {
 
-		Object value = map.get(key);
+		V value = map.get(key);
 
 		if (value == null) {
 			return defaultValue;

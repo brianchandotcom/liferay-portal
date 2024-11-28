@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -499,6 +500,9 @@ public class JournalTransformer {
 			if (dataJSONArray.length() != 0) {
 				data = JSONUtil.toString(dataJSONArray);
 			}
+		}
+		else if (type.equals(DDMFormFieldTypeConstants.TEXT)) {
+			data = HtmlUtil.escape(data);
 		}
 
 		if (dynamicContentElement != null) {

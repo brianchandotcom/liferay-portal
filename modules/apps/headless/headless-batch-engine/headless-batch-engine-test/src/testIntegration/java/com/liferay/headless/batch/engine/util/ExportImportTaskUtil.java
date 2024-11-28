@@ -47,8 +47,10 @@ public class ExportImportTaskUtil {
 						"reference-code/" + externalReferenceCode,
 					Http.Method.GET));
 
-			if (!StringUtil.equals(
-					exportTask.getExecuteStatusAsString(), "STARTED")) {
+			if (StringUtil.equals(
+					exportTask.getExecuteStatusAsString(), "COMPLETED") ||
+				StringUtil.equals(
+					exportTask.getExecuteStatusAsString(), "FAILED")) {
 
 				Assert.assertEquals(
 					expectedExecuteStatus,
@@ -84,8 +86,10 @@ public class ExportImportTaskUtil {
 						"reference-code/" + externalReferenceCode,
 					Http.Method.GET));
 
-			if (!StringUtil.equals(
-					importTask.getExecuteStatusAsString(), "STARTED")) {
+			if (StringUtil.equals(
+					importTask.getExecuteStatusAsString(), "COMPLETED") ||
+				StringUtil.equals(
+					importTask.getExecuteStatusAsString(), "FAILED")) {
 
 				Assert.assertEquals(
 					expectedExecuteStatus,

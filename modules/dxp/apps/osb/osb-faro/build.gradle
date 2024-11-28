@@ -37,6 +37,7 @@ apply plugin: "com.liferay.app.docker"
 apply plugin: "com.liferay.root.defaults.plugin"
 apply plugin: "com.liferay.yarn.defaults.plugin"
 
+task buildNexusCredentials(type: Exec)
 task checkDocker(type: DockerWaitHealthyContainer)
 task copyDatabaseConnector(type: Copy)
 task copyDockerResources(type: Copy)
@@ -62,6 +63,16 @@ appDocker {
 
 buildAppDockerImage {
 	mustRunAfter copyDockerResources
+}
+
+buildNexusCredentials {
+	commandLine("/bin/sh", "-c", "./set_nexus_credentials.sh")
+
+	onlyIf {
+		faroEnvironmentName.equals("local") &&
+		(!project.hasProperty("liferay.ci") ||
+			!project.getProperty("liferay.ci").equals("true"))
+	}
 }
 
 checkDocker {
@@ -125,7 +136,7 @@ docker {
 }
 
 prepareAppDockerImageInputDir {
-	dependsOn copyDatabaseConnector
+	dependsOn buildNexusCredentials, copyDatabaseConnector
 	finalizedBy copyDockerResources
 
 	rename {

@@ -9,11 +9,16 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
+import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.PortalPreferencesWrapper;
 
 import java.util.List;
 
@@ -38,17 +43,34 @@ public class CompanyModelListenerTest {
 	public void testOnAfterCreate() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
+		PortalPreferencesWrapper portalPreferencesWrapper =
+			(PortalPreferencesWrapper)
+				_portalPreferencesLocalService.getPreferences(
+					company.getCompanyId(),
+					PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+		PortalPreferences portalPreferences =
+			portalPreferencesWrapper.getPortalPreferencesImpl();
+
 		List<FeatureFlag> deprecationFeatureFlags =
 			_featureFlagManager.getFeatureFlags(
 				company.getCompanyId(),
 				FeatureFlagType.DEPRECATION.getPredicate());
 
 		for (FeatureFlag deprecationFeatureFlag : deprecationFeatureFlags) {
+			Assert.assertEquals(
+				"false",
+				portalPreferences.getValue(
+					FeatureFlagConstants.PREFERENCE_NAMESPACE,
+					deprecationFeatureFlag.getKey()));
 			Assert.assertFalse(deprecationFeatureFlag.isEnabled());
 		}
 	}
 
 	@Inject
 	private FeatureFlagManager _featureFlagManager;
+
+	@Inject
+	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
 }

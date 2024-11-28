@@ -55,7 +55,7 @@ public class DBUpgraderTest {
 		_currentState = PortalUpgradeProcess.getCurrentState(_connection);
 
 		_upgrading = ReflectionTestUtil.getAndSetFieldValue(
-			StartupHelperUtil.class, "_upgrading", true);
+			StartupHelperUtil.getStartupHelper(), "_upgrading", true);
 	}
 
 	@AfterClass
@@ -63,7 +63,7 @@ public class DBUpgraderTest {
 		DataAccess.cleanUp(_connection);
 
 		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_upgrading", _upgrading);
+			StartupHelperUtil.getStartupHelper(), "_upgrading", _upgrading);
 	}
 
 	@After
@@ -87,7 +87,7 @@ public class DBUpgraderTest {
 		db.runSQL("create index IX_TEST on Lock_ (createDate)");
 
 		Boolean newRelease = ReflectionTestUtil.getAndSetFieldValue(
-			StartupHelperUtil.class, "_newRelease", false);
+			StartupHelperUtil.getStartupHelper(), "_newRelease", false);
 
 		String upgradeDatabaseAutoRun = PropsUtil.get(
 			PropsKeys.UPGRADE_DATABASE_AUTO_RUN);
@@ -108,7 +108,7 @@ public class DBUpgraderTest {
 			Assert.assertTrue(dbInspector.hasIndex("Lock_", "IX_TEST"));
 
 			ReflectionTestUtil.setFieldValue(
-				StartupHelperUtil.class, "_newRelease", true);
+				StartupHelperUtil.getStartupHelper(), "_newRelease", true);
 
 			DBUpgrader.upgradeModules();
 
@@ -119,7 +119,8 @@ public class DBUpgraderTest {
 				PropsKeys.UPGRADE_DATABASE_AUTO_RUN, upgradeDatabaseAutoRun);
 
 			ReflectionTestUtil.setFieldValue(
-				StartupHelperUtil.class, "_newRelease", newRelease);
+				StartupHelperUtil.getStartupHelper(), "_newRelease",
+				newRelease);
 		}
 	}
 

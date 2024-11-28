@@ -56,13 +56,13 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		_bundleContext = bundle.getBundleContext();
 
 		_upgrading = ReflectionTestUtil.getAndSetFieldValue(
-			StartupHelperUtil.class, "_upgrading", false);
+			StartupHelperUtil.getStartupHelper(), "_upgrading", false);
 	}
 
 	@After
 	public void tearDown() {
 		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_upgrading", _upgrading);
+			StartupHelperUtil.getStartupHelper(), "_upgrading", _upgrading);
 
 		Release release = _releaseLocalService.fetchRelease(_symbolicName);
 
@@ -395,10 +395,10 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		_releaseLocalService.updateRelease(release);
 
 		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_upgrading", true);
+			StartupHelperUtil.getStartupHelper(), "_upgrading", true);
 
 		return () -> ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_upgrading", false);
+			StartupHelperUtil.getStartupHelper(), "_upgrading", false);
 	}
 
 	private static BundleContext _bundleContext;

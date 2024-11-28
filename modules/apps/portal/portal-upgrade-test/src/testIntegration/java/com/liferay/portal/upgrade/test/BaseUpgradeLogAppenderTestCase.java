@@ -128,7 +128,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_logContextAppender.start();
 
 		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_newRelease", true);
+			StartupHelperUtil.getStartupHelper(), "_newRelease", true);
 
 		_updatePortalRelease(
 			new Version(1, 0, 0), ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
@@ -252,7 +252,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	@Test
 	public void testDatabaseTablesEmpty() throws Exception {
 		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_newRelease", false);
+			StartupHelperUtil.getStartupHelper(), "_newRelease", false);
 
 		_appender.start();
 
@@ -983,7 +983,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			});
 
 		_originalNewRelease = ReflectionTestUtil.getFieldValue(
-			StartupHelperUtil.class, "_newRelease");
+			StartupHelperUtil.getStartupHelper(), "_newRelease");
 
 		_originalUpgradeClient = ReflectionTestUtil.getAndSetFieldValue(
 			DBUpgrader.class, "_upgradeClient", upgradeClient);
@@ -997,7 +997,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	private static void _restoreRelease() throws Exception {
 		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_newRelease", _originalNewRelease);
+			StartupHelperUtil.getStartupHelper(), "_newRelease",
+			_originalNewRelease);
 
 		_updatePortalRelease(
 			PortalUpgradeProcess.getLatestSchemaVersion(),

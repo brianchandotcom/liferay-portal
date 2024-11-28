@@ -158,14 +158,25 @@ public class PageSpecificationResourceTest
 			testGetSiteSiteByExternalReferenceCodePageTemplatePageSpecificationsPage();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodeSitePagePageSpecificationsPage()
 		throws Exception {
 
-		super.
-			testGetSiteSiteByExternalReferenceCodeSitePagePageSpecificationsPage();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		Layout layout = _addLayout(
+			LayoutConstants.TYPE_CONTENT, serviceContext);
+
+		_testPageSpecificationsPage(
+			layout, serviceContext,
+			() ->
+				pageSpecificationResource.
+					getSiteSiteByExternalReferenceCodeSitePagePageSpecificationsPage(
+						testGroup.getExternalReferenceCode(),
+						layout.getExternalReferenceCode()));
 	}
 
 	@Override

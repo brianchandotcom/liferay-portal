@@ -18,6 +18,7 @@ import React, {
 
 import {DROP_POSITIONS, DropPosition} from '../constants/dropPositions';
 import {isValidMovement} from '../utils/isValidMovement';
+import {clearSessionState} from '../utils/keyboardSessionState';
 import {LayoutColumns, LayoutColumnsContext} from './LayoutColumnsContext';
 
 import type {MillerColumnItem} from '../types/MillerColumnItem';
@@ -116,6 +117,8 @@ function KeyboardMovementProvider({
 			};
 
 			if (key === 'Enter' && target) {
+				clearSessionState();
+
 				const targetItem = getMillerColumnsItem(
 					target.columnIndex,
 					target.itemIndex,

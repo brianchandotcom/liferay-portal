@@ -11,6 +11,12 @@ import {
 	NavigationTarget,
 } from '../contexts/KeyboardNavigationContext';
 import {MillerColumnItem} from '../types/MillerColumnItem';
+import {
+	KeyboardActionType,
+	clearSessionState,
+	getSessionState,
+	setSessionState,
+} from '../utils/keyboardSessionState';
 
 const ALLOWED_KEYS = [
 	'ArrowDown',
@@ -65,6 +71,11 @@ export function useKeyboardNavigation({
 			// Navigate to item if pressing Enter
 
 			if (key === 'Enter') {
+
+				// Store item id in session so we can focus it after navigate
+
+				setSessionState(id, 'navigate');
+
 				navigate(item.url);
 			}
 
@@ -124,6 +135,22 @@ export function useKeyboardNavigation({
 			focusElement(element);
 		}
 	}, [element, isTarget, target.preventFocus]);
+
+	// Focus element after navigate
+
+	useEffect(() => {
+		const {itemId, type} = getSessionState();
+
+		if (!element || itemId !== id) {
+			return;
+		}
+
+		clearSessionState();
+
+		setTarget({columnIndex, itemIndex, preventFocus: true});
+
+		focusElement(element, type);
+	}, [columnIndex, element, id, itemIndex, setTarget]);
 
 	return {
 		isTarget,
@@ -196,11 +223,16 @@ function getNextTarget({
 	return null;
 }
 
-function focusElement(element: HTMLLIElement) {
+function focusElement(element: HTMLLIElement, type?: KeyboardActionType) {
 
 	// Focus the element
 
-	element.querySelector('a')?.focus();
+	if (type === 'movement') {
+		(element.querySelector('.drag-handler') as HTMLButtonElement)?.focus();
+	}
+	else {
+		element.querySelector('a')?.focus();
+	}
 
 	// Scroll to column
 

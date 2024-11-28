@@ -410,6 +410,7 @@ const MillerColumnsItem = ({
 							aria-label={sub(Liferay.Language.get('move-x'), [
 								title,
 							])}
+							className="drag-handler"
 							displayType="unstyled"
 							onClick={(event) => {
 								if (

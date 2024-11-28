@@ -13,6 +13,7 @@ import {
 } from '../contexts/KeyboardMovementContext';
 import {LayoutColumnsContext} from '../contexts/LayoutColumnsContext';
 import {MillerColumnItem} from '../types/MillerColumnItem';
+import {setSessionState} from '../utils/keyboardSessionState';
 
 type Items = Map<string, MillerColumnItem>;
 
@@ -48,9 +49,12 @@ export function useKeyboardMovement({
 				sources,
 				target: initialTarget,
 			});
+
+			setSessionState(item.id, 'movement');
 		},
 		[
 			columnIndex,
+			item.id,
 			itemIndex,
 			setInitialColumns,
 			layoutColumns,

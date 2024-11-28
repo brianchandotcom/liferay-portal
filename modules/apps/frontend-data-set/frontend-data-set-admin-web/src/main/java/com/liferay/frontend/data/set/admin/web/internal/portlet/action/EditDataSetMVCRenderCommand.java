@@ -65,15 +65,12 @@ public class EditDataSetMVCRenderCommand implements MVCRenderCommand {
 			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
 				dataSetERC, objectDefinition.getObjectDefinitionId());
 
-			if (objectEntry != null) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)renderRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-				checkPermissions(
-					themeDisplay.getPermissionChecker(), objectDefinition,
-					objectEntry);
-			}
+			checkPermissions(
+				themeDisplay.getPermissionChecker(), objectDefinition,
+				objectEntry);
 
 			return "/data_set.jsp";
 		}

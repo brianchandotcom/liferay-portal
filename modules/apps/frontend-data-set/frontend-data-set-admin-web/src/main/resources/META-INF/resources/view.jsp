@@ -11,6 +11,7 @@
 portletDisplay.setBeta(true);
 %>
 
+<liferay-ui:error embed="<%= false %>" exception="<%= NoSuchObjectEntryException.class %>" message="the-object-could-not-be-found" />
 <liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
 
 <c:choose>

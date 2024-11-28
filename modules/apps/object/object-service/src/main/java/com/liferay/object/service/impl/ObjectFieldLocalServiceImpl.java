@@ -817,7 +817,6 @@ public class ObjectFieldLocalServiceImpl
 		_validateIndexed(
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
 		_validateLabel(labelMap, null);
-		_validateLocalized(businessType, localized, objectDefinition, required);
 		_validateName(0, objectDefinition, name, system);
 		validateReadOnlyAndReadOnlyConditionExpression(
 			businessType, readOnly, readOnlyConditionExpression, required);
@@ -831,6 +830,13 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setExternalReferenceCode(externalReferenceCode);
 
 		_setBusinessTypeAndDBType(businessType, dbType, objectField);
+
+		ObjectFieldBusinessType objectFieldBusinessType =
+			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
+				objectField.getBusinessType());
+
+		_validateLocalized(
+			localized, objectDefinition, objectFieldBusinessType, required);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -872,7 +878,8 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		_addOrUpdateObjectFieldSettings(
-			objectDefinition, objectField, null, objectFieldSettings);
+			objectField, objectDefinition, objectFieldBusinessType,
+			objectFieldSettings, null);
 
 		if (!objectDefinition.isApproved()) {
 			return objectField;
@@ -913,14 +920,11 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	private void _addOrUpdateObjectFieldSettings(
-			ObjectDefinition objectDefinition, ObjectField newObjectField,
-			ObjectField oldObjectField,
-			List<ObjectFieldSetting> objectFieldSettings)
+			ObjectField newObjectField, ObjectDefinition objectDefinition,
+			ObjectFieldBusinessType objectFieldBusinessType,
+			List<ObjectFieldSetting> objectFieldSettings,
+			ObjectField oldObjectField)
 		throws PortalException {
-
-		ObjectFieldBusinessType objectFieldBusinessType =
-			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
-				newObjectField.getBusinessType());
 
 		objectFieldBusinessType.validateObjectFieldSettings(
 			newObjectField, objectFieldSettings);
@@ -1328,9 +1332,14 @@ public class ObjectFieldLocalServiceImpl
 		_validateIndexed(
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
 		_validateLabel(labelMap, newObjectField);
+
+		ObjectFieldBusinessType objectFieldBusinessType =
+			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
+				businessType);
+
 		_validateLocalized(
-			businessType, localized, oldObjectField.getObjectDefinition(),
-			required);
+			localized, oldObjectField.getObjectDefinition(),
+			objectFieldBusinessType, required);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
@@ -1390,8 +1399,8 @@ public class ObjectFieldLocalServiceImpl
 			newObjectField = objectFieldPersistence.update(newObjectField);
 
 			_addOrUpdateObjectFieldSettings(
-				objectDefinition, newObjectField, oldObjectField,
-				objectFieldSettings);
+				newObjectField, objectDefinition, objectFieldBusinessType,
+				objectFieldSettings, oldObjectField);
 
 			return newObjectField;
 		}
@@ -1416,8 +1425,8 @@ public class ObjectFieldLocalServiceImpl
 		newObjectField = objectFieldPersistence.update(newObjectField);
 
 		_addOrUpdateObjectFieldSettings(
-			objectDefinition, newObjectField, oldObjectField,
-			objectFieldSettings);
+			newObjectField, objectDefinition, objectFieldBusinessType,
+			objectFieldSettings, oldObjectField);
 
 		return newObjectField;
 	}
@@ -1571,23 +1580,20 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	private void _validateLocalized(
-			String businessType, boolean localized,
-			ObjectDefinition objectDefinition, boolean required)
+			boolean localized, ObjectDefinition objectDefinition,
+			ObjectFieldBusinessType objectFieldBusinessType, boolean required)
 		throws PortalException {
 
 		if (!localized) {
 			return;
 		}
 
-		if (!businessType.equals(
-				ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT) &&
-			!businessType.equals(
-				ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT) &&
-			!businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
-
+		if (!objectFieldBusinessType.isLocalizable()) {
 			throw new ObjectFieldLocalizedException(
 				StringBundler.concat(
-					"Only ", ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+					"Only ", ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+					StringPool.COMMA,
+					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 					StringPool.COMMA,
 					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT, " and ",
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,

@@ -384,6 +384,13 @@ public class ListTypeDefinitionLocalServiceUtil {
 			listTypeEntries);
 	}
 
+	public static void updateUserId(
+			long companyId, long oldUserId, long newUserId)
+		throws PortalException {
+
+		getService().updateUserId(companyId, oldUserId, newUserId);
+	}
+
 	public static ListTypeDefinitionLocalService getService() {
 		return _serviceSnapshot.get();
 	}

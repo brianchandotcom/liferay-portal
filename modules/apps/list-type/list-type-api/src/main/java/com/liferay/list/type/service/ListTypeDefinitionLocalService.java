@@ -330,4 +330,7 @@ public interface ListTypeDefinitionLocalService
 			List<ListTypeEntry> listTypeEntries)
 		throws PortalException;
 
+	public void updateUserId(long companyId, long oldUserId, long newUserId)
+		throws PortalException;
+
 }

@@ -50,11 +50,6 @@ public class ClassicSystemFDSEntry implements SystemFDSEntry {
 	}
 
 	@Override
-	public String getSymbol() {
-		return "braces";
-	}
-
-	@Override
 	public String getTitle() {
 		return "Classic Sample";
 	}

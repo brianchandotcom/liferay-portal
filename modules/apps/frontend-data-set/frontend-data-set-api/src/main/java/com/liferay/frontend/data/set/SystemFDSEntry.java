@@ -26,7 +26,9 @@ public interface SystemFDSEntry {
 
 	public String getRESTSchema();
 
-	public String getSymbol();
+	public default String getSymbol() {
+		return "dynamic-data-list";
+	}
 
 	public String getTitle();
 

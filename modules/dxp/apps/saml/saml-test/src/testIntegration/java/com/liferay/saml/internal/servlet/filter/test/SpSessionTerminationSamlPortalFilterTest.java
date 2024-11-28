@@ -6,6 +6,7 @@
 package com.liferay.saml.internal.servlet.filter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -40,88 +41,80 @@ public class SpSessionTerminationSamlPortalFilterTest {
 
 	@Test
 	public void testSpSessionTerminationHasCompanyIdSet() throws Exception {
-		long companyId = CompanyThreadLocal.getCompanyId();
+		try (SafeCloseable safeCloseable1 = _setSamlEnabledWithSafeCloseable(
+				true, TestPropsValues.getCompanyId());
+			SafeCloseable safeCloseable2 = _setSamlEnabledWithSafeCloseable(
+				false, CompanyConstants.SYSTEM)) {
 
-		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+			URL url = new URL("http://localhost:8080/c/portal/saml/acs");
+
+			SamlSpSession samlSpSession =
+				SamlSpSessionLocalServiceUtil.createSamlSpSession(1234);
+
+			samlSpSession.setSamlSpSessionKey("testSamlSpSessionKey");
+			samlSpSession.setTerminated(true);
+
+			SamlSpSessionLocalServiceUtil.addSamlSpSession(samlSpSession);
+
+			String cookie =
+				SamlWebKeys.SAML_SP_SESSION_KEY + "=testSamlSpSessionKey";
+
+			HttpURLConnection httpClient =
+				(HttpURLConnection)url.openConnection();
+
+			httpClient.setDoOutput(true);
+			httpClient.setRequestMethod("POST");
+			httpClient.setRequestProperty("Cookie", cookie);
+
+			Assert.assertNotNull(
+				SamlSpSessionLocalServiceUtil.fetchSamlSpSession(
+					samlSpSession.getSamlSpSessionId()));
+
+			httpClient.getHeaderField("Content-Type");
+
+			Assert.assertNull(
+				SamlSpSessionLocalServiceUtil.fetchSamlSpSession(
+					samlSpSession.getSamlSpSessionId()));
+		}
+	}
+
+	private SafeCloseable _setSamlEnabledWithSafeCloseable(
+			boolean enabled, long companyId)
+		throws Exception {
+
+		long existingCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(companyId);
 
 		SamlProviderConfigurationHelper samlProviderConfigurationHelper =
 			SamlProviderConfigurationHelperUtil.
 				getSamlProviderConfigurationHelper();
 
-		boolean enabledInstanceScope =
-			samlProviderConfigurationHelper.isEnabled();
+		boolean existingValue = samlProviderConfigurationHelper.isEnabled();
 
 		samlProviderConfigurationHelper.updateProperties(
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
-				"saml.enabled", "true"
+				"saml.enabled", String.valueOf(enabled)
 			).build());
 
-		CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
-
-		samlProviderConfigurationHelper =
-			SamlProviderConfigurationHelperUtil.
-				getSamlProviderConfigurationHelper();
-
-		boolean enabledSystemScope =
-			samlProviderConfigurationHelper.isEnabled();
-
-		samlProviderConfigurationHelper.updateProperties(
-			UnicodePropertiesBuilder.create(
-				true
-			).put(
-				"saml.enabled", "false"
-			).build());
-
-		URL url = new URL("http://localhost:8080/c/portal/saml/acs");
-
-		SamlSpSession samlSpSession =
-			SamlSpSessionLocalServiceUtil.createSamlSpSession(1234);
-
-		samlSpSession.setSamlSpSessionKey("testSamlSpSessionKey");
-		samlSpSession.setTerminated(true);
-
-		SamlSpSessionLocalServiceUtil.addSamlSpSession(samlSpSession);
-
-		String cookie =
-			SamlWebKeys.SAML_SP_SESSION_KEY + "=testSamlSpSessionKey";
-
-		HttpURLConnection httpClient = (HttpURLConnection)url.openConnection();
-
-		httpClient.setDoOutput(true);
-		httpClient.setRequestMethod("POST");
-		httpClient.setRequestProperty("Cookie", cookie);
-
-		Assert.assertNotNull(
-			SamlSpSessionLocalServiceUtil.fetchSamlSpSession(
-				samlSpSession.getSamlSpSessionId()));
-
-		httpClient.getHeaderField("Content-Type");
-
-		Assert.assertNull(
-			SamlSpSessionLocalServiceUtil.fetchSamlSpSession(
-				samlSpSession.getSamlSpSessionId()));
-
-		CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
-
-		samlProviderConfigurationHelper.updateProperties(
-			UnicodePropertiesBuilder.create(
-				true
-			).put(
-				"saml.enabled", String.valueOf(enabledSystemScope)
-			).build());
-
-		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
-
-		samlProviderConfigurationHelper.updateProperties(
-			UnicodePropertiesBuilder.create(
-				true
-			).put(
-				"saml.enabled", String.valueOf(enabledInstanceScope)
-			).build());
-
-		CompanyThreadLocal.setCompanyId(companyId);
+		return () -> {
+			try {
+				samlProviderConfigurationHelper.updateProperties(
+					UnicodePropertiesBuilder.create(
+						true
+					).put(
+						"saml.enabled", String.valueOf(existingValue)
+					).build());
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+			finally {
+				CompanyThreadLocal.setCompanyId(existingCompanyId);
+			}
+		};
 	}
 
 }

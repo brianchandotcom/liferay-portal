@@ -989,6 +989,19 @@ public class ObjectRelationshipLocalServiceImpl
 		return objectRelationship;
 	}
 
+	@Override
+	public void updateUserId(long companyId, long oldUserId, long newUserId)
+		throws PortalException {
+
+		for (ObjectRelationship objectRelationship :
+				objectRelationshipPersistence.findByC_U(companyId, oldUserId)) {
+
+			objectRelationship.setUserId(newUserId);
+
+			objectRelationshipPersistence.update(objectRelationship);
+		}
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;

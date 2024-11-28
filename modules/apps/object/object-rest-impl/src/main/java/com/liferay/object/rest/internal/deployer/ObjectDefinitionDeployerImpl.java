@@ -115,7 +115,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Override
-	public Map<Long, List<ServiceRegistration<?>>> deploy(
+	public Map<String, List<ServiceRegistration<?>>> deploy(
 		long companyId, List<ObjectDefinition> objectDefinitions) {
 
 		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =

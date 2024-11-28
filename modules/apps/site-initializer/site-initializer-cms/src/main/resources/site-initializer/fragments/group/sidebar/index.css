@@ -45,7 +45,7 @@
 			left: calc(-1 * var(--sidebar-fragment-width));
 			position: absolute;
 			width: var(--sidebar-fragment-width);
-			z-index: 990;
+			z-index: 989;
 		}
 	}
 

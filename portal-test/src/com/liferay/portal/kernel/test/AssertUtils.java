@@ -64,18 +64,18 @@ public class AssertUtils {
 		Assert.assertTrue(expectedList.containsAll(actualList));
 	}
 
-	public static void assertEquals(
-		Map<String, ?> expectedMap, Map<String, ?> actualMap) {
+	public static <K> void assertEquals(
+		Map<K, ?> expectedMap, Map<K, ?> actualMap) {
 
 		Assert.assertEquals(
 			"The maps have different sizes", expectedMap.size(),
 			actualMap.size());
 
-		for (String name : expectedMap.keySet()) {
+		for (K key : expectedMap.keySet()) {
 			Assert.assertEquals(
-				"The values for key '" + name + "' are different",
-				MapUtil.getString(expectedMap, name),
-				MapUtil.getString(actualMap, name));
+				"The values for key '" + key + "' are different",
+				MapUtil.getString(expectedMap, key),
+				MapUtil.getString(actualMap, key));
 		}
 	}
 

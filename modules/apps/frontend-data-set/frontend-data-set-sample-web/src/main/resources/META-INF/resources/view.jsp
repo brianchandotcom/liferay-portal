@@ -31,7 +31,7 @@ String navigation = ParamUtil.getString(request, "navigation", "customized");
 					navigationItem -> {
 						navigationItem.setActive(navigation.equals("controlled"));
 						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "controlled");
-						navigationItem.setLabel("Classic");
+						navigationItem.setLabel("Controlled");
 					});
 				add(
 					navigationItem -> {

@@ -13,8 +13,9 @@ import com.liferay.asset.kernel.service.persistence.AssetTagFinder;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -89,52 +90,32 @@ public class AssetTagFinderImpl
 		try {
 			session = openSession();
 
-			DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
-				AssetTagTable.INSTANCE
-			).from(
-				AssetTagTable.INSTANCE
-			).innerJoinON(
-				AssetEntries_AssetTagsTable.INSTANCE,
-				AssetEntries_AssetTagsTable.INSTANCE.tagId.eq(
-					AssetTagTable.INSTANCE.tagId)
-			).innerJoinON(
-				AssetEntryTable.INSTANCE,
-				AssetEntryTable.INSTANCE.entryId.eq(
-					AssetEntries_AssetTagsTable.INSTANCE.entryId)
-			).where(
-				() -> {
-					Predicate predicate = AssetEntryTable.INSTANCE.groupId.eq(
-						groupId
-					).and(
-						AssetEntryTable.INSTANCE.classNameId.eq(classNameId)
-					).and(
-						AssetEntryTable.INSTANCE.visible.eq(true)
-					);
-
-					if (name == null) {
-						return predicate;
-					}
-
-					return predicate.and(
-						DSLFunctionFactoryUtil.lower(
-							AssetTagTable.INSTANCE.name
-						).like(
-							StringUtil.toLowerCase(name)
-						));
-				}
-			).orderBy(
-				orderByStep -> {
-					if (orderByComparator == null) {
-						return orderByStep.orderBy(
-							AssetTagTable.INSTANCE.name.ascending());
-					}
-
-					return orderByStep.orderBy(
-						AssetTagTable.INSTANCE, orderByComparator);
-				}
+			Table<AssetTagTable> tempAssetTagTable = _getTagEntriesGroupByStep(
+				groupId, classNameId, name
+			).unionAll(
+				_getEmptyEntriesGroupByStep(name)
+			).as(
+				AssetTagTable.INSTANCE.getName(), AssetTagTable.INSTANCE
 			);
 
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(dslQuery);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
+				DSLQueryFactoryUtil.selectDistinct(
+					tempAssetTagTable
+				).from(
+					tempAssetTagTable
+				).orderBy(
+					orderByStep -> {
+						if (orderByComparator == null) {
+							return orderByStep.orderBy(
+								AssetTagTable.INSTANCE.name.ascending());
+						}
+
+						return orderByStep.orderBy(
+							AssetTagTable.INSTANCE, orderByComparator);
+					}
+				).limit(
+					start, end
+				));
 
 			sqlQuery.addEntity("AssetTag", AssetTagImpl.class);
 
@@ -218,6 +199,68 @@ public class AssetTagFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	private GroupByStep _getEmptyEntriesGroupByStep(String name) {
+		return DSLQueryFactoryUtil.select(
+			AssetTagTable.INSTANCE
+		).from(
+			AssetTagTable.INSTANCE
+		).where(
+			() -> {
+				Predicate predicate = AssetTagTable.INSTANCE.assetCount.eq(0);
+
+				if (name == null) {
+					return predicate;
+				}
+
+				return predicate.and(
+					DSLFunctionFactoryUtil.lower(
+						AssetTagTable.INSTANCE.name
+					).like(
+						StringUtil.toLowerCase(name)
+					));
+			}
+		);
+	}
+
+	private GroupByStep _getTagEntriesGroupByStep(
+		long groupId, long classNameId, String name) {
+
+		return DSLQueryFactoryUtil.selectDistinct(
+			AssetTagTable.INSTANCE
+		).from(
+			AssetTagTable.INSTANCE
+		).innerJoinON(
+			AssetEntries_AssetTagsTable.INSTANCE,
+			AssetEntries_AssetTagsTable.INSTANCE.tagId.eq(
+				AssetTagTable.INSTANCE.tagId)
+		).innerJoinON(
+			AssetEntryTable.INSTANCE,
+			AssetEntryTable.INSTANCE.entryId.eq(
+				AssetEntries_AssetTagsTable.INSTANCE.entryId)
+		).where(
+			() -> {
+				Predicate predicate = AssetEntryTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					AssetEntryTable.INSTANCE.classNameId.eq(classNameId)
+				).and(
+					AssetEntryTable.INSTANCE.visible.eq(true)
+				);
+
+				if (name == null) {
+					return predicate;
+				}
+
+				return predicate.and(
+					DSLFunctionFactoryUtil.lower(
+						AssetTagTable.INSTANCE.name
+					).like(
+						StringUtil.toLowerCase(name)
+					));
+			}
+		);
 	}
 
 }

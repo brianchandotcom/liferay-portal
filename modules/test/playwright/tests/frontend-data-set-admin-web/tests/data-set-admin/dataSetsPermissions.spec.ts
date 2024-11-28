@@ -222,11 +222,11 @@ test.beforeEach(async ({page}) => {
 test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers, page}) => {
 	if (!loggedInAsAdmin) {
 		if (
-			!(await page
+			(await page
 				.getByRole('button', {
 					name: 'Sign In',
 				})
-				.isVisible())
+				.isHidden())
 		) {
 			await performLogout(page);
 		}

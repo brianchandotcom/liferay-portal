@@ -325,12 +325,8 @@ public class BaseEhcachePortalCacheTest {
 	}
 
 	@Test
-	public void testGetPortalCacheDBPartitionDisabled() {
+	public void testGetPortalCache() {
 		_testGetPortalCache(false);
-	}
-
-	@Test
-	public void testGetPortalCacheDBPartitionEnabled() {
 		_testGetPortalCache(true);
 	}
 

@@ -306,7 +306,7 @@ public class JournalContentExportImportPortletPreferencesProcessor
 					_ddmTemplateLocalService.
 						fetchDDMTemplateByExternalReferenceCode(
 							preferenceDDMTemplateExternalReferenceCode,
-							article.getGroupId());
+							article.getGroupId(), true);
 
 				if (ddmTemplate != null) {
 					preferenceDDMTemplateKey = ddmTemplate.getTemplateKey();

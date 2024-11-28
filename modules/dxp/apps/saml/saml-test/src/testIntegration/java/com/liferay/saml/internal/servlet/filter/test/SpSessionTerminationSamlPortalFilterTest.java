@@ -11,6 +11,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -54,20 +55,20 @@ public class SpSessionTerminationSamlPortalFilterTest {
 				SamlSpSessionLocalServiceUtil.createSamlSpSession(
 					_counterLocalService.increment());
 
-			samlSpSession.setSamlSpSessionKey("testSamlSpSessionKey");
+			samlSpSession.setSamlSpSessionKey(RandomTestUtil.randomString());
 			samlSpSession.setTerminated(true);
 
 			SamlSpSessionLocalServiceUtil.addSamlSpSession(samlSpSession);
-
-			String cookie =
-				SamlWebKeys.SAML_SP_SESSION_KEY + "=testSamlSpSessionKey";
 
 			HttpURLConnection httpClient =
 				(HttpURLConnection)url.openConnection();
 
 			httpClient.setDoOutput(true);
 			httpClient.setRequestMethod("POST");
-			httpClient.setRequestProperty("Cookie", cookie);
+			httpClient.setRequestProperty(
+				"Cookie",
+				SamlWebKeys.SAML_SP_SESSION_KEY + "=" +
+					samlSpSession.getSamlSpSessionKey());
 
 			Assert.assertNotNull(
 				SamlSpSessionLocalServiceUtil.fetchSamlSpSession(

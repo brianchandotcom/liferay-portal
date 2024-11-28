@@ -125,6 +125,20 @@ public class PageSpecificationResourceImpl
 				true, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
 
+		if (layout.isDraftLayout() || layout.isTypeAssetDisplay() ||
+			layout.isTypeUtility()) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry != null) {
+			throw new UnsupportedOperationException();
+		}
+
 		return Page.of(_toPageSpecifications(layout));
 	}
 

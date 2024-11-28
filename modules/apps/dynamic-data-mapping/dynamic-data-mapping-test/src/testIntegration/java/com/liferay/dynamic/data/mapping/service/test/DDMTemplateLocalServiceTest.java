@@ -19,6 +19,8 @@ import com.liferay.dynamic.data.mapping.util.comparator.TemplateIdComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -213,6 +215,35 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 
 		Assert.assertNull(
 			_ddmTemplateLocalService.fetchTemplate(template.getTemplateId()));
+	}
+
+	@Test
+	public void testFetchDDMTemplateByExternalReferenceCodeIncludingAncestorTemplates()
+		throws Exception {
+
+		Company company = _companyLocalService.getCompany(group.getCompanyId());
+
+		DDMTemplate template = _ddmTemplateLocalService.addTemplate(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			company.getGroupId(), _classNameId, 0, _resourceClassNameId,
+			Collections.singletonMap(
+				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()),
+			null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE,
+			TemplateConstants.LANG_TYPE_VM,
+			getTestTemplateScript(TemplateConstants.LANG_TYPE_VM),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertNull(
+			_ddmTemplateLocalService.fetchDDMTemplateByExternalReferenceCode(
+				template.getExternalReferenceCode(), group.getGroupId(),
+				false));
+
+		Assert.assertNotNull(
+			_ddmTemplateLocalService.fetchDDMTemplateByExternalReferenceCode(
+				template.getExternalReferenceCode(), group.getGroupId(), true));
+
+		_ddmTemplateLocalService.deleteTemplate(template);
 	}
 
 	@Test
@@ -608,6 +639,9 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 
 	private static long _classNameId;
 	private static long _resourceClassNameId;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private DDMTemplateLocalService _ddmTemplateLocalService;

@@ -16,7 +16,7 @@ import React, {
 	useState,
 } from 'react';
 
-import {DROP_POSITIONS, DropPosition} from '../constants/dropPositions';
+import {DropPosition} from '../constants/dropPositions';
 import {isValidMovement} from '../utils/isValidMovement';
 import {setSessionState} from '../utils/keyboardSessionState';
 import {LayoutColumns, LayoutColumnsContext} from './LayoutColumnsContext';
@@ -389,15 +389,15 @@ function setMovementText({
 
 	const targetTitle = targetItem?.title || '';
 
-	if (target?.position === DROP_POSITIONS.top) {
+	if (target?.position === 'top') {
 		message.push(
 			sub(Liferay.Language.get('at-the-top-of-the-page-x'), targetTitle)
 		);
 	}
-	else if (target?.position === DROP_POSITIONS.middle) {
+	else if (target?.position === 'middle') {
 		message.push(sub(Liferay.Language.get('inside-page-x'), targetTitle));
 	}
-	else if (target?.position === DROP_POSITIONS.bottom) {
+	else if (target?.position === 'bottom') {
 		message.push(
 			sub(
 				Liferay.Language.get('at-the-bottom-of-the-page-x'),

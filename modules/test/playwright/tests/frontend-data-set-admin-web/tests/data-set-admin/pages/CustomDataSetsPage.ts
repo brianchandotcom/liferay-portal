@@ -14,9 +14,12 @@ export class CustomDataSetsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly basePath: string;
 	readonly customDataSetsTab: Locator;
-	readonly dataSetDeleteAction: Locator;
-	readonly dataSetEditAction: Locator;
-	readonly dataSetPermissionsAction: Locator;
+	readonly dataSetDeleteButton: Locator;
+	readonly dataSetDeleteMenuItem: Locator;
+	readonly dataSetEditButton: Locator;
+	readonly dataSetEditMenuItem: Locator;
+	readonly dataSetPermissionsButton: Locator;
+	readonly dataSetPermissionsMenuItem: Locator;
 	readonly dataSetsEmptyState: Locator;
 	readonly dataSetsTable: Locator;
 	readonly dataSetsTabs: Locator;
@@ -45,9 +48,23 @@ export class CustomDataSetsPage {
 		this.customDataSetsTab = page
 			.locator('.nav-item')
 			.filter({hasText: 'Custom Data Sets'});
-		this.dataSetDeleteAction = page.getByRole('menuitem', {name: 'Delete'});
-		this.dataSetEditAction = page.getByRole('menuitem', {name: 'Edit'});
-		this.dataSetPermissionsAction = page.getByRole('menuitem', {
+		this.dataSetDeleteButton = page.getByRole('button', {
+			exact: true,
+			name: 'Delete',
+		});
+		this.dataSetDeleteMenuItem = page.getByRole('menuitem', {
+			name: 'Delete',
+		});
+		this.dataSetEditButton = page.getByRole('button', {
+			exact: true,
+			name: 'Edit',
+		});
+		this.dataSetEditMenuItem = page.getByRole('menuitem', {name: 'Edit'});
+		this.dataSetPermissionsButton = page.getByRole('button', {
+			exact: true,
+			name: 'Permissions',
+		});
+		this.dataSetPermissionsMenuItem = page.getByRole('menuitem', {
 			name: 'Permissions',
 		});
 		this.dataSetsEmptyState = page.locator('.c-empty-state');

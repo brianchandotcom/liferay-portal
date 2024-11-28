@@ -617,7 +617,6 @@ const CustomDataSets = ({
 			schema: {
 				fields: [
 					{
-						actionId: 'edit',
 						contentRenderer: 'actionLink',
 						fieldName: 'label',
 						label: Liferay.Language.get('name'),
@@ -668,16 +667,11 @@ const CustomDataSets = ({
 				itemsActions={[
 					{
 						data: {
-							id: 'edit',
 							permissionKey: 'update',
 						},
 						icon: 'pencil',
 						label: Liferay.Language.get('edit'),
 						onClick: onEditClick,
-					},
-					{
-						separator: true,
-						type: 'group',
 					},
 					{
 						data: {
@@ -689,10 +683,6 @@ const CustomDataSets = ({
 						icon: 'password-policies',
 						label: Liferay.Language.get('permissions'),
 						target: 'modal-permissions',
-					},
-					{
-						separator: true,
-						type: 'group',
 					},
 					{
 						data: {

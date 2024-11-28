@@ -294,19 +294,14 @@ test('A user with "View" and "Permissions" permission', async ({
 		await dataSetsPage.goto({checkTabVisibility: false});
 	});
 
-	await test.step('Open actions dropdown', async () => {
-		await openActionsDropdown({
-			page,
-			text: blogPostsDataSetConfig.name,
-		});
-	});
-
-	await test.step('Check that "Permissions" is visible', async () => {
-		await expect(dataSetsPage.dataSetPermissionsAction).toBeVisible();
+	await test.step('Check that the "Permissions" button action is visible', async () => {
+		await expect(
+			dataSetsPage.dataSetPermissionsButton.first()
+		).toBeVisible();
 	});
 
 	await test.step('Open Permissions modal', async () => {
-		await dataSetsPage.dataSetPermissionsAction.click();
+		await dataSetsPage.dataSetPermissionsButton.first().click();
 
 		await expect(
 			dataSetsPage.permissionsModal.locator('#guest_ACTION_VIEW')
@@ -343,15 +338,8 @@ test('A user with "View" and "Permissions" permission', async ({
 		).not.toBeVisible();
 	});
 
-	await test.step('Open actions dropdown', async () => {
-		await openActionsDropdown({
-			page,
-			text: blogPostsDataSetConfig.name,
-		});
-	});
-
 	await test.step('Open Permissions modal', async () => {
-		await dataSetsPage.dataSetPermissionsAction.click();
+		await dataSetsPage.dataSetPermissionsButton.first().click();
 	});
 
 	await test.step('Confirm "View" permission is persisted', async () => {
@@ -401,19 +389,28 @@ test('A user with only "View" permission', async ({
 		await dataSetsPage.goto({checkTabVisibility: false});
 	});
 
-	await test.step('Open actions dropdown', async () => {
-		await openActionsDropdown({
-			page,
-			text: blogPostsDataSetConfig.name,
+	await test.step('Check that there is no actions dropdown', async () => {
+		const table: Locator = page.locator('.data-set-content-wrapper');
+
+		const row = table.locator('.dnd-tbody .dnd-tr').filter({
+			has: page
+				.getByText(blogPostsDataSetConfig.name, {exact: true})
+				.first(),
 		});
+
+		const actionsButton = row.locator('.cell-item-actions button');
+
+		await expect(actionsButton).not.toBeInViewport();
 	});
 
 	await test.step('Check that "Permissions" is not visible', async () => {
-		await expect(dataSetsPage.dataSetPermissionsAction).not.toBeVisible();
+		await expect(dataSetsPage.dataSetPermissionsButton).not.toBeVisible();
+		await expect(dataSetsPage.dataSetPermissionsMenuItem).not.toBeVisible();
 	});
 
 	await test.step('Check that "Delete" is not visible', async () => {
-		await expect(dataSetsPage.dataSetPermissionsAction).not.toBeVisible();
+		await expect(dataSetsPage.dataSetDeleteButton).not.toBeVisible();
+		await expect(dataSetsPage.dataSetDeleteMenuItem).not.toBeVisible();
 	});
 });
 
@@ -504,7 +501,7 @@ test('A user with "Delete" permission', async ({
 	});
 
 	await test.step('Check that "Delete" is visible', async () => {
-		await expect(dataSetsPage.dataSetDeleteAction).toBeVisible();
+		await expect(dataSetsPage.dataSetDeleteButton.first()).toBeVisible();
 	});
 });
 
@@ -551,15 +548,18 @@ test('Check "Edit" permission', async ({
 		await dataSetsPage.goto({checkTabVisibility: false});
 	});
 
-	await test.step('Open actions dropdown', async () => {
-		await openActionsDropdown({
-			page,
-			text: blogPostsDataSetConfig.name,
-		});
-	});
+	await test.step('Check that there is no actions dropdown', async () => {
+		const table: Locator = page.locator('.data-set-content-wrapper');
 
-	await test.step('Check that "Edit" is not visible', async () => {
-		await expect(dataSetsPage.dataSetEditAction).not.toBeVisible();
+		const row = table.locator('.dnd-tbody .dnd-tr').filter({
+			has: page
+				.getByText(blogPostsDataSetConfig.name, {exact: true})
+				.first(),
+		});
+
+		const actionsButton = row.locator('.cell-item-actions button');
+
+		await expect(actionsButton).not.toBeInViewport();
 	});
 
 	await test.step('Check that the user can not enter to Data Set details pages', async () => {
@@ -599,7 +599,7 @@ test('Check "Edit" permission', async ({
 			text: blogPostsDataSetConfig.name,
 		});
 
-		await dataSetsPage.dataSetPermissionsAction.click();
+		await dataSetsPage.dataSetPermissionsMenuItem.click();
 
 		await expect(
 			dataSetsPage.permissionsModal.locator(
@@ -627,21 +627,11 @@ test('Check "Edit" permission', async ({
 	});
 
 	await test.step('Check that the user has only "Edit" option on actions menu', async () => {
-		await openActionsDropdown({
-			page,
-			text: blogPostsDataSetConfig.name,
-		});
-
-		await expect(dataSetsPage.dataSetEditAction).toBeVisible();
+		await expect(dataSetsPage.dataSetEditButton.first()).toBeVisible();
 	});
 
 	await test.step('Check that the user can now edit the data set', async () => {
-		await openActionsDropdown({
-			page,
-			text: blogPostsDataSetConfig.name,
-		});
-
-		await dataSetsPage.dataSetEditAction.click();
+		await dataSetsPage.dataSetEditButton.first().click();
 
 		await expect(
 			page.getByRole('heading', {name: 'Details'})
@@ -691,7 +681,7 @@ test('A user with "Add Object Entry" permission', async ({
 			text: blogPostsDataSetConfig.name,
 		});
 
-		await dataSetsPage.dataSetDeleteAction.click();
+		await dataSetsPage.dataSetDeleteMenuItem.click();
 
 		const deleteModal = dataSetsPage.page.getByRole('dialog');
 

@@ -862,7 +862,7 @@ const FrontendDataSet = ({
 		else {
 			setItems(
 				itemsProp.filter((item) => {
-					return JSON.stringify(item).includes(query);
+					return JSON.stringify(Object.values(item)).includes(query);
 				})
 			);
 		}

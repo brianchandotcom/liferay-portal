@@ -166,6 +166,8 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 				return _justify;
 			}
 		).put(
+			"localizationConfig", _localizationConfigJSONObject
+		).put(
 			"numberOfSteps", _numberOfSteps
 		).put(
 			"successMessage", _successMessageJSONObject
@@ -188,6 +190,10 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 
 	public String getJustify() {
 		return _justify;
+	}
+
+	public JSONObject getLocalizationConfigJSONObject() {
+		return _localizationConfigJSONObject;
 	}
 
 	public int getNumberOfSteps() {
@@ -247,6 +253,12 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		_justify = justify;
 	}
 
+	public void setLocalizationConfigJSONObject(
+		JSONObject localizationConfigJSONObject) {
+
+		_localizationConfigJSONObject = localizationConfigJSONObject;
+	}
+
 	public void setNumberOfSteps(int numberOfSteps) {
 		_numberOfSteps = numberOfSteps;
 	}
@@ -301,6 +313,11 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			setFormType(itemConfigJSONObject.getString("formType"));
 		}
 
+		if (itemConfigJSONObject.has("localizationConfig")) {
+			setLocalizationConfigJSONObject(
+				itemConfigJSONObject.getJSONObject("localizationConfig"));
+		}
+
 		if (itemConfigJSONObject.has("numberOfSteps")) {
 			setNumberOfSteps(itemConfigJSONObject.getInt("numberOfSteps"));
 		}
@@ -327,6 +344,7 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 	private String _formType;
 	private boolean _indexed = true;
 	private String _justify = "";
+	private JSONObject _localizationConfigJSONObject;
 	private int _numberOfSteps;
 	private JSONObject _successMessageJSONObject;
 	private String _widthType = StyledLayoutStructureConstants.WIDTH_TYPE;

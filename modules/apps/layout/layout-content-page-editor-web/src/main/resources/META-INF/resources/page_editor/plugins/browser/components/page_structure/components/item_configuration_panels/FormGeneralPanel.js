@@ -79,24 +79,31 @@ export function FormGeneralPanel({item}) {
 			<FormOptions item={item} onValueSelect={saveFormConfig} />
 
 			{formIsMapped(item) && (
-				<div className="mb-3 panel-group-sm">
-					<ClayPanel
-						collapsable
-						defaultExpanded
-						displayTitle={Liferay.Language.get(
-							'actions-after-submit'
-						)}
-						displayType="unstyled"
-						showCollapseIcon
-					>
-						<ClayPanel.Body>
-							<SuccessInteractionOptions
-								item={item}
-								onValueSelect={saveFormConfig}
-							/>
-						</ClayPanel.Body>
-					</ClayPanel>
-				</div>
+				<>
+					<div className="mb-3 panel-group-sm">
+						<ClayPanel
+							collapsable
+							defaultExpanded
+							displayTitle={Liferay.Language.get(
+								'actions-after-submit'
+							)}
+							displayType="unstyled"
+							showCollapseIcon
+						>
+							<ClayPanel.Body>
+								<SuccessInteractionOptions
+									item={item}
+									onValueSelect={saveFormConfig}
+								/>
+							</ClayPanel.Body>
+						</ClayPanel>
+					</div>
+
+					<LocalizationOptions
+						item={item}
+						onValueSelect={saveFormConfig}
+					/>
+				</>
 			)}
 
 			<div className="mb-3 panel-group-sm">
@@ -444,5 +451,120 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 				</>
 			)}
 		</>
+	);
+}
+
+const DISABLED_OPTION = 'disabled';
+const READ_ONLY_OPTION = 'read-only';
+
+const UNLOCALIZED_FIELDS_STATE_OPTIONS = [
+	{
+		label: Liferay.Language.get('disabled'),
+		value: DISABLED_OPTION,
+	},
+	{
+		label: Liferay.Language.get('read-only'),
+		value: READ_ONLY_OPTION,
+	},
+];
+
+function LocalizationOptions({item, onValueSelect}) {
+	const languageId = useSelector(selectLanguageId);
+
+	const {localizationConfig = {}} = item.config;
+
+	const {unlocalizedFieldsMessage, unlocalizedFieldsState} =
+		localizationConfig || {};
+
+	const unlocalizedMessage = getEditableLocalizedValue(
+		unlocalizedFieldsMessage,
+		languageId,
+		Liferay.Language.get('this-field-cannot-be-localized')
+	);
+
+	const helpTextId = useId();
+
+	return (
+		<div className="mb-3 panel-group-sm">
+			<ClayPanel
+				collapsable
+				defaultExpanded
+				displayTitle={Liferay.Language.get('unlocalizable-fields')}
+				displayType="unstyled"
+				showCollapseIcon
+			>
+				<ClayPanel.Body>
+					<p className="text-secondary">
+						{Liferay.Language.get(
+							'configure-unlocalizable-fields-when-localization-action-is-taken'
+						)}
+					</p>
+
+					<ClayForm.Group small>
+						<SelectField
+							field={{
+								label: Liferay.Language.get('success-action'),
+								name: 'source',
+								typeOptions: {
+									validValues:
+										UNLOCALIZED_FIELDS_STATE_OPTIONS,
+								},
+							}}
+							onValueSelect={(_name, value) =>
+								onValueSelect({
+									localizationConfig: {
+										...localizationConfig,
+										unlocalizedFieldsState: value,
+									},
+								})
+							}
+							value={unlocalizedFieldsState || DISABLED_OPTION}
+						/>
+					</ClayForm.Group>
+
+					<ClayForm.Group small>
+						<ClayInput.Group className="align-items-end" small>
+							<ClayInput.GroupItem>
+								<TextField
+									aria-describedby={helpTextId}
+									field={{
+										label: Liferay.Language.get(
+											'unlocalizable-fields-message'
+										),
+									}}
+									onValueSelect={(_, value) =>
+										onValueSelect({
+											localizationConfig: setIn(
+												localizationConfig || {},
+												[
+													'unlocalizedFieldsMessage',
+													languageId,
+												],
+
+												value
+											),
+										})
+									}
+									value={unlocalizedMessage}
+								/>
+							</ClayInput.GroupItem>
+
+							<ClayInput.GroupItem shrink>
+								<CurrentLanguageFlag />
+							</ClayInput.GroupItem>
+						</ClayInput.Group>
+
+						<p
+							className="m-0 mt-1 small text-secondary"
+							id={helpTextId}
+						>
+							{Liferay.Language.get(
+								'this-message-appears-over-the-help-icon-of-unlocalizable-fields'
+							)}
+						</p>
+					</ClayForm.Group>
+				</ClayPanel.Body>
+			</ClayPanel>
+		</div>
 	);
 }

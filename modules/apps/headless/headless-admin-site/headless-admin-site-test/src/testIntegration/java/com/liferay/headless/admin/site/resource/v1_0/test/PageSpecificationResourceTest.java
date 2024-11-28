@@ -148,14 +148,26 @@ public class PageSpecificationResourceTest
 			serviceContext);
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageTemplatePageSpecificationsPage()
 		throws Exception {
 
-		super.
-			testGetSiteSiteByExternalReferenceCodePageTemplatePageSpecificationsPage();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getBasicLayoutPageTemplateEntry(serviceContext);
+
+		_testPageSpecificationsPage(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			serviceContext,
+			() ->
+				pageSpecificationResource.
+					getSiteSiteByExternalReferenceCodePageTemplatePageSpecificationsPage(
+						testGroup.getExternalReferenceCode(),
+						layoutPageTemplateEntry.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -418,7 +430,7 @@ public class PageSpecificationResourceTest
 		Assert.assertNull(widgetPageSpecification.getWidgetPageSections());
 	}
 
-	private Layout _getBasicLayoutPageTemplateEntryLayout(
+	private LayoutPageTemplateEntry _getBasicLayoutPageTemplateEntry(
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -434,15 +446,20 @@ public class PageSpecificationResourceTest
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					serviceContext);
 
+		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.BASIC, 0,
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+	}
+
+	private Layout _getBasicLayoutPageTemplateEntryLayout(
+			ServiceContext serviceContext)
+		throws Exception {
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(),
-				serviceContext.getScopeGroupId(),
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.BASIC, 0,
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
+			_getBasicLayoutPageTemplateEntry(serviceContext);
 
 		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
 	}

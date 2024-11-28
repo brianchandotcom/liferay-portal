@@ -39,6 +39,7 @@ public class AssetCategoryPropertyWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("categoryPropertyId", getCategoryPropertyId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -64,6 +65,13 @@ public class AssetCategoryPropertyWrapper
 
 		if (ctCollectionId != null) {
 			setCtCollectionId(ctCollectionId);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long categoryPropertyId = (Long)attributes.get("categoryPropertyId");
@@ -174,6 +182,16 @@ public class AssetCategoryPropertyWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
+	}
+
+	/**
+	 * Returns the external reference code of this asset category property.
+	 *
+	 * @return the external reference code of this asset category property
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -309,6 +327,16 @@ public class AssetCategoryPropertyWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Sets the external reference code of this asset category property.
+	 *
+	 * @param externalReferenceCode the external reference code of this asset category property
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

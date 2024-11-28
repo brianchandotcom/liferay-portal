@@ -217,6 +217,11 @@ public interface AssetCategoryPropertyLocalService
 		long categoryPropertyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetCategoryProperty
+		fetchAssetCategoryPropertyByExternalReferenceCode(
+			String externalReferenceCode, long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetCategoryProperty fetchCategoryProperty(
 		long categoryId, String key);
 
@@ -256,6 +261,12 @@ public interface AssetCategoryPropertyLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetCategoryProperty getAssetCategoryProperty(
 			long categoryPropertyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetCategoryProperty
+			getAssetCategoryPropertyByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -233,6 +233,14 @@ public class AssetCategoryPropertyLocalServiceUtil {
 		return getService().fetchAssetCategoryProperty(categoryPropertyId);
 	}
 
+	public static AssetCategoryProperty
+		fetchAssetCategoryPropertyByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return getService().fetchAssetCategoryPropertyByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static AssetCategoryProperty fetchCategoryProperty(
 		long categoryId, String key) {
 
@@ -283,6 +291,15 @@ public class AssetCategoryPropertyLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getAssetCategoryProperty(categoryPropertyId);
+	}
+
+	public static AssetCategoryProperty
+			getAssetCategoryPropertyByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getAssetCategoryPropertyByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static List<AssetCategoryProperty> getCategoryProperties() {

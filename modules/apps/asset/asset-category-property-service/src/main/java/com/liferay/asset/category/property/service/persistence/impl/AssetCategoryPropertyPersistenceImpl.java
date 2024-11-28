@@ -5,6 +5,7 @@
 
 package com.liferay.asset.category.property.service.persistence.impl;
 
+import com.liferay.asset.category.property.exception.DuplicateAssetCategoryPropertyExternalReferenceCodeException;
 import com.liferay.asset.category.property.exception.NoSuchCategoryPropertyException;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.model.AssetCategoryPropertyTable;
@@ -26,19 +27,26 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -1935,6 +1943,220 @@ public class AssetCategoryPropertyPersistenceImpl
 	private static final String _FINDER_COLUMN_CA_K_KEY_3 =
 		"(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = '')";
 
+	private FinderPath _finderPathFetchByERC_C;
+
+	/**
+	 * Returns the asset category property where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCategoryPropertyException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching asset category property
+	 * @throws NoSuchCategoryPropertyException if a matching asset category property could not be found
+	 */
+	@Override
+	public AssetCategoryProperty findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchCategoryPropertyException {
+
+		AssetCategoryProperty assetCategoryProperty = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (assetCategoryProperty == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCategoryPropertyException(sb.toString());
+		}
+
+		return assetCategoryProperty;
+	}
+
+	/**
+	 * Returns the asset category property where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching asset category property, or <code>null</code> if a matching asset category property could not be found
+	 */
+	@Override
+	public AssetCategoryProperty fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns the asset category property where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching asset category property, or <code>null</code> if a matching asset category property could not be found
+	 */
+	@Override
+	public AssetCategoryProperty fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AssetCategoryProperty.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {externalReferenceCode, companyId};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByERC_C, finderArgs, this);
+			}
+
+			if (result instanceof AssetCategoryProperty) {
+				AssetCategoryProperty assetCategoryProperty =
+					(AssetCategoryProperty)result;
+
+				if (!Objects.equals(
+						externalReferenceCode,
+						assetCategoryProperty.getExternalReferenceCode()) ||
+					(companyId != assetCategoryProperty.getCompanyId())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(companyId);
+
+					List<AssetCategoryProperty> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByERC_C, finderArgs, list);
+						}
+					}
+					else {
+						AssetCategoryProperty assetCategoryProperty = list.get(
+							0);
+
+						result = assetCategoryProperty;
+
+						cacheResult(assetCategoryProperty);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (AssetCategoryProperty)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the asset category property where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the asset category property that was removed
+	 */
+	@Override
+	public AssetCategoryProperty removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchCategoryPropertyException {
+
+		AssetCategoryProperty assetCategoryProperty = findByERC_C(
+			externalReferenceCode, companyId);
+
+		return remove(assetCategoryProperty);
+	}
+
+	/**
+	 * Returns the number of asset category properties where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching asset category properties
+	 */
+	@Override
+	public int countByERC_C(String externalReferenceCode, long companyId) {
+		AssetCategoryProperty assetCategoryProperty = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (assetCategoryProperty == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"assetCategoryProperty.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(assetCategoryProperty.externalReferenceCode IS NULL OR assetCategoryProperty.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"assetCategoryProperty.companyId = ?";
+
 	public AssetCategoryPropertyPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -1970,6 +2192,14 @@ public class AssetCategoryPropertyPersistenceImpl
 				new Object[] {
 					assetCategoryProperty.getCategoryId(),
 					assetCategoryProperty.getKey()
+				},
+				assetCategoryProperty);
+
+			finderCache.putResult(
+				_finderPathFetchByERC_C,
+				new Object[] {
+					assetCategoryProperty.getExternalReferenceCode(),
+					assetCategoryProperty.getCompanyId()
 				},
 				assetCategoryProperty);
 		}
@@ -2074,6 +2304,14 @@ public class AssetCategoryPropertyPersistenceImpl
 
 			finderCache.putResult(
 				_finderPathFetchByCA_K, args, assetCategoryPropertyModelImpl);
+
+			args = new Object[] {
+				assetCategoryPropertyModelImpl.getExternalReferenceCode(),
+				assetCategoryPropertyModelImpl.getCompanyId()
+			};
+
+			finderCache.putResult(
+				_finderPathFetchByERC_C, args, assetCategoryPropertyModelImpl);
 		}
 	}
 
@@ -2214,6 +2452,75 @@ public class AssetCategoryPropertyPersistenceImpl
 
 		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl =
 			(AssetCategoryPropertyModelImpl)assetCategoryProperty;
+
+		if (Validator.isNull(
+				assetCategoryProperty.getExternalReferenceCode())) {
+
+			assetCategoryProperty.setExternalReferenceCode(
+				String.valueOf(assetCategoryProperty.getPrimaryKey()));
+		}
+		else {
+			if (!Objects.equals(
+					assetCategoryPropertyModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					assetCategoryProperty.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = assetCategoryProperty.getCompanyId();
+
+					long groupId = 0;
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = assetCategoryProperty.getPrimaryKey();
+					}
+
+					try {
+						assetCategoryProperty.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								AssetCategoryProperty.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								assetCategoryProperty.
+									getExternalReferenceCode(),
+								null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			AssetCategoryProperty ercAssetCategoryProperty = fetchByERC_C(
+				assetCategoryProperty.getExternalReferenceCode(),
+				assetCategoryProperty.getCompanyId());
+
+			if (isNew) {
+				if (ercAssetCategoryProperty != null) {
+					throw new DuplicateAssetCategoryPropertyExternalReferenceCodeException(
+						"Duplicate asset category property with external reference code " +
+							assetCategoryProperty.getExternalReferenceCode() +
+								" and company " +
+									assetCategoryProperty.getCompanyId());
+				}
+			}
+			else {
+				if ((ercAssetCategoryProperty != null) &&
+					(assetCategoryProperty.getCategoryPropertyId() !=
+						ercAssetCategoryProperty.getCategoryPropertyId())) {
+
+					throw new DuplicateAssetCategoryPropertyExternalReferenceCodeException(
+						"Duplicate asset category property with external reference code " +
+							assetCategoryProperty.getExternalReferenceCode() +
+								" and company " +
+									assetCategoryProperty.getCompanyId());
+				}
+			}
+		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -2767,6 +3074,7 @@ public class AssetCategoryPropertyPersistenceImpl
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("externalReferenceCode");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
@@ -2788,6 +3096,9 @@ public class AssetCategoryPropertyPersistenceImpl
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
 		_uniqueIndexColumnNames.add(new String[] {"categoryId", "key_"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"externalReferenceCode", "companyId"});
 	}
 
 	/**
@@ -2869,6 +3180,11 @@ public class AssetCategoryPropertyPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCA_K",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"categoryId", "key_"}, true);
+
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
 
 		AssetCategoryPropertyUtil.setPersistence(this);
 	}

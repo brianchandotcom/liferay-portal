@@ -31,6 +31,10 @@ public class AssetCategoryPropertyTable
 	public final Column<AssetCategoryPropertyTable, Long> ctCollectionId =
 		createColumn(
 			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<AssetCategoryPropertyTable, String>
+		externalReferenceCode = createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<AssetCategoryPropertyTable, Long> categoryPropertyId =
 		createColumn(
 			"categoryPropertyId", Long.class, Types.BIGINT,

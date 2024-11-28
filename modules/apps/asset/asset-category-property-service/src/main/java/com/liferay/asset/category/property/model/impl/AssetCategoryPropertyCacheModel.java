@@ -69,12 +69,14 @@ public class AssetCategoryPropertyCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", ctCollectionId=");
 		sb.append(ctCollectionId);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", categoryPropertyId=");
 		sb.append(categoryPropertyId);
 		sb.append(", companyId=");
@@ -105,6 +107,15 @@ public class AssetCategoryPropertyCacheModel
 
 		assetCategoryPropertyImpl.setMvccVersion(mvccVersion);
 		assetCategoryPropertyImpl.setCtCollectionId(ctCollectionId);
+
+		if (externalReferenceCode == null) {
+			assetCategoryPropertyImpl.setExternalReferenceCode("");
+		}
+		else {
+			assetCategoryPropertyImpl.setExternalReferenceCode(
+				externalReferenceCode);
+		}
+
 		assetCategoryPropertyImpl.setCategoryPropertyId(categoryPropertyId);
 		assetCategoryPropertyImpl.setCompanyId(companyId);
 		assetCategoryPropertyImpl.setUserId(userId);
@@ -156,6 +167,7 @@ public class AssetCategoryPropertyCacheModel
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 
 		categoryPropertyId = objectInput.readLong();
 
@@ -176,6 +188,13 @@ public class AssetCategoryPropertyCacheModel
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(ctCollectionId);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 
 		objectOutput.writeLong(categoryPropertyId);
 
@@ -212,6 +231,7 @@ public class AssetCategoryPropertyCacheModel
 
 	public long mvccVersion;
 	public long ctCollectionId;
+	public String externalReferenceCode;
 	public long categoryPropertyId;
 	public long companyId;
 	public long userId;

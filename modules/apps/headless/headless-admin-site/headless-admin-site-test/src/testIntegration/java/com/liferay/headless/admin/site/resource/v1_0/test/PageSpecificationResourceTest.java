@@ -111,14 +111,27 @@ public class PageSpecificationResourceTest
 						layoutPageTemplateEntry.getExternalReferenceCode()));
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodeMasterPagePageSpecificationsPage()
 		throws Exception {
 
-		super.
-			testGetSiteSiteByExternalReferenceCodeMasterPagePageSpecificationsPage();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getMasterLayoutPageTemplateEntry(
+				serviceContext, WorkflowConstants.STATUS_DRAFT);
+
+		_testPageSpecificationsPage(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			serviceContext,
+			() ->
+				pageSpecificationResource.
+					getSiteSiteByExternalReferenceCodeMasterPagePageSpecificationsPage(
+						testGroup.getExternalReferenceCode(),
+						layoutPageTemplateEntry.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -524,19 +537,26 @@ public class PageSpecificationResourceTest
 		return _layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid());
 	}
 
+	private LayoutPageTemplateEntry _getMasterLayoutPageTemplateEntry(
+			ServiceContext serviceContext, int status)
+		throws Exception {
+
+		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, status,
+			serviceContext);
+	}
+
 	private Layout _getMasterLayoutPageTemplateEntryLayout(
 			ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(),
-				serviceContext.getScopeGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
+			_getMasterLayoutPageTemplateEntry(
+				serviceContext, WorkflowConstants.STATUS_DRAFT);
 
 		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
 	}
@@ -549,14 +569,8 @@ public class PageSpecificationResourceTest
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(),
-				serviceContext.getScopeGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+			_getMasterLayoutPageTemplateEntry(
+				serviceContext, WorkflowConstants.STATUS_APPROVED);
 
 		return layoutPageTemplateEntry.getPlid();
 	}

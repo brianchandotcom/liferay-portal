@@ -207,7 +207,7 @@ public class ObjectEntryUtil {
 
 				properties.put(
 					infoField.getName() + "_i18n",
-					LocalizedMapUtil.getI18nMap(
+					LocalizedMapUtil.getLanguageIdMap(
 						infoLocalizedValue.getValues()));
 			}
 			else {

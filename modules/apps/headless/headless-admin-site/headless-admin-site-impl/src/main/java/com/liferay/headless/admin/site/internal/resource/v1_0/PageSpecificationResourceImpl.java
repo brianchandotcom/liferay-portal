@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
@@ -104,6 +105,33 @@ public class PageSpecificationResourceImpl
 		}
 
 		return _pageSpecificationDTOConverter.toDTO(layout);
+	}
+
+	@NestedField(parentClass = PageTemplate.class, value = "pageSpecifications")
+	@Override
+	public Page<PageSpecification>
+			getSiteSiteByExternalReferenceCodePageTemplatePageSpecificationsPage(
+				String siteExternalReferenceCode,
+				@NestedFieldId(value = "externalReferenceCode") String
+					pageTemplateExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					pageTemplateExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode));
+
+		return Page.of(
+			_toPageSpecifications(
+				_layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid())));
 	}
 
 	@NestedField(parentClass = SitePage.class, value = "pageSpecifications")

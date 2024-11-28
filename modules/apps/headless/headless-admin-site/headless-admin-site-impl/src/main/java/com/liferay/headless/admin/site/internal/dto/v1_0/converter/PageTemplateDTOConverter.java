@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageTemplate;
-import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplate;
@@ -72,12 +71,6 @@ public class PageTemplateDTOConverter
 					layoutPageTemplateEntry::getExternalReferenceCode);
 				setKey(layoutPageTemplateEntry::getLayoutPageTemplateEntryKey);
 				setName(layoutPageTemplateEntry::getName);
-				setPageSpecifications(
-					() -> new PageSpecification[] {
-						_pageSpecificationDTOConverter.toDTO(layout),
-						_pageSpecificationDTOConverter.toDTO(
-							layout.fetchDraftLayout())
-					});
 				setPageTemplateSet(
 					() -> _getPageTemplateSet(layoutPageTemplateEntry));
 				setType(() -> Type.CONTENT_PAGE_TEMPLATE);
@@ -140,10 +133,6 @@ public class PageTemplateDTOConverter
 				setName_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						true, layoutPrototype.getNameMap()));
-				setPageSpecifications(
-					() -> new PageSpecification[] {
-						_pageSpecificationDTOConverter.toDTO(layout)
-					});
 				setPageTemplateSet(
 					() -> _getPageTemplateSet(layoutPageTemplateEntry));
 				setType(() -> Type.WIDGET_PAGE_TEMPLATE);
@@ -161,12 +150,6 @@ public class PageTemplateDTOConverter
 
 	@Reference
 	private LayoutPrototypeService _layoutPrototypeService;
-
-	@Reference(
-		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageSpecificationDTOConverter)"
-	)
-	private DTOConverter<Layout, PageSpecification>
-		_pageSpecificationDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageTemplateSetDTOConverter)"

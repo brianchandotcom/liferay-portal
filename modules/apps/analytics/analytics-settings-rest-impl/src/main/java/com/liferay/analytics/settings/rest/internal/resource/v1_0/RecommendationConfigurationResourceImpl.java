@@ -7,10 +7,14 @@ package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.dto.v1_0.RecommendationConfiguration;
+import com.liferay.analytics.settings.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.RecommendationConfigurationResource;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -56,6 +60,14 @@ public class RecommendationConfigurationResourceImpl
 			RecommendationConfiguration recommendationConfiguration)
 		throws Exception {
 
+		_analyticsCloudClient.updateAnalyticsDataSourceDetails(
+			_configurationProvider.getCompanyConfiguration(
+				AnalyticsConfiguration.class, contextCompany.getCompanyId()),
+			recommendationConfiguration.
+				getContentRecommenderMostPopularItemsEnabled(),
+			recommendationConfiguration.
+				getContentRecommenderUserPersonalizationEnabled());
+
 		_analyticsSettingsManager.updateCompanyConfiguration(
 			contextCompany.getCompanyId(),
 			HashMapBuilder.<String, Object>put(
@@ -71,8 +83,21 @@ public class RecommendationConfigurationResourceImpl
 		_recommendationConfiguration = recommendationConfiguration;
 	}
 
+	@Activate
+	protected void activate() {
+		_analyticsCloudClient = new AnalyticsCloudClient(_http);
+	}
+
+	private AnalyticsCloudClient _analyticsCloudClient;
+
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Http _http;
 
 	private RecommendationConfiguration _recommendationConfiguration;
 

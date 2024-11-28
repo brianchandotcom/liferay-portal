@@ -336,6 +336,61 @@ public class AnalyticsCloudClient {
 	}
 
 	public AnalyticsDataSource updateAnalyticsDataSourceDetails(
+			AnalyticsConfiguration analyticsConfiguration,
+			Boolean contentRecommenderMostPopularItemsEnabled,
+			Boolean contentRecommenderUserPersonalizationEnabled)
+		throws Exception {
+
+		try {
+			Http.Options options = _getOptions(analyticsConfiguration);
+
+			options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+			options.setBody(
+				JSONUtil.put(
+					"contentRecommenderMostPopularItemsEnabled",
+					contentRecommenderMostPopularItemsEnabled
+				).put(
+					"contentRecommenderUserPersonalizationEnabled",
+					contentRecommenderUserPersonalizationEnabled
+				).toString(),
+				ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+			options.setLocation(
+				String.format(
+					"%s/api/1.0/data-sources/%s/details",
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+					analyticsConfiguration.liferayAnalyticsDataSourceId()));
+			options.setPut(true);
+
+			String content = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				return ObjectMapperHolder._objectMapper.readValue(
+					content, AnalyticsDataSource.class);
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Response code " + response.getResponseCode());
+			}
+
+			throw new PortalException(
+				"Unable to update analytics data source content recommender " +
+					"details");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new PortalException(
+				"Unable to update analytics data source content recommender " +
+					"details",
+				exception);
+		}
+	}
+
+	public AnalyticsDataSource updateAnalyticsDataSourceDetails(
 			Boolean accountsSelected,
 			AnalyticsConfiguration analyticsConfiguration,
 			Boolean commerceChannelsSelected, Boolean contactsSelected,

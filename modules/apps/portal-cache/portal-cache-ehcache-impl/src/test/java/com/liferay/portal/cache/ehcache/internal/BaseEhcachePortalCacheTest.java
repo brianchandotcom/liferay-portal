@@ -116,16 +116,6 @@ public class BaseEhcachePortalCacheTest {
 	}
 
 	@Test
-	public void testCacheDBPartitionDisabled() {
-		_testCacheDBPartition(false);
-	}
-
-	@Test
-	public void testCacheDBPartitionEnabled() {
-		_testCacheDBPartition(true);
-	}
-
-	@Test
 	public void testCacheListener() {
 
 		// Register 1
@@ -332,6 +322,16 @@ public class BaseEhcachePortalCacheTest {
 	public void testGetName() {
 		Assert.assertEquals(
 			_PORTAL_CACHE_NAME, _ehcachePortalCache.getPortalCacheName());
+	}
+
+	@Test
+	public void testGetPortalCacheDBPartitionDisabled() {
+		_testGetPortalCache(false);
+	}
+
+	@Test
+	public void testGetPortalCacheDBPartitionEnabled() {
+		_testGetPortalCache(true);
 	}
 
 	@Test
@@ -760,7 +760,7 @@ public class BaseEhcachePortalCacheTest {
 		_defaultPortalCacheReplicator.reset();
 	}
 
-	private void _testCacheDBPartition(boolean dbPartitionEnabled) {
+	private void _testGetPortalCache(boolean dbPartitionEnabled) {
 		BaseEhcachePortalCacheManager baseEhcachePortalCacheManager =
 			Mockito.spy(BaseEhcachePortalCacheManager.class);
 

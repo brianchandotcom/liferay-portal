@@ -420,9 +420,4 @@ function getMillerColumnsItem(
 	);
 }
 
-export {
-	getNextTarget,
-	KeyboardMovementContext,
-	KeyboardMovementProvider,
-	setMovementText,
-};
+export {KeyboardMovementContext, KeyboardMovementProvider, setMovementText};

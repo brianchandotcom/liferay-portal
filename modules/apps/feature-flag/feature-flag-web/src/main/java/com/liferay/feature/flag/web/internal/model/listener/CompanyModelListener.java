@@ -51,14 +51,17 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			this::_processDeprecationFeatureFlags);
 	}
 
-	private void _processDeprecationFeatureFlags(long companyId) {
+	private PortalPreferences _getPortalPreferences(long companyId) {
 		PortalPreferencesWrapper portalPreferencesWrapper =
 			(PortalPreferencesWrapper)
 				_portalPreferencesLocalService.getPreferences(
 					companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
-		PortalPreferences portalPreferences =
-			portalPreferencesWrapper.getPortalPreferencesImpl();
+		return portalPreferencesWrapper.getPortalPreferencesImpl();
+	}
+
+	private void _processDeprecationFeatureFlags(long companyId) {
+		PortalPreferences portalPreferences = _getPortalPreferences(companyId);
 
 		boolean processed = GetterUtil.getBoolean(
 			portalPreferences.getValue(
@@ -80,6 +83,8 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			_featureFlagsBagProvider.setEnabled(
 				companyId, deprecationFeatureFlag.getKey(), false);
 		}
+
+		portalPreferences = _getPortalPreferences(companyId);
 
 		portalPreferences.setValue(
 			FeatureFlagConstants.PREFERENCE_NAMESPACE,

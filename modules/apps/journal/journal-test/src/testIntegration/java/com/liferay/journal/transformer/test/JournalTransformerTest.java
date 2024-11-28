@@ -173,7 +173,7 @@ public class JournalTransformerTest {
 	}
 
 	@Test
-	public void testCreateTemplateNode() throws Exception {
+	public void testCreateTemplateNode() {
 		_testCreateTemplateNodeDocumentLibraryDDMFormField();
 		_testCreateTemplateNodeSelectTypeDDMFormFieldWithNoOptions();
 		_testCreateTemplateNodeSelectTypeDDMFormFieldWithOptions();
@@ -699,9 +699,7 @@ public class JournalTransformerTest {
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
-	private void _testCreateTemplateNodeDocumentLibraryDDMFormField()
-		throws Exception {
-
+	private void _testCreateTemplateNodeDocumentLibraryDDMFormField() {
 		DDMFormField ddmFormField = new DDMFormField(
 			"name", DDMFormFieldTypeConstants.DOCUMENT_LIBRARY);
 

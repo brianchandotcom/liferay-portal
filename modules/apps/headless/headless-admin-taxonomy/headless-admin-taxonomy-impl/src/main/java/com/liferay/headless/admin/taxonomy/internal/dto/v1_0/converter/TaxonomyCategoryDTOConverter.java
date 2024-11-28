@@ -226,6 +226,8 @@ public class TaxonomyCategoryDTOConverter
 
 		return new TaxonomyCategoryProperty() {
 			{
+				setExternalReferenceCode(
+					assetCategoryProperty::getExternalReferenceCode);
 				setKey(assetCategoryProperty::getKey);
 				setValue(assetCategoryProperty::getValue);
 			}

@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.internal.renderer;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -95,6 +96,18 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "localization-select");
+	}
+
+	@Override
+	public int getType() {
+		return FragmentConstants.TYPE_INPUT;
+	}
+
+	@Override
+	public String getTypeOptions() {
+		return JSONUtil.put(
+			"fieldTypes", JSONUtil.putAll("localizationSelect")
+		).toString();
 	}
 
 	@Override

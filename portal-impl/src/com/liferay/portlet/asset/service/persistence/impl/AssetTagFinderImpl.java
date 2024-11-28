@@ -11,11 +11,14 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagTable;
 import com.liferay.asset.kernel.service.persistence.AssetTagFinder;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.HavingStep;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -26,8 +29,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -203,7 +208,7 @@ public class AssetTagFinderImpl
 
 	private GroupByStep _getEmptyEntriesGroupByStep(String name) {
 		return DSLQueryFactoryUtil.select(
-			AssetTagTable.INSTANCE
+			_getExpressions(true, false)
 		).from(
 			AssetTagTable.INSTANCE
 		).where(
@@ -224,11 +229,41 @@ public class AssetTagFinderImpl
 		);
 	}
 
-	private GroupByStep _getTagEntriesGroupByStep(
+	private Expression<?>[] _getExpressions(
+		boolean includeAssetCount, boolean replaceAssetCount) {
+
+		Collection<Column<AssetTagTable, ?>> columns =
+			AssetTagTable.INSTANCE.getColumns();
+
+		Expression<?>[] expressions = new Expression<?>[0];
+
+		for (Iterator<?> iterator = columns.iterator(); iterator.hasNext();) {
+			Column<AssetTagTable, ?> column =
+				(Column<AssetTagTable, ?>)iterator.next();
+
+			Expression<?> expression = column;
+
+			if (Objects.equals(column.getName(), "assetCount")) {
+				if (!includeAssetCount) {
+					continue;
+				}
+
+				if (replaceAssetCount) {
+					expression = _entryCountExpression;
+				}
+			}
+
+			expressions = ArrayUtil.append(expressions, expression);
+		}
+
+		return expressions;
+	}
+
+	private HavingStep _getTagEntriesGroupByStep(
 		long groupId, long classNameId, String name) {
 
-		return DSLQueryFactoryUtil.selectDistinct(
-			AssetTagTable.INSTANCE
+		return DSLQueryFactoryUtil.select(
+			_getExpressions(true, true)
 		).from(
 			AssetTagTable.INSTANCE
 		).innerJoinON(
@@ -260,7 +295,16 @@ public class AssetTagFinderImpl
 						StringUtil.toLowerCase(name)
 					));
 			}
+		).groupBy(
+			_getExpressions(false, false)
 		);
 	}
+
+	private final Expression<Long> _entryCountExpression =
+		DSLFunctionFactoryUtil.count(
+			AssetTagTable.INSTANCE.tagId
+		).as(
+			"assetCount"
+		);
 
 }

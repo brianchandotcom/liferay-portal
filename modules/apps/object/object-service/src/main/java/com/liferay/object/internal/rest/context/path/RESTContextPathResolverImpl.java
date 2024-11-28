@@ -5,9 +5,11 @@
 
 package com.liferay.object.internal.rest.context.path;
 
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Marco Leo
@@ -15,21 +17,30 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class RESTContextPathResolverImpl implements RESTContextPathResolver {
 
 	public RESTContextPathResolverImpl(
+		ObjectDefinition objectDefinition,
+		ObjectScopeProvider objectScopeProvider, boolean system) {
+
+		_objectDefinition = objectDefinition;
+		_objectScopeProvider = objectScopeProvider;
+		_system = system;
+	}
+
+	public RESTContextPathResolverImpl(
 		String contextPath, ObjectScopeProvider objectScopeProvider,
 		boolean system) {
 
 		_objectScopeProvider = objectScopeProvider;
+		_system = system;
 
-		if (objectScopeProvider.isGroupAware() && !system) {
-			_contextPath = contextPath + "/scopes/{scopeKey}";
-		}
-		else {
-			_contextPath = contextPath;
-		}
+		_initContextPath(contextPath);
 	}
 
 	@Override
 	public String getRESTContextPath(long groupId) {
+		if (Validator.isNull(_contextPath)) {
+			_initContextPath("/o" + _objectDefinition.getRESTContextPath());
+		}
+
 		if (!_objectScopeProvider.isGroupAware() ||
 			!_objectScopeProvider.isValidGroupId(groupId)) {
 
@@ -41,7 +52,17 @@ public class RESTContextPathResolverImpl implements RESTContextPathResolver {
 			new String[] {String.valueOf(groupId), String.valueOf(groupId)});
 	}
 
-	private final String _contextPath;
+	private void _initContextPath(String contextPath) {
+		_contextPath = contextPath;
+
+		if (_objectScopeProvider.isGroupAware() && !_system) {
+			_contextPath = _contextPath + "/scopes/{scopeKey}";
+		}
+	}
+
+	private String _contextPath;
+	private ObjectDefinition _objectDefinition;
 	private final ObjectScopeProvider _objectScopeProvider;
+	private final boolean _system;
 
 }

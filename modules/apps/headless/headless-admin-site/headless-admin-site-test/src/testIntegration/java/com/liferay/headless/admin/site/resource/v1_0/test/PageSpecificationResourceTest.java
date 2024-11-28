@@ -7,10 +7,10 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
-import com.liferay.headless.admin.site.client.dto.v1_0.StyleBook;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
@@ -276,19 +276,20 @@ public class PageSpecificationResourceTest
 				settings.getMasterPageExternalReferenceCode());
 		}
 
+		ItemExternalReference styleBookReference =
+			settings.getStyleBookReference();
+
 		if (layout.getStyleBookEntryId() == 0) {
-			Assert.assertNull(settings.getStyleBook());
+			Assert.assertNull(styleBookReference);
 		}
 		else {
 			StyleBookEntry styleBookEntry =
 				_styleBookEntryLocalService.getStyleBookEntry(
 					layout.getStyleBookEntryId());
 
-			StyleBook styleBook = settings.getStyleBook();
-
 			Assert.assertEquals(
-				styleBookEntry.getStyleBookEntryKey(), styleBook.getKey());
-			Assert.assertEquals(styleBookEntry.getName(), styleBook.getName());
+				styleBookEntry.getExternalReferenceCode(),
+				styleBookReference.getExternalReferenceCode());
 		}
 
 		if (Validator.isNull(layout.getThemeId())) {

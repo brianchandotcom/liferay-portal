@@ -7,11 +7,14 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageSpecificationResource;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -101,6 +104,33 @@ public class PageSpecificationResourceImpl
 		return _pageSpecificationDTOConverter.toDTO(layout);
 	}
 
+	@NestedField(parentClass = UtilityPage.class, value = "pageSpecifications")
+	@Override
+	public Page<PageSpecification>
+			getSiteSiteByExternalReferenceCodeUtilityPagePageSpecificationsPage(
+				String siteExternalReferenceCode,
+				@NestedFieldId(value = "externalReferenceCode") String
+					utilityPageExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					utilityPageExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode));
+
+		return Page.of(
+			_toPageSpecifications(
+				_layoutLocalService.getLayout(
+					layoutUtilityPageEntry.getPlid())));
+	}
+
 	private boolean _isPageSpecificationSupported(Layout layout) {
 		if (_isPublished(layout)) {
 			if (!layout.isApproved() || !layout.isDraftLayout()) {
@@ -165,6 +195,9 @@ public class PageSpecificationResourceImpl
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private LayoutUtilityPageEntryService _layoutUtilityPageEntryService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageSpecificationDTOConverter)"

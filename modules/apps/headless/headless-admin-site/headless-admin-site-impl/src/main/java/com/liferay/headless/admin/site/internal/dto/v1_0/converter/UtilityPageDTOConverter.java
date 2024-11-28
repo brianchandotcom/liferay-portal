@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
-import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
@@ -61,12 +60,6 @@ public class UtilityPageDTOConverter
 				setMarkedAsDefault(
 					layoutUtilityPageEntry::isDefaultLayoutUtilityPageEntry);
 				setName(layoutUtilityPageEntry::getName);
-				setPageSpecifications(
-					() -> new PageSpecification[] {
-						_pageSpecificationDTOConverter.toDTO(layout),
-						_pageSpecificationDTOConverter.toDTO(
-							layout.fetchDraftLayout())
-					});
 				setThumbnail(
 					() -> {
 						if (layoutUtilityPageEntry.getPreviewFileEntryId() <=
@@ -133,12 +126,6 @@ public class UtilityPageDTOConverter
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference(
-		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageSpecificationDTOConverter)"
-	)
-	private DTOConverter<Layout, PageSpecification>
-		_pageSpecificationDTOConverter;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

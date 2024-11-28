@@ -14,7 +14,7 @@ public interface Problem {
 
 	public String getDetail(Locale locale);
 
-	public Status getStatus(Locale locale);
+	public Status getStatus();
 
 	public String getTitle(Locale locale);
 
@@ -22,27 +22,7 @@ public interface Problem {
 
 	public static enum Status {
 
-		BAD_REQUEST(400, "Bad Request");
-
-		public String getReasonPhrase() {
-			return toString();
-		}
-
-		public int getStatusCode() {
-			return _statusCode;
-		}
-
-		public String toString() {
-			return _reasonPhrase;
-		}
-
-		private Status(int statusCode, String reasonPhrase) {
-			_statusCode = statusCode;
-			_reasonPhrase = reasonPhrase;
-		}
-
-		private final String _reasonPhrase;
-		private final int _statusCode;
+		BAD_REQUEST
 
 	}
 

@@ -72,18 +72,27 @@ public class ExceptionMapper extends BaseExceptionMapper<Exception> {
 		if (problem != null) {
 			Locale locale = _acceptLanguage.getPreferredLocale();
 
-			com.liferay.portal.vulcan.problem.Problem.Status status =
-				problem.getStatus(locale);
-
 			return new Problem(
 				problem.getDetail(locale),
-				Response.Status.fromStatusCode(status.getStatusCode()),
+				_getResponseStatus(problem.getStatus()),
 				problem.getTitle(locale), problem.getType());
 		}
 
 		return new Problem(
 			Response.Status.INTERNAL_SERVER_ERROR,
 			Response.Status.INTERNAL_SERVER_ERROR.getReasonPhrase());
+	}
+
+	private Response.Status _getResponseStatus(
+		com.liferay.portal.vulcan.problem.Problem.Status status) {
+
+		if (com.liferay.portal.vulcan.problem.Problem.Status.BAD_REQUEST.equals(
+				status)) {
+
+			return Response.Status.BAD_REQUEST;
+		}
+
+		return Response.Status.INTERNAL_SERVER_ERROR;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -30,7 +30,7 @@ public class TestEntityProblemMapper
 			}
 
 			@Override
-			public Status getStatus(Locale locale) {
+			public Status getStatus() {
 				return Status.BAD_REQUEST;
 			}
 

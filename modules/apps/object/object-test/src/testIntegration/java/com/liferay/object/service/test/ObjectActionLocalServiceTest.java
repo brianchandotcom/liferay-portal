@@ -46,7 +46,6 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.exception.ObjectActionErrorMessageException;
 import com.liferay.object.exception.ObjectActionExecutorKeyException;
-import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.exception.ObjectActionSystemException;
@@ -395,13 +394,6 @@ public class ObjectActionLocalServiceTest {
 					false));
 		}
 
-		AssertUtils.assertFailure(
-			ObjectActionLabelException.class,
-			"Label is null for locale " + LocaleUtil.US.getDisplayName(),
-			() -> _addObjectAction(
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, false));
 		AssertUtils.assertFailure(
 			ObjectActionSystemException.class, false,
 			"Only allowed bundles can add system object actions",

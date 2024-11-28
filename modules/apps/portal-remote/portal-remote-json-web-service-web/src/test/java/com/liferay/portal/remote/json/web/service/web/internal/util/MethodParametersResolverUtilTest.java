@@ -11,13 +11,11 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,17 +23,12 @@ import org.junit.Test;
 /**
  * @author Tamas Biro
  */
-public class MethodParameterExtractorTest {
+public class MethodParametersResolverUtilTest {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		_methodParameters = new ArrayList<>();
-	}
 
 	@Test
 	public void testGetMethodParametersFromGenerics()
@@ -46,29 +39,13 @@ public class MethodParameterExtractorTest {
 		_inputMethod = _inputClass.getDeclaredMethod(
 			"_stringWithGenerics", String.class, List.class);
 
-		_methodParameters = MethodParameterExtractor.getMethodParameters(
-			_inputClass, _inputMethod);
+		_methodParameters =
+			MethodParametersResolverUtil.resolveMethodParameters(_inputMethod);
 
-		Assert.assertEquals(
-			"a",
-			_methodParameters.get(
-				0
-			).getName());
-		Assert.assertEquals(
-			"longList",
-			_methodParameters.get(
-				1
-			).getName());
-		Assert.assertEquals(
-			_methodParameters.get(
-				0
-			).getType(),
-			String.class);
-		Assert.assertEquals(
-			_methodParameters.get(
-				1
-			).getType(),
-			List.class);
+		Assert.assertEquals("a", _methodParameters[0].getName());
+		Assert.assertEquals("longList", _methodParameters[1].getName());
+		Assert.assertEquals(_methodParameters[0].getType(), String.class);
+		Assert.assertEquals(_methodParameters[1].getType(), List.class);
 
 		Assert.assertTrue(
 			_checkGenericTypes(null, new Class<?>[] {Long.class}));
@@ -83,29 +60,13 @@ public class MethodParameterExtractorTest {
 		_inputMethod = _inputClass.getDeclaredMethod(
 			"_withPrimitives", double.class, long.class);
 
-		_methodParameters = MethodParameterExtractor.getMethodParameters(
-			_inputClass, _inputMethod);
+		_methodParameters =
+			MethodParametersResolverUtil.resolveMethodParameters(_inputMethod);
 
-		Assert.assertEquals(
-			"a",
-			_methodParameters.get(
-				0
-			).getName());
-		Assert.assertEquals(
-			"b",
-			_methodParameters.get(
-				1
-			).getName());
-		Assert.assertEquals(
-			_methodParameters.get(
-				0
-			).getType(),
-			double.class);
-		Assert.assertEquals(
-			_methodParameters.get(
-				1
-			).getType(),
-			long.class);
+		Assert.assertEquals("a", _methodParameters[0].getName());
+		Assert.assertEquals("b", _methodParameters[1].getName());
+		Assert.assertEquals(_methodParameters[0].getType(), double.class);
+		Assert.assertEquals(_methodParameters[1].getType(), long.class);
 
 		Assert.assertTrue(_checkGenericTypes(null, null));
 	}
@@ -118,35 +79,26 @@ public class MethodParameterExtractorTest {
 
 		_inputMethod = _inputClass.getDeclaredMethod("_mapGenerics", Map.class);
 
-		_methodParameters = MethodParameterExtractor.getMethodParameters(
-			_inputClass, _inputMethod);
+		_methodParameters =
+			MethodParametersResolverUtil.resolveMethodParameters(_inputMethod);
 
-		Assert.assertEquals(
-			"map",
-			_methodParameters.get(
-				0
-			).getName());
-		Assert.assertEquals(
-			_methodParameters.get(
-				0
-			).getType(),
-			Map.class);
+		Assert.assertEquals("map", _methodParameters[0].getName());
+		Assert.assertEquals(_methodParameters[0].getType(), Map.class);
 
 		Assert.assertTrue(
 			_checkGenericTypes(new Class<?>[] {Object.class, Integer.class}));
 	}
 
 	private boolean _checkGenericTypes(Class[]... classes) {
-		if (_methodParameters.size() != classes.length) {
+		if (_methodParameters.length != classes.length) {
 			return false;
 		}
 
 		int matchCounter = 0;
 
 		for (int i = 0; i < classes.length; i++) {
-			Class<?>[] extractedClassArray = _methodParameters.get(
-				i
-			).getGenericTypes();
+			Class<?>[] extractedClassArray =
+				_methodParameters[i].getGenericTypes();
 
 			if ((extractedClassArray == null) && (classes[i] == null)) {
 				matchCounter++;
@@ -165,7 +117,7 @@ public class MethodParameterExtractorTest {
 
 	private Class<?> _inputClass;
 	private Method _inputMethod;
-	private List<MethodParameter> _methodParameters;
+	private MethodParameter[] _methodParameters;
 
 	private static class TestStaticClass {
 

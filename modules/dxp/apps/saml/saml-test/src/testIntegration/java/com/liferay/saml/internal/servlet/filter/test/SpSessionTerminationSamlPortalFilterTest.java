@@ -49,8 +49,6 @@ public class SpSessionTerminationSamlPortalFilterTest {
 			SafeCloseable safeCloseable2 = _setSamlEnabledWithSafeCloseable(
 				false, CompanyConstants.SYSTEM)) {
 
-			URL url = new URL("http://localhost:8080/c/portal/saml/acs");
-
 			SamlSpSession samlSpSession =
 				SamlSpSessionLocalServiceUtil.createSamlSpSession(
 					_counterLocalService.increment());
@@ -59,6 +57,8 @@ public class SpSessionTerminationSamlPortalFilterTest {
 			samlSpSession.setTerminated(true);
 
 			SamlSpSessionLocalServiceUtil.addSamlSpSession(samlSpSession);
+
+			URL url = new URL("http://localhost:8080/c/portal/saml/acs");
 
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)url.openConnection();

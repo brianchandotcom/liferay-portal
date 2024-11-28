@@ -15,13 +15,14 @@ import {PageTemplateModal} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import ACTIONS from '../actions';
 import {ACCEPTING_TYPES} from './constants/acceptingTypes';
 import {DROP_POSITIONS} from './constants/dropPositions';
+import {LayoutColumnsContext} from './contexts/LayoutColumnsContext';
 import {useKeyboardMovement} from './hooks/useKeyboardMovement';
 import {useKeyboardNavigation} from './hooks/useKeyboardNavigation';
 import {isValidMovement} from './utils/isValidMovement';
@@ -156,6 +157,8 @@ const MillerColumnsItem = ({
 
 	const [loadMessage, setLoadMessage] = useState('');
 
+	const {layoutColumns, setLayoutColumns} = useContext(LayoutColumnsContext);
+
 	function loadDropdownActions() {
 		if (!loadPromiseRef.current) {
 			let loadingMessageShown = false;
@@ -240,6 +243,11 @@ const MillerColumnsItem = ({
 		collect: (monitor) => ({
 			isDragging: !!monitor.isDragging(),
 		}),
+		end: ({initialColumns}, monitor) => {
+			if (!monitor.didDrop() && Liferay.FeatureFlags['LPD-35220']) {
+				setLayoutColumns(initialColumns);
+			}
+		},
 		isDragging: (monitor) => {
 			const movedItems = monitor.getItem().items;
 
@@ -249,6 +257,7 @@ const MillerColumnsItem = ({
 			);
 		},
 		item: {
+			initialColumns: layoutColumns,
 			items: checked
 				? Array.from(items.values()).filter((item) => item.checked)
 				: [items.get(itemId)],

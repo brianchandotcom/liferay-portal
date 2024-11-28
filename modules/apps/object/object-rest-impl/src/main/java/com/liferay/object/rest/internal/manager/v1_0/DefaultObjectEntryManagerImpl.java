@@ -1000,8 +1000,8 @@ public class DefaultObjectEntryManagerImpl
 				_resourcePermissionLocalService, _roleLocalService);
 
 		return ServiceContextUtil.createServiceContext(
-			dtoConverterContext.getLocale(), modelPermissions, objectEntry,
-			dtoConverterContext.getUserId());
+			objectDefinition.getCompanyId(), dtoConverterContext.getLocale(),
+			modelPermissions, objectEntry, dtoConverterContext.getUserId());
 	}
 
 	private byte[] _decode(String fileBase64) {

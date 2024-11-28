@@ -22,19 +22,6 @@ import java.util.Locale;
  */
 public class ServiceContextUtil {
 
-	public static ServiceContext createServiceContext(
-		Locale locale, ModelPermissions modelPermissions,
-		ObjectEntry objectEntry, long userId) {
-
-		ServiceContext serviceContext = createServiceContext(
-			objectEntry, userId);
-
-		serviceContext.setLanguageId(LocaleUtil.toLanguageId(locale));
-		serviceContext.setModelPermissions(modelPermissions);
-
-		return serviceContext;
-	}
-
 	public static ServiceContext createServiceContext(long objectEntryId) {
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			ObjectEntryLocalServiceUtil.fetchObjectEntry(objectEntryId);
@@ -51,6 +38,20 @@ public class ServiceContextUtil {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
+
+		return serviceContext;
+	}
+
+	public static ServiceContext createServiceContext(
+		long companyId, Locale locale, ModelPermissions modelPermissions,
+		ObjectEntry objectEntry, long userId) {
+
+		ServiceContext serviceContext = createServiceContext(
+			objectEntry, userId);
+
+		serviceContext.setCompanyId(companyId);
+		serviceContext.setLanguageId(LocaleUtil.toLanguageId(locale));
+		serviceContext.setModelPermissions(modelPermissions);
 
 		return serviceContext;
 	}

@@ -6,21 +6,21 @@
 	max-width: 800px;
 	width: 100%;
 
-	&.fds-carousel-view-sample-main-image-container {
+	& .main-image-container {
 		align-items: center;
 		display: flex;
 		justify-content: center;
 		margin-bottom: 10px;
 		width: 100%;
 
-		&.fds-carousel-view-sample-main-image {
+		& .main-image {
 			max-height: 500px;
 			object-fit: cover;
 			width: 100%;
 		}
 	}
 
-	&.fds-carousel-view-sample-item-wrapper {
+	& .item-wrapper {
 		align-items: center;
 		background-color: black;
 		display: flex;
@@ -29,7 +29,7 @@
 		position: relative;
 		width: 100%;
 
-		&.fds-carousel-view-sample-nav-buttons {
+		& .nav-buttons {
 			display: flex;
 			justify-content: space-between;
 			position: absolute;
@@ -37,7 +37,7 @@
 			width: 100%;
 			z-index: 10;
 
-			&.fds-carousel-view-sample-nav-button {
+			& .nav-button {
 				background-color: rgba(255, 255, 255, 0.8);
 				border: none;
 				color: black;
@@ -46,7 +46,7 @@
 			}
 		}
 
-		&.fds-carousel-view-sample-item-container {
+		& .item-container {
 			display: flex;
 			gap: 10px;
 			margin-top: 30px;
@@ -55,7 +55,7 @@
 			transition: transform 0.5s ease-in-out;
 			width: 100%;
 
-			&.fds-carousel-view-sample-item {
+			& .sample-item {
 				cursor: pointer;
 				flex: 0 0 auto;
 				width: 150px;
@@ -64,19 +64,19 @@
 					border-color 0.3s ease;
 			}
 
-			&.fds-carousel-view-sample-item.selected {
+			& .item.selected {
 				border-color: #007bff;
 				transform: scale(1.1);
 			}
 
-			&.fds-carousel-view-sample-card {
+			& .sample-card {
 				background-color: #fff;
 				border: 1px solid #ddd;
 				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 				display: flex;
 				flex-direction: column;
 
-				&.fds-carousel-view-sample-card-info {
+				& .sample-card-info {
 					color: #555;
 					font-size: 12px;
 					padding: 2px 10px;

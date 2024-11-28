@@ -73,6 +73,10 @@ public class LayoutModelDocumentContributor
 			return;
 		}
 
+		ThemeDisplay themeDisplay = null;
+
+		Locale originalLocale = null;
+
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					layout)) {
@@ -80,10 +84,14 @@ public class LayoutModelDocumentContributor
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+			themeDisplay = serviceContext.getThemeDisplay();
+
+			originalLocale = themeDisplay.getLocale();
 
 			for (Locale locale :
 					_language.getAvailableLocales(layout.getGroupId())) {
+
+				themeDisplay.setLocale(locale);
 
 				document.addText(
 					Field.getLocalizedName(
@@ -98,6 +106,11 @@ public class LayoutModelDocumentContributor
 				_log.debug(
 					"Unable to get layout content for PLID " + layout.getPlid(),
 					exception);
+			}
+		}
+		finally {
+			if (themeDisplay != null) {
+				themeDisplay.setLocale(originalLocale);
 			}
 		}
 	}

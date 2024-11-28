@@ -63,7 +63,6 @@ public class SpSessionTerminationSamlPortalFilterTest {
 			HttpURLConnection httpClient =
 				(HttpURLConnection)url.openConnection();
 
-			httpClient.setDoOutput(true);
 			httpClient.setRequestMethod("POST");
 			httpClient.setRequestProperty(
 				"Cookie",
@@ -74,7 +73,7 @@ public class SpSessionTerminationSamlPortalFilterTest {
 				SamlSpSessionLocalServiceUtil.fetchSamlSpSession(
 					samlSpSession.getSamlSpSessionId()));
 
-			httpClient.getHeaderField("Content-Type");
+			httpClient.getInputStream();
 
 			Assert.assertNull(
 				SamlSpSessionLocalServiceUtil.fetchSamlSpSession(

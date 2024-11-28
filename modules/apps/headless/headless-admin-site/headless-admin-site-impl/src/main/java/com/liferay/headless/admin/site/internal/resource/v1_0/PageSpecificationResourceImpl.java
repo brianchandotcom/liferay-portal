@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
+import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
@@ -76,6 +77,33 @@ public class PageSpecificationResourceImpl
 
 			throw new UnsupportedOperationException();
 		}
+
+		return Page.of(
+			_toPageSpecifications(
+				_layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid())));
+	}
+
+	@NestedField(parentClass = MasterPage.class, value = "pageSpecifications")
+	@Override
+	public Page<PageSpecification>
+			getSiteSiteByExternalReferenceCodeMasterPagePageSpecificationsPage(
+				String siteExternalReferenceCode,
+				@NestedFieldId(value = "externalReferenceCode") String
+					masterPageExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					masterPageExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode));
 
 		return Page.of(
 			_toPageSpecifications(

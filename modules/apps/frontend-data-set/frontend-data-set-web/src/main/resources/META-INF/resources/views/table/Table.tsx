@@ -8,7 +8,7 @@ import {LinkOrButton} from '@clayui/shared';
 import classNames from 'classnames';
 import React, {useContext, useState} from 'react';
 
-import {IItemsActions} from '../..';
+import {IField, IItemsActions, ITableSchema} from '../..';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import {
@@ -32,15 +32,6 @@ import TableContext from './dnd_table/TableContext';
 // @ts-ignore
 
 import DndTable from './dnd_table/index';
-
-interface IField {
-	fieldName: string | [];
-	label: string;
-	mapData: Function;
-}
-interface ISchema {
-	fields: Array<IField>;
-}
 
 const getVisibleFields = ({
 	fields,
@@ -70,7 +61,7 @@ const Head = ({
 	fields: Array<IField>;
 	items: Array<any>;
 	itemsActions: Array<IItemsActions>;
-	schema: ISchema;
+	schema: ITableSchema;
 	selectItems: Function;
 	selectable: boolean | undefined;
 	selectedItemsKey: string;
@@ -389,7 +380,7 @@ const Table = ({
 }: {
 	items: Array<any>;
 	itemsActions: Array<IItemsActions>;
-	schema: ISchema;
+	schema: ITableSchema;
 	style: string;
 }) => {
 	const {

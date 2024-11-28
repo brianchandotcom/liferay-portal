@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import {IInlineEditingSettings, IItemsActions} from '.';
+import {IInlineEditingSettings, IItemsActions, ISchema} from '.';
 
 export interface IFrontendDataSetContext {
 	actionParameterName?: string | null;
@@ -75,6 +75,7 @@ export interface IInternalRenderer {
 	default?: boolean;
 	label?: string;
 	name?: string;
+	schema?: ISchema;
 	symbol?: string;
 	type: 'internal';
 	url?: string;

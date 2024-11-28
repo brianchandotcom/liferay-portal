@@ -140,6 +140,25 @@ export type TSort = {
 	label?: string;
 };
 
+export interface IField {
+	fieldName: string | [];
+	label: string;
+}
+export interface ITableSchema {
+	fields: Array<IField>;
+}
+
+export interface ICardSchema {
+	description: string;
+	image: string;
+	link: string;
+	sticker: string;
+	symbol: string;
+	title: string;
+}
+
+export type ISchema = ITableSchema | ICardSchema;
+
 type TViews = {
 	component?: any;
 	contentRenderer?: string;
@@ -147,7 +166,7 @@ type TViews = {
 	contentRendererModuleURL?: string;
 	label?: string;
 	name?: string;
-	schema?: object;
+	schema?: ISchema;
 	thumbnail?: string;
 };
 
@@ -226,4 +245,4 @@ export {
 	FDS_NESTED_FIELD_NAME_PARENT_SUFFIX,
 } from './constants';
 
-export {Card, ICardSchema} from './views/cards/Cards';
+export {Card} from './views/cards/Cards';

@@ -224,6 +224,19 @@ public class ListTypeEntryLocalServiceImpl
 		return listTypeEntryPersistence.update(listTypeEntry);
 	}
 
+	@Override
+	public void updateUserId(long companyId, long oldUserId, long newUserId)
+		throws PortalException {
+
+		for (ListTypeEntry listTypeEntry :
+				listTypeEntryPersistence.findByC_U(companyId, oldUserId)) {
+
+			listTypeEntry.setUserId(newUserId);
+
+			listTypeEntryPersistence.update(listTypeEntry);
+		}
+	}
+
 	private void _validateExternalReferenceCode(
 		String externalReferenceCode, long companyId, long listTypeDefinitionId,
 		long listTypeEntryId) {

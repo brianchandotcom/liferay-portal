@@ -87,6 +87,11 @@ public class TextObjectFieldBusinessType extends BaseObjectFieldBusinessType {
 	}
 
 	@Override
+	public boolean isLocalizable() {
+		return true;
+	}
+
+	@Override
 	public void validateObjectFieldSettings(
 			ObjectField objectField,
 			List<ObjectFieldSetting> objectFieldSettings)

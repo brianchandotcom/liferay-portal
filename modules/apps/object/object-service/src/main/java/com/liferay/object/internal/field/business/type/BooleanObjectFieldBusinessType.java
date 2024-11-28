@@ -55,6 +55,11 @@ public class BooleanObjectFieldBusinessType implements ObjectFieldBusinessType {
 		return PropertyDefinition.PropertyType.BOOLEAN;
 	}
 
+	@Override
+	public boolean isLocalizable() {
+		return true;
+	}
+
 	@Reference
 	private Language _language;
 

@@ -123,6 +123,10 @@ public interface ObjectFieldBusinessType {
 		return StringPool.BLANK;
 	}
 
+	public default boolean isLocalizable() {
+		return false;
+	}
+
 	public default boolean isVisible(ObjectDefinition objectDefinition) {
 		return true;
 	}

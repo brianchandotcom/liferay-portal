@@ -64,6 +64,7 @@ public class AssetCategoryPropertyModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"categoryPropertyId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -77,6 +78,7 @@ public class AssetCategoryPropertyModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("categoryPropertyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -89,7 +91,7 @@ public class AssetCategoryPropertyModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetCategoryProperty (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,categoryPropertyId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,key_ VARCHAR(255) null,value VARCHAR(255) null,primary key (categoryPropertyId, ctCollectionId))";
+		"create table AssetCategoryProperty (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,externalReferenceCode VARCHAR(75) null,categoryPropertyId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,key_ VARCHAR(255) null,value VARCHAR(255) null,primary key (categoryPropertyId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetCategoryProperty";
@@ -122,7 +124,13 @@ public class AssetCategoryPropertyModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long KEY_COLUMN_BITMASK = 4L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long KEY_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -241,6 +249,9 @@ public class AssetCategoryPropertyModelImpl
 			attributeGetterFunctions.put(
 				"ctCollectionId", AssetCategoryProperty::getCtCollectionId);
 			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				AssetCategoryProperty::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"categoryPropertyId",
 				AssetCategoryProperty::getCategoryPropertyId);
 			attributeGetterFunctions.put(
@@ -285,6 +296,10 @@ public class AssetCategoryPropertyModelImpl
 				"ctCollectionId",
 				(BiConsumer<AssetCategoryProperty, Long>)
 					AssetCategoryProperty::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<AssetCategoryProperty, String>)
+					AssetCategoryProperty::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"categoryPropertyId",
 				(BiConsumer<AssetCategoryProperty, Long>)
@@ -356,6 +371,35 @@ public class AssetCategoryPropertyModelImpl
 		}
 
 		_ctCollectionId = ctCollectionId;
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -619,6 +663,8 @@ public class AssetCategoryPropertyModelImpl
 
 		assetCategoryPropertyImpl.setMvccVersion(getMvccVersion());
 		assetCategoryPropertyImpl.setCtCollectionId(getCtCollectionId());
+		assetCategoryPropertyImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		assetCategoryPropertyImpl.setCategoryPropertyId(
 			getCategoryPropertyId());
 		assetCategoryPropertyImpl.setCompanyId(getCompanyId());
@@ -644,6 +690,8 @@ public class AssetCategoryPropertyModelImpl
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		assetCategoryPropertyImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		assetCategoryPropertyImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		assetCategoryPropertyImpl.setCategoryPropertyId(
 			this.<Long>getColumnOriginalValue("categoryPropertyId"));
 		assetCategoryPropertyImpl.setCompanyId(
@@ -742,6 +790,18 @@ public class AssetCategoryPropertyModelImpl
 		assetCategoryPropertyCacheModel.mvccVersion = getMvccVersion();
 
 		assetCategoryPropertyCacheModel.ctCollectionId = getCtCollectionId();
+
+		assetCategoryPropertyCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			assetCategoryPropertyCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			assetCategoryPropertyCacheModel.externalReferenceCode = null;
+		}
 
 		assetCategoryPropertyCacheModel.categoryPropertyId =
 			getCategoryPropertyId();
@@ -859,6 +919,7 @@ public class AssetCategoryPropertyModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
+	private String _externalReferenceCode;
 	private long _categoryPropertyId;
 	private long _companyId;
 	private long _userId;
@@ -902,6 +963,8 @@ public class AssetCategoryPropertyModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("categoryPropertyId", _categoryPropertyId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -938,23 +1001,25 @@ public class AssetCategoryPropertyModelImpl
 
 		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("categoryPropertyId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("categoryPropertyId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("categoryId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("key_", 512L);
+		columnBitmasks.put("categoryId", 512L);
 
-		columnBitmasks.put("value", 1024L);
+		columnBitmasks.put("key_", 1024L);
+
+		columnBitmasks.put("value", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

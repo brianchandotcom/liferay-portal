@@ -250,6 +250,25 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 			categoryPropertyId);
 	}
 
+	@Override
+	public AssetCategoryProperty
+		fetchAssetCategoryPropertyByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return assetCategoryPropertyPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public AssetCategoryProperty
+			getAssetCategoryPropertyByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return assetCategoryPropertyPersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the asset category property with the primary key.
 	 *

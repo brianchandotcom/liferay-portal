@@ -267,6 +267,16 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	}
 
 	@Override
+	public AssetCategoryProperty
+		fetchAssetCategoryPropertyByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return _assetCategoryPropertyLocalService.
+			fetchAssetCategoryPropertyByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	@Override
 	public AssetCategoryProperty fetchCategoryProperty(
 		long categoryId, String key) {
 
@@ -325,6 +335,17 @@ public class AssetCategoryPropertyLocalServiceWrapper
 
 		return _assetCategoryPropertyLocalService.getAssetCategoryProperty(
 			categoryPropertyId);
+	}
+
+	@Override
+	public AssetCategoryProperty
+			getAssetCategoryPropertyByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetCategoryPropertyLocalService.
+			getAssetCategoryPropertyByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	@Override

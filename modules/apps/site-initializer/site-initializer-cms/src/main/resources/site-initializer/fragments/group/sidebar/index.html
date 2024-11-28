@@ -1,0 +1,38 @@
+<div class="open sidebar-fragment">
+	<div class="sidebar-container">
+		<div class="sidebar sidebar-light sidebar-sm">
+			<div class="sidebar-header">
+				<div class="autofit-row autofit-row-center">
+					<div class="autofit-col ml-1 mr-3">
+						<img data-lfr-editable-id="sidebarImage" data-lfr-editable-type="image" height="24" src="/image/company_logo" />
+					</div>
+
+					<div class="autofit-col autofit-col-expand mr-3">
+						<div class="component-title" data-lfr-editable-id="sidebarTitle" data-lfr-editable-type="text">
+							The New CMS
+						</div>
+					</div>
+
+					<div class="autofit-col autofit-col-end">
+						[@clay["button"]
+							borderless=true
+							className="lfr-portal-tooltip sidebar-close"
+							disabled=true
+							displayType="secondary"
+							icon="times"
+							title="${languageUtil.get(locale, 'close')}"
+						/]
+					</div>
+				</div>
+			</div>
+
+			<div class="sidebar-body">
+				<lfr-drop-zone data-lfr-drop-zone-id="sidebarBody"></lfr-drop-zone>
+			</div>
+		</div>
+	</div>
+
+	<div class="content">
+		<lfr-drop-zone data-lfr-drop-zone-id="content"></lfr-drop-zone>
+	</div>
+</div>

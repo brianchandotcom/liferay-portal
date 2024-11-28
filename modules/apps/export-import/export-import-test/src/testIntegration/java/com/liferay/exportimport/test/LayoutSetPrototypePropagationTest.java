@@ -829,6 +829,7 @@ public class LayoutSetPrototypePropagationTest
 				userGroup.getGroupId(), true));
 	}
 
+	@FeatureFlags(enable = false, value = "LPD-38869")
 	@Test
 	public void testThemeSettingsAfterLayoutPropagation() throws Exception {
 		LayoutSet prototypePrivateLayoutSet =

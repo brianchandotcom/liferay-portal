@@ -15,7 +15,6 @@ import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.Settings;
-import com.liferay.headless.admin.site.dto.v1_0.StyleBook;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -264,7 +263,7 @@ public class PageSpecificationDTOConverter
 						return layoutPageTemplateEntry.
 							getExternalReferenceCode();
 					});
-				setStyleBook(
+				setStyleBookReference(
 					() -> {
 						StyleBookEntry styleBookEntry =
 							_styleBookEntryLocalService.fetchStyleBookEntry(
@@ -274,12 +273,10 @@ public class PageSpecificationDTOConverter
 							return null;
 						}
 
-						return new StyleBook() {
+						return new ItemExternalReference() {
 							{
-								setKey(
-									() ->
-										styleBookEntry.getStyleBookEntryKey());
-								setName(styleBookEntry::getName);
+								setExternalReferenceCode(
+									styleBookEntry::getExternalReferenceCode);
 							}
 						};
 					});

@@ -76,7 +76,7 @@ public class TaxonomyCategoryResourceTest
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
 			new ServiceContext());
 
-		_testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		DepotEntry depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
@@ -89,7 +89,7 @@ public class TaxonomyCategoryResourceTest
 
 		_depotAssetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
 			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
-			_testDepotEntry.getGroupId(), RandomTestUtil.randomString(),
+			depotEntry.getGroupId(), RandomTestUtil.randomString(),
 			new ServiceContext());
 
 		_globalAssetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
@@ -773,6 +773,9 @@ public class TaxonomyCategoryResourceTest
 					{
 						parentTaxonomyCategory = new ParentTaxonomyCategory() {
 							{
+								externalReferenceCode =
+									patchParentTaxonomyCategory.
+										getExternalReferenceCode();
 								id = Long.valueOf(
 									patchParentTaxonomyCategory.getId());
 							}
@@ -809,6 +812,9 @@ public class TaxonomyCategoryResourceTest
 					{
 						parentTaxonomyCategory = new ParentTaxonomyCategory() {
 							{
+								externalReferenceCode =
+									randomTaxonomyCategory.
+										getExternalReferenceCode();
 								id = Long.valueOf(
 									randomTaxonomyCategory.getId());
 							}
@@ -854,6 +860,9 @@ public class TaxonomyCategoryResourceTest
 							parentTaxonomyCategory =
 								new ParentTaxonomyCategory() {
 									{
+										externalReferenceCode =
+											taxonomyCategory2.
+												getExternalReferenceCode();
 										id = Long.valueOf(
 											taxonomyCategory2.getId());
 									}
@@ -876,6 +885,5 @@ public class TaxonomyCategoryResourceTest
 	private AssetVocabulary _depotAssetVocabulary;
 	private AssetVocabulary _globalAssetVocabulary;
 	private AssetVocabulary _internalAssetVocabulary;
-	private DepotEntry _testDepotEntry;
 
 }

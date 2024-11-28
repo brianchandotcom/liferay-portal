@@ -20,13 +20,9 @@ SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer = cpSearchResultsD
 		</p>
 
 		<button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" id="commerce-order-by" type="button">
-			<c:set var="orderByColArgument">
-				<span class="ml-1">
-					<liferay-ui:message key="<%= cpSearchResultsDisplayContext.getOrderByCol() %>" />
-				</span>
-			</c:set>
-
-			<liferay-ui:message arguments="${orderByColArgument}" key="sort-by-colon-x" />
+			<span class="ml-1">
+				<%= cpSearchResultsDisplayContext.getOrderByColMessage() %>
+			</span>
 
 			<clay:icon
 				symbol="caret-double-l"

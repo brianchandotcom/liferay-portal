@@ -5,6 +5,8 @@
 
 package com.liferay.portal.remote.json.web.service.web.internal.util;
 
+import com.liferay.portal.kernel.util.MethodParameter;
+
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import org.objectweb.asm.Type;
  */
 public class MethodParameterClassVisitor extends ClassVisitor {
 
-	public List<ExtractedParameter> getExtractedParameters() {
+	public List<MethodParameter> getExtractedParameters() {
 		if (_methodVisitor != null) {
 			return _methodVisitor.getExtractedParameterList();
 		}
@@ -40,19 +42,24 @@ public class MethodParameterClassVisitor extends ClassVisitor {
 			return null;
 		}
 
-		_methodVisitor = new MethodParameterMethodVisitor(_method);
+		_methodVisitor = new MethodParameterMethodVisitor(
+			_classLoader, _method);
 
 		return _methodVisitor;
 	}
 
-	protected MethodParameterClassVisitor(Method method) {
+	protected MethodParameterClassVisitor(
+		ClassLoader classLoader, Method method) {
+
 		super(Opcodes.ASM9);
 
+		_classLoader = classLoader;
 		_method = method;
 
 		_methodVisitor = null;
 	}
 
+	private final ClassLoader _classLoader;
 	private final Method _method;
 	private MethodParameterMethodVisitor _methodVisitor;
 

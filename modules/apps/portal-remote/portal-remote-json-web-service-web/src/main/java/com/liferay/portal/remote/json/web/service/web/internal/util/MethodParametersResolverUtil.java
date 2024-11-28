@@ -30,34 +30,16 @@ public class MethodParametersResolverUtil {
 			return methodParameters;
 		}
 
-		Class<?> clazz = method.getDeclaringClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Class<?>[] methodParameterTypes = method.getParameterTypes();
-
-		List<ExtractedParameter> extractedParameterList = null;
-
 		try {
-			extractedParameterList =
-				MethodParameterExtractor.getMethodParameters(clazz, method);
+			List<MethodParameter> extractedParameterList =
+				MethodParameterExtractor.getMethodParameters(
+					method.getDeclaringClass(), method);
 
 			methodParameters =
 				new MethodParameter[extractedParameterList.size()];
 
-			for (int i = 0; i < extractedParameterList.size(); i++) {
-				methodParameters[i] = new MethodParameter(
-					classLoader,
-					extractedParameterList.get(
-						i
-					).getName(),
-					extractedParameterList.get(
-						i
-					).getSignature(),
-					methodParameterTypes[i]);
-			}
-
-			_methodParameters.put(method, methodParameters);
+			_methodParameters.put(
+				method, extractedParameterList.toArray(methodParameters));
 		}
 		catch (PortalException portalException) {
 			_log.error("Error extracting parameters ", portalException);

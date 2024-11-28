@@ -5,6 +5,7 @@
 
 package com.liferay.portal.remote.json.web.service.web.internal.util;
 
+import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Method;
@@ -22,8 +23,8 @@ import org.objectweb.asm.Opcodes;
  */
 public class MethodParameterMethodVisitor extends MethodVisitor {
 
-	public List<ExtractedParameter> getExtractedParameterList() {
-		return _extractedParameterList;
+	public List<MethodParameter> getExtractedParameterList() {
+		return _methodParameterList;
 	}
 
 	@Override
@@ -35,9 +36,11 @@ public class MethodParameterMethodVisitor extends MethodVisitor {
 			return;
 		}
 
+		Class<?>[] parameterTypes = _method.getParameterTypes();
+
 		int count = 0;
 
-		for (Class<?> parameterType : _method.getParameterTypes()) {
+		for (Class<?> parameterType : parameterTypes) {
 			if (parameterType.getName(
 				).equalsIgnoreCase(
 					long.class.getName()
@@ -56,28 +59,37 @@ public class MethodParameterMethodVisitor extends MethodVisitor {
 					(Modifier.isStatic(_method.getModifiers()) ? 0 : 1) +
 						count)) {
 
+			Class<?> parameterType =
+				parameterTypes[_methodParameterList.size()];
+
 			if (signature != null) {
 				String parameterSignature = StringUtil.removeSubstring(
 					signature, descriptor);
 
-				_extractedParameterList.add(
-					new ExtractedParameter(name, parameterSignature));
+				_methodParameterList.add(
+					new MethodParameter(
+						_classLoader, name, parameterSignature, parameterType));
 			}
 			else {
-				_extractedParameterList.add(
-					new ExtractedParameter(name, descriptor));
+				_methodParameterList.add(
+					new MethodParameter(
+						_classLoader, name, descriptor, parameterType));
 			}
 		}
 	}
 
-	protected MethodParameterMethodVisitor(Method method) {
+	protected MethodParameterMethodVisitor(
+		ClassLoader classLoader, Method method) {
+
 		super(Opcodes.ASM9);
 
+		_classLoader = classLoader;
 		_method = method;
 	}
 
-	private final List<ExtractedParameter> _extractedParameterList =
-		new ArrayList<>();
+	private final ClassLoader _classLoader;
 	private final Method _method;
+	private final List<MethodParameter> _methodParameterList =
+		new ArrayList<>();
 
 }

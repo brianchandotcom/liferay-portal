@@ -7,6 +7,7 @@ package com.liferay.portal.remote.json.web.service.web.internal.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.MethodParameter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +23,7 @@ import org.objectweb.asm.ClassReader;
  */
 public class MethodParameterExtractor {
 
-	public static List<ExtractedParameter> getMethodParameters(
+	public static List<MethodParameter> getMethodParameters(
 			Class<?> clazz, Method method)
 		throws PortalException {
 
@@ -54,7 +55,7 @@ public class MethodParameterExtractor {
 		}
 
 		MethodParameterClassVisitor classVisitor =
-			new MethodParameterClassVisitor(method);
+			new MethodParameterClassVisitor(clazz.getClassLoader(), method);
 
 		classReader.accept(classVisitor, ClassReader.SKIP_FRAMES);
 

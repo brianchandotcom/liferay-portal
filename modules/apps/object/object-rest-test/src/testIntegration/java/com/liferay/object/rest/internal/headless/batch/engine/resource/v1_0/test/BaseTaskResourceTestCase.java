@@ -57,10 +57,10 @@ public abstract class BaseTaskResourceTestCase {
 			JSONObject jsonObject)
 		throws Exception {
 
-		String endpoint = BATCH_ENGINE_API_EXPORT_TASK_BY_ERC_ENDPOINT;
+		String endpoint = ENDPOINT_EXPORT_TASK_BY_ERC;
 
 		if (importTask) {
-			endpoint = BATCH_ENGINE_API_IMPORT_TASK_BY_ERC_ENDPOINT;
+			endpoint = ENDPOINT_IMPORT_TASK_BY_ERC;
 		}
 
 		while (true) {
@@ -80,10 +80,10 @@ public abstract class BaseTaskResourceTestCase {
 		}
 	}
 
-	protected static final String BATCH_ENGINE_API_EXPORT_TASK_BY_ERC_ENDPOINT =
+	protected static final String ENDPOINT_EXPORT_TASK_BY_ERC =
 		"headless-batch-engine/v1.0/export-task/by-external-reference-code/";
 
-	protected static final String BATCH_ENGINE_API_IMPORT_TASK_BY_ERC_ENDPOINT =
+	protected static final String ENDPOINT_IMPORT_TASK_BY_ERC =
 		"headless-batch-engine/v1.0/import-task/by-external-reference-code/";
 
 	protected static final String OBJECT_FIELD_NAME_TEXT =

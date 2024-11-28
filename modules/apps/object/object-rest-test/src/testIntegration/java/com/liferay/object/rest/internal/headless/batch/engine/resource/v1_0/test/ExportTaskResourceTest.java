@@ -164,7 +164,7 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 
 		return HTTPTestUtil.invokeToJSONObject(
 			null,
-			BATCH_ENGINE_API_EXPORT_TASK_BY_ERC_ENDPOINT +
+			ENDPOINT_EXPORT_TASK_BY_ERC +
 				jsonObject.getString("externalReferenceCode"),
 			Http.Method.GET);
 	}

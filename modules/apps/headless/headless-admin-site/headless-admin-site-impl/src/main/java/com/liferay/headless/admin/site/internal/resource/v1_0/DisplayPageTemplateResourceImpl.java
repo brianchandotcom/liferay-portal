@@ -81,13 +81,22 @@ public class DisplayPageTemplateResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		return _displayPageTemplateDTOConverter.toDTO(
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.
 				getLayoutPageTemplateEntryByExternalReferenceCode(
 					displayPageTemplateExternalReferenceCode,
 					GroupUtil.getGroupId(
 						true, contextCompany.getCompanyId(),
-						siteExternalReferenceCode)));
+						siteExternalReferenceCode));
+
+		if (!Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+				layoutPageTemplateEntry.getType())) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		return _displayPageTemplateDTOConverter.toDTO(layoutPageTemplateEntry);
 	}
 
 	@Override
@@ -193,6 +202,13 @@ public class DisplayPageTemplateResourceImpl
 				getLayoutPageTemplateCollection(
 					displayPageTemplateFolderExternalReferenceCode, groupId);
 
+		if (!Objects.equals(
+				LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+				layoutPageTemplateCollection.getType())) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		return _addDisplayPageTemplate(
 			displayPageTemplate, groupId,
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
@@ -223,6 +239,13 @@ public class DisplayPageTemplateResourceImpl
 				displayPageTemplate, groupId,
 				_getLayoutPageTemplateCollectionId(
 					displayPageTemplate, groupId));
+		}
+
+		if (!Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+				layoutPageTemplateEntry.getType())) {
+
+			throw new UnsupportedOperationException();
 		}
 
 		long layoutPageTemplateCollectionId =

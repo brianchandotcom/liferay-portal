@@ -25,6 +25,7 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -100,48 +101,14 @@ public class PageSpecificationResourceTest
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getDisplayPageLayoutPageTemplateEntry(serviceContext);
 
-		Layout layout = _layoutLocalService.getLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		_assertPageSpecificationsPage(
-			pageSpecificationResource.
-				getSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationsPage(
-					testGroup.getExternalReferenceCode(),
-					layoutPageTemplateEntry.getExternalReferenceCode()),
-			draftLayout);
-
-		_layoutLocalService.updateStatus(
-			TestPropsValues.getUserId(), draftLayout.getPlid(),
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
-
-		_assertPageSpecificationsPage(
-			pageSpecificationResource.
-				getSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationsPage(
-					testGroup.getExternalReferenceCode(),
-					layoutPageTemplateEntry.getExternalReferenceCode()),
-			draftLayout);
-
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-		_assertPageSpecificationsPage(
-			pageSpecificationResource.
-				getSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationsPage(
-					testGroup.getExternalReferenceCode(),
-					layoutPageTemplateEntry.getExternalReferenceCode()),
-			layout);
-
-		_layoutLocalService.updateStatus(
-			TestPropsValues.getUserId(), draftLayout.getPlid(),
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
-
-		_assertPageSpecificationsPage(
-			pageSpecificationResource.
-				getSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationsPage(
-					testGroup.getExternalReferenceCode(),
-					layoutPageTemplateEntry.getExternalReferenceCode()),
-			layout, draftLayout);
+		_testPageSpecificationsPage(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			serviceContext,
+			() ->
+				pageSpecificationResource.
+					getSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationsPage(
+						testGroup.getExternalReferenceCode(),
+						layoutPageTemplateEntry.getExternalReferenceCode()));
 	}
 
 	@Ignore
@@ -201,14 +168,26 @@ public class PageSpecificationResourceTest
 			testGetSiteSiteByExternalReferenceCodeSitePagePageSpecificationsPage();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodeUtilityPagePageSpecificationsPage()
 		throws Exception {
 
-		super.
-			testGetSiteSiteByExternalReferenceCodeUtilityPagePageSpecificationsPage();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_getLayoutUtilityPageEntry(serviceContext);
+
+		_testPageSpecificationsPage(
+			_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()),
+			serviceContext,
+			() ->
+				pageSpecificationResource.
+					getSiteSiteByExternalReferenceCodeUtilityPagePageSpecificationsPage(
+						testGroup.getExternalReferenceCode(),
+						layoutUtilityPageEntry.getExternalReferenceCode()));
 	}
 
 	@Ignore
@@ -496,17 +475,23 @@ public class PageSpecificationResourceTest
 		return null;
 	}
 
+	private LayoutUtilityPageEntry _getLayoutUtilityPageEntry(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			0, 0, false, RandomTestUtil.randomString(),
+			LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR, 0,
+			serviceContext);
+	}
+
 	private Layout _getLayoutUtilityPageEntryLayout(
 			ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				null, TestPropsValues.getUserId(),
-				serviceContext.getScopeGroupId(), 0, 0, false,
-				RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR,
-				0, serviceContext);
+			_getLayoutUtilityPageEntry(serviceContext);
 
 		return _layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid());
 	}
@@ -643,6 +628,33 @@ public class PageSpecificationResourceTest
 
 		_assertProblemException(draftLayout);
 		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
+	}
+
+	private void _testPageSpecificationsPage(
+			Layout layout, ServiceContext serviceContext,
+			UnsafeSupplier<Page<PageSpecification>, Exception> unsafeSupplier)
+		throws Exception {
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_assertPageSpecificationsPage(unsafeSupplier.get(), draftLayout);
+
+		_layoutLocalService.updateStatus(
+			TestPropsValues.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		_assertPageSpecificationsPage(unsafeSupplier.get(), draftLayout);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertPageSpecificationsPage(unsafeSupplier.get(), layout);
+
+		_layoutLocalService.updateStatus(
+			TestPropsValues.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		_assertPageSpecificationsPage(
+			unsafeSupplier.get(), layout, draftLayout);
 	}
 
 	@Inject

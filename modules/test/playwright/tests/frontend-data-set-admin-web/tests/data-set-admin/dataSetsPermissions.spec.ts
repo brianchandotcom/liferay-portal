@@ -17,6 +17,7 @@ import {RolesPage} from '../../../../pages/roles-admin-web/RolesPage';
 import getRandomString from '../../../../utils/getRandomString';
 import performLogin, {
 	performLogout,
+	performUserSwitch,
 	userData,
 } from '../../../../utils/performLogin';
 import {waitForAlert} from '../../../../utils/waitForAlert';
@@ -38,10 +39,6 @@ const createdDataSetERCs = [];
 const createdRoleIds = [];
 const createdUserIds = [];
 const dataSetUserRoleName = `ds_user_${getRandomString()}`;
-
-let loggedInAsAdmin = true;
-let dataSetUserRole;
-let userAccount: TUserAccount;
 
 const blogPostsDataSetConfig = {
 	name: 'BlogPost',
@@ -90,6 +87,9 @@ async function setupUserRoleAndLoginAsUser({
 	rolePage: RolePage;
 	rolesPage: RolesPage;
 }) {
+	let dataSetUserRole;
+	let userAccount: TUserAccount;
+
 	await test.step('Create Data Set user role', async () => {
 		const companyId = await page.evaluate(() => {
 			return Liferay.ThemeDisplay.getCompanyId();
@@ -193,11 +193,10 @@ async function setupUserRoleAndLoginAsUser({
 	}
 
 	await test.step('Do login with the new user', async () => {
-		await performLogout(page);
-		await performLogin(page, userAccount.alternateName);
-
-		loggedInAsAdmin = false;
+		await performUserSwitch(page, userAccount.alternateName);
 	});
+
+	return {dataSetUserRole, userAccount};
 }
 
 test.beforeEach(async ({page}) => {
@@ -220,13 +219,13 @@ test.beforeEach(async ({page}) => {
 });
 
 test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers, page}) => {
-	if (!loggedInAsAdmin) {
+	if (await page.getByLabel('Test Test User Profile').isHidden()) {
 		if (
-			(await page
+			await page
 				.getByRole('button', {
 					name: 'Sign In',
 				})
-				.isHidden())
+				.isHidden()
 		) {
 			await performLogout(page);
 		}
@@ -519,7 +518,7 @@ test('Check "Edit" permission', async ({
 	rolesPage,
 }) => {
 	const blogPostDataSetERC = getRandomString();
-
+	let userAccount;
 	await test.step('Create a data set', async () => {
 		createdDataSetERCs.push(blogPostDataSetERC);
 
@@ -531,7 +530,7 @@ test('Check "Edit" permission', async ({
 	});
 
 	await test.step('Setup user role and login as user', async () => {
-		await setupUserRoleAndLoginAsUser({
+		const userInfo = await setupUserRoleAndLoginAsUser({
 			apiHelpers,
 			dataSetResourcePermissions: [
 				{
@@ -544,6 +543,8 @@ test('Check "Edit" permission', async ({
 			rolePage,
 			rolesPage,
 		});
+
+		userAccount = userInfo.userAccount;
 	});
 
 	await test.step('Go to Data Sets', async () => {
@@ -587,8 +588,7 @@ test('Check "Edit" permission', async ({
 	});
 
 	await test.step('Do logout and login as administrator', async () => {
-		await performLogout(page);
-		await performLogin(page, 'test');
+		await performUserSwitch(page, 'test');
 	});
 
 	await test.step('Grant Data Sets "Update" permission for the new role', async () => {
@@ -619,8 +619,7 @@ test('Check "Edit" permission', async ({
 	});
 
 	await test.step('Do logout and login with the new user', async () => {
-		await performLogout(page);
-		await performLogin(page, userAccount.alternateName);
+		await performUserSwitch(page, userAccount.alternateName);
 	});
 
 	await test.step('Navigate to Data Set page', async () => {

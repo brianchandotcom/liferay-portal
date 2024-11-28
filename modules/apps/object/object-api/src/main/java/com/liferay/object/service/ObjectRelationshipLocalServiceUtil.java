@@ -562,6 +562,13 @@ public class ObjectRelationshipLocalServiceUtil {
 			deletionType, edge, labelMap, objectField);
 	}
 
+	public static void updateUserId(
+			long companyId, long oldUserId, long newUserId)
+		throws PortalException {
+
+		getService().updateUserId(companyId, oldUserId, newUserId);
+	}
+
 	public static ObjectRelationshipLocalService getService() {
 		return _serviceSnapshot.get();
 	}

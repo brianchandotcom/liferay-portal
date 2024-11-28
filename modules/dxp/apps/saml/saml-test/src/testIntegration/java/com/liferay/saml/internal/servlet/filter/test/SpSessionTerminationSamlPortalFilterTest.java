@@ -6,12 +6,14 @@
 package com.liferay.saml.internal.servlet.filter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlSpSession;
@@ -49,7 +51,8 @@ public class SpSessionTerminationSamlPortalFilterTest {
 			URL url = new URL("http://localhost:8080/c/portal/saml/acs");
 
 			SamlSpSession samlSpSession =
-				SamlSpSessionLocalServiceUtil.createSamlSpSession(1234);
+				SamlSpSessionLocalServiceUtil.createSamlSpSession(
+					_counterLocalService.increment());
 
 			samlSpSession.setSamlSpSessionKey("testSamlSpSessionKey");
 			samlSpSession.setTerminated(true);
@@ -116,5 +119,8 @@ public class SpSessionTerminationSamlPortalFilterTest {
 			}
 		};
 	}
+
+	@Inject
+	private static CounterLocalService _counterLocalService;
 
 }

@@ -14,8 +14,13 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.problem.Problem;
+import com.liferay.portal.vulcan.problem.ProblemMapper;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.ws.rs.GET;
@@ -36,6 +41,9 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
 /**
  * @author Luis Ortiz
  */
@@ -53,25 +61,29 @@ public class ExceptionMapperTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		_serviceRegistration = bundleContext.registerService(
-			Application.class, new ExceptionMapperTest.TestApplication(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"liferay.auth.verifier", true
-			).put(
-				"liferay.jackson", false
-			).put(
-				"liferay.oauth2", false
-			).put(
-				"osgi.jaxrs.application.base", "/test-vulcan"
-			).put(
-				"osgi.jaxrs.extension.select",
-				"(osgi.jaxrs.name=Liferay.Vulcan)"
-			).build());
+		_serviceRegistrations = Arrays.asList(
+			bundleContext.registerService(
+				Application.class, new ExceptionMapperTest.TestApplication(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"liferay.auth.verifier", true
+				).put(
+					"liferay.jackson", false
+				).put(
+					"liferay.oauth2", false
+				).put(
+					"osgi.jaxrs.application.base", "/test-vulcan"
+				).put(
+					"osgi.jaxrs.extension.select",
+					"(osgi.jaxrs.name=Liferay.Vulcan)"
+				).build()),
+			bundleContext.registerService(
+				ProblemMapper.class,
+				new ExceptionMapperTest.TestExceptionProblemMapper(), null));
 	}
 
 	@After
 	public void tearDown() {
-		_serviceRegistration.unregister();
+		_serviceRegistrations.forEach(ServiceRegistration::unregister);
 	}
 
 	@Test
@@ -102,6 +114,38 @@ public class ExceptionMapperTest {
 			).toString());
 	}
 
+	@Test
+	public void testProblemMapperReturnBadRequestProblem() throws Exception {
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				null, "/test-vulcan/testTestException1", Http.Method.GET));
+
+		JSONObject expectedJSONObject = JSONUtil.put(
+			"detail", "This is the detail"
+		).put(
+			"status", "BAD_REQUEST"
+		).put(
+			"title", "This is the title"
+		).put(
+			"type", "This is the type"
+		);
+
+		JSONAssert.assertEquals(
+			expectedJSONObject.toString(),
+			HTTPTestUtil.invokeToString(
+				null, "/test-vulcan/testTestException1", Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			expectedJSONObject.toString(),
+			HTTPTestUtil.invokeToString(
+				null, "/test-vulcan/testTestException2", Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
 	public static class TestApplication extends Application {
 
 		@Override
@@ -123,8 +167,63 @@ public class ExceptionMapperTest {
 			throw new PrincipalException();
 		}
 
+		@GET
+		@Path("/testTestException1")
+		@Produces("application/json")
+		public String testTestException1() throws TestException {
+			throw new TestException("This is the test exception 1");
+		}
+
+		@GET
+		@Path("/testTestException2")
+		@Produces("application/json")
+		public String testTestException2() throws Exception {
+			throw new Exception(
+				new TestException("This is the test exception 2"));
+		}
+
 	}
 
-	private ServiceRegistration<Application> _serviceRegistration;
+	private List<ServiceRegistration<?>> _serviceRegistrations;
+
+	private static class TestException extends Exception {
+
+		public TestException(String s) {
+			super(s);
+		}
+
+	}
+
+	private static class TestExceptionProblemMapper
+		implements ProblemMapper<TestException> {
+
+		@Override
+		public Problem getProblem(TestException testException) {
+			return new Problem() {
+
+				@Override
+				public String getDetail(Locale locale) {
+					return "This is the detail";
+				}
+
+				@Override
+				public Status getStatus() {
+					return Status.BAD_REQUEST;
+				}
+
+				@Override
+				public String getTitle(Locale locale) {
+					return "This is the title";
+				}
+
+				@Override
+				public String getType() {
+					return "This is the type";
+				}
+
+			};
+		}
+
+	}
 
 }

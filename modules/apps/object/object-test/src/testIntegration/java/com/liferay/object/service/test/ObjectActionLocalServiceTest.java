@@ -2100,6 +2100,71 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
+	public void testFillLabelMap() throws Exception {
+
+		// label map as null
+
+		ObjectAction objectAction1 = _addObjectAction(
+			StringPool.BLANK, null, RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
+			new UnicodeProperties(), false);
+
+		Assert.assertEquals(
+			Collections.singletonMap(
+				_objectDefinition.getDefaultLocale(), objectAction1.getName()),
+			objectAction1.getLabelMap());
+
+		// label map with many values without default locale value
+
+		ObjectAction objectAction2 = _addObjectAction(
+			StringPool.BLANK,
+			HashMapBuilder.put(
+				LocaleUtil.BRAZIL, "pt_BR objectAction2Label"
+			).put(
+				LocaleUtil.SPAIN, "es_ES objectAction2Label"
+			).build(),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
+			new UnicodeProperties(), false);
+
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				_objectDefinition.getDefaultLocale(), objectAction2.getName()
+			).put(
+				LocaleUtil.BRAZIL, "pt_BR objectAction2Label"
+			).put(
+				LocaleUtil.SPAIN, "es_ES objectAction2Label"
+			).build(),
+			objectAction2.getLabelMap());
+
+		// label map with one value without default locale value
+
+		ObjectAction objectAction3 = _addObjectAction(
+			StringPool.BLANK,
+			HashMapBuilder.put(
+				LocaleUtil.BRAZIL, "pt_BR objectAction3Label"
+			).build(),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
+			new UnicodeProperties(), false);
+
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				_objectDefinition.getDefaultLocale(), "pt_BR objectAction3Label"
+			).put(
+				LocaleUtil.BRAZIL, "pt_BR objectAction3Label"
+			).build(),
+			objectAction3.getLabelMap());
+
+		_objectActionLocalService.deleteObjectAction(objectAction1);
+		_objectActionLocalService.deleteObjectAction(objectAction2);
+		_objectActionLocalService.deleteObjectAction(objectAction3);
+	}
+
+	@Test
 	@TestInfo("LPS-189995")
 	public void testOnAfterUpdateObjectActionWithAttachmentObjectField()
 		throws Exception {

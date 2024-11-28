@@ -625,7 +625,8 @@ public class ObjectDefinitionLocalServiceImpl
 					objectDefinition.getCompanyId())) {
 
 			_inactiveServiceRegistrationsMap.computeIfAbsent(
-				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getCompanyId() + StringPool.AT +
+					objectDefinition.getObjectDefinitionId(),
 				objectDefinitionId ->
 					InactiveObjectDefinitionDeployerUtil.deploy(
 						_bundleContext, _objectEntryService,
@@ -640,18 +641,19 @@ public class ObjectDefinitionLocalServiceImpl
 
 		for (Map.Entry
 				<ObjectDefinitionDeployer,
-				 Map<Long, List<ServiceRegistration<?>>>> entry :
+				 Map<String, List<ServiceRegistration<?>>>> entry :
 					_activeServiceRegistrationsMaps.entrySet()) {
 
 			ObjectDefinitionDeployer objectDefinitionDeployer = entry.getKey();
-			Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
+			Map<String, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 				entry.getValue();
 
 			try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
 					objectDefinition.getCompanyId())) {
 
 				serviceRegistrationsMap.computeIfAbsent(
-					objectDefinition.getObjectDefinitionId(),
+					objectDefinition.getCompanyId() + StringPool.AT +
+						objectDefinition.getObjectDefinitionId(),
 					objectDefinitionId -> objectDefinitionDeployer.deploy(
 						objectDefinition));
 			}
@@ -892,8 +894,8 @@ public class ObjectDefinitionLocalServiceImpl
 	public void setAopProxy(Object aopProxy) {
 		super.setAopProxy(aopProxy);
 
-		Map<Long, List<ServiceRegistration<?>>> activeServiceRegistrationsMap =
-			new ConcurrentHashMap<>();
+		Map<String, List<ServiceRegistration<?>>>
+			activeServiceRegistrationsMap = new ConcurrentHashMap<>();
 		ObjectDefinitionDeployer objectDefinitionDeployer =
 			new ObjectDefinitionDeployerImpl(
 				_accountEntryLocalService,
@@ -931,7 +933,8 @@ public class ObjectDefinitionLocalServiceImpl
 					}
 
 					_inactiveServiceRegistrationsMap.put(
-						objectDefinition.getObjectDefinitionId(),
+						companyId + StringPool.AT +
+							objectDefinition.getObjectDefinitionId(),
 						InactiveObjectDefinitionDeployerUtil.deploy(
 							_bundleContext, _objectEntryService,
 							_objectFieldLocalService,
@@ -983,7 +986,7 @@ public class ObjectDefinitionLocalServiceImpl
 							}
 						});
 
-					Map<Long, List<ServiceRegistration<?>>>
+					Map<String, List<ServiceRegistration<?>>>
 						serviceRegistrationsMap =
 							_activeServiceRegistrationsMaps.remove(
 								objectDefinitionDeployer);
@@ -1019,19 +1022,20 @@ public class ObjectDefinitionLocalServiceImpl
 
 		for (Map.Entry
 				<ObjectDefinitionDeployer,
-				 Map<Long, List<ServiceRegistration<?>>>> entry :
+				 Map<String, List<ServiceRegistration<?>>>> entry :
 					_activeServiceRegistrationsMaps.entrySet()) {
 
 			ObjectDefinitionDeployer objectDefinitionDeployer = entry.getKey();
 
 			objectDefinitionDeployer.undeploy(objectDefinition);
 
-			Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
+			Map<String, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 				entry.getValue();
 
 			List<ServiceRegistration<?>> serviceRegistrations =
 				serviceRegistrationsMap.remove(
-					objectDefinition.getObjectDefinitionId());
+					objectDefinition.getCompanyId() + StringPool.AT +
+						objectDefinition.getObjectDefinitionId());
 
 			if (serviceRegistrations != null) {
 				for (ServiceRegistration<?> serviceRegistration :
@@ -1317,7 +1321,7 @@ public class ObjectDefinitionLocalServiceImpl
 	private ObjectDefinitionDeployer _addingObjectDefinitionDeployer(
 		ObjectDefinitionDeployer objectDefinitionDeployer) {
 
-		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
+		Map<String, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 			new ConcurrentHashMap<>();
 
 		_companyLocalService.forEachCompanyId(
@@ -2671,7 +2675,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_accountEntryOrganizationRelLocalService;
 
 	private final Map
-		<ObjectDefinitionDeployer, Map<Long, List<ServiceRegistration<?>>>>
+		<ObjectDefinitionDeployer, Map<String, List<ServiceRegistration<?>>>>
 			_activeServiceRegistrationsMaps = Collections.synchronizedMap(
 				new LinkedHashMap<>());
 
@@ -2699,7 +2703,7 @@ public class ObjectDefinitionLocalServiceImpl
 	@Reference
 	private GroupLocalService _groupLocalService;
 
-	private final Map<Long, List<ServiceRegistration<?>>>
+	private final Map<String, List<ServiceRegistration<?>>>
 		_inactiveServiceRegistrationsMap = new ConcurrentHashMap<>();
 
 	@Reference

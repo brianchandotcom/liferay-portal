@@ -6,6 +6,7 @@
 package com.liferay.object.deployer;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.petra.string.StringPool;
 
 import java.util.List;
 import java.util.Map;
@@ -19,15 +20,16 @@ import org.osgi.framework.ServiceRegistration;
  */
 public interface ObjectDefinitionDeployer {
 
-	public default Map<Long, List<ServiceRegistration<?>>> deploy(
+	public default Map<String, List<ServiceRegistration<?>>> deploy(
 		long companyId, List<ObjectDefinition> objectDefinitions) {
 
-		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
+		Map<String, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 			new ConcurrentHashMap<>();
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			serviceRegistrationsMap.put(
-				objectDefinition.getObjectDefinitionId(),
+				companyId + StringPool.AT +
+					objectDefinition.getObjectDefinitionId(),
 				deploy(objectDefinition));
 		}
 

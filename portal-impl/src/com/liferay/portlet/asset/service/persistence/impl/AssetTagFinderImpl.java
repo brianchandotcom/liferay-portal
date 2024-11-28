@@ -97,24 +97,19 @@ public class AssetTagFinderImpl
 				AssetEntries_AssetTagsTable.INSTANCE,
 				AssetEntries_AssetTagsTable.INSTANCE.tagId.eq(
 					AssetTagTable.INSTANCE.tagId)
+			).innerJoinON(
+				AssetEntryTable.INSTANCE,
+				AssetEntryTable.INSTANCE.entryId.eq(
+					AssetEntries_AssetTagsTable.INSTANCE.entryId)
 			).where(
 				() -> {
-					Predicate predicate =
-						AssetEntries_AssetTagsTable.INSTANCE.entryId.in(
-							DSLQueryFactoryUtil.select(
-								AssetEntryTable.INSTANCE.entryId
-							).from(
-								AssetEntryTable.INSTANCE
-							).where(
-								AssetEntryTable.INSTANCE.groupId.eq(
-									groupId
-								).and(
-									AssetEntryTable.INSTANCE.classNameId.eq(
-										classNameId)
-								).and(
-									AssetEntryTable.INSTANCE.visible.eq(true)
-								)
-							));
+					Predicate predicate = AssetEntryTable.INSTANCE.groupId.eq(
+						groupId
+					).and(
+						AssetEntryTable.INSTANCE.classNameId.eq(classNameId)
+					).and(
+						AssetEntryTable.INSTANCE.visible.eq(true)
+					);
 
 					if (name == null) {
 						return predicate;

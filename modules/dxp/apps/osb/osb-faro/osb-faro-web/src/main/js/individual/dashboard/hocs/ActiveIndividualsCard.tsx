@@ -1,22 +1,17 @@
 import ActiveIndividualsChart from '../components/ActiveIndividualsChart';
+import BaseCard from 'shared/components/base-card';
 import Card from 'shared/components/Card';
 import IndividualSiteMetricsQuery from 'shared/queries/IndividualSiteMetricsQuery';
-import IntervalSelector from 'shared/components/IntervalSelector';
 import React from 'react';
 import {compose} from 'redux';
-import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {graphql} from '@apollo/react-hoc';
-import {Interval} from 'shared/types';
-import {INTERVAL_KEY_MAP, isHourlyRangeKey} from 'shared/util/time';
 import {
 	mapPropsToOptions,
 	mapResultToProps
 } from '../hocs/mappers/site-metrics-query';
-import {RangeSelectors} from 'shared/types';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {useParams} from 'react-router-dom';
 import {withError} from 'shared/hoc';
-import {withInterval, withRangeKey} from 'shared/hoc';
 
 const ChartWithData = compose<any>(
 	graphql(IndividualSiteMetricsQuery, {
@@ -26,70 +21,29 @@ const ChartWithData = compose<any>(
 	withError({page: false})
 )(ActiveIndividualsChart);
 
-interface IActiveIndividualsCardProps
-	extends React.HTMLAttributes<HTMLElement> {
-	interval: Interval;
-	loading: Boolean;
-	onChangeInterval: (val: any) => void;
-	onRangeSelectorsChange: (val: RangeSelectors) => void;
-	rangeSelectors: RangeSelectors;
-}
-
-const ActiveIndividualsCard: React.FC<IActiveIndividualsCardProps> = ({
-	interval,
-	loading,
-	onChangeInterval,
-	onRangeSelectorsChange,
-	rangeSelectors
-}) => {
+const ActiveIndividualsCard = () => {
 	const {channelId} = useParams();
 
 	return (
-		<Card
+		<BaseCard
+			label={Liferay.Language.get('active-individuals')}
+			legacyDropdownRangeKey={false}
 			minHeight={536}
 			reportContainer={ReportContainer.ActiveIndividualsCard}
+			showInterval
 		>
-			<Card.Header className='align-items-center d-flex justify-content-between'>
-				<Card.Title>
-					{Liferay.Language.get('active-individuals')}
-				</Card.Title>
-
-				<div className='d-flex'>
-					{interval && (
-						<IntervalSelector
-							activeInterval={interval}
-							className='mr-3'
-							disabled={isHourlyRangeKey(rangeSelectors.rangeKey)}
-							onChange={onChangeInterval}
-						/>
-					)}
-
-					<DropdownRangeKey
-						legacy={false}
-						onRangeSelectorChange={newVal => {
-							onRangeSelectorsChange &&
-								onRangeSelectorsChange(newVal);
-
-							if (isHourlyRangeKey(newVal.rangeKey)) {
-								onChangeInterval(INTERVAL_KEY_MAP.day);
-							}
-						}}
+			{({interval, rangeSelectors}) => (
+				<Card.Body className='justify-content-center'>
+					<ChartWithData
+						active
+						channelId={channelId}
+						interval={interval}
 						rangeSelectors={rangeSelectors}
 					/>
-				</div>
-			</Card.Header>
-
-			<Card.Body className='justify-content-center'>
-				<ChartWithData
-					active
-					channelId={channelId}
-					interval={interval}
-					loading={loading}
-					rangeSelectors={rangeSelectors}
-				/>
-			</Card.Body>
-		</Card>
+				</Card.Body>
+			)}
+		</BaseCard>
 	);
 };
 
-export default compose<any>(withInterval, withRangeKey)(ActiveIndividualsCard);
+export default ActiveIndividualsCard;

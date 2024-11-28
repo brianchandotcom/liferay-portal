@@ -1,3 +1,10 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+/* eslint-disable no-undef */
+
 const sidebarId = `${fragmentEntryLinkNamespace}sidebar`;
 const sidebarOpenKey = `${fragmentEntryLinkNamespace}sidebarOpen`;
 
@@ -16,7 +23,9 @@ if (sidebarTrigger) {
 addSidebarToggleClickEventListener(sidebarCloseButton);
 
 const sidebarOpenString = Liferay.Util.LocalStorage.getItem(
-	sidebarOpenKey, Liferay.Util.LocalStorage.TYPES.FUNCTIONAL);
+	sidebarOpenKey,
+	Liferay.Util.LocalStorage.TYPES.FUNCTIONAL
+);
 
 let sidebarOpen = sidebarOpenString === 'false' ? false : true;
 
@@ -48,24 +57,32 @@ function toggleSidebar(moveFocus = true) {
 	sidebar.toggleAttribute('inert');
 
 	if (sidebarTrigger) {
-		sidebarTrigger.querySelectorAll('.inline-item').forEach(
-			node => node.classList.toggle('hide')
-		);
+		sidebarTrigger
+			.querySelectorAll('.inline-item')
+			.forEach((node) => node.classList.toggle('hide'));
 
 		sidebarTrigger.toggleAttribute('aria-expanded');
 		sidebarTrigger.toggleAttribute('aria-pressed');
 
 		if (sidebarOpen) {
-			sidebarTrigger.setAttribute('title', sidebarTrigger.dataset.titleclose);
-		} else {
-			sidebarTrigger.setAttribute('title', sidebarTrigger.dataset.titleopen);
+			sidebarTrigger.setAttribute(
+				'title',
+				sidebarTrigger.dataset.titleclose
+			);
+		}
+		else {
+			sidebarTrigger.setAttribute(
+				'title',
+				sidebarTrigger.dataset.titleopen
+			);
 		}
 	}
 
 	if (moveFocus) {
 		if (sidebarOpen) {
 			sidebarCloseButton.focus();
-		} else if (sidebarTrigger) {
+		}
+		else if (sidebarTrigger) {
 			sidebarTrigger.focus();
 		}
 	}

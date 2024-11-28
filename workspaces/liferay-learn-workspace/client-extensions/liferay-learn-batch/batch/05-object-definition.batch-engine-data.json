@@ -14,8 +14,8 @@
 			"active": true,
 			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
-			"enableObjectEntryDraft": false,
 			"enableLocalization": true,
+			"enableObjectEntryDraft": false,
 			"externalReferenceCode": "P2S3_EXTERNAL_MEDIA",
 			"label": {
 				"en_US": "P2S3 External Media"

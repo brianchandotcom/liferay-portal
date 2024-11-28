@@ -12,6 +12,10 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
  */
 public class StartupHelperUtil {
 
+	public static StartupHelper getStartupHelper() {
+		return _startupHelper;
+	}
+
 	public static void initResourceActions() {
 		_startupHelper.initResourceActions();
 	}

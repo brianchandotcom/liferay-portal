@@ -10,7 +10,7 @@ import React, {useContext, useRef} from 'react';
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../../FrontendDataSetContext';
-import {IItemsActions} from '../../index';
+import {ICardSchema, IItemsActions} from '../../index';
 import filterItemActions from '../../utils/actionItems/filterItemActions';
 import formatActionURL from '../../utils/actionItems/formatActionURL';
 import handleActionClick from '../../utils/actionItems/handleActionClick';
@@ -18,15 +18,6 @@ import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import getRandomId from '../../utils/getRandomId';
 import isLink from '../../utils/isLink';
 import imagePropsTransformer from '../utils/imagePropsTransformer';
-
-export interface ICardSchema {
-	description: string;
-	image: string;
-	link: string;
-	sticker: string;
-	symbol: string;
-	title: string;
-}
 
 const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 	const {

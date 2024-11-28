@@ -123,6 +123,7 @@ const FrontendDataSet = ({
 				default: customRenderer.default,
 				label: customRenderer.label,
 				name: customRenderer.name,
+				schema: customRenderer.schema,
 				thumbnail: customRenderer.symbol,
 			})) || [];
 

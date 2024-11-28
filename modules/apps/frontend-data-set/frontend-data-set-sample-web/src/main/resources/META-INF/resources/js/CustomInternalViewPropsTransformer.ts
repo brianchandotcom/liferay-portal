@@ -13,6 +13,14 @@ export default function propsTransformer({...otherProps}: any) {
 		default: true,
 		label: 'My Carousel View',
 		name: 'carouselViewRenderer',
+		schema: {
+			description: 'description',
+			image: '',
+			link: '',
+			sticker: '',
+			symbol: '',
+			title: 'title',
+		},
 		symbol: 'rotate',
 		type: 'internal',
 	};

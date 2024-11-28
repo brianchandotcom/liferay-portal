@@ -381,7 +381,8 @@ public class JspPrecompileTest {
 	}
 
 	private static final String _CLASS_NAME_JSP_COMPILER =
-		"com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspCompiler";
+		"com.liferay.portal.osgi.web.servlet.jsp.compiler.internal." +
+			"CompilerWrapper";
 
 	private static final String _JSP_PACKAGE_NAME = "org.apache.jsp.";
 

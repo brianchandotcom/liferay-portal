@@ -40,7 +40,7 @@ if (portletTitleBasedNavigation) {
 			<ul class="middle navbar-nav">
 				<li class="nav-item">
 					<span class="text-secondary">
-						<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(entry.getUserName()), LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getModifiedDate().getTime(), true)} %>" key="x-modified-x-ago" translateArguments="<%= false %>" />
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getModifiedDate().getTime(), true) %>" key="modified-x-ago" translateArguments="<%= false %>" />
 					</span>
 				</li>
 			</ul>

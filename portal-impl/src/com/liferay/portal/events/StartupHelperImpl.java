@@ -92,7 +92,11 @@ public class StartupHelperImpl implements StartupHelper {
 
 	@Override
 	public boolean isUpgrading() {
-		return _upgrading;
+		if (_upgrading || DBUpgrader.isUpgradeClient()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

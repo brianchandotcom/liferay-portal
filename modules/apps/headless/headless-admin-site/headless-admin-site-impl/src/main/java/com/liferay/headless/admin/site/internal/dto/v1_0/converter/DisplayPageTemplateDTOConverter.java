@@ -9,7 +9,6 @@ import com.liferay.headless.admin.site.dto.v1_0.ClassSubtypeReference;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
-import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
@@ -73,12 +72,6 @@ public class DisplayPageTemplateDTOConverter
 				setKey(layoutPageTemplateEntry::getLayoutPageTemplateEntryKey);
 				setMarkedAsDefault(layoutPageTemplateEntry::isDefaultTemplate);
 				setName(layoutPageTemplateEntry::getName);
-				setPageSpecifications(
-					() -> new PageSpecification[] {
-						_pageSpecificationDTOConverter.toDTO(layout),
-						_pageSpecificationDTOConverter.toDTO(
-							layout.fetchDraftLayout())
-					});
 				setParentFolder(
 					() -> {
 						LayoutPageTemplateCollection
@@ -172,12 +165,6 @@ public class DisplayPageTemplateDTOConverter
 	@Reference
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
-
-	@Reference(
-		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageSpecificationDTOConverter)"
-	)
-	private DTOConverter<Layout, PageSpecification>
-		_pageSpecificationDTOConverter;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

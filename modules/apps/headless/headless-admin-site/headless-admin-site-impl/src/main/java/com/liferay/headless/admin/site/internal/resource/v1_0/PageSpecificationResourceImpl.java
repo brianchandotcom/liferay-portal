@@ -5,14 +5,25 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageSpecificationResource;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldId;
+import com.liferay.portal.vulcan.pagination.Page;
+
+import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -23,10 +34,40 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/page-specification.properties",
-	scope = ServiceScope.PROTOTYPE, service = PageSpecificationResource.class
+	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
+	service = PageSpecificationResource.class
 )
 public class PageSpecificationResourceImpl
 	extends BasePageSpecificationResourceImpl {
+
+	@NestedField(
+		parentClass = DisplayPageTemplate.class, value = "pageSpecifications"
+	)
+	@Override
+	public Page<PageSpecification>
+			getSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationsPage(
+				String siteExternalReferenceCode,
+				@NestedFieldId(value = "externalReferenceCode") String
+					displayPageTemplateExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					displayPageTemplateExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode));
+
+		return Page.of(
+			_toPageSpecifications(
+				_layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid())));
+	}
 
 	@Override
 	public PageSpecification
@@ -83,6 +124,36 @@ public class PageSpecificationResourceImpl
 		return GetterUtil.getBoolean(
 			draftLayout.getTypeSettingsProperty("published"));
 	}
+
+	private List<PageSpecification> _toPageSpecifications(Layout layout)
+		throws Exception {
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (_isPublished(layout)) {
+			if ((draftLayout != null) && !draftLayout.isApproved()) {
+				return ListUtil.fromArray(
+					_pageSpecificationDTOConverter.toDTO(layout),
+					_pageSpecificationDTOConverter.toDTO(draftLayout));
+			}
+
+			return ListUtil.fromArray(
+				_pageSpecificationDTOConverter.toDTO(layout));
+		}
+
+		if (draftLayout == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		return ListUtil.fromArray(
+			_pageSpecificationDTOConverter.toDTO(draftLayout));
+	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private LayoutService _layoutService;

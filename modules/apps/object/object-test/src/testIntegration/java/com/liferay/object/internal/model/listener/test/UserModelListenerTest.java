@@ -6,20 +6,23 @@
 package com.liferay.object.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.system.TestSystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -40,7 +43,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.Collections;
 import java.util.Locale;
 
 import org.junit.After;
@@ -107,14 +109,17 @@ public class UserModelListenerTest {
 	public void testOnAfterRemove() throws Exception {
 		User user = UserTestUtil.addUser();
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				user.getUserId(), 0, null, false, false, false, false,
-				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
-				LocalizedMapUtil.getLocalizedMap("Ables"), true,
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
-				Collections.emptyList());
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(), user.getUserId());
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(), user.getUserId());
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinition1,
+				objectDefinition2, user.getUserId());
 
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
@@ -125,22 +130,30 @@ public class UserModelListenerTest {
 			).name(
 				StringUtil.randomId()
 			).objectDefinitionId(
-				objectDefinition.getObjectDefinitionId()
+				objectDefinition1.getObjectDefinitionId()
 			).build());
 
 		_userLocalService.deleteUser(user);
 
-		objectDefinition = _objectDefinitionLocalService.getObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
-
-		objectField = _objectFieldLocalService.getObjectField(
-			objectField.getObjectFieldId());
-
-		long defaultUserId = _userLocalService.getUserIdByScreenName(
+		long userId = _userLocalService.getUserIdByScreenName(
 			TestPropsValues.getCompanyId(), "default-service-account");
 
-		Assert.assertEquals(defaultUserId, objectDefinition.getUserId());
-		Assert.assertEquals(defaultUserId, objectField.getUserId());
+		_assertUserId(
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinition1.getObjectDefinitionId()),
+			userId);
+		_assertUserId(
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinition2.getObjectDefinitionId()),
+			userId);
+		_assertUserId(
+			_objectFieldLocalService.getObjectField(
+				objectField.getObjectFieldId()),
+			userId);
+		_assertUserId(
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationship.getObjectRelationshipId()),
+			userId);
 	}
 
 	@Test
@@ -188,6 +201,10 @@ public class UserModelListenerTest {
 				objectDefinition.getPluralLabel()));
 	}
 
+	private void _assertUserId(AuditedModel auditedModel, long expectedUserId) {
+		Assert.assertEquals(expectedUserId, auditedModel.getUserId());
+	}
+
 	private static final String _OBJECT_DEFINITION_NAME =
 		ObjectDefinitionTestUtil.getRandomName();
 
@@ -207,6 +224,9 @@ public class UserModelListenerTest {
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	private ServiceRegistration<SystemObjectDefinitionManager>
 		_serviceRegistration;

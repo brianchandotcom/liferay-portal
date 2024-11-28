@@ -148,7 +148,7 @@ public class AccountChannelEntryResourceTest
 				0, 0, true, serviceContext);
 		_commerceUser = UserLocalServiceUtil.addUser(
 			_user.getUserId(), testCompany.getCompanyId(), true,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
+			StringPool.BLANK, StringPool.BLANK, true,
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomString() + "@liferay.com",
 			LocaleUtil.getSiteDefault(), RandomTestUtil.randomString(),

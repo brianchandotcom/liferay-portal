@@ -94,6 +94,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -2339,23 +2340,50 @@ public class ObjectDefinitionLocalServiceTest {
 				true
 			).build());
 
-		objectDefinition =
-			_objectDefinitionLocalService.updateCustomObjectDefinition(
-				null, objectDefinition.getObjectDefinitionId(), 0,
-				objectField.getObjectFieldId(), 0,
-				objectField.getObjectFieldId(), false,
-				objectDefinition.isActive(), objectDefinition.getClassName(),
-				true, false, true, false, false, false,
-				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
-				false, LocalizedMapUtil.getLocalizedMap("Ables"),
-				objectDefinition.getScope(), objectDefinition.getStatus());
+		Locale locale = LocaleUtil.getDefault();
 
-		Assert.assertEquals(
-			objectField.getObjectFieldId(),
-			objectDefinition.getDescriptionObjectFieldId());
-		Assert.assertEquals(
-			objectField.getObjectFieldId(),
-			objectDefinition.getTitleObjectFieldId());
+		try {
+			LocaleUtil.setDefault(
+				LocaleUtil.BRAZIL.getLanguage(), LocaleUtil.BRAZIL.getCountry(),
+				LocaleUtil.BRAZIL.getVariant());
+
+			String defaultLanguageId = objectDefinition.getDefaultLanguageId();
+
+			objectDefinition =
+				_objectDefinitionLocalService.updateCustomObjectDefinition(
+					null, objectDefinition.getObjectDefinitionId(), 0,
+					objectField.getObjectFieldId(), 0,
+					objectField.getObjectFieldId(), false,
+					objectDefinition.isActive(),
+					objectDefinition.getClassName(), true, false, true, false,
+					false, false,
+					HashMapBuilder.put(
+						locale, RandomTestUtil.randomString()
+					).put(
+						LocaleUtil.BRAZIL, RandomTestUtil.randomString()
+					).build(),
+					"Able", null, null, false,
+					HashMapBuilder.put(
+						locale, RandomTestUtil.randomString()
+					).put(
+						LocaleUtil.BRAZIL, RandomTestUtil.randomString()
+					).build(),
+					objectDefinition.getScope(), objectDefinition.getStatus());
+
+			Assert.assertEquals(
+				defaultLanguageId, objectDefinition.getDefaultLanguageId());
+
+			Assert.assertEquals(
+				objectField.getObjectFieldId(),
+				objectDefinition.getDescriptionObjectFieldId());
+			Assert.assertEquals(
+				objectField.getObjectFieldId(),
+				objectDefinition.getTitleObjectFieldId());
+		}
+		finally {
+			LocaleUtil.setDefault(
+				locale.getLanguage(), locale.getCountry(), locale.getVariant());
+		}
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 

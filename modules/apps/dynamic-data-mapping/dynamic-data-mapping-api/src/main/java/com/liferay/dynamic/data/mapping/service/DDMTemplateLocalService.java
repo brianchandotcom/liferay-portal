@@ -398,6 +398,11 @@ public interface DDMTemplateLocalService
 	public DDMTemplate fetchDDMTemplateByExternalReferenceCode(
 		String externalReferenceCode, long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMTemplate fetchDDMTemplateByExternalReferenceCode(
+		String externalReferenceCode, long groupId,
+		boolean includeAncestorTemplates);
+
 	/**
 	 * Returns the ddm template matching the UUID and group.
 	 *

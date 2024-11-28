@@ -482,6 +482,15 @@ public class DDMTemplateLocalServiceWrapper
 			externalReferenceCode, groupId);
 	}
 
+	@Override
+	public DDMTemplate fetchDDMTemplateByExternalReferenceCode(
+		String externalReferenceCode, long groupId,
+		boolean includeAncestorTemplates) {
+
+		return _ddmTemplateLocalService.fetchDDMTemplateByExternalReferenceCode(
+			externalReferenceCode, groupId, includeAncestorTemplates);
+	}
+
 	/**
 	 * Returns the ddm template matching the UUID and group.
 	 *

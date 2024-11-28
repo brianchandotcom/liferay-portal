@@ -366,32 +366,35 @@ public class Settings implements Serializable {
 	private Supplier<String> _masterPageExternalReferenceCodeSupplier;
 
 	@Schema(
-		description = "The style book that is applied to the page specification."
+		description = "A reference to the style book that is applied to the page specification."
 	)
 	@Valid
-	public StyleBook getStyleBook() {
-		if (_styleBookSupplier != null) {
-			styleBook = _styleBookSupplier.get();
+	public ItemExternalReference getStyleBookReference() {
+		if (_styleBookReferenceSupplier != null) {
+			styleBookReference = _styleBookReferenceSupplier.get();
 
-			_styleBookSupplier = null;
+			_styleBookReferenceSupplier = null;
 		}
 
-		return styleBook;
+		return styleBookReference;
 	}
 
-	public void setStyleBook(StyleBook styleBook) {
-		this.styleBook = styleBook;
+	public void setStyleBookReference(
+		ItemExternalReference styleBookReference) {
 
-		_styleBookSupplier = null;
+		this.styleBookReference = styleBookReference;
+
+		_styleBookReferenceSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setStyleBook(
-		UnsafeSupplier<StyleBook, Exception> styleBookUnsafeSupplier) {
+	public void setStyleBookReference(
+		UnsafeSupplier<ItemExternalReference, Exception>
+			styleBookReferenceUnsafeSupplier) {
 
-		_styleBookSupplier = () -> {
+		_styleBookReferenceSupplier = () -> {
 			try {
-				return styleBookUnsafeSupplier.get();
+				return styleBookReferenceUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -403,13 +406,13 @@ public class Settings implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The style book that is applied to the page specification."
+		description = "A reference to the style book that is applied to the page specification."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected StyleBook styleBook;
+	protected ItemExternalReference styleBookReference;
 
 	@JsonIgnore
-	private Supplier<StyleBook> _styleBookSupplier;
+	private Supplier<ItemExternalReference> _styleBookReferenceSupplier;
 
 	@Schema(
 		description = "The client extension for the theme CSS of a page specification."
@@ -753,16 +756,16 @@ public class Settings implements Serializable {
 			sb.append("\"");
 		}
 
-		StyleBook styleBook = getStyleBook();
+		ItemExternalReference styleBookReference = getStyleBookReference();
 
-		if (styleBook != null) {
+		if (styleBookReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"styleBook\": ");
+			sb.append("\"styleBookReference\": ");
 
-			sb.append(String.valueOf(styleBook));
+			sb.append(String.valueOf(styleBookReference));
 		}
 
 		ClientExtension themeCSSClientExtension = getThemeCSSClientExtension();

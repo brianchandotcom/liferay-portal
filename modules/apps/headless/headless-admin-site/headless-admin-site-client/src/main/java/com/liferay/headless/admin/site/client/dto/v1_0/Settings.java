@@ -182,26 +182,29 @@ public class Settings implements Cloneable, Serializable {
 
 	protected String masterPageExternalReferenceCode;
 
-	public StyleBook getStyleBook() {
-		return styleBook;
+	public ItemExternalReference getStyleBookReference() {
+		return styleBookReference;
 	}
 
-	public void setStyleBook(StyleBook styleBook) {
-		this.styleBook = styleBook;
+	public void setStyleBookReference(
+		ItemExternalReference styleBookReference) {
+
+		this.styleBookReference = styleBookReference;
 	}
 
-	public void setStyleBook(
-		UnsafeSupplier<StyleBook, Exception> styleBookUnsafeSupplier) {
+	public void setStyleBookReference(
+		UnsafeSupplier<ItemExternalReference, Exception>
+			styleBookReferenceUnsafeSupplier) {
 
 		try {
-			styleBook = styleBookUnsafeSupplier.get();
+			styleBookReference = styleBookReferenceUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected StyleBook styleBook;
+	protected ItemExternalReference styleBookReference;
 
 	public ClientExtension getThemeCSSClientExtension() {
 		return themeCSSClientExtension;

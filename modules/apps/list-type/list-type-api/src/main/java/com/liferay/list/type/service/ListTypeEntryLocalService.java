@@ -345,4 +345,7 @@ public interface ListTypeEntryLocalService
 			Map<Locale, String> nameMap)
 		throws PortalException;
 
+	public void updateUserId(long companyId, long oldUserId, long newUserId)
+		throws PortalException;
+
 }

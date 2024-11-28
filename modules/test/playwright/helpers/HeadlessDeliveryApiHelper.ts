@@ -306,7 +306,7 @@ export class HeadlessDeliveryApiHelper {
 		documentId: number;
 		file?: fs.ReadStream;
 	}) {
-		return this.apiHelpers.patchMultipart(
+		return this.apiHelpers.patchRequestOptions(
 			`${this.apiHelpers.baseUrl}${this.basePath}/documents/${documentId}`,
 			{
 				failOnStatusCode: true,

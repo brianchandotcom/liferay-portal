@@ -13,6 +13,7 @@ import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.service.base.FaroChannelLocalServiceBaseImpl;
 import com.liferay.osb.faro.util.EmailUtil;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -272,16 +273,17 @@ public class FaroChannelLocalServiceImpl
 				"com/liferay/osb/faro/dependencies/property-invite.html"),
 			new String[] {
 				"[$BUTTON_TEXT$]", "[$BUTTON_URL$]", "[$EMAIL_HEADER_URL$]",
-				"[$EMAIL_TITLE$]", "[$FOOTER_MENU_1$]", "[$FOOTER_MENU_2$]",
-				"[$FOOTER_MENU_3$]", "[$FOOTER_MSG_1$]", "[$FOOTER_MSG_2$]",
-				"[$FOOTER_MSG_3$]", "[$FOOTER_MSG_4$]", "[$HEADER_MSG_1$]",
-				"[$LIFERAY_LOGO_URL$]", "[$NOTIFICATION_MSG_1$]",
-				"[$NOTIFICATION_MSG_2$]", "[$YEAR$]"
+				"[$EMAIL_TITLE$]", "[$FARO_URL$]", "[$FOOTER_MENU_1$]",
+				"[$FOOTER_MENU_2$]", "[$FOOTER_MENU_3$]", "[$FOOTER_MSG_1$]",
+				"[$FOOTER_MSG_2$]", "[$FOOTER_MSG_3$]", "[$FOOTER_MSG_4$]",
+				"[$HEADER_MSG_1$]", "[$LIFERAY_LOGO_URL$]",
+				"[$NOTIFICATION_MSG_1$]", "[$NOTIFICATION_MSG_2$]", "[$YEAR$]"
 			},
 			new String[] {
 				_language.get(resourceBundle, "go-to-analytics-cloud"),
 				EmailUtil.getShareIconURL(), EmailUtil.getEmailHeaderURL(),
-				subject, _language.get(resourceBundle, "contact-support"),
+				subject, FaroPropsValues.FARO_URL,
+				_language.get(resourceBundle, "contact-support"),
 				_language.get(resourceBundle, "documentation"),
 				_language.get(resourceBundle, "announcements"),
 				_language.format(

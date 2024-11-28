@@ -12,6 +12,7 @@ import {
 	getNextTarget,
 	setMovementText,
 } from '../contexts/KeyboardMovementContext';
+import {LayoutColumnsContext} from '../contexts/LayoutColumnsContext';
 import {MillerColumnItem} from '../types/MillerColumnItem';
 
 const ALLOWED_KEYS = [
@@ -40,8 +41,17 @@ export function useKeyboardMovement({
 }) {
 	const {columnIndex, itemIndex} = item;
 
-	const {columnSizes, setSources, setTarget, setText, sources, target} =
-		useContext(KeyboardMovementContext);
+	const {
+		columnSizes,
+		setInitialColumns,
+		setSources,
+		setTarget,
+		setText,
+		sources,
+		target,
+	} = useContext(KeyboardMovementContext);
+
+	const {layoutColumns} = useContext(LayoutColumnsContext);
 
 	const enableMovement = useCallback(
 		(sources) => {
@@ -54,6 +64,7 @@ export function useKeyboardMovement({
 			});
 
 			if (initialTarget) {
+				setInitialColumns(layoutColumns);
 				setSources(sources);
 				setTarget(initialTarget);
 				setMovementText({
@@ -70,9 +81,11 @@ export function useKeyboardMovement({
 			isPrivateLayoutsEnabled,
 			item,
 			items,
-			setText,
+			setInitialColumns,
+			layoutColumns,
 			setSources,
 			setTarget,
+			setText,
 		]
 	);
 

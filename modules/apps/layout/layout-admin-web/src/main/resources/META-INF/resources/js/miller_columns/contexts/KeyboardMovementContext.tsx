@@ -10,6 +10,7 @@ import React, {
 	ReactNode,
 	SetStateAction,
 	useCallback,
+	useContext,
 	useEffect,
 	useRef,
 	useState,
@@ -17,6 +18,7 @@ import React, {
 
 import {DROP_POSITIONS, DropPosition} from '../constants/dropPositions';
 import {isValidMovement} from '../utils/isValidMovement';
+import {LayoutColumns, LayoutColumnsContext} from './LayoutColumnsContext';
 
 import type {MillerColumnItem} from '../types/MillerColumnItem';
 
@@ -30,6 +32,7 @@ export type MovementTarget = {
 
 const KeyboardMovementContext = React.createContext<{
 	columnSizes: number[];
+	setInitialColumns: Dispatch<SetStateAction<LayoutColumns>>;
 	setSources: Dispatch<SetStateAction<MovementSources>>;
 	setTarget: Dispatch<SetStateAction<MovementTarget>>;
 	setText: (text: any) => void;
@@ -37,6 +40,7 @@ const KeyboardMovementContext = React.createContext<{
 	target: MovementTarget;
 }>({
 	columnSizes: [],
+	setInitialColumns: () => {},
 	setSources: () => {},
 	setTarget: () => {},
 	setText: () => {},
@@ -76,6 +80,7 @@ function KeyboardMovementProvider({
 	) => void;
 	rtl: boolean;
 }) {
+	const [initialColumns, setInitialColumns] = useState<LayoutColumns>([]);
 	const [sources, setSources] = useState<MovementSources>([]);
 	const [target, setTarget] = useState<MovementTarget>(null);
 	const screenReaderAnnouncerRef = useRef<any>();
@@ -87,6 +92,8 @@ function KeyboardMovementProvider({
 			ref.current?.sendMessage(text);
 		}
 	}, []);
+
+	const {setLayoutColumns} = useContext(LayoutColumnsContext);
 
 	useEffect(() => {
 		const onKeyDown = (event: KeyboardEvent) => {
@@ -130,6 +137,8 @@ function KeyboardMovementProvider({
 			}
 			else if (key === 'Escape') {
 				disableMovement();
+
+				setLayoutColumns(initialColumns);
 			}
 			else {
 				const nextTarget = getNextTarget({
@@ -158,12 +167,23 @@ function KeyboardMovementProvider({
 		return () => {
 			window.removeEventListener('keydown', onKeyDown, true);
 		};
-	}, [columnSizes, items, setText, sources, onMove, rtl, target]);
+	}, [
+		columnSizes,
+		initialColumns,
+		items,
+		onMove,
+		rtl,
+		setLayoutColumns,
+		setText,
+		sources,
+		target,
+	]);
 
 	return (
 		<KeyboardMovementContext.Provider
 			value={{
 				columnSizes,
+				setInitialColumns,
 				setSources,
 				setTarget,
 				setText,

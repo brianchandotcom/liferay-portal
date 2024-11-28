@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luis Miguel Barcos
  */
 @Component(service = ProblemMapper.class)
-public class ObjectValidationRuleEngineProblemMapper
+public class ObjectValidationRuleEngineExceptionProblemMapper
 	implements ProblemMapper<ObjectValidationRuleEngineException> {
 
 	@Override

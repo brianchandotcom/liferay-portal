@@ -22,6 +22,7 @@ type TDocument = {
 	externalReferenceCode?: string;
 	fileName?: string;
 	id?: number;
+	keywords?: string[];
 	taxonomyCategoryIds?: number[];
 	title?: string;
 	viewableBy?: string;
@@ -179,6 +180,7 @@ export class HeadlessDeliveryApiHelper {
 		contentStructureId,
 		datePublished,
 		description = '',
+		relatedContents,
 		siteId,
 		tags,
 		title,
@@ -188,6 +190,7 @@ export class HeadlessDeliveryApiHelper {
 		contentStructureId: number;
 		datePublished: string;
 		description?: string;
+		relatedContents?: {contentType: string; id: number; title: string}[];
 		siteId: string;
 		tags?: string[];
 		title: string;
@@ -201,6 +204,7 @@ export class HeadlessDeliveryApiHelper {
 					datePublished,
 					description,
 					keywords: tags,
+					relatedContents,
 					taxonomyCategoryIds: categoryIds,
 					title,
 					viewableBy,
@@ -280,6 +284,30 @@ export class HeadlessDeliveryApiHelper {
 
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/documents`,
+			{
+				failOnStatusCode: true,
+				headers: {
+					...(await this.apiHelpers.getCSRFTokenHeader()),
+				},
+				multipart: {
+					document: JSON.stringify(document),
+					file,
+				},
+			}
+		);
+	}
+
+	async patchDocument({
+		document,
+		documentId,
+		file,
+	}: {
+		document?: TDocument;
+		documentId: number;
+		file?: fs.ReadStream;
+	}) {
+		return this.apiHelpers.patchMultipart(
+			`${this.apiHelpers.baseUrl}${this.basePath}/documents/${documentId}`,
 			{
 				failOnStatusCode: true,
 				headers: {

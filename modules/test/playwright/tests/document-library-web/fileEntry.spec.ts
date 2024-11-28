@@ -13,9 +13,11 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {createCategories} from '../../helpers/CreateCategories';
+import {DLFILE_STATUS} from '../../helpers/json-web-services/JSONWebServicesDocumentLibraryApiHelper';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {performLogout} from '../../utils/performLogin';
+import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../utils/waitForAlert';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
@@ -390,5 +392,121 @@ test(
 
 			await expect(await page.getByText(document.title)).toBeVisible();
 		}
+	}
+);
+
+test(
+	'Categories, related assets and tags of an expired versioned document should be visible',
+	{
+		tag: '@LPD-42737',
+	},
+
+	async ({apiHelpers, documentLibraryPage, site}) => {
+		const documentTitle = 'Title' + getRandomString();
+
+		const documentId =
+			await test.step('Create a new document', async () => {
+				const document = await apiHelpers.headlessDelivery.postDocument(
+					site.id,
+					createReadStream(
+						path.join(__dirname, '/dependencies/image1.jpeg')
+					),
+					{
+						description: getRandomString(),
+						fileName: getRandomString(),
+						title: documentTitle,
+					}
+				);
+
+				expect(document).toHaveProperty('title', documentTitle);
+
+				return document.id;
+			});
+
+		const [categoryName, keyword, structuredContentTitle] =
+			await test.step('Update the document with a new version: add category, related asset and tag', async () => {
+				const categories = await createCategories({
+					apiHelpers,
+					categoryNames: [{name: 'Category' + getRandomString()}],
+					site,
+					vocabularyName: getRandomString(),
+				});
+
+				const keyword = 'Keyword' + getRandomString();
+
+				const contentStructureId =
+					await getBasicWebContentStructureId(apiHelpers);
+				const structuredContentTitle =
+					'StructuredContent' + getRandomString();
+
+				await apiHelpers.headlessDelivery.postStructuredContent({
+					contentStructureId,
+					datePublished: null,
+					description: getRandomString(),
+					relatedContents: [
+						{
+							contentType: 'Document',
+							id: documentId,
+							title: documentTitle,
+						},
+					],
+					siteId: site.id,
+					title: structuredContentTitle,
+					viewableBy: 'Anyone',
+				});
+
+				const updatedDocument =
+					await apiHelpers.headlessDelivery.patchDocument({
+						document: {
+							keywords: [keyword],
+							taxonomyCategoryIds: [categories[0].id],
+						},
+						documentId,
+					});
+
+				expect(updatedDocument.keywords).toContain(keyword);
+				expect(
+					updatedDocument.relatedContents.map((r) => r.title)
+				).toContain(structuredContentTitle);
+				expect(
+					updatedDocument.taxonomyCategoryBriefs.map(
+						(t) => t.taxonomyCategoryName
+					)
+				).toContain(categories[0].name);
+
+				return [categories[0].name, keyword, structuredContentTitle];
+			});
+
+		const user =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'test@liferay.com'
+			);
+
+		await test.step('Expire the document', async () => {
+			const fileVersion =
+				await apiHelpers.jsonWebServicesDocumentLibrary.getLastestFileVersion(
+					documentId
+				);
+
+			const fileEntry =
+				await apiHelpers.jsonWebServicesDocumentLibrary.updateStatus(
+					user.id,
+					fileVersion.fileVersionId,
+					DLFILE_STATUS.EXPIRED
+				);
+
+			expect(fileEntry.fileEntryId).toBe(String(documentId));
+		});
+
+		await test.step('Check that category, related asset and tag are visible in document view page', async () => {
+			await documentLibraryPage.goto(site.friendlyUrlPath);
+			await documentLibraryPage.goToViewFileEntry(documentTitle);
+			await documentLibraryPage.openInfoPanel(documentTitle, 'Details');
+			await documentLibraryPage.assertInfoPanelCategories([categoryName]);
+			await documentLibraryPage.assertInfoPanelRelatedAssets([
+				structuredContentTitle,
+			]);
+			await documentLibraryPage.assertInfoPanelTags([keyword]);
+		});
 	}
 );

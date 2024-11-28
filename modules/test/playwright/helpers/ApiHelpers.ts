@@ -49,6 +49,7 @@ import {JSONWebServicesCompanyApiHelper} from './json-web-services/JSONWebServic
 import {JSONWebServicesDDMApiHelper} from './json-web-services/JSONWebServicesDDMApiHelper';
 import {JSONWebServicesDepotApiHelper} from './json-web-services/JSONWebServicesDepotApiHelper';
 import {JSONWebServicesDepotGroupRelApiHelper} from './json-web-services/JSONWebServicesDepotGroupRelApiHelper';
+import {JSONWebServicesDocumentLibraryApiHelper} from './json-web-services/JSONWebServicesDocumentLibraryApiHelper';
 import {JSONWebServicesFragmentCollectionApiHelper} from './json-web-services/JSONWebServicesFragmentCollectionApiHelper';
 import {JSONWebServicesFragmentEntryApiHelper} from './json-web-services/JSONWebServicesFragmentEntryApiHelper';
 import {JSONWebServicesGroupApiHelper} from './json-web-services/JSONWebServicesGroupApiHelper';
@@ -126,6 +127,7 @@ export class ApiHelpers {
 	readonly jsonWebServicesDDM: JSONWebServicesDDMApiHelper;
 	readonly jsonWebServicesDepot: JSONWebServicesDepotApiHelper;
 	readonly jsonWebServicesDepotGroupRel: JSONWebServicesDepotGroupRelApiHelper;
+	readonly jsonWebServicesDocumentLibrary: JSONWebServicesDocumentLibraryApiHelper;
 	readonly jsonWebServicesFragmentEntry: JSONWebServicesFragmentEntryApiHelper;
 	readonly jsonWebServicesFragmentCollection: JSONWebServicesFragmentCollectionApiHelper;
 	readonly jsonWebServicesGroup: JSONWebServicesGroupApiHelper;
@@ -199,6 +201,8 @@ export class ApiHelpers {
 		this.jsonWebServicesDepot = new JSONWebServicesDepotApiHelper(this);
 		this.jsonWebServicesDepotGroupRel =
 			new JSONWebServicesDepotGroupRelApiHelper(this);
+		this.jsonWebServicesDocumentLibrary =
+			new JSONWebServicesDocumentLibraryApiHelper(this);
 		this.jsonWebServicesFragmentEntry =
 			new JSONWebServicesFragmentEntryApiHelper(this);
 		this.jsonWebServicesFragmentCollection =
@@ -320,6 +324,23 @@ export class ApiHelpers {
 		const response = await this.page.request.patch(url, {
 			data,
 			headers: await getHeader(this.page),
+		});
+
+		const text = await response.text();
+
+		if (!text) {
+			return response;
+		}
+
+		return response.json();
+	}
+
+	async patchMultipart<T>(url: string, options: PostOptions<T> = {}) {
+		const response = await this.page.request.patch(url, {
+			data: options.data,
+			failOnStatusCode: options.failOnStatusCode || false,
+			headers: options.headers || (await getHeader(this.page)),
+			multipart: options.multipart,
 		});
 
 		const text = await response.text();

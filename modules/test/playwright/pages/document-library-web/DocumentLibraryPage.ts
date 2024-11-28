@@ -15,6 +15,9 @@ export type TVocabularyCategory = {
 
 export class DocumentLibraryPage {
 	readonly exportImportOptionsMenuItem: Locator;
+	readonly infoPanel: Locator;
+	readonly infoPanelButton: Locator;
+	readonly infoPanelTab: Locator;
 	readonly optionsMenu: Locator;
 	readonly orderMenu: Locator;
 	readonly page: Page;
@@ -26,6 +29,15 @@ export class DocumentLibraryPage {
 		this.exportImportOptionsMenuItem = page.getByRole('menuitem', {
 			name: 'Export / Import',
 		});
+		this.infoPanel = page.locator(
+			'[id="_com_liferay_document_library_web_portlet_DLAdminPortlet_ContextualSidebar"]'
+		);
+		this.infoPanelButton = page.locator(
+			'[id="_com_liferay_document_library_web_portlet_DLAdminPortlet_OpenContextualSidebar"]'
+		);
+		this.infoPanelTab = page.locator(
+			'[id^=_com_liferay_document_library_web_portlet_DLAdminPortlet_tabs_]'
+		);
 		this.optionsMenu = page
 			.getByTestId('headerOptions')
 			.getByLabel('Options');
@@ -56,6 +68,64 @@ export class DocumentLibraryPage {
 		await privateFileIcon.waitFor();
 
 		await expect(privateFileIcon).toBeVisible();
+	}
+
+	async openInfoPanel(entryTitle: string, tabName: 'Details' | 'Versions') {
+		const infoPanelHeading = this.infoPanel.getByRole('heading', {
+			name: entryTitle,
+		});
+
+		if (await infoPanelHeading.isHidden()) {
+			this.infoPanelButton.click();
+		}
+
+		await infoPanelHeading.waitFor();
+
+		const infoPanelTab = this.page.getByRole('tab', {name: tabName});
+
+		if (
+			await infoPanelTab.evaluate(
+				(element) => !element.classList.contains('active')
+			)
+		) {
+			await infoPanelTab.click();
+		}
+	}
+
+	async assertInfoPanelCategories(categoryNames: string[]) {
+		await expect(
+			this.page.getByRole('tab', {name: 'Details'})
+		).toBeVisible();
+		await expect(this.infoPanelTab.getByText('Categories')).toBeVisible();
+
+		for (const categoryName of categoryNames) {
+			await expect(this.infoPanelTab.getByText(categoryName)).toBeVisible;
+		}
+	}
+
+	async assertInfoPanelRelatedAssets(relatedAssetNames: string[]) {
+		await expect(
+			this.page.getByRole('tab', {name: 'Details'})
+		).toBeVisible();
+		await expect(
+			this.infoPanelTab.getByText('Related Assets')
+		).toBeVisible();
+
+		for (const relatedAssetName of relatedAssetNames) {
+			await expect(this.infoPanelTab.getByText(relatedAssetName))
+				.toBeVisible;
+		}
+	}
+
+	async assertInfoPanelTags(tags: string[]) {
+		await expect(
+			this.page.getByRole('tab', {name: 'Details'})
+		).toBeVisible();
+		await expect(this.infoPanelTab.getByText('Tags')).toBeVisible();
+
+		for (const tag of tags) {
+			await expect(this.infoPanelTab.getByText(tag)).toBeVisible;
+		}
 	}
 
 	async changeTab(tabName: string) {
@@ -113,6 +183,17 @@ export class DocumentLibraryPage {
 			.locator('.management-bar')
 			.getByRole('button', {name: 'Download'})
 			.click();
+	}
+
+	async goToViewFileEntry(entryTitle: string) {
+		await this.page
+			.getByRole('link', {exact: true, name: entryTitle})
+			.click();
+
+		await this.page
+			.getByLabel('Control Menu')
+			.getByRole('heading', {name: entryTitle})
+			.waitFor();
 	}
 
 	async goToEditFileEntry(entryTitle: string) {

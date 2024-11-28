@@ -7,7 +7,6 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
-import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -53,12 +52,6 @@ public class MasterPageDTOConverter
 				setKey(layoutPageTemplateEntry::getLayoutPageTemplateEntryKey);
 				setMarkedAsDefault(layoutPageTemplateEntry::isDefaultTemplate);
 				setName(layoutPageTemplateEntry::getName);
-				setPageSpecifications(
-					() -> new PageSpecification[] {
-						_pageSpecificationDTOConverter.toDTO(layout),
-						_pageSpecificationDTOConverter.toDTO(
-							layout.fetchDraftLayout())
-					});
 				setThumbnail(
 					() -> {
 						if (layoutPageTemplateEntry.getPreviewFileEntryId() <=
@@ -92,12 +85,6 @@ public class MasterPageDTOConverter
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference(
-		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageSpecificationDTOConverter)"
-	)
-	private DTOConverter<Layout, PageSpecification>
-		_pageSpecificationDTOConverter;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

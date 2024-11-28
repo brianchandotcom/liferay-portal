@@ -2562,12 +2562,12 @@ components:
                     description:
                         The page specification's JavaScript.
                     type: string
-                masterPageExternalReferenceCode:
+                masterPageReference:
+                    $ref: "#/components/schemas/ItemExternalReference"
                     # @review
                     description:
-                        The page specification's master page external reference code. This property is not applied if
-                        the page specification belongs to a master page.
-                    type: string
+                        A reference to the page specification's master page. This property is not applied if the page
+                        specification belongs to a master page.
                 styleBookReference:
                     $ref: "#/components/schemas/ItemExternalReference"
                     # @review

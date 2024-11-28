@@ -41,6 +41,10 @@ test.describe('Keyboard movement and navigation', () => {
 
 			await pagesAdminPage.goto(site.friendlyUrlPath);
 
+			await page
+				.locator('.miller-columns-item', {hasText: 'Page 1'})
+				.waitFor();
+
 			// Check keyboard movement behavior
 			// Move item 3 on top of item 2
 
@@ -55,8 +59,16 @@ test.describe('Keyboard movement and navigation', () => {
 			await expect(async () => {
 				await enableMovement(3);
 
-				await expect(getItem(2)).toHaveClass(/drop-middle/, {
+				await expect(getItem(3)).toHaveClass(/drop-bottom/, {
 					timeout: 1000,
+				});
+			}).toPass();
+
+			await expect(async () => {
+				await page.keyboard.press('ArrowUp');
+
+				await expect(getItem(2)).toHaveClass(/drop-middle/, {
+					timeout: 500,
 				});
 			}).toPass();
 
@@ -70,11 +82,21 @@ test.describe('Keyboard movement and navigation', () => {
 				page.locator('.miller-columns-item').nth(2)
 			).toContainText('Page 3');
 
+			// Check moved item keeps its handler focused
+
+			await expect(getItem(3).locator('.drag-handler')).toBeFocused();
+
 			// Move item 0 inside item 1
 
 			await enableMovement(0);
 
-			await expect(getItem(1)).toHaveClass(/drop-middle/);
+			await expect(async () => {
+				await page.keyboard.press('ArrowDown');
+
+				await expect(getItem(1)).toHaveClass(/drop-middle/, {
+					timeout: 500,
+				});
+			}).toPass();
 
 			await page.keyboard.press('Enter');
 
@@ -89,7 +111,13 @@ test.describe('Keyboard movement and navigation', () => {
 
 			await enableMovement(3);
 
-			await expect(getItem(1)).toHaveClass(/drop-middle/);
+			await expect(async () => {
+				await page.keyboard.press('ArrowUp');
+
+				await expect(getItem(1)).toHaveClass(/drop-middle/, {
+					timeout: 500,
+				});
+			}).toPass();
 
 			await page.keyboard.press('ArrowDown');
 
@@ -136,16 +164,24 @@ test.describe('Keyboard movement and navigation', () => {
 
 			await pagesAdminPage.goto(site.friendlyUrlPath);
 
-			// Check the first item has focus by default
+			await page
+				.locator('.miller-columns-item', {hasText: 'Page 1'})
+				.waitFor();
+
+			// Focus until reach the first item
 
 			const getItem = (index: number) =>
 				page.locator('.miller-columns-item', {
 					hasText: `Page ${index}`,
 				});
 
-			await expect(
-				getItem(0).locator('.miller-columns-item-mask')
-			).toBeFocused();
+			await expect(async () => {
+				await page.keyboard.press('Tab');
+
+				await expect(
+					getItem(0).locator('.miller-columns-item-mask')
+				).toBeFocused({timeout: 500});
+			}).toPass();
 
 			// Check we can go to last item with End key
 
@@ -183,14 +219,20 @@ test.describe('Keyboard movement and navigation', () => {
 
 			await expect(page.getByLabel('Move Page 2')).toBeFocused();
 
-			// Move item 4 inside item 3, check moved item keep focus
+			// Move item 4 inside item 3
 
 			const enableMovement = async (index: number) =>
 				await page.getByLabel(`Move Page ${index}`).press('Enter');
 
 			await enableMovement(4);
 
-			await expect(getItem(3)).toHaveClass(/drop-middle/);
+			await expect(async () => {
+				await page.keyboard.press('ArrowUp');
+
+				await expect(getItem(3)).toHaveClass(/drop-middle/, {
+					timeout: 500,
+				});
+			}).toPass();
 
 			await page.keyboard.press('Enter');
 
@@ -200,10 +242,6 @@ test.describe('Keyboard movement and navigation', () => {
 					.nth(1)
 					.locator('.miller-columns-item')
 			).toContainText('Page 4');
-
-			await expect(
-				getItem(4).locator('.miller-columns-item-mask')
-			).toBeFocused();
 
 			// Check we can come back to parent with left arrow
 

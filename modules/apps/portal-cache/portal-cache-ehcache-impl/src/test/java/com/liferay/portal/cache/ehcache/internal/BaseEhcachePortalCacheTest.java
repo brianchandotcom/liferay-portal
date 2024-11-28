@@ -11,6 +11,7 @@ import com.liferay.portal.cache.test.util.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -35,6 +36,11 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 /**
  * @author Shuyang Zhou
@@ -107,6 +113,16 @@ public class BaseEhcachePortalCacheTest {
 	@After
 	public void tearDown() {
 		_cacheManager.removeAllCaches();
+	}
+
+	@Test
+	public void testCacheDBPartitionDisabled() {
+		_testCacheDBPartition(false);
+	}
+
+	@Test
+	public void testCacheDBPartitionEnabled() {
+		_testCacheDBPartition(true);
 	}
 
 	@Test
@@ -742,6 +758,58 @@ public class BaseEhcachePortalCacheTest {
 			_KEY_1, _VALUE_2, timeToLive);
 
 		_defaultPortalCacheReplicator.reset();
+	}
+
+	private void _testCacheDBPartition(boolean dbPartitionEnabled) {
+		BaseEhcachePortalCacheManager baseEhcachePortalCacheManager =
+			Mockito.spy(BaseEhcachePortalCacheManager.class);
+
+		try (MockedStatic<DBPartition> dbPartitionMockedStatic =
+				Mockito.mockStatic(DBPartition.class)) {
+
+			dbPartitionMockedStatic.when(
+				DBPartition::isPartitionEnabled
+			).thenReturn(
+				dbPartitionEnabled
+			);
+
+			Mockito.doReturn(
+				null
+			).when(
+				baseEhcachePortalCacheManager
+			).getPortalCache(
+				ArgumentMatchers.anyString(), ArgumentMatchers.anyBoolean(),
+				ArgumentMatchers.anyBoolean()
+			);
+
+			baseEhcachePortalCacheManager.getPortalCache(_PORTAL_CACHE_NAME);
+
+			ArgumentCaptor<Boolean> argumentCaptor = ArgumentCaptor.forClass(
+				Boolean.class);
+
+			Mockito.verify(
+				baseEhcachePortalCacheManager
+			).getPortalCache(
+				ArgumentMatchers.anyString(), ArgumentMatchers.anyBoolean(),
+				argumentCaptor.capture()
+			);
+
+			Assert.assertEquals(dbPartitionEnabled, argumentCaptor.getValue());
+
+			Mockito.clearInvocations(baseEhcachePortalCacheManager);
+
+			baseEhcachePortalCacheManager.getPortalCache(
+				_PORTAL_CACHE_NAME, false);
+
+			Mockito.verify(
+				baseEhcachePortalCacheManager
+			).getPortalCache(
+				ArgumentMatchers.anyString(), ArgumentMatchers.anyBoolean(),
+				argumentCaptor.capture()
+			);
+
+			Assert.assertEquals(dbPartitionEnabled, argumentCaptor.getValue());
+		}
 	}
 
 	private static final String _KEY_1 = "KEY_1";

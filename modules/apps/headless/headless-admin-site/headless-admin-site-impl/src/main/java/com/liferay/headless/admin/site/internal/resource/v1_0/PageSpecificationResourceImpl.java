@@ -69,7 +69,11 @@ public class PageSpecificationResourceImpl
 				true, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
 
-		if (!layout.isDraftLayout()) {
+		if (!layout.isDraftLayout() ||
+			(layout.isApproved() &&
+			 GetterUtil.getBoolean(
+				 layout.getTypeSettingsProperty("published")))) {
+
 			throw new UnsupportedOperationException();
 		}
 

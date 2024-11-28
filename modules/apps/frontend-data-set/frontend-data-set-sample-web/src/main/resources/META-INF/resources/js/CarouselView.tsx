@@ -43,8 +43,6 @@ const CarouselView = ({
 		setSelectedIndex(newIndex);
 	};
 
-	const {name, size, url} = items[selectedIndex];
-
 	const visibleItems = items.slice(
 		startIndex,
 		startIndex + visibleItemsCount
@@ -52,46 +50,44 @@ const CarouselView = ({
 
 	return (
 		<div className="fds-carousel-view-sample">
-			<div className="fds-carousel-view-sample-card fds-carousel-view-sample-main-image-container">
+			<div className="card main-image-container">
 				<div>
 					<img
-						alt={name}
-						className="fds-carousel-view-sample-main-image"
-						src={url}
+						alt={items[selectedIndex][schema.title]}
+						className="main-image"
+						src={items[selectedIndex][schema.image]}
 					/>
 
-					<div className="fds-carousel-view-sample-card-info">
-						<p>{name}</p>
-
-						<p>{size}</p>
+					<div className="card-info">
+						<p>{items[selectedIndex][schema.description]}</p>
 					</div>
 				</div>
 			</div>
 
-			<div className="fds-carousel-view-sample-item-wrapper">
-				<div className="fds-carousel-view-sample-nav-buttons">
+			<div className="item-wrapper">
+				<div className="nav-buttons">
 					<button
-						className="fds-carousel-view-sample-nav-button"
+						className="nav-button"
 						onClick={handlePrevClick}
 					>
 						{'<'}
 					</button>
 
 					<button
-						className="fds-carousel-view-sample-nav-button"
+						className="nav-button"
 						onClick={handleNextClick}
 					>
 						{'>'}
 					</button>
 				</div>
 
-				<div className="fds-carousel-view-sample-item-container">
+				<div className="item-container">
 					{visibleItems.map((item, index) => {
 						const actualIndex = startIndex + index;
 
 						return (
 							<div
-								className={`fds-carousel-view-sample-item fds-carousel-view-sample-card ${
+								className={`item card ${
 									actualIndex === selectedIndex
 										? 'selected'
 										: ''

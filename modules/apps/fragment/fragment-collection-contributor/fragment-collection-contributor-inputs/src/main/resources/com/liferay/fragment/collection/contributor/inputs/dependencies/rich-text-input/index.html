@@ -1,11 +1,12 @@
 [#assign
+	localizable = input.attributes.localizable?? && input.attributes.localizable
 	readOnly = input.attributes.readOnly?? && input.attributes.readOnly
 	showLabel = input.showLabel && input.label?has_content && (layoutMode == "edit" || readOnly)
 ]
 
 <div class="rich-text-input [#if !input.showLabel || !input.label?has_content]rich-text-input--hidden-label[/#if]">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
-		<label class="[#if !showLabel]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-rich-text-input-label">
+		<label class="[#if !showLabel]sr-only[/#if]" data-localizable="${localizable?string('true', 'false')}" id="${fragmentEntryLinkNamespace}-rich-text-input-label">
 			${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 		</label>
 

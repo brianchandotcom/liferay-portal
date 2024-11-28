@@ -150,7 +150,8 @@ public class VerifyResourcePermissions extends VerifyProcess {
 				verifiableResourcedModel.getTableName())) {
 
 			AtomicInteger atomicInteger = new AtomicInteger();
-			DCLSingleton<Integer> total = new DCLSingleton<>();
+			DCLSingleton<Integer> verifiableResourcedModelCount =
+				new DCLSingleton<>();
 
 			processConcurrently(
 				_getVerifyResourcedModelSQL(
@@ -178,7 +179,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 						_log.info(
 							StringBundler.concat(
 								"Processed ", processedCount, " of ",
-								total.getSingleton(
+								verifiableResourcedModelCount.getSingleton(
 									() -> _getVerifiableResourcedModelCount(
 										role, verifiableResourcedModel)),
 								" resource permissions for company ", companyId,

@@ -262,8 +262,11 @@ public class PageSpecificationResourceTest
 			unicodeProperties.getProperty("javascript", null),
 			settings.getJavascript());
 
+		ItemExternalReference masterPageReference =
+			settings.getMasterPageReference();
+
 		if (layout.getMasterLayoutPlid() == 0) {
-			Assert.assertNull(settings.getMasterPageExternalReferenceCode());
+			Assert.assertNull(masterPageReference);
 		}
 		else {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -273,7 +276,7 @@ public class PageSpecificationResourceTest
 
 			Assert.assertEquals(
 				layoutPageTemplateEntry.getExternalReferenceCode(),
-				settings.getMasterPageExternalReferenceCode());
+				masterPageReference.getExternalReferenceCode());
 		}
 
 		ItemExternalReference styleBookReference =

@@ -3,10 +3,38 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import i18n from '~/common/I18n';
 import {Liferay} from '~/common/services/liferay';
+import {useGetAccountSubscriptions} from '~/common/services/liferay/graphql/account-subscriptions';
 import {useCustomerPortal} from '~/routes/customer-portal/context';
+
+const DEFAULT_USAGE_DATA_VALUES = {
+	resourceUsage: [
+		{
+			title: i18n.translate('extension-capacity-ram'),
+		},
+		{
+			title: i18n.translate('extension-capacity-vcpu'),
+		},
+		{
+			title: i18n.translate('storage-capacity'),
+		},
+	],
+	siteAndUsers: [
+		{
+			title: i18n.translate('number-of-sites'),
+		},
+		{
+			title: i18n.translate('authenticated-logins-malus'),
+		},
+		{
+			title: i18n.translate('anonymous-page-views-apv'),
+		},
+	],
+};
+
+const ACCEPTED_PROJECTS = ['Business Plan', 'Enterprise Plan', 'Pro Plan'];
 
 export enum SiteAndUserDataEnum {
 	ANONYMOUS_PAGE_VIEWS = 'anonymousPageViews',
@@ -18,15 +46,15 @@ export enum SiteAndUserDataEnum {
 }
 
 interface IData {
-	infoText: string;
-	maxCount: number;
+	infoText?: string;
+	maxCount?: number;
 	title: string;
-	usedCount: number;
+	usedCount?: number;
 }
 
 export interface IChartData extends IData {
 	dataSizeUnits?: string;
-	maxCountText: string;
+	maxCountText?: string;
 }
 
 interface IUsageData {
@@ -34,16 +62,32 @@ interface IUsageData {
 	siteAndUsers: IData[];
 }
 
+const formatedAcceptedProjects = () =>
+	ACCEPTED_PROJECTS.map((projectName) => `'${projectName}'`).join(',');
+
 const useProjectUsageData = () => {
-	const [usageData, setUsageData] = useState<IUsageData>();
+	const [usageData, setUsageData] = useState<IUsageData>(
+		DEFAULT_USAGE_DATA_VALUES
+	);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const [{project}] = useCustomerPortal();
 
+	const {data} = useGetAccountSubscriptions({
+		filter: `name in (${formatedAcceptedProjects()}) and accountSubscriptionGroupERC eq '${
+			project?.accountKey
+		}_liferay-saas'`,
+	});
+
+	const displayUsage = useMemo(
+		() => !!data?.c?.accountSubscriptions?.items.length,
+		[data]
+	);
+
 	const getSiteAndUsers = useCallback(async () => {
 		setIsLoading(true);
 
-		if (project?.id) {
+		if (project?.id && displayUsage) {
 			const response =
 				await Liferay.OAuth2Client.FromUserAgentApplication(
 					'liferay-customer-etc-spring-boot-oaua'
@@ -124,7 +168,7 @@ const useProjectUsageData = () => {
 		getSiteAndUsers();
 	}, [getSiteAndUsers]);
 
-	return {isLoading, usageData};
+	return {displayUsage, isLoading, usageData};
 };
 
 export default useProjectUsageData;

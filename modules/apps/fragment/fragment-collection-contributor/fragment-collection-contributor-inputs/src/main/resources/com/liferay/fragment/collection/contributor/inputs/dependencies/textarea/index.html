@@ -1,10 +1,11 @@
 [#assign
+	localizable = input.attributes.localizable?? && input.attributes.localizable
 	readOnly = input.attributes.readOnly?? && input.attributes.readOnly
 ]
 
 <div class="textarea">
 	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentEntryLinkNamespace}-form-group">
-		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-textarea" id="${fragmentEntryLinkNamespace}-textarea-label">${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
+		<label data-localizable="${localizable?string('true', 'false')}" class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-textarea" id="${fragmentEntryLinkNamespace}-textarea-label">${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
 		<textarea aria-describedby="${fragmentEntryLinkNamespace}-textarea-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-textarea-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-textarea-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-textarea" name="${input.name}" placeholder="${configuration.placeholder}" [#if readOnly]readonly[/#if] ${input.required?then('required', '')} [#if configuration.numberOfLines > 0]rows="${configuration.numberOfLines}"[/#if] type="text">[#if input.value??]${input.value}[/#if]</textarea>
 

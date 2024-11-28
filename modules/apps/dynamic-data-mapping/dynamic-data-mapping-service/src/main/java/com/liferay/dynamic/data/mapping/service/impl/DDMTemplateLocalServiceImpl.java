@@ -509,6 +509,36 @@ public class DDMTemplateLocalServiceImpl
 		}
 	}
 
+	@Override
+	public DDMTemplate fetchDDMTemplateByExternalReferenceCode(
+		String externalReferenceCode, long groupId,
+		boolean includeAncestorTemplates) {
+
+		DDMTemplate template = ddmTemplatePersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+
+		if (template != null) {
+			return template;
+		}
+
+		if (!includeAncestorTemplates) {
+			return null;
+		}
+
+		for (long ancestorSiteGroupId :
+				_getAncestorSiteAndDepotGroupIds(groupId)) {
+
+			template = ddmTemplatePersistence.fetchByERC_G(
+				externalReferenceCode, ancestorSiteGroupId);
+
+			if (template != null) {
+				return template;
+			}
+		}
+
+		return null;
+	}
+
 	/**
 	 * Returns the template with the primary key.
 	 *

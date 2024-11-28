@@ -304,7 +304,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				RESTContextPathResolver.class,
 				new RESTContextPathResolverImpl(
-					"/o" + objectDefinition.getRESTContextPath(),
+					objectDefinition,
 					_objectScopeProviderRegistry.getObjectScopeProvider(
 						objectDefinition.getScope()),
 					false),

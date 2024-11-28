@@ -234,7 +234,7 @@ public class PageSpecificationResourceTest
 			Layout layout, Settings settings)
 		throws Exception {
 
-		if (Validator.isNull(layout.getThemeId()) ||
+		if (Validator.isNull(layout.getColorSchemeId()) ||
 			Validator.isNull(layout.getThemeId())) {
 
 			Assert.assertTrue(Validator.isNull(settings.getColorSchemeName()));

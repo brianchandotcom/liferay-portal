@@ -22,6 +22,13 @@
 
 		<column localized="true" name="name" type="String" />
 		<column name="system" type="boolean" />
+
+		<!-- Finder methods -->
+
+		<finder name="C_U" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="userId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ListTypeEntry" remote-service="true" uuid="true">
 
@@ -55,6 +62,10 @@
 		</finder>
 		<finder name="ListTypeDefinitionId" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="listTypeDefinitionId" />
+		</finder>
+		<finder name="C_U" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="userId" />
 		</finder>
 		<finder name="LTDI_K" return-type="ListTypeEntry">
 			<finder-column name="listTypeDefinitionId" />

@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.internal.renderer;
 
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.configuration.FragmentJavaScriptConfiguration;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
@@ -22,9 +21,6 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.search.InfoSearchClassMapperRegistry;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -174,17 +170,10 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		HttpServletRequest httpServletRequest, InfoForm infoForm,
 		Locale locale) {
 
-		FragmentEntryInputTemplateNodeContextHelper
-			fragmentEntryInputTemplateNodeContextHelper =
-				new FragmentEntryInputTemplateNodeContextHelper(
-					_getFragmentEntryName(fragmentEntryLink),
-					_dlAppLocalService, _fragmentEntryConfigurationParser,
-					_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
-					_itemSelector);
-
 		InputTemplateNode inputTemplateNode =
-			fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(
-				fragmentEntryLink, httpServletRequest, infoForm, locale);
+			_fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(
+				_getFragmentEntryName(fragmentEntryLink), fragmentEntryLink,
+				httpServletRequest, infoForm, locale);
 
 		return inputTemplateNode.toJSONObject();
 	}
@@ -513,14 +502,15 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private FragmentEntryInputTemplateNodeContextHelper
+		_fragmentEntryInputTemplateNodeContextHelper;
 
 	@Reference
 	private FragmentEntryLinkCache _fragmentEntryLinkCache;
@@ -530,15 +520,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private JSONFactory _jsonFactory;

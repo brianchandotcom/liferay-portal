@@ -190,13 +190,6 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		FragmentEntryInputTemplateNodeContextHelper
-			fragmentEntryInputTemplateNodeContextHelper =
-				new FragmentEntryInputTemplateNodeContextHelper(
-					"Default", _dlAppLocalService,
-					_fragmentEntryConfigurationParser, _infoItemServiceRegistry,
-					_infoSearchClassMapperRegistry, _itemSelector);
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
@@ -244,11 +237,12 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			InputTemplateNode inputTemplateNode =
-				fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(
-					fragmentEntryLink, httpServletRequest,
-					infoItemFormProvider.getInfoForm(
-						StringPool.BLANK, _group.getGroupId()),
-					LocaleUtil.getSiteDefault());
+				_fragmentEntryInputTemplateNodeContextHelper.
+					toInputTemplateNode(
+						"Default", fragmentEntryLink, httpServletRequest,
+						infoItemFormProvider.getInfoForm(
+							StringPool.BLANK, _group.getGroupId()),
+						LocaleUtil.getSiteDefault());
 
 			Map<String, Object> attributes = inputTemplateNode.getAttributes();
 
@@ -398,13 +392,6 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			String expectedValue, String inputFieldId)
 		throws Exception {
 
-		FragmentEntryInputTemplateNodeContextHelper
-			fragmentEntryInputTemplateNodeContextHelper =
-				new FragmentEntryInputTemplateNodeContextHelper(
-					"Default", _dlAppLocalService,
-					_fragmentEntryConfigurationParser, _infoItemServiceRegistry,
-					_infoSearchClassMapperRegistry, _itemSelector);
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
@@ -438,11 +425,12 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			InputTemplateNode inputTemplateNode =
-				fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(
-					fragmentEntryLink, httpServletRequest,
-					infoItemFormProvider.getInfoForm(
-						StringPool.BLANK, _group.getGroupId()),
-					LocaleUtil.getSiteDefault());
+				_fragmentEntryInputTemplateNodeContextHelper.
+					toInputTemplateNode(
+						"Default", fragmentEntryLink, httpServletRequest,
+						infoItemFormProvider.getInfoForm(
+							StringPool.BLANK, _group.getGroupId()),
+						LocaleUtil.getSiteDefault());
 
 			Assert.assertEquals(
 				expectedValue, inputTemplateNode.getInputValue());
@@ -507,6 +495,10 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 
 	@Inject
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Inject
+	private FragmentEntryInputTemplateNodeContextHelper
+		_fragmentEntryInputTemplateNodeContextHelper;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

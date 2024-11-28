@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
-
 import {
 	ObjectDefinitionApi,
 	ObjectFolderApi,
 	ObjectRelationship,
 	ObjectRelationshipApi,
-} from '../../../../apps/object/object-admin-rest-client-js';
+} from '@liferay/object-admin-rest-client-js';
+import {expect, mergeTests} from '@playwright/test';
+
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -328,7 +328,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 			await apiHelpers.objectAdmin.postRandomObjectDefinition(
 				{code: 0},
 				undefined,
-				'default'
+				objectFolder.externalReferenceCode
 			);
 
 		const objectDefinition2 =

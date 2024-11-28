@@ -9,7 +9,8 @@ import {
 	ObjectField,
 	ObjectFolder,
 	ObjectFolderApi,
-} from '../../../apps/object/object-admin-rest-client-js';
+} from '@liferay/object-admin-rest-client-js';
+
 import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers} from './ApiHelpers';
 
@@ -20,7 +21,7 @@ export interface CreateObjectField {
 	objectDefinitionLabel?: string;
 
 	objectDefinitionNodes: unknown;
-	objectFieldBusinessType: ObjectField.BusinessTypeEnum;
+	objectFieldBusinessType: string;
 	objectFieldLabel: string;
 }
 

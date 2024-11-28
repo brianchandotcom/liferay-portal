@@ -64,7 +64,7 @@ public class RelatedProductResourceImpl extends BaseRelatedProductResourceImpl {
 		throws Exception {
 
 		List<CPDefinitionLink> cpDefinitionLinks;
-		int totalItems;
+		int totalCount;
 
 		if (Validator.isNull(type)) {
 			cpDefinitionLinks =
@@ -73,7 +73,7 @@ public class RelatedProductResourceImpl extends BaseRelatedProductResourceImpl {
 					WorkflowConstants.STATUS_APPROVED,
 					pagination.getStartPosition(), pagination.getEndPosition());
 
-			totalItems =
+			totalCount =
 				_cpDefinitionLinkLocalService.getCPDefinitionLinksCount(
 					cpDefinition.getCPDefinitionId(),
 					WorkflowConstants.STATUS_APPROVED);
@@ -86,14 +86,14 @@ public class RelatedProductResourceImpl extends BaseRelatedProductResourceImpl {
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null);
 
-			totalItems =
+			totalCount =
 				_cpDefinitionLinkLocalService.getCPDefinitionLinksCount(
 					cpDefinition.getCPDefinitionId(), type,
 					WorkflowConstants.STATUS_APPROVED);
 		}
 
 		return Page.of(
-			_toRelatedProducts(cpDefinitionLinks), pagination, totalItems);
+			_toRelatedProducts(cpDefinitionLinks), pagination, totalCount);
 	}
 
 	private List<RelatedProduct> _toRelatedProducts(

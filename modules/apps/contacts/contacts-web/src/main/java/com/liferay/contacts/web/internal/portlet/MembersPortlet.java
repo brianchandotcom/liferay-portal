@@ -13,6 +13,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Drew Brokke
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	property = {
@@ -37,5 +38,6 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
+@Deprecated
 public class MembersPortlet extends ContactsCenterPortlet {
 }

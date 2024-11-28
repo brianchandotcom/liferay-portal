@@ -77,7 +77,7 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 
 	@Override
 	public String getAvailabilityStatus(
-		long companyId, long commerceCatalogGroupId,
+		long companyId, long accountEntryId, long commerceCatalogGroupId,
 		long commerceChannelGroupId, BigDecimal minStockQuantity, String sku,
 		String unitOfMeasureKey) {
 
@@ -89,13 +89,13 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		}
 
 		return commerceInventoryMethod.getAvailabilityStatus(
-			companyId, commerceChannelGroupId, minStockQuantity, sku,
-			unitOfMeasureKey);
+			companyId, accountEntryId, commerceChannelGroupId, minStockQuantity,
+			sku, unitOfMeasureKey);
 	}
 
 	@Override
 	public BigDecimal getStockQuantity(
-			long companyId, long commerceCatalogGroupId,
+			long companyId, long accountEntryId, long commerceCatalogGroupId,
 			long commerceChannelGroupId, String sku, String unitOfMeasureKey)
 		throws PortalException {
 
@@ -107,7 +107,8 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		}
 
 		return commerceInventoryMethod.getStockQuantity(
-			companyId, commerceChannelGroupId, sku, unitOfMeasureKey);
+			companyId, accountEntryId, commerceChannelGroupId, sku,
+			unitOfMeasureKey);
 	}
 
 	@Override

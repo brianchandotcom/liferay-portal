@@ -3,12 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectDefinition} from '@liferay/object-admin-rest-client-js';
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {
-	ObjectDefinition,
-	ObjectField,
-} from '../../../../apps/object/object-admin-rest-client-js';
 import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
@@ -363,7 +360,7 @@ test.describe('ensure picklist translation', () => {
 			listTypeDefinitionName: listTypeDefinition.name,
 			objectDefinitionNodes:
 				modelBuilderDiagramPage.objectDefinitionNodes,
-			objectFieldBusinessType: ObjectField.BusinessTypeEnum.Picklist,
+			objectFieldBusinessType: 'Picklist',
 			objectFieldLabel: fieldLabel,
 		});
 

@@ -6,8 +6,8 @@
 package com.liferay.commerce.price.list.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.price.list.exception.CommercePriceListCurrencyException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
@@ -394,7 +394,7 @@ public class CommercePriceListLocalServiceTest {
 			updatedCurrency, updatedName, updatedCommercePriceList);
 	}
 
-	@Test(expected = NoSuchCurrencyException.class)
+	@Test(expected = CommercePriceListCurrencyException.class)
 	public void testAddOrUpdateCommercePriceList4() throws Exception {
 		frutillaRule.scenario(
 			"Adding a new Price List"

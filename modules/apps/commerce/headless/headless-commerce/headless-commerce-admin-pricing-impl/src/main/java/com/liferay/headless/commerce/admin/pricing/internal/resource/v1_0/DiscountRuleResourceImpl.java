@@ -71,12 +71,12 @@ public class DiscountRuleResourceImpl extends BaseDiscountRuleResourceImpl {
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
 
-		int totalItems =
+		int totalCount =
 			_commerceDiscountRuleService.getCommerceDiscountRulesCount(
 				commerceDiscount.getCommerceDiscountId());
 
 		return Page.of(
-			_toDiscountRules(commerceDiscountRules), pagination, totalItems);
+			_toDiscountRules(commerceDiscountRules), pagination, totalCount);
 	}
 
 	@Override
@@ -89,11 +89,11 @@ public class DiscountRuleResourceImpl extends BaseDiscountRuleResourceImpl {
 				id, pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
 
-		int totalItems =
+		int totalCount =
 			_commerceDiscountRuleService.getCommerceDiscountRulesCount(id);
 
 		return Page.of(
-			_toDiscountRules(commerceDiscountRules), pagination, totalItems);
+			_toDiscountRules(commerceDiscountRules), pagination, totalCount);
 	}
 
 	@Override

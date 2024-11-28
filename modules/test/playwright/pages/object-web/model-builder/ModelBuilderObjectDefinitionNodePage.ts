@@ -3,12 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectRelationship} from '@liferay/object-admin-rest-client-js';
 import {expect} from '@playwright/test';
 
-import {
-	ObjectField,
-	ObjectRelationship,
-} from '../../../../../apps/object/object-admin-rest-client-js';
 import {CreateObjectField} from '../../../helpers/ObjectAdminApiHelper';
 
 import type {Locator, Page} from '@playwright/test';
@@ -138,7 +135,7 @@ export class ModelBuilderObjectDefinitionNodePage {
 			objectFieldBusinessType
 		);
 
-		if (objectFieldBusinessType === ObjectField.BusinessTypeEnum.Picklist) {
+		if (objectFieldBusinessType === 'Picklist') {
 			await this.objectFieldPicklistSelect.click();
 			await this.page
 				.getByRole('option', {
@@ -166,7 +163,7 @@ export class ModelBuilderObjectDefinitionNodePage {
 		objectDefinitionLabel: string;
 		objectDefinitionNodes: unknown;
 		objectRelationshipLabel: string;
-		objectRelationshipType: ObjectRelationship.TypeEnum;
+		objectRelationshipType: string;
 	}): Promise<ObjectRelationship> {
 		await this.openAddNewObjectFieldOrRelationshipModal(
 			objectDefinitionLabel,
@@ -250,7 +247,7 @@ export class ModelBuilderObjectDefinitionNodePage {
 	}
 
 	async selectNewObjectFieldBusinessTypeOption(
-		objectFieldBusinessType: ObjectField.BusinessTypeEnum
+		objectFieldBusinessType: string
 	) {
 		await this.objectFieldBusinessTypeSelect.click();
 		await this.page

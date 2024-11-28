@@ -21,11 +21,9 @@
 
 	<#include "default_groups.ftl">
 
-	<#include "groups.ftl">
-
 	<#include "notification_templates.ftl">
 
-	<#include "object_definitions.ftl">
+	<#include "system_object_definitions.ftl">
 
-	<#include "object_actions.ftl">
+	<#include "groups.ftl">
 </#list>

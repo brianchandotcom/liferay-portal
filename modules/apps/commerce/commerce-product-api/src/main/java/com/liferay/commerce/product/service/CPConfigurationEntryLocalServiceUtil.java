@@ -54,8 +54,8 @@ public class CPConfigurationEntryLocalServiceUtil {
 	}
 
 	public static CPConfigurationEntry addCPConfigurationEntry(
-			String externalReferenceCode, long userId, long classNameId,
-			long classPK, long cpConfigurationListId,
+			String externalReferenceCode, long userId, long groupId,
+			long classNameId, long classPK, long cpConfigurationListId,
 			String allowedOrderQuantities, boolean backOrders,
 			long commerceAvailabilityEstimateId,
 			String cpDefinitionInventoryEngine, boolean displayAvailability,
@@ -67,7 +67,7 @@ public class CPConfigurationEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().addCPConfigurationEntry(
-			externalReferenceCode, userId, classNameId, classPK,
+			externalReferenceCode, userId, groupId, classNameId, classPK,
 			cpConfigurationListId, allowedOrderQuantities, backOrders,
 			commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
 			displayAvailability, displayStockQuantity, lowStockActivity,
@@ -238,6 +238,13 @@ public class CPConfigurationEntryLocalServiceUtil {
 		return getService().fetchCPConfigurationEntry(CPConfigurationEntryId);
 	}
 
+	public static CPConfigurationEntry fetchCPConfigurationEntry(
+		long classNameId, long classPK, long cpConfigurationListId) {
+
+		return getService().fetchCPConfigurationEntry(
+			classNameId, classPK, cpConfigurationListId);
+	}
+
 	public static CPConfigurationEntry
 		fetchCPConfigurationEntryByExternalReferenceCode(
 			String externalReferenceCode, long companyId) {
@@ -247,18 +254,17 @@ public class CPConfigurationEntryLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the cp configuration entry with the matching UUID and company.
+	 * Returns the cp configuration entry matching the UUID and group.
 	 *
 	 * @param uuid the cp configuration entry's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
 	 */
 	public static CPConfigurationEntry
-		fetchCPConfigurationEntryByUuidAndCompanyId(
-			String uuid, long companyId) {
+		fetchCPConfigurationEntryByUuidAndGroupId(String uuid, long groupId) {
 
-		return getService().fetchCPConfigurationEntryByUuidAndCompanyId(
-			uuid, companyId);
+		return getService().fetchCPConfigurationEntryByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -288,6 +294,40 @@ public class CPConfigurationEntryLocalServiceUtil {
 		long cpConfigurationListId) {
 
 		return getService().getCPConfigurationEntries(cpConfigurationListId);
+	}
+
+	/**
+	 * Returns all the cp configuration entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the cp configuration entries
+	 * @param companyId the primary key of the company
+	 * @return the matching cp configuration entries, or an empty list if no matches were found
+	 */
+	public static List<CPConfigurationEntry>
+		getCPConfigurationEntriesByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return getService().getCPConfigurationEntriesByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of cp configuration entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the cp configuration entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching cp configuration entries, or an empty list if no matches were found
+	 */
+	public static List<CPConfigurationEntry>
+		getCPConfigurationEntriesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<CPConfigurationEntry> orderByComparator) {
+
+		return getService().getCPConfigurationEntriesByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -331,20 +371,19 @@ public class CPConfigurationEntryLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the cp configuration entry with the matching UUID and company.
+	 * Returns the cp configuration entry matching the UUID and group.
 	 *
 	 * @param uuid the cp configuration entry's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching cp configuration entry
 	 * @throws PortalException if a matching cp configuration entry could not be found
 	 */
-	public static CPConfigurationEntry
-			getCPConfigurationEntryByUuidAndCompanyId(
-				String uuid, long companyId)
+	public static CPConfigurationEntry getCPConfigurationEntryByUuidAndGroupId(
+			String uuid, long groupId)
 		throws PortalException {
 
-		return getService().getCPConfigurationEntryByUuidAndCompanyId(
-			uuid, companyId);
+		return getService().getCPConfigurationEntryByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

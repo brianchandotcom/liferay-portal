@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
-
 import {
 	ObjectDefinitionApi,
 	ObjectField,
 	ObjectFieldApi,
 	ObjectRelationship,
 	ObjectRelationshipApi,
-} from '../../../../apps/object/object-admin-rest-client-js';
+} from '@liferay/object-admin-rest-client-js';
+import {expect, mergeTests} from '@playwright/test';
+
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
@@ -213,7 +213,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 			await apiHelpers.objectAdmin.postRandomObjectDefinition(
 				{code: 0},
 				undefined,
-				objectFolder.externalReferenceCode
+				'default'
 			);
 
 		const objectDefinition2 =
@@ -247,8 +247,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 						modelBuilderDiagramPage.objectDefinitionNodes,
 					objectRelationshipLabel:
 						'objectRelationship' + getRandomInt(),
-					objectRelationshipType:
-						ObjectRelationship.TypeEnum.OneToMany,
+					objectRelationshipType: 'One to Many',
 				}
 			);
 
@@ -339,8 +338,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 					objectDefinitionNodes:
 						modelBuilderDiagramPage.objectDefinitionNodes,
 					objectRelationshipLabel,
-					objectRelationshipType:
-						ObjectRelationship.TypeEnum.OneToMany,
+					objectRelationshipType: 'One to Many',
 				}
 			);
 
@@ -381,7 +379,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 			await apiHelpers.objectAdmin.postRandomObjectDefinition(
 				{code: 0},
 				undefined,
-				objectFolder.externalReferenceCode
+				'default'
 			);
 
 		const objectDefinition3 =
@@ -892,8 +890,8 @@ test.describe('Manage object relationships through Model Builder', () => {
 
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 2},
-				undefined,
+				{code: 1},
+				[],
 				objectFolder.externalReferenceCode
 			);
 

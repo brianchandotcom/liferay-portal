@@ -623,7 +623,7 @@ public class TestrayServer {
 
 		NotificationUtil.sendSlackNotification(
 			sb.toString(), "#ci-notifications", ":testray:",
-			"Testray Communication Failure", "Liferay CI");
+			"Testray communication failure", "Liferay CI");
 	}
 
 	private static final int _MILLIS_REQUEST_TIMEOUT_DEFAULT = 60000;

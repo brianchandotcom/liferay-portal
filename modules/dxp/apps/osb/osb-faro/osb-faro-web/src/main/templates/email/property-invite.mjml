@@ -16,9 +16,9 @@
 			<mj-column width="556px">
 				<mj-text align="center" color="#6B6C7E" line-height="21px">
 					[$NOTIFICATION_MSG_1$]
+				</mj-text>
 
-					<br />
-
+				<mj-text align="center" color="#6B6C7E" line-height="21px">
 					[$NOTIFICATION_MSG_2$]
 				</mj-text>
 			</mj-column>

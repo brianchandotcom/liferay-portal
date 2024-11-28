@@ -251,18 +251,19 @@ public interface CommercePriceListModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the commerce currency ID of this commerce price list.
+	 * Returns the commerce currency code of this commerce price list.
 	 *
-	 * @return the commerce currency ID of this commerce price list
+	 * @return the commerce currency code of this commerce price list
 	 */
-	public long getCommerceCurrencyId();
+	@AutoEscape
+	public String getCommerceCurrencyCode();
 
 	/**
-	 * Sets the commerce currency ID of this commerce price list.
+	 * Sets the commerce currency code of this commerce price list.
 	 *
-	 * @param commerceCurrencyId the commerce currency ID of this commerce price list
+	 * @param commerceCurrencyCode the commerce currency code of this commerce price list
 	 */
-	public void setCommerceCurrencyId(long commerceCurrencyId);
+	public void setCommerceCurrencyCode(String commerceCurrencyCode);
 
 	/**
 	 * Returns the parent commerce price list ID of this commerce price list.

@@ -52,8 +52,8 @@ public class CPConfigurationEntryLocalServiceWrapper
 
 	@Override
 	public CPConfigurationEntry addCPConfigurationEntry(
-			String externalReferenceCode, long userId, long classNameId,
-			long classPK, long cpConfigurationListId,
+			String externalReferenceCode, long userId, long groupId,
+			long classNameId, long classPK, long cpConfigurationListId,
 			String allowedOrderQuantities, boolean backOrders,
 			long commerceAvailabilityEstimateId,
 			String cpDefinitionInventoryEngine, boolean displayAvailability,
@@ -65,7 +65,7 @@ public class CPConfigurationEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpConfigurationEntryLocalService.addCPConfigurationEntry(
-			externalReferenceCode, userId, classNameId, classPK,
+			externalReferenceCode, userId, groupId, classNameId, classPK,
 			cpConfigurationListId, allowedOrderQuantities, backOrders,
 			commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
 			displayAvailability, displayStockQuantity, lowStockActivity,
@@ -268,6 +268,14 @@ public class CPConfigurationEntryLocalServiceWrapper
 	}
 
 	@Override
+	public CPConfigurationEntry fetchCPConfigurationEntry(
+		long classNameId, long classPK, long cpConfigurationListId) {
+
+		return _cpConfigurationEntryLocalService.fetchCPConfigurationEntry(
+			classNameId, classPK, cpConfigurationListId);
+	}
+
+	@Override
 	public CPConfigurationEntry
 		fetchCPConfigurationEntryByExternalReferenceCode(
 			String externalReferenceCode, long companyId) {
@@ -278,18 +286,18 @@ public class CPConfigurationEntryLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the cp configuration entry with the matching UUID and company.
+	 * Returns the cp configuration entry matching the UUID and group.
 	 *
 	 * @param uuid the cp configuration entry's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
 	 */
 	@Override
-	public CPConfigurationEntry fetchCPConfigurationEntryByUuidAndCompanyId(
-		String uuid, long companyId) {
+	public CPConfigurationEntry fetchCPConfigurationEntryByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return _cpConfigurationEntryLocalService.
-			fetchCPConfigurationEntryByUuidAndCompanyId(uuid, companyId);
+			fetchCPConfigurationEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -324,6 +332,44 @@ public class CPConfigurationEntryLocalServiceWrapper
 
 		return _cpConfigurationEntryLocalService.getCPConfigurationEntries(
 			cpConfigurationListId);
+	}
+
+	/**
+	 * Returns all the cp configuration entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the cp configuration entries
+	 * @param companyId the primary key of the company
+	 * @return the matching cp configuration entries, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List<CPConfigurationEntry>
+		getCPConfigurationEntriesByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return _cpConfigurationEntryLocalService.
+			getCPConfigurationEntriesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of cp configuration entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the cp configuration entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching cp configuration entries, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List<CPConfigurationEntry>
+		getCPConfigurationEntriesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPConfigurationEntry> orderByComparator) {
+
+		return _cpConfigurationEntryLocalService.
+			getCPConfigurationEntriesByUuidAndCompanyId(
+				uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -373,20 +419,20 @@ public class CPConfigurationEntryLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the cp configuration entry with the matching UUID and company.
+	 * Returns the cp configuration entry matching the UUID and group.
 	 *
 	 * @param uuid the cp configuration entry's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching cp configuration entry
 	 * @throws PortalException if a matching cp configuration entry could not be found
 	 */
 	@Override
-	public CPConfigurationEntry getCPConfigurationEntryByUuidAndCompanyId(
-			String uuid, long companyId)
+	public CPConfigurationEntry getCPConfigurationEntryByUuidAndGroupId(
+			String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpConfigurationEntryLocalService.
-			getCPConfigurationEntryByUuidAndCompanyId(uuid, companyId);
+			getCPConfigurationEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override

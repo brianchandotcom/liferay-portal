@@ -7,6 +7,7 @@ import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../../src/analytics';
+import {webContentTypes} from '../../src/plugins/web-contents';
 import {wait} from '../helpers';
 
 const applicationId = 'WebContent';
@@ -316,5 +317,116 @@ describe('WebContent Plugin', () => {
 				document.body.removeChild(element);
 			}
 		);
+	});
+
+	describe('webContent events with actions', () => {
+		const createWebContentElementWithAction = (action, type) => {
+			const setDataset = (element, data) => {
+				Object.entries(data).forEach(([key, value]) => {
+					element.dataset[key] = value;
+				});
+			};
+
+			const webContentElement = document.createElement('div');
+
+			setDataset(webContentElement, {
+				analyticsAssetAction: action,
+				analyticsAssetId: 'assetId',
+				analyticsAssetSubtype: 'basic-web-content',
+				analyticsAssetTitle: 'assetTitle',
+				analyticsAssetType: type,
+			});
+
+			webContentElement.innerText = `Lorem ipsum dolor, sit amet consectetur adipisicing elit.`;
+
+			document.body.appendChild(webContentElement);
+
+			return webContentElement;
+		};
+
+		it('is not fired when view webContent with an incorrect action value', async () => {
+			const element = createWebContentElementWithAction(
+				'unknown',
+				'web-content'
+			);
+
+			jest.spyOn(element, 'getBoundingClientRect').mockImplementation(
+				() => ({
+					bottom: 500,
+					height: 500,
+					left: 0,
+					right: 500,
+					top: 0,
+					width: 500,
+				})
+			);
+
+			const domContentLoaded = new Event('DOMContentLoaded');
+
+			document.dispatchEvent(domContentLoaded);
+
+			await wait(250);
+
+			const events = Analytics.getEvents().filter(
+				({eventId}) => eventId === 'webContentViewed'
+			);
+
+			expect(events.length).toBeGreaterThanOrEqual(0);
+
+			document.body.removeChild(element);
+		});
+
+		it('is fired when view a webContent with view and impression actions and correct types', async () => {
+			webContentTypes.forEach(async (type) => {
+				[
+					{action: 'view', eventId: 'webContentViewed'},
+					{action: 'impression', eventId: 'webContentImpressionMade'},
+				].forEach(async (props) => {
+					const element = createWebContentElementWithAction(
+						props.action,
+						type
+					);
+
+					jest.spyOn(
+						element,
+						'getBoundingClientRect'
+					).mockImplementation(() => ({
+						bottom: 500,
+						height: 500,
+						left: 0,
+						right: 500,
+						top: 0,
+						width: 500,
+					}));
+
+					const domContentLoaded = new Event('DOMContentLoaded');
+
+					document.dispatchEvent(domContentLoaded);
+
+					await wait(250);
+
+					const events = Analytics.getEvents().filter(
+						({eventId}) => eventId === props.eventId
+					);
+
+					expect(events.length).toBeGreaterThanOrEqual(1);
+
+					expect(events[0]).toEqual(
+						expect.objectContaining({
+							applicationId,
+							eventId: props.eventId,
+							properties: expect.objectContaining({
+								action: props.action,
+								articleId: 'assetId',
+								subtype: 'basic-web-content',
+								type,
+							}),
+						})
+					);
+
+					document.body.removeChild(element);
+				});
+			});
+		});
 	});
 });

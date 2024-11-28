@@ -118,7 +118,7 @@ public class ProductSpecificationResourceImpl
 						pagination.getStartPosition(),
 						pagination.getEndPosition(), null);
 
-		int totalItems =
+		int totalCount =
 			_cpDefinitionSpecificationOptionValueService.
 				getCPDefinitionSpecificationOptionValuesCount(
 					cpDefinition.getCPDefinitionId());
@@ -127,7 +127,7 @@ public class ProductSpecificationResourceImpl
 			_toProductSpecifications(
 				cpDefinitionSpecificationOptionValues,
 				contextAcceptLanguage.getPreferredLocale()),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@Override

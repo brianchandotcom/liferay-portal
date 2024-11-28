@@ -62,7 +62,7 @@ public class PriceEntryResourceTest extends BasePriceEntryResourceTestCase {
 		_commercePriceList =
 			_commercePriceListLocalService.addCommercePriceList(
 				RandomTestUtil.randomString(), testGroup.getGroupId(),
-				_user.getUserId(), _commerceCurrency.getCommerceCurrencyId(),
+				_user.getUserId(), _commerceCurrency.getCode(),
 				RandomTestUtil.randomBoolean(),
 				CommercePriceListConstants.TYPE_PRICE_LIST, 0, false,
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(), 1,
@@ -246,7 +246,7 @@ public class PriceEntryResourceTest extends BasePriceEntryResourceTestCase {
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.addCommercePriceList(
 				RandomTestUtil.randomString(), testGroup.getGroupId(),
-				_user.getUserId(), _commerceCurrency.getCommerceCurrencyId(),
+				_user.getUserId(), _commerceCurrency.getCode(),
 				RandomTestUtil.randomBoolean(),
 				CommercePriceListConstants.TYPE_PRICE_LIST, 0, true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(), 1,

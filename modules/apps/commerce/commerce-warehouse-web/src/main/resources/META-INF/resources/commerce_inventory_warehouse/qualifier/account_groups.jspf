@@ -1,0 +1,43 @@
+<%--
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+--%>
+
+<c:if test="<%= cIWarehouseQualifiersDisplayContext.hasPermission() %>">
+	<div id="item-finder-root"></div>
+
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"commerceInventoryWarehouseId", commerceInventoryWarehouseId
+			).put(
+				"dataSetId", CommerceInventoryWarehouseFDSNames.COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_ACCOUNT_GROUPS
+			).put(
+				"rootPortletId", portletDisplay.getRootPortletId()
+			).put(
+				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+			).put(
+				"warehouseExternalReferenceCode", commerceInventoryWarehouse.getExternalReferenceCode()
+			).build()
+		%>'
+		module="{accountGroups} from commerce-warehouse-web"
+	/>
+
+	<commerce-ui:panel
+		bodyClasses="p-0"
+		title='<%= LanguageUtil.get(request, "account-groups") %>'
+	>
+		<frontend-data-set:headless-display
+			apiURL="<%= cIWarehouseQualifiersDisplayContext.getWarehouseAccountGroupsAPIURL() %>"
+			fdsActionDropdownItems="<%= cIWarehouseQualifiersDisplayContext.getWarehouseAccountGroupFDSActionDropdownItems() %>"
+			formName="fm"
+			id="<%= CommerceInventoryWarehouseFDSNames.COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_ACCOUNT_GROUPS %>"
+			itemsPerPage="<%= 10 %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
+			portletURL="<%= portletCommerceInventoryWarehouseURL %>"
+		/>
+	</commerce-ui:panel>
+</c:if>

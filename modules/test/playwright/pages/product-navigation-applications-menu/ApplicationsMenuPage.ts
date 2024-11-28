@@ -19,6 +19,7 @@ export class ApplicationsMenuPage {
 	private readonly commerceDiscountsMenuItem: Locator;
 	private readonly commerceOrdersMenuItem: Locator;
 	private readonly commercePanelButton: Locator;
+	private readonly commerceProductConfigurationListsMenuItem: Locator;
 	private readonly commerceReturnsMenuItem: Locator;
 	private readonly commerceShipmentsMenuItem: Locator;
 	private readonly commerceSpecificationsMenuItem: Locator;
@@ -96,6 +97,13 @@ export class ApplicationsMenuPage {
 		this.commercePanelButton = page.getByRole('tab', {
 			name: 'Commerce',
 		});
+		this.commerceProductConfigurationListsMenuItem = page.getByRole(
+			'menuitem',
+			{
+				exact: true,
+				name: 'Product Configurations',
+			}
+		);
 		this.commerceReturnsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Returns',
@@ -365,8 +373,17 @@ export class ApplicationsMenuPage {
 		await this.systemSettingsItem.click();
 	}
 
-	async goToInstanceSettings() {
-		await this.goToControlPanel();
+	async goToInstanceSettings(forceReload = true) {
+		if (forceReload) {
+			await this.goto();
+		}
+		else {
+			await this.homePage.openApplicationMenu();
+
+			await expect(this.applicationsMenuTabButton).toBeVisible();
+		}
+
+		await this.controlPanelButton.click();
 		await this.instanceSettingsMenuItem.click();
 	}
 
@@ -395,6 +412,11 @@ export class ApplicationsMenuPage {
 		await this.commerceOrdersMenuItem.click();
 	}
 
+	async goToCommerceProductConfigurationLists(checkTabVisibility = true) {
+		await this.goToCommercePanel(checkTabVisibility);
+		await this.commerceProductConfigurationListsMenuItem.click();
+	}
+
 	async goToCommerceReturns(checkTabVisibility = true) {
 		await this.goToCommercePanel(checkTabVisibility);
 		await this.commerceReturnsMenuItem.click();
@@ -410,8 +432,8 @@ export class ApplicationsMenuPage {
 		await this.commerceSpecificationsMenuItem.click();
 	}
 
-	async goToPayments() {
-		await this.goToCommercePanel();
+	async goToPayments(checkTabVisibility = true) {
+		await this.goToCommercePanel(checkTabVisibility);
 		await this.paymentsMenuItem.click();
 	}
 

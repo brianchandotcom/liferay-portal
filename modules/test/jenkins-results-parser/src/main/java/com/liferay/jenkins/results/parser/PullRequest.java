@@ -96,7 +96,7 @@ public class PullRequest {
 
 			NotificationUtil.sendSlackNotification(
 				sb.toString(), "#ci-notifications", ":liferay-ci:",
-				"Secondary Rate Limit exceeded", "Liferay CI");
+				"Secondary rate limit exceeded", "Liferay CI");
 
 			throw new GitHubSecondaryRateLimitRuntimeException(
 				gitHubSecondaryRateLimitRuntimeException.getGitHubApiUrl(),

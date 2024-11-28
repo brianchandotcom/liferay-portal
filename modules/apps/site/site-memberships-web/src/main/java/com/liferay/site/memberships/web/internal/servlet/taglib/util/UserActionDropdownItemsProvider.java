@@ -53,6 +53,28 @@ public class UserActionDropdownItemsProvider {
 				ActionKeys.ASSIGN_USER_ROLES),
 			_getAssignRolesActionUnsafeConsumer()
 		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "unassignRoles");
+				dropdownItem.putData(
+					"unassignUserGroupRoleURL",
+					PortletURLBuilder.createActionURL(
+						_renderResponse
+					).setMVCPath(
+						"/users_roles.jsp"
+					).setParameter(
+						"assignRoles", Boolean.FALSE
+					).setParameter(
+						"groupId", _themeDisplay.getSiteGroupIdOrLiveGroupId()
+					).setParameter(
+						"p_u_i_d", _user.getUserId()
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString());
+				dropdownItem.putData("userId", _user.getUserId());
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "unassign-roles"));
+			}
+		).add(
 			() ->
 				GroupPermissionUtil.contains(
 					_themeDisplay.getPermissionChecker(),

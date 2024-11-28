@@ -934,10 +934,8 @@ export class PageEditorPage {
 		);
 
 		await fieldsModal
-			.getByRole('row')
-			.getByRole('checkbox')
-			.first()
-			.waitFor();
+			.getByLabel('Select All Items on the Page')
+			.check({trial: true});
 
 		if (!fields) {
 			await fieldsModal

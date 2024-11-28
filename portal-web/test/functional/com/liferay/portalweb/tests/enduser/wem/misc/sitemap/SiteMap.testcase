@@ -69,7 +69,9 @@ definition {
 	@description = "View private parend and child page via Site Map widget."
 	@priority = 4
 	test DisplayPrivateParentAndChildPage {
-		property custom.properties = "feature.flag.LPD-38869=true";
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		task ("Add a parent private page") {
 			JSONLayout.addPrivateLayout(

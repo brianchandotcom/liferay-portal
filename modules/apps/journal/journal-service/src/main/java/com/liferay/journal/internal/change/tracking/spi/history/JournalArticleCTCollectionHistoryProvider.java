@@ -7,8 +7,10 @@ package com.liferay.journal.internal.change.tracking.spi.history;
 
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionTable;
+import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleTable;
@@ -78,6 +80,47 @@ public class JournalArticleCTCollectionHistoryProvider
 	}
 
 	@Override
+	public CTEntry getCTEntry(
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+
+		List<Long> resourcePrimKey = _ctEntryLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				JournalArticleTable.INSTANCE.resourcePrimKey
+			).from(
+				JournalArticleTable.INSTANCE
+			).where(
+				JournalArticleTable.INSTANCE.id.eq(modelClassPK)
+			));
+
+		if (resourcePrimKey.isEmpty()) {
+			return null;
+		}
+
+		List<Long> journalArticleIds = _ctEntryLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				JournalArticleTable.INSTANCE.id
+			).from(
+				JournalArticleTable.INSTANCE
+			).where(
+				JournalArticleTable.INSTANCE.resourcePrimKey.eq(
+					resourcePrimKey.get(0)
+				).and(
+					JournalArticleTable.INSTANCE.ctCollectionId.eq(
+						ctCollectionId)
+				)
+			).orderBy(
+				JournalArticleTable.INSTANCE.modifiedDate.descending()
+			));
+
+		if (journalArticleIds.isEmpty()) {
+			return null;
+		}
+
+		return _ctEntryLocalService.fetchCTEntry(
+			ctCollectionId, modelClassNameId, journalArticleIds.get(0));
+	}
+
+	@Override
 	public Class<JournalArticle> getModelClass() {
 		return JournalArticle.class;
 	}
@@ -121,6 +164,9 @@ public class JournalArticleCTCollectionHistoryProvider
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

@@ -99,6 +99,13 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		throw new RuntimeException(message, exception);
 	}
 
+	protected String getBaseInvocationURL(String cohortName) {
+		return JenkinsResultsParserUtil.getMostAvailableMasterURL(
+			JenkinsResultsParserUtil.combine(
+				"http://", cohortName, ".liferay.com"),
+			1);
+	}
+
 	protected String getBuildParameter(String key) {
 		TopLevelBuildData topLevelBuildData = getBuildData();
 
@@ -298,15 +305,9 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 			throw new RuntimeException(ioException);
 		}
 
-		String invocationURL =
-			JenkinsResultsParserUtil.getMostAvailableMasterURL(
-				JenkinsResultsParserUtil.combine(
-					"http://", cohortName, ".liferay.com"),
-				1);
-
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(invocationURL);
+		sb.append(getBaseInvocationURL(cohortName));
 		sb.append("/job/");
 		sb.append(jobName);
 		sb.append("/buildWithParameters?token=");

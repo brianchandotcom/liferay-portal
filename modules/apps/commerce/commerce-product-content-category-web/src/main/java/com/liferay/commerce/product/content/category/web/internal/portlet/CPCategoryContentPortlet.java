@@ -13,6 +13,7 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -63,7 +64,8 @@ public class CPCategoryContentPortlet extends MVCPortlet {
 					new CPCategoryContentDisplayContext(
 						_portal.getHttpServletRequest(renderRequest),
 						_assetCategoryService, _commerceMediaResolver,
-						_cpAttachmentFileEntryService, _portal);
+						_cpAttachmentFileEntryService, _groupLocalService,
+						_portal);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -87,6 +89,9 @@ public class CPCategoryContentPortlet extends MVCPortlet {
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

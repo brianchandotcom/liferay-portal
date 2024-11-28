@@ -6,6 +6,7 @@
 package com.liferay.portal.vulcan.internal.batch.engine.action;
 
 import com.liferay.batch.engine.action.ImportTaskPostAction;
+import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.portal.vulcan.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
@@ -28,7 +29,8 @@ public class EntityExtensionImportTaskPostAction
 
 	@Override
 	public void run(
-			BatchEngineImportTask batchEngineImportTask, Object item,
+			BatchEngineImportTask batchEngineImportTask,
+			ImportTaskContext importTaskContext, Object item,
 			Object persistedItem)
 		throws Exception {
 

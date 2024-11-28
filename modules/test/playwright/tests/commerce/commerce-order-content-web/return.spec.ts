@@ -10,7 +10,11 @@ import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {commerceReturnSetUp} from '../utils/commerce';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import performLogin, {performLogout} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {commerceReturnSetUp, miniumSetUp} from '../utils/commerce';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -354,4 +358,356 @@ test('LPD-32523 Returns widget to show received quantity label localized', async
 	await expect(
 		await returnDetailsPage.table.getByText('Received Quantity')
 	).toBeVisible();
+});
+
+test('LPD-41539 Buyer users are missing permissions to view refunds', async ({
+	apiHelpers,
+	page,
+	returnDetailsPage,
+}) => {
+	test.setTimeout(180000);
+
+	const siteName = 'minium-' + getRandomInt();
+
+	const {channel, site} = await miniumSetUp(apiHelpers, siteName);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'Account Business',
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['demo.unprivileged@liferay.com']
+	);
+
+	const companyId = await page.evaluate(() => {
+		return Liferay.ThemeDisplay.getCompanyId();
+	});
+
+	const role = await apiHelpers.headlessAdminUser.postRole({
+		name: 'Buyer ' + getRandomString(),
+		rolePermissions: [
+			{
+				actionIds: ['MANAGE_ADDRESSES', 'VIEW_ADDRESSES'],
+				primaryKey: '0',
+				resourceName: 'com.liferay.account.model.AccountEntry',
+				scope: 3,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.model.CommerceOrderType',
+				scope: 1,
+			},
+			{
+				actionIds: [
+					'ADD_COMMERCE_ORDER',
+					'CHECKOUT_OPEN_COMMERCE_ORDERS',
+					'MANAGE_COMMERCE_ORDER_DELIVERY_TERMS',
+					'MANAGE_COMMERCE_ORDER_PAYMENT_METHODS',
+					'MANAGE_COMMERCE_ORDER_PAYMENT_TERMS',
+					'MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS',
+					'VIEW_BILLING_ADDRESS',
+					'VIEW_COMMERCE_ORDERS',
+					'VIEW_OPEN_COMMERCE_ORDERS',
+				],
+				primaryKey: '0',
+				resourceName: 'com.liferay.commerce.order',
+				scope: 3,
+			},
+		],
+	});
+
+	await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+		role.id,
+		user.id
+	);
+
+	apiHelpers.data.push({
+		id: `${role.id}_${user.id}`,
+		type: 'roleUserAccountAssociation',
+	});
+
+	await apiHelpers.jsonWebServicesUser.addGroupUsers(site.id, [user.id]);
+
+	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
+		account.id
+	);
+
+	const catalogs =
+		await apiHelpers.headlessCommerceAdminCatalog.getCatalogsPage(siteName);
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalogs.items[0].id,
+		productType: 'virtual',
+	});
+
+	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+		.getProduct(product.productId)
+		.then((product) => {
+			return product.skus;
+		});
+
+	const sku = productSkus[0];
+
+	const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
+		accountId: account.id,
+		billingAddressId: address.id,
+		channelId: channel.id,
+		orderItems: [
+			{
+				quantity: 1,
+				skuId: sku.id,
+			},
+		],
+		paymentMethod: 'paypal',
+		shippingAddressId: address.id,
+		total: 50,
+	});
+
+	const payment =
+		await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
+			amount: order.total,
+			channelId: channel.id,
+			currencyCode: 'USD',
+			paymentIntegrationType: 1,
+			relatedItemId: order.id,
+			relatedItemName: 'com.liferay.commerce.model.CommerceOrder',
+		});
+
+	await apiHelpers.headlessCommerceAdminPaymentApiHelper.patchPayment(
+		{
+			paymentStatus: 0,
+			relatedItemId: payment.relatedItemId,
+		},
+		payment.id
+	);
+
+	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
+		orderStatus: '10',
+	});
+
+	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
+		orderStatus: '0',
+	});
+
+	await apiHelpers.headlessCommerceReturn.postCommerceReturn({
+		channelId: channel.id,
+		commerceReturnToCommerceReturnItems: [
+			{
+				amount: order.total,
+				authorized: 1,
+				quantity: 1,
+				r_accountToCommerceReturnItems_accountEntryId: account.id,
+				r_commerceOrderItemToCommerceReturnItems_commerceOrderItemId:
+					order.orderItems[0].id,
+				r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
+				received: 1,
+				returnItemStatus: {
+					key: 'toBeProccessed',
+				},
+				returnReason: {
+					key: 'changeOfMind',
+				},
+				returnResolutionMethod: {
+					key: 'refund',
+				},
+			},
+		],
+		r_accountToCommerceReturns_accountEntryId: account.id,
+		r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
+		returnStatus: {
+			key: 'processing',
+		},
+	});
+
+	const refund =
+		await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
+			amount: payment.amount,
+			reasonKey: 'damaged-in-transit',
+			relatedItemId: payment.id,
+			relatedItemName:
+				'com.liferay.commerce.payment.model.CommercePaymentEntry',
+			type: 1,
+		});
+
+	await apiHelpers.headlessCommerceAdminPaymentApiHelper.patchPayment(
+		{
+			paymentStatus: 0,
+			relatedItemId: refund.relatedItemId,
+		},
+		refund.id
+	);
+
+	await performLogout(page);
+
+	await performLogin(page, user.alternateName);
+
+	await page.goto(`/web/${site.name}/returns`);
+
+	await page.getByLabel('View').click();
+
+	await returnDetailsPage.returnActionsButton.click();
+
+	await expect(
+		returnDetailsPage.returnActionsViewRefundsButton
+	).toBeVisible();
+
+	await returnDetailsPage.returnActionsViewRefundsButton.click();
+
+	await expect(returnDetailsPage.viewRefundsTitle).toBeVisible();
+	await expect(
+		returnDetailsPage.viewRefundsFrame.getByText(
+			'Showing 1 to 1 of 1 entries.'
+		)
+	).toBeVisible();
+});
+
+test('LPD-41539 Returns Manager users are missing permissions to manage refunds', async ({
+	apiHelpers,
+	commercePaymentsPage,
+	page,
+}) => {
+	test.setTimeout(180000);
+
+	const siteName = 'minium-' + getRandomInt();
+
+	const {channel, site} = await miniumSetUp(apiHelpers, siteName);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'Account Business',
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['demo.unprivileged@liferay.com']
+	);
+
+	const role =
+		await apiHelpers.headlessAdminUser.getRoleByName('Returns Manager');
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		role.externalReferenceCode,
+		user.id
+	);
+
+	await apiHelpers.jsonWebServicesUser.addGroupUsers(site.id, [user.id]);
+
+	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
+		account.id
+	);
+
+	const catalogs =
+		await apiHelpers.headlessCommerceAdminCatalog.getCatalogsPage(siteName);
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalogs.items[0].id,
+		productType: 'virtual',
+	});
+
+	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+		.getProduct(product.productId)
+		.then((product) => {
+			return product.skus;
+		});
+
+	const sku = productSkus[0];
+
+	const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
+		accountId: account.id,
+		billingAddressId: address.id,
+		channelId: channel.id,
+		orderItems: [
+			{
+				quantity: 1,
+				skuId: sku.id,
+			},
+		],
+		paymentMethod: 'paypal',
+		shippingAddressId: address.id,
+		total: 50,
+	});
+
+	const payment =
+		await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
+			amount: order.total,
+			channelId: channel.id,
+			currencyCode: 'USD',
+			paymentIntegrationType: 1,
+			relatedItemId: order.id,
+			relatedItemName: 'com.liferay.commerce.model.CommerceOrder',
+		});
+
+	await apiHelpers.headlessCommerceAdminPaymentApiHelper.patchPayment(
+		{
+			paymentStatus: 0,
+			relatedItemId: payment.relatedItemId,
+		},
+		payment.id
+	);
+
+	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
+		orderStatus: '10',
+	});
+
+	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
+		orderStatus: '0',
+	});
+
+	await apiHelpers.headlessCommerceReturn.postCommerceReturn({
+		channelId: channel.id,
+		commerceReturnToCommerceReturnItems: [
+			{
+				amount: order.total,
+				authorized: 1,
+				quantity: 1,
+				r_accountToCommerceReturnItems_accountEntryId: account.id,
+				r_commerceOrderItemToCommerceReturnItems_commerceOrderItemId:
+					order.orderItems[0].id,
+				r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
+				received: 1,
+				returnItemStatus: {
+					key: 'toBeProccessed',
+				},
+				returnReason: {
+					key: 'changeOfMind',
+				},
+				returnResolutionMethod: {
+					key: 'refund',
+				},
+			},
+		],
+		r_accountToCommerceReturns_accountEntryId: account.id,
+		r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
+		returnStatus: {
+			key: 'processing',
+		},
+	});
+
+	await performLogout(page);
+
+	await performLogin(page, 'demo.unprivileged');
+
+	await commercePaymentsPage.goto(false);
+	await commercePaymentsPage.makeRefundButton.click();
+	await commercePaymentsPage.reasonInput.selectOption('return');
+	await commercePaymentsPage.saveButton.click();
+
+	await waitForAlert(page);
 });

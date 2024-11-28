@@ -323,6 +323,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		boolean syncReleaseVersions = _syncReleaseVersions(
 			project, portalRootDir, versionOverrideFile, testProject);
 
+		_applyDependencyVersionOverrides(project, portalRootDir);
+
 		_applyVersionOverrides(project, bundleExtension, versionOverrideFile);
 
 		Gradle gradle = project.getGradle();
@@ -1579,6 +1581,66 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			"com/liferay/gradle/plugins/defaults/dependencies" +
 				"/config-maven-publish.gradle",
 			project);
+	}
+
+	private void _applyDependencyVersionOverrides(
+		Project project, File portalRootDir) {
+
+		if (portalRootDir == null) {
+			return;
+		}
+
+		File file = new File(
+			portalRootDir, "modules/.dependency-version-overrides.properties");
+
+		if (!file.exists()) {
+			return;
+		}
+
+		Properties properties = GUtil.loadProperties(file);
+
+		String dependencies = properties.getProperty("dependencies");
+
+		if (Validator.isNull(dependencies)) {
+			return;
+		}
+
+		String includeDirs = properties.getProperty("include.dirs");
+
+		if (!_containsProject(project, includeDirs, portalRootDir)) {
+			return;
+		}
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Action<Configuration> action = new Action<Configuration>() {
+
+			@Override
+			public void execute(Configuration configuration) {
+				ResolutionStrategy resolutionStrategy =
+					configuration.getResolutionStrategy();
+
+				DependencySubstitutions dependencySubstitutions =
+					resolutionStrategy.getDependencySubstitution();
+
+				for (String dependency : dependencies.split(",")) {
+					String[] tokens = dependency.split(":");
+
+					DependencySubstitutions.Substitution substitution =
+						dependencySubstitutions.substitute(
+							dependencySubstitutions.module(
+								tokens[0] + ":" + tokens[1]));
+
+					substitution.using(
+						dependencySubstitutions.module(
+							tokens[0] + ":" + tokens[1] + ":" + tokens[2]));
+				}
+			}
+
+		};
+
+		configurationContainer.all(action);
 	}
 
 	private void _applyPlugins(

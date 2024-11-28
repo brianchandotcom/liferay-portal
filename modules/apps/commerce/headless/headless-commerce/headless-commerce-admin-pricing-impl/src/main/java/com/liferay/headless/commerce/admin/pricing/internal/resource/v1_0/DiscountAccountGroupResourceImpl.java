@@ -74,14 +74,14 @@ public class DiscountAccountGroupResourceImpl
 						pagination.getStartPosition(),
 						pagination.getEndPosition(), null);
 
-		int totalItems =
+		int totalCount =
 			_commerceDiscountCommerceAccountGroupRelService.
 				getCommerceDiscountCommerceAccountGroupRelsCount(
 					commerceDiscount.getCommerceDiscountId());
 
 		return Page.of(
 			_toDiscountAccountGroups(commerceDiscountCommerceAccountGroupRels),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@Override
@@ -96,13 +96,13 @@ public class DiscountAccountGroupResourceImpl
 						id, pagination.getStartPosition(),
 						pagination.getEndPosition(), null);
 
-		int totalItems =
+		int totalCount =
 			_commerceDiscountCommerceAccountGroupRelService.
 				getCommerceDiscountCommerceAccountGroupRelsCount(id);
 
 		return Page.of(
 			_toDiscountAccountGroups(commerceDiscountCommerceAccountGroupRels),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@Override

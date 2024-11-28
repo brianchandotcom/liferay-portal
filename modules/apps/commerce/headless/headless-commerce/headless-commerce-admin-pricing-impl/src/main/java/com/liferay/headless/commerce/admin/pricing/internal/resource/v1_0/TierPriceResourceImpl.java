@@ -96,12 +96,12 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 				commercePriceEntry.getCommercePriceEntryId(),
 				pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commerceTierPriceEntryService.getCommerceTierPriceEntriesCount(
 				commercePriceEntry.getCommercePriceEntryId());
 
 		return Page.of(
-			_toTierPrices(commerceTierPriceEntries), pagination, totalItems);
+			_toTierPrices(commerceTierPriceEntries), pagination, totalCount);
 	}
 
 	@Override
@@ -121,11 +121,11 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 			_commerceTierPriceEntryService.getCommerceTierPriceEntries(
 				id, pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commerceTierPriceEntryService.getCommerceTierPriceEntriesCount(id);
 
 		return Page.of(
-			_toTierPrices(commerceTierPriceEntries), pagination, totalItems);
+			_toTierPrices(commerceTierPriceEntries), pagination, totalCount);
 	}
 
 	@Override

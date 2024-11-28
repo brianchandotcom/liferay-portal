@@ -108,8 +108,8 @@ public class LoginPostAction extends Action {
 
 				boolean reindex = false;
 
-				if (UserLocalServiceUtil.addDefaultGroups(userId) ||
-					UserLocalServiceUtil.addDefaultRoles(userId) ||
+				if (UserLocalServiceUtil.addDefaultGroups(userId) |
+					UserLocalServiceUtil.addDefaultRoles(userId) |
 					UserLocalServiceUtil.addDefaultUserGroups(userId)) {
 
 					reindex = true;

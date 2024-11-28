@@ -91,6 +91,7 @@ export function DefinitionOfTerms({
 						itemsActions={[
 							{
 								href: 'copyTerm',
+								icon: 'copy',
 								id: 'copyTerm',
 								label: Liferay.Language.get('copy'),
 								onClick: copyTerm,

@@ -102,7 +102,7 @@ public abstract class BaseVirtualInstanceOperationTestCase
 				_configurationAdmin.listConfigurations(
 					"(service.pid=" + pid + ")"));
 
-			_countDownLatch.await(10, TimeUnit.SECONDS);
+			_countDownLatch.await(180, TimeUnit.SECONDS);
 		}
 	}
 

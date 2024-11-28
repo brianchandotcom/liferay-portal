@@ -6,6 +6,7 @@
 package com.liferay.commerce.pricing.test.util;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -51,8 +52,7 @@ public class CommercePriceModifierTestUtil {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
-			null, groupId, user.getUserId(),
-			commerceCurrency.getCommerceCurrencyId(), true,
+			null, groupId, user.getUserId(), commerceCurrency.getCode(), true,
 			CommercePriceListConstants.TYPE_PRICE_LIST, 0, false,
 			RandomTestUtil.randomString(), priority,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
@@ -73,12 +73,16 @@ public class CommercePriceModifierTestUtil {
 		User user = UserLocalServiceUtil.getGuestUser(
 			serviceContext.getCompanyId());
 
+		CommerceCurrency commerceCurrency =
+			CommerceCurrencyLocalServiceUtil.getCommerceCurrency(
+				commerceCurrencyId);
+
 		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
-			null, groupId, user.getUserId(), commerceCurrencyId, true,
+			null, groupId, user.getUserId(), commerceCurrency.getCode(), true,
 			CommercePriceListConstants.TYPE_PRICE_LIST, 0, false,
 			RandomTestUtil.randomString(), priority,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),

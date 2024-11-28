@@ -331,6 +331,20 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 						_ctCollectionModelResourcePermission);
 				}
 			).put(
+				"reactivate",
+				() -> {
+					if (ctCollection.getStatus() !=
+							WorkflowConstants.STATUS_EXPIRED) {
+
+						return null;
+					}
+
+					return addAction(
+						ActionKeys.UPDATE, ctCollection.getCtCollectionId(),
+						"putCTCollection",
+						_ctCollectionModelResourcePermission);
+				}
+			).put(
 				"schedule",
 				() -> {
 					if (!_isPublishEnabled(ctCollection.getCtCollectionId()) ||

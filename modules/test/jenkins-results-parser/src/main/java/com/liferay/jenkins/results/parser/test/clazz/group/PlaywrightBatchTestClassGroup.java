@@ -611,7 +611,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 				NotificationUtil.sendSlackNotification(
 					sb.toString(), "#ci-notifications", ":playwright:",
-					"Playwright Batch Creation Failure", "Liferay Playwright");
+					"Playwright batch creation failure", "Liferay Playwright");
 
 				exception.printStackTrace();
 			}

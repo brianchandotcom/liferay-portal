@@ -75,14 +75,14 @@ public class PriceListChannelResourceImpl
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
 
-		int totalItems =
+		int totalCount =
 			_commercePriceListChannelRelService.
 				getCommercePriceListChannelRelsCount(
 					commercePriceList.getCommercePriceListId());
 
 		return Page.of(
 			_toPriceListChannels(commercePriceListChannelRels), pagination,
-			totalItems);
+			totalCount);
 	}
 
 	@NestedField(parentClass = PriceList.class, value = "priceListChannels")
@@ -97,13 +97,13 @@ public class PriceListChannelResourceImpl
 				id, search, pagination.getStartPosition(),
 				pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commercePriceListChannelRelService.
 				getCommercePriceListChannelRelsCount(id, search);
 
 		return Page.of(
 			_toPriceListChannels(commercePriceListChannelRels), pagination,
-			totalItems);
+			totalCount);
 	}
 
 	@Override

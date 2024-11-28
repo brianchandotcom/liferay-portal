@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect, mergeTests} from '@playwright/test';
-
 import {
 	ObjectDefinition,
 	ObjectDefinitionApi,
@@ -14,7 +12,9 @@ import {
 	ObjectFolderApi,
 	ObjectValidationRule,
 	ObjectValidationRuleApi,
-} from '../../../../apps/object/object-admin-rest-client-js';
+} from '@liferay/object-admin-rest-client-js';
+import {Locator, Page, expect, mergeTests} from '@playwright/test';
+
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
@@ -140,7 +140,7 @@ test.describe('Manage object fields through Model Builder', () => {
 		);
 
 		await modelBuilderObjectDefinitionNodePage.selectNewObjectFieldBusinessTypeOption(
-			ObjectField.BusinessTypeEnum.Picklist
+			'Picklist'
 		);
 
 		await modelBuilderObjectDefinitionNodePage.objectFieldPicklistSelect.click();
@@ -192,7 +192,7 @@ test.describe('Manage object fields through Model Builder', () => {
 			objectDefinitionLabel: objectDefinition.label['en_US'],
 			objectDefinitionNodes:
 				modelBuilderDiagramPage.objectDefinitionNodes,
-			objectFieldBusinessType: ObjectField.BusinessTypeEnum.Picklist,
+			objectFieldBusinessType: 'Picklist',
 			objectFieldLabel,
 		});
 
@@ -739,69 +739,62 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 
 		const objectFieldsMock = [
 			{
-				objectFieldBusinessType:
-					ObjectField.BusinessTypeEnum.Attachment,
+				objectFieldBusinessType: 'Attachment',
 				objectFieldLabel: `attachment${getRandomInt()}`,
 			},
 			{
-				objectFieldBusinessType: ObjectField.BusinessTypeEnum.Boolean,
+				objectFieldBusinessType: 'Boolean',
 				objectFieldLabel: `boolean${getRandomInt()}`,
 			},
 			{
-				objectFieldBusinessType: ObjectField.BusinessTypeEnum.Date,
+				objectFieldBusinessType: 'Date',
 				objectFieldLabel: `date${getRandomInt()}`,
 			},
 			{
-				objectFieldBusinessType: ObjectField.BusinessTypeEnum.Decimal,
+				objectFieldBusinessType: 'Decimal',
 				objectFieldLabel: `decimal${getRandomInt()}`,
 			},
 			{
-				objectFieldBusinessType: ObjectField.BusinessTypeEnum.Integer,
+				objectFieldBusinessType: 'Integer',
 				objectFieldLabel: `integer${getRandomInt()}`,
 			},
 			{
-				objectFieldBusinessType:
-					ObjectField.BusinessTypeEnum.LongInteger,
+				objectFieldBusinessType: 'Long Integer',
 				objectFieldLabel: `longInteger${getRandomInt()}`,
 			},
 			{
-				objectFieldBusinessType: ObjectField.BusinessTypeEnum.LongText,
+				objectFieldBusinessType: 'Long Text',
 				objectFieldLabel: `longText${getRandomInt()}`,
 			},
 			{
-				objectFieldBusinessType:
-					ObjectField.BusinessTypeEnum.MultiselectPicklist,
+				objectFieldBusinessType: 'Multiselect Picklist',
 				objectFieldLabel: `multiselectPicklist${getRandomInt()}`,
 			},
 			{
-				objectFieldBusinessType: ObjectField.BusinessTypeEnum.Picklist,
+				objectFieldBusinessType: 'Picklist',
 				objectFieldLabel: `picklist${getRandomInt()}`,
 			},
 			{
-				objectFieldBusinessType:
-					ObjectField.BusinessTypeEnum.PrecisionDecimal,
+				objectFieldBusinessType: 'Precision Decimal',
 				objectFieldLabel: `precisionDecimal${getRandomInt()}`,
 			},
 			{
-				objectFieldBusinessType: ObjectField.BusinessTypeEnum.RichText,
+				objectFieldBusinessType: 'Rich Text',
 				objectFieldLabel: `richText${getRandomInt()}`,
 			},
 			{
-				objectFieldBusinessType: ObjectField.BusinessTypeEnum.Text,
+				objectFieldBusinessType: 'Text',
 				objectFieldLabel: `text${getRandomInt()}`,
 			},
 		] as {
-			objectFieldBusinessType: ObjectField.BusinessTypeEnum;
+			objectFieldBusinessType: string;
 			objectFieldLabel: string;
 		}[];
 
 		for (const objectField of objectFieldsMock) {
 			const {objectFieldBusinessType, objectFieldLabel} = objectField;
 
-			if (
-				objectFieldBusinessType ===
-				ObjectField.BusinessTypeEnum.Attachment
-			) {
+			if (objectFieldBusinessType === 'Attachment') {
 				await objectFieldsPage.addObjectField({
 					attachmentSource: 'Upload Directly from the User',
 					objectDefinitionNodes:
@@ -814,10 +807,8 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			}
 
 			if (
-				objectFieldBusinessType ===
-					ObjectField.BusinessTypeEnum.Picklist ||
-				objectFieldBusinessType ===
-					ObjectField.BusinessTypeEnum.MultiselectPicklist
+				objectFieldBusinessType === 'Picklist' ||
+				objectFieldBusinessType === `Multiselect Picklist`
 			) {
 				await objectFieldsPage.addObjectField({
 					listTypeDefinitionName: listTypeDefinition.name,

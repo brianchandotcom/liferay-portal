@@ -376,11 +376,11 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
 
-		int totalItems = _commerceAddressService.getCommerceAddressesCount(
+		int totalCount = _commerceAddressService.getCommerceAddressesCount(
 			AccountEntry.class.getName(), accountEntry.getAccountEntryId());
 
 		return Page.of(
-			_toAccountAddresses(commerceAddresses), pagination, totalItems);
+			_toAccountAddresses(commerceAddresses), pagination, totalCount);
 	}
 
 	private long _getCountryId(Country country) {

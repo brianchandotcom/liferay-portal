@@ -19,11 +19,13 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Hai Yu
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	property = "javax.portlet.name=" + ContactsPortletKeys.CONTACTS_CENTER,
 	service = SocialActivityInterpreter.class
 )
+@Deprecated
 public class ContactsCenterActivityInterpreter
 	extends BaseSocialActivityInterpreter {
 

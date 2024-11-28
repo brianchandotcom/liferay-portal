@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
-
 import {
 	ObjectDefinitionApi,
 	ObjectValidationRule,
 	ObjectValidationRuleApi,
-} from '../../../../apps/object/object-admin-rest-client-js';
+} from '@liferay/object-admin-rest-client-js';
+import {expect, mergeTests} from '@playwright/test';
+
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -39,6 +39,7 @@ const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-10727': true,
+		'LPD-37927': true,
 		'LPS-178052': true,
 	}),
 	loginTest(),
@@ -875,6 +876,143 @@ test.describe('Date and Time Fragment', () => {
 			});
 		}
 	);
+});
+
+test.describe('Form Localization', () => {
+	test('Can translate form fields', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create a page with a Form fragment and a Localization Select fragment
+
+		const fragmentDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'localization-select',
+		});
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				fragmentDefinition,
+				formDefinition,
+			]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Map the form to the All Fields object and publish the page
+
+		await pageEditorPage.mapFormFragment(formId, 'All Fields Object');
+
+		await pageEditorPage.publishPage();
+
+		// Go to view mode and fill the form
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await page.locator('iframe[title="editor"]').waitFor();
+
+		await page.getByLabel('Long Text').fill('long text english');
+
+		await page.getByLabel('Text', {exact: true}).fill('text english');
+		await page.evaluate(() =>
+			(window as any).CKEDITOR.instances['richText'].setData(
+				'rich text english'
+			)
+		);
+
+		// Add translations
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {name: 'es-ES'}),
+			trigger: page.getByLabel(
+				'Select a language, current language: English (United States).'
+			),
+		});
+
+		await page.getByLabel('Long Text').fill('long text español');
+
+		await page.getByLabel('Text', {exact: true}).fill('text español');
+
+		await page.evaluate(() =>
+			(window as any).CKEDITOR.instances['richText'].setData(
+				'rich text español'
+			)
+		);
+
+		// Publish the form
+
+		await page.getByRole('button', {name: 'Submit'}).click();
+
+		expect(
+			page.getByText(
+				'Thank you. Your information was successfully received.'
+			)
+		).toBeVisible();
+
+		// Go to custom object admin an check the values
+
+		await gotoObjectEntries({
+			entityName: 'All Fields',
+			page,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				exact: true,
+				name: 'View',
+			}),
+			trigger: page.locator('.dnd-tbody .item-actions').last(),
+		});
+
+		await page.getByRole('textbox', {name: 'Long Text'}).waitFor();
+
+		await expect(page.getByText('long text english')).toBeVisible();
+		await expect(
+			page
+				.frameLocator('iframe[title="editor"]')
+				.getByText('rich text english')
+		).toBeVisible();
+		await expect(page.getByText('text english')).toBeVisible();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Español',
+			}),
+			trigger: page.getByTestId('triggerButton').first(),
+		});
+
+		await expect(page.getByText('long text español')).toBeVisible();
+		await expect(
+			page
+				.frameLocator('iframe[title="editor"]')
+				.getByText('rich text español')
+		).toBeVisible();
+		await expect(page.getByText('text español')).toBeVisible();
+
+		// Delete entries
+
+		await deleteObjectEntries({
+			apiHelpers,
+			entityName: 'allfieldsobjects',
+			site: pageManagementSite,
+		});
+	});
 });
 
 test.describe('Numeric input field', () => {
@@ -2257,6 +2395,155 @@ test.describe('Relationships', () => {
 		await expect(form.getByText('Lemon Size')).toBeVisible();
 		await expect(form.getByText('Lemon Basket Color')).toBeVisible();
 	});
+});
+
+test.describe('Multiselect', () => {
+	test(
+		'Page designer can define number of options of multiselect fragment',
+		{tag: ['@LPS-169936', '@LPS-182728']},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Map the form to object and select fields
+
+			await pageEditorPage.mapFormFragment(formId, 'Lemon Basket', [
+				'Lemon Dimensions',
+			]);
+
+			// Assert help text
+
+			await expect(page.getByText('Lemon Dimensions')).toBeVisible();
+
+			const inputId = await pageEditorPage.getFragmentId('Multiselect');
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Help Text',
+				fragmentId: inputId,
+				tab: 'General',
+				value: true,
+			});
+
+			await expect(
+				page.getByText('Add your help text here.')
+			).toBeVisible();
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Help Text',
+				fragmentId: inputId,
+				tab: 'General',
+				value: 'Preferences',
+			});
+
+			await expect(page.getByText('Preferences')).toBeVisible();
+
+			// Assert mandatory symbol
+
+			await expect(
+				page.locator('.custom-checkbox .lexicon-icon-asterisk')
+			).toBeVisible();
+
+			// Change number of options configuration
+
+			await pageEditorPage.selectFragment(inputId);
+
+			await expect(
+				page.getByLabel('Number of Options', {exact: true})
+			).toHaveValue('5');
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Number of Options',
+				fragmentId: inputId,
+				tab: 'General',
+				value: '2',
+			});
+
+			// Assert options in edit mode
+
+			const multiselect = page.locator(
+				'.custom-checkbox .custom-control-label'
+			);
+
+			await expect(multiselect.nth(0).getByText('Large')).toBeVisible();
+			await expect(multiselect.nth(1).getByText('Medium')).toBeVisible();
+			await expect(
+				multiselect.nth(2).getByText('Small')
+			).not.toBeVisible();
+
+			await pageEditorPage.publishPage();
+
+			// Assert options in view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await expect(multiselect.nth(0).getByText('Large')).toBeVisible();
+			await expect(multiselect.nth(1).getByText('Medium')).toBeVisible();
+			await expect(
+				multiselect.nth(2).getByText('Small')
+			).not.toBeVisible();
+
+			// Click show all
+
+			await page.getByRole('button', {name: 'Show All'}).click();
+
+			await expect(multiselect.nth(0).getByText('Large')).toBeVisible();
+			await expect(multiselect.nth(1).getByText('Medium')).toBeVisible();
+			await expect(multiselect.nth(2).getByText('Small')).toBeVisible();
+
+			// Go to edit mode and update show all options configuration
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show All Options',
+				fragmentId: inputId,
+				tab: 'General',
+				value: true,
+			});
+
+			// Assert options in edit mode
+
+			await expect(multiselect.nth(0).getByText('Large')).toBeVisible();
+			await expect(multiselect.nth(1).getByText('Medium')).toBeVisible();
+			await expect(multiselect.nth(2).getByText('Small')).toBeVisible();
+
+			await pageEditorPage.publishPage();
+
+			// Assert options in view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await expect(multiselect.nth(0).getByText('Large')).toBeVisible();
+			await expect(multiselect.nth(1).getByText('Medium')).toBeVisible();
+			await expect(multiselect.nth(2).getByText('Small')).toBeVisible();
+		}
+	);
 });
 
 test.describe('Multistep', () => {

@@ -103,9 +103,9 @@
 		<#assign
 			commerceCatalogGroupModel = dataFactory.newCommerceCatalogGroupModel(commerceCatalogModel)
 
-			commercePriceListModels = dataFactory.newCommercePriceListModels(commerceCatalogGroupModel.groupId, commerceCurrencyModel.commerceCurrencyId, true, true, "price-list")
+			commercePriceListModels = dataFactory.newCommercePriceListModels(commerceCatalogGroupModel.groupId, commerceCurrencyModel.code, true, true, "price-list")
 
-			promotionCommercePriceListModel = dataFactory.newCommercePriceListModel(commerceCatalogGroupModel.groupId, commerceCurrencyModel.commerceCurrencyId, true, true, "promotion")
+			promotionCommercePriceListModel = dataFactory.newCommercePriceListModel(commerceCatalogGroupModel.groupId, commerceCurrencyModel.code, true, true, "promotion")
 
 			commerceProductDLFolderModel = dataFactory.newDLFolderModel(commerceCatalogGroupModel.groupId, 0, "Commerce Product")
 

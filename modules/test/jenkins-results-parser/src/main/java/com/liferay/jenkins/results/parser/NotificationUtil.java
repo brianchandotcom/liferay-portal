@@ -139,6 +139,23 @@ public class NotificationUtil {
 			System.out.println(exception.getMessage());
 
 			exception.printStackTrace();
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Sender: ");
+			sb.append(senderEmailAddress);
+			sb.append("\nRecipient: ");
+			sb.append(recipientEmailAddress);
+			sb.append("\nSubject: ");
+			sb.append(subject);
+			sb.append("\nBody: ");
+			sb.append(body);
+			sb.append("\nError: ");
+			sb.append(exception.getMessage());
+			sb.append("\n\n<@U04GTH03Q>");
+
+			sendSlackNotification(
+				sb.toString(), "ci-notifications", "Unable to send email");
 		}
 	}
 

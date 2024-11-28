@@ -119,12 +119,12 @@ public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					sorts);
 
-		int totalItems = _cpOptionValueService.searchCPOptionValuesCount(
+		int totalCount = _cpOptionValueService.searchCPOptionValuesCount(
 			cpOption.getCompanyId(), cpOption.getCPOptionId(), search);
 
 		return Page.of(
 			_toOptionValues(cpOptionValueBaseModelSearchResult.getBaseModels()),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@NestedField(parentClass = Option.class, value = "optionValues")
@@ -142,12 +142,12 @@ public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					sorts);
 
-		int totalItems = _cpOptionValueService.searchCPOptionValuesCount(
+		int totalCount = _cpOptionValueService.searchCPOptionValuesCount(
 			cpOption.getCompanyId(), cpOption.getCPOptionId(), search);
 
 		return Page.of(
 			_toOptionValues(cpOptionValueBaseModelSearchResult.getBaseModels()),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@Override

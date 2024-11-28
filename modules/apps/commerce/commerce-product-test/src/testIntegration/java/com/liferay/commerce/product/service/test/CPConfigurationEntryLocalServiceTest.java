@@ -101,6 +101,7 @@ public class CPConfigurationEntryLocalServiceTest {
 		CPConfigurationEntry cpConfigurationEntry1 =
 			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
 				externalReferenceCode, _user.getUserId(),
+				_cpConfigurationList.getGroupId(),
 				_portal.getClassNameId(CPDefinition.class),
 				_cpDefinition.getCPDefinitionId(),
 				_cpConfigurationList.getCPConfigurationListId(), "123", true, 0,

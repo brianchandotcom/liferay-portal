@@ -147,11 +147,13 @@ public class CommerceInventoryWarehouseServiceWrapper
 	public java.util.List
 		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouse>
 				getCommerceInventoryWarehouses(
-					long companyId, long groupId, boolean active)
+					long companyId, long accountEntryId, long groupId,
+					boolean active)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryWarehouseService.
-			getCommerceInventoryWarehouses(companyId, groupId, active);
+			getCommerceInventoryWarehouses(
+				companyId, accountEntryId, groupId, active);
 	}
 
 	@Override

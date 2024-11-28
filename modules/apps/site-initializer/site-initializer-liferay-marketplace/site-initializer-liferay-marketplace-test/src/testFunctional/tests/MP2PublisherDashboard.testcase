@@ -1,7 +1,6 @@
 @component-name = "portal-site-management"
 definition {
 
-	property custom.properties = "feature.flag.LPD-38869=true";
 	property osgi.modules.includes = "site-initializer-liferay-marketplace";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -20,6 +19,10 @@ definition {
 			MP2Configuration.marketplaceSetUp(
 				clientExtensionDeploy = "true",
 				viaFrontEnd = "true");
+		}
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
 		}
 
 		task ("Update the account with catalogId field") {

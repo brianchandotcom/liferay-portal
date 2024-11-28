@@ -586,9 +586,12 @@ definition {
 	@description = "This is a use case for LPS-166286. TC-2: Verify that site template propagation works well on private page."
 	@priority = 3
 	test AssertSiteTemplatePropagationOnPrivatePage {
-		property custom.properties = "feature.flag.LPD-38869=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		task ("Given: Add new site template and a new private site based on this site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");

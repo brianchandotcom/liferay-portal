@@ -5,6 +5,7 @@
 
 package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.configuration.CommercePriceConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.context.CommerceContext;
@@ -107,6 +108,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		CommerceContext commerceContext =
 			skuDTOConverterContext.getCommerceContext();
 
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
+
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			(Long)skuDTOConverterContext.getId());
 
@@ -143,6 +146,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 			{
 				setAvailability(
 					() -> _getAvailability(
+						accountEntry.getAccountEntryId(),
 						cpInstance.getGroupId(),
 						commerceContext.getCommerceChannelGroupId(),
 						skuDTOConverterContext.getCompanyId(), cpInstance,
@@ -310,9 +314,9 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 	}
 
 	private Availability _getAvailability(
-			long commerceCatalogGroupId, long commerceChannelGroupId,
-			long companyId, CPInstance cpInstance, String sku,
-			String unitOfMeasureKey, Locale locale)
+			long accountEntryId, long commerceCatalogGroupId,
+			long commerceChannelGroupId, long companyId, CPInstance cpInstance,
+			String sku, String unitOfMeasureKey, Locale locale)
 		throws Exception {
 
 		Availability availability = new Availability();
@@ -320,8 +324,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		if (_cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance)) {
 			if (Objects.equals(
 					_commerceInventoryEngine.getAvailabilityStatus(
-						cpInstance.getCompanyId(), commerceCatalogGroupId,
-						commerceChannelGroupId,
+						cpInstance.getCompanyId(), accountEntryId,
+						commerceCatalogGroupId, commerceChannelGroupId,
 						_cpDefinitionInventoryEngine.getMinStockQuantity(
 							cpInstance),
 						cpInstance.getSku(), unitOfMeasureKey),
@@ -341,8 +345,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		if (_cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance)) {
 			availability.setStockQuantity(
 				() -> _commerceInventoryEngine.getStockQuantity(
-					companyId, commerceCatalogGroupId, commerceChannelGroupId,
-					sku, unitOfMeasureKey));
+					companyId, accountEntryId, commerceCatalogGroupId,
+					commerceChannelGroupId, sku, unitOfMeasureKey));
 		}
 
 		return availability;

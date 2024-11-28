@@ -12,6 +12,15 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
  */
 public class CommerceInventoryWarehouseFDSNames {
 
+	public static final String
+		COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_ACCOUNT_GROUPS =
+			CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE +
+				"-commerceInventoryWarehouseQualifierAccountGroups";
+
+	public static final String COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_ACCOUNTS =
+		CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE +
+			"-commerceInventoryWarehouseQualifierAccounts";
+
 	public static final String COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_CHANNELS =
 		CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE +
 			"-commerceInventoryWarehouseQualifierChannels";

@@ -2962,9 +2962,6 @@ public interface PropsKeys {
 	public static final String WIDGET_SERVLET_MAPPING =
 		"widget.servlet.mapping";
 
-	public static final String WORK_DIR_OVERRIDE_ENABLED =
-		"work.dir.override.enabled";
-
 	public static final String WORKFLOW_EMAIL_FROM_ADDRESS =
 		"workflow.email.from.address";
 

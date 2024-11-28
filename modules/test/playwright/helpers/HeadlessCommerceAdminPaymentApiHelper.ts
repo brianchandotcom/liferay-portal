@@ -17,6 +17,7 @@ type TPayment = {
 	reasonKey?: string;
 	relatedItemId: number;
 	relatedItemName?: string;
+	transactionCode?: string;
 	type?: number;
 };
 

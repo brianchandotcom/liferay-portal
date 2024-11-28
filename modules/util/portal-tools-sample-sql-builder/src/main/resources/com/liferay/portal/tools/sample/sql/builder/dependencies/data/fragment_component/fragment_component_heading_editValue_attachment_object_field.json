@@ -1,0 +1,21 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"element-text": {
+			"collectionFieldId": "ObjectField_${objectFieldId}#fileName",
+			"config": {
+				"alt": "",
+				"collectionFieldId": "ObjectField_${objectFieldId}#downloadURL",
+				"href": "",
+				"imageConfiguration": {
+				},
+				"mapperType": "link",
+				"rel": "",
+				"target": ""
+			},
+			"defaultValue": "Heading Example"
+		}
+	},
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+		"headingLevel": "h1"
+	}
+}

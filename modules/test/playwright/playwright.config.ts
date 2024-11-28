@@ -15,6 +15,7 @@ import {config as analyticsSettingsWebConfig} from './tests/analytics-settings-w
 import {config as analyticsWebConfig} from './tests/analytics-web/config';
 import {config as announcementsWebConfig} from './tests/announcements-web/config';
 import {config as assetPublisherWebConfig} from './tests/asset-publisher-web/config';
+import {config as assetTagsAdminWebConfig} from './tests/asset-tags-admin-web/config';
 import {config as batchPlannerConfig} from './tests/batch-planner/config';
 import {config as blogsWebConfig} from './tests/blogs-web/config';
 import {config as calendarWebConfig} from './tests/calendar-web/config';
@@ -131,6 +132,7 @@ export default defineConfig({
 		depotWebConfig,
 		announcementsWebConfig,
 		assetPublisherWebConfig,
+		assetTagsAdminWebConfig,
 		batchPlannerConfig,
 		blogsWebConfig,
 		calendarWebConfig,

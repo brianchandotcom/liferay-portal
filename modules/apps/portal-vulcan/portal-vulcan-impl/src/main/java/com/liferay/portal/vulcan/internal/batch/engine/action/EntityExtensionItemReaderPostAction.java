@@ -64,18 +64,14 @@ public class EntityExtensionItemReaderPostAction
 	private boolean _isPartialUpdate(
 		BatchEngineImportTask batchEngineImportTask) {
 
-		Map<String, Serializable> parameters =
-			batchEngineImportTask.getParameters();
-
-		if (parameters == null) {
-			return false;
-		}
-
 		BatchEngineTaskOperation batchEngineTaskOperation =
 			BatchEngineTaskOperation.valueOf(
 				batchEngineImportTask.getOperation());
-		String createStrategy = MapUtil.getString(parameters, "createStrategy");
-		String updateStrategy = MapUtil.getString(parameters, "updateStrategy");
+
+		String createStrategy = batchEngineImportTask.getParameterValue(
+			"createStrategy");
+		String updateStrategy = batchEngineImportTask.getParameterValue(
+			"updateStrategy");
 
 		if ((batchEngineTaskOperation == BatchEngineTaskOperation.CREATE) &&
 			StringUtil.equals(createStrategy, "UPSERT") &&

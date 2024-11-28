@@ -198,6 +198,7 @@ public class CommerceOrderEngineTest {
 		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
 			_commerceInventoryWarehouseLocalService.
 				getCommerceInventoryWarehouses(
+					_commerceOrder.getCommerceAccountId(),
 					_commerceChannel.getGroupId(), commerceOrderItem.getSku());
 
 		Assert.assertFalse(commerceInventoryWarehouses.isEmpty());
@@ -277,6 +278,7 @@ public class CommerceOrderEngineTest {
 		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
 			_commerceInventoryWarehouseLocalService.
 				getCommerceInventoryWarehouses(
+					_commerceOrder.getCommerceAccountId(),
 					_commerceChannel.getGroupId(), commerceOrderItem.getSku());
 
 		Assert.assertFalse(commerceInventoryWarehouses.isEmpty());
@@ -345,6 +347,7 @@ public class CommerceOrderEngineTest {
 		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
 			_commerceInventoryWarehouseLocalService.
 				getCommerceInventoryWarehouses(
+					_commerceOrder.getCommerceAccountId(),
 					_commerceChannel.getGroupId(), commerceOrderItem.getSku());
 
 		Assert.assertFalse(commerceInventoryWarehouses.isEmpty());
@@ -797,6 +800,7 @@ public class CommerceOrderEngineTest {
 		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
 			_commerceInventoryWarehouseLocalService.
 				getCommerceInventoryWarehouses(
+					_commerceOrder.getCommerceAccountId(),
 					_commerceChannel.getGroupId(), commerceOrderItem.getSku());
 
 		Assert.assertFalse(commerceInventoryWarehouses.isEmpty());
@@ -907,6 +911,7 @@ public class CommerceOrderEngineTest {
 		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
 			_commerceInventoryWarehouseLocalService.
 				getCommerceInventoryWarehouses(
+					_commerceOrder.getCommerceAccountId(),
 					_commerceChannel.getGroupId(), commerceOrderItem.getSku());
 
 		Assert.assertFalse(commerceInventoryWarehouses.isEmpty());

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -157,8 +156,7 @@ public class BatchEngineBundleTrackerTest {
 	private String _getDataFileName(
 		BatchEngineImportTask batchEngineImportTask) {
 
-		return MapUtil.getString(
-			batchEngineImportTask.getParameters(), "dataFileName", null);
+		return batchEngineImportTask.getParameterValue("dataFileName");
 	}
 
 	private void _testProcessBatchEngineBundle(

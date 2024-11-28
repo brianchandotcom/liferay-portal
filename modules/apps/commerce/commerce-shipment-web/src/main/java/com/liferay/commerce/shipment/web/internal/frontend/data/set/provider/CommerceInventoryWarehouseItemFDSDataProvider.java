@@ -12,6 +12,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
@@ -86,10 +87,13 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 			PermissionThreadLocal.getPermissionChecker(),
 			commerceChannel.getCommerceChannelId(), ActionKeys.VIEW);
 
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
 		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
 			_commerceInventoryWarehouseLocalService.
 				getCommerceInventoryWarehouses(
-					companyId, commerceOrderItem.getGroupId(), true);
+					companyId, commerceOrder.getCommerceAccountId(),
+					commerceOrderItem.getGroupId(), true);
 
 		for (CommerceInventoryWarehouse commerceInventoryWarehouse :
 				commerceInventoryWarehouses) {
@@ -224,9 +228,12 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 			PermissionThreadLocal.getPermissionChecker(),
 			commerceChannel.getCommerceChannelId(), ActionKeys.VIEW);
 
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
 		return _commerceInventoryWarehouseItemLocalService.
 			getCommerceInventoryWarehouseItemsCount(
 				_portal.getCompanyId(httpServletRequest),
+				commerceOrder.getCommerceAccountId(),
 				commerceOrderItem.getGroupId(), commerceOrderItem.getSku(),
 				commerceOrderItem.getUnitOfMeasureKey());
 	}

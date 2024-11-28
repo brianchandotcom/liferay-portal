@@ -131,6 +131,8 @@ public class CPConfigurationEntryPersistenceTest {
 		newCPConfigurationEntry.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
+		newCPConfigurationEntry.setGroupId(RandomTestUtil.nextLong());
+
 		newCPConfigurationEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newCPConfigurationEntry.setUserId(RandomTestUtil.nextLong());
@@ -228,6 +230,9 @@ public class CPConfigurationEntryPersistenceTest {
 		Assert.assertEquals(
 			existingCPConfigurationEntry.getCPConfigurationEntryId(),
 			newCPConfigurationEntry.getCPConfigurationEntryId());
+		Assert.assertEquals(
+			existingCPConfigurationEntry.getGroupId(),
+			newCPConfigurationEntry.getGroupId());
 		Assert.assertEquals(
 			existingCPConfigurationEntry.getCompanyId(),
 			newCPConfigurationEntry.getCompanyId());
@@ -359,6 +364,15 @@ public class CPConfigurationEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
 	public void testCountByUuid_C() throws Exception {
 		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
 
@@ -429,11 +443,12 @@ public class CPConfigurationEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CPConfigurationEntry", "mvccVersion", true, "ctCollectionId", true,
 			"uuid", true, "externalReferenceCode", true,
-			"CPConfigurationEntryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "CPConfigurationListId", true,
-			"CPTaxCategoryId", true, "allowedOrderQuantities", true,
-			"backOrders", true, "commerceAvailabilityEstimateId", true,
+			"CPConfigurationEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"CPConfigurationListId", true, "CPTaxCategoryId", true,
+			"allowedOrderQuantities", true, "backOrders", true,
+			"commerceAvailabilityEstimateId", true,
 			"CPDefinitionInventoryEngine", true, "depth", true,
 			"displayAvailability", true, "displayStockQuantity", true,
 			"freeShipping", true, "height", true, "lowStockActivity", true,
@@ -738,6 +753,17 @@ public class CPConfigurationEntryPersistenceTest {
 		CPConfigurationEntry cpConfigurationEntry) {
 
 		Assert.assertEquals(
+			cpConfigurationEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				cpConfigurationEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
+		Assert.assertEquals(
+			Long.valueOf(cpConfigurationEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				cpConfigurationEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
 			Long.valueOf(cpConfigurationEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
 				cpConfigurationEntry, "getColumnOriginalValue",
@@ -778,6 +804,8 @@ public class CPConfigurationEntryPersistenceTest {
 
 		cpConfigurationEntry.setExternalReferenceCode(
 			RandomTestUtil.randomString());
+
+		cpConfigurationEntry.setGroupId(RandomTestUtil.nextLong());
 
 		cpConfigurationEntry.setCompanyId(RandomTestUtil.nextLong());
 

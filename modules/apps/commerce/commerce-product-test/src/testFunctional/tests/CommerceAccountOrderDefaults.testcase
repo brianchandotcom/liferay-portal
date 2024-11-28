@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.LPD-38869=true${line.separator}jsonws.web.service.paths.excludes=";
+	property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Order Management";
@@ -9,6 +9,10 @@ definition {
 	setUp {
 		task ("Setup: Create Minium site") {
 			CommerceConfiguration.commerceSetUp(minium = "true");
+		}
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
 		}
 
 		task ("Setup: Create a Commerce Account and Buyer User") {

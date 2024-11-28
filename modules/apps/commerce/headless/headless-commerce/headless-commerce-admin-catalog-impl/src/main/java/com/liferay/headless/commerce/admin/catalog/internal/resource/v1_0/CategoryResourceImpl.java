@@ -70,14 +70,14 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 				cpDefinition.getCPDefinitionId(), pagination.getStartPosition(),
 				pagination.getEndPosition());
 
-		int totalItems = _assetCategoryService.getCategoriesCount(
+		int totalCount = _assetCategoryService.getCategoriesCount(
 			_classNameLocalService.getClassNameId(cpDefinition.getModelClass()),
 			cpDefinition.getCPDefinitionId());
 
 		return Page.of(
 			_toProductCategories(
 				assetCategories, contextAcceptLanguage.getPreferredLocale()),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@NestedField(parentClass = Product.class, value = "categories")
@@ -101,14 +101,14 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 				cpDefinition.getCPDefinitionId(), pagination.getStartPosition(),
 				pagination.getEndPosition());
 
-		int totalItems = _assetCategoryService.getCategoriesCount(
+		int totalCount = _assetCategoryService.getCategoriesCount(
 			_classNameLocalService.getClassNameId(cpDefinition.getModelClass()),
 			cpDefinition.getCPDefinitionId());
 
 		return Page.of(
 			_toProductCategories(
 				assetCategories, contextAcceptLanguage.getPreferredLocale()),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@Override

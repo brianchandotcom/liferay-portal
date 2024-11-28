@@ -15,9 +15,12 @@ definition {
 	@description = "Export and import work in organization and add child site from imported site template."
 	@priority = 5
 	test AddChildSiteFromImportedSiteTemplate {
-		property custom.properties = "feature.flag.LPD-38869=true";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		task ("Add an organization") {
 			JSONOrganization.addOrganization(organizationName = "Space Program Academy of Continuing Education");
@@ -403,9 +406,13 @@ definition {
 	@description = "Private virtual hosts redirects to private page."
 	@priority = 4
 	test PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage {
-		property custom.properties = "feature.flag.LPD-38869=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
 		property osgi.module.configurations = "promptEnabled=\"true\"";
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		task ("Get site name") {
 			var siteName = TestCase.getSiteName(siteName = ${siteName});
@@ -844,10 +851,14 @@ definition {
 	@description = "Manage demo site virtual URL, friendly URL and logo, add JS to page, export and import page with child pages."
 	@priority = 4
 	test SitesDemoSiteManagement {
-		property custom.properties = "feature.flag.LPD-38869=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
 		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property portal.release = "true";
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		var portalURL = PropsUtil.get("portal.url");
 

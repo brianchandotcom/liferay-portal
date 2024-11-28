@@ -26,6 +26,8 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -153,6 +156,46 @@ public class InfoRequestFieldValuesProviderHelper {
 						_getInfoFieldValue(
 							infoField, themeDisplay.getLocale(), false));
 				}
+
+				continue;
+			}
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-37927") &&
+				infoField.isLocalizable() &&
+				(infoField.getInfoFieldType() instanceof HTMLInfoFieldType ||
+				 infoField.getInfoFieldType() instanceof
+					 LongTextInfoFieldType ||
+				 infoField.getInfoFieldType() instanceof TextInfoFieldType)) {
+
+				infoFieldValues.put(
+					infoField.getUniqueId(),
+					new InfoFieldValue<>(
+						infoField,
+						InfoLocalizedValue.builder(
+						).defaultLocale(
+							themeDisplay.getSiteDefaultLocale()
+						).value(
+							unsafeBiConsumer -> {
+								for (Locale locale :
+										LanguageUtil.getAvailableLocales(
+											themeDisplay.getSiteGroupId())) {
+
+									String languageId =
+										LanguageUtil.getLanguageId(locale);
+
+									List<String> values =
+										regularParameterMap.get(
+											infoField.getName() +
+												StringPool.UNDERLINE +
+													languageId);
+
+									if (ListUtil.isNotEmpty(values)) {
+										unsafeBiConsumer.accept(
+											locale, values.get(0));
+									}
+								}
+							}
+						).build()));
 
 				continue;
 			}

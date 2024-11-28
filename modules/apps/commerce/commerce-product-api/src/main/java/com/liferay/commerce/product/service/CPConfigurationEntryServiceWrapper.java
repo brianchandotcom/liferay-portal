@@ -31,9 +31,10 @@ public class CPConfigurationEntryServiceWrapper
 
 	@Override
 	public CPConfigurationEntry addCPConfigurationEntry(
-			String externalReferenceCode, long classNameId, long classPK,
-			long cpConfigurationListId, String allowedOrderQuantities,
-			boolean backOrders, long commerceAvailabilityEstimateId,
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long cpConfigurationListId,
+			String allowedOrderQuantities, boolean backOrders,
+			long commerceAvailabilityEstimateId,
 			String cpDefinitionInventoryEngine, boolean displayAvailability,
 			boolean displayStockQuantity, String lowStockActivity,
 			java.math.BigDecimal maxOrderQuantity,
@@ -43,11 +44,12 @@ public class CPConfigurationEntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpConfigurationEntryService.addCPConfigurationEntry(
-			externalReferenceCode, classNameId, classPK, cpConfigurationListId,
-			allowedOrderQuantities, backOrders, commerceAvailabilityEstimateId,
-			cpDefinitionInventoryEngine, displayAvailability,
-			displayStockQuantity, lowStockActivity, maxOrderQuantity,
-			minOrderQuantity, minStockQuantity, multipleOrderQuantity);
+			externalReferenceCode, groupId, classNameId, classPK,
+			cpConfigurationListId, allowedOrderQuantities, backOrders,
+			commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
+			displayAvailability, displayStockQuantity, lowStockActivity,
+			maxOrderQuantity, minOrderQuantity, minStockQuantity,
+			multipleOrderQuantity);
 	}
 
 	@Override

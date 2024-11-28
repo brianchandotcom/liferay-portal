@@ -5,7 +5,10 @@
 
 package com.liferay.commerce.warehouse.web.internal.portlet.action;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseRelService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,13 +62,35 @@ public class EditCommerceInventoryWarehouseQualifiersMVCActionCommand
 			ActionRequest actionRequest)
 		throws PortalException {
 
+		long commerceInventoryWarehouseId = ParamUtil.getLong(
+			actionRequest, "commerceInventoryWarehouseId");
+
+		String accountQualifiers = ParamUtil.getString(
+			actionRequest, "accountQualifiers");
+
+		if (Objects.equals(accountQualifiers, "all")) {
+			_commerceInventoryWarehouseRelService.
+				deleteCommerceInventoryWarehouseRels(
+					AccountEntry.class.getName(), commerceInventoryWarehouseId);
+			_commerceInventoryWarehouseRelService.
+				deleteCommerceInventoryWarehouseRels(
+					AccountGroup.class.getName(), commerceInventoryWarehouseId);
+		}
+		else if (Objects.equals(accountQualifiers, "accounts")) {
+			_commerceInventoryWarehouseRelService.
+				deleteCommerceInventoryWarehouseRels(
+					AccountGroup.class.getName(), commerceInventoryWarehouseId);
+		}
+		else {
+			_commerceInventoryWarehouseRelService.
+				deleteCommerceInventoryWarehouseRels(
+					AccountEntry.class.getName(), commerceInventoryWarehouseId);
+		}
+
 		String channelQualifiers = ParamUtil.getString(
 			actionRequest, "channelQualifiers");
 
 		if (Objects.equals(channelQualifiers, "none")) {
-			long commerceInventoryWarehouseId = ParamUtil.getLong(
-				actionRequest, "commerceInventoryWarehouseId");
-
 			_commerceChannelRelService.deleteCommerceChannelRels(
 				CommerceInventoryWarehouse.class.getName(),
 				commerceInventoryWarehouseId);
@@ -74,5 +99,9 @@ public class EditCommerceInventoryWarehouseQualifiersMVCActionCommand
 
 	@Reference
 	private CommerceChannelRelService _commerceChannelRelService;
+
+	@Reference
+	private CommerceInventoryWarehouseRelService
+		_commerceInventoryWarehouseRelService;
 
 }

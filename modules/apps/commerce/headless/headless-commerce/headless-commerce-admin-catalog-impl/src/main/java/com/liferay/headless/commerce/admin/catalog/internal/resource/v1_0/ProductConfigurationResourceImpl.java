@@ -289,47 +289,51 @@ public class ProductConfigurationResourceImpl
 		}
 
 		CPConfigurationEntry masterCPConfigurationEntry =
-			cpDefinition.getMasterCPConfigurationEntry();
+			cpDefinition.fetchMasterCPConfigurationEntry();
 
-		_cpConfigurationEntryService.updateCPConfigurationEntry(
-			GetterUtil.getString(
-				productConfiguration.getExternalReferenceCode(),
-				masterCPConfigurationEntry.getExternalReferenceCode()),
-			masterCPConfigurationEntry.getCPConfigurationEntryId(),
-			masterCPConfigurationEntry.getCPConfigurationListId(),
-			ProductConfigurationUtil.getAllowedOrderQuantities(
-				productConfiguration.getAllowedOrderQuantities(),
-				masterCPConfigurationEntry.getAllowedOrderQuantities()),
-			GetterUtil.getBoolean(
-				productConfiguration.getAllowBackOrder(),
-				masterCPConfigurationEntry.isBackOrders()),
-			GetterUtil.getLong(
-				productConfiguration.getAvailabilityEstimateId(),
-				masterCPConfigurationEntry.getCommerceAvailabilityEstimateId()),
-			GetterUtil.getString(
-				productConfiguration.getInventoryEngine(),
-				masterCPConfigurationEntry.getCPDefinitionInventoryEngine()),
-			GetterUtil.getBoolean(
-				productConfiguration.getDisplayAvailability(),
-				masterCPConfigurationEntry.isDisplayAvailability()),
-			GetterUtil.getBoolean(
-				productConfiguration.getDisplayStockQuantity(),
-				masterCPConfigurationEntry.isDisplayStockQuantity()),
-			GetterUtil.getString(
-				productConfiguration.getLowStockAction(),
-				masterCPConfigurationEntry.getLowStockActivity()),
-			BigDecimalUtil.get(
-				productConfiguration.getMaxOrderQuantity(),
-				masterCPConfigurationEntry.getMaxOrderQuantity()),
-			BigDecimalUtil.get(
-				productConfiguration.getMinOrderQuantity(),
-				masterCPConfigurationEntry.getMinOrderQuantity()),
-			BigDecimalUtil.get(
-				productConfiguration.getMinStockQuantity(),
-				masterCPConfigurationEntry.getMinStockQuantity()),
-			BigDecimalUtil.get(
-				productConfiguration.getMultipleOrderQuantity(),
-				masterCPConfigurationEntry.getMultipleOrderQuantity()));
+		if (masterCPConfigurationEntry != null) {
+			_cpConfigurationEntryService.updateCPConfigurationEntry(
+				GetterUtil.getString(
+					productConfiguration.getExternalReferenceCode(),
+					masterCPConfigurationEntry.getExternalReferenceCode()),
+				masterCPConfigurationEntry.getCPConfigurationEntryId(),
+				masterCPConfigurationEntry.getCPConfigurationListId(),
+				ProductConfigurationUtil.getAllowedOrderQuantities(
+					productConfiguration.getAllowedOrderQuantities(),
+					masterCPConfigurationEntry.getAllowedOrderQuantities()),
+				GetterUtil.getBoolean(
+					productConfiguration.getAllowBackOrder(),
+					masterCPConfigurationEntry.isBackOrders()),
+				GetterUtil.getLong(
+					productConfiguration.getAvailabilityEstimateId(),
+					masterCPConfigurationEntry.
+						getCommerceAvailabilityEstimateId()),
+				GetterUtil.getString(
+					productConfiguration.getInventoryEngine(),
+					masterCPConfigurationEntry.
+						getCPDefinitionInventoryEngine()),
+				GetterUtil.getBoolean(
+					productConfiguration.getDisplayAvailability(),
+					masterCPConfigurationEntry.isDisplayAvailability()),
+				GetterUtil.getBoolean(
+					productConfiguration.getDisplayStockQuantity(),
+					masterCPConfigurationEntry.isDisplayStockQuantity()),
+				GetterUtil.getString(
+					productConfiguration.getLowStockAction(),
+					masterCPConfigurationEntry.getLowStockActivity()),
+				BigDecimalUtil.get(
+					productConfiguration.getMaxOrderQuantity(),
+					masterCPConfigurationEntry.getMaxOrderQuantity()),
+				BigDecimalUtil.get(
+					productConfiguration.getMinOrderQuantity(),
+					masterCPConfigurationEntry.getMinOrderQuantity()),
+				BigDecimalUtil.get(
+					productConfiguration.getMinStockQuantity(),
+					masterCPConfigurationEntry.getMinStockQuantity()),
+				BigDecimalUtil.get(
+					productConfiguration.getMultipleOrderQuantity(),
+					masterCPConfigurationEntry.getMultipleOrderQuantity()));
+		}
 
 		ProductConfigurationUtil.updateCPDefinitionInventory(
 			_cpDefinitionInventoryService, productConfiguration,
@@ -383,6 +387,7 @@ public class ProductConfigurationResourceImpl
 			_cpConfigurationEntryService.addCPConfigurationEntry(
 				GetterUtil.getString(
 					productConfiguration.getExternalReferenceCode()),
+				cpDefinition.getGroupId(),
 				_portal.getClassNameId(CPDefinition.class.getName()),
 				cpDefinition.getCPDefinitionId(), id,
 				ProductConfigurationUtil.getAllowedOrderQuantities(

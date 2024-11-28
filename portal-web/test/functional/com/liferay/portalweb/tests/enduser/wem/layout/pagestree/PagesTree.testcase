@@ -24,76 +24,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-103104, LPS-140253, and LPS-164377. The page creator can add pages of different types via page tree panel when the private page is disabled. The page creator could identify the page type according to icon in page tree."
-	@priority = 5
-	test AddAllTypesOfPagesWithoutPrivatePage {
-		property portal.acceptance = "true";
-
-		task ("Given a page creator navigates to the Page Tree") {
-			ApplicationsMenu.gotoSite(site = ${randomSiteName});
-
-			PagesFinder.goToPagesFinder();
-		}
-
-		task ("When the page creator adds pages of different pages via Page Tree") {
-			for (var pageType : list "Widget Page,Panel,Page Set,Link to a Page of This Site,Full Page Application") {
-				PagesFinder.addPage(
-					pageName = "Test ${pageType}",
-					sitePageType = ${pageType});
-			}
-
-			for (var pageType : list "Embedded,Link to URL") {
-				PagesFinder.addPage(
-					pageName = "Test ${pageType}",
-					pageTypeURL = "https://www.google.com",
-					sitePageType = ${pageType});
-			}
-
-			PagesFinder.addContentPage(pageName = "Test Content Page");
-
-			PageEditor.publish();
-
-			ContentPages.addCollectionPage(
-				collectionName = "Highest Rated Assets",
-				pageName = "Test Collection Page",
-				tabName = "Collection Providers");
-
-			PageEditor.publish();
-		}
-
-		task ("Then the page creator could see new pages and identify the page type according to icon in Page Tree") {
-			ProductMenuHelper.openProductMenu();
-
-			ProductMenu.gotoHomePage();
-
-			PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
-
-			for (var pageType : list "Widget Page,Panel,Page Set,Link to a Page of This Site,Full Page Application,Embedded,Link to URL,Content Page,Collection Page") {
-				PagesFinder.viewPageNameInPagesFinder(pageName = "Test ${pageType}");
-			}
-
-			for (var pageType : list "Widget Page,Panel,Page Set,Full Page Application,Embedded") {
-				PagesFinder.viewPageIconInPagesFinder(
-					icon = "page-template",
-					pageName = "Test ${pageType}");
-			}
-
-			for (var pageType : list "Link to a Page of This Site,Link to URL") {
-				PagesFinder.viewPageIconInPagesFinder(
-					icon = "link",
-					pageName = "Test ${pageType}");
-			}
-
-			PagesFinder.viewPageIconInPagesFinder(
-				icon = "list",
-				pageName = "Test Collection Page");
-
-			PagesFinder.viewPageIconInPagesFinder(
-				icon = "page",
-				pageName = "Test Content Page");
-		}
-	}
-
 	@description = "This is a test for LPS-103104 and LPS-102544. Can add a child page via page tree panel."
 	@priority = 5
 	@uitest
@@ -234,83 +164,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-148241. Page crashes when edit public pages via page tree"
-	@priority = 5
-	test BackToPreviousPageWhenConfigurePagesViaPageTree {
-		property portal.acceptance = "true";
-
-		task ("Given a site administrator goes to configure Pages via Page Tree") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-
-			Navigator.openSiteURL(siteName = ${randomSiteName});
-
-			PagesFinder.goToPagesFinder();
-
-			Click(
-				ariaLabel = "Configure Pages",
-				locator1 = "Link#ANY_WITH_ARIA_LABEL");
-
-			AssertElementPresent(
-				key_tab = "Design",
-				locator1 = "NavTab#ACTIVE_TAB_LINK");
-		}
-
-		task ("When the site administrator clicks the back icon") {
-			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
-		}
-
-		task ("Then the site administrator should go back to the previous page") {
-			AssertTextEquals(
-				locator1 = "Home#SITE_NAME",
-				value1 = ${randomSiteName});
-
-			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Content Page Name*");
-		}
-	}
-
-	@description = "This is a test for LPS-116618 and LPS-112992. Configure page via Page Tree panel."
-	@priority = 4
-	test ConfigurePage {
-		task ("Assert Test Page Name is shown in Pages admin") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name");
-
-			ApplicationsMenu.gotoSite(site = ${randomSiteName});
-
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			AssertVisible(
-				key_itemName = "Test Page Name",
-				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
-		}
-
-		task ("Configure page via Page Tree panel") {
-			PagesFinder.goToPagesFinder();
-
-			PagesFinder.gotoPageEllipsisItem(
-				item = "Configure",
-				pageName = "Test Page Name");
-
-			PagesAdmin.editName(pageNameEdit = "New Test Page Name");
-		}
-
-		task ("View the renamed page is shown in Pages admin") {
-			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
-
-			ControlMenu.viewHeaderTitle(headerTitle = "New Test Page Name");
-		}
-
-		task ("View the renamed page is shown in Page Tree panel") {
-			PagesFinder.viewPageNameInPagesFinder(pageName = "New Test Page Name");
-		}
-	}
-
 	@description = "This is a test for LPS-168856. Load more button is working while editing a page"
 	@priority = 3
 	test LoadMoreResultsInPageTreeWhenEditContentPage {
@@ -341,8 +194,11 @@ definition {
 	@description = "This is a test for LPS-102544. Can navigate to both public and private pages from pages finder."
 	@priority = 5
 	test NavigateToBothPageTypes {
-		property custom.properties = "feature.flag.LPD-38869=true";
 		property portal.acceptance = "true";
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		task ("Add a public and private pages") {
 			JSONLayout.addPublicLayout(
@@ -368,141 +224,6 @@ definition {
 			PagesFinder.selectPageType(optionValue = "Private Pages");
 
 			PagesFinder.navigateToPage(pageName = "Test Private Page");
-		}
-	}
-
-	@description = "This is a test for LPS-102544. Can quickly browse and go to different pages with page tree."
-	@priority = 4
-	test NavigateToDifferentPages {
-		task ("Add different types of pages") {
-			var i = 1;
-
-			for (var pageType : list "portlet,content,embedded,full_page_application,panel") {
-				JSONLayout.addPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Test Page Name ${i}",
-					type = ${pageType});
-
-				var i = ${i} + 1;
-			}
-
-			JSONLayout.publishLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name 2");
-
-			JSONLayout.updateTypeSettings(
-				embeddedLayoutURL = "http://www.liferay.com",
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name 3");
-		}
-
-		task ("Navigate to pages in page tree") {
-			Navigator.openSiteURL(siteName = ${randomSiteName});
-
-			PagesFinder.goToPagesFinder();
-
-			for (var i : list "1,2,3,4,5") {
-				PagesFinder.navigateToPage(pageName = "Test Page Name ${i}");
-			}
-		}
-	}
-
-	@description = "This is a test for LPS-133709. The user can navigate to private and public pages defined in navigation menu via the Page Tree."
-	@priority = 4
-	test NavigateToPrivateAndPublicPagesDefinedInNavigationMenu {
-		property custom.properties = "feature.flag.LPD-38869=true";
-
-		task ("Add a public content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Parent Page 1",
-				type = "content");
-
-			JSONLayout.publishLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Parent Page 1");
-		}
-
-		task ("Add a child widget page under content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Child Page 1",
-				parentPageName = "Test Parent Page 1");
-		}
-
-		task ("Add a private content page") {
-			JSONLayout.addPrivateLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Parent Page 2",
-				type = "content");
-
-			JSONLayout.publishLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Parent Page 2",
-				privateLayout = "true");
-		}
-
-		task ("Add a child widget page under content page") {
-			JSONLayout.addPrivateLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Child Page 2",
-				parentPageName = "Test Parent Page 2");
-		}
-
-		task ("Add a navigation menu") {
-			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = ${randomSiteName},
-				siteNavigationMenuName = "Navigation Menu Name");
-		}
-
-		task ("Add two content pages as parent page items to the navigation menu") {
-			JSONSitenavigation.addSiteNavigationMenuItem(
-				groupName = ${randomSiteName},
-				privateLayout = "false",
-				siteNavigationMenuItemName = "Test Parent Page 1",
-				siteNavigationMenuName = "Navigation Menu Name",
-				type = "layout");
-
-			JSONSitenavigation.addSiteNavigationMenuItem(
-				groupName = ${randomSiteName},
-				privateLayout = "true",
-				siteNavigationMenuItemName = "Test Parent Page 2",
-				siteNavigationMenuName = "Navigation Menu Name",
-				type = "layout");
-		}
-
-		task ("Add a child widget page item under each parent page item") {
-			JSONSitenavigation.addSiteNavigationMenuItem(
-				groupName = ${randomSiteName},
-				parentSiteNavigationMenuItem = "Test Parent Page 1",
-				privateLayout = "false",
-				siteNavigationMenuItemName = "Test Child Page 1",
-				siteNavigationMenuName = "Navigation Menu Name",
-				type = "layout");
-
-			JSONSitenavigation.addSiteNavigationMenuItem(
-				groupName = ${randomSiteName},
-				parentSiteNavigationMenuItem = "Test Parent Page 2",
-				privateLayout = "true",
-				siteNavigationMenuItemName = "Test Child Page 2",
-				siteNavigationMenuName = "Navigation Menu Name",
-				type = "layout");
-		}
-
-		task ("Select the navigation menu in page type selctor of Page Tree") {
-			Navigator.openSiteURL(siteName = ${randomSiteName});
-
-			PagesFinder.goToPagesFinder();
-
-			PagesFinder.selectPageType(optionValue = "Navigation Menu Name");
-		}
-
-		task ("Navigate to each page via Page Tree") {
-			for (var pageName : list "Test Parent Page 1,Test Parent Page 2,Test Child Page 1,Test Child Page 2") {
-				Portlet.expandTree();
-
-				PagesFinder.navigateToPage(pageName = ${pageName});
-			}
 		}
 	}
 
@@ -743,7 +464,9 @@ definition {
 	@description = "This is a test for LPS-133709. The user can switch site navigation menus via page type selector in Page Tree."
 	@priority = 4
 	test SwitchNavigationMenusViaPageTypeSelector {
-		property custom.properties = "feature.flag.LPD-38869=true";
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		task ("Add two public pages") {
 			for (var n : list "1,2") {

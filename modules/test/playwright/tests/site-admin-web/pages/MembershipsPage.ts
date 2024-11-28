@@ -17,6 +17,46 @@ export class MembershipsPage {
 		this.productMenuPage = new ProductMenuPage(page);
 	}
 
+	async assignAllRolesToUser(userName: String) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: 'Assign Roles',
+			}),
+			timeout: 500,
+			trigger: this.page
+				.locator(
+					'[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users_' +
+						userName +
+						'"]'
+				)
+				.getByLabel('More actions'),
+		});
+
+		await this.page.waitForTimeout(500);
+
+		await this.page
+			.frameLocator('iframe[title="Assign Roles"]')
+			.getByLabel('Select All Items on the Page')
+			.check();
+
+		await this.page.getByRole('button', {name: 'Done'}).click();
+	}
+
+	async assignAllUsersSiteMembership() {
+		await this.page.getByRole('button', {name: 'Add'}).click();
+
+		await this.page.waitForTimeout(500);
+
+		await this.page
+			.frameLocator('iframe[title="Assign Users to This Site"]')
+			.getByLabel('Select All Items on the Page')
+			.check();
+
+		await this.page.getByRole('button', {name: 'Done'}).click();
+	}
+
 	async assignSiteAdministratorRole() {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -67,5 +107,32 @@ export class MembershipsPage {
 			timeout: 500,
 			trigger: this.page.getByLabel('Select All Items on the Page'),
 		});
+	}
+
+	async unassignAllRolesFromUser(userName: String) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: 'Unassign Roles',
+			}),
+			timeout: 500,
+			trigger: this.page
+				.locator(
+					'[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users_' +
+						userName +
+						'"]'
+				)
+				.getByLabel('More actions'),
+		});
+
+		await this.page.waitForTimeout(500);
+
+		await this.page
+			.frameLocator('iframe[title="Unassign Roles"]')
+			.getByLabel('Select All Items on the Page')
+			.check();
+
+		await this.page.getByRole('button', {name: 'Done'}).click();
 	}
 }

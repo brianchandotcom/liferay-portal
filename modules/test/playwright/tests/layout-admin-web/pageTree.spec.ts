@@ -10,10 +10,12 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import getRandomString from '../../utils/getRandomString';
 import {performUserSwitch} from '../../utils/performLogin';
 import {openProductMenu} from '../../utils/productMenu';
+import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -21,12 +23,81 @@ const test = mergeTests(
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,
-	loginTest()
+	loginTest(),
+	pagesPagesTest
+);
+
+test(
+	'Check back button',
+	{
+		tag: ['@LPS-112992', '@LPS-116618', '@LPS-148241'],
+	},
+	async ({apiHelpers, page, pageTreePage, site}) => {
+
+		// Create a new page
+
+		const layoutTitle = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: layoutTitle,
+		});
+
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/en/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		// Open the Product Menu
+
+		await openProductMenu(page);
+
+		// Open tree if it's not already open
+
+		await pageTreePage.open();
+
+		// Configure page
+
+		await page.getByRole('link', {name: layoutTitle}).hover();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Configure'}),
+			trigger: page
+				.getByRole('treeitem')
+				.filter({hasText: layoutTitle})
+				.locator('button.dropdown-toggle'),
+		});
+
+		// Click back button
+
+		await page.getByRole('link', {name: `Go to ${layoutTitle}`}).click();
+
+		// Assert page
+
+		await expect(
+			page.getByRole('heading', {name: layoutTitle})
+		).toBeVisible();
+
+		// Configure pages
+
+		await page.getByLabel('Configure Pages').click();
+
+		// Click back button
+
+		await page.getByRole('link', {name: 'Go to Pages'}).click();
+
+		// Assert page
+
+		await expect(
+			page.getByRole('heading', {name: layoutTitle})
+		).toBeVisible();
+	}
 );
 
 test('Checks the correct label for restricted page in the Page Tree', async ({
 	apiHelpers,
 	page,
+	pageTreePage,
 	site,
 }) => {
 
@@ -55,13 +126,7 @@ test('Checks the correct label for restricted page in the Page Tree', async ({
 
 	// Open tree if it's not already open
 
-	if (!(await page.locator('.treeview').isVisible())) {
-		await page
-			.getByRole('button', {exact: true, name: 'Page Tree'})
-			.click();
-
-		await page.locator('.treeview').waitFor();
-	}
+	await pageTreePage.open();
 
 	// Check the correct label for restricted page
 
@@ -80,7 +145,7 @@ test(
 	{
 		tag: '@LPS-129406',
 	},
-	async ({apiHelpers, page}) => {
+	async ({apiHelpers, page, pageTreePage}) => {
 		await page.goto('/');
 
 		// Open the Product Menu
@@ -89,21 +154,7 @@ test(
 
 		// Open tree if it's not already open
 
-		if (
-			!(await page
-				.getByLabel('Product Menu')
-				.locator('.treeview')
-				.isVisible())
-		) {
-			await page
-				.getByRole('button', {exact: true, name: 'Page Tree'})
-				.click();
-
-			await page
-				.getByLabel('Product Menu')
-				.locator('.treeview')
-				.waitFor();
-		}
+		await pageTreePage.open();
 
 		// Assert add page button is visible for admin user
 
@@ -149,21 +200,7 @@ test(
 
 		// Open tree if it's not already open
 
-		if (
-			!(await page
-				.getByLabel('Product Menu')
-				.locator('.treeview')
-				.isVisible())
-		) {
-			await page
-				.getByRole('button', {exact: true, name: 'Page Tree'})
-				.click();
-
-			await page
-				.getByLabel('Product Menu')
-				.locator('.treeview')
-				.waitFor();
-		}
+		await pageTreePage.open();
 
 		// Assert add page button is not visible
 

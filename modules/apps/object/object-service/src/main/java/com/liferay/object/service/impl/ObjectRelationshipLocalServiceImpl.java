@@ -351,7 +351,8 @@ public class ObjectRelationshipLocalServiceImpl
 
 		if (objectRelationship.isEdge()) {
 			throw new ObjectRelationshipEdgeException(
-				"Edge object relationships cannot be deleted");
+				"Edge object relationships cannot be deleted",
+				"edge-object-relationships-cannot-be-deleted");
 		}
 
 		if (objectRelationship.isReverse()) {
@@ -1832,7 +1833,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 			throw new ObjectRelationshipEdgeException(
 				"Object relationship must be one to many to be an edge of a " +
-					"root context");
+					"root context",
+				"object-relationship-must-be-one-to-many-to-be-an-edge-of-a-" +
+					"root-context");
 		}
 
 		if (objectDefinition1.getObjectDefinitionId() ==
@@ -1840,7 +1843,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 			throw new ObjectRelationshipEdgeException(
 				"Object relationship must not be a self-relationship to be " +
-					"an edge of a root context");
+					"an edge of a root context",
+				"object-relationship-must-not-be-a-self-relationship-to-be-" +
+					"an-edge-of-a-root-context");
 		}
 
 		if (objectDefinition1.isUnmodifiableSystemObject() ||
@@ -1848,7 +1853,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 			throw new ObjectRelationshipEdgeException(
 				"Object relationship must not be between unmodifiable system " +
-					"object definitions to be an edge of a root context");
+					"object definitions to be an edge of a root context",
+				"object-relationship-must-not-be-between-unmodifiable-system-" +
+					"object-definitions-to-be-an-edge-of-a-root-context");
 		}
 
 		// Circular reference in a root context must be validated before
@@ -1860,7 +1867,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 			throw new ObjectRelationshipEdgeException(
 				"The object relationship must not create a circular " +
-					"reference in a root context");
+					"reference in a root context",
+				"the-object-relationship-must-not-create-a-circular-" +
+					"reference-in-a-root-context");
 		}
 
 		int treeHeight = 1;
@@ -1888,7 +1897,9 @@ public class ObjectRelationshipLocalServiceImpl
 		if (treeHeight > TreeConstants.MAX_HEIGHT) {
 			throw new ObjectRelationshipEdgeException(
 				"The object relationship cannot be an edge in the root " +
-					"context because it would exceed the tree's maximum " +
+					"context because it would exceed the tree's maximum height",
+				"the-object-relationship-cannot-be-an-edge-in-the-root-" +
+					"context-because-it-would-exceed-the-tree's-maximum-" +
 						"height");
 		}
 
@@ -1906,7 +1917,10 @@ public class ObjectRelationshipLocalServiceImpl
 					StringBundler.concat(
 						"There must be no unrelated object entries when both ",
 						"object definitions are published so that the object ",
-						"relationship can be an edge to a root context"));
+						"relationship can be an edge to a root context"),
+					"there-must-be-no-unrelated-object-entries-when-both-" +
+						"object-definitions-are-published-so-that-the-object-" +
+							"relationship-can-be-an-edge-to-a-root-context");
 			}
 		}
 
@@ -1919,7 +1933,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 			throw new ObjectRelationshipEdgeException(
 				"Unable to bind the object definitions when the child object " +
-					"definition is bound to another object definition");
+					"definition is bound to another object definition",
+				"unable-to-bind-the-object-definitions-when-the-child-object-" +
+					"definition-is-bound-to-another-object-definition");
 		}
 
 		if (!StringUtil.equals(
@@ -1927,7 +1943,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 			throw new ObjectRelationshipEdgeException(
 				"Unable to bind the object definitions when they have " +
-					"different scopes");
+					"different scopes",
+				"unable-to-bind-the-object-definitions-when-they-have-" +
+					"different-scopes");
 		}
 	}
 

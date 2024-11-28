@@ -79,12 +79,12 @@ public class AccountAddressChannelResourceImpl
 				Address.class.getName(), address.getAddressId(), null,
 				pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems = _commerceChannelRelService.getCommerceChannelRelsCount(
+		int totalCount = _commerceChannelRelService.getCommerceChannelRelsCount(
 			Address.class.getName(), address.getAddressId());
 
 		return Page.of(
 			_toAccountAddressChannels(commerceChannelRels), pagination,
-			totalItems);
+			totalCount);
 	}
 
 	@NestedField(
@@ -108,12 +108,12 @@ public class AccountAddressChannelResourceImpl
 				Address.class.getName(), addressId, search,
 				pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems = _commerceChannelRelService.getCommerceChannelRelsCount(
+		int totalCount = _commerceChannelRelService.getCommerceChannelRelsCount(
 			Address.class.getName(), addressId, search);
 
 		return Page.of(
 			_toAccountAddressChannels(commerceChannelRel), pagination,
-			totalItems);
+			totalCount);
 	}
 
 	@Override

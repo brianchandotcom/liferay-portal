@@ -385,8 +385,11 @@ definition {
 	@priority = 5
 	@uitest
 	test SelectNavigationMenuFromExistingOnes {
-		property custom.properties = "feature.flag.LPD-38869=true";
 		property portal.acceptance = "true";
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		task ("Add a public widget page") {
 			JSONLayout.addPublicLayout(

@@ -102,6 +102,7 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 		return CommerceOrderImporterTypeUtil.getCommerceOrderImporterItems(
 			_commerceContextFactory, commerceOrder,
 			_getCommerceOrderImporterItemImpls(
+				commerceOrder.getCommerceAccountId(),
 				commerceChannel.getGroupId(), (CommerceWishList)object,
 				fdsPagination),
 			_commerceOrderItemService, _commerceOrderPriceCalculation,
@@ -154,8 +155,8 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 	}
 
 	private CommerceOrderImporterItemImpl[] _getCommerceOrderImporterItemImpls(
-			long commerceChannelGroupId, CommerceWishList commerceWishList,
-			FDSPagination fdsPagination)
+			long accountEntryId, long commerceChannelGroupId,
+			CommerceWishList commerceWishList, FDSPagination fdsPagination)
 		throws Exception {
 
 		int start = QueryUtil.ALL_POS;
@@ -170,12 +171,12 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 			_commerceWishListItemService.getCommerceWishListItems(
 				commerceWishList.getCommerceWishListId(), start, end, null),
 			commerceWishListItem -> _toCommerceOrderImporterItemImpl(
-				commerceChannelGroupId, commerceWishListItem),
+				accountEntryId, commerceChannelGroupId, commerceWishListItem),
 			CommerceOrderImporterItemImpl.class);
 	}
 
 	private CommerceOrderImporterItemImpl _toCommerceOrderImporterItemImpl(
-			long commerceChannelGroupId,
+			long accountEntryId, long commerceChannelGroupId,
 			CommerceWishListItem commerceWishListItem)
 		throws Exception {
 
@@ -199,7 +200,8 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 		else {
 			CPInstance firstAvailableReplacementCPInstance =
 				_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
-					commerceChannelGroupId, cpInstance.getCPInstanceId());
+					accountEntryId, commerceChannelGroupId,
+					cpInstance.getCPInstanceId());
 
 			if (firstAvailableReplacementCPInstance != null) {
 				commerceOrderImporterItemImpl.setReplacingSKU(

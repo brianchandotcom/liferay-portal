@@ -15,8 +15,9 @@ export enum ACPage {
 	individualPage = 'contacts/individuals',
 	segmentPage = 'contacts/segments',
 	sitePage = 'sites',
-	testPage = 'tests',
 	propertiesPage = 'properties',
+	testPage = 'tests',
+	userManagementPage = 'users',
 }
 
 export async function navigateTo({

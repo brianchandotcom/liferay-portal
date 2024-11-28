@@ -108,6 +108,66 @@ public class CommerceInventoryWarehouseRelServiceImpl
 	}
 
 	@Override
+	public List<CommerceInventoryWarehouseRel>
+			getAccountEntryCommerceInventoryWarehouseRels(
+				long commerceInventoryWarehouseId, String keywords, int start,
+				int end)
+		throws PortalException {
+
+		_commerceInventoryWarehouseModelResourcePermission.check(
+			getPermissionChecker(), commerceInventoryWarehouseId,
+			ActionKeys.VIEW);
+
+		return commerceInventoryWarehouseRelLocalService.
+			getAccountEntryCommerceInventoryWarehouseRels(
+				commerceInventoryWarehouseId, keywords, start, end);
+	}
+
+	@Override
+	public int getAccountEntryCommerceInventoryWarehouseRelsCount(
+			long commerceInventoryWarehouseId, String keywords)
+		throws PortalException {
+
+		_commerceInventoryWarehouseModelResourcePermission.check(
+			getPermissionChecker(), commerceInventoryWarehouseId,
+			ActionKeys.VIEW);
+
+		return commerceInventoryWarehouseRelLocalService.
+			getAccountEntryCommerceInventoryWarehouseRelsCount(
+				commerceInventoryWarehouseId, keywords);
+	}
+
+	@Override
+	public List<CommerceInventoryWarehouseRel>
+			getAccountGroupCommerceInventoryWarehouseRels(
+				long commerceInventoryWarehouseId, String keywords, int start,
+				int end)
+		throws PortalException {
+
+		_commerceInventoryWarehouseModelResourcePermission.check(
+			getPermissionChecker(), commerceInventoryWarehouseId,
+			ActionKeys.VIEW);
+
+		return commerceInventoryWarehouseRelLocalService.
+			getAccountGroupCommerceInventoryWarehouseRels(
+				commerceInventoryWarehouseId, keywords, start, end);
+	}
+
+	@Override
+	public int getAccountGroupCommerceInventoryWarehouseRelsCount(
+			long commerceInventoryWarehouseId, String keywords)
+		throws PortalException {
+
+		_commerceInventoryWarehouseModelResourcePermission.check(
+			getPermissionChecker(), commerceInventoryWarehouseId,
+			ActionKeys.VIEW);
+
+		return commerceInventoryWarehouseRelLocalService.
+			getAccountGroupCommerceInventoryWarehouseRelsCount(
+				commerceInventoryWarehouseId, keywords);
+	}
+
+	@Override
 	public CommerceInventoryWarehouseRel getCommerceInventoryWarehouseRel(
 			long commerceInventoryWarehouseRelId)
 		throws PortalException {
@@ -156,6 +216,40 @@ public class CommerceInventoryWarehouseRelServiceImpl
 	}
 
 	@Override
+	public List<CommerceInventoryWarehouseRel>
+			getCommerceInventoryWarehouseRels(
+				String className, long commerceInventoryWarehouseId)
+		throws PortalException {
+
+		_commerceInventoryWarehouseModelResourcePermission.check(
+			getPermissionChecker(), commerceInventoryWarehouseId,
+			ActionKeys.VIEW);
+
+		return commerceInventoryWarehouseRelLocalService.
+			getCommerceInventoryWarehouseRels(
+				className, commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public List<CommerceInventoryWarehouseRel>
+			getCommerceInventoryWarehouseRels(
+				String className, long commerceInventoryWarehouseId, int start,
+				int end,
+				OrderByComparator<CommerceInventoryWarehouseRel>
+					orderByComparator)
+		throws PortalException {
+
+		_commerceInventoryWarehouseModelResourcePermission.check(
+			getPermissionChecker(), commerceInventoryWarehouseId,
+			ActionKeys.VIEW);
+
+		return commerceInventoryWarehouseRelLocalService.
+			getCommerceInventoryWarehouseRels(
+				className, commerceInventoryWarehouseId, start, end,
+				orderByComparator);
+	}
+
+	@Override
 	public int getCommerceInventoryWarehouseRelsCount(
 			long commerceInventoryWarehouseId)
 		throws PortalException {
@@ -167,6 +261,20 @@ public class CommerceInventoryWarehouseRelServiceImpl
 		return commerceInventoryWarehouseRelLocalService.
 			getCommerceInventoryWarehouseRelsCount(
 				commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public int getCommerceInventoryWarehouseRelsCount(
+			String className, long commerceInventoryWarehouseId)
+		throws PortalException {
+
+		_commerceInventoryWarehouseModelResourcePermission.check(
+			getPermissionChecker(), commerceInventoryWarehouseId,
+			ActionKeys.VIEW);
+
+		return commerceInventoryWarehouseRelLocalService.
+			getCommerceInventoryWarehouseRelsCount(
+				className, commerceInventoryWarehouseId);
 	}
 
 	@Override

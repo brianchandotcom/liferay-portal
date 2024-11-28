@@ -11,6 +11,7 @@ import com.liferay.commerce.exception.DuplicateCommerceShipmentItemExternalRefer
 import com.liferay.commerce.exception.NoSuchShipmentException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
@@ -232,6 +233,8 @@ public class EditCommerceShipmentItemMVCActionCommand
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.getCommerceOrderItem(commerceOrderItemId);
 
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
 		CommerceShipmentItem initialCommerceShipmentItem =
 			_commerceShipmentItemService.fetchCommerceShipmentItem(
 				commerceShipmentId, commerceOrderItemId, 0);
@@ -250,6 +253,7 @@ public class EditCommerceShipmentItemMVCActionCommand
 			_commerceInventoryWarehouseLocalService.
 				getCommerceInventoryWarehouses(
 					commerceOrderItem.getCompanyId(),
+					commerceOrder.getCommerceAccountId(),
 					commerceOrderItem.getGroupId(), true);
 
 		for (CommerceInventoryWarehouse commerceInventoryWarehouse :

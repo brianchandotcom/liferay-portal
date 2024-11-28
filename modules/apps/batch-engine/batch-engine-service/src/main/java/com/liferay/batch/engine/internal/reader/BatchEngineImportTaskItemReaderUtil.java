@@ -6,6 +6,7 @@
 package com.liferay.batch.engine.internal.reader;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -50,6 +52,17 @@ public class BatchEngineImportTaskItemReaderUtil {
 		Map<String, Serializable> extendedProperties = new HashMap<>();
 		T item = itemClass.newInstance();
 
+		boolean keepCreatorInfo = false;
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-11036") &&
+			StringUtil.equals(
+				batchEngineImportTask.getParameterValue(
+					"importCreatorStrategy"),
+				"KEEP_CREATOR")) {
+
+			keepCreatorInfo = true;
+		}
+
 		for (Map.Entry<String, Object> entry : fieldNameValueMap.entrySet()) {
 			String name = entry.getKey();
 
@@ -69,7 +82,8 @@ public class BatchEngineImportTaskItemReaderUtil {
 			if (field != null) {
 				field.setAccessible(true);
 
-				ObjectMapper objectMapper = _getObjectMapper(field);
+				ObjectMapper objectMapper = _getObjectMapper(
+					field, keepCreatorInfo);
 
 				field.set(
 					item,
@@ -189,8 +203,34 @@ public class BatchEngineImportTaskItemReaderUtil {
 		return targetFieldNameValueMap;
 	}
 
-	private static ObjectMapper _getObjectMapper(Field field)
+	public abstract static class CreatorMixin {
+
+		@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+		public String externalReferenceCode;
+
+		@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+		public Long id;
+
+	}
+
+	private static ObjectMapper _getObjectMapper(
+			Field field, boolean keepCreatorInfo)
 		throws IllegalAccessException, InstantiationException {
+
+		if (keepCreatorInfo && StringUtil.equals(field.getName(), "creator")) {
+			return new ObjectMapper() {
+				{
+					addMixIn(field.getType(), CreatorMixin.class);
+
+					SimpleModule simpleModule = new SimpleModule();
+
+					simpleModule.addDeserializer(
+						Map.class, new MapStdDeserializer());
+
+					registerModule(simpleModule);
+				}
+			};
+		}
 
 		JsonDeserialize[] jsonDeserializes = field.getAnnotationsByType(
 			JsonDeserialize.class);

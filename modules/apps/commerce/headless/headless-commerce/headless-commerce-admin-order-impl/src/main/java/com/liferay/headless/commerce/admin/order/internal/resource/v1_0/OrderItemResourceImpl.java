@@ -153,13 +153,13 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 				commerceOrder.getCommerceOrderId(),
 				pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems = _commerceOrderItemService.getCommerceOrderItemsCount(
+		int totalCount = _commerceOrderItemService.getCommerceOrderItemsCount(
 			commerceOrder.getCommerceOrderId());
 
 		return Page.of(
 			_toOrderItems(
 				commerceOrderItems, contextAcceptLanguage.getPreferredLocale()),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@NestedField(parentClass = Order.class, value = "orderItems")
@@ -179,13 +179,13 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 			_commerceOrderItemService.getCommerceOrderItems(
 				id, pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems = _commerceOrderItemService.getCommerceOrderItemsCount(
+		int totalCount = _commerceOrderItemService.getCommerceOrderItemsCount(
 			id);
 
 		return Page.of(
 			_toOrderItems(
 				commerceOrderItems, contextAcceptLanguage.getPreferredLocale()),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@Override

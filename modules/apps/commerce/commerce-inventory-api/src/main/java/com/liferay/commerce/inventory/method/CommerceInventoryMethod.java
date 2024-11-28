@@ -29,7 +29,7 @@ public interface CommerceInventoryMethod {
 		throws PortalException;
 
 	public String getAvailabilityStatus(
-		long companyId, long commerceChannelGroupId,
+		long companyId, long accountEntryId, long commerceChannelGroupId,
 		BigDecimal minStockQuantity, String sku, String unitOfMeasureKey);
 
 	public String getKey();
@@ -37,8 +37,8 @@ public interface CommerceInventoryMethod {
 	public String getLabel(Locale locale);
 
 	public BigDecimal getStockQuantity(
-			long companyId, long commerceChannelGroupId, String sku,
-			String unitOfMeasureKey)
+			long companyId, long accountEntryId, long commerceChannelGroupId,
+			String sku, String unitOfMeasureKey)
 		throws PortalException;
 
 	public BigDecimal getStockQuantity(

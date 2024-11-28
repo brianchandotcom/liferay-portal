@@ -273,7 +273,7 @@ public class CommerceShipmentItemTest {
 
 		BigDecimal actualCPInstanceStockQuantity =
 			_commerceInventoryEngine.getStockQuantity(
-				_user.getCompanyId(), cpInstance.getGroupId(),
+				_user.getCompanyId(), 0, cpInstance.getGroupId(),
 				_commerceChannel.getGroupId(), cpInstance.getSku(),
 				StringPool.BLANK);
 

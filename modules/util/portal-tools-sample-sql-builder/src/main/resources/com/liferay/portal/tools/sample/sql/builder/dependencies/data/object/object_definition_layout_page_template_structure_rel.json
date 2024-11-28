@@ -1,0 +1,382 @@
+{
+	"deletedItems": [
+	],
+	"items": {
+		"08c7edca-e7a8-0e08-3c35-91ad67339ca8": {
+			"children": [
+				"70d2502e-b49f-6ca4-a927-25ff1b75e230"
+			],
+			"config": {
+				"collection": {
+					"itemSubtype": "597",
+					"itemType": "${objectDefinitionClassName}",
+					"key": "${objectDefinitionClassName}",
+					"title": "Ticket",
+					"type": "com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType"
+				},
+				"cssClasses": [
+				],
+				"displayAllItems": false,
+				"displayAllPages": true,
+				"gutters": true,
+				"landscapeMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"listItemStyle": "",
+				"listStyle": "",
+				"namespace": "omzx",
+				"numberOfColumns": 1,
+				"numberOfItems": 5,
+				"numberOfItemsPerPage": 50,
+				"numberOfPages": 5,
+				"paginationType": "numeric",
+				"portraitMobile": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"showAllItems": false,
+				"styles": {
+				},
+				"tablet": {
+					"numberOfColumns": 1,
+					"styles": {
+					}
+				},
+				"templateKey": ""
+			},
+			"itemId": "08c7edca-e7a8-0e08-3c35-91ad67339ca8",
+			"parentId": "ed349c77-ebab-ff27-f2b3-28ba3bd391ea",
+			"type": "collection"
+		},
+		"3da08c7e-0f52-c726-a9c9-5790197c4b05": {
+			"children": [
+				"da168b11-c71c-5f4d-a1f1-7bbbb0d515c5"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 2,
+				"tablet": {
+				}
+			},
+			"itemId": "3da08c7e-0f52-c726-a9c9-5790197c4b05",
+			"parentId": "e247cab0-a112-95b9-39e7-f8dad25fcc25",
+			"type": "column"
+		},
+		"4959654c-4671-e736-074d-6e0fd1bb9748": {
+			"children": [
+				"64e652b4-98ca-573b-59ba-c105c142698a"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 2,
+				"tablet": {
+				}
+			},
+			"itemId": "4959654c-4671-e736-074d-6e0fd1bb9748",
+			"parentId": "e247cab0-a112-95b9-39e7-f8dad25fcc25",
+			"type": "column"
+		},
+		"64e652b4-98ca-573b-59ba-c105c142698a": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "64e652b4-98ca-573b-59ba-c105c142698a",
+			"parentId": "4959654c-4671-e736-074d-6e0fd1bb9748",
+			"type": "fragment"
+		},
+		"70d2502e-b49f-6ca4-a927-25ff1b75e230": {
+			"children": [
+				"e247cab0-a112-95b9-39e7-f8dad25fcc25"
+			],
+			"config": {
+			},
+			"itemId": "70d2502e-b49f-6ca4-a927-25ff1b75e230",
+			"parentId": "08c7edca-e7a8-0e08-3c35-91ad67339ca8",
+			"type": "collection-item"
+		},
+		"a5226651-cb80-3ad5-ea88-7e639fe35bad": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "a5226651-cb80-3ad5-ea88-7e639fe35bad",
+			"parentId": "c1b86e70-cd19-8fbf-dcf7-70549d371f7b",
+			"type": "fragment"
+		},
+		"ad646098-e71c-4b35-3ec3-7013d3bdc96a": {
+			"children": [
+				"c1c18a42-6b80-162e-7857-e86aa2da4b1f"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 2,
+				"tablet": {
+				}
+			},
+			"itemId": "ad646098-e71c-4b35-3ec3-7013d3bdc96a",
+			"parentId": "e247cab0-a112-95b9-39e7-f8dad25fcc25",
+			"type": "column"
+		},
+		"bdef7d2e-1245-d1ed-765b-07ab8c8b439c": {
+			"children": [
+				"fe531fe4-ec67-60c8-2d6d-e09c10b1a9ec"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 2,
+				"tablet": {
+				}
+			},
+			"itemId": "bdef7d2e-1245-d1ed-765b-07ab8c8b439c",
+			"parentId": "e247cab0-a112-95b9-39e7-f8dad25fcc25",
+			"type": "column"
+		},
+		"c1b86e70-cd19-8fbf-dcf7-70549d371f7b": {
+			"children": [
+				"a5226651-cb80-3ad5-ea88-7e639fe35bad"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 2,
+				"tablet": {
+				}
+			},
+			"itemId": "c1b86e70-cd19-8fbf-dcf7-70549d371f7b",
+			"parentId": "e247cab0-a112-95b9-39e7-f8dad25fcc25",
+			"type": "column"
+		},
+		"c1c18a42-6b80-162e-7857-e86aa2da4b1f": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "c1c18a42-6b80-162e-7857-e86aa2da4b1f",
+			"parentId": "ad646098-e71c-4b35-3ec3-7013d3bdc96a",
+			"type": "fragment"
+		},
+		"ca05734e-8975-bbe0-8520-4ca9f2975a51": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "ca05734e-8975-bbe0-8520-4ca9f2975a51",
+			"parentId": "fda9adac-0dbc-b6ff-698c-1d5b0ef4ba77",
+			"type": "fragment"
+		},
+		"da168b11-c71c-5f4d-a1f1-7bbbb0d515c5": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "da168b11-c71c-5f4d-a1f1-7bbbb0d515c5",
+			"parentId": "3da08c7e-0f52-c726-a9c9-5790197c4b05",
+			"type": "fragment"
+		},
+		"e247cab0-a112-95b9-39e7-f8dad25fcc25": {
+			"children": [
+				"bdef7d2e-1245-d1ed-765b-07ab8c8b439c",
+				"3da08c7e-0f52-c726-a9c9-5790197c4b05",
+				"4959654c-4671-e736-074d-6e0fd1bb9748",
+				"c1b86e70-cd19-8fbf-dcf7-70549d371f7b",
+				"fda9adac-0dbc-b6ff-698c-1d5b0ef4ba77",
+				"ad646098-e71c-4b35-3ec3-7013d3bdc96a"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"gutters": true,
+				"landscapeMobile": {
+					"modulesPerRow": 1,
+					"styles": {
+					}
+				},
+				"modulesPerRow": 6,
+				"numberOfColumns": 6,
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"reverseOrder": false,
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "e247cab0-a112-95b9-39e7-f8dad25fcc25",
+			"parentId": "70d2502e-b49f-6ca4-a927-25ff1b75e230",
+			"type": "row"
+		},
+		"ed349c77-ebab-ff27-f2b3-28ba3bd391ea": {
+			"children": [
+				"08c7edca-e7a8-0e08-3c35-91ad67339ca8"
+			],
+			"config": {
+			},
+			"itemId": "ed349c77-ebab-ff27-f2b3-28ba3bd391ea",
+			"parentId": "",
+			"type": "root"
+		},
+		"fda9adac-0dbc-b6ff-698c-1d5b0ef4ba77": {
+			"children": [
+				"ca05734e-8975-bbe0-8520-4ca9f2975a51"
+			],
+			"config": {
+				"landscapeMobile": {
+					"size": 12
+				},
+				"portraitMobile": {
+				},
+				"size": 2,
+				"tablet": {
+				}
+			},
+			"itemId": "fda9adac-0dbc-b6ff-698c-1d5b0ef4ba77",
+			"parentId": "e247cab0-a112-95b9-39e7-f8dad25fcc25",
+			"type": "column"
+		},
+		"fe531fe4-ec67-60c8-2d6d-e09c10b1a9ec": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "fe531fe4-ec67-60c8-2d6d-e09c10b1a9ec",
+			"parentId": "bdef7d2e-1245-d1ed-765b-07ab8c8b439c",
+			"type": "fragment"
+		}
+	},
+	"pageRules": [
+	],
+	"rootItems": {
+		"dropZone": "",
+		"main": "ed349c77-ebab-ff27-f2b3-28ba3bd391ea"
+	},
+	"version": 1.0
+}

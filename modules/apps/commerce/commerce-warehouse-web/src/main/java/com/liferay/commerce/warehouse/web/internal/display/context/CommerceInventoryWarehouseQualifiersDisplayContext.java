@@ -5,7 +5,11 @@
 
 package com.liferay.commerce.warehouse.web.internal.display.context;
 
+import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseRelService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
@@ -21,6 +25,8 @@ import com.liferay.portal.kernel.util.Portal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.PortletRequest;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -32,6 +38,8 @@ public class CommerceInventoryWarehouseQualifiersDisplayContext
 
 	public CommerceInventoryWarehouseQualifiersDisplayContext(
 		CommerceChannelRelService commerceChannelRelService,
+		CommerceInventoryWarehouseRelService
+			commerceInventoryWarehouseRelService,
 		CommerceInventoryWarehouseService commerceInventoryWarehouseService,
 		HttpServletRequest httpServletRequest, Portal portal,
 		ModelResourcePermission<CommerceInventoryWarehouse>
@@ -43,6 +51,39 @@ public class CommerceInventoryWarehouseQualifiersDisplayContext
 			commerceInventoryWarehouseModelResourcePermission);
 
 		this.commerceChannelRelService = commerceChannelRelService;
+		this.portal = portal;
+
+		_commerceInventoryWarehouseRelService =
+			commerceInventoryWarehouseRelService;
+	}
+
+	public String getActiveAccountEligibility() throws PortalException {
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			getCommerceInventoryWarehouse();
+
+		long commerceInventoryWarehouseRelsCount =
+			_commerceInventoryWarehouseRelService.
+				getCommerceInventoryWarehouseRelsCount(
+					AccountEntry.class.getName(),
+					commerceInventoryWarehouse.
+						getCommerceInventoryWarehouseId());
+
+		if (commerceInventoryWarehouseRelsCount > 0) {
+			return "accounts";
+		}
+
+		commerceInventoryWarehouseRelsCount =
+			_commerceInventoryWarehouseRelService.
+				getCommerceInventoryWarehouseRelsCount(
+					AccountGroup.class.getName(),
+					commerceInventoryWarehouse.
+						getCommerceInventoryWarehouseId());
+
+		if (commerceInventoryWarehouseRelsCount > 0) {
+			return "accountGroups";
+		}
+
+		return "all";
 	}
 
 	public String getActiveChannelEligibility() throws PortalException {
@@ -57,6 +98,63 @@ public class CommerceInventoryWarehouseQualifiersDisplayContext
 		}
 
 		return "none";
+	}
+
+	public List<FDSActionDropdownItem>
+			getWarehouseAccountFDSActionDropdownItems()
+		throws PortalException {
+
+		return getFDSActionTemplates(
+			PortletURLBuilder.create(
+				portal.getControlPanelPortletURL(
+					httpServletRequest,
+					AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/account_admin/edit_account_entry"
+			).setRedirect(
+				cpRequestHelper.getCurrentURL()
+			).setParameter(
+				"accountEntryId", "{account.id}"
+			).buildString(),
+			false);
+	}
+
+	public List<FDSActionDropdownItem>
+			getWarehouseAccountGroupFDSActionDropdownItems()
+		throws PortalException {
+
+		return getFDSActionTemplates(
+			PortletURLBuilder.create(
+				portal.getControlPanelPortletURL(
+					httpServletRequest, AccountPortletKeys.ACCOUNT_GROUPS_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/account_admin/edit_account_group"
+			).setRedirect(
+				cpRequestHelper.getCurrentURL()
+			).setParameter(
+				"accountGroupId", "{accountGroup.id}"
+			).buildString(),
+			false);
+	}
+
+	public String getWarehouseAccountGroupsAPIURL() throws PortalException {
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			getCommerceInventoryWarehouse();
+
+		return "/o/headless-commerce-admin-inventory/v1.0/warehouses/" +
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId() +
+				"/warehouse-account-groups?nestedFields=accountGroup";
+	}
+
+	public String getWarehouseAccountsAPIURL() throws PortalException {
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			getCommerceInventoryWarehouse();
+
+		return "/o/headless-commerce-admin-inventory/v1.0/warehouses/" +
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId() +
+				"/warehouse-accounts?nestedFields=account";
 	}
 
 	public List<FDSActionDropdownItem>
@@ -110,5 +208,8 @@ public class CommerceInventoryWarehouseQualifiersDisplayContext
 
 		return fdsActionDropdownItems;
 	}
+
+	private final CommerceInventoryWarehouseRelService
+		_commerceInventoryWarehouseRelService;
 
 }

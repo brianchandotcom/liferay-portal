@@ -575,8 +575,8 @@ public class CommerceInventoryWarehouseItemServiceHttp {
 	}
 
 	public static int getCommerceInventoryWarehouseItemsCount(
-			HttpPrincipal httpPrincipal, long companyId, long groupId,
-			String sku, String unitOfMeasureKey)
+			HttpPrincipal httpPrincipal, long companyId, long accountEntryId,
+			long groupId, String sku, String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -586,7 +586,8 @@ public class CommerceInventoryWarehouseItemServiceHttp {
 				_getCommerceInventoryWarehouseItemsCountParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, groupId, sku, unitOfMeasureKey);
+				methodKey, companyId, accountEntryId, groupId, sku,
+				unitOfMeasureKey);
 
 			Object returnObj = null;
 
@@ -791,8 +792,8 @@ public class CommerceInventoryWarehouseItemServiceHttp {
 	}
 
 	public static java.math.BigDecimal getStockQuantity(
-		HttpPrincipal httpPrincipal, long companyId, long groupId, String sku,
-		String unitOfMeasureKey) {
+		HttpPrincipal httpPrincipal, long companyId, long accountEntryId,
+		long groupId, String sku, String unitOfMeasureKey) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -800,7 +801,8 @@ public class CommerceInventoryWarehouseItemServiceHttp {
 				"getStockQuantity", _getStockQuantityParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, groupId, sku, unitOfMeasureKey);
+				methodKey, companyId, accountEntryId, groupId, sku,
+				unitOfMeasureKey);
 
 			Object returnObj = null;
 
@@ -1093,7 +1095,7 @@ public class CommerceInventoryWarehouseItemServiceHttp {
 		};
 	private static final Class<?>[]
 		_getCommerceInventoryWarehouseItemsCountParameterTypes12 = new Class[] {
-			long.class, long.class, String.class, String.class
+			long.class, long.class, long.class, String.class, String.class
 		};
 	private static final Class<?>[]
 		_getCommerceInventoryWarehouseItemsCountParameterTypes13 = new Class[] {
@@ -1114,7 +1116,9 @@ public class CommerceInventoryWarehouseItemServiceHttp {
 				int.class, int.class
 			};
 	private static final Class<?>[] _getStockQuantityParameterTypes17 =
-		new Class[] {long.class, long.class, String.class, String.class};
+		new Class[] {
+			long.class, long.class, long.class, String.class, String.class
+		};
 	private static final Class<?>[] _getStockQuantityParameterTypes18 =
 		new Class[] {long.class, String.class, String.class};
 	private static final Class<?>[]

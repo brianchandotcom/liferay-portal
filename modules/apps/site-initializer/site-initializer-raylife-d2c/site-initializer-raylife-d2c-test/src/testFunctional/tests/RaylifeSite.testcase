@@ -1,7 +1,6 @@
 @component-name = "portal-site-management"
 definition {
 
-	property custom.properties = "feature.flag.LPD-38869=true";
 	property osgi.modules.includes = "site-initializer-raylife-d2c";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -14,6 +13,10 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 	}
 
 	tearDown {

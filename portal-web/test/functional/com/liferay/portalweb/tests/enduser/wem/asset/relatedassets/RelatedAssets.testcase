@@ -439,7 +439,9 @@ definition {
 	@priority = 4
 	@uitest
 	test ShouldBeDisplayWithCategory {
-		property custom.properties = "feature.flag.LPD-38869=true";
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(

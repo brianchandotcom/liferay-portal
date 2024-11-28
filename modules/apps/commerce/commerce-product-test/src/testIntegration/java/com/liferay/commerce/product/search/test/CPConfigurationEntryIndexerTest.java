@@ -84,6 +84,7 @@ public class CPConfigurationEntryIndexerTest {
 		CPConfigurationEntry cpConfigurationEntry =
 			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
 				RandomTestUtil.randomString(), _user.getUserId(),
+				commerceCatalog.getGroupId(),
 				_portal.getClassNameId(CPDefinition.class),
 				cpDefinition.getCPDefinitionId(),
 				cpConfigurationList.getCPConfigurationListId(), "123", true, 0,

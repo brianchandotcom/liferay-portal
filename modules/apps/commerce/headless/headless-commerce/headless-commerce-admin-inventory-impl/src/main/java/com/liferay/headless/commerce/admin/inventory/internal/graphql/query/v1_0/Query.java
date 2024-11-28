@@ -5,16 +5,24 @@
 
 package com.liferay.headless.commerce.admin.inventory.internal.graphql.query.v1_0;
 
+import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Account;
+import com.liferay.headless.commerce.admin.inventory.dto.v1_0.AccountGroup;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.ReplenishmentItem;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse;
+import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseAccount;
+import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseAccountGroup;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseChannel;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseOrderType;
+import com.liferay.headless.commerce.admin.inventory.resource.v1_0.AccountGroupResource;
+import com.liferay.headless.commerce.admin.inventory.resource.v1_0.AccountResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.ReplenishmentItemResource;
+import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseAccountGroupResource;
+import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseAccountResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseChannelResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseItemResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseOrderTypeResource;
@@ -52,6 +60,22 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
+	public static void setAccountResourceComponentServiceObjects(
+		ComponentServiceObjects<AccountResource>
+			accountResourceComponentServiceObjects) {
+
+		_accountResourceComponentServiceObjects =
+			accountResourceComponentServiceObjects;
+	}
+
+	public static void setAccountGroupResourceComponentServiceObjects(
+		ComponentServiceObjects<AccountGroupResource>
+			accountGroupResourceComponentServiceObjects) {
+
+		_accountGroupResourceComponentServiceObjects =
+			accountGroupResourceComponentServiceObjects;
+	}
+
 	public static void setChannelResourceComponentServiceObjects(
 		ComponentServiceObjects<ChannelResource>
 			channelResourceComponentServiceObjects) {
@@ -84,6 +108,22 @@ public class Query {
 			warehouseResourceComponentServiceObjects;
 	}
 
+	public static void setWarehouseAccountResourceComponentServiceObjects(
+		ComponentServiceObjects<WarehouseAccountResource>
+			warehouseAccountResourceComponentServiceObjects) {
+
+		_warehouseAccountResourceComponentServiceObjects =
+			warehouseAccountResourceComponentServiceObjects;
+	}
+
+	public static void setWarehouseAccountGroupResourceComponentServiceObjects(
+		ComponentServiceObjects<WarehouseAccountGroupResource>
+			warehouseAccountGroupResourceComponentServiceObjects) {
+
+		_warehouseAccountGroupResourceComponentServiceObjects =
+			warehouseAccountGroupResourceComponentServiceObjects;
+	}
+
 	public static void setWarehouseChannelResourceComponentServiceObjects(
 		ComponentServiceObjects<WarehouseChannelResource>
 			warehouseChannelResourceComponentServiceObjects) {
@@ -106,6 +146,42 @@ public class Query {
 
 		_warehouseOrderTypeResourceComponentServiceObjects =
 			warehouseOrderTypeResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {warehouseAccountAccount(warehouseAccountId: ___){id, logoId, name}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Account warehouseAccountAccount(
+			@GraphQLName("warehouseAccountId") Long warehouseAccountId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource -> accountResource.getWarehouseAccountAccount(
+				warehouseAccountId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {warehouseAccountGroupAccountGroup(warehouseAccountGroupId: ___){id, name}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AccountGroup warehouseAccountGroupAccountGroup(
+			@GraphQLName("warehouseAccountGroupId") Long
+				warehouseAccountGroupId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountGroupResource ->
+				accountGroupResource.getWarehouseAccountGroupAccountGroup(
+					warehouseAccountGroupId));
 	}
 
 	/**
@@ -274,6 +350,107 @@ public class Query {
 			_warehouseResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			warehouseResource -> warehouseResource.getWarehouseId(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {warehouseByExternalReferenceCodeWarehouseAccounts(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WarehouseAccountPage
+			warehouseByExternalReferenceCodeWarehouseAccounts(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountResource -> new WarehouseAccountPage(
+				warehouseAccountResource.
+					getWarehouseByExternalReferenceCodeWarehouseAccountsPage(
+						externalReferenceCode, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {warehouseIdWarehouseAccounts(filter: ___, id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WarehouseAccountPage warehouseIdWarehouseAccounts(
+			@GraphQLName("id") Long id, @GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountResource -> new WarehouseAccountPage(
+				warehouseAccountResource.getWarehouseIdWarehouseAccountsPage(
+					id, search,
+					_filterBiFunction.apply(
+						warehouseAccountResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						warehouseAccountResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {warehouseByExternalReferenceCodeWarehouseAccountGroups(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WarehouseAccountGroupPage
+			warehouseByExternalReferenceCodeWarehouseAccountGroups(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseAccountGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountGroupResource -> new WarehouseAccountGroupPage(
+				warehouseAccountGroupResource.
+					getWarehouseByExternalReferenceCodeWarehouseAccountGroupsPage(
+						externalReferenceCode, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {warehouseIdWarehouseAccountGroups(filter: ___, id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WarehouseAccountGroupPage warehouseIdWarehouseAccountGroups(
+			@GraphQLName("id") Long id, @GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseAccountGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseAccountGroupResource -> new WarehouseAccountGroupPage(
+				warehouseAccountGroupResource.
+					getWarehouseIdWarehouseAccountGroupsPage(
+						id, search,
+						_filterBiFunction.apply(
+							warehouseAccountGroupResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							warehouseAccountGroupResource, sortsString))));
 	}
 
 	/**
@@ -522,6 +699,37 @@ public class Query {
 
 	@GraphQLTypeExtension(ReplenishmentItem.class)
 	public class
+		GetWarehouseByExternalReferenceCodeWarehouseAccountGroupsPageTypeExtension {
+
+		public GetWarehouseByExternalReferenceCodeWarehouseAccountGroupsPageTypeExtension(
+			ReplenishmentItem replenishmentItem) {
+
+			_replenishmentItem = replenishmentItem;
+		}
+
+		@GraphQLField
+		public WarehouseAccountGroupPage
+				warehouseByExternalReferenceCodeWarehouseAccountGroups(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_warehouseAccountGroupResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				warehouseAccountGroupResource -> new WarehouseAccountGroupPage(
+					warehouseAccountGroupResource.
+						getWarehouseByExternalReferenceCodeWarehouseAccountGroupsPage(
+							_replenishmentItem.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private ReplenishmentItem _replenishmentItem;
+
+	}
+
+	@GraphQLTypeExtension(ReplenishmentItem.class)
+	public class
 		GetWarehouseByExternalReferenceCodeWarehouseOrderTypesPageTypeExtension {
 
 		public GetWarehouseByExternalReferenceCodeWarehouseOrderTypesPageTypeExtension(
@@ -543,6 +751,37 @@ public class Query {
 				warehouseOrderTypeResource -> new WarehouseOrderTypePage(
 					warehouseOrderTypeResource.
 						getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
+							_replenishmentItem.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private ReplenishmentItem _replenishmentItem;
+
+	}
+
+	@GraphQLTypeExtension(ReplenishmentItem.class)
+	public class
+		GetWarehouseByExternalReferenceCodeWarehouseAccountsPageTypeExtension {
+
+		public GetWarehouseByExternalReferenceCodeWarehouseAccountsPageTypeExtension(
+			ReplenishmentItem replenishmentItem) {
+
+			_replenishmentItem = replenishmentItem;
+		}
+
+		@GraphQLField
+		public WarehouseAccountPage
+				warehouseByExternalReferenceCodeWarehouseAccounts(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_warehouseAccountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				warehouseAccountResource -> new WarehouseAccountPage(
+					warehouseAccountResource.
+						getWarehouseByExternalReferenceCodeWarehouseAccountsPage(
 							_replenishmentItem.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
@@ -635,6 +874,72 @@ public class Query {
 		}
 
 		private Warehouse _warehouse;
+
+	}
+
+	@GraphQLName("AccountPage")
+	public class AccountPage {
+
+		public AccountPage(Page accountPage) {
+			actions = accountPage.getActions();
+
+			items = accountPage.getItems();
+			lastPage = accountPage.getLastPage();
+			page = accountPage.getPage();
+			pageSize = accountPage.getPageSize();
+			totalCount = accountPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Account> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("AccountGroupPage")
+	public class AccountGroupPage {
+
+		public AccountGroupPage(Page accountGroupPage) {
+			actions = accountGroupPage.getActions();
+
+			items = accountGroupPage.getItems();
+			lastPage = accountGroupPage.getLastPage();
+			page = accountGroupPage.getPage();
+			pageSize = accountGroupPage.getPageSize();
+			totalCount = accountGroupPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<AccountGroup> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
 
 	}
 
@@ -770,6 +1075,72 @@ public class Query {
 
 	}
 
+	@GraphQLName("WarehouseAccountPage")
+	public class WarehouseAccountPage {
+
+		public WarehouseAccountPage(Page warehouseAccountPage) {
+			actions = warehouseAccountPage.getActions();
+
+			items = warehouseAccountPage.getItems();
+			lastPage = warehouseAccountPage.getLastPage();
+			page = warehouseAccountPage.getPage();
+			pageSize = warehouseAccountPage.getPageSize();
+			totalCount = warehouseAccountPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<WarehouseAccount> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("WarehouseAccountGroupPage")
+	public class WarehouseAccountGroupPage {
+
+		public WarehouseAccountGroupPage(Page warehouseAccountGroupPage) {
+			actions = warehouseAccountGroupPage.getActions();
+
+			items = warehouseAccountGroupPage.getItems();
+			lastPage = warehouseAccountGroupPage.getLastPage();
+			page = warehouseAccountGroupPage.getPage();
+			pageSize = warehouseAccountGroupPage.getPageSize();
+			totalCount = warehouseAccountGroupPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<WarehouseAccountGroup> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("WarehouseChannelPage")
 	public class WarehouseChannelPage {
 
@@ -888,6 +1259,34 @@ public class Query {
 		}
 	}
 
+	private void _populateResourceContext(AccountResource accountResource)
+		throws Exception {
+
+		accountResource.setContextAcceptLanguage(_acceptLanguage);
+		accountResource.setContextCompany(_company);
+		accountResource.setContextHttpServletRequest(_httpServletRequest);
+		accountResource.setContextHttpServletResponse(_httpServletResponse);
+		accountResource.setContextUriInfo(_uriInfo);
+		accountResource.setContextUser(_user);
+		accountResource.setGroupLocalService(_groupLocalService);
+		accountResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
+			AccountGroupResource accountGroupResource)
+		throws Exception {
+
+		accountGroupResource.setContextAcceptLanguage(_acceptLanguage);
+		accountGroupResource.setContextCompany(_company);
+		accountGroupResource.setContextHttpServletRequest(_httpServletRequest);
+		accountGroupResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		accountGroupResource.setContextUriInfo(_uriInfo);
+		accountGroupResource.setContextUser(_user);
+		accountGroupResource.setGroupLocalService(_groupLocalService);
+		accountGroupResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(ChannelResource channelResource)
 		throws Exception {
 
@@ -944,6 +1343,38 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			WarehouseAccountResource warehouseAccountResource)
+		throws Exception {
+
+		warehouseAccountResource.setContextAcceptLanguage(_acceptLanguage);
+		warehouseAccountResource.setContextCompany(_company);
+		warehouseAccountResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		warehouseAccountResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		warehouseAccountResource.setContextUriInfo(_uriInfo);
+		warehouseAccountResource.setContextUser(_user);
+		warehouseAccountResource.setGroupLocalService(_groupLocalService);
+		warehouseAccountResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
+			WarehouseAccountGroupResource warehouseAccountGroupResource)
+		throws Exception {
+
+		warehouseAccountGroupResource.setContextAcceptLanguage(_acceptLanguage);
+		warehouseAccountGroupResource.setContextCompany(_company);
+		warehouseAccountGroupResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		warehouseAccountGroupResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		warehouseAccountGroupResource.setContextUriInfo(_uriInfo);
+		warehouseAccountGroupResource.setContextUser(_user);
+		warehouseAccountGroupResource.setGroupLocalService(_groupLocalService);
+		warehouseAccountGroupResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			WarehouseChannelResource warehouseChannelResource)
 		throws Exception {
 
@@ -990,6 +1421,10 @@ public class Query {
 		warehouseOrderTypeResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects<AccountResource>
+		_accountResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AccountGroupResource>
+		_accountGroupResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ChannelResource>
 		_channelResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OrderTypeResource>
@@ -998,6 +1433,10 @@ public class Query {
 		_replenishmentItemResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WarehouseResource>
 		_warehouseResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WarehouseAccountResource>
+		_warehouseAccountResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WarehouseAccountGroupResource>
+		_warehouseAccountGroupResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WarehouseChannelResource>
 		_warehouseChannelResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WarehouseItemResource>

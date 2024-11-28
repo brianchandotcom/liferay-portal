@@ -48,7 +48,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="commerceCurrencyId" type="long" />
+		<field name="commerceCurrencyCode" type="String" />
 		<field name="parentCommercePriceListId" type="long" />
 		<field name="catalogBasePriceList" type="boolean" />
 		<field name="netPrice" type="boolean" />

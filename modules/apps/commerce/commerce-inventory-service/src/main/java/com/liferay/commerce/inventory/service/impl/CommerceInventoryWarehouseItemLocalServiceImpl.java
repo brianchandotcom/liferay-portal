@@ -5,6 +5,9 @@
 
 package com.liferay.commerce.inventory.service.impl;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemSkuException;
 import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWarehouseItemException;
@@ -15,6 +18,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItemTa
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItemTable;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRelTable;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseTable;
 import com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalService;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryWarehouseItemLocalServiceBaseImpl;
@@ -48,6 +52,7 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -365,7 +370,8 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 
 	@Override
 	public int getCommerceInventoryWarehouseItemsCount(
-		long companyId, long groupId, String sku, String unitOfMeasureKey) {
+		long companyId, long accountEntryId, long groupId, String sku,
+		String unitOfMeasureKey) {
 
 		return dslQueryCount(
 			DSLQueryFactoryUtil.countDistinct(
@@ -397,6 +403,12 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 					commerceInventoryWarehouseId.eq(
 						CommerceInventoryWarehouseItemTable.INSTANCE.
 							commerceInventoryWarehouseId)
+			).leftJoinOn(
+				CommerceInventoryWarehouseRelTable.INSTANCE,
+				CommerceInventoryWarehouseTable.INSTANCE.
+					commerceInventoryWarehouseId.eq(
+						CommerceInventoryWarehouseRelTable.INSTANCE.
+							commerceInventoryWarehouseId)
 			).where(
 				CommerceInventoryWarehouseItemTable.INSTANCE.companyId.eq(
 					companyId
@@ -415,6 +427,38 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 					CommerceInventoryWarehouseTable.INSTANCE.active.eq(true)
 				).and(
 					GroupTable.INSTANCE.groupId.eq(groupId)
+				).and(
+					CommerceInventoryWarehouseRelTable.INSTANCE.classPK.eq(
+						accountEntryId
+					).and(
+						CommerceInventoryWarehouseRelTable.INSTANCE.classNameId.
+							eq(
+								_portal.getClassNameId(
+									AccountEntry.class.getName()))
+					).or(
+						() -> {
+							Long[] accountGroupIds = ArrayUtil.toLongArray(
+								_accountGroupLocalService.getAccountGroupIds(
+									accountEntryId));
+
+							if (accountGroupIds.length <= 0) {
+								accountGroupIds = new Long[] {0L};
+							}
+
+							return CommerceInventoryWarehouseRelTable.INSTANCE.
+								classPK.in(
+									accountGroupIds
+								).and(
+									CommerceInventoryWarehouseRelTable.INSTANCE.
+										classNameId.eq(
+											_portal.getClassNameId(
+												AccountGroup.class.getName()))
+								).withParentheses();
+						}
+					).or(
+						CommerceInventoryWarehouseRelTable.INSTANCE.classPK.
+							isNull()
+					).withParentheses()
 				)
 			));
 	}
@@ -673,7 +717,8 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 
 	@Override
 	public BigDecimal getStockQuantity(
-		long companyId, long groupId, String sku, String unitOfMeasureKey) {
+		long companyId, long accountEntryId, long groupId, String sku,
+		String unitOfMeasureKey) {
 
 		Iterable<BigDecimal> iterable = dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -714,6 +759,12 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 					commerceInventoryWarehouseId.eq(
 						CommerceInventoryWarehouseItemTable.INSTANCE.
 							commerceInventoryWarehouseId)
+			).leftJoinOn(
+				CommerceInventoryWarehouseRelTable.INSTANCE,
+				CommerceInventoryWarehouseTable.INSTANCE.
+					commerceInventoryWarehouseId.eq(
+						CommerceInventoryWarehouseRelTable.INSTANCE.
+							commerceInventoryWarehouseId)
 			).where(
 				CommerceInventoryWarehouseItemTable.INSTANCE.companyId.eq(
 					companyId
@@ -732,6 +783,38 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 					CommerceInventoryWarehouseTable.INSTANCE.active.eq(true)
 				).and(
 					GroupTable.INSTANCE.groupId.eq(groupId)
+				).and(
+					CommerceInventoryWarehouseRelTable.INSTANCE.classPK.eq(
+						accountEntryId
+					).and(
+						CommerceInventoryWarehouseRelTable.INSTANCE.classNameId.
+							eq(
+								_portal.getClassNameId(
+									AccountEntry.class.getName()))
+					).or(
+						() -> {
+							Long[] accountGroupIds = ArrayUtil.toLongArray(
+								_accountGroupLocalService.getAccountGroupIds(
+									accountEntryId));
+
+							if (accountGroupIds.length <= 0) {
+								accountGroupIds = new Long[] {0L};
+							}
+
+							return CommerceInventoryWarehouseRelTable.INSTANCE.
+								classPK.in(
+									accountGroupIds
+								).and(
+									CommerceInventoryWarehouseRelTable.INSTANCE.
+										classNameId.eq(
+											_portal.getClassNameId(
+												AccountGroup.class.getName()))
+								).withParentheses();
+						}
+					).or(
+						CommerceInventoryWarehouseRelTable.INSTANCE.classPK.
+							isNull()
+					).withParentheses()
 				)
 			));
 
@@ -1109,6 +1192,9 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			throw new NoSuchCPInstanceUnitOfMeasureException();
 		}
 	}
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private CommerceInventoryAuditLocalService

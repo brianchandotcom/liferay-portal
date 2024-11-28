@@ -38,11 +38,13 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Lee
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	property = "javax.portlet.name=" + ContactsPortletKeys.CONTACTS_CENTER,
 	service = UserNotificationHandler.class
 )
+@Deprecated
 public class ContactsCenterUserNotificationHandler
 	extends BaseUserNotificationHandler {
 

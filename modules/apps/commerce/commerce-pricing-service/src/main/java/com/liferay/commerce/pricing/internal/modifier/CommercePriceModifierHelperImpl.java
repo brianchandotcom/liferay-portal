@@ -17,6 +17,7 @@ import com.liferay.commerce.pricing.type.CommercePriceModifierType;
 import com.liferay.commerce.pricing.type.CommercePriceModifierTypeRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -58,8 +59,9 @@ public class CommercePriceModifierHelperImpl
 
 		BigDecimal originalPrice = originalCommerceMoney.getPrice();
 
-		if (commercePriceList.getCommerceCurrencyId() !=
-				originalCommerceCurrency.getCommerceCurrencyId()) {
+		if (!StringUtil.equals(
+				commercePriceList.getCommerceCurrencyCode(),
+				originalCommerceCurrency.getCode())) {
 
 			originalPrice = _getPrice(
 				originalPrice, priceListCurrency, originalCommerceCurrency);
@@ -83,8 +85,9 @@ public class CommercePriceModifierHelperImpl
 
 				if (CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE.equals(
 						commercePriceModifierType.getKey()) &&
-					(commercePriceList.getCommerceCurrencyId() !=
-						originalCommerceCurrency.getCommerceCurrencyId())) {
+					!StringUtil.equals(
+						commercePriceList.getCommerceCurrencyCode(),
+						originalCommerceCurrency.getCode())) {
 
 					actualPrice = _getPrice(
 						actualPrice, priceListCurrency,
@@ -106,8 +109,9 @@ public class CommercePriceModifierHelperImpl
 
 		if (!CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE.equals(
 				priceModifierKey) &&
-			(commercePriceList.getCommerceCurrencyId() !=
-				originalCommerceCurrency.getCommerceCurrencyId())) {
+			!StringUtil.equals(
+				commercePriceList.getCommerceCurrencyCode(),
+				originalCommerceCurrency.getCode())) {
 
 			lowestPrice = _getPrice(
 				lowestPrice, originalCommerceCurrency, priceListCurrency);

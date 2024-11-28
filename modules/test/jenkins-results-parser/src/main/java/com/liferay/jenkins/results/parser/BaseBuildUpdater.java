@@ -273,7 +273,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 				!notificationRecipients.isEmpty()) {
 
 				NotificationUtil.sendEmail(
-					message, "jenkins", "Build Reinvoked",
+					message, "jenkins", "Build reinvoked",
 					reinvokeRule.notificationRecipients);
 			}
 		}

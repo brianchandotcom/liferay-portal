@@ -64,7 +64,8 @@ public class CommerceInventoryWarehousesDisplayContext {
 
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
-		_portal = portal;
+		this.portal = portal;
+
 		_commerceInventoryWarehouseModelResourcePermission =
 			commerceInventoryWarehouseModelResourcePermission;
 	}
@@ -117,7 +118,7 @@ public class CommerceInventoryWarehousesDisplayContext {
 
 	public PortletURL getEditCommerceWarehouseRenderURL() {
 		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
+			portal.getControlPanelPortletURL(
 				cpRequestHelper.getRequest(),
 				CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE,
 				PortletRequest.RENDER_PHASE)
@@ -290,6 +291,7 @@ public class CommerceInventoryWarehousesDisplayContext {
 	protected CommerceChannelRelService commerceChannelRelService;
 	protected final CPRequestHelper cpRequestHelper;
 	protected HttpServletRequest httpServletRequest;
+	protected Portal portal;
 
 	private String _getKeywords() {
 		if (_keywords != null) {
@@ -304,7 +306,7 @@ public class CommerceInventoryWarehousesDisplayContext {
 
 	private String _getManageWarehousePermissionsURL() throws PortalException {
 		PortletURL portletURL = PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
+			portal.getControlPanelPortletURL(
 				cpRequestHelper.getRequest(),
 				"com_liferay_portlet_configuration_web_portlet_" +
 					"PortletConfigurationPortlet",
@@ -342,6 +344,5 @@ public class CommerceInventoryWarehousesDisplayContext {
 	private final CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;
 	private String _keywords;
-	private final Portal _portal;
 
 }

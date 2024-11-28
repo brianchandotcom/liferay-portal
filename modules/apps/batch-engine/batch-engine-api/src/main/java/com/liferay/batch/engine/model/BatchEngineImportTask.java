@@ -56,4 +56,6 @@ public interface BatchEngineImportTask
 
 	public int getBatchEngineImportTaskErrorsCount();
 
+	public String getParameterValue(String name);
+
 }

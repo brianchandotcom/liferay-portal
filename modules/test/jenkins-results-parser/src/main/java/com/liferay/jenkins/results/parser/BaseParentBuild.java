@@ -77,7 +77,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 											"\nBuild URL: " +
 												thisBuild.getBuildURL(),
 										"ci-notifications",
-										"Build Object Failure");
+										"Build object failure");
 								}
 
 								return null;

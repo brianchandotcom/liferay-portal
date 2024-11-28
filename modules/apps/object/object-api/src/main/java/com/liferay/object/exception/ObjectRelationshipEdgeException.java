@@ -15,8 +15,10 @@ public class ObjectRelationshipEdgeException extends PortalException {
 	public ObjectRelationshipEdgeException() {
 	}
 
-	public ObjectRelationshipEdgeException(String msg) {
-		super(msg);
+	public ObjectRelationshipEdgeException(String message, String messageKey) {
+		super(message);
+
+		_messageKey = messageKey;
 	}
 
 	public ObjectRelationshipEdgeException(String msg, Throwable throwable) {
@@ -26,5 +28,11 @@ public class ObjectRelationshipEdgeException extends PortalException {
 	public ObjectRelationshipEdgeException(Throwable throwable) {
 		super(throwable);
 	}
+
+	public String getMessageKey() {
+		return _messageKey;
+	}
+
+	private String _messageKey;
 
 }

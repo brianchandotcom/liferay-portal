@@ -643,6 +643,10 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setTaxIdNumber(taxIdNumber);
 		accountEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 
+		if (serviceContext != null) {
+			accountEntry.setExpandoBridgeAttributes(serviceContext);
+		}
+
 		accountEntry = accountEntryPersistence.update(accountEntry);
 
 		if (domains != null) {
@@ -657,10 +661,6 @@ public class AccountEntryLocalServiceImpl
 			// Asset
 
 			_updateAsset(accountEntry, serviceContext);
-
-			// Expando
-
-			accountEntry.setExpandoBridgeAttributes(serviceContext);
 
 			workflowServiceContext = (ServiceContext)serviceContext.clone();
 			workflowUserId = serviceContext.getUserId();

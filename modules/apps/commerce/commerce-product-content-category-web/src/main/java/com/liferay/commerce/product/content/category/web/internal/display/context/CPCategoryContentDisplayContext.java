@@ -15,11 +15,15 @@ import com.liferay.commerce.product.content.category.web.internal.configuration.
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -38,27 +42,40 @@ public class CPCategoryContentDisplayContext {
 			AssetCategoryService assetCategoryService,
 			CommerceMediaResolver commerceMediaResolver,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
-			Portal portal)
+			GroupLocalService groupLocalService, Portal portal)
 		throws ConfigurationException {
 
 		_httpServletRequest = httpServletRequest;
 		_assetCategoryService = assetCategoryService;
 		_commerceMediaResolver = commerceMediaResolver;
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
+		_groupLocalService = groupLocalService;
 		_portal = portal;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		_cpCategoryContentPortletInstanceConfiguration =
 			ConfigurationProviderUtil.getPortletInstanceConfiguration(
 				CPCategoryContentPortletInstanceConfiguration.class,
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY));
+				_themeDisplay);
 	}
 
 	public AssetCategory getAssetCategory() throws PortalException {
 		if (_cpCategoryContentPortletInstanceConfiguration.useAssetCategory()) {
-			_assetCategory = _assetCategoryService.fetchCategory(
-				_cpCategoryContentPortletInstanceConfiguration.
-					assetCategoryId());
+			_assetCategory =
+				_assetCategoryService.fetchCategoryByExternalReferenceCode(
+					_cpCategoryContentPortletInstanceConfiguration.
+						assetCategoryExternalReferenceCode(),
+					_themeDisplay.getScopeGroupId());
+
+			if (_assetCategory == null) {
+				_assetCategory =
+					_assetCategoryService.fetchCategoryByExternalReferenceCode(
+						_cpCategoryContentPortletInstanceConfiguration.
+							assetCategoryExternalReferenceCode(),
+						_themeDisplay.getCompanyGroupId());
+			}
 		}
 		else {
 			_assetCategory = (AssetCategory)_httpServletRequest.getAttribute(
@@ -105,23 +122,57 @@ public class CPCategoryContentDisplayContext {
 	}
 
 	public long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId > 0) {
+		if (_displayStyleGroupId != null) {
 			return _displayStyleGroupId;
 		}
 
-		_displayStyleGroupId =
+		String displayStyleGroupExternalReferenceCode =
 			_cpCategoryContentPortletInstanceConfiguration.
-				displayStyleGroupId();
+				displayStyleGroupExternalReferenceCode();
 
-		if (_displayStyleGroupId <= 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		Group group = _themeDisplay.getScopeGroup();
 
-			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				_themeDisplay.getCompanyId());
+		}
+
+		if (group != null) {
+			_displayStyleGroupId = group.getGroupId();
+		}
+		else {
+			_displayStyleGroupId = _themeDisplay.getScopeGroupId();
 		}
 
 		return _displayStyleGroupId;
+	}
+
+	public String getDisplayStyleGroupKey() {
+		if (Validator.isNotNull(_displayStyleGroupKey)) {
+			return _displayStyleGroupKey;
+		}
+
+		String displayStyleGroupExternalReferenceCode =
+			_cpCategoryContentPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
+
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				_themeDisplay.getCompanyId());
+		}
+
+		if (group != null) {
+			_displayStyleGroupKey = group.getGroupKey();
+		}
+		else {
+			_displayStyleGroupKey = StringPool.BLANK;
+		}
+
+		return _displayStyleGroupKey;
 	}
 
 	public boolean useAssetCategory() {
@@ -135,8 +186,11 @@ public class CPCategoryContentDisplayContext {
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	private final CPCategoryContentPortletInstanceConfiguration
 		_cpCategoryContentPortletInstanceConfiguration;
-	private long _displayStyleGroupId;
+	private Long _displayStyleGroupId;
+	private String _displayStyleGroupKey;
+	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;
+	private final ThemeDisplay _themeDisplay;
 
 }

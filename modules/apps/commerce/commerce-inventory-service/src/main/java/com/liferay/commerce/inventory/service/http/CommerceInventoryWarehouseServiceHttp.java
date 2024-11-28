@@ -474,8 +474,8 @@ public class CommerceInventoryWarehouseServiceHttp {
 	public static java.util.List
 		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouse>
 				getCommerceInventoryWarehouses(
-					HttpPrincipal httpPrincipal, long companyId, long groupId,
-					boolean active)
+					HttpPrincipal httpPrincipal, long companyId,
+					long accountEntryId, long groupId, boolean active)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -485,7 +485,7 @@ public class CommerceInventoryWarehouseServiceHttp {
 				_getCommerceInventoryWarehousesParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, groupId, active);
+				methodKey, companyId, accountEntryId, groupId, active);
 
 			Object returnObj = null;
 
@@ -881,7 +881,7 @@ public class CommerceInventoryWarehouseServiceHttp {
 		};
 	private static final Class<?>[]
 		_getCommerceInventoryWarehousesParameterTypes9 = new Class[] {
-			long.class, long.class, boolean.class
+			long.class, long.class, long.class, boolean.class
 		};
 	private static final Class<?>[]
 		_getCommerceInventoryWarehousesCountParameterTypes10 = new Class[] {

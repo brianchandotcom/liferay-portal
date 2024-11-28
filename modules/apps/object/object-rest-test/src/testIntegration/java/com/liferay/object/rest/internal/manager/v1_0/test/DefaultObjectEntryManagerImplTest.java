@@ -2962,13 +2962,13 @@ public class DefaultObjectEntryManagerImplTest
 
 		Organization organization1 = OrganizationTestUtil.addOrganization();
 
-		_addAccountEntryOrganizationRel(accountEntry1, organization1);
-		_addAccountEntryOrganizationRel(accountEntry2, organization1);
-
 		_user = _addUser();
 
 		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), organization1.getOrganizationId());
+
+		_addAccountEntryOrganizationRel(accountEntry1, organization1);
+		_addAccountEntryOrganizationRel(accountEntry2, organization1);
 
 		_assertObjectEntriesSize2(2);
 
@@ -3548,6 +3548,9 @@ public class DefaultObjectEntryManagerImplTest
 							_objectRelationshipERCObjectFieldName,
 							parentObjectEntry2.getExternalReferenceCode()
 						).put(
+							_objectRelationshipFieldName,
+							parentObjectEntry2.getId()
+						).put(
 							"dateObjectFieldName", () -> null
 						).put(
 							"dateTimeObjectFieldName", () -> null
@@ -3581,7 +3584,7 @@ public class DefaultObjectEntryManagerImplTest
 							parentObjectEntry1.getExternalReferenceCode()
 						).put(
 							_objectRelationshipFieldName,
-							parentObjectEntry2.getId()
+							parentObjectEntry1.getId()
 						).build();
 					}
 				}),

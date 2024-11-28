@@ -21,6 +21,8 @@ import {
 } from '../../helpers/SamlProviderConnectionHelper';
 import {EActions} from '../../helpers/ServerAdministrationHelper';
 import {liferayConfig} from '../../liferay.config';
+import {InstanceSettingsPage} from '../../pages/configuration-admin-web/InstanceSettingsPage';
+import {GeneralPage} from '../../pages/instance-configuration-web/GeneralPage';
 import {PagesAdminPage} from '../../pages/layout-admin-web/PagesAdminPage';
 import {
 	AttributeMapping,
@@ -745,6 +747,91 @@ test('LPD-32187 AC2 TC2: Verify unsuccessful IdP initiated SSO with provided Rel
 	).toBeVisible();
 
 	await expect(await idpInstancePage.url()).toContain(DEFAULT_IDP_URL);
+});
+
+test('LPD-32189 AC1 TC1: Verify IdP initiated SLO redirects user to c/portal/saml/slo_logout where all SP instances are logged out.  After, user should be redirected back to Default Logout Page configuration value.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create new page on IdP Instance
+
+	const pagesAdminPage = new PagesAdminPage(idpAdminPage);
+
+	await pagesAdminPage.goto();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: pageTitle,
+	});
+
+	const idpNewPagePath = '/web/guest/' + pageTitle;
+
+	// Configure new page as the Default Logout Page
+
+	const instanceSettingsPage = new InstanceSettingsPage(idpAdminPage);
+
+	await instanceSettingsPage.goToInstanceSetting(
+		'Instance Configuration',
+		'General',
+		false
+	);
+
+	const generalPage = new GeneralPage(instanceSettingsPage.page);
+
+	await generalPage.editDefaultLogoutPage(idpNewPagePath);
+
+	// Create IdP User
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// SP initiated SSO
+
+	const newPage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		DEFAULT_SP_URL
+	);
+
+	// Navigate to Idp and initiate SLO
+
+	await newPage.goto(DEFAULT_IDP_URL);
+
+	await newPage.getByTitle('User Profile Menu').click();
+
+	await newPage.getByRole('menuitem', {name: 'Sign Out'}).click();
+
+	await newPage.waitForTimeout(3000);
+
+	// Expect to redirect to IdP slo_logout page
+
+	expect(await newPage.url()).toContain(
+		`${DEFAULT_IDP_URL}/c/portal/saml/slo_logout`
+	);
+
+	// Expect to be redirected back to Default Landing Page configuration value
+
+	await newPage.waitForTimeout(5000);
+
+	expect(await newPage.url()).toContain(DEFAULT_IDP_URL + idpNewPagePath);
 });
 
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({

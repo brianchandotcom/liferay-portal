@@ -2893,6 +2893,15 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getMostAvailableMasterURL(
+		String baseInvocationURL, int invokedBatchSize, int minimumRAM,
+		int maximumSlavesPerHost) {
+
+		return getMostAvailableMasterURL(
+			baseInvocationURL, null, invokedBatchSize, minimumRAM,
+			maximumSlavesPerHost);
+	}
+
+	public static String getMostAvailableMasterURL(
 		String baseInvocationURL, String blacklist, int invokedBatchSize,
 		int minimumRAM, int maximumSlavesPerHost) {
 

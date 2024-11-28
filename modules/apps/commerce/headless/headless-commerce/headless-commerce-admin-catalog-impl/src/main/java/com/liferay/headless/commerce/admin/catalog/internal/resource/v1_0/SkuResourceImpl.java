@@ -562,10 +562,10 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
 
-		int totalItems = _cpInstanceService.getCPDefinitionInstancesCount(
+		int totalCount = _cpInstanceService.getCPDefinitionInstancesCount(
 			cpDefinition.getCPDefinitionId(), WorkflowConstants.STATUS_ANY);
 
-		return Page.of(_toSKUs(cpInstances, locale), pagination, totalItems);
+		return Page.of(_toSKUs(cpInstances, locale), pagination, totalCount);
 	}
 
 	private Page<Sku> _getSkusPage(

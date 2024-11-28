@@ -78,7 +78,7 @@ public class PriceListAccountGroupResourceImpl
 						pagination.getStartPosition(),
 						pagination.getEndPosition(), null);
 
-		int totalItems =
+		int totalCount =
 			_commercePriceListCommerceAccountGroupRelService.
 				getCommercePriceListCommerceAccountGroupRelsCount(
 					commercePriceList.getCommercePriceListId());
@@ -86,7 +86,7 @@ public class PriceListAccountGroupResourceImpl
 		return Page.of(
 			_toPriceListAccountGroups(
 				commercePriceListCommerceAccountGroupRels),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@NestedField(
@@ -113,14 +113,14 @@ public class PriceListAccountGroupResourceImpl
 						id, search, pagination.getStartPosition(),
 						pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commercePriceListCommerceAccountGroupRelService.
 				getCommercePriceListCommerceAccountGroupRelsCount(id, search);
 
 		return Page.of(
 			_toPriceListAccountGroups(
 				commercePriceListCommerceAccountGroupRels),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	@Override

@@ -15,7 +15,10 @@ import {PackageVersionModal} from '../../../../../../components/PackageVersionMo
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
 import {ProductEditionOption} from '../../../../../../enums/ProductEditionOption';
-import {ProductSpecification} from '../../../../../../enums/ProductSpecification';
+import {
+	ProductSpecification,
+	SpecificationKey,
+} from '../../../../../../enums/ProductSpecification';
 import {ProductType} from '../../../../../../enums/ProductType';
 import {ProductUploadType} from '../../../../../../enums/ProductUploadType';
 import {ProductVersionOption} from '../../../../../../enums/ProductVersionOption';
@@ -241,7 +244,8 @@ export function ProvideAppBuildPage({
 
 		const filteredProductSpecifications = dataProductSpecifications.filter(
 			(specification) =>
-				specification.specificationKey !== 'liferay-version'
+				specification.specificationKey !==
+				SpecificationKey.LIFERAY_VERSION
 		);
 
 		for (const versionKey in buildAppPackages) {
@@ -257,7 +261,7 @@ export function ProvideAppBuildPage({
 					version: versionKey,
 				});
 				liferayVersionSpecifications.push({
-					specificationKey: 'liferay-version',
+					specificationKey: SpecificationKey.LIFERAY_VERSION,
 					value: {
 						en_US: versionKey,
 					},

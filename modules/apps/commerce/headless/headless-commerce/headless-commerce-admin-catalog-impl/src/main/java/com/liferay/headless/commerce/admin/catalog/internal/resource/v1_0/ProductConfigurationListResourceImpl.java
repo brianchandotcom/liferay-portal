@@ -19,15 +19,20 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -281,29 +286,73 @@ public class ProductConfigurationListResourceImpl
 		return _toProductConfigurationList(cpConfigurationList);
 	}
 
+	private Map<String, Map<String, String>> _getActions(
+		CPConfigurationList cpConfigurationList) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			() -> {
+				if (cpConfigurationList.isMasterCPConfigurationList()) {
+					return null;
+				}
+
+				return addAction(
+					"UPDATE", cpConfigurationList.getCPConfigurationListId(),
+					"deleteProductConfigurationList",
+					_cpConfigurationListModelResourcePermission);
+			}
+		).put(
+			"get",
+			() -> addAction(
+				"VIEW", cpConfigurationList.getCPConfigurationListId(),
+				"getProductConfigurationList",
+				_cpConfigurationListModelResourcePermission)
+		).put(
+			"update",
+			() -> addAction(
+				"UPDATE", cpConfigurationList.getCPConfigurationListId(),
+				"patchProductConfigurationList",
+				_cpConfigurationListModelResourcePermission)
+		).build();
+	}
+
 	private ProductConfigurationList _toProductConfigurationList(
 			CPConfigurationList cpConfigurationList)
 		throws Exception {
 
-		return _toProductConfigurationList(
-			cpConfigurationList.getCPConfigurationListId());
+		return _productConfigurationListDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				_getActions(cpConfigurationList), _dtoConverterRegistry,
+				contextHttpServletRequest,
+				cpConfigurationList.getCPConfigurationListId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	private ProductConfigurationList _toProductConfigurationList(
 			long cpConfigurationListId)
 		throws Exception {
 
-		return _productConfigurationListDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				cpConfigurationListId,
-				contextAcceptLanguage.getPreferredLocale()));
+		return _toProductConfigurationList(
+			_cpConfigurationListService.getCPConfigurationList(
+				cpConfigurationListId));
 	}
 
 	@Reference
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPConfigurationList)"
+	)
+	private ModelResourcePermission<CPConfigurationList>
+		_cpConfigurationListModelResourcePermission;
+
 	@Reference
 	private CPConfigurationListService _cpConfigurationListService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductConfigurationListDTOConverter)"

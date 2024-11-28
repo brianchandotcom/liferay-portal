@@ -140,7 +140,8 @@ public class CommercePriceListPersistenceTest {
 
 		newCommercePriceList.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCommercePriceList.setCommerceCurrencyId(RandomTestUtil.nextLong());
+		newCommercePriceList.setCommerceCurrencyCode(
+			RandomTestUtil.randomString());
 
 		newCommercePriceList.setParentCommercePriceListId(
 			RandomTestUtil.nextLong());
@@ -209,8 +210,8 @@ public class CommercePriceListPersistenceTest {
 			Time.getShortTimestamp(existingCommercePriceList.getModifiedDate()),
 			Time.getShortTimestamp(newCommercePriceList.getModifiedDate()));
 		Assert.assertEquals(
-			existingCommercePriceList.getCommerceCurrencyId(),
-			newCommercePriceList.getCommerceCurrencyId());
+			existingCommercePriceList.getCommerceCurrencyCode(),
+			newCommercePriceList.getCommerceCurrencyCode());
 		Assert.assertEquals(
 			existingCommercePriceList.getParentCommercePriceListId(),
 			newCommercePriceList.getParentCommercePriceListId());
@@ -311,10 +312,12 @@ public class CommercePriceListPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCommerceCurrencyId() throws Exception {
-		_persistence.countByCommerceCurrencyId(RandomTestUtil.nextLong());
+	public void testCountByCommerceCurrencyCode() throws Exception {
+		_persistence.countByCommerceCurrencyCode("");
 
-		_persistence.countByCommerceCurrencyId(0L);
+		_persistence.countByCommerceCurrencyCode("null");
+
+		_persistence.countByCommerceCurrencyCode((String)null);
 	}
 
 	@Test
@@ -476,7 +479,7 @@ public class CommercePriceListPersistenceTest {
 			"uuid", true, "externalReferenceCode", true, "commercePriceListId",
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"commerceCurrencyId", true, "parentCommercePriceListId", true,
+			"commerceCurrencyCode", true, "parentCommercePriceListId", true,
 			"catalogBasePriceList", true, "netPrice", true, "type", true,
 			"name", true, "priority", true, "displayDate", true,
 			"expirationDate", true, "lastPublishDate", true, "status", true,
@@ -839,7 +842,8 @@ public class CommercePriceListPersistenceTest {
 
 		commercePriceList.setModifiedDate(RandomTestUtil.nextDate());
 
-		commercePriceList.setCommerceCurrencyId(RandomTestUtil.nextLong());
+		commercePriceList.setCommerceCurrencyCode(
+			RandomTestUtil.randomString());
 
 		commercePriceList.setParentCommercePriceListId(
 			RandomTestUtil.nextLong());

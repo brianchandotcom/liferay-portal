@@ -77,6 +77,7 @@ public class CommerceReturnCommerceOrderStatusObjectValidationRuleEngineImplTest
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
 				_commerceInventoryWarehouseLocalService.
 					getCommerceInventoryWarehouses(
+						commerceOrder.getCommerceAccountId(),
 						commerceChannel.getGroupId(),
 						commerceOrderItem.getSku());
 

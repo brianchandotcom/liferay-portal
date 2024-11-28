@@ -5,9 +5,11 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.provider;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
@@ -102,6 +104,18 @@ public class CPDefinitionInfoItemFieldValuesProvider
 		}
 	}
 
+	private long _getAccountEntryId() throws PortalException {
+		CommerceContext commerceContext = CommerceContextThreadLocal.get();
+
+		if (commerceContext != null) {
+			AccountEntry accountEntry = commerceContext.getAccountEntry();
+
+			return accountEntry.getAccountEntryId();
+		}
+
+		return 0;
+	}
+
 	private String _getAvailabilityStatus(
 			CPInstance cpInstance, ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -132,8 +146,8 @@ public class CPDefinitionInfoItemFieldValuesProvider
 
 		if (displayAvailability) {
 			return _commerceInventoryEngine.getAvailabilityStatus(
-				cpInstance.getCompanyId(), cpInstance.getGroupId(),
-				commerceChannel.getGroupId(),
+				cpInstance.getCompanyId(), _getAccountEntryId(),
+				cpInstance.getGroupId(), commerceChannel.getGroupId(),
 				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance),
 				cpInstance.getSku(), StringPool.BLANK);
 		}
@@ -557,8 +571,9 @@ public class CPDefinitionInfoItemFieldValuesProvider
 						themeDisplay.getScopeGroupId());
 
 			return _commerceInventoryEngine.getStockQuantity(
-				cpInstance.getCompanyId(), cpInstance.getGroupId(),
-				commerceChannelGroupId, cpInstance.getSku(), StringPool.BLANK);
+				cpInstance.getCompanyId(), _getAccountEntryId(),
+				cpInstance.getGroupId(), commerceChannelGroupId,
+				cpInstance.getSku(), StringPool.BLANK);
 		}
 
 		return null;

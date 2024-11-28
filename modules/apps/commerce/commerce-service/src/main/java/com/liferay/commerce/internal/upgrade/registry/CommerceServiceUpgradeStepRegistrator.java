@@ -748,6 +748,13 @@ public class CommerceServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.dropColumns(
 				CommerceOrderModelImpl.TABLE_NAME, "commerceCurrencyId"));
 
+		registry.register(
+			"13.0.0", "13.0.1",
+			new com.liferay.commerce.internal.upgrade.v13_0_1.
+				ReturnsManagerRoleUpgradeProcess(
+					_companyLocalService, _resourcePermissionLocalService,
+					_roleLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

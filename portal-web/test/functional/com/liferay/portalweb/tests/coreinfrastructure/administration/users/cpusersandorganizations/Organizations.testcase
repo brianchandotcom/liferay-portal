@@ -215,8 +215,11 @@ definition {
 
 	@priority = 4
 	test AddOrganizationSitePrivatePage {
-		property custom.properties = "feature.flag.LPD-38869=true";
 		property testray.component.names = "Training";
+
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		var portalURL = PropsUtil.get("portal.url");
 

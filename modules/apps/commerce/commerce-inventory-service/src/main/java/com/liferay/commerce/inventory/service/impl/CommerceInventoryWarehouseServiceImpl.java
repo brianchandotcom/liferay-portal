@@ -195,7 +195,7 @@ public class CommerceInventoryWarehouseServiceImpl
 
 	@Override
 	public List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses(
-			long companyId, long groupId, boolean active)
+			long companyId, long accountEntryId, long groupId, boolean active)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
@@ -207,7 +207,8 @@ public class CommerceInventoryWarehouseServiceImpl
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryWarehouseLocalService.
-			getCommerceInventoryWarehouses(companyId, groupId, active);
+			getCommerceInventoryWarehouses(
+				companyId, accountEntryId, groupId, active);
 	}
 
 	@Override

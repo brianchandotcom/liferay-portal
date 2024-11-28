@@ -242,16 +242,10 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 		BuildData buildData = getBuildData();
 
-		String cohortName = buildData.getCohortName();
-
-		sb.append(
-			JenkinsResultsParserUtil.getMostAvailableMasterURL(
-				"http://" + cohortName + ".liferay.com", 1));
+		sb.append(getBaseInvocationURL(buildData.getCohortName()));
 
 		sb.append("/job/");
-
 		sb.append(jobName);
-
 		sb.append("/buildWithParameters?token=");
 
 		try {

@@ -96,38 +96,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LRAC-9063 | Test Summary: Delete button to manage user permissions"
-	@priority = 5
-	test DeleteButtonToDeleteUserPermissions {
-		task ("Create two new users") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToUserManagement();
-
-			ACSettings.addUser(userInvite = "user1@liferay.com");
-
-			ACSettings.addUser(userInvite = "user2@liferay.com");
-		}
-
-		task ("Delete the user by the icon beside and check if it was deleted") {
-			Click(
-				locator1 = "ACSettings#SELECT_USER_EMAIL",
-				userEmail = "user1@liferay.com");
-
-			Click(locator1 = "ACSettings#DELETE_USER");
-
-			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
-
-			ACSettings.assertUserNotPresent(userEmail = "user1@liferay.com");
-		}
-
-		task ("Delete the user through the icon at the top of the table and check if it was deleted") {
-			ACSettings.deleteUser(userDelete = "user2@liferay.com");
-
-			ACSettings.assertUserNotPresent(userEmail = "user2@liferay.com");
-		}
-	}
-
 	@description = "Automation ID: LRAC-9066 | Test Summary: Member cannot delete users"
 	@priority = 3
 	test MemberCantDeleteUser {

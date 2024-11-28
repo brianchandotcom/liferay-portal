@@ -409,7 +409,9 @@ definition {
 	@description = "This is a use case for LPS-120198. Link public and private pages to fragments."
 	@priority = 4
 	test MapPageToImageFragment {
-		property custom.properties = "feature.flag.LPD-38869=true";
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		task ("Add a public widget page") {
 			JSONLayout.addPublicLayout(

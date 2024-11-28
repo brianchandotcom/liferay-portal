@@ -5,6 +5,7 @@
 
 package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -84,6 +85,8 @@ public class MappedProductDTOConverter
 		CommerceContext commerceContext =
 			mappedProductDTOConverterContext.getCommerceContext();
 
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
+
 		CSDiagramEntry csDiagramEntry =
 			_csDiagramEntryLocalService.getCSDiagramEntry(
 				(Long)mappedProductDTOConverterContext.getId());
@@ -121,6 +124,7 @@ public class MappedProductDTOConverter
 
 		CPInstance firstAvailableReplacementCPInstance =
 			_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
+				accountEntry.getAccountEntryId(),
 				commerceContext.getCommerceChannelGroupId(), cpInstanceId);
 
 		return new MappedProduct() {
@@ -133,6 +137,7 @@ public class MappedProductDTOConverter
 						}
 
 						return _getAvailability(
+							accountEntry.getAccountEntryId(),
 							commerceContext.getCommerceChannelGroupId(),
 							mappedProductDTOConverterContext.getCompanyId(),
 							cpInstance,
@@ -389,8 +394,9 @@ public class MappedProductDTOConverter
 	}
 
 	private Availability _getAvailability(
-			long commerceChannelGroupId, long companyId, CPInstance cpInstance,
-			Locale locale, String sku, String unitOfMeasureKey)
+			long accountEntryId, long commerceChannelGroupId, long companyId,
+			CPInstance cpInstance, Locale locale, String sku,
+			String unitOfMeasureKey)
 		throws Exception {
 
 		Availability availability = new Availability();
@@ -398,8 +404,8 @@ public class MappedProductDTOConverter
 		if (_cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance)) {
 			if (Objects.equals(
 					_commerceInventoryEngine.getAvailabilityStatus(
-						cpInstance.getCompanyId(), cpInstance.getGroupId(),
-						commerceChannelGroupId,
+						cpInstance.getCompanyId(), accountEntryId,
+						cpInstance.getGroupId(), commerceChannelGroupId,
 						_cpDefinitionInventoryEngine.getMinStockQuantity(
 							cpInstance),
 						cpInstance.getSku(), unitOfMeasureKey),
@@ -420,7 +426,7 @@ public class MappedProductDTOConverter
 			availability.setStockQuantity(
 				() -> BigDecimalUtil.stripTrailingZeros(
 					_commerceInventoryEngine.getStockQuantity(
-						companyId, cpInstance.getGroupId(),
+						companyId, accountEntryId, cpInstance.getGroupId(),
 						commerceChannelGroupId, sku, unitOfMeasureKey)));
 		}
 

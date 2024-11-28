@@ -292,6 +292,48 @@ public class CommerceInventoryWarehouseRelLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel>
+			getAccountEntryCommerceInventoryWarehouseRels(
+				long commerceInventoryWarehouseId, String keywords, int start,
+				int end) {
+
+		return _commerceInventoryWarehouseRelLocalService.
+			getAccountEntryCommerceInventoryWarehouseRels(
+				commerceInventoryWarehouseId, keywords, start, end);
+	}
+
+	@Override
+	public int getAccountEntryCommerceInventoryWarehouseRelsCount(
+		long commerceInventoryWarehouseId, String keywords) {
+
+		return _commerceInventoryWarehouseRelLocalService.
+			getAccountEntryCommerceInventoryWarehouseRelsCount(
+				commerceInventoryWarehouseId, keywords);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel>
+			getAccountGroupCommerceInventoryWarehouseRels(
+				long commerceInventoryWarehouseId, String keywords, int start,
+				int end) {
+
+		return _commerceInventoryWarehouseRelLocalService.
+			getAccountGroupCommerceInventoryWarehouseRels(
+				commerceInventoryWarehouseId, keywords, start, end);
+	}
+
+	@Override
+	public int getAccountGroupCommerceInventoryWarehouseRelsCount(
+		long commerceInventoryWarehouseId, String keywords) {
+
+		return _commerceInventoryWarehouseRelLocalService.
+			getAccountGroupCommerceInventoryWarehouseRelsCount(
+				commerceInventoryWarehouseId, keywords);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -360,6 +402,33 @@ public class CommerceInventoryWarehouseRelLocalServiceWrapper
 				commerceInventoryWarehouseId, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel>
+			getCommerceInventoryWarehouseRels(
+				String className, long commerceInventoryWarehouseId) {
+
+		return _commerceInventoryWarehouseRelLocalService.
+			getCommerceInventoryWarehouseRels(
+				className, commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel>
+			getCommerceInventoryWarehouseRels(
+				String className, long commerceInventoryWarehouseId, int start,
+				int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.commerce.inventory.model.
+						CommerceInventoryWarehouseRel> orderByComparator) {
+
+		return _commerceInventoryWarehouseRelLocalService.
+			getCommerceInventoryWarehouseRels(
+				className, commerceInventoryWarehouseId, start, end,
+				orderByComparator);
+	}
+
 	/**
 	 * Returns the number of commerce inventory warehouse rels.
 	 *
@@ -378,6 +447,15 @@ public class CommerceInventoryWarehouseRelLocalServiceWrapper
 		return _commerceInventoryWarehouseRelLocalService.
 			getCommerceInventoryWarehouseRelsCount(
 				commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public int getCommerceInventoryWarehouseRelsCount(
+		String className, long commerceInventoryWarehouseId) {
+
+		return _commerceInventoryWarehouseRelLocalService.
+			getCommerceInventoryWarehouseRelsCount(
+				className, commerceInventoryWarehouseId);
 	}
 
 	@Override

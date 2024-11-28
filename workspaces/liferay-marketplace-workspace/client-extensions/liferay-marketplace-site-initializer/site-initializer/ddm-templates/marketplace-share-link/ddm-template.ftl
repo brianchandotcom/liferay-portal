@@ -1,10 +1,16 @@
 <style>
+	.copy-text {
+		color: #272833;
+		cursor: pointer;
+		font-size: 18px;
+	}
+
 	.help-and-support-link-icon {
 		color: rgb(133, 140, 148);
 	}
 </style>
 
-<a class="copy-text font-weight-bold ml-1 text-decoration-none text-primary" href="#copy-share-link" onclick="copyToClipboard(Liferay.ThemeDisplay.getLayoutURL())" style="align-items: center; color: #272833; cursor: pointer; display: flex; font-size: 18px; justify-content: space-between; text-decoration: none;">
+<a class="align-items-center copy-text d-flex font-weight-bold justify-content-between ml-1 text-decoration-none text-primary" href="#copy-share-link" onclick="copyToClipboard(Liferay.ThemeDisplay.getCanonicalURL())">
 	<span class="help-and-support-link-icon mr-1">
 		<@clay["icon"] symbol="link" />
 	</span>
@@ -23,24 +29,11 @@
 </a>
 
 <script>
-	var target = document.querySelector('[href="#copy-share-link"]');
-
 	function copyToClipboard(text) {
 		if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
 			navigator.clipboard.writeText(text)
 
 			Liferay.Util.openToast({message: "Copied link to the clipboard"})
 		};
-
-		if (target) {
-			target.popover('show');
-
-			setTimeout(
-				function() {
-					target.popover('hide')
-				},
-				1000
-			);
-		}
 	}
 </script>

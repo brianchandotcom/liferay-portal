@@ -311,11 +311,11 @@ public interface CommerceInventoryWarehouseLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses(
-		long companyId, long groupId, boolean active);
+		long companyId, long accountEntryId, long groupId, boolean active);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses(
-		long groupId, String sku);
+		long accountEntryId, long groupId, String sku);
 
 	/**
 	 * Returns the number of commerce inventory warehouses.

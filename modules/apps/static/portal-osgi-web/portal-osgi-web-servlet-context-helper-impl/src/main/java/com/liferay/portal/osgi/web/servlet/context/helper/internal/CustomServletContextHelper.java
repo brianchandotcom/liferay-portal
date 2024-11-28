@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebResourceCollectionDefinition;
 import com.liferay.portal.servlet.delegate.ServletContextDelegate;
@@ -23,8 +22,6 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 
 import java.util.Enumeration;
@@ -110,35 +107,7 @@ public class CustomServletContextHelper
 			name = StringPool.SLASH.concat(name);
 		}
 
-		URL url = null;
-
-		if (PropsValues.WORK_DIR_OVERRIDE_ENABLED &&
-			(name.endsWith(".css") || name.endsWith(".js"))) {
-
-			String overrideName = StringUtil.removeSubstring(
-				name, "/META-INF/resources");
-
-			File file = new File(_overrideDirName, overrideName);
-
-			if (file.exists()) {
-				try {
-					URI uri = file.toURI();
-
-					url = uri.toURL();
-				}
-				catch (MalformedURLException malformedURLException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Invalid override URL " + file.toString(),
-							malformedURLException);
-					}
-				}
-			}
-		}
-
-		if (url == null) {
-			url = BundleUtil.getResourceInBundleOrFragments(_bundle, name);
-		}
+		URL url = BundleUtil.getResourceInBundleOrFragments(_bundle, name);
 
 		if (url == null) {
 			url = BundleUtil.getResourceInBundleOrFragments(

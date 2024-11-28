@@ -11,7 +11,11 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.DateTimeInfoFieldType;
+import com.liferay.info.field.type.HTMLInfoFieldType;
+import com.liferay.info.field.type.LongTextInfoFieldType;
+import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -28,6 +32,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.text.Format;
 
@@ -184,6 +189,26 @@ public class ObjectEntryUtil {
 				properties.put(
 					infoField.getName(),
 					dateTimeFormatter.format((LocalDateTime)value));
+			}
+			else if ((Objects.equals(
+						HTMLInfoFieldType.INSTANCE,
+						infoField.getInfoFieldType()) ||
+					  Objects.equals(
+						  LongTextInfoFieldType.INSTANCE,
+						  infoField.getInfoFieldType()) ||
+					  Objects.equals(
+						  TextInfoFieldType.INSTANCE,
+						  infoField.getInfoFieldType())) &&
+					 infoField.isLocalizable() &&
+					 (value instanceof InfoLocalizedValue)) {
+
+				InfoLocalizedValue<String> infoLocalizedValue =
+					(InfoLocalizedValue<String>)value;
+
+				properties.put(
+					infoField.getName() + "_i18n",
+					LocalizedMapUtil.getI18nMap(
+						infoLocalizedValue.getValues()));
 			}
 			else {
 				properties.put(infoField.getName(), value);

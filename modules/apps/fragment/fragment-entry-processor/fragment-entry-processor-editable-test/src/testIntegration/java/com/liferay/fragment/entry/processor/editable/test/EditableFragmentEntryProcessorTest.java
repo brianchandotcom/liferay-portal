@@ -834,6 +834,8 @@ public class EditableFragmentEntryProcessorTest {
 			AnalyticsAttributesUtil.ACTION_IMPRESSION,
 			element.attr("data-analytics-asset-action"));
 		Assert.assertEquals(
+			"smallImage", element.attr("data-analytics-asset-field"));
+		Assert.assertEquals(
 			String.valueOf(journalArticle.getResourcePrimKey()),
 			element.attr("data-analytics-asset-id"));
 		Assert.assertEquals(
@@ -943,6 +945,8 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertEquals(
 			AnalyticsAttributesUtil.ACTION_VIEW,
 			element.attr("data-analytics-asset-action"));
+		Assert.assertEquals(
+			"title", element.attr("data-analytics-asset-field"));
 		Assert.assertEquals(
 			String.valueOf(journalArticle.getResourcePrimKey()),
 			element.attr("data-analytics-asset-id"));

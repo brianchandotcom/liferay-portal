@@ -638,7 +638,7 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 				WorkflowConstants.STATUS_APPROVED,
 				pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(
 				_classNameLocalService.getClassNameId(
 					cpDefinition.getModelClass()),
@@ -646,7 +646,7 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 				WorkflowConstants.STATUS_APPROVED);
 
 		return Page.of(
-			_toAttachments(cpAttachmentFileEntries), pagination, totalItems);
+			_toAttachments(cpAttachmentFileEntries), pagination, totalCount);
 	}
 
 	private Attachment _toAttachment(Long cpAttachmentFileEntryId)

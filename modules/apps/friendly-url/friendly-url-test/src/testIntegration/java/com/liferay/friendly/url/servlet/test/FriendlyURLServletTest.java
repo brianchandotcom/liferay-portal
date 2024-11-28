@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -708,6 +709,50 @@ public class FriendlyURLServletTest {
 
 		Assert.assertEquals(
 			_layout.getFriendlyURL(),
+			mockHttpServletResponse.getRedirectedUrl());
+
+		Assert.assertEquals(302, mockHttpServletResponse.getStatus());
+	}
+
+	@Test
+	public void testServiceRedirectWithForwardedRequest() throws Throwable {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		String oldFriendlyURL = layout.getFriendlyURL();
+
+		String oldPath = getPath(_group, layout);
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		layout = _layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
+			layout.isHidden(),
+			HashMapBuilder.put(
+				locale, StringPool.SLASH + RandomTestUtil.randomString()
+			).build(),
+			layout.isIconImage(), null, layout.getStyleBookEntryId(),
+			layout.getFaviconFileEntryId(), layout.getMasterLayoutPlid(),
+			ServiceContextTestUtil.getServiceContext());
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI, oldFriendlyURL);
+		mockHttpServletRequest.setPathInfo(oldPath);
+		mockHttpServletRequest.setRequestURI(
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING + oldPath);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			StringPool.SLASH + locale.getLanguage() + layout.getFriendlyURL(),
 			mockHttpServletResponse.getRedirectedUrl());
 
 		Assert.assertEquals(302, mockHttpServletResponse.getStatus());

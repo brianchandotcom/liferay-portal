@@ -15,13 +15,16 @@ import com.liferay.commerce.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys;
 import com.liferay.commerce.notification.constants.CommerceNotificationActionKeys;
+import com.liferay.commerce.payment.constants.CommercePaymentEntryActionKeys;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
 import com.liferay.commerce.pricing.constants.CommercePricingClassActionKeys;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.util.CommerceAccountRoleHelper;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -404,14 +407,25 @@ public class CommerceAccountRoleHelperImpl
 			}
 
 			companyResourceActionIds.put(
+				CommerceChannel.class.getName(),
+				new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
+			companyResourceActionIds.put(
 				CommercePaymentEntry.class.getName(),
 				new String[] {ActionKeys.VIEW});
 			companyResourceActionIds.put(
 				PortletKeys.PORTAL,
 				new String[] {ActionKeys.VIEW_CONTROL_PANEL});
 			companyResourceActionIds.put(
+				"com.liferay.commerce.currency",
+				new String[] {
+					CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES
+				});
+			companyResourceActionIds.put(
 				"com.liferay.commerce.order",
 				new String[] {CommerceOrderActionKeys.VIEW_COMMERCE_ORDERS});
+			companyResourceActionIds.put(
+				"com.liferay.commerce.payment",
+				new String[] {CommercePaymentEntryActionKeys.ADD_REFUND});
 			companyResourceActionIds.put(
 				"com.liferay.commerce.return",
 				new String[] {CommerceActionKeys.MANAGE_RETURNS});
@@ -492,6 +506,7 @@ public class CommerceAccountRoleHelperImpl
 	}
 
 	private static final String[] _RETURNS_MANAGER_CONTROL_PANEL_PORTLET_IDS = {
+		CommercePortletKeys.COMMERCE_PAYMENT,
 		CommercePortletKeys.COMMERCE_RETURN
 	};
 

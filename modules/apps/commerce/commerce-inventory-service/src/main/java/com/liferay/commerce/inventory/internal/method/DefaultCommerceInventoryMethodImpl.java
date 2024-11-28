@@ -129,13 +129,14 @@ public class DefaultCommerceInventoryMethodImpl
 
 	@Override
 	public String getAvailabilityStatus(
-		long companyId, long commerceChannelGroupId,
+		long companyId, long accountEntryId, long commerceChannelGroupId,
 		BigDecimal minStockQuantity, String sku, String unitOfMeasureKey) {
 
 		return _getAvailabilityStatus(
 			minStockQuantity,
 			getStockQuantity(
-				companyId, commerceChannelGroupId, sku, unitOfMeasureKey));
+				companyId, accountEntryId, commerceChannelGroupId, sku,
+				unitOfMeasureKey));
 	}
 
 	@Override
@@ -153,12 +154,13 @@ public class DefaultCommerceInventoryMethodImpl
 
 	@Override
 	public BigDecimal getStockQuantity(
-		long companyId, long commerceChannelGroupId, String sku,
-		String unitOfMeasureKey) {
+		long companyId, long accountEntryId, long commerceChannelGroupId,
+		String sku, String unitOfMeasureKey) {
 
 		BigDecimal stockQuantity =
 			_commerceInventoryWarehouseItemService.getStockQuantity(
-				companyId, commerceChannelGroupId, sku, unitOfMeasureKey);
+				companyId, accountEntryId, commerceChannelGroupId, sku,
+				unitOfMeasureKey);
 
 		return stockQuantity.subtract(
 			_commerceInventoryBookedQuantityLocalService.

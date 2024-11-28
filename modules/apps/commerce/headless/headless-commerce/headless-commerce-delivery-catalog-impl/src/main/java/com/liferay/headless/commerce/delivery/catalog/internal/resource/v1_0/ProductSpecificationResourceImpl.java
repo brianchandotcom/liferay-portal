@@ -91,14 +91,14 @@ public class ProductSpecificationResourceImpl
 						pagination.getStartPosition(),
 						pagination.getEndPosition(), null);
 
-		int totalItems =
+		int totalCount =
 			_cpDefinitionSpecificationOptionValueLocalService.
 				getCPDefinitionSpecificationOptionValuesCount(
 					cpDefinition.getCPDefinitionId());
 
 		return Page.of(
 			_toProductSpecifications(cpDefinitionSpecificationOptionValues),
-			pagination, totalItems);
+			pagination, totalCount);
 	}
 
 	private List<ProductSpecification> _toProductSpecifications(

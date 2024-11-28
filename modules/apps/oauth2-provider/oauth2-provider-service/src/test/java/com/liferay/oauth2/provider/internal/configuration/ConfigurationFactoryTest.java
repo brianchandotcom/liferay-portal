@@ -249,6 +249,12 @@ public class ConfigurationFactoryTest {
 		);
 
 		Mockito.when(
+			_userLocalService.getUserById(Mockito.anyLong(), Mockito.anyLong())
+		).thenReturn(
+			_user
+		);
+
+		Mockito.when(
 			_userLocalService.getUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(

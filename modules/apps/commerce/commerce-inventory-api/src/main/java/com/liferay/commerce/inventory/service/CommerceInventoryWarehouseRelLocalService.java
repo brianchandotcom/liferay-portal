@@ -219,6 +219,26 @@ public interface CommerceInventoryWarehouseRelLocalService
 		String className, long classPK, long commerceInventoryWarehouseId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceInventoryWarehouseRel>
+		getAccountEntryCommerceInventoryWarehouseRels(
+			long commerceInventoryWarehouseId, String keywords, int start,
+			int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountEntryCommerceInventoryWarehouseRelsCount(
+		long commerceInventoryWarehouseId, String keywords);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceInventoryWarehouseRel>
+		getAccountGroupCommerceInventoryWarehouseRels(
+			long commerceInventoryWarehouseId, String keywords, int start,
+			int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountGroupCommerceInventoryWarehouseRelsCount(
+		long commerceInventoryWarehouseId, String keywords);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -258,6 +278,18 @@ public interface CommerceInventoryWarehouseRelLocalService
 			long commerceInventoryWarehouseId, int start, int end,
 			OrderByComparator<CommerceInventoryWarehouseRel> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceInventoryWarehouseRel>
+		getCommerceInventoryWarehouseRels(
+			String className, long commerceInventoryWarehouseId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceInventoryWarehouseRel>
+		getCommerceInventoryWarehouseRels(
+			String className, long commerceInventoryWarehouseId, int start,
+			int end,
+			OrderByComparator<CommerceInventoryWarehouseRel> orderByComparator);
+
 	/**
 	 * Returns the number of commerce inventory warehouse rels.
 	 *
@@ -269,6 +301,10 @@ public interface CommerceInventoryWarehouseRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceInventoryWarehouseRelsCount(
 		long commerceInventoryWarehouseId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceInventoryWarehouseRelsCount(
+		String className, long commerceInventoryWarehouseId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceInventoryWarehouseRel>

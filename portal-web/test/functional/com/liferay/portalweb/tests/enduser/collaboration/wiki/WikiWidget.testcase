@@ -67,7 +67,9 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanNavigateToOtherPageByEditorLink {
-		property custom.properties = "feature.flag.LPD-38869=true";
+		task ("Enable private pages") {
+			PagesAdmin.enablePrivatePages();
+		}
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Guest",

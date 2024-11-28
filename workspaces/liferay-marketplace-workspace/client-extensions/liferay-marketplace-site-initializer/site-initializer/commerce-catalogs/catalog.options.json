@@ -1,31 +1,6 @@
 [
 	{
 		"ddmFormFieldTypeName": "radio",
-		"description": "Specifies if a trial exists for a given app or solution submission.",
-		"externalReferenceCode": "MKT-OPTION-TRIAL",
-		"facetable": true,
-		"fieldType": "radio",
-		"key": "trial",
-		"name": "Trial",
-		"required": true,
-		"skuContributor": true,
-		"values": [
-			{
-				"externalReferenceCode": "NO-VALUE",
-				"key": "no",
-				"name": "No",
-				"priority": 0
-			},
-			{
-				"externalReferenceCode": "YES-VALUE",
-				"key": "yes",
-				"name": "Yes",
-				"priority": 1
-			}
-		]
-	},
-	{
-		"ddmFormFieldTypeName": "radio",
 		"description": "Specifies if a acquision of an app.",
 		"externalReferenceCode": "MKT-OPTION-DXP-USAGE",
 		"facetable": false,
@@ -51,6 +26,30 @@
 				"key": "trial",
 				"name": "Trial",
 				"priority": 2
+			}
+		]
+	},
+	{
+		"ddmFormFieldTypeName": "radio",
+		"description": "Specifies if a acquision of an app.",
+		"externalReferenceCode": "MKT-OPTION-CLOUD-LICENSE-USAGE",
+		"facetable": false,
+		"key": "cloud-license-usage-type",
+		"name": "Cloud License Usage Type",
+		"required": true,
+		"skuContributor": true,
+		"values": [
+			{
+				"externalReferenceCode": "STANDARD",
+				"key": "standard",
+				"name": "Standard",
+				"priority": 0
+			},
+			{
+				"externalReferenceCode": "TRIAL",
+				"key": "trial",
+				"name": "Trial",
+				"priority": 1
 			}
 		]
 	},

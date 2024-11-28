@@ -13,6 +13,7 @@ import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -59,6 +60,15 @@ public class BaseConfigurationFactoryTest {
 			).put(
 				"companyId", companyId
 			).build();
+
+		_testGetFactoryConfiguration(
+			OAuth2ProviderApplicationHeadlessServerConfiguration.class.
+				getName(),
+			properties,
+			_userLocalService.getUserByScreenName(
+				companyId, UserConstants.SCREEN_NAME_DEFAULT_SERVICE_ACCOUNT));
+
+		properties.put("userAccountScreenName", "test");
 
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationHeadlessServerConfiguration.class.

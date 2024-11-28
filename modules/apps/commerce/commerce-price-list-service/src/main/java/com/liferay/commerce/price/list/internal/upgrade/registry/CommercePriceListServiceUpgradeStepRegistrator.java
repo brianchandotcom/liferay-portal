@@ -13,9 +13,11 @@ import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.util.CommercePric
 import com.liferay.commerce.price.list.internal.upgrade.v2_2_0.util.CommercePriceListOrderTypeRelTable;
 import com.liferay.commerce.price.list.model.impl.CommercePriceEntryModelImpl;
 import com.liferay.commerce.price.list.model.impl.CommercePriceListAccountRelModelImpl;
+import com.liferay.commerce.price.list.model.impl.CommercePriceListModelImpl;
 import com.liferay.commerce.price.list.model.impl.CommerceTierPriceEntryModelImpl;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -159,6 +161,20 @@ public class CommercePriceListServiceUpgradeStepRegistrator
 			"2.8.1", "2.9.0",
 			UpgradeProcessFactory.addColumns(
 				"CommercePriceEntry", "pricingQuantity BIGDECIMAL null"));
+
+		registry.register(
+			"2.9.0", "3.0.0",
+			UpgradeProcessFactory.addColumns(
+				CommercePriceListModelImpl.TABLE_NAME,
+				"commerceCurrencyCode VARCHAR(75) null"),
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"update CommercePriceList set commerceCurrencyCode = ",
+					"(select code_ from CommerceCurrency where ",
+					"CommerceCurrency.commerceCurrencyId = ",
+					"CommercePriceList.commerceCurrencyId)")),
+			UpgradeProcessFactory.dropColumns(
+				CommercePriceListModelImpl.TABLE_NAME, "commerceCurrencyId"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce price list upgrade step registrator finished");

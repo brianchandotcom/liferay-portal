@@ -30,6 +30,8 @@ public class KaleoDefinitionTable extends BaseTable<KaleoDefinitionTable> {
 	public final Column<KaleoDefinitionTable, Long> ctCollectionId =
 		createColumn(
 			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<KaleoDefinitionTable, String> uuid = createColumn(
+		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<KaleoDefinitionTable, String> externalReferenceCode =
 		createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,

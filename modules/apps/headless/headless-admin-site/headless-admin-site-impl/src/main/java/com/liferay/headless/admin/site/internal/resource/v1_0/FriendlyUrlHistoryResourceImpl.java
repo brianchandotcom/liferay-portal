@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationModel;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.friendly.url.util.comparator.FriendlyURLEntryLocalizationComparator;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
@@ -22,6 +23,7 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldId;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,7 +55,8 @@ public class FriendlyUrlHistoryResourceImpl
 	public FriendlyUrlHistory
 			getSiteSiteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory(
 				String siteExternalReferenceCode,
-				String displayPageTemplateExternalReferenceCode)
+				@NestedFieldId(value = "externalReferenceCode") String
+					displayPageTemplateExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -82,7 +86,8 @@ public class FriendlyUrlHistoryResourceImpl
 	public FriendlyUrlHistory
 			getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode)
+				@NestedFieldId(value = "externalReferenceCode") String
+					sitePageExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -117,7 +122,8 @@ public class FriendlyUrlHistoryResourceImpl
 	public FriendlyUrlHistory
 			getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory(
 				String siteExternalReferenceCode,
-				String utilityPageExternalReferenceCode)
+				@NestedFieldId(value = "externalReferenceCode") String
+					utilityPageExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
@@ -145,16 +151,18 @@ public class FriendlyUrlHistoryResourceImpl
 			layout.isPrivateLayout());
 
 		for (String languageId : layout.getAvailableLanguageIds()) {
-			jsonObject.put(
-				LocaleUtil.toBCP47LanguageId(languageId),
-				JSONUtil.toJSONArray(
-					_friendlyURLEntryLocalService.
-						getFriendlyURLEntryLocalizations(
-							layout.getGroupId(), classNameId, layout.getPlid(),
-							languageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-							_friendlyURLEntryLocalizationComparator),
-					friendlyURLEntryLocalization ->
-						friendlyURLEntryLocalization.getUrlTitle()));
+			JSONArray jsonArray = JSONUtil.toJSONArray(
+				_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
+					layout.getGroupId(), classNameId, layout.getPlid(),
+					languageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					_friendlyURLEntryLocalizationComparator),
+				FriendlyURLEntryLocalizationModel::getUrlTitle);
+
+			if (jsonArray.length() == 0) {
+				continue;
+			}
+
+			jsonObject.put(LocaleUtil.toBCP47LanguageId(languageId), jsonArray);
 		}
 
 		return jsonObject;

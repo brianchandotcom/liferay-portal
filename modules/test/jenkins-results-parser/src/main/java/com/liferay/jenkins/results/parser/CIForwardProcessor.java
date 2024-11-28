@@ -138,7 +138,7 @@ public class CIForwardProcessor {
 
 						NotificationUtil.sendSlackNotification(
 							sb.toString(), "#ci-notifications",
-							"Pull Request Successfully Forwarded.");
+							"Pull request successfully forwarded");
 
 						return pullRequestURL;
 					}
@@ -178,7 +178,7 @@ public class CIForwardProcessor {
 
 				NotificationUtil.sendSlackNotification(
 					sb.toString(), "#ci-notifications", ":liferay-ci:",
-					"Unable to forward pull request. ", "Liferay CI");
+					"Unable to forward pull request", "Liferay CI");
 
 				throw new GitHubSecondaryRateLimitRuntimeException(
 					gitHubSecondaryRateLimitRuntimeException.getGitHubApiUrl(),

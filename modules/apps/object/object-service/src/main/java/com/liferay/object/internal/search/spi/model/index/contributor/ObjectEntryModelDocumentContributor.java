@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.FieldArray;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -102,18 +103,16 @@ public class ObjectEntryModelDocumentContributor
 	}
 
 	private void _contribute(
-		Document document, FieldArray fieldArray,
-		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-		ObjectField objectField, StringBundler sb,
+		Document document, FieldArray fieldArray, String fieldName,
+		Object fieldValue, String locale, ObjectDefinition objectDefinition,
+		ObjectEntry objectEntry, ObjectField objectField, StringBundler sb,
 		Map<String, Serializable> values) {
 
 		if (!objectField.isIndexed()) {
 			return;
 		}
 
-		Object value = values.get(objectField.getName());
-
-		if (value == null) {
+		if (fieldValue == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
@@ -125,8 +124,6 @@ public class ObjectEntryModelDocumentContributor
 			return;
 		}
 
-		String objectFieldName = objectField.getName();
-
 		if (StringUtil.equals(
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
@@ -134,19 +131,21 @@ public class ObjectEntryModelDocumentContributor
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
-			value = ObjectEntryValuesUtil.getValueString(objectField, values);
+			fieldValue = ObjectEntryValuesUtil.getValueString(
+				objectField, values);
 		}
 		else if (StringUtil.equals(
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL)) {
 
-			value = BigDecimalUtil.stripTrailingZeros((BigDecimal)value);
+			fieldValue = BigDecimalUtil.stripTrailingZeros(
+				(BigDecimal)fieldValue);
 		}
 		else if (Objects.equals(
 					objectDefinition.getAccountEntryRestrictedObjectFieldId(),
 					objectField.getObjectFieldId())) {
 
-			Long accountEntryId = (Long)value;
+			Long accountEntryId = (Long)fieldValue;
 
 			document.addKeyword(
 				"accountEntryRestrictedObjectFieldValue", accountEntryId);
@@ -160,81 +159,82 @@ public class ObjectEntryModelDocumentContributor
 					Long.class));
 		}
 
-		String valueString = String.valueOf(value);
+		String valueString = String.valueOf(fieldValue);
 
 		if (objectField.isIndexedAsKeyword()) {
 			_addField(
-				fieldArray, objectFieldName, "value_keyword",
+				fieldArray, fieldName, "value_keyword",
 				StringUtil.lowerCase(valueString));
 
-			_appendToContent(sb, objectFieldName, valueString);
+			_appendToContent(sb, fieldName, valueString);
 		}
-		else if (value instanceof BigDecimal) {
-			_addField(fieldArray, objectFieldName, "value_double", valueString);
+		else if (fieldValue instanceof BigDecimal) {
+			_addField(fieldArray, fieldName, "value_double", valueString);
 
-			_appendToContent(sb, objectFieldName, valueString);
+			_appendToContent(sb, fieldName, valueString);
 		}
-		else if (value instanceof Boolean) {
+		else if (fieldValue instanceof Boolean) {
+			_addField(fieldArray, fieldName, "value_boolean", valueString);
 			_addField(
-				fieldArray, objectFieldName, "value_boolean", valueString);
+				fieldArray, fieldName, "value_keyword",
+				_translate((Boolean)fieldValue));
+
+			_appendToContent(sb, fieldName, valueString);
+		}
+		else if (fieldValue instanceof Date) {
 			_addField(
-				fieldArray, objectFieldName, "value_keyword",
-				_translate((Boolean)value));
+				fieldArray, fieldName, "value_date",
+				_getDateString(fieldValue));
 
-			_appendToContent(sb, objectFieldName, valueString);
+			_appendToContent(sb, fieldName, _getDateString(fieldValue));
 		}
-		else if (value instanceof Date) {
-			_addField(
-				fieldArray, objectFieldName, "value_date",
-				_getDateString(value));
+		else if (fieldValue instanceof Double) {
+			_addField(fieldArray, fieldName, "value_double", valueString);
 
-			_appendToContent(sb, objectFieldName, _getDateString(value));
+			_appendToContent(sb, fieldName, valueString);
 		}
-		else if (value instanceof Double) {
-			_addField(fieldArray, objectFieldName, "value_double", valueString);
+		else if (fieldValue instanceof Integer) {
+			_addField(fieldArray, fieldName, "value_integer", valueString);
 
-			_appendToContent(sb, objectFieldName, valueString);
+			_appendToContent(sb, fieldName, valueString);
 		}
-		else if (value instanceof Integer) {
-			_addField(
-				fieldArray, objectFieldName, "value_integer", valueString);
+		else if (fieldValue instanceof Long) {
+			_addField(fieldArray, fieldName, "value_long", valueString);
 
-			_appendToContent(sb, objectFieldName, valueString);
+			_appendToContent(sb, fieldName, valueString);
 		}
-		else if (value instanceof Long) {
-			_addField(fieldArray, objectFieldName, "value_long", valueString);
-
-			_appendToContent(sb, objectFieldName, valueString);
-		}
-		else if (value instanceof String) {
+		else if (fieldValue instanceof String) {
 			if (Validator.isBlank(objectField.getIndexedLanguageId())) {
+				_addField(fieldArray, fieldName, "value_text", valueString);
+			}
+			else if (objectField.isLocalized()) {
 				_addField(
-					fieldArray, objectFieldName, "value_text", valueString);
+					fieldArray, fieldName, "value_" + locale, valueString);
 			}
 			else {
 				_addField(
-					fieldArray, objectFieldName,
+					fieldArray, fieldName,
 					"value_" + objectField.getIndexedLanguageId(), valueString);
 			}
 
 			_addField(
-				fieldArray, objectFieldName, "value_keyword_lowercase",
+				fieldArray, fieldName, "value_keyword_lowercase",
 				_getSortableValue(valueString));
 
-			_appendToContent(sb, objectFieldName, valueString);
+			_appendToContent(sb, fieldName, valueString);
 		}
-		else if (value instanceof byte[]) {
+		else if (fieldValue instanceof byte[]) {
 			_addField(
-				fieldArray, objectFieldName, "value_binary",
-				Base64.encode((byte[])value));
+				fieldArray, fieldName, "value_binary",
+				Base64.encode((byte[])fieldValue));
 		}
 		else {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
 						"Object entry ", objectEntry.getObjectEntryId(),
-						" has object field \"", objectFieldName,
-						"\" with unsupported value ", value));
+						" has object field \"", fieldName,
+						"\" with unsupported value ", fieldValue));
 			}
 		}
 	}
@@ -280,9 +280,33 @@ public class ObjectEntryModelDocumentContributor
 		StringBundler sb = new StringBundler(objectFields.size() * 4);
 
 		for (ObjectField objectField : objectFields) {
-			_contribute(
-				document, fieldArray, objectDefinition, objectEntry,
-				objectField, sb, values);
+			if (objectField.isLocalized()) {
+				Map<String, String> localizedValues =
+					(Map<String, String>)values.get(
+						objectField.getI18nObjectFieldName());
+
+				if (localizedValues.isEmpty()) {
+					continue;
+				}
+
+				for (Map.Entry<String, String> localeMap :
+						localizedValues.entrySet()) {
+
+					_contribute(
+						document, fieldArray, objectField.getName(),
+						localizedValues.get(localeMap.getKey()),
+						LocaleUtil.fromLanguageId(
+							localeMap.getKey(), true, false
+						).toString(),
+						objectDefinition, objectEntry, objectField, sb, values);
+				}
+			}
+			else {
+				_contribute(
+					document, fieldArray, objectField.getName(),
+					values.get(objectField.getName()), null, objectDefinition,
+					objectEntry, objectField, sb, values);
+			}
 		}
 
 		if (sb.index() > 0) {

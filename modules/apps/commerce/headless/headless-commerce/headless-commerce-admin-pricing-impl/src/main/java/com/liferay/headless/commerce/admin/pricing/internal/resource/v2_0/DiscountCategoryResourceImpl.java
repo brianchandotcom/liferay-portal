@@ -75,14 +75,14 @@ public class DiscountCategoryResourceImpl
 				AssetCategory.class.getName(), pagination.getStartPosition(),
 				pagination.getEndPosition(), null);
 
-		int totalItems =
+		int totalCount =
 			_commerceDiscountRelService.getCommerceDiscountRelsCount(
 				commerceDiscount.getCommerceDiscountId(),
 				AssetCategory.class.getName());
 
 		return Page.of(
 			_toDiscountCategories(commerceDiscountRels), pagination,
-			totalItems);
+			totalCount);
 	}
 
 	@NestedField(parentClass = Discount.class, value = "discountCategories")
@@ -97,13 +97,13 @@ public class DiscountCategoryResourceImpl
 				id, search, pagination.getStartPosition(),
 				pagination.getEndPosition());
 
-		int totalItems =
+		int totalCount =
 			_commerceDiscountRelService.getCategoriesByCommerceDiscountIdCount(
 				id, search);
 
 		return Page.of(
 			_toDiscountCategories(commerceDiscountRels), pagination,
-			totalItems);
+			totalCount);
 	}
 
 	@Override

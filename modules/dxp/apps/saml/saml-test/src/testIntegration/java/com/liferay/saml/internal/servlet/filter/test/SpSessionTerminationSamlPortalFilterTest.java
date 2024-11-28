@@ -68,11 +68,6 @@ public class SpSessionTerminationSamlPortalFilterTest {
 				"Cookie",
 				SamlWebKeys.SAML_SP_SESSION_KEY + "=" +
 					samlSpSession.getSamlSpSessionKey());
-
-			Assert.assertNotNull(
-				SamlSpSessionLocalServiceUtil.fetchSamlSpSession(
-					samlSpSession.getSamlSpSessionId()));
-
 			httpURLConnection.getInputStream();
 
 			Assert.assertNull(

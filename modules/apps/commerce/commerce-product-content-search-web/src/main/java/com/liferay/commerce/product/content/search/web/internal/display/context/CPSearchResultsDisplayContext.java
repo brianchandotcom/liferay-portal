@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -251,6 +252,11 @@ public class CPSearchResultsDisplayContext {
 		}
 
 		return CPSearchResultsConstants.SORT_OPTION_DEFAULT;
+	}
+
+	public String getOrderByColMessage() throws PortalException {
+		return LanguageUtil.format(
+			_httpServletRequest, "sort-by-colon-x", getOrderByCol(), true);
 	}
 
 	public int getPaginationDelta() {

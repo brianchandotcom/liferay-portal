@@ -8,6 +8,7 @@ package com.liferay.object.internal.model.listener;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -48,6 +49,10 @@ public class UserModelListener extends BaseModelListener<User> {
 				defaultServiceAccountUser.getUserId());
 
 			_objectFieldLocalService.updateUserId(
+				user.getCompanyId(), user.getUserId(),
+				defaultServiceAccountUser.getUserId());
+
+			_objectRelationshipLocalService.updateUserId(
 				user.getCompanyId(), user.getUserId(),
 				defaultServiceAccountUser.getUserId());
 		}
@@ -111,6 +116,9 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry

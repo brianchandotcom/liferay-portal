@@ -34,24 +34,25 @@ const GET_ACCOUNT_SUBSCRIPTIONS = gql`
 	}
 `;
 
-export function useGetAccountSubscriptions(
-	options = {
-		filter: '',
-		notifyOnNetworkStatusChange: false,
-		page: 1,
-		pageSize: 20,
-		skip: false,
-	}
-) {
+interface IQueryOptions {
+	filter?: string;
+	notifyOnNetworkStatusChange?: boolean;
+	page?: number;
+	pageSize?: number;
+	skip?: boolean;
+}
+
+export function useGetAccountSubscriptions(options: IQueryOptions) {
 	return useQuery(GET_ACCOUNT_SUBSCRIPTIONS, {
 		fetchPolicy: 'cache-and-network',
 		nextFetchPolicy: 'cache-first',
-		notifyOnNetworkStatusChange: options.notifyOnNetworkStatusChange,
-		skip: options.skip,
+		notifyOnNetworkStatusChange:
+			options?.notifyOnNetworkStatusChange || false,
+		skip: options?.skip || false,
 		variables: {
-			filter: options.filter || '',
-			page: options.page || 1,
-			pageSize: options.pageSize || 20,
+			filter: options?.filter || '',
+			page: options?.page || 1,
+			pageSize: options?.pageSize || 20,
 		},
 	});
 }

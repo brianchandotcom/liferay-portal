@@ -366,6 +366,10 @@ function setMovementText({
 	sources: MillerColumnItem[];
 	target: MovementTarget;
 }) {
+	if (!target) {
+		return;
+	}
+
 	const targetItem = getMillerColumnsItem(
 		target?.columnIndex,
 		target?.itemIndex,
@@ -410,8 +414,8 @@ function setMovementText({
 }
 
 function getMillerColumnsItem(
-	columnIndex: number | undefined,
-	itemIndex: number | undefined,
+	columnIndex: number,
+	itemIndex: number,
 	items: Map<string, MillerColumnItem>
 ) {
 	return Array.from(items.values()).find(

@@ -5698,6 +5698,10 @@ public class DataFactory {
 		String paragraphRenderNamespace = StringUtil.randomId();
 
 		for (ObjectFieldModel objectFieldModel : objectFieldModels) {
+			if (objectFieldModel.isSystem()) {
+				continue;
+			}
+
 			String editValue;
 
 			if (StringUtil.equals(

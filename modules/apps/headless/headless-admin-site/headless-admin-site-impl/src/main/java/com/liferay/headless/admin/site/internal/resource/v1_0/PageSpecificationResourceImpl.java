@@ -128,6 +128,16 @@ public class PageSpecificationResourceImpl
 						true, true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode));
 
+		if (!Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.BASIC,
+				layoutPageTemplateEntry.getType()) &&
+			!Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
+				layoutPageTemplateEntry.getType())) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		return Page.of(
 			_toPageSpecifications(
 				_layoutLocalService.getLayout(

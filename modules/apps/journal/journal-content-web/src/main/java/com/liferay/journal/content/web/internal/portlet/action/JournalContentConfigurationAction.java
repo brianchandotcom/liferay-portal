@@ -337,7 +337,7 @@ public class JournalContentConfigurationAction
 				_ddmTemplateLocalService.
 					fetchDDMTemplateByExternalReferenceCode(
 						ddmTemplateExternalReferenceCode,
-						_getArticleGroupId(portletRequest));
+						_getArticleGroupId(portletRequest), true);
 		}
 		else {
 			String ddmTemplateKey = getParameter(

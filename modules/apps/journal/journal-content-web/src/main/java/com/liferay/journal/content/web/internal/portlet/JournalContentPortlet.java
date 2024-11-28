@@ -217,7 +217,7 @@ public class JournalContentPortlet extends MVCPortlet {
 						_ddmTemplateLocalService.
 							fetchDDMTemplateByExternalReferenceCode(
 								ddmTemplateExternalReferenceCode,
-								article.getGroupId());
+								article.getGroupId(), true);
 
 					if (ddmTemplate != null) {
 						ddmTemplateKey = ddmTemplate.getTemplateKey();

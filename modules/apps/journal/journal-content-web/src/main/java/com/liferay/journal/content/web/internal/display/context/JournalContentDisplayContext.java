@@ -405,7 +405,7 @@ public class JournalContentDisplayContext {
 					_ddmTemplateLocalService.
 						fetchDDMTemplateByExternalReferenceCode(
 							ddmTemplateExternalReferenceCode,
-							_themeDisplay.getScopeGroupId());
+							_themeDisplay.getScopeGroupId(), true);
 
 				if (ddmTemplate != null) {
 					ddmTemplateKey = ddmTemplate.getTemplateKey();

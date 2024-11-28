@@ -9,6 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageSpecificationResource;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -62,6 +63,13 @@ public class PageSpecificationResourceImpl
 					GroupUtil.getGroupId(
 						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode));
+
+		if (!Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+				layoutPageTemplateEntry.getType())) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		return Page.of(
 			_toPageSpecifications(

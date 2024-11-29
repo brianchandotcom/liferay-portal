@@ -851,6 +851,200 @@ test.describe('Date and Time Fragment', () => {
 
 test.describe('File Upload Fragment', () => {
 	test(
+		'Cannot clear object entry’s mandatory attached file via associated display page',
+		{
+			tag: '@LPS-191357',
+		},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
+
+			// Create a Display page for the all fields object
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentType: 'All Fields',
+				name: displayPageTemplateName,
+			});
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			// Add a Form Container and map it to file upload field
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Form Container'
+			);
+
+			const fragmentId =
+				await pageEditorPage.getFragmentId('Form Container');
+
+			await pageEditorPage.mapFormFragment(
+				fragmentId,
+				'All Fields (Default)',
+				['Computer File']
+			);
+
+			// Mark upload file as required
+
+			const dptFileUploadId =
+				await pageEditorPage.getFragmentId('File Upload');
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Mark as Required',
+				fragmentId: dptFileUploadId,
+				tab: 'General',
+				value: true,
+			});
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Mark display page as default
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await displayPageTemplatesPage.markAsDefault(
+				displayPageTemplateName
+			);
+
+			// Create a page with a form fragment with a file upload fragment
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					ALL_FIELDS_OBJECT_ERC
+				)
+			).body;
+
+			const fileUploadId = getRandomString();
+
+			const fileUploadDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_fileUpload',
+				},
+				id: fileUploadId,
+				key: 'INPUTS-file-upload',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+				objectDefinitionClassName,
+				pageElements: [fileUploadDefinition, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Mark upload file as required
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Mark as Required',
+				fragmentId: fileUploadId,
+				tab: 'General',
+				value: true,
+			});
+
+			// Change redirect to display page after submit
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Success Action',
+				fragmentId: formId,
+				tab: 'General',
+				value: 'Go to Entry Display Page',
+			});
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Display Page',
+				fragmentId: formId,
+				tab: 'General',
+				value: 'Default',
+			});
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Select file from computer
+
+			const fileChooserPromise = page.waitForEvent('filechooser');
+
+			const fileUploadInput = page.locator('.file-upload');
+
+			await fileUploadInput
+				.getByText('Select File', {exact: true})
+				.click();
+
+			const fileChooser = await fileChooserPromise;
+
+			await fileChooser.setFiles(
+				path.join(__dirname, '/dependencies/image.jpg')
+			);
+
+			await expect(fileUploadInput.getByText('image')).toBeVisible();
+
+			// Submit form
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			// Assert form is submitted and user is redirected to display page
+
+			await expect(page.getByText('Computer File')).toBeVisible();
+
+			await expect(fileUploadInput.getByText('image')).toBeVisible();
+
+			// Assert form is not submitted if mandatory field is cleared
+
+			await page.locator('[id*="file-upload-remove-button"]').click();
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			await expect(page.getByText('Computer File')).toBeVisible();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).not.toBeVisible();
+		}
+	);
+
+	test(
 		'Configuration',
 		{
 			tag: '@LPS-157806',

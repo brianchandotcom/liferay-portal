@@ -879,11 +879,11 @@ public class JournalTransformerTest {
 
 	private void _testCreateTemplateNodeTextDDMFormFieldWithHTML() {
 		_testCreateTemplateNodeTextDDMFormField(
-			"<img src=x onerror=alert(document.cookie)>");
+			"<img src=\"x\" onerror=alert(document.cookie)>");
 	}
 
 	private void _testCreateTemplateNodeTextDDMFormFieldWithPlainText() {
-		_testCreateTemplateNodeTextDDMFormField("plain text");
+		_testCreateTemplateNodeTextDDMFormField(RandomTestUtil.randomString());
 	}
 
 	private static Object _journalTransformer;

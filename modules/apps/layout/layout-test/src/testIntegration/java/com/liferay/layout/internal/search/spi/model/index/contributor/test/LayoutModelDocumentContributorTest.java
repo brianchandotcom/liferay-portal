@@ -168,6 +168,7 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-43082")
 	public void testReindexPublishedDraftLayoutWithLanguageKeyLocalization()
 		throws Exception {
 

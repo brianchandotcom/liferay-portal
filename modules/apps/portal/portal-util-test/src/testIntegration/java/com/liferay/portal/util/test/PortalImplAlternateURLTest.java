@@ -137,9 +137,9 @@ public class PortalImplAlternateURLTest {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
-				LocaleUtil.BRAZIL, "Inicio"
+				LocaleUtil.BRAZIL, RandomTestUtil.randomString()
 			).put(
-				LocaleUtil.US, "Home"
+				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
 			HashMapBuilder.put(
 				LocaleUtil.BRAZIL,
@@ -619,7 +619,7 @@ public class PortalImplAlternateURLTest {
 			_group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			_group.getGroupId(), "welcome", false);
+			_group.getGroupId(), RandomTestUtil.randomString(), false);
 
 		String canonicalURL = _generateURL(
 			portalDomain, StringPool.BLANK, _group.getFriendlyURL(),
@@ -675,7 +675,7 @@ public class PortalImplAlternateURLTest {
 			_group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			_group.getGroupId(), "welcome", false);
+			_group.getGroupId(), RandomTestUtil.randomString(), false);
 
 		String canonicalURL = _generateURL(
 			portalDomain, StringPool.BLANK, _group.getFriendlyURL(),
@@ -754,11 +754,9 @@ public class PortalImplAlternateURLTest {
 		Map<Locale, String> friendlyURLMap = new HashMap<>();
 
 		for (Locale availableLocale : groupAvailableLocales) {
-			nameMap.put(
-				availableLocale, "welcome-" + availableLocale.getCountry());
+			nameMap.put(availableLocale, RandomTestUtil.randomString());
 			friendlyURLMap.put(
-				availableLocale,
-				"/friendlyurl-" + availableLocale.getCountry());
+				availableLocale, StringPool.SLASH + _getRandomFriendlyURL());
 		}
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
@@ -915,7 +913,7 @@ public class PortalImplAlternateURLTest {
 			_group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			_group.getGroupId(), "welcome", false);
+			_group.getGroupId(), RandomTestUtil.randomString(), false);
 
 		String canonicalURL = _generateURL(
 			portalDomain, StringPool.BLANK, _group.getFriendlyURL(),

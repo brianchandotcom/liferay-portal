@@ -288,8 +288,9 @@ public class ObjectLayoutLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.object.model.ObjectLayout>
-		getDefaultObjectLayouts(long companyId) {
+	public java.util.Map
+		<Long, java.util.List<com.liferay.object.model.ObjectLayout>>
+			getDefaultObjectLayouts(long companyId) {
 
 		return _objectLayoutLocalService.getDefaultObjectLayouts(companyId);
 	}

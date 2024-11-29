@@ -464,7 +464,9 @@ public class ObjectFieldLocalServiceUtil {
 			objectDefinitionId, businessType);
 	}
 
-	public static List<ObjectField> getObjectFieldsByCompanyId(long companyId) {
+	public static Map<Long, List<ObjectField>> getObjectFieldsByCompanyId(
+		long companyId) {
+
 		return getService().getObjectFieldsByCompanyId(companyId);
 	}
 

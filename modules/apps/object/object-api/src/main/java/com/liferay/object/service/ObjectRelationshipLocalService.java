@@ -377,8 +377,8 @@ public interface ObjectRelationshipLocalService
 		long objectDefinitionId1, String deletionType, boolean reverse);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ObjectRelationship> getObjectRelationshipsByCompanyId(
-		long companyId);
+	public Map<Long, List<ObjectRelationship>>
+		getObjectRelationshipsByCompanyId(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectRelationship> getObjectRelationshipsByObjectDefinitionId2(

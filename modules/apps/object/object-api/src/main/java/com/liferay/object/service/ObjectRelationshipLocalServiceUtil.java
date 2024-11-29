@@ -491,8 +491,8 @@ public class ObjectRelationshipLocalServiceUtil {
 			objectDefinitionId1, deletionType, reverse);
 	}
 
-	public static List<ObjectRelationship> getObjectRelationshipsByCompanyId(
-		long companyId) {
+	public static Map<Long, List<ObjectRelationship>>
+		getObjectRelationshipsByCompanyId(long companyId) {
 
 		return getService().getObjectRelationshipsByCompanyId(companyId);
 	}

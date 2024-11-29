@@ -110,6 +110,10 @@ public class KBArticleLayoutDisplayPageProvider
 		try {
 			List<String> parts = StringUtil.split(urlTitle, CharPool.SLASH);
 
+			if (parts.size() <= 1) {
+				return null;
+			}
+
 			KBArticle kbArticle =
 				_kbArticleLocalService.fetchKBArticleByUrlTitle(
 					groupId, _getKBFolderId(groupId, parts),

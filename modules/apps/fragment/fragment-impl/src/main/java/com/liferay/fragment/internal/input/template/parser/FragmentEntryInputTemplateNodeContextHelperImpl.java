@@ -458,6 +458,94 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		inputTemplateNode.addAttribute("readOnly", infoField.isReadOnly());
+
+		_addLocalizationOptionsAttributes(
+			fragmentEntryLink, httpServletRequest, infoField,
+			inputTemplateNode);
+	}
+
+	private void _addLocalizationOptionsAttributes(
+		FragmentEntryLink fragmentEntryLink,
+		HttpServletRequest httpServletRequest, InfoField infoField,
+		InputTemplateNode inputTemplateNode) {
+
+		if (infoField.isLocalizable() ||
+			!FeatureFlagManagerUtil.isEnabled("LPD-37927")) {
+
+			return;
+		}
+
+		LayoutStructure layoutStructure = null;
+
+		if (httpServletRequest != null) {
+			layoutStructure = (LayoutStructure)httpServletRequest.getAttribute(
+				LayoutWebKeys.LAYOUT_STRUCTURE);
+		}
+
+		if (layoutStructure == null) {
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					fetchLayoutPageTemplateStructure(
+						fragmentEntryLink.getGroupId(),
+						fragmentEntryLink.getPlid());
+
+			layoutStructure = LayoutStructure.of(
+				layoutPageTemplateStructure.getData(
+					fragmentEntryLink.getSegmentsExperienceId()));
+		}
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+				fragmentEntryLink.getFragmentEntryLinkId());
+
+		if (layoutStructureItem == null) {
+			return;
+		}
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			_getParentFormStyleLayoutStructureItem(
+				layoutStructure, layoutStructureItem);
+
+		if (formStyledLayoutStructureItem == null) {
+			return;
+		}
+
+		JSONObject localizationConfigJSONObject =
+			formStyledLayoutStructureItem.getLocalizationConfigJSONObject();
+
+		if (localizationConfigJSONObject == null) {
+			return;
+		}
+
+		inputTemplateNode.addAttribute(
+			"unlocalizedFieldsState",
+			localizationConfigJSONObject.getString(
+				"unlocalizedFieldsState", "disabled"));
+
+		JSONObject jsonObject = localizationConfigJSONObject.getJSONObject(
+			"unlocalizedFieldsMessage");
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
+		String unlocalizedFieldsMessage = StringPool.BLANK;
+
+		if (jsonObject != null) {
+			unlocalizedFieldsMessage = jsonObject.getString(
+				LocaleUtil.toLanguageId(locale),
+				jsonObject.getString(
+					LocaleUtil.toLanguageId(
+						themeDisplay.getSiteDefaultLocale())));
+		}
+
+		inputTemplateNode.addAttribute(
+			"unlocalizedFieldsMessage",
+			GetterUtil.getString(
+				unlocalizedFieldsMessage,
+				_language.get(locale, "this-field-cannot-be-localized")));
 	}
 
 	private void _addLongTextInfoFieldTypeInputTemplateNodeAttributes(
@@ -637,6 +725,29 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		return defaultInputLabel;
+	}
+
+	private FormStyledLayoutStructureItem
+		_getParentFormStyleLayoutStructureItem(
+			LayoutStructure layoutStructure,
+			LayoutStructureItem layoutStructureItem) {
+
+		LayoutStructureItem parentLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructureItem.getParentItemId());
+
+		if (parentLayoutStructureItem == null) {
+			return null;
+		}
+
+		if (parentLayoutStructureItem instanceof
+				FormStyledLayoutStructureItem) {
+
+			return (FormStyledLayoutStructureItem)parentLayoutStructureItem;
+		}
+
+		return _getParentFormStyleLayoutStructureItem(
+			layoutStructure, parentLayoutStructureItem);
 	}
 
 	private List<String> _getSelectedOptions(

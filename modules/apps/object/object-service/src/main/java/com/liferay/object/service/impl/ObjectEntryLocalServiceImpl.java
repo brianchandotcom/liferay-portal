@@ -1943,7 +1943,7 @@ public class ObjectEntryLocalServiceImpl
 					getObjectFieldColumns();
 
 		for (int i = 0; i < objectFieldColumns.size(); i++) {
-			Map<String, String> localizedValues = new HashMap<>();
+			Map<String, Object> localizedValues = new HashMap<>();
 
 			for (Object[] row : rows) {
 				Object localizedValue = row[i];
@@ -1954,7 +1954,7 @@ public class ObjectEntryLocalServiceImpl
 
 				localizedValues.put(
 					String.valueOf(row[objectFieldColumns.size()]),
-					String.valueOf(localizedValue));
+					localizedValue);
 			}
 
 			Column<DynamicObjectDefinitionLocalizationTable, ?>

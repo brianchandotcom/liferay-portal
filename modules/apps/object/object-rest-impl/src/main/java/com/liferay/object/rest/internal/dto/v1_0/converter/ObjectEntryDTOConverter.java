@@ -584,14 +584,13 @@ public class ObjectEntryDTOConverter
 		};
 	}
 
-	private String _getLocalizedValue(
+	private Serializable _getLocalizedValue(
 			DTOConverterContext dtoConverterContext, Long groupId,
 			Map<String, Serializable> objectField_i18n)
 		throws Exception {
 
-		String serializable = GetterUtil.getString(
-			objectField_i18n.get(
-				String.valueOf(dtoConverterContext.getLocale())));
+		Serializable serializable = objectField_i18n.get(
+			String.valueOf(dtoConverterContext.getLocale()));
 
 		if (Validator.isNotNull(serializable)) {
 			return serializable;
@@ -600,17 +599,16 @@ public class ObjectEntryDTOConverter
 		User user = dtoConverterContext.getUser();
 
 		if (user != null) {
-			serializable = GetterUtil.getString(
-				objectField_i18n.get(String.valueOf(user.getLocale())));
+			serializable = objectField_i18n.get(
+				String.valueOf(user.getLocale()));
 
 			if (Validator.isNotNull(serializable)) {
 				return serializable;
 			}
 		}
 
-		return GetterUtil.getString(
-			objectField_i18n.get(
-				String.valueOf(_portal.getSiteDefaultLocale(groupId))));
+		return objectField_i18n.get(
+			String.valueOf(_portal.getSiteDefaultLocale(groupId)));
 	}
 
 	private Map<String, UnsafeSupplier<Object, Exception>>
@@ -897,6 +895,19 @@ public class ObjectEntryDTOConverter
 					serializable = _getLocalizedValue(
 						dtoConverterContext, objectEntry.getGroupId(),
 						objectField_i18n);
+
+					if (Objects.equals(
+							objectField.getDBType(),
+							ObjectFieldConstants.DB_TYPE_BLOB) ||
+						Objects.equals(
+							objectField.getDBType(),
+							ObjectFieldConstants.DB_TYPE_CLOB) ||
+						Objects.equals(
+							objectField.getDBType(),
+							ObjectFieldConstants.DB_TYPE_STRING)) {
+
+						serializable = GetterUtil.getString(serializable);
+					}
 				}
 			}
 

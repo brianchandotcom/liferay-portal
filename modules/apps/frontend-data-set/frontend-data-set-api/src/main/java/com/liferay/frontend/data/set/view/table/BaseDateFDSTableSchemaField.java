@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.data.set.view.table;
 
+import com.liferay.frontend.data.set.constants.FDSTimeZoneBehaviors;
 import com.liferay.portal.kernel.json.JSONObject;
 
 /**
@@ -16,17 +17,31 @@ public class BaseDateFDSTableSchemaField extends FDSTableSchemaField {
 		return _formatJSONObject;
 	}
 
+	public String getTimeZoneBehavior() {
+		return _timeZoneBehavior;
+	}
+
 	public void setFormat(JSONObject formatJSONObject) {
 		_formatJSONObject = formatJSONObject;
+	}
+
+	public void setTimeZoneBehavior(String timeZoneBehavior) {
+		_timeZoneBehavior = timeZoneBehavior;
 	}
 
 	@Override
 	public JSONObject toJSONObject() {
 		JSONObject jsonObject = super.toJSONObject();
 
-		return jsonObject.put("format", getFormat());
+		return jsonObject.put(
+			"format", getFormat()
+		).put(
+			"timeZoneBehavior", getTimeZoneBehavior()
+		);
 	}
 
 	private JSONObject _formatJSONObject;
+	private String _timeZoneBehavior =
+		FDSTimeZoneBehaviors.DO_NOT_MODIFY_DATE_VALUE;
 
 }

@@ -14,6 +14,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import {pushToApiHelpersData} from '../../utils/pushToApiHelpersData';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -391,6 +392,148 @@ test.describe('Manage root models elements through Objects Admin', () => {
 							...objectRelationship.objectField,
 							required: true,
 						},
+					}
+				);
+			}
+		}
+	});
+
+	test('can create relationship with inheritance enabled using the add relationship modal', async ({
+		apiHelpers,
+		objectRelationshipFormPage,
+		objectRelationshipsPage,
+		page,
+	}) => {
+		const objectRelationships: ObjectRelationship[] = [];
+
+		try {
+			const objectFolder =
+				await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+			apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
+
+			const objectDefinition1 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition(
+					{code: 0},
+					undefined,
+					objectFolder.externalReferenceCode
+				);
+			const objectDefinition2 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition(
+					{code: 0},
+					undefined,
+					objectFolder.externalReferenceCode
+				);
+
+			const siteScopedObjectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition(
+					{code: 0},
+					undefined,
+					objectFolder.externalReferenceCode,
+					'site'
+				);
+
+			pushToApiHelpersData(
+				apiHelpers,
+				[
+					objectDefinition1.id,
+					objectDefinition2.id,
+					siteScopedObjectDefinition.id,
+				],
+				'objectDefinition'
+			);
+
+			await objectRelationshipsPage.goto(
+				objectDefinition1.name,
+				objectFolder.label['en_US']
+			);
+
+			// Add object relationship trough modal.
+
+			await objectRelationshipsPage.addObjectRelationshipButton.click();
+
+			const objectRelationshipLabel = 'Relationship' + getRandomInt();
+
+			await objectRelationshipFormPage.labelInput.fill(
+				objectRelationshipLabel
+			);
+
+			await objectRelationshipFormPage.selectType('One to Many');
+
+			await objectRelationshipFormPage.selectManyRecordsOf(
+				siteScopedObjectDefinition.name
+			);
+
+			await objectRelationshipFormPage.inheritanceCheckbox.check();
+
+			// Check if info alert is displayed in the modal when the inheritance is enabled.
+
+			await expect(page.getByText('Info:When enabled,')).toBeVisible();
+
+			await objectRelationshipFormPage.saveButton.click();
+
+			// Check if error alert is displayed in the modal.
+
+			await expect(
+				page.getByText('Error:Unable to bind the')
+			).toBeVisible();
+
+			await objectRelationshipFormPage.selectManyRecordsOf(
+				objectDefinition2.name
+			);
+
+			await objectRelationshipFormPage.reverseOrderButton.click();
+
+			const responsePromise = page.waitForResponse(
+				`**/${objectDefinition2.externalReferenceCode}/object-relationships`
+			);
+
+			await objectRelationshipFormPage.saveButton.click();
+
+			const response = await responsePromise;
+
+			objectRelationships.push(await response.json());
+
+			// Check if success toast is displayed after creating a relationship.
+
+			await expect(
+				page.getByText('Success:Relationship was')
+			).toBeVisible();
+
+			const viewRelationshipLink = page.getByRole('link', {
+				name: 'View Relationship',
+			});
+
+			// Check if success toast includes a link to the other side of the relationship.
+
+			await expect(viewRelationshipLink).toBeVisible();
+
+			await viewRelationshipLink.click();
+
+			// Check if the link works and the relationship was really created with inheritance enabled;
+
+			await expect(
+				page.locator('h3', {hasText: objectDefinition2.name})
+			).toBeVisible();
+
+			const cellClassSufix = 'relationshipInheritance';
+
+			await expect(
+				page
+					.locator(`.dnd-td.cell-${cellClassSufix}`)
+					.or(page.locator(`td.cell-${cellClassSufix}`))
+			).toHaveText('Inherited');
+		}
+		finally {
+			const objectRelationshipApiClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipApi);
+
+			for (const objectRelationship of objectRelationships) {
+				await objectRelationshipApiClient.putObjectRelationship(
+					objectRelationship.id,
+					{
+						...objectRelationship,
+						edge: false,
 					}
 				);
 			}

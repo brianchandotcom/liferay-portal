@@ -48,6 +48,7 @@ export class ObjectAdminApiHelper {
 		status: {code: number},
 		objectFields?: Partial<ObjectField>[],
 		objectFolderExternalReferenceCode?: string,
+		scope: 'site' | 'company' = 'company',
 		titleObjectFieldName?: string
 	): Promise<ObjectDefinition> {
 		const objectDefinitionExternalReferenceCode =
@@ -80,7 +81,7 @@ export class ObjectAdminApiHelper {
 			pluralLabel: {
 				en_US: objectDefinitionExternalReferenceCode,
 			},
-			scope: 'company',
+			scope,
 			status,
 			titleObjectFieldName: titleObjectFieldName ?? 'id',
 		};

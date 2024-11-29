@@ -102,6 +102,33 @@
 			"type": "Long"
 		},
 		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"externalReferenceCode": "dl-file-upload-erc",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "DL File"
+			},
+			"localized": false,
+			"name": "dlFileUpload",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "pdf"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": 100
+				},
+				{
+					"name": "fileSource",
+					"value": "documentsAndMedia"
+				}
+			],
+			"type": "Long"
+		},
+		{
 			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "text-erc",

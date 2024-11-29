@@ -927,7 +927,7 @@ test.describe('File Upload Fragment', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					ALL_FIELDS_OBJECT_ERC
+					getObjectERC('All Fields')
 				)
 			).body;
 
@@ -1058,7 +1058,7 @@ test.describe('File Upload Fragment', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					ALL_FIELDS_OBJECT_ERC
+					getObjectERC('All Fields')
 				)
 			).body;
 
@@ -1166,7 +1166,7 @@ test.describe('File Upload Fragment', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					ALL_FIELDS_OBJECT_ERC
+					getObjectERC('All Fields')
 				)
 			).body;
 
@@ -1249,7 +1249,7 @@ test.describe('File Upload Fragment', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					ALL_FIELDS_OBJECT_ERC
+					getObjectERC('All Fields')
 				)
 			).body;
 
@@ -1324,7 +1324,7 @@ test.describe('File Upload Fragment', () => {
 
 			const {className: objectDefinitionClassName} = (
 				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					ALL_FIELDS_OBJECT_ERC
+					getObjectERC('All Fields')
 				)
 			).body;
 

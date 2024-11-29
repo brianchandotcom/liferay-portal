@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.taxonomy.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServiceUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -19,6 +20,7 @@ import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetType;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.ParentTaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategoryProperty;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
@@ -231,6 +233,43 @@ public class TaxonomyCategoryResourceTest
 				entityField, assetCategory2, assetCategory1, "desc",
 				parentAssetCategory);
 		}
+	}
+
+	@Test
+	public void testGetTaxonomyCategoryTaxonomyCategoryWithAssetCategoryProperty()
+		throws Exception {
+
+		TaxonomyCategory taxonomyCategory =
+			testGetTaxonomyCategoriesRankedPage_addTaxonomyCategory(
+				randomTaxonomyCategory());
+
+		String key = RandomTestUtil.randomString();
+		String value = RandomTestUtil.randomString();
+
+		_assetCategoryPropertyLocalService.addCategoryProperty(
+			TestPropsValues.getUserId(),
+			GetterUtil.getLong(taxonomyCategory.getId()), key, value);
+
+		taxonomyCategory = taxonomyCategoryResource.getTaxonomyCategory(
+			taxonomyCategory.getId());
+
+		TaxonomyCategoryProperty[] taxonomyCategoryProperties =
+			taxonomyCategory.getTaxonomyCategoryProperties();
+
+		Assert.assertNotNull(taxonomyCategoryProperties[0]);
+
+		TaxonomyCategoryProperty taxonomyCategoryProperty =
+			taxonomyCategoryProperties[0];
+
+		Assert.assertNotNull(
+			taxonomyCategoryProperty.toString(),
+			taxonomyCategoryProperty.getExternalReferenceCode());
+		Assert.assertEquals(
+			taxonomyCategoryProperty.toString(),
+			taxonomyCategoryProperty.getKey(), key);
+		Assert.assertEquals(
+			taxonomyCategoryProperty.toString(),
+			taxonomyCategoryProperty.getValue(), value);
 	}
 
 	@Override
@@ -828,6 +867,10 @@ public class TaxonomyCategoryResourceTest
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetCategoryPropertyLocalService
+		_assetCategoryPropertyLocalService;
 
 	private AssetVocabulary _assetVocabulary;
 	private AssetVocabulary _depotAssetVocabulary;

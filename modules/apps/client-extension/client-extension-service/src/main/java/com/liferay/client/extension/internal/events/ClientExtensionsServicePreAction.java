@@ -89,7 +89,7 @@ public class ClientExtensionsServicePreAction extends Action {
 				httpServletRequest, "p_l_mode", Constants.VIEW);
 
 			if (!Objects.equals(mode, Constants.PREVIEW)) {
-				return;
+				return layout;
 			}
 
 			long selPlid = ParamUtil.getLong(
@@ -100,11 +100,13 @@ public class ClientExtensionsServicePreAction extends Action {
 					"_selPlid"));
 
 			if (selPlid <= 0) {
-				return;
+				return layout;
 			}
 
 			layout = _layoutLocalService.fetchLayout(selPlid);
 		}
+
+		return layout;
 	}
 
 	private CET _getCET(

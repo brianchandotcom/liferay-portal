@@ -72,38 +72,6 @@ public class ClientExtensionsServicePreAction extends Action {
 		}
 	}
 
-	private Layout _getLayout(HttpServletRequest httpServletRequest) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.isTypeControlPanel()) {
-			String mode = ParamUtil.getString(
-				httpServletRequest, "p_l_mode", Constants.VIEW);
-
-			if (!Objects.equals(mode, Constants.PREVIEW)) {
-				return layout;
-			}
-
-			long selPlid = ParamUtil.getLong(
-				httpServletRequest,
-				StringBundler.concat(
-					StringPool.UNDERLINE,
-					ParamUtil.getString(httpServletRequest, "p_p_id"),
-					"_selPlid"));
-
-			if (selPlid <= 0) {
-				return layout;
-			}
-
-			layout = _layoutLocalService.fetchLayout(selPlid);
-		}
-
-		return layout;
-	}
-
 	private CET _getCET(
 		long classNameId, long classPK, long companyId, String type) {
 
@@ -200,6 +168,38 @@ public class ClientExtensionsServicePreAction extends Action {
 		}
 
 		return null;
+	}
+
+	private Layout _getLayout(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isTypeControlPanel()) {
+			String mode = ParamUtil.getString(
+				httpServletRequest, "p_l_mode", Constants.VIEW);
+
+			if (!Objects.equals(mode, Constants.PREVIEW)) {
+				return layout;
+			}
+
+			long selPlid = ParamUtil.getLong(
+				httpServletRequest,
+				StringBundler.concat(
+					StringPool.UNDERLINE,
+					ParamUtil.getString(httpServletRequest, "p_p_id"),
+					"_selPlid"));
+
+			if (selPlid <= 0) {
+				return layout;
+			}
+
+			layout = _layoutLocalService.fetchLayout(selPlid);
+		}
+
+		return layout;
 	}
 
 	private ThemeCSSCET _getThemeCSSCET(Layout layout) {

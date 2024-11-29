@@ -1581,10 +1581,6 @@
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `source-formatter.properties` file." />
 		</check>
-		<check name="PropertiesSQLStylingCheck">
-			<category name="Styling" />
-			<description name="Applies rules to enforce consistency in code style." />
-		</check>
 		<check name="PropertiesStylingCheck">
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />

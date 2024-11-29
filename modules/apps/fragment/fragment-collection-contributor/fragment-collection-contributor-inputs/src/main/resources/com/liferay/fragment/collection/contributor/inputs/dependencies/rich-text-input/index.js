@@ -28,6 +28,10 @@ else if (layoutMode !== 'edit' && input.attributes.localizable) {
 					getOrCreateTranslationInput(currentLanguageId);
 
 				translationInput.value = value;
+
+				Liferay.fire('localizationSelect:updateTranslationStatus', {
+					languageId: currentLanguageId,
+				});
 			});
 		}
 

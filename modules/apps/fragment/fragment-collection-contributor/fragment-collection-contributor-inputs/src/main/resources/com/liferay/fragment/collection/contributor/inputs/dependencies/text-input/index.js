@@ -85,6 +85,12 @@ function main() {
 
 				translationInput.value = value;
 			});
+
+			inputElement.addEventListener('change', () => {
+				Liferay.fire('localizationSelect:updateTranslationStatus', {
+					languageId: currentLanguageId,
+				});
+			});
 		}
 	}
 }

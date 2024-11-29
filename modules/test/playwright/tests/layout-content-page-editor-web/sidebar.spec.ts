@@ -497,7 +497,7 @@ test.describe('Fragments Panel', () => {
 			if ((await favoriteButton.count()) > 1) {
 				await favoriteButton.first().click();
 
-				expect(favoriteButton).toHaveCount(1);
+				await expect(favoriteButton).toHaveCount(1);
 			}
 
 			await favoriteButton.click();
@@ -1068,7 +1068,8 @@ test.describe('Page Contents Panel', () => {
 						.locator('.journal-article-button-row')
 						.isVisible()
 				) {
-					page.locator('.journal-article-button-row')
+					await page
+						.locator('.journal-article-button-row')
 						.getByRole('button', {name: 'Publish'})
 						.click();
 

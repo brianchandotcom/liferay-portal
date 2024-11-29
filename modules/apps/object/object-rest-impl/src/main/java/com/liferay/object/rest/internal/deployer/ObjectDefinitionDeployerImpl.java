@@ -128,27 +128,23 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 			new ConcurrentHashMap<>();
 
-		List<ObjectField> objectFields =
+		Map<Long, List<ObjectField>> partitionedObjectFields =
 			_objectFieldLocalService.getObjectFieldsByCompanyId(companyId);
-		List<ObjectRelationship> objectRelationships =
+		Map<Long, List<ObjectRelationship>> partitionedObjectRelationships =
 			_objectRelationshipLocalService.getObjectRelationshipsByCompanyId(
 				companyId);
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			long objectDefinitionId = objectDefinition.getObjectDefinitionId();
+
 			serviceRegistrationsMap.put(
-				objectDefinition.getObjectDefinitionId(),
+				objectDefinitionId,
 				_deploy(
 					objectDefinition,
-					ListUtil.filter(
-						objectFields,
-						objectField ->
-							objectField.getObjectDefinitionId() ==
-								objectDefinition.getObjectDefinitionId()),
-					ListUtil.filter(
-						objectRelationships,
-						objectRelationship ->
-							objectRelationship.getObjectDefinitionId1() ==
-								objectDefinition.getObjectDefinitionId())));
+					partitionedObjectFields.getOrDefault(
+						objectDefinitionId, Collections.emptyList()),
+					partitionedObjectRelationships.getOrDefault(
+						objectDefinitionId, Collections.emptyList())));
 		}
 
 		return serviceRegistrationsMap;

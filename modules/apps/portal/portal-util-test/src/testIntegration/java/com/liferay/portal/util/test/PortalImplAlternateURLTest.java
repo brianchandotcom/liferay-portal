@@ -71,6 +71,7 @@ import javax.portlet.PortletPreferences;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -117,11 +118,14 @@ public class PortalImplAlternateURLTest {
 			GetterUtil.getString(_defaultPrependStyle));
 	}
 
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
+
 	@Test
 	public void testAlternateURLDoesNotHaveLocaleInHomeLayout()
 		throws Exception {
-
-		_group = GroupTestUtil.addGroup();
 
 		Collection<Locale> availableLocales = Arrays.asList(
 			LocaleUtil.BRAZIL, LocaleUtil.US);
@@ -168,8 +172,6 @@ public class PortalImplAlternateURLTest {
 
 	@Test
 	public void testAlternateURLWithAssetDisplayPageEntry() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
 		Collection<Locale> availableLocales = Arrays.asList(
 			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
 		Locale defaultLocale = LocaleUtil.US;
@@ -228,8 +230,6 @@ public class PortalImplAlternateURLTest {
 
 	@Test
 	public void testAlternateURLWithLayout() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
 		Collection<Locale> availableLocales = Arrays.asList(
 			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
 		Locale defaultLocale = LocaleUtil.US;
@@ -272,8 +272,6 @@ public class PortalImplAlternateURLTest {
 	@TestInfo("LPD-43082")
 	public void testAlternateURLWithLayoutFriendlyURLStartingByDefaultLanguageCode()
 		throws Exception {
-
-		_group = GroupTestUtil.addGroup();
 
 		Collection<Locale> availableLocales = Arrays.asList(
 			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
@@ -617,8 +615,6 @@ public class PortalImplAlternateURLTest {
 			String expectedI18nPath)
 		throws Exception {
 
-		_group = GroupTestUtil.addGroup();
-
 		_group = GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
 
@@ -674,8 +670,6 @@ public class PortalImplAlternateURLTest {
 			String portalDomain, Collection<Locale> groupAvailableLocales,
 			Locale groupDefaultLocale)
 		throws Exception {
-
-		_group = GroupTestUtil.addGroup();
 
 		_group = GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
@@ -752,8 +746,6 @@ public class PortalImplAlternateURLTest {
 			Locale groupDefaultLocale, Locale alternateLocale,
 			String expectedI18nPath)
 		throws Exception {
-
-		_group = GroupTestUtil.addGroup();
 
 		_group = GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
@@ -918,8 +910,6 @@ public class PortalImplAlternateURLTest {
 			Locale groupDefaultLocale, Locale alternateLocale,
 			String expectedI18nPath)
 		throws Exception {
-
-		_group = GroupTestUtil.addGroup();
 
 		_group = GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), groupAvailableLocales, groupDefaultLocale);

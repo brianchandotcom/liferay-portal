@@ -169,7 +169,7 @@ public class LayoutModelDocumentContributorTest {
 
 	@Test
 	@TestInfo("LPD-43082")
-	public void testReindexPublishedDraftLayoutWithLanguageKeyLocalization()
+	public void testReindexPublishedDraftLayoutWithFreeMarkerUsingLocale()
 		throws Exception {
 
 		String contentText = RandomTestUtil.randomString();

@@ -72,7 +72,7 @@ function main() {
 				const translationInput =
 					getOrCreateTranslationInput(currentLanguageId);
 
-				if (translationInput.value) {
+				if (translationInput.getAttribute('value') !== null) {
 					textarea.value = translationInput.value;
 				}
 			});

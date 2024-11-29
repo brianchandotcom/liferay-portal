@@ -41,7 +41,7 @@ else if (layoutMode !== 'edit' && input.attributes.localizable) {
 			const translationInput =
 				getOrCreateTranslationInput(currentLanguageId);
 
-			if (translationInput.value) {
+			if (translationInput.getAttribute('value') !== null) {
 				editorEvent.editor.setData(translationInput.value);
 			}
 		});

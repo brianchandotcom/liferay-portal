@@ -282,15 +282,15 @@ public class ObjectEntryModelDocumentContributor
 
 		for (ObjectField objectField : objectFields) {
 			if (objectField.isLocalized()) {
-				Map<String, String> localizedValues =
-					(Map<String, String>)values.get(
+				Map<String, Object> localizedValues =
+					(Map<String, Object>)values.get(
 						objectField.getI18nObjectFieldName());
 
 				if (MapUtil.isEmpty(localizedValues)) {
 					continue;
 				}
 
-				for (Map.Entry<String, String> localeMap :
+				for (Map.Entry<String, Object> localeMap :
 						localizedValues.entrySet()) {
 
 					_contribute(

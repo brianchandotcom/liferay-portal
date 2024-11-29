@@ -94,7 +94,7 @@ public interface ObjectFieldBusinessType {
 			return values.get(objectField.getName());
 		}
 
-		Map<String, String> localizedValues = (Map<String, String>)values.get(
+		Map<String, Object> localizedValues = (Map<String, Object>)values.get(
 			objectField.getI18nObjectFieldName());
 
 		if (localizedValues == null) {
@@ -113,7 +113,7 @@ public interface ObjectFieldBusinessType {
 			locale = user.getLocale();
 		}
 
-		String localizedValue = localizedValues.get(
+		Object localizedValue = localizedValues.get(
 			LocaleUtil.toLanguageId(locale));
 
 		if (localizedValue != null) {

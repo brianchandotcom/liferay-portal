@@ -8,7 +8,7 @@ import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {TranslationAdminItem} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 export function LocalizationSelect({
 	defaultLanguageId,
@@ -19,6 +19,12 @@ export function LocalizationSelect({
 }) {
 	const [active, setActive] = useState(false);
 	const [selectedLocaleId, setSelectedLocaleId] = useState(defaultLanguageId);
+
+	const localizableInputs = useMemo(
+		() =>
+			document.querySelectorAll('label[data-localizable="true"]').length,
+		[]
+	);
 
 	const onSelectedLocaleChange = (localeId) => {
 		setSelectedLocaleId(localeId);
@@ -54,7 +60,14 @@ export function LocalizationSelect({
 					<TranslationAdminItem
 						defaultLanguageId={defaultLanguageId}
 						item={item}
-						translationProgress={null}
+						translationProgress={
+							localizableInputs
+								? {
+										totalItems: localizableInputs,
+										translatedItems: {},
+									}
+								: null
+						}
 					/>
 				</Option>
 			)}

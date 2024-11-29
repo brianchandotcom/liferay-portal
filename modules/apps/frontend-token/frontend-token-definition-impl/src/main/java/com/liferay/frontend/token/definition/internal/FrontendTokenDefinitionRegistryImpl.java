@@ -172,8 +172,6 @@ public class FrontendTokenDefinitionRegistryImpl
 			return frontendTokenDefinitionImpls;
 		}
 		catch (JSONException | RuntimeException exception) {
-			exception.printStackTrace();
-
 			_log.error(
 				"Unable to parse frontend token definitions for bundle " +
 					bundle.getSymbolicName(),

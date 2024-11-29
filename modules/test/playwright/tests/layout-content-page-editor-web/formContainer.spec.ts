@@ -839,10 +839,7 @@ test.describe('Date and Time Fragment', () => {
 
 			// Check the date and time of the object entry
 
-			const row = page
-				.locator('.dnd-tr')
-				.filter({hasText: 'Date And Time'})
-				.last();
+			const row = page.locator('.dnd-tbody .dnd-tr').first();
 
 			await expect(row).toContainText('Oct 10, 2022, 10:10 AM');
 		}

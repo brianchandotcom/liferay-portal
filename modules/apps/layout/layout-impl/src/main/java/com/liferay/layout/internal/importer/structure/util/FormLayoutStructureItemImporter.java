@@ -6,6 +6,7 @@
 package com.liferay.layout.internal.importer.structure.util;
 
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
+import com.liferay.headless.delivery.dto.v1_0.LocalizationConfig;
 import com.liferay.headless.delivery.dto.v1_0.MessageFormSubmissionResult;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.converter.AlignConverter;
@@ -116,6 +117,14 @@ public class FormLayoutStructureItemImporter
 					FormStyledLayoutStructureItem.FORM_CONFIG_OTHER_ITEM_TYPE);
 			}
 
+			JSONObject localizationConfigJSONObject =
+				_getLocalizationConfigJSONObject(sourceMap);
+
+			if (localizationConfigJSONObject != null) {
+				formStyledLayoutStructureItem.setLocalizationConfigJSONObject(
+					localizationConfigJSONObject);
+			}
+
 			if (sourceMap.containsKey("formType")) {
 				formStyledLayoutStructureItem.setFormType(
 					(String)sourceMap.get("formType"));
@@ -222,6 +231,53 @@ public class FormLayoutStructureItemImporter
 	@Override
 	public PageElement.Type getPageElementType() {
 		return PageElement.Type.FORM;
+	}
+
+	private JSONObject _getLocalizationConfigJSONObject(
+		Map<String, Object> sourceMap) {
+
+		Map<String, Object> localizationConfigResultMap =
+			(Map<String, Object>)sourceMap.get("localizationConfig");
+
+		if (MapUtil.isEmpty(localizationConfigResultMap)) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"unlocalizedFieldsMessage",
+			() -> {
+				if (localizationConfigResultMap.containsKey(
+						"unlocalizedFieldsMessage")) {
+
+					return _getLocalizedValuesJSONObject(
+						"unlocalizedFieldsMessage",
+						localizationConfigResultMap);
+				}
+
+				return null;
+			}
+		).put(
+			"unlocalizedFieldsState",
+			() -> {
+				if (localizationConfigResultMap.containsKey(
+						"unlocalizedFieldsState")) {
+
+					if (Objects.equals(
+							String.valueOf(
+								localizationConfigResultMap.get(
+									"unlocalizedFieldsState")),
+							LocalizationConfig.UnlocalizedFieldsState.
+								DISABLED)) {
+
+						return "disabled";
+					}
+
+					return "read-only";
+				}
+
+				return null;
+			}
+		);
 	}
 
 	private JSONObject _getLocalizedValuesJSONObject(

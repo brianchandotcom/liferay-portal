@@ -8,9 +8,11 @@ package com.liferay.frontend.data.set.sample.web.internal.view;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.FDSCellRendererCET;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.frontend.data.set.constants.FDSTimeZoneBehaviors;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
+import com.liferay.frontend.data.set.view.table.DateTimeFDSTableSchemaField;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -64,7 +66,7 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 		).add(
 			"description", "description"
 		).add(
-			"date", "date"
+			_addDateFDSTableSchemaField()
 		).add(
 			"color", "color",
 			fdsTableSchemaField -> {
@@ -153,6 +155,24 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 	@Override
 	public boolean isQuickActionsEnabled() {
 		return true;
+	}
+
+	private DateTimeFDSTableSchemaField _addDateFDSTableSchemaField() {
+		DateTimeFDSTableSchemaField dateFDSTableSchemaField =
+			new DateTimeFDSTableSchemaField();
+
+		dateFDSTableSchemaField.setContentRenderer(
+			"dateTime"
+		).setFieldName(
+			"date"
+		).setLabel(
+			"date"
+		);
+
+		dateFDSTableSchemaField.setTimeZoneBehavior(
+			FDSTimeZoneBehaviors.APPLY_THEME_DISPLAY_TIME_ZONE);
+
+		return dateFDSTableSchemaField;
 	}
 
 	@Reference

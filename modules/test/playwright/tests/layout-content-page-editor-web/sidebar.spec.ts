@@ -1689,13 +1689,13 @@ test.describe('Page Contents Panel', () => {
 					.getByRole('menuitem', {
 						name: 'Permissions',
 					})
-					.click();
+					.click({timeout: 1000});
 
 				await expect(
 					page
 						.frameLocator('iframe[title="Permissions"]')
 						.getByText('Guest')
-				).toBeVisible();
+				).toBeVisible({timeout: 1000});
 
 				await page.getByLabel('close', {exact: true}).click();
 			}).toPass();

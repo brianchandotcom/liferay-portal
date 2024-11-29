@@ -371,7 +371,8 @@ public interface ObjectFieldLocalService
 		long objectDefinitionId, String businessType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ObjectField> getObjectFieldsByCompanyId(long companyId);
+	public Map<Long, List<ObjectField>> getObjectFieldsByCompanyId(
+		long companyId);
 
 	/**
 	 * Returns the number of object fields.

@@ -92,6 +92,16 @@ public class FormConfigSerDes {
 			sb.append("\"");
 		}
 
+		if (formConfig.getLocalizationConfig() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"localizationConfig\": ");
+
+			sb.append(String.valueOf(formConfig.getLocalizationConfig()));
+		}
+
 		if (formConfig.getNumberOfSteps() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -144,6 +154,15 @@ public class FormConfigSerDes {
 			map.put("formType", String.valueOf(formConfig.getFormType()));
 		}
 
+		if (formConfig.getLocalizationConfig() == null) {
+			map.put("localizationConfig", null);
+		}
+		else {
+			map.put(
+				"localizationConfig",
+				String.valueOf(formConfig.getLocalizationConfig()));
+		}
+
 		if (formConfig.getNumberOfSteps() == null) {
 			map.put("numberOfSteps", null);
 		}
@@ -181,6 +200,11 @@ public class FormConfigSerDes {
 			else if (Objects.equals(jsonParserFieldName, "formType")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "localizationConfig")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "numberOfSteps")) {
 				return false;
 			}
@@ -210,6 +234,15 @@ public class FormConfigSerDes {
 				if (jsonParserFieldValue != null) {
 					formConfig.setFormType(
 						FormConfig.FormType.create(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "localizationConfig")) {
+
+				if (jsonParserFieldValue != null) {
+					formConfig.setLocalizationConfig(
+						LocalizationConfigSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

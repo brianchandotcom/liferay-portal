@@ -204,6 +204,49 @@ public class FormConfig implements Serializable {
 	@JsonIgnore
 	private Supplier<FormType> _formTypeSupplier;
 
+	@Schema
+	@Valid
+	public LocalizationConfig getLocalizationConfig() {
+		if (_localizationConfigSupplier != null) {
+			localizationConfig = _localizationConfigSupplier.get();
+
+			_localizationConfigSupplier = null;
+		}
+
+		return localizationConfig;
+	}
+
+	public void setLocalizationConfig(LocalizationConfig localizationConfig) {
+		this.localizationConfig = localizationConfig;
+
+		_localizationConfigSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setLocalizationConfig(
+		UnsafeSupplier<LocalizationConfig, Exception>
+			localizationConfigUnsafeSupplier) {
+
+		_localizationConfigSupplier = () -> {
+			try {
+				return localizationConfigUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected LocalizationConfig localizationConfig;
+
+	@JsonIgnore
+	private Supplier<LocalizationConfig> _localizationConfigSupplier;
+
 	@Schema(description = "The definition for the number of steps of the form.")
 	public Integer getNumberOfSteps() {
 		if (_numberOfStepsSupplier != null) {
@@ -335,6 +378,18 @@ public class FormConfig implements Serializable {
 			sb.append(formType);
 
 			sb.append("\"");
+		}
+
+		LocalizationConfig localizationConfig = getLocalizationConfig();
+
+		if (localizationConfig != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"localizationConfig\": ");
+
+			sb.append(String.valueOf(localizationConfig));
 		}
 
 		Integer numberOfSteps = getNumberOfSteps();

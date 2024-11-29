@@ -89,7 +89,7 @@ public class MethodParametersResolverUtil {
 
 		classReader.accept(classVisitor, ClassReader.SKIP_FRAMES);
 
-		return classVisitor.getExtractedParameters();
+		return classVisitor.getMethodParameters();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

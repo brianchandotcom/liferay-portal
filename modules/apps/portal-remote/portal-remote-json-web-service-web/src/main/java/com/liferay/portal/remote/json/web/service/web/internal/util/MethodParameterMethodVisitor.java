@@ -23,8 +23,8 @@ import org.objectweb.asm.Opcodes;
  */
 public class MethodParameterMethodVisitor extends MethodVisitor {
 
-	public List<MethodParameter> getExtractedParameterList() {
-		return _methodParameterList;
+	public List<MethodParameter> getMethodParameters() {
+		return _methodParameters;
 	}
 
 	@Override
@@ -59,19 +59,18 @@ public class MethodParameterMethodVisitor extends MethodVisitor {
 					(Modifier.isStatic(_method.getModifiers()) ? 0 : 1) +
 						count)) {
 
-			Class<?> parameterType =
-				parameterTypes[_methodParameterList.size()];
+			Class<?> parameterType = parameterTypes[_methodParameters.size()];
 
 			if (signature != null) {
 				String parameterSignature = StringUtil.removeSubstring(
 					signature, descriptor);
 
-				_methodParameterList.add(
+				_methodParameters.add(
 					new MethodParameter(
 						_classLoader, name, parameterSignature, parameterType));
 			}
 			else {
-				_methodParameterList.add(
+				_methodParameters.add(
 					new MethodParameter(
 						_classLoader, name, descriptor, parameterType));
 			}
@@ -89,7 +88,6 @@ public class MethodParameterMethodVisitor extends MethodVisitor {
 
 	private final ClassLoader _classLoader;
 	private final Method _method;
-	private final List<MethodParameter> _methodParameterList =
-		new ArrayList<>();
+	private final List<MethodParameter> _methodParameters = new ArrayList<>();
 
 }

@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.util.MethodParameter;
 
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,12 +23,12 @@ import org.objectweb.asm.Type;
  */
 public class MethodParameterClassVisitor extends ClassVisitor {
 
-	public List<MethodParameter> getExtractedParameters() {
-		if (_methodVisitor != null) {
-			return _methodVisitor.getExtractedParameterList();
+	public List<MethodParameter> getMethodParameters() {
+		if (_methodParameterMethodVisitor != null) {
+			return _methodParameterMethodVisitor.getMethodParameters();
 		}
 
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -42,10 +42,10 @@ public class MethodParameterClassVisitor extends ClassVisitor {
 			return null;
 		}
 
-		_methodVisitor = new MethodParameterMethodVisitor(
+		_methodParameterMethodVisitor = new MethodParameterMethodVisitor(
 			_classLoader, _method);
 
-		return _methodVisitor;
+		return _methodParameterMethodVisitor;
 	}
 
 	protected MethodParameterClassVisitor(
@@ -56,11 +56,11 @@ public class MethodParameterClassVisitor extends ClassVisitor {
 		_classLoader = classLoader;
 		_method = method;
 
-		_methodVisitor = null;
+		_methodParameterMethodVisitor = null;
 	}
 
 	private final ClassLoader _classLoader;
 	private final Method _method;
-	private MethodParameterMethodVisitor _methodVisitor;
+	private MethodParameterMethodVisitor _methodParameterMethodVisitor;
 
 }

@@ -300,7 +300,7 @@ public interface ObjectActionLocalService
 	public List<ObjectAction> getObjectActions(long objectDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ObjectAction> getObjectActions(
+	public Map<Long, List<ObjectAction>> getObjectActions(
 		long companyId, boolean active, String objectActionTriggerKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

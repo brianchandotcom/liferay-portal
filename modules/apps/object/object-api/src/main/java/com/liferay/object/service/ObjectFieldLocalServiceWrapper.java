@@ -537,8 +537,9 @@ public class ObjectFieldLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.object.model.ObjectField>
-		getObjectFieldsByCompanyId(long companyId) {
+	public java.util.Map
+		<Long, java.util.List<com.liferay.object.model.ObjectField>>
+			getObjectFieldsByCompanyId(long companyId) {
 
 		return _objectFieldLocalService.getObjectFieldsByCompanyId(companyId);
 	}

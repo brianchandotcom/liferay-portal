@@ -350,7 +350,7 @@ public class ObjectActionLocalServiceUtil {
 		return getService().getObjectActions(objectDefinitionId);
 	}
 
-	public static List<ObjectAction> getObjectActions(
+	public static Map<Long, List<ObjectAction>> getObjectActions(
 		long companyId, boolean active, String objectActionTriggerKey) {
 
 		return getService().getObjectActions(

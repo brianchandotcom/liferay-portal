@@ -253,7 +253,9 @@ public class ObjectLayoutLocalServiceUtil {
 		return getService().getDefaultObjectLayout(objectDefinitionId);
 	}
 
-	public static List<ObjectLayout> getDefaultObjectLayouts(long companyId) {
+	public static Map<Long, List<ObjectLayout>> getDefaultObjectLayouts(
+		long companyId) {
+
 		return getService().getDefaultObjectLayouts(companyId);
 	}
 

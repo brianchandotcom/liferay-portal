@@ -572,8 +572,9 @@ public class ObjectRelationshipLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.object.model.ObjectRelationship>
-		getObjectRelationshipsByCompanyId(long companyId) {
+	public java.util.Map
+		<Long, java.util.List<com.liferay.object.model.ObjectRelationship>>
+			getObjectRelationshipsByCompanyId(long companyId) {
 
 		return _objectRelationshipLocalService.
 			getObjectRelationshipsByCompanyId(companyId);

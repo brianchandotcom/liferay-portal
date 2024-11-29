@@ -1724,6 +1724,23 @@
 					"title": "The layout Schema",
 					"type": "object"
 				},
+				"localizationConfig": {
+					"properties": {
+						"unlocalizedFieldsMessage": {
+							"$ref": "#/definitions/FragmentInlineValue"
+						},
+						"unlocalizedFieldsState": {
+							"enum": [
+								"disabled",
+								"readOnly"
+							],
+							"title": "The unlocalizedFieldsState Schema",
+							"type": "string"
+						}
+					},
+					"title": "The localizationConfig Schema",
+					"type": "object"
+				},
 				"name": {
 					"title": "The name Schema",
 					"type": "string"

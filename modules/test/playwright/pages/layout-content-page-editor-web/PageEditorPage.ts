@@ -462,16 +462,22 @@ export class PageEditorPage {
 	}
 
 	async clickOnAction(action: string) {
-		await clickAndExpectToBeVisible({
-			target: this.page.getByRole('menuitem', {
-				name: action,
-			}),
-			trigger: this.page
-				.locator('.control-menu-nav-item')
-				.getByLabel('Options', {exact: true}),
-		});
+		await expect(async () => {
+			await clickAndExpectToBeVisible({
+				target: this.page.getByRole('menuitem', {
+					name: action,
+				}),
+				trigger: this.page
+					.locator('.control-menu-nav-item')
+					.getByLabel('Options', {exact: true}),
+			});
 
-		await this.page.getByRole('menuitem', {name: action}).click();
+			await this.page
+				.getByRole('menuitem', {
+					name: action,
+				})
+				.click({timeout: 1000});
+		}).toPass();
 	}
 
 	async copyFragment(fragmentId: string) {
@@ -722,6 +728,12 @@ export class PageEditorPage {
 				.getByLabel('Configuration Panel')
 				.getByRole('heading', {name: editableId})
 				.click();
+
+			await this.waitForChangesSaved();
+
+			await expect(this.page.locator('.cke_editable')).not.toBeVisible({
+				timeout: 1000,
+			});
 
 			await expect(editable).toHaveText(value, {
 				timeout: 1000,

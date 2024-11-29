@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import ClayLayout from '@clayui/layout';
+import {TranslationAdminItem} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -51,7 +51,11 @@ export function LocalizationSelect({
 		>
 			{(item) => (
 				<Option key={item.id} textValue={item.label}>
-					<LanguageItem locale={item} />
+					<TranslationAdminItem
+						defaultLanguageId={defaultLanguageId}
+						item={item}
+						translationProgress={null}
+					/>
 				</Option>
 			)}
 		</Picker>
@@ -87,20 +91,3 @@ const TriggerButton = React.forwardRef(
 		);
 	}
 );
-
-const LanguageItem = ({locale}) => {
-	return (
-		<ClayLayout.ContentRow containerElement="span">
-			<ClayLayout.ContentCol containerElement="span" expand>
-				<ClayLayout.ContentSection>
-					<ClayIcon
-						className="inline-item inline-item-before"
-						symbol={locale.symbol}
-					/>
-
-					<span>{locale.label}</span>
-				</ClayLayout.ContentSection>
-			</ClayLayout.ContentCol>
-		</ClayLayout.ContentRow>
-	);
-};

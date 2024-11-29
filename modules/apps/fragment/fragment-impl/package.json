@@ -6,6 +6,7 @@
 		"@clayui/icon": "3.111.0",
 		"@clayui/label": "3.111.0",
 		"@clayui/layout": "3.111.0",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},

@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
-
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {Locator, Page, expect} from '@playwright/test';
 
 export class SimulationMenuPage {
 	readonly page: Page;
@@ -23,12 +21,28 @@ export class SimulationMenuPage {
 			});
 	}
 
-	async changePreviewBy(name: 'experiences' | 'segments') {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.locator(`#${name}`),
-			trigger: this.page.getByRole('combobox', {name: 'Preview By'}),
-		});
+	async changePreviewBy(name: 'Experiences' | 'Segments') {
+		const select = this.page.getByRole('combobox', {name: 'Preview By'});
+
+		if ((await select.textContent()).includes(name)) {
+			return;
+		}
+
+		const value = name.toLowerCase();
+
+		await expect(async () => {
+			await this.page.getByRole('combobox', {name: 'Preview By'}).click();
+
+			await expect(this.page.locator(`#${value}`)).toBeVisible({
+				timeout: 1000,
+			});
+
+			await this.page.locator(`#${value}`).click({timeout: 1000});
+
+			await expect(
+				this.page.getByRole('combobox', {name: 'Preview By'})
+			).toContainText(name, {timeout: 1000});
+		}).toPass();
 	}
 
 	async openSimulationPanel() {

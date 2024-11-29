@@ -88,7 +88,7 @@ test.describe('Page content', () => {
 
 			// Select experiences
 
-			await simulationMenuPage.changePreviewBy('experiences');
+			await simulationMenuPage.changePreviewBy('Experiences');
 
 			// Assert default experience
 
@@ -149,7 +149,7 @@ test.describe('Page content', () => {
 				)
 			).toBeVisible();
 
-			await simulationMenuPage.changePreviewBy('experiences');
+			await simulationMenuPage.changePreviewBy('Experiences');
 
 			await expect(
 				page.getByText('Showing content for the experience "Default".')

@@ -4,6 +4,7 @@
  */
 
 import ClayLabel from '@clayui/label';
+import ClayLink from '@clayui/link';
 import {
 	FrontendDataSet,
 
@@ -11,9 +12,11 @@ import {
 
 } from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
+import {openToast, sessionStorage} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';
+import {getEditObjectRelationshipURL} from '../../utils/url';
 import LabelRenderer from '../LabelRenderer';
 import ModalDeletionNotAllowed from '../ModalDeletionNotAllowed';
 import {deleteRelationship} from '../ViewObjectDefinitions/objectDefinitionUtil';
@@ -33,6 +36,7 @@ interface RelationshipsProps extends IFDSTableProps {
 	baseResourceURL: string;
 	isApproved: boolean;
 	objectDefinitionExternalReferenceCode: string;
+	objectDefinitionId: string;
 	objectRelationshipTypes: string[];
 	parameterRequired: boolean;
 }
@@ -139,6 +143,7 @@ export default function Relationships({
 	isApproved,
 	items,
 	objectDefinitionExternalReferenceCode,
+	objectDefinitionId,
 	parameterRequired,
 	style,
 	url,
@@ -240,8 +245,65 @@ export default function Relationships({
 		],
 	};
 
+	const onAfterAddObjectRelationship = async ({
+		objectDefinitionId1,
+	}: ObjectRelationship) => {
+		const toastMessage = Liferay.Language.get(
+			'relationship-was-created-successfully'
+		);
+
+		let toastAction;
+
+		if (objectDefinitionId !== objectDefinitionId1.toString()) {
+			toastAction = {
+				linkHref: await getEditObjectRelationshipURL(
+					baseResourceURL,
+					objectDefinitionId1
+				),
+				linkLabel: Liferay.Language.get('view-relationship'),
+			};
+		}
+
+		sessionStorage.setItem(
+			'addObjectRelationshipSuccessToast',
+			JSON.stringify({
+				toastAction,
+				toastMessage,
+			}),
+			sessionStorage.TYPES.NECESSARY
+		);
+	};
+
 	useEffect(() => {
 		Liferay.on('addObjectRelationship', () => setShowAddModal(true));
+
+		const addObjectRelationshipSuccessToast = sessionStorage.getItem(
+			'addObjectRelationshipSuccessToast',
+			sessionStorage.TYPES.NECESSARY
+		);
+
+		if (addObjectRelationshipSuccessToast) {
+			const {toastAction, toastMessage} = JSON.parse(
+				addObjectRelationshipSuccessToast
+			);
+
+			openToast({
+				message: toastMessage,
+				toastProps: toastAction && {
+					actions: (
+						<ClayLink
+							decoration="underline"
+							href={toastAction.linkHref}
+							style={{color: 'inherit'}}
+						>
+							{toastAction.linkLabel}
+						</ClayLink>
+					),
+				},
+			});
+
+			sessionStorage.removeItem('addObjectRelationshipSuccessToast');
+		}
 
 		return () => {
 			Liferay.detach('addObjectRelationship');
@@ -260,6 +322,7 @@ export default function Relationships({
 						objectDefinitionExternalReferenceCode
 					}
 					objectRelationshipParameterRequired={parameterRequired}
+					onAfterAddObjectRelationship={onAfterAddObjectRelationship}
 				/>
 			)}
 

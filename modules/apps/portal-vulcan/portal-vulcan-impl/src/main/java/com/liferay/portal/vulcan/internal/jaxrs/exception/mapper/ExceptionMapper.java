@@ -61,8 +61,6 @@ public class ExceptionMapper extends BaseExceptionMapper<Exception> {
 
 	@Override
 	protected Problem getProblem(Exception exception) {
-		_log.error(exception);
-
 		ProblemProvider problemProvider =
 			_problemProviderRegistrySnapshot.get();
 
@@ -77,6 +75,8 @@ public class ExceptionMapper extends BaseExceptionMapper<Exception> {
 				_getResponseStatus(problem.getStatus()),
 				problem.getTitle(locale), problem.getType());
 		}
+
+		_log.error(exception);
 
 		return new Problem(
 			Response.Status.INTERNAL_SERVER_ERROR,

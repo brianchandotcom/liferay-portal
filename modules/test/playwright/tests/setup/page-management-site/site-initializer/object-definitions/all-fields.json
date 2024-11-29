@@ -67,6 +67,41 @@
 			"type": "Clob"
 		},
 		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"externalReferenceCode": "computer-file-upload-erc",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Computer File"
+			},
+			"localized": false,
+			"name": "fileUpload",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "jpeg, jpg, pdf, png"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": 2
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": true
+				},
+				{
+					"name": "storageDLFolderPath",
+					"value": "/FileUpload"
+				}
+			],
+			"type": "Long"
+		},
+		{
 			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "text-erc",

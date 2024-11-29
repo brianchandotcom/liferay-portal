@@ -1,4 +1,10 @@
 .lfr-objects__modal-add-object-relationship {
+	&-body {
+		div:last-child {
+			margin-bottom: 0;
+		}
+	}
+
 	&-current-object-input {
 		align-items: center;
 		display: flex;

@@ -1,9 +1,22 @@
 .cp-project-usage-page {
-	.cp-project-usage-info-button {
-		background: var(--status-info-lighten-2);
+	.fade-panel {
+		background: linear-gradient(
+			to bottom,
+			rgba(255, 255, 255, 0.3),
+			rgba(255, 255, 255, 0.5) 70%,
+			rgba(255, 255, 255, 1) 90%
+		);
+		bottom: 0;
+		left: 0;
+		right: 0;
+		top: 0;
+		z-index: 10;
+	}
+
+	.empty-text {
+		background-color: var(--color-brand-primary-lighten-3);
 		border-radius: var(--border-radius-sm);
-		height: var(--spacer-3);
-		width: var(--spacer-3);
+		height: var(--btn-lg-line-height);
 	}
 
 	.d-grid {

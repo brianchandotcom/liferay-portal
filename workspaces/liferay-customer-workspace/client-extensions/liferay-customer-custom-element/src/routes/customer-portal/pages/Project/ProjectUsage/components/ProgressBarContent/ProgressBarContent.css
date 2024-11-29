@@ -9,8 +9,4 @@
 			height: var(--label-lg-icon-size);
 		}
 	}
-
-	.total-value-text {
-		font-size: var(--color-neutral-2);
-	}
 }

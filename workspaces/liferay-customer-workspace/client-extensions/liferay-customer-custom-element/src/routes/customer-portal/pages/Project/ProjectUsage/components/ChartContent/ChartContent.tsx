@@ -7,6 +7,7 @@ import React, {useMemo} from 'react';
 
 import './ChartContent.css';
 
+import classNames from 'classnames';
 import {Cell, Pie, PieChart, Text} from 'recharts';
 
 import {IChartData} from '../../hooks/useProjectUsageData';
@@ -41,27 +42,37 @@ const CustomLabel: React.FC<ICustomLabelProps> = ({
 	);
 };
 
-type IChartContentProps = Omit<IChartData, 'infoText'>;
+type IChartContentProps = Omit<IChartData, 'infoText'> & {
+	displayUsage?: boolean;
+};
 
 const ChartContent: React.FC<IChartContentProps> = ({
 	dataSizeUnits = '',
-	maxCount,
+	displayUsage,
+	maxCount = 0,
 	maxCountText,
 	title,
-	usedCount,
+	usedCount = 0,
 }) => {
 	const chartData = useMemo(() => {
-		const consumedValue = (usedCount / maxCount) * 100;
+		let consumedValue = Math.random() * 100;
+		let chartLegend = '##';
+
+		if (displayUsage) {
+			consumedValue = (usedCount / maxCount) * 100;
+			chartLegend = usedCount.toLocaleString() + dataSizeUnits;
+		}
+
 		const emptySpace = 100 - consumedValue;
 
 		return [
 			{
-				name: usedCount.toLocaleString() + dataSizeUnits,
+				name: chartLegend,
 				value: consumedValue,
 			},
 			{name: '', value: emptySpace},
 		];
-	}, [usedCount, dataSizeUnits, maxCount]);
+	}, [usedCount, dataSizeUnits, displayUsage, maxCount]);
 
 	return (
 		<div className="align-items-center chart-content d-flex w-100">
@@ -90,11 +101,26 @@ const ChartContent: React.FC<IChartContentProps> = ({
 			<p className="m-0">
 				<h5 className="chart-title mb-3">{title}</h5>
 
-				<h5 className="m-0">
-					<span className="chart-max-text mr-3">
-						Total {maxCountText}
+				<h5
+					className={classNames('m-0', {
+						row: !displayUsage,
+					})}
+				>
+					<span
+						className={classNames('chart-max-text mr-3', {
+							'col empty-text': !displayUsage,
+						})}
+					>
+						{displayUsage && `Total ${maxCountText}`}
 					</span>
-					<span>{maxCount + dataSizeUnits}</span>
+
+					<span
+						className={classNames({
+							'col empty-text': !displayUsage,
+						})}
+					>
+						{displayUsage && maxCount + dataSizeUnits}
+					</span>
 				</h5>
 			</p>
 		</div>

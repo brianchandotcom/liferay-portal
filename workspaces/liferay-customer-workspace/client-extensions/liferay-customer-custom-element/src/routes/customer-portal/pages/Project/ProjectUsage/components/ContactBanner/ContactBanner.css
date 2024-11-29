@@ -1,0 +1,43 @@
+.contact-banner {
+	background: radial-gradient(
+		circle at bottom left,
+		#06004d 0%,
+		#0001a5 33%,
+		#0069ff 71%,
+		#00e0ff 100%
+	);
+	border-radius: var(--border-radius-lg);
+
+	.contact-container {
+		backdrop-filter: blur(5px);
+		background: radial-gradient(
+			ellipse at top right,
+			#ffffff64 0%,
+			#e3edffe6 100%
+		);
+		color: var(--color-neutral-9);
+		z-index: 10;
+
+		.manager-name {
+			font-weight: var(--font-weight-bold);
+		}
+	}
+
+	.second-gradient {
+		background: radial-gradient(
+			ellipse farthest-side at 94% 100%,
+			#ff6da3 16%,
+			#ca00facc 56%,
+			#ca00fa00 100%
+		);
+		bottom: 0;
+		height: 90%;
+		right: 0;
+		width: 70%;
+	}
+
+	.title-container {
+		color: var(--color-neutral-0);
+		z-index: 10;
+	}
+}

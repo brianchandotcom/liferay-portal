@@ -2560,18 +2560,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.remote.json.web.service.web.jar!jodd-proxetta.jar</file-name>
-				<version>6.0.0</version>
-				<project-name>Jodd Proxetta</project-name>
-				<project-url>https://http.jodd.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD-2-Clause</license-name>
-						<license-url>https://github.com/oblac/jodd-proxetta/blob/master/LICENSE</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.remote.rest.extender.jar!cxf-rt-rs-extension-providers.jar</file-name>
 				<version>3.5.9</version>
 				<project-name>Apache CXF JAX-RS Extensions: Providers</project-name>

@@ -36,29 +36,25 @@ public class MethodParameterMethodVisitor extends MethodVisitor {
 			return;
 		}
 
+		int parameterCount = _method.getParameterCount();
+
+		if (!Modifier.isStatic(_method.getModifiers())) {
+			parameterCount++;
+		}
+
 		Class<?>[] parameterTypes = _method.getParameterTypes();
 
-		int count = 0;
-
 		for (Class<?> parameterType : parameterTypes) {
-			if (parameterType.getName(
-				).equalsIgnoreCase(
-					long.class.getName()
-				) ||
-				parameterType.getName(
-				).equalsIgnoreCase(
-					double.class.getName()
-				)) {
+			if (StringUtil.equalsIgnoreCase(
+					parameterType.getName(), double.class.getName()) ||
+				StringUtil.equalsIgnoreCase(
+					parameterType.getName(), long.class.getName())) {
 
-				count++;
+				parameterCount++;
 			}
 		}
 
-		if (index <
-				(_method.getParameterCount() +
-					(Modifier.isStatic(_method.getModifiers()) ? 0 : 1) +
-						count)) {
-
+		if (index < parameterCount) {
 			Class<?> parameterType = parameterTypes[_methodParameters.size()];
 
 			if (signature != null) {

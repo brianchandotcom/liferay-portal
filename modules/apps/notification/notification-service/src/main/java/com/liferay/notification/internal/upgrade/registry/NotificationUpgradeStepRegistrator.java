@@ -9,10 +9,14 @@ import com.liferay.notification.internal.upgrade.v1_1_0.util.NotificationQueueEn
 import com.liferay.notification.internal.upgrade.v1_1_0.util.NotificationTemplateAttachmentTable;
 import com.liferay.notification.internal.upgrade.v1_2_0.NotificationQueueEntryUpgradeProcess;
 import com.liferay.notification.internal.upgrade.v2_1_0.NotificationTemplateUpgradeProcess;
+import com.liferay.notification.internal.upgrade.v3_10_4.DeleteStaleNotificationQueueEntriesAndNotificationTemplatesUpgradeProcess;
 import com.liferay.notification.internal.upgrade.v3_4_0.NotificationRecipientUpgradeProcess;
 import com.liferay.notification.internal.upgrade.v3_7_0.ResourcePermissionUpgradeProcess;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -146,12 +150,27 @@ public class NotificationUpgradeStepRegistrator
 			UpgradeProcessFactory.runSQL(
 				"delete from NotificationRecipientSetting where name = " +
 					"'usePreferredLocaleForGuestUsers'"));
+
+		registry.register(
+			"3.10.3", "3.10.4",
+			new DeleteStaleNotificationQueueEntriesAndNotificationTemplatesUpgradeProcess(
+				_classNameLocalService, _groupLocalService,
+				_portletFileRepository, _resourcePermissionLocalService));
 	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
+
+	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

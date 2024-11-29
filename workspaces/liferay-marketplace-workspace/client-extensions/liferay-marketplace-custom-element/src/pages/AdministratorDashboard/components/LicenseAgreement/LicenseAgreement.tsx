@@ -7,15 +7,9 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 
 import i18n from '../../../../i18n';
-import {Liferay} from '../../../../liferay/liferay';
 import {getSiteName} from '../../../../utils/site';
 
 import './LicenseAgreement.scss';
-
-const LicenseAgreementPath = Liferay.ThemeDisplay.getLayoutURL().replace(
-	'publisher-dashboard',
-	'license-agreement'
-);
 
 const LicenseAgreement = () => (
 	<div className="license-agreement-container">
@@ -68,13 +62,10 @@ const LicenseAgreement = () => (
 
 		<small>
 			By clicking on the button &quot;continue&quot; below, I confirm that
-			I have read and agree to be bound by the&nbsp;
-			<a href={LicenseAgreementPath} target="_blank">
-				<strong>Liferay Publisher Program License Agreement.</strong>
-			</a>
-			&nbsp; I also confirm that I am of the legal age of majority in the
-			jurisdiction where I reside (at least 18 years of age in many
-			countries).
+			I have read and agree to be bound by the
+			<strong>Liferay Publisher License Agreement. </strong>I also confirm
+			that I am of the legal age of majority in the jurisdiction where I
+			reside (at least 18 years of age in many countries).
 		</small>
 	</div>
 );

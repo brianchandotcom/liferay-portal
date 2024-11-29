@@ -275,10 +275,7 @@ function AccountDetailsPage({
 						>
 							<table className="account-details-body-table">
 								<tr>
-									<th>
-										Liferay Publisher Program License
-										agreement
-									</th>
+									<th>Liferay Publisher License Agreement</th>
 
 									<td className="account-details-body-table-description">
 										<ClayIcon
@@ -289,7 +286,7 @@ function AccountDetailsPage({
 								</tr>
 
 								<tr>
-									<th>Liferay Publisher agreement</th>
+									<th>End User License Agreement</th>
 
 									<td className="account-details-body-table-description">
 										<ClayIcon

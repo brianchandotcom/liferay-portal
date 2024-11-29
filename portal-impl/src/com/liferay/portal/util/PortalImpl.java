@@ -1278,7 +1278,9 @@ public class PortalImpl implements Portal {
 		String siteDefaultLocaleI18nPath = _buildI18NPath(
 			siteDefaultLocale, layout.getGroup());
 
-		if (currentURL.startsWith(siteDefaultLocaleI18nPath)) {
+		if (currentURL.startsWith(
+				siteDefaultLocaleI18nPath + StringPool.SLASH)) {
+
 			currentURL = currentURL.substring(
 				siteDefaultLocaleI18nPath.length());
 		}
@@ -1321,7 +1323,9 @@ public class PortalImpl implements Portal {
 
 		String canonicalURLSuffix = canonicalURL.substring(pos);
 
-		if (canonicalURLSuffix.startsWith(siteDefaultLocaleI18nPath)) {
+		if (canonicalURLSuffix.startsWith(
+				siteDefaultLocaleI18nPath + StringPool.SLASH)) {
+
 			canonicalURLSuffix = canonicalURLSuffix.substring(
 				siteDefaultLocaleI18nPath.length());
 		}

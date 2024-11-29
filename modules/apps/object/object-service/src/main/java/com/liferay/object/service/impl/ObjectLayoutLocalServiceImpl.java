@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -162,16 +163,27 @@ public class ObjectLayoutLocalServiceImpl
 	}
 
 	@Override
-	public List<ObjectLayout> getDefaultObjectLayouts(long companyId) {
-		List<ObjectLayout> objectLayouts = objectLayoutPersistence.findByC_DOL(
-			companyId, true);
+	public Map<Long, List<ObjectLayout>> getDefaultObjectLayouts(
+		long companyId) {
 
-		for (ObjectLayout objectLayout : objectLayouts) {
+		Map<Long, List<ObjectLayout>> partitionedObjectLayouts =
+			new HashMap<>();
+
+		for (ObjectLayout objectLayout :
+				objectLayoutPersistence.findByC_DOL(companyId, true)) {
+
 			objectLayout.setObjectLayoutTabs(
 				_getObjectLayoutTabs(objectLayout));
+
+			List<ObjectLayout> objectLayouts =
+				partitionedObjectLayouts.computeIfAbsent(
+					objectLayout.getObjectDefinitionId(),
+					key -> new ArrayList<>());
+
+			objectLayouts.add(objectLayout);
 		}
 
-		return objectLayouts;
+		return partitionedObjectLayouts;
 	}
 
 	@Override

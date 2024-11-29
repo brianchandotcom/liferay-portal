@@ -22,7 +22,7 @@ public class MarketplaceConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryIcon() {
-		return "home";
+		return "marketplace";
 	}
 
 	@Override

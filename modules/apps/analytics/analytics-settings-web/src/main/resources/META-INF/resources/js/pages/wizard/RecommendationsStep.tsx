@@ -27,6 +27,7 @@ const Step: React.FC<IGenericStepProps> = ({onChangeStep}) => {
 					<ClayLink
 						className="ml-1"
 						href="https://learn.liferay.com/w/analytics-cloud/getting-started/connecting-liferay-dxp-to-analytics-cloud"
+						target="_blank"
 					>
 						{Liferay.Language.get(
 							'learn-more-about-recommendations'
@@ -39,33 +40,31 @@ const Step: React.FC<IGenericStepProps> = ({onChangeStep}) => {
 			<Recommendations />
 
 			<BasePage.Footer>
-				<ClayButton.Group>
-					<ClayButton
-						onClick={() => {
-							sync();
+				<ClayButton
+					onClick={() => {
+						sync();
 
-							dispatch({
-								payload: EPageView.Default,
-								type: Events.ChangePageView,
-							});
+						dispatch({
+							payload: EPageView.Default,
+							type: Events.ChangePageView,
+						});
 
-							Liferay.Util.openToast({
-								message: Liferay.Language.get(
-									'dxp-has-successfully-connected-to-analytics-cloud.-you-will-begin-to-see-data-as-activities-occur-on-your-sites'
-								),
-							});
-						}}
-					>
-						{Liferay.Language.get('finish')}
-					</ClayButton>
+						Liferay.Util.openToast({
+							message: Liferay.Language.get(
+								'dxp-has-successfully-connected-to-analytics-cloud.-you-will-begin-to-see-data-as-activities-occur-on-your-sites'
+							),
+						});
+					}}
+				>
+					{Liferay.Language.get('finish')}
+				</ClayButton>
 
-					<ClayButton
-						displayType="secondary"
-						onClick={() => onChangeStep(ESteps.Attributes)}
-					>
-						{Liferay.Language.get('previous')}
-					</ClayButton>
-				</ClayButton.Group>
+				<ClayButton
+					displayType="secondary"
+					onClick={() => onChangeStep(ESteps.Attributes)}
+				>
+					{Liferay.Language.get('previous')}
+				</ClayButton>
 			</BasePage.Footer>
 		</BasePage>
 	);

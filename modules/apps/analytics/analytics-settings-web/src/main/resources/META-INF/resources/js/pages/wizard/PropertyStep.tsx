@@ -18,18 +18,16 @@ const Step: React.FC<IGenericStepProps> = ({onChangeStep}) => (
 		<Properties />
 
 		<BasePage.Footer>
-			<ClayButton.Group spaced>
-				<ClayButton onClick={() => onChangeStep(ESteps.People)}>
-					{Liferay.Language.get('next')}
-				</ClayButton>
+			<ClayButton onClick={() => onChangeStep(ESteps.People)}>
+				{Liferay.Language.get('next')}
+			</ClayButton>
 
-				<ClayButton
-					displayType="secondary"
-					onClick={() => onChangeStep(ESteps.ConnectAC)}
-				>
-					{Liferay.Language.get('previous')}
-				</ClayButton>
-			</ClayButton.Group>
+			<ClayButton
+				displayType="secondary"
+				onClick={() => onChangeStep(ESteps.ConnectAC)}
+			>
+				{Liferay.Language.get('previous')}
+			</ClayButton>
 		</BasePage.Footer>
 	</BasePage>
 );

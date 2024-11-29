@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -321,11 +322,25 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	@Override
-	public List<ObjectAction> getObjectActions(
+	public Map<Long, List<ObjectAction>> getObjectActions(
 		long companyId, boolean active, String objectActionTriggerKey) {
 
-		return objectActionPersistence.findByC_A_OATK(
-			companyId, active, objectActionTriggerKey);
+		Map<Long, List<ObjectAction>> partitionedObjectActions =
+			new HashMap<>();
+
+		for (ObjectAction objectAction :
+				objectActionPersistence.findByC_A_OATK(
+					companyId, active, objectActionTriggerKey)) {
+
+			List<ObjectAction> objectActions =
+				partitionedObjectActions.computeIfAbsent(
+					objectAction.getObjectDefinitionId(),
+					key -> new ArrayList<>());
+
+			objectActions.add(objectAction);
+		}
+
+		return partitionedObjectActions;
 	}
 
 	@Override

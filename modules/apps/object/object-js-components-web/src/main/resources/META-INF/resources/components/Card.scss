@@ -26,6 +26,10 @@
 		gap: 1.5rem;
 		padding: 1.5rem;
 
+		.alert {
+			margin-bottom: 0;
+		}
+
 		&--inline {
 			align-items: center;
 			flex-direction: row;

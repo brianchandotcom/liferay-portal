@@ -517,3 +517,5 @@ interface ShowObjectDefinitionsModals {
 	objectDefinitionOnRootModelDeletionNotAllowed: boolean;
 	objectFieldDeletionNotAllowed: boolean;
 }
+
+type SubmitError = string | null;

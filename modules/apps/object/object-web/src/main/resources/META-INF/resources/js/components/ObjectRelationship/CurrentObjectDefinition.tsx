@@ -29,7 +29,7 @@ export default function CurrentObjectDefinition({
 	const readOnly = disabled ? false : true;
 
 	return (
-		<div className="lfr-object-web__modal-add-object-relationship-current-object-input">
+		<div className="lfr-objects__modal-add-object-relationship-current-object-input">
 			<Input
 				disabled={disabled}
 				error={error}

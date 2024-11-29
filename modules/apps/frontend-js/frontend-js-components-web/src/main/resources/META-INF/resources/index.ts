@@ -29,6 +29,7 @@ export {
 export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';
 
 export {Locale} from './translation_manager/TranslationAdminContent';
+export {default as TranslationAdminItem} from './translation_manager/TranslationAdminItem';
 export {default as TranslationAdminModal} from './translation_manager/TranslationAdminModal';
 
 export {

@@ -91,6 +91,14 @@ export function ModalAddObjectRelationship({
 			const {message} = error as Error;
 
 			setSubmitError(message);
+
+			const modalBodyElement = document.querySelector(
+				'.lfr-objects__modal-add-object-relationship-body'
+			);
+
+			if (modalBodyElement) {
+				modalBodyElement.scrollTop = modalBodyElement.scrollHeight;
+			}
 		}
 	};
 

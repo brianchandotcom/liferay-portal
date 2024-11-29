@@ -1541,6 +1541,130 @@ test.describe('Page Contents Panel', () => {
 			await expect(page.getByTitle('E1 Text')).not.toBeVisible();
 		}
 	);
+
+	test(
+		'View permissions and usage of mapped web content in Contents panel',
+		{
+			tag: '@LPS-96794',
+		},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a page with a Heading fragment
+
+			const headingId = getRandomString();
+
+			const headingDefinition = getFragmentDefinition({
+				id: headingId,
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const layoutTitle = getRandomString();
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([headingDefinition]),
+				siteId: site.id,
+				title: layoutTitle,
+			});
+
+			// Create basic web content
+
+			const basicWebContentTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+				groupId: site.id,
+				titleMap: {en_US: basicWebContentTitle},
+			});
+
+			// Go to edit mode of page and map the editable to te BWC
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await page.getByText('Heading Example', {exact: true}).waitFor();
+
+			await pageEditorPage.selectEditable(headingId, 'element-text');
+
+			await pageEditorPage.setMappedItem({
+				entity: 'Web Content',
+				entry: basicWebContentTitle,
+				field: 'Title',
+			});
+
+			// Go to Page Contents panel and assert permissions
+
+			await pageEditorPage.goToSidebarTab('Page Content');
+
+			// Assert content page editor can edit/view permissions
+
+			const panel = page.getByLabel('Page Content Panel');
+
+			const content = panel.locator(
+				'.page-editor__page-contents__page-content'
+			);
+
+			await expect(async () => {
+				await hoverAndExpectToBeVisible({
+					autoClick: true,
+					target: content.getByLabel(
+						`Actions for ${basicWebContentTitle}`
+					),
+					trigger: content,
+				});
+
+				await page
+					.getByRole('menuitem', {
+						name: 'Permissions',
+					})
+					.waitFor();
+
+				await page
+					.getByRole('menuitem', {
+						name: 'Permissions',
+					})
+					.click();
+
+				await expect(
+					page
+						.frameLocator('iframe[title="Permissions"]')
+						.getByText('Guest')
+				).toBeVisible();
+
+				await page.getByLabel('close', {exact: true}).click();
+			}).toPass();
+
+			// Assert content page editor can view usages
+
+			await expect(async () => {
+				await hoverAndExpectToBeVisible({
+					autoClick: true,
+					target: content.getByLabel(
+						`Actions for ${basicWebContentTitle}`
+					),
+					trigger: content,
+				});
+
+				await page
+					.getByRole('menuitem', {
+						name: 'View Usages',
+					})
+					.waitFor();
+
+				await page
+					.getByRole('menuitem', {
+						name: 'View Usages',
+					})
+					.click();
+
+				const iframe = page.frameLocator('iframe[title="View Usages"]');
+
+				await expect(
+					iframe.getByRole('heading', {name: 'All (1)'})
+				).toBeVisible();
+
+				await expect(iframe.getByText(layoutTitle)).toBeVisible();
+			}).toPass();
+		}
+	);
 });
 
 test.describe('Page Design Options', () => {

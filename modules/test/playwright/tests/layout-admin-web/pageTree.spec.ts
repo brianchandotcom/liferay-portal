@@ -84,7 +84,9 @@ test(
 
 		// Click back button
 
-		await page.getByRole('link', {name: 'Go to Pages'}).click();
+		await page
+			.getByRole('link', {exact: true, name: 'Go to Pages'})
+			.click();
 
 		// Assert page
 

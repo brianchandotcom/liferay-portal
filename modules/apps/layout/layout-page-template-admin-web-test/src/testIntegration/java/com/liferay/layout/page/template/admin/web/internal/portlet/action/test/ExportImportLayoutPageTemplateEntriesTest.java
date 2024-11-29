@@ -1177,6 +1177,19 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 		_validateImportExport(expectedFile, inputFile);
 	}
 
+	@FeatureFlags("LPD-37927")
+	@Test
+	public void testImportExportLayoutPageTemplateEntryLocalizationConfig()
+		throws Exception {
+
+		File expectedFile = _generateZipFile(
+			"form/localization_config/expected", null, null);
+		File inputFile = _generateZipFile(
+			"form/localization_config/input", null, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
 	@Test
 	public void testImportExportLayoutPageTemplateEntryRowContainer()
 		throws Exception {

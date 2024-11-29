@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -285,7 +286,7 @@ public class ObjectEntryModelDocumentContributor
 					(Map<String, String>)values.get(
 						objectField.getI18nObjectFieldName());
 
-				if (localizedValues.isEmpty()) {
+				if (MapUtil.isEmpty(localizedValues)) {
 					continue;
 				}
 

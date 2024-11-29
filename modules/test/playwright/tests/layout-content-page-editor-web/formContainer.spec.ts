@@ -925,7 +925,7 @@ test.describe('Form Localization', () => {
 
 		await page.getByRole('button', {name: 'Submit'}).click();
 
-		expect(
+		await expect(
 			page.getByText(
 				'Thank you. Your information was successfully received.'
 			)
@@ -1124,9 +1124,9 @@ test.describe('Numeric input field', () => {
 
 		const lemonWeightInput = page.getByLabel('Lemon Weight');
 
-		expect(lemonWeightInput).toHaveAttribute('type', 'number');
-		expect(lemonWeightInput).toHaveAttribute('max');
-		expect(lemonWeightInput).toHaveAttribute('min');
+		await expect(lemonWeightInput).toHaveAttribute('type', 'number');
+		await expect(lemonWeightInput).toHaveAttribute('max');
+		await expect(lemonWeightInput).toHaveAttribute('min');
 
 		// Submit the form with a wrong value
 
@@ -2113,7 +2113,7 @@ test.describe('Picklist input field', () => {
 
 			await page.getByText('carton').click();
 
-			expect(page.getByLabel('Material')).toHaveValue('Carton');
+			await expect(page.getByLabel('Material')).toHaveValue('Carton');
 		}
 	);
 });
@@ -2539,7 +2539,7 @@ test.describe('Multistep', () => {
 
 			await pageEditorPage.addFragment('Form Components', 'Stepper');
 
-			expect(
+			await expect(
 				page.getByText(
 					'Adding a stepper fragment inside a simple form will turn it into a multistep form. Are you sure you want to continue?'
 				)

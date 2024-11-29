@@ -1425,7 +1425,7 @@ public class PortalImpl implements Portal {
 			String i18NPath = _buildI18NPath(
 				languageId, locale, themeDisplay.getSiteGroup());
 
-			if (!alternateURLSuffix.startsWith(i18NPath) &&
+			if (!alternateURLSuffix.startsWith(i18NPath + StringPool.SLASH) &&
 				((localePrependFriendlyURLStyle == 2) ||
 				 ((localePrependFriendlyURLStyle != 0) &&
 				  !siteDefaultLocale.equals(locale)))) {

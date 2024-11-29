@@ -62,10 +62,8 @@ public class ClientExtensionsServicePreAction extends Action {
 
 		themeDisplay.setFaviconURL(_getFaviconURL(layout));
 
-		if (!layout.isTypeControlPanel()) {
-			_setThemeDisplayCSSURLs(
-				httpServletRequest, _getThemeCSSCET(layout), themeDisplay);
-		}
+		_setThemeDisplayCSSURLs(
+			httpServletRequest, _getThemeCSSCET(layout), themeDisplay);
 
 		ThemeSpritemapCET themeSpritemapCET = _getThemeSpritemapCET(layout);
 
@@ -82,9 +80,6 @@ public class ClientExtensionsServicePreAction extends Action {
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeControlPanel()) {
-			_setThemeDisplayCSSURLs(
-				httpServletRequest, _getThemeCSSCET(layout), themeDisplay);
-
 			String mode = ParamUtil.getString(
 				httpServletRequest, "p_l_mode", Constants.VIEW);
 

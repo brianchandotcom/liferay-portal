@@ -16,6 +16,8 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -363,12 +365,29 @@ public class AssetTagLocalServiceTest {
 
 		Arrays.sort(expectedTagNames);
 
+		_addBlogsEntry(expectedTagNames);
 		_addArticle(expectedTagNames);
 
-		_assertGetTags(expectedTagNames.length, expectedTagNames, "tag1");
-		_assertGetTags(expectedTagNames.length, expectedTagNames, "TAG1");
-		_assertGetTags(1, expectedTagNames, "TAG1", 0, 1);
-		_assertGetTags(1, expectedTagNames, "Tag1", 0, 1);
+		_assertGetTags(
+			BlogsEntry.class.getName(), expectedTagNames.length,
+			expectedTagNames, "tag1");
+		_assertGetTags(
+			BlogsEntry.class.getName(), expectedTagNames.length,
+			expectedTagNames, "TAG1");
+		_assertGetTags(
+			BlogsEntry.class.getName(), 1, expectedTagNames, "TAG1", 0, 1);
+		_assertGetTags(
+			BlogsEntry.class.getName(), 1, expectedTagNames, "Tag1", 0, 1);
+		_assertGetTags(
+			JournalArticle.class.getName(), expectedTagNames.length,
+			expectedTagNames, "tag1");
+		_assertGetTags(
+			JournalArticle.class.getName(), expectedTagNames.length,
+			expectedTagNames, "TAG1");
+		_assertGetTags(
+			JournalArticle.class.getName(), 1, expectedTagNames, "TAG1", 0, 1);
+		_assertGetTags(
+			JournalArticle.class.getName(), 1, expectedTagNames, "Tag1", 0, 1);
 	}
 
 	@Test
@@ -499,23 +518,30 @@ public class AssetTagLocalServiceTest {
 		return assetTags;
 	}
 
-	private void _assertGetTags(
-		long expectedLength, String[] expectedTagNames, String name) {
+	private void _addBlogsEntry(String[] tagNames) throws Exception {
+		_serviceContext.setAssetTagNames(tagNames);
 
-		_assertGetTags(
-			expectedLength, expectedTagNames, name, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		BlogsTestUtil.addEntryWithWorkflow(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
+			_serviceContext);
 	}
 
 	private void _assertGetTags(
-		long expectedLength, String[] expectedTagNames, String name, int start,
-		int end) {
+		String className, long expectedLength, String[] expectedTagNames,
+		String name) {
+
+		_assertGetTags(
+			className, expectedLength, expectedTagNames, name,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	private void _assertGetTags(
+		String className, long expectedLength, String[] expectedTagNames,
+		String name, int start, int end) {
 
 		List<AssetTag> actualAssetTags = _assetTagLocalService.getTags(
 			_group.getGroupId(),
-			_classNameLocalService.getClassNameId(
-				JournalArticle.class.getName()),
-			name, start, end);
+			_classNameLocalService.getClassNameId(className), name, start, end);
 
 		Assert.assertEquals(
 			actualAssetTags.toString(), expectedLength, actualAssetTags.size());

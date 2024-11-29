@@ -56,23 +56,29 @@ public class CPConfigurationEntryLocalServiceUtil {
 	public static CPConfigurationEntry addCPConfigurationEntry(
 			String externalReferenceCode, long userId, long groupId,
 			long classNameId, long classPK, long cpConfigurationListId,
-			String allowedOrderQuantities, boolean backOrders,
-			long commerceAvailabilityEstimateId,
-			String cpDefinitionInventoryEngine, boolean displayAvailability,
-			boolean displayStockQuantity, String lowStockActivity,
+			long cpTaxCategoryId, String allowedOrderQuantities,
+			boolean backOrders, long commerceAvailabilityEstimateId,
+			String cpDefinitionInventoryEngine, double depth,
+			boolean displayAvailability, boolean displayStockQuantity,
+			boolean freeShipping, double height, String lowStockActivity,
 			java.math.BigDecimal maxOrderQuantity,
 			java.math.BigDecimal minOrderQuantity,
 			java.math.BigDecimal minStockQuantity,
-			java.math.BigDecimal multipleOrderQuantity)
+			java.math.BigDecimal multipleOrderQuantity, boolean purchasable,
+			boolean shippable, double shippingExtraPrice,
+			boolean shipSeparately, boolean taxExempt, boolean visible,
+			double weight, double width)
 		throws PortalException {
 
 		return getService().addCPConfigurationEntry(
 			externalReferenceCode, userId, groupId, classNameId, classPK,
-			cpConfigurationListId, allowedOrderQuantities, backOrders,
-			commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
-			displayAvailability, displayStockQuantity, lowStockActivity,
+			cpConfigurationListId, cpTaxCategoryId, allowedOrderQuantities,
+			backOrders, commerceAvailabilityEstimateId,
+			cpDefinitionInventoryEngine, depth, displayAvailability,
+			displayStockQuantity, freeShipping, height, lowStockActivity,
 			maxOrderQuantity, minOrderQuantity, minStockQuantity,
-			multipleOrderQuantity);
+			multipleOrderQuantity, purchasable, shippable, shippingExtraPrice,
+			shipSeparately, taxExempt, visible, weight, width);
 	}
 
 	/**
@@ -296,6 +302,13 @@ public class CPConfigurationEntryLocalServiceUtil {
 		return getService().getCPConfigurationEntries(cpConfigurationListId);
 	}
 
+	public static List<CPConfigurationEntry> getCPConfigurationEntries(
+		long classNameId, long classPK, boolean visible) {
+
+		return getService().getCPConfigurationEntries(
+			classNameId, classPK, visible);
+	}
+
 	/**
 	 * Returns all the cp configuration entries matching the UUID and company.
 	 *
@@ -437,22 +450,28 @@ public class CPConfigurationEntryLocalServiceUtil {
 
 	public static CPConfigurationEntry updateCPConfigurationEntry(
 			String externalReferenceCode, long cpConfigurationEntryId,
-			String allowedOrderQuantities, boolean backOrders,
-			long commerceAvailabilityEstimateId,
-			String cpDefinitionInventoryEngine, boolean displayAvailability,
-			boolean displayStockQuantity, String lowStockActivity,
+			long cpTaxCategoryId, String allowedOrderQuantities,
+			boolean backOrders, long commerceAvailabilityEstimateId,
+			String cpDefinitionInventoryEngine, double depth,
+			boolean displayAvailability, boolean displayStockQuantity,
+			boolean freeShipping, double height, String lowStockActivity,
 			java.math.BigDecimal maxOrderQuantity,
 			java.math.BigDecimal minOrderQuantity,
 			java.math.BigDecimal minStockQuantity,
-			java.math.BigDecimal multipleOrderQuantity)
+			java.math.BigDecimal multipleOrderQuantity, boolean purchasable,
+			boolean shippable, double shippingExtraPrice,
+			boolean shipSeparately, boolean taxExempt, boolean visible,
+			double weight, double width)
 		throws PortalException {
 
 		return getService().updateCPConfigurationEntry(
-			externalReferenceCode, cpConfigurationEntryId,
+			externalReferenceCode, cpConfigurationEntryId, cpTaxCategoryId,
 			allowedOrderQuantities, backOrders, commerceAvailabilityEstimateId,
-			cpDefinitionInventoryEngine, displayAvailability,
-			displayStockQuantity, lowStockActivity, maxOrderQuantity,
-			minOrderQuantity, minStockQuantity, multipleOrderQuantity);
+			cpDefinitionInventoryEngine, depth, displayAvailability,
+			displayStockQuantity, freeShipping, height, lowStockActivity,
+			maxOrderQuantity, minOrderQuantity, minStockQuantity,
+			multipleOrderQuantity, purchasable, shippable, shippingExtraPrice,
+			shipSeparately, taxExempt, visible, weight, width);
 	}
 
 	public static CPConfigurationEntryLocalService getService() {

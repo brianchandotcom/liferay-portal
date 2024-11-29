@@ -45,14 +45,19 @@ public class CPConfigurationEntryServiceHttp {
 			addCPConfigurationEntry(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long groupId, long classNameId, long classPK,
-				long cpConfigurationListId, String allowedOrderQuantities,
-				boolean backOrders, long commerceAvailabilityEstimateId,
-				String cpDefinitionInventoryEngine, boolean displayAvailability,
-				boolean displayStockQuantity, String lowStockActivity,
+				long cpConfigurationListId, long cpTaxCategoryId,
+				String allowedOrderQuantities, boolean backOrders,
+				long commerceAvailabilityEstimateId,
+				String cpDefinitionInventoryEngine, double depth,
+				boolean displayAvailability, boolean displayStockQuantity,
+				boolean freeShipping, double height, String lowStockActivity,
 				java.math.BigDecimal maxOrderQuantity,
 				java.math.BigDecimal minOrderQuantity,
 				java.math.BigDecimal minStockQuantity,
-				java.math.BigDecimal multipleOrderQuantity)
+				java.math.BigDecimal multipleOrderQuantity, boolean purchasable,
+				boolean shippable, double shippingExtraPrice,
+				boolean shipSeparately, boolean taxExempt, boolean visible,
+				double weight, double width)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -63,11 +68,14 @@ public class CPConfigurationEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId, classNameId, classPK,
-				cpConfigurationListId, allowedOrderQuantities, backOrders,
-				commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
-				displayAvailability, displayStockQuantity, lowStockActivity,
+				cpConfigurationListId, cpTaxCategoryId, allowedOrderQuantities,
+				backOrders, commerceAvailabilityEstimateId,
+				cpDefinitionInventoryEngine, depth, displayAvailability,
+				displayStockQuantity, freeShipping, height, lowStockActivity,
 				maxOrderQuantity, minOrderQuantity, minStockQuantity,
-				multipleOrderQuantity);
+				multipleOrderQuantity, purchasable, shippable,
+				shippingExtraPrice, shipSeparately, taxExempt, visible, weight,
+				width);
 
 			Object returnObj = null;
 
@@ -269,15 +277,19 @@ public class CPConfigurationEntryServiceHttp {
 	public static com.liferay.commerce.product.model.CPConfigurationEntry
 			updateCPConfigurationEntry(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long cpConfigurationEntryId, long cpConfigurationListId,
+				long cpConfigurationEntryId, long cpTaxCategoryId,
 				String allowedOrderQuantities, boolean backOrders,
 				long commerceAvailabilityEstimateId,
-				String cpDefinitionInventoryEngine, boolean displayAvailability,
-				boolean displayStockQuantity, String lowStockActivity,
+				String cpDefinitionInventoryEngine, double depth,
+				boolean displayAvailability, boolean displayStockQuantity,
+				boolean freeShipping, double height, String lowStockActivity,
 				java.math.BigDecimal maxOrderQuantity,
 				java.math.BigDecimal minOrderQuantity,
 				java.math.BigDecimal minStockQuantity,
-				java.math.BigDecimal multipleOrderQuantity)
+				java.math.BigDecimal multipleOrderQuantity, boolean purchasable,
+				boolean shippable, double shippingExtraPrice,
+				boolean shipSeparately, boolean taxExempt, boolean visible,
+				double weight, double width)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -288,11 +300,13 @@ public class CPConfigurationEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, cpConfigurationEntryId,
-				cpConfigurationListId, allowedOrderQuantities, backOrders,
+				cpTaxCategoryId, allowedOrderQuantities, backOrders,
 				commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
-				displayAvailability, displayStockQuantity, lowStockActivity,
-				maxOrderQuantity, minOrderQuantity, minStockQuantity,
-				multipleOrderQuantity);
+				depth, displayAvailability, displayStockQuantity, freeShipping,
+				height, lowStockActivity, maxOrderQuantity, minOrderQuantity,
+				minStockQuantity, multipleOrderQuantity, purchasable, shippable,
+				shippingExtraPrice, shipSeparately, taxExempt, visible, weight,
+				width);
 
 			Object returnObj = null;
 
@@ -329,10 +343,13 @@ public class CPConfigurationEntryServiceHttp {
 	private static final Class<?>[] _addCPConfigurationEntryParameterTypes0 =
 		new Class[] {
 			String.class, long.class, long.class, long.class, long.class,
-			String.class, boolean.class, long.class, String.class,
-			boolean.class, boolean.class, String.class,
+			long.class, String.class, boolean.class, long.class, String.class,
+			double.class, boolean.class, boolean.class, boolean.class,
+			double.class, String.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class
+			java.math.BigDecimal.class, boolean.class, boolean.class,
+			double.class, boolean.class, boolean.class, boolean.class,
+			double.class, double.class
 		};
 	private static final Class<?>[] _deleteCPConfigurationEntryParameterTypes1 =
 		new Class[] {long.class};
@@ -346,10 +363,12 @@ public class CPConfigurationEntryServiceHttp {
 	private static final Class<?>[] _updateCPConfigurationEntryParameterTypes5 =
 		new Class[] {
 			String.class, long.class, long.class, String.class, boolean.class,
-			long.class, String.class, boolean.class, boolean.class,
-			String.class, java.math.BigDecimal.class,
+			long.class, String.class, double.class, boolean.class,
+			boolean.class, boolean.class, double.class, String.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class
+			java.math.BigDecimal.class, java.math.BigDecimal.class,
+			boolean.class, boolean.class, double.class, boolean.class,
+			boolean.class, boolean.class, double.class, double.class
 		};
 
 }

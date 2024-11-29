@@ -46,13 +46,17 @@ public interface CPConfigurationEntryService extends BaseService {
 	 */
 	public CPConfigurationEntry addCPConfigurationEntry(
 			String externalReferenceCode, long groupId, long classNameId,
-			long classPK, long cpConfigurationListId,
+			long classPK, long cpConfigurationListId, long cpTaxCategoryId,
 			String allowedOrderQuantities, boolean backOrders,
 			long commerceAvailabilityEstimateId,
-			String cpDefinitionInventoryEngine, boolean displayAvailability,
-			boolean displayStockQuantity, String lowStockActivity,
+			String cpDefinitionInventoryEngine, double depth,
+			boolean displayAvailability, boolean displayStockQuantity,
+			boolean freeShipping, double height, String lowStockActivity,
 			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
-			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity)
+			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity,
+			boolean purchasable, boolean shippable, double shippingExtraPrice,
+			boolean shipSeparately, boolean taxExempt, boolean visible,
+			double weight, double width)
 		throws PortalException;
 
 	public void deleteCPConfigurationEntry(long cpConfigurationEntryId)
@@ -82,12 +86,16 @@ public interface CPConfigurationEntryService extends BaseService {
 
 	public CPConfigurationEntry updateCPConfigurationEntry(
 			String externalReferenceCode, long cpConfigurationEntryId,
-			long cpConfigurationListId, String allowedOrderQuantities,
+			long cpTaxCategoryId, String allowedOrderQuantities,
 			boolean backOrders, long commerceAvailabilityEstimateId,
-			String cpDefinitionInventoryEngine, boolean displayAvailability,
-			boolean displayStockQuantity, String lowStockActivity,
+			String cpDefinitionInventoryEngine, double depth,
+			boolean displayAvailability, boolean displayStockQuantity,
+			boolean freeShipping, double height, String lowStockActivity,
 			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
-			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity)
+			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity,
+			boolean purchasable, boolean shippable, double shippingExtraPrice,
+			boolean shipSeparately, boolean taxExempt, boolean visible,
+			double weight, double width)
 		throws PortalException;
 
 }

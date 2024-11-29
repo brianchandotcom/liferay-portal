@@ -851,7 +851,7 @@ test.describe('Date and Time Fragment', () => {
 
 test.describe('File Upload Fragment', () => {
 	test(
-		'Cannot clear object entry’s mandatory attached file via associated display page',
+		"Cannot clear object entry's mandatory attached file via associated display page",
 		{
 			tag: '@LPS-191357',
 		},
@@ -1045,7 +1045,7 @@ test.describe('File Upload Fragment', () => {
 	);
 
 	test(
-		'Configuration',
+		'Configure fragment mapped to File Upload field',
 		{
 			tag: '@LPS-157806',
 		},
@@ -1311,7 +1311,7 @@ test.describe('File Upload Fragment', () => {
 	);
 
 	test(
-		'View error messages',
+		'View error messages from File Upload field',
 		{
 			tag: '@LPS-151402',
 		},

@@ -237,35 +237,17 @@ public class PortalImplAlternateURLTest {
 		_group = GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), availableLocales, defaultLocale);
 
-		Map<Locale, String> friendlyURLMap = HashMapBuilder.put(
-			LocaleUtil.GERMANY, StringPool.SLASH.concat(_getRandomFriendlyURL())
-		).put(
-			LocaleUtil.SPAIN, StringPool.SLASH.concat(_getRandomFriendlyURL())
-		).put(
-			LocaleUtil.US, StringPool.SLASH.concat(_getRandomFriendlyURL())
-		).build();
-
-		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			_group.getGroupId(), false,
+		_testAlternateURLWithLayout(
+			availableLocales, defaultLocale,
 			HashMapBuilder.put(
-				LocaleUtil.GERMANY, RandomTestUtil.randomString()
+				LocaleUtil.GERMANY,
+				StringPool.SLASH.concat(_getRandomFriendlyURL())
 			).put(
-				LocaleUtil.SPAIN, RandomTestUtil.randomString()
+				LocaleUtil.SPAIN,
+				StringPool.SLASH.concat(_getRandomFriendlyURL())
 			).put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			friendlyURLMap);
-
-		ThemeDisplay themeDisplay = _getThemeDisplay(_group, layout);
-
-		_testAlternateURLWithLayout(
-			availableLocales, defaultLocale, friendlyURLMap, 0, themeDisplay);
-		_testAlternateURLWithLayout(
-			availableLocales, defaultLocale, friendlyURLMap, 1, themeDisplay);
-		_testAlternateURLWithLayout(
-			availableLocales, defaultLocale, friendlyURLMap, 2, themeDisplay);
-		_testAlternateURLWithLayout(
-			availableLocales, defaultLocale, friendlyURLMap, 3, themeDisplay);
+				LocaleUtil.US, StringPool.SLASH.concat(_getRandomFriendlyURL())
+			).build());
 	}
 
 	@Test
@@ -288,35 +270,15 @@ public class PortalImplAlternateURLTest {
 				"test.com", StringPool.BLANK
 			).build());
 
-		Map<Locale, String> friendlyURLMap = HashMapBuilder.put(
-			LocaleUtil.GERMANY, "/de" + _getRandomFriendlyURL()
-		).put(
-			LocaleUtil.SPAIN, "/es" + _getRandomFriendlyURL()
-		).put(
-			LocaleUtil.US, "/en" + _getRandomFriendlyURL()
-		).build();
-
-		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			_group.getGroupId(), false,
+		_testAlternateURLWithLayout(
+			availableLocales, defaultLocale,
 			HashMapBuilder.put(
-				LocaleUtil.GERMANY, RandomTestUtil.randomString()
+				LocaleUtil.GERMANY, "/de" + _getRandomFriendlyURL()
 			).put(
-				LocaleUtil.SPAIN, RandomTestUtil.randomString()
+				LocaleUtil.SPAIN, "/es" + _getRandomFriendlyURL()
 			).put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			friendlyURLMap);
-
-		ThemeDisplay themeDisplay = _getThemeDisplay(_group, layout);
-
-		_testAlternateURLWithLayout(
-			availableLocales, defaultLocale, friendlyURLMap, 0, themeDisplay);
-		_testAlternateURLWithLayout(
-			availableLocales, defaultLocale, friendlyURLMap, 1, themeDisplay);
-		_testAlternateURLWithLayout(
-			availableLocales, defaultLocale, friendlyURLMap, 2, themeDisplay);
-		_testAlternateURLWithLayout(
-			availableLocales, defaultLocale, friendlyURLMap, 3, themeDisplay);
+				LocaleUtil.US, "/en" + _getRandomFriendlyURL()
+			).build());
 	}
 
 	@Test
@@ -842,6 +804,34 @@ public class PortalImplAlternateURLTest {
 			portletPreferences.reset(
 				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 		}
+	}
+
+	private void _testAlternateURLWithLayout(
+			Collection<Locale> availableLocales, Locale defaultLocale,
+			Map<Locale, String> friendlyURLMap)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(
+			_group,
+			LayoutTestUtil.addTypePortletLayout(
+				_group.getGroupId(), false,
+				HashMapBuilder.put(
+					LocaleUtil.GERMANY, RandomTestUtil.randomString()
+				).put(
+					LocaleUtil.SPAIN, RandomTestUtil.randomString()
+				).put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				friendlyURLMap));
+
+		_testAlternateURLWithLayout(
+			availableLocales, defaultLocale, friendlyURLMap, 0, themeDisplay);
+		_testAlternateURLWithLayout(
+			availableLocales, defaultLocale, friendlyURLMap, 1, themeDisplay);
+		_testAlternateURLWithLayout(
+			availableLocales, defaultLocale, friendlyURLMap, 2, themeDisplay);
+		_testAlternateURLWithLayout(
+			availableLocales, defaultLocale, friendlyURLMap, 3, themeDisplay);
 	}
 
 	private void _testAlternateURLWithLayout(

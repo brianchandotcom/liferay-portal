@@ -40,28 +40,16 @@ public class UserProcessorFactoryTest {
 	@Test
 	public void testMembershipUserGroups() throws Exception {
 		_user = UserTestUtil.addUser();
+
 		_userGroup = UserGroupTestUtil.addUserGroup();
 
-		_user = _processUser(_userGroup.getName());
+		_assertProcess(_userGroup.getName());
 
-		Assert.assertEquals(
-			1,
-			_userGroupLocalService.getUserUserGroupsCount(_user.getUserId()));
-
-		_user = _processUser(null);
-
-		Assert.assertEquals(
-			1,
-			_userGroupLocalService.getUserUserGroupsCount(_user.getUserId()));
-
-		_user = _processUser();
-
-		Assert.assertEquals(
-			0,
-			_userGroupLocalService.getUserUserGroupsCount(_user.getUserId()));
+		_assertProcess(null);
+		_assertProcess();
 	}
 
-	private User _processUser(String... userGroupName) throws Exception {
+	private void _assertProcess(String... userGroupName) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_user.getCompanyId(), _user.getGroupId(), _user.getUserId());
@@ -72,9 +60,25 @@ public class UserProcessorFactoryTest {
 		if (userGroupName != null) {
 			userProcessor.setValueArray(
 				String.class, "membership:userGroups", userGroupName);
-		}
 
-		return userProcessor.process(serviceContext);
+			userProcessor.process(serviceContext);
+
+			Assert.assertEquals(
+				userGroupName.length,
+				_userGroupLocalService.getUserUserGroupsCount(
+					_user.getUserId()));
+		}
+		else {
+			int expected = _userGroupLocalService.getUserUserGroupsCount(
+				_user.getUserId());
+
+			userProcessor.process(serviceContext);
+
+			Assert.assertEquals(
+				expected,
+				_userGroupLocalService.getUserUserGroupsCount(
+					_user.getUserId()));
+		}
 	}
 
 	@DeleteAfterTestRun

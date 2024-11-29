@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -64,6 +65,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.portlet.PortletPreferences;
 
@@ -137,16 +139,9 @@ public class PortalImplAlternateURLTest {
 			).build(),
 			HashMapBuilder.put(
 				LocaleUtil.BRAZIL,
-				StringPool.SLASH.concat(
-					FriendlyURLNormalizerUtil.normalize(
-						RandomTestUtil.randomString(
-							LayoutFriendlyURLRandomizerBumper.INSTANCE)))
+				StringPool.SLASH.concat(_getRandomFriendlyURL())
 			).put(
-				LocaleUtil.US,
-				StringPool.SLASH.concat(
-					FriendlyURLNormalizerUtil.normalize(
-						RandomTestUtil.randomString(
-							LayoutFriendlyURLRandomizerBumper.INSTANCE)))
+				LocaleUtil.US, StringPool.SLASH.concat(_getRandomFriendlyURL())
 			).build());
 
 		ThemeDisplay themeDisplay = _getThemeDisplay(_group, layout);
@@ -183,20 +178,11 @@ public class PortalImplAlternateURLTest {
 			_group.getGroupId(), availableLocales, defaultLocale);
 
 		Map<Locale, String> friendlyURLMap = HashMapBuilder.put(
-			LocaleUtil.GERMANY,
-			FriendlyURLNormalizerUtil.normalize(
-				RandomTestUtil.randomString(
-					LayoutFriendlyURLRandomizerBumper.INSTANCE))
+			LocaleUtil.GERMANY, _getRandomFriendlyURL()
 		).put(
-			LocaleUtil.SPAIN,
-			FriendlyURLNormalizerUtil.normalize(
-				RandomTestUtil.randomString(
-					LayoutFriendlyURLRandomizerBumper.INSTANCE))
+			LocaleUtil.SPAIN, _getRandomFriendlyURL()
 		).put(
-			LocaleUtil.US,
-			FriendlyURLNormalizerUtil.normalize(
-				RandomTestUtil.randomString(
-					LayoutFriendlyURLRandomizerBumper.INSTANCE))
+			LocaleUtil.US, _getRandomFriendlyURL()
 		).build();
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -252,23 +238,64 @@ public class PortalImplAlternateURLTest {
 			_group.getGroupId(), availableLocales, defaultLocale);
 
 		Map<Locale, String> friendlyURLMap = HashMapBuilder.put(
-			LocaleUtil.GERMANY,
-			StringPool.SLASH.concat(
-				FriendlyURLNormalizerUtil.normalize(
-					RandomTestUtil.randomString(
-						LayoutFriendlyURLRandomizerBumper.INSTANCE)))
+			LocaleUtil.GERMANY, StringPool.SLASH.concat(_getRandomFriendlyURL())
 		).put(
-			LocaleUtil.SPAIN,
-			StringPool.SLASH.concat(
-				FriendlyURLNormalizerUtil.normalize(
-					RandomTestUtil.randomString(
-						LayoutFriendlyURLRandomizerBumper.INSTANCE)))
+			LocaleUtil.SPAIN, StringPool.SLASH.concat(_getRandomFriendlyURL())
 		).put(
-			LocaleUtil.US,
-			StringPool.SLASH.concat(
-				FriendlyURLNormalizerUtil.normalize(
-					RandomTestUtil.randomString(
-						LayoutFriendlyURLRandomizerBumper.INSTANCE)))
+			LocaleUtil.US, StringPool.SLASH.concat(_getRandomFriendlyURL())
+		).build();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), false,
+			HashMapBuilder.put(
+				LocaleUtil.GERMANY, RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.SPAIN, RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			friendlyURLMap);
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(_group, layout);
+
+		_testAlternateURLWithLayout(
+			availableLocales, defaultLocale, friendlyURLMap, 0, themeDisplay);
+		_testAlternateURLWithLayout(
+			availableLocales, defaultLocale, friendlyURLMap, 1, themeDisplay);
+		_testAlternateURLWithLayout(
+			availableLocales, defaultLocale, friendlyURLMap, 2, themeDisplay);
+		_testAlternateURLWithLayout(
+			availableLocales, defaultLocale, friendlyURLMap, 3, themeDisplay);
+	}
+
+	@Test
+	@TestInfo("LPD-43082")
+	public void testAlternateURLWithLayoutFriendlyURLStartingByDefaultLanguageCode()
+		throws Exception {
+
+		_group = GroupTestUtil.addGroup();
+
+		Collection<Locale> availableLocales = Arrays.asList(
+			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
+		Locale defaultLocale = LocaleUtil.US;
+
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(), availableLocales, defaultLocale);
+
+		LayoutSet layoutSet = _group.getPublicLayoutSet();
+
+		_virtualHostLocalService.updateVirtualHosts(
+			_group.getCompanyId(), layoutSet.getLayoutSetId(),
+			TreeMapBuilder.put(
+				"test.com", StringPool.BLANK
+			).build());
+
+		Map<Locale, String> friendlyURLMap = HashMapBuilder.put(
+			LocaleUtil.GERMANY, "/de" + _getRandomFriendlyURL()
+		).put(
+			LocaleUtil.SPAIN, "/es" + _getRandomFriendlyURL()
+		).put(
+			LocaleUtil.US, "/en" + _getRandomFriendlyURL()
 		).build();
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
@@ -422,6 +449,27 @@ public class PortalImplAlternateURLTest {
 	}
 
 	private String _generateLayoutURL(
+		Locale defaultLocale, String friendlyURL, Group group, Locale locale,
+		String portalURL, PortletPreferences portletPreferences) {
+
+		LayoutSet layoutSet = group.getPublicLayoutSet();
+
+		TreeMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
+
+		if (virtualHostnames.isEmpty()) {
+			return _generateLayoutURL(
+				defaultLocale, friendlyURL, _group.getFriendlyURL(), locale,
+				portalURL, portletPreferences);
+		}
+
+		return StringBundler.concat(
+			"http://", virtualHostnames.firstKey(), ":8080",
+			_getI18nPath(defaultLocale, locale, portletPreferences),
+			friendlyURL);
+	}
+
+	private String _generateLayoutURL(
 		Locale defaultLocale, String friendlyURL, String groupFriendlyURL,
 		Locale locale, String portalURL,
 		PortletPreferences portletPreferences) {
@@ -487,6 +535,12 @@ public class PortalImplAlternateURLTest {
 		}
 
 		return i18nPath;
+	}
+
+	private String _getRandomFriendlyURL() {
+		return FriendlyURLNormalizerUtil.normalize(
+			RandomTestUtil.randomString(
+				LayoutFriendlyURLRandomizerBumper.INSTANCE));
 	}
 
 	private ThemeDisplay _getThemeDisplay(Group group, Layout layout)
@@ -817,15 +871,14 @@ public class PortalImplAlternateURLTest {
 			portletPreferences.store();
 
 			String canonicalURL = _generateLayoutURL(
-				defaultLocale, friendlyURLMap.get(defaultLocale),
-				_group.getFriendlyURL(), defaultLocale,
-				themeDisplay.getPortalURL(), portletPreferences);
+				defaultLocale, friendlyURLMap.get(defaultLocale), _group,
+				defaultLocale, themeDisplay.getPortalURL(), portletPreferences);
 
 			for (Locale alternateLocale : availableLocales) {
 				String expectedAlternateURL = _generateLayoutURL(
-					defaultLocale, friendlyURLMap.get(alternateLocale),
-					_group.getFriendlyURL(), alternateLocale,
-					themeDisplay.getPortalURL(), portletPreferences);
+					defaultLocale, friendlyURLMap.get(alternateLocale), _group,
+					alternateLocale, themeDisplay.getPortalURL(),
+					portletPreferences);
 
 				Assert.assertEquals(
 					expectedAlternateURL,

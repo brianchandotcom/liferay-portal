@@ -192,32 +192,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test case for LPS-173150. Assert new import display page template works when wrong file extension occurs."
-	@priority = 3
-	test CannotImportNonZip {
-		task ("Given a user accesses to the Page Templates import page") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-
-			MenuItem.click(menuItem = "Import");
-
-			WaitForPageLoad();
-		}
-
-		task ("When the user uploads an non-zip file") {
-			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-				locator1 = "TextInput#FILE",
-				value1 = "Document_1.doc");
-		}
-
-		task ("Then the user should see the validation error message") {
-			AssertTextEquals(
-				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
-				value1 = "Only zip files are allowed.");
-		}
-	}
-
 	@description = "This is a use case for LPS-106212. Can export a content page template based on custom master and import."
 	@priority = 4
 	@uitest

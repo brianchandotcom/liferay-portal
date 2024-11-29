@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -538,7 +538,7 @@ public class PortalImplAlternateURLTest {
 	}
 
 	private String _getRandomFriendlyURL() {
-		return FriendlyURLNormalizerUtil.normalize(
+		return _friendlyURLNormalizer.normalize(
 			RandomTestUtil.randomString(
 				LayoutFriendlyURLRandomizerBumper.INSTANCE));
 	}
@@ -690,7 +690,7 @@ public class PortalImplAlternateURLTest {
 		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
 			canonicalURL,
 			_getThemeDisplay(
-				GroupLocalServiceUtil.getGroup(
+				_groupLocalService.getGroup(
 					_group.getCompanyId(), GroupConstants.GUEST),
 				canonicalURL),
 			layout);
@@ -992,8 +992,14 @@ public class PortalImplAlternateURLTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@Inject
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private Language _language;

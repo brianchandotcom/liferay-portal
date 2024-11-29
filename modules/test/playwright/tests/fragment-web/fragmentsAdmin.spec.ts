@@ -145,6 +145,8 @@ test(
 
 		// Create fragment
 
+		await page.getByRole('link', {name: 'Fragments'}).click();
+
 		const fragmentName = getRandomString();
 
 		await fragmentsPage.createFragment(setName, fragmentName);

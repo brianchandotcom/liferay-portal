@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -27,35 +27,27 @@ public class MethodParametersResolverUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetMethodParametersFromGenerics() throws Exception {
+	public void testResolveMethodParameters() throws Exception {
 		MethodParameter[] methodParameters =
 			MethodParametersResolverUtil.resolveMethodParameters(
 				TestClass.class.getDeclaredMethod(
-					"_stringWithGenerics", String.class, List.class));
+					"stringAndLongList", String.class, List.class));
 
 		_assertMethodParameter(methodParameters[0], null, "a", String.class);
 		_assertMethodParameter(
 			methodParameters[1], new Class<?>[] {Long.class}, "longList",
 			List.class);
-	}
 
-	@Test
-	public void testGetMethodParametersFromPrimitives() throws Exception {
-		MethodParameter[] methodParameters =
-			MethodParametersResolverUtil.resolveMethodParameters(
-				TestClass.class.getDeclaredMethod(
-					"_withPrimitives", double.class, long.class));
+		methodParameters = MethodParametersResolverUtil.resolveMethodParameters(
+			TestClass.class.getDeclaredMethod(
+				"doubleAndLong", double.class, long.class));
 
 		_assertMethodParameter(methodParameters[0], null, "a", double.class);
 		_assertMethodParameter(methodParameters[1], null, "b", long.class);
-	}
 
-	@Test
-	public void testGetMethodParametersFromStaticMethod() throws Exception {
-		MethodParameter[] methodParameters =
-			MethodParametersResolverUtil.resolveMethodParameters(
-				TestStaticClass.class.getDeclaredMethod(
-					"_mapGenerics", Map.class));
+		methodParameters = MethodParametersResolverUtil.resolveMethodParameters(
+			TestStaticClass.class.getDeclaredMethod(
+				"objectIntegerMap", Map.class));
 
 		_assertMethodParameter(
 			methodParameters[0], new Class<?>[] {Object.class, Integer.class},
@@ -73,18 +65,20 @@ public class MethodParametersResolverUtilTest {
 
 	private static class TestStaticClass {
 
-		private void _mapGenerics(Map<Object, Integer> map) {
+		public static void objectIntegerMap(Map<Object, Integer> map) {
+			map.clear();
 		}
 
 	}
 
 	private class TestClass {
 
-		private String _stringWithGenerics(String a, List<Long> longList) {
-			return "return";
+		public void doubleAndLong(double a, long b) {
+			a = a + b;
 		}
 
-		private void _withPrimitives(double a, long b) {
+		public String stringAndLongList(String a, List<Long> longList) {
+			return a + longList.toString();
 		}
 
 	}

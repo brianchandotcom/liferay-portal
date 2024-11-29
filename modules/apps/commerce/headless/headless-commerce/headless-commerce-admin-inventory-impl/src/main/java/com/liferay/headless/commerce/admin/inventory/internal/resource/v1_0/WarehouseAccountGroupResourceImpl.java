@@ -16,8 +16,10 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseAccountGroup;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseAccountGroupResource;
+import com.liferay.headless.commerce.core.util.ActionUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,6 +32,9 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -155,6 +160,38 @@ public class WarehouseAccountGroupResourceImpl
 			commerceInventoryWarehouseRel.getCommerceInventoryWarehouseRelId());
 	}
 
+	private Map<String, String> _addAction(
+			Class<?> clazz,
+			CommerceInventoryWarehouseRel commerceInventoryWarehouseRel,
+			String methodName, UriInfo uriInfo)
+		throws Exception {
+
+		if (!_commerceInventoryWarehouseModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				commerceInventoryWarehouseRel.getCommerceInventoryWarehouseId(),
+				"UPDATE")) {
+
+			return null;
+		}
+
+		return HashMapBuilder.put(
+			"href",
+			() -> {
+				UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
+
+				return uriBuilder.path(
+					ActionUtil.getVersion(uriInfo)
+				).path(
+					clazz.getSuperclass(), methodName
+				).toTemplate();
+			}
+		).put(
+			"method",
+			ActionUtil.getHttpMethodName(
+				clazz, ActionUtil.getMethod(clazz, methodName))
+		).build();
+	}
+
 	private CommerceInventoryWarehouseRel _addCommerceInventoryWarehouseRel(
 			CommerceInventoryWarehouse commerceInventoryWarehouse,
 			WarehouseAccountGroup warehouseAccountGroup)
@@ -196,13 +233,15 @@ public class WarehouseAccountGroupResourceImpl
 			CommerceInventoryWarehouseRel commerceInventoryWarehouseRel)
 		throws Exception {
 
+		if (contextUriInfo == null) {
+			return null;
+		}
+
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
-			addAction(
-				"UPDATE",
-				commerceInventoryWarehouseRel.getCommerceInventoryWarehouseId(),
-				"deleteWarehouseAccountGroup",
-				_commerceInventoryWarehouseModelResourcePermission)
+			_addAction(
+				getClass(), commerceInventoryWarehouseRel,
+				"deleteWarehouseAccountGroup", contextUriInfo)
 		).build();
 	}
 

@@ -1042,6 +1042,81 @@ test.describe('File Upload Fragment', () => {
 	);
 
 	test(
+		'Upload file from document library',
+		{
+			tag: '@LPS-194129',
+		},
+		async ({apiHelpers, page, pageManagementSite}) => {
+
+			// Create a page with a form fragment with a file upload fragment
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					ALL_FIELDS_OBJECT_ERC
+				)
+			).body;
+
+			const fileUploadId = getRandomString();
+
+			const fileUploadDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_dlFileUpload',
+				},
+				id: fileUploadId,
+				key: 'INPUTS-file-upload',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [fileUploadDefinition, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Select file from document library
+
+			const fileUploadInput = page.locator('.file-upload');
+
+			await fileUploadInput
+				.getByText('Select File', {exact: true})
+				.click();
+
+			// Assert jpg files are not present
+
+			const dialogIFrame = page.frameLocator('iframe');
+
+			await expect(
+				dialogIFrame.getByText(
+					'Drag & Drop Your Files or Browse to Upload'
+				)
+			).toBeVisible();
+
+			await expect(
+				dialogIFrame.getByText('balinese.jpg')
+			).not.toBeVisible();
+		}
+	);
+
+	test(
 		'View error messages',
 		{
 			tag: '@LPS-151402',

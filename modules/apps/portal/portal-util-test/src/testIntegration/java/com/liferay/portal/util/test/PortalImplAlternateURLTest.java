@@ -229,6 +229,7 @@ public class PortalImplAlternateURLTest {
 	}
 
 	@Test
+	@TestInfo("LPD-43082")
 	public void testAlternateURLWithLayout() throws Exception {
 		Collection<Locale> availableLocales = Arrays.asList(
 			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
@@ -248,19 +249,6 @@ public class PortalImplAlternateURLTest {
 			).put(
 				LocaleUtil.US, StringPool.SLASH.concat(_getRandomFriendlyURL())
 			).build());
-	}
-
-	@Test
-	@TestInfo("LPD-43082")
-	public void testAlternateURLWithLayoutFriendlyURLStartingByDefaultLanguageCode()
-		throws Exception {
-
-		Collection<Locale> availableLocales = Arrays.asList(
-			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
-		Locale defaultLocale = LocaleUtil.US;
-
-		_group = GroupTestUtil.updateDisplaySettings(
-			_group.getGroupId(), availableLocales, defaultLocale);
 
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 

@@ -78,6 +78,10 @@ public abstract class BaseProductConfigurationListResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "catalogId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "filter"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -111,6 +115,9 @@ public abstract class BaseProductConfigurationListResourceImpl
 	@Override
 	public Page<ProductConfigurationList> getProductConfigurationListsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("catalogId")
+			Long catalogId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("search")
 			String search,
 			@javax.ws.rs.core.Context Filter filter,
@@ -128,6 +135,10 @@ public abstract class BaseProductConfigurationListResourceImpl
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "catalogId"
+			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "filter"
@@ -167,6 +178,9 @@ public abstract class BaseProductConfigurationListResourceImpl
 	@javax.ws.rs.Produces("application/json")
 	@Override
 	public Response postProductConfigurationListsPageExportBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("catalogId")
+			Long catalogId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("search")
 			String search,
@@ -630,7 +644,8 @@ public abstract class BaseProductConfigurationListResourceImpl
 		throws Exception {
 
 		return getProductConfigurationListsPage(
-			search, filter, pagination, sorts);
+			_parseLong((String)parameters.get("catalogId")), search, filter,
+			pagination, sorts);
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseAccountGr
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseAccountGroupResource;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,8 +29,15 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+
 import java.util.List;
 import java.util.Map;
+
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -155,6 +163,36 @@ public class WarehouseAccountGroupResourceImpl
 			commerceInventoryWarehouseRel.getCommerceInventoryWarehouseRelId());
 	}
 
+	private Map<String, String> _addAction(
+			Class<?> clazz,
+			CommerceInventoryWarehouseRel commerceInventoryWarehouseRel,
+			String methodName, UriInfo uriInfo)
+		throws Exception {
+
+		if (!_commerceInventoryWarehouseModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				commerceInventoryWarehouseRel.getCommerceInventoryWarehouseId(),
+				"UPDATE")) {
+
+			return null;
+		}
+
+		return HashMapBuilder.put(
+			"href",
+			() -> {
+				UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
+
+				return uriBuilder.path(
+					_getVersion(uriInfo)
+				).path(
+					clazz.getSuperclass(), methodName
+				).toTemplate();
+			}
+		).put(
+			"method", _getHttpMethodName(clazz, _getMethod(clazz, methodName))
+		).build();
+	}
+
 	private CommerceInventoryWarehouseRel _addCommerceInventoryWarehouseRel(
 			CommerceInventoryWarehouse commerceInventoryWarehouse,
 			WarehouseAccountGroup warehouseAccountGroup)
@@ -196,14 +234,61 @@ public class WarehouseAccountGroupResourceImpl
 			CommerceInventoryWarehouseRel commerceInventoryWarehouseRel)
 		throws Exception {
 
+		if (contextUriInfo == null) {
+			return null;
+		}
+
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
-			addAction(
-				"UPDATE",
-				commerceInventoryWarehouseRel.getCommerceInventoryWarehouseId(),
-				"deleteWarehouseAccountGroup",
-				_commerceInventoryWarehouseModelResourcePermission)
+			_addAction(
+				getClass(), commerceInventoryWarehouseRel,
+				"deleteWarehouseAccountGroup", contextUriInfo)
 		).build();
+	}
+
+	private String _getHttpMethodName(Class<?> clazz, Method method)
+		throws Exception {
+
+		Class<?> superClass = clazz.getSuperclass();
+
+		Method superMethod = superClass.getMethod(
+			method.getName(), method.getParameterTypes());
+
+		for (Annotation annotation : superMethod.getAnnotations()) {
+			Class<? extends Annotation> annotationType =
+				annotation.annotationType();
+
+			Annotation[] annotations = annotationType.getAnnotationsByType(
+				HttpMethod.class);
+
+			if (annotations.length > 0) {
+				HttpMethod httpMethod = (HttpMethod)annotations[0];
+
+				return httpMethod.value();
+			}
+		}
+
+		return null;
+	}
+
+	private Method _getMethod(Class<?> clazz, String methodName) {
+		for (Method method : clazz.getMethods()) {
+			if (methodName.equals(method.getName())) {
+				return method;
+			}
+		}
+
+		return null;
+	}
+
+	private String _getVersion(UriInfo uriInfo) {
+		List<String> matchedURIs = uriInfo.getMatchedURIs();
+
+		if (matchedURIs.isEmpty()) {
+			return "";
+		}
+
+		return matchedURIs.get(matchedURIs.size() - 1);
 	}
 
 	private WarehouseAccountGroup _toWarehouseAccountGroup(

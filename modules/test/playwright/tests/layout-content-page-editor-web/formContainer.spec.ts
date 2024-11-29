@@ -878,10 +878,15 @@ test.describe('File Upload Fragment', () => {
 				key: 'INPUTS-file-upload',
 			});
 
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
 			const formDefinition = getFormContainerDefinition({
 				id: getRandomString(),
 				objectDefinitionClassName,
-				pageElements: [fileUploadDefinition],
+				pageElements: [fileUploadDefinition, submitFragmentDefinition],
 			});
 
 			const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -897,6 +902,35 @@ test.describe('File Upload Fragment', () => {
 				pageManagementSite.friendlyUrlPath
 			);
 
+			// Assert default configuration values
+
+			await pageEditorPage.selectFragment(fileUploadId);
+
+			await expect(
+				page.getByLabel('Show Label', {exact: true})
+			).toBeChecked();
+
+			await expect(
+				page.getByLabel('Show Help Text', {exact: true})
+			).not.toBeChecked();
+
+			await expect(
+				page.getByLabel('Help Text', {exact: true})
+			).toHaveValue('Add your help text here.');
+
+			await expect(
+				page.getByLabel('Show Supported File Info', {exact: true})
+			).toBeChecked();
+
+			const fileUploadInput = page.locator('.file-upload');
+
+			await expect(
+				fileUploadInput.getByText(
+					'Upload a .jpeg,.jpg,.pdf,.png no larger than 2 MB.',
+					{exact: true}
+				)
+			).toBeVisible();
+
 			// Change button text
 
 			await pageEditorPage.changeFragmentConfiguration({
@@ -905,8 +939,6 @@ test.describe('File Upload Fragment', () => {
 				tab: 'General',
 				value: 'Upload',
 			});
-
-			const fileUploadInput = page.locator('.file-upload');
 
 			await expect(
 				fileUploadInput.getByText('Upload', {exact: true})

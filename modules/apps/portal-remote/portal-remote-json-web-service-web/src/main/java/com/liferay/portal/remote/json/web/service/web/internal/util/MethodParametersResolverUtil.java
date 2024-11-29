@@ -7,11 +7,12 @@ package com.liferay.portal.remote.json.web.service.web.internal.util;
 
 import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.memory.FinalizeManager;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,39 +38,32 @@ public class MethodParametersResolverUtil {
 		}
 
 		try {
-			List<MethodParameter> extractedParameterList =
-				_resolveMethodParameters(method.getDeclaringClass(), method);
+			methodParameters = _resolveMethodParameters(
+				method.getDeclaringClass(), method);
 
-			methodParameters =
-				new MethodParameter[extractedParameterList.size()];
-
-			_methodParameters.put(
-				method, extractedParameterList.toArray(methodParameters));
+			_methodParameters.put(method, methodParameters);
 		}
 		catch (PortalException portalException) {
-			_log.error("Error extracting parameters ", portalException);
+			_log.error("Unable to resolve method parameters", portalException);
 		}
 
 		return methodParameters;
 	}
 
-	private static List<MethodParameter> _resolveMethodParameters(
+	private static MethodParameter[] _resolveMethodParameters(
 			Class<?> clazz, Method method)
 		throws PortalException {
 
-		String resourceName = clazz.getName(
-		).replace(
-			StringPool.PERIOD, StringPool.SLASH
-		);
+		String path = StringUtil.replace(
+			clazz.getName(), CharPool.PERIOD, CharPool.SLASH);
 
-		resourceName = resourceName + ".class";
+		String resourcePath = path.concat(".class");
 
-		InputStream classInputStream = clazz.getClassLoader(
-		).getResourceAsStream(
-			resourceName
-		);
+		ClassLoader classLoader = clazz.getClassLoader();
 
-		if (classInputStream == null) {
+		InputStream inputStream = classLoader.getResourceAsStream(resourcePath);
+
+		if (inputStream == null) {
 			throw new IllegalArgumentException(
 				"Class not found: " + clazz.getName());
 		}
@@ -77,19 +71,23 @@ public class MethodParametersResolverUtil {
 		ClassReader classReader = null;
 
 		try {
-			classReader = new ClassReader(classInputStream);
+			classReader = new ClassReader(inputStream);
 		}
 		catch (IOException ioException) {
 			throw new PortalException(
-				"Unable to readClass to extract parameters ", ioException);
+				"Unable to read class from path " + resourcePath, ioException);
 		}
 
-		MethodParameterClassVisitor classVisitor =
-			new MethodParameterClassVisitor(clazz.getClassLoader(), method);
+		MethodParameterClassVisitor methodParameterClassVisitor =
+			new MethodParameterClassVisitor(classLoader, method);
 
-		classReader.accept(classVisitor, ClassReader.SKIP_FRAMES);
+		classReader.accept(
+			methodParameterClassVisitor, ClassReader.SKIP_FRAMES);
 
-		return classVisitor.getMethodParameters();
+		List<MethodParameter> methodParameters =
+			methodParameterClassVisitor.getMethodParameters();
+
+		return methodParameters.toArray(new MethodParameter[0]);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

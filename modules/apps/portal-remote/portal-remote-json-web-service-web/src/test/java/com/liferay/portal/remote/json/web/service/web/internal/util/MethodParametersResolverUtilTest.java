@@ -5,13 +5,9 @@
 
 package com.liferay.portal.remote.json.web.service.web.internal.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.lang.reflect.Method;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -31,93 +27,49 @@ public class MethodParametersResolverUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetMethodParametersFromGenerics()
-		throws NoSuchMethodException, PortalException {
+	public void testGetMethodParametersFromGenerics() throws Exception {
+		MethodParameter[] methodParameters =
+			MethodParametersResolverUtil.resolveMethodParameters(
+				TestClass.class.getDeclaredMethod(
+					"_stringWithGenerics", String.class, List.class));
 
-		_inputClass = TestClass.class;
-
-		_inputMethod = _inputClass.getDeclaredMethod(
-			"_stringWithGenerics", String.class, List.class);
-
-		_methodParameters =
-			MethodParametersResolverUtil.resolveMethodParameters(_inputMethod);
-
-		Assert.assertEquals("a", _methodParameters[0].getName());
-		Assert.assertEquals("longList", _methodParameters[1].getName());
-		Assert.assertEquals(_methodParameters[0].getType(), String.class);
-		Assert.assertEquals(_methodParameters[1].getType(), List.class);
-
-		Assert.assertTrue(
-			_checkGenericTypes(null, new Class<?>[] {Long.class}));
+		_assertMethodParameter(methodParameters[0], null, "a", String.class);
+		_assertMethodParameter(
+			methodParameters[1], new Class<?>[] {Long.class}, "longList",
+			List.class);
 	}
 
 	@Test
-	public void testGetMethodParametersFromPrimitives()
-		throws NoSuchMethodException, PortalException {
+	public void testGetMethodParametersFromPrimitives() throws Exception {
+		MethodParameter[] methodParameters =
+			MethodParametersResolverUtil.resolveMethodParameters(
+				TestClass.class.getDeclaredMethod(
+					"_withPrimitives", double.class, long.class));
 
-		_inputClass = TestClass.class;
-
-		_inputMethod = _inputClass.getDeclaredMethod(
-			"_withPrimitives", double.class, long.class);
-
-		_methodParameters =
-			MethodParametersResolverUtil.resolveMethodParameters(_inputMethod);
-
-		Assert.assertEquals("a", _methodParameters[0].getName());
-		Assert.assertEquals("b", _methodParameters[1].getName());
-		Assert.assertEquals(_methodParameters[0].getType(), double.class);
-		Assert.assertEquals(_methodParameters[1].getType(), long.class);
-
-		Assert.assertTrue(_checkGenericTypes(null, null));
+		_assertMethodParameter(methodParameters[0], null, "a", double.class);
+		_assertMethodParameter(methodParameters[1], null, "b", long.class);
 	}
 
 	@Test
-	public void testGetMethodParametersFromStaticMethod()
-		throws NoSuchMethodException, PortalException {
+	public void testGetMethodParametersFromStaticMethod() throws Exception {
+		MethodParameter[] methodParameters =
+			MethodParametersResolverUtil.resolveMethodParameters(
+				TestStaticClass.class.getDeclaredMethod(
+					"_mapGenerics", Map.class));
 
-		_inputClass = TestStaticClass.class;
-
-		_inputMethod = _inputClass.getDeclaredMethod("_mapGenerics", Map.class);
-
-		_methodParameters =
-			MethodParametersResolverUtil.resolveMethodParameters(_inputMethod);
-
-		Assert.assertEquals("map", _methodParameters[0].getName());
-		Assert.assertEquals(_methodParameters[0].getType(), Map.class);
-
-		Assert.assertTrue(
-			_checkGenericTypes(new Class<?>[] {Object.class, Integer.class}));
+		_assertMethodParameter(
+			methodParameters[0], new Class<?>[] {Object.class, Integer.class},
+			"map", Map.class);
 	}
 
-	private boolean _checkGenericTypes(Class[]... classes) {
-		if (_methodParameters.length != classes.length) {
-			return false;
-		}
+	private void _assertMethodParameter(
+		MethodParameter methodParameter, Class<?>[] genericTypes, String name,
+		Class<?> type) {
 
-		int matchCounter = 0;
-
-		for (int i = 0; i < classes.length; i++) {
-			Class<?>[] extractedClassArray =
-				_methodParameters[i].getGenericTypes();
-
-			if ((extractedClassArray == null) && (classes[i] == null)) {
-				matchCounter++;
-			}
-			else if (Arrays.equals(extractedClassArray, classes[i])) {
-				matchCounter++;
-			}
-		}
-
-		if (matchCounter == classes.length) {
-			return true;
-		}
-
-		return false;
+		Assert.assertEquals(genericTypes, methodParameter.getGenericTypes());
+		Assert.assertEquals(name, methodParameter.getName());
+		Assert.assertEquals(type, methodParameter.getType());
 	}
-
-	private Class<?> _inputClass;
-	private Method _inputMethod;
-	private MethodParameter[] _methodParameters;
 
 	private static class TestStaticClass {
 

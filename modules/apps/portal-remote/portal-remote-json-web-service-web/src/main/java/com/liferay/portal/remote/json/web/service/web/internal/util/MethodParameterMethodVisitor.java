@@ -58,12 +58,11 @@ public class MethodParameterMethodVisitor extends MethodVisitor {
 			Class<?> parameterType = parameterTypes[_methodParameters.size()];
 
 			if (signature != null) {
-				String parameterSignature = StringUtil.removeSubstring(
-					signature, descriptor);
-
 				_methodParameters.add(
 					new MethodParameter(
-						_classLoader, name, parameterSignature, parameterType));
+						_classLoader, name,
+						StringUtil.removeSubstring(signature, descriptor),
+						parameterType));
 			}
 			else {
 				_methodParameters.add(

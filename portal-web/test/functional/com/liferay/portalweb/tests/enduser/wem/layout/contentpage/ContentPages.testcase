@@ -976,6 +976,305 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-133933. The user can resize the displayed image via image editor on Page Content panel."
+	@priority = 5
+	test ResizeDisplayedImageViaImageEditor {
+		property portal.acceptance = "true";
+
+		task ("Add an Image fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+		}
+
+		task ("Directly select an image in editable field") {
+			PageEditor.editFragmentImage(
+				fileName = "analytics-cloud-hero-image.png",
+				fragmentName = "Image",
+				id = "image-square");
+		}
+
+		task ("View the selected image is shown in Image fragment") {
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "analytics-cloud-hero-image");
+		}
+
+		task ("Take down the naturalWidth and naturalHeight of image") {
+			var naturalWidth = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image')]@naturalWidth");
+			var naturalHeight = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image')]@naturalHeight");
+		}
+
+		task ("Edit the image via the image editor on Page Content panel") {
+			PageEditor.gotoEllipsisMenuItemInPageContentPanel(
+				itemName = "analytics-cloud-hero-image.png",
+				menuItem = "Edit Image");
+
+			ImageEditor.resizeImage(dimension = "16:9");
+
+			ImageEditor.saveChanges();
+		}
+
+		task ("Take down the new naturalWidth and naturalHeight of image") {
+			PageEditor.gotoTab(tabName = "Browser");
+
+			WaitForElementPresent(
+				key_resolutionLabel = "Width",
+				locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
+
+			var editedNaturalWidth = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image')]@naturalWidth");
+			var editedNaturalHeight = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image')]@naturalHeight");
+		}
+
+		task ("View the naturalWidth doesn't change") {
+			StringUtil.assertEquals(${naturalWidth}, ${editedNaturalWidth});
+		}
+
+		task ("View the naturalHeight becomes smaller") {
+			TestUtils.isGreaterThan(
+				actual = ${naturalHeight},
+				expected = ${editedNaturalHeight});
+
+			PageEditor.publish();
+		}
+
+		task ("Take down the new naturalWidth and naturalHeight of image at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "analytics-cloud-hero-image");
+
+			var editedNaturalWidth = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image')]@naturalWidth");
+			var editedNaturalHeight = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image')]@naturalHeight");
+		}
+
+		task ("View the naturalWidth doesn't change") {
+			StringUtil.assertEquals(${naturalWidth}, ${editedNaturalWidth});
+		}
+
+		task ("View the naturalHeight becomes smaller") {
+			TestUtils.isGreaterThan(
+				actual = ${naturalHeight},
+				expected = ${editedNaturalHeight});
+		}
+	}
+
+	@description = "This is a test for LPS-133933. The user can rotate the displayed image via image editor on Page Content panel."
+	@priority = 5
+	test RotateDisplayedImageViaImageEditor {
+		property portal.acceptance = "true";
+
+		task ("Add a Banner Center fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				composition = "true",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Map the Preview Image of an image to background image editable field") {
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
+				entryTitle = "analytics-cloud-hero-image.png",
+				fieldName = "Preview Image",
+				navItem = "Documents and Media",
+				panel = "Styles",
+				uploadFileName = "analytics-cloud-hero-image.png");
+		}
+
+		task ("View the mapped image is shown in Banner Center fragment") {
+			PageEditor.viewContainerStyle(backgroundImage = "analytics-cloud-hero-image\.png");
+		}
+
+		task ("View the version of mapped image") {
+			AssertVisible(
+				backgroundImageStyle = "version\=1\.0",
+				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
+				position = 1);
+		}
+
+		task ("Edit the image via the image editor on Page Content panel") {
+			PageEditor.gotoEllipsisMenuItemInPageContentPanel(
+				itemName = "analytics-cloud-hero-image.png",
+				menuItem = "Edit Image");
+
+			ImageEditor.rotateImage();
+
+			ImageEditor.saveChanges();
+		}
+
+		task ("View the version of mapped image") {
+			PageEditor.gotoTab(tabName = "Browser");
+
+			WaitForElementPresent(
+				key_resolutionLabel = "Width",
+				locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
+
+			AssertVisible(
+				backgroundImageStyle = "version\=2\.0",
+				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
+				position = 1);
+
+			PageEditor.publish();
+		}
+
+		task ("View the version of mapped image at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Banner Title Example");
+
+			AssertVisible(
+				backgroundImageStyle = "version=2.0",
+				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
+				position = 1);
+		}
+	}
+
+	@description = "This is a test for LPS-122396. The outline of editable field should be dashed when hover on mapped assets in Page Content panel."
+	@priority = 5
+	test ViewDashedOutlineOfMappedEditableFieldWhenHoverOnAssets {
+		property portal.acceptance = "true";
+
+		task ("Add a web content, a blogs entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = ${randomSiteName},
+				title = "Blogs Entry Title");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = ${randomSiteName},
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a Banner Center to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				composition = "true",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Map the Title of web content to title editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Map the Title of blogs entry to link editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Blogs Entry Title",
+				navItem = "Blogs");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Map the Preview Image of document to background image editable field") {
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
+				entryTitle = "Document Title",
+				fieldName = "Preview Image",
+				navItem = "Documents and Media",
+				panel = "Styles");
+
+			PageEditor.clickManagementBar();
+		}
+
+		task ("View the dashed outline of mapped editable field when hover on assets") {
+			PageEditor.gotoTab(tabName = "Page Content");
+
+			MouseOver(
+				key_itemName = "Web Content Title",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = 1,
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "outline-style",
+				value1 = "dashed");
+
+			MouseOver(
+				key_sidebarButton = "Page Content",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			MouseOver(
+				key_itemName = "Blogs Entry Title",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertCssValue(
+				fragmentName = "button",
+				id = "link",
+				index = 1,
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "outline-style",
+				value1 = "dashed");
+
+			MouseOver(
+				key_sidebarButton = "Page Content",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			MouseOver(
+				key_itemName = "Document Title",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			var backgroundImageOutlineStyle = Css.getPseudoElementCssValue(
+				attribute = "outline-style",
+				element = "//div[contains(@class,'page-editor__topper')][@draggable][.//div[contains(@style,'Document_1\\.jpg')]]",
+				pseudo = ":after");
+
+			StringUtil.assertEquals("dashed", ${backgroundImageOutlineStyle});
+		}
+	}
+
 	@description = "This is a test for LPS-175136. View no alert for draft when design changes on content page being published in page editor."
 	@priority = 3
 	test ViewDesignChangesSavedInDraftViaPageDesignOptions {

@@ -10,6 +10,7 @@ import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.FormConfig;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.delivery.dto.v1_0.Layout;
+import com.liferay.headless.delivery.dto.v1_0.LocalizationConfig;
 import com.liferay.headless.delivery.dto.v1_0.MessageFormSubmissionResult;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageFormDefinition;
@@ -84,6 +85,19 @@ public class FormLayoutStructureItemMapper
 													saveInlineContent,
 													saveMappingConfiguration,
 													formStyledLayoutStructureItem));
+
+										setLocalizationConfig(
+											() -> {
+												if (FeatureFlagManagerUtil.
+														isEnabled(
+															"LPD-37927")) {
+
+													return _toLocalizationConfig(
+														formStyledLayoutStructureItem);
+												}
+
+												return null;
+											});
 
 										if (FeatureFlagManagerUtil.isEnabled(
 												"LPD-10727")) {
@@ -326,6 +340,57 @@ public class FormLayoutStructureItemMapper
 					});
 			}
 		};
+	}
+
+	private LocalizationConfig _toLocalizationConfig(
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
+
+		JSONObject localizationConfigJSONObject =
+			formStyledLayoutStructureItem.getLocalizationConfigJSONObject();
+
+		if (localizationConfigJSONObject == null) {
+			return null;
+		}
+
+		return new LocalizationConfig() {
+			{
+				setUnlocalizedFieldsMessage(
+					() -> {
+						if (localizationConfigJSONObject.has(
+								"unlocalizedFieldsMessage")) {
+
+							return _toFragmentInlineValue(
+								localizationConfigJSONObject.getJSONObject(
+									"unlocalizedFieldsMessage"));
+						}
+
+						return null;
+					});
+
+				setUnlocalizedFieldsState(
+					() -> {
+						if (localizationConfigJSONObject.has(
+								"unlocalizedFieldsState")) {
+
+							return _toUnlocalizedFieldState(
+								localizationConfigJSONObject.getString(
+									"unlocalizedFieldsState"));
+						}
+
+						return null;
+					});
+			}
+		};
+	}
+
+	private LocalizationConfig.UnlocalizedFieldsState _toUnlocalizedFieldState(
+		String value) {
+
+		if (Objects.equals(value, "disabled")) {
+			return LocalizationConfig.UnlocalizedFieldsState.DISABLED;
+		}
+
+		return LocalizationConfig.UnlocalizedFieldsState.READ_ONLY;
 	}
 
 }

@@ -1320,6 +1320,74 @@ test.describe('Page Contents Panel', () => {
 	);
 
 	test(
+		'Search mapped assets',
+		{
+			tag: '@LPS-122148',
+		},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a page with a Heading fragment
+
+			const headingId = getRandomString();
+
+			const headingDefinition = getFragmentDefinition({
+				id: headingId,
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const layoutTitle = getRandomString();
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([headingDefinition]),
+				siteId: site.id,
+				title: layoutTitle,
+			});
+
+			// Create basic web content
+
+			const basicWebContentTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+				groupId: site.id,
+				titleMap: {en_US: basicWebContentTitle},
+			});
+
+			// Go to edit mode of page and map the editable to te BWC
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await page.getByText('Heading Example', {exact: true}).waitFor();
+
+			await pageEditorPage.selectEditable(headingId, 'element-text');
+
+			await pageEditorPage.setMappedItem({
+				entity: 'Web Content',
+				entry: basicWebContentTitle,
+				field: 'Title',
+			});
+
+			// Go to Page Contents panel and assert permissions
+
+			await pageEditorPage.goToSidebarTab('Page Content');
+
+			// Search by keywods
+
+			await expect(page.getByTitle(basicWebContentTitle)).toBeVisible();
+
+			await page.getByPlaceholder('Search...').fill(getRandomString());
+
+			await expect(
+				page.getByTitle(basicWebContentTitle)
+			).not.toBeVisible();
+
+			await page.getByPlaceholder('Search...').fill(basicWebContentTitle);
+
+			await expect(page.getByTitle(basicWebContentTitle)).toBeVisible();
+		}
+	);
+
+	test(
 		'View collection, mapped content and mapped content via content display in page content panel',
 		{
 			tag: '@LPS-125985',

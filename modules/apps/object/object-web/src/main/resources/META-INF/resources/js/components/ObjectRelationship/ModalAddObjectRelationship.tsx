@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
@@ -47,7 +46,7 @@ export function ModalAddObjectRelationship({
 		},
 	});
 
-	const [error, setError] = useState<string>('');
+	const [submitError, setSubmitError] = useState<SubmitError>(null);
 
 	const initialValues: Partial<ObjectRelationship> = {
 		objectDefinitionExternalReferenceCode1,
@@ -89,7 +88,7 @@ export function ModalAddObjectRelationship({
 		catch (error: unknown) {
 			const {message} = error as Error;
 
-			setError(message);
+			setSubmitError(message);
 		}
 	};
 
@@ -109,10 +108,6 @@ export function ModalAddObjectRelationship({
 					</ClayModal.Header>
 
 					<ClayModal.Body>
-						{error && (
-							<ClayAlert displayType="danger">{error}</ClayAlert>
-						)}
-
 						<Input
 							error={errors.label}
 							label={Liferay.Language.get('label')}
@@ -138,6 +133,7 @@ export function ModalAddObjectRelationship({
 								objectDefinitionExternalReferenceCode2
 							}
 							setValues={setValues}
+							submitError={submitError}
 							values={{
 								...values,
 								name:

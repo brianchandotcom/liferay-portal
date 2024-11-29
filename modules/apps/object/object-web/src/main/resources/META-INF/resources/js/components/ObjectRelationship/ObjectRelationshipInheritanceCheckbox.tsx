@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
@@ -11,14 +12,12 @@ import React, {useState} from 'react';
 import './ObjectRelationshipInheritanceCheckbox.scss';
 
 interface ObjectRelationshipInheritanceCheckbox {
-	onSubmit: (values?: Partial<ObjectRelationship>) => Promise<void>;
-	setValues: (values: Partial<ObjectRelationship>) => void;
+	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	values: Partial<ObjectRelationship>;
 }
 
 export function ObjectRelationshipInheritanceCheckbox({
-	onSubmit,
-	setValues,
+	onChange,
 	values,
 }: ObjectRelationshipInheritanceCheckbox) {
 	const [showPopover, setShowPopover] = useState(false);
@@ -29,29 +28,7 @@ export function ObjectRelationshipInheritanceCheckbox({
 				<ClayCheckbox
 					checked={!!values.edge}
 					label={Liferay.Language.get('enable-inheritance')}
-					onChange={({target}) => {
-						if (target.checked) {
-							setValues({
-								...values,
-								edge: true,
-							});
-						}
-						else {
-							const parentWindow = Liferay.Util.getOpener();
-
-							parentWindow.Liferay.fire(
-								'openModalDisableInheritance',
-								{
-									handleDisable: async () => {
-										await onSubmit({
-											...values,
-											edge: false,
-										});
-									},
-								}
-							);
-						}
-					}}
+					onChange={onChange}
 				/>
 
 				<ClayPopover
@@ -73,6 +50,15 @@ export function ObjectRelationshipInheritanceCheckbox({
 					)}
 				</ClayPopover>
 			</div>
+
+			<ClayAlert
+				displayType="info"
+				title={`${Liferay.Language.get('info')}:`}
+			>
+				{Liferay.Language.get(
+					'when-enabled,-permissions-are-inherited,-all-api-endpoints-are-grouped-under-the-parent,-and-the-relationship-field-is-always-mandatory'
+				)}
+			</ClayAlert>
 		</>
 	);
 }

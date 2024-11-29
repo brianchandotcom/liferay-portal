@@ -18,13 +18,7 @@ import CurrentObjectDefinition from './CurrentObjectDefinition';
 import {ObjectRelationshipInheritanceCheckbox} from './ObjectRelationshipInheritanceCheckbox';
 import SelectObjectDefinition from './SelectObjectDefinition';
 
-export type Alert = {
-	displayType: 'info' | 'warning';
-	message: string;
-};
-
 interface ObjectRelationshipFormBaseProps {
-	alert?: Alert;
 	baseResourceURL: string;
 	children?: JSX.Element;
 	className?: string;
@@ -33,9 +27,13 @@ interface ObjectRelationshipFormBaseProps {
 	hasDefinedObjectDefinitionTarget?: boolean;
 	objectDefinitionExternalReferenceCode1: string;
 	objectDefinitionExternalReferenceCode2?: string;
+	onChangeInheritanceCheckbox?: (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => void;
 	onSubmit?: (values?: Partial<ObjectRelationship>) => Promise<void>;
 	readonly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
+	submitError?: SubmitError;
 	values: Partial<ObjectRelationship>;
 }
 
@@ -86,7 +84,6 @@ export const OBJECT_RELATIONSHIP_TYPES = [
 ];
 
 export function ObjectRelationshipFormBase({
-	alert,
 	baseResourceURL,
 	children,
 	className,
@@ -95,9 +92,10 @@ export function ObjectRelationshipFormBase({
 	hasDefinedObjectDefinitionTarget,
 	objectDefinitionExternalReferenceCode1,
 	objectDefinitionExternalReferenceCode2,
-	onSubmit,
+	onChangeInheritanceCheckbox,
 	readonly,
 	setValues,
+	submitError,
 	values,
 }: ObjectRelationshipFormBaseProps) {
 	const [creationLanguageId, setCreationLanguageId] =
@@ -445,25 +443,23 @@ export function ObjectRelationshipFormBase({
 
 			{children}
 
-			{alert &&
-				onSubmit &&
+			{onChangeInheritanceCheckbox &&
 				values.type === 'oneToMany' &&
 				Liferay.FeatureFlags['LPS-187142'] && (
-					<>
-						<ObjectRelationshipInheritanceCheckbox
-							onSubmit={onSubmit}
-							setValues={setValues}
-							values={values}
-						/>
-
-						<ClayAlert
-							displayType={alert.displayType}
-							title={`${alert.displayType === 'info' ? Liferay.Language.get('info') : Liferay.Language.get('warning')}:`}
-						>
-							{alert.message}
-						</ClayAlert>
-					</>
+					<ObjectRelationshipInheritanceCheckbox
+						onChange={onChangeInheritanceCheckbox}
+						values={values}
+					/>
 				)}
+
+			{submitError && (
+				<ClayAlert
+					displayType="danger"
+					title={`${Liferay.Language.get('error')}:`}
+				>
+					{submitError}
+				</ClayAlert>
+			)}
 		</>
 	);
 }

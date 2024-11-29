@@ -8,14 +8,13 @@ import {InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
 
 import {ObjectRelationshipDeletionTypeSelect} from './ObjectRelationshipDeletionTypeSelect';
-import {Alert, ObjectRelationshipFormBase} from './ObjectRelationshipFormBase';
+import {ObjectRelationshipFormBase} from './ObjectRelationshipFormBase';
 import {ObjectRelationshipParameterRequired} from './ObjectRelationshipParameterRequired';
 
 import type {FormError} from '@liferay/object-js-components-web';
 import type {ChangeEventHandler, ElementType} from 'react';
 
 interface EditObjectRelationshipContentProps {
-	alert?: Alert;
 	autoSave?: boolean;
 	baseResourceURL: string;
 	containerWrapper: ElementType;
@@ -23,16 +22,19 @@ interface EditObjectRelationshipContentProps {
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	objectDefinitionExternalReferenceCode: string;
 	objectRelationshipDeletionTypes: LabelValueObject[];
+	onChangeInheritanceCheckbox?: (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => void;
 	onSubmit: (values?: Partial<ObjectRelationship>) => Promise<void>;
 	parameterRequired: boolean;
 	readOnly?: boolean;
 	restContextPath: string;
 	setValues: (values: Partial<ObjectRelationship>) => void;
+	submitError?: SubmitError;
 	values: Partial<ObjectRelationship>;
 }
 
 export function EditObjectRelationshipContent({
-	alert,
 	autoSave,
 	baseResourceURL,
 	containerWrapper: ContainerWrapper,
@@ -40,11 +42,13 @@ export function EditObjectRelationshipContent({
 	handleChange,
 	objectDefinitionExternalReferenceCode,
 	objectRelationshipDeletionTypes,
+	onChangeInheritanceCheckbox,
 	onSubmit,
 	parameterRequired,
 	readOnly,
 	restContextPath,
 	setValues,
+	submitError,
 	values,
 }: EditObjectRelationshipContentProps) {
 	return (
@@ -79,16 +83,17 @@ export function EditObjectRelationshipContent({
 				/>
 
 				<ObjectRelationshipFormBase
-					alert={alert}
 					baseResourceURL={baseResourceURL}
 					errors={errors}
 					handleChange={handleChange}
 					objectDefinitionExternalReferenceCode1={
 						objectDefinitionExternalReferenceCode
 					}
+					onChangeInheritanceCheckbox={onChangeInheritanceCheckbox}
 					onSubmit={onSubmit}
 					readonly
 					setValues={setValues}
+					submitError={submitError}
 					values={values}
 				>
 					<>

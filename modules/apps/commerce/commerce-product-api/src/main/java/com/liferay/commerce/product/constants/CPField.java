@@ -49,6 +49,9 @@ public class CPField {
 	public static final String CP_CONFIGURATION_LIST_ID =
 		"CPConfigurationListId";
 
+	public static final String CP_CONFIGURATION_LIST_IDS =
+		"CPConfigurationListIds";
+
 	public static final String CP_DEFINITION_ID = "CPDefinitionId";
 
 	public static final String CP_DEFINITION_OPTION_REL_ID =
@@ -128,6 +131,8 @@ public class CPField {
 
 	public static final String REPLACEMENT_CPRODUCT_ID =
 		"replacementCProductId";
+
+	public static final String SHIPPABLE = "shippable";
 
 	public static final String SHORT_DESCRIPTION = "shortDescription";
 

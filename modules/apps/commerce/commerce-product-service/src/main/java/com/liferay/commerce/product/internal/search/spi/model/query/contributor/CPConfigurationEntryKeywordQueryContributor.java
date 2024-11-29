@@ -42,6 +42,8 @@ public class CPConfigurationEntryKeywordQueryContributor
 			false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, Field.NAME, false);
 	}
 
 	@Reference

@@ -19,6 +19,8 @@ import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfigurationList;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductShippingConfiguration;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductTaxConfiguration;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductConfigurationDTOConverterContext;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductConfigurationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationResource;
@@ -44,6 +46,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.math.BigDecimal;
 
 import java.util.Map;
+import java.util.Objects;
 
 import javax.ws.rs.core.Response;
 
@@ -167,6 +170,9 @@ public class ProductConfigurationResourceImpl
 				searchContext.setAttribute(
 					CPField.CP_CONFIGURATION_LIST_ID,
 					cpConfigurationList.getCPConfigurationListId());
+				searchContext.setAttribute(
+					Field.CLASS_NAME_ID,
+					_portal.getClassNameId(CPDefinition.class));
 				searchContext.setCompanyId(companyId);
 			},
 			sorts,
@@ -220,13 +226,21 @@ public class ProductConfigurationResourceImpl
 		CPConfigurationEntry cpConfigurationEntry =
 			_cpConfigurationEntryService.getCPConfigurationEntry(id);
 
+		ProductShippingConfiguration productShippingConfiguration =
+			_getProductShippingConfiguration(productConfiguration);
+
+		ProductTaxConfiguration productTaxConfiguration =
+			_getProductTaxConfiguration(productConfiguration);
+
 		return _toProductConfiguration(
 			_cpConfigurationEntryService.updateCPConfigurationEntry(
 				GetterUtil.getString(
 					productConfiguration.getExternalReferenceCode(),
 					cpConfigurationEntry.getExternalReferenceCode()),
 				cpConfigurationEntry.getCPConfigurationEntryId(),
-				cpConfigurationEntry.getCPConfigurationListId(),
+				GetterUtil.getLong(
+					productTaxConfiguration.getId(),
+					cpConfigurationEntry.getCPTaxCategoryId()),
 				ProductConfigurationUtil.getAllowedOrderQuantities(
 					productConfiguration.getAllowedOrderQuantities(),
 					cpConfigurationEntry.getAllowedOrderQuantities()),
@@ -239,12 +253,21 @@ public class ProductConfigurationResourceImpl
 				GetterUtil.getString(
 					productConfiguration.getInventoryEngine(),
 					cpConfigurationEntry.getCPDefinitionInventoryEngine()),
+				GetterUtil.getDouble(
+					productShippingConfiguration.getDepth(),
+					cpConfigurationEntry.getDepth()),
 				GetterUtil.getBoolean(
 					productConfiguration.getDisplayAvailability(),
 					cpConfigurationEntry.isDisplayAvailability()),
 				GetterUtil.getBoolean(
 					productConfiguration.getDisplayStockQuantity(),
 					cpConfigurationEntry.isDisplayStockQuantity()),
+				GetterUtil.getBoolean(
+					productShippingConfiguration.getFreeShipping(),
+					cpConfigurationEntry.isFreeShipping()),
+				GetterUtil.getDouble(
+					productShippingConfiguration.getHeight(),
+					cpConfigurationEntry.getHeight()),
 				GetterUtil.getString(
 					productConfiguration.getLowStockAction(),
 					cpConfigurationEntry.getLowStockActivity()),
@@ -259,7 +282,31 @@ public class ProductConfigurationResourceImpl
 					cpConfigurationEntry.getMinStockQuantity()),
 				BigDecimalUtil.get(
 					productConfiguration.getMultipleOrderQuantity(),
-					cpConfigurationEntry.getMultipleOrderQuantity())));
+					cpConfigurationEntry.getMultipleOrderQuantity()),
+				GetterUtil.getBoolean(
+					productConfiguration.getPurchasable(),
+					cpConfigurationEntry.isPurchasable()),
+				GetterUtil.getBoolean(
+					productShippingConfiguration.getShippable(),
+					cpConfigurationEntry.isShippable()),
+				GetterUtil.getDouble(
+					productShippingConfiguration.getShippingExtraPrice(),
+					cpConfigurationEntry.getShippingExtraPrice()),
+				GetterUtil.getBoolean(
+					productShippingConfiguration.getShippingSeparately(),
+					cpConfigurationEntry.isShipSeparately()),
+				GetterUtil.getBoolean(
+					!productTaxConfiguration.getTaxable(),
+					cpConfigurationEntry.isTaxExempt()),
+				GetterUtil.getBoolean(
+					productConfiguration.getVisible(),
+					cpConfigurationEntry.isVisible()),
+				GetterUtil.getDouble(
+					productShippingConfiguration.getWeight(),
+					cpConfigurationEntry.getWeight()),
+				GetterUtil.getDouble(
+					productShippingConfiguration.getWidth(),
+					cpConfigurationEntry.getWidth())));
 	}
 
 	@Override
@@ -296,12 +343,20 @@ public class ProductConfigurationResourceImpl
 			cpDefinition.fetchMasterCPConfigurationEntry();
 
 		if (masterCPConfigurationEntry != null) {
+			ProductShippingConfiguration productShippingConfiguration =
+				_getProductShippingConfiguration(productConfiguration);
+
+			ProductTaxConfiguration productTaxConfiguration =
+				_getProductTaxConfiguration(productConfiguration);
+
 			_cpConfigurationEntryService.updateCPConfigurationEntry(
 				GetterUtil.getString(
 					productConfiguration.getExternalReferenceCode(),
 					masterCPConfigurationEntry.getExternalReferenceCode()),
 				masterCPConfigurationEntry.getCPConfigurationEntryId(),
-				masterCPConfigurationEntry.getCPConfigurationListId(),
+				GetterUtil.getLong(
+					productTaxConfiguration.getId(),
+					masterCPConfigurationEntry.getCPTaxCategoryId()),
 				ProductConfigurationUtil.getAllowedOrderQuantities(
 					productConfiguration.getAllowedOrderQuantities(),
 					masterCPConfigurationEntry.getAllowedOrderQuantities()),
@@ -316,12 +371,21 @@ public class ProductConfigurationResourceImpl
 					productConfiguration.getInventoryEngine(),
 					masterCPConfigurationEntry.
 						getCPDefinitionInventoryEngine()),
+				GetterUtil.getDouble(
+					productShippingConfiguration.getDepth(),
+					masterCPConfigurationEntry.getDepth()),
 				GetterUtil.getBoolean(
 					productConfiguration.getDisplayAvailability(),
 					masterCPConfigurationEntry.isDisplayAvailability()),
 				GetterUtil.getBoolean(
 					productConfiguration.getDisplayStockQuantity(),
 					masterCPConfigurationEntry.isDisplayStockQuantity()),
+				GetterUtil.getBoolean(
+					productShippingConfiguration.getFreeShipping(),
+					masterCPConfigurationEntry.isFreeShipping()),
+				GetterUtil.getDouble(
+					productShippingConfiguration.getHeight(),
+					masterCPConfigurationEntry.getHeight()),
 				GetterUtil.getString(
 					productConfiguration.getLowStockAction(),
 					masterCPConfigurationEntry.getLowStockActivity()),
@@ -336,7 +400,31 @@ public class ProductConfigurationResourceImpl
 					masterCPConfigurationEntry.getMinStockQuantity()),
 				BigDecimalUtil.get(
 					productConfiguration.getMultipleOrderQuantity(),
-					masterCPConfigurationEntry.getMultipleOrderQuantity()));
+					masterCPConfigurationEntry.getMultipleOrderQuantity()),
+				GetterUtil.getBoolean(
+					productConfiguration.getPurchasable(),
+					masterCPConfigurationEntry.isPurchasable()),
+				GetterUtil.getBoolean(
+					productShippingConfiguration.getShippable(),
+					masterCPConfigurationEntry.isShippable()),
+				GetterUtil.getDouble(
+					productShippingConfiguration.getShippingExtraPrice(),
+					masterCPConfigurationEntry.getShippingExtraPrice()),
+				GetterUtil.getBoolean(
+					productShippingConfiguration.getShippingSeparately(),
+					masterCPConfigurationEntry.isShipSeparately()),
+				GetterUtil.getBoolean(
+					!productTaxConfiguration.getTaxable(),
+					masterCPConfigurationEntry.isTaxExempt()),
+				GetterUtil.getBoolean(
+					productConfiguration.getVisible(),
+					masterCPConfigurationEntry.isVisible()),
+				GetterUtil.getDouble(
+					productShippingConfiguration.getWeight(),
+					masterCPConfigurationEntry.getWeight()),
+				GetterUtil.getDouble(
+					productShippingConfiguration.getWidth(),
+					masterCPConfigurationEntry.getWidth()));
 		}
 
 		ProductConfigurationUtil.updateCPDefinitionInventory(
@@ -375,35 +463,63 @@ public class ProductConfigurationResourceImpl
 				Long id, ProductConfiguration productConfiguration)
 		throws Exception {
 
-		CPDefinition cpDefinition =
-			_cpDefinitionService.
-				fetchCPDefinitionByCProductExternalReferenceCode(
-					GetterUtil.getString(
-						productConfiguration.getEntityExternalReferenceCode()),
-					contextCompany.getCompanyId());
+		CPConfigurationList cpConfigurationList =
+			_cpConfigurationListService.getCPConfigurationList(id);
 
-		if (cpDefinition == null) {
-			cpDefinition = _cpDefinitionService.getCPDefinition(
-				GetterUtil.getLong(productConfiguration.getEntityId()));
+		long classNameId = _portal.getClassNameId(CPDefinition.class.getName());
+		long classPK = GetterUtil.getLong(productConfiguration.getEntityId());
+		ProductConfiguration.EntityType entityType =
+			productConfiguration.getEntityType();
+
+		if ((entityType == null) ||
+			Objects.equals(entityType.getValue(), "product")) {
+
+			CPDefinition cpDefinition =
+				_cpDefinitionService.
+					fetchCPDefinitionByCProductExternalReferenceCode(
+						GetterUtil.getString(
+							productConfiguration.
+								getEntityExternalReferenceCode()),
+						contextCompany.getCompanyId());
+
+			if (cpDefinition == null) {
+				_cpDefinitionService.getCPDefinition(classPK);
+			}
+
+			classPK = cpDefinition.getCPDefinitionId();
 		}
+		else if (Objects.equals(entityType.getValue(), "template")) {
+			classNameId = _portal.getClassNameId(
+				CPConfigurationList.class.getName());
+			classPK = id;
+		}
+
+		ProductShippingConfiguration productShippingConfiguration =
+			_getProductShippingConfiguration(productConfiguration);
+
+		ProductTaxConfiguration productTaxConfiguration =
+			_getProductTaxConfiguration(productConfiguration);
 
 		return _toProductConfiguration(
 			_cpConfigurationEntryService.addCPConfigurationEntry(
 				GetterUtil.getString(
 					productConfiguration.getExternalReferenceCode()),
-				cpDefinition.getGroupId(),
-				_portal.getClassNameId(CPDefinition.class.getName()),
-				cpDefinition.getCPDefinitionId(), id,
+				cpConfigurationList.getGroupId(), classNameId, classPK, id,
+				GetterUtil.getLong(productTaxConfiguration.getId()),
 				ProductConfigurationUtil.getAllowedOrderQuantities(
 					productConfiguration.getAllowedOrderQuantities(), null),
 				GetterUtil.getBoolean(productConfiguration.getAllowBackOrder()),
 				GetterUtil.getLong(
 					productConfiguration.getAvailabilityEstimateId()),
 				GetterUtil.getString(productConfiguration.getInventoryEngine()),
+				GetterUtil.getDouble(productShippingConfiguration.getDepth()),
 				GetterUtil.getBoolean(
 					productConfiguration.getDisplayAvailability()),
 				GetterUtil.getBoolean(
 					productConfiguration.getDisplayStockQuantity()),
+				GetterUtil.getBoolean(
+					productShippingConfiguration.getFreeShipping(), true),
+				GetterUtil.getDouble(productShippingConfiguration.getHeight()),
 				GetterUtil.getString(productConfiguration.getLowStockAction()),
 				BigDecimalUtil.get(
 					productConfiguration.getMaxOrderQuantity(),
@@ -414,7 +530,20 @@ public class ProductConfigurationResourceImpl
 					productConfiguration.getMinStockQuantity(), BigDecimal.ONE),
 				BigDecimalUtil.get(
 					productConfiguration.getMultipleOrderQuantity(),
-					BigDecimal.ONE)));
+					BigDecimal.ONE),
+				GetterUtil.getBoolean(
+					productConfiguration.getPurchasable(), true),
+				GetterUtil.getBoolean(
+					productShippingConfiguration.getShippable(), true),
+				GetterUtil.getDouble(
+					productShippingConfiguration.getShippingExtraPrice()),
+				GetterUtil.getBoolean(
+					productShippingConfiguration.getShippingSeparately(), true),
+				!GetterUtil.getBoolean(
+					productTaxConfiguration.getTaxable(), true),
+				GetterUtil.getBoolean(productConfiguration.getVisible(), true),
+				GetterUtil.getDouble(productShippingConfiguration.getWeight()),
+				GetterUtil.getDouble(productShippingConfiguration.getWidth())));
 	}
 
 	private Map<String, Map<String, String>> _getActions(
@@ -439,6 +568,32 @@ public class ProductConfigurationResourceImpl
 				"patchProductConfiguration",
 				_cpConfigurationEntryModelResourcePermission)
 		).build();
+	}
+
+	private ProductShippingConfiguration _getProductShippingConfiguration(
+		ProductConfiguration productConfiguration) {
+
+		ProductShippingConfiguration productShippingConfiguration =
+			productConfiguration.getProductShippingConfiguration();
+
+		if (productShippingConfiguration == null) {
+			return new ProductShippingConfiguration();
+		}
+
+		return productShippingConfiguration;
+	}
+
+	private ProductTaxConfiguration _getProductTaxConfiguration(
+		ProductConfiguration productConfiguration) {
+
+		ProductTaxConfiguration productTaxConfiguration =
+			productConfiguration.getProductTaxConfiguration();
+
+		if (productTaxConfiguration == null) {
+			return new ProductTaxConfiguration();
+		}
+
+		return productTaxConfiguration;
 	}
 
 	private ProductConfiguration _toProductConfiguration(

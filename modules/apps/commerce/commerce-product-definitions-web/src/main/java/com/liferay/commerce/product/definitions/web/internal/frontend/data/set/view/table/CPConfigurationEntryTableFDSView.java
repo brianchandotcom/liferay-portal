@@ -32,12 +32,33 @@ public class CPConfigurationEntryTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"id", "id",
+			"entityName", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink"
 			).setSortable(
 				true
 			)
+		).add(
+			"visible", "visible",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
+			"purchasable", "purchasable",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
+			"productShippingConfiguration.shippable", "shippable",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
+			"productShippingConfiguration.shippable", "shippable",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
+			"minOrderQuantity", "min-order-quantity",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
+			"maxOrderQuantity", "max-order-quantity",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
+			"multipleOrderQuantity", "multiple-order-quantity",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).build();
 	}
 

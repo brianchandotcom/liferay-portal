@@ -87,9 +87,10 @@ public class CPConfigurationEntryIndexerTest {
 				commerceCatalog.getGroupId(),
 				_portal.getClassNameId(CPDefinition.class),
 				cpDefinition.getCPDefinitionId(),
-				cpConfigurationList.getCPConfigurationListId(), "123", true, 0,
-				"cpde", true, true, "lowstoc", BigDecimal.TEN, BigDecimal.ONE,
-				BigDecimal.ONE, BigDecimal.ONE);
+				cpConfigurationList.getCPConfigurationListId(), 0, "123", true,
+				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
+				true, true, 1.0, true, true, true, 1.0, 1.0);
 
 		SearchContext searchContext = new SearchContext();
 

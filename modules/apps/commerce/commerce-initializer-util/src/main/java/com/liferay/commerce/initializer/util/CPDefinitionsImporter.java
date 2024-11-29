@@ -620,21 +620,31 @@ public class CPDefinitionsImporter {
 				_portal.getClassNameId(CPDefinition.class),
 				cpDefinition.getCPDefinitionId(),
 				masterCPConfigurationList.getCPConfigurationListId(),
+				_getCPTaxCategoryId(taxCategory, serviceContext),
 				allowedOrderQuantities, backOrders,
 				commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
-				displayAvailability, displayStockQuantity, lowStockActivity,
-				maxOrderQuantity, minOrderQuantity, minStockQuantity,
-				multipleOrderQuantity);
+				cpDefinition.getDepth(), displayAvailability,
+				displayStockQuantity, cpDefinition.isFreeShipping(), height,
+				lowStockActivity, maxOrderQuantity, minOrderQuantity,
+				minStockQuantity, multipleOrderQuantity, true, shippable,
+				cpDefinition.getShippingExtraPrice(),
+				cpDefinition.isShipSeparately(), cpDefinition.isTaxExempt(),
+				true, weight, width);
 		}
 		else {
 			_cpConfigurationEntryLocalService.updateCPConfigurationEntry(
 				cpConfigurationEntry.getExternalReferenceCode(),
 				cpConfigurationEntry.getCPConfigurationEntryId(),
+				_getCPTaxCategoryId(taxCategory, serviceContext),
 				allowedOrderQuantities, backOrders,
 				commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
-				displayAvailability, displayStockQuantity, lowStockActivity,
-				maxOrderQuantity, minOrderQuantity, minStockQuantity,
-				multipleOrderQuantity);
+				cpDefinition.getDepth(), displayAvailability,
+				displayStockQuantity, cpDefinition.isFreeShipping(), height,
+				lowStockActivity, maxOrderQuantity, minOrderQuantity,
+				minStockQuantity, multipleOrderQuantity, true, shippable,
+				cpDefinition.getShippingExtraPrice(),
+				cpDefinition.isShipSeparately(), cpDefinition.isTaxExempt(),
+				true, weight, width);
 		}
 
 		// Commerce product images

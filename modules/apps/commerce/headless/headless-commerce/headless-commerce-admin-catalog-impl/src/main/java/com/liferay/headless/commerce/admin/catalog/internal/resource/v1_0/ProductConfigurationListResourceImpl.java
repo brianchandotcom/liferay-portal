@@ -92,7 +92,8 @@ public class ProductConfigurationListResourceImpl
 
 	@Override
 	public Page<ProductConfigurationList> getProductConfigurationListsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			Long catalogId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -105,15 +106,13 @@ public class ProductConfigurationListResourceImpl
 
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 
-				long[] commerceCatalogGroupIds = transformToLongArray(
-					_commerceCatalogLocalService.search(
-						contextCompany.getCompanyId()),
-					CommerceCatalog::getGroupId);
+				if (GetterUtil.getLong(catalogId) > 0) {
+					CommerceCatalog commerceCatalog =
+						_commerceCatalogLocalService.getCommerceCatalog(
+							catalogId);
 
-				if ((commerceCatalogGroupIds != null) &&
-					(commerceCatalogGroupIds.length > 0)) {
-
-					searchContext.setGroupIds(commerceCatalogGroupIds);
+					searchContext.setGroupIds(
+						new long[] {commerceCatalog.getGroupId()});
 				}
 			},
 			sorts,

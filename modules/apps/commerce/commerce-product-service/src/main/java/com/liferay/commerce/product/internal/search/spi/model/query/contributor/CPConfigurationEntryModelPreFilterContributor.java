@@ -6,7 +6,6 @@
 package com.liferay.commerce.product.internal.search.spi.model.query.contributor;
 
 import com.liferay.commerce.product.constants.CPField;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -47,9 +46,15 @@ public class CPConfigurationEntryModelPreFilterContributor
 				BooleanClauseOccur.MUST);
 		}
 
-		booleanFilter.add(
-			new TermFilter(Field.ENTRY_CLASS_PK, StringPool.BLANK),
-			BooleanClauseOccur.MUST_NOT);
+		long classNameId = GetterUtil.getLong(
+			searchContext.getAttribute(Field.CLASS_NAME_ID));
+
+		if (classNameId > 0) {
+			booleanFilter.add(
+				new TermFilter(
+					Field.CLASS_NAME_ID, String.valueOf(classNameId)),
+				BooleanClauseOccur.MUST);
+		}
 	}
 
 }

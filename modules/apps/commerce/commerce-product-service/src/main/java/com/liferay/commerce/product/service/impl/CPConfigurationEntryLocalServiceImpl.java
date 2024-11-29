@@ -6,12 +6,16 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPConfigurationEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.math.BigDecimal;
@@ -36,12 +40,16 @@ public class CPConfigurationEntryLocalServiceImpl
 	public CPConfigurationEntry addCPConfigurationEntry(
 			String externalReferenceCode, long userId, long groupId,
 			long classNameId, long classPK, long cpConfigurationListId,
-			String allowedOrderQuantities, boolean backOrders,
-			long commerceAvailabilityEstimateId,
-			String cpDefinitionInventoryEngine, boolean displayAvailability,
-			boolean displayStockQuantity, String lowStockActivity,
+			long cpTaxCategoryId, String allowedOrderQuantities,
+			boolean backOrders, long commerceAvailabilityEstimateId,
+			String cpDefinitionInventoryEngine, double depth,
+			boolean displayAvailability, boolean displayStockQuantity,
+			boolean freeShipping, double height, String lowStockActivity,
 			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
-			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity)
+			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity,
+			boolean purchasable, boolean shippable, double shippingExtraPrice,
+			boolean shipSeparately, boolean taxExempt, boolean visible,
+			double weight, double width)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -58,21 +66,42 @@ public class CPConfigurationEntryLocalServiceImpl
 		cpConfigurationEntry.setClassNameId(classNameId);
 		cpConfigurationEntry.setClassPK(classPK);
 		cpConfigurationEntry.setCPConfigurationListId(cpConfigurationListId);
+		cpConfigurationEntry.setCPTaxCategoryId(cpTaxCategoryId);
 		cpConfigurationEntry.setAllowedOrderQuantities(allowedOrderQuantities);
 		cpConfigurationEntry.setBackOrders(backOrders);
 		cpConfigurationEntry.setCommerceAvailabilityEstimateId(
 			commerceAvailabilityEstimateId);
 		cpConfigurationEntry.setCPDefinitionInventoryEngine(
 			cpDefinitionInventoryEngine);
+		cpConfigurationEntry.setDepth(depth);
 		cpConfigurationEntry.setDisplayAvailability(displayAvailability);
 		cpConfigurationEntry.setDisplayStockQuantity(displayStockQuantity);
+		cpConfigurationEntry.setFreeShipping(freeShipping);
+		cpConfigurationEntry.setHeight(height);
 		cpConfigurationEntry.setLowStockActivity(lowStockActivity);
 		cpConfigurationEntry.setMaxOrderQuantity(maxOrderQuantity);
 		cpConfigurationEntry.setMinOrderQuantity(minOrderQuantity);
 		cpConfigurationEntry.setMinStockQuantity(minStockQuantity);
 		cpConfigurationEntry.setMultipleOrderQuantity(multipleOrderQuantity);
+		cpConfigurationEntry.setPurchasable(purchasable);
+		cpConfigurationEntry.setShippable(shippable);
+		cpConfigurationEntry.setShippingExtraPrice(shippingExtraPrice);
+		cpConfigurationEntry.setShipSeparately(shipSeparately);
+		cpConfigurationEntry.setTaxExempt(taxExempt);
+		cpConfigurationEntry.setVisible(visible);
+		cpConfigurationEntry.setWeight(weight);
+		cpConfigurationEntry.setWidth(width);
 
-		return cpConfigurationEntryPersistence.update(cpConfigurationEntry);
+		cpConfigurationEntry = cpConfigurationEntryPersistence.update(
+			cpConfigurationEntry);
+
+		if (classNameId == _classNameLocalService.getClassNameId(
+				CPDefinition.class)) {
+
+			_reindexCPDefinition(classPK);
+		}
+
+		return cpConfigurationEntry;
 	}
 
 	@Override
@@ -118,12 +147,16 @@ public class CPConfigurationEntryLocalServiceImpl
 	@Override
 	public CPConfigurationEntry updateCPConfigurationEntry(
 			String externalReferenceCode, long cpConfigurationEntryId,
-			String allowedOrderQuantities, boolean backOrders,
-			long commerceAvailabilityEstimateId,
-			String cpDefinitionInventoryEngine, boolean displayAvailability,
-			boolean displayStockQuantity, String lowStockActivity,
+			long cpTaxCategoryId, String allowedOrderQuantities,
+			boolean backOrders, long commerceAvailabilityEstimateId,
+			String cpDefinitionInventoryEngine, double depth,
+			boolean displayAvailability, boolean displayStockQuantity,
+			boolean freeShipping, double height, String lowStockActivity,
 			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
-			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity)
+			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity,
+			boolean purchasable, boolean shippable, double shippingExtraPrice,
+			boolean shipSeparately, boolean taxExempt, boolean visible,
+			double weight, double width)
 		throws PortalException {
 
 		CPConfigurationEntry cpConfigurationEntry =
@@ -131,22 +164,46 @@ public class CPConfigurationEntryLocalServiceImpl
 				cpConfigurationEntryId);
 
 		cpConfigurationEntry.setExternalReferenceCode(externalReferenceCode);
+		cpConfigurationEntry.setCPTaxCategoryId(cpTaxCategoryId);
 		cpConfigurationEntry.setAllowedOrderQuantities(allowedOrderQuantities);
 		cpConfigurationEntry.setBackOrders(backOrders);
 		cpConfigurationEntry.setCommerceAvailabilityEstimateId(
 			commerceAvailabilityEstimateId);
 		cpConfigurationEntry.setCPDefinitionInventoryEngine(
 			cpDefinitionInventoryEngine);
+		cpConfigurationEntry.setDepth(depth);
 		cpConfigurationEntry.setDisplayAvailability(displayAvailability);
 		cpConfigurationEntry.setDisplayStockQuantity(displayStockQuantity);
+		cpConfigurationEntry.setFreeShipping(freeShipping);
+		cpConfigurationEntry.setHeight(height);
 		cpConfigurationEntry.setLowStockActivity(lowStockActivity);
 		cpConfigurationEntry.setMaxOrderQuantity(maxOrderQuantity);
 		cpConfigurationEntry.setMinOrderQuantity(minOrderQuantity);
 		cpConfigurationEntry.setMinStockQuantity(minStockQuantity);
 		cpConfigurationEntry.setMultipleOrderQuantity(multipleOrderQuantity);
+		cpConfigurationEntry.setPurchasable(purchasable);
+		cpConfigurationEntry.setShippable(shippable);
+		cpConfigurationEntry.setShippingExtraPrice(shippingExtraPrice);
+		cpConfigurationEntry.setShipSeparately(shipSeparately);
+		cpConfigurationEntry.setTaxExempt(taxExempt);
+		cpConfigurationEntry.setVisible(visible);
+		cpConfigurationEntry.setWeight(weight);
+		cpConfigurationEntry.setWidth(width);
 
 		return cpConfigurationEntryPersistence.update(cpConfigurationEntry);
 	}
+
+	private void _reindexCPDefinition(long cpDefinitionId)
+		throws PortalException {
+
+		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPDefinition.class);
+
+		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
+	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -36,24 +36,30 @@ public class CPConfigurationEntryServiceImpl
 	@Override
 	public CPConfigurationEntry addCPConfigurationEntry(
 			String externalReferenceCode, long groupId, long classNameId,
-			long classPK, long cpConfigurationListId,
+			long classPK, long cpConfigurationListId, long cpTaxCategoryId,
 			String allowedOrderQuantities, boolean backOrders,
 			long commerceAvailabilityEstimateId,
-			String cpDefinitionInventoryEngine, boolean displayAvailability,
-			boolean displayStockQuantity, String lowStockActivity,
+			String cpDefinitionInventoryEngine, double depth,
+			boolean displayAvailability, boolean displayStockQuantity,
+			boolean freeShipping, double height, String lowStockActivity,
 			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
-			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity)
+			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity,
+			boolean purchasable, boolean shippable, double shippingExtraPrice,
+			boolean shipSeparately, boolean taxExempt, boolean visible,
+			double weight, double width)
 		throws PortalException {
 
 		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
 
 		return cpConfigurationEntryLocalService.addCPConfigurationEntry(
 			externalReferenceCode, getUserId(), groupId, classNameId, classPK,
-			cpConfigurationListId, allowedOrderQuantities, backOrders,
-			commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
-			displayAvailability, displayStockQuantity, lowStockActivity,
+			cpConfigurationListId, cpTaxCategoryId, allowedOrderQuantities,
+			backOrders, commerceAvailabilityEstimateId,
+			cpDefinitionInventoryEngine, depth, displayAvailability,
+			displayStockQuantity, freeShipping, height, lowStockActivity,
 			maxOrderQuantity, minOrderQuantity, minStockQuantity,
-			multipleOrderQuantity);
+			multipleOrderQuantity, purchasable, shippable, shippingExtraPrice,
+			shipSeparately, taxExempt, visible, weight, width);
 	}
 
 	@Override
@@ -120,12 +126,16 @@ public class CPConfigurationEntryServiceImpl
 	@Override
 	public CPConfigurationEntry updateCPConfigurationEntry(
 			String externalReferenceCode, long cpConfigurationEntryId,
-			long cpConfigurationListId, String allowedOrderQuantities,
+			long cpTaxCategoryId, String allowedOrderQuantities,
 			boolean backOrders, long commerceAvailabilityEstimateId,
-			String cpDefinitionInventoryEngine, boolean displayAvailability,
-			boolean displayStockQuantity, String lowStockActivity,
+			String cpDefinitionInventoryEngine, double depth,
+			boolean displayAvailability, boolean displayStockQuantity,
+			boolean freeShipping, double height, String lowStockActivity,
 			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
-			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity)
+			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity,
+			boolean purchasable, boolean shippable, double shippingExtraPrice,
+			boolean shipSeparately, boolean taxExempt, boolean visible,
+			double weight, double width)
 		throws PortalException {
 
 		CPConfigurationEntry cpConfigurationEntry =
@@ -136,11 +146,13 @@ public class CPConfigurationEntryServiceImpl
 			cpConfigurationEntry.getGroupId(), ActionKeys.UPDATE);
 
 		return cpConfigurationEntryLocalService.updateCPConfigurationEntry(
-			externalReferenceCode, cpConfigurationEntryId,
+			externalReferenceCode, cpConfigurationEntryId, cpTaxCategoryId,
 			allowedOrderQuantities, backOrders, commerceAvailabilityEstimateId,
-			cpDefinitionInventoryEngine, displayAvailability,
-			displayStockQuantity, lowStockActivity, maxOrderQuantity,
-			minOrderQuantity, minStockQuantity, multipleOrderQuantity);
+			cpDefinitionInventoryEngine, depth, displayAvailability,
+			displayStockQuantity, freeShipping, height, lowStockActivity,
+			maxOrderQuantity, minOrderQuantity, minStockQuantity,
+			multipleOrderQuantity, purchasable, shippable, shippingExtraPrice,
+			shipSeparately, taxExempt, visible, weight, width);
 	}
 
 	private void _checkCommerceCatalog(long groupId, String actionId)

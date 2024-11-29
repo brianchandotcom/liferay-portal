@@ -16,6 +16,8 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -27,6 +29,8 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
+import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -137,6 +141,12 @@ public class CPDefinitionModelDocumentContributor
 
 						return commerceChannel.getGroupId();
 					}));
+
+			document.addKeyword(
+				CPField.CP_CONFIGURATION_LIST_IDS,
+				_getVisibleCPConfigurationListIds(
+					cpDefinition.getCompanyId(), cpDefinition.getGroupId(),
+					cpDefinition.getCPDefinitionId()));
 
 			long cpAttachmentFileEntryId = 0;
 
@@ -656,6 +666,34 @@ public class CPDefinitionModelDocumentContributor
 		return reverseCPDefinitionIds.toArray(reverseCPDefinitionIdsArray);
 	}
 
+	private String[] _getVisibleCPConfigurationListIds(
+		long companyId, long groupId, long cpDefinitionId) {
+
+		List<String> cpConfigurationListIds = new ArrayList<>();
+
+		List<CPConfigurationList> cpConfigurationLists =
+			_cpConfigurationListLocalService.getCPConfigurationLists(
+				groupId, companyId);
+
+		for (CPConfigurationList cpConfigurationList : cpConfigurationLists) {
+			CPConfigurationEntry cpConfigurationEntry =
+				_cpConfigurationEntryLocalService.fetchCPConfigurationEntry(
+					_classNameLocalService.getClassNameId(CPDefinition.class),
+					cpDefinitionId,
+					cpConfigurationList.getCPConfigurationListId());
+
+			if ((cpConfigurationEntry != null) &&
+				cpConfigurationEntry.isVisible()) {
+
+				cpConfigurationListIds.add(
+					String.valueOf(
+						cpConfigurationEntry.getCPConfigurationListId()));
+			}
+		}
+
+		return cpConfigurationListIds.toArray(new String[0]);
+	}
+
 	private boolean _isHidden(CPDefinition cpDefinition, CProduct cProduct) {
 		if ((cpDefinition.getCPDefinitionId() !=
 				cProduct.getPublishedCPDefinitionId()) &&
@@ -696,6 +734,12 @@ public class CPDefinitionModelDocumentContributor
 
 	@Reference
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
+
+	@Reference
+	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+
+	@Reference
+	private CPConfigurationListLocalService _cpConfigurationListLocalService;
 
 	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;

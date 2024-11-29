@@ -50,6 +50,9 @@
 		"CPConfigurationListId": {
 			"type": "keyword"
 		},
+		"CPConfigurationListIds": {
+			"type": "keyword"
+		},
 		"advanceStatus": {
 			"type": "keyword"
 		},
@@ -111,6 +114,9 @@
 			"type": "keyword"
 		},
 		"replacementCProductId": {
+			"type": "keyword"
+		},
+		"shippable": {
 			"type": "keyword"
 		},
 		"sku": {

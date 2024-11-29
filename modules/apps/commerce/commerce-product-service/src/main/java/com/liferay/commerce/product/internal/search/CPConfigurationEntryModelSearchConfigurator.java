@@ -35,9 +35,10 @@ public class CPConfigurationEntryModelSearchConfigurator
 	@Override
 	public String[] getDefaultSelectedFieldNames() {
 		return new String[] {
-			CPField.DEPTH, CPField.HEIGHT, CPField.PRODUCT_TYPE_NAME,
-			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME
+			CPField.EXTERNAL_REFERENCE_CODE, Field.COMPANY_ID, Field.GROUP_ID,
+			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			CPField.ASSET_CATEGORY_NAMES, CPField.PRODUCT_TYPE_NAME,
+			Field.MODIFIED_DATE, Field.NAME, Field.HIDDEN, CPField.PURCHASABLE
 		};
 	}
 

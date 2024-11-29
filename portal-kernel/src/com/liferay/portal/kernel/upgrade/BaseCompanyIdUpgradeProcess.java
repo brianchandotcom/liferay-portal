@@ -149,7 +149,7 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 			}
 
 			return StringBundler.concat(
-				"select companyId from ", foreignTableName, " where ",
+				"select distinct companyId from ", foreignTableName, " where ",
 				foreignTableName, ".", foreignColumnName, " = ", getTableName(),
 				".", columnName);
 		}

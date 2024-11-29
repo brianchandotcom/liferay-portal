@@ -723,9 +723,7 @@ export class PageEditorPage {
 				.getByRole('heading', {name: editableId})
 				.click();
 
-			const editable = this.page.getByText(value);
-
-			await expect(editable).toHaveClass(/page-editor__editable/, {
+			await expect(editable).toHaveText(value, {
 				timeout: 1000,
 			});
 		}).toPass();

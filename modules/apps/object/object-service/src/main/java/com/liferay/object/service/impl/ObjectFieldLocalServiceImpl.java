@@ -515,8 +515,23 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
-	public List<ObjectField> getObjectFieldsByCompanyId(long companyId) {
-		return objectFieldPersistence.findByCompanyId(companyId);
+	public Map<Long, List<ObjectField>> getObjectFieldsByCompanyId(
+		long companyId) {
+
+		Map<Long, List<ObjectField>> partitionedObjectFields = new HashMap<>();
+
+		for (ObjectField objectField :
+				objectFieldPersistence.findByCompanyId(companyId)) {
+
+			List<ObjectField> objectFields =
+				partitionedObjectFields.computeIfAbsent(
+					objectField.getObjectDefinitionId(),
+					key -> new ArrayList<>());
+
+			objectFields.add(objectField);
+		}
+
+		return partitionedObjectFields;
 	}
 
 	@Override

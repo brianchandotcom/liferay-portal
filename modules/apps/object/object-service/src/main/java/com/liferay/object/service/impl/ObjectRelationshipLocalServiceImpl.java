@@ -97,6 +97,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -810,10 +811,24 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
-	public List<ObjectRelationship> getObjectRelationshipsByCompanyId(
-		long companyId) {
+	public Map<Long, List<ObjectRelationship>>
+		getObjectRelationshipsByCompanyId(long companyId) {
 
-		return objectRelationshipPersistence.findByCompanyId(companyId);
+		Map<Long, List<ObjectRelationship>> partitionedObjectRelationships =
+			new HashMap<>();
+
+		for (ObjectRelationship objectRelationship :
+				objectRelationshipPersistence.findByCompanyId(companyId)) {
+
+			List<ObjectRelationship> objectRelationships =
+				partitionedObjectRelationships.computeIfAbsent(
+					objectRelationship.getObjectDefinitionId1(),
+					key -> new ArrayList<>());
+
+			objectRelationships.add(objectRelationship);
+		}
+
+		return partitionedObjectRelationships;
 	}
 
 	@Override

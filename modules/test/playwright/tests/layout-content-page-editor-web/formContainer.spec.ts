@@ -933,25 +933,43 @@ test.describe('Form Localization', () => {
 			)
 		);
 
-		// Add translations
+		// Add translations and check translation status
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('option', {name: 'es-ES'}),
-			trigger: page.getByLabel(
-				'Select a language, current language: English (United States).'
-			),
+		const translationSelector = page.getByLabel(
+			'Select a language, current language:'
+		);
+
+		await translationSelector.click();
+
+		const option = page.getByRole('option', {
+			name: 'Spanish (Spain) Language',
 		});
+
+		await expect(option).toContainText(/Not Translated/);
+
+		await option.click();
 
 		await page.getByLabel('Long Text').fill('long text español');
 
 		await page.getByLabel('Text', {exact: true}).fill('text español');
+
+		await translationSelector.click();
+
+		await expect(option).toContainText(/Translating 2\/3/);
+
+		await option.click();
 
 		await page.evaluate(() =>
 			(window as any).CKEDITOR.instances['richText'].setData(
 				'rich text español'
 			)
 		);
+
+		await translationSelector.click();
+
+		await expect(option).toContainText(/Translated/);
+
+		await option.click();
 
 		// Publish the form
 

@@ -1040,6 +1040,91 @@ test.describe('File Upload Fragment', () => {
 			await expect(page.getByRole('link', {name: 'image'})).toBeVisible();
 		}
 	);
+
+	test(
+		'View error messages',
+		{
+			tag: '@LPS-151402',
+		},
+		async ({apiHelpers, page, pageManagementSite}) => {
+
+			// Create a page with a form fragment with a file upload fragment
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					ALL_FIELDS_OBJECT_ERC
+				)
+			).body;
+
+			const fileUploadId = getRandomString();
+
+			const fileUploadDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_fileUpload',
+				},
+				id: fileUploadId,
+				key: 'INPUTS-file-upload',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [fileUploadDefinition, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Select file from computer
+
+			const fileChooserPromise = page.waitForEvent('filechooser');
+
+			const fileUploadInput = page.locator('.file-upload');
+
+			await fileUploadInput
+				.getByText('Select File', {exact: true})
+				.click();
+
+			const fileChooser = await fileChooserPromise;
+
+			await fileChooser.setFiles(
+				path.join(__dirname, '/dependencies/high_resolution_photo.jpg')
+			);
+
+			await expect(
+				fileUploadInput.getByText('high_resolution_photo')
+			).toBeVisible();
+
+			// Submit form
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			// Assert error message
+
+			await expect(
+				page.getByText(
+					'File size is larger than the allowed maximum upload size (2 MB).'
+				)
+			).toBeVisible();
+		}
+	);
 });
 
 test.describe('Form Localization', () => {

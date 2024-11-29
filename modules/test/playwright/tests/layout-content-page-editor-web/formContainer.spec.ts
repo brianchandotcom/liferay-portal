@@ -872,7 +872,7 @@ test.describe('File Upload Fragment', () => {
 			const displayPageTemplateName = getRandomString();
 
 			await displayPageTemplatesPage.createTemplate({
-				contentType: 'All Fields Object',
+				contentType: 'All Fields',
 				name: displayPageTemplateName,
 			});
 

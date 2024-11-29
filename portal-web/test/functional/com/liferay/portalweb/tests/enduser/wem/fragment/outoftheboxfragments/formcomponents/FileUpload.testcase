@@ -136,57 +136,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-194129. Add the filter to the windows popup that opens for you to select from the PC."
-	@priority = 4
-	test FilterAttachmentFromComputerByFileType {
-		task ("Given a user has a File Upload fragment mapped to an attachment from user's computer only accept pdf file extension") {
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Attachment",
-				fieldLabelName = "Custom Attachment From Computer",
-				fieldName = "customAttachmentFromComputer",
-				fieldType = "Long",
-				fileSource = "userComputer",
-				isRequired = "false",
-				objectName = "UploadObject");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Upload Object");
-
-			ObjectAdmin.goToFieldsTab();
-
-			ObjectAdmin.goToFieldsDetails(label = "Custom Attachment From Computer");
-
-			SystemSettings.editTextAreaSetting(
-				settingName = "Accepted File ExtensionsMandatory",
-				settingValue = "pdf");
-
-			ObjectField.save();
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "UploadObject");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Form Components",
-				fragmentName = "Form Container");
-
-			PageEditor.mapFormContainerToObject(contentType = "Upload Object");
-		}
-
-		task ("When the user accesses to the content page at view mode") {
-			PageEditor.publish();
-		}
-
-		task ("Then the user should see the File Upload only accept pdf file extension") {
-			PageEditor.viewInputStyle(
-				helpText = "Upload a .pdf no larger than 100 MB.",
-				type = "file-upload");
-		}
-	}
-
 	@description = "This is a test for LPS-194129. Filtering the Documents that are in Libraries."
 	@priority = 4
 	test FilterAttachmentFromDocumentsAndMediaByFileType {

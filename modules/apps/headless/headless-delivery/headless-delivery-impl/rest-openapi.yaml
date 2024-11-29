@@ -4030,6 +4030,21 @@ components:
                                 A flag that indicates whether the page form instance is multi step or not.
                             enum: [simple, multistep]
                             type: string
+                        localizationConfig:
+                            properties:
+                                unlocalizedFieldsMessage:
+                                    $ref: "#/components/schemas/FragmentInlineValue"
+                                    # @review
+                                    description:
+                                        The message displayed in the unlocalized fields.
+                                    type: string
+                                unlocalizedFieldsState:
+                                    # @review
+                                    description:
+                                        The state of the unlocalized fields.
+                                    enum: [Disabled, ReadOnly]
+                                    type: string
+                            type: object
                         numberOfSteps:
                             # @review
                             description:

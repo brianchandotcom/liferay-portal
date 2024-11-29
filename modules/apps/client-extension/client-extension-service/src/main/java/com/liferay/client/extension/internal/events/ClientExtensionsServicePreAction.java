@@ -50,6 +50,31 @@ public class ClientExtensionsServicePreAction extends Action {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
+		Layout layout = _getLayout(httpServletRequest);
+
+		if (layout == null) {
+			return;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setFaviconURL(_getFaviconURL(layout));
+
+		if (!layout.isTypeControlPanel()) {
+			_setThemeDisplayCSSURLs(
+				httpServletRequest, _getThemeCSSCET(layout), themeDisplay);
+		}
+
+		ThemeSpritemapCET themeSpritemapCET = _getThemeSpritemapCET(layout);
+
+		if (themeSpritemapCET != null) {
+			themeDisplay.setPathThemeSpritemap(themeSpritemapCET.getURL());
+		}
+	}
+
+	private Layout _getLayout(HttpServletRequest httpServletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -79,23 +104,6 @@ public class ClientExtensionsServicePreAction extends Action {
 			}
 
 			layout = _layoutLocalService.fetchLayout(selPlid);
-		}
-
-		if (layout == null) {
-			return;
-		}
-
-		themeDisplay.setFaviconURL(_getFaviconURL(layout));
-
-		if (!layout.isTypeControlPanel()) {
-			_setThemeDisplayCSSURLs(
-				httpServletRequest, _getThemeCSSCET(layout), themeDisplay);
-		}
-
-		ThemeSpritemapCET themeSpritemapCET = _getThemeSpritemapCET(layout);
-
-		if (themeSpritemapCET != null) {
-			themeDisplay.setPathThemeSpritemap(themeSpritemapCET.getURL());
 		}
 	}
 

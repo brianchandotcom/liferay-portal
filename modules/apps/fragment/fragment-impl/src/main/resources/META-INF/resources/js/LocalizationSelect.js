@@ -8,7 +8,9 @@ import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {TranslationAdminItem} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
+
+const EVENT_TRANSLATION_STATUS = 'localizationSelect:updateTranslationStatus';
 
 export function LocalizationSelect({
 	defaultLanguageId,
@@ -19,6 +21,7 @@ export function LocalizationSelect({
 }) {
 	const [active, setActive] = useState(false);
 	const [selectedLocaleId, setSelectedLocaleId] = useState(defaultLanguageId);
+	const [translatedInputs, setTranslatedInputs] = useState({});
 
 	const localizableInputs = useMemo(
 		() =>
@@ -30,6 +33,25 @@ export function LocalizationSelect({
 		setSelectedLocaleId(localeId);
 		setActive(false);
 	};
+
+	useEffect(() => {
+		Liferay.on(EVENT_TRANSLATION_STATUS, ({languageId}) => {
+			const translatedInputs = Array.from(
+				document.querySelectorAll(
+					`[type="hidden"][name*="_${languageId}"]`
+				)
+			).filter((input) => input.getAttribute('value') !== null);
+
+			setTranslatedInputs((previousState) => ({
+				...previousState,
+				[languageId]: translatedInputs.length,
+			}));
+		});
+
+		return () => {
+			Liferay.detach(EVENT_TRANSLATION_STATUS);
+		};
+	}, []);
 
 	return (
 		<Picker
@@ -64,7 +86,7 @@ export function LocalizationSelect({
 							localizableInputs
 								? {
 										totalItems: localizableInputs,
-										translatedItems: {},
+										translatedItems: translatedInputs,
 									}
 								: null
 						}

@@ -99,6 +99,15 @@ export function ModalAddObjectRelationship({
 			parameterRequired: objectRelationshipParameterRequired,
 		});
 
+	const handleInheritanceCheckboxChange = ({
+		target,
+	}: React.ChangeEvent<HTMLInputElement>) => {
+		setValues({
+			...values,
+			edge: target.checked,
+		});
+	};
+
 	return (
 		<ClayModalProvider>
 			<ClayModal center observer={observer}>
@@ -131,6 +140,9 @@ export function ModalAddObjectRelationship({
 							}
 							objectDefinitionExternalReferenceCode2={
 								objectDefinitionExternalReferenceCode2
+							}
+							onChangeInheritanceCheckbox={
+								handleInheritanceCheckboxChange
 							}
 							setValues={setValues}
 							submitError={submitError}

@@ -9,9 +9,11 @@ import {
 	ObjectValidationRuleApi,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
+import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
+import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
@@ -32,6 +34,7 @@ import getWidgetDefinition from './utils/getWidgetDefinition';
 const test = mergeTests(
 	apiHelpersTest,
 	displayPageTemplatesPagesTest,
+	documentLibraryPagesTest,
 	featureFlagsTest({
 		'LPD-10727': true,
 		'LPD-37927': true,
@@ -842,6 +845,167 @@ test.describe('Date and Time Fragment', () => {
 			const row = page.locator('.dnd-tbody .dnd-tr').first();
 
 			await expect(row).toContainText('Oct 10, 2022, 10:10 AM');
+		}
+	);
+});
+
+test.describe('File Upload Fragment', () => {
+	test(
+		'Configuration',
+		{
+			tag: '@LPS-157806',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a form fragment with a file upload fragment
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					ALL_FIELDS_OBJECT_ERC
+				)
+			).body;
+
+			const fileUploadId = getRandomString();
+
+			const fileUploadDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_fileUpload',
+				},
+				id: fileUploadId,
+				key: 'INPUTS-file-upload',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [fileUploadDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Change button text
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Button Text',
+				fragmentId: fileUploadId,
+				tab: 'General',
+				value: 'Upload',
+			});
+
+			const fileUploadInput = page.locator('.file-upload');
+
+			await expect(
+				fileUploadInput.getByText('Upload', {exact: true})
+			).toBeVisible();
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await expect(
+				fileUploadInput.getByRole('button', {name: 'Upload'})
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Upload file from computer',
+		{
+			tag: '@LPS-155170',
+		},
+		async ({apiHelpers, documentLibraryPage, page, pageManagementSite}) => {
+
+			// Create a page with a form fragment with a file upload fragment
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					ALL_FIELDS_OBJECT_ERC
+				)
+			).body;
+
+			const fileUploadId = getRandomString();
+
+			const fileUploadDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_fileUpload',
+				},
+				id: fileUploadId,
+				key: 'INPUTS-file-upload',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [fileUploadDefinition, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Select file from computer
+
+			const fileChooserPromise = page.waitForEvent('filechooser');
+
+			const fileUploadInput = page.locator('.file-upload');
+
+			await fileUploadInput
+				.getByText('Select File', {exact: true})
+				.click();
+
+			const fileChooser = await fileChooserPromise;
+
+			await fileChooser.setFiles(
+				path.join(__dirname, '/dependencies/image.jpg')
+			);
+
+			await expect(fileUploadInput.getByText('image')).toBeVisible();
+
+			// Submit form
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			// Assert document is added to document library
+
+			await documentLibraryPage.goto(pageManagementSite.friendlyUrlPath);
+
+			await page.getByRole('link', {name: 'FileUpload'}).click();
+
+			await expect(page.getByRole('link', {name: 'image'})).toBeVisible();
 		}
 	);
 });

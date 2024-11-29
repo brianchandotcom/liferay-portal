@@ -1962,6 +1962,7 @@ public class Mutation {
 
 	@GraphQLField
 	public Response createProductConfigurationListsPageExportBatch(
+			@GraphQLName("catalogId") Long catalogId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("sort") String sortsString,
@@ -1976,7 +1977,7 @@ public class Mutation {
 			productConfigurationListResource ->
 				productConfigurationListResource.
 					postProductConfigurationListsPageExportBatch(
-						search,
+						catalogId, search,
 						_filterBiFunction.apply(
 							productConfigurationListResource, filterString),
 						_sortsBiFunction.apply(

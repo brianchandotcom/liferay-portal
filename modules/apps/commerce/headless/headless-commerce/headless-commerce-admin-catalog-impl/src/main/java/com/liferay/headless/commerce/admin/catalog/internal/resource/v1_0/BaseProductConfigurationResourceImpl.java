@@ -135,7 +135,7 @@ public abstract class BaseProductConfigurationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configurations' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configurations' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityName": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___, "productShippingConfiguration": ___, "productTaxConfiguration": ___, "purchasable": ___, "visible": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -237,7 +237,7 @@ public abstract class BaseProductConfigurationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/{id}/product-configurations' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/{id}/product-configurations' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityName": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___, "productShippingConfiguration": ___, "productTaxConfiguration": ___, "purchasable": ___, "visible": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -396,7 +396,7 @@ public abstract class BaseProductConfigurationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configurations/by-externalReferenceCode/{externalReferenceCode}' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configurations/by-externalReferenceCode/{externalReferenceCode}' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityName": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___, "productShippingConfiguration": ___, "productTaxConfiguration": ___, "purchasable": ___, "visible": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -547,7 +547,7 @@ public abstract class BaseProductConfigurationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configurations/{id}' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configurations/{id}' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityName": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___, "productShippingConfiguration": ___, "productTaxConfiguration": ___, "purchasable": ___, "visible": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -618,7 +618,7 @@ public abstract class BaseProductConfigurationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/configuration' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/configuration' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityName": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___, "productShippingConfiguration": ___, "productTaxConfiguration": ___, "purchasable": ___, "visible": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -691,7 +691,7 @@ public abstract class BaseProductConfigurationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/configuration' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/configuration' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "availabilityEstimateId": ___, "availabilityEstimateName": ___, "displayAvailability": ___, "displayStockQuantity": ___, "entityExternalReferenceCode": ___, "entityId": ___, "entityName": ___, "entityType": ___, "externalReferenceCode": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___, "productShippingConfiguration": ___, "productTaxConfiguration": ___, "purchasable": ___, "visible": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

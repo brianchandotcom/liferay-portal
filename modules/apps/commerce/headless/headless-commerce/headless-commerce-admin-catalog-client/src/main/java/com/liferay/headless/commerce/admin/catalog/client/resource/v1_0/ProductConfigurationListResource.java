@@ -35,25 +35,27 @@ public interface ProductConfigurationListResource {
 	}
 
 	public Page<ProductConfigurationList> getProductConfigurationListsPage(
-			String search, String filterString, Pagination pagination,
-			String sortString)
+			Long catalogId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getProductConfigurationListsPageHttpResponse(
-				String search, String filterString, Pagination pagination,
-				String sortString)
+				Long catalogId, String search, String filterString,
+				Pagination pagination, String sortString)
 		throws Exception;
 
 	public void postProductConfigurationListsPageExportBatch(
-			String search, String filterString, String sortString,
-			String callbackURL, String contentType, String fieldNames)
+			Long catalogId, String search, String filterString,
+			String sortString, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postProductConfigurationListsPageExportBatchHttpResponse(
-				String search, String filterString, String sortString,
-				String callbackURL, String contentType, String fieldNames)
+				Long catalogId, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
 		throws Exception;
 
 	public ProductConfigurationList postProductConfigurationList(
@@ -244,13 +246,13 @@ public interface ProductConfigurationListResource {
 		implements ProductConfigurationListResource {
 
 		public Page<ProductConfigurationList> getProductConfigurationListsPage(
-				String search, String filterString, Pagination pagination,
-				String sortString)
+				Long catalogId, String search, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProductConfigurationListsPageHttpResponse(
-					search, filterString, pagination, sortString);
+					catalogId, search, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -313,8 +315,8 @@ public interface ProductConfigurationListResource {
 
 		public HttpInvoker.HttpResponse
 				getProductConfigurationListsPageHttpResponse(
-					String search, String filterString, Pagination pagination,
-					String sortString)
+					Long catalogId, String search, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -337,6 +339,10 @@ public interface ProductConfigurationListResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (catalogId != null) {
+				httpInvoker.parameter("catalogId", String.valueOf(catalogId));
+			}
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
@@ -369,14 +375,15 @@ public interface ProductConfigurationListResource {
 		}
 
 		public void postProductConfigurationListsPageExportBatch(
-				String search, String filterString, String sortString,
-				String callbackURL, String contentType, String fieldNames)
+				Long catalogId, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postProductConfigurationListsPageExportBatchHttpResponse(
-					search, filterString, sortString, callbackURL, contentType,
-					fieldNames);
+					catalogId, search, filterString, sortString, callbackURL,
+					contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -428,8 +435,9 @@ public interface ProductConfigurationListResource {
 
 		public HttpInvoker.HttpResponse
 				postProductConfigurationListsPageExportBatchHttpResponse(
-					String search, String filterString, String sortString,
-					String callbackURL, String contentType, String fieldNames)
+					Long catalogId, String search, String filterString,
+					String sortString, String callbackURL, String contentType,
+					String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -454,6 +462,10 @@ public interface ProductConfigurationListResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (catalogId != null) {
+				httpInvoker.parameter("catalogId", String.valueOf(catalogId));
+			}
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));

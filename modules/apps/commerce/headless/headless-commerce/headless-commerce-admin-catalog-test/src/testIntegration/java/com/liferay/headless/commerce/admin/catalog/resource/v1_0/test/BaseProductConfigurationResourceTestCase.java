@@ -178,6 +178,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			randomProductConfiguration();
 
 		productConfiguration.setEntityExternalReferenceCode(regex);
+		productConfiguration.setEntityName(regex);
 		productConfiguration.setExternalReferenceCode(regex);
 		productConfiguration.setInventoryEngine(regex);
 		productConfiguration.setLowStockAction(regex);
@@ -190,6 +191,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 
 		Assert.assertEquals(
 			regex, productConfiguration.getEntityExternalReferenceCode());
+		Assert.assertEquals(regex, productConfiguration.getEntityName());
 		Assert.assertEquals(
 			regex, productConfiguration.getExternalReferenceCode());
 		Assert.assertEquals(regex, productConfiguration.getInventoryEngine());
@@ -2208,6 +2210,14 @@ public abstract class BaseProductConfigurationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("entityName", additionalAssertFieldName)) {
+				if (productConfiguration.getEntityName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("entityType", additionalAssertFieldName)) {
 				if (productConfiguration.getEntityType() == null) {
 					valid = false;
@@ -2270,6 +2280,45 @@ public abstract class BaseProductConfigurationResourceTestCase {
 					"multipleOrderQuantity", additionalAssertFieldName)) {
 
 				if (productConfiguration.getMultipleOrderQuantity() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"productShippingConfiguration",
+					additionalAssertFieldName)) {
+
+				if (productConfiguration.getProductShippingConfiguration() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"productTaxConfiguration", additionalAssertFieldName)) {
+
+				if (productConfiguration.getProductTaxConfiguration() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("purchasable", additionalAssertFieldName)) {
+				if (productConfiguration.getPurchasable() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("visible", additionalAssertFieldName)) {
+				if (productConfiguration.getVisible() == null) {
 					valid = false;
 				}
 
@@ -2512,6 +2561,17 @@ public abstract class BaseProductConfigurationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("entityName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productConfiguration1.getEntityName(),
+						productConfiguration2.getEntityName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("entityType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						productConfiguration1.getEntityType(),
@@ -2608,6 +2668,56 @@ public abstract class BaseProductConfigurationResourceTestCase {
 				if (!Objects.deepEquals(
 						productConfiguration1.getMultipleOrderQuantity(),
 						productConfiguration2.getMultipleOrderQuantity())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"productShippingConfiguration",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productConfiguration1.getProductShippingConfiguration(),
+						productConfiguration2.
+							getProductShippingConfiguration())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"productTaxConfiguration", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productConfiguration1.getProductTaxConfiguration(),
+						productConfiguration2.getProductTaxConfiguration())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("purchasable", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productConfiguration1.getPurchasable(),
+						productConfiguration2.getPurchasable())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("visible", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productConfiguration1.getVisible(),
+						productConfiguration2.getVisible())) {
 
 					return false;
 				}
@@ -2810,6 +2920,52 @@ public abstract class BaseProductConfigurationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("entityName")) {
+			Object object = productConfiguration.getEntityName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("entityType")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2978,6 +3134,26 @@ public abstract class BaseProductConfigurationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("productShippingConfiguration")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("productTaxConfiguration")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("purchasable")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("visible")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -3032,6 +3208,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 				entityExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				entityId = RandomTestUtil.randomLong();
+				entityName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
@@ -3039,6 +3217,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 					RandomTestUtil.randomString());
 				lowStockAction = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				purchasable = RandomTestUtil.randomBoolean();
+				visible = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

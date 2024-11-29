@@ -49,12 +49,13 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ProductConfigurationListResource {
 
 	public Page<ProductConfigurationList> getProductConfigurationListsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			Long catalogId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public Response postProductConfigurationListsPageExportBatch(
-			String search, Filter filter, Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+			Long catalogId, String search, Filter filter, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public ProductConfigurationList postProductConfigurationList(

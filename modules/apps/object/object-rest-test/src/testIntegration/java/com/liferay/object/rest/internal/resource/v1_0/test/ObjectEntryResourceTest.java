@@ -14747,7 +14747,7 @@ public class ObjectEntryResourceTest {
 			StringBundler.concat(
 				endpoint, "?sort=",
 				URLCodec.encodeURL(
-					StringUtil.merge(fieldNames, ":asc,") + ":asc")),
+					StringUtil.merge(fieldNames, ":asc,") + ":asc,id:asc")),
 			Http.Method.GET);
 
 		_assertItem(0, pageJSONObject, "id", expectedJSONObject1.getLong("id"));
@@ -14760,7 +14760,7 @@ public class ObjectEntryResourceTest {
 			StringBundler.concat(
 				endpoint, "?sort=",
 				URLCodec.encodeURL(
-					StringUtil.merge(fieldNames, ":desc,") + ":desc")),
+					StringUtil.merge(fieldNames, ":desc,") + ":desc,id:asc")),
 			Http.Method.GET);
 
 		_assertItem(0, pageJSONObject, "id", expectedJSONObject3.getLong("id"));

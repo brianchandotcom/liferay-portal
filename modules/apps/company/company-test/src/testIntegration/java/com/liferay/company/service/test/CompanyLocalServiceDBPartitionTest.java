@@ -576,6 +576,10 @@ public class CompanyLocalServiceDBPartitionTest
 		boolean standaloneDBPartition = false;
 
 		try {
+			String pid = _createFactoryConfiguration(
+				company.getCompanyId()
+			).getPid();
+
 			companyLocalService.extractDBPartitionCompany(
 				company.getCompanyId());
 
@@ -599,6 +603,17 @@ public class CompanyLocalServiceDBPartitionTest
 						")");
 
 			Assert.assertTrue(serviceReferences.isEmpty());
+
+			BundleListener configurationManager = ReflectionTestUtil.invoke(
+				_configurationAdmin, "getConfigurationManager", new Class<?>[0],
+				null);
+
+			Assert.assertNull(
+				ReflectionTestUtil.invoke(
+					configurationManager, "getConfiguration",
+					new Class<?>[] {String.class}, pid));
+
+			Assert.assertFalse(_persistenceManager.exists(pid));
 		}
 		finally {
 			if (standaloneDBPartition) {

@@ -5,13 +5,15 @@
 
 import {
 	ObjectDefinitionApi,
+	ObjectField,
 	ObjectValidationRule,
 	ObjectValidationRuleApi,
 } from '@liferay/object-admin-rest-client-js';
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -19,6 +21,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
+import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEditorPage';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
@@ -26,6 +29,7 @@ import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {getObjectERC} from '../setup/page-management-site/utils/getObjectERC';
 import {goToObjectEntity} from '../setup/page-management-site/utils/goToObjectEntity';
+import getContainerDefinition from './utils/getContainerDefinition';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -33,6 +37,7 @@ import getWidgetDefinition from './utils/getWidgetDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,
+	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
 	documentLibraryPagesTest,
 	featureFlagsTest({
@@ -4248,6 +4253,248 @@ test.describe('Edit mode language changes', () => {
 });
 
 test.describe('Edit mode form errors', () => {
+	async function assertWarningMessage(
+		headingMessage: string,
+		page: Page,
+		pageEditorPage: PageEditorPage,
+		warningMessage: string
+	) {
+		await pageEditorPage.publishButton.click();
+
+		await expect(
+			page.getByRole('heading', {name: headingMessage})
+		).toBeVisible();
+
+		await expect(page.getByText(warningMessage)).toBeVisible();
+
+		await page.getByRole('button', {name: 'Cancel'}).click();
+	}
+
+	test(
+		'Show a warning message when there is a form with unmapped input fragments, hidden required input fragments, missing required input fragments, hidden submit button or missing submit button',
+		{tag: ['@LPS-150278', '@LPS-157998']},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a new object definition with a required field
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					externalReferenceCode: 'studentERC',
+					label: {
+						en_US: 'Student',
+					},
+					name: 'Student',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType: ObjectField.BusinessTypeEnum.Text,
+							externalReferenceCode: 'nameERC',
+							indexed: true,
+							indexedAsKeyword: true,
+							label: {
+								en_US: 'Name',
+							},
+							name: 'name',
+							required: true,
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.Integer,
+							businessType: ObjectField.BusinessTypeEnum.Integer,
+							externalReferenceCode: 'ageERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {
+								en_US: 'Age'
+							},
+							name: 'age',
+							required: false,
+						},
+					],
+					pluralLabel: {
+						en_US: 'Students',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a Form fragment
+
+			const textContainerId = getRandomString();
+			const textContainerDefinition = getContainerDefinition({
+				id: textContainerId,
+			});
+
+			const numericContainerId = getRandomString();
+			const numericContainerDefinition = getContainerDefinition({
+				id: numericContainerId,
+			});
+
+			const submitContainerId = getRandomString();
+			const submitContainerDefinition = getContainerDefinition({
+				id: submitContainerId,
+			});
+
+			const formId = getRandomString();
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+				objectDefinitionClassName: objectDefinition.className,
+				pageElements: [
+					textContainerDefinition,
+					numericContainerDefinition,
+					submitContainerDefinition,
+				],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Publish and assert multiple wargning messages
+
+			await assertWarningMessage(
+				'Form Errors',
+				page,
+				pageEditorPage,
+				'Submit button is hidden or missing. Your users may not be able to submit the form.'
+			);
+
+			await assertWarningMessage(
+				'Form Errors',
+				page,
+				pageEditorPage,
+				'One or more required fields are not mapped from the form. A form with missing required fields will not generate a valid entry.'
+			);
+
+			// Add text input fragment and map to required field
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Textarea',
+				page.locator(`.lfr-layout-structure-item-${textContainerId}`)
+			);
+
+			const textareaId = await pageEditorPage.getFragmentId('Textarea');
+
+			await pageEditorPage.selectFragment(textareaId);
+
+			await page.getByLabel('Field', {exact: true}).selectOption('Name*');
+
+			await pageEditorPage.waitForChangesSaved();
+
+			// Publish and check warning message for missing submit button
+
+			await assertWarningMessage(
+				'Submit Button Missing',
+				page,
+				pageEditorPage,
+				'Student form has a hidden or missing submit button. If you continue, your users may not be able to submit the form. Are you sure you want to publish it?'
+			);
+
+			// Add submit button
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Form Button',
+				page.locator(`.lfr-layout-structure-item-${submitContainerId}`)
+			);
+
+			// Hide submit button container
+
+			await pageEditorPage.hideFragment(submitContainerId);
+
+			// Publish and check warning message for hide submit button
+
+			await assertWarningMessage(
+				'Submit Button Missing',
+				page,
+				pageEditorPage,
+				'Student form has a hidden or missing submit button. If you continue, your users may not be able to submit the form. Are you sure you want to publish it?'
+			);
+
+			await waitForAlert(
+				page,
+				'The hidden fragment contained required fields. A form with missing required fields will not generate a valid entry.',
+				{type: 'warning'}
+			);
+
+			// Show submit button container
+
+			await pageEditorPage.goToSidebarTab('Browser');
+
+			await page.locator(`[data-item-id="${submitContainerId}"]`).click();
+
+			await page.getByLabel('Show Container').click();
+
+			// Add unmapped numeric input fragment
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Numeric',
+				page.locator(`.lfr-layout-structure-item-${numericContainerId}`)
+			);
+
+			// Publish and check warning message for unmapped numeric input fragment
+
+			await assertWarningMessage(
+				'Fragment Mapping Missing',
+				page,
+				pageEditorPage,
+				'Student form has some fragments not mapped to object fields. Unmapped fragments data will not be stored. Are you sure you want to publish?'
+			);
+
+			// Map numeric input fragment
+
+			const numericId = await pageEditorPage.getFragmentId('Numeric');
+
+			await pageEditorPage.selectFragment(numericId);
+
+			await page.getByLabel('Field', {exact: true}).selectOption('Age');
+
+			await pageEditorPage.waitForChangesSaved();
+
+			// Hide text container
+
+			await pageEditorPage.hideFragment(textContainerId);
+
+			// Publish and check warning message for hidden required input fragment
+
+			await assertWarningMessage(
+				'Required Fields Hidden',
+				page,
+				pageEditorPage,
+				'Student form contains one or more hidden fragments mapped to required fields. A form with missing required fields will not generate a valid entry. Are you sure you want to publish it?'
+			);
+
+			await waitForAlert(
+				page,
+				'The hidden fragment contained required fields. A form with missing required fields will not generate a valid entry.',
+				{type: 'warning'}
+			);
+		}
+	);
+
 	test(
 		'Show an error when there is no Submit Button',
 		{tag: '@LPS-151754'},

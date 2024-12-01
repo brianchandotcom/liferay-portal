@@ -36,7 +36,7 @@ import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryIn
 import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryInfoItemObjectProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
-import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelper;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrationUtil;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
@@ -356,14 +356,14 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					"model.class.name", objectDefinition.getClassName()
 				).build());
 
-			_objectRelatedModelsProviderRegistrarHelper.register(
+			ObjectRelatedModelsProviderRegistrationUtil.register(
 				_bundleContext, objectDefinition,
 				new SystemObjectMtoMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectDefinitionLocalService,
 					_objectFieldLocalService, _objectRelationshipLocalService,
 					systemObjectDefinitionManager,
 					_systemObjectDefinitionManagerRegistry));
-			_objectRelatedModelsProviderRegistrarHelper.register(
+			ObjectRelatedModelsProviderRegistrationUtil.register(
 				_bundleContext, objectDefinition,
 				new SystemObject1toMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectDefinitionLocalService,
@@ -446,10 +446,6 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 	@Reference
 	private ObjectFolderLocalService _objectFolderLocalService;
-
-	@Reference
-	private ObjectRelatedModelsProviderRegistrarHelper
-		_objectRelatedModelsProviderRegistrarHelper;
 
 	@Reference
 	private ObjectRelatedModelsProviderRegistry

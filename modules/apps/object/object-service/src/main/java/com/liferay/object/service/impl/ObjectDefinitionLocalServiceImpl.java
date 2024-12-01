@@ -60,7 +60,6 @@ import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableFactory;
-import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelper;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -630,7 +629,6 @@ public class ObjectDefinitionLocalServiceImpl
 					InactiveObjectDefinitionDeployerUtil.deploy(
 						_bundleContext, _objectEntryService,
 						_objectFieldLocalService,
-						_objectRelatedModelsProviderRegistrarHelper,
 						_objectRelationshipLocalService, objectDefinition));
 		}
 	}
@@ -905,7 +903,6 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinitionLocalService, _objectEntryLocalService,
 				_objectEntryService, _objectFieldLocalService,
 				_objectLayoutLocalService, _objectLayoutTabLocalService,
-				_objectRelatedModelsProviderRegistrarHelper,
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
 				_objectViewLocalService, _organizationLocalService,
 				_ploEntryLocalService, _portal, _portletLocalService,
@@ -934,7 +931,6 @@ public class ObjectDefinitionLocalServiceImpl
 							InactiveObjectDefinitionDeployerUtil.deploy(
 								_bundleContext, _objectEntryService,
 								_objectFieldLocalService,
-								_objectRelatedModelsProviderRegistrarHelper,
 								_objectRelationshipLocalService,
 								objectDefinition));
 					}
@@ -2702,10 +2698,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ObjectLayoutTabLocalService _objectLayoutTabLocalService;
-
-	@Reference
-	private ObjectRelatedModelsProviderRegistrarHelper
-		_objectRelatedModelsProviderRegistrarHelper;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

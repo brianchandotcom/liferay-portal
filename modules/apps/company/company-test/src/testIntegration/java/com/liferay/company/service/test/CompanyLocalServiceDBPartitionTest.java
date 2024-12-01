@@ -222,6 +222,10 @@ public class CompanyLocalServiceDBPartitionTest
 	public void testAddDBPartitionCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
+		String pid = _createFactoryConfiguration(
+			company.getCompanyId()
+		).getPid();
+
 		companyLocalService.extractDBPartitionCompany(company.getCompanyId());
 
 		String name = "new" + company.getName();
@@ -231,6 +235,17 @@ public class CompanyLocalServiceDBPartitionTest
 		boolean standaloneDBPartition = true;
 
 		try {
+			BundleListener configurationManager = ReflectionTestUtil.invoke(
+				_configurationAdmin, "getConfigurationManager", new Class<?>[0],
+				null);
+
+			Assert.assertNull(
+				ReflectionTestUtil.invoke(
+					configurationManager, "getConfiguration",
+					new Class<?>[] {String.class}, pid));
+
+			Assert.assertFalse(_persistenceManager.exists(pid));
+
 			company = companyLocalService.addDBPartitionCompany(
 				company.getCompanyId(), name, virtualHostName, webId);
 
@@ -243,6 +258,13 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertEquals(name, company.getName());
 			Assert.assertEquals(virtualHostName, company.getVirtualHostname());
 			Assert.assertEquals(webId, company.getWebId());
+
+			Assert.assertNotNull(
+				ReflectionTestUtil.invoke(
+					configurationManager, "getConfiguration",
+					new Class<?>[] {String.class}, pid));
+
+			Assert.assertTrue(_persistenceManager.exists(pid));
 		}
 		finally {
 			if (standaloneDBPartition) {

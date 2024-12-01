@@ -97,13 +97,13 @@ test('Allows selecting specific repeatable field when mapping', async ({
 
 	const fragment = page.locator('.component-heading');
 
-	expect(fragment).toHaveText('Spain');
+	await expect(fragment).toHaveText('Spain');
 
 	await page.getByLabel('Iteration to Display').selectOption('Last');
 
 	await pageEditorPage.waitForChangesSaved();
 
-	expect(fragment).toHaveText('United Kingdom');
+	await expect(fragment).toHaveText('United Kingdom');
 
 	await page
 		.getByLabel('Iteration to Display')
@@ -115,11 +115,11 @@ test('Allows selecting specific repeatable field when mapping', async ({
 
 	await pageEditorPage.waitForChangesSaved();
 
-	expect(fragment).toHaveText('France');
+	await expect(fragment).toHaveText('France');
 
 	await pageEditorPage.switchLanguage('es-ES');
 
-	expect(fragment).toHaveText('Francia');
+	await expect(fragment).toHaveText('Francia');
 
 	// Publish and check the published page
 
@@ -129,7 +129,7 @@ test('Allows selecting specific repeatable field when mapping', async ({
 		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 	);
 
-	expect(fragment).toHaveText('France');
+	await expect(fragment).toHaveText('France');
 });
 
 test('Allows selecting specific repeatable collection provider', async ({
@@ -197,10 +197,10 @@ test('Allows selecting specific repeatable collection provider', async ({
 
 	await pageEditorPage.waitForChangesSaved();
 
-	expect(page.getByText('Balinese')).toBeAttached();
-	expect(page.getByText('Poodle')).toBeAttached();
-	expect(page.getByText('Pug')).toBeAttached();
-	expect(page.getByText('Sphynx')).toBeAttached();
+	await expect(page.getByText('Balinese')).toBeAttached();
+	await expect(page.getByText('Poodle')).toBeAttached();
+	await expect(page.getByText('Pug')).toBeAttached();
+	await expect(page.getByText('Sphynx')).toBeAttached();
 
 	await pageEditorPage.publishPage();
 
@@ -208,8 +208,8 @@ test('Allows selecting specific repeatable collection provider', async ({
 		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 	);
 
-	expect(page.getByText('Balinese')).toBeAttached();
-	expect(page.getByText('Poodle')).toBeAttached();
-	expect(page.getByText('Pug')).toBeAttached();
-	expect(page.getByText('Sphynx')).toBeAttached();
+	await expect(page.getByText('Balinese')).toBeAttached();
+	await expect(page.getByText('Poodle')).toBeAttached();
+	await expect(page.getByText('Pug')).toBeAttached();
+	await expect(page.getByText('Sphynx')).toBeAttached();
 });

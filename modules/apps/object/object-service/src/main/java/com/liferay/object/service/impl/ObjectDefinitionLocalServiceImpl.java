@@ -17,7 +17,6 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.util.ObjectDefinitionThreadLocal;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
-import com.liferay.object.deployer.InactiveObjectDefinitionDeployer;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
@@ -45,7 +44,7 @@ import com.liferay.object.exception.ObjectRelationshipEdgeException;
 import com.liferay.object.exception.RequiredObjectDefinitionException;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
-import com.liferay.object.internal.deployer.InactiveObjectDefinitionDeployerImpl;
+import com.liferay.object.internal.deployer.InactiveObjectDefinitionDeployerUtil;
 import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
 import com.liferay.object.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.model.ObjectAction;
@@ -621,27 +620,18 @@ public class ObjectDefinitionLocalServiceImpl
 
 		undeployObjectDefinition(objectDefinition);
 
-		for (Map.Entry
-				<InactiveObjectDefinitionDeployer,
-				 Map<Long, List<ServiceRegistration<?>>>> entry :
-					_inactiveObjectDefinitionsServiceRegistrationsMaps.
-						entrySet()) {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					objectDefinition.getCompanyId())) {
 
-			InactiveObjectDefinitionDeployer inactiveObjectDefinitionDeployer =
-				entry.getKey();
-			Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
-				entry.getValue();
-
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						objectDefinition.getCompanyId())) {
-
-				serviceRegistrationsMap.computeIfAbsent(
-					objectDefinition.getObjectDefinitionId(),
-					objectDefinitionId ->
-						inactiveObjectDefinitionDeployer.deploy(
-							objectDefinition));
-			}
+			_inactiveObjectDefinitionsServiceRegistrations.computeIfAbsent(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinitionId ->
+					InactiveObjectDefinitionDeployerUtil.deploy(
+						_bundleContext, _objectEntryService,
+						_objectFieldLocalService,
+						_objectRelatedModelsProviderRegistrarHelper,
+						_objectRelationshipLocalService, objectDefinition));
 		}
 	}
 
@@ -900,13 +890,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 		Map<Long, List<ServiceRegistration<?>>> activeServiceRegistrationsMap =
 			new ConcurrentHashMap<>();
-		InactiveObjectDefinitionDeployer inactiveObjectDefinitionDeployer =
-			new InactiveObjectDefinitionDeployerImpl(
-				_bundleContext, _objectEntryService, _objectFieldLocalService,
-				_objectRelatedModelsProviderRegistrarHelper,
-				_objectRelationshipLocalService);
-		Map<Long, List<ServiceRegistration<?>>>
-			inactiveServiceRegistrationsMap = new ConcurrentHashMap<>();
 		ObjectDefinitionDeployer objectDefinitionDeployer =
 			new ObjectDefinitionDeployerImpl(
 				_accountEntryLocalService,
@@ -939,16 +922,20 @@ public class ObjectDefinitionLocalServiceImpl
 							objectDefinitions,
 							objectDefinition -> objectDefinition.isActive())));
 
-				inactiveServiceRegistrationsMap.putAll(
-					inactiveObjectDefinitionDeployer.deployObjectDefinitions(
-						companyId,
-						ListUtil.filter(
-							objectDefinitions,
-							objectDefinition -> !objectDefinition.isActive())));
+				for (ObjectDefinition objectDefinition : objectDefinitions) {
+					if (!objectDefinition.isActive()) {
+						_inactiveObjectDefinitionsServiceRegistrations.put(
+							objectDefinition.getObjectDefinitionId(),
+							InactiveObjectDefinitionDeployerUtil.deploy(
+								_bundleContext, _objectEntryService,
+								_objectFieldLocalService,
+								_objectRelatedModelsProviderRegistrarHelper,
+								_objectRelationshipLocalService,
+								objectDefinition));
+					}
+				}
 			});
 
-		_inactiveObjectDefinitionsServiceRegistrationsMaps.put(
-			inactiveObjectDefinitionDeployer, inactiveServiceRegistrationsMap);
 		_serviceRegistrationsMaps.put(
 			objectDefinitionDeployer, activeServiceRegistrationsMap);
 
@@ -2657,11 +2644,9 @@ public class ObjectDefinitionLocalServiceImpl
 	@Reference
 	private GroupLocalService _groupLocalService;
 
-	private final Map
-		<InactiveObjectDefinitionDeployer,
-		 Map<Long, List<ServiceRegistration<?>>>>
-			_inactiveObjectDefinitionsServiceRegistrationsMaps =
-				Collections.synchronizedMap(new LinkedHashMap<>());
+	private final Map<Long, List<ServiceRegistration<?>>>
+		_inactiveObjectDefinitionsServiceRegistrations =
+			new ConcurrentHashMap<>();
 
 	@Reference
 	private Language _language;

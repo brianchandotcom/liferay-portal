@@ -3,27 +3,29 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.internal.related.models;
+package com.liferay.object.related.models;
 
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.related.models.ObjectRelatedModelsProvider;
-import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelper;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Carlos Correa
  */
-@Component(service = ObjectRelatedModelsProviderRegistrarHelper.class)
-public class ObjectRelatedModelsProviderRegistrarHelperImpl
-	implements ObjectRelatedModelsProviderRegistrarHelper {
+public class ObjectRelatedModelsProviderRegistrationUtil {
 
-	@Override
-	public ServiceRegistration<?> register(
+	public static ServiceRegistration<?> register(
+		BundleContext bundleContext, ObjectDefinition objectDefinition,
+		ObjectRelatedModelsProvider<?> objectRelatedModelsProvider) {
+
+		return register(
+			bundleContext, objectDefinition, objectRelatedModelsProvider, null);
+	}
+
+	public static ServiceRegistration<?> register(
 		BundleContext bundleContext, ObjectDefinition objectDefinition,
 		ObjectRelatedModelsProvider<?> objectRelatedModelsProvider,
 		Integer serviceRanking) {
@@ -33,12 +35,10 @@ public class ObjectRelatedModelsProviderRegistrarHelperImpl
 			HashMapDictionaryBuilder.<String, Object>put(
 				Constants.SERVICE_RANKING, () -> serviceRanking
 			).put(
-				ObjectRelatedModelsProviderRegistrarHelper.
-					KEY_OBJECT_DEFINITION_ERC,
+				ObjectRelatedModelsProvider.KEY_OBJECT_DEFINITION_ERC,
 				objectDefinition.getExternalReferenceCode()
 			).put(
-				ObjectRelatedModelsProviderRegistrarHelper.
-					KEY_RELATIONSHIP_TYPE,
+				ObjectRelatedModelsProvider.KEY_RELATIONSHIP_TYPE,
 				objectRelatedModelsProvider.getObjectRelationshipType()
 			).build());
 	}

@@ -9,7 +9,7 @@ import com.liferay.object.internal.related.models.ObjectEntry1to1ObjectRelatedMo
 import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.related.models.ObjectEntryMtoMObjectRelatedModelsProviderImpl;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelper;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrationUtil;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -28,23 +28,21 @@ public class InactiveObjectDefinitionDeployerUtil {
 	public static List<ServiceRegistration<?>> deploy(
 		BundleContext bundleContext, ObjectEntryService objectEntryService,
 		ObjectFieldLocalService objectFieldLocalService,
-		ObjectRelatedModelsProviderRegistrarHelper
-			objectRelatedModelsProviderRegistrarHelper,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectDefinition objectDefinition) {
 
 		return ListUtil.fromArray(
-			objectRelatedModelsProviderRegistrarHelper.register(
+			ObjectRelatedModelsProviderRegistrationUtil.register(
 				bundleContext, objectDefinition,
 				new ObjectEntryMtoMObjectRelatedModelsProviderImpl(
 					objectDefinition, objectEntryService,
 					objectRelationshipLocalService)),
-			objectRelatedModelsProviderRegistrarHelper.register(
+			ObjectRelatedModelsProviderRegistrationUtil.register(
 				bundleContext, objectDefinition,
 				new ObjectEntry1toMObjectRelatedModelsProviderImpl(
 					objectDefinition, objectEntryService,
 					objectFieldLocalService, objectRelationshipLocalService)),
-			objectRelatedModelsProviderRegistrarHelper.register(
+			ObjectRelatedModelsProviderRegistrationUtil.register(
 				bundleContext, objectDefinition,
 				new ObjectEntry1to1ObjectRelatedModelsProviderImpl(
 					objectDefinition, objectEntryService,

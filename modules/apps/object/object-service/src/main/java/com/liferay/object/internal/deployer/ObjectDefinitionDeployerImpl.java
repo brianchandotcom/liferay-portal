@@ -41,7 +41,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
-import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelper;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrationUtil;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -125,8 +125,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectLayoutLocalService objectLayoutLocalService,
 		ObjectLayoutTabLocalService objectLayoutTabLocalService,
-		ObjectRelatedModelsProviderRegistrarHelper
-			objectRelatedModelsProviderRegistrarHelper,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		ObjectViewLocalService objectViewLocalService,
@@ -155,8 +153,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectLayoutLocalService = objectLayoutLocalService;
 		_objectLayoutTabLocalService = objectLayoutTabLocalService;
-		_objectRelatedModelsProviderRegistrarHelper =
-			objectRelatedModelsProviderRegistrarHelper;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_objectViewLocalService = objectViewLocalService;
@@ -381,17 +377,17 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
 				).build()),
-			_objectRelatedModelsProviderRegistrarHelper.register(
+			ObjectRelatedModelsProviderRegistrationUtil.register(
 				_bundleContext, objectDefinition,
 				new ObjectEntryMtoMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryService,
 					_objectRelationshipLocalService)),
-			_objectRelatedModelsProviderRegistrarHelper.register(
+			ObjectRelatedModelsProviderRegistrationUtil.register(
 				_bundleContext, objectDefinition,
 				new ObjectEntry1toMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryService,
 					_objectFieldLocalService, _objectRelationshipLocalService)),
-			_objectRelatedModelsProviderRegistrarHelper.register(
+			ObjectRelatedModelsProviderRegistrationUtil.register(
 				_bundleContext, objectDefinition,
 				new ObjectEntry1to1ObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryService,
@@ -563,8 +559,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectLayoutLocalService _objectLayoutLocalService;
 	private final ObjectLayoutTabLocalService _objectLayoutTabLocalService;
-	private final ObjectRelatedModelsProviderRegistrarHelper
-		_objectRelatedModelsProviderRegistrarHelper;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;

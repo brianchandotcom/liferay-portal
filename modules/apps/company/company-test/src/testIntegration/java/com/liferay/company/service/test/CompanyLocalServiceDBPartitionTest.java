@@ -235,16 +235,7 @@ public class CompanyLocalServiceDBPartitionTest
 		boolean standaloneDBPartition = true;
 
 		try {
-			BundleListener configurationManager = ReflectionTestUtil.invoke(
-				_configurationAdmin, "getConfigurationManager", new Class<?>[0],
-				null);
-
-			Assert.assertNull(
-				ReflectionTestUtil.invoke(
-					configurationManager, "getConfiguration",
-					new Class<?>[] {String.class}, pid));
-
-			Assert.assertFalse(_persistenceManager.exists(pid));
+			_assertConfiguration(pid, false);
 
 			company = companyLocalService.addDBPartitionCompany(
 				company.getCompanyId(), name, virtualHostName, webId);
@@ -259,12 +250,7 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertEquals(virtualHostName, company.getVirtualHostname());
 			Assert.assertEquals(webId, company.getWebId());
 
-			Assert.assertNotNull(
-				ReflectionTestUtil.invoke(
-					configurationManager, "getConfiguration",
-					new Class<?>[] {String.class}, pid));
-
-			Assert.assertTrue(_persistenceManager.exists(pid));
+			_assertConfiguration(pid, true);
 		}
 		finally {
 			if (standaloneDBPartition) {
@@ -404,7 +390,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 			long copiedCompanyId = copiedCompany.getCompanyId();
 
-			_assertConfiguration(copiedCompanyId, configuration);
+			_assertCompanyConfiguration(copiedCompanyId, configuration);
 
 			companyLocalService.deleteCompany(copiedCompany);
 
@@ -548,16 +534,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		Assert.assertTrue(serviceReferences.isEmpty());
 
-		BundleListener configurationManager = ReflectionTestUtil.invoke(
-			_configurationAdmin, "getConfigurationManager", new Class<?>[0],
-			null);
-
-		Assert.assertNull(
-			ReflectionTestUtil.invoke(
-				configurationManager, "getConfiguration",
-				new Class<?>[] {String.class}, pid));
-
-		Assert.assertFalse(_persistenceManager.exists(pid));
+		_assertConfiguration(pid, false);
 	}
 
 	@Test
@@ -626,16 +603,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 			Assert.assertTrue(serviceReferences.isEmpty());
 
-			BundleListener configurationManager = ReflectionTestUtil.invoke(
-				_configurationAdmin, "getConfigurationManager", new Class<?>[0],
-				null);
-
-			Assert.assertNull(
-				ReflectionTestUtil.invoke(
-					configurationManager, "getConfiguration",
-					new Class<?>[] {String.class}, pid));
-
-			Assert.assertFalse(_persistenceManager.exists(pid));
+			_assertConfiguration(pid, false);
 		}
 		finally {
 			if (standaloneDBPartition) {
@@ -709,7 +677,7 @@ public class CompanyLocalServiceDBPartitionTest
 			companyId -> _resourceActionLocalService.checkResourceActions());
 	}
 
-	private void _assertConfiguration(
+	private void _assertCompanyConfiguration(
 			long companyId, Configuration configuration)
 		throws SQLException {
 
@@ -732,6 +700,30 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertTrue(dictionary.contains(String.valueOf(companyId)));
 			Assert.assertFalse(dictionary.contains(configuration.getPid()));
 		}
+	}
+
+	private void _assertConfiguration(String pid, boolean exists) {
+		BundleListener configurationManager = ReflectionTestUtil.invoke(
+			_configurationAdmin, "getConfigurationManager", new Class<?>[0],
+			null);
+
+		if (exists) {
+			Assert.assertNotNull(
+				ReflectionTestUtil.invoke(
+					configurationManager, "getConfiguration",
+					new Class<?>[] {String.class}, pid));
+
+			Assert.assertTrue(_persistenceManager.exists(pid));
+
+			return;
+		}
+
+		Assert.assertNull(
+			ReflectionTestUtil.invoke(
+				configurationManager, "getConfiguration",
+				new Class<?>[] {String.class}, pid));
+
+		Assert.assertFalse(_persistenceManager.exists(pid));
 	}
 
 	private void _assertCopyDBPartitionCompany(

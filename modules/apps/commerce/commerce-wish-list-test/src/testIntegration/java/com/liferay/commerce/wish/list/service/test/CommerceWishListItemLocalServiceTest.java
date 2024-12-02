@@ -69,30 +69,25 @@ public class CommerceWishListItemLocalServiceTest {
 
 		CProduct cProduct = cpDefinition.getCProduct();
 
-		long cProductId = cProduct.getCProductId();
-
-		long commerceWishListId = _commerceWishList.getCommerceWishListId();
-
-		String cpInstanceUuid = _cpInstance.getCPInstanceUuid();
-
 		_commerceWishListItem =
 			_commerceWishListItemLocalService.addOrUpdateCommerceWishListItem(
-				commerceWishListId, cProductId, cpInstanceUuid, "",
+				_commerceWishList.getCommerceWishListId(),
+				cProduct.getCProductId(), _cpInstance.getCPInstanceUuid(), "",
 				_serviceContext);
 
 		Assert.assertEquals(
 			1,
 			_commerceWishListItemLocalService.getCommerceWishListItemsCount(
-				commerceWishListId));
+				_commerceWishList.getCommerceWishListId()));
 
 		_commerceWishListItemLocalService.addOrUpdateCommerceWishListItem(
-			commerceWishListId, cProductId, cpInstanceUuid, "",
-			_serviceContext);
+			commerceWishListId, cProduct.getCProductId(),
+			_cpInstance.getCPInstanceUuid(), "", _serviceContext);
 
 		Assert.assertEquals(
 			1,
 			_commerceWishListItemLocalService.getCommerceWishListItemsCount(
-				commerceWishListId));
+				_commerceWishList.getCommerceWishListId()));
 	}
 
 	private static User _user;

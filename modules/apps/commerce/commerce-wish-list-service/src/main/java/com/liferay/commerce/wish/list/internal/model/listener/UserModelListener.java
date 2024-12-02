@@ -27,6 +27,7 @@ public class UserModelListener extends BaseModelListener<User> {
 	public void onBeforeRemove(User user) {
 		try {
 			CommerceWishListThreadLocal.setDefaultWishListDeletable(true);
+
 			_commerceWishListLocalService.deleteCommerceWishListsByUserId(
 				user.getUserId());
 		}

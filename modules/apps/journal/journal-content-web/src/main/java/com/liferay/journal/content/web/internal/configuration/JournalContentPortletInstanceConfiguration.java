@@ -29,11 +29,11 @@ public interface JournalContentPortletInstanceConfiguration {
 	@Meta.AD(name = "article-id", required = false)
 	public String articleId();
 
-	@Meta.AD(deflt = "0", name = "group-id", required = false)
-	public long groupId();
-
 	@Meta.AD(name = "group-external-reference-code", required = false)
 	public String groupExternalReferenceCode();
+
+	@Meta.AD(deflt = "0", name = "group-id", required = false)
+	public long groupId();
 
 	@Meta.AD(name = "ddm-template-key", required = false)
 	public String ddmTemplateKey();

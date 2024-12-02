@@ -398,9 +398,9 @@ public class JournalContentExportImportPortletPreferencesProcessor
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		long companyId = _getCompanyId(portletDataContext);
-
 		long importGroupId = 0;
+
+		long companyId = _getCompanyId(portletDataContext);
 
 		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-27566")) {
 			importGroupId = _getGroupId(companyId, portletPreferences);

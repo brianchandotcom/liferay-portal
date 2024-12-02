@@ -43,6 +43,12 @@ export class SimulationMenuPage {
 				this.page.getByRole('combobox', {name: 'Preview By'})
 			).toContainText(name, {timeout: 1000});
 		}).toPass();
+
+		await expect(
+			this.page
+				.frameLocator('iframe[title="Simulation Preview"]')
+				.locator('.public-page')
+		).toBeVisible();
 	}
 
 	async openSimulationPanel() {

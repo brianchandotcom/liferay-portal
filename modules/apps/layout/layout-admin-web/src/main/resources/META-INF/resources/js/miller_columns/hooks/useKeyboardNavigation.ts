@@ -70,7 +70,9 @@ export function useKeyboardNavigation({
 
 			// Navigate to item if pressing Enter
 
-			if (key === 'Enter') {
+			const anchor = element.querySelector('a');
+
+			if (key === 'Enter' && event.target === anchor) {
 
 				// Store item id in session so we can focus it after navigate
 
@@ -108,6 +110,7 @@ export function useKeyboardNavigation({
 			active,
 			columnIndex,
 			columnSizes,
+			element,
 			getItemChildren,
 			hasChild,
 			id,

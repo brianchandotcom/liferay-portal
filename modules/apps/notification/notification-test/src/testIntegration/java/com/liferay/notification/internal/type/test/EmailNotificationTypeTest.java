@@ -59,6 +59,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.Group;
@@ -149,6 +150,8 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -180,6 +183,17 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				"type", TemplateContextContributor.TYPE_GLOBAL
 			).build());
 
+		_freeMarkerEngineConfiguration = _configurationAdmin.getConfiguration(
+			"com.liferay.portal.template.freemarker.configuration." +
+				"FreeMarkerEngineConfiguration",
+			StringPool.QUESTION);
+
+		ConfigurationTestUtil.saveConfiguration(
+			_freeMarkerEngineConfiguration,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"restrictedVariables", true
+			).build());
+
 		_pushServiceContext();
 	}
 
@@ -190,6 +204,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
+
+		ConfigurationTestUtil.deleteConfiguration(
+			_freeMarkerEngineConfiguration);
 	}
 
 	@Before
@@ -1487,6 +1504,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		return StringUtil.merge(
 			Arrays.asList(
 				serviceBuilderObjectEntry.getUserName(),
@@ -1502,9 +1522,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				"listTypeEntry1Value,listTypeEntry2Value",
 				"listTypeEntry1Value", "", "textObjectFieldValue",
 				LanguageUtil.getLanguageId(LocaleUtil.US),
-				_portal.getPortalURL(
-					ServiceContextThreadLocal.getServiceContext(
-					).getRequest())),
+				_portal.getPortalURL(serviceContext.getRequest()),
+				serviceContext.getCompanyId()),
 			StringPool.NEW_LINE);
 	}
 
@@ -1727,6 +1746,11 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				"notificationTemplateId", notificationTemplateId
 			).build());
 	}
+
+	@Inject
+	private static ConfigurationAdmin _configurationAdmin;
+
+	private static Configuration _freeMarkerEngineConfiguration;
 
 	@Inject
 	private static Portal _portal;

@@ -342,7 +342,7 @@ public class ObjectFieldLocalServiceTest {
 					).build())));
 		AssertUtils.assertFailure(
 			ObjectFieldLocalizedException.class,
-			"Only LongText,RichText and Text business types support " +
+			"Only Boolean,LongText,RichText and Text business types support " +
 				"localization",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false,

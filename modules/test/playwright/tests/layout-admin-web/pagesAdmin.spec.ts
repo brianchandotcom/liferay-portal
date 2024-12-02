@@ -59,6 +59,10 @@ test.describe('Keyboard movement and navigation', () => {
 			await expect(async () => {
 				await enableMovement(3);
 
+				await expect(
+					page.locator('.drag-preview__content', {hasText: 'Page 3'})
+				).toBeVisible({timeout: 1000});
+
 				await expect(getItem(3)).toHaveClass(/drop-bottom/, {
 					timeout: 1000,
 				});

@@ -510,7 +510,7 @@ public class Settings implements Serializable {
 
 	@Schema(description = "The page specification's theme settings.")
 	@Valid
-	public Object getThemeSettings() {
+	public Map<String, String> getThemeSettings() {
 		if (_themeSettingsSupplier != null) {
 			themeSettings = _themeSettingsSupplier.get();
 
@@ -520,7 +520,7 @@ public class Settings implements Serializable {
 		return themeSettings;
 	}
 
-	public void setThemeSettings(Object themeSettings) {
+	public void setThemeSettings(Map<String, String> themeSettings) {
 		this.themeSettings = themeSettings;
 
 		_themeSettingsSupplier = null;
@@ -528,7 +528,8 @@ public class Settings implements Serializable {
 
 	@JsonIgnore
 	public void setThemeSettings(
-		UnsafeSupplier<Object, Exception> themeSettingsUnsafeSupplier) {
+		UnsafeSupplier<Map<String, String>, Exception>
+			themeSettingsUnsafeSupplier) {
 
 		_themeSettingsSupplier = () -> {
 			try {
@@ -545,10 +546,10 @@ public class Settings implements Serializable {
 
 	@GraphQLField(description = "The page specification's theme settings.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object themeSettings;
+	protected Map<String, String> themeSettings;
 
 	@JsonIgnore
-	private Supplier<Object> _themeSettingsSupplier;
+	private Supplier<Map<String, String>> _themeSettingsSupplier;
 
 	@Schema(
 		description = "The client extension for the theme spritemap of a page specification."
@@ -797,7 +798,7 @@ public class Settings implements Serializable {
 			sb.append("\"");
 		}
 
-		Object themeSettings = getThemeSettings();
+		Map<String, String> themeSettings = getThemeSettings();
 
 		if (themeSettings != null) {
 			if (sb.length() > 1) {
@@ -806,18 +807,7 @@ public class Settings implements Serializable {
 
 			sb.append("\"themeSettings\": ");
 
-			if (themeSettings instanceof Map) {
-				sb.append(
-					JSONFactoryUtil.createJSONObject((Map<?, ?>)themeSettings));
-			}
-			else if (themeSettings instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)themeSettings));
-				sb.append("\"");
-			}
-			else {
-				sb.append(themeSettings);
-			}
+			sb.append(_toJSON(themeSettings));
 		}
 
 		ClientExtension themeSpritemapClientExtension =

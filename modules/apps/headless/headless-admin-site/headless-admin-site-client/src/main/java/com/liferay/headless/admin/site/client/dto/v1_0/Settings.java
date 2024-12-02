@@ -10,6 +10,7 @@ import com.liferay.headless.admin.site.client.serdes.v1_0.SettingsSerDes;
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -253,16 +254,17 @@ public class Settings implements Cloneable, Serializable {
 
 	protected String themeName;
 
-	public Object getThemeSettings() {
+	public Map<String, String> getThemeSettings() {
 		return themeSettings;
 	}
 
-	public void setThemeSettings(Object themeSettings) {
+	public void setThemeSettings(Map<String, String> themeSettings) {
 		this.themeSettings = themeSettings;
 	}
 
 	public void setThemeSettings(
-		UnsafeSupplier<Object, Exception> themeSettingsUnsafeSupplier) {
+		UnsafeSupplier<Map<String, String>, Exception>
+			themeSettingsUnsafeSupplier) {
 
 		try {
 			themeSettings = themeSettingsUnsafeSupplier.get();
@@ -272,7 +274,7 @@ public class Settings implements Cloneable, Serializable {
 		}
 	}
 
-	protected Object themeSettings;
+	protected Map<String, String> themeSettings;
 
 	public ClientExtension getThemeSpritemapClientExtension() {
 		return themeSpritemapClientExtension;

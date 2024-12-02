@@ -203,14 +203,7 @@ public class SettingsSerDes {
 
 			sb.append("\"themeSettings\": ");
 
-			if (settings.getThemeSettings() instanceof String) {
-				sb.append("\"");
-				sb.append((String)settings.getThemeSettings());
-				sb.append("\"");
-			}
-			else {
-				sb.append(settings.getThemeSettings());
-			}
+			sb.append(_toJSON(settings.getThemeSettings()));
 		}
 
 		if (settings.getThemeSpritemapClientExtension() != null) {
@@ -401,7 +394,7 @@ public class SettingsSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "themeSettings")) {
-				return false;
+				return true;
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "themeSpritemapClientExtension")) {
@@ -517,7 +510,8 @@ public class SettingsSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "themeSettings")) {
 				if (jsonParserFieldValue != null) {
-					settings.setThemeSettings((Object)jsonParserFieldValue);
+					settings.setThemeSettings(
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

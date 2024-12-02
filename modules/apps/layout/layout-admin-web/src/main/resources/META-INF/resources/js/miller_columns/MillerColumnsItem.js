@@ -557,6 +557,7 @@ const MillerColumnsItem = ({
 						<ClayDropDown
 							active={layoutActionsActive}
 							onActiveChange={setLayoutActionsActive}
+							onKeyDown={(event) => event.stopPropagation()}
 							renderMenuOnClick
 							trigger={
 								<ClayButtonWithIcon
@@ -619,6 +620,7 @@ const MillerColumnsItem = ({
 								)
 							}
 							items={dropdownActions}
+							onKeyDown={(event) => event.stopPropagation()}
 							trigger={
 								<ClayButtonWithIcon
 									aria-label={Liferay.Language.get(

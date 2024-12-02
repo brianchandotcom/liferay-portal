@@ -65,13 +65,13 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "IS_KNOWLEDGE_CHECK",
+					"externalReferenceCode": "KNOWLEDGE_CHECK",
 					"indexed": true,
 					"label": {
-						"en_US": "Is Knowledge Check"
+						"en_US": "Knowledge Check"
 					},
 					"localized": false,
-					"name": "isKnowledgeCheck",
+					"name": "knowledgeCheck",
 					"readOnly": "false",
 					"type": "Boolean"
 				},

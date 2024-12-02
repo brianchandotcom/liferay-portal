@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -71,7 +70,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -311,7 +309,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		if (localizable && FeatureFlagManagerUtil.isEnabled("LPD-37927")) {
 			_addLocalizationOptionsAttributes(
-				fragmentEntryLink, httpServletRequest, inputTemplateNode);
+				fragmentEntryLink, httpServletRequest, inputTemplateNode,
+				locale);
 		}
 
 		return inputTemplateNode;
@@ -469,7 +468,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 	private void _addLocalizationOptionsAttributes(
 		FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest,
-		InputTemplateNode inputTemplateNode) {
+		InputTemplateNode inputTemplateNode, Locale locale) {
 
 		LayoutStructure layoutStructure = null;
 
@@ -525,20 +524,13 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		JSONObject jsonObject = localizationConfigJSONObject.getJSONObject(
 			"unlocalizedFieldsMessage");
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Locale locale = themeDisplay.getLocale();
-
 		String unlocalizedFieldsMessage = StringPool.BLANK;
 
 		if (jsonObject != null) {
 			unlocalizedFieldsMessage = jsonObject.getString(
 				LocaleUtil.toLanguageId(locale),
 				jsonObject.getString(
-					LocaleUtil.toLanguageId(
-						themeDisplay.getSiteDefaultLocale())));
+					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault())));
 		}
 
 		inputTemplateNode.addAttribute(

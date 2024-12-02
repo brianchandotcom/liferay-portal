@@ -12,6 +12,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {messageBoardsPagesTest} from '../../fixtures/messageBoardsTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import getRandomString from '../../utils/getRandomString';
+import {gotoPage, setItemsPerPage} from '../../utils/pagination';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -187,6 +188,9 @@ test(
 	'Message Boards Admin: Change delta to a higher value when on last page',
 	{tag: '@LPD-37727'},
 	async ({apiHelpers, messageBoardsPage, page, site}) => {
+		const threadsLinks = page.getByRole('link', {
+			name: /Thread with headline #\d+/,
+		});
 		for (let i = 0; i < 5; i++) {
 			await apiHelpers.headlessDelivery.postMessageBoardThread({
 				articleBody: getRandomString(),
@@ -197,25 +201,14 @@ test(
 
 		await messageBoardsPage.goto(site.friendlyUrlPath);
 
-		await page.getByLabel('Items per Page').click();
-		await page.getByRole('option', {name: /4\s+Entries per Page/}).click();
+		await setItemsPerPage(page, 4);
+		await expect(threadsLinks).toHaveCount(4);
 
-		await expect(
-			page.getByRole('link', {name: /Thread with headline #\d+/})
-		).toHaveCount(4);
+		await gotoPage(page, 2);
+		await expect(threadsLinks).toHaveCount(1);
 
-		await page.getByRole('link', {name: /Page\s+2/}).click();
-
-		await expect(
-			page.getByRole('link', {name: /Thread with headline #\d+/})
-		).toHaveCount(1);
-
-		await page.getByLabel('Items per Page').click();
-		await page.getByRole('option', {name: /8\s+Entries per Page/}).click();
-
-		await expect(
-			page.getByRole('link', {name: /Thread with headline #\d+/})
-		).toHaveCount(5);
+		await setItemsPerPage(page, 8);
+		await expect(threadsLinks).toHaveCount(5);
 	}
 );
 
@@ -223,6 +216,9 @@ test(
 	'Message Boards Widget: Change delta to a higher value when on last page',
 	{tag: '@LPD-39570'},
 	async ({apiHelpers, messageBoardsWidgetPage, page, site}) => {
+		const threadsLinks = page.getByRole('link', {
+			name: /Thread with headline #\d+/,
+		});
 		for (let i = 0; i < 5; i++) {
 			await apiHelpers.headlessDelivery.postMessageBoardThread({
 				articleBody: getRandomString(),
@@ -230,27 +226,15 @@ test(
 				siteId: site.id,
 			});
 		}
-
 		await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
 
-		await page.getByLabel('Items per Page').click();
-		await page.getByRole('option', {name: /4\s+Entries per Page/}).click();
+		await setItemsPerPage(page, 4);
+		await expect(threadsLinks).toHaveCount(4);
 
-		await expect(
-			page.getByRole('link', {name: /Thread with headline #\d+/})
-		).toHaveCount(4);
+		await gotoPage(page, 2);
+		await expect(threadsLinks).toHaveCount(1);
 
-		await page.getByRole('link', {name: /Page\s+2/}).click();
-
-		await expect(
-			page.getByRole('link', {name: /Thread with headline #\d+/})
-		).toHaveCount(1);
-
-		await page.getByLabel('Items per Page').click();
-		await page.getByRole('option', {name: /8\s+Entries per Page/}).click();
-
-		await expect(
-			page.getByRole('link', {name: /Thread with headline #\d+/})
-		).toHaveCount(5);
+		await setItemsPerPage(page, 8);
+		await expect(threadsLinks).toHaveCount(5);
 	}
 );

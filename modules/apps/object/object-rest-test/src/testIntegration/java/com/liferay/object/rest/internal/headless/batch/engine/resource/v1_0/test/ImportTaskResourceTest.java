@@ -34,6 +34,9 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 
 	@Test
 	public void testPostImportTask() throws Exception {
+
+		// With "restrictedFieldNames" query parameter
+
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
 
@@ -47,8 +50,6 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 				objectEntry.getExternalReferenceCode(),
 				"?nestedFields=permissions"),
 			Http.Method.GET);
-
-		// With "restrictedFieldNames" query parameter
 
 		waitForFinish(
 			"COMPLETED", true,

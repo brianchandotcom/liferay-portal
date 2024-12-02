@@ -33,6 +33,46 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 	@Override
+	public PageElement getSiteSiteByExternalReferenceCodePageElement(
+			String siteExternalReferenceCode,
+			String sitePageExternalReferenceCode,
+			String pageElementExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode,
+			GroupUtil.getGroupId(
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				pageElementExternalReferenceCode);
+
+		if (layoutStructureItem == null) {
+			throw new NoSuchLayoutException();
+		}
+
+		return _pageElementDTOConverter.toDTO(layoutStructureItem);
+	}
+
+	@Override
 	public Page<PageElement>
 			getSiteSiteByExternalReferenceCodePageElementPageElementsPage(
 				String siteExternalReferenceCode,

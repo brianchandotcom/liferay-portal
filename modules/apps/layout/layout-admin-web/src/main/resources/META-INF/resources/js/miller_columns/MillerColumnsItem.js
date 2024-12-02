@@ -526,9 +526,9 @@ const MillerColumnsItem = ({
 					</div>
 
 					{description && (
-						<div className="d-flex h5 list-group-subtitle small">
+						<div className="d-flex flex-wrap h5 list-group-subtitle small">
 							<span
-								className={classNames({
+								className={classNames('mr-2', {
 									'text-truncate':
 										!Liferay.FeatureFlags['LPD-35220'],
 								})}
@@ -538,7 +538,7 @@ const MillerColumnsItem = ({
 
 							{states.map((state) => (
 								<ClayLabel
-									className={classNames('inline-item-after', {
+									className={classNames({
 										'text-truncate':
 											!Liferay.FeatureFlags['LPD-35220'],
 									})}

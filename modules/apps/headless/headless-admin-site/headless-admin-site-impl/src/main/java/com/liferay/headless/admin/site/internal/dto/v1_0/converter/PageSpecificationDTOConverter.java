@@ -245,7 +245,7 @@ public class PageSpecificationDTOConverter
 						ClientExtensionEntryConstants.TYPE_GLOBAL_JS));
 				setJavascript(
 					() -> unicodeProperties.getProperty("javascript", null));
-				setMasterPageReference(
+				setMasterPageItemExternalReference(
 					() -> {
 						if (layout.getMasterLayoutPlid() == 0) {
 							return null;
@@ -268,7 +268,7 @@ public class PageSpecificationDTOConverter
 							}
 						};
 					});
-				setStyleBookReference(
+				setStyleBookItemExternalReference(
 					() -> {
 						StyleBookEntry styleBookEntry =
 							_styleBookEntryLocalService.fetchStyleBookEntry(

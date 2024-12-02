@@ -262,11 +262,11 @@ public class PageSpecificationResourceTest
 			unicodeProperties.getProperty("javascript", null),
 			settings.getJavascript());
 
-		ItemExternalReference masterPageReference =
-			settings.getMasterPageReference();
+		ItemExternalReference masterPageItemExternalReference =
+			settings.getMasterPageItemExternalReference();
 
 		if (layout.getMasterLayoutPlid() == 0) {
-			Assert.assertNull(masterPageReference);
+			Assert.assertNull(masterPageItemExternalReference);
 		}
 		else {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -276,14 +276,14 @@ public class PageSpecificationResourceTest
 
 			Assert.assertEquals(
 				layoutPageTemplateEntry.getExternalReferenceCode(),
-				masterPageReference.getExternalReferenceCode());
+				masterPageItemExternalReference.getExternalReferenceCode());
 		}
 
-		ItemExternalReference styleBookReference =
-			settings.getStyleBookReference();
+		ItemExternalReference styleBookItemExternalReference =
+			settings.getStyleBookItemExternalReference();
 
 		if (layout.getStyleBookEntryId() == 0) {
-			Assert.assertNull(styleBookReference);
+			Assert.assertNull(styleBookItemExternalReference);
 		}
 		else {
 			StyleBookEntry styleBookEntry =
@@ -292,7 +292,7 @@ public class PageSpecificationResourceTest
 
 			Assert.assertEquals(
 				styleBookEntry.getExternalReferenceCode(),
-				styleBookReference.getExternalReferenceCode());
+				styleBookItemExternalReference.getExternalReferenceCode());
 		}
 
 		if (Validator.isNull(layout.getThemeId())) {

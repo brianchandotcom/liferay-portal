@@ -4,10 +4,10 @@
  */
 
 import ClayLink from '@clayui/link';
-import BasePage from 'js/components/BasePage';
 import React from 'react';
 
 import Recommendations from '../.././components/recommendations/Recommendations';
+import BasePage from '../../components/BasePage';
 import {IGenericPageProps} from './DefaultPage';
 
 const RecommendationsPage: React.FC<IGenericPageProps> = ({title}) => (

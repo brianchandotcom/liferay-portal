@@ -239,3 +239,33 @@ export function updateProductsFields(fields: TField[]) {
 		method: 'PATCH',
 	});
 }
+
+export function fetchRecommendationConfiguration() {
+	return request('/recommendation/configuration', {
+		method: 'GET',
+	});
+}
+
+export enum JobId {
+	ContentRecommenderMostPopularItemsEnabled = 'contentRecommenderMostPopularItemsEnabled',
+	ContentRecommenderUserPersonalizationEnabled = 'contentRecommenderUserPersonalizationEnabled',
+}
+
+export type TRecommendationConfiguration = {
+	[key in JobId]: boolean;
+};
+
+export function updateRecommendationConfiguration(
+	recommendationConfiguration: TRecommendationConfiguration
+) {
+	return request(
+		'/recommendation/configuration',
+		{
+			body: JSON.stringify(recommendationConfiguration),
+			method: 'PUT',
+		},
+		Liferay.Language.get(
+			'configuration-couldnt-be-completed.-please-try-again-later'
+		)
+	);
+}

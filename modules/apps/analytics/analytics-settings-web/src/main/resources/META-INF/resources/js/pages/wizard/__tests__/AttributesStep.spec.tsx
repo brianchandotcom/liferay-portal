@@ -28,21 +28,23 @@ const AttributesStepContent = ({
 
 	useEffect(() => {
 		onDataChange(data);
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data]);
+	}, [data, onDataChange]);
 
 	return <AttributesStep onCancel={() => {}} onChangeStep={() => {}} />;
 };
 
 describe('Attributes Step', () => {
-	afterAll(() => (window.Liferay.FeatureFlags['LPD-20640'] = false));
+	afterAll(() => {
+		window.Liferay.FeatureFlags['LPD-20640'] = false;
+	});
 
 	afterEach(() => {
 		jest.restoreAllMocks();
 	});
 
-	beforeAll(() => (window.Liferay.FeatureFlags['LPD-20640'] = true));
+	beforeAll(() => {
+		window.Liferay.FeatureFlags['LPD-20640'] = true;
+	});
 
 	window.Liferay.FeatureFlags['LPD-20640'] = true;
 

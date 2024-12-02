@@ -1264,7 +1264,7 @@ test('Verify Custom Fields can be used for user matching in SAML, see LPS-128600
 	);
 });
 
-test('Verify during SP initiated SSO, RelayState is correct and present regardless of VM cache', async ({
+test('Verify during SP initiated SSO, RelayState is correct and present regardless of VM cache.  Also covers LPD-32208 AC1 TC1.', async ({
 	applicationsMenuPage,
 	browser,
 	serverAdministrationPage,
@@ -1328,7 +1328,7 @@ test('Verify during SP initiated SSO, RelayState is correct and present regardle
 
 	await clickSignInButton(spInstancePage);
 
-	// Reset VM cache to clear relayState cache
+	// Reset VM cache to clear relayState cache (not relevant for LPD-32208)
 
 	await applicationsMenuPage.goToServerAdministration();
 

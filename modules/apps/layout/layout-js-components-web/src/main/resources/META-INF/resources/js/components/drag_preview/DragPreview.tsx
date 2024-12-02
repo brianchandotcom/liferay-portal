@@ -4,10 +4,18 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import React, {useMemo, useRef} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useDragLayer} from 'react-dnd';
 
 import './DragPreview.scss';
+
+import {debounce} from 'frontend-js-web';
+
+type Alignment = {
+	element: HTMLElement;
+	position: 'bottom' | 'middle' | 'top';
+	scrollElement?: HTMLElement;
+};
 
 interface DragItem {
 	icon?: string;
@@ -15,26 +23,63 @@ interface DragItem {
 }
 
 interface Props<T> {
+	alignment?: Alignment;
 	getIcon: (item: T) => string;
 	getLabel: (item: T) => string;
 }
 
-const getItemStyles = (
-	currentOffset: {x: number; y: number} | null,
-	ref: React.RefObject<HTMLDivElement>,
-	rtl: boolean
-) => {
-	if (!currentOffset || !ref.current) {
+const getItemStyles = ({
+	alignment,
+	currentOffset,
+	previewRef,
+	rtl,
+}: {
+	alignment?: Alignment;
+	currentOffset: {x: number; y: number} | null;
+	previewRef: React.RefObject<HTMLDivElement>;
+	rtl: boolean;
+}) => {
+
+	// Do not display if data is not ready
+
+	if ((!currentOffset && !alignment) || !previewRef.current) {
 		return {
 			display: 'none',
 		};
 	}
 
-	const rect = ref.current.getBoundingClientRect();
-	const x = rtl
-		? currentOffset.x + rect.width * 0.5 - window.innerWidth
-		: currentOffset.x - rect.width * 0.5;
-	const y = currentOffset.y - rect.height * 0.5;
+	let x;
+	let y;
+
+	const previewRect = previewRef.current.getBoundingClientRect();
+
+	// Align to keyboard target
+
+	if (alignment) {
+		const targetRect = alignment.element.getBoundingClientRect();
+
+		x = targetRect.x + targetRect.width / 2 - previewRect.width * 0.5;
+
+		if (alignment.position === 'bottom') {
+			y = targetRect.y + targetRect.height - previewRect.height * 0.5;
+		}
+		else if (alignment.position === 'top') {
+			y = targetRect.y - previewRect.height * 0.5;
+		}
+		else {
+			y = targetRect.y + targetRect.height / 2 - previewRect.height * 0.5;
+		}
+	}
+
+	// Align to mouse
+
+	else if (currentOffset) {
+		x = rtl
+			? currentOffset.x + previewRect.width * 0.5 - window.innerWidth
+			: currentOffset.x - previewRect.width * 0.5;
+
+		y = currentOffset.y - previewRect.height * 0.5;
+	}
 
 	const transform = `translate(${x}px, ${y}px)`;
 
@@ -44,7 +89,14 @@ const getItemStyles = (
 	};
 };
 
+/**
+ * Drag preview for both mouse DnD and keyboard movement.
+ * It's aligned to the correct element if alignment is passed,
+ * otherwise it's aligned to mouse
+ */
+
 export default function DragPreview<T extends DragItem>({
+	alignment,
 	getIcon = (item) => item?.icon || '',
 	getLabel = (item) => item?.name || Liferay.Language.get('element'),
 }: Props<T>) {
@@ -59,12 +111,54 @@ export default function DragPreview<T extends DragItem>({
 	const icon = useMemo(() => getIcon(item), [getIcon, item]);
 	const label = useMemo(() => getLabel(item), [getLabel, item]);
 
-	if (!isDragging || (!icon && !label)) {
-		return null;
-	}
-
 	const dir =
 		Liferay.Language.direction[Liferay.ThemeDisplay.getLanguageId()];
+
+	const [style, setStyle] = useState<React.CSSProperties>();
+
+	// Set styles during movement
+
+	useEffect(() => {
+		setStyle(
+			getItemStyles({
+				alignment,
+				currentOffset,
+				previewRef: ref,
+				rtl: dir === 'rtl',
+			})
+		);
+	}, [alignment, currentOffset, dir]);
+
+	// Set styles on scroll when aligning to keyboard target
+
+	useEffect(() => {
+		const onScroll = debounce(() => {
+			setStyle(
+				getItemStyles({
+					alignment,
+					currentOffset,
+					previewRef: ref,
+					rtl: dir === 'rtl',
+				})
+			);
+		}, 100);
+
+		if (alignment?.scrollElement) {
+			alignment.scrollElement.addEventListener('scroll', onScroll);
+		}
+
+		return () => {
+			if (alignment?.scrollElement) {
+				alignment.scrollElement.removeEventListener('scroll', onScroll);
+			}
+		};
+	});
+
+	// Return if no movement is enabled
+
+	if ((!isDragging && !alignment) || (!icon && !label)) {
+		return null;
+	}
 
 	return (
 		<div className="cadmin">
@@ -73,7 +167,7 @@ export default function DragPreview<T extends DragItem>({
 					className="align-items-center d-flex drag-preview__content p-2 position-absolute text-2"
 					dir={dir}
 					ref={ref}
-					style={getItemStyles(currentOffset, ref, dir === 'rtl')}
+					style={style}
 				>
 					{icon && (
 						<ClayIcon

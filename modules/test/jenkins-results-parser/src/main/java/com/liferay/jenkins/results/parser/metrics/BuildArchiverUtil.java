@@ -65,11 +65,11 @@ public class BuildArchiverUtil {
 
 		try {
 			outputDirPath = _buildProperties.getProperty(
-				"archive.build.tmp.dir");
+				"archive.ci.build.data.tmp.dir");
 		}
 		catch (Exception exception) {
 			System.out.println(
-				"Unable to get property \"archive.build.tmp.dir\"");
+				"Unable to get property \"archive.ci.build.data.tmp.dir\"");
 		}
 
 		if (outputDirPath == null) {

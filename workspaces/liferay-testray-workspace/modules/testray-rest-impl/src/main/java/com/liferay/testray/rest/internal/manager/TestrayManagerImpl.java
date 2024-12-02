@@ -759,15 +759,23 @@ public class TestrayManagerImpl implements TestrayManager {
 		String testrayCaseName = (String)testrayCasePropertiesMap.get(
 			"testray.testcase.name");
 
+		long testrayCaseTypeId = _getTestrayCaseTypeId(
+			companyId, serviceContext, testrayCache,
+			(String)testrayCasePropertiesMap.get("testray.case.type.name"),
+			userId);
+
 		String objectEntryIdsKey = StringBundler.concat(
-			"Case#", testrayCaseName, "#ProjectId#", testrayProjectId);
+			"Case#", testrayCaseName, "#CaseTypeId#", testrayCaseTypeId,
+			"#ProjectId#", testrayProjectId);
 
 		long testrayCaseId = _getObjectEntryId(
 			companyId,
 			StringBundler.concat(
-				"projectId eq '", testrayProjectId, "' and name eq '",
+				"name eq '",
 				StringUtil.removeChar(
 					StringUtil.replace(testrayCaseName, '\'', "''"), '\\'),
+				"' and projectId eq '", testrayProjectId,
+				"' and r_caseTypeToCases_c_caseTypeId eq '", testrayCaseTypeId,
 				"'"),
 			objectEntryIdsKey, new String[] {"c_caseId"}, "Case", testrayCache,
 			userId);
@@ -797,12 +805,7 @@ public class TestrayManagerImpl implements TestrayManager {
 					"priority",
 					testrayCasePropertiesMap.get("testray.testcase.priority")
 				).put(
-					"r_caseTypeToCases_c_caseTypeId",
-					_getTestrayCaseTypeId(
-						companyId, serviceContext, testrayCache,
-						(String)testrayCasePropertiesMap.get(
-							"testray.case.type.name"),
-						userId)
+					"r_caseTypeToCases_c_caseTypeId", testrayCaseTypeId
 				).put(
 					"r_componentToCases_c_componentId", testrayComponentId
 				).put(

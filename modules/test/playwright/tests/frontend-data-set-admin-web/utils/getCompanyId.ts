@@ -6,7 +6,7 @@
 import {Page} from '@playwright/test';
 
 export default async function getCompanyId(page: Page) {
-    return await page.evaluate(() => {
+	return await page.evaluate(() => {
 		return Liferay.ThemeDisplay.getCompanyId();
 	});
 }

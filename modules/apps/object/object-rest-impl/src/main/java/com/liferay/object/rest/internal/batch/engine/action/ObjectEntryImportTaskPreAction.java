@@ -11,7 +11,6 @@ import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -35,8 +34,7 @@ public class ObjectEntryImportTaskPreAction implements ImportTaskPreAction {
 			ImportTaskContext importTaskContext, Object item)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-11036") ||
-			!(item instanceof ObjectEntry) ||
+		if (!(item instanceof ObjectEntry) ||
 			!StringUtil.equals(
 				batchEngineImportTask.getParameterValue(
 					"importCreatorStrategy"),

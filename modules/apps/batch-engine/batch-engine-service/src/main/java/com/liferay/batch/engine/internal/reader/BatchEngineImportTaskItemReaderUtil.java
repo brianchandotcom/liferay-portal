@@ -58,8 +58,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 		boolean keepCreatorInfo = false;
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-11036") &&
-			StringUtil.equals(
+		if (StringUtil.equals(
 				batchEngineImportTask.getParameterValue(
 					"importCreatorStrategy"),
 				"KEEP_CREATOR")) {

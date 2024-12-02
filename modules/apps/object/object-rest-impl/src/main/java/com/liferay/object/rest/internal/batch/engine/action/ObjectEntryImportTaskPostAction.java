@@ -10,7 +10,6 @@ import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,8 +29,7 @@ public class ObjectEntryImportTaskPostAction implements ImportTaskPostAction {
 			Object persistedItem)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-11036") ||
-			!(item instanceof ObjectEntry) ||
+		if (!(item instanceof ObjectEntry) ||
 			!StringUtil.equals(
 				batchEngineImportTask.getParameterValue(
 					"importCreatorStrategy"),

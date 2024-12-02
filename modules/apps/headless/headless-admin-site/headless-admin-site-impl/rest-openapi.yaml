@@ -5049,6 +5049,16 @@ paths:
                   schema:
                       type: string
                 - in: path
+                  name: pageSpecificationExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageExperienceExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
                   name: pageElementExternalReferenceCode
                   required: true
                   schema:
@@ -6226,12 +6236,22 @@ paths:
             operationId: deleteSiteSiteByExternalReferenceCodePageElement
             parameters:
                 - in: path
-                  name: pageElementExternalReferenceCode
+                  name: siteExternalReferenceCode
                   required: true
                   schema:
                       type: string
                 - in: path
-                  name: siteExternalReferenceCode
+                  name: pageSpecificationExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageExperienceExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageElementExternalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -6249,12 +6269,22 @@ paths:
             operationId: getSiteSiteByExternalReferenceCodePageElement
             parameters:
                 - in: path
-                  name: pageElementExternalReferenceCode
+                  name: siteExternalReferenceCode
                   required: true
                   schema:
                       type: string
                 - in: path
-                  name: siteExternalReferenceCode
+                  name: pageSpecificationExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageExperienceExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageElementExternalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -6288,12 +6318,22 @@ paths:
             operationId: patchSiteSiteByExternalReferenceCodePageElement
             parameters:
                 - in: path
-                  name: pageElementExternalReferenceCode
+                  name: siteExternalReferenceCode
                   required: true
                   schema:
                       type: string
                 - in: path
-                  name: siteExternalReferenceCode
+                  name: pageSpecificationExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageExperienceExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageElementExternalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -6335,12 +6375,22 @@ paths:
             operationId: putSiteSiteByExternalReferenceCodePageElement
             parameters:
                 - in: path
-                  name: pageElementExternalReferenceCode
+                  name: siteExternalReferenceCode
                   required: true
                   schema:
                       type: string
                 - in: path
-                  name: siteExternalReferenceCode
+                  name: pageSpecificationExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageExperienceExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageElementExternalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -6383,12 +6433,22 @@ paths:
             operationId: getSiteSiteByExternalReferenceCodePageElementPageElementsPage
             parameters:
                 - in: path
-                  name: pageElementExternalReferenceCode
+                  name: siteExternalReferenceCode
                   required: true
                   schema:
                       type: string
                 - in: path
-                  name: siteExternalReferenceCode
+                  name: pageSpecificationExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageExperienceExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageElementExternalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -6522,11 +6582,17 @@ paths:
             operationId: getSiteSiteByExternalReferenceCodePageExperiencePageElementsPage
             parameters:
                 - in: path
-                  name: pageExperienceExternalReferenceCode
+                  name: siteExternalReferenceCode
+                  required: true
                   schema:
                       type: string
                 - in: path
-                  name: siteExternalReferenceCode
+                  name: pageSpecificationExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageExperienceExternalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -6568,12 +6634,17 @@ paths:
             operationId: postSiteSiteByExternalReferenceCodePageExperiencePageElement
             parameters:
                 - in: path
-                  name: pageExperienceExternalReferenceCode
+                  name: siteExternalReferenceCode
                   required: true
                   schema:
                       type: string
                 - in: path
-                  name: siteExternalReferenceCode
+                  name: pageSpecificationExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageExperienceExternalReferenceCode
                   required: true
                   schema:
                       type: string

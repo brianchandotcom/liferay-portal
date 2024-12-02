@@ -146,7 +146,6 @@ function KeyboardMovementProvider({
 			else {
 				const nextTarget = getNextTarget({
 					columnSizes,
-					isPrivateLayoutsEnabled: false,
 					items,
 					key,
 					sources,
@@ -220,14 +219,12 @@ function getKey(event: KeyboardEvent, rtl: boolean) {
 
 function getNextTarget({
 	columnSizes,
-	isPrivateLayoutsEnabled,
 	items,
 	key,
 	sources,
 	target,
 }: {
 	columnSizes: number[];
-	isPrivateLayoutsEnabled: boolean;
 	items: Map<string, MillerColumnItem>;
 	key: AllowedKey;
 	sources: MovementSources;
@@ -331,7 +328,6 @@ function getNextTarget({
 		candidateItem &&
 		isValidMovement({
 			dropPosition: candidate.position,
-			isPrivateLayoutsEnabled,
 			sources,
 			target: candidateItem,
 		})
@@ -343,7 +339,6 @@ function getNextTarget({
 
 	return getNextTarget({
 		columnSizes,
-		isPrivateLayoutsEnabled,
 		items,
 		key,
 		sources,

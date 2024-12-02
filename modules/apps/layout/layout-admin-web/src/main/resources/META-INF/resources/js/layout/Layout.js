@@ -19,7 +19,6 @@ const Layout = ({
 	getItemChildrenURL,
 	getPageTemplateCollectionsURL,
 	initialBreadcrumbEntries,
-	isPrivateLayoutsEnabled,
 	isSiteTemplate,
 	languageId,
 	moveItemURL,
@@ -179,7 +178,6 @@ const Layout = ({
 				getItemActionsURL={getItemActionsURL}
 				getItemChildren={getItemChildren}
 				getPageTemplateCollectionsURL={getPageTemplateCollectionsURL}
-				isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
 				isSiteTemplate={isSiteTemplate}
 				namespace={namespace}
 				onColumnsChange={updateBreadcrumbs}
@@ -200,7 +198,6 @@ export default function ({
 		getItemChildrenURL,
 		getLayoutPageTemplateCollectionsURL,
 		isLayoutSetPrototype = false,
-		isPrivateLayoutsEnabled,
 		languageId,
 		layoutColumns,
 		moveItemURL,
@@ -218,7 +215,6 @@ export default function ({
 				}
 				initialBreadcrumbEntries={breadcrumbEntries}
 				isLayoutSetPrototype={isLayoutSetPrototype}
-				isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
 				languageId={languageId}
 				moveItemURL={moveItemURL}
 				namespace={namespace}

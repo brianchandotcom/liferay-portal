@@ -82,7 +82,6 @@ const MillerColumns = ({
 	getPageTemplateCollectionsURL,
 	getItemActionsURL,
 	isLayoutSetPrototype,
-	isPrivateLayoutsEnabled,
 	namespace,
 	onColumnsChange = noop,
 	getItemChildren,
@@ -390,9 +389,6 @@ const MillerColumns = ({
 								}
 								index={index}
 								isLayoutSetPrototype={isLayoutSetPrototype}
-								isPrivateLayoutsEnabled={
-									isPrivateLayoutsEnabled
-								}
 								items={items}
 								key={index}
 								namespace={namespace}

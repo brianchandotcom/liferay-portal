@@ -168,13 +168,6 @@ public class MillerColumnsDisplayContext {
 					return group.isLayoutSetPrototype();
 				}
 			).put(
-				"isPrivateLayoutsEnabled",
-				() -> {
-					Group group = _themeDisplay.getScopeGroup();
-
-					return group.isPrivateLayoutsEnabled();
-				}
-			).put(
 				"languageId", _themeDisplay.getLanguageId()
 			).put(
 				"layoutColumns", getLayoutColumnsJSONArray()

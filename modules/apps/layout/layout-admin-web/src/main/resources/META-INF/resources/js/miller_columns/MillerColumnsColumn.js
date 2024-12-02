@@ -59,7 +59,6 @@ const MillerColumnsColumn = ({
 	columnItems = [],
 	columnsContainer,
 	isLayoutSetPrototype,
-	isPrivateLayoutsEnabled,
 	items,
 	namespace,
 	onItemDrop,
@@ -137,7 +136,6 @@ const MillerColumnsColumn = ({
 							getPageTemplateCollectionsURL
 						}
 						isLayoutSetPrototype={isLayoutSetPrototype}
-						isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
 						item={item}
 						items={items}
 						key={item.key}

@@ -8,62 +8,44 @@ import {MillerColumnItem} from '../types/MillerColumnItem';
 
 type Props = {
 	dropPosition: DropPosition;
-	isPrivateLayoutsEnabled: boolean;
 	sources: MillerColumnItem[];
 	target: MillerColumnItem;
 };
 
-export function isValidMovement({
-	dropPosition,
-	isPrivateLayoutsEnabled,
-	sources,
-	target,
-}: Props) {
+export function isValidMovement({dropPosition, sources, target}: Props) {
 	if (!sources.length || !target) {
-		return false;
-	}
-
-	if (sources.some((item) => item.id === target.id)) {
 		return false;
 	}
 
 	if (
 		sources.some(
-			(source) =>
-				!(
-					(((isPrivateLayoutsEnabled && target.parentId) ||
-						!isPrivateLayoutsEnabled) &&
-						target.columnIndex <= source.columnIndex) ||
-					(target.columnIndex > source.columnIndex && !source.active)
-				)
+			(source) => source.id === target.id || source.id === target.parentId
 		)
 	) {
 		return false;
 	}
 
 	if (dropPosition === 'top') {
-		return !sources.some(
+		return sources.every(
 			(source) =>
-				!(
-					target.columnIndex !== source.columnIndex ||
-					target.itemIndex < source.itemIndex ||
-					target.itemIndex > source.itemIndex + 1
-				)
+				target.columnIndex !== source.columnIndex ||
+				target.itemIndex < source.itemIndex ||
+				target.itemIndex > source.itemIndex + 1
 		);
 	}
 	else if (dropPosition === 'bottom') {
-		return !sources.some(
+		return sources.every(
 			(source) =>
-				!(
-					target.columnIndex !== source.columnIndex ||
-					target.itemIndex > source.itemIndex ||
-					target.itemIndex < source.itemIndex - 1
-				)
+				target.columnIndex !== source.columnIndex ||
+				target.itemIndex > source.itemIndex ||
+				target.itemIndex < source.itemIndex - 1
 		);
 	}
 	else if (dropPosition === 'middle') {
-		return !sources.some(
-			(source) => !(target.id !== source.parentId && target.parentable)
-		);
+		if (!target.parentable) {
+			return false;
+		}
+
+		return sources.every((source) => target.id !== source.parentId);
 	}
 }

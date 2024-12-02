@@ -111,7 +111,6 @@ const MillerColumnsItem = ({
 	getPageTemplateCollectionsURL,
 	getItemActionsURL,
 	isLayoutSetPrototype,
-	isPrivateLayoutsEnabled,
 	item,
 	items,
 	namespace,
@@ -272,7 +271,6 @@ const MillerColumnsItem = ({
 
 			return isValidMovement({
 				dropPosition,
-				isPrivateLayoutsEnabled,
 				sources: source.items,
 				target: item,
 			});

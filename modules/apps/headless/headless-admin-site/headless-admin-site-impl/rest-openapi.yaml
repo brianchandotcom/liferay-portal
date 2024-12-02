@@ -5034,7 +5034,7 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["MasterPage"]
-    "/sites/{siteExternalReferenceCode}/page-elements/{pageElementExternalReferenceCode}/fragment-compositions":
+    "/sites/{siteExternalReferenceCode}/page-specifications/{pageSpecificationExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}/page-elements/{pageElementExternalReferenceCode}/fragment-compositions":
         post:
             # @review
             description:
@@ -6217,7 +6217,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/PageSpecification"
             tags: ["PageSpecification"]
-    "/sites/{siteExternalReferenceCode}/page-specifications/{pageSpecificationExternalReferenceCode}/page-elements/{pageElementExternalReferenceCode}":
+    "/sites/{siteExternalReferenceCode}/page-specifications/{pageSpecificationExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}/page-elements/{pageElementExternalReferenceCode}":
         delete:
             # @review
             description:
@@ -6374,7 +6374,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/PageElement"
             tags: ["PageElement"]
-    "/sites/{siteExternalReferenceCode}/page-specifications/{pageSpecificationExternalReferenceCode}/page-elements/{pageElementExternalReferenceCode}/page-elements":
+    "/sites/{siteExternalReferenceCode}/page-specifications/{pageSpecificationExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}/page-elements/{pageElementExternalReferenceCode}/page-elements":
         get:
             # @review
             description:

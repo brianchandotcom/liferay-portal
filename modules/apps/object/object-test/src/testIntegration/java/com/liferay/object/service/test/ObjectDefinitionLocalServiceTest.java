@@ -34,6 +34,7 @@ import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
@@ -3371,11 +3372,15 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(iterator.hasNext());
 
 		_assertSystemObjectFields(
-			new TextObjectFieldBuilder(
+			new ObjectFieldBuilder(
 			).dbColumnName(
 				objectEntryTable.status.getName()
 			).dbTableName(
 				dbTableName
+			).dbType(
+				ObjectFieldConstants.DB_TYPE_INTEGER
+			).businessType(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "status"))

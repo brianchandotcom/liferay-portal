@@ -42,12 +42,12 @@ import com.liferay.headless.commerce.admin.order.internal.util.v1_0.BillingAddre
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.OrderItemUtil;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.ShippingAddressUtil;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderResource;
+import com.liferay.headless.commerce.core.util.ActionUtil;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -74,21 +74,16 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-
 import java.math.BigDecimal;
 
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -262,7 +257,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 	private Map<String, String> _addAction(
 			String actionId, long commerceOrderId, UriInfo uriInfo,
 			String methodName, Class<?> clazz)
-		throws NoSuchMethodException, PortalException {
+		throws Exception {
 
 		if (!_commerceOrderModelResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(), commerceOrderId,
@@ -277,13 +272,15 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 				UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
 
 				return uriBuilder.path(
-					_getVersion(uriInfo)
+					ActionUtil.getVersion(uriInfo)
 				).path(
 					clazz.getSuperclass(), methodName
 				).toTemplate();
 			}
 		).put(
-			"method", _getHttpMethodName(clazz, _getMethod(clazz, methodName))
+			"method",
+			ActionUtil.getHttpMethodName(
+				clazz, ActionUtil.getMethod(clazz, methodName))
 		).build();
 	}
 
@@ -487,7 +484,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 	private Map<String, Map<String, String>> _getActions(
 			CommerceOrder commerceOrder)
-		throws NoSuchMethodException, PortalException {
+		throws Exception {
 
 		if (contextUriInfo == null) {
 			return Collections.emptyMap();
@@ -536,41 +533,6 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			CommerceOrderItem.class.getName(), contextCompany.getCompanyId(),
 			orderItem.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private String _getHttpMethodName(Class<?> clazz, Method method)
-		throws NoSuchMethodException {
-
-		Class<?> superClass = clazz.getSuperclass();
-
-		Method superMethod = superClass.getMethod(
-			method.getName(), method.getParameterTypes());
-
-		for (Annotation annotation : superMethod.getAnnotations()) {
-			Class<? extends Annotation> annotationType =
-				annotation.annotationType();
-
-			Annotation[] annotations = annotationType.getAnnotationsByType(
-				HttpMethod.class);
-
-			if (annotations.length > 0) {
-				HttpMethod httpMethod = (HttpMethod)annotations[0];
-
-				return httpMethod.value();
-			}
-		}
-
-		return null;
-	}
-
-	private Method _getMethod(Class<?> clazz, String methodName) {
-		for (Method method : clazz.getMethods()) {
-			if (methodName.equals(method.getName())) {
-				return method;
-			}
-		}
-
-		return null;
 	}
 
 	private String[] _getOrderItemExternalReferenceCodes(
@@ -646,16 +608,6 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 				}
 			},
 			sorts, transformUnsafeFunction);
-	}
-
-	private String _getVersion(UriInfo uriInfo) {
-		List<String> matchedURIs = uriInfo.getMatchedURIs();
-
-		if (matchedURIs.isEmpty()) {
-			return "";
-		}
-
-		return matchedURIs.get(matchedURIs.size() - 1);
 	}
 
 	private Order _toOrder(

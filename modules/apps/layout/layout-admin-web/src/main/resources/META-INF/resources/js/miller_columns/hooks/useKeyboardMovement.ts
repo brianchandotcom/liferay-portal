@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useContext} from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 
 import {
 	KeyboardMovementContext,
@@ -18,9 +18,11 @@ import {setSessionState} from '../utils/keyboardSessionState';
 type Items = Map<string, MillerColumnItem>;
 
 export function useKeyboardMovement({
+	element,
 	item,
 	items,
 }: {
+	element: HTMLLIElement;
 	item: MillerColumnItem;
 	items: Items;
 }) {
@@ -30,6 +32,9 @@ export function useKeyboardMovement({
 		useContext(KeyboardMovementContext);
 
 	const {layoutColumns} = useContext(LayoutColumnsContext);
+
+	const isTarget =
+		columnIndex === target?.columnIndex && itemIndex === target?.itemIndex;
 
 	const enableMovement = useCallback(
 		(sources) => {
@@ -65,13 +70,23 @@ export function useKeyboardMovement({
 		]
 	);
 
+	// Scroll to column if it's target
+
+	useEffect(() => {
+		if (element && isTarget) {
+			const column = element.closest('.miller-columns-col');
+
+			if (column) {
+				column.scrollIntoView({behavior: 'smooth', inline: 'center'});
+			}
+		}
+	}, [element, isTarget]);
+
 	return {
 		enableMovement,
 		isEnabled: !!sources.length,
 		isSource: isSource(item, sources),
-		isTarget:
-			columnIndex === target?.columnIndex &&
-			itemIndex === target?.itemIndex,
+		isTarget,
 		position: target?.position,
 	};
 }

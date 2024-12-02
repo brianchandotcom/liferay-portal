@@ -303,6 +303,7 @@ const MillerColumnsItem = ({
 		isTarget: isKeyboardMovementTarget,
 		position: keyboardMovementPosition,
 	} = useKeyboardMovement({
+		element: ref.current,
 		item,
 		items,
 	});

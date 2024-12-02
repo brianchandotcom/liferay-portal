@@ -43,9 +43,11 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -496,13 +498,17 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			return;
 		}
 
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-			_getParentFormStyleLayoutStructureItem(
-				layoutStructure, layoutStructureItem);
+		LayoutStructureItem ancestorLayoutStructureItem =
+			LayoutStructureItemUtil.getAncestor(
+				layoutStructureItem.getItemId(),
+				LayoutDataItemTypeConstants.TYPE_FORM, layoutStructure);
 
-		if (formStyledLayoutStructureItem == null) {
+		if (ancestorLayoutStructureItem == null) {
 			return;
 		}
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)ancestorLayoutStructureItem;
 
 		JSONObject localizationConfigJSONObject =
 			formStyledLayoutStructureItem.getLocalizationConfigJSONObject();
@@ -719,29 +725,6 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		return defaultInputLabel;
-	}
-
-	private FormStyledLayoutStructureItem
-		_getParentFormStyleLayoutStructureItem(
-			LayoutStructure layoutStructure,
-			LayoutStructureItem layoutStructureItem) {
-
-		LayoutStructureItem parentLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
-				layoutStructureItem.getParentItemId());
-
-		if (parentLayoutStructureItem == null) {
-			return null;
-		}
-
-		if (parentLayoutStructureItem instanceof
-				FormStyledLayoutStructureItem) {
-
-			return (FormStyledLayoutStructureItem)parentLayoutStructureItem;
-		}
-
-		return _getParentFormStyleLayoutStructureItem(
-			layoutStructure, parentLayoutStructureItem);
 	}
 
 	private List<String> _getSelectedOptions(

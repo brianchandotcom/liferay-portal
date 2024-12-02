@@ -1013,10 +1013,12 @@ test.describe('File Upload Fragment', () => {
 			const fileChooser = await fileChooserPromise;
 
 			await fileChooser.setFiles(
-				path.join(__dirname, '/dependencies/image.jpg')
+				path.join(__dirname, '/dependencies/file_upload_image_1.jpg')
 			);
 
-			await expect(fileUploadInput.getByText('image')).toBeVisible();
+			await expect(
+				fileUploadInput.getByText('file_upload_image_1')
+			).toBeVisible();
 
 			// Submit form
 
@@ -1026,7 +1028,9 @@ test.describe('File Upload Fragment', () => {
 
 			await expect(page.getByText('Computer File')).toBeVisible();
 
-			await expect(fileUploadInput.getByText('image')).toBeVisible();
+			await expect(
+				fileUploadInput.getByText('file_upload_image_1')
+			).toBeVisible();
 
 			// Assert form is not submitted if mandatory field is cleared
 
@@ -1216,10 +1220,12 @@ test.describe('File Upload Fragment', () => {
 			const fileChooser = await fileChooserPromise;
 
 			await fileChooser.setFiles(
-				path.join(__dirname, '/dependencies/image.jpg')
+				path.join(__dirname, '/dependencies/file_upload_image_2.jpg')
 			);
 
-			await expect(fileUploadInput.getByText('image')).toBeVisible();
+			await expect(
+				fileUploadInput.getByText('file_upload_image_2')
+			).toBeVisible();
 
 			// Submit form
 
@@ -1231,7 +1237,9 @@ test.describe('File Upload Fragment', () => {
 
 			await page.getByRole('link', {name: 'FileUpload'}).click();
 
-			await expect(page.getByRole('link', {name: 'image'})).toBeVisible();
+			await expect(
+				page.getByRole('link', {name: 'file_upload_image_2'})
+			).toBeVisible();
 		}
 	);
 

@@ -38,23 +38,79 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RestController
 public class JiraRestController extends BaseRestController {
 
-	public JiraRestController() {
+	public JiraRestController(
+		@Value(
+			"${liferay.customer.jira.security.vulnerability.field.affected.versions.details}"
+		)
+		String affectedVersionsDetails,
+		@Value("${liferay.customer.jira.security.vulnerability.field.category}")
+			String category,
+		@Value(
+			"${liferay.customer.jira.security.vulnerability.field.customer.portal.description}"
+		)
+		String customerPortalDescription,
+		@Value(
+			"${liferay.customer.jira.security.vulnerability.field.customer.portal.summary}"
+		)
+		String customerPortalSummary,
+		@Value(
+			"${liferay.customer.jira.security.vulnerability.field.customer.publishing.date}"
+		)
+		String customerPublishingDate,
+		@Value("${liferay.customer.jira.security.vulnerability.field.cve.ids}")
+			String cveIds,
+		@Value(
+			"${liferay.customer.jira.security.vulnerability.field.cvss.base.score}"
+		)
+		String cvssBaseScore,
+		@Value(
+			"${liferay.customer.jira.security.vulnerability.field.cvss.vector.string}"
+		)
+		String cvssVectorString,
+		@Value("${liferay.customer.jira.security.vulnerability.field.cwe.ids}")
+			String cweIds,
+		@Value(
+			"${liferay.customer.jira.security.vulnerability.field.issue.classification}"
+		)
+		String issueClassification,
+		@Value(
+			"${liferay.customer.jira.security.vulnerability.field.partner.publishing.date}"
+		)
+		String partnerPublishingDate,
+		@Value(
+			"${liferay.customer.jira.security.vulnerability.field.publishing.status}"
+		)
+		String publishingStatus,
+		@Value("${liferay.customer.jira.security.vulnerability.field.severity}")
+			String severity) {
+
+		_jiraSecurityVulnerabilityFieldAffectedVersionsDetails =
+			affectedVersionsDetails;
+		_jiraSecurityVulnerabilityFieldCategory = category;
+		_jiraSecurityVulnerabilityFieldCustomerPortalDescription =
+			customerPortalDescription;
+		_jiraSecurityVulnerabilityFieldCustomerPortalSummary =
+			customerPortalSummary;
+		_jiraSecurityVulnerabilityFieldCustomerPublishingDate =
+			customerPublishingDate;
+		_jiraSecurityVulnerabilityFieldCVEIds = cveIds;
+		_jiraSecurityVulnerabilityFieldCVSSBaseScore = cvssBaseScore;
+		_jiraSecurityVulnerabilityFieldCVSSVectorString = cvssVectorString;
+		_jiraSecurityVulnerabilityFieldCWEIds = cweIds;
+		_jiraSecurityVulnerabilityFieldIssueClassification =
+			issueClassification;
+		_jiraSecurityVulnerabilityFieldPartnerPublishingDate =
+			partnerPublishingDate;
+		_jiraSecurityVulnerabilityFieldPublishingStatus = publishingStatus;
+		_jiraSecurityVulnerabilityFieldSeverity = severity;
+
 		_securityVulnerabilitiesIssueFields = new String[] {
 			_FIELD_COMPONENTS, _FIELD_FIX_VERSIONS, _FIELD_ISSUE_KEY,
-			_FIELD_VERSIONS,
-			_jiraSecurityVulnerabilityFieldAffectedVersionsDetails,
-			_jiraSecurityVulnerabilityFieldCategory,
-			_jiraSecurityVulnerabilityFieldCustomerPortalDescription,
-			_jiraSecurityVulnerabilityFieldCustomerPortalSummary,
-			_jiraSecurityVulnerabilityFieldCustomerPublishingDate,
-			_jiraSecurityVulnerabilityFieldCVEIds,
-			_jiraSecurityVulnerabilityFieldCVSSBaseScore,
-			_jiraSecurityVulnerabilityFieldCVSSVectorString,
-			_jiraSecurityVulnerabilityFieldCWEIds,
-			_jiraSecurityVulnerabilityFieldIssueClassification,
-			_jiraSecurityVulnerabilityFieldPartnerPublishingDate,
-			_jiraSecurityVulnerabilityFieldPublishingStatus,
-			_jiraSecurityVulnerabilityFieldSeverity
+			_FIELD_VERSIONS, affectedVersionsDetails, category,
+			customerPortalDescription, customerPortalSummary,
+			customerPublishingDate, cveIds, cvssBaseScore, cvssVectorString,
+			cweIds, issueClassification, partnerPublishingDate,
+			publishingStatus, severity
 		};
 	}
 
@@ -525,62 +581,20 @@ public class JiraRestController extends BaseRestController {
 	@Value("${liferay.customer.jira.api.token}")
 	private String _jiraAPIToken;
 
-	@Value(
-		"${liferay.customer.jira.security.vulnerability.field.affected.versions.details}"
-	)
-	private String _jiraSecurityVulnerabilityFieldAffectedVersionsDetails;
-
-	@Value("${liferay.customer.jira.security.vulnerability.field.category}")
-	private String _jiraSecurityVulnerabilityFieldCategory;
-
-	@Value(
-		"${liferay.customer.jira.security.vulnerability.field.customer.portal.description}"
-	)
-	private String _jiraSecurityVulnerabilityFieldCustomerPortalDescription;
-
-	@Value(
-		"${liferay.customer.jira.security.vulnerability.field.customer.portal.summary}"
-	)
-	private String _jiraSecurityVulnerabilityFieldCustomerPortalSummary;
-
-	@Value(
-		"${liferay.customer.jira.security.vulnerability.field.customer.publishing.date}"
-	)
-	private String _jiraSecurityVulnerabilityFieldCustomerPublishingDate;
-
-	@Value("${liferay.customer.jira.security.vulnerability.field.cve.ids}")
-	private String _jiraSecurityVulnerabilityFieldCVEIds;
-
-	@Value(
-		"${liferay.customer.jira.security.vulnerability.field.cvss.base.score}"
-	)
-	private String _jiraSecurityVulnerabilityFieldCVSSBaseScore;
-
-	@Value(
-		"${liferay.customer.jira.security.vulnerability.field.cvss.vector.string}"
-	)
-	private String _jiraSecurityVulnerabilityFieldCVSSVectorString;
-
-	@Value("${liferay.customer.jira.security.vulnerability.field.cwe.ids}")
-	private String _jiraSecurityVulnerabilityFieldCWEIds;
-
-	@Value(
-		"${liferay.customer.jira.security.vulnerability.field.issue.classification}"
-	)
-	private String _jiraSecurityVulnerabilityFieldIssueClassification;
-
-	@Value(
-		"${liferay.customer.jira.security.vulnerability.field.partner.publishing.date}"
-	)
-	private String _jiraSecurityVulnerabilityFieldPartnerPublishingDate;
-
-	@Value(
-		"${liferay.customer.jira.security.vulnerability.field.publishing.status}"
-	)
-	private String _jiraSecurityVulnerabilityFieldPublishingStatus;
-
-	@Value("${liferay.customer.jira.security.vulnerability.field.severity}")
-	private String _jiraSecurityVulnerabilityFieldSeverity;
+	private final String _jiraSecurityVulnerabilityFieldAffectedVersionsDetails;
+	private final String _jiraSecurityVulnerabilityFieldCategory;
+	private final String
+		_jiraSecurityVulnerabilityFieldCustomerPortalDescription;
+	private final String _jiraSecurityVulnerabilityFieldCustomerPortalSummary;
+	private final String _jiraSecurityVulnerabilityFieldCustomerPublishingDate;
+	private final String _jiraSecurityVulnerabilityFieldCVEIds;
+	private final String _jiraSecurityVulnerabilityFieldCVSSBaseScore;
+	private final String _jiraSecurityVulnerabilityFieldCVSSVectorString;
+	private final String _jiraSecurityVulnerabilityFieldCWEIds;
+	private final String _jiraSecurityVulnerabilityFieldIssueClassification;
+	private final String _jiraSecurityVulnerabilityFieldPartnerPublishingDate;
+	private final String _jiraSecurityVulnerabilityFieldPublishingStatus;
+	private final String _jiraSecurityVulnerabilityFieldSeverity;
 
 	@Value("${liferay.customer.jira.security.vulnerability.project}")
 	private String _jiraSecurityVulnerabilityProject;

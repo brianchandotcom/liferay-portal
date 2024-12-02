@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -161,6 +163,54 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 					layoutStructure.getLayoutStructureItem(itemId))));
 	}
 
+	@Override
+	public Page<PageElement>
+			getSiteSiteByExternalReferenceCodePageExperiencePageElementsPage(
+				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
+				String pageExperienceExternalReferenceCode, Boolean flatten)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		long groupId = GroupUtil.getGroupId(
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode, groupId);
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.
+				fetchSegmentsExperienceByExternalReferenceCode(
+					pageExperienceExternalReferenceCode, groupId);
+
+		if (segmentsExperience == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(
+				segmentsExperience.getSegmentsExperienceId()));
+
+		return Page.of(
+			transform(
+				LayoutStructureItemUtil.getChildrenItemIds(
+					layoutStructure.getMainItemId(), layoutStructure),
+				itemId -> _pageElementDTOConverter.toDTO(
+					layoutStructure.getLayoutStructureItem(itemId))));
+	}
+
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
@@ -173,5 +223,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 	)
 	private DTOConverter<LayoutStructureItem, PageElement>
 		_pageElementDTOConverter;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

@@ -10,6 +10,7 @@ import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageElementResource;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
@@ -17,10 +18,13 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -210,6 +214,103 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				itemId -> _pageElementDTOConverter.toDTO(
 					layoutStructure.getLayoutStructureItem(itemId))));
 	}
+
+	@Override
+	public PageElement
+			postSiteSiteByExternalReferenceCodePageExperiencePageElement(
+				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
+				String pageExperienceExternalReferenceCode,
+				PageElement pageElement)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		long groupId = GroupUtil.getGroupId(
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode, groupId);
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.
+				fetchSegmentsExperienceByExternalReferenceCode(
+					pageExperienceExternalReferenceCode, groupId);
+
+		if (segmentsExperience == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(
+				segmentsExperience.getSegmentsExperienceId()));
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.addLayoutStructureItem(
+				pageElement.getExternalReferenceCode(),
+				_externalToInternalValuesMap.get(pageElement.getType()),
+				pageElement.getParentExternalReferenceCode(),
+				pageElement.getPosition());
+
+		_addChildPageElements(layoutStructure, pageElement);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				layout.getGroupId(), layout.getPlid(),
+				layoutStructure.toString());
+
+		return _pageElementDTOConverter.toDTO(layoutStructureItem);
+	}
+
+	private void _addChildPageElements(
+		LayoutStructure layoutStructure, PageElement pageElement) {
+
+		for (PageElement childPageElement : pageElement.getPageElements()) {
+			layoutStructure.addLayoutStructureItem(
+				_externalToInternalValuesMap.get(childPageElement.getType()),
+				childPageElement.getParentExternalReferenceCode(),
+				childPageElement.getPosition());
+
+			_addChildPageElements(layoutStructure, childPageElement);
+		}
+	}
+
+	private static final Map<PageElement.Type, String>
+		_externalToInternalValuesMap = HashMapBuilder.put(
+			PageElement.Type.COLLECTION,
+			LayoutDataItemTypeConstants.TYPE_COLLECTION
+		).put(
+			PageElement.Type.COLLECTION_ITEM,
+			LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM
+		).put(
+			PageElement.Type.COLUMN, LayoutDataItemTypeConstants.TYPE_COLUMN
+		).put(
+			PageElement.Type.CONTAINER,
+			LayoutDataItemTypeConstants.TYPE_CONTAINER
+		).put(
+			PageElement.Type.DROP_ZONE,
+			LayoutDataItemTypeConstants.TYPE_DROP_ZONE
+		).put(
+			PageElement.Type.FORM, LayoutDataItemTypeConstants.TYPE_FORM
+		).put(
+			PageElement.Type.FRAGMENT, LayoutDataItemTypeConstants.TYPE_FRAGMENT
+		).put(
+			PageElement.Type.FRAGMENT_DROP_ZONE,
+			LayoutDataItemTypeConstants.TYPE_FRAGMENT_DROP_ZONE
+		).put(
+			PageElement.Type.ROW, LayoutDataItemTypeConstants.TYPE_ROW
+		).build();
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

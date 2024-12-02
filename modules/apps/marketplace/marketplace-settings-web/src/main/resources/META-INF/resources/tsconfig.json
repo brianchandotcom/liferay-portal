@@ -1,5 +1,5 @@
 {
-	"@generated": "a98b296fcc9bb2181300393cb0c0a9545ed98788",
+	"@generated": "ae08bf46bd7f32cb022420f2c02b24a5e54647fc",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -12,16 +12,13 @@
 		"module": "es6",
 		"moduleResolution": "node",
 		"paths": {
-			"frontend-js-web": [
-				"../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
-			]
 		},
 		"rootDir": "../../../../../../../..",
 		"skipLibCheck": true,
 		"sourceMap": false,
 		"strict": true,
 		"target": "esnext",
-		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/analytics-settings-web.tsbuildinfo",
+		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/marketplace-settings-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"
 		]
@@ -32,8 +29,5 @@
 		"../../../../../../../../global.d.ts"
 	],
 	"references": [
-		{
-			"path": "../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
-		}
 	]
 }

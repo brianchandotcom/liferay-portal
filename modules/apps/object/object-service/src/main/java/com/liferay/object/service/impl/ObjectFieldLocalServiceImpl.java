@@ -830,8 +830,6 @@ public class ObjectFieldLocalServiceImpl
 
 		objectField.setExternalReferenceCode(externalReferenceCode);
 
-		_setBusinessTypeAndDBType(businessType, dbType, objectField);
-
 		User user = _userLocalService.getUser(userId);
 
 		objectField.setCompanyId(user.getCompanyId());
@@ -862,6 +860,8 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setRequired(required);
 		objectField.setState(state);
 		objectField.setSystem(system);
+
+		_setBusinessTypeAndDBType(businessType, dbType, objectField);
 
 		objectField = objectFieldPersistence.update(objectField);
 
@@ -1284,7 +1284,13 @@ public class ObjectFieldLocalServiceImpl
 
 		if (objectFieldBusinessType != null) {
 			objectField.setBusinessType(businessType);
-			objectField.setDBType(objectFieldBusinessType.getDBType());
+
+			if (ObjectFieldUtil.isMetadata(objectField.getName())) {
+				objectField.setDBType(dbType);
+			}
+			else {
+				objectField.setDBType(objectFieldBusinessType.getDBType());
+			}
 		}
 		else if (objectFieldDBTypes.contains(dbType) &&
 				 _businessTypes.containsKey(dbType)) {

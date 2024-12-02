@@ -73,4 +73,8 @@ public interface FragmentCollectionContributor {
 		return false;
 	}
 
+	public default boolean isEnabled() {
+		return true;
+	}
+
 }

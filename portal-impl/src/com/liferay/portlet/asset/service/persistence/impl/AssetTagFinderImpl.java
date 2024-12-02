@@ -55,12 +55,37 @@ public class AssetTagFinderImpl
 			}
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
-				DSLQueryFactoryUtil.countDistinct(
-					AssetEntries_AssetTagsTable.INSTANCE.entryId
+				DSLQueryFactoryUtil.count(
 				).from(
-					AssetEntries_AssetTagsTable.INSTANCE
+					AssetTagTable.INSTANCE
+				).innerJoinON(
+					AssetEntries_AssetTagsTable.INSTANCE,
+					AssetEntries_AssetTagsTable.INSTANCE.tagId.eq(
+						AssetTagTable.INSTANCE.tagId)
+				).innerJoinON(
+					AssetEntryTable.INSTANCE,
+					AssetEntryTable.INSTANCE.entryId.eq(
+						AssetEntries_AssetTagsTable.INSTANCE.entryId)
 				).where(
-					AssetEntries_AssetTagsTable.INSTANCE.tagId.in(assetTagIds)
+					() -> {
+						Predicate predicate =
+							AssetEntryTable.INSTANCE.groupId.eq(
+								groupId
+							).and(
+								AssetEntryTable.INSTANCE.classNameId.eq(
+									classNameId)
+							).and(
+								AssetEntryTable.INSTANCE.visible.eq(true)
+							);
+
+						if (name == null) {
+							return predicate;
+						}
+
+						return predicate.and(
+							AssetEntries_AssetTagsTable.INSTANCE.tagId.in(
+								assetTagIds));
+					}
 				));
 
 			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);

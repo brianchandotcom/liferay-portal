@@ -765,11 +765,12 @@ test.describe('Manage object entries through View Object Entries', () => {
 		const objectField = 'textField';
 
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-				titleObjectFieldName: objectField,
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default',
+				objectField
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition1.id,
@@ -777,11 +778,12 @@ test.describe('Manage object entries through View Object Entries', () => {
 		});
 
 		const objectDefinition2 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-				titleObjectFieldName: objectField,
-			});
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				{code: 0},
+				undefined,
+				'default',
+				objectField
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition2.id,
@@ -793,28 +795,28 @@ test.describe('Manage object entries through View Object Entries', () => {
 		const objectRelationshipName =
 			'objectRelationshipName' + getRandomInt();
 
-		const objectAdminRestClient = await apiHelpers.buildRestClient(
-			ObjectAdminRestClient
+		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipApi
 		);
 
-		await objectAdminRestClient.objectRelationship.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-			{
-				externalReferenceCode: objectDefinition1.externalReferenceCode,
-				requestBody: {
-					label: {
-						en_US: objectRelationshipLabel,
-					},
-					name: objectRelationshipName,
-					objectDefinitionExternalReferenceCode1:
-						objectDefinition1.externalReferenceCode,
-					objectDefinitionExternalReferenceCode2:
-						objectDefinition2.externalReferenceCode,
-					objectDefinitionId1: objectDefinition1.id,
-					objectDefinitionId2: objectDefinition2.id,
-					objectDefinitionName2: objectDefinition2.name,
-					type: 'manyToMany' as ObjectRelationshipType,
-				},
-			}
+		const objectRelationshipData: Partial<ObjectRelationship> = {
+			label: {
+				en_US: objectRelationshipLabel,
+			},
+			name: objectRelationshipName,
+			objectDefinitionExternalReferenceCode1:
+				objectDefinition1.externalReferenceCode,
+			objectDefinitionExternalReferenceCode2:
+				objectDefinition2.externalReferenceCode,
+			objectDefinitionId1: objectDefinition1.id,
+			objectDefinitionId2: objectDefinition2.id,
+			objectDefinitionName2: objectDefinition2.name,
+			type: ObjectRelationship.TypeEnum.ManyToMany,
+		};
+
+		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			objectDefinition1.externalReferenceCode,
+			objectRelationshipData
 		);
 
 		const applicationName =
@@ -869,7 +871,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		);
 
 		await viewObjectEntriesPage.fillObjectEntry({
-			objectFieldBusinessType: 'Text',
+			objectFieldBusinessType: ObjectField.BusinessTypeEnum.Text,
 			objectFieldLabel: objectField,
 			objectFieldValue: 'tests',
 		});
@@ -880,6 +882,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		await viewObjectEntriesPage.addObjectEntryButton.click();
 
+		await expect(viewObjectEntriesPage.searchButton).toBeEnabled();
 		await viewObjectEntriesPage.searchBar.click();
 		await viewObjectEntriesPage.searchBar.fill('t 1');
 		await viewObjectEntriesPage.searchButton.click();
@@ -890,6 +893,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			'test 2'
 		);
 
+		await expect(viewObjectEntriesPage.searchButton).toBeEnabled();
 		await viewObjectEntriesPage.searchBar.click();
 		await viewObjectEntriesPage.searchBar.fill('t 2');
 		await viewObjectEntriesPage.searchButton.click();
@@ -900,6 +904,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			'test 1'
 		);
 
+		await expect(viewObjectEntriesPage.searchButton).toBeEnabled();
 		await viewObjectEntriesPage.searchBar.click();
 		await viewObjectEntriesPage.searchBar.fill('tes');
 		await viewObjectEntriesPage.searchButton.click();

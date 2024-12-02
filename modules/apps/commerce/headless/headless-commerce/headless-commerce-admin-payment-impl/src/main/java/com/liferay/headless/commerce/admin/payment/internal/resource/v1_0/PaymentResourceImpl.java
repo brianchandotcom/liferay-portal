@@ -15,8 +15,8 @@ import com.liferay.commerce.payment.service.CommercePaymentEntryService;
 import com.liferay.headless.commerce.admin.payment.dto.v1_0.Payment;
 import com.liferay.headless.commerce.admin.payment.internal.odata.entity.v1_0.PaymentEntityModel;
 import com.liferay.headless.commerce.admin.payment.resource.v1_0.PaymentResource;
+import com.liferay.headless.commerce.core.util.ActionUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -36,17 +36,12 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-
 import java.math.BigDecimal;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -282,7 +277,7 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 	private Map<String, String> _addAction(
 			Class<?> clazz, CommercePaymentEntry commercePaymentEntry,
 			String methodName, UriInfo uriInfo)
-		throws NoSuchMethodException, PortalException {
+		throws Exception {
 
 		if (!_portletResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(),
@@ -302,13 +297,15 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 				UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
 
 				return uriBuilder.path(
-					_getVersion(uriInfo)
+					ActionUtil.getVersion(uriInfo)
 				).path(
 					clazz.getSuperclass(), methodName
 				).toTemplate();
 			}
 		).put(
-			"method", _getHttpMethodName(clazz, _getMethod(clazz, methodName))
+			"method",
+			ActionUtil.getHttpMethodName(
+				clazz, ActionUtil.getMethod(clazz, methodName))
 		).build();
 	}
 
@@ -316,7 +313,7 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 			String actionId, Class<?> clazz,
 			CommercePaymentEntry commercePaymentEntry, String methodName,
 			UriInfo uriInfo)
-		throws NoSuchMethodException, PortalException {
+		throws Exception {
 
 		if (!_commercePaymentEntryModelResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(),
@@ -333,13 +330,15 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 				UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
 
 				return uriBuilder.path(
-					_getVersion(uriInfo)
+					ActionUtil.getVersion(uriInfo)
 				).path(
 					clazz.getSuperclass(), methodName
 				).toTemplate();
 			}
 		).put(
-			"method", _getHttpMethodName(clazz, _getMethod(clazz, methodName))
+			"method",
+			ActionUtil.getHttpMethodName(
+				clazz, ActionUtil.getMethod(clazz, methodName))
 		).build();
 	}
 
@@ -371,7 +370,7 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 
 	private Map<String, Map<String, String>> _getActions(
 			CommercePaymentEntry commercePaymentEntry)
-		throws NoSuchMethodException, PortalException {
+		throws Exception {
 
 		if (contextUriInfo == null) {
 			return Collections.emptyMap();
@@ -397,51 +396,6 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 				ActionKeys.UPDATE, getClass(), commercePaymentEntry,
 				"patchPayment", contextUriInfo)
 		).build();
-	}
-
-	private String _getHttpMethodName(Class<?> clazz, Method method)
-		throws NoSuchMethodException {
-
-		Class<?> superClass = clazz.getSuperclass();
-
-		Method superMethod = superClass.getMethod(
-			method.getName(), method.getParameterTypes());
-
-		for (Annotation annotation : superMethod.getAnnotations()) {
-			Class<? extends Annotation> annotationType =
-				annotation.annotationType();
-
-			Annotation[] annotations = annotationType.getAnnotationsByType(
-				HttpMethod.class);
-
-			if (annotations.length > 0) {
-				HttpMethod httpMethod = (HttpMethod)annotations[0];
-
-				return httpMethod.value();
-			}
-		}
-
-		return null;
-	}
-
-	private Method _getMethod(Class<?> clazz, String methodName) {
-		for (Method method : clazz.getMethods()) {
-			if (methodName.equals(method.getName())) {
-				return method;
-			}
-		}
-
-		return null;
-	}
-
-	private String _getVersion(UriInfo uriInfo) {
-		List<String> matchedURIs = uriInfo.getMatchedURIs();
-
-		if (matchedURIs.isEmpty()) {
-			return "";
-		}
-
-		return matchedURIs.get(matchedURIs.size() - 1);
 	}
 
 	private Payment _toPayment(

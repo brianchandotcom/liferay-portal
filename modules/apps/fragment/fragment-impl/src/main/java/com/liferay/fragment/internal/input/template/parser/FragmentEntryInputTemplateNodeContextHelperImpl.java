@@ -307,6 +307,10 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			fragmentEntryLink, httpServletRequest, infoField, inputTemplateNode,
 			label, locale, value);
 
+		_addLocalizationOptionsAttributes(
+			fragmentEntryLink, httpServletRequest, infoField,
+			inputTemplateNode);
+
 		return inputTemplateNode;
 	}
 
@@ -457,10 +461,6 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			_addTextInfoFieldTypeInputTemplateNodeAttributes(
 				infoField, inputTemplateNode);
 		}
-
-		_addLocalizationOptionsAttributes(
-			fragmentEntryLink, httpServletRequest, infoField,
-			inputTemplateNode);
 	}
 
 	private void _addLocalizationOptionsAttributes(

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -250,6 +250,174 @@ test.describe('Keyboard movement and navigation', () => {
 			await expect(
 				getItem(3).locator('.miller-columns-item-mask')
 			).toBeFocused();
+		}
+	);
+});
+
+test.describe('Miller Columns drag and drop', () => {
+	test(
+		'Drag and drop with mouse works as expected',
+		{tag: ['@LPS-110108', '@LPS-114527', '@LPS-110108']},
+		async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+			// Create two pages at first level
+
+			const firstPage = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: 'Page 1-1',
+			});
+
+			await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: 'Page 1-2',
+			});
+
+			// Create two pages at second level as child of Page 1-1
+
+			await apiHelpers.headlessDelivery.createSitePage({
+				parentSitePage: {
+					friendlyUrlPath: firstPage.friendlyUrlPath,
+				},
+				siteId: site.id,
+				title: 'Page 2-1',
+			});
+
+			await apiHelpers.headlessDelivery.createSitePage({
+				parentSitePage: {
+					friendlyUrlPath: firstPage.friendlyUrlPath,
+				},
+				siteId: site.id,
+				title: 'Page 2-2',
+			});
+
+			// Go to pages administration and click Page 1-1 to show its children
+
+			const getColumn = (index: number) =>
+				page.locator('.miller-columns-col').nth(index);
+
+			const getItem = (title: string) =>
+				page.locator('.miller-columns-item', {hasText: title});
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await getItem('Page 1-1').click();
+
+			await expect(getItem('Page 2-1')).toBeVisible();
+
+			// Drag Page 1-1 to second position of same level
+
+			const itemRect = await getItem('Page 1-1').evaluate((element) =>
+				element.getBoundingClientRect()
+			);
+
+			const dragItem = async (
+				source: Locator,
+				target: Locator,
+				position: 'bottom' | 'middle' | 'top'
+			) => {
+				let targetPosition: {x: number; y: number};
+
+				if (position === 'bottom') {
+					targetPosition = {
+						x: itemRect.width / 2,
+						y: itemRect.height - 2,
+					};
+				}
+				else if (position === 'top') {
+					targetPosition = {
+						x: itemRect.width / 2,
+						y: itemRect.y + 2,
+					};
+				}
+				else {
+					targetPosition = {
+						x: itemRect.width / 2,
+						y: itemRect.height / 2,
+					};
+				}
+
+				await source.locator('.drag-handler').dragTo(target, {
+					targetPosition,
+				});
+			};
+
+			const checkItemTitle = async ({
+				columnIndex,
+				itemIndex,
+				title,
+			}: {
+				columnIndex: number;
+				itemIndex: number;
+				title: string;
+			}) => {
+				await expect(
+					getColumn(columnIndex)
+						.locator(
+							'.miller-columns-item .miller-columns-item-mask'
+						)
+						.nth(itemIndex)
+				).toHaveText(title);
+			};
+
+			await dragItem(getItem('Page 1-1'), getItem('Page 1-2'), 'bottom');
+
+			await checkItemTitle({
+				columnIndex: 0,
+				itemIndex: 1,
+				title: 'Page 1-1',
+			});
+
+			// Move child page to parent level
+
+			await dragItem(getItem('Page 2-1'), getItem('Page 1-2'), 'bottom');
+
+			await checkItemTitle({
+				columnIndex: 0,
+				itemIndex: 1,
+				title: 'Page 2-1',
+			});
+
+			// Move two pages from different levels
+
+			await getItem('Page 1-1').click();
+
+			await expect(getItem('Page 2-2')).toBeVisible();
+
+			await page.getByLabel('Select Page 1-2').click();
+			await page.getByLabel('Select Page 2-2').click();
+
+			await dragItem(getItem('Page 1-2'), getItem('Page 1-1'), 'bottom');
+
+			await checkItemTitle({
+				columnIndex: 0,
+				itemIndex: 2,
+				title: 'Page 1-2',
+			});
+
+			await checkItemTitle({
+				columnIndex: 0,
+				itemIndex: 3,
+				title: 'Page 2-2',
+			});
+
+			// Move two pages from same level
+
+			await page.getByLabel('Select Page 2-1').click();
+			await page.getByLabel('Select Page 1-1').click();
+
+			await dragItem(getItem('Page 2-1'), getItem('Page 2-2'), 'bottom');
+
+			await checkItemTitle({
+				columnIndex: 0,
+				itemIndex: 2,
+				title: 'Page 2-1',
+			});
+
+			await checkItemTitle({
+				columnIndex: 0,
+				itemIndex: 3,
+				title: 'Page 1-1',
+			});
 		}
 	);
 });

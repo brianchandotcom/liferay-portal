@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -309,25 +310,22 @@ public class PageSpecificationDTOConverter
 					});
 				setThemeSettings(
 					() -> {
-						UnicodeProperties themeSettingsUnicodeProperties =
-							new UnicodeProperties();
+						Map<String, String> themeSettingsMap = new HashMap<>();
 
-						for (Map.Entry<String, String> entry :
-								unicodeProperties.entrySet()) {
-
-							String key = entry.getKey();
-
-							if (key.startsWith("lfr-theme:")) {
-								themeSettingsUnicodeProperties.setProperty(
-									key, entry.getValue());
+						for (String key : unicodeProperties.keySet()) {
+							if (!key.startsWith("lfr-theme:")) {
+								continue;
 							}
+
+							themeSettingsMap.put(
+								key, unicodeProperties.getProperty(key, null));
 						}
 
-						if (themeSettingsUnicodeProperties.isEmpty()) {
+						if (MapUtil.isEmpty(themeSettingsMap)) {
 							return null;
 						}
 
-						return themeSettingsUnicodeProperties;
+						return themeSettingsMap;
 					});
 				setThemeSpritemapClientExtension(
 					() -> _getClientExtension(

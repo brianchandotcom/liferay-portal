@@ -42,7 +42,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 	@Override
 	public void deleteSiteSiteByExternalReferenceCodePageElement(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode,
+			String pageSpecificationExternalReferenceCode,
+			String pageExperienceExternalReferenceCode,
 			String pageElementExternalReferenceCode)
 		throws Exception {
 
@@ -50,13 +51,22 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		long groupId = GroupUtil.getGroupId(
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode,
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
+			pageSpecificationExternalReferenceCode, groupId);
 
 		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.
+				fetchSegmentsExperienceByExternalReferenceCode(
+					pageExperienceExternalReferenceCode, groupId);
+
+		if (segmentsExperience == null) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -66,7 +76,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 					layout.getGroupId(), layout.getPlid());
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+			layoutPageTemplateStructure.getData(
+				segmentsExperience.getSegmentsExperienceKey()));
 
 		LayoutStructureItem layoutStructureItem =
 			layoutStructure.getLayoutStructureItem(
@@ -88,7 +99,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 	@Override
 	public PageElement getSiteSiteByExternalReferenceCodePageElement(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode,
+			String pageSpecificationExternalReferenceCode,
+			String pageExperienceExternalReferenceCode,
 			String pageElementExternalReferenceCode)
 		throws Exception {
 
@@ -96,13 +108,22 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		long groupId = GroupUtil.getGroupId(
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode,
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
+			pageSpecificationExternalReferenceCode, groupId);
 
 		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.
+				fetchSegmentsExperienceByExternalReferenceCode(
+					pageExperienceExternalReferenceCode, groupId);
+
+		if (segmentsExperience == null) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -112,7 +133,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 					layout.getGroupId(), layout.getPlid());
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+			layoutPageTemplateStructure.getData(
+				segmentsExperience.getSegmentsExperienceKey()));
 
 		LayoutStructureItem layoutStructureItem =
 			layoutStructure.getLayoutStructureItem(
@@ -129,7 +151,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 	public Page<PageElement>
 			getSiteSiteByExternalReferenceCodePageElementPageElementsPage(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode,
+				String pageSpecificationExternalReferenceCode,
+				String pageExperienceExternalReferenceCode,
 				String pageElementExternalReferenceCode, Boolean flatten)
 		throws Exception {
 
@@ -137,13 +160,22 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		long groupId = GroupUtil.getGroupId(
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode,
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
+			pageSpecificationExternalReferenceCode, groupId);
 
 		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.
+				fetchSegmentsExperienceByExternalReferenceCode(
+					pageExperienceExternalReferenceCode, groupId);
+
+		if (segmentsExperience == null) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -153,7 +185,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 					layout.getGroupId(), layout.getPlid());
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+			layoutPageTemplateStructure.getData(
+				segmentsExperience.getSegmentsExperienceKey()));
 
 		LayoutStructureItem layoutStructureItem =
 			layoutStructure.getLayoutStructureItem(
@@ -171,7 +204,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 	public Page<PageElement>
 			getSiteSiteByExternalReferenceCodePageExperiencePageElementsPage(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode,
+				String pageSpecificationExternalReferenceCode,
 				String pageExperienceExternalReferenceCode, Boolean flatten)
 		throws Exception {
 
@@ -183,7 +216,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode, groupId);
+			pageSpecificationExternalReferenceCode, groupId);
 
 		if (layout == null) {
 			throw new UnsupportedOperationException();
@@ -219,7 +252,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 	public PageElement
 			postSiteSiteByExternalReferenceCodePageExperiencePageElement(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode,
+				String pageSpecificationExternalReferenceCode,
 				String pageExperienceExternalReferenceCode,
 				PageElement pageElement)
 		throws Exception {
@@ -232,7 +265,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode, groupId);
+			pageSpecificationExternalReferenceCode, groupId);
 
 		if (layout == null) {
 			throw new UnsupportedOperationException();

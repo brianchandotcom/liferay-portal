@@ -307,9 +307,10 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			fragmentEntryLink, httpServletRequest, infoField, inputTemplateNode,
 			label, locale, value);
 
-		_addLocalizationOptionsAttributes(
-			fragmentEntryLink, httpServletRequest, infoField,
-			inputTemplateNode);
+		if (localizable && FeatureFlagManagerUtil.isEnabled("LPD-37927")) {
+			_addLocalizationOptionsAttributes(
+				fragmentEntryLink, httpServletRequest, inputTemplateNode);
+		}
 
 		return inputTemplateNode;
 	}
@@ -465,14 +466,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 	private void _addLocalizationOptionsAttributes(
 		FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest, InfoField infoField,
+		HttpServletRequest httpServletRequest,
 		InputTemplateNode inputTemplateNode) {
-
-		if (infoField.isLocalizable() ||
-			!FeatureFlagManagerUtil.isEnabled("LPD-37927")) {
-
-			return;
-		}
 
 		LayoutStructure layoutStructure = null;
 

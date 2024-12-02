@@ -61,20 +61,21 @@ public class MBDisplayContextTest {
 
 		MBMessage mbMessage = Mockito.mock(MBMessage.class);
 
-		String userName = RandomTestUtil.randomString();
-		String statusByUserName = RandomTestUtil.randomString();
-
 		Mockito.when(
 			mbMessage.getModifiedDate()
 		).thenReturn(
 			new Date()
 		);
 
+		String userName = RandomTestUtil.randomString();
+
 		Mockito.when(
 			mbMessage.getUserName()
 		).thenReturn(
 			userName
 		);
+
+		String statusByUserName = RandomTestUtil.randomString();
 
 		Mockito.when(
 			mbMessage.getStatusByUserName()
@@ -83,8 +84,9 @@ public class MBDisplayContextTest {
 		);
 
 		_testGetModifiedLabel(
-			false, statusByUserName, mbMessage, mbDisplayContext);
-		_testGetModifiedLabel(true, "anonymous", mbMessage, mbDisplayContext);
+			false, statusByUserName, mbDisplayContext, mbMessage);
+
+		_testGetModifiedLabel(true, "anonymous", mbDisplayContext, mbMessage);
 	}
 
 	private void _setUpLanguageUtil() {
@@ -114,8 +116,8 @@ public class MBDisplayContextTest {
 	}
 
 	private void _testGetModifiedLabel(
-		boolean anonymous, String expectedModifiedLabel, MBMessage mbMessage,
-		MBDisplayContext mbDisplayContext) {
+		boolean anonymous, String expectedModifiedLabel,
+		MBDisplayContext mbDisplayContext, MBMessage mbMessage) {
 
 		Mockito.when(
 			mbMessage.isAnonymous()

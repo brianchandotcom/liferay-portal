@@ -228,6 +228,14 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
+	public StyleBookEntry fetchStyleBookEntryByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return styleBookEntryPersistence.fetchByERC_G_Head(
+			externalReferenceCode, groupId, true);
+	}
+
+	@Override
 	public StyleBookEntry fetchStyleBookEntryByUuidAndGroupId(
 		String uuid, long groupId) {
 

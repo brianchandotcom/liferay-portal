@@ -19,7 +19,7 @@ const ProjectUsage = () => {
 	const {displayUsage, isLoading, usageData} = useProjectUsageData();
 
 	return (
-		<div className="cp-project-usage-page m-0 p-0">
+		<div className="container-xl cp-project-usage-page m-0 p-0">
 			<h2 className="mb-4">{i18n.translate('project-usage-metrics')}</h2>
 
 			{!displayUsage && !isLoading && (
@@ -67,7 +67,6 @@ const ProjectUsage = () => {
 				>
 					{usageData?.resourceUsage.map((chartData, index) => (
 						<CardContainer
-							classNameCard="px-4"
 							displayUsage={displayUsage}
 							infoButtonText={chartData.infoText}
 							key={`${chartData.title}-${index}`}

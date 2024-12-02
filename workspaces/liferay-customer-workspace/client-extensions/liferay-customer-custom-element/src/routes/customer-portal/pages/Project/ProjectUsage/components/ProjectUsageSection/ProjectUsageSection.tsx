@@ -26,7 +26,7 @@ const ProjectUsageSection: React.FC<IProps> = ({
 		<div className={`${className}`}>
 			<h3 className="mb-3">{title}</h3>
 
-			<div className="col-11 col-xl-10 mx-0 px-0 row">
+			<div className="d-grid">
 				{isLoading
 					? [...Array(CONTENT_SKELETON_QUANTITY)].map((_, index) => (
 							<CardContainer

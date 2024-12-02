@@ -11,7 +11,6 @@ import './CardContainer.css';
 interface IProps {
 	children?: ReactNode;
 	className?: string;
-	classNameCard?: string;
 	displayUsage?: boolean;
 	infoButtonText?: string;
 }
@@ -19,29 +18,24 @@ interface IProps {
 const CardContainer: React.FC<IProps> = ({
 	children,
 	className,
-	classNameCard,
 	displayUsage,
 	infoButtonText,
-}) => {
-	return (
-		<div className={`col-12 col-md-6 col-xl-4 mb-3 ${className}`}>
-			<div
-				className={`card-container px-3 py-4 position-relative rounded ${classNameCard}`}
-			>
-				{infoButtonText && displayUsage && (
-					<div className="align-items-center d-flex info-button justify-content-center position-absolute">
-						<PopoverIconButton
-							iconSize="xs"
-							isSubscriptionCard
-							popoverText={infoButtonText}
-						/>
-					</div>
-				)}
-
-				{children}
+}) => (
+	<div
+		className={`card-container px-3 py-4 position-relative rounded ${className}`}
+	>
+		{infoButtonText && displayUsage && (
+			<div className="align-items-center d-flex info-button justify-content-center position-absolute">
+				<PopoverIconButton
+					iconSize="xs"
+					isSubscriptionCard
+					popoverText={infoButtonText}
+				/>
 			</div>
-		</div>
-	);
-};
+		)}
+
+		{children}
+	</div>
+);
 
 export default CardContainer;

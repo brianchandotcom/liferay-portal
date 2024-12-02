@@ -22,7 +22,7 @@ const ContactBanner: React.FC<IProps> = ({className, description, title}) => {
 
 	return (
 		<div
-			className={`col-11 col-xl-10 contact-banner overflow-hidden position-relative p-5 ${className}`}
+			className={`contact-banner overflow-hidden position-relative p-5 ${className}`}
 		>
 			<div className="align-items-center justify-content-between m-0 row">
 				<div className="col-8 title-container">

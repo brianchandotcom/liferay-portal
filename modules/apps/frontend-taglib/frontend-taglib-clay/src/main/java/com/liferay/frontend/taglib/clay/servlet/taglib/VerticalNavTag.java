@@ -6,18 +6,23 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.IconItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
@@ -296,14 +301,17 @@ public class VerticalNavTag extends BaseContainerTag {
 			jspWriter.write(
 				HtmlUtil.escape((String)verticalNavItem.get("label")));
 
-			if (GetterUtil.getBoolean(verticalNavItem.get("locked"))) {
-				jspWriter.write("<svg title=\"\" class=\"lexicon-icon");
-				jspWriter.write(" lexicon-icon-lock c-ml-1 text-muted");
-				jspWriter.write(" role=\"presentation\">");
-				jspWriter.write(
-					"<use href=\"http://localhost:8080/o/admin-theme/");
-				jspWriter.write("images/clay/icons.svg#lock\">");
-				jspWriter.write("</use></svg>");
+			List<IconItem> iconItems = (List<IconItem>)verticalNavItem.get(
+				"icons");
+
+			if (ListUtil.isNotEmpty(iconItems)) {
+				for (IconItem iconItem : iconItems) {
+					String symbol = (String)iconItem.get("symbol");
+
+					if (Validator.isNotNull(symbol)) {
+						_writeIcon(symbol, jspWriter);
+					}
+				}
 			}
 
 			if (GetterUtil.getBoolean(verticalNavItem.get("deprecated"))) {
@@ -346,6 +354,25 @@ public class VerticalNavTag extends BaseContainerTag {
 		}
 
 		jspWriter.write("</ul>");
+	}
+
+	private void _writeIcon(String icon, JspWriter jspWriter) throws Exception {
+		jspWriter.write("<svg class=\"lexicon-icon lexicon-icon-");
+		jspWriter.write(icon);
+		jspWriter.write(" c-ml-2 text-muted\" role=\"presentation\">");
+		jspWriter.write("<use xlink:href=\"");
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		jspWriter.write(themeDisplay.getPathThemeSpritemap());
+
+		jspWriter.write("#");
+		jspWriter.write(icon);
+		jspWriter.write("\" /></svg></span>");
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:vertical_nav:";

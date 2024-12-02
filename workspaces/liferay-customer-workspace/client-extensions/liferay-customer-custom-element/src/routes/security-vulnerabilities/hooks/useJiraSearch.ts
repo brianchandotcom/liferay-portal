@@ -37,14 +37,38 @@ const useJiraSearch = () => {
 	const fetchJiraSearch = useCallback(async (params: URLSearchParams) => {
 		setLoading(true);
 
-		const queryString = params.toString();
+		const mapFilterParams = (params: string): string => {
+			const filterMap: {[key: string]: string} = {
+				affectedVersions: 'filterAffectedVersions',
+				category: 'filterCategories',
+				issueClassification: 'clea',
+				fixVersions: 'filterFixVersions',
+				severity: 'filterSeverities',
+			};
+
+			const splittedParams = params.split('&');
+
+			const mappedParams = splittedParams.map((param) => {
+				const [key, value] = param.split('=');
+
+				const mappedKey = filterMap[key] || key;
+
+				return `${mappedKey}=${value}`;
+			});
+
+			return mappedParams.join('&');
+		};
+
+		const queryString = mapFilterParams(params.toString());
 
 		try {
 			const response: IJiraResponse =
 				await Liferay.OAuth2Client.FromUserAgentApplication(
 					'liferay-customer-etc-spring-boot-oaua'
 				)
-					.fetch(`/jira/securities/search/customer?${queryString}`)
+					.fetch(
+						`/jira/security-vulnerabilities/search?${queryString}`
+					)
 					.then((response) => response.json());
 
 			setJiraSearch(response);

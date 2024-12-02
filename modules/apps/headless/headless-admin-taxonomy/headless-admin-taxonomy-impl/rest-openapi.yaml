@@ -123,6 +123,11 @@ components:
                     description:
                         The keyword's name.
                     type: string
+                siteExternalReferenceCode:
+                    description:
+                        The external reference code of the site to which this keyword is scoped.
+                    readOnly: true
+                    type: string
                 siteId:
                     description:
                         The ID of the site to which this keyword is scoped.
@@ -244,6 +249,11 @@ components:
                             type: object
                     readOnly: true
                     type: object
+                siteExternalReferenceCode:
+                    description:
+                        The external reference code of the site to which this category is scoped.
+                    readOnly: true
+                    type: string
                 siteId:
                     description:
                         The ID of the site to which this category is scoped.
@@ -373,6 +383,11 @@ components:
                         The number of categories that directly depend on this vocabulary.
                     readOnly: true
                     type: integer
+                siteExternalReferenceCode:
+                    description:
+                        The external reference code of the site to which this vocabulary is scoped.
+                    readOnly: true
+                    type: string
                 siteId:
                     description:
                         The ID of the site to which this vocabulary is scoped.

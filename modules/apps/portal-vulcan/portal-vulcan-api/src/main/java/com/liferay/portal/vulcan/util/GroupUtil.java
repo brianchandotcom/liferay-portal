@@ -77,6 +77,14 @@ public class GroupUtil {
 		return null;
 	}
 
+	public static String getSiteExternalReferenceCode(Group group) {
+		if (group.isDepot()) {
+			return null;
+		}
+
+		return group.getExternalReferenceCode();
+	}
+
 	public static Long getSiteId(Group group) {
 		if (group.isDepot()) {
 			return null;

@@ -85,6 +85,8 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 						return hits.getLength();
 					});
 				setName(assetTag::getName);
+				setSiteExternalReferenceCode(
+					() -> GroupUtil.getSiteExternalReferenceCode(group));
 				setSiteId(() -> GroupUtil.getSiteId(group));
 				setSubscribed(
 					() -> _subscriptionLocalService.isSubscribed(

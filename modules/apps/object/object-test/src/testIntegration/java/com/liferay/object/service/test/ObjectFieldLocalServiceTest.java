@@ -1063,8 +1063,9 @@ public class ObjectFieldLocalServiceTest {
 
 		ObjectField systemObjectField = _addOrUpdateSystemObjectField(
 			null, modifiableSystemObjectDefinition.getObjectDefinitionId(),
-			null, null, false, false, LocalizedMapUtil.getLocalizedMap("Able"),
-			false, "able", false);
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT, null, null,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false,
+			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", false);
 
 		_assertSystemObjectField(
 			"able_", false, false, LocalizedMapUtil.getLocalizedMap("Able"),
@@ -1075,14 +1076,18 @@ public class ObjectFieldLocalServiceTest {
 			_addOrUpdateSystemObjectField(
 				systemObjectField.getExternalReferenceCode(),
 				modifiableSystemObjectDefinition.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				true, true, LocalizedMapUtil.getLocalizedMap("Baker"), false,
-				"able", true));
+				ObjectFieldConstants.DB_TYPE_STRING, true, true,
+				LocalizedMapUtil.getLocalizedMap("Baker"), false, "able",
+				true));
 
 		ObjectField localizedSystemObjectField = _addOrUpdateSystemObjectField(
 			null, modifiableSystemObjectDefinition.getObjectDefinitionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
-			false, LocalizedMapUtil.getLocalizedMap("Charlie"), true, "charlie",
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ObjectFieldConstants.DB_TYPE_STRING, false, false,
+			LocalizedMapUtil.getLocalizedMap("Charlie"), true, "charlie",
 			false);
 
 		Assert.assertTrue(localizedSystemObjectField.isLocalized());
@@ -1104,8 +1109,8 @@ public class ObjectFieldLocalServiceTest {
 				_addOrUpdateSystemObjectField(
 					systemObjectField.getExternalReferenceCode(),
 					modifiableSystemObjectDefinition.getObjectDefinitionId(),
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(), false, false,
+					null, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), null, false, false,
 					LocalizedMapUtil.getLocalizedMap("Dog"), false, "able",
 					false));
 		}
@@ -1986,6 +1991,29 @@ public class ObjectFieldLocalServiceTest {
 	}
 
 	@Test
+	public void testStatusMetaFieldDBType() throws Exception {
+		ObjectDefinition modifiableSystemObjectDefinition =
+			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), null, true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				Collections.emptyList());
+
+		ObjectField systemObjectField = _addOrUpdateSystemObjectField(
+			null, modifiableSystemObjectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT, null, null,
+			ObjectFieldConstants.DB_TYPE_INTEGER, false, false,
+			LocalizedMapUtil.getLocalizedMap("Status"), false, "status", false);
+
+		Assert.assertTrue(
+			Objects.equals(
+				ObjectFieldConstants.DB_TYPE_INTEGER,
+				systemObjectField.getDBType()));
+	}
+
+	@Test
 	public void testUpdateRequired() throws Exception {
 
 		// Deletion type cascade
@@ -2203,16 +2231,16 @@ public class ObjectFieldLocalServiceTest {
 
 	private ObjectField _addOrUpdateSystemObjectField(
 			String externalReferenceCode, long objectDefinitionId,
-			String dbColumnName, String dbTableName, boolean indexed,
-			boolean indexedAsKeyword, Map<Locale, String> labelMap,
-			boolean localized, String name, boolean required)
+			String fieldBusinessType, String dbColumnName, String dbTableName,
+			String dbType, boolean indexed, boolean indexedAsKeyword,
+			Map<Locale, String> labelMap, boolean localized, String name,
+			boolean required)
 		throws Exception {
 
 		return _objectFieldLocalService.addOrUpdateSystemObjectField(
 			externalReferenceCode, TestPropsValues.getUserId(), 0L,
-			objectDefinitionId, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			dbColumnName, dbTableName, ObjectFieldConstants.DB_TYPE_STRING,
-			indexed, indexedAsKeyword, "", labelMap, localized, name,
+			objectDefinitionId, fieldBusinessType, dbColumnName, dbTableName,
+			dbType, indexed, indexedAsKeyword, "", labelMap, localized, name,
 			ObjectFieldConstants.READ_ONLY_FALSE, null, required, false,
 			Collections.emptyList());
 	}

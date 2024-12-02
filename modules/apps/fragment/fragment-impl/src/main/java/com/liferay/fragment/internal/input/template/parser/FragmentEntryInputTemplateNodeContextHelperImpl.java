@@ -181,12 +181,17 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			defaultInputLabel, fragmentEntryLink.getEditableValues(), infoField,
 			locale);
 
+		boolean localizable = false;
 		String name = "name";
 		boolean readOnly = false;
 
 		if (infoField != null) {
 			name = infoField.getName();
 			readOnly = infoField.isReadOnly();
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-37927")) {
+				localizable = infoField.isLocalizable();
+			}
 		}
 
 		boolean required = false;
@@ -218,8 +223,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		if (infoField == null) {
 			return new InputTemplateNode(
-				errorMessage, inputHelpText, inputLabel, name, readOnly,
-				required, inputShowHelpText, inputShowLabel, "type",
+				errorMessage, inputHelpText, inputLabel, localizable, name,
+				readOnly, required, inputShowHelpText, inputShowLabel, "type",
 				StringPool.BLANK);
 		}
 
@@ -294,8 +299,9 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(
-			errorMessage, inputHelpText, inputLabel, name, readOnly, required,
-			inputShowHelpText, inputShowLabel, infoFieldType.getName(), value);
+			errorMessage, inputHelpText, inputLabel, localizable, name,
+			readOnly, required, inputShowHelpText, inputShowLabel,
+			infoFieldType.getName(), value);
 
 		_addInputTemplateNodeAttributes(
 			fragmentEntryLink, httpServletRequest, infoField, inputTemplateNode,
@@ -450,11 +456,6 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		else if (infoField.getInfoFieldType() instanceof TextInfoFieldType) {
 			_addTextInfoFieldTypeInputTemplateNodeAttributes(
 				infoField, inputTemplateNode);
-		}
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-37927")) {
-			inputTemplateNode.addAttribute(
-				"localizable", infoField.isLocalizable());
 		}
 
 		_addLocalizationOptionsAttributes(

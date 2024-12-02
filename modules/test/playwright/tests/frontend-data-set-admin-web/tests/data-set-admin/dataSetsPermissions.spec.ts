@@ -41,14 +41,6 @@ const blogPostsDataSetConfig = {
 	restSchema: 'BlogPosting',
 };
 
-async function assertTableRowsCount(page: Page, rowsCount: number) {
-	await test.step(`Assert table has ${rowsCount} rows`, async () => {
-		const rows = await page.locator('.dnd-table > .dnd-tbody > .dnd-tr');
-
-		expect(rows).toHaveCount(rowsCount);
-	});
-}
-
 async function openActionsDropdown({page, text}: {page: Page; text: string}) {
 	const table: Locator = page.locator('.data-set-content-wrapper');
 
@@ -322,7 +314,7 @@ test('A user without "View" permission on Data Set items', async ({
 	});
 
 	await test.step('Assert that no data sets appear on the table', async () => {
-		assertTableRowsCount(page, 0);
+		await expect(dataSetsPage.dataSetsEmptyState).toBeVisible();
 	});
 });
 

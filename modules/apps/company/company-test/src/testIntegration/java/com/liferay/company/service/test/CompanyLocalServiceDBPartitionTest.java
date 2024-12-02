@@ -228,14 +228,14 @@ public class CompanyLocalServiceDBPartitionTest
 
 		companyLocalService.extractDBPartitionCompany(company.getCompanyId());
 
-		String name = "new" + company.getName();
-		String virtualHostName = "new" + company.getVirtualHostname();
-		String webId = "new" + company.getWebId();
-
 		boolean standaloneDBPartition = true;
 
 		try {
 			_assertConfiguration(pid, false);
+
+			String name = "new" + company.getName();
+			String virtualHostName = "new" + company.getVirtualHostname();
+			String webId = "new" + company.getWebId();
 
 			company = companyLocalService.addDBPartitionCompany(
 				company.getCompanyId(), name, virtualHostName, webId);

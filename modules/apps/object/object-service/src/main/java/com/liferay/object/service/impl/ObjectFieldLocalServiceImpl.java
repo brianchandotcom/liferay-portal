@@ -830,7 +830,7 @@ public class ObjectFieldLocalServiceImpl
 
 		objectField.setExternalReferenceCode(externalReferenceCode);
 
-		_setBusinessTypeAndDBType(businessType, dbType, objectField);
+		_setBusinessTypeAndDBType(businessType, dbType, objectField, name);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -1272,7 +1272,8 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	private void _setBusinessTypeAndDBType(
-			String businessType, String dbType, ObjectField objectField)
+			String businessType, String dbType, ObjectField objectField,
+			String name)
 		throws PortalException {
 
 		ObjectFieldBusinessType objectFieldBusinessType =
@@ -1284,7 +1285,13 @@ public class ObjectFieldLocalServiceImpl
 
 		if (objectFieldBusinessType != null) {
 			objectField.setBusinessType(businessType);
-			objectField.setDBType(objectFieldBusinessType.getDBType());
+
+			if (ObjectFieldUtil.isMetadata(name)) {
+				objectField.setDBType(dbType);
+			}
+			else {
+				objectField.setDBType(objectFieldBusinessType.getDBType());
+			}
 		}
 		else if (objectFieldDBTypes.contains(dbType) &&
 				 _businessTypes.containsKey(dbType)) {
@@ -1396,7 +1403,7 @@ public class ObjectFieldLocalServiceImpl
 			return newObjectField;
 		}
 
-		_setBusinessTypeAndDBType(businessType, dbType, newObjectField);
+		_setBusinessTypeAndDBType(businessType, dbType, newObjectField, name);
 
 		newObjectField.setListTypeDefinitionId(listTypeDefinitionId);
 

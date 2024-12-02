@@ -160,6 +160,27 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 	}
 
 	@Test
+	public void testIncludeI18nPathCustomLocaleAlgorithm3() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 3;
+
+			_assertLocalizedSiteLayoutFriendlyURL(
+				_group.getGroupId(),
+				LayoutTestUtil.addTypePortletLayout(
+					_group.getGroupId(), false, _nameMap, _friendlyURLMap),
+				"/inicio", LocaleUtil.BRAZIL, LocaleUtil.BRAZIL, "/inicio",
+				true);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
 	public void testIncludeI18nPathDefaultLocaleAlgorithm0() throws Exception {
 		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			_group.getCompanyId());
@@ -218,6 +239,26 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 				LayoutTestUtil.addTypePortletLayout(
 					_group.getGroupId(), false, _nameMap, _friendlyURLMap),
 				"/home", LocaleUtil.US, LocaleUtil.US, "/home", true);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
+	public void testIncludeI18nPathDefaultLocaleAlgorithm3() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 3;
+
+			_assertLocalizedSiteLayoutFriendlyURL(
+				_group.getGroupId(),
+				LayoutTestUtil.addTypePortletLayout(
+					_group.getGroupId(), false, _nameMap, _friendlyURLMap),
+				"/home", LocaleUtil.US, LocaleUtil.US, "/home", false);
 		}
 		finally {
 			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =

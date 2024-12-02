@@ -64,16 +64,7 @@ public class PortalInstances {
 				SiteInitializerThreadLocal.setKeyWithSafeCloseable(
 					siteInitializerKey)) {
 
-			Company company = unsafeSupplier.get();
-
-			try (SafeCloseable safeCloseable2 =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						company.getCompanyId())) {
-
-				initCompany(company, true);
-			}
-
-			return company;
+			return unsafeSupplier.get();
 		}
 	}
 

@@ -289,6 +289,16 @@ public class ServletDataImpl implements ServletData {
 							MasterPageResourceImpl.class,
 							"putSiteSiteExternalReferenceCodeMasterPagePermissionsPage"));
 					put(
+						"mutation#createSiteSiteByExternalReferenceCodePageElementFragmentComposition",
+						new ObjectValuePair<>(
+							PageElementResourceImpl.class,
+							"postSiteSiteByExternalReferenceCodePageElementFragmentComposition"));
+					put(
+						"mutation#createSiteSiteByExternalReferenceCodePageExperiencePageElement",
+						new ObjectValuePair<>(
+							PageElementResourceImpl.class,
+							"postSiteSiteByExternalReferenceCodePageExperiencePageElement"));
+					put(
 						"mutation#deleteSiteSiteByExternalReferenceCodePageElement",
 						new ObjectValuePair<>(
 							PageElementResourceImpl.class,
@@ -303,16 +313,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PageElementResourceImpl.class,
 							"putSiteSiteByExternalReferenceCodePageElement"));
-					put(
-						"mutation#createSiteSiteByExternalReferenceCodePageElementFragmentComposition",
-						new ObjectValuePair<>(
-							PageElementResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodePageElementFragmentComposition"));
-					put(
-						"mutation#createSiteSiteByExternalReferenceCodePageExperiencePageElement",
-						new ObjectValuePair<>(
-							PageElementResourceImpl.class,
-							"postSiteSiteByExternalReferenceCodePageExperiencePageElement"));
 					put(
 						"mutation#deleteSiteSiteByExternalReferenceCodePageExperience",
 						new ObjectValuePair<>(
@@ -665,6 +665,11 @@ public class ServletDataImpl implements ServletData {
 							MasterPageResourceImpl.class,
 							"getSiteSiteExternalReferenceCodeMasterPagePermissionsPage"));
 					put(
+						"query#siteByExternalReferenceCodePageExperiencePageElements",
+						new ObjectValuePair<>(
+							PageElementResourceImpl.class,
+							"getSiteSiteByExternalReferenceCodePageExperiencePageElementsPage"));
+					put(
 						"query#siteByExternalReferenceCodePageElement",
 						new ObjectValuePair<>(
 							PageElementResourceImpl.class,
@@ -674,11 +679,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PageElementResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodePageElementPageElementsPage"));
-					put(
-						"query#siteByExternalReferenceCodePageExperiencePageElements",
-						new ObjectValuePair<>(
-							PageElementResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageExperiencePageElementsPage"));
 					put(
 						"query#siteByExternalReferenceCodePageExperience",
 						new ObjectValuePair<>(

@@ -692,58 +692,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodePageElement(pageElementExternalReferenceCode: ___, siteExternalReferenceCode: ___){definition, externalReferenceCode, pageElements, parentExternalReferenceCode, position, type}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField(
-		description = "Retrieves a page element within an experience of a specific page specification of a site page within a site."
-	)
-	public PageElement siteByExternalReferenceCodePageElement(
-			@GraphQLName("siteExternalReferenceCode") String
-				siteExternalReferenceCode,
-			@GraphQLName("pageElementExternalReferenceCode") String
-				pageElementExternalReferenceCode)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_pageElementResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			pageElementResource ->
-				pageElementResource.
-					getSiteSiteByExternalReferenceCodePageElement(
-						siteExternalReferenceCode,
-						pageElementExternalReferenceCode));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodePageElementPageElements(flatten: ___, pageElementExternalReferenceCode: ___, siteExternalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField(
-		description = "Retrieves all the descendant page elements of a page element within an experience in a page specification of a site page."
-	)
-	public PageElementPage siteByExternalReferenceCodePageElementPageElements(
-			@GraphQLName("siteExternalReferenceCode") String
-				siteExternalReferenceCode,
-			@GraphQLName("pageElementExternalReferenceCode") String
-				pageElementExternalReferenceCode,
-			@GraphQLName("flatten") Boolean flatten)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_pageElementResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			pageElementResource -> new PageElementPage(
-				pageElementResource.
-					getSiteSiteByExternalReferenceCodePageElementPageElementsPage(
-						siteExternalReferenceCode,
-						pageElementExternalReferenceCode, flatten)));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodePageExperiencePageElements(flatten: ___, pageExperienceExternalReferenceCode: ___, siteExternalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodePageExperiencePageElements(flatten: ___, pageExperienceExternalReferenceCode: ___, siteExternalReferenceCode: ___, sitePageExternalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves all the page elements within an experience in a page specification of a site page."
@@ -752,6 +701,8 @@ public class Query {
 			siteByExternalReferenceCodePageExperiencePageElements(
 				@GraphQLName("siteExternalReferenceCode") String
 					siteExternalReferenceCode,
+				@GraphQLName("sitePageExternalReferenceCode") String
+					sitePageExternalReferenceCode,
 				@GraphQLName("pageExperienceExternalReferenceCode") String
 					pageExperienceExternalReferenceCode,
 				@GraphQLName("flatten") Boolean flatten)
@@ -764,7 +715,65 @@ public class Query {
 				pageElementResource.
 					getSiteSiteByExternalReferenceCodePageExperiencePageElementsPage(
 						siteExternalReferenceCode,
+						sitePageExternalReferenceCode,
 						pageExperienceExternalReferenceCode, flatten)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodePageElement(pageElementExternalReferenceCode: ___, siteExternalReferenceCode: ___, sitePageExternalReferenceCode: ___){definition, externalReferenceCode, pageElements, parentExternalReferenceCode, position, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves a page element within an experience of a specific page specification of a site page within a site."
+	)
+	public PageElement siteByExternalReferenceCodePageElement(
+			@GraphQLName("siteExternalReferenceCode") String
+				siteExternalReferenceCode,
+			@GraphQLName("sitePageExternalReferenceCode") String
+				sitePageExternalReferenceCode,
+			@GraphQLName("pageElementExternalReferenceCode") String
+				pageElementExternalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageElementResource ->
+				pageElementResource.
+					getSiteSiteByExternalReferenceCodePageElement(
+						siteExternalReferenceCode,
+						sitePageExternalReferenceCode,
+						pageElementExternalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodePageElementPageElements(flatten: ___, pageElementExternalReferenceCode: ___, siteExternalReferenceCode: ___, sitePageExternalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves all the descendant page elements of a page element within an experience in a page specification of a site page."
+	)
+	public PageElementPage siteByExternalReferenceCodePageElementPageElements(
+			@GraphQLName("siteExternalReferenceCode") String
+				siteExternalReferenceCode,
+			@GraphQLName("sitePageExternalReferenceCode") String
+				sitePageExternalReferenceCode,
+			@GraphQLName("pageElementExternalReferenceCode") String
+				pageElementExternalReferenceCode,
+			@GraphQLName("flatten") Boolean flatten)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageElementResource -> new PageElementPage(
+				pageElementResource.
+					getSiteSiteByExternalReferenceCodePageElementPageElementsPage(
+						siteExternalReferenceCode,
+						sitePageExternalReferenceCode,
+						pageElementExternalReferenceCode, flatten)));
 	}
 
 	/**

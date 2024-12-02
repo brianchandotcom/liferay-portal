@@ -47,26 +47,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PageElementResource {
 
-	public void deleteSiteSiteByExternalReferenceCodePageElement(
-			String siteExternalReferenceCode,
-			String pageElementExternalReferenceCode)
-		throws Exception;
-
-	public PageElement getSiteSiteByExternalReferenceCodePageElement(
-			String siteExternalReferenceCode,
-			String pageElementExternalReferenceCode)
-		throws Exception;
-
-	public PageElement patchSiteSiteByExternalReferenceCodePageElement(
-			String siteExternalReferenceCode,
-			String pageElementExternalReferenceCode, PageElement pageElement)
-		throws Exception;
-
-	public PageElement putSiteSiteByExternalReferenceCodePageElement(
-			String siteExternalReferenceCode,
-			String pageElementExternalReferenceCode, PageElement pageElement)
-		throws Exception;
-
 	public PageElement
 			postSiteSiteByExternalReferenceCodePageElementFragmentComposition(
 				String siteExternalReferenceCode,
@@ -75,22 +55,49 @@ public interface PageElementResource {
 		throws Exception;
 
 	public Page<PageElement>
-			getSiteSiteByExternalReferenceCodePageElementPageElementsPage(
-				String siteExternalReferenceCode,
-				String pageElementExternalReferenceCode, Boolean flatten)
-		throws Exception;
-
-	public Page<PageElement>
 			getSiteSiteByExternalReferenceCodePageExperiencePageElementsPage(
 				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
 				String pageExperienceExternalReferenceCode, Boolean flatten)
 		throws Exception;
 
 	public PageElement
 			postSiteSiteByExternalReferenceCodePageExperiencePageElement(
 				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
 				String pageExperienceExternalReferenceCode,
 				PageElement pageElement)
+		throws Exception;
+
+	public void deleteSiteSiteByExternalReferenceCodePageElement(
+			String siteExternalReferenceCode,
+			String sitePageExternalReferenceCode,
+			String pageElementExternalReferenceCode)
+		throws Exception;
+
+	public PageElement getSiteSiteByExternalReferenceCodePageElement(
+			String siteExternalReferenceCode,
+			String sitePageExternalReferenceCode,
+			String pageElementExternalReferenceCode)
+		throws Exception;
+
+	public PageElement patchSiteSiteByExternalReferenceCodePageElement(
+			String siteExternalReferenceCode,
+			String sitePageExternalReferenceCode,
+			String pageElementExternalReferenceCode, PageElement pageElement)
+		throws Exception;
+
+	public PageElement putSiteSiteByExternalReferenceCodePageElement(
+			String siteExternalReferenceCode,
+			String sitePageExternalReferenceCode,
+			String pageElementExternalReferenceCode, PageElement pageElement)
+		throws Exception;
+
+	public Page<PageElement>
+			getSiteSiteByExternalReferenceCodePageElementPageElementsPage(
+				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
+				String pageElementExternalReferenceCode, Boolean flatten)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -746,70 +746,6 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Deletes a page element within an experience of a specific page specification of a site page within a site."
-	)
-	public boolean deleteSiteSiteByExternalReferenceCodePageElement(
-			@GraphQLName("siteExternalReferenceCode") String
-				siteExternalReferenceCode,
-			@GraphQLName("pageElementExternalReferenceCode") String
-				pageElementExternalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_pageElementResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			pageElementResource ->
-				pageElementResource.
-					deleteSiteSiteByExternalReferenceCodePageElement(
-						siteExternalReferenceCode,
-						pageElementExternalReferenceCode));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Updates a page element within an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched."
-	)
-	public PageElement patchSiteSiteByExternalReferenceCodePageElement(
-			@GraphQLName("siteExternalReferenceCode") String
-				siteExternalReferenceCode,
-			@GraphQLName("pageElementExternalReferenceCode") String
-				pageElementExternalReferenceCode,
-			@GraphQLName("pageElement") PageElement pageElement)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_pageElementResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			pageElementResource ->
-				pageElementResource.
-					patchSiteSiteByExternalReferenceCodePageElement(
-						siteExternalReferenceCode,
-						pageElementExternalReferenceCode, pageElement));
-	}
-
-	@GraphQLField(
-		description = "Updates a page element within an experience of a specific page specification of a site page within a site."
-	)
-	public PageElement updateSiteSiteByExternalReferenceCodePageElement(
-			@GraphQLName("siteExternalReferenceCode") String
-				siteExternalReferenceCode,
-			@GraphQLName("pageElementExternalReferenceCode") String
-				pageElementExternalReferenceCode,
-			@GraphQLName("pageElement") PageElement pageElement)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_pageElementResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			pageElementResource ->
-				pageElementResource.
-					putSiteSiteByExternalReferenceCodePageElement(
-						siteExternalReferenceCode,
-						pageElementExternalReferenceCode, pageElement));
-	}
-
-	@GraphQLField(
 		description = "Adds a new fragment composition under a page element of an experience in a page specification of a site page. If successful, the response will contain the page element in which the fragment composition is converted."
 	)
 	public PageElement
@@ -841,6 +777,8 @@ public class Mutation {
 			createSiteSiteByExternalReferenceCodePageExperiencePageElement(
 				@GraphQLName("siteExternalReferenceCode") String
 					siteExternalReferenceCode,
+				@GraphQLName("sitePageExternalReferenceCode") String
+					sitePageExternalReferenceCode,
 				@GraphQLName("pageExperienceExternalReferenceCode") String
 					pageExperienceExternalReferenceCode,
 				@GraphQLName("pageElement") PageElement pageElement)
@@ -853,7 +791,81 @@ public class Mutation {
 				pageElementResource.
 					postSiteSiteByExternalReferenceCodePageExperiencePageElement(
 						siteExternalReferenceCode,
+						sitePageExternalReferenceCode,
 						pageExperienceExternalReferenceCode, pageElement));
+	}
+
+	@GraphQLField(
+		description = "Deletes a page element within an experience of a specific page specification of a site page within a site."
+	)
+	public boolean deleteSiteSiteByExternalReferenceCodePageElement(
+			@GraphQLName("siteExternalReferenceCode") String
+				siteExternalReferenceCode,
+			@GraphQLName("sitePageExternalReferenceCode") String
+				sitePageExternalReferenceCode,
+			@GraphQLName("pageElementExternalReferenceCode") String
+				pageElementExternalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_pageElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageElementResource ->
+				pageElementResource.
+					deleteSiteSiteByExternalReferenceCodePageElement(
+						siteExternalReferenceCode,
+						sitePageExternalReferenceCode,
+						pageElementExternalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates a page element within an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched."
+	)
+	public PageElement patchSiteSiteByExternalReferenceCodePageElement(
+			@GraphQLName("siteExternalReferenceCode") String
+				siteExternalReferenceCode,
+			@GraphQLName("sitePageExternalReferenceCode") String
+				sitePageExternalReferenceCode,
+			@GraphQLName("pageElementExternalReferenceCode") String
+				pageElementExternalReferenceCode,
+			@GraphQLName("pageElement") PageElement pageElement)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageElementResource ->
+				pageElementResource.
+					patchSiteSiteByExternalReferenceCodePageElement(
+						siteExternalReferenceCode,
+						sitePageExternalReferenceCode,
+						pageElementExternalReferenceCode, pageElement));
+	}
+
+	@GraphQLField(
+		description = "Updates a page element within an experience of a specific page specification of a site page within a site."
+	)
+	public PageElement updateSiteSiteByExternalReferenceCodePageElement(
+			@GraphQLName("siteExternalReferenceCode") String
+				siteExternalReferenceCode,
+			@GraphQLName("sitePageExternalReferenceCode") String
+				sitePageExternalReferenceCode,
+			@GraphQLName("pageElementExternalReferenceCode") String
+				pageElementExternalReferenceCode,
+			@GraphQLName("pageElement") PageElement pageElement)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageElementResource ->
+				pageElementResource.
+					putSiteSiteByExternalReferenceCodePageElement(
+						siteExternalReferenceCode,
+						sitePageExternalReferenceCode,
+						pageElementExternalReferenceCode, pageElement));
 	}
 
 	@GraphQLField(

@@ -7,6 +7,7 @@ package com.liferay.portal.search.web.internal.type.facet.portlet.shared.search;
 
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.facet.type.TypeFacetSearchContributor;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -15,11 +16,6 @@ import com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortle
 import com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferencesImpl;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,16 +59,13 @@ public class TypeFacetPortletSharedSearchContributor
 
 		searchRequestBuilder.withSearchContext(
 			searchContext -> {
-				Set<String> assetEntryClassNamesSet = new HashSet<>(
-					Arrays.asList(searchContext.getEntryClassNames()));
-
-				Collections.addAll(
-					assetEntryClassNamesSet,
+				String[] entryClassNames = ArrayUtil.append(
+					searchContext.getEntryClassNames(),
 					typeFacetPortletPreferences.getCurrentAssetTypesArray(
 						themeDisplay.getCompanyId()));
 
 				searchContext.setEntryClassNames(
-					assetEntryClassNamesSet.toArray(new String[0]));
+					ArrayUtil.unique(entryClassNames));
 			});
 	}
 

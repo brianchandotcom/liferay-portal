@@ -528,9 +528,9 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		if (jsonObject != null) {
 			unlocalizedFieldsMessage = jsonObject.getString(
-				LocaleUtil.toLanguageId(locale),
+				_language.getLanguageId(locale),
 				jsonObject.getString(
-					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault())));
+					_language.getLanguageId(LocaleUtil.getSiteDefault())));
 		}
 
 		inputTemplateNode.addAttribute(
@@ -689,7 +689,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		if (inputLabelJSONObject != null) {
 			inputLabel = inputLabelJSONObject.getString(
-				LocaleUtil.toLanguageId(locale));
+				_language.getLanguageId(locale));
 		}
 
 		if (Validator.isNull(inputLabel) && (infoField != null)) {

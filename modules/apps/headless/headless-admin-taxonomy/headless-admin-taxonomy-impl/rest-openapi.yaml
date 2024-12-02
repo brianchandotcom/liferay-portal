@@ -33,6 +33,11 @@ components:
                         The type of the content.
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    description:
+                        The user's external reference code.
+                    readOnly: true
+                    type: string
                 familyName:
                     description:
                         The user's surname (last name).

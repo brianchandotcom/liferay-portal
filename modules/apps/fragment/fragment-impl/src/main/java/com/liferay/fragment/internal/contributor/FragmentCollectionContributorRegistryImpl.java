@@ -73,7 +73,14 @@ public class FragmentCollectionContributorRegistryImpl
 			return null;
 		}
 
-		return fragmentCollectionBag._fragmentCollectionContributor;
+		FragmentCollectionContributor fragmentCollectionContributor =
+			fragmentCollectionBag._fragmentCollectionContributor;
+
+		if (!fragmentCollectionContributor.isEnabled()) {
+			return null;
+		}
+
+		return fragmentCollectionContributor;
 	}
 
 	@Override
@@ -88,6 +95,10 @@ public class FragmentCollectionContributorRegistryImpl
 
 			FragmentCollectionContributor fragmentCollectionContributor =
 				fragmentCollectionBag._fragmentCollectionContributor;
+
+			if (!fragmentCollectionContributor.isEnabled()) {
+				continue;
+			}
 
 			if (MapUtil.isNotEmpty(fragmentCollectionContributor.getNames())) {
 				fragmentCollectionContributors.add(
@@ -116,6 +127,13 @@ public class FragmentCollectionContributorRegistryImpl
 			return null;
 		}
 
+		FragmentCollectionContributor fragmentCollectionContributor =
+			fragmentCollectionBag._fragmentCollectionContributor;
+
+		if (!fragmentCollectionContributor.isEnabled()) {
+			return null;
+		}
+
 		Map<String, FragmentComposition> fragmentCompostions =
 			fragmentCollectionBag._fragmentCompostions;
 
@@ -128,6 +146,13 @@ public class FragmentCollectionContributorRegistryImpl
 
 		for (FragmentCollectionBag fragmentCollectionBag :
 				_serviceTrackerMap.values()) {
+
+			FragmentCollectionContributor fragmentCollectionContributor =
+				fragmentCollectionBag._fragmentCollectionContributor;
+
+			if (!fragmentCollectionContributor.isEnabled()) {
+				continue;
+			}
 
 			fragmentEntries.putAll(fragmentCollectionBag._fragmentEntries);
 		}
@@ -144,6 +169,10 @@ public class FragmentCollectionContributorRegistryImpl
 
 			FragmentCollectionContributor fragmentCollectionContributor =
 				fragmentCollectionBag._fragmentCollectionContributor;
+
+			if (!fragmentCollectionContributor.isEnabled()) {
+				continue;
+			}
 
 			for (FragmentEntry fragmentEntry :
 					fragmentCollectionContributor.getFragmentEntries(
@@ -173,6 +202,13 @@ public class FragmentCollectionContributorRegistryImpl
 			_serviceTrackerMap.getService(fragmentEntryKey.substring(0, index));
 
 		if (fragmentCollectionBag == null) {
+			return null;
+		}
+
+		FragmentCollectionContributor fragmentCollectionContributor =
+			fragmentCollectionBag._fragmentCollectionContributor;
+
+		if (!fragmentCollectionContributor.isEnabled()) {
 			return null;
 		}
 

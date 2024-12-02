@@ -109,7 +109,7 @@
 						"en_US": "Total Score"
 					},
 					"localized": false,
-					"name": "TOTAL_SCORE",
+					"name": "totalScore",
 					"readOnly": "false",
 					"required": true,
 					"state": false,

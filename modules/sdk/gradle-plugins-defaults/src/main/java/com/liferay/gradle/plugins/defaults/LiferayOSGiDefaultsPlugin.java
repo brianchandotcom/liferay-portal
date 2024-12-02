@@ -1625,16 +1625,18 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					resolutionStrategy.getDependencySubstitution();
 
 				for (String dependency : dependencies.split(",")) {
-					String[] tokens = dependency.split(":");
+					String[] tokens = dependency.split("->");
+
+					if (tokens.length != 2) {
+						continue;
+					}
 
 					DependencySubstitutions.Substitution substitution =
 						dependencySubstitutions.substitute(
-							dependencySubstitutions.module(
-								tokens[0] + ":" + tokens[1]));
+							dependencySubstitutions.module(tokens[0]));
 
 					substitution.using(
-						dependencySubstitutions.module(
-							tokens[0] + ":" + tokens[1] + ":" + tokens[2]));
+						dependencySubstitutions.module(tokens[1]));
 				}
 			}
 

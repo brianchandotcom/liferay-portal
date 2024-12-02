@@ -27,6 +27,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
@@ -246,7 +247,22 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 			Object objectFieldValue = properties.get(objectFieldName);
 
-			if (objectFieldValue instanceof Double) {
+			if (StringUtil.equals(
+					ddmFormField.getType(), DDMFormFieldTypeConstants.RADIO)) {
+
+				JSONArray jsonArray = _toJSONArray(objectFieldValue);
+
+				value.addString(locale, jsonArray.getString(0));
+			}
+			else if (StringUtil.equals(
+						ddmFormField.getType(),
+						DDMFormFieldTypeConstants.SELECT)) {
+
+				JSONArray jsonArray = _toJSONArray(objectFieldValue);
+
+				value.addString(locale, jsonArray.toString());
+			}
+			else if (objectFieldValue instanceof Double) {
 				NumberFormat numberFormat = NumberFormat.getInstance(locale);
 
 				value.addString(locale, numberFormat.format(objectFieldValue));
@@ -357,6 +373,23 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		}
 
 		return valueString;
+	}
+
+	private JSONArray _toJSONArray(Object objectFieldValue) {
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		if (objectFieldValue instanceof List) {
+			for (ListEntry listEntry : (List<ListEntry>)objectFieldValue) {
+				jsonArray.put(listEntry.getName());
+			}
+		}
+		else {
+			ListEntry listEntry = (ListEntry)objectFieldValue;
+
+			jsonArray.put(listEntry.getName());
+		}
+
+		return jsonArray;
 	}
 
 	private Map<String, Object> _toProperties(

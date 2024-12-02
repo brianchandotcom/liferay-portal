@@ -457,8 +457,6 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				"localizable", infoField.isLocalizable());
 		}
 
-		inputTemplateNode.addAttribute("readOnly", infoField.isReadOnly());
-
 		_addLocalizationOptionsAttributes(
 			fragmentEntryLink, httpServletRequest, infoField,
 			inputTemplateNode);

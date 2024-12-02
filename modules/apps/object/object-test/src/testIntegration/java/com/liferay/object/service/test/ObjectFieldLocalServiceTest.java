@@ -78,7 +78,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -99,7 +98,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -1063,8 +1061,9 @@ public class ObjectFieldLocalServiceTest {
 
 		ObjectField systemObjectField = _addOrUpdateSystemObjectField(
 			null, modifiableSystemObjectDefinition.getObjectDefinitionId(),
-			null, null, false, false, LocalizedMapUtil.getLocalizedMap("Able"),
-			false, "able", false);
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT, null, null,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false,
+			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", false);
 
 		_assertSystemObjectField(
 			"able_", false, false, LocalizedMapUtil.getLocalizedMap("Able"),
@@ -1075,14 +1074,18 @@ public class ObjectFieldLocalServiceTest {
 			_addOrUpdateSystemObjectField(
 				systemObjectField.getExternalReferenceCode(),
 				modifiableSystemObjectDefinition.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				true, true, LocalizedMapUtil.getLocalizedMap("Baker"), false,
-				"able", true));
+				ObjectFieldConstants.DB_TYPE_STRING, true, true,
+				LocalizedMapUtil.getLocalizedMap("Baker"), false, "able",
+				true));
 
 		ObjectField localizedSystemObjectField = _addOrUpdateSystemObjectField(
 			null, modifiableSystemObjectDefinition.getObjectDefinitionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
-			false, LocalizedMapUtil.getLocalizedMap("Charlie"), true, "charlie",
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ObjectFieldConstants.DB_TYPE_STRING, false, false,
+			LocalizedMapUtil.getLocalizedMap("Charlie"), true, "charlie",
 			false);
 
 		Assert.assertTrue(localizedSystemObjectField.isLocalized());
@@ -1104,8 +1107,10 @@ public class ObjectFieldLocalServiceTest {
 				_addOrUpdateSystemObjectField(
 					systemObjectField.getExternalReferenceCode(),
 					modifiableSystemObjectDefinition.getObjectDefinitionId(),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(), false, false,
+					RandomTestUtil.randomString(),
+					ObjectFieldConstants.DB_TYPE_STRING, false, false,
 					LocalizedMapUtil.getLocalizedMap("Dog"), false, "able",
 					false));
 		}
@@ -2203,15 +2208,15 @@ public class ObjectFieldLocalServiceTest {
 
 	private ObjectField _addOrUpdateSystemObjectField(
 			String externalReferenceCode, long objectDefinitionId,
-			String dbColumnName, String dbTableName, boolean indexed,
-			boolean indexedAsKeyword, Map<Locale, String> labelMap,
-			boolean localized, String name, boolean required)
+			String businessType, String dbColumnName, String dbTableName,
+			String dbType, boolean indexed, boolean indexedAsKeyword,
+			Map<Locale, String> labelMap, boolean localized, String name,
+			boolean required)
 		throws Exception {
 
 		return _objectFieldLocalService.addOrUpdateSystemObjectField(
 			externalReferenceCode, TestPropsValues.getUserId(), 0L,
-			objectDefinitionId, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			dbColumnName, dbTableName, ObjectFieldConstants.DB_TYPE_STRING,
+			objectDefinitionId, businessType, dbColumnName, dbTableName, dbType,
 			indexed, indexedAsKeyword, "", labelMap, localized, name,
 			ObjectFieldConstants.READ_ONLY_FALSE, null, required, false,
 			Collections.emptyList());
@@ -2614,11 +2619,20 @@ public class ObjectFieldLocalServiceTest {
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, Collections.emptyList());
 
-		for (String objectFieldName : _readOnlyObjectFieldNames) {
+		for (Map.Entry<String, String> readOnlyObjectFieldDbType :
+				_readOnlyObjectFieldDbTypes.entrySet()) {
+
 			_assertReadOnlyTrue(
 				_objectFieldLocalService.getObjectField(
 					objectDefinition1.getObjectDefinitionId(),
-					objectFieldName));
+					readOnlyObjectFieldDbType.getKey()));
+
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				readOnlyObjectFieldDbType.getKey());
+
+			Assert.assertEquals(
+				readOnlyObjectFieldDbType.getValue(), objectField.getDBType());
 		}
 
 		_assertReadOnlyFalse(
@@ -2816,7 +2830,17 @@ public class ObjectFieldLocalServiceTest {
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
-	private final Set<String> _readOnlyObjectFieldNames = SetUtil.fromArray(
-		"createDate", "creator", "id", "modifiedDate", "status");
+	private final Map<String, String> _readOnlyObjectFieldDbTypes =
+		HashMapBuilder.put(
+			"createDate", ObjectFieldConstants.DB_TYPE_DATE
+		).put(
+			"creator", ObjectFieldConstants.DB_TYPE_STRING
+		).put(
+			"id", ObjectFieldConstants.DB_TYPE_LONG
+		).put(
+			"modifiedDate", ObjectFieldConstants.DB_TYPE_DATE
+		).put(
+			"status", ObjectFieldConstants.DB_TYPE_INTEGER
+		).build();
 
 }

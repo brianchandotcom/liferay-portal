@@ -20,9 +20,9 @@ import org.junit.runner.Description;
 /**
  * @author Jonathan McCann
  */
-public class LanguageIdTestRule extends ClassTestRule<Void> {
+public class LanguageIdsTestRule extends ClassTestRule<Void> {
 
-	public static final LanguageIdTestRule INSTANCE = new LanguageIdTestRule();
+	public static final LanguageIdsTestRule INSTANCE = new LanguageIdsTestRule();
 
 	@Override
 	protected void afterClass(Description description, Void v)

@@ -834,6 +834,82 @@ test('LPD-32189 AC1 TC1: Verify IdP initiated SLO redirects user to c/portal/sam
 	expect(await newPage.url()).toContain(DEFAULT_IDP_URL + idpNewPagePath);
 });
 
+test('LPD-32208 AC1 TC2 and TC3: Verify SP initiated SSO with RelayState and invalid credentials redirects/maintains the user to the IdP login page, and then successful auth redirects user back to provided RelayState.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create new user in IdP instance
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// Create a new page on the SP Instance
+
+	const pagesAdminPage = new PagesAdminPage(spAdminPage);
+
+	await pagesAdminPage.goto();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: pageTitle,
+	});
+
+	const spNewPageUrl = DEFAULT_SP_URL + '/web/guest/' + pageTitle;
+
+	// Perform SP initiated SSO from the new page with invalid credentials
+
+	const spInstancePage = await performSpInitiatedSSO(
+		browser,
+		'invalid@test.com',
+		spNewPageUrl,
+		false
+	);
+
+	// Verify unsuccessful authentication, and user remains on IdP login page
+
+	await expect(await spInstancePage.getByText('Error:')).toBeVisible();
+
+	await expect(
+		await spInstancePage.getByRole('button', {name: 'Sign In'})
+	).toBeVisible();
+
+	expect(await spInstancePage.url()).toContain(DEFAULT_IDP_URL);
+
+	// TC2 end, TC3 begin: from the same page, correctly authenticate user
+
+	await spInstancePage
+		.getByLabel('Email Address')
+		.fill(userAccount.emailAddress);
+	await spInstancePage.getByLabel('Password').fill('test');
+	await spInstancePage.getByRole('button', {name: 'Sign In'}).click();
+
+	// Assert authentication and SP redirection
+
+	await expect(
+		await spInstancePage.getByTitle('User Profile Menu')
+	).toBeVisible();
+
+	await expect(await spInstancePage.url()).toContain(spNewPageUrl);
+});
+
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({
 	browser,
 }) => {

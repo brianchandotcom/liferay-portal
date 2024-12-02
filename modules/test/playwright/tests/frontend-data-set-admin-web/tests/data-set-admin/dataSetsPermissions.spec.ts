@@ -127,14 +127,9 @@ test('A user with "View" and "Permissions" permission', async ({
 		});
 	});
 
-	const companyId = await page.evaluate(() => {
-		return Liferay.ThemeDisplay.getCompanyId();
-	});
-
 	await test.step('Setup user role and login as user', async () => {
 		const userRoleAndAccount = await setupUserRoleAndLoginAsUser({
 			apiHelpers,
-			companyId,
 			dataSetResourcePermissions: [
 				{
 					actions: ['PERMISSIONS', 'VIEW'],
@@ -225,14 +220,9 @@ test('A user with only "View" permission', async ({
 		});
 	});
 
-	const companyId = await page.evaluate(() => {
-		return Liferay.ThemeDisplay.getCompanyId();
-	});
-
 	await test.step('Setup user role and login as user', async () => {
 		const userRoleAndAccount = await setupUserRoleAndLoginAsUser({
 			apiHelpers,
-			companyId,
 			dataSetResourcePermissions: [
 				{
 					actions: ['VIEW'],
@@ -293,14 +283,9 @@ test('A user without "View" permission on Data Set items', async ({
 		});
 	});
 
-	const companyId = await page.evaluate(() => {
-		return Liferay.ThemeDisplay.getCompanyId();
-	});
-
 	await test.step('Setup user role and login as user', async () => {
 		const userRoleAndAccount = await setupUserRoleAndLoginAsUser({
 			apiHelpers,
-			companyId,
 			dataSetUserRoleName,
 			page,
 		});
@@ -335,14 +320,9 @@ test('A user with "Delete" permission', async ({
 		});
 	});
 
-	const companyId = await page.evaluate(() => {
-		return Liferay.ThemeDisplay.getCompanyId();
-	});
-
 	await test.step('Setup user role and login as user', async () => {
 		const userRoleAndAccount = await setupUserRoleAndLoginAsUser({
 			apiHelpers,
-			companyId,
 			dataSetResourcePermissions: [
 				{
 					actions: ['DELETE', 'VIEW'],
@@ -392,14 +372,9 @@ test('Check "Edit" permission', async ({
 		});
 	});
 
-	const companyId = await page.evaluate(() => {
-		return Liferay.ThemeDisplay.getCompanyId();
-	});
-
 	await test.step('Setup user role and login as user', async () => {
 		const userRoleAndAccount = await setupUserRoleAndLoginAsUser({
 			apiHelpers,
-			companyId,
 			dataSetResourcePermissions: [
 				{
 					actions: ['VIEW'],
@@ -515,14 +490,9 @@ test('A user with "Add Object Entry" permission', async ({
 	dataSetsPage,
 	page,
 }) => {
-	const companyId = await page.evaluate(() => {
-		return Liferay.ThemeDisplay.getCompanyId();
-	});
-
 	await test.step('Setup user role and login as user with "Add Object Entry"', async () => {
 		const userRoleAndAccount = await setupUserRoleAndLoginAsUser({
 			apiHelpers,
-			companyId,
 			dataSetResourcePermissions: [
 				{
 					actions: ['ADD_OBJECT_ENTRY'],
@@ -568,14 +538,9 @@ test('A user without "Add Object Entry" permission', async ({
 	dataSetsPage,
 	page,
 }) => {
-	const companyId = await page.evaluate(() => {
-		return Liferay.ThemeDisplay.getCompanyId();
-	});
-
 	await test.step('Setup user role and login as user with "View" permission', async () => {
 		const userRoleAndAccount = await setupUserRoleAndLoginAsUser({
 			apiHelpers,
-			companyId,
 			dataSetResourcePermissions: [
 				{
 					actions: ['VIEW'],

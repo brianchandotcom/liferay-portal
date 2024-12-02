@@ -7,6 +7,7 @@ import {Page} from '@playwright/test';
 
 import {DataApiHelpers} from '../../../helpers/ApiHelpers';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
+import getCompanyId from './getCompanyId';
 
 type TRole = {
 	name: string;
@@ -117,17 +118,16 @@ async function getDataSetObjectInfo(apiHelpers: DataApiHelpers) {
 
 export async function setupUserRoleAndLoginAsUser({
 	apiHelpers,
-	companyId,
 	dataSetResourcePermissions,
 	dataSetUserRoleName,
 	page,
 }: {
 	apiHelpers: DataApiHelpers;
-	companyId: string;
 	dataSetResourcePermissions?: IResourcePermission[];
 	dataSetUserRoleName: string;
 	page: Page;
 }) {
+	const companyId = await getCompanyId(page);
 	const dataSetObject = await getDataSetObjectInfo(apiHelpers);
 	const dataSetUserRole = await createUserRole(
 		apiHelpers,

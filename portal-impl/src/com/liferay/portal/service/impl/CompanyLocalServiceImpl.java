@@ -689,6 +689,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 					unregisterCompany(company);
 
+					_synchronizePortalInstances();
+
 					return null;
 				});
 

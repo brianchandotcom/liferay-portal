@@ -56,7 +56,7 @@ export function isMovementValid({
 
 		// Skip iteration if it is
 
-		if (valid === true) {
+		if (valid) {
 			continue;
 		}
 

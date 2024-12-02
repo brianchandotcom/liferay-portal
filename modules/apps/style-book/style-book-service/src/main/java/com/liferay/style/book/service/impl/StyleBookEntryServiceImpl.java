@@ -144,8 +144,9 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 			getPermissionChecker(), groupId,
 			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 
-		return styleBookEntryPersistence.findByERC_G_Head(
-			externalReferenceCode, groupId, true);
+		return styleBookEntryLocalService.
+			getStyleBookEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	@Override

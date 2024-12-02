@@ -1409,6 +1409,8 @@ public class DefaultObjectEntryManagerImpl
 
 				fileContent = StreamUtil.toByteArray(
 					urlConnection.getInputStream());
+
+				fileEntry.setFileSourceURL(() -> (String)null);
 			}
 			catch (MalformedURLException malformedURLException) {
 				throw new IllegalArgumentException(malformedURLException);

@@ -112,6 +112,7 @@ const DEFAULT_STATE = {
 			container01: {
 				children: ['fragment01'],
 				itemId: 'container01',
+				parentId: 'root01',
 				type: LAYOUT_DATA_ITEM_TYPES.container,
 			},
 			fragment01: {
@@ -123,6 +124,7 @@ const DEFAULT_STATE = {
 			},
 			fragment02: {
 				itemId: 'fragment02',
+				parentId: 'root01',
 				type: LAYOUT_DATA_ITEM_TYPES.fragment,
 			},
 			root01: {
@@ -295,13 +297,13 @@ describe('ShortcutManager', () => {
 	});
 
 	it('calls updateItemStyle when pressing ctrl + H', () => {
-		const newState = {...DEFAULT_STATE};
+		const newState = JSON.parse(JSON.stringify(DEFAULT_STATE));
 
 		newState.layoutData.items.fragment01 = {
 			children: [],
 			config: {
-				fragmentEntryLinkId: 'fragmenEntryLinkId',
-				styles: {diplay: 'none'},
+				fragmentEntryLinkId: 'fragmentEntryLinkId',
+				styles: {display: 'block'},
 			},
 			itemId: 'fragment01',
 		};

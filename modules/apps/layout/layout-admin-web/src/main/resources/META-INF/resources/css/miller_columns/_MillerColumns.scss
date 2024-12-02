@@ -17,7 +17,7 @@
 		border-right: 1px solid $gray-400;
 	}
 
-	&.drop-target .miller-columns-item:last-child {
+	&.drop-target .miller-columns-item:last-child .miller-columns-item-mask {
 		box-shadow: inset 0 -2px 0 0 $primary;
 	}
 
@@ -46,6 +46,7 @@
 	&--active {
 		background-color: $primary-l3;
 		box-shadow: inset 0.25rem 0 0 0 $primary-l0;
+
 		.miller-columns-item-child-indicator .lexicon-icon-caret-right {
 			fill: $gray-800;
 		}
@@ -59,19 +60,21 @@
 		opacity: 0.4;
 	}
 
-	&.drop-bottom {
+	&.drop-bottom .miller-columns-item-mask {
 		box-shadow: inset 0 -2px 0 0 $primary;
 	}
 
 	&.drop-top {
-		box-shadow: 0 -2px 0 0 $primary;
+		.miller-columns-item-mask {
+			box-shadow: 0 -2px 0 0 $primary;
+		}
 
-		&:first-child {
+		&:first-child .miller-columns-item-mask {
 			box-shadow: inset 0 2px 0 0 $primary;
 		}
 	}
 
-	&.drop-middle {
+	&.drop-middle .miller-columns-item-mask {
 		box-shadow: inset 0 0 0 0.125rem $primary;
 	}
 
@@ -94,14 +97,12 @@
 		}
 	}
 
-	&:not(.dragging) .miller-columns-item-mask {
+	& .miller-columns-item-mask {
 		height: 100%;
 		left: 0;
 		position: absolute;
 		top: 0;
-		transition: box-shadow 150ms ease-in-out;
 		width: 100%;
-		will-change: box-shadow;
 		z-index: 1;
 
 		&:focus {

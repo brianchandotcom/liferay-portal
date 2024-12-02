@@ -86,18 +86,13 @@ public class FormLayoutStructureItemMapper
 													saveMappingConfiguration,
 													formStyledLayoutStructureItem));
 
-										setLocalizationConfig(
-											() -> {
-												if (FeatureFlagManagerUtil.
-														isEnabled(
-															"LPD-37927")) {
+										if (FeatureFlagManagerUtil.isEnabled(
+												"LPD-37927")) {
 
-													return _toLocalizationConfig(
-														formStyledLayoutStructureItem);
-												}
-
-												return null;
-											});
+											setLocalizationConfig(
+												() -> _toLocalizationConfig(
+													formStyledLayoutStructureItem));
+										}
 
 										if (FeatureFlagManagerUtil.isEnabled(
 												"LPD-10727")) {
@@ -106,9 +101,8 @@ public class FormLayoutStructureItemMapper
 												() -> _toFormType(
 													formStyledLayoutStructureItem));
 											setNumberOfSteps(
-												() ->
-													formStyledLayoutStructureItem.
-														getNumberOfSteps());
+												formStyledLayoutStructureItem::
+													getNumberOfSteps);
 										}
 									}
 								});
@@ -128,8 +122,7 @@ public class FormLayoutStructureItemMapper
 									formStyledLayoutStructureItem.
 										getItemConfigJSONObject()));
 							setIndexed(
-								() ->
-									formStyledLayoutStructureItem.isIndexed());
+								formStyledLayoutStructureItem::isIndexed);
 							setLayout(
 								() -> _toLayout(formStyledLayoutStructureItem));
 							setName(formStyledLayoutStructureItem::getName);
@@ -354,43 +347,35 @@ public class FormLayoutStructureItemMapper
 
 		return new LocalizationConfig() {
 			{
-				setUnlocalizedFieldsMessage(
-					() -> {
-						if (localizationConfigJSONObject.has(
-								"unlocalizedFieldsMessage")) {
+				if (localizationConfigJSONObject.has(
+						"unlocalizedFieldsMessage")) {
 
-							return _toFragmentInlineValue(
-								localizationConfigJSONObject.getJSONObject(
-									"unlocalizedFieldsMessage"));
-						}
+					setUnlocalizedFieldsMessage(
+						() -> _toFragmentInlineValue(
+							localizationConfigJSONObject.getJSONObject(
+								"unlocalizedFieldsMessage")));
+				}
 
-						return null;
-					});
+				if (localizationConfigJSONObject.has(
+						"unlocalizedFieldsState")) {
 
-				setUnlocalizedFieldsState(
-					() -> {
-						if (localizationConfigJSONObject.has(
-								"unlocalizedFieldsState")) {
+					setUnlocalizedFieldsState(
+						() -> {
+							if (Objects.equals(
+									localizationConfigJSONObject.getString(
+										"unlocalizedFieldsState"),
+									"disabled")) {
 
-							return _toUnlocalizedFieldState(
-								localizationConfigJSONObject.getString(
-									"unlocalizedFieldsState"));
-						}
+								return LocalizationConfig.
+									UnlocalizedFieldsState.DISABLED;
+							}
 
-						return null;
-					});
+							return LocalizationConfig.UnlocalizedFieldsState.
+								READ_ONLY;
+						});
+				}
 			}
 		};
-	}
-
-	private LocalizationConfig.UnlocalizedFieldsState _toUnlocalizedFieldState(
-		String value) {
-
-		if (Objects.equals(value, "disabled")) {
-			return LocalizationConfig.UnlocalizedFieldsState.DISABLED;
-		}
-
-		return LocalizationConfig.UnlocalizedFieldsState.READ_ONLY;
 	}
 
 }

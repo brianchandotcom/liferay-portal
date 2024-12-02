@@ -8,6 +8,7 @@ import {openToast, sub} from 'frontend-js-web';
 import {LayoutData, LayoutDataItem} from '../../types/layout_data/LayoutData';
 import {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
 import {WidgetSet} from '../actions/updateWidgets';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import selectLayoutDataItemLabel from '../selectors/selectLayoutDataItemLabel';
 import checkAllowedChild, {
 	MovementItem,
@@ -23,6 +24,61 @@ type Props = {
 	targetId: LayoutDataItem['itemId'];
 };
 
+const DROP_TARGET_TYPES = [
+	LAYOUT_DATA_ITEM_TYPES.column,
+	LAYOUT_DATA_ITEM_TYPES.container,
+	LAYOUT_DATA_ITEM_TYPES.collection,
+	LAYOUT_DATA_ITEM_TYPES.collectionItem,
+	LAYOUT_DATA_ITEM_TYPES.dropZone,
+	LAYOUT_DATA_ITEM_TYPES.form,
+	LAYOUT_DATA_ITEM_TYPES.formStep,
+	LAYOUT_DATA_ITEM_TYPES.root,
+];
+
+export function getDropTargetId(
+	targetId: LayoutDataItem['itemId'],
+	layoutData: LayoutData
+): string {
+	const target = layoutData.items[targetId];
+	const items = layoutData.items;
+
+	// Return first step id for multistep form
+
+	if (
+		target.type === LAYOUT_DATA_ITEM_TYPES.form &&
+		target.config.formType === 'multistep'
+	) {
+		for (const childId of target.children) {
+			const child = items[childId];
+
+			if (child.type === LAYOUT_DATA_ITEM_TYPES.formStepContainer) {
+				return items[child.children[0]].itemId;
+			}
+		}
+	}
+
+	// Return collectionItem id if collection is mapped
+
+	if (
+		target.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+		target.config.collection
+	) {
+		return target.children[0];
+	}
+
+	// Return available parent id
+
+	if (DROP_TARGET_TYPES.some((type) => type === target.type)) {
+		return target.itemId;
+	}
+
+	const parent = items[target.parentId];
+
+	// If not found go deeper and check for available parent id
+
+	return getDropTargetId(parent.itemId, layoutData);
+}
+
 export function isMovementValid({
 	fragmentEntryLinks,
 	getWidgets,
@@ -31,7 +87,11 @@ export function isMovementValid({
 	sources,
 	targetId,
 }: Props) {
-	const target = toMovementItem(targetId, layoutData, fragmentEntryLinks);
+	const target = toMovementItem(
+		getDropTargetId(targetId, layoutData),
+		layoutData,
+		fragmentEntryLinks
+	);
 
 	// Return false if target not found (for example if target is an editable)
 

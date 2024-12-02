@@ -263,9 +263,8 @@ public class FormLayoutStructureItemImporter
 						"unlocalizedFieldsState")) {
 
 					if (Objects.equals(
-							String.valueOf(
-								localizationConfigResultMap.get(
-									"unlocalizedFieldsState")),
+							localizationConfigResultMap.get(
+								"unlocalizedFieldsState"),
 							LocalizationConfig.UnlocalizedFieldsState.
 								DISABLED)) {
 

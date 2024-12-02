@@ -18,6 +18,7 @@
 			"label": {
 				"en_US": "P2S3 Quiz Answer"
 			},
+			"modifiable": true,
 			"name": "P2S3QuizAnswer",
 			"objectFields": [
 				{

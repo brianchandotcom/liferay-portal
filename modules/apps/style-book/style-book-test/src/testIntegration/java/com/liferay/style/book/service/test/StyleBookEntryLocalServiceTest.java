@@ -188,6 +188,26 @@ public class StyleBookEntryLocalServiceTest {
 				styleBookEntry.getStyleBookEntryId()));
 	}
 
+	@Test
+	public void testFetchAndGetStyleBookEntryByExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_styleBookEntryLocalService.addStyleBookEntry(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), false, null, RandomTestUtil.randomString(),
+			null, RandomTestUtil.randomString(), _serviceContext);
+
+		Assert.assertNotNull(
+			_styleBookEntryLocalService.
+				fetchStyleBookEntryByExternalReferenceCode(
+					externalReferenceCode, _group.getGroupId()));
+
+		_styleBookEntryLocalService.getStyleBookEntryByExternalReferenceCode(
+			externalReferenceCode, _group.getGroupId());
+	}
+
 	private ClientExtensionEntry _clientExtensionEntry;
 
 	@Inject

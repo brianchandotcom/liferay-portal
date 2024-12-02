@@ -63,13 +63,13 @@ public class BuildArchiverUtil {
 	public static void archiveOneDay(String startDateString) {
 		String outputDirPath = null;
 
+		String propertyName = "archive.ci.build.data.tmp.dir";
+
 		try {
-			outputDirPath = _buildProperties.getProperty(
-				"archive.ci.build.data.tmp.dir");
+			outputDirPath = _buildProperties.getProperty(propertyName);
 		}
 		catch (Exception exception) {
-			System.out.println(
-				"Unable to get property \"archive.ci.build.data.tmp.dir\"");
+			System.out.println("Unable to get property " + propertyName);
 		}
 
 		if (outputDirPath == null) {

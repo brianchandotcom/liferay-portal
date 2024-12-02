@@ -225,6 +225,8 @@ definition {
 				changeTitle = "WC WebContent Title",
 				changeType = "Added",
 				changeUser = "Test Test");
+
+			AssertElementNotPresent(locator1 = "Icon#SVG_ELLIPSIS");
 		}
 	}
 

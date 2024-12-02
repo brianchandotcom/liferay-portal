@@ -157,53 +157,55 @@ public class Settings implements Cloneable, Serializable {
 
 	protected String javascript;
 
-	public ItemExternalReference getMasterPageReference() {
-		return masterPageReference;
+	public ItemExternalReference getMasterPageItemExternalReference() {
+		return masterPageItemExternalReference;
 	}
 
-	public void setMasterPageReference(
-		ItemExternalReference masterPageReference) {
+	public void setMasterPageItemExternalReference(
+		ItemExternalReference masterPageItemExternalReference) {
 
-		this.masterPageReference = masterPageReference;
+		this.masterPageItemExternalReference = masterPageItemExternalReference;
 	}
 
-	public void setMasterPageReference(
+	public void setMasterPageItemExternalReference(
 		UnsafeSupplier<ItemExternalReference, Exception>
-			masterPageReferenceUnsafeSupplier) {
+			masterPageItemExternalReferenceUnsafeSupplier) {
 
 		try {
-			masterPageReference = masterPageReferenceUnsafeSupplier.get();
+			masterPageItemExternalReference =
+				masterPageItemExternalReferenceUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected ItemExternalReference masterPageReference;
+	protected ItemExternalReference masterPageItemExternalReference;
 
-	public ItemExternalReference getStyleBookReference() {
-		return styleBookReference;
+	public ItemExternalReference getStyleBookItemExternalReference() {
+		return styleBookItemExternalReference;
 	}
 
-	public void setStyleBookReference(
-		ItemExternalReference styleBookReference) {
+	public void setStyleBookItemExternalReference(
+		ItemExternalReference styleBookItemExternalReference) {
 
-		this.styleBookReference = styleBookReference;
+		this.styleBookItemExternalReference = styleBookItemExternalReference;
 	}
 
-	public void setStyleBookReference(
+	public void setStyleBookItemExternalReference(
 		UnsafeSupplier<ItemExternalReference, Exception>
-			styleBookReferenceUnsafeSupplier) {
+			styleBookItemExternalReferenceUnsafeSupplier) {
 
 		try {
-			styleBookReference = styleBookReferenceUnsafeSupplier.get();
+			styleBookItemExternalReference =
+				styleBookItemExternalReferenceUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected ItemExternalReference styleBookReference;
+	protected ItemExternalReference styleBookItemExternalReference;
 
 	public ClientExtension getThemeCSSClientExtension() {
 		return themeCSSClientExtension;

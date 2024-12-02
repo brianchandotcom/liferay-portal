@@ -150,24 +150,26 @@ public class SettingsSerDes {
 			sb.append("\"");
 		}
 
-		if (settings.getMasterPageReference() != null) {
+		if (settings.getMasterPageItemExternalReference() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"masterPageReference\": ");
+			sb.append("\"masterPageItemExternalReference\": ");
 
-			sb.append(String.valueOf(settings.getMasterPageReference()));
+			sb.append(
+				String.valueOf(settings.getMasterPageItemExternalReference()));
 		}
 
-		if (settings.getStyleBookReference() != null) {
+		if (settings.getStyleBookItemExternalReference() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"styleBookReference\": ");
+			sb.append("\"styleBookItemExternalReference\": ");
 
-			sb.append(String.valueOf(settings.getStyleBookReference()));
+			sb.append(
+				String.valueOf(settings.getStyleBookItemExternalReference()));
 		}
 
 		if (settings.getThemeCSSClientExtension() != null) {
@@ -288,22 +290,22 @@ public class SettingsSerDes {
 			map.put("javascript", String.valueOf(settings.getJavascript()));
 		}
 
-		if (settings.getMasterPageReference() == null) {
-			map.put("masterPageReference", null);
+		if (settings.getMasterPageItemExternalReference() == null) {
+			map.put("masterPageItemExternalReference", null);
 		}
 		else {
 			map.put(
-				"masterPageReference",
-				String.valueOf(settings.getMasterPageReference()));
+				"masterPageItemExternalReference",
+				String.valueOf(settings.getMasterPageItemExternalReference()));
 		}
 
-		if (settings.getStyleBookReference() == null) {
-			map.put("styleBookReference", null);
+		if (settings.getStyleBookItemExternalReference() == null) {
+			map.put("styleBookItemExternalReference", null);
 		}
 		else {
 			map.put(
-				"styleBookReference",
-				String.valueOf(settings.getStyleBookReference()));
+				"styleBookItemExternalReference",
+				String.valueOf(settings.getStyleBookItemExternalReference()));
 		}
 
 		if (settings.getThemeCSSClientExtension() == null) {
@@ -379,12 +381,14 @@ public class SettingsSerDes {
 				return false;
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "masterPageReference")) {
+						jsonParserFieldName,
+						"masterPageItemExternalReference")) {
 
 				return false;
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "styleBookReference")) {
+						jsonParserFieldName,
+						"styleBookItemExternalReference")) {
 
 				return false;
 			}
@@ -478,19 +482,21 @@ public class SettingsSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "masterPageReference")) {
+						jsonParserFieldName,
+						"masterPageItemExternalReference")) {
 
 				if (jsonParserFieldValue != null) {
-					settings.setMasterPageReference(
+					settings.setMasterPageItemExternalReference(
 						ItemExternalReferenceSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "styleBookReference")) {
+						jsonParserFieldName,
+						"styleBookItemExternalReference")) {
 
 				if (jsonParserFieldValue != null) {
-					settings.setStyleBookReference(
+					settings.setStyleBookItemExternalReference(
 						ItemExternalReferenceSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}

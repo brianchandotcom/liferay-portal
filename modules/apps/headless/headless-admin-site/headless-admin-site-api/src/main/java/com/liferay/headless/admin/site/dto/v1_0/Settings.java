@@ -320,32 +320,33 @@ public class Settings implements Serializable {
 		description = "A reference to the page specification's master page. This property is not applied if the page specification belongs to a master page."
 	)
 	@Valid
-	public ItemExternalReference getMasterPageReference() {
-		if (_masterPageReferenceSupplier != null) {
-			masterPageReference = _masterPageReferenceSupplier.get();
+	public ItemExternalReference getMasterPageItemExternalReference() {
+		if (_masterPageItemExternalReferenceSupplier != null) {
+			masterPageItemExternalReference =
+				_masterPageItemExternalReferenceSupplier.get();
 
-			_masterPageReferenceSupplier = null;
+			_masterPageItemExternalReferenceSupplier = null;
 		}
 
-		return masterPageReference;
+		return masterPageItemExternalReference;
 	}
 
-	public void setMasterPageReference(
-		ItemExternalReference masterPageReference) {
+	public void setMasterPageItemExternalReference(
+		ItemExternalReference masterPageItemExternalReference) {
 
-		this.masterPageReference = masterPageReference;
+		this.masterPageItemExternalReference = masterPageItemExternalReference;
 
-		_masterPageReferenceSupplier = null;
+		_masterPageItemExternalReferenceSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setMasterPageReference(
+	public void setMasterPageItemExternalReference(
 		UnsafeSupplier<ItemExternalReference, Exception>
-			masterPageReferenceUnsafeSupplier) {
+			masterPageItemExternalReferenceUnsafeSupplier) {
 
-		_masterPageReferenceSupplier = () -> {
+		_masterPageItemExternalReferenceSupplier = () -> {
 			try {
-				return masterPageReferenceUnsafeSupplier.get();
+				return masterPageItemExternalReferenceUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -360,41 +361,43 @@ public class Settings implements Serializable {
 		description = "A reference to the page specification's master page. This property is not applied if the page specification belongs to a master page."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ItemExternalReference masterPageReference;
+	protected ItemExternalReference masterPageItemExternalReference;
 
 	@JsonIgnore
-	private Supplier<ItemExternalReference> _masterPageReferenceSupplier;
+	private Supplier<ItemExternalReference>
+		_masterPageItemExternalReferenceSupplier;
 
 	@Schema(
 		description = "A reference to the style book that is applied to the page specification."
 	)
 	@Valid
-	public ItemExternalReference getStyleBookReference() {
-		if (_styleBookReferenceSupplier != null) {
-			styleBookReference = _styleBookReferenceSupplier.get();
+	public ItemExternalReference getStyleBookItemExternalReference() {
+		if (_styleBookItemExternalReferenceSupplier != null) {
+			styleBookItemExternalReference =
+				_styleBookItemExternalReferenceSupplier.get();
 
-			_styleBookReferenceSupplier = null;
+			_styleBookItemExternalReferenceSupplier = null;
 		}
 
-		return styleBookReference;
+		return styleBookItemExternalReference;
 	}
 
-	public void setStyleBookReference(
-		ItemExternalReference styleBookReference) {
+	public void setStyleBookItemExternalReference(
+		ItemExternalReference styleBookItemExternalReference) {
 
-		this.styleBookReference = styleBookReference;
+		this.styleBookItemExternalReference = styleBookItemExternalReference;
 
-		_styleBookReferenceSupplier = null;
+		_styleBookItemExternalReferenceSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setStyleBookReference(
+	public void setStyleBookItemExternalReference(
 		UnsafeSupplier<ItemExternalReference, Exception>
-			styleBookReferenceUnsafeSupplier) {
+			styleBookItemExternalReferenceUnsafeSupplier) {
 
-		_styleBookReferenceSupplier = () -> {
+		_styleBookItemExternalReferenceSupplier = () -> {
 			try {
-				return styleBookReferenceUnsafeSupplier.get();
+				return styleBookItemExternalReferenceUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -409,10 +412,11 @@ public class Settings implements Serializable {
 		description = "A reference to the style book that is applied to the page specification."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ItemExternalReference styleBookReference;
+	protected ItemExternalReference styleBookItemExternalReference;
 
 	@JsonIgnore
-	private Supplier<ItemExternalReference> _styleBookReferenceSupplier;
+	private Supplier<ItemExternalReference>
+		_styleBookItemExternalReferenceSupplier;
 
 	@Schema(
 		description = "The client extension for the theme CSS of a page specification."
@@ -739,28 +743,30 @@ public class Settings implements Serializable {
 			sb.append("\"");
 		}
 
-		ItemExternalReference masterPageReference = getMasterPageReference();
+		ItemExternalReference masterPageItemExternalReference =
+			getMasterPageItemExternalReference();
 
-		if (masterPageReference != null) {
+		if (masterPageItemExternalReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"masterPageReference\": ");
+			sb.append("\"masterPageItemExternalReference\": ");
 
-			sb.append(String.valueOf(masterPageReference));
+			sb.append(String.valueOf(masterPageItemExternalReference));
 		}
 
-		ItemExternalReference styleBookReference = getStyleBookReference();
+		ItemExternalReference styleBookItemExternalReference =
+			getStyleBookItemExternalReference();
 
-		if (styleBookReference != null) {
+		if (styleBookItemExternalReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"styleBookReference\": ");
+			sb.append("\"styleBookItemExternalReference\": ");
 
-			sb.append(String.valueOf(styleBookReference));
+			sb.append(String.valueOf(styleBookItemExternalReference));
 		}
 
 		ClientExtension themeCSSClientExtension = getThemeCSSClientExtension();

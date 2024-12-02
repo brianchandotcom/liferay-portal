@@ -6999,7 +6999,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testGetWithObjectValidationRule() throws Exception {
+	public void testGetObjectEntryWithObjectValidationRule() throws Exception {
 		ObjectField integerObjectField =
 			_objectFieldLocalService.getObjectField(
 				_objectDefinition1.getObjectDefinitionId(),

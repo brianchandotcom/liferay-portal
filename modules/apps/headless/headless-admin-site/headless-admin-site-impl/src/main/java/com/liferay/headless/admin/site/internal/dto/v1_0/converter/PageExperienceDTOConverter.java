@@ -130,8 +130,24 @@ public class PageExperienceDTOConverter
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructureRel.getData());
 
-		return _getChildPageElement(
-			layoutStructure, layoutStructure.getMainLayoutStructureItem());
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.getMainLayoutStructureItem();
+
+		List<String> childrenItemIds =
+			rootLayoutStructureItem.getChildrenItemIds();
+
+		List<PageElement> pageElements = new ArrayList<>();
+
+		for (int i = 0; i < childrenItemIds.size(); i++) {
+			PageElement pageElement = _getPageElement(
+				childrenItemIds.get(i), layoutStructure, i);
+
+			pageElement.setParentExternalReferenceCode(() -> null);
+
+			pageElements.add(pageElement);
+		}
+
+		return pageElements.toArray(new PageElement[0]);
 	}
 
 	@Reference

@@ -1424,6 +1424,8 @@ public class DefaultObjectEntryManagerImpl
 
 				fileContent = StreamUtil.toByteArray(
 					urlConnection.getInputStream());
+
+				fileEntry.setFileSourceURL(() -> (String)null);
 			}
 			catch (MalformedURLException malformedURLException) {
 				throw new IllegalArgumentException(malformedURLException);
@@ -1481,6 +1483,7 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		fileEntry.setFileBase64(() -> (String)null);
+		fileEntry.setFileURL(() -> (String)null);
 		fileEntry.setId(serviceBuilderFileEntry::getFileEntryId);
 
 		Map<String, Object> properties = objectEntry.getProperties();

@@ -250,7 +250,12 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertEquals(virtualHostName, company.getVirtualHostname());
 			Assert.assertEquals(webId, company.getWebId());
 
-			_assertConfiguration(pid, true);
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						company.getCompanyId())) {
+
+				_assertConfiguration(pid, true);
+			}
 		}
 		finally {
 			if (standaloneDBPartition) {

@@ -39,6 +39,7 @@ import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
+import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.DecimalObjectFieldBuilder;
@@ -247,6 +248,13 @@ public class DefaultObjectEntryManagerImplTest
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				false, Collections.emptyList());
 		_localizedObjectFieldI18nValues = HashMapBuilder.<String, Object>put(
+			"localizedBooleanObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", true
+			).put(
+				"pt_BR", false
+			).build()
+		).put(
 			"localizedLongTextObjectFieldName_i18n",
 			HashMapBuilder.put(
 				"en_US", "en_US localizedLongTextObjectFieldValue"
@@ -310,6 +318,15 @@ public class DefaultObjectEntryManagerImplTest
 						_createObjectFieldSetting(
 							"fileSource", "documentsAndMedia"),
 						_createObjectFieldSetting("maximumFileSize", "100"))
+				).build(),
+				new BooleanObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"localizedBooleanObjectFieldName"
 				).build(),
 				new DateObjectFieldBuilder(
 				).labelMap(
@@ -2190,6 +2207,8 @@ public class DefaultObjectEntryManagerImplTest
 					properties = HashMapBuilder.<String, Object>put(
 						_objectRelationshipFieldName, parentObjectEntry1.getId()
 					).put(
+						"localizedBooleanObjectFieldName", true
+					).put(
 						"localizedLongTextObjectFieldName",
 						"en_US localizedLongTextObjectFieldValue"
 					).put(
@@ -2240,6 +2259,13 @@ public class DefaultObjectEntryManagerImplTest
 							_objectRelationshipFieldName,
 							parentObjectEntry2.getId()
 						).put(
+							"localizedBooleanObjectFieldName_i18n",
+							HashMapBuilder.put(
+								"en_US", false
+							).put(
+								"pt_BR", true
+							).build()
+						).put(
 							"localizedLongTextObjectFieldName",
 							"en_US localizedLongTextObjectFieldValue"
 						).put(
@@ -2264,6 +2290,13 @@ public class DefaultObjectEntryManagerImplTest
 				{
 					properties = HashMapBuilder.<String, Object>put(
 						_objectRelationshipFieldName, parentObjectEntry2.getId()
+					).put(
+						"localizedBooleanObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", false
+						).put(
+							"pt_BR", true
+						).build()
 					).put(
 						"localizedLongTextObjectFieldName",
 						"en_US localizedLongTextObjectFieldValue"
@@ -2422,6 +2455,13 @@ public class DefaultObjectEntryManagerImplTest
 					parentObjectEntry2.getExternalReferenceCode())
 			).build(),
 			childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				buildEqualsExpressionFilterString(
+					"localizedBooleanObjectFieldName", true)
+			).build(),
+			childObjectEntry1);
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
@@ -2594,6 +2634,16 @@ public class DefaultObjectEntryManagerImplTest
 				"sort", "id:desc"
 			).build(),
 			childObjectEntry2, childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedBooleanObjectFieldName:asc"
+			).build(),
+			childObjectEntry2, childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedBooleanObjectFieldName:desc"
+			).build(),
+			childObjectEntry1, childObjectEntry2);
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"sort", "localizedTextObjectFieldName:asc"
@@ -3756,6 +3806,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
+				"localizedBooleanObjectFieldName", true
+			).put(
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(
@@ -3773,6 +3825,8 @@ public class DefaultObjectEntryManagerImplTest
 			"en_US", objectEntry.getId());
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
+				"localizedBooleanObjectFieldName", false
+			).put(
 				"localizedLongTextObjectFieldName",
 				"pt_BR localizedLongTextObjectFieldValue"
 			).put(
@@ -3819,6 +3873,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
+				"localizedBooleanObjectFieldName", false
+			).put(
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(
@@ -3835,6 +3891,8 @@ public class DefaultObjectEntryManagerImplTest
 			"ar_SA", objectEntry.getId());
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
+				"localizedBooleanObjectFieldName", false
+			).put(
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(
@@ -3849,6 +3907,8 @@ public class DefaultObjectEntryManagerImplTest
 			"en_US", objectEntry.getId());
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
+				"localizedBooleanObjectFieldName", false
+			).put(
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(
@@ -3863,6 +3923,17 @@ public class DefaultObjectEntryManagerImplTest
 			"pt_BR", objectEntry.getId());
 
 		_localizedObjectFieldI18nValues = HashMapBuilder.<String, Object>put(
+			"localizedBooleanObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"ar_SA", false
+			).put(
+				"ca_ES", false
+			).put(
+				"en_US", true
+			).put(
+				"pt_BR", true
+			).build()
+		).put(
 			"localizedLongTextObjectFieldName_i18n",
 			HashMapBuilder.put(
 				"en_US", "en_US localizedLongTextObjectFieldValue"
@@ -3899,6 +3970,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
+				"localizedBooleanObjectFieldName", false
+			).put(
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(
@@ -3916,6 +3989,8 @@ public class DefaultObjectEntryManagerImplTest
 			"ar_SA", objectEntry.getId());
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
+				"localizedBooleanObjectFieldName", false
+			).put(
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(
@@ -3933,6 +4008,8 @@ public class DefaultObjectEntryManagerImplTest
 			"ca_ES", objectEntry.getId());
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
+				"localizedBooleanObjectFieldName", true
+			).put(
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(
@@ -3950,6 +4027,8 @@ public class DefaultObjectEntryManagerImplTest
 			"en_US", objectEntry.getId());
 		_assertLocalizedValues(
 			HashMapBuilder.<String, Object>put(
+				"localizedBooleanObjectFieldName", true
+			).put(
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(

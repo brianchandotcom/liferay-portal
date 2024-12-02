@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -122,13 +123,13 @@ public class ExceptionMapperTest {
 				null, "/test-vulcan/testTestException1", Http.Method.GET));
 
 		JSONObject expectedJSONObject = JSONUtil.put(
-			"detail", "This is the detail"
+			"detail", _DETAIL
 		).put(
 			"status", "BAD_REQUEST"
 		).put(
-			"title", "This is the title"
+			"title", _TITLE
 		).put(
-			"type", "This is the type"
+			"type", _TYPE
 		);
 
 		JSONAssert.assertEquals(
@@ -171,7 +172,7 @@ public class ExceptionMapperTest {
 		@Path("/testTestException1")
 		@Produces("application/json")
 		public String testTestException1() throws TestException {
-			throw new TestException("This is the test exception 1");
+			throw new TestException(RandomTestUtil.randomString());
 		}
 
 		@GET
@@ -179,10 +180,16 @@ public class ExceptionMapperTest {
 		@Produces("application/json")
 		public String testTestException2() throws Exception {
 			throw new Exception(
-				new TestException("This is the test exception 2"));
+				new TestException(RandomTestUtil.randomString()));
 		}
 
 	}
+
+	private static final String _DETAIL = RandomTestUtil.randomString();
+
+	private static final String _TITLE = RandomTestUtil.randomString();
+
+	private static final String _TYPE = RandomTestUtil.randomString();
 
 	private List<ServiceRegistration<?>> _serviceRegistrations;
 
@@ -203,7 +210,7 @@ public class ExceptionMapperTest {
 
 				@Override
 				public String getDetail(Locale locale) {
-					return "This is the detail";
+					return _DETAIL;
 				}
 
 				@Override
@@ -213,12 +220,12 @@ public class ExceptionMapperTest {
 
 				@Override
 				public String getTitle(Locale locale) {
-					return "This is the title";
+					return _TITLE;
 				}
 
 				@Override
 				public String getType() {
-					return "This is the type";
+					return _TYPE;
 				}
 
 			};

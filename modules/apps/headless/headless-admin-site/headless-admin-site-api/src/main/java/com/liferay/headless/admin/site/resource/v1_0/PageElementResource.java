@@ -47,56 +47,63 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PageElementResource {
 
-	public PageElement
-			postSiteSiteByExternalReferenceCodePageElementFragmentComposition(
-				String siteExternalReferenceCode,
-				String pageElementExternalReferenceCode, Integer position,
-				FragmentComposition fragmentComposition)
-		throws Exception;
-
 	public Page<PageElement>
 			getSiteSiteByExternalReferenceCodePageExperiencePageElementsPage(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode,
+				String pageSpecificationExternalReferenceCode,
 				String pageExperienceExternalReferenceCode, Boolean flatten)
 		throws Exception;
 
 	public PageElement
 			postSiteSiteByExternalReferenceCodePageExperiencePageElement(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode,
+				String pageSpecificationExternalReferenceCode,
 				String pageExperienceExternalReferenceCode,
 				PageElement pageElement)
 		throws Exception;
 
 	public void deleteSiteSiteByExternalReferenceCodePageElement(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode,
+			String pageSpecificationExternalReferenceCode,
+			String pageExperienceExternalReferenceCode,
 			String pageElementExternalReferenceCode)
 		throws Exception;
 
 	public PageElement getSiteSiteByExternalReferenceCodePageElement(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode,
+			String pageSpecificationExternalReferenceCode,
+			String pageExperienceExternalReferenceCode,
 			String pageElementExternalReferenceCode)
 		throws Exception;
 
 	public PageElement patchSiteSiteByExternalReferenceCodePageElement(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode,
+			String pageSpecificationExternalReferenceCode,
+			String pageExperienceExternalReferenceCode,
 			String pageElementExternalReferenceCode, PageElement pageElement)
 		throws Exception;
 
 	public PageElement putSiteSiteByExternalReferenceCodePageElement(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode,
+			String pageSpecificationExternalReferenceCode,
+			String pageExperienceExternalReferenceCode,
 			String pageElementExternalReferenceCode, PageElement pageElement)
+		throws Exception;
+
+	public PageElement
+			postSiteSiteByExternalReferenceCodePageElementFragmentComposition(
+				String siteExternalReferenceCode,
+				String pageSpecificationExternalReferenceCode,
+				String pageExperienceExternalReferenceCode,
+				String pageElementExternalReferenceCode, Integer position,
+				FragmentComposition fragmentComposition)
 		throws Exception;
 
 	public Page<PageElement>
 			getSiteSiteByExternalReferenceCodePageElementPageElementsPage(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode,
+				String pageSpecificationExternalReferenceCode,
+				String pageExperienceExternalReferenceCode,
 				String pageElementExternalReferenceCode, Boolean flatten)
 		throws Exception;
 

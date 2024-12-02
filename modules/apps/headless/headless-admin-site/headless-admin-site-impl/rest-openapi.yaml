@@ -2584,6 +2584,8 @@ components:
                         The page specification's theme name.
                     type: string
                 themeSettings:
+                    additionalProperties:
+                        type: string
                     # @review
                     description:
                         The page specification's theme settings.

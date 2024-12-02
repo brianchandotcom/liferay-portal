@@ -910,6 +910,120 @@ test('LPD-32208 AC1 TC2 and TC3: Verify SP initiated SSO with RelayState and inv
 	await expect(await spInstancePage.url()).toContain(spNewPageUrl);
 });
 
+test('LPD-32208 AC1 TC4: Verify SP initiated SSO with RelayState redirects user back to RelayState, but display error message and user is not authenticated if IdP auth is successful but SP auth is not.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create Custom Field for SP instance only
+
+	const customFieldName = 'CustomField' + getRandomInt();
+
+	const fieldValues: TInputField = {
+		startingValue: 'spStartingValue',
+	};
+
+	const customField: TCustomField = {
+		fieldName: customFieldName,
+		fieldType: 'inputField',
+		fieldValues,
+		resource: 'User',
+	};
+
+	await createCustomField(spAdminPage, customField);
+
+	// Edit IdP Connection to include User Custom Field attribute mapping
+
+	const attributeMappings: AttributeMapping[] = [
+		{
+			attributeMappingType: 'User Custom Fields',
+			samlAttribute: customFieldName,
+			useToMatchUsers: true,
+			userFieldExpression: customFieldName,
+		},
+	];
+
+	const idpConnection: TIdpConnection = {
+		attributeMappings,
+		entityId: DEFAULT_IDP_NAME,
+		idpDomain: `http://${DEFAULT_IDP_NAME}:8080`,
+		idpName: DEFAULT_IDP_NAME,
+		spName: DEFAULT_SP_NAME,
+		userResolution: 'attribute',
+		...DEFAULT_IDP_CONNECTION_VALUES,
+	};
+
+	await editIdentityProviderConnection(spAdminPage, idpConnection);
+
+	// Create a user on the IdP instance
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// Create a new page on the SP Instance
+
+	const pagesAdminPage = new PagesAdminPage(spAdminPage);
+
+	await pagesAdminPage.goto();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: pageTitle,
+	});
+
+	const spNewPageUrl = DEFAULT_SP_URL + '/web/guest/' + pageTitle;
+
+	// Perform SP initiated SSO from the new page
+
+	const spInstancePage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		spNewPageUrl,
+		false
+	);
+
+	// Verify unsuccessful SP auth
+
+	await expect(
+		await spInstancePage.getByText(
+			`Your user ${userAccount.emailAddress} could not be logged in`
+		)
+	).toBeVisible();
+
+	await expect(
+		await spInstancePage.getByRole('button', {name: 'Sign In'})
+	).toBeVisible();
+
+	// Verify user is taken back to RelayState
+
+	expect(await spInstancePage.url()).toContain(spNewPageUrl);
+
+	// Go to IdP instance and verify IdP auth was successful
+
+	await spInstancePage.goto(DEFAULT_IDP_URL);
+
+	await expect(
+		await spInstancePage.getByTitle('User Profile Menu')
+	).toBeVisible();
+});
+
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({
 	browser,
 }) => {

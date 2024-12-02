@@ -208,13 +208,13 @@ public class FrontendTokenDefinitionRegistryImpl
 		try {
 			List<String> themeIds = new ArrayList<>();
 
+			String servletContextName = getServletContextName(bundle);
+
 			String xml = URLUtil.toString(url);
 
 			xml = xml.replaceAll(StringPool.NEW_LINE, StringPool.SPACE);
 
 			Matcher matcher = _themeIdPattern.matcher(xml);
-
-			String servletContextName = getServletContextName(bundle);
 
 			while (matcher.find()) {
 				String themeId = matcher.group(1);

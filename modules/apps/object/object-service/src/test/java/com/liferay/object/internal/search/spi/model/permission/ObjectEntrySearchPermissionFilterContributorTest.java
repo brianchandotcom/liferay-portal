@@ -74,6 +74,9 @@ public class ObjectEntrySearchPermissionFilterContributorTest {
 			long accountEntryId, boolean inactive)
 		throws PortalException {
 
+		AccountEntryUserRel accountEntryUserRel = Mockito.mock(
+			AccountEntryUserRel.class);
+
 		AccountEntry accountEntry = Mockito.mock(AccountEntry.class);
 
 		Mockito.when(
@@ -87,9 +90,6 @@ public class ObjectEntrySearchPermissionFilterContributorTest {
 		).thenReturn(
 			inactive
 		);
-
-		AccountEntryUserRel accountEntryUserRel = Mockito.mock(
-			AccountEntryUserRel.class);
 
 		Mockito.when(
 			accountEntryUserRel.getAccountEntry()

@@ -617,6 +617,7 @@ const CustomDataSets = ({
 			schema: {
 				fields: [
 					{
+						actionId: 'edit',
 						contentRenderer: 'actionLink',
 						fieldName: 'label',
 						label: Liferay.Language.get('name'),
@@ -667,6 +668,7 @@ const CustomDataSets = ({
 				itemsActions={[
 					{
 						data: {
+							id: 'edit',
 							permissionKey: 'update',
 						},
 						icon: 'pencil',

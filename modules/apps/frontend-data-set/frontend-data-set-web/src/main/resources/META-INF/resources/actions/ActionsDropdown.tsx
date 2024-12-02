@@ -144,12 +144,6 @@ function ActionsDropdown({
 	) {
 		const [action] = actions;
 
-		const {data: actionData} = action;
-
-		if (actionData?.id && !action?.href) {
-			return null;
-		}
-
 		if (loading) {
 			return <ClayLoadingIndicator className="mb-2 mt-2" />;
 		}

@@ -150,8 +150,7 @@ public class PageSpecificationDTOConverter
 				LayoutPageTemplateStructure layoutPageTemplateStructure =
 					_layoutPageTemplateStructureLocalService.
 						fetchLayoutPageTemplateStructure(
-							segmentsExperience.getGroupId(),
-							segmentsExperience.getPlid());
+							segmentsExperience.getGroupId(), layout.getPlid());
 
 				LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
 					_layoutPageTemplateStructureRelLocalService.

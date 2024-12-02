@@ -1374,7 +1374,7 @@ test.describe('File Upload Fragment', () => {
 			const fileChooser = await fileChooserPromise;
 
 			await fileChooser.setFiles(
-				path.join(__dirname, '/dependencies/high_resolution_photo.jpg')
+				path.join(__dirname, '/dependencies/high_resolution_image.jpg')
 			);
 
 			await expect(

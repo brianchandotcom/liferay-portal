@@ -132,6 +132,10 @@ public class FDSSamplePortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						"ImageURL", "imageURL", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 						"Size", "size", false)));
 
 		objectDefinition =
@@ -157,6 +161,8 @@ public class FDSSamplePortlet extends MVCPortlet {
 					"date", calendar.getTime()
 				).put(
 					"description", "This is a description for sample " + i + "."
+				).put(
+					"imageURL", "/image/company_logo"
 				).put(
 					"size", sizes[i % 6]
 				).put(

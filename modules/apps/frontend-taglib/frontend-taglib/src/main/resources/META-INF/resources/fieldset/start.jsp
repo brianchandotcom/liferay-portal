@@ -30,10 +30,10 @@ else if (collapsible) {
 
 					<c:if test="<%= Validator.isNotNull(helpMessage) %>">
 						<clay:icon
-							aria-label="<%= helpMessage %>"
+							aria-label="<%= LanguageUtil.get(request, helpMessage) %>"
 							cssClass="lfr-portal-tooltip"
 							symbol="question-circle-full"
-							title="<%= helpMessage %>"
+							title="<%= LanguageUtil.get(request, helpMessage) %>"
 						/>
 					</c:if>
 

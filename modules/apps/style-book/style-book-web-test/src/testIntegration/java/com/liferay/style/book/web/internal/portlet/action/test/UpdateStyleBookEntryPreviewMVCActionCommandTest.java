@@ -204,9 +204,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommandTest {
 			mockLiferayPortletActionRequest, new MockActionResponse());
 	}
 
-	private void _testProcessAction(String fileName)
-		throws Exception {
-
+	private void _testProcessAction(String fileName) throws Exception {
 		FileEntry tempFileEntry = _addFileEntry(fileName);
 
 		_processAction(

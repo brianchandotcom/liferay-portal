@@ -10,12 +10,14 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 
 export class VocabulariesEditPage {
 	readonly deleteButton: Locator;
+	readonly descriptionInput: Locator;
 	readonly nameInput: Locator;
 	readonly saveButton: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
 		this.deleteButton = page.getByRole('button', {name: 'Delete'});
+		this.descriptionInput = page.getByPlaceholder('Description');
 		this.nameInput = page.getByPlaceholder('Name');
 		this.saveButton = page.getByRole('button', {
 			name: 'Save',
@@ -23,8 +25,13 @@ export class VocabulariesEditPage {
 		this.page = page;
 	}
 
-	async add(name: string) {
+	async add(name: string, description?: string) {
 		await this.fillName(name);
+
+		if (description) {
+			await this.fillDescription(description);
+		}
+
 		await this.page.on('dialog', (dialog) => dialog.accept());
 		await this.saveButton.click();
 		await waitForAlert(this.page);
@@ -40,6 +47,10 @@ export class VocabulariesEditPage {
 		});
 
 		await this.deleteButton.click();
+	}
+
+	async fillDescription(description: string) {
+		await this.descriptionInput.fill(description);
 	}
 
 	async fillName(name: string) {

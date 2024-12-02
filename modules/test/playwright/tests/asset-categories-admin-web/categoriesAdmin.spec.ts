@@ -24,16 +24,19 @@ test('Add, edit and delete a vocabulary', async ({
 }) => {
 	await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
 
+	const vocabularyDescription = 'Vocabulary Description';
 	const vocabularyName = 'Vocabulary 1';
 
-	await test.step('Add a vocabulary', async () => {
+	await test.step('Add a vocabulary with description', async () => {
 		await assetCategoriesAdminPage.newVocabularyButton.click();
 
-		await vocabulariesEditPage.add(vocabularyName);
+		await vocabulariesEditPage.add(vocabularyName, vocabularyDescription);
 
 		await expect(
 			page.getByRole('heading', {name: vocabularyName})
 		).toBeVisible();
+
+		await expect(page.getByText(vocabularyDescription)).toBeVisible();
 	});
 
 	const newVocabularyName = 'Vocabulary Changed';

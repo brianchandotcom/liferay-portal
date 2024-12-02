@@ -758,7 +758,6 @@ public class TestrayManagerImpl implements TestrayManager {
 
 		String testrayCaseName = (String)testrayCasePropertiesMap.get(
 			"testray.testcase.name");
-
 		long testrayCaseTypeId = _getTestrayCaseTypeId(
 			companyId, serviceContext, testrayCache,
 			(String)testrayCasePropertiesMap.get("testray.case.type.name"),

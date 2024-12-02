@@ -2927,7 +2927,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		new ConcurrentHashMap<>();
 	private static volatile Map<String, String> _portletIdsByStrutsPath;
 	private static final Map<String, Portlet> _portletsMap =
-		new ConcurrentHashMap<>();
+		new GlobalPortletsMap();
 	private static final Map<Long, Map<String, Portlet>> _portletsMaps =
 		new ConcurrentHashMap<>();
 
@@ -2960,6 +2960,50 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 	private ServiceTracker<FriendlyURLMapper, String[]> _serviceTracker;
 	private ServiceTrackerList<Consumer<Long>> _serviceTrackerList;
+
+	private static class GlobalPortletsMap
+		extends ConcurrentHashMap<String, Portlet> {
+
+		@Override
+		public Portlet get(Object key) {
+			Portlet portlet = super.get(key);
+
+			if ((portlet != null) &&
+				(portlet.getCompanyId() == CompanyConstants.SYSTEM)) {
+
+				return portlet;
+			}
+
+			return super.get(
+				key + StringPool.AT +
+					CompanyThreadLocal.getNonsystemCompanyId());
+		}
+
+		@Override
+		public Portlet put(String key, Portlet value) {
+			if ((value == null) ||
+				(value.getCompanyId() == CompanyConstants.SYSTEM)) {
+
+				return super.put(key, value);
+			}
+
+			return super.put(key + StringPool.AT + value.getCompanyId(), value);
+		}
+
+		@Override
+		public Portlet remove(Object key) {
+			Portlet portlet = super.remove(
+				key + StringPool.AT +
+					CompanyThreadLocal.getNonsystemCompanyId());
+
+			if (portlet != null) {
+				return portlet;
+			}
+
+			return super.remove(key);
+		}
+
+	}
 
 	private class FriendlyURLMapperServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<FriendlyURLMapper, String[]> {

@@ -117,17 +117,17 @@ public class FormLayoutStructureItemImporter
 					FormStyledLayoutStructureItem.FORM_CONFIG_OTHER_ITEM_TYPE);
 			}
 
+			if (sourceMap.containsKey("formType")) {
+				formStyledLayoutStructureItem.setFormType(
+					(String)sourceMap.get("formType"));
+			}
+
 			JSONObject localizationConfigJSONObject =
 				_getLocalizationConfigJSONObject(sourceMap);
 
 			if (localizationConfigJSONObject != null) {
 				formStyledLayoutStructureItem.setLocalizationConfigJSONObject(
 					localizationConfigJSONObject);
-			}
-
-			if (sourceMap.containsKey("formType")) {
-				formStyledLayoutStructureItem.setFormType(
-					(String)sourceMap.get("formType"));
 			}
 
 			if (sourceMap.containsKey("numberOfSteps")) {

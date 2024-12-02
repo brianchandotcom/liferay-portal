@@ -82,10 +82,11 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 
 		Map<String, Map<String, String>> actions = ctCollection.getActions();
 
-		Assert.assertEquals(actions.toString(), 2, actions.size());
+		Assert.assertEquals(actions.toString(), 3, actions.size());
 
 		Assert.assertTrue(actions.containsKey("delete"));
 		Assert.assertTrue(actions.containsKey("get"));
+		Assert.assertTrue(actions.containsKey("reactivate"));
 	}
 
 	@Override

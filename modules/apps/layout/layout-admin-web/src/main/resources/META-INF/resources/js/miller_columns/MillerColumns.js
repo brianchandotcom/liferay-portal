@@ -19,7 +19,10 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import MillerColumnsColumn from './MillerColumnsColumn';
 import {DROP_POSITIONS} from './constants/dropPositions';
-import {KeyboardMovementProvider} from './contexts/KeyboardMovementContext';
+import {
+	KeyboardMovementContext,
+	KeyboardMovementProvider,
+} from './contexts/KeyboardMovementContext';
 import {KeyboardNavigationProvider} from './contexts/KeyboardNavigationContext';
 import {LayoutColumnsContext} from './contexts/LayoutColumnsContext';
 
@@ -298,21 +301,6 @@ const MillerColumns = ({
 		[getMovedItems, items, saveData]
 	);
 
-	const getDragPreviewLabel = (item) => {
-		const items = item?.items;
-
-		if (items) {
-			if (items.length > 1) {
-				return sub(Liferay.Language.get('x-elements'), items.length);
-			}
-			else {
-				const [item] = items;
-
-				return item.title;
-			}
-		}
-	};
-
 	const columnSizes = layoutColumns
 		.filter((col) => col.length)
 		.map((col) => col.length);
@@ -369,7 +357,7 @@ const MillerColumns = ({
 				rtl={rtl}
 			>
 				<DndProvider backend={HTML5Backend}>
-					<DragPreview getLabel={getDragPreviewLabel} />
+					<DragPreviewWrapper />
 
 					<div
 						className="bg-white miller-columns-row"
@@ -403,5 +391,46 @@ const MillerColumns = ({
 		</KeyboardNavigationProvider>
 	);
 };
+
+function DragPreviewWrapper() {
+	const {sources, target} = useContext(KeyboardMovementContext);
+
+	const getDragPreviewLabel = (item) => {
+		const items = sources.length ? sources : item?.items;
+
+		if (items) {
+			if (items.length > 1) {
+				return sub(Liferay.Language.get('x-elements'), items.length);
+			}
+			else {
+				const [item] = items;
+
+				return item.title;
+			}
+		}
+	};
+
+	const alignment = useMemo(() => {
+		if (!target) {
+			return null;
+		}
+
+		const {columnIndex, itemIndex, position} = target;
+
+		const column = document.querySelectorAll('.miller-columns-col')[
+			columnIndex
+		];
+
+		const item = column.querySelectorAll('.miller-columns-item')[itemIndex];
+
+		return {
+			element: item,
+			position,
+			scrollElement: document.querySelector('.miller-columns-row'),
+		};
+	}, [target]);
+
+	return <DragPreview alignment={alignment} getLabel={getDragPreviewLabel} />;
+}
 
 export default MillerColumns;

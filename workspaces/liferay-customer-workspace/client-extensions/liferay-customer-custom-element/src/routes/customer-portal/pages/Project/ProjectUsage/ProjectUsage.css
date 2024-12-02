@@ -1,4 +1,15 @@
 .cp-project-usage-page {
+	.d-grid {
+		grid-gap: var(--spacer-3);
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	}
+	
+	.empty-text {
+		background-color: var(--color-brand-primary-lighten-3);
+		border-radius: var(--border-radius-sm);
+		height: var(--btn-lg-line-height);
+	}
+
 	.fade-panel {
 		background: linear-gradient(
 			to bottom,
@@ -11,16 +22,5 @@
 		right: 0;
 		top: 0;
 		z-index: 10;
-	}
-
-	.empty-text {
-		background-color: var(--color-brand-primary-lighten-3);
-		border-radius: var(--border-radius-sm);
-		height: var(--btn-lg-line-height);
-	}
-
-	.d-grid {
-		grid-gap: var(--spacer-3);
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	}
 }

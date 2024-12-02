@@ -114,7 +114,8 @@ public class FreeMarkerFragmentEntryValidator
 					"input",
 					new InputTemplateNode(
 						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-						"name", false, false, false, false, "type", "value")
+						false, "name", false, false, false, false, "type",
+						"value")
 				).put(
 					"layoutMode", Constants.VIEW
 				).putAll(

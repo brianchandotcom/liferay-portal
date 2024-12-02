@@ -20,13 +20,14 @@ import java.util.Map;
 public class InputTemplateNode extends LinkedHashMap<String, Object> {
 
 	public InputTemplateNode(
-		String errorMessage, String helpText, String label, String name,
-		boolean readOnly, boolean required, boolean showHelpText,
+		String errorMessage, String helpText, String label, boolean localizable,
+		String name, boolean readOnly, boolean required, boolean showHelpText,
 		boolean showLabel, String type, String value) {
 
 		_errorMessage = errorMessage;
 		_helpText = helpText;
 		_label = label;
+		_localizable = localizable;
 		_name = name;
 		_readOnly = readOnly;
 		_required = required;
@@ -38,6 +39,7 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		put("errorMessage", errorMessage);
 		put("helpText", helpText);
 		put("label", label);
+		put("localizable", localizable);
 		put("name", name);
 		put("readOnly", readOnly);
 		put("required", required);
@@ -79,6 +81,10 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		return _type;
 	}
 
+	public boolean isLocalizable() {
+		return _localizable;
+	}
+
 	public boolean isReadOnly() {
 		return _readOnly;
 	}
@@ -114,6 +120,8 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 			"helpText", HtmlUtil.escape(_helpText)
 		).put(
 			"label", HtmlUtil.escape(_label)
+		).put(
+			"localizable", _localizable
 		).put(
 			"name", _name
 		).put(
@@ -164,6 +172,7 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 	private final String _errorMessage;
 	private final String _helpText;
 	private final String _label;
+	private final boolean _localizable;
 	private final String _name;
 	private final boolean _readOnly;
 	private final boolean _required;

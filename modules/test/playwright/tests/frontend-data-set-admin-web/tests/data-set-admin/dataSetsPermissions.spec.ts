@@ -56,11 +56,6 @@ async function openActionsDropdown({page, text}: {page: Page; text: string}) {
 }
 
 test.beforeEach(async ({page}) => {
-
-	// Unsure why this happens, but sometimes this can start off as not
-	// signed in, so this attempts to log in again or else the headless
-	// requests will fail.
-
 	if (
 		await page
 			.getByRole('button', {

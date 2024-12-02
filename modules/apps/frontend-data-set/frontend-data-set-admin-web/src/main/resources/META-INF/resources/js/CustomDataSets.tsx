@@ -655,7 +655,9 @@ const CustomDataSets = ({
 				{...FDS_DEFAULT_PROPS}
 				apiURL={API_URL.DATA_SETS}
 				creationMenu={
-					hasAddDataSetObjectEntryPermission ? creationMenu : undefined
+					hasAddDataSetObjectEntryPermission
+						? creationMenu
+						: undefined
 				}
 				emptyState={{
 					description: Liferay.Language.get(

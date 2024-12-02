@@ -6801,6 +6801,75 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testGetObjectEntryWithObjectValidationRule() throws Exception {
+		ObjectField integerObjectField =
+			_objectFieldLocalService.getObjectField(
+				_objectDefinition1.getObjectDefinitionId(),
+				_OBJECT_FIELD_NAME_INTEGER);
+
+		ObjectField textObjectField = _objectFieldLocalService.getObjectField(
+			_objectDefinition1.getObjectDefinitionId(),
+			_OBJECT_FIELD_NAME_TEXT);
+
+		String error = RandomTestUtil.randomString();
+
+		_objectValidationRuleLocalService.addObjectValidationRule(
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY,
+			LocalizedMapUtil.getLocalizedMap(error),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+			StringPool.BLANK, false,
+			Arrays.asList(
+				new ObjectValidationRuleSettingBuilder(
+				).name(
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
+				).value(
+					String.valueOf(integerObjectField.getObjectFieldId())
+				).build(),
+				new ObjectValidationRuleSettingBuilder(
+				).name(
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
+				).value(
+					String.valueOf(textObjectField.getObjectFieldId())
+				).build()));
+
+		Integer randomInt = RandomTestUtil.randomInt();
+		String randomString = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_INTEGER, randomInt
+				).put(
+					_OBJECT_FIELD_NAME_TEXT, randomString
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"detail", "[{\"errorMessage\":\"" + error + "\"}]"
+			).put(
+				"status", "BAD_REQUEST"
+			).put(
+				"type", "ObjectValidationRuleEngineException"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_INTEGER, randomInt
+				).put(
+					_OBJECT_FIELD_NAME_TEXT, randomString
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
 	public void testGetObjectEntryWithTaxonomyCategories() throws Exception {
 		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory();
 		TaxonomyCategory taxonomyCategory2 = _addTaxonomyCategory();
@@ -6996,75 +7065,6 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(
 			itemJSONObject.getLong("id"),
 			_siteScopedObjectEntry1.getObjectEntryId());
-	}
-
-	@Test
-	public void testGetObjectEntryWithObjectValidationRule() throws Exception {
-		ObjectField integerObjectField =
-			_objectFieldLocalService.getObjectField(
-				_objectDefinition1.getObjectDefinitionId(),
-				_OBJECT_FIELD_NAME_INTEGER);
-
-		ObjectField textObjectField = _objectFieldLocalService.getObjectField(
-			_objectDefinition1.getObjectDefinitionId(),
-			_OBJECT_FIELD_NAME_TEXT);
-
-		String error = RandomTestUtil.randomString();
-
-		_objectValidationRuleLocalService.addObjectValidationRule(
-			StringPool.BLANK, TestPropsValues.getUserId(),
-			_objectDefinition1.getObjectDefinitionId(), true,
-			ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY,
-			LocalizedMapUtil.getLocalizedMap(error),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-			StringPool.BLANK, false,
-			Arrays.asList(
-				new ObjectValidationRuleSettingBuilder(
-				).name(
-					ObjectValidationRuleSettingConstants.
-						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
-				).value(
-					String.valueOf(integerObjectField.getObjectFieldId())
-				).build(),
-				new ObjectValidationRuleSettingBuilder(
-				).name(
-					ObjectValidationRuleSettingConstants.
-						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
-				).value(
-					String.valueOf(textObjectField.getObjectFieldId())
-				).build()));
-
-		Integer randomInt = RandomTestUtil.randomInt();
-		String randomString = RandomTestUtil.randomString();
-
-		Assert.assertEquals(
-			200,
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_INTEGER, randomInt
-				).put(
-					_OBJECT_FIELD_NAME_TEXT, randomString
-				).toString(),
-				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"detail", "[{\"errorMessage\":\"" + error + "\"}]"
-			).put(
-				"status", "BAD_REQUEST"
-			).put(
-				"type", "ObjectValidationRuleEngineException"
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_INTEGER, randomInt
-				).put(
-					_OBJECT_FIELD_NAME_TEXT, randomString
-				).toString(),
-				_objectDefinition1.getRESTContextPath(), Http.Method.POST
-			).toString(),
-			JSONCompareMode.LENIENT);
 	}
 
 	@Test

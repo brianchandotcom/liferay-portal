@@ -115,13 +115,11 @@ public class PageSpecificationResourceTest
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
-		_testGetSiteSiteByExternalReferenceCodePageSpecification(
-			_addLayout(LayoutConstants.TYPE_PORTLET, serviceContext));
-
 		_testGetSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
 			_addLayout(LayoutConstants.TYPE_CONTENT, serviceContext),
 			serviceContext);
-
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(
+			_addLayout(LayoutConstants.TYPE_PORTLET, serviceContext));
 		_testGetSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
 			_getBasicLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);

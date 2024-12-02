@@ -15,6 +15,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.web.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -66,6 +67,11 @@ public class ObjectEntryAssetRendererFactory
 		objectEntryAssetRenderer.setServletContext(_servletContext);
 
 		return objectEntryAssetRenderer;
+	}
+
+	@Override
+	public String getIconCssClass() {
+		return StringPool.BLANK;
 	}
 
 	@Override

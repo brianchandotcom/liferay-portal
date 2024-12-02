@@ -657,11 +657,8 @@ public class FragmentDisplayContext {
 				verticalNavItem -> {
 					verticalNavItem.addIcon(
 						IconItem.of("lock", StringPool.BLANK));
-
-					if (fragmentCollectionContributor.isDeprecated()) {
-						verticalNavItem.setDeprecated(true);
-					}
-
+					verticalNavItem.setDeprecated(
+						fragmentCollectionContributor.isDeprecated());
 					verticalNavItem.setActive(
 						Objects.equals(
 							fragmentCollectionContributor.

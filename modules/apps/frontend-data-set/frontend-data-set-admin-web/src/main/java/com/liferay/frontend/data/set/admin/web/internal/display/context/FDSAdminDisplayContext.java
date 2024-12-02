@@ -245,7 +245,7 @@ public class FDSAdminDisplayContext {
 			));
 	}
 
-	public boolean hasAddObjectEntryPermission() {
+	public boolean hasAddDataSetObjectEntryPermission() {
 		PortletResourcePermission portletResourcePermission =
 			ObjectDefinitionPortletResourcePermissionRegistryUtil.getService(
 				_dataSetObjectDefinition.getResourceName());

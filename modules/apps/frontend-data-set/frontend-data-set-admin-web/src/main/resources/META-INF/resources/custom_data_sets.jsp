@@ -18,7 +18,7 @@ portletDisplay.setBeta(true);
 			HashMapBuilder.<String, Object>put(
 				"editDataSetURL", fdsAdminDisplayContext.getEditDataSetURL()
 			).put(
-				"hasAddObjectEntryPermission", fdsAdminDisplayContext.hasAddObjectEntryPermission()
+				"hasAddDataSetObjectEntryPermission", fdsAdminDisplayContext.hasAddDataSetObjectEntryPermission()
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(

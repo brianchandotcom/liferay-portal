@@ -15,7 +15,7 @@ export default function propsTransformer({...otherProps}: any) {
 		name: 'carouselViewRenderer',
 		schema: {
 			description: 'description',
-			image: '',
+			image: 'imageURL',
 			link: '',
 			sticker: '',
 			symbol: '',

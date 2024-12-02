@@ -2536,66 +2536,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.osgi.web.servlet.jsp.compiler.jar!tomcat-api.jar</file-name>
-				<version>9.0.97</version>
-				<project-name>tomcat-api</project-name>
-				<project-url>https://tomcat.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.osgi.web.servlet.jsp.compiler.jar!tomcat-jasper.jar</file-name>
-				<version>9.0.97</version>
-				<project-name>tomcat-jasper</project-name>
-				<project-url>https://tomcat.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.osgi.web.servlet.jsp.compiler.jar!tomcat-juli.jar</file-name>
-				<version>9.0.97</version>
-				<project-name>tomcat-juli</project-name>
-				<project-url>https://tomcat.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.osgi.web.servlet.jsp.compiler.jar!tomcat-util-scan.jar</file-name>
-				<version>9.0.97</version>
-				<project-name>tomcat-util-scan</project-name>
-				<project-url>https://tomcat.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.osgi.web.servlet.jsp.compiler.jar!tomcat-util.jar</file-name>
-				<version>9.0.97</version>
-				<project-name>tomcat-util</project-name>
-				<project-url>https://tomcat.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.osgi.web.wab.extender.jar!javax.servlet.jsp.jar</file-name>
 				<version>2.3.3-b02.LIFERAY-PATCHED-10</version>
 				<project-name>JSP implementation</project-name>
@@ -7165,7 +7105,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-context.jar</file-name>
-				<version>5.3.39</version>
+				<version>5.3.39.LIFERAY-PATCHED-1</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>

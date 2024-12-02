@@ -293,7 +293,7 @@ function getNextTarget({
 			candidate = {
 				columnIndex: columnIndex - 1,
 				itemIndex: 0,
-				position: 'bottom',
+				position: 'top',
 			};
 		}
 	}
@@ -305,7 +305,7 @@ function getNextTarget({
 			candidate = {
 				columnIndex: columnIndex + 1,
 				itemIndex: 0,
-				position: 'bottom',
+				position: 'top',
 			};
 		}
 	}
@@ -327,6 +327,7 @@ function getNextTarget({
 	if (
 		candidateItem &&
 		isValidMovement({
+			allowSelfTarget: key === 'ArrowLeft' || key === 'ArrowRight',
 			dropPosition: candidate.position,
 			sources,
 			target: candidateItem,

@@ -7,19 +7,27 @@ import {DropPosition} from '../constants/dropPositions';
 import {MillerColumnItem} from '../types/MillerColumnItem';
 
 type Props = {
+	allowSelfTarget?: boolean;
 	dropPosition: DropPosition;
 	sources: MillerColumnItem[];
 	target: MillerColumnItem;
 };
 
-export function isValidMovement({dropPosition, sources, target}: Props) {
+export function isValidMovement({
+	allowSelfTarget = false,
+	dropPosition,
+	sources,
+	target,
+}: Props) {
 	if (!sources.length || !target) {
 		return false;
 	}
 
 	if (
 		sources.some(
-			(source) => source.id === target.id || source.id === target.parentId
+			(source) =>
+				(source.id === target.id && !allowSelfTarget) ||
+				source.id === target.parentId
 		)
 	) {
 		return false;
@@ -28,6 +36,7 @@ export function isValidMovement({dropPosition, sources, target}: Props) {
 	if (dropPosition === 'top') {
 		return sources.every(
 			(source) =>
+				allowSelfTarget ||
 				target.columnIndex !== source.columnIndex ||
 				target.itemIndex < source.itemIndex ||
 				target.itemIndex > source.itemIndex + 1
@@ -36,6 +45,7 @@ export function isValidMovement({dropPosition, sources, target}: Props) {
 	else if (dropPosition === 'bottom') {
 		return sources.every(
 			(source) =>
+				allowSelfTarget ||
 				target.columnIndex !== source.columnIndex ||
 				target.itemIndex > source.itemIndex ||
 				target.itemIndex < source.itemIndex - 1

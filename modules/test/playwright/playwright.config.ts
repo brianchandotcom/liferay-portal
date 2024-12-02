@@ -23,6 +23,7 @@ import {config as calendarWebConfig} from './tests/calendar-web/config';
 import {config as captchaWebConfig} from './tests/captcha-web/config';
 import {config as changeTrackingWebConfig} from './tests/change-tracking-web/config';
 import {config as clientExtensionWebConfig} from './tests/client-extension-web/config';
+import {config as clusterTestConfig} from './tests/cluster-test/config';
 import {config as commerceAccountWebConfig} from './tests/commerce/commerce-account-web/config';
 import {config as commerceCartContentWebConfig} from './tests/commerce/commerce-cart-content-web/config';
 import {config as commerceChannelWebConfig} from './tests/commerce/commerce-channel-web/config';
@@ -144,6 +145,7 @@ export default defineConfig({
 		captchaWebConfig,
 		changeTrackingWebConfig,
 		clientExtensionWebConfig,
+		clusterTestConfig,
 		commerceAccountWebConfig,
 		commerceCartContentWebConfig,
 		commerceChannelWebConfig,

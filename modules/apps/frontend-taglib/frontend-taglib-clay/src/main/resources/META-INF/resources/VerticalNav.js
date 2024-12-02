@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayBadge from '@clayui/badge';
 import {VerticalNav as ClayVerticalNav} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import {FeatureIndicator} from 'frontend-js-components-web';
 import React from 'react';
 
 export default function VerticalNav({
@@ -58,12 +58,9 @@ export default function VerticalNav({
 					})}
 
 					{item.deprecated ? (
-						<ClayBadge
-							className="c-ml-2 text-uppercase"
-							displayType="warning"
-							label={Liferay.Language.get('deprecated')}
-							translucent
-						/>
+						<span className="c-ml-2">
+							<FeatureIndicator type="deprecated" />
+						</span>
 					) : null}
 				</ClayVerticalNav.Item>
 			)}

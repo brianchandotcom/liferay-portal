@@ -6,6 +6,7 @@
 package com.liferay.portal.db.partition.internal.instance.lifecycle;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -53,7 +54,19 @@ public class ConfigurationPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		if (!DBPartition.isPartitionEnabled() ||
-			!PortalInstances.isCompanyInCopyProcess()) {
+			(!PortalInstances.isCompanyInCopyProcess() &&
+			 !PortalInstances.isCompanyInInsertionProcess())) {
+
+			return;
+		}
+
+		if (PortalInstances.isCompanyInInsertionProcess()) {
+			Map<String, String> configurations =
+				DBPartitionUtil.getConfigurations(company.getCompanyId());
+
+			for (String configurationId : configurations.keySet()) {
+				_reloadablePersistenceManager.reload(configurationId);
+			}
 
 			return;
 		}
@@ -110,5 +123,8 @@ public class ConfigurationPortalInstanceLifecycleListener
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ReloadablePersistenceManager _reloadablePersistenceManager;
 
 }

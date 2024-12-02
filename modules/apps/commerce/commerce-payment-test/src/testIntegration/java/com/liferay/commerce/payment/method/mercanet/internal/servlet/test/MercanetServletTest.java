@@ -53,13 +53,14 @@ public class MercanetServletTest {
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
+		mockHttpServletRequest.addParameter("Data", "data");
+
 		String redirect = "https://www.google.com";
 
 		mockHttpServletRequest.addParameter("redirect", redirect);
 
 		mockHttpServletRequest.addParameter("type", "normal");
 		mockHttpServletRequest.setAttribute(WebKeys.USER, user);
-		mockHttpServletRequest.setParameter("Data", "data");
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

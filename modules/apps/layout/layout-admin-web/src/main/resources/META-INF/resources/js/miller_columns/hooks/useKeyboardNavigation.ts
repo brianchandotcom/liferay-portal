@@ -66,20 +66,22 @@ export function useKeyboardNavigation({
 				return;
 			}
 
-			event.preventDefault();
+			// Navigate to item if pressing Enter on anchor
 
-			// Navigate to item if pressing Enter
-
-			const anchor = element.querySelector('a');
-
-			if (key === 'Enter' && event.target === anchor) {
+			if (key === 'Enter') {
+				const anchor = element.querySelector('a');
 
 				// Store item id in session so we can focus it after navigate
 
-				setSessionState(id, 'navigate');
+				if (event.target === anchor) {
+					setSessionState(id, 'navigate');
+					navigate(item.url);
+				}
 
-				navigate(item.url);
+				return;
 			}
+
+			event.preventDefault();
 
 			// Load children if pressing Arrow Right when item is active
 

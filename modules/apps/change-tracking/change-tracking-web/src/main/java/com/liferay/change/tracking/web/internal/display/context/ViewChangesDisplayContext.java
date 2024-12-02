@@ -582,8 +582,11 @@ public class ViewChangesDisplayContext {
 		).put(
 			"discardURL",
 			() -> {
-				if (_ctCollection.getStatus() !=
-						WorkflowConstants.STATUS_DRAFT) {
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_DRAFT) ||
+					!CTCollectionPermission.contains(
+						_themeDisplay.getPermissionChecker(), _ctCollection,
+						ActionKeys.DELETE)) {
 
 					return null;
 				}
@@ -627,8 +630,11 @@ public class ViewChangesDisplayContext {
 		).put(
 			"moveChangesURL",
 			() -> {
-				if (_ctCollection.getStatus() !=
-						WorkflowConstants.STATUS_DRAFT) {
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_DRAFT) ||
+					!CTCollectionPermission.contains(
+						_themeDisplay.getPermissionChecker(), _ctCollection,
+						ActionKeys.UPDATE)) {
 
 					return null;
 				}

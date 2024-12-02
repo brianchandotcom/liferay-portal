@@ -50,15 +50,15 @@ public class ClientExtensionsServicePreAction extends Action {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		Layout layout = _getLayout(httpServletRequest);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = _getLayout(httpServletRequest, themeDisplay);
 
 		if (layout == null) {
 			return;
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setFaviconURL(_getFaviconURL(layout));
 
@@ -170,10 +170,8 @@ public class ClientExtensionsServicePreAction extends Action {
 		return null;
 	}
 
-	private Layout _getLayout(HttpServletRequest httpServletRequest) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+	private Layout _getLayout(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
 
 		Layout layout = themeDisplay.getLayout();
 

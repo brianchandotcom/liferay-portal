@@ -2,9 +2,12 @@ import com.liferay.gradle.plugins.node.task.ExecutePackageManagerTask
 import com.liferay.gradle.plugins.node.task.PackageRunTask
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.GradleUtil
+import com.liferay.gradle.util.Validator
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 import groovy.json.JsonSlurper
+
+import java.nio.file.Path
 
 import java.util.Objects
 import java.util.concurrent.ConcurrentSkipListSet
@@ -22,6 +25,10 @@ import org.gradle.util.GUtil
 
 buildscript {
 	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
+
+	dependencies {
+		classpath group: "org.eclipse.transformer", name: "org.eclipse.transformer.cli", version: "1.0.0"
+	}
 }
 
 apply plugin: "com.liferay.yarn.defaults.plugin"
@@ -49,6 +56,7 @@ task portalYarnFormatLocalChanges
 task portalYarnInstall
 
 Set<File> bndPrintJarFiles = null
+JavaVersion javaVersion = JavaVersion.current()
 
 Set<Project> implicitDependencyProjects = allprojects.findAll {
 	it.file(".lfrbuild-app-server-lib").exists() || it.file(".lfrbuild-portal-pre").exists()
@@ -724,6 +732,40 @@ gradle.beforeProject {
 			processResources {
 				mustRunAfter "formatSource"
 			}
+
+			if (Boolean.getBoolean("build.jakarta.transformer.enabled") && (javaVersion.compareTo(JavaVersion.VERSION_17) >= 0) && _containsProject(project, System.getProperty("build.jakarta.transformer.include.dirs"), rootDir.parentFile)) {
+				task jakartaTransformer
+
+				File jakartaTransformerDir = file("$buildDir/jakarta-transformer")
+
+				configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+					jakartaTransformer.dependsOn "${it.dependencyProject.path}:jar"
+				}
+
+				tasks.withType(JavaCompile) {
+					classpath = files(jakartaTransformerDir)
+				}
+
+				compileJava {
+					dependsOn jakartaTransformer
+				}
+
+				jakartaTransformer {
+					doLast {
+						configurations.compileClasspath.files.each {
+							String jakartaFileName = it.name.contains('.') ? it.name.replaceFirst(/(\.[^.]+)$/, '-JAKARTA-SNAPSHOT$1') : it.name
+
+							File jakartaFile = new File(jakartaTransformerDir, jakartaFileName)
+
+							org.eclipse.transformer.cli.JakartaTransformerCLI.runWith(
+								new org.eclipse.transformer.cli.JakartaTransformerCLI(
+									System.out, System.out, new String[] {it.getAbsolutePath(), jakartaFile.getAbsolutePath()}))
+
+							logger.lifecycle "Jakarta: ${project.name} ${it.name} -> ${FileUtil.relativize(jakartaFile, project.projectDir.parentFile)}"
+						}
+					}
+				}
+			}
 		}
 
 		pluginManager.withPlugin("org.ysb33r.gradletest") {
@@ -818,6 +860,30 @@ gradle.taskGraph.whenReady {
 			}
 		}
 	}
+}
+
+private boolean _containsProject(
+	Project project, String dirNames, File portalRootDir) {
+
+	if (Validator.isNull(dirNames) || (portalRootDir == null)) {
+		return false
+	}
+
+	File portalModulesDir = new File(portalRootDir, "modules")
+
+	Path portalModulesPath = portalModulesDir.toPath()
+
+	File projectDir = project.getProjectDir()
+
+	Path projectPath = projectDir.toPath()
+
+	for (String dirName : dirNames.split(",")) {
+		if (projectPath.startsWith(portalModulesPath.resolve(dirName))) {
+			return true
+		}
+	}
+
+	return false
 }
 
 private List<String> _getTestClasses(Task task) {

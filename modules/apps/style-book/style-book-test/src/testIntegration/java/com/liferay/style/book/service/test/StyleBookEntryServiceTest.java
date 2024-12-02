@@ -6,6 +6,8 @@
 package com.liferay.style.book.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -122,6 +124,56 @@ public class StyleBookEntryServiceTest {
 	}
 
 	@Test
+	public void testFetchStyleBookEntryByExternalReferenceCode()
+		throws Exception {
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryService.addStyleBookEntry(
+				RandomTestUtil.randomString(), _group.getGroupId(),
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), _serviceContext);
+
+		StyleBookEntry curStyleBookEntry =
+			_styleBookEntryService.fetchStyleBookEntryByExternalReferenceCode(
+				styleBookEntry.getExternalReferenceCode(),
+				styleBookEntry.getGroupId());
+
+		Assert.assertEquals(
+			styleBookEntry.getStyleBookEntryId(),
+			curStyleBookEntry.getStyleBookEntryId());
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, StyleBookEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(styleBookEntry.getStyleBookEntryId()),
+			ActionKeys.VIEW);
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.SITE_MEMBER, StyleBookEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(styleBookEntry.getStyleBookEntryId()),
+			ActionKeys.VIEW);
+
+		try {
+			UserTestUtil.setUser(
+				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+
+			_styleBookEntryService.fetchStyleBookEntryByExternalReferenceCode(
+				styleBookEntry.getExternalReferenceCode(),
+				styleBookEntry.getGroupId());
+
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
+		}
+		finally {
+			UserTestUtil.setUser(TestPropsValues.getUser());
+		}
+	}
+
+	@Test
 	public void testGetStyleBookEntryByExternalReferenceCode()
 		throws Exception {
 
@@ -167,6 +219,9 @@ public class StyleBookEntryServiceTest {
 			UserTestUtil.setUser(TestPropsValues.getUser());
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StyleBookEntryServiceTest.class);
 
 	@DeleteAfterTestRun
 	private Group _group;

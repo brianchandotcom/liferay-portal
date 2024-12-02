@@ -23,6 +23,7 @@ import getItemWidget from '../getItemWidget';
 import getWidget from '../getWidget';
 import {hasCollectionParent} from '../hasCollectionParent';
 import {hasFormStepParent} from '../hasFormStepParent';
+import isLocalizationSelect from '../isLocalizationSelect';
 import {isMultistepForm} from '../isMultistepForm';
 import isStepper from '../isStepper';
 import {isUnmappedCollection} from '../isUnmappedCollection';
@@ -177,7 +178,8 @@ export default function checkAllowedChild(
 		else {
 			if (
 				child.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input &&
-				!formParent
+				!formParent &&
+				!isLocalizationSelect(child)
 			) {
 				return {reason: 'input-outside-form', valid: false};
 			}

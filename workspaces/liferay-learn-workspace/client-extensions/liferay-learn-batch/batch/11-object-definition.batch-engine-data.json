@@ -1,0 +1,114 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableLocalization": true,
+			"externalReferenceCode": "P2S3_QUIZ_ANSWER",
+			"label": {
+				"en_US": "P2S3 Quiz Answer"
+			},
+			"name": "P2S3QuizAnswer",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "ANSWER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Answer"
+					},
+					"localized": true,
+					"name": "answer",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"localized": false,
+					"name": "name",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "POSITION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Position"
+					},
+					"localized": false,
+					"name": "position",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "Integer",
+					"unique": false
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "SCORE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Score"
+					},
+					"localized": false,
+					"name": "score",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "Integer",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"pluralLabel": {
+				"en_US": "P2S3 Quiz Answers"
+			},
+			"restContextPath": "/o/c/p2s3quizanswers",
+			"scope": "site",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"titleObjectFieldName": "name"
+		}
+	]
+}

@@ -7,6 +7,7 @@ package com.liferay.fragment.collection.contributor.featured.content;
 
 import com.liferay.fragment.contributor.BaseFragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import javax.servlet.ServletContext;
 
@@ -36,6 +37,11 @@ public class FeaturedContentFragmentCollectionContributor
 	@Override
 	public boolean isDeprecated() {
 		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return FeatureFlagManagerUtil.isEnabled("LPD-40529");
 	}
 
 	@Reference(

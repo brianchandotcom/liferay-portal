@@ -1,5 +1,9 @@
-.sv-content {
-	width: 90rem;
+.sv-header {
+	background: linear-gradient(to bottom, #00256C 3%, #0038A3 23%, #0B5FFF 42%, #00A4FA 61%, #2EB7FFCC 74%, #FFFFFF80 94%);
+}
+
+.sv-table-content {
+	width: 118rem;
 
 	.sv-priority-summary {
 		.sv-severity {
@@ -9,4 +13,9 @@
 			min-width: 3.125rem;
 		}
 	}
+
+	.sv-name-link {
+		text-decoration-line: none;
+	}
 }
+

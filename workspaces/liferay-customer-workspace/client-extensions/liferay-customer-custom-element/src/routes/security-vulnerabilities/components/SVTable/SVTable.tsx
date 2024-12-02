@@ -7,8 +7,6 @@ import ClayTable from '@clayui/table';
 
 import './SVTable.css';
 
-import i18n from '~/common/I18n';
-
 export interface IColumn {
 	columnKey: string;
 	label: string;
@@ -40,32 +38,17 @@ const SVTable = ({columns, rows}: IProps) => {
 			</ClayTable.Head>
 
 			<ClayTable.Body align="left">
-				{rows.length ? (
-					rows.map((row, index) => (
-						<ClayTable.Row key={index}>
-							{columns.map((column) => (
-								<ClayTable.Cell key={column.columnKey}>
-									{column.columnKey === 'prioritySummary'
-										? row[column.columnKey]
-										: row[column.columnKey]}
-								</ClayTable.Cell>
-							))}
-						</ClayTable.Row>
-					))
-				) : (
-					<ClayTable.Row>
-						<ClayTable.Cell
-							className="font-weight-semi-bold m-3 text-center text-neutral-10"
-							colSpan={5}
-						>
-							<div className="py-2">
-								{i18n.translate(
-									'the-requested-search-does-not-exist-in-our-database-please-try-again-with-different-criteria'
-								)}
-							</div>
-						</ClayTable.Cell>
+				{rows.map((row, index) => (
+					<ClayTable.Row key={index}>
+						{columns.map((column) => (
+							<ClayTable.Cell key={column.columnKey}>
+								{column.columnKey === 'prioritySummary'
+									? row[column.columnKey]
+									: row[column.columnKey]}
+							</ClayTable.Cell>
+						))}
 					</ClayTable.Row>
-				)}
+				))}
 			</ClayTable.Body>
 		</ClayTable>
 	);

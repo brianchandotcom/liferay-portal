@@ -23,9 +23,4 @@
 	& thead {
 		background-color: var(--color-neutral-1);
 	}
-
-	.ticket-name-link {
-		font-size: var(--h3-font-size);
-		font-weight: var(--font-weight-semi-bold);
-	}
 }

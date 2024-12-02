@@ -12,6 +12,7 @@ export interface IJiraFields {
 	[JiraEnum.AFFECTED_VERSIONS]?: string[];
 	[JiraEnum.CATEGORY]?: string;
 	[JiraEnum.CLASSIFICATION]?: string;
+	[JiraEnum.CVE_IDS]?: string;
 	[JiraEnum.DESCRIPTION]?: string;
 	[JiraEnum.FIX_VERSIONS]?: string[];
 	[JiraEnum.PUBLISHED_DATE]?: string;

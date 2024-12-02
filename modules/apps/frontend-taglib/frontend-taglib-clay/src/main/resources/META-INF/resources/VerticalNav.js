@@ -49,7 +49,7 @@ export default function VerticalNav({
 					{item.icons?.map((icon) => {
 						return (
 							<ClayIcon
-								className="c-ml-1 text-muted"
+								className="c-ml-2 text-muted"
 								key={icon.symbol}
 								symbol={icon.symbol}
 								title={icon.title}

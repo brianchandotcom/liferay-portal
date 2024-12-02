@@ -13,9 +13,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.layout.model.LayoutLocalization;
 import com.liferay.layout.model.LayoutLocalizationTable;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -53,17 +51,16 @@ public class LayoutLocalizationUpgradeProcess extends UpgradeProcess {
 							WorkflowConstants.STATUS_DRAFT)
 					))) {
 
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ctCollection.getCtCollectionId())) {
-
-				for (CTEntry ctEntry :
-						(List<CTEntry>)_ctEntryLocalService.dslQuery(
-							DSLQueryFactoryUtil.select(
-								CTEntryTable.INSTANCE
-							).from(
-								CTEntryTable.INSTANCE
-							).where(
+			for (CTEntry ctEntry :
+					(List<CTEntry>)_ctEntryLocalService.dslQuery(
+						DSLQueryFactoryUtil.select(
+							CTEntryTable.INSTANCE
+						).from(
+							CTEntryTable.INSTANCE
+						).where(
+							CTEntryTable.INSTANCE.ctCollectionId.eq(
+								ctCollection.getCtCollectionId()
+							).and(
 								CTEntryTable.INSTANCE.modelClassNameId.eq(
 									_portal.getClassNameId(
 										LayoutLocalization.class.getName())
@@ -76,10 +73,10 @@ public class LayoutLocalizationUpgradeProcess extends UpgradeProcess {
 											LayoutLocalizationTable.INSTANCE
 										))
 								)
-							))) {
+							)
+						))) {
 
-					_ctEntryLocalService.deleteCTEntry(ctEntry);
-				}
+				_ctEntryLocalService.deleteCTEntry(ctEntry);
 			}
 		}
 	}

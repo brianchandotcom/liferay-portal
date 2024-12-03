@@ -94,66 +94,6 @@ definition {
 		}
 	}
 
-	@description = "Add a category with Guest view permission."
-	@priority = 4
-	test AddCategoryWithGuestViewPermission {
-		task ("Add a category") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("View the category with Guest view permission") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Category.viewCategoryViewableByCP(
-				categoryName = "Category Name",
-				viewableBy = "Anyone (Guest Role)",
-				vocabularyName = "Vocabulary Name");
-		}
-	}
-
-	@description = "Add a category with Owner view permission."
-	@priority = 4
-	test AddCategoryWithOwnerViewPermission {
-		task ("Add a category") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("View the category with Owner view permission") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Category.viewCategoryViewableByCP(
-				categoryName = "Category Name",
-				viewableBy = "Owner",
-				vocabularyName = "Vocabulary Name");
-		}
-	}
-
-	@description = "Add a category with Site Member view permission."
-	@priority = 4
-	test AddCategoryWithSiteMemberViewPermission {
-		task ("Add a category") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("View the category with Site Member view permission") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Category.viewCategoryViewableByCP(
-				categoryName = "Category Name",
-				viewableBy = "Site Members",
-				vocabularyName = "Vocabulary Name");
-		}
-	}
-
 	@description = "Add a property in subcategory."
 	@priority = 3
 	test AddSubcategoryProperty {

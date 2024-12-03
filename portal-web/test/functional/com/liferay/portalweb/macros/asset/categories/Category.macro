@@ -508,29 +508,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCategoryViewableByCP(viewableBy = null, vocabularyName = null, categoryName = null) {
-		Navigator.gotoNavNested(navNested = ${vocabularyName});
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Permissions",
-			rowEntry = ${categoryName});
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		if (${viewableBy} == "Anyone (Guest Role)") {
-			AssertChecked.assertCheckedNotVisible(locator1 = "AssetPermissions#GUEST_VIEW_CHECKBOX");
-		}
-		else if (${viewableBy} == "Owner") {
-			AssertChecked.assertCheckedNotVisible(locator1 = "AssetPermissions#OWNER_VIEW_CHECKBOX");
-		}
-		else if (${viewableBy} == "Site Members") {
-			AssertChecked.assertCheckedNotVisible(locator1 = "AssetPermissions#SITE_MEMBER_VIEW_CHECKBOX");
-		}
-
-		SelectFrameTop(value1 = "relative=top");
-	}
-
-	@summary = "Default summary"
 	macro viewCP(vocabularyName = null, categoryName = null) {
 		var key_categoryName = ${categoryName};
 

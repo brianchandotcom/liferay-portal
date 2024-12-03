@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -68,6 +70,66 @@ public class AssetCategoryServiceTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Test
+	public void testAddCategoryWithGuestViewPermission() throws Exception {
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Role ownerRole = _roleLocalService.getRole(
+			_group.getCompanyId(), RoleConstants.GUEST);
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				_group.getCompanyId(), AssetCategory.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(assetCategory.getPrimaryKey()),
+				ownerRole.getRoleId());
+
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+	}
+
+	@Test
+	public void testAddCategoryWithOwnerViewPermission() throws Exception {
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Role ownerRole = _roleLocalService.getRole(
+			_group.getCompanyId(), RoleConstants.OWNER);
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				_group.getCompanyId(), AssetCategory.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(assetCategory.getPrimaryKey()),
+				ownerRole.getRoleId());
+
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+	}
+
+	@Test
+	public void testAddCategoryWithSiteMemberViewPermission() throws Exception {
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Role ownerRole = _roleLocalService.getRole(
+			_group.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				_group.getCompanyId(), AssetCategory.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(assetCategory.getPrimaryKey()),
+				ownerRole.getRoleId());
+
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
 	}
 
 	@Test
@@ -144,6 +206,9 @@ public class AssetCategoryServiceTest {
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

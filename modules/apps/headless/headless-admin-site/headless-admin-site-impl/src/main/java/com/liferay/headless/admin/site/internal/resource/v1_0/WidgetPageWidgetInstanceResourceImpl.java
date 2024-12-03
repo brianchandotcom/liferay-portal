@@ -256,6 +256,10 @@ public class WidgetPageWidgetInstanceResourceImpl
 				widgetPageWidgetInstance.getPosition());
 		}
 
+		layout = _layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
+
 		return _toWidgetPageWidgetInstance(layout, portletId);
 	}
 

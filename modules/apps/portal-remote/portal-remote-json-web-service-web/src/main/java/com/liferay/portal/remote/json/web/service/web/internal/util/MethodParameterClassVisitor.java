@@ -6,8 +6,10 @@
 package com.liferay.portal.remote.json.web.service.web.internal.util;
 
 import com.liferay.portal.kernel.util.MethodParameter;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,8 +44,26 @@ public class MethodParameterClassVisitor extends ClassVisitor {
 			return null;
 		}
 
+		int parameterCount = _method.getParameterCount();
+
+		if (!Modifier.isStatic(_method.getModifiers())) {
+			parameterCount++;
+		}
+
+		Class<?>[] parameterTypes = _method.getParameterTypes();
+
+		for (Class<?> parameterType : parameterTypes) {
+			if (StringUtil.equalsIgnoreCase(
+					parameterType.getName(), double.class.getName()) ||
+				StringUtil.equalsIgnoreCase(
+					parameterType.getName(), long.class.getName())) {
+
+				parameterCount++;
+			}
+		}
+
 		_methodParameterMethodVisitor = new MethodParameterMethodVisitor(
-			_classLoader, _method);
+			_classLoader, _method, parameterCount);
 
 		return _methodParameterMethodVisitor;
 	}
@@ -55,8 +75,6 @@ public class MethodParameterClassVisitor extends ClassVisitor {
 
 		_classLoader = classLoader;
 		_method = method;
-
-		_methodParameterMethodVisitor = null;
 	}
 
 	private final ClassLoader _classLoader;

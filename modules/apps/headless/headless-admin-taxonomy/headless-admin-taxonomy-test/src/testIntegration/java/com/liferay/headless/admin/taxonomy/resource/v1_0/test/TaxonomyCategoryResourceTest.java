@@ -112,91 +112,8 @@ public class TaxonomyCategoryResourceTest
 	public void testGetTaxonomyCategory() throws Exception {
 		super.testGetTaxonomyCategory();
 
-		TaxonomyCategory postTaxonomyCategory =
-			testGetTaxonomyCategory_addTaxonomyCategory();
-
-		TaxonomyCategory getTaxonomyCategory =
-			taxonomyCategoryResource.getTaxonomyCategory(
-				postTaxonomyCategory.getId());
-
-		assertValid(
-			getTaxonomyCategory.getActions(),
-			HashMapBuilder.<String, Map<String, String>>put(
-				"add-category",
-				HashMapBuilder.put(
-					"href",
-					StringBundler.concat(
-						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
-						"/taxonomy-categories/", getTaxonomyCategory.getId(),
-						"/taxonomy-categories")
-				).put(
-					"method", "POST"
-				).build()
-			).put(
-				"delete",
-				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-categories/" + getTaxonomyCategory.getId()
-				).put(
-					"method", "DELETE"
-				).build()
-			).put(
-				"get",
-				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-categories/" + getTaxonomyCategory.getId()
-				).put(
-					"method", "GET"
-				).build()
-			).put(
-				"replace",
-				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-categories/" + getTaxonomyCategory.getId()
-				).put(
-					"method", "PUT"
-				).build()
-			).put(
-				"update",
-				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-categories/" + getTaxonomyCategory.getId()
-				).put(
-					"method", "PATCH"
-				).build()
-			).build());
-
-		Assert.assertNull(postTaxonomyCategory.getTaxonomyCategoryUsageCount());
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			"headless-admin-taxonomy/v1.0/taxonomy-categories/" +
-				getTaxonomyCategory.getId() +
-					"?nestedFields=taxonomyCategoryUsageCount",
-			Http.Method.GET);
-
-		Assert.assertNotNull(jsonObject.get("taxonomyCategoryUsageCount"));
-
-		_addTaxonomyCategoryWithParentTaxonomyCategory(
-			postTaxonomyCategory.getId(), randomTaxonomyCategory());
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				"headless-admin-taxonomy/v1.0/taxonomy-categories/",
-				postTaxonomyCategory.getId(), "/taxonomy-categories",
-				"?nestedFields=taxonomyCategoryUsageCount"),
-			Http.Method.GET);
-
-		JSONArray itemsJSONArray = (JSONArray)jsonObject.get("items");
-
-		JSONObject itemJSONObject = (JSONObject)itemsJSONArray.get(0);
-
-		Assert.assertNotNull(itemJSONObject.get("taxonomyCategoryUsageCount"));
+		_testGetTaxonomyCategoryTaxonomyCategoryUsageCount();
+		_testGetTaxonomyCategoryWithAssetCategoryProperty();
 	}
 
 	@Override
@@ -233,43 +150,6 @@ public class TaxonomyCategoryResourceTest
 				entityField, assetCategory2, assetCategory1, "desc",
 				parentAssetCategory);
 		}
-	}
-
-	@Test
-	public void testGetTaxonomyCategoryTaxonomyCategoryWithAssetCategoryProperty()
-		throws Exception {
-
-		TaxonomyCategory taxonomyCategory =
-			testGetTaxonomyCategoriesRankedPage_addTaxonomyCategory(
-				randomTaxonomyCategory());
-
-		String key = RandomTestUtil.randomString();
-		String value = RandomTestUtil.randomString();
-
-		_assetCategoryPropertyLocalService.addCategoryProperty(
-			TestPropsValues.getUserId(),
-			GetterUtil.getLong(taxonomyCategory.getId()), key, value);
-
-		taxonomyCategory = taxonomyCategoryResource.getTaxonomyCategory(
-			taxonomyCategory.getId());
-
-		TaxonomyCategoryProperty[] taxonomyCategoryProperties =
-			taxonomyCategory.getTaxonomyCategoryProperties();
-
-		Assert.assertNotNull(taxonomyCategoryProperties[0]);
-
-		TaxonomyCategoryProperty taxonomyCategoryProperty =
-			taxonomyCategoryProperties[0];
-
-		Assert.assertNotNull(
-			taxonomyCategoryProperty.toString(),
-			taxonomyCategoryProperty.getExternalReferenceCode());
-		Assert.assertEquals(
-			taxonomyCategoryProperty.toString(),
-			taxonomyCategoryProperty.getKey(), key);
-		Assert.assertEquals(
-			taxonomyCategoryProperty.toString(),
-			taxonomyCategoryProperty.getValue(), value);
 	}
 
 	@Override
@@ -592,6 +472,132 @@ public class TaxonomyCategoryResourceTest
 				siteId = testGroup.getGroupId();
 			}
 		};
+	}
+
+	private void _testGetTaxonomyCategoryTaxonomyCategoryUsageCount()
+		throws Exception {
+
+		TaxonomyCategory postTaxonomyCategory =
+			testGetTaxonomyCategory_addTaxonomyCategory();
+
+		TaxonomyCategory getTaxonomyCategory =
+			taxonomyCategoryResource.getTaxonomyCategory(
+				postTaxonomyCategory.getId());
+
+		assertValid(
+			getTaxonomyCategory.getActions(),
+			HashMapBuilder.<String, Map<String, String>>put(
+				"add-category",
+				HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
+						"/taxonomy-categories/", getTaxonomyCategory.getId(),
+						"/taxonomy-categories")
+				).put(
+					"method", "POST"
+				).build()
+			).put(
+				"delete",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-categories/" + getTaxonomyCategory.getId()
+				).put(
+					"method", "DELETE"
+				).build()
+			).put(
+				"get",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-categories/" + getTaxonomyCategory.getId()
+				).put(
+					"method", "GET"
+				).build()
+			).put(
+				"replace",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-categories/" + getTaxonomyCategory.getId()
+				).put(
+					"method", "PUT"
+				).build()
+			).put(
+				"update",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-categories/" + getTaxonomyCategory.getId()
+				).put(
+					"method", "PATCH"
+				).build()
+			).build());
+
+		Assert.assertNull(postTaxonomyCategory.getTaxonomyCategoryUsageCount());
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			"headless-admin-taxonomy/v1.0/taxonomy-categories/" +
+				getTaxonomyCategory.getId() +
+					"?nestedFields=taxonomyCategoryUsageCount",
+			Http.Method.GET);
+
+		Assert.assertNotNull(jsonObject.get("taxonomyCategoryUsageCount"));
+
+		_addTaxonomyCategoryWithParentTaxonomyCategory(
+			postTaxonomyCategory.getId(), randomTaxonomyCategory());
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				"headless-admin-taxonomy/v1.0/taxonomy-categories/",
+				postTaxonomyCategory.getId(), "/taxonomy-categories",
+				"?nestedFields=taxonomyCategoryUsageCount"),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = (JSONArray)jsonObject.get("items");
+
+		JSONObject itemJSONObject = (JSONObject)itemsJSONArray.get(0);
+
+		Assert.assertNotNull(itemJSONObject.get("taxonomyCategoryUsageCount"));
+	}
+
+	private void _testGetTaxonomyCategoryWithAssetCategoryProperty()
+		throws Exception {
+
+		TaxonomyCategory taxonomyCategory =
+			testGetTaxonomyCategoriesRankedPage_addTaxonomyCategory(
+				randomTaxonomyCategory());
+
+		String key = RandomTestUtil.randomString();
+		String value = RandomTestUtil.randomString();
+
+		_assetCategoryPropertyLocalService.addCategoryProperty(
+			TestPropsValues.getUserId(),
+			GetterUtil.getLong(taxonomyCategory.getId()), key, value);
+
+		taxonomyCategory = taxonomyCategoryResource.getTaxonomyCategory(
+			taxonomyCategory.getId());
+
+		TaxonomyCategoryProperty[] taxonomyCategoryProperties =
+			taxonomyCategory.getTaxonomyCategoryProperties();
+
+		Assert.assertNotNull(taxonomyCategoryProperties[0]);
+
+		TaxonomyCategoryProperty taxonomyCategoryProperty =
+			taxonomyCategoryProperties[0];
+
+		Assert.assertNotNull(
+			taxonomyCategoryProperty.toString(),
+			taxonomyCategoryProperty.getExternalReferenceCode());
+		Assert.assertEquals(
+			taxonomyCategoryProperty.toString(),
+			taxonomyCategoryProperty.getKey(), key);
+		Assert.assertEquals(
+			taxonomyCategoryProperty.toString(),
+			taxonomyCategoryProperty.getValue(), value);
 	}
 
 	private void _testGetTaxonomyVocabularyTaxonomyCategoriesPageFlatten(

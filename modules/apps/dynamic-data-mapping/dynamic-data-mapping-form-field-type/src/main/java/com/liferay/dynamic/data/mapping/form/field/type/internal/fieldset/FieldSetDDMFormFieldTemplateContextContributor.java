@@ -88,6 +88,9 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 			"ddmStructureLayoutId",
 			ddmFormField.getProperty("ddmStructureLayoutId")
 		).put(
+			"externalReferenceCode",
+			ddmFormField.getProperty("externalReferenceCode")
+		).put(
 			"nestedFields", nestedFields
 		).put(
 			"normalizedStructure",

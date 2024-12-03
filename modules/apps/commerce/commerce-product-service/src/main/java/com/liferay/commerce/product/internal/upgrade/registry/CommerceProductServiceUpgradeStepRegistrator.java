@@ -616,6 +616,33 @@ public class CommerceProductServiceUpgradeStepRegistrator
 		registry.register(
 			"5.24.0", "5.25.0", CPConfigurationListRelTable.create());
 
+		registry.register(
+			"5.25.0", "5.25.1",
+			new BaseUpgradePortletPreferences() {
+
+				@Override
+				protected String[] getPortletIds() {
+					return new String[] {
+						CPPortletKeys.CP_COMPARE_CONTENT_MINI_WEB,
+						CPPortletKeys.CP_COMPARE_CONTENT_WEB,
+						CPPortletKeys.CP_CONTENT_WEB,
+						CPPortletKeys.CP_OPTION_FACETS + "_INSTANCE_%",
+						CPPortletKeys.CP_PUBLISHER_WEB + "_INSTANCE_%",
+						CPPortletKeys.CP_SEARCH_RESULTS + "_INSTANCE_%",
+						CPPortletKeys.CP_SPECIFICATION_OPTION_FACETS +
+							"_INSTANCE_%"
+					};
+				}
+
+				@Override
+				protected void upgradePreferences(
+						long companyId, long ownerId, int ownerType, long plid,
+						String portletId, PortletPreferences portletPreferences)
+					throws Exception {
+				}
+
+			});
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

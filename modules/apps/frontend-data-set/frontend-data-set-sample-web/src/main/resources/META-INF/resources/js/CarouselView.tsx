@@ -66,17 +66,11 @@ const CarouselView = ({
 
 			<div className="item-wrapper">
 				<div className="nav-buttons">
-					<button
-						className="nav-button"
-						onClick={handlePrevClick}
-					>
+					<button className="nav-button" onClick={handlePrevClick}>
 						{'<'}
 					</button>
 
-					<button
-						className="nav-button"
-						onClick={handleNextClick}
-					>
+					<button className="nav-button" onClick={handleNextClick}>
 						{'>'}
 					</button>
 				</div>

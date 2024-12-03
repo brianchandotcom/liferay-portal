@@ -23,7 +23,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CommerceOrganizationPortletInstanceConfiguration {
 
-	@Meta.AD(deflt = "0", name = "root-organization-id", required = false)
+	@Meta.AD(
+		deflt = "", name = "root-organization-external-reference-code",
+		required = false
+	)
+	public String rootOrganizationExternalReferenceCode();
+
+	@Meta.AD(
+		deflt = "0", description = "root-organization-id-description",
+		name = "root-organization-id", required = false
+	)
 	public String rootOrganizationId();
 
 }

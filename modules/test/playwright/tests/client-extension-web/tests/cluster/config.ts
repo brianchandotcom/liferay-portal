@@ -4,8 +4,8 @@
  */
 
 export const config = {
-	name: 'cluster-test',
-	testDir: 'tests/cluster-test',
+	name: 'client-extension-web/cluster',
+	testDir: 'tests/client-extension-web/tests/cluster',
 	use: {
 		testIdAttribute: 'data-qa-id',
 	},

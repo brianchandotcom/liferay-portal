@@ -59,9 +59,15 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			layoutStructure.getLayoutStructureItem(
 				pageElement.getExternalReferenceCode()));
 
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
 		pageElementResource.deleteSiteSiteByExternalReferenceCodePageElement(
 			testGroup.getExternalReferenceCode(),
 			_layout.getExternalReferenceCode(),
+			segmentsExperience.getExternalReferenceCode(),
 			pageElement.getExternalReferenceCode());
 
 		_layout = _layoutLocalService.fetchLayout(_layout.getPlid());
@@ -77,6 +83,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				deleteSiteSiteByExternalReferenceCodePageElement(
 					testGroup.getExternalReferenceCode(),
 					_layout.getExternalReferenceCode(),
+					segmentsExperience.getExternalReferenceCode(),
 					pageElement.getExternalReferenceCode());
 
 			Assert.fail();
@@ -98,10 +105,16 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			testPostSiteSiteByExternalReferenceCodePageExperiencePageElement_addPageElement(
 				randomPageElement());
 
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
 		PageElement getPageElement =
 			pageElementResource.getSiteSiteByExternalReferenceCodePageElement(
 				testGroup.getExternalReferenceCode(),
 				_layout.getExternalReferenceCode(),
+				segmentsExperience.getExternalReferenceCode(),
 				postPageElement.getExternalReferenceCode());
 
 		assertEquals(postPageElement, getPageElement);
@@ -111,6 +124,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			pageElementResource.getSiteSiteByExternalReferenceCodePageElement(
 				testGroup.getExternalReferenceCode(),
 				_layout.getExternalReferenceCode(),
+				segmentsExperience.getExternalReferenceCode(),
 				RandomTestUtil.randomString());
 
 			Assert.fail();
@@ -178,7 +192,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	protected PageElement
 			testGetSiteSiteByExternalReferenceCodePageElementPageElementsPage_addPageElement(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode,
+				String pageSpecificationExternalReferenceCode,
+				String pageExperienceExternalReferenceCode,
 				String pageElementExternalReferenceCode,
 				PageElement pageElement)
 		throws Exception {
@@ -191,7 +206,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return pageElementResource.
 			postSiteSiteByExternalReferenceCodePageExperiencePageElement(
 				testGroup.getExternalReferenceCode(),
-				sitePageExternalReferenceCode,
+				pageSpecificationExternalReferenceCode,
 				segmentsExperience.getExternalReferenceCode(), pageElement);
 	}
 
@@ -205,20 +220,27 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return layoutStructure.getMainItemId();
 	}
 
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageElementPageElementsPage_getPageExperienceExternalReferenceCode()
+		throws Exception {
+
+		return testGetSiteSiteByExternalReferenceCodePageExperiencePageElementsPage_getPageExperienceExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageElementPageElementsPage_getPageSpecificationExternalReferenceCode()
+		throws Exception {
+
+		return _layout.getExternalReferenceCode();
+	}
+
 	@Override
 	protected String
 			testGetSiteSiteByExternalReferenceCodePageElementPageElementsPage_getSiteExternalReferenceCode()
 		throws Exception {
 
 		return testGroup.getExternalReferenceCode();
-	}
-
-	@Override
-	protected String
-			testGetSiteSiteByExternalReferenceCodePageElementPageElementsPage_getSitePageExternalReferenceCode()
-		throws Exception {
-
-		return _layout.getExternalReferenceCode();
 	}
 
 	@Override
@@ -260,18 +282,18 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Override
 	protected String
-			testGetSiteSiteByExternalReferenceCodePageExperiencePageElementsPage_getSiteExternalReferenceCode()
+			testGetSiteSiteByExternalReferenceCodePageExperiencePageElementsPage_getPageSpecificationExternalReferenceCode()
 		throws Exception {
 
-		return testGroup.getExternalReferenceCode();
+		return _layout.getExternalReferenceCode();
 	}
 
 	@Override
 	protected String
-			testGetSiteSiteByExternalReferenceCodePageExperiencePageElementsPage_getSitePageExternalReferenceCode()
+			testGetSiteSiteByExternalReferenceCodePageExperiencePageElementsPage_getSiteExternalReferenceCode()
 		throws Exception {
 
-		return _layout.getExternalReferenceCode();
+		return testGroup.getExternalReferenceCode();
 	}
 
 	@Override

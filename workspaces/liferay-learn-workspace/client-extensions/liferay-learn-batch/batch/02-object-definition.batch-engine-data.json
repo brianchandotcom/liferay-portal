@@ -125,6 +125,19 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_ASSESSMENT_TO_LEARNING_PATHS",
+					"label": {
+						"en_US": "P2S3 Assessment to P2S3 Learning Paths"
+					},
+					"name": "assessmentToLearningPaths",
+					"objectDefinitionExternalReferenceCode1": "P2S3_ASSESSMENT",
+					"objectDefinitionExternalReferenceCode2": "P2S3_LEARNING_PATH",
+					"type": "oneToMany"
+				}
+			],
 			"pluralLabel": {
 				"en_US": "P2S3 Assessments"
 			},
@@ -354,6 +367,19 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_CERTIFICATION_TO_ASSESSMENTS",
+					"label": {
+						"en_US": "P2S3 Certification to P2S3 Assessments"
+					},
+					"name": "certificationToAssessments",
+					"objectDefinitionExternalReferenceCode1": "P2S3_CERTIFICATION",
+					"objectDefinitionExternalReferenceCode2": "P2S3_ASSESSMENT",
+					"type": "oneToMany"
+				}
+			],
 			"pluralLabel": {
 				"en_US": "P2S3 Certifications"
 			},
@@ -548,6 +574,30 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_COURSE_TO_ENROLLMENTS",
+					"label": {
+						"en_US": "P2S3 Course to P2S3 Enrollments"
+					},
+					"name": "courseToEnrollments",
+					"objectDefinitionExternalReferenceCode1": "P2S3_COURSE",
+					"objectDefinitionExternalReferenceCode2": "P2S3_ENROLLMENT",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_COURSE_TO_MODULES",
+					"label": {
+						"en_US": "P2S3 Course to P2S3 Modules"
+					},
+					"name": "courseToModules",
+					"objectDefinitionExternalReferenceCode1": "P2S3_COURSE",
+					"objectDefinitionExternalReferenceCode2": "P2S3_MODULE",
+					"type": "oneToMany"
+				}
+			],
 			"pluralLabel": {
 				"en_US": "P2S3 Courses"
 			},
@@ -939,6 +989,30 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_LEARNING_PATH_TO_ENROLLMENTS",
+					"label": {
+						"en_US": "P2S3 Learning Path to P2S3 Learning Path Steps"
+					},
+					"name": "learningPathToEnrollments",
+					"objectDefinitionExternalReferenceCode1": "P2S3_LEARNING_PATH",
+					"objectDefinitionExternalReferenceCode2": "P2S3_ENROLLMENT",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_LEARNING_PATH_TO_LEARNING_PATH_STEPS",
+					"label": {
+						"en_US": "P2S3 Learning Path to P2S3 Learning Path Steps"
+					},
+					"name": "learningPathToLearningPathSteps",
+					"objectDefinitionExternalReferenceCode1": "P2S3_LEARNING_PATH",
+					"objectDefinitionExternalReferenceCode2": "P2S3_LEARNING_PATH_STEP",
+					"type": "oneToMany"
+				}
+			],
 			"pluralLabel": {
 				"en_US": "P2S3 Learning Paths"
 			},
@@ -1063,6 +1137,30 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_LEARNING_PATH_STEP_TO_COURSES",
+					"label": {
+						"en_US": "P2S3 Learning Path Step to P2S3 Courses"
+					},
+					"name": "learningPathStepToCourses",
+					"objectDefinitionExternalReferenceCode1": "P2S3_LEARNING_PATH_STEP",
+					"objectDefinitionExternalReferenceCode2": "P2S3_COURSE",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_LEARNING_PATH_STEP_TO_EXTERNAL_MEDIAS",
+					"label": {
+						"en_US": "P2S3 Learning Path Step to P2S3 External Medias"
+					},
+					"name": "learningPathStepToExternalMedias",
+					"objectDefinitionExternalReferenceCode1": "P2S3_LEARNING_PATH_STEP",
+					"objectDefinitionExternalReferenceCode2": "P2S3_EXTERNAL_MEDIA",
+					"type": "oneToMany"
+				}
+			],
 			"pluralLabel": {
 				"en_US": "P2S3 Learning Path Steps"
 			},
@@ -1359,6 +1457,30 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_MODULE_TO_LESSONS",
+					"label": {
+						"en_US": "P2S3 Module to P2S3 Lessons"
+					},
+					"name": "moduleToLessons",
+					"objectDefinitionExternalReferenceCode1": "P2S3_MODULE",
+					"objectDefinitionExternalReferenceCode2": "P2S3_LESSON",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_MODULE_TO_QUIZZES",
+					"label": {
+						"en_US": "P2S3 Module to P2S3 Quizzes"
+					},
+					"name": "moduleToQuizzes",
+					"objectDefinitionExternalReferenceCode1": "P2S3_MODULE",
+					"objectDefinitionExternalReferenceCode2": "P2S3_QUIZ",
+					"type": "oneToMany"
+				}
+			],
 			"pluralLabel": {
 				"en_US": "P2S3 Modules"
 			},
@@ -1509,6 +1631,41 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_QUIZ_TO_BADGES",
+					"label": {
+						"en_US": "P2S3 Quiz to P2S3 Badges"
+					},
+					"name": "quizToBadges",
+					"objectDefinitionExternalReferenceCode1": "P2S3_QUIZ",
+					"objectDefinitionExternalReferenceCode2": "P2S3_BADGE",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_QUIZ_TO_QUIZ_QUESTIONS",
+					"label": {
+						"en_US": "P2S3 Quiz to P2S3 Quiz Questions"
+					},
+					"name": "quizToQuizQuestions",
+					"objectDefinitionExternalReferenceCode1": "P2S3_QUIZ",
+					"objectDefinitionExternalReferenceCode2": "P2S3_QUIZ_QUESTION",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_QUIZ_TO_QUIZ_RESULTS",
+					"label": {
+						"en_US": "P2S3 Quiz to P2S3 Quiz Results"
+					},
+					"name": "quizToQuizResults",
+					"objectDefinitionExternalReferenceCode1": "P2S3_QUIZ",
+					"objectDefinitionExternalReferenceCode2": "P2S3_QUIZ_RESULT",
+					"type": "oneToMany"
+				}
+			],
 			"pluralLabel": {
 				"en_US": "P2S3 Quizzes"
 			},
@@ -1730,6 +1887,19 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_QUIZ_QUESTION_TO_QUIZ_ANSWERS",
+					"label": {
+						"en_US": "P2S3 Quiz Question to P2S3 Quiz Answers"
+					},
+				"name": "quizQuestionToQuizAnswers",
+					"objectDefinitionExternalReferenceCode1": "P2S3_QUIZ_QUESTION",
+					"objectDefinitionExternalReferenceCode2": "P2S3_QUIZ_ANSWER",
+					"type": "oneToMany"
+				}
+			],
 			"pluralLabel": {
 				"en_US": "P2S3 Quiz Questions"
 			},

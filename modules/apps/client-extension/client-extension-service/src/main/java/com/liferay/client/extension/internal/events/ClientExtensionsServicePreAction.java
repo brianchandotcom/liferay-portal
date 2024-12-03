@@ -62,8 +62,18 @@ public class ClientExtensionsServicePreAction extends Action {
 
 		themeDisplay.setFaviconURL(_getFaviconURL(layout));
 
-		_setThemeDisplayCSSURLs(
-			httpServletRequest, _getThemeCSSCET(layout), themeDisplay);
+		ThemeCSSCET themeCSSCET = _getThemeCSSCET(layout);
+
+		if (themeCSSCET != null) {
+			if (_portal.isRightToLeft(httpServletRequest)) {
+				themeDisplay.setClayCSSURL(themeCSSCET.getClayRTLURL());
+				themeDisplay.setMainCSSURL(themeCSSCET.getMainRTLURL());
+			}
+			else {
+				themeDisplay.setClayCSSURL(themeCSSCET.getClayURL());
+				themeDisplay.setMainCSSURL(themeCSSCET.getMainURL());
+			}
+		}
 
 		ThemeSpritemapCET themeSpritemapCET = _getThemeSpritemapCET(layout);
 
@@ -276,22 +286,6 @@ public class ClientExtensionsServicePreAction extends Action {
 		}
 
 		return null;
-	}
-
-	private void _setThemeDisplayCSSURLs(
-		HttpServletRequest httpServletRequest, ThemeCSSCET themeCSSCET,
-		ThemeDisplay themeDisplay) {
-
-		if (themeCSSCET != null) {
-			if (_portal.isRightToLeft(httpServletRequest)) {
-				themeDisplay.setClayCSSURL(themeCSSCET.getClayRTLURL());
-				themeDisplay.setMainCSSURL(themeCSSCET.getMainRTLURL());
-			}
-			else {
-				themeDisplay.setClayCSSURL(themeCSSCET.getClayURL());
-				themeDisplay.setMainCSSURL(themeCSSCET.getMainURL());
-			}
-		}
 	}
 
 	@Reference

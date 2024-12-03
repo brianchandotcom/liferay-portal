@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 				"setVisible('ddmStructureId', FALSE)",
 				"setVisible('ddmStructureKey', FALSE)",
 				"setVisible('ddmStructureLayoutId', FALSE)",
+				"setVisible('externalReferenceCode', FALSE)",
 				"setVisible('name', FALSE)",
 				"setVisible('normalizedStructure', FALSE)",
 				"setVisible('rows', FALSE)",
@@ -47,8 +48,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 								"label", "collapsible", "labelAtStructureLevel",
 								"repeatable", "showLabel", "rows", "type",
 								"ddmStructureId", "ddmStructureKey",
-								"ddmStructureLayoutId", "upgradedStructure",
-								"normalizedStructure"
+								"ddmStructureLayoutId", "externalReferenceCode",
+								"upgradedStructure", "normalizedStructure"
 							}
 						)
 					}
@@ -86,6 +87,9 @@ public interface FieldSetDDMFormFieldTypeSettings
 
 	@DDMFormField(dataType = "numeric")
 	public long ddmStructureLayoutId();
+
+	@DDMFormField(dataType = "string")
+	public String externalReferenceCode();
 
 	@DDMFormField(predefinedValue = "false")
 	public boolean normalizedStructure();

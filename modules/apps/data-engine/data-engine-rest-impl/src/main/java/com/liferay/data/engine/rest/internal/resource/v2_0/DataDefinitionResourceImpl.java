@@ -785,6 +785,15 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		long classNameId = DataDefinitionContentTypeRegistryUtil.getClassNameId(
 			contentType);
+
+		ddmStructure = _ddmStructureLocalService.fetchStructure(
+			groupId, classNameId,
+			MapUtil.getString(properties, "externalReferenceCode"));
+
+		if (ddmStructure != null) {
+			return ddmStructure;
+		}
+
 		String ddmStructureKey = MapUtil.getString(
 			properties, "ddmStructureKey");
 

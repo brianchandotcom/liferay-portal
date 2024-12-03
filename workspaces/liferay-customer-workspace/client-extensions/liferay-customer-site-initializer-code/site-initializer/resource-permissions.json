@@ -981,6 +981,33 @@
 		"actionIds": [
 			"VIEW"
 		],
+		"primKey": "[$ROLE_ID:Customer$]",
+		"resourceName": "com.liferay.portal.kernel.model.Role",
+		"roleName": "Customer",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$ROLE_ID:Liferay Staff$]",
+		"resourceName": "com.liferay.portal.kernel.model.Role",
+		"roleName": "Liferay Staff",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$ROLE_ID:Partner$]",
+		"resourceName": "com.liferay.portal.kernel.model.Role",
+		"roleName": "Partner",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
 		"resourceName": "com.liferay.portal.kernel.model.User",
 		"roleName": "Provisioning Admin",
 		"scope": "1"

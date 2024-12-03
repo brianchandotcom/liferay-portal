@@ -81,7 +81,12 @@ public class CETItemSelectorViewDescriptor
 			_cetItemSelectorCriterion.getType(),
 			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null);
 
-		cets = _filterCETs(cets, _cetItemSelectorCriterion.getType());
+		Predicate<CET> filterPredicate = _getFilterPredicate(
+			_cetItemSelectorCriterion.getType());
+
+		if (filterPredicate != null) {
+			cets = ListUtil.filter(cets, filterPredicate);
+		}
 
 		searchContainer.setResultsAndTotal(cets);
 
@@ -96,16 +101,6 @@ public class CETItemSelectorViewDescriptor
 	@Override
 	public boolean isShowBreadcrumb() {
 		return false;
-	}
-
-	private List<CET> _filterCETs(List<CET> cets, String type) {
-		Predicate<CET> filterPredicate = _getFilterPredicate(type);
-
-		if (filterPredicate == null) {
-			return cets;
-		}
-
-		return ListUtil.filter(cets, filterPredicate);
 	}
 
 	private Predicate<CET> _getFilterPredicate(String type) {

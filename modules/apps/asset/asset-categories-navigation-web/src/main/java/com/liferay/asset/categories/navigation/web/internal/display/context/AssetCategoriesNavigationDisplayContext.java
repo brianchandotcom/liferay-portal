@@ -199,7 +199,9 @@ public class AssetCategoriesNavigationDisplayContext {
 
 			String displayStyleGroupExternalReferenceCode =
 				portletPreferences.getValue(
-					"displayStyleGroupExternalReferenceCode", null);
+					"displayStyleGroupExternalReferenceCode",
+					_assetCategoriesNavigationPortletInstanceConfiguration.
+						displayStyleGroupExternalReferenceCode());
 
 			if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
 				Group group =

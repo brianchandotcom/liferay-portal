@@ -11,6 +11,7 @@ import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryCo
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
@@ -130,8 +131,7 @@ public class LoginActionTest {
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					_portal, "_pathFriendlyURLPublic",
-					context + _portal.getPathFriendlyURLPublic())) {
+					_portal, "_pathContext", context)) {
 
 			Group group = _groupLocalService.getGroup(
 				TestPropsValues.getCompanyId(), GroupConstants.GUEST);
@@ -153,17 +153,21 @@ public class LoginActionTest {
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)url.openConnection();
 
+			httpURLConnection.setInstanceFollowRedirects(false);
+
 			httpURLConnection.setRequestMethod("GET");
 
-			Assert.assertEquals(200, httpURLConnection.getResponseCode());
+			Assert.assertEquals(302, httpURLConnection.getResponseCode());
 
-			String queryString = httpURLConnection.getURL(
-			).getQuery();
+			String locationHeader = httpURLConnection.getHeaderField(
+				"Location");
 
 			Assert.assertTrue(
-				queryString.contains(
-					"_com_liferay_login_web_portlet_LoginPortlet_redirect=" +
-						HtmlUtil.escapeURL(context) + "%2Fweb%2Fguest%2Fhome"));
+				locationHeader.contains(
+					StringBundler.concat(
+						"_com_liferay_login_web_portlet_LoginPortlet_redirect=",
+						"http%3A%2F%2Flocalhost%3A8080",
+						HtmlUtil.escapeURL(context), "%2Fweb%2Fguest%2Fhome")));
 		}
 	}
 
@@ -207,7 +211,7 @@ public class LoginActionTest {
 			Assert.assertTrue(
 				queryString.contains(
 					"_com_liferay_login_web_portlet_LoginPortlet_redirect=" +
-						"%2Fweb%2Fguest%2Fhome"));
+						"http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fhome"));
 		}
 	}
 

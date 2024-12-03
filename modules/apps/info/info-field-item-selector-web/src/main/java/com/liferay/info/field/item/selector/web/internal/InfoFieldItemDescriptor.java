@@ -50,6 +50,8 @@ public class InfoFieldItemDescriptor
 				return _infoField.getLabel(themeDisplay.getLocale());
 			}
 		).put(
+			"localizable", _infoField.isLocalizable()
+		).put(
 			"name", _infoField.getName()
 		).put(
 			"uniqueId", _infoField.getUniqueId()

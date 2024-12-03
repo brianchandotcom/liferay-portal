@@ -28,7 +28,7 @@ const SVTable = ({columns, rows}: IProps) => {
 				<ClayTable.Row>
 					{columns.map((column) => (
 						<ClayTable.Cell
-							className="text-neutral-10"
+							className="font-weight-semi-bold text-neutral-10"
 							key={column.columnKey}
 						>
 							{column.label}

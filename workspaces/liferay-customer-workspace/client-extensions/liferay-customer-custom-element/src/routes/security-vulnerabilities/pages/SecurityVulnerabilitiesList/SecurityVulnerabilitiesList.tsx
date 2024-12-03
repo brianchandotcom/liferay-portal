@@ -13,6 +13,7 @@ import './SecurityVulnerabilitiesList.css';
 
 import {useMemo} from 'react';
 import {Link} from 'react-router-dom';
+import {SVWaves} from '~/common/icons/sv_waves';
 import {getFormattedDate} from '~/routes/customer-portal/utils/getFormattedDate';
 
 import {IRow} from '../../components/SVTable/SVTable';
@@ -68,7 +69,7 @@ const SecurityVulnerabilitiesList = () => {
 				classification:
 					issue[JiraEnum.FIELDS]?.[JiraEnum.CLASSIFICATION],
 				prioritySummary: (
-					<div className="sv-priority-summary">
+					<div>
 						<div className="align-items-center d-flex">
 							<div
 								className={`mr-1 px-2 sv-severity sv-severity-${issue[JiraEnum.FIELDS]?.[JiraEnum.SEVERITY]?.toLowerCase()} text-center`}
@@ -85,7 +86,7 @@ const SecurityVulnerabilitiesList = () => {
 								</Link>
 							</div>
 						</div>
-						<div className="sv-summary">
+						<div className="sv-summary text-neutral-8">
 							{issue[JiraEnum.FIELDS]?.[JiraEnum.SUMMARY]}
 						</div>
 					</div>
@@ -118,6 +119,10 @@ const SecurityVulnerabilitiesList = () => {
 								})
 							}
 						/>
+					</div>
+
+					<div className="align-items-end d-flex justify-content-end position-absolute sv-gradient">
+						<SVWaves />
 					</div>
 				</div>
 

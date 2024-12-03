@@ -168,6 +168,11 @@ public class NotificationTemplateFTLElementsMVCResourceCommand
 					String content = (String)jsonObject.get("name");
 
 					if (infoField) {
+						if (content.contains(StringPool.POUND)) {
+							content = StringBundler.concat(
+								".data_model[\"", content, "\"]");
+						}
+
 						content = StringBundler.concat(
 							"${", content, ".getData()}");
 					}

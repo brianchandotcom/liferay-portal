@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -192,13 +191,11 @@ public class AssetCategoriesNavigationDisplayContext {
 			_assetCategoriesNavigationPortletInstanceConfiguration.
 				displayStyleGroupId();
 
-		PortletPreferences portletPreferences = _renderRequest.getPreferences();
-
-		Map<String, String[]> map = portletPreferences.getMap();
-
 		if (FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPD-27566") &&
-			map.containsKey("displayStyleGroupExternalReferenceCode")) {
+				_themeDisplay.getCompanyId(), "LPD-27566")) {
+
+			PortletPreferences portletPreferences =
+				_renderRequest.getPreferences();
 
 			String displayStyleGroupExternalReferenceCode =
 				portletPreferences.getValue(
@@ -230,17 +227,27 @@ public class AssetCategoriesNavigationDisplayContext {
 	}
 
 	private String[] _getAssetVocabularyIds() {
-		PortletPreferences portletPreferences = _renderRequest.getPreferences();
-
-		Map<String, String[]> map = portletPreferences.getMap();
-
 		if (!FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPD-27566") ||
-			!map.containsKey("assetVocabularyGroupExternalReferenceCodes")) {
+				_themeDisplay.getCompanyId(), "LPD-27566")) {
 
 			return _assetCategoriesNavigationPortletInstanceConfiguration.
 				assetVocabularyIds();
 		}
+
+		List<Long> assetVocabularyIds = new ArrayList<>();
+
+		PortletPreferences portletPreferences = _renderRequest.getPreferences();
+
+		assetVocabularyIds.addAll(
+			_getExternalAssetVocabularyIds(portletPreferences));
+		assetVocabularyIds.addAll(
+			_getLocalAssetVocabularyIds(portletPreferences));
+
+		return ArrayUtil.toStringArray(assetVocabularyIds);
+	}
+
+	private List<Long> _getExternalAssetVocabularyIds(
+		PortletPreferences portletPreferences) {
 
 		List<Long> assetVocabularyIds = new ArrayList<>();
 
@@ -285,7 +292,36 @@ public class AssetCategoriesNavigationDisplayContext {
 			}
 		}
 
-		return ArrayUtil.toStringArray(assetVocabularyIds);
+		return assetVocabularyIds;
+	}
+
+	private List<Long> _getLocalAssetVocabularyIds(
+		PortletPreferences portletPreferences) {
+
+		List<Long> assetVocabularyIds = new ArrayList<>();
+
+		String[] assetVocabularyExternalReferenceCodes =
+			GetterUtil.getStringValues(
+				portletPreferences.getValues(
+					"assetVocabularyExternalReferenceCodes", null));
+
+		for (String assetVocabularyExternalReferenceCode :
+				assetVocabularyExternalReferenceCodes) {
+
+			AssetVocabulary assetVocabulary =
+				AssetVocabularyLocalServiceUtil.
+					fetchAssetVocabularyByExternalReferenceCode(
+						assetVocabularyExternalReferenceCode,
+						_themeDisplay.getScopeGroupId());
+
+			if (assetVocabulary == null) {
+				continue;
+			}
+
+			assetVocabularyIds.add(assetVocabulary.getVocabularyId());
+		}
+
+		return assetVocabularyIds;
 	}
 
 	private String _getTitle(AssetVocabulary assetVocabulary) {

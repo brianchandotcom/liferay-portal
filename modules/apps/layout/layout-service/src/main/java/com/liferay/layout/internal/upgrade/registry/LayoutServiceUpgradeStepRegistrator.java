@@ -11,7 +11,6 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutClassedModelUsageUpgradeProcess;
-import com.liferay.layout.internal.upgrade.v1_0_0.LayoutPermissionsUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_1_0.UpgradeCompanyId;
 import com.liferay.layout.internal.upgrade.v1_2_1.LayoutAssetUpgradeProcess;
@@ -49,8 +48,7 @@ public class LayoutServiceUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.register(
 			"0.0.1", "1.0.0",
-			new LayoutClassedModelUsageUpgradeProcess(_assetEntryLocalService),
-			new LayoutPermissionsUpgradeProcess());
+			new LayoutClassedModelUsageUpgradeProcess(_assetEntryLocalService));
 
 		registry.register("1.0.0", "1.0.1", new LayoutUpgradeProcess());
 

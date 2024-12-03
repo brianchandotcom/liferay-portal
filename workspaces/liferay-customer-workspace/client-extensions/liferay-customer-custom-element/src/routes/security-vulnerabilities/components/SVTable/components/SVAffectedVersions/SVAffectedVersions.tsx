@@ -18,9 +18,9 @@ const SVAffectedVersions = ({
 	}
 
 	const firstAffectedVersion = affectedVersions[0];
+	const remainingVersions = affectedVersions.slice(1);
 	const secondAffectedVersion = affectedVersions[1];
 
-	const remainingVersions = affectedVersions.slice(1);
 	const remainingCount = remainingVersions.length;
 
 	const otherAffectedVersions =

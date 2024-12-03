@@ -4259,15 +4259,19 @@ test.describe('Edit mode form errors', () => {
 		pageEditorPage: PageEditorPage,
 		warningMessage: string
 	) {
-		await pageEditorPage.publishButton.click();
-
-		await expect(
-			page.getByRole('heading', {name: headingMessage})
-		).toBeVisible();
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('heading', {name: headingMessage}),
+			timeout: 2000,
+			trigger: pageEditorPage.publishButton,
+		});
 
 		await expect(page.getByText(warningMessage)).toBeVisible();
 
-		await page.getByRole('button', {name: 'Cancel'}).click();
+		await clickAndExpectToBeHidden({
+			target: page.getByRole('heading', {name: headingMessage}),
+			timeout: 2000,
+			trigger: page.getByRole('button', {name: 'Cancel'}),
+		});
 	}
 
 	test(
@@ -4309,7 +4313,7 @@ test.describe('Edit mode form errors', () => {
 							indexedAsKeyword: false,
 							indexedLanguageId: '',
 							label: {
-								en_US: 'Age'
+								en_US: 'Age',
 							},
 							name: 'age',
 							required: false,

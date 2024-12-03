@@ -13,6 +13,134 @@
 		{
 			"active": true,
 			"defaultLanguageId": "en_US",
+			"enableLocalization": true,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "P2S3_ASSESSMENT",
+			"label": {
+				"en_US": "P2S3 Assessment"
+			},
+			"modifiable": true,
+			"name": "P2S3Assessment",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "DESCRIPTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Description"
+					},
+					"localized": true,
+					"name": "description",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "DURATION_MINUTES",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Duration (Minutes)"
+					},
+					"localized": false,
+					"name": "durationMinutes",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "Integer",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"localized": false,
+					"name": "name",
+					"objectFieldSettings": [
+						{
+							"name": "uniqueValues",
+							"value": true
+						}
+					],
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TITLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Title"
+					},
+					"localized": true,
+					"name": "title",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "URL"
+					},
+					"localized": true,
+					"name": "url",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"pluralLabel": {
+				"en_US": "P2S3 Assessments"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/p2s3assessments",
+			"scope": "site",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"titleObjectFieldName": "name"
+		},
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableLocalization": true,
 			"enableObjectEntryHistory": false,
@@ -119,6 +247,118 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3badges",
+			"scope": "site",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"titleObjectFieldName": "name"
+		},
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableLocalization": true,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "P2S3_CERTIFICATION",
+			"label": {
+				"en_US": "P2S3 Certification"
+			},
+			"modifiable": true,
+			"name": "P2S3Certification",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "DESCRIPTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Description"
+					},
+					"localized": true,
+					"name": "description",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"localized": false,
+					"name": "name",
+					"objectFieldSettings": [
+						{
+							"name": "uniqueValues",
+							"value": true
+						}
+					],
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"externalReferenceCode": "PERSONA",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Persona"
+					},
+					"listTypeDefinitionExternalReferenceCode": "P2S3_PERSONAS",
+					"localized": false,
+					"name": "persona",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TITLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Title"
+					},
+					"localized": true,
+					"name": "title",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"pluralLabel": {
+				"en_US": "P2S3 Certifications"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/p2s3certifications",
 			"scope": "site",
 			"status": {
 				"code": 0,

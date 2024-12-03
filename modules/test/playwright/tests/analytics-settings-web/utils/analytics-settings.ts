@@ -224,6 +224,8 @@ export async function syncAnalyticsCloud({
 
 	await goNextStep(page);
 
+	await goNextStep(page);
+
 	await page.getByRole('button', {name: 'Finish'}).click();
 
 	return {

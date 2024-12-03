@@ -252,6 +252,168 @@ test.describe('Keyboard movement and navigation', () => {
 			).toBeFocused();
 		}
 	);
+
+	test(
+		'Accessibility checks',
+		{tag: ['@LPD-35946']},
+		async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+			// Create two pages at first level
+
+			const firstPage = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: 'Page 1-1',
+			});
+
+			await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: 'Page 1-2',
+			});
+
+			// Create two pages at second level as child of Page 1-1
+
+			await apiHelpers.headlessDelivery.createSitePage({
+				parentSitePage: {
+					friendlyUrlPath: firstPage.friendlyUrlPath,
+				},
+				siteId: site.id,
+				title: 'Page 2-1',
+			});
+
+			await apiHelpers.headlessDelivery.createSitePage({
+				parentSitePage: {
+					friendlyUrlPath: firstPage.friendlyUrlPath,
+				},
+				siteId: site.id,
+				title: 'Page 2-2',
+			});
+
+			// Go to pages admin
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await page
+				.locator('.miller-columns-item', {hasText: 'Page 1-1'})
+				.waitFor();
+
+			// Focus until reach Page 1-1 item drag handler
+
+			const getItem = (title: string) =>
+				page.locator('.miller-columns-item', {hasText: title});
+
+			await expect(async () => {
+				await page.keyboard.press('Tab');
+
+				await expect(
+					getItem('Page 1-1').locator('.drag-handler')
+				).toBeFocused({timeout: 500});
+			}).toPass();
+
+			// Enable and cancel movement and check drag handler keeps focus
+
+			await page.getByLabel('Move Page 1-1').press('Enter');
+
+			await expect(getItem('Page 1-1')).toHaveClass(/dragging/);
+
+			await page.keyboard.press('Escape');
+
+			await expect(getItem('Page 1-1')).not.toHaveClass(/dragging/);
+
+			await expect(
+				getItem('Page 1-1').locator('.drag-handler')
+			).toBeFocused();
+
+			// Focus the anchor again and press Enter to check item keeps focus after navigate
+
+			await page.keyboard.press('Shift+Tab');
+
+			await expect(
+				getItem('Page 1-1').locator('.miller-columns-item-mask')
+			).toBeFocused();
+
+			await page.keyboard.press('Enter');
+
+			await expect(getItem('Page 2-2')).toBeVisible();
+
+			await expect(
+				getItem('Page 1-1').locator('.miller-columns-item-mask')
+			).toBeFocused();
+
+			// Check loading children with Arrow Right
+
+			await getItem('Page 1-2')
+				.locator('.miller-columns-item-mask')
+				.press('Enter');
+
+			await expect(getItem('Page 2-1')).not.toBeVisible();
+
+			await page.keyboard.press('ArrowUp');
+
+			await expect(
+				getItem('Page 1-1').locator('.miller-columns-item-mask')
+			).toBeFocused();
+
+			await page.keyboard.press('ArrowRight');
+
+			await expect(
+				getItem('Page 2-1').locator('.miller-columns-item-mask')
+			).toBeFocused();
+
+			// Check dropdowns work well
+
+			await expect(async () => {
+				await page.keyboard.press('Tab');
+
+				await expect(
+					getItem('Page 2-1').getByLabel('Add Child Page')
+				).toBeFocused({timeout: 500});
+			}).toPass();
+
+			await page.keyboard.press('Enter');
+
+			await expect(
+				page.getByRole('menuitem', {name: 'Add Page'})
+			).toBeVisible();
+
+			await page.keyboard.press('Escape');
+
+			await expect(
+				getItem('Page 2-1').getByLabel('Add Child Page')
+			).toBeFocused();
+
+			await page.keyboard.press('Tab');
+
+			await expect(
+				getItem('Page 2-1').getByLabel('Open Page Options Menu')
+			).toBeFocused();
+
+			await page.keyboard.press('Enter');
+
+			await expect(
+				page.getByRole('menuitem', {name: 'Edit'})
+			).toBeVisible();
+
+			await page.keyboard.press('Escape');
+
+			await expect(
+				getItem('Page 2-1').getByLabel('Open Page Options Menu')
+			).toBeFocused();
+
+			// Check title link works well
+
+			await expect(async () => {
+				await page.keyboard.press('Shift+Tab');
+
+				await expect(
+					getItem('Page 2-1').getByRole('link', {name: 'Page 2-1'})
+				).toBeFocused({timeout: 500});
+			}).toPass();
+
+			await page.keyboard.press('Enter');
+
+			await expect(getItem('Page 1-1')).not.toBeVisible();
+		}
+	);
 });
 
 test.describe('Miller Columns drag and drop', () => {

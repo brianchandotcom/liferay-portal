@@ -732,30 +732,6 @@ gradle.beforeProject {
 			processResources {
 				mustRunAfter "formatSource"
 			}
-
-			if (Boolean.getBoolean("build.jakarta.transformer.enabled") && (javaVersion.compareTo(JavaVersion.VERSION_17) >= 0) && _containsProject(project, System.getProperty("build.jakarta.transformer.include.dirs"), rootDir.parentFile)) {
-				task jakartaTransformer
-
-				File jakartaTransformerDir = file("$buildDir/jakarta-transformer")
-
-				configurations.compileOnly.allDependencies.withType(ProjectDependency) {
-					jakartaTransformer.dependsOn "${it.dependencyProject.path}:jar"
-				}
-
-				tasks.withType(JavaCompile) {
-					classpath = files(jakartaTransformerDir)
-				}
-
-				compileJava {
-					dependsOn jakartaTransformer
-				}
-
-				jakartaTransformer {
-					doLast {
-						_jakartaTransform(it, configurations.compileClasspath, jakartaTransformerDir)
-					}
-				}
-			}
 		}
 
 		pluginManager.withPlugin("org.ysb33r.gradletest") {
@@ -799,6 +775,24 @@ gradle.beforeProject {
 					File tmpFile = new File(dir, "tmp")
 
 					tmpFile.createNewFile()
+				}
+			}
+		}
+
+		if (Boolean.getBoolean("build.jakarta.transformer.enabled") && (javaVersion.compareTo(JavaVersion.VERSION_17) >= 0) && _containsProject(project, System.getProperty("build.jakarta.transformer.include.dirs"), rootDir.parentFile)) {
+			pluginManager.withPlugin("java") {
+				tasks.named("compileJava") {
+					configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+						compileJava.dependsOn "${it.dependencyProject.path}:jar"
+					}
+
+					doFirst {
+						FileCollection jarFiles = files(configurations.compileClasspath.files.findAll { it.name.endsWith(".jar") })
+
+						_jakartaTransform(it, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"))
+
+						classpath = files(configurations.compileClasspath.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
+					}
 				}
 			}
 		}

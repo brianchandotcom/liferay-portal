@@ -36,6 +36,10 @@ public class PortalAcceptancePullRequestJob
 
 	@Override
 	public List<BatchTestClassGroup> getBatchTestClassGroups() {
+		if (batchTestClassGroups != null) {
+			return batchTestClassGroups;
+		}
+
 		synchronized (jobProperties) {
 			PortalGitWorkingDirectory portalGitWorkingDirectory =
 				getPortalGitWorkingDirectory();
@@ -49,10 +53,6 @@ public class PortalAcceptancePullRequestJob
 				testProperties.getProperty("relevant.engine.enabled"));
 
 			if (_isRelevantTestSuite() && relevantEngineEnabled) {
-				if (batchTestClassGroups != null) {
-					return batchTestClassGroups;
-				}
-
 				System.out.println("Relevant engine is enabled");
 
 				batchTestClassGroups = Collections.synchronizedList(

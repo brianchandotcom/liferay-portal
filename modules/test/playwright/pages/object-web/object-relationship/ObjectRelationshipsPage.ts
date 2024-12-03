@@ -41,7 +41,7 @@ export class ObjectRelationshipsPage {
 		this.inheritanceWarningMessage = page
 			.frameLocator('iframe')
 			.getByText(
-				'Warning:Unable to bind the object definitions when the child object definition is bound to another object definition'
+				'Error:Unable to bind the object definitions when the child object definition is bound to another object definition'
 			);
 		this.relationshipTabItem = page.getByRole('link', {
 			name: 'Relationships',

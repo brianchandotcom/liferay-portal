@@ -5,15 +5,15 @@
 		overflow: hidden;
 	}
 
-	.dnd-table {
+	table {
 		background-color: transparent;
 
 		.with-bg {
 			background-color: transparent;
 		}
 
-		.dnd-td,
-		.dnd-th {
+		td,
+		th {
 			border-right: none;
 		}
 
@@ -30,7 +30,7 @@
 			}
 		}
 
-		.dnd-tr {
+		tr {
 			background-color: $color-bg;
 			border-bottom: none;
 			border-radius: $border-radius;
@@ -42,7 +42,7 @@
 			}
 		}
 
-		.dnd-thead {
+		thead {
 			color: $color-fg-alt;
 			font-size: 12px;
 			font-weight: 500;
@@ -89,9 +89,8 @@
 
 	/* ---------- Custom minium fds cell customization ---------- */
 
-	.dnd-table {
-		.dnd-td,
-		.dnd-th {
+	table {
+		th {
 			&.cell-externalReferenceCode {
 				min-width: 150px;
 			}

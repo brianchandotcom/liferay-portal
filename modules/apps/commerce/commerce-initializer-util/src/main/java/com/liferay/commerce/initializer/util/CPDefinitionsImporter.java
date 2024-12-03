@@ -591,9 +591,6 @@ public class CPDefinitionsImporter {
 				allowedOrderQuantities, multipleOrderQuantity);
 		}
 
-		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.fetchMasterCPConfigurationEntry();
-
 		// Commerce product definition availability estimate
 
 		String availabilityEstimate = jsonObject.getString(
@@ -610,6 +607,9 @@ public class CPDefinitionsImporter {
 			commerceAvailabilityEstimateId =
 				cpdAvailabilityEstimate.getCommerceAvailabilityEstimateId();
 		}
+
+		CPConfigurationEntry cpConfigurationEntry =
+			cpDefinition.fetchMasterCPConfigurationEntry();
 
 		if (cpConfigurationEntry == null) {
 			CPConfigurationList masterCPConfigurationList =

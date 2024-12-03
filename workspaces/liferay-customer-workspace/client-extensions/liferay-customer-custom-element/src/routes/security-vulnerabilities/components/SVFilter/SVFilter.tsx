@@ -14,8 +14,6 @@ import {IProps as ISortOptions} from '../../utils/constants/sortOptions';
 
 import './SVFilter.css';
 
-import {useState} from 'react';
-
 interface IProps {
 	filterOptions: IFilterOptions;
 	onChange: (params: IJiraSearch) => void;
@@ -28,14 +26,25 @@ const SVFilter = ({filterOptions, onChange, params, sortOptions}: IProps) => {
 		param: keyof IFilterOptions,
 		value: string[]
 	) => {
-		const newFilters = {[param]: value};
+		let newValue = value;
+
+		if (value.length === 1) {
+			newValue = params.getAll(param)[0]?.split(',') || [];
+
+			if (newValue.includes(value[0])) {
+				newValue = newValue.filter((item) => item !== value[0]);
+			}
+			else {
+				newValue.push(value[0]);
+			}
+		}
 
 		onChange({
 			[JiraEnum.FILTERS]: {
 				...params
 					.getAll(JiraEnum.FILTERS)
 					.reduce((acc, curr) => ({...acc, ...JSON.parse(curr)}), {}),
-				...newFilters,
+				[param]: newValue,
 			},
 		});
 	};
@@ -43,83 +52,50 @@ const SVFilter = ({filterOptions, onChange, params, sortOptions}: IProps) => {
 	const renderFilterSection = (
 		filterKey: keyof IFilterOptions,
 		languageKey: string
-	) => {
-		const [updatedFilters, setUpdatedFilters] = useState<string[]>(
-			params.getAll(filterKey)
-		);
+	) => (
+		<div className="sv-filter-box">
+			<h5>{i18n.translate(languageKey)}</h5>
 
-		const handleCheckboxChange = (value: string) => {
-			let newUpdatedFilters = [...updatedFilters];
-			const isChecked = newUpdatedFilters.includes(value);
+			<div className="d-flex my-2">
+				<ClayButton
+					aria-label={i18n.translate('select-all')}
+					className="mr-3 p-0 sv-select-all-button"
+					displayType="link"
+					onClick={() =>
+						handleFilterChange(
+							filterKey,
+							filterOptions[filterKey] as string[]
+						)
+					}
+				>
+					{i18n.translate('select-all')}
+				</ClayButton>
 
-			if (isChecked) {
-				newUpdatedFilters = newUpdatedFilters.filter(
-					(item) => item !== value
-				);
-			}
-			else {
-				newUpdatedFilters.push(value);
-			}
-
-			setUpdatedFilters(newUpdatedFilters);
-			handleFilterChange(filterKey, newUpdatedFilters);
-		};
-
-		const handleClearFilters = () => {
-			setUpdatedFilters([]);
-			handleFilterChange(filterKey, []);
-		};
-
-		const handleSelectAll = () => {
-			const allFilters = filterOptions[filterKey] as string[];
-			setUpdatedFilters(allFilters);
-			handleFilterChange(filterKey, allFilters);
-		};
-
-		return (
-			<div className="sv-filter-box">
-				<h5>{i18n.translate(languageKey)}</h5>
-
-				<div className="d-flex my-2">
-					<ClayButton
-						aria-label={i18n.translate('select-all')}
-						className="mr-3 p-0 sv-select-all-button"
-						displayType="link"
-						onClick={handleSelectAll}
-					>
-						{i18n.translate('select-all')}
-					</ClayButton>
-
-					<ClayButton
-						aria-label={i18n.translate('clear')}
-						className="p-0 sv-clear-button"
-						displayType="link"
-						onClick={handleClearFilters}
-					>
-						{i18n.translate('clear')}
-					</ClayButton>
-				</div>
-
-				{(filterOptions[filterKey] as string[])?.map((value) => {
-					const isChecked = updatedFilters.includes(value);
-
-					return (
-						<ClayCheckbox
-							aria-label={i18n.translate(value)}
-							checked={isChecked}
-							key={value}
-							label={i18n.translate(value)}
-							onChange={() => handleCheckboxChange(value)}
-							value={value}
-						/>
-					);
-				})}
+				<ClayButton
+					aria-label={i18n.translate('clear')}
+					className="p-0 sv-clear-button"
+					displayType="link"
+					onClick={() => handleFilterChange(filterKey, [])}
+				>
+					{i18n.translate('clear')}
+				</ClayButton>
 			</div>
-		);
-	};
+
+			{(filterOptions[filterKey] as string[])?.map((value) => (
+				<ClayCheckbox
+					aria-label={i18n.translate(value)}
+					checked={params.getAll(filterKey)[0]?.includes(value)}
+					key={value}
+					label={i18n.translate(value)}
+					onChange={() => handleFilterChange(filterKey, [value])}
+					value={value}
+				/>
+			))}
+		</div>
+	);
 
 	return (
-		<div className="mr-4 sv-filter-content">
+		<div className="sv-filter-content">
 			<div className="sv-filter-box">
 				<h5 className="pb-2">{i18n.translate('sort-by')}</h5>
 

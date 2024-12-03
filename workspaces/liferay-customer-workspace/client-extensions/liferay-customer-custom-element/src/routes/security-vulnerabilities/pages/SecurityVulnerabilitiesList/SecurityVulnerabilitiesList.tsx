@@ -13,8 +13,7 @@ import './SecurityVulnerabilitiesList.css';
 
 import {useMemo} from 'react';
 import {Link} from 'react-router-dom';
-import {Liferay} from '~/common/services/liferay';
-import {FORMAT_DATE_TYPES} from '~/common/utils/constants';
+import {getFormattedDate} from '~/routes/customer-portal/utils/getFormattedDate';
 
 import {IRow} from '../../components/SVTable/SVTable';
 import SVAffectedVersions from '../../components/SVTable/components/SVAffectedVersions';
@@ -51,32 +50,6 @@ const SecurityVulnerabilitiesList = () => {
 		},
 	];
 
-	const formatPublishedDate = (
-		dateString: string | undefined,
-		formatType: keyof typeof FORMAT_DATE_TYPES
-	): string => {
-		if (!dateString) {
-			return 'Invalid Date';
-		}
-
-		const formattedDateString = dateString.replace(
-			/([+-]\d{2})(\d{2})$/,
-			'$1:$2'
-		);
-		const date = new Date(formattedDateString);
-
-		if (isNaN(date.getTime())) {
-			return 'Invalid Date';
-		}
-
-		const options = FORMAT_DATE_TYPES[formatType];
-
-		return date.toLocaleDateString(
-			Liferay.ThemeDisplay.getBCP47LanguageId(),
-			options
-		);
-	};
-
 	const rows = useMemo(() => {
 		if (jiraSearch?.[JiraEnum.ISSUES]) {
 			return jiraSearch?.[JiraEnum.ISSUES].map((issue: IJiraIssue) => ({
@@ -97,7 +70,9 @@ const SecurityVulnerabilitiesList = () => {
 				prioritySummary: (
 					<div className="sv-priority-summary">
 						<div className="align-items-center d-flex">
-							<div className="mr-1 px-2 sv-severity text-center">
+							<div
+								className={`mr-1 px-2 sv-severity sv-severity-${issue[JiraEnum.FIELDS]?.[JiraEnum.SEVERITY]?.toLowerCase()} text-center`}
+							>
 								{issue[JiraEnum.FIELDS]?.[JiraEnum.SEVERITY]}
 							</div>
 
@@ -115,7 +90,7 @@ const SecurityVulnerabilitiesList = () => {
 						</div>
 					</div>
 				),
-				published: formatPublishedDate(
+				published: getFormattedDate(
 					issue[JiraEnum.FIELDS]?.[JiraEnum.PUBLISHED_DATE],
 					'day2DMonthSYearN'
 				),

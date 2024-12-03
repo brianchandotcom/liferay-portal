@@ -9,6 +9,7 @@ import {Liferay} from '~/common/services/liferay';
 
 import {IProps as IFilterOptions} from '../utils/constants/filterOptions';
 import {JiraEnum} from '../utils/constants/jiraEnum';
+import {getFilterParams} from '../utils/getFilterParams';
 import {IJiraIssue} from './useJiraIssue';
 
 export interface IJiraResponse {
@@ -37,29 +38,7 @@ const useJiraSearch = () => {
 	const fetchJiraSearch = useCallback(async (params: URLSearchParams) => {
 		setLoading(true);
 
-		const mapFilterParams = (params: string): string => {
-			const filterMap: {[key: string]: string} = {
-				affectedVersions: 'filterAffectedVersions',
-				category: 'filterCategories',
-				issueClassification: 'clea',
-				fixVersions: 'filterFixVersions',
-				severity: 'filterSeverities',
-			};
-
-			const splittedParams = params.split('&');
-
-			const mappedParams = splittedParams.map((param) => {
-				const [key, value] = param.split('=');
-
-				const mappedKey = filterMap[key] || key;
-
-				return `${mappedKey}=${value}`;
-			});
-
-			return mappedParams.join('&');
-		};
-
-		const queryString = mapFilterParams(params.toString());
+		const queryString = getFilterParams(params.toString());
 
 		try {
 			const response: IJiraResponse =

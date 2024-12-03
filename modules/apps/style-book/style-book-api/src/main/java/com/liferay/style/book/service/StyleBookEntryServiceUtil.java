@@ -88,6 +88,14 @@ public class StyleBookEntryServiceUtil {
 		return getService().discardDraftStyleBookEntry(styleBookEntryId);
 	}
 
+	public static StyleBookEntry fetchStyleBookEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().fetchStyleBookEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

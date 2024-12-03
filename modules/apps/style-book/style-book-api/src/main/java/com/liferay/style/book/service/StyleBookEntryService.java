@@ -73,6 +73,11 @@ public interface StyleBookEntryService extends BaseService {
 	public StyleBookEntry discardDraftStyleBookEntry(long styleBookEntryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public StyleBookEntry fetchStyleBookEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

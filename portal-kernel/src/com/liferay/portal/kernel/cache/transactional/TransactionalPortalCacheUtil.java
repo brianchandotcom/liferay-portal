@@ -178,22 +178,8 @@ public class TransactionalPortalCacheUtil {
 	public static <K extends Serializable, V> void put(
 		PortalCache<K, V> portalCache, K key, V value, int ttl, boolean mvcc) {
 
-		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
-
-		UncommittedBuffer uncommittedBuffer = portalCacheMap.get(portalCache);
-
-		if (uncommittedBuffer == null) {
-			if (mvcc) {
-				uncommittedBuffer = new UncommittedBuffer(
-					(PortalCache<Serializable, Object>)portalCache);
-			}
-			else {
-				uncommittedBuffer = new MarkerUncommittedBuffer(
-					(PortalCache<Serializable, Object>)portalCache);
-			}
-
-			portalCacheMap.put(portalCache, uncommittedBuffer);
-		}
+		UncommittedBuffer uncommittedBuffer = _getUncommittedBuffer(
+			portalCache, mvcc);
 
 		uncommittedBuffer.put(
 			key,
@@ -203,22 +189,8 @@ public class TransactionalPortalCacheUtil {
 	public static <K extends Serializable, V> void removeAll(
 		PortalCache<K, V> portalCache, boolean mvcc) {
 
-		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
-
-		UncommittedBuffer uncommittedBuffer = portalCacheMap.get(portalCache);
-
-		if (uncommittedBuffer == null) {
-			if (mvcc) {
-				uncommittedBuffer = new UncommittedBuffer(
-					(PortalCache<Serializable, Object>)portalCache);
-			}
-			else {
-				uncommittedBuffer = new MarkerUncommittedBuffer(
-					(PortalCache<Serializable, Object>)portalCache);
-			}
-
-			portalCacheMap.put(portalCache, uncommittedBuffer);
-		}
+		UncommittedBuffer uncommittedBuffer = _getUncommittedBuffer(
+			portalCache, mvcc);
 
 		uncommittedBuffer.removeAll(SkipReplicationThreadLocal.isEnabled());
 	}
@@ -232,6 +204,30 @@ public class TransactionalPortalCacheUtil {
 	protected static class PortalCacheMap
 		extends HashMap
 			<PortalCache<? extends Serializable, ?>, UncommittedBuffer> {
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <K extends Serializable, V> UncommittedBuffer
+		_getUncommittedBuffer(PortalCache<K, V> portalCache, boolean mvcc) {
+
+		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
+
+		UncommittedBuffer uncommittedBuffer = portalCacheMap.get(portalCache);
+
+		if (uncommittedBuffer == null) {
+			if (mvcc) {
+				uncommittedBuffer = new UncommittedBuffer(
+					(PortalCache<Serializable, Object>)portalCache);
+			}
+			else {
+				uncommittedBuffer = new MarkerUncommittedBuffer(
+					(PortalCache<Serializable, Object>)portalCache);
+			}
+
+			portalCacheMap.put(portalCache, uncommittedBuffer);
+		}
+
+		return uncommittedBuffer;
 	}
 
 	private static boolean _isTransactionalCacheEnabled() {

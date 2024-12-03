@@ -564,7 +564,7 @@ public abstract class BaseBuild implements Build {
 				NotificationUtil.sendEmail(
 					"Failure message generator exception, class name is: " +
 						className,
-					"Notification Util", "Failure message generator",
+					"jenkins", "Failure message generator",
 					"calum.ragan@liferay.com");
 			}
 		}

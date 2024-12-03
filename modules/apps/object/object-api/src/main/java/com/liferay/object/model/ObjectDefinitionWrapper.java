@@ -409,6 +409,11 @@ public class ObjectDefinitionWrapper
 		return model.getDefaultLanguageId();
 	}
 
+	@Override
+	public java.util.Locale getDefaultLocale() {
+		return model.getDefaultLocale();
+	}
+
 	/**
 	 * Returns the description object field ID of this object definition.
 	 *

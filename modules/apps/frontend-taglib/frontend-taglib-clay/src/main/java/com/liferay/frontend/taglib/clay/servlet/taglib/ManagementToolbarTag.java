@@ -949,7 +949,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			iconTag.doTag(pageContext);
 
 			jspWriter.write("</span><span class=\"navbar-text-truncate\">");
-			jspWriter.write(LanguageUtil.get(resourceBundle, "order"));
+			jspWriter.write(LanguageUtil.get(resourceBundle, "order[sort]"));
 			jspWriter.write("</span>");
 
 			iconTag = new IconTag();

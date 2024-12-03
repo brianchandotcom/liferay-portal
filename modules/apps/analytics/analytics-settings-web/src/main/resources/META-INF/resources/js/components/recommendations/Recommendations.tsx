@@ -111,7 +111,7 @@ const RecommendationsContent: React.FC<IRecommendationsContentProps> = ({
 				<Body>
 					{jobs.map(
 						({active, description, id, title, type}, index) => (
-							<Row key={id}>
+							<Row data-testid={id} key={id}>
 								<Cell>
 									<Text size={3} weight="bold">
 										{title}
@@ -126,7 +126,7 @@ const RecommendationsContent: React.FC<IRecommendationsContentProps> = ({
 									<Text size={3}>{type}</Text>
 								</Cell>
 
-								<Cell textValue={title}>
+								<Cell id="toggle" textValue={title}>
 									<ClayToggle
 										onToggle={async () => {
 											if (jobs[index].active) {

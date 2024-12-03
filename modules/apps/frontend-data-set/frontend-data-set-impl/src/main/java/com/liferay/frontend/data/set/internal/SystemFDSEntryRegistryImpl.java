@@ -7,24 +7,20 @@ package com.liferay.frontend.data.set.internal;
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
+import com.liferay.petra.string.StringPool;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Daniel Sanz
@@ -34,125 +30,63 @@ public class SystemFDSEntryRegistryImpl implements SystemFDSEntryRegistry {
 
 	@Override
 	public Map<String, SystemFDSEntry> getSystemFDSEntries() {
-		return _systemFDSEntries.get();
+		if (!_opened) {
+			getSystemFDSEntry(StringPool.BLANK);
+
+			_opened = true;
+		}
+
+		return Collections.unmodifiableMap(_systemFDSEntries);
 	}
 
 	@Override
 	public SystemFDSEntry getSystemFDSEntry(String fdsName) {
-		ServiceTrackerCustomizerFactory.ServiceWrapper<SystemFDSEntry>
-			serviceWrapper = _serviceTrackerMap.getService(fdsName);
-
-		if (serviceWrapper == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"No frontend data set system entry is associated with " +
-						fdsName);
-			}
-
-			return null;
-		}
-
-		return serviceWrapper.getService();
+		return _serviceTrackerMap.getService(fdsName);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_serviceTracker = new ServiceTracker<>(
-			_bundleContext, SystemFDSEntry.class,
-			new DataSetServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, SystemFDSEntry.class, "frontend.data.set.name",
-			ServiceTrackerCustomizerFactory.<SystemFDSEntry>serviceWrapper(
-				bundleContext));
+			new ServiceTrackerMapListener
+				<String, SystemFDSEntry, SystemFDSEntry>() {
+
+				@Override
+				public void keyEmitted(
+					ServiceTrackerMap<String, SystemFDSEntry> serviceTrackerMap,
+					String key, SystemFDSEntry service,
+					SystemFDSEntry content) {
+
+					_systemFDSEntries.put(key, service);
+				}
+
+				@Override
+				public void keyRemoved(
+					ServiceTrackerMap<String, SystemFDSEntry> serviceTrackerMap,
+					String key, SystemFDSEntry service,
+					SystemFDSEntry content) {
+
+					_systemFDSEntries.remove(key);
+				}
+
+			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
-
 		_serviceTrackerMap.close();
-	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SystemFDSEntryRegistryImpl.class);
+		_opened = false;
+
+		_systemFDSEntries.clear();
+	}
 
 	private BundleContext _bundleContext;
-	private ServiceTracker<SystemFDSEntry, SystemFDSEntry> _serviceTracker;
-	private ServiceTrackerMap
-		<String, ServiceTrackerCustomizerFactory.ServiceWrapper<SystemFDSEntry>>
-			_serviceTrackerMap;
-	private final AtomicReference<Map<String, SystemFDSEntry>>
-		_systemFDSEntries = new AtomicReference<>();
-
-	private class DataSetServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<SystemFDSEntry, SystemFDSEntry> {
-
-		@Override
-		public SystemFDSEntry addingService(
-			ServiceReference<SystemFDSEntry> serviceReference) {
-
-			SystemFDSEntry systemFDSEntry = _bundleContext.getService(
-				serviceReference);
-
-			String fdsName = GetterUtil.getString(
-				serviceReference.getProperty("frontend.data.set.name"));
-
-			_systemFDSEntries.updateAndGet(
-				systemFDSEntries -> {
-					if (systemFDSEntries == null) {
-						systemFDSEntries = new HashMap<>();
-					}
-					else {
-						systemFDSEntries = new HashMap<>(systemFDSEntries);
-					}
-
-					systemFDSEntries.put(fdsName, systemFDSEntry);
-
-					return systemFDSEntries;
-				});
-
-			return systemFDSEntry;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<SystemFDSEntry> serviceReference,
-			SystemFDSEntry dataSet) {
-
-			removedService(serviceReference, dataSet);
-
-			addingService(serviceReference);
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<SystemFDSEntry> serviceReference,
-			SystemFDSEntry dataSet) {
-
-			String fdsName = GetterUtil.getString(
-				serviceReference.getProperty("frontend.data.set.name"));
-
-			_bundleContext.ungetService(serviceReference);
-
-			_systemFDSEntries.updateAndGet(
-				systemFDSEntries -> {
-					systemFDSEntries = new HashMap<>(systemFDSEntries);
-
-					systemFDSEntries.remove(fdsName);
-
-					if (systemFDSEntries.isEmpty()) {
-						return null;
-					}
-
-					return systemFDSEntries;
-				});
-		}
-
-	}
+	private boolean _opened;
+	private ServiceTrackerMap<String, SystemFDSEntry> _serviceTrackerMap;
+	private final ConcurrentMap<String, SystemFDSEntry> _systemFDSEntries =
+		new ConcurrentHashMap<>();
 
 }

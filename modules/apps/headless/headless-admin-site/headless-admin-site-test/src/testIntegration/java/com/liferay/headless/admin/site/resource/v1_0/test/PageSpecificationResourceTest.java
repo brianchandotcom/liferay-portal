@@ -28,7 +28,6 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServic
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -387,17 +387,17 @@ public class PageSpecificationResourceTest
 			Assert.assertNull(settings.getThemeSettings());
 		}
 		else {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				(String)settings.getThemeSettings());
+			Map<String, String> themeSettingMap = settings.getThemeSettings();
 
 			Assert.assertEquals(
-				themeSettingsUnicodeProperties.size(), jsonObject.length());
+				MapUtil.toString(themeSettingMap),
+				themeSettingsUnicodeProperties.size(), themeSettingMap.size());
 
 			for (Map.Entry<String, String> entry :
 					themeSettingsUnicodeProperties.entrySet()) {
 
 				Assert.assertEquals(
-					entry.getValue(), jsonObject.getString(entry.getKey()));
+					entry.getValue(), themeSettingMap.get(entry.getKey()));
 			}
 		}
 	}

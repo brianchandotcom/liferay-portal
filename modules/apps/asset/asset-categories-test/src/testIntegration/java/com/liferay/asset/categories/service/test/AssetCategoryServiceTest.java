@@ -73,63 +73,19 @@ public class AssetCategoryServiceTest {
 	}
 
 	@Test
-	public void testAddCategoryWithGuestViewPermission() throws Exception {
+	public void testAddCategoryWithViewPermission() throws Exception {
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		Role ownerRole = _roleLocalService.getRole(
-			_group.getCompanyId(), RoleConstants.GUEST);
-
-		ResourcePermission resourcePermission =
-			_resourcePermissionLocalService.getResourcePermission(
-				_group.getCompanyId(), AssetCategory.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(assetCategory.getPrimaryKey()),
-				ownerRole.getRoleId());
-
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
-	}
-
-	@Test
-	public void testAddCategoryWithOwnerViewPermission() throws Exception {
-		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Role ownerRole = _roleLocalService.getRole(
-			_group.getCompanyId(), RoleConstants.OWNER);
-
-		ResourcePermission resourcePermission =
-			_resourcePermissionLocalService.getResourcePermission(
-				_group.getCompanyId(), AssetCategory.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(assetCategory.getPrimaryKey()),
-				ownerRole.getRoleId());
-
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
-	}
-
-	@Test
-	public void testAddCategoryWithSiteMemberViewPermission() throws Exception {
-		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Role ownerRole = _roleLocalService.getRole(
-			_group.getCompanyId(), RoleConstants.SITE_MEMBER);
-
-		ResourcePermission resourcePermission =
-			_resourcePermissionLocalService.getResourcePermission(
-				_group.getCompanyId(), AssetCategory.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(assetCategory.getPrimaryKey()),
-				ownerRole.getRoleId());
-
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+		_testAddCategoryWithViewPermission(
+			String.valueOf(assetCategory.getPrimaryKey()), RoleConstants.GUEST);
+		_testAddCategoryWithViewPermission(
+			String.valueOf(assetCategory.getPrimaryKey()), RoleConstants.OWNER);
+		_testAddCategoryWithViewPermission(
+			String.valueOf(assetCategory.getPrimaryKey()),
+			RoleConstants.SITE_MEMBER);
 	}
 
 	@Test
@@ -188,6 +144,20 @@ public class AssetCategoryServiceTest {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
 		}
+	}
+
+	private void _testAddCategoryWithViewPermission(
+			String primKey, String roleName)
+		throws Exception {
+
+		Role role = _roleLocalService.getRole(_group.getCompanyId(), roleName);
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				_group.getCompanyId(), AssetCategory.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL, primKey, role.getRoleId());
+
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
 	}
 
 	@Inject

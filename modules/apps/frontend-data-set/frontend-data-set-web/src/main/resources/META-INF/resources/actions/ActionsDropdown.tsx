@@ -10,7 +10,6 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {LinkOrButton} from '@clayui/shared';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import classnames from 'classnames';
 import React, {useContext} from 'react';
 
 import FrontendDataSetContext, {
@@ -208,11 +207,7 @@ function ActionsDropdown({
 		});
 
 	return (
-		<div
-			className={classnames('d-flex', {
-				'justify-content-end': !Liferay.FeatureFlags['LPS-193005'],
-			})}
-		>
+		<div className="d-flex">
 			{inlineEditingAlwaysOn && inlineEditingActions}
 
 			<ClayDropDown

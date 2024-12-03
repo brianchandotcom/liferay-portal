@@ -8,11 +8,11 @@ import React, {useContext, useMemo, useState} from 'react';
 import ViewsContext, {
 	IViewsContext,
 	TViewsContextDispatch,
-} from '../../ViewsContext';
+} from '../ViewsContext';
 
 // @ts-ignore
 
-import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
+import {VIEWS_ACTION_TYPES} from '../viewsReducer';
 import TableContext from './TableContext';
 
 function TableContextProvider({

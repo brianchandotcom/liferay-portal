@@ -1,224 +1,31 @@
-.dnd-thead {
-	display: table-header-group;
-}
+.visualization-mode-table table {
+	table-layout: auto !important;
 
-.dnd-tbody {
-	display: table-row-group;
-
-	.dnd-tr {
-		&:hover,
-		&.selected {
-			background-color: $primary-l3;
-		}
-
-		&:nth-child(odd):not(:hover):not(.selected) {
-			background-color: $table-accent-bg;
-		}
-	}
-}
-
-.dnd-td,
-.dnd-th {
-	border-color: $table-list-border-color;
-	border-style: solid;
-	border-width: 0 1px 1px 0;
-	display: table-cell;
-	overflow: hidden;
-	padding: $table-cell-padding;
-	vertical-align: middle;
-	white-space: normal;
-
-	&:last-child {
-		border-right: none;
-	}
-
-	&.item-actions {
-		min-height: 58px;
-
-		& > * {
-			margin: auto;
-		}
-	}
-
-	&.item-actions,
-	&.item-selector {
-		width: 0;
-	}
-}
-
-.dnd-th {
-	font-weight: 600;
-	position: relative;
-}
-
-.dnd-tr {
-	display: table-row;
-	min-width: 100%;
-	position: relative;
-
-	.dnd-tbody &:last-child {
-		border-bottom: none;
-	}
-
-	&::before {
-		background: $primary;
-		bottom: 0;
-		content: '';
-		left: 0;
-		position: absolute;
-		top: 0;
-		transform: scaleX(0);
-		transition: transform 0.1s ease-in;
-		width: 3px;
-	}
-
-	&.active::before {
-		transform: scaleX(1);
-	}
-
-	&.nested + &.dnd-tr:not(.nested) {
-		border-top: 1px solid $table-list-border-color;
-	}
-
-	&.nested {
-		border-bottom: 1px solid $table-bg;
-		border-width: 0;
-		margin: 0;
-		overflow: hidden;
-		position: relative;
-
-		&.last {
-			border-bottom: none;
-			border-radius: 0 0 10px 10px;
-			margin-bottom: 8px;
-
-			.dnd-td:first-child {
-				border-bottom-left-radius: 10px;
-			}
-
-			.dnd-td:last-child {
-				border-bottom-right-radius: 10px;
-			}
-		}
-
-		.dnd-td {
-			background-color: $table-list-active-bg;
-			border-color: $table-bg;
-			overflow: hidden;
-			padding-bottom: $spacer * 0.5;
-			padding-top: $spacer * 0.5;
-		}
-
-		.sticker {
-			transform: scale(0.8);
-			transform-origin: left;
-		}
-	}
-}
-
-.dnd-table {
-	background-color: $table-bg;
-	border: 1px solid $table-list-border-color;
-	border-radius: 2px;
-	color: $table-list-color;
-	display: table;
-	font-size: 0.875rem;
-	overflow-x: auto;
-	transition: opacity 0.1s ease-in;
-	white-space: nowrap;
-	width: 100%;
-
-	&.fixed {
-		display: block;
-		overflow: auto;
-
-		.dnd-td,
-		.dnd-th {
-			align-items: center;
-			display: flex;
-			min-width: auto;
-		}
-
-		.dnd-tr {
-			display: flex;
-			width: fit-content;
-		}
-
-		.dnd-thead,
-		.dnd-tbody {
-			display: block;
-		}
-	}
-
-	&.is-dragging {
+	.dnd-th-resizer {
+		background: $info;
 		cursor: col-resize;
-		touch-action: none;
-		user-select: none;
-	}
+		display: block;
+		height: 100%;
+		opacity: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		transition: background-color 0.1s ease-in;
+		width: 4px;
+		z-index: 1;
 
-	.content-renderer-image {
-		width: 1%;
-	}
+		&:hover {
+			opacity: 1;
+		}
 
-	.dnd-tbody {
-		display: none;
-	}
+		&.is-active {
+			background: $danger;
+			opacity: 1;
 
-	&.with-quick-actions {
-		.dnd-tr:hover:not(.nested):not(.selected),
-		.dnd-tr.menu-active:not(.nested):not(.selected) {
-			.item-actions {
-				overflow: visible;
-				position: relative;
-			}
-
-			.quick-action-menu {
-				background-color: inherit;
-				display: flex;
-				right: 48px;
-			}
-
-			.dnd-td:nth-last-child(2) {
-				visibility: hidden;
+			&.is-allowed {
+				background: $primary;
 			}
 		}
-	}
-}
-
-.dnd-th-resizer {
-	background: $info;
-	cursor: col-resize;
-	display: block;
-	height: 100%;
-	opacity: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
-	transition: background-color 0.1s ease-in;
-	width: 4px;
-	z-index: 1;
-
-	&:hover {
-		opacity: 1;
-	}
-
-	&.is-active {
-		background: $danger;
-		opacity: 1;
-
-		&.is-allowed {
-			background: $primary;
-		}
-	}
-}
-
-.fds-table {
-	&.fixed tbody tr {
-		display: table-row;
-	}
-
-	tbody tr {
-		display: none;
 	}
 }
 

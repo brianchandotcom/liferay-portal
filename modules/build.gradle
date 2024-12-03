@@ -789,7 +789,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(configurations.jspC.files.findAll { it.name.endsWith(".jar") })
 
-						_jakartaTransform(it, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"))
+						_transformToJakarta(it, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"))
 
 						classpath = files(configurations.jspC.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
 					}
@@ -805,7 +805,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(configurations.compileClasspath.files.findAll { it.name.endsWith(".jar") })
 
-						_jakartaTransform(it, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"))
+						_transformToJakarta(it, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"))
 
 						classpath = files(configurations.compileClasspath.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
 					}
@@ -930,7 +930,7 @@ private boolean _hasTestClasses(Task task, String testClassesDirName) {
 	return true
 }
 
-private void _jakartaTransform(Task task, FileCollection jarFiles, File outputDir) {
+private void _transformToJakarta(Task task, FileCollection jarFiles, File outputDir) {
 	jarFiles.files.each {
 		String fileName = it.name.contains('.') ? it.name.replaceFirst(/(\.[^.]+)$/, '-JAKARTA-SNAPSHOT$1') : it.name
 

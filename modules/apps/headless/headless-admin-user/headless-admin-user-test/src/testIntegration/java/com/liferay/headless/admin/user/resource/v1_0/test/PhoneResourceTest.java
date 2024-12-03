@@ -68,6 +68,14 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeletePhone() throws Exception {
+		super.testDeletePhone();
+
+		_testDeletePrimaryPhone();
+	}
+
+	@Override
+	@Test
 	public void testPatchPhone() throws Exception {
 		super.testPatchPhone();
 
@@ -267,6 +275,28 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 		ListType listType = listTypes.get(0);
 
 		return listType.getListTypeId();
+	}
+
+	private void _testDeletePrimaryPhone() throws Exception {
+		Phone phone1 = randomPhone();
+
+		phone1.setPrimary(true);
+
+		phone1 = _addPhone(
+			phone1, Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_PHONE);
+
+		Assert.assertTrue(phone1.getPrimary());
+
+		Phone phone2 = testDeletePhone_addPhone();
+
+		Assert.assertFalse(phone2.getPrimary());
+
+		phoneResource.deletePhone(phone1.getId());
+
+		phone2 = phoneResource.getPhone(phone2.getId());
+
+		Assert.assertTrue(phone2.getPrimary());
 	}
 
 	private void _testPatchPhoneType() throws Exception {

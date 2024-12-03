@@ -26,6 +26,8 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -41,7 +43,14 @@ public class PhoneResourceImpl extends BasePhoneResourceImpl {
 
 	@Override
 	public void deletePhone(Long phoneId) throws Exception {
+		com.liferay.portal.kernel.model.Phone phone = _phoneService.getPhone(
+			phoneId);
+
 		_phoneService.deletePhone(phoneId);
+
+		if (phone.isPrimary()) {
+			_updatePrimaryPhone(phone.getClassName(), phone.getClassPK());
+		}
 	}
 
 	@Override
@@ -189,6 +198,24 @@ public class PhoneResourceImpl extends BasePhoneResourceImpl {
 		}
 
 		return listType.getListTypeId();
+	}
+
+	private void _updatePrimaryPhone(String className, long contactId)
+		throws Exception {
+
+		List<com.liferay.portal.kernel.model.Phone> phones =
+			_phoneService.getPhones(className, contactId);
+
+		if (phones.isEmpty()) {
+			return;
+		}
+
+		com.liferay.portal.kernel.model.Phone phone = phones.get(0);
+
+		_phoneService.updatePhone(
+			phone.getExternalReferenceCode(), phone.getPhoneId(),
+			phone.getNumber(), phone.getExtension(), phone.getListTypeId(),
+			true);
 	}
 
 	@Reference

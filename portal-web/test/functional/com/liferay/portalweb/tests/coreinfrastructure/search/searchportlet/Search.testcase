@@ -3122,6 +3122,8 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		DropdownMenuItem.click(menuItem = "Display Page Template");
+
 		LexiconCard.clickCard(card = "Blank");
 
 		PortletEntry.inputName(name = "Custom Object Display Template");

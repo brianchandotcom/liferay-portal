@@ -56,7 +56,9 @@ public class ObjectEntriesPanelApp extends BasePanelApp {
 		if (portlet == null) {
 			portlet = _supplier.get();
 
-			_portlet = portlet;
+			if (portlet.getCompanyId() == _objectDefinition.getCompanyId()) {
+				_portlet = portlet;
+			}
 		}
 
 		return portlet;

@@ -3836,13 +3836,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 		throws Exception {
 
 		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchSiteNavigationMenuByName(
-				serviceContext.getScopeGroupId(), jsonObject.getString("name"));
+			_siteNavigationMenuLocalService.
+				fetchSiteNavigationMenuByExternalReferenceCode(
+					jsonObject.getString("externalReferenceCode"),
+					serviceContext.getScopeGroupId());
 
 		if (siteNavigationMenu == null) {
 			siteNavigationMenu =
 				_siteNavigationMenuLocalService.addSiteNavigationMenu(
-					null, serviceContext.getUserId(),
+					jsonObject.getString("externalReferenceCode"),
+					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
 					jsonObject.getString("name"), jsonObject.getInt("typeSite"),
 					serviceContext);
@@ -3851,8 +3854,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_siteNavigationMenuLocalService.updateSiteNavigationMenu(
 				serviceContext.getUserId(),
 				siteNavigationMenu.getSiteNavigationMenuId(),
-				jsonObject.getInt("typeSite"), jsonObject.getBoolean("auto"),
-				serviceContext);
+				serviceContext.getScopeGroupId(), jsonObject.getString("name"),
+				jsonObject.getInt("typeSite"), jsonObject.getBoolean("auto"));
 		}
 
 		_addOrUpdateSiteNavigationMenuItems(
@@ -4025,7 +4028,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
+			_replace(_replace(json, serviceContext), stringUtilReplaceValues));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			_addOrUpdateSiteNavigationMenu(

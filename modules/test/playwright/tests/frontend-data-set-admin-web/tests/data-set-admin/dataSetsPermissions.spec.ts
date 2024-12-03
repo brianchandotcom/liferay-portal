@@ -17,12 +17,12 @@ import performLogin, {
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {setupUserRoleAndLoginAsUser} from '../../utils/setupUserRoleAndLoginAsUser';
-import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
+import {customDataSetsPageTest} from './fixtures/customDataSetsPageTest';
 
 export const test = mergeTests(
+	customDataSetsPageTest,
 	dataApiHelpersTest,
 	dataSetManagerApiHelpersTest,
-	dataSetsPageTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -107,8 +107,8 @@ test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers, page}) => {
 
 test('A user with "View" and "Permissions" permission', async ({
 	apiHelpers,
+	customDataSetsPage,
 	dataSetManagerApiHelpers,
-	dataSetsPage,
 	page,
 }) => {
 	await test.step('Create a data set', async () => {
@@ -140,43 +140,43 @@ test('A user with "View" and "Permissions" permission', async ({
 	});
 
 	await test.step('Go to Data Sets', async () => {
-		await dataSetsPage.goto({checkTabVisibility: false});
+		await customDataSetsPage.goto({checkTabVisibility: false});
 	});
 
 	await test.step('Check that the "Permissions" button action is visible', async () => {
 		await expect(
-			dataSetsPage.dataSetPermissionsButton.first()
+			customDataSetsPage.dataSetPermissionsButton.first()
 		).toBeVisible();
 	});
 
 	await test.step('Open Permissions modal', async () => {
-		await dataSetsPage.dataSetPermissionsButton.first().click();
+		await customDataSetsPage.dataSetPermissionsButton.first().click();
 
 		await expect(
-			dataSetsPage.permissionsModal.locator('#guest_ACTION_VIEW')
+			customDataSetsPage.permissionsModal.locator('#guest_ACTION_VIEW')
 		).not.toBeChecked();
 	});
 
 	await test.step('Enable "View" permission for "User" role', async () => {
-		await dataSetsPage.permissionsModal
+		await customDataSetsPage.permissionsModal
 			.locator('#guest_ACTION_VIEW')
 			.setChecked(true);
 
 		await expect(
-			dataSetsPage.permissionsModal.locator('#guest_ACTION_VIEW')
+			customDataSetsPage.permissionsModal.locator('#guest_ACTION_VIEW')
 		).toBeChecked();
 	});
 
 	await test.step('Save Permissions modal', async () => {
-		await dataSetsPage.permissionsModal
+		await customDataSetsPage.permissionsModal
 			.getByRole('button', {name: 'Save'})
 			.click();
 
-		await waitForAlert(dataSetsPage.permissionsModal);
+		await waitForAlert(customDataSetsPage.permissionsModal);
 	});
 
 	await test.step('Click "Cancel" in the Permissions modal', async () => {
-		await dataSetsPage.permissionsModal
+		await customDataSetsPage.permissionsModal
 			.getByRole('button', {name: 'Cancel'})
 			.click();
 	});
@@ -188,20 +188,20 @@ test('A user with "View" and "Permissions" permission', async ({
 	});
 
 	await test.step('Open Permissions modal', async () => {
-		await dataSetsPage.dataSetPermissionsButton.first().click();
+		await customDataSetsPage.dataSetPermissionsButton.first().click();
 	});
 
 	await test.step('Confirm "View" permission is persisted', async () => {
 		await expect(
-			dataSetsPage.permissionsModal.locator('#guest_ACTION_VIEW')
+			customDataSetsPage.permissionsModal.locator('#guest_ACTION_VIEW')
 		).toBeChecked();
 	});
 });
 
 test('A user with only "View" permission', async ({
 	apiHelpers,
+	customDataSetsPage,
 	dataSetManagerApiHelpers,
-	dataSetsPage,
 	page,
 }) => {
 	await test.step('Create a data set', async () => {
@@ -233,7 +233,7 @@ test('A user with only "View" permission', async ({
 	});
 
 	await test.step('Go to Data Sets', async () => {
-		await dataSetsPage.goto({checkTabVisibility: false});
+		await customDataSetsPage.goto({checkTabVisibility: false});
 	});
 
 	await test.step('Check that there is no actions dropdown', async () => {
@@ -251,20 +251,26 @@ test('A user with only "View" permission', async ({
 	});
 
 	await test.step('Check that "Permissions" is not visible', async () => {
-		await expect(dataSetsPage.dataSetPermissionsButton).not.toBeVisible();
-		await expect(dataSetsPage.dataSetPermissionsMenuItem).not.toBeVisible();
+		await expect(
+			customDataSetsPage.dataSetPermissionsButton
+		).not.toBeVisible();
+		await expect(
+			customDataSetsPage.dataSetPermissionsMenuItem
+		).not.toBeVisible();
 	});
 
 	await test.step('Check that "Delete" is not visible', async () => {
-		await expect(dataSetsPage.dataSetDeleteButton).not.toBeVisible();
-		await expect(dataSetsPage.dataSetDeleteMenuItem).not.toBeVisible();
+		await expect(customDataSetsPage.dataSetDeleteButton).not.toBeVisible();
+		await expect(
+			customDataSetsPage.dataSetDeleteMenuItem
+		).not.toBeVisible();
 	});
 });
 
 test('A user without "View" permission on Data Set items', async ({
 	apiHelpers,
+	customDataSetsPage,
 	dataSetManagerApiHelpers,
-	dataSetsPage,
 	page,
 }) => {
 	await test.step('Create a data set', async () => {
@@ -290,18 +296,18 @@ test('A user without "View" permission on Data Set items', async ({
 	});
 
 	await test.step('Go to Data Sets', async () => {
-		await dataSetsPage.goto({checkTabVisibility: false});
+		await customDataSetsPage.goto({checkTabVisibility: false});
 	});
 
 	await test.step('Assert that no data sets appear on the table', async () => {
-		await expect(dataSetsPage.dataSetsEmptyState).toBeVisible();
+		await expect(customDataSetsPage.dataSetsEmptyState).toBeVisible();
 	});
 });
 
 test('A user with "Delete" permission', async ({
 	apiHelpers,
+	customDataSetsPage,
 	dataSetManagerApiHelpers,
-	dataSetsPage,
 	page,
 }) => {
 	await test.step('Create a data set', async () => {
@@ -333,7 +339,7 @@ test('A user with "Delete" permission', async ({
 	});
 
 	await test.step('Go to Data Sets', async () => {
-		await dataSetsPage.goto({checkTabVisibility: false});
+		await customDataSetsPage.goto({checkTabVisibility: false});
 	});
 
 	await test.step('Open actions dropdown', async () => {
@@ -344,14 +350,16 @@ test('A user with "Delete" permission', async ({
 	});
 
 	await test.step('Check that "Delete" is visible', async () => {
-		await expect(dataSetsPage.dataSetDeleteButton.first()).toBeVisible();
+		await expect(
+			customDataSetsPage.dataSetDeleteButton.first()
+		).toBeVisible();
 	});
 });
 
 test('Check "Edit" permission', async ({
 	apiHelpers,
+	customDataSetsPage,
 	dataSetManagerApiHelpers,
-	dataSetsPage,
 	page,
 }) => {
 	const blogPostDataSetERC = getRandomString();
@@ -386,7 +394,7 @@ test('Check "Edit" permission', async ({
 	});
 
 	await test.step('Go to Data Sets', async () => {
-		await dataSetsPage.goto({checkTabVisibility: false});
+		await customDataSetsPage.goto({checkTabVisibility: false});
 	});
 
 	await test.step('Check that there is no actions dropdown', async () => {
@@ -433,30 +441,30 @@ test('Check "Edit" permission', async ({
 	});
 
 	await test.step('Grant Data Sets "Update" permission for the new role', async () => {
-		await dataSetsPage.goto({checkTabVisibility: false});
+		await customDataSetsPage.goto({checkTabVisibility: false});
 
 		await openActionsDropdown({
 			page,
 			text: blogPostsDataSetConfig.name,
 		});
 
-		await dataSetsPage.dataSetPermissionsMenuItem.click();
+		await customDataSetsPage.dataSetPermissionsMenuItem.click();
 
 		await expect(
-			dataSetsPage.permissionsModal.locator(
+			customDataSetsPage.permissionsModal.locator(
 				`#${dataSetUserRoleName}_ACTION_UPDATE`
 			)
 		).not.toBeChecked();
 
-		await dataSetsPage.permissionsModal
+		await customDataSetsPage.permissionsModal
 			.locator(`#${dataSetUserRoleName}_ACTION_UPDATE`)
 			.setChecked(true);
 
-		await dataSetsPage.permissionsModal
+		await customDataSetsPage.permissionsModal
 			.getByRole('button', {name: 'Save'})
 			.click();
 
-		await waitForAlert(dataSetsPage.permissionsModal);
+		await waitForAlert(customDataSetsPage.permissionsModal);
 	});
 
 	await test.step('Do logout and login with the new user', async () => {
@@ -464,15 +472,17 @@ test('Check "Edit" permission', async ({
 	});
 
 	await test.step('Navigate to Data Set page', async () => {
-		await dataSetsPage.goto({checkTabVisibility: false});
+		await customDataSetsPage.goto({checkTabVisibility: false});
 	});
 
 	await test.step('Check that the user has only "Edit" option on actions menu', async () => {
-		await expect(dataSetsPage.dataSetEditButton.first()).toBeVisible();
+		await expect(
+			customDataSetsPage.dataSetEditButton.first()
+		).toBeVisible();
 	});
 
 	await test.step('Check that the user can now edit the data set', async () => {
-		await dataSetsPage.dataSetEditButton.first().click();
+		await customDataSetsPage.dataSetEditButton.first().click();
 
 		await expect(
 			page.getByRole('heading', {name: 'Details'})
@@ -482,7 +492,7 @@ test('Check "Edit" permission', async ({
 
 test('A user with "Add Object Entry" permission', async ({
 	apiHelpers,
-	dataSetsPage,
+	customDataSetsPage,
 	page,
 }) => {
 	await test.step('Setup user role and login as user with "Add Object Entry"', async () => {
@@ -503,13 +513,13 @@ test('A user with "Add Object Entry" permission', async ({
 	});
 
 	await test.step('Go to Data Sets', async () => {
-		await dataSetsPage.goto({checkTabVisibility: false});
+		await customDataSetsPage.goto({checkTabVisibility: false});
 	});
 
 	await test.step('Confirm that the user can create a Data Set', async () => {
-		await expect(dataSetsPage.newDataSetButton).toBeVisible();
+		await expect(customDataSetsPage.newDataSetButton).toBeVisible();
 
-		await dataSetsPage.createDataSet(blogPostsDataSetConfig);
+		await customDataSetsPage.createDataSet(blogPostsDataSetConfig);
 
 		await waitForAlert(page);
 	});
@@ -520,9 +530,9 @@ test('A user with "Add Object Entry" permission', async ({
 			text: blogPostsDataSetConfig.name,
 		});
 
-		await dataSetsPage.dataSetDeleteMenuItem.click();
+		await customDataSetsPage.dataSetDeleteMenuItem.click();
 
-		const deleteModal = dataSetsPage.page.getByRole('dialog');
+		const deleteModal = customDataSetsPage.page.getByRole('dialog');
 
 		await deleteModal.getByRole('button', {name: 'Delete'}).click();
 	});
@@ -530,7 +540,7 @@ test('A user with "Add Object Entry" permission', async ({
 
 test('A user without "Add Object Entry" permission', async ({
 	apiHelpers,
-	dataSetsPage,
+	customDataSetsPage,
 	page,
 }) => {
 	await test.step('Setup user role and login as user with "View" permission', async () => {
@@ -551,10 +561,10 @@ test('A user without "Add Object Entry" permission', async ({
 	});
 
 	await test.step('Go to Data Sets', async () => {
-		await dataSetsPage.goto({checkTabVisibility: false});
+		await customDataSetsPage.goto({checkTabVisibility: false});
 	});
 
 	await test.step('Confirm that the user can not create a Data Set', async () => {
-		await expect(dataSetsPage.newDataSetButton).not.toBeVisible();
+		await expect(customDataSetsPage.newDataSetButton).not.toBeVisible();
 	});
 });

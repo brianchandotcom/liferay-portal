@@ -17,6 +17,7 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import {openFieldset} from '../../utils/openFieldset';
+import {nextPage, setItemsPerPage} from '../../utils/pagination';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../utils/waitForAlert';
@@ -429,14 +430,12 @@ baseTest(
 
 		await journalPage.goto(site.friendlyUrlPath);
 
-		await page.getByLabel('Items per Page').click();
-
-		await page.getByRole('option', {name: '4 Entries per Page'}).click();
+		await setItemsPerPage(page, 4);
 
 		await page.getByTestId('row').nth(0).getByRole('checkbox').check();
 		await page.getByTestId('row').nth(1).getByRole('checkbox').check();
 
-		await page.getByRole('link', {name: 'Page 2'}).click();
+		await nextPage(page);
 
 		await expect(
 			page.getByText('Showing 5 to 8 of 10 entries.')
@@ -445,7 +444,7 @@ baseTest(
 		await page.getByTestId('row').nth(0).getByRole('checkbox').check();
 		await page.getByTestId('row').nth(1).getByRole('checkbox').check();
 
-		await page.getByRole('link', {name: 'Page 3'}).click();
+		await nextPage(page);
 
 		await expect(
 			page.getByText('Showing 9 to 10 of 10 entries.')

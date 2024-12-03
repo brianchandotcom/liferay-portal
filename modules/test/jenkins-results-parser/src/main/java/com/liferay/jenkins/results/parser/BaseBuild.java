@@ -561,10 +561,15 @@ public abstract class BaseBuild implements Build {
 
 				String className = clazz.getName();
 
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Unable to get failure message from " + className);
+				sb.append(className);
+				sb.append("\n");
+				sb.append(getBuildURL());
+
 				NotificationUtil.sendEmail(
-					"Failure message generator exception, class name is: " +
-						className,
-					"jenkins", "Failure message generator",
+					sb.toString(), "jenkins", "Unable to get failure message",
 					"calum.ragan@liferay.com");
 			}
 		}

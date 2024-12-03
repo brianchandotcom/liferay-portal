@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Hibernate Dependencies
 Bundle-SymbolicName: com.liferay.portal.hibernate.dependencies
-Bundle-Version: 1.0.3
+Bundle-Version: 1.0.4
 -fixupmessages:\
 	"The JAR is empty: ...";is:=ignore,\
 	"While setting properties ...";is:=ignore

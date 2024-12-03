@@ -752,15 +752,7 @@ gradle.beforeProject {
 
 				jakartaTransformer {
 					doLast {
-						configurations.compileClasspath.files.each {
-							String jakartaFileName = it.name.contains('.') ? it.name.replaceFirst(/(\.[^.]+)$/, '-JAKARTA-SNAPSHOT$1') : it.name
-
-							File jakartaFile = new File(jakartaTransformerDir, jakartaFileName)
-
-							org.eclipse.transformer.cli.JakartaTransformerCLI.runWith(new org.eclipse.transformer.cli.JakartaTransformerCLI(System.out, System.out, new String[] {it.getAbsolutePath(), jakartaFile.getAbsolutePath()}))
-
-							logger.lifecycle "Jakarta: ${project.name} ${it.name} -> ${FileUtil.relativize(jakartaFile, project.projectDir.parentFile)}"
-						}
+						_jakartaTransform(it, configurations.compileClasspath, jakartaTransformerDir)
 					}
 				}
 			}
@@ -926,6 +918,18 @@ private boolean _hasTestClasses(Task task, String testClassesDirName) {
 	}
 
 	return true
+}
+
+private void _jakartaTransform(Task task, FileCollection jarFiles, File outputDir) {
+	jarFiles.files.each {
+		String fileName = it.name.contains('.') ? it.name.replaceFirst(/(\.[^.]+)$/, '-JAKARTA-SNAPSHOT$1') : it.name
+
+		File file = new File(outputDir, fileName)
+
+		org.eclipse.transformer.cli.JakartaTransformerCLI.runWith(new org.eclipse.transformer.cli.JakartaTransformerCLI(System.out, System.out, new String[] {it.getAbsolutePath(), file.getAbsolutePath()}))
+
+		task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${it.name} -> ${FileUtil.relativize(file, task.project.projectDir.parentFile)}"
+	}
 }
 
 private void _updateGradleSourcePaths(String gradleVersion, EclipseModel eclipseModel) {

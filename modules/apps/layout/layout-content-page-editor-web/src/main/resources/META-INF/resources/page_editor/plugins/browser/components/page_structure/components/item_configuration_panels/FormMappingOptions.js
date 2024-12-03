@@ -7,8 +7,9 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {useControlledState} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
+import AddLocalizationSelectModal from '../../../../../../app/components/AddLocalizationSelectModal';
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
 import {FORM_MAPPING_SOURCES} from '../../../../../../app/config/constants/formMappingSources';
 import {LAYOUT_TYPES} from '../../../../../../app/config/constants/layoutTypes';
@@ -21,8 +22,11 @@ import {openInfoFieldSelector} from '../../../../../../common/openInfoFieldSelec
 export default function FormMappingOptions({
 	hideLabel = false,
 	item,
+	onAfterSave,
 	onValueSelect,
 }) {
+	const [openAddLocalizationSelectModal, setOpenAddLocalizationSelectModal] =
+		useState(false);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const formTypes = useMemo(() => getTypes(), []);
@@ -63,7 +67,13 @@ export default function FormMappingOptions({
 					formItemId: item.itemId,
 					itemType: type.className,
 					onCancel: resetMapping,
-					onSave: saveMapping,
+					onSave: (fields) => {
+						saveMapping(fields);
+
+						if (Liferay.FeatureFlags['LPD-37927']) {
+							onAfterSave(fields);
+						}
+					},
 					segmentsExperienceId,
 				});
 			}
@@ -78,6 +88,7 @@ export default function FormMappingOptions({
 			setClassNameId,
 			setClassTypeId,
 			segmentsExperienceId,
+			onAfterSave,
 		]
 	);
 
@@ -150,6 +161,15 @@ export default function FormMappingOptions({
 					value={classTypeId}
 				/>
 			)}
+
+			{openAddLocalizationSelectModal ? (
+				<AddLocalizationSelectModal
+					formId={item.itemId}
+					onCloseModal={() =>
+						setOpenAddLocalizationSelectModal(false)
+					}
+				/>
+			) : null}
 		</>
 	);
 }

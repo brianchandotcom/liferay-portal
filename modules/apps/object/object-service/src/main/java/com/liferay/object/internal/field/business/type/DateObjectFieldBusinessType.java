@@ -75,6 +75,11 @@ public class DateObjectFieldBusinessType implements ObjectFieldBusinessType {
 		return PropertyDefinition.PropertyType.DATE_TIME;
 	}
 
+	@Override
+	public boolean isLocalizable() {
+		return true;
+	}
+
 	@Reference
 	private Language _language;
 

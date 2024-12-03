@@ -1610,6 +1610,8 @@ public class ObjectFieldLocalServiceImpl
 					StringBundler.concat(
 						"Only ", ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 						StringPool.COMMA,
+						ObjectFieldConstants.BUSINESS_TYPE_DATE,
+						StringPool.COMMA,
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						StringPool.COMMA,
 						ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT, " and ",

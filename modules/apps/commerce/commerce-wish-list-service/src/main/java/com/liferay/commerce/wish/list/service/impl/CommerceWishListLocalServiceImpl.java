@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -50,11 +49,10 @@ public class CommerceWishListLocalServiceImpl
 
 	@Override
 	public CommerceWishList addCommerceWishList(
-			String name, boolean defaultWishList, ServiceContext serviceContext)
+			long groupId, long userId, String name, boolean defaultWishList)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
+		User user = _userLocalService.getUser(userId);
 
 		if (user.isGuestUser()) {
 			_validateGuestWishLists();
@@ -202,11 +200,6 @@ public class CommerceWishListLocalServiceImpl
 			}
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setUserId(user.getUserId());
-
 		if (user.isGuestUser()) {
 			return guestCommerceWishList;
 		}
@@ -230,7 +223,7 @@ public class CommerceWishListLocalServiceImpl
 		if (guestCommerceWishList != null) {
 			_mergeCommerceWishList(
 				guestCommerceWishList.getCommerceWishListId(),
-				commerceWishList.getCommerceWishListId(), serviceContext);
+				commerceWishList.getCommerceWishListId());
 		}
 
 		return commerceWishList;
@@ -262,8 +255,7 @@ public class CommerceWishListLocalServiceImpl
 	}
 
 	private void _mergeCommerceWishList(
-			long fromCommerceWishListId, long toCommerceWishListId,
-			ServiceContext serviceContext)
+			long fromCommerceWishListId, long toCommerceWishListId)
 		throws PortalException {
 
 		// Commerce wish list items
@@ -303,10 +295,9 @@ public class CommerceWishListLocalServiceImpl
 
 			if (!found) {
 				_commerceWishListItemLocalService.addCommerceWishListItem(
-					toCommerceWishListId,
+					fromCommerceWishListItem.getUserId(), toCommerceWishListId,
 					fromCommerceWishListItem.getCProductId(),
-					fromCommerceWishListItem.getCPInstanceUuid(), json,
-					serviceContext);
+					fromCommerceWishListItem.getCPInstanceUuid(), json);
 			}
 		}
 

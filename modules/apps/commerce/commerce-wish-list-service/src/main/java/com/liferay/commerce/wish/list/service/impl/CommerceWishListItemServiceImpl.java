@@ -15,7 +15,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -39,7 +38,7 @@ public class CommerceWishListItemServiceImpl
 	@Override
 	public CommerceWishListItem addCommerceWishListItem(
 			long commerceAccountId, long commerceWishListId, long cProductId,
-			String cpInstanceUuid, String json, ServiceContext serviceContext)
+			String cpInstanceUuid, String json)
 		throws PortalException {
 
 		_commerceWishListModelResourcePermission.check(
@@ -52,14 +51,13 @@ public class CommerceWishListItemServiceImpl
 			cProduct.getPublishedCPDefinitionId());
 
 		return commerceWishListItemLocalService.addCommerceWishListItem(
-			commerceWishListId, cProductId, cpInstanceUuid, json,
-			serviceContext);
+			getUserId(), commerceWishListId, cProductId, cpInstanceUuid, json);
 	}
 
 	@Override
 	public CommerceWishListItem addOrUpdateCommerceWishListItem(
 			long commerceAccountId, long commerceWishListId, long cProductId,
-			String cpInstanceUuid, String json, ServiceContext serviceContext)
+			String cpInstanceUuid, String json)
 		throws PortalException {
 
 		_commerceWishListModelResourcePermission.check(
@@ -72,8 +70,7 @@ public class CommerceWishListItemServiceImpl
 			cProduct.getPublishedCPDefinitionId());
 
 		return commerceWishListItemLocalService.addOrUpdateCommerceWishListItem(
-			commerceWishListId, cProductId, cpInstanceUuid, json,
-			serviceContext);
+			getUserId(), commerceWishListId, cProductId, cpInstanceUuid, json);
 	}
 
 	@Override

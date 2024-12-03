@@ -1,5 +1,6 @@
 [
 	{
+		"externalReferenceCode": "SITENAVIGATIONMENU1",
 		"menuItems": [
 			{
 				"externalReferenceCode": "TESTSITENAVIGATIONMENUITEM1",
@@ -65,6 +66,6 @@
 				"type": "layout"
 			}
 		],
-		"name": "Test Site Navigation Menu"
+		"name": "Test Site Navigation Menu Update"
 	}
 ]

@@ -3659,10 +3659,14 @@ public class BundleSiteInitializerTest {
 
 	private void _assertSiteNavigationMenu1() {
 		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchSiteNavigationMenuByName(
-				_group.getGroupId(), "Test Site Navigation Menu");
+			_siteNavigationMenuLocalService.
+				fetchSiteNavigationMenuByExternalReferenceCode(
+					"SITENAVIGATIONMENU1", _group.getGroupId());
 
 		Assert.assertNotNull(siteNavigationMenu);
+
+		Assert.assertEquals(
+			"Test Site Navigation Menu", siteNavigationMenu.getName());
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
@@ -3736,10 +3740,14 @@ public class BundleSiteInitializerTest {
 
 	private void _assertSiteNavigationMenu2() {
 		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchSiteNavigationMenuByName(
-				_group.getGroupId(), "Test Site Navigation Menu");
+			_siteNavigationMenuLocalService.
+				fetchSiteNavigationMenuByExternalReferenceCode(
+					"SITENAVIGATIONMENU1", _group.getGroupId());
 
 		Assert.assertNotNull(siteNavigationMenu);
+
+		Assert.assertEquals(
+			"Test Site Navigation Menu Update", siteNavigationMenu.getName());
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(

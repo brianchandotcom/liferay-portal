@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.jaxrs.exception.mapper;
 
-import com.liferay.layout.exception.NoSuchLayoutStructureItemException;
+import com.liferay.layout.util.structure.exception.NoSuchLayoutStructureItemException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 

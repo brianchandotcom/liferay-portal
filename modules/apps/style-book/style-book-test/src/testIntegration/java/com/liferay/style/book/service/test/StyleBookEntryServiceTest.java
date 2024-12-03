@@ -142,16 +142,7 @@ public class StyleBookEntryServiceTest {
 			styleBookEntry.getStyleBookEntryId(),
 			curStyleBookEntry.getStyleBookEntryId());
 
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, StyleBookEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(styleBookEntry.getStyleBookEntryId()),
-			ActionKeys.VIEW);
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.SITE_MEMBER, StyleBookEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(styleBookEntry.getStyleBookEntryId()),
-			ActionKeys.VIEW);
+		_removeResourcePermissions(styleBookEntry.getStyleBookEntryId());
 
 		try {
 			UserTestUtil.setUser(
@@ -192,16 +183,7 @@ public class StyleBookEntryServiceTest {
 			styleBookEntry.getStyleBookEntryId(),
 			curStyleBookEntry.getStyleBookEntryId());
 
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, StyleBookEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(styleBookEntry.getStyleBookEntryId()),
-			ActionKeys.VIEW);
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.SITE_MEMBER, StyleBookEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(styleBookEntry.getStyleBookEntryId()),
-			ActionKeys.VIEW);
+		_removeResourcePermissions(styleBookEntry.getStyleBookEntryId());
 
 		try {
 			UserTestUtil.setUser(
@@ -218,6 +200,19 @@ public class StyleBookEntryServiceTest {
 		finally {
 			UserTestUtil.setUser(TestPropsValues.getUser());
 		}
+	}
+
+	private void _removeResourcePermissions(long styleBookEntryId)
+		throws Exception {
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, StyleBookEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(styleBookEntryId), ActionKeys.VIEW);
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.SITE_MEMBER, StyleBookEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(styleBookEntryId), ActionKeys.VIEW);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

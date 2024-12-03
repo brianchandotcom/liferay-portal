@@ -139,17 +139,6 @@ public class StyleBookEntryServiceTest {
 		Assert.assertEquals(
 			styleBookEntry.getStyleBookEntryId(),
 			curStyleBookEntry.getStyleBookEntryId());
-	}
-
-	@Test
-	public void testGetStyleBookEntryByExternalReferenceCodeWithoutViewPermission()
-		throws Exception {
-
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryService.addStyleBookEntry(
-				RandomTestUtil.randomString(), _group.getGroupId(),
-				RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomString(), _serviceContext);
 
 		RoleTestUtil.removeResourcePermission(
 			RoleConstants.GUEST, StyleBookEntry.class.getName(),

@@ -150,7 +150,7 @@ test.describe('Keyboard movement and navigation', () => {
 
 	test(
 		'Keyboard navigation works as expected',
-		{tag: ['@LPD-35945']},
+		{tag: ['@LPD-35946']},
 		async ({apiHelpers, page, pagesAdminPage, site}) => {
 
 			// Create five pages and go to admin page

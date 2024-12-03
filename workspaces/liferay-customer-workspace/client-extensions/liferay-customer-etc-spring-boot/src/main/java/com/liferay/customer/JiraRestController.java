@@ -7,7 +7,6 @@ package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.customer.constants.RoleConstants;
-import com.liferay.customer.service.UserAccountService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -18,6 +17,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,7 +25,6 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -218,7 +217,7 @@ public class JiraRestController extends BaseRestController {
 					_jiraSecurityVulnerabilityFieldPublishingStatus));
 			sb.append(" = 'Ready for Publishing'");
 
-			if (_isPartner(jwt)) {
+			if (_hasEarlyPublishAccess(jwt)) {
 				sb.append(" AND ");
 				sb.append(
 					_getJQLCustomField(
@@ -296,7 +295,7 @@ public class JiraRestController extends BaseRestController {
 
 			sb.append(" ORDER BY ");
 
-			if (_isPartner(jwt)) {
+			if (_hasEarlyPublishAccess(jwt)) {
 				sb.append(
 					_getJQLCustomField(
 						_jiraSecurityVulnerabilityFieldPartnerPublishingDate));
@@ -402,6 +401,42 @@ public class JiraRestController extends BaseRestController {
 		return null;
 	}
 
+	private JSONObject _getMyUserAccountJSONObject(Jwt jwt) {
+		try {
+			return new JSONObject(
+				get(
+					"Bearer " + jwt.getTokenValue(),
+					"/o/headless-admin-user/v1.0/my-user-account"));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to fetch user account", exception);
+			}
+		}
+
+		return null;
+	}
+
+	private List<String> _getUserRoleNames(Jwt jwt) {
+		JSONObject userJSONObject = _getMyUserAccountJSONObject(jwt);
+
+		JSONArray roleBriefsJSONArray = userJSONObject.getJSONArray(
+			"roleBriefs");
+
+		List<String> rolesNames = new ArrayList<>();
+
+		for (int i = 0; i < roleBriefsJSONArray.length(); i++) {
+			JSONObject roleBriefJSONObject = roleBriefsJSONArray.getJSONObject(
+				i);
+
+			String roleName = roleBriefJSONObject.getString("name");
+
+			rolesNames.add(roleName);
+		}
+
+		return rolesNames;
+	}
+
 	private JSONArray _getVersionsJSONArray(String project) throws Exception {
 		try {
 			return new JSONArray(
@@ -431,13 +466,12 @@ public class JiraRestController extends BaseRestController {
 		return null;
 	}
 
-	private boolean _isPartner(Jwt jwt) {
-		ArrayList<String> userRoles = _userAccountService.getUserRoles(jwt);
+	private boolean _hasEarlyPublishAccess(Jwt jwt) {
+		List<String> userRoles = _getUserRoleNames(jwt);
 
 		if (userRoles.contains(RoleConstants.NAME_ADMINISTRATOR) ||
 			userRoles.contains(RoleConstants.NAME_LIFERAY_STAFF) ||
-			userRoles.contains(RoleConstants.NAME_PARTNER) ||
-			userRoles.contains(RoleConstants.NAME_PROVISIONING_ADMIN)) {
+			userRoles.contains(RoleConstants.NAME_PARTNER)) {
 
 			return true;
 		}
@@ -638,8 +672,5 @@ public class JiraRestController extends BaseRestController {
 	private String _jiraURL;
 
 	private final String[] _securityVulnerabilitiesIssueFields;
-
-	@Autowired
-	private UserAccountService _userAccountService;
 
 }

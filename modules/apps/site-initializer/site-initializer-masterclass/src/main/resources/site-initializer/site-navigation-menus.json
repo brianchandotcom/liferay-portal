@@ -1,5 +1,6 @@
 [
 	{
+		"externalReferenceCode": "SITENAVIGATIONMENU1",
 		"menuItems": [
 			{
 				"menuItems": [
@@ -36,6 +37,7 @@
 		"name": "Main Navigation"
 	},
 	{
+		"externalReferenceCode": "SITENAVIGATIONMENU2",
 		"menuItems": [
 			{
 				"friendlyURL": "/my-learning",

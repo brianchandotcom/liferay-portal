@@ -1,5 +1,6 @@
 [
 	{
+		"externalReferenceCode": "SITENAVIGATIONMENU1",
 		"menuItems": [
 			{
 				"friendlyURL": "/dashboard",
@@ -10,6 +11,7 @@
 		"name": "Private"
 	},
 	{
+		"externalReferenceCode": "SITENAVIGATIONMENU2",
 		"menuItems": [
 			{
 				"friendlyURL": "/home",

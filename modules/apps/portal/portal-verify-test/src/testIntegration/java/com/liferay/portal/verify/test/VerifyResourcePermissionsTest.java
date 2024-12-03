@@ -54,15 +54,6 @@ public class VerifyResourcePermissionsTest extends BaseVerifyProcessTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testVerifyGroupResourcedModel() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		_testVerifyResourcedModel(
-			_group.getCompanyId(), _group.getGroupId(),
-			_group.getCreatorUserId(), new GroupVerifiableResourcedModel());
-	}
-
-	@Test
 	public void testGetVerifiableResourcedModelsCount() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.kernel.util.LoggingTimer",
@@ -79,6 +70,15 @@ public class VerifyResourcePermissionsTest extends BaseVerifyProcessTestCase {
 				logEntries.toString(), 2 * companyIds.length,
 				logEntries.size());
 		}
+	}
+
+	@Test
+	public void testVerifyGroupResourcedModel() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_testVerifyResourcedModel(
+			_group.getCompanyId(), _group.getGroupId(),
+			_group.getCreatorUserId(), new GroupVerifiableResourcedModel());
 	}
 
 	@Test

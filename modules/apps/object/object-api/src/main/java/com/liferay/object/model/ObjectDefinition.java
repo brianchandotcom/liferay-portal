@@ -48,6 +48,8 @@ public interface ObjectDefinition
 
 		};
 
+	public java.util.Locale getDefaultLocale();
+
 	public String getDestinationName();
 
 	public String getExtensionDBTableName();

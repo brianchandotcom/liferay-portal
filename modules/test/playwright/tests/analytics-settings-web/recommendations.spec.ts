@@ -10,6 +10,7 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {createChannel} from '../osb-faro-web/utils/channel';
 import {createDataSource} from '../osb-faro-web/utils/data-source';
@@ -66,7 +67,7 @@ test.describe('Test All Recommendation Job', () => {
 
 			const channelName = 'My Property - ' + getRandomString();
 
-			await createChannel({
+			const {channel, project} = await createChannel({
 				apiHelpers,
 				channelName,
 			});
@@ -153,6 +154,17 @@ test.describe('Test All Recommendation Job', () => {
 			).toBeTruthy();
 
 			expect(await toggleElement.isChecked()).toBeFalsy();
+
+			await test.step('Delete channel and delete site on the DXP side', async () => {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+
+				await page.goto(liferayConfig.environment.baseUrl);
+
+				await apiHelpers.headlessSite.deleteSite(String(site.id));
+			});
 		});
 	});
 });

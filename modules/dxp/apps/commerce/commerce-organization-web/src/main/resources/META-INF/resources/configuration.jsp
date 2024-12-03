@@ -47,9 +47,9 @@ Organization rootOrganization = commerceOrganizationDisplayContext.getRootOrgani
 						).put(
 							"initialValue", (rootOrganization == null) ? 0 : rootOrganization.getOrganizationId()
 						).put(
-							"inputName", liferayPortletResponse.getNamespace() + "preferences--rootOrganizationId--"
+							"inputName", liferayPortletResponse.getNamespace() + "preferences--rootOrganizationExternalReferenceCode--"
 						).put(
-							"itemsKey", "id"
+							"itemsKey", "externalReferenceCode"
 						).put(
 							"itemsLabel", "name"
 						).put(

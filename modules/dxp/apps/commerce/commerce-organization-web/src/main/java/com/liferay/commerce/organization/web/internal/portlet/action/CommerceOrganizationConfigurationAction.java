@@ -7,13 +7,16 @@ package com.liferay.commerce.organization.web.internal.portlet.action;
 
 import com.liferay.commerce.organization.constants.CommerceOrganizationPortletKeys;
 import com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationDisplayContext;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletConfig;
@@ -49,8 +52,9 @@ public class CommerceOrganizationConfigurationAction
 			CommerceOrganizationDisplayContext
 				commerceOrganizationDisplayContext =
 					new CommerceOrganizationDisplayContext(
-						httpServletRequest, _organizationService,
-						_userLocalService);
+						_configurationProvider, httpServletRequest,
+						_organizationLocalService, _organizationService,
+						_portal, _userLocalService);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -67,7 +71,16 @@ public class CommerceOrganizationConfigurationAction
 		CommerceOrganizationConfigurationAction.class);
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
 	private OrganizationService _organizationService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

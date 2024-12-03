@@ -7,10 +7,12 @@ package com.liferay.commerce.organization.web.internal.portlet;
 
 import com.liferay.commerce.organization.constants.CommerceOrganizationPortletKeys;
 import com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationDisplayContext;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -37,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.display-category=commerce",
 		"com.liferay.portlet.layout-cacheable=false",
 		"com.liferay.portlet.preferences-owned-by-group=true",
-		"com.liferay.portlet.preferences-unique-per-layout=false",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
@@ -63,8 +64,10 @@ public class CommerceOrganizationPortlet extends MVCPortlet {
 			CommerceOrganizationDisplayContext
 				commerceOrganizationDisplayContext =
 					new CommerceOrganizationDisplayContext(
+						_configurationProvider,
 						_portal.getHttpServletRequest(renderRequest),
-						_organizationService, _userLocalService);
+						_organizationLocalService, _organizationService,
+						_portal, _userLocalService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -79,6 +82,12 @@ public class CommerceOrganizationPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrganizationPortlet.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
 	private OrganizationService _organizationService;

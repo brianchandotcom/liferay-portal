@@ -181,6 +181,10 @@ export const phones = [
 		flag: 'ru-ru',
 	},
 	{
+		code: '+250',
+		flag: 'rw-rw',
+	},
+	{
 		code: '+421',
 		flag: 'sk-sk',
 	},

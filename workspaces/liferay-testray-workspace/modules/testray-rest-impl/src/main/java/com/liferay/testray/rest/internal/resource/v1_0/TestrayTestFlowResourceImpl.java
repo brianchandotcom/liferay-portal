@@ -208,7 +208,8 @@ public class TestrayTestFlowResourceImpl
 		List<Map<String, Serializable>> valuesList =
 			_objectEntryLocalService.getValuesList(
 				0, contextCompany.getCompanyId(), contextUser.getUserId(),
-				objectDefinition.getObjectDefinitionId(), null,
+				objectDefinition.getObjectDefinitionId(),
+				new String[] {"c_buildId"},
 				_filterFactory.create(
 					"buildToTasks/id eq '" + testrayTaskId + "'",
 					objectDefinition),

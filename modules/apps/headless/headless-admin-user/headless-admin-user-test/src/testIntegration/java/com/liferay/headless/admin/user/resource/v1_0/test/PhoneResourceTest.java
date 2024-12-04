@@ -30,9 +30,11 @@ import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -65,6 +67,14 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPatchPhone() throws Exception {
+		super.testPatchPhone();
+
+		_testPatchPhoneType();
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"extension", "phoneNumber", "primary"};
 	}
@@ -75,6 +85,7 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 			{
 				extension = String.valueOf(RandomTestUtil.randomInt());
 				phoneNumber = RandomTestUtil.randomString();
+				phoneType = "business";
 				primary = false;
 			}
 		};
@@ -258,13 +269,34 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 		return listType.getListTypeId();
 	}
 
-	private Phone _toPhone(com.liferay.portal.kernel.model.Phone phone) {
+	private void _testPatchPhoneType() throws Exception {
+		Phone postPhone = testPatchPhone_addPhone();
+
+		Phone randomPatchPhone = randomPatchPhone();
+
+		randomPatchPhone.setPhoneType("personal");
+
+		Phone patchPhone = phoneResource.patchPhone(
+			postPhone.getId(), randomPatchPhone);
+
+		Phone getPhone = phoneResource.getPhone(patchPhone.getId());
+
+		Assert.assertEquals(
+			randomPatchPhone.getPhoneType(), getPhone.getPhoneType());
+	}
+
+	private Phone _toPhone(com.liferay.portal.kernel.model.Phone phone)
+		throws Exception {
+
+		ListType listType = phone.getListType();
+
 		return new Phone() {
 			{
 				extension = phone.getExtension();
 				externalReferenceCode = phone.getExternalReferenceCode();
 				id = phone.getPhoneId();
 				phoneNumber = phone.getNumber();
+				phoneType = listType.getName();
 				primary = phone.isPrimary();
 			}
 		};

@@ -34,6 +34,18 @@ public class HeaderActionModel {
 		_label = label;
 	}
 
+	public HeaderActionModel(
+		String additionalClasses, String formId, String href, String id,
+		String label, String submitButtonId) {
+
+		_additionalClasses = additionalClasses;
+		_formId = formId;
+		_href = href;
+		_id = id;
+		_label = label;
+		_submitButtonId = submitButtonId;
+	}
+
 	public String getAdditionalClasses() {
 		return _additionalClasses;
 	}
@@ -52,6 +64,10 @@ public class HeaderActionModel {
 
 	public String getLabel() {
 		return _label;
+	}
+
+	public String getSubmitButtonId() {
+		return _submitButtonId;
 	}
 
 	public void setAdditionalClasses(String additionalClasses) {
@@ -74,10 +90,15 @@ public class HeaderActionModel {
 		_label = label;
 	}
 
+	public void setSubmitButtonId(String submitButtonId) {
+		_submitButtonId = submitButtonId;
+	}
+
 	private String _additionalClasses;
 	private String _formId;
 	private String _href;
 	private String _id;
 	private String _label;
+	private String _submitButtonId;
 
 }

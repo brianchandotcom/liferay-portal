@@ -301,7 +301,15 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 														' not found!'
 												);
 											}
-											submitForm(form);
+											<c:choose>
+												<c:when test="<%= Validator.isNotNull(action.getSubmitButtonId()) %>">
+													document.getElementById('<%= HtmlUtil.escapeJS(action.getSubmitButtonId()) %>').click();
+												</c:when>
+												<c:otherwise>
+													submitForm(form);
+												</c:otherwise>
+											</c:choose>
+
 										});
 								</aui:script>
 							</c:if>

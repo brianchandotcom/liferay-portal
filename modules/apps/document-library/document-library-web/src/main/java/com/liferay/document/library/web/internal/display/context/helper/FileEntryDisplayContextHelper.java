@@ -100,6 +100,15 @@ public class FileEntryDisplayContextHelper {
 		return _hasPermissionsPermission;
 	}
 
+	public boolean hasSubscribePermission() throws PortalException {
+		if (_hasSubscribePermission == null) {
+			_hasSubscribePermission = DLFileEntryPermission.contains(
+				_permissionChecker, _fileEntry, ActionKeys.SUBSCRIBE);
+		}
+
+		return _hasSubscribePermission;
+	}
+
 	public boolean hasUpdatePermission() throws PortalException {
 		if (_hasUpdatePermission == null) {
 			_hasUpdatePermission = DLFileEntryPermission.contains(
@@ -286,6 +295,7 @@ public class FileEntryDisplayContextHelper {
 	private Boolean _hasLock;
 	private Boolean _hasOverrideCheckoutPermission;
 	private Boolean _hasPermissionsPermission;
+	private Boolean _hasSubscribePermission;
 	private Boolean _hasUpdatePermission;
 	private Boolean _hasViewPermission;
 	private final PermissionChecker _permissionChecker;

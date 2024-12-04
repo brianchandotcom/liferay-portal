@@ -21,6 +21,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.display.context.helper.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.internal.display.context.helper.FileShortcutDisplayContextHelper;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
+import com.liferay.document.library.web.internal.util.DLSubscriptionUtil;
 import com.liferay.document.library.web.internal.util.FolderItemSelectorURLProvider;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -545,6 +546,62 @@ public class UIItemsBuilder {
 		).build();
 	}
 
+	public DropdownItem createSubscribeDropdownItem() {
+		return DropdownItemBuilder.putData(
+			"action", "subscribeFileEntry"
+		).putData(
+			"subscribeFileEntryURL",
+			PortletURLBuilder.createActionURL(
+				_getLiferayPortletResponse()
+			).setActionName(
+				"/document_library/subscribe_file_entry"
+			).setRedirect(
+				_getRedirect()
+			).setParameter(
+				"fileEntryId", _fileEntry.getFileEntryId()
+			).buildString()
+		).setIcon(
+			"bell-on"
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "subscribe")
+		).build();
+	}
+
+	public DropdownItem createUnsubscribeDropdownItem() throws PortalException {
+		if (!DLSubscriptionUtil.isSubscribedToFolder(
+				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
+				_themeDisplay.getUserId(), _fileEntry.getFolderId())) {
+
+			return DropdownItemBuilder.putData(
+				"action", "unsubscribeFileEntry"
+			).putData(
+				"unsubscribeFileEntryURL",
+				PortletURLBuilder.createActionURL(
+					_getLiferayPortletResponse()
+				).setActionName(
+					"/document_library/unsubscribe_file_entry"
+				).setRedirect(
+					_getRedirect()
+				).setParameter(
+					"fileEntryId", _fileEntry.getFileEntryId()
+				).buildString()
+			).setIcon(
+				"bell-off"
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "unsubscribe")
+			).build();
+		}
+
+		return DropdownItemBuilder.setDisabled(
+			true
+		).setIcon(
+			"bell-off"
+		).setLabel(
+			LanguageUtil.get(
+				_httpServletRequest, "subscribed-to-a-parent-folder")
+		).build();
+	}
+
 	public DropdownItem createViewOriginalFileDropdownItem() {
 		if (_fileShortcut == null) {
 			return null;
@@ -793,6 +850,30 @@ public class UIItemsBuilder {
 
 		return !Objects.equals(
 			latestFileVersion.getVersion(), _fileVersion.getVersion());
+	}
+
+	public boolean isSubscribeActionAvailable() throws PortalException {
+		if (!_fileEntryDisplayContextHelper.hasSubscribePermission()) {
+			return false;
+		}
+
+		return !isUnsubscribeActionAvailable();
+	}
+
+	public boolean isUnsubscribeActionAvailable() throws PortalException {
+		if (_subscribed != null) {
+			return _subscribed;
+		}
+
+		_subscribed = false;
+
+		if (_fileEntryDisplayContextHelper.hasSubscribePermission()) {
+			_subscribed = DLSubscriptionUtil.isSubscribedToFileEntry(
+				_fileEntry.getCompanyId(), _themeDisplay.getScopeGroupId(),
+				_themeDisplay.getUserId(), _fileEntry.getFileEntryId());
+		}
+
+		return _subscribed;
 	}
 
 	public boolean isViewOriginalFileActionAvailable() {
@@ -1197,6 +1278,7 @@ public class UIItemsBuilder {
 	private final FileVersion _fileVersion;
 	private final HttpServletRequest _httpServletRequest;
 	private String _redirect;
+	private Boolean _subscribed;
 	private final ThemeDisplay _themeDisplay;
 	private Boolean _trashEnabled;
 	private final VersioningStrategy _versioningStrategy;

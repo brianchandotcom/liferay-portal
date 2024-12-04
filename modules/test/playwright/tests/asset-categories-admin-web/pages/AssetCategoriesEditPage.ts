@@ -30,20 +30,10 @@ export class AssetCategoriesEditPage {
 		this.page = page;
 	}
 
-	async goto(title: string) {
+	async goto(action: string, title: string) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: 'Edit'}),
-			trigger: this.page
-				.getByRole('row', {name: title})
-				.getByLabel('Show Actions'),
-		});
-	}
-
-	async gotoDelete(title: string) {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: 'Delete'}),
+			target: this.page.getByRole('menuitem', {name: action}),
 			trigger: this.page
 				.getByRole('row', {name: title})
 				.getByLabel('Show Actions'),
@@ -51,7 +41,7 @@ export class AssetCategoriesEditPage {
 	}
 
 	async goToPropertiesTab(title: string) {
-		await this.goto(title);
+		await this.goto('Edit', title);
 		await this.propertiesTab.click();
 	}
 

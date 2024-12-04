@@ -42,7 +42,7 @@ test('User can add, edit, delete a category.', async ({
 	const categoryNameChanged = 'category-1-changed';
 
 	await test.step('edit', async () => {
-		await assetCategoriesEditPage.goto(categoryName);
+		await assetCategoriesEditPage.goto('Edit', categoryName);
 
 		await assetCategoriesEditPage.fillName(categoryNameChanged);
 		await assetCategoriesEditPage.save(categoryNameChanged);
@@ -53,7 +53,7 @@ test('User can add, edit, delete a category.', async ({
 	});
 
 	await test.step('delete', async () => {
-		await assetCategoriesEditPage.gotoDelete(categoryNameChanged);
+		await assetCategoriesEditPage.goto('Delete', categoryNameChanged);
 
 		await assetCategoriesEditPage.deleteButton.click();
 		await waitForAlert(page);
@@ -87,7 +87,7 @@ test('User can add, edit, delete properties in category.', async ({
 	await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
 
 	await test.step('Add', async () => {
-		await assetCategoriesEditPage.goto(categoryName);
+		await assetCategoriesEditPage.goto('Edit', categoryName);
 		await assetCategoriesEditPage.addProperties(properties);
 
 		await assetCategoriesEditPage.goToPropertiesTab(categoryName);

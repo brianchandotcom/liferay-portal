@@ -37,7 +37,10 @@ export class AssetCategoriesEditPage {
 		await this.propertiesTab.click();
 	}
 
-	async addProperties(properties: {[key: string]: string}) {
+	async addProperties(
+		properties: {[key: string]: string},
+		{save = true} = {}
+	) {
 		await this.propertiesTab.click();
 
 		const keyInputs = this.page.getByLabel('key');
@@ -60,8 +63,9 @@ export class AssetCategoriesEditPage {
 			await valueInput.fill(value);
 		}
 
-		await this.saveButton.click();
-		await waitForAlert(this.page);
+		if (save) {
+			await this.save();
+		}
 	}
 
 	async save() {

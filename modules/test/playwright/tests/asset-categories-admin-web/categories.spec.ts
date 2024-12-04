@@ -40,7 +40,7 @@ test('User can add, edit, delete properties in category.', async ({
 
 	await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
 
-	await test.step('add', async () => {
+	await test.step('Add', async () => {
 		await assetCategoriesEditPage.goto(categoryName);
 		await assetCategoriesEditPage.addProperties(properties);
 
@@ -55,7 +55,7 @@ test('User can add, edit, delete properties in category.', async ({
 		await expect(page.getByLabel('value')).toHaveCount(3);
 	});
 
-	await test.step('edit', async () => {
+	await test.step('Edit', async () => {
 		const editedValue = 'value 2 - EDITED Category Property';
 		await page.getByLabel('value').nth(1).fill(editedValue);
 		await assetCategoriesEditPage.save();
@@ -64,8 +64,23 @@ test('User can add, edit, delete properties in category.', async ({
 		await expect(page.getByLabel('value').nth(1)).toHaveValue(editedValue);
 	});
 
-	await test.step('delete', async () => {
+	await test.step('Can not duplicate property key', async () => {
+		await assetCategoriesEditPage.addProperties(
+			{
+				[Object.keys(properties)[0]]: 'duplicated key',
+			},
+			{save: false}
+		);
+		await assetCategoriesEditPage.saveButton.click();
+
+		await expect(
+			page.getByText('Error:Please enter a unique property key.')
+		).toBeVisible();
+	});
+
+	await test.step('Delete', async () => {
 		await page.getByRole('button', {name: 'Remove'}).nth(1).click();
+		await page.getByRole('button', {name: 'Remove'}).last().click();
 		await assetCategoriesEditPage.save();
 
 		await assetCategoriesEditPage.goToPropertiesTab(categoryName);

@@ -430,6 +430,54 @@ public class AssetCategoryLocalServiceTest {
 	}
 
 	@Test
+	public void testCategoryWithLongTitlesAreTrimmed() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
+			AssetCategory.class.getName(), "name");
+
+		String assetCategoryTitle = RandomTestUtil.randomString(nameMaxLength);
+
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.SPAIN,
+			assetCategoryTitle + RandomTestUtil.randomString(10)
+		).put(
+			LocaleUtil.US, assetCategoryTitle + RandomTestUtil.randomString(10)
+		).build();
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			titleMap.get(_portal.getSiteDefaultLocale(_group.getGroupId())),
+			assetVocabulary.getVocabularyId(), serviceContext);
+
+		_testAssetCategoryLongTitlesAreTrimmed(
+			assetCategory, assetCategoryTitle);
+
+		assetCategory = _assetCategoryLocalService.updateCategory(
+			assetCategory.getUserId(), assetCategory.getCategoryId(),
+			assetCategory.getParentCategoryId(),
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN,
+				assetCategoryTitle + RandomTestUtil.randomString(10)
+			).put(
+				LocaleUtil.US,
+				assetCategoryTitle + RandomTestUtil.randomString(10)
+			).build(),
+			assetCategory.getDescriptionMap(), assetCategory.getVocabularyId(),
+			null, serviceContext);
+
+		_testAssetCategoryLongTitlesAreTrimmed(
+			assetCategory, assetCategoryTitle);
+	}
+
+	@Test
 	public void testDeleteCategory() throws Exception {
 		Map<Locale, String> titleMap = HashMapBuilder.put(
 			LocaleUtil.US, RandomTestUtil.randomString()
@@ -895,6 +943,18 @@ public class AssetCategoryLocalServiceTest {
 		return JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+	}
+
+	private void _testAssetCategoryLongTitlesAreTrimmed(
+		AssetCategory assetCategory, String title) {
+
+		Assert.assertEquals(title, assetCategory.getName());
+
+		Map<Locale, String> titleMap = assetCategory.getTitleMap();
+
+		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
+			Assert.assertEquals(title, entry.getValue());
+		}
 	}
 
 	@Inject

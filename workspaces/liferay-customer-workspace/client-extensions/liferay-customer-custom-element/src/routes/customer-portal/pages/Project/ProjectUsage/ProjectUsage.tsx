@@ -11,12 +11,13 @@ import './ProjectUsage.css';
 
 import i18n from '~/common/I18n';
 
+import AddOnContent from './components/AddOnContent';
 import ContactBanner from './components/ContactBanner';
 import ProjectUsageSection from './components/ProjectUsageSection';
 import useProjectUsageData from './hooks/useProjectUsageData';
 
 const ProjectUsage = () => {
-	const {displayUsage, isLoading, usageData} = useProjectUsageData();
+	const {addOns, displayUsage, isLoading, usageData} = useProjectUsageData();
 
 	return (
 		<div className="container-xl cp-project-usage-page m-0 p-0">
@@ -82,6 +83,39 @@ const ProjectUsage = () => {
 						</CardContainer>
 					))}
 				</ProjectUsageSection>
+
+				{displayUsage && (
+					<>
+						{!!addOns.length && (
+							<ProjectUsageSection
+								className="mb-5"
+								contentSkeleton={2}
+								isLoading={isLoading}
+								title={i18n.translate('add-ons')}
+							>
+								{addOns?.map((addOn, index) => (
+									<CardContainer
+										className="align-items-center d-flex p-4"
+										displayUsage={displayUsage}
+										infoButtonText={addOn.infoText}
+										key={`${addOn.title}-${index}`}
+									>
+										<AddOnContent title={addOn.title} />
+									</CardContainer>
+								))}
+							</ProjectUsageSection>
+						)}
+
+						<ContactBanner
+							description={i18n.translate(
+								'dont-let-resource-limits-put-your-project-at-risk'
+							)}
+							title={i18n.translate(
+								'need-more-project-resources'
+							)}
+						/>
+					</>
+				)}
 			</div>
 		</div>
 	);

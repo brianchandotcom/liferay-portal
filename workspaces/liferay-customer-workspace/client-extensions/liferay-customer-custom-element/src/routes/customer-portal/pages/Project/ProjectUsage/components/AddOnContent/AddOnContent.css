@@ -1,0 +1,13 @@
+.add-on-content {
+	.add-on-description {
+		color: var(--color-neutral-7);
+	}
+
+	.add-on-title {
+		color: var(--color-neutral-8);
+	}
+
+	.icon-background {
+		background-color: var(--color-brand-primary-lighten-6);
+	}
+}

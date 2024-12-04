@@ -9,6 +9,37 @@ import {Liferay} from '~/common/services/liferay';
 import {useGetAccountSubscriptions} from '~/common/services/liferay/graphql/account-subscriptions';
 import {useCustomerPortal} from '~/routes/customer-portal/context';
 
+interface IAddOn {
+	infoText?: string;
+	title: string;
+}
+
+interface IData {
+	infoText?: string;
+	maxCount?: number;
+	title: string;
+	usedCount?: number;
+}
+
+export interface IChartData extends IData {
+	dataSizeUnits?: string;
+	maxCountText?: string;
+}
+
+interface IUsageData {
+	resourceUsage: IChartData[];
+	siteAndUsers: IData[];
+}
+
+export enum SiteAndUserDataEnum {
+	ANONYMOUS_PAGE_VIEWS = 'anonymousPageViews',
+	CLIENT_EXTENSIONS_CAPACITY_CPU = 'clientExtensionsCapacityCPU',
+	CLIENT_EXTENSIONS_CAPACITY_RAM = 'clientExtensionsCapacityRAM',
+	MONTHLY_ACTIVE_LOGGED_IN_USERS = 'monthlyActiveLoggedInUsers',
+	SITES = 'sites',
+	STORAGE_CAPACITY_DOCUMENT_LIBRARY = 'storageCapacityDocumentLibrary',
+}
+
 const DEFAULT_USAGE_DATA_VALUES = {
 	resourceUsage: [
 		{
@@ -34,36 +65,24 @@ const DEFAULT_USAGE_DATA_VALUES = {
 	],
 };
 
-const ACCEPTED_PROJECTS = ['Business Plan', 'Enterprise Plan', 'Pro Plan'];
+const ADD_ONS_CARDS = [
+	{
+		infoText: i18n.translate('dedicated-resources'),
+		title: i18n.translate('dedicated-resources'),
+	},
+	{
+		infoText: i18n.translate('private-cluster'),
+		title: i18n.translate('private-cluster'),
+	},
+];
 
-export enum SiteAndUserDataEnum {
-	ANONYMOUS_PAGE_VIEWS = 'anonymousPageViews',
-	CLIENT_EXTENSIONS_CAPACITY_CPU = 'clientExtensionsCapacityCPU',
-	CLIENT_EXTENSIONS_CAPACITY_RAM = 'clientExtensionsCapacityRAM',
-	MONTHLY_ACTIVE_LOGGED_IN_USERS = 'monthlyActiveLoggedInUsers',
-	SITES = 'sites',
-	STORAGE_CAPACITY_DOCUMENT_LIBRARY = 'storageCapacityDocumentLibrary',
-}
+const ACCEPTED_SUBSCRIPTIONS = ['Business Plan', 'Enterprise Plan', 'Pro Plan'];
+const ADD_ONS = ['Dedicated Resources', 'Private Cluster'];
 
-interface IData {
-	infoText?: string;
-	maxCount?: number;
-	title: string;
-	usedCount?: number;
-}
-
-export interface IChartData extends IData {
-	dataSizeUnits?: string;
-	maxCountText?: string;
-}
-
-interface IUsageData {
-	resourceUsage: IChartData[];
-	siteAndUsers: IData[];
-}
-
-const formatedAcceptedProjects = () =>
-	ACCEPTED_PROJECTS.map((projectName) => `'${projectName}'`).join(',');
+const formatedSubscriptions = () =>
+	[...ACCEPTED_SUBSCRIPTIONS, ...ADD_ONS]
+		.map((projectName) => `'${projectName}'`)
+		.join(',');
 
 const useProjectUsageData = () => {
 	const [usageData, setUsageData] = useState<IUsageData>(
@@ -74,18 +93,35 @@ const useProjectUsageData = () => {
 	const [{project}] = useCustomerPortal();
 
 	const {data} = useGetAccountSubscriptions({
-		filter: `name in (${formatedAcceptedProjects()}) and accountSubscriptionGroupERC eq '${
+		filter: `name in (${formatedSubscriptions()}) and accountSubscriptionGroupERC eq '${
 			project?.accountKey
 		}_liferay-saas'`,
 	});
 
 	const displayUsage = useMemo(
-		() => !!data?.c?.accountSubscriptions?.items.length,
+		() =>
+			!!data?.c?.accountSubscriptions?.items.filter(
+				({name}: {name: string}) =>
+					ACCEPTED_SUBSCRIPTIONS.includes(name)
+			).length,
 		[data]
 	);
 
+	const addOns = useMemo<IAddOn[]>(() => {
+		const filteredAddOns = data?.c?.accountSubscriptions?.items?.filter(
+			({name}: {name: string}) => ADD_ONS.includes(name)
+		);
+
+		return ADD_ONS_CARDS.filter(
+			(card) =>
+				!filteredAddOns?.some(
+					({name}: {name: string}) => card.title === name
+				)
+		);
+	}, [data]);
+
 	const getSiteAndUsers = useCallback(async () => {
-		if (project?.id) {
+		if (project?.externalReferenceCode) {
 			if (!displayUsage) {
 				setIsLoading(false);
 
@@ -96,7 +132,7 @@ const useProjectUsageData = () => {
 				await Liferay.OAuth2Client.FromUserAgentApplication(
 					'liferay-customer-etc-spring-boot-oaua'
 				)
-					.fetch(`/accounts/${project?.id}/usage`)
+					.fetch(`/accounts/${project?.externalReferenceCode}/usage`)
 					.then((response) => response.json())
 					.catch(console.error);
 
@@ -161,13 +197,13 @@ const useProjectUsageData = () => {
 
 			setIsLoading(false);
 		}
-	}, [displayUsage, project?.id, setUsageData]);
+	}, [displayUsage, project?.externalReferenceCode, setUsageData]);
 
 	useEffect(() => {
 		getSiteAndUsers();
 	}, [getSiteAndUsers]);
 
-	return {displayUsage, isLoading, usageData};
+	return {addOns, displayUsage, isLoading, usageData};
 };
 
 export default useProjectUsageData;

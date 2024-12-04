@@ -10,15 +10,15 @@ import CardContainer from '../CardContainer';
 interface IProps {
 	children?: ReactNode;
 	className?: string;
+	contentSkeleton?: number;
 	isLoading?: boolean;
 	title?: string;
 }
 
-const CONTENT_SKELETON_QUANTITY = 3;
-
 const ProjectUsageSection: React.FC<IProps> = ({
 	children,
 	className,
+	contentSkeleton = 3,
 	isLoading,
 	title,
 }) => {
@@ -28,7 +28,7 @@ const ProjectUsageSection: React.FC<IProps> = ({
 
 			<div className="d-grid">
 				{isLoading
-					? [...Array(CONTENT_SKELETON_QUANTITY)].map((_, index) => (
+					? [...Array(contentSkeleton)].map((_, index) => (
 							<CardContainer
 								displayUsage={false}
 								key={`${title}-${index}-loading`}

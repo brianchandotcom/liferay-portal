@@ -90,6 +90,23 @@ public class LayoutSEOEntryServiceUtil {
 
 	public static LayoutSEOEntry updateLayoutSEOEntry(
 			long groupId, boolean privateLayout, long layoutId,
+			boolean openGraphDescriptionEnabled,
+			Map<java.util.Locale, String> openGraphDescriptionMap,
+			Map<java.util.Locale, String> openGraphImageAltMap,
+			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			Map<java.util.Locale, String> openGraphTitleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateLayoutSEOEntry(
+			groupId, privateLayout, layoutId, openGraphDescriptionEnabled,
+			openGraphDescriptionMap, openGraphImageAltMap,
+			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
+			serviceContext);
+	}
+
+	public static LayoutSEOEntry updateLayoutSEOEntry(
+			long groupId, boolean privateLayout, long layoutId,
 			boolean enabledCanonicalURLMap,
 			Map<java.util.Locale, String> canonicalURLMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

@@ -93,6 +93,24 @@ public class LayoutSEOEntryServiceWrapper
 	@Override
 	public LayoutSEOEntry updateLayoutSEOEntry(
 			long groupId, boolean privateLayout, long layoutId,
+			boolean openGraphDescriptionEnabled,
+			java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
+			java.util.Map<java.util.Locale, String> openGraphImageAltMap,
+			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			java.util.Map<java.util.Locale, String> openGraphTitleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutSEOEntryService.updateLayoutSEOEntry(
+			groupId, privateLayout, layoutId, openGraphDescriptionEnabled,
+			openGraphDescriptionMap, openGraphImageAltMap,
+			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
+			serviceContext);
+	}
+
+	@Override
+	public LayoutSEOEntry updateLayoutSEOEntry(
+			long groupId, boolean privateLayout, long layoutId,
 			boolean enabledCanonicalURLMap,
 			java.util.Map<java.util.Locale, String> canonicalURLMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

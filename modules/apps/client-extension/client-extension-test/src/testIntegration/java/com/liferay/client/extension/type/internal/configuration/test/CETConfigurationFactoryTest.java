@@ -108,7 +108,7 @@ public class CETConfigurationFactoryTest {
 	}
 
 	@Test
-	public void testActivate() throws Exception {
+	public void testAddCET() throws Exception {
 		FeatureFlagTestHelper featureFlagTestHelper =
 			new FeatureFlagTestHelper();
 
@@ -118,7 +118,7 @@ public class CETConfigurationFactoryTest {
 		String liferayMode = SystemProperties.get("liferay.mode");
 
 		try {
-			_testActivate();
+			_testAddCET();
 		}
 		finally {
 			featureFlagTestHelper.setFeatureFlagValue(
@@ -232,7 +232,7 @@ public class CETConfigurationFactoryTest {
 		).build();
 	}
 
-	private void _testActivate() throws Exception {
+	private void _testAddCET() throws Exception {
 		SystemProperties.clear("liferay.mode");
 
 		Bundle bundle = FrameworkUtil.getBundle(

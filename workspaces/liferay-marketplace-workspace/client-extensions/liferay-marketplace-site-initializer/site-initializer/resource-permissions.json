@@ -130,15 +130,6 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.commerce.product.model.CommerceChannel",
-		"roleName": "Supplier",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
 			"VIEW"
 		],
 		"primKey": "0",

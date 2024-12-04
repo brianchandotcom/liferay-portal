@@ -41,7 +41,7 @@ const Apps = () => {
 						.build(),
 					'images.accountId': '-1',
 					'nestedFields':
-						'attachments,images,productChannels,productSpecifications,skus',
+						'attachments,images,productSpecifications,skus',
 					'page': page.toString(),
 					'skus.accountId': '-1',
 					'sort': 'createDate:desc',

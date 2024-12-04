@@ -527,8 +527,6 @@ interface Product {
 	modifiedDate: string;
 	name: {[key: string]: string};
 	price?: number;
-	productChannelFilter?: boolean;
-	productChannels: Channel[];
 	productId: number;
 	productSpecifications: ProductSpecification[];
 	productStatus: number;

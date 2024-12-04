@@ -40,7 +40,6 @@ class HeadlessCommerceAdminCatalog {
 		categories,
 		description,
 		name,
-		productChannels,
 		productStatus,
 		workflowStatusInfo,
 	}: {
@@ -48,7 +47,6 @@ class HeadlessCommerceAdminCatalog {
 		categories: Partial<Categories>[];
 		description: string;
 		name: string;
-		productChannels?: Partial<Channel>[];
 		productStatus?: number;
 		workflowStatusInfo?: number;
 	}) {
@@ -60,7 +58,6 @@ class HeadlessCommerceAdminCatalog {
 				categories,
 				description: {en_US: description},
 				name: {en_US: name},
-				productChannels,
 				productConfiguration: {
 					allowBackOrder: true,
 					maxOrderQuantity: 1,

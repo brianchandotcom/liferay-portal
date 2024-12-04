@@ -14,8 +14,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Keven Leone
  * @author Eduardo Diniz
+ * @author Keven Leone
  */
 @Component(service = ConfigurationScreen.class)
 public class MarketplaceConfigurationScreen
@@ -28,11 +28,7 @@ public class MarketplaceConfigurationScreen
 
 	@Override
 	public boolean isVisible() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-24498")) {
-			return true;
-		}
-
-		return false;
+		return FeatureFlagManagerUtil.isEnabled("LPD-35941");
 	}
 
 	@Override

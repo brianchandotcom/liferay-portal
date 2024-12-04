@@ -10,8 +10,8 @@ import com.liferay.configuration.admin.category.ConfigurationCategory;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Keven Leone
  * @author Eduardo Diniz
+ * @author Keven Leone
  */
 @Component(service = ConfigurationCategory.class)
 public class MarketplaceConfigurationCategory implements ConfigurationCategory {

@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Keven Leone
  * @author Eduardo Diniz
+ * @author Keven Leone
  */
 public abstract class BaseMarketplaceConfigurationScreen
 	implements ConfigurationScreen {

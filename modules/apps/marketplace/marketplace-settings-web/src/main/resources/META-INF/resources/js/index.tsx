@@ -6,11 +6,7 @@
 import React from 'react';
 
 const App = () => {
-	return (
-		<div>
-			<h1>Markeplace Settings Web</h1>
-		</div>
-	);
+	return <h1>Markeplace Settings Web</h1>;
 };
 
 export {App};

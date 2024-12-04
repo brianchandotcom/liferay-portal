@@ -201,30 +201,30 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 		<nav aria-label="<liferay-ui:message key="pagination" />">
 			<ul class="pagination">
 				<li class="page-item <%= (cur > 1) ? StringPool.BLANK : "disabled" %>">
-					<c:choose>
-						<c:when test="<%= cur > 1 %>">
-							<liferay-ui:csp>
+					<liferay-ui:csp>
+						<c:choose>
+							<c:when test="<%= cur > 1 %>">
 								<a class="lfr-portal-tooltip page-link" href="<%= _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur -1) : "" %>" title="<%= LanguageUtil.get(request, "previous-page") %>">
-							</liferay-ui:csp>
-						</c:when>
-						<c:otherwise>
-							<div class="page-link">
-						</c:otherwise>
-					</c:choose>
+							</c:when>
+							<c:otherwise>
+								<div class="page-link">
+							</c:otherwise>
+						</c:choose>
 
-						<liferay-ui:icon
-							icon='<%= PortalUtil.isRightToLeft(request) ? "angle-right" : "angle-left" %>'
-							markupView="lexicon"
-						/>
+							<liferay-ui:icon
+								icon='<%= PortalUtil.isRightToLeft(request) ? "angle-right" : "angle-left" %>'
+								markupView="lexicon"
+							/>
 
-					<c:choose>
-						<c:when test="<%= cur > 1 %>">
-							</a>
-						</c:when>
-						<c:otherwise>
-							</div>
-						</c:otherwise>
-					</c:choose>
+						<c:choose>
+							<c:when test="<%= cur > 1 %>">
+								</a>
+							</c:when>
+							<c:otherwise>
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:csp>
 				</li>
 
 				<c:choose>
@@ -235,18 +235,18 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						%>
 
 							<li class="page-item <%= (i == cur) ? "active" : StringPool.BLANK %>">
-								<c:choose>
-									<c:when test="<%= i == cur %>">
-										<a aria-current="page" class="page-link" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" tabindex="0">
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:csp>
+								<liferay-ui:csp>
+									<c:choose>
+										<c:when test="<%= i == cur %>">
+											<a aria-current="page" class="page-link" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" tabindex="0">
+										</c:when>
+										<c:otherwise>
 											<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>">
-										</liferay-ui:csp>
-									</c:otherwise>
-								</c:choose>
+										</c:otherwise>
+									</c:choose>
 
-								<span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
+									<span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
+								</liferay-ui:csp>
 							</li>
 
 						<%
@@ -453,30 +453,30 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 				</c:choose>
 
 				<li class="page-item <%= (cur < pages) ? StringPool.BLANK : "disabled" %>">
-					<c:choose>
-						<c:when test="<%= cur < pages %>">
-							<liferay-ui:csp>
+					<liferay-ui:csp>
+						<c:choose>
+							<c:when test="<%= cur < pages %>">
 								<a class="lfr-portal-tooltip page-link" href="<%= _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur + 1) : "" %>" title="<%= LanguageUtil.get(request, "next-page") %>">
-							</liferay-ui:csp>
-						</c:when>
-						<c:otherwise>
-							<div class="page-link">
-						</c:otherwise>
-					</c:choose>
+							</c:when>
+							<c:otherwise>
+								<div class="page-link">
+							</c:otherwise>
+						</c:choose>
 
-						<liferay-ui:icon
-							icon='<%= PortalUtil.isRightToLeft(request) ? "angle-left" : "angle-right" %>'
-							markupView="lexicon"
-						/>
+							<liferay-ui:icon
+								icon='<%= PortalUtil.isRightToLeft(request) ? "angle-left" : "angle-right" %>'
+								markupView="lexicon"
+							/>
 
-					<c:choose>
-						<c:when test="<%= cur < pages %>">
-							</a>
-						</c:when>
-						<c:otherwise>
-							</div>
-						</c:otherwise>
-					</c:choose>
+						<c:choose>
+							<c:when test="<%= cur < pages %>">
+								</a>
+							</c:when>
+							<c:otherwise>
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:csp>
 				</li>
 			</ul>
 		</nav>

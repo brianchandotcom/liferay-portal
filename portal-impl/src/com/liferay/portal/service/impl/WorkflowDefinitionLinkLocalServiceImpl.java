@@ -383,6 +383,32 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	}
 
 	@Override
+	public WorkflowDefinitionLink updateWorkflowDefinitionLink(
+			String externalReferenceCode, long userId, long companyId,
+			long groupId, String className, long classPK, long typePK,
+			String workflowDefinitionName, int workflowDefinitionVersion)
+		throws PortalException {
+
+		WorkflowDefinitionLink serviceBuilderWorkflowDefinitionLink =
+			workflowDefinitionLinkPersistence.fetchByERC_G(
+				externalReferenceCode, groupId);
+
+		if (serviceBuilderWorkflowDefinitionLink == null) {
+			return addWorkflowDefinitionLink(
+				userId, companyId, StagingUtil.getLiveGroupId(groupId),
+				className, classPK, typePK, workflowDefinitionName,
+				workflowDefinitionVersion);
+		}
+
+		serviceBuilderWorkflowDefinitionLink.setClassName(className);
+		serviceBuilderWorkflowDefinitionLink.setWorkflowDefinitionName(
+			workflowDefinitionName);
+
+		return workflowDefinitionLinkPersistence.update(
+			serviceBuilderWorkflowDefinitionLink);
+	}
+
+	@Override
 	public void updateWorkflowDefinitionLinks(
 			long userId, long companyId, long groupId, String className,
 			long classPK,

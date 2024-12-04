@@ -81,17 +81,8 @@ export class AssetCategoriesEditPage {
 		await this.nameInput.fill(name);
 	}
 
-	async save(name?: string) {
+	async save(successMessage?: string) {
 		await this.saveButton.click();
-
-		if (name) {
-			await waitForAlert(
-				this.page,
-				`Success:${name} was updated successfully.`
-			);
-		}
-		else {
-			await waitForAlert(this.page);
-		}
+		await waitForAlert(this.page, successMessage);
 	}
 }

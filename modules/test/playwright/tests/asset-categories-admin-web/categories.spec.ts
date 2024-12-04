@@ -19,7 +19,7 @@ const test = mergeTests(
 	loginTest()
 );
 
-test('User can add, edit, delete a category.', async ({
+test('User can add, edit, delete a category and add a subcategory.', async ({
 	apiHelpers,
 	assetCategoriesAdminPage,
 	assetCategoriesEditPage,
@@ -27,13 +27,14 @@ test('User can add, edit, delete a category.', async ({
 	site,
 }) => {
 	const categoryName = 'category-1';
+	const vocabularyName = 'test vocabulary';
 
 	await test.step('add', async () => {
 		await createCategories({
 			apiHelpers,
 			categoryNames: [{name: categoryName}],
 			site,
-			vocabularyName: 'test vocabulary',
+			vocabularyName,
 		});
 	});
 
@@ -45,14 +46,32 @@ test('User can add, edit, delete a category.', async ({
 		await assetCategoriesEditPage.goto('Edit', categoryName);
 
 		await assetCategoriesEditPage.fillName(categoryNameChanged);
-		await assetCategoriesEditPage.save(categoryNameChanged);
+		await assetCategoriesEditPage.save(`Success:${categoryNameChanged}`);
 
 		await expect(
 			page.getByRole('link', {name: categoryNameChanged})
 		).toBeVisible();
 	});
 
+	await test.step('add a subcategory', async () => {
+		await assetCategoriesEditPage.goto(
+			'Add Subcategory',
+			categoryNameChanged
+		);
+
+		const subcategoryName = 'Subcategory name';
+
+		await assetCategoriesEditPage.fillName(subcategoryName);
+		await assetCategoriesEditPage.save(`Success:${subcategoryName}`);
+
+		await expect(
+			page.getByRole('link', {name: subcategoryName})
+		).toBeVisible();
+	});
+
 	await test.step('delete', async () => {
+		await assetCategoriesAdminPage.gotoVocabulary(vocabularyName);
+
 		await assetCategoriesEditPage.goto('Delete', categoryNameChanged);
 
 		await assetCategoriesEditPage.deleteButton.click();

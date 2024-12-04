@@ -21,4 +21,8 @@ export class AssetCategoriesAdminPage {
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.categoriesAdmin}`
 		);
 	}
+
+	async gotoVocabulary(name: string) {
+		await this.page.getByRole('menuitem', {name}).click();
+	}
 }

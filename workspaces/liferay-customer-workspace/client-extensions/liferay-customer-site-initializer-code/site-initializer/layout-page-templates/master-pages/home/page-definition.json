@@ -531,7 +531,7 @@
 							"fragmentStyle": {
 								"borderRadius": "",
 								"borderWidth": "0",
-								"paddingLeft": "2",
+								"paddingLeft": "0",
 								"shadow": "",
 								"textAlign": ""
 							},

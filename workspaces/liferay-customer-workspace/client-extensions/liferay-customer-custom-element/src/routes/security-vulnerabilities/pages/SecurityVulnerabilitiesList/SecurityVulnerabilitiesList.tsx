@@ -79,7 +79,7 @@ const SecurityVulnerabilitiesList = () => {
 							<div className="font-weight-bold sv-name">
 								<Link
 									className="sv-name-link"
-									to={`/ticket/${issue[JiraEnum.FIELDS]?.[JiraEnum.CVE_IDS]}`}
+									to={`/ticket/${issue?.[JiraEnum.KEY]}`}
 								>
 									{issue[JiraEnum.FIELDS]?.[JiraEnum.CVE_IDS]}
 								</Link>
@@ -103,47 +103,53 @@ const SecurityVulnerabilitiesList = () => {
 
 	return (
 		<>
-			<div className="align-items-center d-flex flex-column mt-3 sv-header">
-				<div className="align-items-center d-flex flex-column justify-content-center my-5 sv-search text-center">
-					<h1 className="my-4 text-neutral-0">
-						{i18n.translate('liferay-security-reports')}
-					</h1>
+			<div className="sv-list">
+				<div className="align-items-center d-flex flex-column mt-3 sv-list-header">
+					<div className="align-items-center d-flex flex-column justify-content-center my-5 sv-search text-center">
+						<h1 className="my-4 text-neutral-0">
+							{i18n.translate('liferay-security-reports')}
+						</h1>
 
-					<SVSearch
-						keywords={searchParams.get(JiraEnum.KEYWORDS) || ''}
-						onChange={(keywords) =>
-							updateSearchParams({[JiraEnum.KEYWORDS]: keywords})
-						}
-					/>
-				</div>
-			</div>
-
-			<div className="d-flex justify-content-center">
-				<div className="row sv-table-content">
-					<div className="col-3">
-						<SVFilter
-							filterOptions={FILTER_OPTIONS}
-							onChange={(params) => updateSearchParams(params)}
-							params={searchParams}
-							sortOptions={SORT_OPTIONS}
+						<SVSearch
+							keywords={searchParams.get(JiraEnum.KEYWORDS) || ''}
+							onChange={(keywords) =>
+								updateSearchParams({
+									[JiraEnum.KEYWORDS]: keywords,
+								})
+							}
 						/>
 					</div>
+				</div>
 
-					<div className="col-9">
-						{loading ? (
-							<span className="cp-spinner ml-2 spinner-border spinner-border-sm"></span>
-						) : rows?.length ? (
-							<SVTable
-								columns={columns}
-								rows={rows as unknown as IRow[]}
+				<div className="container-fluid container-fluid-max-xl d-flex justify-content-center">
+					<div className="row sv-table-content">
+						<div className="col-3">
+							<SVFilter
+								filterOptions={FILTER_OPTIONS}
+								onChange={(params) =>
+									updateSearchParams(params)
+								}
+								params={searchParams}
+								sortOptions={SORT_OPTIONS}
 							/>
-						) : (
-							<div className="py-2">
-								{i18n.translate(
-									'the-requested-search-does-not-exist-in-our-database-please-try-again-with-different-criteria'
-								)}
-							</div>
-						)}
+						</div>
+
+						<div className="col-9">
+							{loading ? (
+								<span className="cp-spinner ml-2 spinner-border spinner-border-sm"></span>
+							) : rows?.length ? (
+								<SVTable
+									columns={columns}
+									rows={rows as unknown as IRow[]}
+								/>
+							) : (
+								<div className="py-2">
+									{i18n.translate(
+										'the-requested-search-does-not-exist-in-our-database-please-try-again-with-different-criteria'
+									)}
+								</div>
+							)}
+						</div>
 					</div>
 				</div>
 			</div>

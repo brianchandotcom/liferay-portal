@@ -1,38 +1,3 @@
-.sv-header {
+.sv-list .sv-list-header {
 	background: linear-gradient(to bottom, #00256C 3%, #0038A3 23%, #0B5FFF 42%, #00A4FA 61%, #2EB7FFCC 74%, #FFFFFF80 94%);
-}
-
-.sv-table-content {
-	max-width: 120rem;
-	width: 100%;
-
-	.sv-name-link {
-		text-decoration-line: none;
-	}
-
-	.sv-severity {
-		border-radius: var(--border-radius-sm);
-		font-size: var(--font-size-sm);
-		min-width: var(--spacer-6);
-	}
-
-	.sv-severity-critical {
-		background-color: var(--color-state-error-lighten-2);
-		color: var(--color-state-error-darken-2);
-	}
-
-	.sv-severity-high {
-		background-color: var(--color-state-warning-lighten-2);
-		color: var(--color-state-warning-darken-2);
-	}
-
-	.sv-severity-low {
-		background-color: var(--color-neutral-2);
-		color: var(--color-neutral-8);
-	}
-
-	.sv-severity-medium {
-		background-color: var(--color-state-info-lighten-2);
-		color: var(--color-state-info-darken-2);
-	}
 }

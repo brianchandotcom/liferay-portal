@@ -10,6 +10,7 @@ import {JiraEnum} from '../utils/constants/jiraEnum';
 
 export interface IJiraFields {
 	[JiraEnum.AFFECTED_VERSIONS]?: string[];
+	[JiraEnum.AFFECTS]?: string;
 	[JiraEnum.CATEGORY]?: string;
 	[JiraEnum.CLASSIFICATION]?: string;
 	[JiraEnum.CVE_IDS]?: string;
@@ -24,32 +25,47 @@ export interface IJiraIssue {
 	[JiraEnum.KEY]?: string;
 }
 
-const useJiraIssue = (issueKey: string) => {
+const useJiraIssue = (issueKey?: string) => {
 	const [jiraIssue, setJiraIssue] = useState<IJiraIssue | undefined>(
 		undefined
 	);
+	const [loading, setLoading] = useState(true);
 
-	const fetchJiraIssue = useCallback(async (issueKey: string) => {
+	const fetchJiraIssue = useCallback(async () => {
+		if (!issueKey) {
+			setJiraIssue(undefined);
+			setLoading(false);
+
+			return;
+		}
+
+		setLoading(true);
+
 		try {
 			const response: IJiraIssue =
 				await Liferay.OAuth2Client.FromUserAgentApplication(
 					'liferay-customer-etc-spring-boot-oaua'
 				)
-					.fetch(`/jira/securities/issues/${issueKey}`)
+					.fetch(`/jira/issue/${issueKey}`)
 					.then((response) => response.json());
 
 			setJiraIssue(response);
 		}
 		catch (error) {
 			console.error('Error fetching Jira data:', error);
+
+			setJiraIssue(undefined);
 		}
-	}, []);
+		finally {
+			setLoading(false);
+		}
+	}, [issueKey]);
 
 	useEffect(() => {
-		fetchJiraIssue(issueKey);
-	}, [fetchJiraIssue, issueKey]);
+		fetchJiraIssue();
+	}, [fetchJiraIssue]);
 
-	return {fetchJiraIssue, jiraIssue};
+	return {jiraIssue, loading};
 };
 
 export default useJiraIssue;

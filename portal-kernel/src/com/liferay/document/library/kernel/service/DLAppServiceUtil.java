@@ -2098,6 +2098,20 @@ public class DLAppServiceUtil {
 	}
 
 	/**
+	 * Subscribe the user to changes in the file entry. This method is only
+	 * supported by the Liferay repository.
+	 *
+	 * @param groupId the primary key of the file entry's group
+	 * @param fileEntryId the primary key of the file entry
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public static void subscribeFileEntry(long groupId, long fileEntryId)
+		throws PortalException {
+
+		getService().subscribeFileEntry(groupId, fileEntryId);
+	}
+
+	/**
 	 * Subscribe the user to changes in documents of the file entry type. This
 	 * method is only supported by the Liferay repository.
 	 *
@@ -2156,6 +2170,20 @@ public class DLAppServiceUtil {
 		throws PortalException {
 
 		getService().unlockFolder(repositoryId, parentFolderId, name, lockUuid);
+	}
+
+	/**
+	 * Unsubscribe the user from changes in the file entry. This method is only
+	 * supported by the Liferay repository.
+	 *
+	 * @param groupId the primary key of the file entry's group
+	 * @param fileEntryId the primary key of the file entry
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public static void unsubscribeFileEntry(long groupId, long fileEntryId)
+		throws PortalException {
+
+		getService().unsubscribeFileEntry(groupId, fileEntryId);
 	}
 
 	/**

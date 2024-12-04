@@ -7831,63 +7831,87 @@ ${docker.start.error}</fail>
 
 			<get-host-git-dir />
 
-			<exec executable="docker" outputproperty="docker.inspect.output">
-				<arg line="inspect ${operating.system.docker.image}" />
-			</exec>
+			<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
 
-			<beanshell>
-				<![CDATA[
-					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+			<get-java-jdk-bundle-type test.batch.name="${test.batch.name}" />
 
-					import org.json.JSONObject;
-					import org.json.JSONArray;
+			<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
 
-					String dockerInspectOutput = project.getProperty("docker.inspect.output");
+			<if>
+				<isset property="java.jdk.home">
+				<then>
+					<exec executable="docker" outputproperty="docker.inspect.output">
+						<arg line="inspect ${operating.system.docker.image}" />
+					</exec>
 
-					JSONArray dockerJSONArray = new JSONArray(dockerInspectOutput);
+					<beanshell>
+						<![CDATA[
+							import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
-					JSONObject dockerJSONObject = dockerJSONArray.getJSONObject(0);
+							import org.json.JSONObject;
+							import org.json.JSONArray;
 
-					if (dockerJSONObject.has("Config")) {
-						JSONObject configObject = dockerJSONObject.getJSONObject("Config");
+							String dockerInspectOutput = project.getProperty("docker.inspect.output");
 
-						if (configObject.has("Env")) {
+							JSONArray dockerJSONArray = new JSONArray(dockerInspectOutput);
 
-							JSONArray envArray = configObject.getJSONArray("Env");
+							JSONObject dockerJSONObject = dockerJSONArray.getJSONObject(0);
 
-							String javaHomeString;
-							String pathString;
+							if (dockerJSONObject.has("Config")) {
+								JSONObject configObject = dockerJSONObject.getJSONObject("Config");
 
-							for (int i = 0; i < envArray.length(); i++) {
-								System.out.println("@@ cw env array: " + envArray.getString(i));
+								if (configObject.has("Env")) {
 
-								if (envArray.getString(i).contains("JAVA_HOME")) {
-									javaHomeString = envArray.getString(i).replace("JAVA_HOME=", "");
+									JSONArray envArray = configObject.getJSONArray("Env");
 
-								}
+									String javaHomeString;
+									String pathString;
 
-								if (envArray.getString(i).contains("PATH")) {
-									pathString = envArray.getString(i).replace("PATH=", "");
+									for (int i = 0; i < envArray.length(); i++) {
+										System.out.println("@@ cw env array: " + envArray.getString(i));
 
+										if (envArray.getString(i).contains("JAVA_HOME")) {
+											javaHomeString = envArray.getString(i).replace("JAVA_HOME=", "");
+
+										}
+
+										if (envArray.getString(i).contains("PATH")) {
+											pathString = envArray.getString(i).replace("PATH=", "");
+
+										}
+									}
+
+									if (!JenkinsResultsParserUtil.isNullOrEmpty(pathString)
+											&& !JenkinsResultsParserUtil.isNullOrEmpty(javaHomeString)) {
+										if (!javaHomeString.equals(project.getProperty("java.jdk.home"))) {
+											pathString = javaHomeString + "/bin:" + pathString;
+
+											String dockerJavaRunOptions = " -e PATH=" + pathString + " -e JAVA_HOME=" + javaHomeString;
+				
+											project.setProperty("docker.java.run.options", dockerJavaRunOptions);
+										}
+									}
 								}
 							}
+						]]>
+					</beanshell>
+				</then>
+			</if>
 
-							if (!JenkinsResultsParserUtil.isNullOrEmpty(pathString)
-									&& !JenkinsResultsParserUtil.isNullOrEmpty(javaHomeString)) {
-								pathString = javaHomeString + "/bin:" + pathString;
-
-								project.setProperty("docker.path", pathString);
-								project.setProperty("docker.java.home", javaHomeString);
-							}
-						}
-					}
-				]]>
-			</beanshell>
+			<if>
+				<not>
+					<isset property="docker.java.run.options" />
+				</not>
+				<then>
+					<property name="docker.java.run.options" value="" />
+				</then>
+			</if>
 
 			<start-docker-container image="${operating.system.docker.image}" name="${operating.system.host}" options="${operating.system.docker.os.options}">\
 				--mount type=bind,source=${host.git.dir}/${portal.dir.name},target=${portal.dir} \
 				--network-alias=${operating.system.host.alias} \
 				${operating.system.docker.run.options} \
+				${docker.java.run.options} \
 			</start-docker-container>
 		</sequential>
 	</macrodef>

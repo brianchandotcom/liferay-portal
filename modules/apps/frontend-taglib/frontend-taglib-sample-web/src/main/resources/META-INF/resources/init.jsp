@@ -19,7 +19,7 @@ page import="com.liferay.frontend.taglib.sample.web.internal.display.context.Sea
 page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <%
-SampleDisplayContext sampleDisplayContext = (SampleDisplayContext)request.getAttribute(SamplePortletKeys.FRONTEND_SAMPLE_DISPLAY_CONTEXT);
+SampleDisplayContext sampleDisplayContext = (SampleDisplayContext)request.getAttribute(SamplePortletKeys.SAMPLE_DISPLAY_CONTEXT);
 %>
 
 <liferay-theme:defineObjects />

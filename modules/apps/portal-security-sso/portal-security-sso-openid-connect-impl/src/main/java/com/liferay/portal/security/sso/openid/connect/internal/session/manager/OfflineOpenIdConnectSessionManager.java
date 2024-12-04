@@ -231,9 +231,6 @@ public class OfflineOpenIdConnectSessionManager {
 			return null;
 		}
 
-		int metadataCacheInSecs =
-			(int)(oAuthClientEntry.getMetadataCacheInMillis() / 1000);
-
 		try {
 			OIDCTokens oidcTokens = OpenIdConnectTokenRequestUtil.request(
 				OIDCClientInformation.parse(
@@ -241,7 +238,7 @@ public class OfflineOpenIdConnectSessionManager {
 				_authorizationServerMetadataResolver.
 					resolveOIDCProviderMetadata(
 						openIdConnectSession.getAuthServerWellKnownURI(),
-						metadataCacheInSecs,
+						oAuthClientEntry.getMetadataCacheInSeconds(),
 						oAuthClientEntry.getOAuthClientEntryId()),
 				refreshToken, oAuthClientEntry.getTokenRequestParametersJSON());
 

@@ -99,6 +99,7 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -638,8 +639,7 @@ public class ObjectDefinitionLocalServiceImpl
 						objectDefinition.getCompanyId())) {
 
 				serviceRegistrationsMap.computeIfAbsent(
-					objectDefinition.getCompanyId() + StringPool.AT +
-						objectDefinition.getObjectDefinitionId(),
+					_getObjectDefinitionKey(objectDefinition),
 					objectDefinitionId ->
 						inactiveObjectDefinitionDeployer.deploy(
 							objectDefinition));
@@ -664,8 +664,7 @@ public class ObjectDefinitionLocalServiceImpl
 					objectDefinition.getCompanyId())) {
 
 				serviceRegistrationsMap.computeIfAbsent(
-					objectDefinition.getCompanyId() + StringPool.AT +
-						objectDefinition.getObjectDefinitionId(),
+					_getObjectDefinitionKey(objectDefinition),
 					objectDefinitionId -> objectDefinitionDeployer.deploy(
 						objectDefinition));
 			}
@@ -942,14 +941,12 @@ public class ObjectDefinitionLocalServiceImpl
 
 					if (objectDefinition.isActive()) {
 						activeServiceRegistrationsMap.put(
-							companyId + StringPool.AT +
-								objectDefinition.getObjectDefinitionId(),
+							_getObjectDefinitionKey(objectDefinition),
 							objectDefinitionDeployer.deploy(objectDefinition));
 					}
 					else {
 						inactiveServiceRegistrationsMap.put(
-							companyId + StringPool.AT +
-								objectDefinition.getObjectDefinitionId(),
+							_getObjectDefinitionKey(objectDefinition),
 							inactiveObjectDefinitionDeployer.deploy(
 								objectDefinition));
 					}
@@ -1050,8 +1047,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 			List<ServiceRegistration<?>> serviceRegistrations =
 				serviceRegistrationsMap.remove(
-					objectDefinition.getCompanyId() + StringPool.AT +
-						objectDefinition.getObjectDefinitionId());
+					_getObjectDefinitionKey(objectDefinition));
 
 			if (serviceRegistrations != null) {
 				for (ServiceRegistration<?> serviceRegistration :
@@ -1348,8 +1344,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 					if (objectDefinition.isActive()) {
 						serviceRegistrationsMap.put(
-							companyId + StringPool.AT +
-								objectDefinition.getObjectDefinitionId(),
+							_getObjectDefinitionKey(objectDefinition),
 							objectDefinitionDeployer.deploy(objectDefinition));
 					}
 				}
@@ -1767,6 +1762,16 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		return name;
+	}
+
+	private String _getObjectDefinitionKey(ObjectDefinition objectDefinition) {
+		String key = String.valueOf(objectDefinition.getObjectDefinitionId());
+
+		if (DBPartition.isPartitionEnabled()) {
+			key = key + StringPool.AT + objectDefinition.getCompanyId();
+		}
+
+		return key;
 	}
 
 	private long _getObjectFolderId(long companyId, long objectFolderId)

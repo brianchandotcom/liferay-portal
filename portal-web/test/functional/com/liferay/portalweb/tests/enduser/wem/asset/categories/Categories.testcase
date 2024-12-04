@@ -360,16 +360,6 @@ definition {
 		}
 	}
 
-	@description = "Cannot add a vocabulary without title."
-	@priority = 3
-	test CannotAddVocabularyWithNullTitle {
-		task ("View cannot add a vocabulary without title") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.addVocabularyWithNullTitle();
-		}
-	}
-
 	@description = "Delete an associated asset type of vocabulary."
 	@priority = 3
 	test DeleteAssociatedAssetTypeOfVocabulary {

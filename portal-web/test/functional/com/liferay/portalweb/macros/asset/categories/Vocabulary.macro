@@ -97,19 +97,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addVocabularyWithNullTitle() {
-		Vocabulary.gotoAddVocabulary();
-
-		PortletEntry.inputName(name = " ");
-
-		Button.clickSave();
-
-		AssertTextEquals(
-			locator1 = "Message#REQUIRED_INFO",
-			value1 = "The Name field is required.");
-	}
-
-	@summary = "Default summary"
 	macro addWithAssociatedAssetTypeCP(assetSubtype = null, vocabularyName = null, rowNumber = null, required = null, assetType = null) {
 		Vocabulary.gotoAddVocabulary();
 

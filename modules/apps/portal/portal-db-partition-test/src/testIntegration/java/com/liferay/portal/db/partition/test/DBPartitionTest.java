@@ -17,13 +17,18 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.persistence.PortletPersistence;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -654,6 +659,57 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	public void testPortlets() throws Exception {
+		Company company = companyLocalService.fetchCompanyByVirtualHost(
+			TestPropsValues.COMPANY_WEB_ID);
+
+		String portletName = RandomTestUtil.randomString();
+
+		try {
+			_deployRemotePortlet(company.getCompanyId(), portletName);
+
+			long defaultCompanyId = PortalInstancePool.getDefaultCompanyId();
+
+			_deployRemotePortlet(defaultCompanyId, portletName);
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						company.getCompanyId())) {
+
+				Portlet portlet = _portletLocalService.getPortletById(
+					portletName);
+
+				Assert.assertNotNull(portlet);
+				Assert.assertEquals(
+					company.getCompanyId(), portlet.getCompanyId());
+			}
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						defaultCompanyId)) {
+
+				Portlet portlet = _portletLocalService.getPortletById(
+					portletName);
+
+				Assert.assertNotNull(portlet);
+				Assert.assertEquals(defaultCompanyId, portlet.getCompanyId());
+			}
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						COMPANY_IDS[0])) {
+
+				Assert.assertNull(
+					_portletLocalService.getPortletById(portletName));
+			}
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> _destroyRemotePortlet(companyId, portletName));
+		}
+	}
+
+	@Test
 	public void testRegenerateViews() throws Exception {
 		try {
 			DBPartitionUtil.forEachCompanyId(
@@ -805,6 +861,28 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		}
 	}
 
+	private void _deployRemotePortlet(long companyId, String portletName)
+		throws Exception {
+
+		Portlet portlet = _portletPersistence.create(0);
+
+		portlet.setCompanyId(companyId);
+		portlet.setPortletId(portletName);
+
+		_portletLocalService.deployRemotePortlet(
+			new long[] {companyId}, portlet, new String[] {"category.hidden"},
+			true, true);
+	}
+
+	private void _destroyRemotePortlet(long companyId, String portletName) {
+		Portlet portlet = _portletLocalService.getPortletById(
+			companyId, portletName);
+
+		if (portlet != null) {
+			_portletLocalService.destroyRemotePortlet(portlet);
+		}
+	}
+
 	private static final String _CLASS_NAME = DBPartitionTest.class.getName();
 
 	@Inject
@@ -815,5 +893,11 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Inject
 	private CounterLocalService _counterLocalService;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
+
+	@Inject
+	private PortletPersistence _portletPersistence;
 
 }

@@ -185,29 +185,28 @@ public class ClientExtensionsServicePreAction extends Action {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
-			String mode = ParamUtil.getString(
-				httpServletRequest, "p_l_mode", Constants.VIEW);
-
-			if (!Objects.equals(mode, Constants.PREVIEW)) {
-				return layout;
-			}
-
-			long selPlid = ParamUtil.getLong(
-				httpServletRequest,
-				StringBundler.concat(
-					StringPool.UNDERLINE,
-					ParamUtil.getString(httpServletRequest, "p_p_id"),
-					"_selPlid"));
-
-			if (selPlid <= 0) {
-				return layout;
-			}
-
-			layout = _layoutLocalService.fetchLayout(selPlid);
+		if (!layout.isTypeControlPanel()) {
+			return layout;
 		}
 
-		return layout;
+		String mode = ParamUtil.getString(
+			httpServletRequest, "p_l_mode", Constants.VIEW);
+
+		if (!Objects.equals(mode, Constants.PREVIEW)) {
+			return layout;
+		}
+
+		long selPlid = ParamUtil.getLong(
+			httpServletRequest,
+			StringBundler.concat(
+				StringPool.UNDERLINE,
+				ParamUtil.getString(httpServletRequest, "p_p_id"), "_selPlid"));
+
+		if (selPlid <= 0) {
+			return layout;
+		}
+
+		return _layoutLocalService.fetchLayout(selPlid);
 	}
 
 	private ThemeCSSCET _getThemeCSSCET(Layout layout) {

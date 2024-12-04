@@ -112,6 +112,8 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 					attributesJSONObject.put(entry.getKey(), entry.getValue());
 				}
 
+				attributesJSONObject.put("readOnly", _readOnly);
+
 				return attributesJSONObject;
 			}
 		).put(

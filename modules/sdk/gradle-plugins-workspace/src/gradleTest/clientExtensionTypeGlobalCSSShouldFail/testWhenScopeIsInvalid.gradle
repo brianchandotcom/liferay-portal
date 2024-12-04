@@ -1,0 +1,4 @@
+ext.expectedErrorMessage = "Client extension with-invalid-scope-global-css-client-extension has an invalid value \"foo\" for the property \"scope\". Valid values are: company, layout."
+ext.taskPath = ":with-invalid-scope-global-css-client-extension:validateClientExtensions"
+
+apply from: project.property("commonScript.shouldFailTestCase.gradle")

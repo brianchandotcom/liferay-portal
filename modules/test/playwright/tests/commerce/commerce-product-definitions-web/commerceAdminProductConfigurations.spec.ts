@@ -7,11 +7,14 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
+	dataApiHelpersTest,
 	commercePagesTest,
 	featureFlagsTest({
 		'LPD-10889': true,
@@ -58,4 +61,457 @@ test('LPD-43390 Create child configuration list', async ({
 	await expect(
 		commerceAdminProductConfigurationListsPage.newConfigurationListName
 	).toHaveText('Test');
+});
+
+test('LPD-43013 Configuration Entry form in side panel', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminProductConfigurationEntriesPage,
+	commerceAdminProductConfigurationEntryPage,
+	commerceAdminProductConfigurationListPage,
+	commerceAdminProductConfigurationListsPage,
+	page,
+}) => {
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+	});
+
+	const configurationLists =
+		await apiHelpers.headlessCommerceAdminCatalog.getProductConfigurationListsPage();
+
+	expect(configurationLists.items?.length).toBeGreaterThan(0);
+
+	const configurationList = configurationLists.items.find((item) =>
+		item.name.includes(catalog.name)
+	);
+
+	expect(configurationList).not.toBeNull();
+
+	await apiHelpers.headlessCommerceAdminCatalog.postProductConfiguration(
+		configurationList.id,
+		{
+			entityExternalReferenceCode: product.externalReferenceCode,
+			entityId: product.id,
+		}
+	);
+
+	await applicationsMenuPage.goToCommerceProductConfigurationLists();
+
+	await (
+		await commerceAdminProductConfigurationListsPage.tableRowLink({
+			colIndex: 0,
+			rowValue: configurationList.name,
+		})
+	).click();
+
+	await commerceAdminProductConfigurationListPage.entriesMenuItem.click();
+
+	await expect(
+		commerceAdminProductConfigurationEntriesPage.table
+	).toBeVisible();
+	await expect(
+		commerceAdminProductConfigurationListPage.saveButton
+	).not.toBeVisible();
+
+	await (
+		await commerceAdminProductConfigurationEntriesPage.tableRowLink({
+			colIndex: 0,
+			rowValue: product.name['en_US'],
+		})
+	).click();
+
+	await expect(
+		commerceAdminProductConfigurationEntryPage.sidePanelTitle
+	).toBeVisible();
+
+	await commerceAdminProductConfigurationEntryPage.allowedOrderQuantitiesInput.fill(
+		'1,2'
+	);
+	await commerceAdminProductConfigurationEntryPage.backOrdersInput.click();
+	await commerceAdminProductConfigurationEntryPage.CPDefinitionInventoryEngineInput.selectOption(
+		'default'
+	);
+	await commerceAdminProductConfigurationEntryPage.depthInput.fill('2');
+	await commerceAdminProductConfigurationEntryPage.displayAvailabilityInput.click();
+	await commerceAdminProductConfigurationEntryPage.displayStockQuantityInput.click();
+	await commerceAdminProductConfigurationEntryPage.freeShippingInput.click();
+	await commerceAdminProductConfigurationEntryPage.heightInput.fill('3');
+	await commerceAdminProductConfigurationEntryPage.lowStockActivityInput.selectOption(
+		'default'
+	);
+	await commerceAdminProductConfigurationEntryPage.maxOrderQuantityInput.fill(
+		'400'
+	);
+	await commerceAdminProductConfigurationEntryPage.minOrderQuantityInput.fill(
+		'5'
+	);
+	await commerceAdminProductConfigurationEntryPage.minStockQuantityInput.fill(
+		'6'
+	);
+	await commerceAdminProductConfigurationEntryPage.multipleOrderQuantityInput.fill(
+		'7'
+	);
+	await commerceAdminProductConfigurationEntryPage.purchasableInput.click();
+	await commerceAdminProductConfigurationEntryPage.shippableInput.click();
+
+	await expect(
+		commerceAdminProductConfigurationEntryPage.freeShippingInput
+	).toBeHidden();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.shipSeparatelyInput
+	).toBeHidden();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.depthInput
+	).toBeHidden();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.heightInput
+	).toBeHidden();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.weightInput
+	).toBeHidden();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.widthInput
+	).toBeHidden();
+
+	await commerceAdminProductConfigurationEntryPage.shippableInput.click();
+
+	await commerceAdminProductConfigurationEntryPage.shipSeparatelyInput.click();
+	await commerceAdminProductConfigurationEntryPage.taxExemptInput.click();
+	await commerceAdminProductConfigurationEntryPage.visibleInput.click();
+	await commerceAdminProductConfigurationEntryPage.weightInput.fill('8');
+	await commerceAdminProductConfigurationEntryPage.widthInput.fill('9');
+
+	await commerceAdminProductConfigurationEntryPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await (
+		await commerceAdminProductConfigurationEntriesPage.tableRowLink({
+			colIndex: 0,
+			rowValue: product.name['en_US'],
+		})
+	).click();
+
+	await expect(
+		commerceAdminProductConfigurationEntryPage.sidePanelTitle
+	).toBeVisible();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.allowedOrderQuantitiesInput
+	).toHaveValue('1,2');
+	await expect(
+		commerceAdminProductConfigurationEntryPage.backOrdersInput
+	).toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.CPDefinitionInventoryEngineInput
+	).toHaveValue('default');
+	await expect(
+		commerceAdminProductConfigurationEntryPage.depthInput
+	).toHaveValue('2.0');
+	await expect(
+		commerceAdminProductConfigurationEntryPage.displayAvailabilityInput
+	).toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.displayStockQuantityInput
+	).toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.freeShippingInput
+	).not.toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.heightInput
+	).toHaveValue('3.0');
+	await expect(
+		commerceAdminProductConfigurationEntryPage.lowStockActivityInput
+	).toHaveValue('default');
+	await expect(
+		commerceAdminProductConfigurationEntryPage.maxOrderQuantityInput
+	).toHaveValue('400.0');
+	await expect(
+		commerceAdminProductConfigurationEntryPage.minOrderQuantityInput
+	).toHaveValue('5.0');
+	await expect(
+		commerceAdminProductConfigurationEntryPage.minStockQuantityInput
+	).toHaveValue('6.0');
+	await expect(
+		commerceAdminProductConfigurationEntryPage.multipleOrderQuantityInput
+	).toHaveValue('7.0');
+	await expect(
+		commerceAdminProductConfigurationEntryPage.purchasableInput
+	).not.toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.shippableInput
+	).toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.shipSeparatelyInput
+	).not.toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.taxExemptInput
+	).toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.visibleInput
+	).not.toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationEntryPage.weightInput
+	).toHaveValue('8.0');
+	await expect(
+		commerceAdminProductConfigurationEntryPage.widthInput
+	).toHaveValue('9.0');
+});
+
+test('LPD-43013 Configuration Entry form in side panel for virtual products', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminProductConfigurationEntriesPage,
+	commerceAdminProductConfigurationEntryPage,
+	commerceAdminProductConfigurationListPage,
+	commerceAdminProductConfigurationListsPage,
+	page,
+}) => {
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		productType: 'virtual',
+	});
+
+	const configurationLists =
+		await apiHelpers.headlessCommerceAdminCatalog.getProductConfigurationListsPage();
+
+	expect(configurationLists.items?.length).toBeGreaterThan(0);
+
+	const configurationList = configurationLists.items.find((item) =>
+		item.name.includes(catalog.name)
+	);
+
+	expect(configurationList).not.toBeNull();
+
+	await apiHelpers.headlessCommerceAdminCatalog.postProductConfiguration(
+		configurationList.id,
+		{
+			entityExternalReferenceCode: product.externalReferenceCode,
+			entityId: product.id,
+		}
+	);
+
+	await applicationsMenuPage.goToCommerceProductConfigurationLists();
+
+	await (
+		await commerceAdminProductConfigurationListsPage.tableRowLink({
+			colIndex: 0,
+			rowValue: configurationList.name,
+		})
+	).click();
+
+	await commerceAdminProductConfigurationListPage.entriesMenuItem.click();
+
+	await expect(
+		commerceAdminProductConfigurationEntriesPage.table
+	).toBeVisible();
+	await expect(
+		commerceAdminProductConfigurationListPage.saveButton
+	).not.toBeVisible();
+
+	await (
+		await commerceAdminProductConfigurationEntriesPage.tableRowLink({
+			colIndex: 0,
+			rowValue: product.name['en_US'],
+		})
+	).click();
+
+	await expect(
+		commerceAdminProductConfigurationEntryPage.sidePanelTitle
+	).toBeVisible();
+
+	await commerceAdminProductConfigurationEntryPage.allowedOrderQuantitiesInput.fill(
+		'1,2'
+	);
+	await commerceAdminProductConfigurationEntryPage.backOrdersInput.click();
+
+	await expect(
+		commerceAdminProductConfigurationEntryPage.shippableInput
+	).toBeDisabled();
+
+	await commerceAdminProductConfigurationEntryPage.saveButton.click();
+
+	await waitForAlert(page);
+});
+
+test('LPD-43013 Edit configuration template', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminProductConfigurationListPage,
+	commerceAdminProductConfigurationListsPage,
+	page,
+}) => {
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	const configurationLists =
+		await apiHelpers.headlessCommerceAdminCatalog.getProductConfigurationListsPage();
+
+	expect(configurationLists.items?.length).toBeGreaterThan(0);
+
+	const configurationList = configurationLists.items.find((item) =>
+		item.name.includes(catalog.name)
+	);
+
+	expect(configurationList).not.toBeNull();
+
+	await applicationsMenuPage.goToCommerceProductConfigurationLists();
+
+	await (
+		await commerceAdminProductConfigurationListsPage.tableRowLink({
+			colIndex: 0,
+			rowValue: configurationList.name,
+		})
+	).click();
+
+	await expect(
+		commerceAdminProductConfigurationListPage.detailsMenuItem
+	).toBeVisible();
+
+	await commerceAdminProductConfigurationListPage.nameInput.fill('Name1');
+	await expect(
+		commerceAdminProductConfigurationListPage.catalogNameInput
+	).toBeDisabled();
+	await expect(
+		commerceAdminProductConfigurationListPage.catalogNameInput
+	).toHaveValue(catalog.name);
+	await commerceAdminProductConfigurationListPage.priorityInput.fill('2');
+
+	await commerceAdminProductConfigurationListPage.allowedOrderQuantitiesInput.fill(
+		'1,2'
+	);
+	await commerceAdminProductConfigurationListPage.backOrdersInput.click();
+	await commerceAdminProductConfigurationListPage.CPDefinitionInventoryEngineInput.selectOption(
+		'default'
+	);
+	await commerceAdminProductConfigurationListPage.depthInput.fill('2');
+	await commerceAdminProductConfigurationListPage.displayAvailabilityInput.click();
+	await commerceAdminProductConfigurationListPage.displayStockQuantityInput.click();
+	await commerceAdminProductConfigurationListPage.freeShippingInput.click();
+	await commerceAdminProductConfigurationListPage.heightInput.fill('3');
+	await commerceAdminProductConfigurationListPage.lowStockActivityInput.selectOption(
+		'default'
+	);
+	await commerceAdminProductConfigurationListPage.maxOrderQuantityInput.fill(
+		'400'
+	);
+	await commerceAdminProductConfigurationListPage.minOrderQuantityInput.fill(
+		'5'
+	);
+	await commerceAdminProductConfigurationListPage.minStockQuantityInput.fill(
+		'6'
+	);
+	await commerceAdminProductConfigurationListPage.multipleOrderQuantityInput.fill(
+		'7'
+	);
+	await commerceAdminProductConfigurationListPage.purchasableInput.click();
+	await commerceAdminProductConfigurationListPage.shippableInput.click();
+
+	await expect(
+		commerceAdminProductConfigurationListPage.freeShippingInput
+	).toBeHidden();
+	await expect(
+		commerceAdminProductConfigurationListPage.shipSeparatelyInput
+	).toBeHidden();
+	await expect(
+		commerceAdminProductConfigurationListPage.depthInput
+	).toBeHidden();
+	await expect(
+		commerceAdminProductConfigurationListPage.heightInput
+	).toBeHidden();
+	await expect(
+		commerceAdminProductConfigurationListPage.weightInput
+	).toBeHidden();
+	await expect(
+		commerceAdminProductConfigurationListPage.widthInput
+	).toBeHidden();
+
+	await commerceAdminProductConfigurationListPage.shippableInput.click();
+
+	await commerceAdminProductConfigurationListPage.shipSeparatelyInput.click();
+	await commerceAdminProductConfigurationListPage.taxExemptInput.click();
+	await commerceAdminProductConfigurationListPage.visibleInput.click();
+	await commerceAdminProductConfigurationListPage.weightInput.fill('8');
+	await commerceAdminProductConfigurationListPage.widthInput.fill('9');
+
+	await commerceAdminProductConfigurationListPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await page.reload();
+
+	await expect(
+		commerceAdminProductConfigurationListPage.nameInput
+	).toHaveValue('Name1');
+	await expect(
+		commerceAdminProductConfigurationListPage.catalogNameInput
+	).toBeDisabled();
+	await expect(
+		commerceAdminProductConfigurationListPage.catalogNameInput
+	).toHaveValue(catalog.name);
+	await expect(
+		commerceAdminProductConfigurationListPage.priorityInput
+	).toHaveValue('2.0');
+	await expect(
+		commerceAdminProductConfigurationListPage.allowedOrderQuantitiesInput
+	).toHaveValue('1,2');
+	await expect(
+		commerceAdminProductConfigurationListPage.backOrdersInput
+	).not.toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationListPage.CPDefinitionInventoryEngineInput
+	).toHaveValue('default');
+	await expect(
+		commerceAdminProductConfigurationListPage.depthInput
+	).toHaveValue('2.0');
+	await expect(
+		commerceAdminProductConfigurationListPage.displayAvailabilityInput
+	).not.toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationListPage.displayStockQuantityInput
+	).not.toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationListPage.freeShippingInput
+	).toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationListPage.heightInput
+	).toHaveValue('3.0');
+	await expect(
+		commerceAdminProductConfigurationListPage.lowStockActivityInput
+	).toHaveValue('default');
+	await expect(
+		commerceAdminProductConfigurationListPage.maxOrderQuantityInput
+	).toHaveValue('400.0');
+	await expect(
+		commerceAdminProductConfigurationListPage.minOrderQuantityInput
+	).toHaveValue('5.0');
+	await expect(
+		commerceAdminProductConfigurationListPage.minStockQuantityInput
+	).toHaveValue('6.0');
+	await expect(
+		commerceAdminProductConfigurationListPage.multipleOrderQuantityInput
+	).toHaveValue('7.0');
+	await expect(
+		commerceAdminProductConfigurationListPage.purchasableInput
+	).not.toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationListPage.shippableInput
+	).toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationListPage.shipSeparatelyInput
+	).toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationListPage.taxExemptInput
+	).toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationListPage.visibleInput
+	).not.toBeChecked();
+	await expect(
+		commerceAdminProductConfigurationListPage.weightInput
+	).toHaveValue('8.0');
+	await expect(
+		commerceAdminProductConfigurationListPage.widthInput
+	).toHaveValue('9.0');
 });

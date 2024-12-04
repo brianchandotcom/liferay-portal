@@ -29,6 +29,44 @@ export async function addBreakdownByIndividualAttribute({
 	await page.getByRole('button', {exact: true, name: 'Save'}).click();
 }
 
+export async function createPageWithHTMLFragment({
+	htmlContent,
+	page,
+}: {
+	htmlContent: string;
+	page: Page;
+}) {
+	await page.getByLabel('Search Fragments and Widgets').fill('html');
+
+	await page.waitForTimeout(2000);
+
+	await page.getByLabel(`Add HTML`).focus();
+
+	await page.keyboard.press('Enter');
+
+	await page.keyboard.press('Enter');
+
+	await page.getByText('HTML Example').click();
+
+	await page.getByText('HTML Example').dblclick({delay: 500});
+
+	await page.locator('.CodeMirror-scroll').click();
+
+	await page.keyboard.press('Control+A');
+
+	await page.keyboard.press('Backspace');
+
+	await page.keyboard.insertText(htmlContent);
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await page.waitForTimeout(2000);
+
+	await page.getByRole('button', {name: 'Publish'}).click();
+
+	await page.waitForTimeout(2000);
+}
+
 export async function viewNameNotPresentOnTableList({
 	itemNames,
 	page,

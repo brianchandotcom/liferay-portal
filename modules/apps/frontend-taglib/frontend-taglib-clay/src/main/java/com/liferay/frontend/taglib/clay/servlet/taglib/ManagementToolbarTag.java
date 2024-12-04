@@ -1074,11 +1074,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			jspWriter.write(" role=\"search\"><div class=\"input-group\"><div");
 			jspWriter.write(" class=\"input-group-item\"><input class=\"");
 			jspWriter.write("form-control form-control input-group-inset");
-			jspWriter.write(" input-group-inset-after\"");
-
-			if (disabled) {
-				jspWriter.write(" disabled");
-			}
+			jspWriter.write(" input-group-inset-after\" disabled");
 
 			String searchInputName = getSearchInputName();
 

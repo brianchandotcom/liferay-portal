@@ -209,6 +209,17 @@
 					"allOf": [
 						{
 							"$ref": "#/definitions/propertySets/properties/url"
+						},
+						{
+							"properties": {
+								"scope": {
+									"default": "layout",
+									"enum": [
+										"company",
+										"layout"
+									]
+								}
+							}
 						}
 					],
 					"description": "Description for globalCSS"

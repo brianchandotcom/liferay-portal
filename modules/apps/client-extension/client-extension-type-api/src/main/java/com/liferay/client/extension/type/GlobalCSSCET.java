@@ -17,6 +17,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface GlobalCSSCET extends CET {
 
+	@CETProperty(
+		defaultValue = "layout", name = "scope", type = CETProperty.Type.String
+	)
+	public String getScope();
+
 	@CETProperty(defaultValue = "", name = "url", type = CETProperty.Type.URL)
 	public String getURL();
 

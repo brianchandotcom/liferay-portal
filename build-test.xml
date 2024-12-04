@@ -7813,6 +7813,59 @@ ${docker.start.error}</fail>
 
 			<get-host-git-dir />
 
+			<exec executable="docker" outputproperty="docker.inspect.output">
+				<arg line="inspect ${operating.system.docker.image}" />
+			</exec>
+
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+					import org.json.JSONObject;
+					import org.json.JSONArray;
+
+					String dockerInspectOutput = project.getProperty("docker.inspect.output");
+
+					JSONArray dockerJSONArray = new JSONArray(dockerInspectOutput);
+
+					JSONObject dockerJSONObject = dockerJSONArray.getJSONObject(0);
+
+					if (dockerJSONObject.has("Config")) {
+						JSONObject configObject = dockerJSONObject.getJSONObject("Config");
+
+						if (configObject.has("Env")) {
+
+							JSONArray envArray = configObject.getJSONArray("Env");
+
+							String javaHomeString;
+							String pathString;
+
+							for (int i = 0; i < envArray.length(); i++) {
+								System.out.println("@@ cw env array: " + envArray.getString(i));
+
+								if (envArray.getString(i).contains("JAVA_HOME")) {
+									javaHomeString = envArray.getString(i).replace("JAVA_HOME=", "");
+
+								}
+
+								if (envArray.getString(i).contains("PATH")) {
+									pathString = envArray.getString(i).replace("PATH=", "");
+
+								}
+							}
+
+							if (!JenkinsResultsParserUtil.isNullOrEmpty(pathString)
+									&& !JenkinsResultsParserUtil.isNullOrEmpty(javaHomeString)) {
+								pathString = javaHomeString + "/bin:" + pathString;
+
+								project.setProperty("docker.path", pathString);
+								project.setProperty("docker.java.home", javaHomeString);
+							}
+						}
+					}
+				]]>
+			</beanshell>
+
 			<start-docker-container image="${operating.system.docker.image}" name="${operating.system.host}" options="${operating.system.docker.os.options}">\
 				--mount type=bind,source=${host.git.dir}/${portal.dir.name},target=${portal.dir} \
 				--network-alias=${operating.system.host.alias} \

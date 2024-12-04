@@ -10,8 +10,8 @@ package com.liferay.frontend.taglib.sample.web.internal.constants;
  */
 public class SamplePortletKeys {
 
-	public static final String FRONTEND_SAMPLE_DISPLAY_CONTEXT =
-		"FRONTEND_SAMPLE_DISPLAY_CONTEXT";
+	public static final String SAMPLE_DISPLAY_CONTEXT =
+		"SAMPLE_DISPLAY_CONTEXT";
 
 	public static final String SAMPLE_PORTLET =
 		"com_liferay_sample_web_portlet_SamplePortlet";

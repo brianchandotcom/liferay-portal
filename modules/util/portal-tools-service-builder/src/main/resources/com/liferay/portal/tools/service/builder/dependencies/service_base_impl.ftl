@@ -2063,15 +2063,15 @@ import org.osgi.service.component.annotations.Reference;
 		 * @param sql the sql query
 		 */
 		protected void runSQL(String sql) {
+			<#if entity.hasEntityColumns()>
+				DataSource dataSource = ${entity.variableName}Persistence.getDataSource();
+			<#else>
+				DataSource dataSource = InfrastructureUtil.getDataSource();
+			</#if>
+
+			DB db = DBManagerUtil.getDB();
+
 			try {
-				<#if entity.hasEntityColumns()>
-					DataSource dataSource = ${entity.variableName}Persistence.getDataSource();
-				<#else>
-					DataSource dataSource = InfrastructureUtil.getDataSource();
-				</#if>
-
-				DB db = DBManagerUtil.getDB();
-
 				sql = db.buildSQL(sql);
 				sql = PortalUtil.transformSQL(sql);
 

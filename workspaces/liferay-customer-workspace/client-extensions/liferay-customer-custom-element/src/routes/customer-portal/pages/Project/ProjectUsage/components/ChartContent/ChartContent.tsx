@@ -59,7 +59,9 @@ const ChartContent: React.FC<IChartContentProps> = ({
 		let chartLegend = '##';
 
 		if (displayUsage) {
-			consumedValue = (usedCount / maxCount) * 100;
+			const percentage = (usedCount / maxCount) * 100;
+
+			consumedValue = percentage >= 100 ? 100 : percentage;
 			chartLegend = usedCount.toLocaleString() + dataSizeUnits;
 		}
 

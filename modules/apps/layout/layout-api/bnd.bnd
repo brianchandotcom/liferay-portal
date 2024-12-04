@@ -32,4 +32,5 @@ Export-Package:\
 	com.liferay.layout.util.constants,\
 	com.liferay.layout.util.structure,\
 	com.liferay.layout.util.structure.collection,\
+	com.liferay.layout.util.structure.exception,\
 	com.liferay.layout.util.template

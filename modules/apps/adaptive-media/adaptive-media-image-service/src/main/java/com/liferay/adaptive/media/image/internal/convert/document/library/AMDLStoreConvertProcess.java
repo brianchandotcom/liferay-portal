@@ -42,13 +42,8 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 		_transfer(sourceStore, targetStore, true);
 	}
 
-	private void _transfer(Store sourceStore, Store targetStore, boolean delete)
-		throws PortalException {
-
-		int count = _amImageEntryLocalService.getAMImageEntriesCount();
-
-		MaintenanceUtil.appendStatus(
-			"Migrating images in " + count + " adaptive media image entries");
+	private ActionableDynamicQuery _getActionableDynamicQuery(
+		Store sourceStore, Store targetStore, boolean delete) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_amImageEntryLocalService.getActionableDynamicQuery();
@@ -87,6 +82,20 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 					}
 				}
 			});
+
+		return actionableDynamicQuery;
+	}
+
+	private void _transfer(Store sourceStore, Store targetStore, boolean delete)
+		throws PortalException {
+
+		int count = _amImageEntryLocalService.getAMImageEntriesCount();
+
+		MaintenanceUtil.appendStatus(
+			"Migrating images in " + count + " adaptive media image entries");
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_getActionableDynamicQuery(sourceStore, targetStore, delete);
 
 		actionableDynamicQuery.performActions();
 	}

@@ -42,13 +42,8 @@ public class DLFileVersionDLStoreConvertProcess
 		_transfer(sourceStore, targetStore, true);
 	}
 
-	private void _transfer(Store sourceStore, Store targetStore, boolean delete)
-		throws PortalException {
-
-		int count = _dlFileVersionLocalService.getDLFileVersionsCount();
-
-		MaintenanceUtil.appendStatus(
-			"Migrating " + count + " documents and media files");
+	private ActionableDynamicQuery _getActionableDynamicQuery(
+		Store sourceStore, Store targetStore, boolean delete) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_dlFileVersionLocalService.getActionableDynamicQuery();
@@ -79,6 +74,20 @@ public class DLFileVersionDLStoreConvertProcess
 						exception);
 				}
 			});
+
+		return actionableDynamicQuery;
+	}
+
+	private void _transfer(Store sourceStore, Store targetStore, boolean delete)
+		throws PortalException {
+
+		int count = _dlFileVersionLocalService.getDLFileVersionsCount();
+
+		MaintenanceUtil.appendStatus(
+			"Migrating " + count + " documents and media files");
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_getActionableDynamicQuery(sourceStore, targetStore, delete);
 
 		actionableDynamicQuery.performActions();
 	}

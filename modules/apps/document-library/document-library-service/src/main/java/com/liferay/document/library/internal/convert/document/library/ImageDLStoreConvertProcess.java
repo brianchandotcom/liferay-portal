@@ -39,12 +39,8 @@ public class ImageDLStoreConvertProcess implements DLStoreConvertProcess {
 		_transfer(sourceStore, targetStore, true);
 	}
 
-	private void _transfer(Store sourceStore, Store targetStore, boolean delete)
-		throws PortalException {
-
-		int count = _imageLocalService.getImagesCount();
-
-		MaintenanceUtil.appendStatus("Migrating " + count + " images");
+	private ActionableDynamicQuery _getActionableDynamicQuery(
+		Store sourceStore, Store targetStore, boolean delete) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_imageLocalService.getActionableDynamicQuery();
@@ -64,6 +60,19 @@ public class ImageDLStoreConvertProcess implements DLStoreConvertProcess {
 					_log.error("Unable to migrate " + fileName, exception);
 				}
 			});
+
+		return actionableDynamicQuery;
+	}
+
+	private void _transfer(Store sourceStore, Store targetStore, boolean delete)
+		throws PortalException {
+
+		int count = _imageLocalService.getImagesCount();
+
+		MaintenanceUtil.appendStatus("Migrating " + count + " images");
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_getActionableDynamicQuery(sourceStore, targetStore, delete);
 
 		actionableDynamicQuery.performActions();
 	}

@@ -51,4 +51,10 @@ public interface CPConfigurationList
 
 			};
 
+	public CommerceCatalog fetchCommerceCatalog();
+
+	public CPConfigurationEntry fetchTemplateCPConfigurationEntry();
+
+	public long getTemplateCPConfigurationEntryId();
+
 }

@@ -670,6 +670,161 @@ public interface CPConfigurationEntryPersistence
 	public int countByCPConfigurationListId(long CPConfigurationListId);
 
 	/**
+	 * Returns all the cp configuration entries where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching cp configuration entries
+	 */
+	public java.util.List<CPConfigurationEntry> findByC_C(
+		long classNameId, long classPK);
+
+	/**
+	 * Returns a range of all the cp configuration entries where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @return the range of matching cp configuration entries
+	 */
+	public java.util.List<CPConfigurationEntry> findByC_C(
+		long classNameId, long classPK, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the cp configuration entries where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration entries
+	 */
+	public java.util.List<CPConfigurationEntry> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPConfigurationEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the cp configuration entries where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPConfigurationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cp configuration entries
+	 */
+	public java.util.List<CPConfigurationEntry> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPConfigurationEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first cp configuration entry in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp configuration entry
+	 * @throws NoSuchCPConfigurationEntryException if a matching cp configuration entry could not be found
+	 */
+	public CPConfigurationEntry findByC_C_First(
+			long classNameId, long classPK,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPConfigurationEntry> orderByComparator)
+		throws NoSuchCPConfigurationEntryException;
+
+	/**
+	 * Returns the first cp configuration entry in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
+	 */
+	public CPConfigurationEntry fetchByC_C_First(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<CPConfigurationEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last cp configuration entry in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp configuration entry
+	 * @throws NoSuchCPConfigurationEntryException if a matching cp configuration entry could not be found
+	 */
+	public CPConfigurationEntry findByC_C_Last(
+			long classNameId, long classPK,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPConfigurationEntry> orderByComparator)
+		throws NoSuchCPConfigurationEntryException;
+
+	/**
+	 * Returns the last cp configuration entry in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
+	 */
+	public CPConfigurationEntry fetchByC_C_Last(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator<CPConfigurationEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the cp configuration entries before and after the current cp configuration entry in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param CPConfigurationEntryId the primary key of the current cp configuration entry
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp configuration entry
+	 * @throws NoSuchCPConfigurationEntryException if a cp configuration entry with the primary key could not be found
+	 */
+	public CPConfigurationEntry[] findByC_C_PrevAndNext(
+			long CPConfigurationEntryId, long classNameId, long classPK,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPConfigurationEntry> orderByComparator)
+		throws NoSuchCPConfigurationEntryException;
+
+	/**
+	 * Removes all the cp configuration entries where classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 */
+	public void removeByC_C(long classNameId, long classPK);
+
+	/**
+	 * Returns the number of cp configuration entries where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching cp configuration entries
+	 */
+	public int countByC_C(long classNameId, long classPK);
+
+	/**
 	 * Returns the cp configuration entry where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63; or throws a <code>NoSuchCPConfigurationEntryException</code> if it could not be found.
 	 *
 	 * @param classNameId the class name ID

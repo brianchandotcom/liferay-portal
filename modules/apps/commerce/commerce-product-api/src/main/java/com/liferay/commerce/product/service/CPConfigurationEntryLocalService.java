@@ -111,6 +111,8 @@ public interface CPConfigurationEntryLocalService
 
 	public void deleteCPConfigurationEntries(long cpConfigurationListId);
 
+	public void deleteCPConfigurationEntries(long classNameId, long classPK);
+
 	/**
 	 * Deletes the cp configuration entry from the database. Also notifies the appropriate model listeners.
 	 *

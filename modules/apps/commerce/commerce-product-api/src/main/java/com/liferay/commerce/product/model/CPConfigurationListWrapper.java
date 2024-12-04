@@ -208,6 +208,16 @@ public class CPConfigurationListWrapper
 		return wrap(model.cloneWithOriginalValues());
 	}
 
+	@Override
+	public CommerceCatalog fetchCommerceCatalog() {
+		return model.fetchCommerceCatalog();
+	}
+
+	@Override
+	public CPConfigurationEntry fetchTemplateCPConfigurationEntry() {
+		return model.fetchTemplateCPConfigurationEntry();
+	}
+
 	/**
 	 * Returns the company ID of this cp configuration list.
 	 *
@@ -416,6 +426,11 @@ public class CPConfigurationListWrapper
 	@Override
 	public Date getStatusDate() {
 		return model.getStatusDate();
+	}
+
+	@Override
+	public long getTemplateCPConfigurationEntryId() {
+		return model.getTemplateCPConfigurationEntryId();
 	}
 
 	/**

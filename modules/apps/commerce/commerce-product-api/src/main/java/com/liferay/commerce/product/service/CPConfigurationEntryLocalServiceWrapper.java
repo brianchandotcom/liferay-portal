@@ -111,6 +111,12 @@ public class CPConfigurationEntryLocalServiceWrapper
 			cpConfigurationListId);
 	}
 
+	@Override
+	public void deleteCPConfigurationEntries(long classNameId, long classPK) {
+		_cpConfigurationEntryLocalService.deleteCPConfigurationEntries(
+			classNameId, classPK);
+	}
+
 	/**
 	 * Deletes the cp configuration entry from the database. Also notifies the appropriate model listeners.
 	 *

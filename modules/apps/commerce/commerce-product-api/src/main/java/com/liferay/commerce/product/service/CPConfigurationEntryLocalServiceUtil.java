@@ -109,6 +109,12 @@ public class CPConfigurationEntryLocalServiceUtil {
 		getService().deleteCPConfigurationEntries(cpConfigurationListId);
 	}
 
+	public static void deleteCPConfigurationEntries(
+		long classNameId, long classPK) {
+
+		getService().deleteCPConfigurationEntries(classNameId, classPK);
+	}
+
 	/**
 	 * Deletes the cp configuration entry from the database. Also notifies the appropriate model listeners.
 	 *

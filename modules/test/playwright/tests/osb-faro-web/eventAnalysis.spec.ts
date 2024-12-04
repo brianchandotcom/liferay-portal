@@ -33,6 +33,7 @@ import {
 import {createSitePage, navigateToSitePage} from './utils/portal';
 import {closeSessions} from './utils/sessions';
 import {changeTimeFilter} from './utils/time-filter';
+import {createPageWithHTMLFragment} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,

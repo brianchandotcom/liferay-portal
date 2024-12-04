@@ -12,6 +12,7 @@ import {JiraEnum} from '../../utils/constants/jiraEnum';
 import './SecurityVulnerabilitiesItem.css';
 
 import {useMemo} from 'react';
+import {SVWaves} from '~/common/icons/sv_waves';
 
 import SVTable from '../../components/SVTable';
 import {IRow} from '../../components/SVTable/SVTable';
@@ -105,8 +106,8 @@ const SecurityVulnerabilitiesItem = () => {
 	}
 
 	return (
-		<div className="container-fluid container-fluid-max-xl sv-item">
-			<div className="mb-3 sv-item-header">
+		<div className="container-fluid container-fluid-xl py-4 sv-item">
+			<div className="d-flex flex-column justify-content-between mb-3 p-4 sv-item-header">
 				<div className="sv-breadcrumbs">
 					<Link to="/">{i18n.translate('all-security-reports')}</Link>
 
@@ -132,12 +133,18 @@ const SecurityVulnerabilitiesItem = () => {
 						{jiraIssue[JiraEnum.FIELDS]?.[JiraEnum.SUMMARY]}
 					</span>
 				)}
+
+				<div className="align-items-end d-flex justify-content-end position-absolute sv-gradient">
+					<SVWaves />
+				</div>
 			</div>
 
 			<div className="mb-3 row sv-issue-details">
-				<div className="col-9">
+				<div className="col-9 pr-6">
 					<div className="sv-item-description">
-						<h6>{i18n.translate('summary')}</h6>
+						<h5 className="text-neutral-10">
+							{i18n.translate('summary')}
+						</h5>
 
 						<div>
 							{jiraIssue[JiraEnum.FIELDS]?.[JiraEnum.DESCRIPTION]}
@@ -145,11 +152,13 @@ const SecurityVulnerabilitiesItem = () => {
 					</div>
 				</div>
 
-				<div className="col-3">
+				<div className="col-3 d-flex justify-content-end">
 					<div className="sv-item-details">
 						{jiraIssue[JiraEnum.FIELDS]?.[JiraEnum.AFFECTS] && (
 							<div className="mb-4">
-								<h6>{i18n.translate('affects')}</h6>
+								<h5 className="text-neutral-10">
+									{i18n.translate('affects')}
+								</h5>
 
 								{jiraIssue[JiraEnum.FIELDS]?.[JiraEnum.AFFECTS]}
 							</div>
@@ -157,7 +166,9 @@ const SecurityVulnerabilitiesItem = () => {
 
 						{jiraIssue[JiraEnum.FIELDS]?.[JiraEnum.CATEGORY] && (
 							<div className="mb-4">
-								<h6>{i18n.translate('category')}</h6>
+								<h5 className="text-neutral-10">
+									{i18n.translate('category')}
+								</h5>
 
 								{
 									jiraIssue[JiraEnum.FIELDS]?.[
@@ -171,7 +182,9 @@ const SecurityVulnerabilitiesItem = () => {
 							JiraEnum.CLASSIFICATION
 						] && (
 							<div className="mb-4">
-								<h6>{i18n.translate('classification')}</h6>
+								<h5 className="text-neutral-10">
+									{i18n.translate('classification')}
+								</h5>
 
 								{
 									jiraIssue[JiraEnum.FIELDS]?.[
@@ -188,9 +201,9 @@ const SecurityVulnerabilitiesItem = () => {
 								JiraEnum.AFFECTED_VERSIONS
 							].length > 0 && (
 								<div className="mb-4">
-									<h6>
+									<h5 className="text-neutral-10">
 										{i18n.translate('affected-versions')}
-									</h6>
+									</h5>
 
 									{jiraIssue[JiraEnum.FIELDS]?.[
 										JiraEnum.AFFECTED_VERSIONS
@@ -204,7 +217,9 @@ const SecurityVulnerabilitiesItem = () => {
 							jiraIssue[JiraEnum.FIELDS]?.[JiraEnum.FIX_VERSIONS]
 								.length > 0 && (
 								<div className="mb-4">
-									<h6>{i18n.translate('fix-versions')}</h6>
+									<h5 className="text-neutral-10">
+										{i18n.translate('fix-versions')}
+									</h5>
 
 									{jiraIssue[JiraEnum.FIELDS]?.[
 										JiraEnum.FIX_VERSIONS
@@ -221,7 +236,7 @@ const SecurityVulnerabilitiesItem = () => {
 				jiraIssue[JiraEnum.FIELDS]?.[JiraEnum.FIX_VERSIONS].length >
 					0 &&
 				jiraSearch && (
-					<div className="sv-item-table">
+					<div className="p-4 sv-item-table">
 						<h4 className="mb-3">
 							{i18n.sub('additional-reports-fixed-in-x', [
 								jiraIssue[JiraEnum.FIELDS]?.[

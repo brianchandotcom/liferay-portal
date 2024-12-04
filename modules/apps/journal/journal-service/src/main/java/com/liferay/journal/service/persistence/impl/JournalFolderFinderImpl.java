@@ -86,12 +86,11 @@ public class JournalFolderFinderImpl
 
 	@Override
 	public int filterCountF_A_ByG_F_DDMSI_NotS(
-		long groupId, long folderId, long ddmStructureId, int[] excludedStatus,
+		long groupId, long folderId, long ddmStructureId, int[] statuses,
 		QueryDefinition<?> queryDefinition) {
 
 		return doCountF_A_ByG_F_DDMSI_NotS(
-			groupId, folderId, ddmStructureId, excludedStatus, queryDefinition,
-			true);
+			groupId, folderId, ddmStructureId, statuses, queryDefinition, true);
 	}
 
 	@Override
@@ -115,10 +114,10 @@ public class JournalFolderFinderImpl
 
 	public List<Object> filterFindF_A_ByG_F_DDMSI_L_NotS(
 		long groupId, long folderId, long ddmStructureId, Locale locale,
-		int[] excludedStatus, QueryDefinition<?> queryDefinition) {
+		int[] statuses, QueryDefinition<?> queryDefinition) {
 
 		return doFindF_A_ByG_F_DDMSI_L_NotS(
-			groupId, folderId, ddmStructureId, locale, excludedStatus,
+			groupId, folderId, ddmStructureId, locale, statuses,
 			queryDefinition, true);
 	}
 
@@ -160,7 +159,7 @@ public class JournalFolderFinderImpl
 	}
 
 	protected int doCountF_A_ByG_F_DDMSI_NotS(
-		long groupId, long folderId, long ddmStructureId, int[] excludedStatus,
+		long groupId, long folderId, long ddmStructureId, int[] statuses,
 		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
 
 		Session session = null;
@@ -181,7 +180,7 @@ public class JournalFolderFinderImpl
 						articleSQLId, groupId, queryDefinition,
 						inlineSQLHelper),
 					StringPool.CLOSE_PARENTHESIS),
-				folderId, ddmStructureId, excludedStatus);
+				folderId, ddmStructureId, statuses);
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
@@ -336,7 +335,7 @@ public class JournalFolderFinderImpl
 
 	protected List<Object> doFindF_A_ByG_F_DDMSI_L_NotS(
 		long groupId, long folderId, long ddmStructureId, Locale locale,
-		int[] excludedStatus, QueryDefinition<?> queryDefinition,
+		int[] statuses, QueryDefinition<?> queryDefinition,
 		boolean inlineSQLHelper) {
 
 		Session session = null;
@@ -357,7 +356,7 @@ public class JournalFolderFinderImpl
 						articleSQLId, groupId, queryDefinition,
 						inlineSQLHelper),
 					StringPool.CLOSE_PARENTHESIS),
-				folderId, ddmStructureId, excludedStatus);
+				folderId, ddmStructureId, statuses);
 
 			sql = _customSQL.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
@@ -466,32 +465,6 @@ public class JournalFolderFinderImpl
 		return sb.toString();
 	}
 
-	protected String getExcludedStatuses(
-		int[] excludedStatus, String tableName) {
-
-		if (ArrayUtil.isEmpty(excludedStatus)) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(" AND ");
-		sb.append(tableName);
-		sb.append(".Status NOT IN (");
-
-		for (int i = 0; i < excludedStatus.length; i++) {
-			sb.append(excludedStatus[i]);
-
-			if (i != (excludedStatus.length - 1)) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append(")");
-
-		return sb.toString();
-	}
-
 	protected String getFolderId(long folderId, String tableName) {
 		if (folderId < 0) {
 			return StringPool.BLANK;
@@ -531,8 +504,32 @@ public class JournalFolderFinderImpl
 		return sql;
 	}
 
+	protected String getStatuses(int[] statuses, String tableName) {
+		if (ArrayUtil.isEmpty(statuses)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(" AND ");
+		sb.append(tableName);
+		sb.append(".Status NOT IN (");
+
+		for (int i = 0; i < statuses.length; i++) {
+			sb.append(statuses[i]);
+
+			if (i != (statuses.length - 1)) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append(")");
+
+		return sb.toString();
+	}
+
 	protected String updateSQL(
-		String sql, long folderId, long ddmStructureId, int[] excludedStatus) {
+		String sql, long folderId, long ddmStructureId, int[] statuses) {
 
 		return StringUtil.replace(
 			sql,
@@ -543,8 +540,7 @@ public class JournalFolderFinderImpl
 			new String[] {
 				getFolderId(folderId, JournalArticleImpl.TABLE_NAME),
 				getDDMStructureId(ddmStructureId),
-				getExcludedStatuses(
-					excludedStatus, JournalArticleImpl.TABLE_NAME),
+				getStatuses(statuses, JournalArticleImpl.TABLE_NAME),
 				getFolderId(folderId, JournalFolderImpl.TABLE_NAME)
 			});
 	}

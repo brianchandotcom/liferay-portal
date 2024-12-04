@@ -72,7 +72,7 @@ const SecurityVulnerabilitiesItem = () => {
 							<div className="font-weight-bold sv-name">
 								<Link
 									className="sv-name-link"
-									to={`/ticket/${issue?.[JiraEnum.KEY]}`}
+									to={`/${issue?.[JiraEnum.KEY]}`}
 								>
 									{issue[JiraEnum.FIELDS]?.[JiraEnum.CVE_IDS]}
 								</Link>

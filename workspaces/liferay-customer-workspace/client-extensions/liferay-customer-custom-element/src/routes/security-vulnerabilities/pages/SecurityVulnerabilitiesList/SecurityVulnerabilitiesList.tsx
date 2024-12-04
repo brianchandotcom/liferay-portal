@@ -80,7 +80,7 @@ const SecurityVulnerabilitiesList = () => {
 							<div className="font-weight-bold sv-name">
 								<Link
 									className="sv-name-link"
-									to={`/ticket/${issue?.[JiraEnum.KEY]}`}
+									to={`/${issue?.[JiraEnum.KEY]}`}
 								>
 									{issue[JiraEnum.FIELDS]?.[JiraEnum.CVE_IDS]}
 								</Link>
@@ -126,7 +126,7 @@ const SecurityVulnerabilitiesList = () => {
 					</div>
 				</div>
 
-				<div className="container-fluid container-fluid-max-xl d-flex justify-content-center">
+				<div className="container-fluid container-fluid-max-xl">
 					<div className="row sv-table-content">
 						<div className="col-3">
 							<SVFilter

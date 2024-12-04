@@ -447,6 +447,10 @@
 		"cssVariableMapping": "color-state-warning-lighten-2",
 		"value": "#F7EAE0"
 	},
+	"containterMaxXL": {
+		"cssVariableMapping": "container-max-xl",
+		"value": "1600px"
+	},
 	"fontFamilyBase": {
 		"cssVariableMapping": "font-family-base",
 		"value": "\"Source Sans Pro\", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"

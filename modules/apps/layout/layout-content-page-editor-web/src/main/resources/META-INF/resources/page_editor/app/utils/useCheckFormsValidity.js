@@ -21,6 +21,7 @@ import {hasVisibleFormButtonChild} from './hasVisibleFormButtonChild';
 import hasVisibleSubmitChild from './hasVisibleSubmitChild';
 import {isItemHidden} from './isItemHidden';
 import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
+import isLocalizationSelect from './isLocalizationSelect';
 import {isMultistepForm} from './isMultistepForm';
 import isStepper from './isStepper';
 import isVisible from './isVisible';
@@ -256,7 +257,8 @@ async function checkUnmappedInputChild(
 		if (
 			fragmentEntryLink.fragmentEntryType !==
 				FRAGMENT_ENTRY_TYPES.input ||
-			isStepper(fragmentEntryLink)
+			isStepper(fragmentEntryLink) ||
+			isLocalizationSelect(fragmentEntryLink)
 		) {
 			continue;
 		}

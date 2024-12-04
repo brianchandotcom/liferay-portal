@@ -129,11 +129,12 @@ public class CETConfigurationFactoryTest {
 	}
 
 	@Test
-	public void testControlPanelThemeCSSCET() throws Exception {
+	public void testAddControlPanelThemeCSSCETEntryRel() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
 		String pid1 = ConfigurationTestUtil.createFactoryConfiguration(
-			_PID, _getThemeCSSConfigurationProperties(company.getCompanyId()));
+			_PID,
+			_getThemeCSSCETConfigurationProperties(company.getCompanyId()));
 
 		String pid2 = null;
 
@@ -156,7 +157,7 @@ public class CETConfigurationFactoryTest {
 
 			pid2 = ConfigurationTestUtil.createFactoryConfiguration(
 				_PID,
-				_getThemeCSSConfigurationProperties(company.getCompanyId()));
+				_getThemeCSSCETConfigurationProperties(company.getCompanyId()));
 
 			clientExtensionEntryRels =
 				_clientExtensionEntryRelLocalService.
@@ -202,7 +203,7 @@ public class CETConfigurationFactoryTest {
 		return layouts.get(0);
 	}
 
-	private Dictionary<String, Object> _getThemeCSSConfigurationProperties(
+	private Dictionary<String, Object> _getThemeCSSCETConfigurationProperties(
 			long companyId)
 		throws Exception {
 

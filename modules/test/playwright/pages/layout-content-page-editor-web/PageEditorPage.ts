@@ -995,7 +995,8 @@ export class PageEditorPage {
 
 		await waitForAlert(
 			this.page,
-			'Success:Your form has been successfully loaded.'
+			'Success:Your form has been successfully loaded.',
+			{autoClose: false}
 		);
 	}
 

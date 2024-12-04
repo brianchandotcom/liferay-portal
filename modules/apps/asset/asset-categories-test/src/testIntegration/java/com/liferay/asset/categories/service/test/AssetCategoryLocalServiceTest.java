@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -139,7 +138,7 @@ public class AssetCategoryLocalServiceTest {
 			_group.getGroupId());
 
 		String externalReferenceCode = StringUtil.randomString();
-		Locale locale = PortalUtil.getSiteDefaultLocale(_group.getGroupId());
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
 
 		AssetCategoryLocalServiceUtil.addCategory(
 			externalReferenceCode, TestPropsValues.getUserId(),
@@ -233,7 +232,7 @@ public class AssetCategoryLocalServiceTest {
 			_group.getGroupId());
 
 		String externalReferenceCode = StringUtil.randomString();
-		Locale locale = PortalUtil.getSiteDefaultLocale(_group.getGroupId());
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
 
 		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
 			externalReferenceCode, TestPropsValues.getUserId(),

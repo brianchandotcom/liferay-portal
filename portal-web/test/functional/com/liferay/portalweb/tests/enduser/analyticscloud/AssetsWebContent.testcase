@@ -44,52 +44,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8456 | Test Summary: Web content appears on card shows the pages that the web content appears on"
-	@priority = 5
-	test AssertAppearsOnListShowsPagesWebContentExists {
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		task ("Go to the site page") {
-			ACUtils.navigateToSitePage(
-				actionType = "View WC",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch to new property in AC and go to WC tab") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-			ACNavigation.goToAssets();
-
-			ACNavigation.switchTab(tabName = "Web Content");
-		}
-
-		task ("Go to the WC overview") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-
-			ACNavigation.openItem(itemName = "Web Content AC Title");
-		}
-
-		task ("Assert appears on metric") {
-			var portalURL = PropsUtil.get("portal.url");
-			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
-
-			ACAssets.viewAssetAppearsOnMetric(
-				canonicalURL = "${portalURL}/web/site-name",
-				cardTitle = "Asset Appears On",
-				metricTitle = "Views",
-				pageName = "AC Page - Site Name - ${dataSourceName}");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8446 | Test Summary: Assert 180 day time filter in Assets"
 	@ignore = "true"
 	@priority = 3

@@ -6,6 +6,7 @@
 package com.liferay.document.library.internal.service;
 
 import com.liferay.document.library.internal.DLAssetDisplayPageUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
@@ -110,6 +111,16 @@ public class SubscriptionDLAppLocalServiceWrapper
 	}
 
 	@Override
+	public void subscribeFileEntry(long userId, long groupId, long fileEntryId)
+		throws PortalException {
+
+		super.subscribeFileEntry(userId, groupId, fileEntryId);
+
+		_subscriptionLocalService.addSubscription(
+			userId, groupId, DLFileEntry.class.getName(), fileEntryId);
+	}
+
+	@Override
 	public void subscribeFileEntryType(
 			long userId, long groupId, long fileEntryTypeId)
 		throws PortalException {
@@ -138,6 +149,17 @@ public class SubscriptionDLAppLocalServiceWrapper
 
 		_subscriptionLocalService.addSubscription(
 			userId, groupId, DLFolder.class.getName(), folderId);
+	}
+
+	@Override
+	public void unsubscribeFileEntry(
+			long userId, long groupId, long fileEntryId)
+		throws PortalException {
+
+		super.subscribeFileEntry(userId, groupId, fileEntryId);
+
+		_subscriptionLocalService.deleteSubscription(
+			userId, DLFileEntry.class.getName(), fileEntryId);
 	}
 
 	@Override

@@ -488,7 +488,7 @@
 	"this-team-member-is-assigned-as-an-incident-contact-and-cannot-be-removed": "This team member is assigned as an Incident Contact and cannot be removed. Please remove them from all incident contact roles and then try again.",
 	"this-user-will-be-the-recepient-of-any-high-priority-communications": "このユーザーとのやりとりには高い優先度が設定されます。",
 	"this-user-will-create-and-manage-the-analytics-cloud-workspace-and-must-have-a-liferay-com-account-the-owner-email-can-be-updated-via-a-support-ticket-if-needed": "このユーザーは Analytics Cloud のワークスペースを作成および管理し、liferay.com アカウントを持っている必要があります。所有者のメールアドレスは、必要に応じてサポートチケットで更新できます。",
-	"threat-informaiton": "脅威情報",
+	"threat-information": "脅威情報",
 	"time-zone": "タイムゾーン",
 	"to": "～",
 	"to-activate-a-local-instance-of-liferay-dxp-download-a-developer-key-for-your-liferay-dxp-version": "Liferay DXP のローカルインスタンスをライセンス認証するには、Liferay DXP バージョンの開発者キーをダウンロードしてください。",

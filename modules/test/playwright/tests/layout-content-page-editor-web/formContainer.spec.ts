@@ -1560,6 +1560,50 @@ test.describe('Form Localization', () => {
 		).toBeVisible();
 		await expect(page.getByText('text español')).toBeVisible();
 	});
+
+	test('Shows a warning modal when the page is published and there is a Localization Select fragment but no localizable fields', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create a page with a Form fragment and Localication Select
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const localizationSelectDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'localization-select',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				localizationSelectDefinition,
+				formDefinition,
+			]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Map the form to the All Fields, only the Boolean field
+
+		await pageEditorPage.mapFormFragment(formId, 'All Fields', ['Boolean']);
+
+		// Publish and check the warning modal
+
+		await pageEditorPage.publishButton.click();
+
+		await expect(
+			page.getByText('Localizable Fields Hidden or Missing')
+		).toBeVisible();
+	});
 });
 
 test.describe('Numeric input field', () => {

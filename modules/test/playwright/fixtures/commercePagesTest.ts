@@ -46,6 +46,15 @@ import {CommerceWishListPage} from '../pages/commerce/commerce-wish-list-web/com
 import {CommerceCatalogSystemSettingsPage} from '../pages/commerce/commerceCatalogSystemSettingsPage';
 import {CommerceInstanceSettingsPage} from '../pages/commerce/commerceInstanceSettingsPage';
 import {CommerceMiniCartPage} from '../pages/commerce/commerceMiniCartPage';
+import {
+	CommerceAdminProductConfigurationListPage
+} from "../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationListPage";
+import {
+	CommerceAdminProductConfigurationEntriesPage
+} from "../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationEntriesPage";
+import {
+	CommerceAdminProductConfigurationEntryPage
+} from "../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationEntryPage";
 
 const commercePagesTest = test.extend<{
 	attachmentsPage: AttachmentsPage;
@@ -58,6 +67,9 @@ const commercePagesTest = test.extend<{
 	commerceAdminDiscountsPage: CommerceAdminDiscountsPage;
 	commerceAdminOrderDetailsPage: CommerceAdminOrderDetailsPage;
 	commerceAdminOrdersPage: CommerceAdminOrdersPage;
+	commerceAdminProductConfigurationEntriesPage: CommerceAdminProductConfigurationEntriesPage;
+	commerceAdminProductConfigurationEntryPage: CommerceAdminProductConfigurationEntryPage;
+	commerceAdminProductConfigurationListPage: CommerceAdminProductConfigurationListPage;
 	commerceAdminProductConfigurationListsPage: CommerceAdminProductConfigurationListsPage;
 	commerceAdminProductDetailsDiagramPage: CommerceAdminProductDetailsDiagramPage;
 	commerceAdminProductDetailsMediaPage: CommerceAdminProductDetailsMediaPage;
@@ -119,6 +131,15 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminOrdersPage: async ({page}, use) => {
 		await use(new CommerceAdminOrdersPage(page));
+	},
+	commerceAdminProductConfigurationEntriesPage: async ({page}, use) => {
+		await use(new CommerceAdminProductConfigurationEntriesPage(page));
+	},
+	commerceAdminProductConfigurationEntryPage: async ({page}, use) => {
+		await use(new CommerceAdminProductConfigurationEntryPage(page));
+	},
+	commerceAdminProductConfigurationListPage: async ({page}, use) => {
+		await use(new CommerceAdminProductConfigurationListPage(page));
 	},
 	commerceAdminProductConfigurationListsPage: async ({page}, use) => {
 		await use(new CommerceAdminProductConfigurationListsPage(page));

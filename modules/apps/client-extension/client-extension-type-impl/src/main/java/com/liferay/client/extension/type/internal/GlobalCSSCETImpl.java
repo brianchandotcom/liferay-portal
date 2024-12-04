@@ -35,6 +35,11 @@ public class GlobalCSSCETImpl extends BaseCETImpl implements GlobalCSSCET {
 	}
 
 	@Override
+	public String getScope() {
+		return getString("scope");
+	}
+
+	@Override
 	public String getType() {
 		return ClientExtensionEntryConstants.TYPE_GLOBAL_CSS;
 	}

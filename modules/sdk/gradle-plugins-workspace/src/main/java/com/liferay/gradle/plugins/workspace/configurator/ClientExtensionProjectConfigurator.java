@@ -1198,6 +1198,10 @@ public class ClientExtensionProjectConfigurator
 			_validateRequiredTypeSettingsKeys(
 				clientExtension, "oAuthApplicationHeadlessServer");
 		}
+		else if (Objects.equals(clientExtension.type, "globalCSS")) {
+			_validateTypeSettingsValues(
+				clientExtension, "scope", "company", "layout");
+		}
 		else if (Objects.equals(clientExtension.type, "globalJS")) {
 			_validateGlobalJSScriptElementAttributes(clientExtension);
 			_validateTypeSettingsValues(

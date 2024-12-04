@@ -58,5 +58,5 @@
 		"format": "node-scripts format",
 		"test": "node-scripts test"
 	},
-	"version": "6.0.184"
+	"version": "6.0.185"
 }

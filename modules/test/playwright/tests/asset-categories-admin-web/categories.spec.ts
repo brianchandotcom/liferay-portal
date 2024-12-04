@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {createCategories} from '../../helpers/CreateCategories';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {assetCategoriesPagesTest} from './fixtures/assetCategoriesAdminPagesTest';
 
 const test = mergeTests(
@@ -17,6 +18,51 @@ const test = mergeTests(
 	isolatedSiteTest,
 	loginTest()
 );
+
+test('User can add, edit, delete a category.', async ({
+	apiHelpers,
+	assetCategoriesAdminPage,
+	assetCategoriesEditPage,
+	page,
+	site,
+}) => {
+	const categoryName = 'category-1';
+
+	await test.step('add', async () => {
+		await createCategories({
+			apiHelpers,
+			categoryNames: [{name: categoryName}],
+			site,
+			vocabularyName: 'test vocabulary',
+		});
+	});
+
+	await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
+
+	const categoryNameChanged = 'category-1-changed';
+
+	await test.step('edit', async () => {
+		await assetCategoriesEditPage.goto(categoryName);
+
+		await assetCategoriesEditPage.fillName(categoryNameChanged);
+		await assetCategoriesEditPage.save(categoryNameChanged);
+
+		await expect(
+			page.getByRole('link', {name: categoryNameChanged})
+		).toBeVisible();
+	});
+
+	await test.step('delete', async () => {
+		await assetCategoriesEditPage.gotoDelete(categoryNameChanged);
+
+		await assetCategoriesEditPage.deleteButton.click();
+		await waitForAlert(page);
+
+		await expect(
+			page.getByRole('link', {name: categoryNameChanged})
+		).not.toBeVisible();
+	});
+});
 
 test('User can add, edit, delete properties in category.', async ({
 	apiHelpers,

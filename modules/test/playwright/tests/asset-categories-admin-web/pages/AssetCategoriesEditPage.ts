@@ -11,13 +11,21 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 export class AssetCategoriesEditPage {
 	readonly page: Page;
 	readonly propertiesTab: Locator;
+	readonly deleteButton: Locator;
+	readonly descriptionField: Locator;
+	readonly nameInput: Locator;
 	readonly cancelButton: Locator;
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
 		this.propertiesTab = page.getByRole('link', {name: 'properties'});
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
-		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.deleteButton = page.getByRole('button', {name: 'Delete'});
+		this.descriptionField = page
+			.frameLocator('iframe[title="editor"]')
+			.getByRole('textbox');
+		this.nameInput = page.getByPlaceholder('Name');
+		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
 
 		this.page = page;
 	}
@@ -26,6 +34,16 @@ export class AssetCategoriesEditPage {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: 'Edit'}),
+			trigger: this.page
+				.getByRole('row', {name: title})
+				.getByLabel('Show Actions'),
+		});
+	}
+
+	async gotoDelete(title: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Delete'}),
 			trigger: this.page
 				.getByRole('row', {name: title})
 				.getByLabel('Show Actions'),
@@ -68,8 +86,22 @@ export class AssetCategoriesEditPage {
 		}
 	}
 
-	async save() {
+	async fillName(name: string) {
+		await this.descriptionField.waitFor();
+		await this.nameInput.fill(name);
+	}
+
+	async save(name?: string) {
 		await this.saveButton.click();
-		await waitForAlert(this.page);
+
+		if (name) {
+			await waitForAlert(
+				this.page,
+				`Success:${name} was updated successfully.`
+			);
+		}
+		else {
+			await waitForAlert(this.page);
+		}
 	}
 }

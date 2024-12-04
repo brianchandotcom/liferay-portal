@@ -94,7 +94,11 @@ const UNMAPPED_FORM_ITEM = {
 	type: LAYOUT_DATA_ITEM_TYPES.form,
 };
 
-const renderComponent = ({item = MAPPED_FORM_ITEM, successMessage} = {}) => {
+const renderComponent = ({
+	item = MAPPED_FORM_ITEM,
+	successMessage,
+	fragmentEntryLinks,
+} = {}) => {
 	const mockDispatch = jest.fn((a) => {
 		if (typeof a === 'function') {
 			return a(mockDispatch, () => state);
@@ -107,6 +111,7 @@ const renderComponent = ({item = MAPPED_FORM_ITEM, successMessage} = {}) => {
 	};
 
 	const state = {
+		fragmentEntryLinks: {...fragmentEntryLinks},
 		languageId: 'en_US',
 		layoutData: {
 			items: {
@@ -389,5 +394,38 @@ describe('FormGeneralPanel', () => {
 				itemType: '11111-className',
 			})
 		);
+	});
+
+	describe('Show Unlocalizable Fields fieldset', () => {
+		it('does not show Unlocalizable Fields fieldset when there are not localizable fields', () => {
+			Liferay.FeatureFlags['LPD-37927'] = true;
+
+			renderComponent();
+
+			expect(
+				screen.queryByText('unlocalizable-fields')
+			).not.toBeInTheDocument();
+
+			Liferay.FeatureFlags['LPD-37927'] = false;
+		});
+
+		it('shows Unlocalizable Fields fieldset when there are localizable fields', () => {
+			Liferay.FeatureFlags['LPD-37927'] = true;
+
+			renderComponent({
+				fragmentEntryLinks: {
+					fragmentEntryLink01: {
+						content:
+							'<label data-localizable="true">This is a test label</label>',
+					},
+				},
+			});
+
+			expect(
+				screen.getByText('unlocalizable-fields')
+			).toBeInTheDocument();
+
+			Liferay.FeatureFlags['LPD-37927'] = false;
+		});
 	});
 });

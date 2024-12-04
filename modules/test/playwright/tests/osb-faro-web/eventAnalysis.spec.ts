@@ -459,6 +459,141 @@ city:  "rio de janeiro"
 );
 
 test(
+	'Event Analysis breakdown filter provide auto complete suggestions for "not contain" condition',
+	{
+		tag: '@LRAC-9481',
+	},
+
+	async ({apiHelpers, page, pageEditorPage}) => {
+		await test.step('Go to configure My Page and create a custom event', async () => {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			const customEventContent = `<h1>My Custom Events</h1>
+<script>window.onload = (event) => {
+  Analytics.track('customEvent', {
+city:  "rio de janeiro"
+});
+};</script>`;
+
+			await createPageWithHTMLFragment({
+				htmlContent: customEventContent,
+				page,
+			});
+		});
+
+		await test.step('Generate a custom event with attributes of different types', async () => {
+			await navigateToSitePage({
+				page,
+				pageName: pageTitle,
+				siteName,
+			});
+
+			await page.waitForTimeout(2000);
+
+			await page.reload();
+
+			await page.waitForTimeout(3000);
+
+			await closeSessions(apiHelpers, page);
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACPageViaURL({
+				acPage: ACPage.eventAnalysisPage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+		});
+
+		await test.step('Add the custom event and create an analysis', async () => {
+			await page.getByRole('link', {name: 'Create Analysis'}).click();
+		});
+
+		await test.step('Add a name to the Analysis', async () => {
+			await setEventAnalysisName({
+				eventAnalysisName: `Event Analysis ${randomString}`,
+				page,
+			});
+		});
+
+		await test.step('Add the custom event to the analysis', async () => {
+			await addCustomEvent({
+				customEventName: 'customEvent',
+				page,
+			});
+		});
+
+		await test.step('Change the time filter to Last 24 hours', async () => {
+			await changeTimeFilter({
+				page,
+				timeFilterPeriod: 'Last 24 hours',
+			});
+		});
+
+		await test.step('Add a filter to the analysis', async () => {
+			await page
+				.locator('.attribute-filter-section-root')
+				.getByRole('button')
+				.click();
+
+			await page
+				.getByRole('menuitem', {exact: true, name: 'city'})
+				.click();
+		});
+
+		await test.step('Select the not contain condition', async () => {
+			await page.getByLabel('Condition').click();
+
+			await selectAndExpectToHaveValue({
+				optionLabel: 'does not contain',
+				select: page.getByLabel('Condition'),
+			});
+
+			await page.waitForTimeout(1000);
+		});
+
+		await test.step('Check the auto complete filter', async () => {
+			await page
+				.locator(
+					"xpath=//div[contains(@class,'event-analysis-editor-attribute-dropdown-root show')]//input"
+				)
+				.first()
+				.fill('rio');
+
+			await page.getByRole('option', {name: 'rio de janeiro'}).click();
+
+			await page.keyboard.press('Enter');
+		});
+
+		await test.step('Check that the analysis result appears', async () => {
+			expect(
+				page
+					.getByRole('row', {name: 'customEvent'})
+					.locator('div')
+					.first()
+			).toBeVisible();
+
+			await page
+				.locator('div')
+				.filter({
+					hasText:
+						/^FilterEvent \| citydoes not contain "rio de janeiro"$/,
+				})
+				.getByLabel('Close')
+				.click();
+
+			expect(
+				page
+					.getByRole('row', {name: 'customEvent'})
+					.locator('div')
+					.first()
+			).not.toBeVisible();
+		});
+	}
+);
+
+test(
 	'The analysis result should not appear if any of the attribute conditions are not contained within the result',
 	{
 		tag: '@LRAC-11746',

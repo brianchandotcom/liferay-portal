@@ -257,42 +257,6 @@ definition {
 		}
 	}
 
-	@description = "Add a vocabulary with Guest view permission."
-	@priority = 3
-	test AddVocabularyWithGuestViewPermission {
-		task ("View the new vocabulary with Guest view permission") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.viewVocabularyPermissionsCP(
-				viewableBy = "Anyone (Guest Role)",
-				vocabularyName = "Vocabulary Name");
-		}
-	}
-
-	@description = "Add a vocabulary with Owner view permission."
-	@priority = 3
-	test AddVocabularyWithOwnerViewPermission {
-		task ("View the new vocabulary with Owner view permission") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.viewVocabularyPermissionsCP(
-				viewableBy = "Owner",
-				vocabularyName = "Vocabulary Name");
-		}
-	}
-
-	@description = "Add a vocabulary with Site Member view permission."
-	@priority = 3
-	test AddVocabularyWithSiteMemberViewPermission {
-		task ("View the new vocabulary with Site Member view permission") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.viewVocabularyPermissionsCP(
-				viewableBy = "Site Members",
-				vocabularyName = "Vocabulary Name");
-		}
-	}
-
 	@description = "Cancel a vocabulary creation."
 	@priority = 3
 	test CancelVocabularyCreation {

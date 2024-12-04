@@ -378,33 +378,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewVocabularyPermissionsCP(viewableBy = null, vocabularyName = null) {
-		Navigator.gotoNavNested(navNested = ${vocabularyName});
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		Click.waitForMenuToggleJSClick(
-			key_headerName = ${vocabularyName},
-			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Permissions");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		if (${viewableBy} == "Anyone (Guest Role)") {
-			AssertChecked.assertCheckedNotVisible(locator1 = "AssetPermissions#GUEST_VIEW_CHECKBOX");
-		}
-		else if (${viewableBy} == "Owner") {
-			AssertChecked.assertCheckedNotVisible(locator1 = "AssetPermissions#OWNER_VIEW_CHECKBOX");
-		}
-		else if (${viewableBy} == "Site Members") {
-			AssertChecked.assertCheckedNotVisible(locator1 = "AssetPermissions#SITE_MEMBER_VIEW_CHECKBOX");
-		}
-
-		SelectFrameTop(value1 = "relative=top");
-	}
-
-	@summary = "Default summary"
 	macro viewVocabularyVisibilityEdit(vocabularyName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 

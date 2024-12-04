@@ -21,15 +21,22 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
@@ -154,6 +161,20 @@ public class AssetVocabularyServiceTest {
 					externalReferenceCode, _group.getGroupId());
 
 		Assert.assertEquals(vocabulary1, vocabulary2);
+	}
+
+	@Test
+	public void testAddVocabularyWithViewPermission() throws Exception {
+		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId(), RandomTestUtil.randomString());
+
+		_testAddVocabularyWithViewPermission(
+			String.valueOf(vocabulary.getPrimaryKey()), RoleConstants.GUEST);
+		_testAddVocabularyWithViewPermission(
+			String.valueOf(vocabulary.getPrimaryKey()), RoleConstants.OWNER);
+		_testAddVocabularyWithViewPermission(
+			String.valueOf(vocabulary.getPrimaryKey()),
+			RoleConstants.SITE_MEMBER);
 	}
 
 	@Test
@@ -545,6 +566,20 @@ public class AssetVocabularyServiceTest {
 		return results.getLength();
 	}
 
+	private void _testAddVocabularyWithViewPermission(
+			String primKey, String roleName)
+		throws Exception {
+
+		Role role = _roleLocalService.getRole(_group.getCompanyId(), roleName);
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				_group.getCompanyId(), AssetVocabulary.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL, primKey, role.getRoleId());
+
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+	}
+
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
@@ -555,5 +590,11 @@ public class AssetVocabularyServiceTest {
 	private Group _group;
 
 	private Locale _locale;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

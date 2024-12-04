@@ -80,6 +80,27 @@ exports[`Edit should render 1`] = `
                   Dynamic Segment
                 </span>
               </div>
+              <button
+                class="btn btn-translucent btn-warning"
+                data-tooltip="true"
+                data-tooltip-align="top"
+                title="Open Deprecated Definition"
+                type="button"
+              >
+                DEPRECATED
+                <span
+                  class="inline-item inline-item-before pl-2"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-warning-full"
+                    role="presentation"
+                  >
+                    <use
+                      href="#warning-full"
+                    />
+                  </svg>
+                </span>
+              </button>
             </span>
           </div>
           <div

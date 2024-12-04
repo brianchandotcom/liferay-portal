@@ -51,4 +51,6 @@ public interface OAuthClientEntry
 
 			};
 
+	public int getMetadataCacheInSeconds();
+
 }

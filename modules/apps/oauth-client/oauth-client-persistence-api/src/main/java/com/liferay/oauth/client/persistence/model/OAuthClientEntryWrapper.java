@@ -220,6 +220,11 @@ public class OAuthClientEntryWrapper
 		return model.getMetadataCacheInMillis();
 	}
 
+	@Override
+	public int getMetadataCacheInSeconds() {
+		return model.getMetadataCacheInSeconds();
+	}
+
 	/**
 	 * Returns the modified date of this o auth client entry.
 	 *

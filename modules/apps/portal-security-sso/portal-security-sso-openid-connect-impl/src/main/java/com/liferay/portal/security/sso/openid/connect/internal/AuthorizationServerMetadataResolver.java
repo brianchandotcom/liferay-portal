@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AuthorizationServerMetadataResolver {
 
 	public OIDCProviderMetadata resolveOIDCProviderMetadata(
-			String authServerWellKnownURI, int metadataCacheInSecs,
+			String authServerWellKnownURI, int metadataCacheInSeconds,
 			long oAuthClientEntryId)
 		throws Exception {
 
@@ -62,7 +62,7 @@ public class AuthorizationServerMetadataResolver {
 			httpResponse.getContent());
 
 		_oidcProviderMetadataPortalCache.put(
-			oAuthClientEntryId, oidcProviderMetadata, metadataCacheInSecs);
+			oAuthClientEntryId, oidcProviderMetadata, metadataCacheInSeconds);
 
 		return oidcProviderMetadata;
 	}

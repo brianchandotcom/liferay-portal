@@ -2927,7 +2927,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		new ConcurrentHashMap<>();
 	private static volatile Map<String, String> _portletIdsByStrutsPath;
 	private static final Map<String, Portlet> _portletsMap =
-		new GlobalPortletsMap();
+		new ShardedPortletsMap();
 	private static final Map<Long, Map<String, Portlet>> _portletsMaps =
 		new ConcurrentHashMap<>();
 
@@ -2961,7 +2961,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	private ServiceTracker<FriendlyURLMapper, String[]> _serviceTracker;
 	private ServiceTrackerList<Consumer<Long>> _serviceTrackerList;
 
-	private static class GlobalPortletsMap
+	private static class ShardedPortletsMap
 		extends ConcurrentHashMap<String, Portlet> {
 
 		@Override

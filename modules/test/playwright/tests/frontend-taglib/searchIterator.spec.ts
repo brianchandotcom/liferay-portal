@@ -11,7 +11,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../utils/getRandomString';
-import {taglibSamplePageTest} from './fixtures/taglibSamplePageTest';
+import {samplePageTest} from './fixtures/samplePageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -21,14 +21,14 @@ export const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
 	pageViewModePagesTest,
-	taglibSamplePageTest
+	samplePageTest
 );
 
 test(
 	'Search Iterator overlaps fixed header on scrolling',
 	{tag: '@LPD-40036'},
 	async ({apiHelpers, page, site, widgetPagePage}) => {
-		await test.step('Create a content site, add taglib sample widget and open permissions configuration', async () => {
+		await test.step('Create a content site, add frontend taglib sample widget and open permissions configuration', async () => {
 			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 				groupId: site.id,
 				title: getRandomString(),

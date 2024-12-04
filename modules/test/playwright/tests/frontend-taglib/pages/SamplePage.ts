@@ -11,7 +11,7 @@ import getRandomString from '../../../utils/getRandomString';
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
 
-export class TaglibSamplePage {
+export class SamplePage {
 	readonly apiHelpers: ApiHelpers;
 	readonly page: Page;
 	readonly linkList: Locator;
@@ -30,7 +30,7 @@ export class TaglibSamplePage {
 		await linkHeading.click();
 	}
 
-	async setupTaglibSampleWidget({site}) {
+	async setupSampleWidget({site}) {
 		const widgetDefinition = getWidgetDefinition({
 			id: getRandomString(),
 			widgetName: 'com_liferay_sample_web_portlet_SamplePortlet',

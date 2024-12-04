@@ -2680,6 +2680,27 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * Subscribe the user to changes in the file entry. This method is only
+	 * supported by the Liferay repository.
+	 *
+	 * @param  groupId the primary key of the file entry's group
+	 * @param  fileEntryId the primary key of the file entry
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public void subscribeFileEntry(long groupId, long fileEntryId)
+		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			DLPortletResourcePermissionUtil.getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
+
+		dlAppLocalService.subscribeFileEntry(getUserId(), groupId, fileEntryId);
+	}
+
+	/**
 	 * Subscribe the user to changes in documents of the file entry type. This
 	 * method is only supported by the Liferay repository.
 	 *
@@ -2756,6 +2777,28 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		repository.unlockFolder(parentFolderId, name, lockUuid);
+	}
+
+	/**
+	 * Unsubscribe the user from changes in the file entry. This method is only
+	 * supported by the Liferay repository.
+	 *
+	 * @param  groupId the primary key of the file entry's group
+	 * @param  fileEntryId the primary key of the file entry
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public void unsubscribeFileEntry(long groupId, long fileEntryId)
+		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			DLPortletResourcePermissionUtil.getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
+
+		dlAppLocalService.unsubscribeFileEntry(
+			getUserId(), groupId, fileEntryId);
 	}
 
 	/**

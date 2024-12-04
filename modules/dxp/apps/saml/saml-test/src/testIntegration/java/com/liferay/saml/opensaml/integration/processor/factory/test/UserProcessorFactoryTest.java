@@ -43,9 +43,7 @@ public class UserProcessorFactoryTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testAllUserFieldsAreUpdatedWhenEmailIsChanged()
-		throws Exception {
-
+	public void testCreateAndUpdateUser() throws Exception {
 		_user = _userLocalService.createUser(0);
 
 		_user.setCompanyId(TestPropsValues.getCompanyId());

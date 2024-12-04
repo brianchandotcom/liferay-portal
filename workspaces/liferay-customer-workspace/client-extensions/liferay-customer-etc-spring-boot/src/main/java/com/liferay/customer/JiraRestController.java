@@ -44,98 +44,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RestController
 public class JiraRestController extends BaseRestController {
 
-	public JiraRestController(
-		@Value(
-			"${liferay.customer.jira.security.vulnerability.field.affected.versions.details}"
-		)
-		String jiraSecurityVulnerabilityFieldAffectedVersionsDetails,
-		@Value("${liferay.customer.jira.security.vulnerability.field.category}")
-			String jiraSecurityVulnerabilityFieldCategory,
-		@Value(
-			"${liferay.customer.jira.security.vulnerability.field.customer.portal.description}"
-		)
-		String jiraSecurityVulnerabilityFieldCustomerPortalDescription,
-		@Value(
-			"${liferay.customer.jira.security.vulnerability.field.customer.portal.summary}"
-		)
-		String jiraSecurityVulnerabilityFieldCustomerPortalSummary,
-		@Value(
-			"${liferay.customer.jira.security.vulnerability.field.customer.publishing.date}"
-		)
-		String jiraSecurityVulnerabilityFieldCustomerPublishingDate,
-		@Value("${liferay.customer.jira.security.vulnerability.field.cve.ids}")
-			String jiraSecurityVulnerabilityFieldCVEIds,
-		@Value(
-			"${liferay.customer.jira.security.vulnerability.field.cvss.base.score}"
-		)
-		String jiraSecurityVulnerabilityFieldCVSSBaseScore,
-		@Value(
-			"${liferay.customer.jira.security.vulnerability.field.cvss.vector.string}"
-		)
-		String jiraSecurityVulnerabilityFieldCVSSVectorString,
-		@Value("${liferay.customer.jira.security.vulnerability.field.cwe.ids}")
-			String jiraSecurityVulnerabilityFieldCWEIds,
-		@Value(
-			"${liferay.customer.jira.security.vulnerability.field.issue.classification}"
-		)
-		String jiraSecurityVulnerabilityFieldIssueClassification,
-		@Value(
-			"${liferay.customer.jira.security.vulnerability.field.partner.publishing.date}"
-		)
-		String jiraSecurityVulnerabilityFieldPartnerPublishingDate,
-		@Value(
-			"${liferay.customer.jira.security.vulnerability.field.publishing.status}"
-		)
-		String jiraSecurityVulnerabilityFieldPublishingStatus,
-		@Value("${liferay.customer.jira.security.vulnerability.field.severity}")
-			String jiraSecurityVulnerabilityFieldSeverity) {
-
-		_jiraSecurityVulnerabilityFieldAffectedVersionsDetails =
-			jiraSecurityVulnerabilityFieldAffectedVersionsDetails;
-		_jiraSecurityVulnerabilityFieldCategory =
-			jiraSecurityVulnerabilityFieldCategory;
-		_jiraSecurityVulnerabilityFieldCustomerPortalDescription =
-			jiraSecurityVulnerabilityFieldCustomerPortalDescription;
-		_jiraSecurityVulnerabilityFieldCustomerPortalSummary =
-			jiraSecurityVulnerabilityFieldCustomerPortalSummary;
-		_jiraSecurityVulnerabilityFieldCustomerPublishingDate =
-			jiraSecurityVulnerabilityFieldCustomerPublishingDate;
-		_jiraSecurityVulnerabilityFieldCVEIds =
-			jiraSecurityVulnerabilityFieldCVEIds;
-		_jiraSecurityVulnerabilityFieldCVSSBaseScore =
-			jiraSecurityVulnerabilityFieldCVSSBaseScore;
-		_jiraSecurityVulnerabilityFieldCVSSVectorString =
-			jiraSecurityVulnerabilityFieldCVSSVectorString;
-		_jiraSecurityVulnerabilityFieldCWEIds =
-			jiraSecurityVulnerabilityFieldCWEIds;
-		_jiraSecurityVulnerabilityFieldIssueClassification =
-			jiraSecurityVulnerabilityFieldIssueClassification;
-		_jiraSecurityVulnerabilityFieldPartnerPublishingDate =
-			jiraSecurityVulnerabilityFieldPartnerPublishingDate;
-		_jiraSecurityVulnerabilityFieldPublishingStatus =
-			jiraSecurityVulnerabilityFieldPublishingStatus;
-		_jiraSecurityVulnerabilityFieldSeverity =
-			jiraSecurityVulnerabilityFieldSeverity;
-
-		_securityVulnerabilitiesIssueFields = new String[] {
-			_FIELD_COMPONENTS, _FIELD_FIX_VERSIONS, _FIELD_ISSUE_KEY,
-			_FIELD_VERSIONS,
-			jiraSecurityVulnerabilityFieldAffectedVersionsDetails,
-			jiraSecurityVulnerabilityFieldCategory,
-			jiraSecurityVulnerabilityFieldCustomerPortalDescription,
-			jiraSecurityVulnerabilityFieldCustomerPortalSummary,
-			jiraSecurityVulnerabilityFieldCustomerPublishingDate,
-			jiraSecurityVulnerabilityFieldCVEIds,
-			jiraSecurityVulnerabilityFieldCVSSBaseScore,
-			jiraSecurityVulnerabilityFieldCVSSVectorString,
-			jiraSecurityVulnerabilityFieldCWEIds,
-			jiraSecurityVulnerabilityFieldIssueClassification,
-			jiraSecurityVulnerabilityFieldPartnerPublishingDate,
-			jiraSecurityVulnerabilityFieldPublishingStatus,
-			jiraSecurityVulnerabilityFieldSeverity
-		};
-	}
-
 	@RequestMapping(
 		method = RequestMethod.GET,
 		path = "/jira/security-vulnerabilities/versions"
@@ -312,8 +220,26 @@ public class JiraRestController extends BaseRestController {
 				_getJQLCustomField(_jiraSecurityVulnerabilityFieldSeverity));
 			sb.append(" ASC");
 
+			String[] securityVulnerabilitiesIssueFields = {
+				_FIELD_COMPONENTS, _FIELD_FIX_VERSIONS, _FIELD_ISSUE_KEY,
+				_FIELD_VERSIONS,
+				_jiraSecurityVulnerabilityFieldAffectedVersionsDetails,
+				_jiraSecurityVulnerabilityFieldCategory,
+				_jiraSecurityVulnerabilityFieldCustomerPortalDescription,
+				_jiraSecurityVulnerabilityFieldCustomerPortalSummary,
+				_jiraSecurityVulnerabilityFieldCustomerPublishingDate,
+				_jiraSecurityVulnerabilityFieldCVEIds,
+				_jiraSecurityVulnerabilityFieldCVSSBaseScore,
+				_jiraSecurityVulnerabilityFieldCVSSVectorString,
+				_jiraSecurityVulnerabilityFieldCWEIds,
+				_jiraSecurityVulnerabilityFieldIssueClassification,
+				_jiraSecurityVulnerabilityFieldPartnerPublishingDate,
+				_jiraSecurityVulnerabilityFieldPublishingStatus,
+				_jiraSecurityVulnerabilityFieldSeverity
+			};
+
 			JSONObject jsonObject = _search(
-				sb.toString(), pageSize, _securityVulnerabilitiesIssueFields,
+				sb.toString(), pageSize, securityVulnerabilitiesIssueFields,
 				_calculateStartAt(page, pageSize));
 
 			JSONObject responseJSONObject = _transformSearchResults(jsonObject);
@@ -649,27 +575,67 @@ public class JiraRestController extends BaseRestController {
 	@Value("${liferay.customer.jira.api.token}")
 	private String _jiraAPIToken;
 
-	private final String _jiraSecurityVulnerabilityFieldAffectedVersionsDetails;
-	private final String _jiraSecurityVulnerabilityFieldCategory;
-	private final String
-		_jiraSecurityVulnerabilityFieldCustomerPortalDescription;
-	private final String _jiraSecurityVulnerabilityFieldCustomerPortalSummary;
-	private final String _jiraSecurityVulnerabilityFieldCustomerPublishingDate;
-	private final String _jiraSecurityVulnerabilityFieldCVEIds;
-	private final String _jiraSecurityVulnerabilityFieldCVSSBaseScore;
-	private final String _jiraSecurityVulnerabilityFieldCVSSVectorString;
-	private final String _jiraSecurityVulnerabilityFieldCWEIds;
-	private final String _jiraSecurityVulnerabilityFieldIssueClassification;
-	private final String _jiraSecurityVulnerabilityFieldPartnerPublishingDate;
-	private final String _jiraSecurityVulnerabilityFieldPublishingStatus;
-	private final String _jiraSecurityVulnerabilityFieldSeverity;
+	@Value(
+		"${liferay.customer.jira.security.vulnerability.field.affected.versions.details}"
+	)
+	private String _jiraSecurityVulnerabilityFieldAffectedVersionsDetails;
+
+	@Value("${liferay.customer.jira.security.vulnerability.field.category}")
+	private String _jiraSecurityVulnerabilityFieldCategory;
+
+	@Value(
+		"${liferay.customer.jira.security.vulnerability.field.customer.portal.description}"
+	)
+	private String _jiraSecurityVulnerabilityFieldCustomerPortalDescription;
+
+	@Value(
+		"${liferay.customer.jira.security.vulnerability.field.customer.portal.summary}"
+	)
+	private String _jiraSecurityVulnerabilityFieldCustomerPortalSummary;
+
+	@Value(
+		"${liferay.customer.jira.security.vulnerability.field.customer.publishing.date}"
+	)
+	private String _jiraSecurityVulnerabilityFieldCustomerPublishingDate;
+
+	@Value("${liferay.customer.jira.security.vulnerability.field.cve.ids}")
+	private String _jiraSecurityVulnerabilityFieldCVEIds;
+
+	@Value(
+		"${liferay.customer.jira.security.vulnerability.field.cvss.base.score}"
+	)
+	private String _jiraSecurityVulnerabilityFieldCVSSBaseScore;
+
+	@Value(
+		"${liferay.customer.jira.security.vulnerability.field.cvss.vector.string}"
+	)
+	private String _jiraSecurityVulnerabilityFieldCVSSVectorString;
+
+	@Value("${liferay.customer.jira.security.vulnerability.field.cwe.ids}")
+	private String _jiraSecurityVulnerabilityFieldCWEIds;
+
+	@Value(
+		"${liferay.customer.jira.security.vulnerability.field.issue.classification}"
+	)
+	private String _jiraSecurityVulnerabilityFieldIssueClassification;
+
+	@Value(
+		"${liferay.customer.jira.security.vulnerability.field.partner.publishing.date}"
+	)
+	private String _jiraSecurityVulnerabilityFieldPartnerPublishingDate;
+
+	@Value(
+		"${liferay.customer.jira.security.vulnerability.field.publishing.status}"
+	)
+	private String _jiraSecurityVulnerabilityFieldPublishingStatus;
+
+	@Value("${liferay.customer.jira.security.vulnerability.field.severity}")
+	private String _jiraSecurityVulnerabilityFieldSeverity;
 
 	@Value("${liferay.customer.jira.security.vulnerability.project}")
 	private String _jiraSecurityVulnerabilityProject;
 
 	@Value("${liferay.customer.jira.url}")
 	private String _jiraURL;
-
-	private final String[] _securityVulnerabilitiesIssueFields;
 
 }

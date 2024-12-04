@@ -195,7 +195,7 @@ public class CETConfigurationFactoryTest {
 
 		if (ListUtil.isEmpty(layouts)) {
 			throw new NoSuchLayoutException(
-				"Unable to get control panel layout");
+				"Unable to get Control Panel layout");
 		}
 
 		return layouts.get(0);

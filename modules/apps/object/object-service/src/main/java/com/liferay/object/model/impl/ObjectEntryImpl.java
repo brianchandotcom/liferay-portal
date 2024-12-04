@@ -7,12 +7,15 @@ package com.liferay.object.model.impl;
 
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -38,6 +41,21 @@ import java.util.Objects;
  * @author Brian Wing Shun Chan
  */
 public class ObjectEntryImpl extends ObjectEntryBaseImpl {
+
+	@Override
+	public String buildTreePath() throws PortalException {
+		if (getObjectEntryFolderId() ==
+				ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER) {
+
+			return StringPool.SLASH;
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			ObjectEntryFolderLocalServiceUtil.getObjectEntryFolder(
+				getObjectEntryFolderId());
+
+		return objectEntryFolder.buildTreePath();
+	}
 
 	@Override
 	public ObjectEntry cloneWithOriginalValues() {

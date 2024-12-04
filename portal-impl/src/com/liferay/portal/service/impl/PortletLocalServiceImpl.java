@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -2968,8 +2969,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		public Portlet get(Object key) {
 			Portlet portlet = super.get(key);
 
-			if ((portlet != null) &&
-				(portlet.getCompanyId() == CompanyConstants.SYSTEM)) {
+			if (!DBPartition.isPartitionEnabled() ||
+				((portlet != null) &&
+				 (portlet.getCompanyId() == CompanyConstants.SYSTEM))) {
 
 				return portlet;
 			}
@@ -2981,7 +2983,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		@Override
 		public Portlet put(String key, Portlet value) {
-			if ((value == null) ||
+			if (!DBPartition.isPartitionEnabled() || (value == null) ||
 				(value.getCompanyId() == CompanyConstants.SYSTEM)) {
 
 				return super.put(key, value);
@@ -2992,12 +2994,14 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		@Override
 		public Portlet remove(Object key) {
-			Portlet portlet = super.remove(
-				key + StringPool.AT +
-					CompanyThreadLocal.getNonsystemCompanyId());
+			if (DBPartition.isPartitionEnabled()) {
+				Portlet portlet = super.remove(
+					key + StringPool.AT +
+						CompanyThreadLocal.getNonsystemCompanyId());
 
-			if (portlet != null) {
-				return portlet;
+				if (portlet != null) {
+					return portlet;
+				}
 			}
 
 			return super.remove(key);

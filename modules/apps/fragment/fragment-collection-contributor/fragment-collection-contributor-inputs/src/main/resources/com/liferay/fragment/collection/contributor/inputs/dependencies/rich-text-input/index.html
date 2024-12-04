@@ -1,16 +1,14 @@
 [#assign
-	localizable = input.attributes.localizable?? && input.attributes.localizable
-	readOnly = input.attributes.readOnly?? && input.attributes.readOnly
-	showLabel = input.showLabel && input.label?has_content && (layoutMode == "edit" || readOnly)
+	showLabel = input.showLabel && input.label?has_content && (layoutMode == "edit" || input.readOnly)
 ]
 
 <div class="rich-text-input [#if !input.showLabel || !input.label?has_content]rich-text-input--hidden-label[/#if]">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
-		<label class="[#if !showLabel]sr-only[/#if]" data-localizable="${localizable?string('true', 'false')}" id="${fragmentEntryLinkNamespace}-rich-text-input-label">
-			${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+		<label class="[#if !showLabel]sr-only[/#if]" data-localizable="${input.localizable?string('true', 'false')}" id="${fragmentEntryLinkNamespace}-rich-text-input-label">
+			${htmlUtil.escape(input.label)} [#if input.readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 		</label>
 
-		[#if readOnly]
+		[#if input.readOnly]
 			<div aria-labelledby="${fragmentEntryLinkNamespace}-rich-text-input-label" aria-multiline="true" aria-readonly="true" [#if input.required]aria-required="true"[/#if] class="form-control" contenteditable="false" id="${fragmentEntryLinkNamespace}-rich-text-input" role="textbox" tabindex="0"></div>
 		[#elseif layoutMode == "edit"]
 			[@liferay_editor["resources"]editorName="ckeditor" /]

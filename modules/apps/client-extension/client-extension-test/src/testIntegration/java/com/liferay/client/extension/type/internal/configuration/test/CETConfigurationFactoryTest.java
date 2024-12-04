@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -130,11 +129,9 @@ public class CETConfigurationFactoryTest {
 
 	@Test
 	public void testAddControlPanelThemeCSSCETEntryRel() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
 		String pid1 = ConfigurationTestUtil.createFactoryConfiguration(
 			_PID,
-			_getThemeCSSCETConfigurationProperties(company.getCompanyId()));
+			_getThemeCSSCETConfigurationProperties(_virtualInstanceCompanyId));
 
 		String pid2 = null;
 
@@ -143,7 +140,7 @@ public class CETConfigurationFactoryTest {
 					"CETConfigurationFactory",
 				LoggerTestUtil.ERROR)) {
 
-			Layout layout = _getControlPanelLayout(company.getCompanyId());
+			Layout layout = _getControlPanelLayout(_virtualInstanceCompanyId);
 
 			List<ClientExtensionEntryRel> clientExtensionEntryRels =
 				_clientExtensionEntryRelLocalService.
@@ -157,7 +154,8 @@ public class CETConfigurationFactoryTest {
 
 			pid2 = ConfigurationTestUtil.createFactoryConfiguration(
 				_PID,
-				_getThemeCSSCETConfigurationProperties(company.getCompanyId()));
+				_getThemeCSSCETConfigurationProperties(
+					_virtualInstanceCompanyId));
 
 			clientExtensionEntryRels =
 				_clientExtensionEntryRelLocalService.

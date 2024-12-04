@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayBadge from '@clayui/badge';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {FeatureIndicator} from 'frontend-js-components-web';
 import {useSessionState} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
@@ -173,14 +173,7 @@ function TabCollectionCollapse({
 				<span className="panel-title">
 					<span className="c-mr-2">{title}</span>
 
-					{deprecated && (
-						<ClayBadge
-							className="text-uppercase"
-							displayType="warning"
-							label={Liferay.Language.get('deprecated')}
-							translucent
-						/>
-					)}
+					{deprecated && <FeatureIndicator type="deprecated" />}
 
 					<span
 						className={`text-secondary collapse-icon-${

@@ -177,7 +177,7 @@ public class CPDefinitionModelDocumentContributor
 				CPField.EXTERNAL_REFERENCE_CODE,
 				cProduct.getExternalReferenceCode());
 
-			document.addText(
+			document.addKeyword(
 				CPField.GTINS,
 				TransformUtil.transformToArray(
 					cpDefinition.getCPInstances(), CPInstance::getGtin,

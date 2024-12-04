@@ -59,7 +59,7 @@ public class SamplePortlet extends MVCPortlet {
 				_portal, renderRequest, renderResponse));
 
 		renderRequest.setAttribute(
-			SamplePortletKeys.FRONTEND_SAMPLE_DISPLAY_CONTEXT,
+			SamplePortletKeys.SAMPLE_DISPLAY_CONTEXT,
 			new SampleDisplayContext(renderRequest, renderResponse));
 
 		renderRequest.setAttribute(

@@ -691,6 +691,22 @@ public class DLAppLocalServiceWrapper
 	}
 
 	/**
+	 * Subscribe the user to changes in the file entry. This method is only
+	 * supported by the Liferay repository.
+	 *
+	 * @param userId the primary key of the user
+	 * @param groupId the primary key of the file entry's group
+	 * @param fileEntryId the primary key of the file entry
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public void subscribeFileEntry(long userId, long groupId, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dlAppLocalService.subscribeFileEntry(userId, groupId, fileEntryId);
+	}
+
+	/**
 	 * Subscribe the user to changes in documents of the file entry type. This
 	 * method is only supported by the Liferay repository.
 	 *
@@ -722,6 +738,23 @@ public class DLAppLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_dlAppLocalService.subscribeFolder(userId, groupId, folderId);
+	}
+
+	/**
+	 * Unsubscribe the user from changes in the file entry. This method is only
+	 * supported by the Liferay repository.
+	 *
+	 * @param userId the primary key of the user
+	 * @param groupId the primary key of the file entry's group
+	 * @param fileEntryId the primary key of the file entry
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public void unsubscribeFileEntry(
+			long userId, long groupId, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dlAppLocalService.unsubscribeFileEntry(userId, groupId, fileEntryId);
 	}
 
 	/**

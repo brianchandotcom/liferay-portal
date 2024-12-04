@@ -152,13 +152,13 @@ public class CETConfigurationFactory {
 			_cet.getExternalReferenceCode(), _cet.getType(), StringPool.BLANK,
 			new ServiceContext());
 
-		int clientExtensionEntryRelsCount =
+		int count =
 			_clientExtensionEntryRelLocalService.
 				getClientExtensionEntryRelsCount(
 					_portal.getClassNameId(Layout.class), layout.getPlid(),
 					ClientExtensionEntryConstants.TYPE_THEME_CSS);
 
-		if (clientExtensionEntryRelsCount > 1) {
+		if (count > 1) {
 			_log.error(
 				"Only one theme CSS client extension can be applied at a " +
 					"time. To avoid conflicts, none of them will be applied.");
@@ -176,7 +176,7 @@ public class CETConfigurationFactory {
 
 		if (ListUtil.isEmpty(layouts)) {
 			throw new NoSuchLayoutException(
-				"Unable to get control panel layout");
+				"Unable to get Control Panel layout");
 		}
 
 		return layouts.get(0);

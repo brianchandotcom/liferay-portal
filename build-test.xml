@@ -7820,7 +7820,7 @@ ${docker.start.error}</fail>
 			<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
 
 			<if>
-				<isset property="java.jdk.home">
+				<isset property="java.jdk.home" />
 				<then>
 					<exec executable="docker" outputproperty="docker.inspect.output">
 						<arg line="inspect ${operating.system.docker.image}" />
@@ -7863,12 +7863,14 @@ ${docker.start.error}</fail>
 										}
 									}
 
+									String javaJDKHome = project.getProperty("java.jdk.home");
+
 									if (!JenkinsResultsParserUtil.isNullOrEmpty(pathString)
 											&& !JenkinsResultsParserUtil.isNullOrEmpty(javaHomeString)) {
-										if (!javaHomeString.equals(project.getProperty("java.jdk.home"))) {
-											pathString = javaHomeString + "/bin:" + pathString;
+										if (!javaHomeString.equals(javaJDKHome)) {
+											pathString = javaJDKHome + "/bin:" + pathString;
 
-											String dockerJavaRunOptions = " -e PATH=" + pathString + " -e JAVA_HOME=" + javaHomeString;
+											String dockerJavaRunOptions = " -e PATH=" + pathString + " -e JAVA_HOME=" + javaJDKHome;
 				
 											project.setProperty("docker.java.run.options", dockerJavaRunOptions);
 										}

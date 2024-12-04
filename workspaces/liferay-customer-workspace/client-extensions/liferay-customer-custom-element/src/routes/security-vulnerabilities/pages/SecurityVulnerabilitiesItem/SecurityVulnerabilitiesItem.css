@@ -7,17 +7,10 @@
 		}
 	}
 
-	.sv-issue-details {
-		h5 {
-			font-size: 1rem;
-		}
-	}
-
 	.sv-item-details {
 		background-color: var(--color-neutral-1);
 		border-radius: var(--border-radius-lg);
 		padding: var(--spacer-4);
-		width: 17.75rem;
 	}
 
 	.sv-item-header {
@@ -25,16 +18,14 @@
 		border-radius: var(--border-radius-lg);
 		color: var(--color-neutral-0);
 		padding: var(--spacer-4);
+		position: relative;
 
 		.sv-gradient {
 			right: 0;
 		}
 
 		.sv-severity {
-			border-radius: var(--border-radius-sm);
-			font-size: var(--font-size-sm);
 			margin-left: var(--spacer-4);
-			min-width: var(--spacer-6);
 			padding: var(--spacer-1) var(--spacer-2);
 		}
 
@@ -47,7 +38,7 @@
 		}
 
 		.sv-severity-low {
-			background-color: var(--color-neutral-4);
+			background-color: var(--color-neutral-5);
 		}
 
 		.sv-severity-medium {
@@ -56,47 +47,11 @@
 	}
 
 	.sv-item-table {
-		border-color: var(--color-neutral-1);
+		border-color: var(--color-neutral-2);
 		border-radius: var(--border-radius-lg);
 		border-style: solid;
 		border-width: var(--border-width-1);
-		margin-top: 3.75rem;
+		margin-top: var(--spacer-5);
 		padding: var(--spacer-3);
-
-		.label {
-			background-color: var(--color-neutral-2);
-			border: none;
-			font-weight: var(--font-weight-normal, 400);
-		}
-	
-		.sv-name-link {
-			text-decoration-line: none;
-		}
-	
-		.sv-severity {
-			border-radius: var(--border-radius-sm);
-			font-size: var(--font-size-sm);
-			min-width: var(--spacer-6);
-		}
-	
-		.sv-severity-critical {
-			background-color: var(--color-state-error-lighten-2);
-			color: var(--color-state-error-darken-2);
-		}
-	
-		.sv-severity-high {
-			background-color: var(--color-state-warning-lighten-2);
-			color: var(--color-state-warning-darken-2);
-		}
-	
-		.sv-severity-low {
-			background-color: var(--color-neutral-2);
-			color: var(--color-neutral-8);
-		}
-	
-		.sv-severity-medium {
-			background-color: var(--color-state-info-lighten-2);
-			color: var(--color-state-info-darken-2);
-		}
 	}
 }

@@ -38,6 +38,7 @@ export class JSONWebServicesLayoutApiHelper {
 		masterLayoutPlid = '0',
 		options = {type: 'portlet'},
 		parentLayoutId = '0',
+		privateLayout = 'false',
 		title,
 	}: {
 		externalReferenceCode?: string;
@@ -45,6 +46,7 @@ export class JSONWebServicesLayoutApiHelper {
 		masterLayoutPlid?: string;
 		options?: {publish?: boolean; type: string};
 		parentLayoutId?: string;
+		privateLayout?: string;
 		title: string;
 	}): Promise<Layout> {
 		if (options.publish && options.type !== 'content') {
@@ -59,7 +61,7 @@ export class JSONWebServicesLayoutApiHelper {
 
 		urlSearchParams.append('externalReferenceCode', externalReferenceCode);
 		urlSearchParams.append('groupId', groupId);
-		urlSearchParams.append('privateLayout', 'false');
+		urlSearchParams.append('privateLayout', privateLayout);
 		urlSearchParams.append('parentLayoutId', parentLayoutId);
 		urlSearchParams.append('localeNamesMap', JSON.stringify({en_US: name}));
 		urlSearchParams.append(

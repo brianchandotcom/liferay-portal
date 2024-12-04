@@ -144,6 +144,14 @@ const ACTIONS = {
 			},
 		});
 	},
+
+	subscribeFileEntry({subscribeFileEntryURL}) {
+		location.href = subscribeFileEntryURL;
+	},
+
+	unsubscribeFileEntry({unsubscribeFileEntryURL}) {
+		location.href = unsubscribeFileEntryURL;
+	},
 };
 
 export default function propsTransformer({items, portletNamespace, ...props}) {

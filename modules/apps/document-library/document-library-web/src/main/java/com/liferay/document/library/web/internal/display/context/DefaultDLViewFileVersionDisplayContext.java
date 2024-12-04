@@ -132,6 +132,12 @@ public class DefaultDLViewFileVersionDisplayContext
 						_uiItemsBuilder::isCheckinActionAvailable,
 						_uiItemsBuilder.createCheckinDropdownItem()
 					).add(
+						_uiItemsBuilder::isSubscribeActionAvailable,
+						_uiItemsBuilder.createSubscribeDropdownItem()
+					).add(
+						_uiItemsBuilder::isUnsubscribeActionAvailable,
+						_uiItemsBuilder.createUnsubscribeDropdownItem()
+					).add(
 						_uiItemsBuilder::
 							isCollectDigitalSignatureActionAvailable,
 						_uiItemsBuilder.

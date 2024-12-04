@@ -6,8 +6,6 @@
 package com.liferay.layout.seo.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.seo.model.LayoutSEOEntry;
-import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOEntryService;
 import com.liferay.layout.seo.web.internal.util.LayoutTypeSettingsUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -79,27 +77,8 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> openGraphTitleMap =
 			_localization.getLocalizationMap(actionRequest, "openGraphTitle");
 
-		LayoutSEOEntry layoutSEOEntry =
-			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-				groupId, privateLayout, layoutId);
-
-		boolean canonicalURLEnabled = false;
-
-		if ((layoutSEOEntry != null) &&
-			layoutSEOEntry.isCanonicalURLEnabled()) {
-
-			canonicalURLEnabled = true;
-		}
-
-		Map<Locale, String> canonicalURLMap = null;
-
-		if (layoutSEOEntry != null) {
-			canonicalURLMap = layoutSEOEntry.getCanonicalURLMap();
-		}
-
 		_layoutSEOEntryService.updateLayoutSEOEntry(
-			groupId, privateLayout, layoutId, canonicalURLEnabled,
-			canonicalURLMap, openGraphDescriptionEnabled,
+			groupId, privateLayout, layoutId, openGraphDescriptionEnabled,
 			openGraphDescriptionMap, openGraphImageAltMap,
 			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
 			serviceContext);
@@ -131,9 +110,6 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	@Reference
 	private LayoutSEOEntryService _layoutSEOEntryService;

@@ -4,9 +4,11 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import {readFileSync} from 'fs';
 
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {getTempDir} from '../../utils/temp';
 
 export const test = mergeTests(loginTest(), applicationsMenuPageTest);
 
@@ -41,7 +43,7 @@ const fields = [
 	'userId',
 ];
 
-test('LPD-40224: Check if the export audit events request body has all the search parameters', async ({
+test('LPD-40224: Check if the export audit events .csv is being filtered by the search fields', async ({
 	applicationsMenuPage,
 	page,
 }) => {
@@ -50,6 +52,30 @@ test('LPD-40224: Check if the export audit events request body has all the searc
 	await applicationsMenuPage.goToAudit();
 
 	await page.locator('#toggle_id_audit_event_searchtoggleAdvanced').click();
+
+	// Filter the events by the first element, use the information to make assertions in the .csv
+
+	const firstEventResourceId = await page
+		.locator('td.lfr-resource-id-column')
+		.first();
+
+	const resourceId = (await firstEventResourceId.textContent()).trim();
+
+	const firstEventResourceAction = await page
+		.locator('td.lfr-resource-action-column')
+		.first();
+
+	const resourceAction = (
+		await firstEventResourceAction.textContent()
+	).trim();
+
+	await page
+		.locator(`#${AUDIT_PORTLET_NAMESPACE}classPK:visible`)
+		.fill(resourceId);
+
+	await page
+		.locator(`#${AUDIT_PORTLET_NAMESPACE}eventType:visible`)
+		.fill(resourceAction);
 
 	await page.locator('.lexicon-icon-search').click();
 
@@ -60,7 +86,7 @@ test('LPD-40224: Check if the export audit events request body has all the searc
 	const dateValues = {};
 
 	for (const field of dateFields) {
-		const inputElement = page.locator(`#${field}`);
+		const inputElement = await page.locator(`#${field}`);
 		const inputValue = await inputElement.inputValue();
 
 		dateValues[field] = inputValue;
@@ -68,7 +94,7 @@ test('LPD-40224: Check if the export audit events request body has all the searc
 
 	// On the export request, check if the body has all parameters
 
-	page.on('request', async (request) => {
+	await page.on('request', async (request) => {
 		if (request.url().includes('export_audit_events')) {
 			const requestBody = request.postData();
 
@@ -84,15 +110,37 @@ test('LPD-40224: Check if the export audit events request body has all the searc
 		}
 	});
 
-	const options = page.getByLabel('Options');
+	const options = await page.getByLabel('Options');
 
 	await options.click();
 
-	const menuItem = page.getByRole('menuitem', {
+	const menuItem = await page.getByRole('menuitem', {
 		name: 'Export Audit Events',
 	});
 
 	await menuItem.click();
+
+	const downloadPromise = await page.waitForEvent('download');
+
+	const download = await downloadPromise;
+
+	const filePath = getTempDir() + download.suggestedFilename();
+
+	await download.saveAs(filePath);
+
+	const content = await readFileSync(filePath, 'utf8');
+
+	expect(content).toContain(resourceId);
+
+	const regex = new RegExp(resourceAction, 'g');
+
+	const matches = await content.match(regex);
+
+	const eventCount = await page
+		.locator('table.table > tbody tr:not(.d-none)')
+		.count();
+
+	expect(matches).toHaveLength(eventCount);
 });
 
 test("LPS-192555: Assert that the page's URL with advanced search doesn't get over 2048 characters", async ({

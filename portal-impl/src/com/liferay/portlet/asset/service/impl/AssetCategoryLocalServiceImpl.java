@@ -56,6 +56,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -105,16 +106,15 @@ public class AssetCategoryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		Locale defaultLocale = PortalUtil.getSiteDefaultLocale(groupId);
-
-		String name = titleMap.get(defaultLocale);
-
-		name = ModelHintsUtil.trimString(
-			AssetCategory.class.getName(), "name", name);
+		Map<Locale, String> trimmedTitleMap = _getTrimmedTitleMap(titleMap);
 
 		if (categoryProperties == null) {
 			categoryProperties = new String[0];
 		}
+
+		Locale defaultLocale = PortalUtil.getSiteDefaultLocale(groupId);
+
+		String name = trimmedTitleMap.get(defaultLocale);
 
 		validate(0, parentCategoryId, name, vocabularyId);
 
@@ -150,7 +150,7 @@ public class AssetCategoryLocalServiceImpl
 		}
 
 		category.setName(name);
-		category.setTitleMap(titleMap);
+		category.setTitleMap(trimmedTitleMap);
 		category.setDescriptionMap(descriptionMap);
 		category.setVocabularyId(vocabularyId);
 
@@ -625,13 +625,12 @@ public class AssetCategoryLocalServiceImpl
 		AssetCategory category = assetCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
+		Map<Locale, String> trimmedTitleMap = _getTrimmedTitleMap(titleMap);
+
 		Locale defaultLocale = PortalUtil.getSiteDefaultLocale(
 			category.getGroupId());
 
-		String name = titleMap.get(defaultLocale);
-
-		name = ModelHintsUtil.trimString(
-			AssetCategory.class.getName(), "name", name);
+		String name = trimmedTitleMap.get(defaultLocale);
 
 		if (categoryProperties == null) {
 			categoryProperties = new String[0];
@@ -670,7 +669,7 @@ public class AssetCategoryLocalServiceImpl
 		}
 
 		category.setName(name);
-		category.setTitleMap(titleMap);
+		category.setTitleMap(trimmedTitleMap);
 		category.setDescriptionMap(descriptionMap);
 
 		return assetCategoryPersistence.update(category);
@@ -771,6 +770,21 @@ public class AssetCategoryLocalServiceImpl
 					"There is another category named ", name,
 					" as a child of category ", parentCategoryId));
 		}
+	}
+
+	private Map<Locale, String> _getTrimmedTitleMap(
+		Map<Locale, String> titleMap) {
+
+		Map<Locale, String> trimmedTitleMap = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
+			trimmedTitleMap.put(
+				entry.getKey(),
+				ModelHintsUtil.trimString(
+					AssetCategory.class.getName(), "name", entry.getValue()));
+		}
+
+		return trimmedTitleMap;
 	}
 
 	private void _rebuildTreePath(

@@ -137,3 +137,8 @@ be49bcfd853f3c1ce83fe2a18d39defa6b8ce448^..345c1303e0d7a9c65c9e8ccaaa1ceec2b67bb
 # Bundle Version 1.0.28
 #
 d5816c3c57c36b37eddf998a6af7ff94bb02a5e2^..6c2e182f06563714ade80f4ed3a8ab1a4bcfeef0=LPD-33708 LPD-36353
+
+#
+# Bundle Version 1.0.30
+#
+6c2e182f06563714ade80f4ed3a8ab1a4bcfeef0^..505d86c0ac02b924b05ae2addc4722b79be8a9c4=LPD-39638 LPD-42616 LPD-42693

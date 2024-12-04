@@ -24,7 +24,7 @@ const linkName = 'Search Paginator';
 test(
 	'Search Paginator dropdown generates page links on scrolling',
 	{tag: '@LPD-37458'},
-	async ({page, site, samplePage}) => {
+	async ({page, samplePage, site}) => {
 		let dropdownMenuHandler: Locator;
 
 		await test.step('Create a content site and the frontend taglib sample widget', async () => {

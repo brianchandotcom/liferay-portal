@@ -23,7 +23,7 @@ public interface JournalFolderFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 	public int filterCountF_A_ByG_F_DDMSI_NotS(
-		long groupId, long folderId, long ddmStructureId, int[] excludedStatus,
+		long groupId, long folderId, long ddmStructureId, int[] statuses,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 	public java.util.List<Object> filterFindF_A_ByG_F_DDMSI(
@@ -37,7 +37,7 @@ public interface JournalFolderFinder {
 
 	public java.util.List<Object> filterFindF_A_ByG_F_DDMSI_L_NotS(
 		long groupId, long folderId, long ddmStructureId,
-		java.util.Locale locale, int[] excludedStatus,
+		java.util.Locale locale, int[] statuses,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 	public java.util.List<Object> findF_A_ByG_F_DDMSI(

@@ -16,6 +16,8 @@ import {getDescendantIds} from './getDescendantIds';
 import {FORM_ERROR_TYPES} from './getFormErrorDescription';
 import getLayoutDataItemUniqueClassName from './getLayoutDataItemUniqueClassName';
 import hasDraftSubmitChild from './hasDraftSubmitChild';
+import {hasLocalizableFields} from './hasLocalizableFields';
+import {hasLocalizationSelect} from './hasLocalizationSelect';
 import hasRequiredInputChild from './hasRequiredInputChild';
 import {hasVisibleFormButtonChild} from './hasVisibleFormButtonChild';
 import hasVisibleSubmitChild from './hasVisibleSubmitChild';
@@ -50,6 +52,17 @@ export default function useCheckFormsValidity() {
 		}
 
 		for (const form of forms) {
+			if (
+				hasLocalizationSelect(fragmentEntryLinks) &&
+				!hasLocalizableFields(fragmentEntryLinks)
+			) {
+				addError(
+					validations,
+					form,
+					FORM_ERROR_TYPES.missingLocalizableFields
+				);
+			}
+
 			if (
 				!hasVisibleSubmitChild(
 					form.itemId,

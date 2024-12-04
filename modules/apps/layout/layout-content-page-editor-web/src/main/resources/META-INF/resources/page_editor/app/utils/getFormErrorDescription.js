@@ -13,6 +13,7 @@ export const FORM_ERROR_TYPES = {
 	hiddenFragment: 'hiddenFragment',
 	missingFields: 'missingFields',
 	missingFragments: 'missingFragments',
+	missingLocalizableFields: 'missingLocalizableFields',
 	missingNextButton: 'missingNextButton',
 	missingPreviousButton: 'missingPreviousButton',
 	missingSubmit: 'missingSubmit',
@@ -222,6 +223,22 @@ export function getFormErrorDescription(error) {
 					'submit-button-is-hidden-or-missing'
 				),
 				title: Liferay.Language.get('submit-button-missing'),
+			};
+
+		case FORM_ERROR_TYPES.missingLocalizableFields:
+			return {
+				message: sub(
+					Liferay.Language.get(
+						'the-page-has-a-localization-select-but-the-localizable-form-fields-are-hidden-or-missing'
+					),
+					name
+				),
+				summary: Liferay.Language.get(
+					'localizable-fields-are-hidden-or-missing'
+				),
+				title: Liferay.Language.get(
+					'localizable-fields-hidden-or-missing'
+				),
 			};
 
 		default:

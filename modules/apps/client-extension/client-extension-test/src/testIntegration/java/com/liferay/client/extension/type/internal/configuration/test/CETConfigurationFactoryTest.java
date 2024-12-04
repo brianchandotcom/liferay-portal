@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -45,6 +44,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.TimeoutException;
@@ -202,8 +202,8 @@ public class CETConfigurationFactoryTest {
 		return layouts.get(0);
 	}
 
-	private HashMapDictionary<String, Object>
-			_getThemeCSSConfigurationProperties(long companyId)
+	private Dictionary<String, Object> _getThemeCSSConfigurationProperties(
+			long companyId)
 		throws Exception {
 
 		String name = RandomTestUtil.randomString();

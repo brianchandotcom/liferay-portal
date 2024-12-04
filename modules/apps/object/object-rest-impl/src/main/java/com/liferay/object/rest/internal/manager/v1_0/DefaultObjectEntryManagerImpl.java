@@ -767,7 +767,8 @@ public class DefaultObjectEntryManagerImpl
 			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry, objectEntry.getScopeKey()));
+				serviceBuilderObjectEntry,
+				String.valueOf(serviceBuilderObjectEntry.getGroupId())));
 	}
 
 	@Override

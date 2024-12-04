@@ -37,6 +37,50 @@ public class LocalizedMapUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testGetI18nMap() {
+		Map<String, String> i18nMap = LocalizedMapUtil.getI18nMap(
+			HashMapBuilder.put(
+				LocaleUtil.FRANCE, "bonjour"
+			).put(
+				LocaleUtil.US, "hello"
+			).build());
+
+		Assert.assertEquals(i18nMap.toString(), 2, i18nMap.size());
+		Assert.assertEquals("hello", i18nMap.get("en-US"));
+		Assert.assertEquals("bonjour", i18nMap.get("fr-FR"));
+
+		i18nMap = LocalizedMapUtil.getI18nMap(
+			false,
+			HashMapBuilder.put(
+				LocaleUtil.FRANCE, "bonjour"
+			).put(
+				LocaleUtil.US, "hello"
+			).build());
+
+		Assert.assertNull(i18nMap);
+
+		Set<Locale> availableLocales = new HashSet<>();
+
+		availableLocales.add(LocaleUtil.BRAZIL);
+		availableLocales.add(LocaleUtil.FRANCE);
+		availableLocales.add(LocaleUtil.US);
+
+		i18nMap = LocalizedMapUtil.getI18nMap(
+			true, availableLocales,
+			HashMapBuilder.put(
+				"en_US", "hello"
+			).put(
+				"fr_FR", "bonjour"
+			).put(
+				"hu_HU", "szia"
+			).build());
+
+		Assert.assertEquals(i18nMap.toString(), 2, i18nMap.size());
+		Assert.assertEquals("hello", i18nMap.get("en_US"));
+		Assert.assertEquals("bonjour", i18nMap.get("fr_FR"));
+	}
+
+	@Test
 	public void testMergeI18nMap() {
 		Map<String, String> map = LocalizedMapUtil.mergeI18nMap(
 			HashMapBuilder.put(

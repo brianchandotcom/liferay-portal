@@ -12,12 +12,8 @@ public class RoleConstants {
 
 	public static final String NAME_ADMINISTRATOR = "Administrator";
 
-	public static final String NAME_CUSTOMER = "Customer";
-
 	public static final String NAME_LIFERAY_STAFF = "Liferay Staff";
 
 	public static final String NAME_PARTNER = "Partner";
-
-	public static final String NAME_PROVISIONING_ADMIN = "Provisioning Admin";
 
 }

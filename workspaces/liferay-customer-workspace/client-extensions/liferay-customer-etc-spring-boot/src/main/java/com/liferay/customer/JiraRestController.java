@@ -12,7 +12,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -154,7 +153,7 @@ public class JiraRestController extends BaseRestController {
 		catch (Exception exception) {
 			_log.error(exception, exception);
 
-			return new ResponseEntity(
+			return new ResponseEntity<>(
 				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -178,7 +177,7 @@ public class JiraRestController extends BaseRestController {
 		catch (Exception exception) {
 			_log.error(exception, exception);
 
-			return new ResponseEntity(
+			return new ResponseEntity<>(
 				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -325,7 +324,7 @@ public class JiraRestController extends BaseRestController {
 		catch (Exception exception) {
 			_log.error(exception, exception);
 
-			return new ResponseEntity(
+			return new ResponseEntity<>(
 				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

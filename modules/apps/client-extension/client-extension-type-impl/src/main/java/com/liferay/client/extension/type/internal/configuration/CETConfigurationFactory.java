@@ -72,7 +72,7 @@ public class CETConfigurationFactory {
 						_cet.getType(),
 						ClientExtensionEntryConstants.TYPE_THEME_CSS)) {
 
-					_addControlPanelThemeCSSCETEntryRel(companyId);
+					_addControlPanelThemeCSSClientExtensionEntryRel(companyId);
 				}
 			});
 	}
@@ -117,12 +117,12 @@ public class CETConfigurationFactory {
 						deleteClientExtensionEntryRels(
 							companyId, _cet.getExternalReferenceCode());
 
-					_addControlPanelThemeCSSCETEntryRel(companyId);
+					_addControlPanelThemeCSSClientExtensionEntryRel(companyId);
 				}
 			});
 	}
 
-	private void _addControlPanelThemeCSSCETEntryRel(Long companyId)
+	private void _addControlPanelThemeCSSClientExtensionEntryRel(Long companyId)
 		throws PortalException {
 
 		ThemeCSSCET themeCSSCET = (ThemeCSSCET)_cet;

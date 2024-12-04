@@ -193,8 +193,7 @@ public class CPConfigurationListDisplayContext {
 				dropdownItem.setHref("addCPConfigurationList");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
-						httpServletRequest,
-						"add-new-product-configuration"));
+						httpServletRequest, "add-new-product-configuration"));
 				dropdownItem.setTarget("event");
 			}
 		).build();

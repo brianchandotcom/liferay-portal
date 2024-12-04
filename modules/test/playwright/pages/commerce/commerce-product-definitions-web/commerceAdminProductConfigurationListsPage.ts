@@ -3,11 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class CommerceAdminProductConfigurationListsPage extends CommerceDNDTablePage {
+	readonly addConfigurationList: Locator;
+	readonly addConfigurationListCatalog: Locator;
+	readonly addConfigurationListName: Locator;
+	readonly addConfigurationListParentListElement: Locator;
+	readonly addConfigurationListParentList: Locator;
+	readonly addConfigurationListPriority: Locator;
+	readonly addConfigurationListSaveButton: Locator;
+	readonly newConfigurationListName: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -15,6 +23,28 @@ export class CommerceAdminProductConfigurationListsPage extends CommerceDNDTable
 			page,
 			'#_com_liferay_commerce_product_definitions_web_internal_portlet_CPConfigurationListsPortlet_fm .dnd-table'
 		);
+		this.addConfigurationList = page
+			.getByTestId('management-toolbar')
+			.locator('[data-testid="fdsCreationActionButton"]');
+		this.addConfigurationListCatalog = page
+			.frameLocator('iframe[title="Add New Product Configuration"]')
+			.getByLabel('Catalog Required');
+		this.addConfigurationListName = page
+			.frameLocator('iframe[title="Add New Product Configuration"]')
+			.getByLabel('Name Required');
+		this.addConfigurationListParentListElement = page
+			.frameLocator('iframe[title="Add New Product Configuration"]')
+			.getByRole('menuitem', {name: 'Master Configuration Master'});
+		this.addConfigurationListParentList = page
+			.frameLocator('iframe[title="Add New Product Configuration"]')
+			.getByPlaceholder('Type Here');
+		this.addConfigurationListPriority = page
+			.frameLocator('iframe[title="Add New Product Configuration"]')
+			.getByLabel('Priority Required');
+		this.addConfigurationListSaveButton = page.getByRole('button', {
+			name: 'Submit',
+		});
+		this.newConfigurationListName = page.getByTestId('headerDetailsTitle');
 		this.page = page;
 	}
 }

@@ -5,14 +5,12 @@
 
 package com.liferay.commerce.product.internal.search.spi.model.query.contributor;
 
-import com.liferay.commerce.product.constants.CPField;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
@@ -23,12 +21,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"indexer.class.name=com.liferay.commerce.product.model.CPConfigurationEntry",
+		"indexer.class.name=com.liferay.commerce.product.model.CPConfigurationList",
 		"indexer.clauses.mandatory=true"
 	},
 	service = ModelPreFilterContributor.class
 )
-public class CPConfigurationEntryModelPreFilterContributor
+public class CPConfigurationListModelPreFilterContributor
 	implements ModelPreFilterContributor {
 
 	@Override
@@ -36,32 +34,14 @@ public class CPConfigurationEntryModelPreFilterContributor
 		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
 		SearchContext searchContext) {
 
-		long cpConfigurationListId = GetterUtil.getLong(
-			searchContext.getAttribute(CPField.CP_CONFIGURATION_LIST_ID));
+		long[] groupIds = searchContext.getGroupIds();
 
-		if (cpConfigurationListId > 0) {
-			booleanFilter.add(
-				new TermFilter(
-					CPField.CP_CONFIGURATION_LIST_ID,
-					String.valueOf(cpConfigurationListId)),
-				BooleanClauseOccur.SHOULD);
-
-			TermsFilter termsFilter = new TermsFilter(
-				CPField.CP_CONFIGURATION_LIST_IDS);
-
-			termsFilter.addValue(String.valueOf(cpConfigurationListId));
-
-			booleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
-		}
-
-		long classNameId = GetterUtil.getLong(
-			searchContext.getAttribute(Field.CLASS_NAME_ID));
-
-		if (classNameId > 0) {
-			booleanFilter.add(
-				new TermFilter(
-					Field.CLASS_NAME_ID, String.valueOf(classNameId)),
-				BooleanClauseOccur.MUST);
+		if (ArrayUtil.isNotEmpty(groupIds)) {
+			for (long groupId : groupIds) {
+				booleanFilter.add(
+					new TermFilter(Field.GROUP_ID, String.valueOf(groupId)),
+					BooleanClauseOccur.MUST);
+			}
 		}
 	}
 

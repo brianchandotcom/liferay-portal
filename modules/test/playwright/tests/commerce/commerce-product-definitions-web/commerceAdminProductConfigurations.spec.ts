@@ -29,3 +29,34 @@ test('LPD-42555 Verify configuration list table appears', async ({
 		commerceAdminProductConfigurationListsPage.table
 	).toBeVisible();
 });
+
+test('LPD-43390 Create child configuration list', async ({
+	applicationsMenuPage,
+	commerceAdminProductConfigurationListsPage,
+	page,
+}) => {
+	await applicationsMenuPage.goToCommerceProductConfigurationLists(false);
+
+	await expect(
+		commerceAdminProductConfigurationListsPage.table
+	).toBeVisible();
+
+	await commerceAdminProductConfigurationListsPage.addConfigurationList.click();
+
+	await commerceAdminProductConfigurationListsPage.addConfigurationListName.fill(
+		'Test'
+	);
+	await commerceAdminProductConfigurationListsPage.addConfigurationListPriority.fill(
+		'1'
+	);
+	await commerceAdminProductConfigurationListsPage.addConfigurationListCatalog.selectOption(
+		{label: 'Master'}
+	);
+	await commerceAdminProductConfigurationListsPage.addConfigurationListParentList.click();
+	await commerceAdminProductConfigurationListsPage.addConfigurationListParentListElement.click();
+	await commerceAdminProductConfigurationListsPage.addConfigurationListSaveButton.click();
+
+	await expect(
+		commerceAdminProductConfigurationListsPage.newConfigurationListName
+	).toHaveText('Test');
+});

@@ -21,6 +21,7 @@ const RecommendationsPage: React.FC<IGenericPageProps> = ({title}) => (
 				<ClayLink
 					className="ml-1"
 					href="https://learn.liferay.com/w/analytics-cloud/getting-started/connecting-liferay-dxp-to-analytics-cloud"
+					target="_blank"
 				>
 					{Liferay.Language.get('learn-more-about-recommendations')}
 				</ClayLink>

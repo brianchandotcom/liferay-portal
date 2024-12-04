@@ -14,7 +14,6 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -109,29 +108,28 @@ public class AssetVocabularyServiceTest {
 
 		String description = RandomTestUtil.randomString();
 
-		AssetVocabulary vocabulary =
-			AssetVocabularyLocalServiceUtil.addVocabulary(
-				externalReferenceCode, TestPropsValues.getUserId(),
-				_group.getGroupId(), StringPool.BLANK, StringPool.BLANK,
-				HashMapBuilder.put(
-					LocaleUtil.SPAIN, title + "_ES"
-				).put(
-					LocaleUtil.US, title + "_US"
-				).build(),
-				HashMapBuilder.put(
-					LocaleUtil.SPAIN, description + "_ES"
-				).put(
-					LocaleUtil.US, description + "_US"
-				).build(),
-				null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), TestPropsValues.getUserId()));
+		AssetVocabulary vocabulary = _assetVocabularyLocalService.addVocabulary(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), StringPool.BLANK, StringPool.BLANK,
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, title + "_ES"
+			).put(
+				LocaleUtil.US, title + "_US"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, description + "_ES"
+			).put(
+				LocaleUtil.US, description + "_US"
+			).build(),
+			null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(
 			externalReferenceCode, vocabulary.getExternalReferenceCode());
 
 		vocabulary =
-			AssetVocabularyLocalServiceUtil.
+			_assetVocabularyLocalService.
 				getAssetVocabularyByExternalReferenceCode(
 					externalReferenceCode, _group.getGroupId());
 
@@ -151,7 +149,7 @@ public class AssetVocabularyServiceTest {
 		Assert.assertEquals(externalReferenceCode, vocabulary1.getUuid());
 
 		AssetVocabulary vocabulary2 =
-			AssetVocabularyLocalServiceUtil.
+			_assetVocabularyLocalService.
 				getAssetVocabularyByExternalReferenceCode(
 					externalReferenceCode, _group.getGroupId());
 
@@ -177,7 +175,7 @@ public class AssetVocabularyServiceTest {
 
 		Assert.assertEquals(initialAssetCategoriesCount + 2, searchCount());
 
-		AssetVocabularyLocalServiceUtil.deleteVocabulary(
+		_assetVocabularyLocalService.deleteVocabulary(
 			vocabulary.getVocabularyId());
 
 		Assert.assertEquals(initialAssetCategoriesCount, searchCount());
@@ -189,7 +187,7 @@ public class AssetVocabularyServiceTest {
 			AssetCategoryLocalServiceUtil.fetchAssetCategory(
 				category.getCategoryId()));
 		Assert.assertNull(
-			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+			_assetVocabularyLocalService.fetchAssetVocabulary(
 				vocabulary.getVocabularyId()));
 	}
 
@@ -201,7 +199,7 @@ public class AssetVocabularyServiceTest {
 		String title = RandomTestUtil.randomString();
 		String description = RandomTestUtil.randomString();
 
-		AssetVocabularyLocalServiceUtil.addVocabulary(
+		_assetVocabularyLocalService.addVocabulary(
 			externalReferenceCode, TestPropsValues.getUserId(),
 			_group.getGroupId(), StringPool.BLANK, StringPool.BLANK,
 			HashMapBuilder.put(
@@ -218,7 +216,7 @@ public class AssetVocabularyServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
-		AssetVocabularyLocalServiceUtil.addVocabulary(
+		_assetVocabularyLocalService.addVocabulary(
 			externalReferenceCode, TestPropsValues.getUserId(),
 			_group.getGroupId(), StringPool.BLANK, StringPool.BLANK,
 			HashMapBuilder.put(
@@ -267,7 +265,7 @@ public class AssetVocabularyServiceTest {
 		serviceContext.setAddGroupPermissions(false);
 		serviceContext.setAddGuestPermissions(false);
 
-		AssetVocabularyLocalServiceUtil.addVocabulary(
+		_assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), serviceContext);
 
@@ -302,7 +300,7 @@ public class AssetVocabularyServiceTest {
 		serviceContext.setAddGroupPermissions(false);
 		serviceContext.setAddGuestPermissions(false);
 
-		AssetVocabularyLocalServiceUtil.addVocabulary(
+		_assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), serviceContext);
 
@@ -361,7 +359,7 @@ public class AssetVocabularyServiceTest {
 		serviceContext.setAddGroupPermissions(false);
 		serviceContext.setAddGuestPermissions(false);
 
-		AssetVocabularyLocalServiceUtil.addVocabulary(
+		_assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), serviceContext);
 
@@ -395,7 +393,7 @@ public class AssetVocabularyServiceTest {
 		serviceContext.setAddGroupPermissions(false);
 		serviceContext.setAddGuestPermissions(false);
 
-		AssetVocabularyLocalServiceUtil.addVocabulary(
+		_assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), serviceContext);
 
@@ -456,7 +454,7 @@ public class AssetVocabularyServiceTest {
 		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.SPAIN);
 
 		AssetVocabulary vocabulary =
-			AssetVocabularyLocalServiceUtil.addDefaultVocabulary(
+			_assetVocabularyLocalService.addDefaultVocabulary(
 				_group.getGroupId());
 
 		Assert.assertEquals(
@@ -485,11 +483,10 @@ public class AssetVocabularyServiceTest {
 			LocaleUtil.US, description + "_US"
 		).build();
 
-		AssetVocabulary vocabulary =
-			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				StringPool.BLANK, titleMap, descriptionMap, StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		AssetVocabulary vocabulary = _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), _group.getGroupId(), StringPool.BLANK,
+			titleMap, descriptionMap, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
 			StringUtil.toLowerCase(titleMap.get(LocaleUtil.SPAIN)),
@@ -523,10 +520,9 @@ public class AssetVocabularyServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		AssetVocabulary vocabulary =
-			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-				title, serviceContext);
+		AssetVocabulary vocabulary = _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			title, serviceContext);
 
 		Assert.assertEquals(title, vocabulary.getTitle(LocaleUtil.US, true));
 		Assert.assertEquals(

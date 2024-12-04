@@ -5,25 +5,32 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.price.list.exception.CommercePriceListDisplayDateException;
 import com.liferay.commerce.price.list.exception.CommercePriceListExpirationDateException;
 import com.liferay.commerce.product.exception.CPConfigurationListParentCPConfigurationListGroupIdException;
 import com.liferay.commerce.product.exception.DuplicateCPConfigurationListException;
 import com.liferay.commerce.product.exception.NoSuchCPConfigurationListException;
 import com.liferay.commerce.product.exception.RequiredCPConfigurationListException;
+import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.base.CPConfigurationListLocalServiceBaseImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.List;
@@ -91,7 +98,39 @@ public class CPConfigurationListLocalServiceImpl
 		cpConfigurationList.setDisplayDate(displayDate);
 		cpConfigurationList.setExpirationDate(expirationDate);
 
-		return cpConfigurationListPersistence.update(cpConfigurationList);
+		cpConfigurationList = cpConfigurationListPersistence.update(
+			cpConfigurationList);
+
+		if (parentCPConfigurationListId > 0) {
+			Indexer<CPConfigurationEntry> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(
+					CPConfigurationEntry.class);
+
+			for (CPConfigurationEntry cpConfigurationEntry :
+					_cpConfigurationEntryLocalService.getCPConfigurationEntries(
+						parentCPConfigurationListId)) {
+
+				indexer.reindex(
+					CPConfigurationEntry.class.getName(),
+					cpConfigurationEntry.getCPConfigurationEntryId());
+			}
+		}
+		else if (masterCPConfigurationList) {
+			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
+				null, userId, groupId,
+				_portal.getClassNameId(CPConfigurationList.class),
+				cpConfigurationList.getCPConfigurationListId(),
+				cpConfigurationList.getCPConfigurationListId(), 0,
+				StringPool.BLANK, true, 0, StringPool.BLANK, 0, true, true,
+				false, 0, StringPool.BLANK,
+				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY,
+				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
+				BigDecimal.ONE,
+				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY,
+				true, true, 0, false, false, true, 0, 0);
+		}
+
+		return cpConfigurationList;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

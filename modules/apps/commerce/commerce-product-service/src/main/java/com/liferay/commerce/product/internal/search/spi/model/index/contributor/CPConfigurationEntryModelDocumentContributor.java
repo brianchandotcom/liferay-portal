@@ -9,7 +9,9 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,6 +49,25 @@ public class CPConfigurationEntryModelDocumentContributor
 			document.addKeyword(
 				CPField.CP_CONFIGURATION_LIST_ID,
 				cpConfigurationEntry.getCPConfigurationListId());
+
+			document.addNumber(
+				CPField.CP_CONFIGURATION_LIST_IDS,
+				TransformUtil.transformToArray(
+					_cpConfigurationListLocalService.getCPConfigurationLists(
+						cpConfigurationEntry.getGroupId(),
+						cpConfigurationEntry.getCompanyId()),
+					cpConfigurationList -> {
+						if (cpConfigurationList.getCPConfigurationListId() ==
+								cpConfigurationEntry.
+									getCPConfigurationListId()) {
+
+							return null;
+						}
+
+						return cpConfigurationEntry.getCPConfigurationListId();
+					},
+					Long.class));
+
 			document.addText(
 				Field.CLASS_NAME_ID,
 				String.valueOf(cpConfigurationEntry.getClassNameId()));
@@ -114,6 +135,9 @@ public class CPConfigurationEntryModelDocumentContributor
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private CPConfigurationListLocalService _cpConfigurationListLocalService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

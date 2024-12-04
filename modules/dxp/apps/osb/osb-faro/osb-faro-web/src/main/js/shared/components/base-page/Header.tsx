@@ -1,5 +1,6 @@
 import Breadcrumbs from 'shared/components/Breadcrumbs';
 import classNames from 'classnames';
+import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
@@ -65,6 +66,7 @@ const NavBar: React.FC<INavBarProps> = ({
 };
 
 interface Action extends React.HTMLAttributes<HTMLElement> {
+	deprecated?: boolean;
 	disabled: boolean;
 	label: string;
 	href: string;
@@ -140,9 +142,20 @@ const PageActions: React.FC<IPageActionsProps> = ({
 					</ClayButton>
 				}
 			>
-				{actions.map(({label, ...props}) => (
+				{actions.map(({deprecated, label, ...props}) => (
 					<ClayDropDown.Item key={label} {...props}>
 						{label}
+
+						{deprecated && (
+							<ClayBadge
+								className='ml-1'
+								displayType='warning'
+								label={Liferay.Language.get(
+									'deprecated'
+								).toUpperCase()}
+								translucent
+							/>
+						)}
 					</ClayDropDown.Item>
 				))}
 			</ClayDropDown>

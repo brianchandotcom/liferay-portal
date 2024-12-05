@@ -137,17 +137,17 @@ test.describe('manage picklists inside the picklists portlet', () => {
 
 		const frameElement = await page.$('iframe');
 		const frame = await frameElement.contentFrame();
-		await frame.waitForLoadState('load');
+		await frame.waitForLoadState('networkidle');
 
-		const [listTypeDefinitionHeader, listTypeDefinitionContent] =
-			await Promise.all([
-				listTypeDefinitionPage.frameLocator
-					.locator('div.dnd-th')
-					.allInnerTexts(),
-				listTypeDefinitionPage.frameLocator
-					.locator('div.dnd-td')
-					.allInnerTexts(),
-			]);
+		const listTypeDefinitionHeader =
+			await listTypeDefinitionPage.frameLocator
+				.locator('div.dnd-th')
+				.allInnerTexts();
+
+		const listTypeDefinitionContent =
+			await listTypeDefinitionPage.frameLocator
+				.locator('div.dnd-td')
+				.allInnerTexts();
 
 		const listTypeDefinitionHeaderTemplate = [
 			'Name',

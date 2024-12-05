@@ -267,6 +267,7 @@ export class PageEditorPage {
 		fieldLabel,
 		fragmentId,
 		isDesktop = true,
+		panel,
 		tab,
 		value,
 		valueFromStylebook,
@@ -274,6 +275,7 @@ export class PageEditorPage {
 		fieldLabel: string;
 		fragmentId: string;
 		isDesktop?: boolean;
+		panel?: string;
 		tab: FragmentConfigurationTab;
 		value?: string | boolean;
 		valueFromStylebook?: boolean;
@@ -282,6 +284,7 @@ export class PageEditorPage {
 
 		await this.changeConfiguration({
 			fieldLabel,
+			panel,
 			tab,
 			value,
 			valueFromStylebook,
@@ -290,22 +293,32 @@ export class PageEditorPage {
 
 	async changeConfiguration({
 		fieldLabel,
+		panel,
 		tab,
 		value,
 		valueFromStylebook,
 	}: {
 		fieldLabel: string;
+		panel?: string;
 		tab: ConfigurationTab;
 		value: string | boolean;
 		valueFromStylebook?: boolean;
 	}) {
 		await this.goToConfigurationTab(tab);
 
-		const field = this.page
-			.getByRole('tabpanel', {name: tab})
-			.getByLabel(fieldLabel, {
-				exact: true,
-			});
+		const field = panel
+			? this.page
+					.getByRole('tabpanel', {name: tab})
+					.locator('.panel')
+					.filter({hasText: panel})
+					.getByLabel(fieldLabel, {
+						exact: true,
+					})
+			: this.page
+					.getByRole('tabpanel', {name: tab})
+					.getByLabel(fieldLabel, {
+						exact: true,
+					});
 
 		await field.waitFor();
 

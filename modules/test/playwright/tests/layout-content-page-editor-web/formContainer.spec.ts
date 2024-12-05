@@ -990,6 +990,7 @@ test.describe('File Upload Fragment', () => {
 			await pageEditorPage.changeFragmentConfiguration({
 				fieldLabel: 'Success Action',
 				fragmentId: formId,
+				panel: 'Actions After Submit',
 				tab: 'General',
 				value: 'Go to Entry Display Page',
 			});

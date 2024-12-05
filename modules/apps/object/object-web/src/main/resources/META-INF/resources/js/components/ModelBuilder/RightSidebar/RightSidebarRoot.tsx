@@ -35,7 +35,10 @@ export function RightSideBarRoot({children}: IRightSidebarRoot) {
 	};
 
 	useEffect(() => {
-		const newRightSidebarWidth = getRightSidebarWidth(selectedObjectField);
+		const newRightSidebarWidth = getRightSidebarWidth(
+			selectedObjectField,
+			selectedObjectRelationship
+		);
 
 		setNewVerticalBarWidthValue(newRightSidebarWidth);
 	}, [

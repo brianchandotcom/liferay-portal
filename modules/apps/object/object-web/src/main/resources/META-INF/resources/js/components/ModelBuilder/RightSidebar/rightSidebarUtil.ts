@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export function getRightSidebarWidth(selectedObjectField?: ObjectFieldNodeRow) {
+import {ObjectRelationshipEdgeData} from '../types';
+
+export function getRightSidebarWidth(
+	selectedObjectField?: ObjectFieldNodeRow,
+	selectedObjectRelationship?: ObjectRelationshipEdgeData | null
+) {
 	if (selectedObjectField) {
 		if (selectedObjectField.businessType === 'Aggregation') {
 			return 950;
@@ -12,6 +17,10 @@ export function getRightSidebarWidth(selectedObjectField?: ObjectFieldNodeRow) {
 		if (selectedObjectField.businessType === 'Picklist') {
 			return 500;
 		}
+	}
+
+	if (selectedObjectRelationship) {
+		return 360;
 	}
 
 	return 320;

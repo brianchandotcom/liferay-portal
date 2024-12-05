@@ -32,7 +32,7 @@ export function ObjectRelationshipInheritanceCheckbox({
 				/>
 
 				<ClayPopover
-					alignPosition="top-left"
+					alignPosition="top"
 					closeOnClickOutside
 					disableScroll
 					header={Liferay.Language.get('inheritance')}

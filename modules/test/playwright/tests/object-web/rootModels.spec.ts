@@ -399,11 +399,12 @@ test.describe('Manage root models elements through Objects Admin', () => {
 	});
 
 	test('can create relationship with inheritance enabled using the add relationship modal', async ({
+		addNewObjectRelationshipModalPage,
 		apiHelpers,
-		objectRelationshipFormPage,
 		objectRelationshipsPage,
 		page,
 	}) => {
+		const {objectRelationshipFormPage} = addNewObjectRelationshipModalPage;
 		const objectRelationships: ObjectRelationship[] = [];
 
 		try {

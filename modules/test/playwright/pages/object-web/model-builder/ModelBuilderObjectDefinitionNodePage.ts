@@ -4,13 +4,14 @@
  */
 
 import {ObjectRelationship} from '@liferay/object-admin-rest-client-js';
-import {expect} from '@playwright/test';
 
 import {CreateObjectField} from '../../../helpers/ObjectAdminApiHelper';
+import {AddNewObjectRelationshipModalPage} from '../object-relationship/AddObjectRelationshipModalPage';
 
 import type {Locator, Page} from '@playwright/test';
 
 export class ModelBuilderObjectDefinitionNodePage {
+	readonly addNewObjectRelationshipModalPage: AddNewObjectRelationshipModalPage;
 	readonly addObjectFieldButton: Locator;
 	readonly addObjectFieldOrRelationshipButton: Locator;
 	readonly addObjectRelationshipButton: Locator;
@@ -29,6 +30,8 @@ export class ModelBuilderObjectDefinitionNodePage {
 	readonly page: Page;
 
 	constructor(page: Page) {
+		this.addNewObjectRelationshipModalPage =
+			new AddNewObjectRelationshipModalPage(page);
 		this.addObjectFieldButton = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Add Field',
@@ -163,7 +166,7 @@ export class ModelBuilderObjectDefinitionNodePage {
 		objectDefinitionLabel: string;
 		objectDefinitionNodes: unknown;
 		objectRelationshipLabel: string;
-		objectRelationshipType: string;
+		objectRelationshipType: ObjectRelationshipType;
 	}): Promise<ObjectRelationship> {
 		await this.openAddNewObjectFieldOrRelationshipModal(
 			objectDefinitionLabel,
@@ -171,42 +174,14 @@ export class ModelBuilderObjectDefinitionNodePage {
 			this.addObjectRelationshipButton
 		);
 
-		const objectRelationship = await this.handleObjectRelationshipModal({
-			manyRecordsOf,
-			objectRelationshipLabel,
-			type: String(objectRelationshipType),
-		});
+		const objectRelationship =
+			await this.addNewObjectRelationshipModalPage.handleForm({
+				manyRecordsOf,
+				objectRelationshipLabel,
+				type: objectRelationshipType,
+			});
 
 		return objectRelationship;
-	}
-
-	async handleObjectRelationshipModal({
-		manyRecordsOf,
-		objectRelationshipLabel,
-		type,
-	}: {
-		manyRecordsOf?: string;
-		objectRelationshipLabel: string;
-		type: string;
-	}): Promise<ObjectRelationship> {
-		await expect(this.objectRelationshipTitle).toBeVisible();
-
-		await this.objectRelationshipLabelInput.fill(objectRelationshipLabel);
-		await this.objectRelationshipTypeButton.click();
-		await this.page.getByRole('option', {name: type}).click();
-
-		if (manyRecordsOf) {
-			await this.objectRelationshipManyRecordsOf.click();
-			await this.page.getByRole('option', {name: manyRecordsOf}).click();
-		}
-
-		const responsePromise = this.page.waitForResponse(
-			'**/object-relationships'
-		);
-		await this.newObjectRelationshipSaveButton.click();
-		const response = await responsePromise;
-
-		return response.json();
 	}
 
 	async deleteObjectDefinition(objectDefinitionName: string) {

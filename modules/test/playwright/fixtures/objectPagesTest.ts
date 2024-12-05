@@ -16,6 +16,7 @@ import {ModelBuilderRightSidebarPage} from '../pages/object-web/model-builder/Mo
 import {EditObjectDetailsPage} from '../pages/object-web/object-details/EditObjectDetailsPage';
 import {ViewObjectEntriesPage} from '../pages/object-web/object-entries/ViewObjectEntriesPage';
 import {ObjectFieldsPage} from '../pages/object-web/object-fields/ObjectFieldsPage';
+import {AddNewObjectRelationshipModalPage} from '../pages/object-web/object-relationship/AddObjectRelationshipModalPage';
 import {ObjectRelationshipFormPage} from '../pages/object-web/object-relationship/ObjectRelationshipFormPage';
 import {ObjectRelationshipsPage} from '../pages/object-web/object-relationship/ObjectRelationshipsPage';
 import {EditObjectValidationPage} from '../pages/object-web/object-validation/EditObjectValidationPage';
@@ -26,6 +27,7 @@ import {ObjectDetailsPage} from '../pages/object-web/object-view/ObjectDetailsPa
 import {ObjectViewPage} from '../pages/object-web/object-view/ObjectViewsPage';
 
 const objectPagesTest = test.extend<{
+	addNewObjectRelationshipModalPage: AddNewObjectRelationshipModalPage;
 	editObjectDefinitionPage: EditObjectDefinitionPage;
 	editObjectDetailsPage: EditObjectDetailsPage;
 	editObjectValidationPage: EditObjectValidationPage;
@@ -46,6 +48,9 @@ const objectPagesTest = test.extend<{
 	viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 	viewObjectEntriesPage: ViewObjectEntriesPage;
 }>({
+	addNewObjectRelationshipModalPage: async ({page}, use) => {
+		await use(new AddNewObjectRelationshipModalPage(page));
+	},
 	editObjectDefinitionPage: async ({page}, use) => {
 		await use(new EditObjectDefinitionPage(page));
 	},
@@ -84,9 +89,6 @@ const objectPagesTest = test.extend<{
 	},
 	objectFieldsPage: async ({page}, use) => {
 		await use(new ObjectFieldsPage(page));
-	},
-	objectRelationshipFormPage: async ({page}, use) => {
-		await use(new ObjectRelationshipFormPage(page));
 	},
 	objectRelationshipsPage: async ({page}, use) => {
 		await use(new ObjectRelationshipsPage(page));

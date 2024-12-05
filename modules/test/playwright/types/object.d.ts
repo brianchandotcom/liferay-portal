@@ -105,3 +105,5 @@ type ObjectFieldFilterSetting = {
 		| IncludesFilterOperator
 		| string;
 };
+
+type ObjectRelationshipType = 'Many to Many' | 'One to Many';

@@ -74,3 +74,32 @@ test('cannot see Scripted Assignment option when script management configuration
 		await page.$(`#assignment-type option[value="scriptedAssignment"]`)
 	).toBeNull();
 });
+
+test('role name search box does not support regex strings', async ({
+	diagramViewPage,
+	nodePropertiesSidebarPage,
+	page,
+	processBuilderPage,
+}) => {
+	await processBuilderPage.goto();
+
+	await processBuilderPage.clickWorkflowDefinitionName(
+		workflowDefinitionName
+	);
+
+	await diagramViewPage.clickNode('review');
+
+	await nodePropertiesSidebarPage.editAssignmentButton.click();
+
+	await nodePropertiesSidebarPage.roleNameInput.fill('a');
+
+	expect(
+		await page.getByRole('menuitem').filter({hasText: 'Account'}).first()
+	).toBeVisible();
+
+	await nodePropertiesSidebarPage.roleNameInput.fill('a+');
+
+	expect(
+		await page.getByRole('menuitem').filter({hasText: 'Account'})
+	).not.toBeVisible();
+});

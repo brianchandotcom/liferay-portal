@@ -22,6 +22,7 @@ export class NodePropertiesSidebarPage {
 	readonly nodeLabelInput: Locator;
 	readonly notificationPage: NotificationSectionPage;
 	readonly page: Page;
+	readonly roleNameInput: Locator;
 	readonly sidebarBackButton: Locator;
 	readonly sideBarNodes: Locator;
 	readonly timerPage: TimerPage;
@@ -46,12 +47,14 @@ export class NodePropertiesSidebarPage {
 			'button[title="Delete Notifications"]'
 		);
 		this.diagramViewPage = new DiagramViewPage(page);
-		this.editAssignmentButton = page.locator(
-			'a.c-link:has-text("Asset Creator")'
-		);
+		this.editAssignmentButton = page
+			.getByRole('tablist')
+			.filter({hasText: 'Assignments'})
+			.locator('a');
 		this.nodeLabelInput = page.locator('#workflowDefinitionBaseNodeLabel');
 		this.notificationPage = new NotificationSectionPage(page);
 		this.page = page;
+		this.roleNameInput = page.getByLabel('Role Name').first();
 		this.sidebarBackButton = page
 			.locator('div.sidebar-header')
 			.getByRole('button')

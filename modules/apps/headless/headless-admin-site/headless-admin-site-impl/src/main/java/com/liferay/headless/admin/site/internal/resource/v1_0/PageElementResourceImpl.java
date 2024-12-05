@@ -24,7 +24,9 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -290,6 +292,81 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				segmentsExperience.getSegmentsExperienceId()));
 
 		return _addPageElement(layout, layoutStructure, pageElement);
+	}
+
+	@Override
+	public PageElement putSiteSiteByExternalReferenceCodePageElement(
+			String siteExternalReferenceCode,
+			String pageSpecificationExternalReferenceCode,
+			String pageExperienceExternalReferenceCode,
+			String pageElementExternalReferenceCode, PageElement pageElement)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		long groupId = GroupUtil.getGroupId(
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			pageSpecificationExternalReferenceCode, groupId);
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.
+				fetchSegmentsExperienceByExternalReferenceCode(
+					pageExperienceExternalReferenceCode, groupId);
+
+		if (segmentsExperience == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(
+				segmentsExperience.getSegmentsExperienceId()));
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				pageElementExternalReferenceCode);
+
+		if (layoutStructureItem == null) {
+			return _addPageElement(layout, layoutStructure, pageElement);
+		}
+
+		LayoutStructureItem parentLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructureItem.getParentItemId());
+
+		List<String> childrenItemIds =
+			parentLayoutStructureItem.getChildrenItemIds();
+
+		if (!Objects.equals(
+				layoutStructureItem.getParentItemId(),
+				pageElement.getParentExternalReferenceCode()) ||
+			(childrenItemIds.indexOf(layoutStructureItem.getItemId()) !=
+				pageElement.getPosition())) {
+
+			layoutStructure.moveLayoutStructureItem(
+				layoutStructureItem.getItemId(),
+				pageElement.getParentExternalReferenceCode(),
+				pageElement.getPosition());
+
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructureData(
+					layout.getGroupId(), layout.getPlid(),
+					layoutStructure.toString());
+		}
+
+		return _pageElementDTOConverter.toDTO(layoutStructureItem);
 	}
 
 	private void _addChildPageElements(

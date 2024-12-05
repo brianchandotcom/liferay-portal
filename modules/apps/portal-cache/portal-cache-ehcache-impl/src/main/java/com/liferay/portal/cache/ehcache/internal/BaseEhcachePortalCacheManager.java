@@ -11,12 +11,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.AggregatedPortalCacheManagerListener;
 import com.liferay.portal.cache.LowLevelCache;
 import com.liferay.portal.cache.MVCCPortalCache;
+import com.liferay.portal.cache.PortalCacheReplicatorFactory;
 import com.liferay.portal.cache.TransactionalPortalCache;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.cache.ehcache.internal.configurator.EhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.cache.ehcache.internal.event.ConfigurableEhcachePortalCacheListener;
-import com.liferay.portal.cache.ehcache.internal.event.EhcachePortalCacheListenerFactory;
+import com.liferay.portal.cache.ehcache.internal.event.EhcachePortalCacheReplicatorUtil;
 import com.liferay.portal.cache.ehcache.internal.event.PortalCacheManagerEventListener;
 import com.liferay.portal.cache.ehcache.internal.management.ManagementService;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -382,8 +383,7 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 	protected BundleContext bundleContext;
 
 	@Reference
-	protected EhcachePortalCacheListenerFactory
-		ehcachePortalCacheListenerFactory;
+	protected PortalCacheReplicatorFactory portalCacheReplicatorFactory;
 
 	@Reference
 	protected Props props;
@@ -401,7 +401,8 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 					getPortalCacheReplicatorPropertiesSet()) {
 
 			PortalCacheListener<K, V> portalCacheListener =
-				ehcachePortalCacheListenerFactory.create(properties);
+				EhcachePortalCacheReplicatorUtil.create(
+					portalCacheReplicatorFactory, properties);
 
 			if (portalCacheListener == null) {
 				continue;

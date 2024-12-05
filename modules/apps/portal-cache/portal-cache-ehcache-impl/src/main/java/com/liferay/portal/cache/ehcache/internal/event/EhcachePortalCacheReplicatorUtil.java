@@ -16,16 +16,13 @@ import java.io.Serializable;
 
 import java.util.Properties;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Tina Tian
  */
-@Component(service = EhcachePortalCacheListenerFactory.class)
-public class EhcachePortalCacheListenerFactory {
+public class EhcachePortalCacheReplicatorUtil {
 
-	public <K extends Serializable, V> PortalCacheListener<K, V> create(
+	public static <K extends Serializable, V> PortalCacheListener<K, V> create(
+		PortalCacheReplicatorFactory portalCacheReplicatorFactory,
 		Properties properties) {
 
 		boolean replicator = GetterUtil.getBoolean(
@@ -33,7 +30,7 @@ public class EhcachePortalCacheListenerFactory {
 
 		if (replicator) {
 			PortalCacheListener<K, V> portalCacheListener =
-				(PortalCacheListener<K, V>)_portalCacheReplicatorFactory.create(
+				(PortalCacheListener<K, V>)portalCacheReplicatorFactory.create(
 					properties);
 
 			if (portalCacheListener == null) {
@@ -49,10 +46,7 @@ public class EhcachePortalCacheListenerFactory {
 		return null;
 	}
 
-	@Reference
-	private PortalCacheReplicatorFactory _portalCacheReplicatorFactory;
-
-	private class EhcachePortalCacheReplicator
+	private static class EhcachePortalCacheReplicator
 		<K extends Serializable, V extends Serializable>
 			implements ConfigurableEhcachePortalCacheListener,
 					   PortalCacheReplicator<K, V> {

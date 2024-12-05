@@ -6,9 +6,7 @@
 package com.liferay.portal.cache.configuration;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -18,17 +16,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PortalCacheManagerConfiguration {
 
 	public PortalCacheManagerConfiguration(
-		Set<Properties> portalCacheManagerListenerPropertiesSet,
 		PortalCacheConfiguration defaultPortalCacheConfiguration,
 		Set<PortalCacheConfiguration> portalCacheConfigurations) {
-
-		if (portalCacheManagerListenerPropertiesSet == null) {
-			_portalCacheManagerListenerPropertiesSet = Collections.emptySet();
-		}
-		else {
-			_portalCacheManagerListenerPropertiesSet = new HashSet<>(
-				portalCacheManagerListenerPropertiesSet);
-		}
 
 		_defaultPortalCacheConfiguration = defaultPortalCacheConfiguration;
 
@@ -65,11 +54,6 @@ public class PortalCacheManagerConfiguration {
 		return portalCacheConfiguration;
 	}
 
-	public Set<Properties> getPortalCacheManagerListenerPropertiesSet() {
-		return Collections.unmodifiableSet(
-			_portalCacheManagerListenerPropertiesSet);
-	}
-
 	public Set<String> getPortalCacheNames() {
 		return Collections.unmodifiableSet(_portalCacheConfigurations.keySet());
 	}
@@ -91,6 +75,5 @@ public class PortalCacheManagerConfiguration {
 	private PortalCacheConfiguration _defaultPortalCacheConfiguration;
 	private final Map<String, PortalCacheConfiguration>
 		_portalCacheConfigurations = new ConcurrentHashMap<>();
-	private final Set<Properties> _portalCacheManagerListenerPropertiesSet;
 
 }

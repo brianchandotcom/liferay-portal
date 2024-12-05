@@ -4,10 +4,11 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
-import {readFileSync} from 'fs';
+import {readFileSync, statSync} from 'fs';
 
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {loginTest} from '../../fixtures/loginTest';
+import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import {getTempDir} from '../../utils/temp';
 
 export const test = mergeTests(loginTest(), applicationsMenuPageTest);
@@ -141,6 +142,47 @@ test('LPD-40224: Check if the export audit events .csv is being filtered by the 
 		.count();
 
 	expect(matches).toHaveLength(eventCount);
+});
+
+test('LPD-40224: Check if the audit events filtered by date are being exported', async ({
+	applicationsMenuPage,
+	page,
+}) => {
+	page.on('dialog', (dialog) => dialog.accept());
+
+	await applicationsMenuPage.goToAudit();
+
+	await page.locator('#toggle_id_audit_event_searchtoggleAdvanced').click();
+
+	await page.locator('#startDate').fill('01/01/2001');
+
+	await fillAndClickOutside(page, page.locator('#endDate'), '01/01/2001');
+
+	await page.locator('.lexicon-icon-search').click();
+
+	await page.waitForTimeout(500);
+
+	await expect(page.getByText('There are no events.')).toBeVisible();
+
+	const options = await page.getByLabel('Options');
+
+	await options.click();
+
+	const menuItem = await page.getByRole('menuitem', {
+		name: 'Export Audit Events',
+	});
+
+	await menuItem.click();
+
+	const downloadPromise = await page.waitForEvent('download');
+
+	const download = await downloadPromise;
+
+	const filePath = getTempDir() + download.suggestedFilename();
+
+	await download.saveAs(filePath);
+
+	expect(statSync(filePath).size).toBe(0);
 });
 
 test("LPS-192555: Assert that the page's URL with advanced search doesn't get over 2048 characters", async ({

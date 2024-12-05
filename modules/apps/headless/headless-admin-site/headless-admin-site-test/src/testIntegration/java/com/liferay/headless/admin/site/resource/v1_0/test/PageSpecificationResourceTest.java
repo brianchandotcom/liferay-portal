@@ -527,8 +527,8 @@ public class PageSpecificationResourceTest
 						testGroup.getExternalReferenceCode(),
 						layout.getExternalReferenceCode());
 
-		_updatePageExperiences(contentPageSpecification.getPageExperiences());
-		_updateSettings(serviceContext, contentPageSpecification.getSettings());
+		_modifyPageExperiences(contentPageSpecification.getPageExperiences());
+		_modifySettings(serviceContext, contentPageSpecification.getSettings());
 
 		PageSpecification putPageSpecification =
 			pageSpecificationResource.
@@ -915,7 +915,7 @@ public class PageSpecificationResourceTest
 					testGroup.getExternalReferenceCode(),
 					layout.getExternalReferenceCode());
 
-		_updateSettings(serviceContext, pageSpecification.getSettings());
+		_modifySettings(serviceContext, pageSpecification.getSettings());
 
 		pageSpecification.setStatus(PageSpecification.Status.APPROVED);
 
@@ -1010,7 +1010,7 @@ public class PageSpecificationResourceTest
 			0, layout.getMasterLayoutPlid(), serviceContext);
 	}
 
-	private void _updatePageExperiences(PageExperience[] pageExperiences) {
+	private void _modifyPageExperiences(PageExperience[] pageExperiences) {
 		for (PageExperience pageExperience : pageExperiences) {
 			List<PageElement> dropZonePageElements =
 				TransformUtil.transformToList(
@@ -1048,7 +1048,7 @@ public class PageSpecificationResourceTest
 		}
 	}
 
-	private void _updateSettings(
+	private void _modifySettings(
 			ServiceContext serviceContext, Settings settings)
 		throws Exception {
 

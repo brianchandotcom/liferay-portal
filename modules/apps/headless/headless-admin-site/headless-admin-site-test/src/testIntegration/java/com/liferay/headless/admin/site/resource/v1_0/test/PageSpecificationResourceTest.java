@@ -754,6 +754,114 @@ public class PageSpecificationResourceTest
 		).buildString();
 	}
 
+	private void _modifyPageExperiences(PageExperience[] pageExperiences) {
+		for (PageExperience pageExperience : pageExperiences) {
+			List<PageElement> dropZonePageElements =
+				TransformUtil.transformToList(
+					pageExperience.getPageElements(),
+					pageElement -> {
+						if (Objects.equals(
+								pageElement.getType(),
+								PageElement.Type.DROP_ZONE)) {
+
+							return pageElement;
+						}
+
+						return null;
+					});
+
+			pageExperience.setPageElements(
+				() -> {
+					PageElement[] pageElements = _getPageElements(
+						RandomTestUtil.randomInt(1, 3), null);
+
+					if (ListUtil.isEmpty(dropZonePageElements)) {
+						return pageElements;
+					}
+
+					for (int i = 0; i < dropZonePageElements.size(); i++) {
+						PageElement pageElement = dropZonePageElements.get(i);
+
+						pageElement.setPosition(pageElements.length + i);
+					}
+
+					return ArrayUtil.append(
+						pageElements,
+						dropZonePageElements.toArray(new PageElement[0]));
+				});
+		}
+	}
+
+	private void _modifySettings(
+			ServiceContext serviceContext, Settings settings)
+		throws Exception {
+
+		if (Validator.isNotNull(settings.getJavascript())) {
+			settings.setJavascript(() -> null);
+		}
+		else {
+			settings.setJavascript(RandomTestUtil::randomString);
+		}
+
+		if (settings.getMasterPageItemExternalReference() != null) {
+			settings.setMasterPageItemExternalReference(() -> null);
+		}
+		else {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_getMasterLayoutPageTemplateEntry(
+					serviceContext, WorkflowConstants.STATUS_APPROVED);
+
+			settings.setMasterPageItemExternalReference(
+				() -> new ItemExternalReference() {
+					{
+						setCollectionType(CollectionType.COLLECTION);
+						setExternalReferenceCode(
+							layoutPageTemplateEntry::getExternalReferenceCode);
+					}
+				});
+		}
+
+		if (settings.getStyleBookItemExternalReference() != null) {
+			settings.setStyleBookItemExternalReference(() -> null);
+		}
+		else {
+			StyleBookEntry styleBookEntry = _addStyleBookEntry(serviceContext);
+
+			settings.setStyleBookItemExternalReference(
+				() -> new ItemExternalReference() {
+					{
+						setCollectionType(CollectionType.COLLECTION);
+						setExternalReferenceCode(
+							styleBookEntry::getExternalReferenceCode);
+					}
+				});
+		}
+
+		if (Validator.isNotNull(settings.getThemeName())) {
+			settings.setColorSchemeName(() -> null);
+			settings.setThemeName(() -> null);
+		}
+		else {
+			if (RandomTestUtil.randomBoolean()) {
+				settings.setColorSchemeName("01");
+			}
+
+			settings.setThemeName("Classic");
+		}
+
+		if (Validator.isNotNull(settings.getThemeSettings())) {
+			settings.setThemeSettings(() -> null);
+		}
+		else {
+			settings.setThemeSettings(
+				() -> HashMapBuilder.put(
+					"lfr-theme:regular:show-maximize-minimize-application-" +
+						"links",
+					"true"
+				).build());
+		}
+	}
+
 	private void _testDeleteSiteSiteByExternalReferenceCodePageSpecification(
 			Layout layout, ServiceContext serviceContext)
 		throws Exception {
@@ -1008,114 +1116,6 @@ public class PageSpecificationResourceTest
 			layout.isHidden(), layout.getFriendlyURLMap(),
 			layout.getIconImage(), null, _getStyleBookEntryId(serviceContext),
 			0, layout.getMasterLayoutPlid(), serviceContext);
-	}
-
-	private void _modifyPageExperiences(PageExperience[] pageExperiences) {
-		for (PageExperience pageExperience : pageExperiences) {
-			List<PageElement> dropZonePageElements =
-				TransformUtil.transformToList(
-					pageExperience.getPageElements(),
-					pageElement -> {
-						if (Objects.equals(
-								pageElement.getType(),
-								PageElement.Type.DROP_ZONE)) {
-
-							return pageElement;
-						}
-
-						return null;
-					});
-
-			pageExperience.setPageElements(
-				() -> {
-					PageElement[] pageElements = _getPageElements(
-						RandomTestUtil.randomInt(1, 3), null);
-
-					if (ListUtil.isEmpty(dropZonePageElements)) {
-						return pageElements;
-					}
-
-					for (int i = 0; i < dropZonePageElements.size(); i++) {
-						PageElement pageElement = dropZonePageElements.get(i);
-
-						pageElement.setPosition(pageElements.length + i);
-					}
-
-					return ArrayUtil.append(
-						pageElements,
-						dropZonePageElements.toArray(new PageElement[0]));
-				});
-		}
-	}
-
-	private void _modifySettings(
-			ServiceContext serviceContext, Settings settings)
-		throws Exception {
-
-		if (Validator.isNotNull(settings.getJavascript())) {
-			settings.setJavascript(() -> null);
-		}
-		else {
-			settings.setJavascript(RandomTestUtil::randomString);
-		}
-
-		if (settings.getMasterPageItemExternalReference() != null) {
-			settings.setMasterPageItemExternalReference(() -> null);
-		}
-		else {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_getMasterLayoutPageTemplateEntry(
-					serviceContext, WorkflowConstants.STATUS_APPROVED);
-
-			settings.setMasterPageItemExternalReference(
-				() -> new ItemExternalReference() {
-					{
-						setCollectionType(CollectionType.COLLECTION);
-						setExternalReferenceCode(
-							layoutPageTemplateEntry::getExternalReferenceCode);
-					}
-				});
-		}
-
-		if (settings.getStyleBookItemExternalReference() != null) {
-			settings.setStyleBookItemExternalReference(() -> null);
-		}
-		else {
-			StyleBookEntry styleBookEntry = _addStyleBookEntry(serviceContext);
-
-			settings.setStyleBookItemExternalReference(
-				() -> new ItemExternalReference() {
-					{
-						setCollectionType(CollectionType.COLLECTION);
-						setExternalReferenceCode(
-							styleBookEntry::getExternalReferenceCode);
-					}
-				});
-		}
-
-		if (Validator.isNotNull(settings.getThemeName())) {
-			settings.setColorSchemeName(() -> null);
-			settings.setThemeName(() -> null);
-		}
-		else {
-			if (RandomTestUtil.randomBoolean()) {
-				settings.setColorSchemeName("01");
-			}
-
-			settings.setThemeName("Classic");
-		}
-
-		if (Validator.isNotNull(settings.getThemeSettings())) {
-			settings.setThemeSettings(() -> null);
-		}
-		else {
-			settings.setThemeSettings(
-				() -> HashMapBuilder.put(
-					"lfr-theme:regular:show-maximize-minimize-application-" +
-						"links",
-					"true"
-				).build());
-		}
 	}
 
 	@Inject

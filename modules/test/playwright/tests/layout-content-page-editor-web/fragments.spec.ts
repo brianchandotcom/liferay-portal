@@ -1305,7 +1305,8 @@ test.describe('Multiselect Fragment', () => {
 			});
 
 			await displayPageTemplatesPage.editTemplate(
-				displayPageTemplateName);
+				displayPageTemplateName
+			);
 
 			// Add a form container and map it
 

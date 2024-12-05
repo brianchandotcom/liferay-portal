@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"after-filter=Virtual Host Filter", "before-filter=Session Id Filter",
-		"dispatcher=REQUEST", "enabled=true",
+		"before-filter=Session Id Filter", "dispatcher=REQUEST", "enabled=true",
 		"init-param.url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$",
 		"servlet-context-name=",
 		"servlet-filter-name=Same Site Lax Cookies SAML Portal Filter",
@@ -54,7 +53,9 @@ public class SameSiteLaxCookiesSamlPortalFilter extends BaseSamlPortalFilter {
 
 		if (!_samlProviderConfigurationHelper.isEnabled() ||
 			Objects.equals(httpServletRequest.getMethod(), "GET") ||
-			ParamUtil.getBoolean(httpServletRequest, "continue")) {
+			ParamUtil.getBoolean(httpServletRequest, "continue") ||
+			(!ParamUtil.getBoolean(httpServletRequest, "noscript") &&
+			 (httpServletRequest.getSession(false) != null))) {
 
 			return false;
 		}

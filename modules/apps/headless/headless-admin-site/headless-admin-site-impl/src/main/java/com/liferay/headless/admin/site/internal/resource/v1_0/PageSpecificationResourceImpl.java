@@ -60,6 +60,7 @@ import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -585,6 +586,10 @@ public class PageSpecificationResourceImpl
 			SegmentsExperience segmentsExperience)
 		throws Exception {
 
+		if (segmentsExperience == null) {
+			throw new UnsupportedOperationException();
+		}
+
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
@@ -710,13 +715,28 @@ public class PageSpecificationResourceImpl
 			Layout layout, PageExperience[] pageExperiences)
 		throws Exception {
 
+		List<SegmentsExperience> segmentsExperiences =
+			_segmentsExperienceService.getSegmentsExperiences(
+				layout.getGroupId(), layout.getPlid(), true);
+
+		if (pageExperiences.length != segmentsExperiences.size()) {
+			throw new UnsupportedOperationException();
+		}
+
+		Map<String, SegmentsExperience> segmentsExperiencesMap =
+			new HashMap<>();
+
+		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
+			segmentsExperiencesMap.put(
+				segmentsExperience.getExternalReferenceCode(),
+				segmentsExperience);
+		}
+
 		for (PageExperience pageExperience : pageExperiences) {
 			_updateLayoutPageTemplateStructureData(
 				layout, pageExperience,
-				_segmentsExperienceService.getSegmentsExperience(
-					layout.getGroupId(),
-					pageExperience.getExternalReferenceCode(),
-					layout.getPlid()));
+				segmentsExperiencesMap.get(
+					pageExperience.getExternalReferenceCode()));
 		}
 	}
 

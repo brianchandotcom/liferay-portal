@@ -137,6 +137,11 @@ public class JournalArticleCTCollectionHistoryProvider
 				"modelClassNameId", new Long[] {classNameId});
 
 			if (journalArticle == null) {
+				if (classPK > 0) {
+					searchContext.setAttribute(
+						"modelClassPK", new Long[] {classPK});
+				}
+
 				return;
 			}
 

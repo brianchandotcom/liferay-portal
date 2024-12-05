@@ -135,6 +135,11 @@ public class KBArticleCTCollectionHistoryProvider
 				"modelClassNameId", new Long[] {classNameId});
 
 			if (kbArticle == null) {
+				if (classPK > 0) {
+					searchContext.setAttribute(
+						"modelClassPK", new Long[] {classPK});
+				}
+
 				return;
 			}
 

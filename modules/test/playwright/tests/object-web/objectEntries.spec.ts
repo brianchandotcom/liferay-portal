@@ -678,6 +678,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				{code: 0},
 				undefined,
 				'default',
+				undefined,
 				'textField'
 			);
 
@@ -797,6 +798,7 @@ test.describe('Manage object entries through Workflow', () => {
 				{code: 0},
 				undefined,
 				'default',
+				undefined,
 				'textField'
 			);
 
@@ -867,6 +869,7 @@ test.describe('Manage object entries through Workflow', () => {
 				{code: 0},
 				undefined,
 				'default',
+				undefined,
 				'textField'
 			);
 

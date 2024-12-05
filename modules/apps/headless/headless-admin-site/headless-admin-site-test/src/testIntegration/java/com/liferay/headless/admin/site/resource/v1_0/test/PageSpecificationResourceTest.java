@@ -6,6 +6,10 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
@@ -27,8 +31,8 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -40,8 +44,11 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -271,13 +278,21 @@ public class PageSpecificationResourceTest
 		super.testPostSiteSiteByExternalReferenceCodePageSpecificationPublish();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPutSiteSiteByExternalReferenceCodePageSpecification()
 		throws Exception {
 
-		super.testPutSiteSiteByExternalReferenceCodePageSpecification();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		_testPutSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+			_addLayout(LayoutConstants.TYPE_CONTENT, serviceContext),
+			serviceContext);
+		_testPutSiteSiteByExternalReferenceCodePageSpecification(
+			_addLayout(LayoutConstants.TYPE_PORTLET, serviceContext),
+			serviceContext);
 	}
 
 	@Override
@@ -298,6 +313,29 @@ public class PageSpecificationResourceTest
 			Collections.emptyMap(), type, _getTypeSettings(), false, false,
 			Collections.emptyMap(), _getMasterLayoutPlid(serviceContext),
 			serviceContext);
+	}
+
+	private DLFileEntry _adDLFileEntry(ServiceContext serviceContext)
+		throws Exception {
+
+		return _dlFileEntryLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, StringUtil.randomId(),
+			ContentTypes.IMAGE_PNG, StringUtil.randomString(),
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
+			null, new UnsyncByteArrayInputStream(new byte[0]), 0, null, null,
+			null, serviceContext);
+	}
+
+	private StyleBookEntry _addStyleBookEntry(ServiceContext serviceContext)
+		throws Exception {
+
+		return _styleBookEntryLocalService.addStyleBookEntry(
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			false, null, RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	private void _assertContentPageSpecification(
@@ -481,6 +519,27 @@ public class PageSpecificationResourceTest
 		}
 	}
 
+	private void _assertPutSiteSiteByExternalReferenceCodePageSpecification(
+			Layout draftLayout, ServiceContext serviceContext)
+		throws Exception {
+
+		PageSpecification pageSpecification =
+			pageSpecificationResource.
+				getSiteSiteByExternalReferenceCodePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					draftLayout.getExternalReferenceCode());
+
+		_updateSettings(serviceContext, pageSpecification.getSettings());
+
+		PageSpecification putPageSpecification =
+			pageSpecificationResource.
+				putSiteSiteByExternalReferenceCodePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					draftLayout.getExternalReferenceCode(), pageSpecification);
+
+		equals(pageSpecification, putPageSpecification);
+	}
+
 	private void _assertWidgetPageSpecification(
 		WidgetPageSpecification widgetPageSpecification) {
 
@@ -548,6 +607,18 @@ public class PageSpecificationResourceTest
 			_getDisplayPageLayoutPageTemplateEntry(serviceContext);
 
 		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
+	}
+
+	private long _getFaviconFileEntryId(ServiceContext serviceContext)
+		throws Exception {
+
+		if (RandomTestUtil.randomBoolean()) {
+			return 0;
+		}
+
+		DLFileEntry dlFileEntry = _adDLFileEntry(serviceContext);
+
+		return dlFileEntry.getFileEntryId();
 	}
 
 	private Layout _getLayout(String externalReferenceCode, Layout... layouts)
@@ -621,6 +692,18 @@ public class PageSpecificationResourceTest
 				serviceContext, WorkflowConstants.STATUS_APPROVED);
 
 		return layoutPageTemplateEntry.getPlid();
+	}
+
+	private long _getStyleBookEntryId(ServiceContext serviceContext)
+		throws Exception {
+
+		if (RandomTestUtil.randomBoolean()) {
+			return 0;
+		}
+
+		StyleBookEntry styleBookEntry = _addStyleBookEntry(serviceContext);
+
+		return styleBookEntry.getStyleBookEntryId();
 	}
 
 	private UnicodeProperties _getThemeSettingsUnicodeProperties(
@@ -802,8 +885,202 @@ public class PageSpecificationResourceTest
 			unsafeSupplier.get(), layout, draftLayout);
 	}
 
+	private void _testPutSiteSiteByExternalReferenceCodePageSpecification(
+			Layout layout, ServiceContext serviceContext)
+		throws Exception {
+
+		layout = _updateLayout(layout, serviceContext);
+
+		PageSpecification pageSpecification =
+			pageSpecificationResource.
+				getSiteSiteByExternalReferenceCodePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					layout.getExternalReferenceCode());
+
+		_updateSettings(serviceContext, pageSpecification.getSettings());
+
+		pageSpecification.setStatus(PageSpecification.Status.APPROVED);
+
+		PageSpecification putPageSpecification =
+			pageSpecificationResource.
+				putSiteSiteByExternalReferenceCodePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					layout.getExternalReferenceCode(), pageSpecification);
+
+		equals(pageSpecification, putPageSpecification);
+	}
+
+	private void
+			_testPutSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+				Layout layout, ServiceContext serviceContext)
+		throws Exception {
+
+		Layout draftLayout = _updateLayout(
+			layout.fetchDraftLayout(), serviceContext);
+
+		PageSpecification pageSpecification =
+			pageSpecificationResource.
+				getSiteSiteByExternalReferenceCodePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					draftLayout.getExternalReferenceCode());
+
+		pageSpecification.setStatus(PageSpecification.Status.APPROVED);
+
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					putSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						draftLayout.getExternalReferenceCode(),
+						pageSpecification));
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					putSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layout.getExternalReferenceCode(), pageSpecification));
+
+		pageSpecification.setStatus(PageSpecification.Status.DRAFT);
+
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					putSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layout.getExternalReferenceCode(), pageSpecification));
+
+		_assertPutSiteSiteByExternalReferenceCodePageSpecification(
+			draftLayout, serviceContext);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		pageSpecification.setStatus(PageSpecification.Status.APPROVED);
+
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					putSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						draftLayout.getExternalReferenceCode(),
+						pageSpecification));
+
+		_layoutLocalService.updateStatus(
+			TestPropsValues.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		_assertPutSiteSiteByExternalReferenceCodePageSpecification(
+			draftLayout, serviceContext);
+	}
+
+	private Layout _updateLayout(Layout layout, ServiceContext serviceContext)
+		throws Exception {
+
+		if (RandomTestUtil.randomBoolean()) {
+			layout = _layoutLocalService.updateLookAndFeel(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), "classic_WAR_classictheme", "01",
+				RandomTestUtil.randomString());
+		}
+
+		return _layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
+			layout.isHidden(), layout.getFriendlyURLMap(),
+			layout.getIconImage(), null, _getStyleBookEntryId(serviceContext),
+			_getFaviconFileEntryId(serviceContext),
+			layout.getMasterLayoutPlid(), serviceContext);
+	}
+
+	private void _updateSettings(
+			ServiceContext serviceContext, Settings settings)
+		throws Exception {
+
+		if (settings.getFavIcon() != null) {
+			settings.setFavIcon(() -> null);
+		}
+		else {
+			DLFileEntry dlFileEntry = _adDLFileEntry(serviceContext);
+
+			settings.setFavIcon(
+				() -> new ItemExternalReference() {
+					{
+						setCollectionType(CollectionType.COLLECTION);
+						setExternalReferenceCode(
+							dlFileEntry::getExternalReferenceCode);
+					}
+				});
+		}
+
+		if (Validator.isNotNull(settings.getJavascript())) {
+			settings.setJavascript(() -> null);
+		}
+		else {
+			settings.setJavascript(RandomTestUtil::randomString);
+		}
+
+		if (settings.getMasterPageItemExternalReference() != null) {
+			settings.setMasterPageItemExternalReference(() -> null);
+		}
+		else {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_getMasterLayoutPageTemplateEntry(
+					serviceContext, WorkflowConstants.STATUS_APPROVED);
+
+			settings.setMasterPageItemExternalReference(
+				() -> new ItemExternalReference() {
+					{
+						setCollectionType(CollectionType.COLLECTION);
+						setExternalReferenceCode(
+							layoutPageTemplateEntry::getExternalReferenceCode);
+					}
+				});
+		}
+
+		if (settings.getStyleBookItemExternalReference() != null) {
+			settings.setStyleBookItemExternalReference(() -> null);
+		}
+		else {
+			StyleBookEntry styleBookEntry = _addStyleBookEntry(serviceContext);
+
+			settings.setStyleBookItemExternalReference(
+				() -> new ItemExternalReference() {
+					{
+						setCollectionType(CollectionType.COLLECTION);
+						setExternalReferenceCode(
+							styleBookEntry::getExternalReferenceCode);
+					}
+				});
+		}
+
+		if (Validator.isNotNull(settings.getThemeName())) {
+			settings.setColorSchemeName(() -> null);
+			settings.setThemeName(() -> null);
+		}
+		else {
+			if (RandomTestUtil.randomBoolean()) {
+				settings.setColorSchemeName("01");
+			}
+
+			settings.setThemeName("Classic");
+		}
+
+		if (Validator.isNotNull(settings.getThemeSettings())) {
+			settings.setThemeSettings(() -> null);
+		}
+		else {
+			settings.setThemeSettings(
+				() -> HashMapBuilder.put(
+					"lfr-theme:regular:show-maximize-minimize-application-" +
+						"links",
+					"true"
+				).build());
+		}
+	}
+
 	@Inject
-	private JSONFactory _jsonFactory;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

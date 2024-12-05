@@ -205,7 +205,7 @@ public class PasswordEncryptorUtil {
 
 			_log.error(
 				"You may have forgotten to configure " +
-				"passwords.encryption.algorithm.legacy property");
+					"passwords.encryption.algorithm.legacy property");
 
 			return null;
 		}

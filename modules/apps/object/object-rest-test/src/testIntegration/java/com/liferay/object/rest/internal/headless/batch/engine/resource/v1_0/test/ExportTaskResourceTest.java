@@ -157,12 +157,8 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 			objectEntry.getObjectEntryId(), objectDefinition.getClassName(),
 			null);
 
-		String nestedFieldNames = "permissions";
-
 		JSONObject jsonObject = _testPostExportTask(
-			"COMPLETED",
-			"nestedFieldNames=" + URLCodec.encodeURL(nestedFieldNames),
-			objectDefinition);
+			"COMPLETED", "nestedFieldNames=permissions", objectDefinition);
 
 		Assert.assertEquals(1, jsonObject.getInt("processedItemsCount"));
 

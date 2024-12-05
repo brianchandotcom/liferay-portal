@@ -325,6 +325,16 @@ public class PageSpecificationResourceImpl
 		serviceContext.setUserId(contextUser.getUserId());
 
 		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
+			if (!Objects.equals(
+					pageSpecification.getStatus(),
+					PageSpecification.Status.APPROVED) ||
+				!Objects.equals(
+					PageSpecification.Type.WIDGET_PAGE_SPECIFICATION,
+					pageSpecification.getType())) {
+
+				throw new UnsupportedOperationException();
+			}
+
 			return _updateWidgetPageSpecification(
 				layout, (WidgetPageSpecification)pageSpecification,
 				serviceContext);

@@ -219,38 +219,9 @@ public class EhcachePortalCacheManagerConfigurator {
 		return portalCacheListenerPropertiesSet;
 	}
 
-	private Set<Properties> _parseCacheManagerEventListenerConfigurations(
-		FactoryConfiguration<?> factoryConfiguration, ClassLoader classLoader) {
-
-		if (factoryConfiguration == null) {
-			return Collections.emptySet();
-		}
-
-		Properties properties = parseProperties(
-			factoryConfiguration.getProperties(),
-			factoryConfiguration.getPropertySeparator());
-
-		properties.put(
-			EhcacheConstants.
-				CACHE_MANAGER_LISTENER_PROPERTIES_KEY_FACTORY_CLASS_LOADER,
-			classLoader);
-		properties.put(
-			EhcacheConstants.
-				CACHE_MANAGER_LISTENER_PROPERTIES_KEY_FACTORY_CLASS_NAME,
-			factoryConfiguration.getFullyQualifiedClassPath());
-
-		return Collections.singleton(properties);
-	}
-
 	private PortalCacheManagerConfiguration _parseListenerConfigurations(
 		Configuration configuration, ClassLoader classLoader,
 		boolean usingDefault) {
-
-		Set<Properties> cacheManagerListenerPropertiesSet =
-			_parseCacheManagerEventListenerConfigurations(
-				configuration.
-					getCacheManagerEventListenerFactoryConfiguration(),
-				classLoader);
 
 		CacheConfiguration defaultCacheConfiguration =
 			configuration.getDefaultCacheConfiguration();
@@ -289,8 +260,7 @@ public class EhcachePortalCacheManagerConfigurator {
 		}
 
 		return new PortalCacheManagerConfiguration(
-			cacheManagerListenerPropertiesSet, defaultPortalCacheConfiguration,
-			portalCacheConfigurations);
+			defaultPortalCacheConfiguration, portalCacheConfigurations);
 	}
 
 	private void _populateCacheReplicator(

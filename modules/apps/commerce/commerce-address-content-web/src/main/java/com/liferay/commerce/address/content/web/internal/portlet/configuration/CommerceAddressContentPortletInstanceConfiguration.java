@@ -26,7 +26,22 @@ public interface CommerceAddressContentPortletInstanceConfiguration {
 	@Meta.AD(name = "display-style", required = false)
 	public String displayStyle();
 
-	@Meta.AD(deflt = "0", name = "display-style-group-id", required = false)
+	@Meta.AD(
+		deflt = "", name = "display-style-group-external-reference-code",
+		required = false
+	)
+	public String displayStyleGroupExternalReferenceCode();
+
+	@Meta.AD(
+		deflt = "0", description = "display-style-group-id-description",
+		name = "display-style-group-id", required = false
+	)
 	public long displayStyleGroupId();
+
+	@Meta.AD(
+		description = "display-style-group-key-description",
+		name = "display-style-group-key", required = false
+	)
+	public String displayStyleGroupKey();
 
 }

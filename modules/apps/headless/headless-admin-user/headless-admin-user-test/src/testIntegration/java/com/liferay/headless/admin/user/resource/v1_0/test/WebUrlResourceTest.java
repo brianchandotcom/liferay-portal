@@ -31,9 +31,11 @@ import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -63,6 +65,14 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 			AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Override
+	@Test
+	public void testDeleteWebUrl() throws Exception {
+		super.testDeleteWebUrl();
+
+		_testDeletePrimaryWebUrl();
 	}
 
 	@Override
@@ -257,11 +267,35 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 		return listType.getListTypeId();
 	}
 
+	private void _testDeletePrimaryWebUrl() throws Exception {
+		WebUrl webUrl1 = randomWebUrl();
+
+		webUrl1 = _toWebUrl(
+			WebsiteLocalServiceUtil.addWebsite(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				Contact.class.getName(), _user.getContactId(), webUrl1.getUrl(),
+				_getListTypeId(ListTypeConstants.CONTACT_WEBSITE), true,
+				new ServiceContext()));
+
+		Assert.assertTrue(webUrl1.getPrimary());
+
+		WebUrl webUrl2 = testDeleteWebUrl_addWebUrl();
+
+		Assert.assertFalse(webUrl2.getPrimary());
+
+		webUrlResource.deleteWebUrl(webUrl1.getId());
+
+		webUrl2 = webUrlResource.getWebUrl(webUrl2.getId());
+
+		Assert.assertTrue(webUrl2.getPrimary());
+	}
+
 	private WebUrl _toWebUrl(Website website) {
 		return new WebUrl() {
 			{
 				externalReferenceCode = website.getExternalReferenceCode();
 				id = website.getWebsiteId();
+				primary = website.isPrimary();
 				url = website.getUrl();
 			}
 		};

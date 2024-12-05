@@ -61,7 +61,13 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Override
 	public void deletePostalAddress(Long postalAddressId) throws Exception {
+		Address address = _addressService.getAddress(postalAddressId);
+
 		_addressService.deleteAddress(postalAddressId);
+
+		if (address.isPrimary()) {
+			_updatePrimaryAddress(address.getClassName(), address.getClassPK());
+		}
 	}
 
 	@Override
@@ -471,6 +477,26 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		}
 
 		return region.getRegionId();
+	}
+
+	private void _updatePrimaryAddress(String className, long contactId)
+		throws Exception {
+
+		List<Address> addresses = _addressService.getAddresses(
+			className, contactId);
+
+		if (addresses.isEmpty()) {
+			return;
+		}
+
+		Address address = addresses.get(0);
+
+		_addressService.updateAddress(
+			address.getAddressId(), address.getName(), address.getDescription(),
+			address.getStreet1(), address.getStreet2(), address.getStreet3(),
+			address.getCity(), address.getZip(), address.getRegionId(),
+			address.getCountryId(), address.getListTypeId(),
+			address.isMailing(), true, address.getPhoneNumber());
 	}
 
 	@Reference

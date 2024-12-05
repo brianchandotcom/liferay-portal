@@ -37,9 +37,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -77,6 +79,14 @@ public class PostalAddressResourceTest
 			false, false, serviceContext);
 
 		_organization = OrganizationTestUtil.addOrganization();
+	}
+
+	@Override
+	@Test
+	public void testDeletePostalAddress() throws Exception {
+		super.testDeletePostalAddress();
+
+		_testDeletePrimaryPostalAddress();
 	}
 
 	@Override
@@ -334,6 +344,31 @@ public class PostalAddressResourceTest
 		ListType listType = listTypes.get(0);
 
 		return listType.getListTypeId();
+	}
+
+	private void _testDeletePrimaryPostalAddress() throws Exception {
+		PostalAddress postalAddress1 = randomPostalAddress();
+
+		postalAddress1.setPrimary(true);
+
+		postalAddress1 = _addPostalAddress(
+			postalAddress1, Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_ADDRESS);
+
+		Assert.assertTrue(postalAddress1.getPrimary());
+
+		PostalAddress postalAddress2 = _addPostalAddress(
+			randomPostalAddress(), Contact.class.getName(),
+			_user.getContactId(), ListTypeConstants.CONTACT_ADDRESS);
+
+		Assert.assertFalse(postalAddress2.getPrimary());
+
+		postalAddressResource.deletePostalAddress(postalAddress1.getId());
+
+		postalAddress2 = postalAddressResource.getPostalAddress(
+			postalAddress2.getId());
+
+		Assert.assertTrue(postalAddress2.getPrimary());
 	}
 
 	private PostalAddress _toPostalAddress(Address address) {

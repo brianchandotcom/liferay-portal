@@ -30,9 +30,11 @@ import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -62,6 +64,14 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 			AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Override
+	@Test
+	public void testDeleteEmailAddress() throws Exception {
+		super.testDeleteEmailAddress();
+
+		_testDeletePrimaryEmailAddress();
 	}
 
 	@Override
@@ -273,6 +283,29 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 		ListType listType = listTypes.get(0);
 
 		return listType.getListTypeId();
+	}
+
+	private void _testDeletePrimaryEmailAddress() throws Exception {
+		EmailAddress emailAddress1 = randomEmailAddress();
+
+		emailAddress1.setPrimary(true);
+
+		emailAddress1 = _addEmailAddress(
+			emailAddress1, Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_EMAIL_ADDRESS);
+
+		Assert.assertTrue(emailAddress1.getPrimary());
+
+		EmailAddress emailAddress2 = testDeleteEmailAddress_addEmailAddress();
+
+		Assert.assertFalse(emailAddress2.getPrimary());
+
+		emailAddressResource.deleteEmailAddress(emailAddress1.getId());
+
+		emailAddress2 = emailAddressResource.getEmailAddress(
+			emailAddress2.getId());
+
+		Assert.assertTrue(emailAddress2.getPrimary());
 	}
 
 	private EmailAddress _toEmailAddress(

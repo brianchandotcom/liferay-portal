@@ -27,6 +27,8 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -42,7 +44,15 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 
 	@Override
 	public void deleteEmailAddress(Long emailAddressId) throws Exception {
+		com.liferay.portal.kernel.model.EmailAddress emailAddress =
+			_emailAddressService.getEmailAddress(emailAddressId);
+
 		_emailAddressService.deleteEmailAddress(emailAddressId);
+
+		if (emailAddress.isPrimary()) {
+			_updatePrimaryEmailAddress(
+				emailAddress.getClassName(), emailAddress.getClassPK());
+		}
 	}
 
 	@Override
@@ -222,6 +232,25 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 				emailAddress.getPrimary(), serviceEmailAddress.isPrimary()));
 
 		return EmailAddressUtil.toEmailAddress(serviceEmailAddress);
+	}
+
+	private void _updatePrimaryEmailAddress(String className, long contactId)
+		throws Exception {
+
+		List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses =
+			_emailAddressService.getEmailAddresses(className, contactId);
+
+		if (emailAddresses.isEmpty()) {
+			return;
+		}
+
+		com.liferay.portal.kernel.model.EmailAddress emailAddress =
+			emailAddresses.get(0);
+
+		_emailAddressService.updateEmailAddress(
+			emailAddress.getExternalReferenceCode(),
+			emailAddress.getEmailAddressId(), emailAddress.getAddress(),
+			emailAddress.getListTypeId(), true);
 	}
 
 	@Reference

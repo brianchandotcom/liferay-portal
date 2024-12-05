@@ -482,7 +482,7 @@ public class LayoutsImporterTest {
 	}
 
 	@Test
-	@TestInfo({"LPS-128399", "LPS-129107"})
+	@TestInfo({"LPS-107748", "LPS-128399", "LPS-129107"})
 	public void testImportLayoutPageTemplateEntryWithStyleBookAndMissingFragmentEntry()
 		throws Exception {
 

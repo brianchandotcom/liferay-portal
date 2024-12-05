@@ -1248,7 +1248,7 @@ test.describe('Localization Select Fragment', () => {
 
 		// Click an option and checkt the langue select is updated and the event is fired
 
-		expect(languageSelect).toBeVisible();
+		await expect(languageSelect).toBeVisible();
 
 		await page.evaluate(() => {
 			Liferay.on('localizationSelect:localeChanged', (event) => {
@@ -1304,7 +1304,8 @@ test.describe('Multiselect Fragment', () => {
 				name: displayPageTemplateName,
 			});
 
-			displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName);
 
 			// Add a form container and map it
 

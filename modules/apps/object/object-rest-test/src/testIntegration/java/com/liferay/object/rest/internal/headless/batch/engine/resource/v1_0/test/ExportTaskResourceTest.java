@@ -192,18 +192,20 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 			String externalReferenceCode)
 		throws Exception {
 
-		ZipInputStream zipInputStream = new ZipInputStream(
-			HTTPTestUtil.invokeToInputStream(
-				null,
-				StringBundler.concat(
-					"headless-batch-engine/v1.0/export-task",
-					"/by-external-reference-code/", externalReferenceCode,
-					"/content"),
-				Http.Method.GET));
+		try (ZipInputStream zipInputStream = new ZipInputStream(
+				HTTPTestUtil.invokeToInputStream(
+					null,
+					StringBundler.concat(
+						"headless-batch-engine/v1.0/export-task",
+						"/by-external-reference-code/", externalReferenceCode,
+						"/content"),
+					Http.Method.GET))) {
 
-		zipInputStream.getNextEntry();
+			zipInputStream.getNextEntry();
 
-		return JSONFactoryUtil.createJSONArray(StringUtil.read(zipInputStream));
+			return JSONFactoryUtil.createJSONArray(
+				StringUtil.read(zipInputStream));
+		}
 	}
 
 	private JSONObject _testPostExportTask(

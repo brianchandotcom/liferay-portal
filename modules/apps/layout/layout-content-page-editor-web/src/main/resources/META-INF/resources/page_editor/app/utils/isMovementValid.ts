@@ -43,7 +43,7 @@ export function getPasteTargetId(
 	const target = layoutData.items[targetId];
 	const items = layoutData.items;
 
-	// Return first step id for multistep form
+	// Return first step id for multistep forms
 
 	if (
 		target.type === LAYOUT_DATA_ITEM_TYPES.form &&
@@ -58,7 +58,7 @@ export function getPasteTargetId(
 		}
 	}
 
-	// Return collectionItem id if collection is mapped
+	// Return collection item id for mapped collections
 
 	if (
 		target.type === LAYOUT_DATA_ITEM_TYPES.collection &&
@@ -67,17 +67,15 @@ export function getPasteTargetId(
 		return target.children[0];
 	}
 
-	// Return available parent id
+	// Return parent id if the item is not a valid paste target
 
-	if (VALID_PASTE_TYPES.some((type) => type === target.type)) {
-		return target.itemId;
+	if (!VALID_PASTE_TYPES.includes(target.type)) {
+		return target.parentId;
 	}
 
-	const parent = items[target.parentId];
+	// Otherwise return the id of the item itself
 
-	// If not found go deeper and check for available parent id
-
-	return getPasteTargetId(parent.itemId, layoutData);
+	return target.itemId;
 }
 
 export function isMovementValid({

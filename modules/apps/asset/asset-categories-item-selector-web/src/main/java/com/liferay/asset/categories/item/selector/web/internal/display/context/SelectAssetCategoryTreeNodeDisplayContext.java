@@ -303,15 +303,15 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 		AssetVocabulary assetVocabulary =
 			AssetVocabularyServiceUtil.fetchVocabulary(assetVocabularyId);
 
-		if (assetVocabulary != null) {
-			return _createBreadcrumbEntry(
-				assetVocabulary.getTitle(_themeDisplay.getLocale()),
-				_getAssetCategoryTreeNodeURL(
-					assetVocabularyId,
-					AssetCategoryTreeNodeConstants.TYPE_ASSET_VOCABULARY));
+		if (assetVocabulary == null) {
+			return null;
 		}
 
-		return null;
+		return _createBreadcrumbEntry(
+			assetVocabulary.getTitle(_themeDisplay.getLocale()),
+			_getAssetCategoryTreeNodeURL(
+				assetVocabularyId,
+				AssetCategoryTreeNodeConstants.TYPE_ASSET_VOCABULARY));
 	}
 
 	private PortletRequest _getPortletRequest() {

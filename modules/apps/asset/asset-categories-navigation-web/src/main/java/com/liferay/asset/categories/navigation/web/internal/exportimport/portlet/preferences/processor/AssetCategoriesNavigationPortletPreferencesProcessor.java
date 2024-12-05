@@ -152,16 +152,18 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 				groupIds, GetterUtil.getLong(oldValues[1]));
 		}
 
-		if (className.equals(AssetVocabulary.class.getName())) {
-			String uuid = oldValues[0];
+		if (!className.equals(AssetVocabulary.class.getName())) {
+			return null;
+		}
 
-			AssetVocabulary assetVocabulary =
-				_assetVocabularyLocalService.
-					fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
+		String uuid = oldValues[0];
 
-			if (assetVocabulary != null) {
-				return assetVocabulary.getVocabularyId();
-			}
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchAssetVocabularyByUuidAndGroupId(
+				uuid, groupId);
+
+		if (assetVocabulary != null) {
+			return assetVocabulary.getVocabularyId();
 		}
 
 		return null;

@@ -163,14 +163,15 @@ public class AssetCategoriesManagementToolbarDisplayContext
 					).setParameter(
 						"parentCategoryId",
 						() -> {
-							if (_assetCategoriesDisplayContext.getCategoryId() >
-									0) {
+							long categoryId =
+								_assetCategoriesDisplayContext.getCategoryId();
 
-								return _assetCategoriesDisplayContext.
-									getCategoryId();
+							if (categoryId <= 0) {
+								return null;
 							}
 
-							return null;
+							return _assetCategoriesDisplayContext.
+								getCategoryId();
 						}
 					).setParameter(
 						"vocabularyId",

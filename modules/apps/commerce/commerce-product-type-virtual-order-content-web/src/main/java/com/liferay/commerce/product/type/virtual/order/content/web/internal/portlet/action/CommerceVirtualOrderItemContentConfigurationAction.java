@@ -16,9 +16,10 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import javax.portlet.PortletConfig;
 
@@ -36,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ConfigurationAction.class
 )
 public class CommerceVirtualOrderItemContentConfigurationAction
-	extends DefaultConfigurationAction {
+	extends BaseConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
@@ -58,7 +59,8 @@ public class CommerceVirtualOrderItemContentConfigurationAction
 						_commerceVirtualOrderItemFileEntryModelResourcePermission,
 						_cpDefinitionHelper,
 						_cpDefinitionVirtualSettingLocalService,
-						_cpInstanceHelper, httpServletRequest);
+						_cpInstanceHelper, _groupLocalService,
+						httpServletRequest);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -96,5 +98,8 @@ public class CommerceVirtualOrderItemContentConfigurationAction
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

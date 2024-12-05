@@ -13,10 +13,11 @@ import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import javax.portlet.PortletConfig;
 
@@ -34,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ConfigurationAction.class
 )
 public class CommerceAddressContentConfigurationAction
-	extends DefaultConfigurationAction {
+	extends BaseConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
@@ -52,7 +53,7 @@ public class CommerceAddressContentConfigurationAction
 				new CommerceAddressDisplayContext(
 					_actionHelper, _commerceAccountHelper,
 					_commerceAddressService, _countryService,
-					httpServletRequest, _regionService);
+					_groupLocalService, httpServletRequest, _regionService);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceAddressDisplayContext);
@@ -78,6 +79,9 @@ public class CommerceAddressContentConfigurationAction
 
 	@Reference
 	private CountryService _countryService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private RegionService _regionService;

@@ -21,11 +21,12 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import javax.portlet.PortletConfig;
 
@@ -44,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ConfigurationAction.class
 )
 public class CommerceCartContentMiniConfigurationAction
-	extends DefaultConfigurationAction {
+	extends BaseConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
@@ -68,7 +69,8 @@ public class CommerceCartContentMiniConfigurationAction
 						_cpDefinitionHelper, _cpInstanceHelper,
 						_commerceOrderModelResourcePermission,
 						_commerceProductPortletResourcePermission,
-						_percentageFormatter, httpServletRequest, _portal);
+						_percentageFormatter, _groupLocalService,
+						httpServletRequest, _portal);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -118,6 +120,9 @@ public class CommerceCartContentMiniConfigurationAction
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private PercentageFormatter _percentageFormatter;

@@ -1024,6 +1024,117 @@ test('LPD-32208 AC1 TC4: Verify SP initiated SSO with RelayState redirects user 
 	).toBeVisible();
 });
 
+test('LPD-32210 AC1 TC1: Verify IdP initiated SSO with same-site page redirect parameter redirects the user to designated page.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create a new page on the IdP Instance
+
+	const pagesAdminPage = new PagesAdminPage(idpAdminPage);
+
+	await pagesAdminPage.goto();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: pageTitle,
+	});
+
+	// Create new user in IdP instance
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// Execute IdP initiated SSO with redirect parameter
+
+	const pagePath = '/web/guest/' + pageTitle;
+
+	const newPage = await performSamlSafeLogin(
+		browser,
+		DEFAULT_IDP_NAME,
+		'?p_p_id=com_liferay_login_web_portlet_LoginPortlet&' +
+			'p_p_state=maximized&' +
+			'_com_liferay_login_web_portlet_LoginPortlet_redirect=' +
+			pagePath.replace('/', '%2F'),
+		'@liferay.com',
+		undefined,
+		userAccount.alternateName
+	);
+
+	// Verify we have been redirected and logged in
+
+	expect(await newPage.url()).toContain(DEFAULT_IDP_URL + pagePath);
+
+	await expect(await newPage.getByTitle('User Profile Menu')).toBeVisible();
+});
+
+test('LPD-32210 AC1 TC2: Verify IdP initiated SSO with different instance redirect parameter redirects the user to designated instance.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create new user in IdP instance
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// Execute IdP initiated SSO with redirect parameter
+
+	const newPage = await browser.newPage();
+
+	const escapedSpUrl = DEFAULT_SP_URL.replace('/', '%2F').replace(':', '%3A');
+
+	await newPage.goto(
+		DEFAULT_IDP_URL +
+			'?p_p_id=com_liferay_login_web_portlet_LoginPortlet&' +
+			'p_p_state=maximized&' +
+			'_com_liferay_login_web_portlet_LoginPortlet_redirect=' +
+			escapedSpUrl
+	);
+
+	await newPage.getByLabel('Email Address').fill(userAccount.emailAddress);
+	await newPage.getByLabel('Password').fill('test');
+	await newPage.getByRole('button', {name: 'Sign In'}).click();
+	await newPage.waitForTimeout(5000);
+
+	// Verify we have been redirected to SP instance
+
+	expect(await newPage.url()).toContain(DEFAULT_SP_URL);
+});
+
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({
 	browser,
 }) => {

@@ -11,6 +11,7 @@ import {
 	MovementTarget,
 	setMovementText,
 } from '../contexts/KeyboardMovementContext';
+import {KeyboardNavigationContext} from '../contexts/KeyboardNavigationContext';
 import {LayoutColumnsContext} from '../contexts/LayoutColumnsContext';
 import {MillerColumnItem} from '../types/MillerColumnItem';
 import {setSessionState} from '../utils/keyboardSessionState';
@@ -30,6 +31,10 @@ export function useKeyboardMovement({
 
 	const {setInitialColumns, setSources, setTarget, setText, sources, target} =
 		useContext(KeyboardMovementContext);
+
+	const {setTarget: setNavigationTarget} = useContext(
+		KeyboardNavigationContext
+	);
 
 	const {layoutColumns} = useContext(LayoutColumnsContext);
 
@@ -56,6 +61,10 @@ export function useKeyboardMovement({
 			});
 
 			setSessionState(item.id, 'movement');
+
+			// Prevent focus in keyboard navigation
+
+			setNavigationTarget((prev) => ({...prev, preventFocus: true}));
 		},
 		[
 			columnIndex,
@@ -67,6 +76,7 @@ export function useKeyboardMovement({
 			setTarget,
 			items,
 			setText,
+			setNavigationTarget,
 		]
 	);
 
@@ -91,13 +101,6 @@ export function useKeyboardMovement({
 	};
 }
 
-function isSource(
-	item: MillerColumnItem | MovementTarget,
-	sources: MovementSources
-) {
-	return sources.some(
-		(source) =>
-			source.itemIndex === item?.itemIndex &&
-			source.columnIndex === item?.columnIndex
-	);
+function isSource(item: MillerColumnItem, sources: MovementSources) {
+	return sources.some((source) => source.id === item.id);
 }

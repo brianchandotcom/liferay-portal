@@ -282,7 +282,7 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 	private static final Pattern _axisNamePattern = Pattern.compile(
 		"(?<batchName>[^/]+)/[^/]+/[^/]+");
 	private static final ExecutorService _executorService =
-		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(30, true);
 	private static final Pattern _testClassFilePathPattern = Pattern.compile(
 		".+/modules(?<relativePath>/.+)/src/(?<type>test|testIntegration)/.*");
 

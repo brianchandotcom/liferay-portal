@@ -454,7 +454,10 @@ public class PageSpecificationResourceImpl
 	private long _getMasterLayoutPlid(Layout layout, Settings settings)
 		throws Exception {
 
-		if (settings.getMasterPageItemExternalReference() == null) {
+		ItemExternalReference itemExternalReference =
+			settings.getMasterPageItemExternalReference();
+
+		if (itemExternalReference == null) {
 			return 0;
 		}
 
@@ -469,9 +472,6 @@ public class PageSpecificationResourceImpl
 
 			throw new UnsupportedOperationException();
 		}
-
-		ItemExternalReference itemExternalReference =
-			settings.getMasterPageItemExternalReference();
 
 		layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.

@@ -1477,7 +1477,7 @@ test.describe('Form Localization', () => {
 		await translationSelector.click();
 
 		const option = page.getByRole('option', {
-			name: 'Spanish (Spain) Language',
+			name: 'español (España) Language',
 		});
 
 		await expect(option).toContainText(/Not Translated/);

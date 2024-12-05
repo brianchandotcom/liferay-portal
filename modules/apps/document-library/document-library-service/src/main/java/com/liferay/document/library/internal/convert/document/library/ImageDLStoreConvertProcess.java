@@ -9,10 +9,13 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.util.MaintenanceUtil;
 
@@ -40,10 +43,14 @@ public class ImageDLStoreConvertProcess implements DLStoreConvertProcess {
 	}
 
 	private ActionableDynamicQuery _getActionableDynamicQuery(
-		Store sourceStore, Store targetStore, boolean delete) {
+		long companyId, Store sourceStore, Store targetStore, boolean delete) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_imageLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq("companyId", companyId)));
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(Image image) -> {
@@ -64,23 +71,39 @@ public class ImageDLStoreConvertProcess implements DLStoreConvertProcess {
 		return actionableDynamicQuery;
 	}
 
+	private long _getCount(long companyId) {
+		DynamicQuery dynamicQuery = _imageLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", companyId));
+
+		return _imageLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
 	private void _transfer(Store sourceStore, Store targetStore, boolean delete)
 		throws PortalException {
 
-		int count = _imageLocalService.getImagesCount();
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				MaintenanceUtil.appendStatus(
+					String.format(
+						"Migrating %d images for company %d",
+						_getCount(companyId), companyId));
 
-		MaintenanceUtil.appendStatus("Migrating " + count + " images");
+				ActionableDynamicQuery actionableDynamicQuery =
+					_getActionableDynamicQuery(
+						companyId, sourceStore, targetStore, delete);
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			_getActionableDynamicQuery(sourceStore, targetStore, delete);
-
-		actionableDynamicQuery.performActions();
+				actionableDynamicQuery.performActions();
+			});
 	}
 
 	private static final long _REPOSITORY_ID = 0L;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImageDLStoreConvertProcess.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ImageLocalService _imageLocalService;

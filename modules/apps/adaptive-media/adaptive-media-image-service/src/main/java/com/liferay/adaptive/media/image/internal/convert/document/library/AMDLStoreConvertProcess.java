@@ -12,8 +12,11 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.util.MaintenanceUtil;
 
 import java.io.IOException;
@@ -43,10 +46,14 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 	}
 
 	private ActionableDynamicQuery _getActionableDynamicQuery(
-		Store sourceStore, Store targetStore, boolean delete) {
+		long companyId, Store sourceStore, Store targetStore, boolean delete) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_amImageEntryLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq("companyId", companyId)));
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(AMImageEntry amImageEntry) -> {
@@ -86,22 +93,38 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 		return actionableDynamicQuery;
 	}
 
+	private long _getCount(long companyId) {
+		DynamicQuery dynamicQuery = _amImageEntryLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", companyId));
+
+		return _amImageEntryLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
 	private void _transfer(Store sourceStore, Store targetStore, boolean delete)
 		throws PortalException {
 
-		int count = _amImageEntryLocalService.getAMImageEntriesCount();
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				MaintenanceUtil.appendStatus(
+					String.format(
+						"Migrating images in %d adaptive media image entries " +
+							"for company %d",
+						_getCount(companyId), companyId));
 
-		MaintenanceUtil.appendStatus(
-			"Migrating images in " + count + " adaptive media image entries");
+				ActionableDynamicQuery actionableDynamicQuery =
+					_getActionableDynamicQuery(
+						companyId, sourceStore, targetStore, delete);
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			_getActionableDynamicQuery(sourceStore, targetStore, delete);
-
-		actionableDynamicQuery.performActions();
+				actionableDynamicQuery.performActions();
+			});
 	}
 
 	@Reference
 	private AMImageEntryLocalService _amImageEntryLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

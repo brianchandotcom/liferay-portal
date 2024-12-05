@@ -13,9 +13,12 @@ import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.util.MaintenanceUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,10 +46,14 @@ public class DLFileVersionDLStoreConvertProcess
 	}
 
 	private ActionableDynamicQuery _getActionableDynamicQuery(
-		Store sourceStore, Store targetStore, boolean delete) {
+		long companyId, Store sourceStore, Store targetStore, boolean delete) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_dlFileVersionLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq("companyId", companyId)));
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(DLFileVersion dlFileVersion) -> {
@@ -78,22 +85,37 @@ public class DLFileVersionDLStoreConvertProcess
 		return actionableDynamicQuery;
 	}
 
+	private long _getCount(long companyId) {
+		DynamicQuery dynamicQuery = _dlFileVersionLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", companyId));
+
+		return _dlFileVersionLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
 	private void _transfer(Store sourceStore, Store targetStore, boolean delete)
 		throws PortalException {
 
-		int count = _dlFileVersionLocalService.getDLFileVersionsCount();
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				MaintenanceUtil.appendStatus(
+					String.format(
+						"Migrating %d documents and media files for company %d",
+						_getCount(companyId), companyId));
 
-		MaintenanceUtil.appendStatus(
-			"Migrating " + count + " documents and media files");
+				ActionableDynamicQuery actionableDynamicQuery =
+					_getActionableDynamicQuery(
+						companyId, sourceStore, targetStore, delete);
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			_getActionableDynamicQuery(sourceStore, targetStore, delete);
-
-		actionableDynamicQuery.performActions();
+				actionableDynamicQuery.performActions();
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileVersionDLStoreConvertProcess.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

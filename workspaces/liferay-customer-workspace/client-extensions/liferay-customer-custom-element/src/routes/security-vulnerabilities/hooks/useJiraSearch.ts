@@ -19,6 +19,7 @@ export interface IJiraResponse {
 	[JiraEnum.PAGE_SIZE]?: number;
 	[JiraEnum.SORT_BY]?: string;
 	[JiraEnum.SORT_ORDER]?: string;
+	[JiraEnum.TOTAL]?: number;
 }
 
 export interface IProps {
@@ -30,12 +31,16 @@ export interface IProps {
 	[JiraEnum.SORT_ORDER]?: string;
 }
 
-const useJiraSearch = () => {
+const useJiraSearch = (
+		page: number,
+		pageSize:number
+	) => {
+
 	const [jiraSearch, setJiraSearch] = useState<IJiraResponse>();
 	const [loading, setLoading] = useState(true);
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	const fetchJiraSearch = useCallback(async (params: URLSearchParams) => {
+	const fetchJiraSearch = useCallback(async (page:number, pageSize:number, params: URLSearchParams) => {
 		setLoading(true);
 
 		const queryString = getFilterParams(params.toString());
@@ -46,7 +51,7 @@ const useJiraSearch = () => {
 					'liferay-customer-etc-spring-boot-oaua'
 				)
 					.fetch(
-						`/jira/security-vulnerabilities/search?${queryString}`
+						`/jira/security-vulnerabilities/search?${queryString}&page=${page}&pageSize=${pageSize}`
 					)
 					.then((response) => response.json());
 
@@ -125,8 +130,8 @@ const useJiraSearch = () => {
 	);
 
 	useEffect(() => {
-		fetchJiraSearch(searchParams);
-	}, [fetchJiraSearch, searchParams]);
+		fetchJiraSearch(page, pageSize, searchParams);
+	}, [fetchJiraSearch, page, pageSize, searchParams]);
 
 	return {jiraSearch, loading, searchParams, updateSearchParams};
 };

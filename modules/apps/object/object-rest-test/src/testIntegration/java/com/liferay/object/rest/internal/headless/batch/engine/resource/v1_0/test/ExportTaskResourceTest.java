@@ -17,6 +17,7 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
@@ -128,17 +129,6 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 
 		Assert.assertEquals(2, jsonObject.getInt("processedItemsCount"));
 
-		ZipInputStream zipInputStream = new ZipInputStream(
-			HTTPTestUtil.invokeToInputStream(
-				null,
-				StringBundler.concat(
-					"headless-batch-engine/v1.0/export-task",
-					"/by-external-reference-code/",
-					jsonObject.getString("externalReferenceCode"), "/content"),
-				Http.Method.GET));
-
-		zipInputStream.getNextEntry();
-
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
@@ -148,7 +138,10 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 					"externalReferenceCode",
 					objectEntry2.getExternalReferenceCode())
 			).toString(),
-			StringUtil.read(zipInputStream), JSONCompareMode.LENIENT);
+			_getExportTaskContentJSONArray(
+				jsonObject.getString("externalReferenceCode")
+			).toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	@FeatureFlags("LPD-29367")
@@ -173,23 +166,11 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 
 		Assert.assertEquals(1, jsonObject.getInt("processedItemsCount"));
 
-		ZipInputStream zipInputStream = new ZipInputStream(
-			HTTPTestUtil.invokeToInputStream(
-				null,
-				StringBundler.concat(
-					"headless-batch-engine/v1.0/export-task",
-					"/by-external-reference-code/",
-					jsonObject.getString("externalReferenceCode"), "/content"),
-				Http.Method.GET));
-
-		zipInputStream.getNextEntry();
-
-		String content = StringUtil.read(zipInputStream);
-
-		JSONArray outerJSONArray = _jsonFactory.createJSONArray(content);
+		JSONArray contentJSONArray = _getExportTaskContentJSONArray(
+			jsonObject.getString("externalReferenceCode"));
 
 		JSONObject firstJSONObject = _jsonFactory.createJSONObject(
-			outerJSONArray.get(
+			contentJSONArray.get(
 				0
 			).toString());
 
@@ -211,6 +192,24 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 			).anyMatch(
 				n -> Objects.equals(n.getRoleName(), roleName)
 			));
+	}
+
+	private JSONArray _getExportTaskContentJSONArray(
+			String externalReferenceCode)
+		throws Exception {
+
+		ZipInputStream zipInputStream = new ZipInputStream(
+			HTTPTestUtil.invokeToInputStream(
+				null,
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/export-task",
+					"/by-external-reference-code/", externalReferenceCode,
+					"/content"),
+				Http.Method.GET));
+
+		zipInputStream.getNextEntry();
+
+		return JSONFactoryUtil.createJSONArray(StringUtil.read(zipInputStream));
 	}
 
 	private JSONObject _testPostExportTask(

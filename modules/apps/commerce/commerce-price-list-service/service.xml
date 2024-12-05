@@ -450,6 +450,7 @@
 		<exception>CommerceTierPriceEntryDisplayDate</exception>
 		<exception>CommerceTierPriceEntryExpirationDate</exception>
 		<exception>CommerceTierPriceEntryMinQuantity</exception>
+		<exception>CommerceTierPriceEntryPrice</exception>
 		<exception>DuplicateCommerceBasePriceList</exception>
 		<exception>DuplicateCommercePriceEntry</exception>
 		<exception>DuplicateCommercePriceList</exception>

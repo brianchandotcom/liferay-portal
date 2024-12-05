@@ -318,6 +318,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>CommerceDiscountAmount</exception>
 		<exception>CommerceDiscountCouponCode</exception>
 		<exception>CommerceDiscountDisplayDate</exception>
 		<exception>CommerceDiscountExpirationDate</exception>

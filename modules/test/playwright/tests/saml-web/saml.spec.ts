@@ -1573,6 +1573,7 @@ test('Verify IdP initiated SLO also logs out of authenticated SP when Require Au
 	const newPage = await performSamlSafeLogin(
 		browser,
 		DEFAULT_IDP_NAME,
+		undefined,
 		'@liferay.com',
 		false,
 		userAccount.alternateName

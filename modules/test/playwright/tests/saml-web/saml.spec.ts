@@ -1289,6 +1289,94 @@ test('LPD-32210 AC1 TC4: Verify IdP initiated SSO with no redirection params/con
 	expect(await newPage.url()).toContain(idpNewPageUrl);
 });
 
+test('LPD-32210 AC1 TC5: Verify unsuccessful IdP initiated SSO with any redirection params/configs applied redirects user to current login page.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create new page on IdP Instance
+
+	const pagesAdminPage = new PagesAdminPage(idpAdminPage);
+
+	await pagesAdminPage.goto();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: pageTitle,
+	});
+
+	const idpNewPagePath = '/web/guest/' + pageTitle;
+
+	// Configure new page as the Default Landing Page
+
+	const instanceSettingsPage = new InstanceSettingsPage(idpAdminPage);
+
+	await instanceSettingsPage.goToInstanceSetting(
+		'Instance Configuration',
+		'General',
+		false
+	);
+
+	const generalPage = new GeneralPage(instanceSettingsPage.page);
+
+	await generalPage.editDefaultLandingPage(idpNewPagePath);
+
+	resetAfterTestGeneralPage.add(DEFAULT_IDP_NAME);
+
+	// Dynamically retrieve home URL
+
+	const newPage = await browser.newPage();
+
+	await newPage.goto(DEFAULT_IDP_URL + '/c/portal/layout');
+
+	const homeUrl = await newPage.url();
+
+	// Set new page as login redirect parameter
+
+	const loginPageParams =
+		'?p_p_id=com_liferay_login_web_portlet_LoginPortlet&' +
+		'p_p_state=maximized&' +
+		'_com_liferay_login_web_portlet_LoginPortlet_redirect=%2F' +
+		pageTitle;
+
+	// Execute unsuccessful IdP initiated SSO
+
+	await newPage.goto(homeUrl + loginPageParams);
+
+	await newPage.getByLabel('Email Address').fill('invalid@liferay.com');
+	await newPage.getByLabel('Password').fill('invalid');
+	await newPage.getByRole('button', {name: 'Sign In'}).click();
+	await newPage.waitForTimeout(5000);
+
+	// Verify unsuccessful authentication
+
+	await expect(await newPage.getByText('Error:')).toBeVisible();
+
+	// Verify user is not logged in and still on login portlet page
+
+	await expect(await newPage.getByLabel('Email Address')).toBeVisible();
+
+	await expect(await newPage.url()).toContain(homeUrl);
+});
+
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({
 	browser,
 }) => {

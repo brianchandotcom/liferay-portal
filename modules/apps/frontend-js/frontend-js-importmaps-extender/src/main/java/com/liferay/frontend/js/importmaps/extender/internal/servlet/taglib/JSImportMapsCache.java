@@ -54,7 +54,11 @@ public class JSImportMapsCache {
 
 			invalidate();
 
-			return () -> globalImportMapsJSONObjects.remove(globalId);
+			return () -> {
+				synchronized (JSImportMapsCache.this) {
+					globalImportMapsJSONObjects.remove(globalId);
+				}
+			};
 		}
 
 		Map<String, JSONObject> scopedImportMapsJSONObjects =
@@ -64,7 +68,11 @@ public class JSImportMapsCache {
 
 		invalidate();
 
-		return () -> scopedImportMapsJSONObjects.remove(scope);
+		return () -> {
+			synchronized (JSImportMapsCache.this) {
+				scopedImportMapsJSONObjects.remove(scope);
+			}
+		};
 	}
 
 	private Map<Long, JSONObject> _getGlobalImportMapsJSONObjects(

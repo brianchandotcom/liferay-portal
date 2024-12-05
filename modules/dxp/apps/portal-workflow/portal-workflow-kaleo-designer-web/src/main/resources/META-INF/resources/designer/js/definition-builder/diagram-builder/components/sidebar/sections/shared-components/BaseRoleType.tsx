@@ -190,7 +190,7 @@ export function BaseRoleType({
 						? item
 						: item?.roleName
 								.toLowerCase()
-								.match(selectedRoleName?.toLowerCase())
+								.includes(selectedRoleName?.toLowerCase())
 				)
 			: [];
 	};

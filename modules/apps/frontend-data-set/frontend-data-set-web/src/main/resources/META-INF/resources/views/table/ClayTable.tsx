@@ -61,6 +61,7 @@ type Props = {
 	itemInlineChanges?: Array<any>;
 	items: Array<any>;
 	itemsActions: Array<IItemsActions>;
+	nestedItemsKey?: string;
 	nestedItemsReferenceKey?: string;
 	selectItems: Function;
 	selectable?: boolean;
@@ -88,6 +89,7 @@ export function ClayTable({
 	itemInlineChanges,
 	items,
 	itemsActions,
+	nestedItemsKey = 'id',
 	nestedItemsReferenceKey,
 	selectItems,
 	selectable,
@@ -140,6 +142,7 @@ export function ClayTable({
 			alwaysVisibleColumns={
 				selectable ? defaultAlwaysVisibleColumns : undefined
 			}
+			itemIdKey={nestedItemsKey}
 			messages={{
 				columnsVisibility: Liferay.Language.get(
 					'manage-columns-visibility'
@@ -254,7 +257,6 @@ export function ClayTable({
 									? [{fieldName: 'select'}, ...items]
 									: items
 							}
-							key={id}
 						>
 							{(cell) => {
 								const cellColumnName = getCellColumnClassName(

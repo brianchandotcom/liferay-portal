@@ -1,0 +1,17 @@
+.sv-panel-content {
+	.sv-panel-box {
+		background-color: var(--color-neutral-1);
+		border-radius: var(--border-radius-lg);
+		margin-bottom: var(--spacer-3);
+		padding: var(--spacer-3);
+
+        & a {
+            font-weight: var(--font-weight-semi-bold);
+        }
+
+		& p {
+			color: var(--color-neutral-10);
+			font-size: var(--font-size-md);
+		}
+	}
+}

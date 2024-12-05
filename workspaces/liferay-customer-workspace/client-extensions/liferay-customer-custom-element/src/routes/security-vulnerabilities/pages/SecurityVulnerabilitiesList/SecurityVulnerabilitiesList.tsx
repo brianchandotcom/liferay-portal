@@ -6,6 +6,7 @@
 import i18n from '~/common/I18n';
 
 import SVFilter from '../../components/SVFilter';
+import SVPanel from '../../components/SVPanel';
 import SVSearch from '../../components/SVSearch';
 import SVTable from '../../components/SVTable';
 
@@ -142,6 +143,10 @@ const SecurityVulnerabilitiesList = () => {
 								}
 								params={searchParams}
 								sortOptions={SORT_OPTIONS}
+							/>
+
+							<SVPanel
+								text="for-information-on-previously-addressed-cves-fixed-in-dxp-2024-q1-1-or-earlier-please-visit-our-help-center"
 							/>
 						</div>
 

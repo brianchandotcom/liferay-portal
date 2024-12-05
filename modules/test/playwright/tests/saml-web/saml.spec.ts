@@ -1161,6 +1161,77 @@ test('LPD-32210 AC1 TC2: Verify IdP initiated SSO with different instance redire
 	expect(await newPage.url()).toContain(DEFAULT_SP_URL);
 });
 
+test('LPD-32210 AC1 TC3: Verify IdP initiated SSO with a configured Default Landing Page redirects user properly.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create new page on IdP Instance
+
+	const pagesAdminPage = new PagesAdminPage(idpAdminPage);
+
+	await pagesAdminPage.goto();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: pageTitle,
+	});
+
+	const idpNewPagePath = '/web/guest/' + pageTitle;
+
+	// Configure new page as the Default Landing Page
+
+	const instanceSettingsPage = new InstanceSettingsPage(idpAdminPage);
+
+	await instanceSettingsPage.goToInstanceSetting(
+		'Instance Configuration',
+		'General',
+		false
+	);
+
+	const generalPage = new GeneralPage(instanceSettingsPage.page);
+
+	await generalPage.editDefaultLandingPage(idpNewPagePath);
+
+	resetAfterTestGeneralPage.add(DEFAULT_IDP_NAME);
+
+	// Create IdP User
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// IdP initiated SSO
+
+	const newPage = await browser.newPage();
+
+	await performLogin(newPage, userAccount.alternateName, DEFAULT_IDP_URL);
+
+	await newPage.getByTitle('User Profile Menu').waitFor({timeout: 30 * 1000});
+
+	// Expect to be redirected back to Default Landing Page configuration value
+
+	await newPage.waitForTimeout(5000);
+
+	expect(await newPage.url()).toContain(DEFAULT_IDP_URL + idpNewPagePath);
+});
+
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({
 	browser,
 }) => {

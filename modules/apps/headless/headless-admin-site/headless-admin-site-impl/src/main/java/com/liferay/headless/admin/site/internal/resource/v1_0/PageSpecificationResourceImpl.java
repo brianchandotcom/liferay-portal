@@ -457,16 +457,32 @@ public class PageSpecificationResourceImpl
 			return 0;
 		}
 
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if ((layoutPageTemplateEntry != null) &&
+			Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				layoutPageTemplateEntry.getType())) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		ItemExternalReference itemExternalReference =
 			settings.getMasterPageItemExternalReference();
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
+		layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.
 				fetchLayoutPageTemplateEntryByExternalReferenceCode(
 					itemExternalReference.getExternalReferenceCode(),
 					layout.getGroupId());
 
-		if (layoutPageTemplateEntry == null) {
+		if ((layoutPageTemplateEntry == null) ||
+			!Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				layoutPageTemplateEntry.getType())) {
+
 			throw new UnsupportedOperationException();
 		}
 

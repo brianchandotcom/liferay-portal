@@ -369,6 +369,14 @@ public class PageSpecificationResourceImpl
 		}
 
 		for (PageElement childPageElement : pageElement.getPageElements()) {
+			if ((childPageElement.getParentExternalReferenceCode() != null) &&
+				!Objects.equals(
+					childPageElement.getParentExternalReferenceCode(),
+					pageElement.getExternalReferenceCode())) {
+
+				throw new UnsupportedOperationException();
+			}
+
 			layoutStructure.addLayoutStructureItem(
 				childPageElement.getExternalReferenceCode(),
 				_externalToInternalValuesMap.get(childPageElement.getType()),

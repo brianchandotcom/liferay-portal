@@ -22,7 +22,7 @@ public class PortalCacheConfiguration {
 
 	public PortalCacheConfiguration(
 		String portalCacheName,
-		Set<Properties> portalCacheListenerPropertiesSet) {
+		Set<Properties> portalCacheReplicatorPropertiesSet) {
 
 		if (portalCacheName == null) {
 			throw new NullPointerException("Portal cache name is null");
@@ -30,31 +30,31 @@ public class PortalCacheConfiguration {
 
 		_portalCacheName = portalCacheName;
 
-		if (portalCacheListenerPropertiesSet == null) {
-			_portalCacheListenerPropertiesSet = Collections.emptySet();
+		if (portalCacheReplicatorPropertiesSet == null) {
+			_portalCacheReplicatorPropertiesSet = Collections.emptySet();
 		}
 		else {
-			_portalCacheListenerPropertiesSet = new HashSet<>(
-				portalCacheListenerPropertiesSet);
+			_portalCacheReplicatorPropertiesSet = new HashSet<>(
+				portalCacheReplicatorPropertiesSet);
 		}
-	}
-
-	public Set<Properties> getPortalCacheListenerPropertiesSet() {
-		return _portalCacheListenerPropertiesSet;
 	}
 
 	public String getPortalCacheName() {
 		return _portalCacheName;
 	}
 
+	public Set<Properties> getPortalCacheReplicatorPropertiesSet() {
+		return _portalCacheReplicatorPropertiesSet;
+	}
+
 	public PortalCacheConfiguration newPortalCacheConfiguration(
 		String portalCacheName) {
 
 		return new PortalCacheConfiguration(
-			portalCacheName, _portalCacheListenerPropertiesSet);
+			portalCacheName, _portalCacheReplicatorPropertiesSet);
 	}
 
-	private final Set<Properties> _portalCacheListenerPropertiesSet;
 	private final String _portalCacheName;
+	private final Set<Properties> _portalCacheReplicatorPropertiesSet;
 
 }

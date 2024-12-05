@@ -11,12 +11,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.AggregatedPortalCacheManagerListener;
 import com.liferay.portal.cache.LowLevelCache;
 import com.liferay.portal.cache.MVCCPortalCache;
-import com.liferay.portal.cache.PortalCacheListenerFactory;
 import com.liferay.portal.cache.TransactionalPortalCache;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.cache.ehcache.internal.configurator.EhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.cache.ehcache.internal.event.ConfigurableEhcachePortalCacheListener;
+import com.liferay.portal.cache.ehcache.internal.event.EhcachePortalCacheListenerFactory;
 import com.liferay.portal.cache.ehcache.internal.event.PortalCacheManagerEventListener;
 import com.liferay.portal.cache.ehcache.internal.management.ManagementService;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -197,8 +197,7 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 			configurationObjectValuePair =
 				_ehcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
-						_portalCacheManagerName, configurationURL, classLoader,
-						_usingDefault);
+						_portalCacheManagerName, configurationURL);
 
 		_reconfigEhcache(configurationObjectValuePair.getKey());
 
@@ -322,8 +321,7 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 			configurationObjectValuePair =
 				_ehcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
-						_portalCacheManagerName, configFileURL, classLoader,
-						_usingDefault);
+						_portalCacheManagerName, configFileURL);
 
 		_overrideConfigurationsByExtFile(configurationObjectValuePair);
 
@@ -384,7 +382,8 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 	protected BundleContext bundleContext;
 
 	@Reference
-	protected PortalCacheListenerFactory portalCacheListenerFactory;
+	protected EhcachePortalCacheListenerFactory
+		ehcachePortalCacheListenerFactory;
 
 	@Reference
 	protected Props props;
@@ -399,10 +398,10 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 
 		for (Properties properties :
 				portalCacheConfiguration.
-					getPortalCacheListenerPropertiesSet()) {
+					getPortalCacheReplicatorPropertiesSet()) {
 
 			PortalCacheListener<K, V> portalCacheListener =
-				portalCacheListenerFactory.create(properties);
+				ehcachePortalCacheListenerFactory.create(properties);
 
 			if (portalCacheListener == null) {
 				continue;
@@ -447,8 +446,7 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 			extConfigurationObjectValuePair =
 				_ehcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
-						_portalCacheManagerName, extFileURL, classLoader,
-						false);
+						_portalCacheManagerName, extFileURL);
 
 		Configuration extConfiguration =
 			extConfigurationObjectValuePair.getKey();

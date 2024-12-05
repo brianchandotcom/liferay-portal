@@ -5,24 +5,16 @@
 
 package com.liferay.portal.cache.ehcache.internal.event;
 
-import com.liferay.portal.cache.PortalCacheListenerFactory;
 import com.liferay.portal.cache.PortalCacheReplicator;
 import com.liferay.portal.cache.PortalCacheReplicatorFactory;
-import com.liferay.portal.cache.ehcache.internal.constants.EhcacheConstants;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Properties;
-
-import net.sf.ehcache.event.CacheEventListener;
-import net.sf.ehcache.event.CacheEventListenerFactory;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,11 +22,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tina Tian
  */
-@Component(service = PortalCacheListenerFactory.class)
-public class EhcachePortalCacheListenerFactory
-	implements PortalCacheListenerFactory {
+@Component(service = EhcachePortalCacheListenerFactory.class)
+public class EhcachePortalCacheListenerFactory {
 
-	@Override
 	public <K extends Serializable, V> PortalCacheListener<K, V> create(
 		Properties properties) {
 
@@ -56,37 +46,7 @@ public class EhcachePortalCacheListenerFactory
 						portalCacheListener);
 		}
 
-		String className = (String)properties.remove(
-			EhcacheConstants.CACHE_LISTENER_PROPERTIES_KEY_FACTORY_CLASS_NAME);
-
-		if (Validator.isNull(className)) {
-			return null;
-		}
-
-		ClassLoader classLoader = (ClassLoader)properties.remove(
-			EhcacheConstants.
-				CACHE_LISTENER_PROPERTIES_KEY_FACTORY_CLASS_LOADER);
-
-		if (classLoader == null) {
-			return null;
-		}
-
-		try {
-			CacheEventListenerFactory cacheEventListenerFactory =
-				(CacheEventListenerFactory)InstanceFactory.newInstance(
-					classLoader, className);
-
-			CacheEventListener cacheEventListener =
-				cacheEventListenerFactory.createCacheEventListener(properties);
-
-			return new EhcachePortalCacheListenerAdapter<>(cacheEventListener);
-		}
-		catch (Exception exception) {
-			throw new SystemException(
-				"Unable to instantiate cache event listener factory " +
-					className,
-				exception);
-		}
+		return null;
 	}
 
 	@Reference

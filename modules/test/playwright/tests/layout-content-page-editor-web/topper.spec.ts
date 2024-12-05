@@ -23,7 +23,6 @@ const test = mergeTests(
 	collectionsPagesTest,
 	featureFlagsTest({
 		'LPD-18221': true,
-		'LPD-32075': true,
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,

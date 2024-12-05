@@ -176,7 +176,7 @@ export default function TopperItemActions({disabled, item}) {
 			});
 		}
 
-		if (portletId && Liferay.FeatureFlags['LPD-32075']) {
+		if (portletId) {
 			addPortletAction(
 				items,
 				portletActions[PORTLET_DEFAULT_ACTIONS.exportImport],
@@ -223,7 +223,7 @@ export default function TopperItemActions({disabled, item}) {
 
 		addDivider(items);
 
-		if (portletId && Liferay.FeatureFlags['LPD-32075']) {
+		if (portletId) {
 			addPortletAction(
 				items,
 				portletActions[PORTLET_DEFAULT_ACTIONS.configuration],

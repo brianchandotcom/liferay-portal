@@ -237,8 +237,7 @@ const ActivableTopperEmpty = ({
 					tabIndex: isFocusable ? 0 : -1,
 				})}
 
-				{isActive ||
-				(isHovered && Liferay.FeatureFlags['LPD-32075']) ? (
+				{isActive || isHovered ? (
 					<TopperEmptyLabel
 						isActive={isActive}
 						isHovered={isHovered && !isActive}

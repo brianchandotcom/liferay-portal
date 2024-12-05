@@ -268,9 +268,7 @@ function TopperContent({
 			}}
 			tabIndex={isFocusable ? 0 : -1}
 		>
-			{isActive ||
-			isHighlighted ||
-			(isHovered && Liferay.FeatureFlags['LPD-32075']) ? (
+			{isActive || isHighlighted || isHovered ? (
 				<TopperLabel
 					isDragging={isDraggingSource}
 					isHovered={isHovered && !isActive}

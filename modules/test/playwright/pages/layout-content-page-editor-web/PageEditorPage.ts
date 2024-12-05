@@ -893,22 +893,7 @@ export class PageEditorPage {
 	}
 
 	async goToWidgetConfiguration(widgetId: string) {
-		if (await this.page.evaluate(() => Liferay.FeatureFlags['LPD-32075'])) {
-			await this.clickFragmentOption(widgetId, 'Configuration');
-		}
-		else {
-			const topper = this.getTopper(widgetId);
-
-			await topper.hover();
-
-			await expect(topper.locator('.portlet-options')).toBeVisible();
-
-			await topper.locator('.portlet-options').click();
-
-			await this.page
-				.getByRole('menuitem', {exact: true, name: 'Configuration'})
-				.click();
-		}
+		await this.clickFragmentOption(widgetId, 'Configuration');
 	}
 
 	async hideFragment(fragmentId: string, isDesktop = true) {

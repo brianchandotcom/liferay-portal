@@ -69,10 +69,12 @@ import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlParserUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -100,6 +102,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -931,6 +934,18 @@ public class ObjectEntryDTOConverter
 						ObjectFieldConstants.BUSINESS_TYPE_DATE) ||
 					 objectField.compareBusinessType(
 						 ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
+
+				if (Validator.isNull(serializable)) {
+					continue;
+				}
+
+				if (serializable instanceof String) {
+					Date date = DateUtil.parseDate(
+						"yyyy-MM-dd", (String)serializable,
+						LocaleUtil.getSiteDefault());
+
+					serializable = new Timestamp(date.getTime());
+				}
 
 				Timestamp timestamp = (Timestamp)serializable;
 

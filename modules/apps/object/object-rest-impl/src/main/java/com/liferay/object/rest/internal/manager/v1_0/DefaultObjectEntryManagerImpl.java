@@ -1314,6 +1314,18 @@ public class DefaultObjectEntryManagerImpl
 				objectEntryId, null));
 	}
 
+	private Serializable _getValue(
+		Locale locale, ObjectField objectField, Object value) {
+
+		if (Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_DATE)) {
+
+			return _toDate(locale, String.valueOf(value));
+		}
+
+		return (Serializable)value;
+	}
+
 	private boolean _isManyToOneObjectRelationship(
 		ObjectDefinition objectDefinition,
 		ObjectRelationship objectRelationship,
@@ -1719,20 +1731,10 @@ public class DefaultObjectEntryManagerImpl
 					values.put(
 						objectField.getI18nObjectFieldName(),
 						HashMapBuilder.put(
-							_language.getLanguageId(locale), value
+							_language.getLanguageId(locale),
+							_getValue(locale, objectField, value)
 						).build());
 				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_DATE)) {
-
-				values.put(
-					objectField.getName(),
-					_toDate(locale, String.valueOf(value)));
 
 				continue;
 			}
@@ -1747,7 +1749,8 @@ public class DefaultObjectEntryManagerImpl
 				continue;
 			}
 
-			values.put(objectField.getName(), (Serializable)value);
+			values.put(
+				objectField.getName(), _getValue(locale, objectField, value));
 		}
 
 		return values;

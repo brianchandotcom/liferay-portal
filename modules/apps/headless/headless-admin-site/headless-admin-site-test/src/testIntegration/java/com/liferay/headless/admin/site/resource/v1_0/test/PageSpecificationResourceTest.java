@@ -6,10 +6,6 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
@@ -31,7 +27,6 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
-import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
@@ -44,11 +39,9 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -313,20 +306,6 @@ public class PageSpecificationResourceTest
 			Collections.emptyMap(), type, _getTypeSettings(), false, false,
 			Collections.emptyMap(), _getMasterLayoutPlid(serviceContext),
 			serviceContext);
-	}
-
-	private DLFileEntry _adDLFileEntry(ServiceContext serviceContext)
-		throws Exception {
-
-		return _dlFileEntryLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			serviceContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, StringUtil.randomId(),
-			ContentTypes.IMAGE_PNG, StringUtil.randomString(),
-			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, new UnsyncByteArrayInputStream(new byte[0]), 0, null, null,
-			null, serviceContext);
 	}
 
 	private StyleBookEntry _addStyleBookEntry(ServiceContext serviceContext)
@@ -607,18 +586,6 @@ public class PageSpecificationResourceTest
 			_getDisplayPageLayoutPageTemplateEntry(serviceContext);
 
 		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
-	}
-
-	private long _getFaviconFileEntryId(ServiceContext serviceContext)
-		throws Exception {
-
-		if (RandomTestUtil.randomBoolean()) {
-			return 0;
-		}
-
-		DLFileEntry dlFileEntry = _adDLFileEntry(serviceContext);
-
-		return dlFileEntry.getFileEntryId();
 	}
 
 	private Layout _getLayout(String externalReferenceCode, Layout... layouts)
@@ -989,29 +956,12 @@ public class PageSpecificationResourceTest
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(), layout.getFriendlyURLMap(),
 			layout.getIconImage(), null, _getStyleBookEntryId(serviceContext),
-			_getFaviconFileEntryId(serviceContext),
-			layout.getMasterLayoutPlid(), serviceContext);
+			0, layout.getMasterLayoutPlid(), serviceContext);
 	}
 
 	private void _updateSettings(
 			ServiceContext serviceContext, Settings settings)
 		throws Exception {
-
-		if (settings.getFavIcon() != null) {
-			settings.setFavIcon(() -> null);
-		}
-		else {
-			DLFileEntry dlFileEntry = _adDLFileEntry(serviceContext);
-
-			settings.setFavIcon(
-				() -> new ItemExternalReference() {
-					{
-						setCollectionType(CollectionType.COLLECTION);
-						setExternalReferenceCode(
-							dlFileEntry::getExternalReferenceCode);
-					}
-				});
-		}
 
 		if (Validator.isNotNull(settings.getJavascript())) {
 			settings.setJavascript(() -> null);
@@ -1078,9 +1028,6 @@ public class PageSpecificationResourceTest
 				).build());
 		}
 	}
-
-	@Inject
-	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

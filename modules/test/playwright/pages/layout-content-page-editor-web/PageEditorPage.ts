@@ -309,8 +309,7 @@ export class PageEditorPage {
 		const field = panel
 			? this.page
 					.getByRole('tabpanel', {name: tab})
-					.locator('.panel')
-					.filter({hasText: panel})
+					.locator('.panel', {hasText: panel})
 					.getByLabel(fieldLabel, {
 						exact: true,
 					})
@@ -584,13 +583,15 @@ export class PageEditorPage {
 		await this.goToSidebarTab('Browser');
 
 		const sourceNode = this.page
-			.locator('.page-editor__page-structure__tree-node')
-			.filter({hasText: source.label})
+			.locator('.page-editor__page-structure__tree-node', {
+				hasText: source.label,
+			})
 			.nth(source.nth || 0);
 
 		const targetNode = this.page
-			.locator('.page-editor__page-structure__tree-node')
-			.filter({hasText: target.label})
+			.locator('.page-editor__page-structure__tree-node', {
+				hasText: target.label,
+			})
 			.nth(target.nth || 0);
 
 		// Select and drag source node

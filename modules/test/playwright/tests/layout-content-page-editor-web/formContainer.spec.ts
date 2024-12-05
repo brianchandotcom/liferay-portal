@@ -88,8 +88,7 @@ test.describe('Form Configuration', () => {
 			await pageEditorPage.selectFragment(formId);
 
 			await page
-				.locator('.panel')
-				.filter({hasText: 'Actions After Submit'})
+				.locator('.panel', {hasText: 'Actions After Submit'})
 				.getByLabel('Success Action', {exact: true})
 				.selectOption({label: 'Show Embedded Message'});
 
@@ -196,8 +195,7 @@ test.describe('Form Configuration', () => {
 			await pageEditorPage.selectFragment(formId);
 
 			await page
-				.locator('.panel')
-				.filter({hasText: 'Actions After Submit'})
+				.locator('.panel', {hasText: 'Actions After Submit'})
 				.getByLabel('Success Action', {exact: true})
 				.selectOption({label: 'Stay in Page'});
 
@@ -1601,8 +1599,7 @@ test.describe('Numeric input field', () => {
 		});
 
 		const requireIcon = page
-			.locator('label')
-			.filter({hasText: 'Lemon Weight'})
+			.locator('label', {hasText: 'Lemon Weight'})
 			.locator('svg.reference-mark');
 
 		await expect(requireIcon).toBeAttached();
@@ -1616,9 +1613,7 @@ test.describe('Numeric input field', () => {
 			value: 'Lemon weight in grams',
 		});
 
-		const label = page
-			.locator('label')
-			.filter({hasText: 'Lemon weight in grams'});
+		const label = page.locator('label', {hasText: 'Lemon weight in grams'});
 
 		await expect(label).not.toHaveClass(/sr-only/);
 
@@ -1781,8 +1776,7 @@ test.describe('Text input field', () => {
 			});
 
 			const requireIcon = page
-				.locator('label')
-				.filter({hasText: 'Lemon Size'})
+				.locator('label', {hasText: 'Lemon Size'})
 				.locator('svg.reference-mark');
 
 			await expect(requireIcon).toBeAttached();
@@ -1796,9 +1790,7 @@ test.describe('Text input field', () => {
 				value: 'Lemon size in cm',
 			});
 
-			const label = page
-				.locator('label')
-				.filter({hasText: 'Lemon size in cm'});
+			const label = page.locator('label', {hasText: 'Lemon size in cm'});
 
 			await expect(label).not.toHaveClass(/sr-only/);
 
@@ -2099,7 +2091,7 @@ test.describe('Submit button', () => {
 
 				// Check the status of the object entry
 
-				const row = page.locator('.dnd-tr').filter({hasText: value});
+				const row = page.locator('.dnd-tr', {hasText: value});
 
 				await expect(row).toContainText(status);
 			};
@@ -2458,8 +2450,7 @@ test.describe('Textarea input field', () => {
 			});
 
 			const requireIcon = page
-				.locator('label')
-				.filter({hasText: 'Lemon History'})
+				.locator('label', {hasText: 'Lemon History'})
 				.locator('svg.reference-mark');
 
 			await expect(requireIcon).toBeAttached();
@@ -2473,9 +2464,9 @@ test.describe('Textarea input field', () => {
 				value: 'Describe the history of the lemon',
 			});
 
-			const label = page
-				.locator('label')
-				.filter({hasText: 'Describe the history of the lemon'});
+			const label = page.locator('label', {
+				hasText: 'Describe the history of the lemon',
+			});
 
 			await expect(label).not.toHaveClass(/sr-only/);
 

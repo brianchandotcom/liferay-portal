@@ -10,6 +10,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
@@ -30,6 +31,7 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	masterPagesPagesTest,
 	pageEditorPagesTest,
 	pageManagementSiteTest
 );
@@ -351,5 +353,91 @@ test(
 		await expect(
 			navigationItem.filter({hasText: 'Supported Clients'})
 		).toContainText(/Deprecated/);
+	}
+);
+
+test(
+	'Widgets inherited from custom master will inherit permissions set in custom master',
+	{
+		tag: '@LPS-106813',
+	},
+	async ({apiHelpers, masterPagesPage, page, pageEditorPage, site}) => {
+
+		// Add master page
+
+		const layoutPageTemplateEntryName = getRandomString();
+
+		const masterPage =
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+				{
+					groupId: site.id,
+					name: layoutPageTemplateEntryName,
+					type: 'master-layout',
+				}
+			);
+
+		// Go to edit master page
+
+		await masterPagesPage.goto(site.friendlyUrlPath);
+
+		await masterPagesPage.editMaster(layoutPageTemplateEntryName);
+
+		// Add language selector widget
+
+		await pageEditorPage.addWidget('Tools', 'Language Selector');
+
+		// Open permissions
+
+		const widgetId =
+			await pageEditorPage.getFragmentId('Language Selector');
+
+		await pageEditorPage.selectFragment(widgetId);
+
+		await page
+			.locator('.page-editor__topper__item')
+			.getByRole('button', {name: 'Options'})
+			.click();
+
+		const dropdown = page.locator('.dropdown-menu.show');
+
+		await dropdown.getByText('Permissions', {exact: true}).click();
+
+		// Removes view permissions
+
+		const permissionsIFrame = page.frameLocator(
+			'iframe[title="Permissions"]'
+		);
+
+		await permissionsIFrame.locator('#guest_ACTION_VIEW').uncheck();
+
+		await permissionsIFrame.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(permissionsIFrame);
+
+		await page.getByLabel('close', {exact: true}).click();
+
+		// Publish
+
+		await pageEditorPage.publishPage();
+
+		// Create a layout
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			masterLayoutPlid: masterPage.plid,
+			title: getRandomString(),
+		});
+
+		// Go to view mode as guest user and assert language selector is not visible
+
+		await performLogout(page);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await expect(
+			page.getByText(
+				'You do not have the roles required to access this portlet.'
+			)
+		).toBeVisible();
 	}
 );

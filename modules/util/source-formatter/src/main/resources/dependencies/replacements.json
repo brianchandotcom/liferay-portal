@@ -3744,8 +3744,7 @@
 		"from": "updateFileEntry(long paramName, long paramName, String paramName, String paramName, String paramName, String paramName, String paramName, boolean paramName, byte[] paramName, ServiceContext paramName)",
 		"issueKey": "LPS-194134",
 		"newImports": [
-			"com.liferay.document.library.kernel.model.DLVersionNumberIncrease",
-			"java.util.Date"
+			"com.liferay.document.library.kernel.model.DLVersionNumberIncrease"
 		],
 		"to": "updateFileEntry(param#0#, param#1#, param#2#, param#3#, param#4#, null, param#5#, param#6#, dlVersionNumberIncrease, param#7#, null, null, param#8#, param#9#)"
 	},
@@ -3757,8 +3756,7 @@
 		"from": "updateFileEntry(long paramName, long paramName, String paramName, String paramName, String paramName, String paramName, String paramName, DLVersionNumberIncrease paramName, byte[] paramName, ServiceContext paramName)",
 		"issueKey": "LPS-194134",
 		"newImports": [
-			"com.liferay.document.library.kernel.model.DLVersionNumberIncrease",
-			"java.util.Date"
+			"com.liferay.document.library.kernel.model.DLVersionNumberIncrease"
 		],
 		"to": "updateFileEntry(param#0#, param#1#, param#2#, param#3#, param#4#, null, param#5#, param#6#, param#7#, param#8#, null, null, param#9#)"
 	},

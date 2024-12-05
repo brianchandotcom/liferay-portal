@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
@@ -76,6 +76,10 @@ export class DisplayPageTemplatesPage {
 	}
 
 	async deleteAllDisplayPageTemplates() {
+		await expect(
+			this.page.getByLabel('Search for', {exact: true})
+		).toBeEnabled();
+
 		await this.page
 			.getByLabel('Select All Items on the Page')
 			.setChecked(true);

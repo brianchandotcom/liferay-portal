@@ -1232,6 +1232,63 @@ test('LPD-32210 AC1 TC3: Verify IdP initiated SSO with a configured Default Land
 	expect(await newPage.url()).toContain(DEFAULT_IDP_URL + idpNewPagePath);
 });
 
+test('LPD-32210 AC1 TC4: Verify IdP initiated SSO with no redirection params/configs applied redirects user to the page they initiated SSO from.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create new page on IdP Instance
+
+	const pagesAdminPage = new PagesAdminPage(idpAdminPage);
+
+	await pagesAdminPage.goto();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: pageTitle,
+	});
+
+	const idpNewPageUrl = DEFAULT_IDP_URL + '/web/guest/' + pageTitle;
+
+	// Create IdP User
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// IdP initiated SSO from new page
+
+	const newPage = await browser.newPage();
+
+	await performLogin(newPage, userAccount.alternateName, idpNewPageUrl);
+
+	await newPage.waitForTimeout(5000);
+
+	// Verify user is logged in
+
+	expect(await newPage.getByTitle('User Profile Menu')).toBeVisible();
+
+	// Expect to be redirected back to page SSO was initiated from
+
+	expect(await newPage.url()).toContain(idpNewPageUrl);
+});
+
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({
 	browser,
 }) => {

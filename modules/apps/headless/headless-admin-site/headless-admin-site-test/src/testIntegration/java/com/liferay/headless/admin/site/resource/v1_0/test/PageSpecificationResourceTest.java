@@ -515,8 +515,9 @@ public class PageSpecificationResourceTest
 		}
 	}
 
-	private void _assertPutSiteSiteByExternalReferenceCodePageSpecification(
-			Layout layout, ServiceContext serviceContext)
+	private void
+			_assertPutSiteSiteByExternalReferenceCodeContentPageSpecification(
+				Layout layout, ServiceContext serviceContext)
 		throws Exception {
 
 		ContentPageSpecification contentPageSpecification =
@@ -966,7 +967,7 @@ public class PageSpecificationResourceTest
 						testGroup.getExternalReferenceCode(),
 						layout.getExternalReferenceCode(), pageSpecification));
 
-		_assertPutSiteSiteByExternalReferenceCodePageSpecification(
+		_assertPutSiteSiteByExternalReferenceCodeContentPageSpecification(
 			draftLayout, serviceContext);
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
@@ -985,7 +986,7 @@ public class PageSpecificationResourceTest
 			TestPropsValues.getUserId(), draftLayout.getPlid(),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
-		_assertPutSiteSiteByExternalReferenceCodePageSpecification(
+		_assertPutSiteSiteByExternalReferenceCodeContentPageSpecification(
 			draftLayout, serviceContext);
 	}
 

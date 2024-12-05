@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:application-list:application-list-api")
 	testIntegrationImplementation project(":apps:asset:asset-display-page-api")
 	testIntegrationImplementation project(":apps:asset:asset-list-api")
+	testIntegrationImplementation project(":apps:asset:asset-publisher-api")
 	testIntegrationImplementation project(":apps:blogs:blogs-api")
 	testIntegrationImplementation project(":apps:blogs:blogs-test-util")
 	testIntegrationImplementation project(":apps:change-tracking:change-tracking-api")

@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.admin.web.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -60,17 +61,28 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -292,6 +304,181 @@ public class LayoutsImporterTest {
 		_assertLayoutPageTemplateEntry(
 			fragmentEntry, fragmentEntryLink,
 			_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
+	}
+
+	@Test
+	@TestInfo("LPS-106815")
+	public void testImportLayoutPageTemplateEntryWithOrganizationRole()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization(true);
+
+		Group organizationSite = _groupLocalService.getOrganizationGroup(
+			TestPropsValues.getCompanyId(), organization.getOrganizationId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, _serviceContext1.getUserId(),
+					organizationSite.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					RandomTestUtil.randomString(), StringPool.BLANK,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
+					_serviceContext1);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, _serviceContext1.getUserId(),
+				organizationSite.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.BASIC, 0,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext1);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		JSONObject processAddPortletJSONObject =
+			ContentLayoutTestUtil.addPortletToLayout(
+				draftLayout, AssetPublisherPortletKeys.ASSET_PUBLISHER);
+
+		JSONObject fragmentEntryLinkJSONObject =
+			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLinkJSONObject.getJSONObject("editableValues");
+
+		String portletId = PortletIdCodec.encode(
+			editableValuesJSONObject.getString("portletId"),
+			editableValuesJSONObject.getString("instanceId"));
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_ORGANIZATION);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(),
+			AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			PortletPermissionUtil.getPrimaryKey(
+				draftLayout.getPlid(), portletId),
+			role.getRoleId(), new String[] {ActionKeys.VIEW});
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
+			LayoutPageTemplateEntryTypeConstants.BASIC);
+
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			_layoutsImporter.importFile(
+				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+
+		LayoutsImporterResultEntry layoutsImporterResultEntry =
+			layoutsImporterResultEntries.get(0);
+
+		Assert.assertEquals(
+			LayoutsImporterResultEntry.Status.IMPORTED,
+			layoutsImporterResultEntry.getStatus());
+
+		Assert.assertArrayEquals(
+			new String[] {
+				"Role with key " + role.getName() +
+					" was ignored because it does not exist."
+			},
+			layoutsImporterResultEntry.getWarningMessages());
+	}
+
+	@Test
+	@TestInfo("LPS-106815")
+	public void testImportLayoutPageTemplateEntryWithRegularRole()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry();
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		JSONObject processAddPortletJSONObject =
+			ContentLayoutTestUtil.addPortletToLayout(
+				draftLayout, AssetPublisherPortletKeys.ASSET_PUBLISHER);
+
+		JSONObject fragmentEntryLinkJSONObject =
+			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLinkJSONObject.getJSONObject("editableValues");
+
+		String portletId = PortletIdCodec.encode(
+			editableValuesJSONObject.getString("portletId"),
+			editableValuesJSONObject.getString("instanceId"));
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(),
+			AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			PortletPermissionUtil.getPrimaryKey(
+				draftLayout.getPlid(), portletId),
+			role.getRoleId(), new String[] {ActionKeys.VIEW});
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
+			LayoutPageTemplateEntryTypeConstants.BASIC);
+
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			_layoutsImporter.importFile(
+				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+
+		LayoutsImporterResultEntry layoutsImporterResultEntry =
+			layoutsImporterResultEntries.get(0);
+
+		Assert.assertEquals(
+			LayoutsImporterResultEntry.Status.IMPORTED,
+			layoutsImporterResultEntry.getStatus());
+
+		LayoutPageTemplateEntry importedLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group2.getGroupId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				importedLayoutPageTemplateEntry.getGroupId(),
+				importedLayoutPageTemplateEntry.getPlid());
+
+		Assert.assertEquals(
+			fragmentEntryLinks.toString(), 1, fragmentEntryLinks.size());
+
+		FragmentEntryLink importedFragmentEntryLink = fragmentEntryLinks.get(0);
+
+		JSONObject importedEditableValuesJSONObject =
+			_jsonFactory.createJSONObject(
+				importedFragmentEntryLink.getEditableValues());
+
+		String importedPortletId = PortletIdCodec.encode(
+			importedEditableValuesJSONObject.getString("portletId"),
+			importedEditableValuesJSONObject.getString("instanceId"));
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(),
+				AssetPublisherPortletKeys.ASSET_PUBLISHER,
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				PortletPermissionUtil.getPrimaryKey(
+					importedLayoutPageTemplateEntry.getPlid(),
+					importedPortletId),
+				role.getRoleId(), ActionKeys.VIEW));
 	}
 
 	@Test
@@ -1621,6 +1808,9 @@ public class LayoutsImporterTest {
 	private Group _group2;
 
 	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Inject
@@ -1652,6 +1842,9 @@ public class LayoutsImporterTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

@@ -1391,7 +1391,7 @@ test.describe('File Upload Fragment', () => {
 			);
 
 			await expect(
-				fileUploadInput.getByText('high_resolution_photo')
+				fileUploadInput.getByText('high_resolution_image')
 			).toBeVisible();
 
 			// Submit form

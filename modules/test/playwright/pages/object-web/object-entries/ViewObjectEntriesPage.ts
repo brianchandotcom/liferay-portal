@@ -134,6 +134,10 @@ export class ViewObjectEntriesPage {
 			.getByRole('link', {name: 'Provided by Liferay'})
 			.click();
 
+		await expect(
+			this.selectFileIframe.getByLabel('Search for', {exact: true})
+		).toBeEnabled();
+
 		await this.selectFileIframe.getByText(fileName).dblclick();
 	}
 

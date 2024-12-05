@@ -340,6 +340,17 @@ public class PageSpecificationResourceImpl
 				serviceContext);
 		}
 
+		if (!Objects.equals(
+				PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
+				pageSpecification.getType()) ||
+			!layout.isDraftLayout() ||
+			!Objects.equals(
+				pageSpecification.getStatus(),
+				PageSpecification.Status.DRAFT)) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
 			serviceContext.setAttribute(
 				"layout.instanceable.allowed", Boolean.TRUE);

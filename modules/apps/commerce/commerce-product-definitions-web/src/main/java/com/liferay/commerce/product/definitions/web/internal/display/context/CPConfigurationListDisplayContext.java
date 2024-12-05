@@ -143,7 +143,7 @@ public class CPConfigurationListDisplayContext {
 	}
 
 	public CPConfigurationList getCPConfigurationList() throws PortalException {
-		long cpConfigurationListId = getCPConfigurationEntryId();
+		long cpConfigurationListId = getCPConfigurationListId();
 
 		if (cpConfigurationListId == 0) {
 			return null;

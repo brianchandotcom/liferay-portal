@@ -510,24 +510,26 @@ public class PageSpecificationResourceTest
 	}
 
 	private void _assertPutSiteSiteByExternalReferenceCodePageSpecification(
-			Layout draftLayout, ServiceContext serviceContext)
+			Layout layout, ServiceContext serviceContext)
 		throws Exception {
 
-		PageSpecification pageSpecification =
-			pageSpecificationResource.
-				getSiteSiteByExternalReferenceCodePageSpecification(
-					testGroup.getExternalReferenceCode(),
-					draftLayout.getExternalReferenceCode());
+		ContentPageSpecification contentPageSpecification =
+			(ContentPageSpecification)
+				pageSpecificationResource.
+					getSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layout.getExternalReferenceCode());
 
-		_updateSettings(serviceContext, pageSpecification.getSettings());
+		_updateSettings(serviceContext, contentPageSpecification.getSettings());
 
 		PageSpecification putPageSpecification =
 			pageSpecificationResource.
 				putSiteSiteByExternalReferenceCodePageSpecification(
 					testGroup.getExternalReferenceCode(),
-					draftLayout.getExternalReferenceCode(), pageSpecification);
+					layout.getExternalReferenceCode(),
+					contentPageSpecification);
 
-		equals(pageSpecification, putPageSpecification);
+		equals(contentPageSpecification, putPageSpecification);
 	}
 
 	private void _assertWidgetPageSpecification(

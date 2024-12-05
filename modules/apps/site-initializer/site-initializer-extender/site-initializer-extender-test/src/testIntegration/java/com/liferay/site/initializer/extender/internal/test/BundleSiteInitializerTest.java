@@ -1841,6 +1841,10 @@ public class BundleSiteInitializerTest {
 			Validator.isNull(journalArticle3.getDDMTemplateKey()));
 		Assert.assertEquals(
 			"Test Journal Article 3", journalArticle3.getTitle());
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(
+				_portal.getSiteDefaultLocale(_group.getGroupId())),
+			journalArticle3.getDefaultLanguageId());
 
 		List<JournalFolder> journalFolders = _journalFolderService.getFolders(
 			_group.getGroupId());

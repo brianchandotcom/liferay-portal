@@ -33,12 +33,10 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.vulcan.permission.Permission;
+import com.liferay.portal.vulcan.jackson.databind.ObjectMapperProviderUtil;
 import com.liferay.portal.vulcan.permission.PermissionUtil;
 
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Objects;
 import java.util.zip.ZipInputStream;
 
 import org.junit.Assert;
@@ -150,44 +148,44 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
 
-		Collection<Permission> permissions = PermissionUtil.getPermissions(
-			objectDefinition.getCompanyId(),
-			ResourceActionLocalServiceUtil.getResourceActions(
-				objectDefinition.getClassName()),
-			objectEntry.getObjectEntryId(), objectDefinition.getClassName(),
-			null);
+		// With "nestedFieldNames" query parameter
 
-		JSONObject jsonObject = _testPostExportTask(
+		JSONObject jsonObject1 = _testPostExportTask(
 			"COMPLETED", "nestedFieldNames=permissions", objectDefinition);
 
-		Assert.assertEquals(1, jsonObject.getInt("processedItemsCount"));
+		Assert.assertEquals(1, jsonObject1.getInt("processedItemsCount"));
 
-		JSONArray contentJSONArray = _getExportTaskContentJSONArray(
-			jsonObject.getString("externalReferenceCode"));
+		JSONArray contentJSONArray1 = _getExportTaskContentJSONArray(
+			jsonObject1.getString("externalReferenceCode"));
 
-		JSONObject firstJSONObject = _jsonFactory.createJSONObject(
-			contentJSONArray.get(
-				0
-			).toString());
+		JSONArray permissionsJSONArray = JSONUtil.getValueAsJSONArray(
+			contentJSONArray1, "JSONObject/0", "JSONArray/permissions");
 
-		JSONArray permissionsJSONArray = _jsonFactory.createJSONArray(
-			firstJSONObject.get(
-				"permissions"
-			).toString());
+		JSONAssert.assertEquals(
+			ObjectMapperProviderUtil.getObjectMapper(
+			).writeValueAsString(
+				PermissionUtil.getPermissions(
+					objectDefinition.getCompanyId(),
+					ResourceActionLocalServiceUtil.getResourceActions(
+						objectDefinition.getClassName()),
+					objectEntry.getObjectEntryId(),
+					objectDefinition.getClassName(), null)
+			),
+			permissionsJSONArray.toString(), JSONCompareMode.LENIENT);
 
-		String roleName = _jsonFactory.createJSONObject(
-			permissionsJSONArray.get(
-				0
-			).toString()
-		).get(
-			"roleName"
-		).toString();
+		// Without "nestedFieldNames" query parameter
 
-		Assert.assertTrue(
-			permissions.stream(
-			).anyMatch(
-				n -> Objects.equals(n.getRoleName(), roleName)
-			));
+		JSONObject jsonObject2 = _testPostExportTask(
+			"COMPLETED", null, objectDefinition);
+
+		Assert.assertEquals(1, jsonObject2.getInt("processedItemsCount"));
+
+		JSONArray contentJSONArray2 = _getExportTaskContentJSONArray(
+			jsonObject2.getString("externalReferenceCode"));
+
+		Assert.assertNull(
+			JSONUtil.getValueAsJSONArray(
+				contentJSONArray2, "JSONObject/0", "JSONArray/permissions"));
 	}
 
 	private JSONArray _getExportTaskContentJSONArray(

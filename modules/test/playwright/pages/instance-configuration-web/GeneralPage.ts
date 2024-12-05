@@ -8,16 +8,25 @@ import {Locator, Page} from '@playwright/test';
 import {waitForAlert} from '../../utils/waitForAlert';
 
 export class GeneralPage {
+	readonly defaultLandingPageField: Locator;
 	readonly defaultLogoutPageField: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
+		this.defaultLandingPageField = page.getByLabel('Default Landing Page');
 		this.defaultLogoutPageField = page.getByLabel('Default Logout Page');
 		this.page = page;
 		this.saveButton = page
 			.getByRole('button', {name: 'Save'})
 			.or(page.getByRole('button', {name: 'Update'}));
+	}
+
+	async editDefaultLandingPage(defaultLandingPage: string) {
+		await this.defaultLandingPageField.fill(defaultLandingPage);
+
+		await this.saveButton.click();
+		await waitForAlert(this.page);
 	}
 
 	async editDefaultLogoutPage(defaultLogoutPage: string) {

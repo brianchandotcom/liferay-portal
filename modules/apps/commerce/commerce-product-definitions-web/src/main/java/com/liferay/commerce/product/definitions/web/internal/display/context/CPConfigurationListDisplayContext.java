@@ -191,7 +191,10 @@ public class CPConfigurationListDisplayContext {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref("addCPConfigurationList");
-				dropdownItem.setLabel("add-new-product-configuration");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						httpServletRequest,
+						"add-new-product-configuration"));
 				dropdownItem.setTarget("event");
 			}
 		).build();

@@ -519,6 +519,7 @@
 	"workspaces-group-id": "ワークスペースのグループ ID",
 	"x-cluster-nodes-keys": "{0} 件のクラスターノード (キー)",
 	"x-copied-to-clipboard": "{0}がクリップボードにコピーされました",
+	"x-entries": "{0} エントリ",
 	"x-items": "{0} 項目",
 	"x-of-x": "{0} / {1}",
 	"x-of-x-available": "{0} / {1} 件を使用可能",

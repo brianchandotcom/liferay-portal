@@ -519,6 +519,7 @@
 	"workspaces-group-id": "ID de grupo do local de trabalho",
 	"x-cluster-nodes-keys": "{0} nós de cluster (chaves)",
 	"x-copied-to-clipboard": "{0} copiado para a área de transferência",
+	"x-entries": "{0} entradas",
 	"x-items": "{0} itens",
 	"x-of-x": "{0} de {1}",
 	"x-of-x-available": "{0} de {1} disponíveis",

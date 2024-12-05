@@ -519,6 +519,7 @@
 	"workspaces-group-id": "Identificador de grupo del espacio de trabajo",
 	"x-cluster-nodes-keys": "{0} nodos del clúster (códigos de activación)",
 	"x-copied-to-clipboard": "{0} copiado en el Portapapeles",
+	"x-entries": "{0} entradas",
 	"x-items": "{0} elementos",
 	"x-of-x": "{0} de {1}",
 	"x-of-x-available": "{0} de {1} disponibles",

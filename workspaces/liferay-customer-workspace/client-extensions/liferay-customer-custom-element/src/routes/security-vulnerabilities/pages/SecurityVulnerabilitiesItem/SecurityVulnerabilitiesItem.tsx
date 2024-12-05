@@ -18,12 +18,16 @@ import SVTable from '../../components/SVTable';
 import {IRow} from '../../components/SVTable/SVTable';
 import SVAffectedVersions from '../../components/SVTable/components/SVAffectedVersions';
 import useJiraSearch from '../../hooks/useJiraSearch';
+import { ClayPaginationBarWithBasicItems } from '@clayui/pagination-bar/lib/PaginationBarWithBasicItems';
+import usePagination from '../../components/SVTable/hooks/usePaginationSV';
 
 const SecurityVulnerabilitiesItem = () => {
 	const {id} = useParams();
 
+	const pagination = usePagination();
+
 	const {jiraIssue, loading: issueLoading} = useJiraIssue(id);
-	const {jiraSearch, loading: searchLoading} = useJiraSearch();
+	const {jiraSearch, loading: searchLoading} = useJiraSearch(pagination.activePage, pagination.activeDelta);
 
 	const columns = [
 		{
@@ -254,10 +258,17 @@ const SecurityVulnerabilitiesItem = () => {
 						{searchLoading ? (
 							<span className="cp-spinner ml-2 spinner-border spinner-border-sm"></span>
 						) : rows?.length ? (
-							<SVTable
-								columns={columns}
-								rows={rows as unknown as IRow[]}
-							/>
+							<>
+								<SVTable
+									columns={columns}
+									rows={rows as unknown as IRow[]}
+								/>
+
+								<ClayPaginationBarWithBasicItems
+											{...pagination}
+											totalItems={jiraSearch?.[JiraEnum.TOTAL]!}
+										/>
+							</>
 						) : (
 							<div className="py-2">
 								{i18n.translate(

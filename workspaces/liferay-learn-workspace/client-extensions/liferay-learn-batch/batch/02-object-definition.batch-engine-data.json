@@ -1155,7 +1155,7 @@
 					"label": {
 						"en_US": "P2S3 Learning Path Step to P2S3 External Medias"
 					},
-					"name": "p2s3LearningPathStepToP2S3ExternalMedias",
+					"name": "p2s3LPStepToP2S3ExtMedia",
 					"objectDefinitionExternalReferenceCode1": "P2S3_LEARNING_PATH_STEP",
 					"objectDefinitionExternalReferenceCode2": "P2S3_EXTERNAL_MEDIA",
 					"type": "oneToMany"

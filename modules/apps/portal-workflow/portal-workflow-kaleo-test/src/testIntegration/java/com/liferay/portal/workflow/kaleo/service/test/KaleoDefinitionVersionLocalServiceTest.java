@@ -62,42 +62,85 @@ public class KaleoDefinitionVersionLocalServiceTest
 
 	@Test
 	public void testGetLatestKaleoDefinitionVersions() throws Exception {
+		KaleoDefinition kaleoDefinition1 = addKaleoDefinition(
+			StringUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		KaleoDefinitionVersion kaleoDefinition1LatestKaleoDefinitionVersion =
+			kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
+				kaleoDefinition1.getKaleoDefinitionId(),
+				"KaleoDefinitionVersionName1", kaleoDefinition1.getTitle(),
+				"KaleoDefinitionVersionDescription1",
+				kaleoDefinition1.getContent(), "2.0", serviceContext);
+
+		KaleoDefinition kaleoDefinition2 = addKaleoDefinition(
+			StringUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		KaleoDefinitionVersion kaleoDefinition2LatestKaleoDefinitionVersion =
+			kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
+				kaleoDefinition2.getKaleoDefinitionId(),
+				"KaleoDefinitionVersionName2", "KaleoDefinitionVersionTitle2",
+				kaleoDefinition2.getDescription(),
+				kaleoDefinition2.getContent(), "2.0", serviceContext);
+
+		KaleoDefinition kaleoDefinition3 = addKaleoDefinition(
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), RandomTestUtil.randomString());
+
+		KaleoDefinitionVersion kaleoDefinition3LatestKaleoDefinitionVersion =
+			kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
+				kaleoDefinition3.getKaleoDefinitionId(),
+				kaleoDefinition3.getName(), "KaleoDefinitionVersionTitle3",
+				"KaleoDefinitionVersionDescription3",
+				kaleoDefinition3.getContent(), "3.0", serviceContext);
+
+		KaleoDefinitionVersion kaleoDefinition3SecondKaleoDefinitionVersion =
+			kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
+				kaleoDefinition3.getKaleoDefinitionId(),
+				kaleoDefinition3.getName(), kaleoDefinition3.getTitle(),
+				kaleoDefinition3.getDescription(),
+				kaleoDefinition3.getContent(), "2.0", serviceContext);
+
+		long kaleoDefinition3SecondKaleoDefinitionVersionId =
+			kaleoDefinition3SecondKaleoDefinitionVersion.
+				getKaleoDefinitionVersionId();
+
+		long kaleoDefinition3LatestKaleoDefinitionVersionId =
+			kaleoDefinition3LatestKaleoDefinitionVersion.
+				getKaleoDefinitionVersionId();
+
+		Assert.assertTrue(
+			kaleoDefinition3SecondKaleoDefinitionVersionId >
+				kaleoDefinition3LatestKaleoDefinitionVersionId);
+
 		KaleoDefinitionVersionTitleComparator
 			kaleoDefinitionVersionTitleComparator =
 				new KaleoDefinitionVersionTitleComparator(true);
-		KaleoDefinitionVersion kaleoDefinitionVersion1 =
-			getLatestKaleoDefinitionVersion(
-				addKaleoDefinition(
-					StringUtil.randomString(), "Name 1", "First definition",
-					"Description 1"));
-		KaleoDefinitionVersion kaleoDefinitionVersion2 =
-			getLatestKaleoDefinitionVersion(
-				addKaleoDefinition(
-					StringUtil.randomString(), "Name 2", "My title 2",
-					RandomTestUtil.randomString()));
-		KaleoDefinitionVersion kaleoDefinitionVersion3 =
-			getLatestKaleoDefinitionVersion(
-				addKaleoDefinition(
-					StringUtil.randomString(), RandomTestUtil.randomString(),
-					"My title 3", "Description 3"));
 
 		Assert.assertEquals(
-			Arrays.asList(kaleoDefinitionVersion1, kaleoDefinitionVersion3),
+			Arrays.asList(
+				kaleoDefinition1LatestKaleoDefinitionVersion,
+				kaleoDefinition3LatestKaleoDefinitionVersion),
 			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersions(
-				kaleoDefinitionVersion1.getCompanyId(), "desc",
+				kaleoDefinition1.getCompanyId(),
+				"kaleodefinitionversiondescription",
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, kaleoDefinitionVersionTitleComparator));
 		Assert.assertEquals(
-			Arrays.asList(kaleoDefinitionVersion2, kaleoDefinitionVersion3),
+			Arrays.asList(
+				kaleoDefinition1LatestKaleoDefinitionVersion,
+				kaleoDefinition2LatestKaleoDefinitionVersion),
 			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersions(
-				kaleoDefinitionVersion1.getCompanyId(), "my",
+				kaleoDefinition1.getCompanyId(), "kaleodefinitionversionname",
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, kaleoDefinitionVersionTitleComparator));
-
 		Assert.assertEquals(
-			Arrays.asList(kaleoDefinitionVersion1, kaleoDefinitionVersion2),
+			Arrays.asList(
+				kaleoDefinition2LatestKaleoDefinitionVersion,
+				kaleoDefinition3LatestKaleoDefinitionVersion),
 			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersions(
-				kaleoDefinitionVersion1.getCompanyId(), "name",
+				kaleoDefinition1.getCompanyId(), "kaleodefinitionversiontitle",
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, kaleoDefinitionVersionTitleComparator));
 	}

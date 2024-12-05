@@ -80,7 +80,7 @@ describe('setMovementText', () => {
 		});
 
 		expect(setText).toHaveBeenCalledWith(
-			'use-arrows-to-move-it-and-press-enter-to-select-the-new-position-press-esc-to-cancel move-page-x inside-page-x'
+			'use-arrows-to-move-it-and-press-enter-to-select-the-new-position-press-esc-to-cancel'
 		);
 	});
 

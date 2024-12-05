@@ -8,12 +8,14 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
+import com.liferay.headless.admin.site.dto.v1_0.PageContainerDefinition;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -520,6 +522,7 @@ public class PageSpecificationResourceTest
 						testGroup.getExternalReferenceCode(),
 						layout.getExternalReferenceCode());
 
+		_updatePageExperiences(contentPageSpecification.getPageExperiences());
 		_updateSettings(serviceContext, contentPageSpecification.getSettings());
 
 		PageSpecification putPageSpecification =
@@ -672,6 +675,36 @@ public class PageSpecificationResourceTest
 				serviceContext, WorkflowConstants.STATUS_APPROVED);
 
 		return layoutPageTemplateEntry.getPlid();
+	}
+
+	private PageElement[] _getPageElements(
+		int count, String curParentExternalReferenceCode) {
+
+		PageElement[] pageElements = new PageElement[count];
+
+		for (int i = 0; i < count; i++) {
+			String curExternalReferenceCode = RandomTestUtil.randomString();
+
+			pageElements[i] = new PageElement() {
+				{
+					setDefinition(() -> new PageContainerDefinition());
+					setExternalReferenceCode(curExternalReferenceCode);
+
+					if (RandomTestUtil.randomBoolean()) {
+						setPageElements(
+							_getPageElements(
+								RandomTestUtil.randomInt(1, 2),
+								curExternalReferenceCode));
+					}
+
+					setParentExternalReferenceCode(
+						() -> curParentExternalReferenceCode);
+					setType(() -> PageElement.Type.CONTAINER);
+				}
+			};
+		}
+
+		return pageElements;
 	}
 
 	private long _getStyleBookEntryId(ServiceContext serviceContext)
@@ -970,6 +1003,14 @@ public class PageSpecificationResourceTest
 			layout.isHidden(), layout.getFriendlyURLMap(),
 			layout.getIconImage(), null, _getStyleBookEntryId(serviceContext),
 			0, layout.getMasterLayoutPlid(), serviceContext);
+	}
+
+	private void _updatePageExperiences(PageExperience[] pageExperiences) {
+		for (PageExperience pageExperience : pageExperiences) {
+			pageExperience.setPageElements(
+				() -> _getPageElements(
+						RandomTestUtil.randomInt(1, 3), null));
+		}
 	}
 
 	private void _updateSettings(

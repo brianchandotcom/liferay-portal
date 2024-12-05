@@ -83,6 +83,51 @@ test('User can add, edit, delete a category and add a subcategory.', async ({
 	});
 });
 
+test('User can move a category to another vocabulary.', async ({
+	apiHelpers,
+	assetCategoriesAdminPage,
+	assetCategoriesEditPage,
+	page,
+	site,
+}) => {
+	const categoryName = 'category-1';
+	const vocabularyName1 = 'vocabulary one';
+	const vocabularyName2 = 'vocabulary two';
+
+	await test.step('add two vocabularies', async () => {
+		await createCategories({
+			apiHelpers,
+			categoryNames: [{name: categoryName}],
+			site,
+			vocabularyName: vocabularyName1,
+		});
+
+		await createCategories({
+			apiHelpers,
+			categoryNames: [],
+			site,
+			vocabularyName: vocabularyName2,
+		});
+	});
+
+	await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
+
+	await test.step('move category to vocabulary two', async () => {
+		await assetCategoriesEditPage.goto('Move', categoryName);
+
+		await assetCategoriesEditPage.moveCategory(
+			categoryName,
+			vocabularyName2
+		);
+
+		await assetCategoriesAdminPage.gotoVocabulary(vocabularyName2);
+
+		await expect(
+			page.getByRole('link', {name: categoryName})
+		).toBeVisible();
+	});
+});
+
 test('User can add, edit, delete properties in category.', async ({
 	apiHelpers,
 	assetCategoriesAdminPage,

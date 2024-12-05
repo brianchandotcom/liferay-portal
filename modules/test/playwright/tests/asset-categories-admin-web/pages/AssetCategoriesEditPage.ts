@@ -9,6 +9,7 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 export class AssetCategoriesEditPage {
+	readonly addButton: Locator;
 	readonly page: Page;
 	readonly propertiesTab: Locator;
 	readonly deleteButton: Locator;
@@ -18,6 +19,7 @@ export class AssetCategoriesEditPage {
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
+		this.addButton = page.getByRole('button', {name: 'Add'});
 		this.propertiesTab = page.getByRole('link', {name: 'properties'});
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.deleteButton = page.getByRole('button', {name: 'Delete'});
@@ -26,7 +28,6 @@ export class AssetCategoriesEditPage {
 			.getByRole('textbox');
 		this.nameInput = page.getByPlaceholder('Name');
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
-
 		this.page = page;
 	}
 
@@ -79,6 +80,15 @@ export class AssetCategoriesEditPage {
 	async fillName(name: string) {
 		await this.descriptionField.waitFor();
 		await this.nameInput.fill(name);
+	}
+
+	async moveCategory(categoryName: string, vocabularyName: string) {
+		await this.page
+			.frameLocator(`iframe[title="Move ${categoryName}"]`)
+			.getByText(vocabularyName)
+			.click();
+		await this.addButton.click();
+		await waitForAlert(this.page);
 	}
 
 	async save(successMessage?: string) {

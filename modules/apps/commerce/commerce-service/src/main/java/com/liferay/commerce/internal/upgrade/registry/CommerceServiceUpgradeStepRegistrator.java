@@ -11,6 +11,7 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.internal.upgrade.v11_5_1.SupplierRoleUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v11_5_2.CommerceChannelRepositoryUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v1_2_0.CommerceSubscriptionUpgradeProcess;
@@ -80,6 +81,9 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portlet.display.template.upgrade.BaseUpgradePortletPreferences;
+
+import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -754,6 +758,32 @@ public class CommerceServiceUpgradeStepRegistrator
 				ReturnsManagerRoleUpgradeProcess(
 					_companyLocalService, _resourcePermissionLocalService,
 					_roleLocalService));
+
+		registry.register(
+			"13.0.1", "13.0.2",
+			new BaseUpgradePortletPreferences() {
+
+				@Override
+				protected String[] getPortletIds() {
+					return new String[] {
+						CommercePortletKeys.COMMERCE_ADDRESS_CONTENT,
+						CommercePortletKeys.COMMERCE_CART_CONTENT +
+							"_INSTANCE_%",
+						CommercePortletKeys.COMMERCE_CART_CONTENT_MINI,
+						CommercePortletKeys.COMMERCE_CART_CONTENT_TOTAL,
+						CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
+						CommercePortletKeys.COMMERCE_ORDER_CONTENT
+					};
+				}
+
+				@Override
+				protected void upgradePreferences(
+						long companyId, long ownerId, int ownerType, long plid,
+						String portletId, PortletPreferences portletPreferences)
+					throws Exception {
+				}
+
+			});
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

@@ -5,14 +5,19 @@
 
 package com.liferay.commerce.product.type.virtual.order.internal.upgrade.registry;
 
+import com.liferay.commerce.product.type.virtual.order.constants.CommerceVirtualOrderPortletKeys;
 import com.liferay.commerce.product.type.virtual.order.internal.upgrade.v2_0_0.CommerceVirtualOrderItemFileEntryUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portlet.display.template.upgrade.BaseUpgradePortletPreferences;
+
+import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Cheryl Tang
+ * @author Alessio Antonio Rendina
  */
 @Component(service = UpgradeStepRegistrator.class)
 public class CommerceProductTypeVirtualOrderServiceUpgradeStepRegistrator
@@ -34,6 +39,27 @@ public class CommerceProductTypeVirtualOrderServiceUpgradeStepRegistrator
 		registry.register(
 			"1.1.0", "2.0.0",
 			new CommerceVirtualOrderItemFileEntryUpgradeProcess());
+
+		registry.register(
+			"2.0.0", "2.0.1",
+			new BaseUpgradePortletPreferences() {
+
+				@Override
+				protected String[] getPortletIds() {
+					return new String[] {
+						CommerceVirtualOrderPortletKeys.
+							COMMERCE_VIRTUAL_ORDER_ITEM_CONTENT
+					};
+				}
+
+				@Override
+				protected void upgradePreferences(
+						long companyId, long ownerId, int ownerType, long plid,
+						String portletId, PortletPreferences portletPreferences)
+					throws Exception {
+				}
+
+			});
 	}
 
 }

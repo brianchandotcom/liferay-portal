@@ -9253,6 +9253,60 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPutSiteRelationsShipWithSiteScopeNestedEntries()
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		JSONObject objectEntryJSONObject = JSONUtil.put(
+			objectRelationship.getName(),
+			_createObjectEntriesJSONArray(
+				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME_1,
+				new String[] {
+					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
+				}));
+
+		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
+			objectEntryJSONObject.toString(),
+			_getEndpoint(
+				TestPropsValues.getGroupId(), _siteScopedObjectDefinition1),
+			Http.Method.POST);
+
+		String objectRelationshipName = objectRelationship.getName();
+
+		JSONObject actualJSONObject1 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
+			).put(
+				objectRelationshipName,
+				_createObjectEntriesJSONArray(
+					new String[] {_ERC_VALUE_3}, _OBJECT_FIELD_NAME_2,
+					new String[] {_NEW_OBJECT_FIELD_VALUE_2})
+			).toString(),
+			_siteScopedObjectDefinition1.getRESTContextPath() + "/" +
+				jsonObject1.getLong("id"),
+			Http.Method.PUT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"externalReferenceCode", String.valueOf(_ERC_VALUE_3)
+			).toString(),
+			actualJSONObject1.getJSONArray(
+				objectRelationshipName
+			).getJSONObject(
+				0
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+	}
+
+	@Test
 	public void testSortByCustomObjectField() throws Exception {
 		String endpoint = _getEndpoint(
 			TestPropsValues.getGroupId(), _objectDefinition1);

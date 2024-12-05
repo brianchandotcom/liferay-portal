@@ -14,6 +14,8 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {performLogout} from '../../utils/performLogin';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {getObjectERC} from '../setup/page-management-site/utils/getObjectERC';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -30,6 +32,74 @@ const test = mergeTests(
 	loginTest(),
 	pageEditorPagesTest,
 	pageManagementSiteTest
+);
+
+test(
+	'Can set permissions for widgets in content page',
+	{tag: ['@LPD-106813']},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create page with language selector widget and go to edit mode
+
+		const widgetId = getRandomString();
+
+		const widgetDefinition = getWidgetDefinition({
+			id: widgetId,
+			widgetName:
+				'com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([widgetDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Open permissions
+
+		await pageEditorPage.selectFragment(widgetId);
+
+		await page
+			.locator('.page-editor__topper__item')
+			.getByRole('button', {name: 'Options'})
+			.click();
+
+		const dropdown = page.locator('.dropdown-menu.show');
+
+		await dropdown.getByText('Permissions', {exact: true}).click();
+
+		// Removes view permissions
+
+		const permissionsIFrame = page.frameLocator(
+			'iframe[title="Permissions"]'
+		);
+
+		await permissionsIFrame.locator('#guest_ACTION_VIEW').uncheck();
+
+		await permissionsIFrame.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(permissionsIFrame);
+
+		await page.getByLabel('close', {exact: true}).click();
+
+		// Publish
+
+		await pageEditorPage.publishPage();
+
+		// Go to view mode as guest user and assert language selector is not visible
+
+		await performLogout(page);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await expect(
+			page.getByText(
+				'You do not have the roles required to access this portlet.'
+			)
+		).toBeVisible();
+	}
 );
 
 test(

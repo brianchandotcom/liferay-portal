@@ -267,66 +267,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-106813. Can set permissions for widgets in content page."
-	@priority = 5
-	test ConfigurePermissionsOfAssetPublisher {
-		property portal.acceptance = "true";
-
-		task ("Add an Asset Publisher widget to the content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addWidget(portletName = "Asset Publisher");
-		}
-
-		task ("Configure permissions of Asset Publisher") {
-			MouseOver.mouseOverNotVisible(
-				key_portletName = "Asset Publisher",
-				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
-
-			Click.waitForMenuToggleJSClick(
-				key_portletName = "Asset Publisher",
-				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
-
-			AssertVisible(
-				key_menuItem = "Permissions",
-				locator1 = "MenuItem#ANY_MENU_ITEM");
-
-			MenuItem.click(menuItem = "Permissions");
-
-			IFrame.selectPermissionsFrame();
-
-			AssertChecked.assertCheckedNotVisible(
-				key_roleTitle = "guest",
-				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
-
-			Uncheck.uncheckNotVisible(
-				key_roleTitle = "guest",
-				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-
-			IFrame.closeFrame();
-		}
-
-		task ("Publish the content page") {
-			PageEditor.publish();
-		}
-
-		task ("Assert the ellipsis button of Asset Publisher is unavailable in view mode") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			AssertElementNotPresent(
-				key_portletName = "Asset Publisher",
-				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
-		}
-	}
-
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session on content page in card view."
 	@priority = 3
 	test CouldAddAndRemoveFragmentInCardView {

@@ -2457,6 +2457,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
+		stringUtilReplaceValues.put(
+			"LOCALE_DEFAULT",
+			LocaleUtil.toLanguageId(
+				_portal.getSiteDefaultLocale(
+					serviceContext.getScopeGroupId())));
+
 		_addOrUpdateJournalArticles(
 			null, "/site-initializer/journal-articles", serviceContext,
 			siteNavigationMenuItemSettingsBuilder, stringUtilReplaceValues);

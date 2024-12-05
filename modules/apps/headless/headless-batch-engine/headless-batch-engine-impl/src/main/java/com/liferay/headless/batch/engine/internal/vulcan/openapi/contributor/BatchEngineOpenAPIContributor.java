@@ -60,14 +60,18 @@ public class BatchEngineOpenAPIContributor implements OpenAPIContributor {
 
 		Operation operation = pathItem.getPost();
 
-		if (operation != null) {
-			List<Parameter> parameters = operation.getParameters();
-
-			if (parameters != null) {
-				parameters.removeIf(
-					param -> Objects.equals(param.getName(), parameterName));
-			}
+		if (operation == null) {
+			return;
 		}
+
+		List<Parameter> parameters = operation.getParameters();
+
+		if (parameters == null) {
+			return;
+		}
+
+		parameters.removeIf(
+			param -> Objects.equals(param.getName(), parameterName));
 	}
 
 }

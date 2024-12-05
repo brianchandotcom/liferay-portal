@@ -29,7 +29,6 @@ const VALID_PASTE_TYPES: Array<LayoutDataItem['type']> = [
 	LAYOUT_DATA_ITEM_TYPES.column,
 	LAYOUT_DATA_ITEM_TYPES.container,
 	LAYOUT_DATA_ITEM_TYPES.collection,
-	LAYOUT_DATA_ITEM_TYPES.collectionItem,
 	LAYOUT_DATA_ITEM_TYPES.dropZone,
 	LAYOUT_DATA_ITEM_TYPES.form,
 	LAYOUT_DATA_ITEM_TYPES.formStep,

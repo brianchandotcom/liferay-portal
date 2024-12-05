@@ -75,39 +75,39 @@ public class WorkflowPermissionUtil {
 			return Boolean.TRUE;
 		}
 
-		if (WorkflowInstanceLinkLocalServiceUtil.hasWorkflowInstanceLink(
+		if (!WorkflowInstanceLinkLocalServiceUtil.hasWorkflowInstanceLink(
 				companyId, groupId, className, classPK)) {
 
-			WorkflowInstanceLink workflowInstanceLink =
-				WorkflowInstanceLinkLocalServiceUtil.getWorkflowInstanceLink(
-					companyId, groupId, className, classPK);
-
-			if (Objects.equals(actionId, ActionKeys.VIEW) &&
-				(permissionChecker.getUserId() ==
-					workflowInstanceLink.getUserId())) {
-
-				return Boolean.TRUE;
-			}
-
-			WorkflowInstance workflowInstance =
-				WorkflowInstanceManagerUtil.getWorkflowInstance(
-					companyId, workflowInstanceLink.getWorkflowInstanceId());
-
-			if (workflowInstance.isComplete()) {
-				return null;
-			}
-
-			boolean hasPermission = _hasImplicitPermission(
-				permissionChecker, workflowInstance);
-
-			if (!hasPermission && actionId.equals(ActionKeys.VIEW)) {
-				return Boolean.FALSE;
-			}
-
-			return hasPermission;
+			return null;
 		}
 
-		return null;
+		WorkflowInstanceLink workflowInstanceLink =
+			WorkflowInstanceLinkLocalServiceUtil.getWorkflowInstanceLink(
+				companyId, groupId, className, classPK);
+
+		if (Objects.equals(actionId, ActionKeys.VIEW) &&
+			(permissionChecker.getUserId() ==
+				workflowInstanceLink.getUserId())) {
+
+			return Boolean.TRUE;
+		}
+
+		WorkflowInstance workflowInstance =
+			WorkflowInstanceManagerUtil.getWorkflowInstance(
+				companyId, workflowInstanceLink.getWorkflowInstanceId());
+
+		if (workflowInstance.isComplete()) {
+			return null;
+		}
+
+		boolean hasPermission = _hasImplicitPermission(
+			permissionChecker, workflowInstance);
+
+		if (!hasPermission && actionId.equals(ActionKeys.VIEW)) {
+			return Boolean.FALSE;
+		}
+
+		return hasPermission;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

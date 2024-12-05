@@ -14,6 +14,10 @@ import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {liferayConfig} from '../../liferay.config';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {
+	disableSystemFeatureFlag,
+	enableSystemFeatureFlag,
+} from '../../utils/systemFeatureFlag';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
@@ -209,20 +213,20 @@ test(
 	}
 );
 
-const testDeprecatedFragmentSet = mergeTests(
-	test,
-	featureFlagsTest({
-		'LPD-40529': true,
-		'LPS-178052': true,
-	})
-);
-
-testDeprecatedFragmentSet(
+test(
 	'The deprecated label exist for the contributed Featured Content Fragment Set',
 	{
 		tag: '@LPD-42061',
 	},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Enable feature flag
+
+		await enableSystemFeatureFlag({
+			page,
+			title: 'Featured Content Fragment Set',
+			type: 'Deprecation',
+		});
 
 		// Create a content page
 
@@ -240,5 +244,13 @@ testDeprecatedFragmentSet(
 		await expect(
 			page.getByRole('menuitem', {name: 'Featured Content Deprecated'})
 		).toBeVisible();
+
+		// Disable feature flag
+
+		await disableSystemFeatureFlag({
+			page,
+			title: 'Featured Content Fragment Set',
+			type: 'Deprecation',
+		});
 	}
 );

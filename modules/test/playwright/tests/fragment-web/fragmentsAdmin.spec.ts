@@ -18,6 +18,10 @@ import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getGlobalSiteId from '../../utils/getGlobalSiteId';
 import getRandomString from '../../utils/getRandomString';
+import {
+	disableSystemFeatureFlag,
+	enableSystemFeatureFlag,
+} from '../../utils/systemFeatureFlag';
 import {waitForAlert} from '../../utils/waitForAlert';
 import getFormContainerDefinition from '../layout-content-page-editor-web/utils/getFormContainerDefinition';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
@@ -1319,19 +1323,20 @@ test(
 	}
 );
 
-const testDeprecatedFragmentSet = mergeTests(
-	test,
-	featureFlagsTest({
-		'LPD-40529': true,
-	})
-);
-
-testDeprecatedFragmentSet(
+test(
 	'The deprecated label and button exist for the contributed Featured Content Fragment Set',
 	{
 		tag: '@LPD-42061',
 	},
 	async ({fragmentsPage, page, site}) => {
+
+		// Enable feature flag
+
+		await enableSystemFeatureFlag({
+			page,
+			title: 'Featured Content Fragment Set',
+			type: 'Deprecation',
+		});
 
 		// Go to fragment administration and look for the label
 
@@ -1352,5 +1357,13 @@ testDeprecatedFragmentSet(
 				'This feature is deprecated. Learn more about deprecated features.'
 			)
 		).toBeVisible();
+
+		// Disable feature flag
+
+		await disableSystemFeatureFlag({
+			page,
+			title: 'Featured Content Fragment Set',
+			type: 'Deprecation',
+		});
 	}
 );

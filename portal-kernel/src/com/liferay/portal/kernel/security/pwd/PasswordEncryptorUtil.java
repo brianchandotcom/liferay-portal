@@ -203,7 +203,11 @@ public class PasswordEncryptorUtil {
 				return legacyAlgorithm;
 			}
 
-			return _PASSWORDS_ENCRYPTION_ALGORITHM;
+			_log.error(
+				"You may have forgotten to configure " +
+				"passwords.encryption.algorithm.legacy property");
+
+			return null;
 		}
 		else if (Validator.isNotNull(encryptedPassword) &&
 				 (encryptedPassword.charAt(0) == CharPool.OPEN_CURLY_BRACE)) {

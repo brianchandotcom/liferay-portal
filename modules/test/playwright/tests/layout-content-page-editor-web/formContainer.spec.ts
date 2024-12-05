@@ -88,6 +88,8 @@ test.describe('Form Configuration', () => {
 			await pageEditorPage.selectFragment(formId);
 
 			await page
+				.locator('.panel')
+				.filter({hasText: 'Actions After Submit'})
 				.getByLabel('Success Action', {exact: true})
 				.selectOption({label: 'Show Embedded Message'});
 
@@ -194,6 +196,8 @@ test.describe('Form Configuration', () => {
 			await pageEditorPage.selectFragment(formId);
 
 			await page
+				.locator('.panel')
+				.filter({hasText: 'Actions After Submit'})
 				.getByLabel('Success Action', {exact: true})
 				.selectOption({label: 'Stay in Page'});
 

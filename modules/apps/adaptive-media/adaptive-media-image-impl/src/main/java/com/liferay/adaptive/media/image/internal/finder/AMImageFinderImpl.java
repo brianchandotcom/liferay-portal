@@ -105,15 +105,15 @@ public class AMImageFinderImpl implements AMImageFinder {
 			TransformUtil.transform(
 				amImageConfigurationEntries,
 				amImageConfigurationEntry -> {
-					if (filter.test(amImageConfigurationEntry) &&
-						_hasAdaptiveMedia(
+					if (!filter.test(amImageConfigurationEntry) ||
+						!_hasAdaptiveMedia(
 							fileVersion, amImageConfigurationEntry)) {
 
-						return _createMedia(
-							fileVersion, uriFactory, amImageConfigurationEntry);
+						return null;
 					}
 
-					return null;
+					return _createMedia(
+						fileVersion, uriFactory, amImageConfigurationEntry);
 				});
 
 		AMDistanceComparator<AdaptiveMedia<AMProcessor<FileVersion>>>

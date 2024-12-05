@@ -145,17 +145,17 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 	private static String[] _getEmailAddressDomains(
 		long accountEntryId, String navigation) {
 
-		if (Objects.equals(navigation, "valid-domain-users")) {
-			AccountEntryLocalService accountEntryLocalService =
-				_accountEntryLocalServiceSnapshot.get();
-
-			AccountEntry accountEntry =
-				accountEntryLocalService.fetchAccountEntry(accountEntryId);
-
-			return StringUtil.split(accountEntry.getDomains());
+		if (!Objects.equals(navigation, "valid-domain-users")) {
+			return null;
 		}
 
-		return null;
+		AccountEntryLocalService accountEntryLocalService =
+			_accountEntryLocalServiceSnapshot.get();
+
+		AccountEntry accountEntry = accountEntryLocalService.fetchAccountEntry(
+			accountEntryId);
+
+		return StringUtil.split(accountEntry.getDomains());
 	}
 
 	private static boolean _isReverseOrder(String orderByType) {

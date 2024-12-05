@@ -22,9 +22,10 @@ type Props = {
 	onInvalid?: () => {};
 	sources: Array<MovementItem>;
 	targetId: LayoutDataItem['itemId'];
+	type?: 'drop' | 'paste';
 };
 
-const DROP_TARGET_TYPES = [
+const VALID_PASTE_TYPES: Array<LayoutDataItem['type']> = [
 	LAYOUT_DATA_ITEM_TYPES.column,
 	LAYOUT_DATA_ITEM_TYPES.container,
 	LAYOUT_DATA_ITEM_TYPES.collection,
@@ -35,7 +36,7 @@ const DROP_TARGET_TYPES = [
 	LAYOUT_DATA_ITEM_TYPES.root,
 ];
 
-export function getDropTargetId(
+export function getPasteTargetId(
 	targetId: LayoutDataItem['itemId'],
 	layoutData: LayoutData
 ): string {
@@ -68,7 +69,7 @@ export function getDropTargetId(
 
 	// Return available parent id
 
-	if (DROP_TARGET_TYPES.some((type) => type === target.type)) {
+	if (VALID_PASTE_TYPES.some((type) => type === target.type)) {
 		return target.itemId;
 	}
 
@@ -76,7 +77,7 @@ export function getDropTargetId(
 
 	// If not found go deeper and check for available parent id
 
-	return getDropTargetId(parent.itemId, layoutData);
+	return getPasteTargetId(parent.itemId, layoutData);
 }
 
 export function isMovementValid({
@@ -86,9 +87,10 @@ export function isMovementValid({
 	onInvalid,
 	sources,
 	targetId,
+	type = 'paste',
 }: Props) {
 	const target = toMovementItem(
-		getDropTargetId(targetId, layoutData),
+		type === 'paste' ? getPasteTargetId(targetId, layoutData) : targetId,
 		layoutData,
 		fragmentEntryLinks
 	);

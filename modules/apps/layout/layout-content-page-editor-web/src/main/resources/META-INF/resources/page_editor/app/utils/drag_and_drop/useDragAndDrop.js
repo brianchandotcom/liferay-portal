@@ -415,6 +415,7 @@ function computeDrop({
 			onInvalid: () => dispatch(initialDragDrop.state),
 			sources,
 			targetId,
+			type: 'drop',
 		})
 	) {
 		return;

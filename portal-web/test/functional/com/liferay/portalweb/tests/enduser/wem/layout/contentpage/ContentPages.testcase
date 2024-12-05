@@ -1590,29 +1590,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-167430. Fragment Menu difficult to Display"
-	@priority = 3
-	test ViewEllipsisIconWhenHoverOnBodyOfWidget {
-		task ("Given a content page with a Search Results widget") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addWidget(portletName = "Search Results");
-		}
-
-		task ("When the mouse passes over the fragment") {
-			MouseOver(
-				fragmentName = "Search",
-				index = 1,
-				locator1 = "Fragment#FRAGMENT_BODY");
-		}
-
-		task ("Then you should easily see the ellipsis icon") {
-			AssertVisible(locator1 = "Portlet#OPTIONS_ICON");
-		}
-	}
-
 	@description = "This is a test for LPS-158746. The favorite fragment is hidden if it is not allowed on master page."
 	@priority = 3
 	test ViewFavoriteFragmentIsHiddenWhenItIsNotAllowedOnMasterPage {

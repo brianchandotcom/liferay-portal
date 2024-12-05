@@ -19,6 +19,8 @@ interface ObjectDefinitionNodeHeaderProps {
 	dropDownItems: DropDownItems[];
 	handleSelectObjectDefinitionNode: () => void;
 	isLinkedObjectDefinition: boolean;
+	isRootDescendantNode: boolean;
+	isRootNode: boolean;
 	objectDefinitionLabel: string;
 	status: {
 		code: number;
@@ -33,6 +35,8 @@ export default function ObjectDefinitionNodeHeader({
 	dropDownItems,
 	handleSelectObjectDefinitionNode,
 	isLinkedObjectDefinition,
+	isRootDescendantNode,
+	isRootNode,
 	objectDefinitionLabel,
 	status,
 	system,
@@ -88,6 +92,21 @@ export default function ObjectDefinitionNodeHeader({
 				</div>
 
 				<div>
+					{Liferay.FeatureFlags['LPS-187142'] && (
+						<ClayLabel
+							className={classNames('label-inverse-secondary', {
+								'label-inverse-info':
+									isRootDescendantNode || isRootNode,
+							})}
+						>
+							{isRootNode
+								? Liferay.Language.get('root-object')
+								: isRootDescendantNode
+									? Liferay.Language.get('inherited')
+									: Liferay.Language.get('standard')}
+						</ClayLabel>
+					)}
+
 					<ClayLabel displayType={system ? 'info' : 'warning'}>
 						{system
 							? Liferay.Language.get('system')

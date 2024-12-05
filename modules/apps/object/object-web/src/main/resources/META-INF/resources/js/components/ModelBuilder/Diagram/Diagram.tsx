@@ -55,6 +55,7 @@ const NODE_TYPES = {
 const EDGE_TYPES = {
 	defaultObjectRelationshipEdge: DefaultObjectRelationshipEdge,
 	selfObjectRelationshipEdge: SelfObjectRelationshipEdge,
+	treeStructureObjectRelationshipEdge: DefaultObjectRelationshipEdge,
 };
 
 function DiagramBuilder() {

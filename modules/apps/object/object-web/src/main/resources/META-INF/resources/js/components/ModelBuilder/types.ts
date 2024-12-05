@@ -295,6 +295,7 @@ export interface LeftSidebarObjectDefinitionItem {
 
 export interface ObjectRelationshipEdgeData {
 	defaultLanguageId?: Liferay.Language.Locale;
+	edge: boolean;
 	id: number;
 	label: string;
 	markerEndId: string;

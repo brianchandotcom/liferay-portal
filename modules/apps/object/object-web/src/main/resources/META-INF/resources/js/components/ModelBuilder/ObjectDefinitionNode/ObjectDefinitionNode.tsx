@@ -35,6 +35,7 @@ export function ObjectDefinitionNode({
 		linkedObjectDefinition,
 		name,
 		objectFields,
+		rootObjectDefinitionExternalReferenceCode,
 		selected,
 		showAllObjectFields,
 		status,
@@ -81,6 +82,13 @@ export function ObjectDefinitionNode({
 		}
 	};
 
+	const isTreeStructure = !!rootObjectDefinitionExternalReferenceCode;
+
+	const isRootNode =
+		externalReferenceCode === rootObjectDefinitionExternalReferenceCode;
+
+	const isRootDescendantNode = isTreeStructure && !isRootNode;
+
 	const handleSelectObjectDefinitionNode = () => {
 		const {edges, nodes} = store.getState();
 
@@ -104,6 +112,8 @@ export function ObjectDefinitionNode({
 							linkedObjectDefinition,
 						'lfr-objects__model-builder-node-container--selected':
 							selected,
+						'lfr-objects__model-builder-node-container--treeItem':
+							isTreeStructure,
 					}
 				)}
 				onMouseEnter={() => {
@@ -131,6 +141,8 @@ export function ObjectDefinitionNode({
 						handleSelectObjectDefinitionNode
 					}
 					isLinkedObjectDefinition={linkedObjectDefinition}
+					isRootDescendantNode={isRootDescendantNode}
+					isRootNode={isRootNode}
 					objectDefinitionLabel={stringUtils.getLocalizableLabel(
 						defaultLanguageId,
 						label,

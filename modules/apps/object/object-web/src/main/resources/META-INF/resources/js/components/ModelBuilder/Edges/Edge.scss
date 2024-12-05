@@ -11,6 +11,18 @@
 		}
 	}
 
+	&.react-flow__edge-treeStructureObjectRelationshipEdge {
+		&.selected {
+			marker {
+				fill: #2e5aac !important;
+			}
+		}
+
+		marker {
+			fill: #89a7e0;
+		}
+	}
+
 	.react-flow__connection {
 		cursor: pointer;
 	}

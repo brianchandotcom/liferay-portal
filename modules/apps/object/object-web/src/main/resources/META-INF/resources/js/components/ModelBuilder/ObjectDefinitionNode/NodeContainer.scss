@@ -14,6 +14,7 @@
 		border-style: solid;
 		border-width: 0.125rem;
 		height: auto;
+		position: relative;
 		@include nodeAnimation(4px);
 
 		&:active {
@@ -43,6 +44,22 @@
 				rgba(17, 17, 26, 0.1) 0 4px 16px,
 				rgba(17, 17, 26, 0.05) 0 8px 32px;
 			@include nodeAnimation(4px);
+		}
+
+		&--treeItem {
+			padding-left: 1rem;
+
+			&::before {
+				background-color: #2e5aac;
+				border-bottom-left-radius: 0.15rem;
+				border-top-left-radius: 0.15rem;
+				bottom: 0;
+				content: '';
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 1rem;
+			}
 		}
 	}
 }

@@ -293,7 +293,7 @@ function getNextTarget({
 			candidate = {
 				columnIndex: columnIndex - 1,
 				itemIndex: 0,
-				position: 'top',
+				position: 'bottom',
 			};
 		}
 	}
@@ -305,7 +305,7 @@ function getNextTarget({
 			candidate = {
 				columnIndex: columnIndex + 1,
 				itemIndex: 0,
-				position: 'top',
+				position: 'bottom',
 			};
 		}
 	}

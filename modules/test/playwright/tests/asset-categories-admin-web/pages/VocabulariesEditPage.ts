@@ -12,17 +12,17 @@ export class VocabulariesEditPage {
 	readonly deleteButton: Locator;
 	readonly descriptionInput: Locator;
 	readonly nameInput: Locator;
-	readonly saveButton: Locator;
 	readonly page: Page;
+	readonly saveButton: Locator;
 
 	constructor(page: Page) {
 		this.deleteButton = page.getByRole('button', {name: 'Delete'});
 		this.descriptionInput = page.getByPlaceholder('Description');
 		this.nameInput = page.getByPlaceholder('Name');
+		this.page = page;
 		this.saveButton = page.getByRole('button', {
 			name: 'Save',
 		});
-		this.page = page;
 	}
 
 	async add(name: string, description?: string) {

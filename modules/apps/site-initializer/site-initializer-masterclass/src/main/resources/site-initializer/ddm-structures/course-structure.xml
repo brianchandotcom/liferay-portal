@@ -8,17 +8,17 @@
 			<![CDATA[
 				{
 					"availableLanguageIds": [
-						"en_US"
+						"[$LOCALE_DEFAULT$]"
 					],
-					"defaultLanguageId": "en_US",
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
 					"fields": [
 						{
 							"autocomplete": false,
 							"confirmationErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"confirmationLabel": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"dataSourceType": "",
 							"dataType": "string",
@@ -31,7 +31,7 @@
 							"hideField": false,
 							"indexType": "keyword",
 							"label": {
-								"en_US": "Name"
+								"[$LOCALE_DEFAULT$]": "Name"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": true,
@@ -39,24 +39,24 @@
 							"nativeField": false,
 							"objectFieldName": "",
 							"placeholder": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"predefinedValue": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"requireConfirmation": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"tooltip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "text",
 							"visibilityExpression": ""
@@ -64,10 +64,10 @@
 						{
 							"autocomplete": false,
 							"confirmationErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"confirmationLabel": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"dataSourceType": "",
 							"dataType": "string",
@@ -80,7 +80,7 @@
 							"hideField": false,
 							"indexType": "keyword",
 							"label": {
-								"en_US": "Short Description"
+								"[$LOCALE_DEFAULT$]": "Short Description"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": true,
@@ -88,24 +88,24 @@
 							"nativeField": false,
 							"objectFieldName": "",
 							"placeholder": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"predefinedValue": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"requireConfirmation": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"tooltip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "text",
 							"visibilityExpression": ""
@@ -113,10 +113,10 @@
 						{
 							"autocomplete": false,
 							"confirmationErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"confirmationLabel": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"dataSourceType": "",
 							"dataType": "string",
@@ -129,7 +129,7 @@
 							"hideField": false,
 							"indexType": "keyword",
 							"label": {
-								"en_US": "Program Description"
+								"[$LOCALE_DEFAULT$]": "Program Description"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": true,
@@ -137,24 +137,24 @@
 							"nativeField": false,
 							"objectFieldName": "",
 							"placeholder": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"predefinedValue": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"requireConfirmation": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"tooltip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "text",
 							"visibilityExpression": ""
@@ -165,23 +165,23 @@
 							"fieldReference": "VideoThumbnail",
 							"indexType": "text",
 							"label": {
-								"en_US": "Video Thumbnail"
+								"[$LOCALE_DEFAULT$]": "Video Thumbnail"
 							},
 							"localizable": true,
 							"name": "VideoThumbnail",
 							"objectFieldName": "",
 							"predefinedValue": {
-								"en_US": "{}"
+								"[$LOCALE_DEFAULT$]": "{}"
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "image",
 							"visibilityExpression": ""
@@ -192,23 +192,23 @@
 							"fieldReference": "Video",
 							"indexType": "text",
 							"label": {
-								"en_US": "Video"
+								"[$LOCALE_DEFAULT$]": "Video"
 							},
 							"localizable": true,
 							"name": "Video",
 							"objectFieldName": "",
 							"predefinedValue": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "rich_text",
 							"visibilityExpression": ""
@@ -219,7 +219,7 @@
 							"ddmStructureLayoutId": "",
 							"fieldReference": "Features",
 							"label": {
-								"en_US": "Features"
+								"[$LOCALE_DEFAULT$]": "Features"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": false,
@@ -228,10 +228,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -244,7 +244,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Number of Lessons"
+										"[$LOCALE_DEFAULT$]": "Number of Lessons"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -252,24 +252,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -277,10 +277,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -293,7 +293,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Quizzes"
+										"[$LOCALE_DEFAULT$]": "Quizzes"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -301,24 +301,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -326,10 +326,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -342,7 +342,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Duration"
+										"[$LOCALE_DEFAULT$]": "Duration"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -350,24 +350,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -375,10 +375,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -391,7 +391,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Max Retakes"
+										"[$LOCALE_DEFAULT$]": "Max Retakes"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -399,24 +399,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -424,10 +424,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -440,7 +440,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Pass Percentage"
+										"[$LOCALE_DEFAULT$]": "Pass Percentage"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -448,24 +448,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -484,7 +484,7 @@
 							"ddmStructureLayoutId": "",
 							"fieldReference": "Module1",
 							"label": {
-								"en_US": "Module 1"
+								"[$LOCALE_DEFAULT$]": "Module 1"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": false,
@@ -493,10 +493,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -509,7 +509,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 1 Description"
+										"[$LOCALE_DEFAULT$]": "Module 1 Description"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -517,24 +517,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -542,10 +542,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -558,7 +558,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 1 Name"
+										"[$LOCALE_DEFAULT$]": "Module 1 Name"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -566,24 +566,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -591,10 +591,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -607,7 +607,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 1 Duration"
+										"[$LOCALE_DEFAULT$]": "Module 1 Duration"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -615,24 +615,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -640,10 +640,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -656,7 +656,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 1 Number of Lessons"
+										"[$LOCALE_DEFAULT$]": "Module 1 Number of Lessons"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -664,24 +664,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -700,7 +700,7 @@
 							"ddmStructureLayoutId": "",
 							"fieldReference": "Module2",
 							"label": {
-								"en_US": "Module 2"
+								"[$LOCALE_DEFAULT$]": "Module 2"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": false,
@@ -709,10 +709,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -725,7 +725,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 2 Description"
+										"[$LOCALE_DEFAULT$]": "Module 2 Description"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -733,24 +733,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -758,10 +758,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -774,7 +774,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 2 Name"
+										"[$LOCALE_DEFAULT$]": "Module 2 Name"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -782,24 +782,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -807,10 +807,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -823,7 +823,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 2 Duration"
+										"[$LOCALE_DEFAULT$]": "Module 2 Duration"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -831,24 +831,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -856,10 +856,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -872,7 +872,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 2 Number of Lessons"
+										"[$LOCALE_DEFAULT$]": "Module 2 Number of Lessons"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -880,24 +880,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -916,7 +916,7 @@
 							"ddmStructureLayoutId": "",
 							"fieldReference": "Module3",
 							"label": {
-								"en_US": "Module 3"
+								"[$LOCALE_DEFAULT$]": "Module 3"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": false,
@@ -925,10 +925,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -941,7 +941,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 3 Description"
+										"[$LOCALE_DEFAULT$]": "Module 3 Description"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -949,24 +949,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -974,10 +974,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -990,7 +990,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 3 Name"
+										"[$LOCALE_DEFAULT$]": "Module 3 Name"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -998,24 +998,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -1023,10 +1023,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -1039,7 +1039,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 3 Duration"
+										"[$LOCALE_DEFAULT$]": "Module 3 Duration"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -1047,24 +1047,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -1072,10 +1072,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -1088,7 +1088,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 3 Number of Lessons"
+										"[$LOCALE_DEFAULT$]": "Module 3 Number of Lessons"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -1096,24 +1096,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""

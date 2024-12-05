@@ -8,17 +8,17 @@
 			<![CDATA[
 				{
 					"availableLanguageIds": [
-						"en_US"
+						"[$LOCALE_DEFAULT$]"
 					],
-					"defaultLanguageId": "en_US",
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
 					"fields": [
 						{
 							"autocomplete": false,
 							"confirmationErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"confirmationLabel": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"dataSourceType": "",
 							"dataType": "string",
@@ -31,7 +31,7 @@
 							"hideField": false,
 							"indexType": "keyword",
 							"label": {
-								"en_US": "Name"
+								"[$LOCALE_DEFAULT$]": "Name"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": true,
@@ -39,24 +39,24 @@
 							"nativeField": false,
 							"objectFieldName": "",
 							"placeholder": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"predefinedValue": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"requireConfirmation": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"tooltip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "text",
 							"visibilityExpression": ""
@@ -67,23 +67,23 @@
 							"fieldReference": "Image",
 							"indexType": "text",
 							"label": {
-								"en_US": "Image"
+								"[$LOCALE_DEFAULT$]": "Image"
 							},
 							"localizable": true,
 							"name": "Image",
 							"objectFieldName": "",
 							"predefinedValue": {
-								"en_US": "{}"
+								"[$LOCALE_DEFAULT$]": "{}"
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "image",
 							"visibilityExpression": ""
@@ -91,10 +91,10 @@
 						{
 							"autocomplete": false,
 							"confirmationErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"confirmationLabel": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"dataSourceType": "",
 							"dataType": "string",
@@ -107,7 +107,7 @@
 							"hideField": false,
 							"indexType": "keyword",
 							"label": {
-								"en_US": "Info"
+								"[$LOCALE_DEFAULT$]": "Info"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": true,
@@ -115,24 +115,24 @@
 							"nativeField": false,
 							"objectFieldName": "",
 							"placeholder": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"predefinedValue": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"requireConfirmation": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"tooltip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "text",
 							"visibilityExpression": ""

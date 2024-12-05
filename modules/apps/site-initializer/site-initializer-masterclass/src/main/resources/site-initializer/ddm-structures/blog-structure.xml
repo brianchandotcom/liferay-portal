@@ -8,16 +8,16 @@
 			<![CDATA[
 				{
 					"availableLanguageIds": [
-						"en_US"
+						"[$LOCALE_DEFAULT$]"
 					],
-					"defaultLanguageId": "en_US",
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
 					"fields": [
 						{
 							"confirmationErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"confirmationLabel": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"dataType": "string",
 							"direction": "[vertical]",
@@ -27,7 +27,7 @@
 							"hideField": false,
 							"indexType": "keyword",
 							"label": {
-								"en_US": "Title"
+								"[$LOCALE_DEFAULT$]": "Title"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": true,
@@ -35,34 +35,34 @@
 							"nativeField": false,
 							"objectFieldName": "",
 							"placeholder": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"predefinedValue": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"requireConfirmation": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"tooltip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "text",
 							"visibilityExpression": ""
 						},
 						{
 							"confirmationErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"confirmationLabel": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"dataType": "string",
 							"direction": "[vertical]",
@@ -72,7 +72,7 @@
 							"hideField": false,
 							"indexType": "keyword",
 							"label": {
-								"en_US": "Subtitle"
+								"[$LOCALE_DEFAULT$]": "Subtitle"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": true,
@@ -80,24 +80,24 @@
 							"nativeField": false,
 							"objectFieldName": "",
 							"placeholder": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"predefinedValue": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"requireConfirmation": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"tooltip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "text",
 							"visibilityExpression": ""
@@ -108,33 +108,33 @@
 							"fieldReference": "MainImage",
 							"indexType": "text",
 							"label": {
-								"en_US": "Main Image"
+								"[$LOCALE_DEFAULT$]": "Main Image"
 							},
 							"localizable": true,
 							"name": "MainImage",
 							"objectFieldName": "",
 							"predefinedValue": {
-								"en_US": "{}"
+								"[$LOCALE_DEFAULT$]": "{}"
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "image",
 							"visibilityExpression": ""
 						},
 						{
 							"confirmationErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"confirmationLabel": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"dataType": "string",
 							"direction": "[vertical]",
@@ -144,7 +144,7 @@
 							"hideField": false,
 							"indexType": "keyword",
 							"label": {
-								"en_US": "Image Author"
+								"[$LOCALE_DEFAULT$]": "Image Author"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": true,
@@ -152,24 +152,24 @@
 							"nativeField": false,
 							"objectFieldName": "",
 							"placeholder": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"predefinedValue": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"requireConfirmation": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"tooltip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "text",
 							"visibilityExpression": ""
@@ -180,23 +180,23 @@
 							"fieldReference": "Body",
 							"indexType": "text",
 							"label": {
-								"en_US": "Body"
+								"[$LOCALE_DEFAULT$]": "Body"
 							},
 							"localizable": true,
 							"name": "Body",
 							"objectFieldName": "",
 							"predefinedValue": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "rich_text",
 							"visibilityExpression": ""

@@ -8,17 +8,17 @@
 			<![CDATA[
 				{
 					"availableLanguageIds": [
-						"en_US"
+						"[$LOCALE_DEFAULT$]"
 					],
-					"defaultLanguageId": "en_US",
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
 					"fields": [
 						{
 							"autocomplete": false,
 							"confirmationErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"confirmationLabel": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"dataSourceType": "",
 							"dataType": "string",
@@ -31,7 +31,7 @@
 							"hideField": false,
 							"indexType": "keyword",
 							"label": {
-								"en_US": "Course Name"
+								"[$LOCALE_DEFAULT$]": "Course Name"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": true,
@@ -39,24 +39,24 @@
 							"nativeField": false,
 							"objectFieldName": "",
 							"placeholder": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"predefinedValue": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"requireConfirmation": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"tooltip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "text",
 							"visibilityExpression": ""
@@ -67,23 +67,23 @@
 							"fieldReference": "CourseVideoThumbnail",
 							"indexType": "text",
 							"label": {
-								"en_US": "Course Video Thumbnail"
+								"[$LOCALE_DEFAULT$]": "Course Video Thumbnail"
 							},
 							"localizable": true,
 							"name": "CourseVideoThumbnail",
 							"objectFieldName": "",
 							"predefinedValue": {
-								"en_US": "{}"
+								"[$LOCALE_DEFAULT$]": "{}"
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": false,
 							"requiredErrorMessage": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"showLabel": true,
 							"tip": {
-								"en_US": ""
+								"[$LOCALE_DEFAULT$]": ""
 							},
 							"type": "image",
 							"visibilityExpression": ""
@@ -94,7 +94,7 @@
 							"ddmStructureLayoutId": "",
 							"fieldReference": "Module1",
 							"label": {
-								"en_US": "Module 1"
+								"[$LOCALE_DEFAULT$]": "Module 1"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": false,
@@ -103,10 +103,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -119,7 +119,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 1 Name"
+										"[$LOCALE_DEFAULT$]": "Module 1 Name"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -127,34 +127,34 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
 								},
 								{
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataType": "string",
 									"direction": "[vertical]",
@@ -164,7 +164,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 1 Description"
+										"[$LOCALE_DEFAULT$]": "Module 1 Description"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -172,34 +172,34 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
 								},
 								{
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataType": "string",
 									"direction": "[vertical]",
@@ -209,7 +209,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 1 Video URL"
+										"[$LOCALE_DEFAULT$]": "Module 1 Video URL"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -217,24 +217,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -253,7 +253,7 @@
 							"ddmStructureLayoutId": "",
 							"fieldReference": "Module2",
 							"label": {
-								"en_US": "Module 2"
+								"[$LOCALE_DEFAULT$]": "Module 2"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": false,
@@ -262,10 +262,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -278,7 +278,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 2 Name"
+										"[$LOCALE_DEFAULT$]": "Module 2 Name"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -286,34 +286,34 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
 								},
 								{
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataType": "string",
 									"direction": "[vertical]",
@@ -323,7 +323,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 2 Description"
+										"[$LOCALE_DEFAULT$]": "Module 2 Description"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -331,34 +331,34 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
 								},
 								{
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataType": "string",
 									"direction": "[vertical]",
@@ -368,7 +368,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 2 Video URL"
+										"[$LOCALE_DEFAULT$]": "Module 2 Video URL"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -376,24 +376,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
@@ -412,7 +412,7 @@
 							"ddmStructureLayoutId": "",
 							"fieldReference": "Module3",
 							"label": {
-								"en_US": "Module 3"
+								"[$LOCALE_DEFAULT$]": "Module 3"
 							},
 							"labelAtStructureLevel": true,
 							"localizable": false,
@@ -421,10 +421,10 @@
 								{
 									"autocomplete": false,
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataSourceType": "",
 									"dataType": "string",
@@ -437,7 +437,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 3 Name"
+										"[$LOCALE_DEFAULT$]": "Module 3 Name"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -445,34 +445,34 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
 								},
 								{
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataType": "string",
 									"direction": "[vertical]",
@@ -482,7 +482,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 3 Description"
+										"[$LOCALE_DEFAULT$]": "Module 3 Description"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -490,34 +490,34 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""
 								},
 								{
 									"confirmationErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"confirmationLabel": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"dataType": "string",
 									"direction": "[vertical]",
@@ -527,7 +527,7 @@
 									"hideField": false,
 									"indexType": "keyword",
 									"label": {
-										"en_US": "Module 3 Video URL"
+										"[$LOCALE_DEFAULT$]": "Module 3 Video URL"
 									},
 									"labelAtStructureLevel": true,
 									"localizable": true,
@@ -535,24 +535,24 @@
 									"nativeField": false,
 									"objectFieldName": "",
 									"placeholder": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"predefinedValue": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"readOnly": false,
 									"repeatable": false,
 									"requireConfirmation": false,
 									"required": false,
 									"requiredErrorMessage": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"showLabel": true,
 									"tip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"tooltip": {
-										"en_US": ""
+										"[$LOCALE_DEFAULT$]": ""
 									},
 									"type": "text",
 									"visibilityExpression": ""

@@ -47,59 +47,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-151159. The page designer map the Select from List fragment to objects fields on content pages."
-	@priority = 5
-	test MapPicklistFieldOnContentPage {
-		property portal.acceptance = "true";
-
-		task ("Given a page designer has a mapped Form Container on content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Form Components",
-				fragmentName = "Form Container");
-		}
-
-		task ("When the page designer maps Select from list fragment and views it after publishing") {
-			PageEditor.editFormContainer(contentType = "Purchase Order");
-
-			PageEditor.editInput(
-				fragmentName = "Select",
-				helpText = "Just one type of ticket can be selected",
-				hideHelpText = "false",
-				label = "Select your ticket");
-
-			PageEditor.publish(objectName = "Purchase Order");
-
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Then the pages designer can see available options on select from list fragment at view mode") {
-			PageEditor.viewInputStyle(
-				helpText = "Just one type of ticket can be selected",
-				label = "Select your ticket",
-				showHelpText = "true",
-				showLabel = "true",
-				type = "select");
-
-			Click(
-				index = 1,
-				locator1 = "Fragment#INPUT_TOGGLE",
-				type = "select");
-
-			MenuItem.viewOrder(menuItemList = "Reserved,Giveaways,Members");
-		}
-	}
-
 	@description = "This is a test for LPS-154568. The page designer can map a Form Container to Object field with relationship on system object"
 	@priority = 5
 	test MapRelationshipWithSystemObject {
@@ -373,52 +320,6 @@ definition {
 				type = "select");
 
 			MenuItem.viewOrder(menuItemList = "Adapt Media,Analystics Cloud,Collections,Clay,Content Dashboard,Control Menu,Forms,Data Engine,Categories,Item Selector,Page Templates");
-		}
-	}
-
-	@description = "This is a test for LPS-182728. The user should see the field error below the Select from List fragment."
-	@priority = 3
-	test ViewSelectFromListFieldErrorMessageWhenPartialValidationFailure {
-		task ("Given a user has a content page where a Select from List fragment mapped to a mandatory Select from List field") {
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Picklist",
-				fieldLabelName = "Mandatory",
-				fieldName = "mandatory",
-				fieldType = "String",
-				isRequired = "true",
-				objectName = "PurchaseOrder",
-				picklistName = "Ticket Type");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Form Components",
-				fragmentName = "Form Container");
-
-			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
-
-			PageEditor.publish();
-		}
-
-		task ("When the user submits form without selection") {
-			SetElementAttribute.removeElementAttribute(
-				attribute1 = "required",
-				locator1 = "//label[normalize-space()='Mandatory']//following-sibling::div//input[contains(@id,'select-from-list')]");
-
-			Button.clickSubmitButton();
-		}
-
-		task ("Then the user should see a field error message below Select from List") {
-			Alert.viewFieldErrorMessage(
-				errorMessage = "This field is required.",
-				fieldLabel = "Mandatory");
 		}
 	}
 

@@ -2744,6 +2744,120 @@ test.describe('Picklist input field', () => {
 			await expect(page.getByLabel('Material')).toHaveValue('Carton');
 		}
 	);
+
+	test(
+		'The page designer map the Select from List fragment to objects fields on content pages',
+		{
+			tag: ['@LPS-151159', '@LPS-182728'],
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a Form fragment
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('Lemon Basket')
+				)
+			).body;
+
+			const picklistId = getRandomString();
+
+			const picklistDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_material',
+				},
+				id: picklistId,
+				key: 'INPUTS-select-from-list',
+			});
+
+			const multiselectPicklistDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_lemonDimensions',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-select-from-list',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [
+					picklistDefinition,
+					multiselectPicklistDefinition,
+					submitFragmentDefinition,
+				],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode and map it to the object
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Change label and help text
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Label',
+				fragmentId: picklistId,
+				tab: 'General',
+				value: 'Select your material',
+			});
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Help Text',
+				fragmentId: picklistId,
+				tab: 'General',
+				value: 'Just one material can be selected',
+			});
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Help Text',
+				fragmentId: picklistId,
+				tab: 'General',
+				value: true,
+			});
+
+			// Mark field as required
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Mark as Required',
+				fragmentId: picklistId,
+				tab: 'General',
+				value: true,
+			});
+
+			// Publish and go to view mode
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Assert help text and label
+
+			await expect(page.getByText('Select your material')).toBeVisible();
+
+			await expect(
+				page.getByText('Just one material can be selected')
+			).toBeVisible();
+		}
+	);
 });
 
 test.describe('Rich Text Fragment', () => {

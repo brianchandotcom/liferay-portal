@@ -12,11 +12,9 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -235,11 +233,5 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private JSONFactory _jsonFactory;
-
-	@Inject
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

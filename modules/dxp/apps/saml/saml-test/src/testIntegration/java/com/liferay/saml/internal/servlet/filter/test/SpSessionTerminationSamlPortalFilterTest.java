@@ -58,7 +58,7 @@ public class SpSessionTerminationSamlPortalFilterTest {
 
 			SamlSpSessionLocalServiceUtil.addSamlSpSession(samlSpSession);
 
-			URL url = new URL("http://localhost:8080/c/portal/saml/acs");
+			URL url = new URL("http://localhost:8080");
 
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)url.openConnection();

@@ -9,6 +9,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.exception.CommerceOrderItemPriceException;
 import com.liferay.commerce.exception.CommerceOrderItemRequestedDeliveryDateException;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.model.CommerceOrder;
@@ -88,8 +89,9 @@ public class EditCommerceOrderItemMVCActionCommand
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
-			else if (throwable instanceof
-						CommerceOrderItemRequestedDeliveryDateException) {
+			else if (throwable instanceof CommerceOrderItemPriceException ||
+					 throwable instanceof
+						 CommerceOrderItemRequestedDeliveryDateException) {
 
 				SessionErrors.add(
 					actionRequest, throwable.getClass(), throwable);
@@ -206,18 +208,23 @@ public class EditCommerceOrderItemMVCActionCommand
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItemUnitPrice(
 					commerceOrderItemId, decimalQuantity,
-					_commercePriceFormatter.parse(actionRequest, "price"));
+					_commercePriceFormatter.parse(
+						actionRequest, CommerceOrderItem.class.getName(),
+						"price"));
 
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItemPrices(
 					commerceOrderItemId,
 					_commercePriceFormatter.parse(
-						actionRequest, "discountAmount"),
+						actionRequest, CommerceOrderItem.class.getName(),
+						"discountAmount"),
 					commerceOrderItem.getDiscountPercentageLevel1(),
 					commerceOrderItem.getDiscountPercentageLevel2(),
 					commerceOrderItem.getDiscountPercentageLevel3(),
 					commerceOrderItem.getDiscountPercentageLevel4(),
-					_commercePriceFormatter.parse(actionRequest, "finalPrice"),
+					_commercePriceFormatter.parse(
+						actionRequest, CommerceOrderItem.class.getName(),
+						"finalPrice"),
 					commerceOrderItem.getPromoPrice(),
 					commerceOrderItem.getUnitPrice());
 		}

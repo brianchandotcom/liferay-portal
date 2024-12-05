@@ -488,23 +488,31 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		_commerceOrderService.updateCommerceOrderPrices(
 			commerceOrder.getCommerceOrderId(),
-			_commercePriceFormatter.parse(actionRequest, "shippingAmount"),
 			_commercePriceFormatter.parse(
-				actionRequest, "shippingDiscountAmount"),
+				actionRequest, CommerceOrder.class.getName(), "shippingAmount"),
+			_commercePriceFormatter.parse(
+				actionRequest, CommerceOrder.class.getName(),
+				"shippingDiscountAmount"),
 			commerceOrder.getShippingDiscountPercentageLevel1(),
 			commerceOrder.getShippingDiscountPercentageLevel2(),
 			commerceOrder.getShippingDiscountPercentageLevel3(),
 			commerceOrder.getShippingDiscountPercentageLevel4(),
-			_commercePriceFormatter.parse(actionRequest, "subtotal"),
 			_commercePriceFormatter.parse(
-				actionRequest, "subtotalDiscountAmount"),
+				actionRequest, CommerceOrder.class.getName(), "subtotal"),
+			_commercePriceFormatter.parse(
+				actionRequest, CommerceOrder.class.getName(),
+				"subtotalDiscountAmount"),
 			commerceOrder.getSubtotalDiscountPercentageLevel1(),
 			commerceOrder.getSubtotalDiscountPercentageLevel2(),
 			commerceOrder.getSubtotalDiscountPercentageLevel3(),
 			commerceOrder.getSubtotalDiscountPercentageLevel4(),
-			_commercePriceFormatter.parse(actionRequest, "taxAmount"),
-			_commercePriceFormatter.parse(actionRequest, "total"),
-			_commercePriceFormatter.parse(actionRequest, "totalDiscountAmount"),
+			_commercePriceFormatter.parse(
+				actionRequest, CommerceOrder.class.getName(), "taxAmount"),
+			_commercePriceFormatter.parse(
+				actionRequest, CommerceOrder.class.getName(), "total"),
+			_commercePriceFormatter.parse(
+				actionRequest, CommerceOrder.class.getName(),
+				"totalDiscountAmount"),
 			commerceOrder.getTotalDiscountPercentageLevel1(),
 			commerceOrder.getTotalDiscountPercentageLevel2(),
 			commerceOrder.getTotalDiscountPercentageLevel3(),
@@ -671,13 +679,16 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getAdvanceStatus(),
 			commerceOrder.getCommercePaymentMethodKey(),
 			commerceOrder.getName(), commerceOrder.getPurchaseOrderNumber(),
-			_commercePriceFormatter.parse(actionRequest, "shippingPrice"),
+			_commercePriceFormatter.parse(
+				actionRequest, CommerceOrder.class.getName(), "shippingPrice"),
 			commerceOrder.getShippingOptionName(),
 			commerceOrder.getShippingWithTaxAmount(),
-			_commercePriceFormatter.parse(actionRequest, "subtotal"),
+			_commercePriceFormatter.parse(
+				actionRequest, CommerceOrder.class.getName(), "subtotal"),
 			commerceOrder.getSubtotalWithTaxAmount(),
 			commerceOrder.getTaxAmount(),
-			_commercePriceFormatter.parse(actionRequest, "total"),
+			_commercePriceFormatter.parse(
+				actionRequest, CommerceOrder.class.getName(), "total"),
 			commerceOrder.getTotalDiscountAmount(),
 			commerceOrder.getTotalWithTaxAmount(), commerceContext, false);
 	}

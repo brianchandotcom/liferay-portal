@@ -458,12 +458,12 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 				groupId, layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassTypeId());
 
-		if (layoutPageTemplateEntry != null) {
-			return layoutLocalService.fetchLayout(
-				layoutPageTemplateEntry.getPlid());
+		if (layoutPageTemplateEntry == null) {
+			return null;
 		}
 
-		return null;
+		return layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
 	}
 
 	private LayoutDisplayPageProvider<?> _getLayoutDisplayPageProvider(

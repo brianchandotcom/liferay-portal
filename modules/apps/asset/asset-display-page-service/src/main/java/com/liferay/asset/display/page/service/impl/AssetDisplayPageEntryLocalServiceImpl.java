@@ -364,12 +364,12 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			).withParentheses(
 			).or(
 				() -> {
-					if (defaultTemplate) {
-						return AssetDisplayPageEntryTable.INSTANCE.type.eq(
-							AssetDisplayPageConstants.TYPE_DEFAULT);
+					if (!defaultTemplate) {
+						return null;
 					}
 
-					return null;
+					return AssetDisplayPageEntryTable.INSTANCE.type.eq(
+						AssetDisplayPageConstants.TYPE_DEFAULT);
 				}
 			).withParentheses()
 		).and(

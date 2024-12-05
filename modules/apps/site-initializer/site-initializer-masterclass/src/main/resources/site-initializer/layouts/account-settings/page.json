@@ -1,6 +1,7 @@
 {
 	"friendlyURL": "/account-settings",
 	"hidden": false,
+	"name": "Account Settings",
 	"name_i18n": {
 		"en_US": "Account Settings"
 	},

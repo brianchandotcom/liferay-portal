@@ -71,3 +71,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "object-model-builder"));
 		module="{ExpressionBuilderModal} from object-web"
 	/>
 </div>
+
+<div>
+	<react:component
+		module="{ModalDisableInheritance} from object-web"
+	/>
+</div>

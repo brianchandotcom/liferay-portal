@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.test.util.HitsAssert;
@@ -37,6 +38,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -77,7 +81,7 @@ public class CPConfigurationEntryIndexerTest {
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
 			commerceCatalog.getGroupId());
 
-		CPConfigurationList cpConfigurationList =
+		CPConfigurationList cpConfigurationList1 =
 			_cpConfigurationListLocalService.getMasterCPConfigurationList(
 				commerceCatalog.getGroupId());
 
@@ -87,7 +91,7 @@ public class CPConfigurationEntryIndexerTest {
 				commerceCatalog.getGroupId(),
 				_portal.getClassNameId(CPDefinition.class),
 				cpDefinition.getCPDefinitionId(),
-				cpConfigurationList.getCPConfigurationListId(), 0, "123", true,
+				cpConfigurationList1.getCPConfigurationListId(), 0, "123", true,
 				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
 				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
 				true, true, 1.0, true, true, true, 1.0, 1.0);
@@ -96,12 +100,46 @@ public class CPConfigurationEntryIndexerTest {
 
 		searchContext.setAttribute(
 			CPField.CP_CONFIGURATION_LIST_ID,
-			cpConfigurationEntry.getCPConfigurationListId());
+			cpConfigurationList1.getCPConfigurationListId());
+		searchContext.setAttribute(
+			Field.CLASS_NAME_ID, _portal.getClassNameId(CPDefinition.class));
 		searchContext.setCompanyId(_group.getCompanyId());
 
 		Hits hits = _indexer.search(searchContext);
 
 		Document document = HitsAssert.assertOnlyOne(hits);
+
+		Assert.assertEquals(
+			String.valueOf(cpConfigurationEntry.getClassPK()),
+			document.get(Field.ENTRY_CLASS_PK));
+
+		Date date = new Date();
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(date.getTime());
+
+		int displayDateHour = calendar.get(Calendar.HOUR);
+
+		if (calendar.get(Calendar.AM_PM) == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		CPConfigurationList cpConfigurationList2 =
+			_cpConfigurationListLocalService.addCPConfigurationList(
+				null, commerceCatalog.getGroupId(), _user.getUserId(), 0, false,
+				"Test List", 0D, calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), displayDateHour,
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+
+		searchContext.setAttribute(
+			CPField.CP_CONFIGURATION_LIST_ID,
+			cpConfigurationList2.getCPConfigurationListId());
+
+		searchContext.setCompanyId(_group.getCompanyId());
+
+		hits = _indexer.search(searchContext);
+
+		document = HitsAssert.assertOnlyOne(hits);
 
 		Assert.assertEquals(
 			String.valueOf(cpConfigurationEntry.getClassPK()),

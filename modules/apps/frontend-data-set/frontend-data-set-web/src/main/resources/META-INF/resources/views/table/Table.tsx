@@ -440,6 +440,7 @@ const Table = ({
 					itemInlineChanges={itemsChanges}
 					items={items}
 					itemsActions={itemsActions}
+					nestedItemsKey={nestedItemsKey}
 					nestedItemsReferenceKey={nestedItemsReferenceKey}
 					selectItems={selectItems}
 					selectable={selectable}

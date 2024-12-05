@@ -1318,8 +1318,7 @@ public class ObjectEntryLocalServiceImpl
 			selectExpressions);
 
 		_addLocalizedObjectFieldValues(
-			dynamicObjectDefinitionLocalizationTable,
-			objectEntry.getObjectEntryId(), values);
+			dynamicObjectDefinitionLocalizationTable, objectEntry, values);
 		_addObjectRelationshipERCFieldValue(
 			objectEntry.getObjectDefinitionId(), values);
 
@@ -1909,29 +1908,31 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _addLocalizedObjectFieldValues(
-		DynamicObjectDefinitionLocalizationTable
-			dynamicObjectDefinitionLocalizationTable,
-		long objectEntryId, Map<String, Serializable> values) {
+			DynamicObjectDefinitionLocalizationTable
+				dynamicObjectDefinitionLocalizationTable,
+			ObjectEntry objectEntry, Map<String, Serializable> values)
+		throws PortalException {
 
 		if (dynamicObjectDefinitionLocalizationTable == null) {
 			return;
 		}
 
-		List<Object[]> rows = objectEntryPersistence.dslQuery(
+		Expression<?>[] selectExpressions = ArrayUtil.append(
+			_getSelectExpressions(dynamicObjectDefinitionLocalizationTable),
+			dynamicObjectDefinitionLocalizationTable.getLanguageIdColumn());
+
+		List<Object[]> rows = _list(
 			DSLQueryFactoryUtil.select(
-				ArrayUtil.append(
-					_getSelectExpressions(
-						dynamicObjectDefinitionLocalizationTable),
-					dynamicObjectDefinitionLocalizationTable.
-						getLanguageIdColumn())
+				selectExpressions
 			).from(
 				dynamicObjectDefinitionLocalizationTable
 			).where(
 				dynamicObjectDefinitionLocalizationTable.getForeignKeyColumn(
 				).eq(
-					objectEntryId
+					objectEntry.getObjectEntryId()
 				)
-			));
+			),
+			objectEntry.getObjectDefinitionId(), selectExpressions);
 
 		if (ListUtil.isEmpty(rows)) {
 			return;

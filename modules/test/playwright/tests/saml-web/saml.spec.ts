@@ -90,6 +90,7 @@ export const test = mergeTests(
 
 export const deleteAfterTestProviderConnections = new Set<string>();
 export const deleteAfterTestVirtualInstances = new Set<string>();
+const resetAfterTestGeneralPage = new Set<string>();
 
 test.afterAll(async ({browser}) => {
 
@@ -116,6 +117,28 @@ test.afterAll(async ({browser}) => {
 
 test.afterEach(async ({browser}) => {
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
+
+	for (const instanceName of resetAfterTestGeneralPage) {
+		liferayConfig.environment.baseUrl = `http://${instanceName}:8080`;
+
+		// Reset general tab
+
+		const newPage = await performSamlSafeLogin(browser, instanceName);
+
+		const instanceSettingsPage = new InstanceSettingsPage(newPage);
+
+		await instanceSettingsPage.goToInstanceSetting(
+			'Instance Configuration',
+			'General',
+			false
+		);
+
+		const generalPage = new GeneralPage(instanceSettingsPage.page);
+
+		await generalPage.editDefaultLogoutPage('');
+
+		await newPage.close();
+	}
 
 	for (const instanceName of deleteAfterTestProviderConnections) {
 		liferayConfig.environment.baseUrl = `http://${instanceName}:8080`;
@@ -798,6 +821,8 @@ test('LPD-32189 AC1 TC1: Verify IdP initiated SLO redirects user to c/portal/sam
 	const generalPage = new GeneralPage(instanceSettingsPage.page);
 
 	await generalPage.editDefaultLogoutPage(idpNewPagePath);
+
+	resetAfterTestGeneralPage.add(DEFAULT_IDP_NAME);
 
 	// Create IdP User
 

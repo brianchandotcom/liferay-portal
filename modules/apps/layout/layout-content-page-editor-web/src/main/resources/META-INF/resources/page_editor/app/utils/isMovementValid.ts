@@ -25,58 +25,6 @@ type Props = {
 	type?: 'drop' | 'paste';
 };
 
-const VALID_PASTE_TYPES: Array<LayoutDataItem['type']> = [
-	LAYOUT_DATA_ITEM_TYPES.column,
-	LAYOUT_DATA_ITEM_TYPES.container,
-	LAYOUT_DATA_ITEM_TYPES.collection,
-	LAYOUT_DATA_ITEM_TYPES.dropZone,
-	LAYOUT_DATA_ITEM_TYPES.form,
-	LAYOUT_DATA_ITEM_TYPES.formStep,
-	LAYOUT_DATA_ITEM_TYPES.root,
-];
-
-export function getPasteTargetId(
-	targetId: LayoutDataItem['itemId'],
-	layoutData: LayoutData
-): string {
-	const target = layoutData.items[targetId];
-	const items = layoutData.items;
-
-	// Return first step id for multistep forms
-
-	if (
-		target.type === LAYOUT_DATA_ITEM_TYPES.form &&
-		target.config.formType === 'multistep'
-	) {
-		for (const childId of target.children) {
-			const child = items[childId];
-
-			if (child.type === LAYOUT_DATA_ITEM_TYPES.formStepContainer) {
-				return items[child.children[0]].itemId;
-			}
-		}
-	}
-
-	// Return collection item id for mapped collections
-
-	if (
-		target.type === LAYOUT_DATA_ITEM_TYPES.collection &&
-		target.config.collection
-	) {
-		return target.children[0];
-	}
-
-	// Return parent id if the item is not a valid paste target
-
-	if (!VALID_PASTE_TYPES.includes(target.type)) {
-		return target.parentId;
-	}
-
-	// Otherwise return the id of the item itself
-
-	return target.itemId;
-}
-
 export function isMovementValid({
 	fragmentEntryLinks,
 	getWidgets,
@@ -212,4 +160,56 @@ export function isMovementValid({
 	}
 
 	return true;
+}
+
+const VALID_PASTE_TYPES: Array<LayoutDataItem['type']> = [
+	LAYOUT_DATA_ITEM_TYPES.column,
+	LAYOUT_DATA_ITEM_TYPES.container,
+	LAYOUT_DATA_ITEM_TYPES.collection,
+	LAYOUT_DATA_ITEM_TYPES.dropZone,
+	LAYOUT_DATA_ITEM_TYPES.form,
+	LAYOUT_DATA_ITEM_TYPES.formStep,
+	LAYOUT_DATA_ITEM_TYPES.root,
+];
+
+export function getPasteTargetId(
+	targetId: LayoutDataItem['itemId'],
+	layoutData: LayoutData
+): string {
+	const target = layoutData.items[targetId];
+	const items = layoutData.items;
+
+	// Return first step id for multistep forms
+
+	if (
+		target.type === LAYOUT_DATA_ITEM_TYPES.form &&
+		target.config.formType === 'multistep'
+	) {
+		for (const childId of target.children) {
+			const child = items[childId];
+
+			if (child.type === LAYOUT_DATA_ITEM_TYPES.formStepContainer) {
+				return items[child.children[0]].itemId;
+			}
+		}
+	}
+
+	// Return collection item id for mapped collections
+
+	if (
+		target.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+		target.config.collection
+	) {
+		return target.children[0];
+	}
+
+	// Return parent id if the item is not a valid paste target
+
+	if (!VALID_PASTE_TYPES.includes(target.type)) {
+		return target.parentId;
+	}
+
+	// Otherwise return the id of the item itself
+
+	return target.itemId;
 }

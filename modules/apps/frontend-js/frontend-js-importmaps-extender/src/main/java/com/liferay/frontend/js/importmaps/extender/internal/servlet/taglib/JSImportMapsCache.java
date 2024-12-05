@@ -57,6 +57,8 @@ public class JSImportMapsCache {
 			return () -> {
 				synchronized (JSImportMapsCache.this) {
 					globalImportMapsJSONObjects.remove(globalId);
+
+					invalidate();
 				}
 			};
 		}
@@ -71,6 +73,8 @@ public class JSImportMapsCache {
 		return () -> {
 			synchronized (JSImportMapsCache.this) {
 				scopedImportMapsJSONObjects.remove(scope);
+
+				invalidate();
 			}
 		};
 	}

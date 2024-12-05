@@ -27,7 +27,6 @@ import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
-import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.List;
 import java.util.Objects;
@@ -148,10 +147,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return;
 		}
 
-		SiteNavigationMenuItemType siteNavigationMenuItemType =
-			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
-				SiteNavigationMenuItemTypeConstants.LAYOUT);
-
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -164,7 +159,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				null, serviceContext.getUserId(), layout.getGroupId(),
 				siteNavigationMenuId, parentSiteNavigationMenuItemId,
 				SiteNavigationMenuItemTypeConstants.LAYOUT,
-				siteNavigationMenuItemType.getTypeSettingsFromLayout(layout),
+				_siteNavigationMenuItemType.getTypeSettingsFromLayout(layout),
 				serviceContext);
 		}
 		catch (PortalException portalException) {
@@ -271,9 +266,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	private SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
 
-	@Reference
-	private SiteNavigationMenuItemTypeRegistry
-		_siteNavigationMenuItemTypeRegistry;
+	@Reference(
+		target = "(site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeConstants.LAYOUT + ")"
+	)
+	private SiteNavigationMenuItemType _siteNavigationMenuItemType;
 
 	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;

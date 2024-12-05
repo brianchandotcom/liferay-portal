@@ -29,6 +29,7 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
@@ -41,7 +42,9 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -58,6 +61,7 @@ import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -1007,9 +1011,39 @@ public class PageSpecificationResourceTest
 
 	private void _updatePageExperiences(PageExperience[] pageExperiences) {
 		for (PageExperience pageExperience : pageExperiences) {
+			List<PageElement> dropZonePageElements =
+				TransformUtil.transformToList(
+					pageExperience.getPageElements(),
+					pageElement -> {
+						if (Objects.equals(
+								pageElement.getType(),
+								PageElement.Type.DROP_ZONE)) {
+
+							return pageElement;
+						}
+
+						return null;
+					});
+
 			pageExperience.setPageElements(
-				() -> _getPageElements(
-						RandomTestUtil.randomInt(1, 3), null));
+				() -> {
+					PageElement[] pageElements = _getPageElements(
+						RandomTestUtil.randomInt(1, 3), null);
+
+					if (ListUtil.isEmpty(dropZonePageElements)) {
+						return pageElements;
+					}
+
+					for (int i = 0; i < dropZonePageElements.size(); i++) {
+						PageElement pageElement = dropZonePageElements.get(i);
+
+						pageElement.setPosition(pageElements.length + i);
+					}
+
+					return ArrayUtil.append(
+						pageElements,
+						dropZonePageElements.toArray(new PageElement[0]));
+				});
 		}
 	}
 

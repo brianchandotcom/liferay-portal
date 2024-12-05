@@ -12,9 +12,9 @@ import com.liferay.asset.kernel.exception.VocabularyNameException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -205,7 +205,7 @@ public class AssetVocabularyServiceTest {
 			ResourceActionLocalServiceUtil.getResourceActionsCount(
 				AssetVocabulary.class.getName()));
 		Assert.assertNull(
-			AssetCategoryLocalServiceUtil.fetchAssetCategory(
+			_assetCategoryLocalService.fetchAssetCategory(
 				category.getCategoryId()));
 		Assert.assertNull(
 			_assetVocabularyLocalService.fetchAssetVocabulary(
@@ -299,7 +299,7 @@ public class AssetVocabularyServiceTest {
 				user, permissionChecker)) {
 
 			List<AssetVocabulary> vocabularies =
-				AssetVocabularyServiceUtil.getGroupVocabularies(
+				_assetVocabularyService.getGroupVocabularies(
 					_group.getGroupId(), false, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 
@@ -334,7 +334,7 @@ public class AssetVocabularyServiceTest {
 				user, permissionChecker)) {
 
 			List<AssetVocabulary> vocabularies =
-				AssetVocabularyServiceUtil.getGroupVocabularies(
+				_assetVocabularyService.getGroupVocabularies(
 					_group.getGroupId(), true, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 
@@ -350,7 +350,7 @@ public class AssetVocabularyServiceTest {
 		throws Exception {
 
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(
+			_assetVocabularyService.getGroupVocabularies(
 				_group.getGroupId(), false, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
@@ -362,7 +362,7 @@ public class AssetVocabularyServiceTest {
 		throws Exception {
 
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(
+			_assetVocabularyService.getGroupVocabularies(
 				_group.getGroupId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 
@@ -393,7 +393,7 @@ public class AssetVocabularyServiceTest {
 				user, permissionChecker)) {
 
 			List<AssetVocabulary> vocabularies =
-				AssetVocabularyServiceUtil.getGroupVocabularies(
+				_assetVocabularyService.getGroupVocabularies(
 					_group.getGroupId(), false);
 
 			Assert.assertTrue(ListUtil.isEmpty(vocabularies));
@@ -427,7 +427,7 @@ public class AssetVocabularyServiceTest {
 				user, permissionChecker)) {
 
 			List<AssetVocabulary> vocabularies =
-				AssetVocabularyServiceUtil.getGroupVocabularies(
+				_assetVocabularyService.getGroupVocabularies(
 					_group.getGroupId(), true);
 
 			Assert.assertTrue(ListUtil.isEmpty(vocabularies));
@@ -440,7 +440,7 @@ public class AssetVocabularyServiceTest {
 	@Test
 	public void testGetGroupVocabulariesWithNoVocabularies() throws Exception {
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(
+			_assetVocabularyService.getGroupVocabularies(
 				_group.getGroupId(), false);
 
 		Assert.assertTrue(ListUtil.isEmpty(vocabularies));
@@ -451,7 +451,7 @@ public class AssetVocabularyServiceTest {
 		throws Exception {
 
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(
+			_assetVocabularyService.getGroupVocabularies(
 				_group.getGroupId(), true);
 
 		Assert.assertEquals(vocabularies.toString(), 1, vocabularies.size());
@@ -580,7 +580,13 @@ public class AssetVocabularyServiceTest {
 	}
 
 	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
+	private AssetVocabularyService _assetVocabularyService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

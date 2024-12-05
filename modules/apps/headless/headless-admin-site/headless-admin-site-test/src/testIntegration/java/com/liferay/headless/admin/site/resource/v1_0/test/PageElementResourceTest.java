@@ -137,13 +137,45 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		}
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPatchSiteSiteByExternalReferenceCodePageElement()
 		throws Exception {
 
-		super.testPatchSiteSiteByExternalReferenceCodePageElement();
+		PageElement postPageElement =
+			testPostSiteSiteByExternalReferenceCodePageExperiencePageElement_addPageElement(
+				randomPageElement());
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				_layout.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		PageElement pathPageElement =
+			pageElementResource.patchSiteSiteByExternalReferenceCodePageElement(
+				testGroup.getExternalReferenceCode(),
+				_layout.getExternalReferenceCode(),
+				segmentsExperience.getExternalReferenceCode(),
+				postPageElement.getExternalReferenceCode(), postPageElement);
+
+		assertEquals(postPageElement, pathPageElement);
+		assertValid(pathPageElement);
+
+		try {
+			pageElementResource.patchSiteSiteByExternalReferenceCodePageElement(
+				testGroup.getExternalReferenceCode(),
+				_layout.getExternalReferenceCode(),
+				segmentsExperience.getExternalReferenceCode(),
+				RandomTestUtil.randomString(), randomPageElement());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
 	}
 
 	@Ignore
@@ -156,13 +188,27 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			testPostSiteSiteByExternalReferenceCodePageElementFragmentComposition();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPutSiteSiteByExternalReferenceCodePageElement()
 		throws Exception {
 
-		super.testPutSiteSiteByExternalReferenceCodePageElement();
+		PageElement pageElement = randomPageElement();
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				_layout.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		PageElement putPageElement =
+			pageElementResource.putSiteSiteByExternalReferenceCodePageElement(
+				testGroup.getExternalReferenceCode(),
+				_layout.getExternalReferenceCode(),
+				segmentsExperience.getExternalReferenceCode(),
+				pageElement.getExternalReferenceCode(), pageElement);
+
+		assertEquals(pageElement, putPageElement);
+		assertValid(putPageElement);
 	}
 
 	@Override

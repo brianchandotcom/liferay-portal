@@ -388,15 +388,13 @@ const MillerColumnsItem = ({
 			<a
 				{...ariaProps}
 				aria-current={active}
-				aria-label={item.title}
+				aria-label={`${title} ${description}`}
 				aria-owns={groupId}
 				className="miller-columns-item-mask"
 				href={url}
 				role="menuitem"
 				tabIndex={tabIndex}
-			>
-				<span className="c-inner sr-only">{title}</span>
-			</a>
+			/>
 
 			<span
 				className="autofit-row autofit-row-center"

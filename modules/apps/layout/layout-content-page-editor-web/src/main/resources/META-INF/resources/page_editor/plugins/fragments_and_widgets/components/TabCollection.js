@@ -172,7 +172,7 @@ function TabCollectionCollapse({
 				<span className="panel-title">
 					<span className="c-mr-2">{title}</span>
 
-					{deprecated && <FeatureIndicator type="deprecated" />}
+					{deprecated ? <FeatureIndicator type="deprecated" /> : null}
 
 					<span
 						className={`text-secondary collapse-icon-${

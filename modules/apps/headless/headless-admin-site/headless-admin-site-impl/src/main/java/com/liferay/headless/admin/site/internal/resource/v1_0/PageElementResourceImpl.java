@@ -289,6 +289,27 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			layoutPageTemplateStructure.getData(
 				segmentsExperience.getSegmentsExperienceId()));
 
+		return _addPageElement(layout, layoutStructure, pageElement);
+	}
+
+	private void _addChildPageElements(
+		LayoutStructure layoutStructure, PageElement pageElement) {
+
+		for (PageElement childPageElement : pageElement.getPageElements()) {
+			layoutStructure.addLayoutStructureItem(
+				_externalToInternalValuesMap.get(childPageElement.getType()),
+				childPageElement.getParentExternalReferenceCode(),
+				childPageElement.getPosition());
+
+			_addChildPageElements(layoutStructure, childPageElement);
+		}
+	}
+
+	private PageElement _addPageElement(
+			Layout layout, LayoutStructure layoutStructure,
+			PageElement pageElement)
+		throws Exception {
+
 		LayoutStructureItem layoutStructureItem =
 			layoutStructure.addLayoutStructureItem(
 				pageElement.getExternalReferenceCode(),
@@ -304,19 +325,6 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				layoutStructure.toString());
 
 		return _pageElementDTOConverter.toDTO(layoutStructureItem);
-	}
-
-	private void _addChildPageElements(
-		LayoutStructure layoutStructure, PageElement pageElement) {
-
-		for (PageElement childPageElement : pageElement.getPageElements()) {
-			layoutStructure.addLayoutStructureItem(
-				_externalToInternalValuesMap.get(childPageElement.getType()),
-				childPageElement.getParentExternalReferenceCode(),
-				childPageElement.getPosition());
-
-			_addChildPageElements(layoutStructure, childPageElement);
-		}
 	}
 
 	private static final Map<PageElement.Type, String>

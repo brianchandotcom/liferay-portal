@@ -380,30 +380,36 @@ function setMovementText({
 			)
 		);
 	}
-
-	message.push(
-		isFinalPosition
-			? sub(Liferay.Language.get('page-x-placed'), sources[0].title)
-			: sub(Liferay.Language.get('move-page-x'), sources[0].title)
-	);
-
-	const targetTitle = targetItem?.title || '';
-
-	if (target?.position === 'top') {
+	else {
 		message.push(
-			sub(Liferay.Language.get('at-the-top-of-the-page-x'), targetTitle)
+			isFinalPosition
+				? sub(Liferay.Language.get('page-x-placed'), sources[0].title)
+				: sub(Liferay.Language.get('move-page-x'), sources[0].title)
 		);
-	}
-	else if (target?.position === 'middle') {
-		message.push(sub(Liferay.Language.get('inside-page-x'), targetTitle));
-	}
-	else if (target?.position === 'bottom') {
-		message.push(
-			sub(
-				Liferay.Language.get('at-the-bottom-of-the-page-x'),
-				targetTitle
-			)
-		);
+
+		const targetTitle = targetItem?.title || '';
+
+		if (target?.position === 'top') {
+			message.push(
+				sub(
+					Liferay.Language.get('at-the-top-of-the-page-x'),
+					targetTitle
+				)
+			);
+		}
+		else if (target?.position === 'middle') {
+			message.push(
+				sub(Liferay.Language.get('inside-page-x'), targetTitle)
+			);
+		}
+		else if (target?.position === 'bottom') {
+			message.push(
+				sub(
+					Liferay.Language.get('at-the-bottom-of-the-page-x'),
+					targetTitle
+				)
+			);
+		}
 	}
 
 	setText(message.join(' '));

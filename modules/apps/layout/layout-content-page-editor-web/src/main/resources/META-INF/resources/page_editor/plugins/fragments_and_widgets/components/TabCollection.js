@@ -5,8 +5,7 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {FeatureIndicator} from 'frontend-js-components-web';
-import {useSessionState} from 'frontend-js-components-web';
+import {FeatureIndicator, useSessionState} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 

@@ -7,6 +7,7 @@ package com.liferay.commerce.pricing.web.internal.portlet.action;
 
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
+import com.liferay.commerce.discount.exception.CommerceDiscountAmountException;
 import com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeException;
 import com.liferay.commerce.discount.exception.CommerceDiscountMaxPriceValueException;
 import com.liferay.commerce.discount.exception.CommerceDiscountMinPriceValueException;
@@ -71,8 +72,9 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
-			else if (throwable instanceof
-						CommerceDiscountMaxPriceValueException ||
+			else if (throwable instanceof CommerceDiscountAmountException ||
+					 throwable instanceof
+						 CommerceDiscountMaxPriceValueException ||
 					 throwable instanceof
 						 CommerceDiscountMinPriceValueException) {
 
@@ -164,7 +166,9 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 		String level = ParamUtil.getString(actionRequest, "level");
 
 		BigDecimal[] discountLevels = _getDiscountLevels(
-			level, _commercePriceFormatter.parse(actionRequest, "amount"));
+			level,
+			_commercePriceFormatter.parse(
+				actionRequest, CommerceDiscount.class.getName(), "amount"));
 
 		int limitationTimes = ParamUtil.getInteger(
 			actionRequest, "limitationTimes");
@@ -196,7 +200,8 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 			commerceDiscountId, title, target, useCouponCode, couponCode,
 			usePercentage,
 			_commercePriceFormatter.parse(
-				actionRequest, "maximumDiscountAmount"),
+				actionRequest, CommerceDiscount.class.getName(),
+				"maximumDiscountAmount"),
 			level, discountLevels[0], discountLevels[1], discountLevels[2],
 			discountLevels[3],
 			_getLimitationType(limitationTimes, limitationTimesPerAccount),

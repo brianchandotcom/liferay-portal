@@ -141,7 +141,7 @@ public class EditCommercePaymentEntryMVCActionCommand
 			actionRequest, "commercePaymentEntryId");
 
 		BigDecimal amount = _commercePriceFormatter.parse(
-			actionRequest, "amount");
+			actionRequest, CommercePaymentEntry.class.getName(), "amount");
 
 		String reasonKey = ParamUtil.getString(actionRequest, "reasonKey");
 

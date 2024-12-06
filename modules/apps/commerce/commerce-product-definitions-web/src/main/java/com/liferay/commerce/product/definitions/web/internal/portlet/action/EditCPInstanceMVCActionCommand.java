@@ -19,6 +19,7 @@ import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsE
 import com.liferay.commerce.product.exception.CPInstanceDeliverySubscriptionLengthException;
 import com.liferay.commerce.product.exception.CPInstanceJsonException;
 import com.liferay.commerce.product.exception.CPInstanceMaxPriceValueException;
+import com.liferay.commerce.product.exception.CPInstancePriceException;
 import com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUuidException;
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.exception.DuplicateCPInstanceException;
@@ -126,6 +127,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 					CPInstanceDeliverySubscriptionLengthException ||
 				throwable instanceof CPInstanceJsonException ||
 				throwable instanceof CPInstanceMaxPriceValueException ||
+				throwable instanceof CPInstancePriceException ||
 				throwable instanceof
 					CPInstanceReplacementCPInstanceUuidException ||
 				throwable instanceof CPInstanceSkuException ||
@@ -249,10 +251,11 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		double depth = ParamUtil.getDouble(actionRequest, "depth");
 		double weight = ParamUtil.getDouble(actionRequest, "weight");
 		BigDecimal price = _commercePriceFormatter.parse(
-			actionRequest, "price");
+			actionRequest, CPInstance.class.getName(), "price");
 		BigDecimal promoPrice = _commercePriceFormatter.parse(
-			actionRequest, "promoPrice");
-		BigDecimal cost = _commercePriceFormatter.parse(actionRequest, "cost");
+			actionRequest, CPInstance.class.getName(), "promoPrice");
+		BigDecimal cost = _commercePriceFormatter.parse(
+			actionRequest, CPInstance.class.getName(), "cost");
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
 		int displayDateDay = ParamUtil.getInteger(

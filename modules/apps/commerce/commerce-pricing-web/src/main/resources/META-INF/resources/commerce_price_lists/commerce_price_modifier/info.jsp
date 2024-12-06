@@ -39,6 +39,8 @@ if (modifierType.equals(CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE)
 	<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceListDisplayContext.getCommercePriceListId() %>" />
 	<aui:input name="commercePriceModifierId" type="hidden" value="<%= commercePriceModifierId %>" />
 
+	<liferay-ui:error exception="<%= CommercePriceModifierAmountException.class %>" message="please-enter-a-valid-amount" />
+
 	<aui:model-context bean="<%= commercePriceModifier %>" model="<%= CommercePriceModifier.class %>" />
 
 	<commerce-ui:panel

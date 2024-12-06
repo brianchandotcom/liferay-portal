@@ -8,6 +8,7 @@ package com.liferay.commerce.pricing.web.internal.portlet.action;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
+import com.liferay.commerce.pricing.exception.CommercePriceModifierAmountException;
 import com.liferay.commerce.pricing.exception.NoSuchPriceModifierException;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
 import com.liferay.commerce.pricing.service.CommercePriceModifierService;
@@ -76,6 +77,19 @@ public class EditCommercePriceModifierMVCActionCommand
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
+			else if (exception instanceof
+						CommercePriceModifierAmountException) {
+
+				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
 			else {
 				throw exception;
 			}
@@ -119,7 +133,8 @@ public class EditCommercePriceModifierMVCActionCommand
 		String modifierType = ParamUtil.getString(
 			actionRequest, "modifierType");
 		BigDecimal modifierAmount = _commercePriceFormatter.parse(
-			actionRequest, "modifierAmount");
+			actionRequest, CommercePriceModifier.class.getName(),
+			"modifierAmount");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 

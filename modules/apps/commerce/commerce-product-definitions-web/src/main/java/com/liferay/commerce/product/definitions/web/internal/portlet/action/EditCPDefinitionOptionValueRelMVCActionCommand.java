@@ -214,7 +214,10 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRelId, cpInstanceId, key, nameMap,
 				ParamUtil.getBoolean(actionRequest, "preselected"),
-				_commercePriceFormatter.parse(actionRequest, "price"), priority,
+				_commercePriceFormatter.parse(
+					actionRequest, CPDefinitionOptionValueRel.class.getName(),
+					"price"),
+				priority,
 				_commerceOrderItemQuantityFormatter.parse(
 					actionRequest, "quantity"),
 				unitOfMeasureKey, serviceContext);

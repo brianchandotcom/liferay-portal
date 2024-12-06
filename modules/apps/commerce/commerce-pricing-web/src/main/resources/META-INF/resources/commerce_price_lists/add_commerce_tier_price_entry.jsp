@@ -31,6 +31,7 @@ boolean neverExpire = true;
 		<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceListId %>" />
 
 		<liferay-ui:error exception="<%= CommerceTierPriceEntryMinQuantityException.class %>" message="the-specified-quantity-is-not-allowed" />
+		<liferay-ui:error exception="<%= CommerceTierPriceEntryPriceException.class %>" message="please-enter-a-valid-price" />
 		<liferay-ui:error exception="<%= DuplicateCommerceTierPriceEntryException.class %>" message="there-is-already-a-tier-price-entry-with-the-same-minimum-quantity" />
 
 		<%@ include file="/commerce_price_lists/commerce_tier_price_entry/details.jspf" %>

@@ -29,6 +29,7 @@ if (commerceShippingFixedOption != null) {
 	<aui:input name="commerceShippingFixedOptionId" type="hidden" value="<%= commerceShippingFixedOptionId %>" />
 	<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
 
+	<liferay-ui:error exception="<%= CommerceShippingFixedOptionAmountException.class %>" message="please-enter-a-valid-amount" />
 	<liferay-ui:error exception="<%= CommerceShippingFixedOptionKeyException.class %>" message="please-enter-a-valid-key" />
 
 	<commerce-ui:panel>

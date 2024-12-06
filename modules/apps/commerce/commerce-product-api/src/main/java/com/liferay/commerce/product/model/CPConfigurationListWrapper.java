@@ -49,8 +49,7 @@ public class CPConfigurationListWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put(
 			"parentCPConfigurationListId", getParentCPConfigurationListId());
-		attributes.put(
-			"masterCPConfigurationList", isMasterCPConfigurationList());
+		attributes.put("master", isMaster());
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
 		attributes.put("displayDate", getDisplayDate());
@@ -141,11 +140,10 @@ public class CPConfigurationListWrapper
 			setParentCPConfigurationListId(parentCPConfigurationListId);
 		}
 
-		Boolean masterCPConfigurationList = (Boolean)attributes.get(
-			"masterCPConfigurationList");
+		Boolean master = (Boolean)attributes.get("master");
 
-		if (masterCPConfigurationList != null) {
-			setMasterCPConfigurationList(masterCPConfigurationList);
+		if (master != null) {
+			setMaster(master);
 		}
 
 		String name = (String)attributes.get("name");
@@ -309,13 +307,13 @@ public class CPConfigurationListWrapper
 	}
 
 	/**
-	 * Returns the master cp configuration list of this cp configuration list.
+	 * Returns the master of this cp configuration list.
 	 *
-	 * @return the master cp configuration list of this cp configuration list
+	 * @return the master of this cp configuration list
 	 */
 	@Override
-	public boolean getMasterCPConfigurationList() {
-		return model.getMasterCPConfigurationList();
+	public boolean getMaster() {
+		return model.getMaster();
 	}
 
 	/**
@@ -541,13 +539,13 @@ public class CPConfigurationListWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this cp configuration list is master cp configuration list.
+	 * Returns <code>true</code> if this cp configuration list is master.
 	 *
-	 * @return <code>true</code> if this cp configuration list is master cp configuration list; <code>false</code> otherwise
+	 * @return <code>true</code> if this cp configuration list is master; <code>false</code> otherwise
 	 */
 	@Override
-	public boolean isMasterCPConfigurationList() {
-		return model.isMasterCPConfigurationList();
+	public boolean isMaster() {
+		return model.isMaster();
 	}
 
 	/**
@@ -666,15 +664,13 @@ public class CPConfigurationListWrapper
 	}
 
 	/**
-	 * Sets whether this cp configuration list is master cp configuration list.
+	 * Sets whether this cp configuration list is master.
 	 *
-	 * @param masterCPConfigurationList the master cp configuration list of this cp configuration list
+	 * @param master the master of this cp configuration list
 	 */
 	@Override
-	public void setMasterCPConfigurationList(
-		boolean masterCPConfigurationList) {
-
-		model.setMasterCPConfigurationList(masterCPConfigurationList);
+	public void setMaster(boolean master) {
+		model.setMaster(master);
 	}
 
 	/**

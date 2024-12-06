@@ -61,10 +61,9 @@ public class CPConfigurationListTable
 		parentCPConfigurationListId = createColumn(
 			"parentCPConfigurationListId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<CPConfigurationListTable, Boolean>
-		masterCPConfigurationList = createColumn(
-			"masterCPConfigurationList", Boolean.class, Types.BOOLEAN,
-			Column.FLAG_DEFAULT);
+	public final Column<CPConfigurationListTable, Boolean> master =
+		createColumn(
+			"master", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CPConfigurationListTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPConfigurationListTable, Double> priority =

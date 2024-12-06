@@ -95,8 +95,8 @@ public class CPConfigurationListCacheModel
 		sb.append(modifiedDate);
 		sb.append(", parentCPConfigurationListId=");
 		sb.append(parentCPConfigurationListId);
-		sb.append(", masterCPConfigurationList=");
-		sb.append(masterCPConfigurationList);
+		sb.append(", master=");
+		sb.append(master);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", priority=");
@@ -171,8 +171,7 @@ public class CPConfigurationListCacheModel
 
 		cpConfigurationListImpl.setParentCPConfigurationListId(
 			parentCPConfigurationListId);
-		cpConfigurationListImpl.setMasterCPConfigurationList(
-			masterCPConfigurationList);
+		cpConfigurationListImpl.setMaster(master);
 
 		if (name == null) {
 			cpConfigurationListImpl.setName("");
@@ -248,7 +247,7 @@ public class CPConfigurationListCacheModel
 
 		parentCPConfigurationListId = objectInput.readLong();
 
-		masterCPConfigurationList = objectInput.readBoolean();
+		master = objectInput.readBoolean();
 		name = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
@@ -303,7 +302,7 @@ public class CPConfigurationListCacheModel
 
 		objectOutput.writeLong(parentCPConfigurationListId);
 
-		objectOutput.writeBoolean(masterCPConfigurationList);
+		objectOutput.writeBoolean(master);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -343,7 +342,7 @@ public class CPConfigurationListCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long parentCPConfigurationListId;
-	public boolean masterCPConfigurationList;
+	public boolean master;
 	public String name;
 	public double priority;
 	public long displayDate;

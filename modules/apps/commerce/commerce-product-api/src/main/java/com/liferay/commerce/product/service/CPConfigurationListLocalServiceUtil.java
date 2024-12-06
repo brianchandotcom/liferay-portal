@@ -55,7 +55,25 @@ public class CPConfigurationListLocalServiceUtil {
 
 	public static CPConfigurationList addCPConfigurationList(
 			String externalReferenceCode, long groupId, long userId,
-			long parentCPConfigurationListId, boolean masterCPConfigurationList,
+			long parentCPConfigurationListId, boolean master, String name,
+			double priority, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire)
+		throws PortalException {
+
+		return getService().addCPConfigurationList(
+			externalReferenceCode, groupId, userId, parentCPConfigurationListId,
+			master, name, priority, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire);
+	}
+
+	public static CPConfigurationList addOrUpdateCPConfigurationList(
+			String externalReferenceCode, long companyId, long groupId,
+			long userId, long parentCPConfigurationListId, boolean master,
 			String name, double priority, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
@@ -64,32 +82,13 @@ public class CPConfigurationListLocalServiceUtil {
 			boolean neverExpire)
 		throws PortalException {
 
-		return getService().addCPConfigurationList(
-			externalReferenceCode, groupId, userId, parentCPConfigurationListId,
-			masterCPConfigurationList, name, priority, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire);
-	}
-
-	public static CPConfigurationList addOrUpdateCPConfigurationList(
-			String externalReferenceCode, long companyId, long groupId,
-			long userId, long parentCPConfigurationListId,
-			boolean masterCPConfigurationList, String name, double priority,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire)
-		throws PortalException {
-
 		return getService().addOrUpdateCPConfigurationList(
 			externalReferenceCode, companyId, groupId, userId,
-			parentCPConfigurationListId, masterCPConfigurationList, name,
-			priority, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire);
+			parentCPConfigurationListId, master, name, priority,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire);
 	}
 
 	/**
@@ -452,9 +451,9 @@ public class CPConfigurationListLocalServiceUtil {
 	public static CPConfigurationList updateCPConfigurationList(
 			String externalReferenceCode, long cpConfigurationListId,
 			long groupId, long userId, long parentCPConfigurationListId,
-			boolean masterCPConfigurationList, String name, double priority,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			boolean master, String name, double priority, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire)
@@ -462,11 +461,11 @@ public class CPConfigurationListLocalServiceUtil {
 
 		return getService().updateCPConfigurationList(
 			externalReferenceCode, cpConfigurationListId, groupId, userId,
-			parentCPConfigurationListId, masterCPConfigurationList, name,
-			priority, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire);
+			parentCPConfigurationListId, master, name, priority,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire);
 	}
 
 	public static CPConfigurationListLocalService getService() {

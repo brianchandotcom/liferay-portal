@@ -103,7 +103,7 @@ create table CPConfigurationList (
 	createDate DATE null,
 	modifiedDate DATE null,
 	parentCPConfigurationListId LONG,
-	masterCPConfigurationList BOOLEAN,
+	master BOOLEAN,
 	name VARCHAR(75) null,
 	priority DOUBLE,
 	displayDate DATE null,

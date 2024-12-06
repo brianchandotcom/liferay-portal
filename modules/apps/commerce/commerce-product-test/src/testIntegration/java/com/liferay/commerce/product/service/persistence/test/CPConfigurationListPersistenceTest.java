@@ -143,8 +143,7 @@ public class CPConfigurationListPersistenceTest {
 		newCPConfigurationList.setParentCPConfigurationListId(
 			RandomTestUtil.nextLong());
 
-		newCPConfigurationList.setMasterCPConfigurationList(
-			RandomTestUtil.randomBoolean());
+		newCPConfigurationList.setMaster(RandomTestUtil.randomBoolean());
 
 		newCPConfigurationList.setName(RandomTestUtil.randomString());
 
@@ -209,8 +208,8 @@ public class CPConfigurationListPersistenceTest {
 			existingCPConfigurationList.getParentCPConfigurationListId(),
 			newCPConfigurationList.getParentCPConfigurationListId());
 		Assert.assertEquals(
-			existingCPConfigurationList.isMasterCPConfigurationList(),
-			newCPConfigurationList.isMasterCPConfigurationList());
+			existingCPConfigurationList.isMaster(),
+			newCPConfigurationList.isMaster());
 		Assert.assertEquals(
 			existingCPConfigurationList.getName(),
 			newCPConfigurationList.getName());
@@ -411,11 +410,11 @@ public class CPConfigurationListPersistenceTest {
 			"uuid", true, "externalReferenceCode", true,
 			"CPConfigurationListId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "parentCPConfigurationListId", true,
-			"masterCPConfigurationList", true, "name", true, "priority", true,
-			"displayDate", true, "expirationDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"modifiedDate", true, "parentCPConfigurationListId", true, "master",
+			true, "name", true, "priority", true, "displayDate", true,
+			"expirationDate", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -721,10 +720,10 @@ public class CPConfigurationListPersistenceTest {
 				cpConfigurationList, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
-			Boolean.valueOf(cpConfigurationList.getMasterCPConfigurationList()),
+			Boolean.valueOf(cpConfigurationList.getMaster()),
 			ReflectionTestUtil.<Boolean>invoke(
 				cpConfigurationList, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "masterCPConfigurationList"));
+				new Class<?>[] {String.class}, "master"));
 
 		Assert.assertEquals(
 			cpConfigurationList.getExternalReferenceCode(),
@@ -767,8 +766,7 @@ public class CPConfigurationListPersistenceTest {
 		cpConfigurationList.setParentCPConfigurationListId(
 			RandomTestUtil.nextLong());
 
-		cpConfigurationList.setMasterCPConfigurationList(
-			RandomTestUtil.randomBoolean());
+		cpConfigurationList.setMaster(RandomTestUtil.randomBoolean());
 
 		cpConfigurationList.setName(RandomTestUtil.randomString());
 

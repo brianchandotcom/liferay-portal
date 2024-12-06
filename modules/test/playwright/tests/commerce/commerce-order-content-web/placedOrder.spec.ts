@@ -144,7 +144,10 @@ test('LPD-25831 Placed orders widget configuration to display full addresses and
 	await placedOrdersPage.configurationIFrameShowFullAddressToggle.check();
 	await placedOrdersPage.configurationIFrameShowPhoneNumberToggle.check();
 	await placedOrdersPage.configurationIFrameSaveButton.click();
-	await waitForAlert(placedOrdersPage.configurationIFrame);
+	await waitForAlert(
+		placedOrdersPage.configurationIFrame,
+		'Success:You have successfully updated the setup'
+	);
 	await page.reload();
 
 	await placedOrdersPage.viewButton.click();

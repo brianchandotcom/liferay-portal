@@ -50,21 +50,23 @@ public class SpringBeanELResolver extends ELResolver {
 
 		String beanName = property.toString();
 
-		if (_beanFactory.containsBean(beanName)) {
-			PortletRequest portletRequest = _beanFactory.getBean(
-				"portletRequest", PortletRequest.class);
+		if (!_beanFactory.containsBean(beanName)) {
+			return null;
+		}
 
-			Object bean = portletRequest.getAttribute(beanName);
+		PortletRequest portletRequest = _beanFactory.getBean(
+			"portletRequest", PortletRequest.class);
 
-			if (bean == null) {
-				bean = _beanFactory.getBean(beanName);
-			}
+		Object bean = portletRequest.getAttribute(beanName);
 
-			if (bean != null) {
-				elContext.setPropertyResolved(true);
+		if (bean == null) {
+			bean = _beanFactory.getBean(beanName);
+		}
 
-				return bean;
-			}
+		if (bean != null) {
+			elContext.setPropertyResolved(true);
+
+			return bean;
 		}
 
 		return null;

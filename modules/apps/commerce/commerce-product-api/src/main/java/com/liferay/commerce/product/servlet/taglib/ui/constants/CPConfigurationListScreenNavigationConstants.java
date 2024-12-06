@@ -16,6 +16,8 @@ public class CPConfigurationListScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_ENTRIES = "entries";
 
+	public static final String CATEGORY_KEY_QUALIFIERS = "qualifiers";
+
 	public static final String
 		SCREEN_NAVIGATION_KEY_CP_CONFIGURATION_LIST_DISPLAY_LAYOUT_GENERAL =
 			"cp.configuration.list.display.layout.general";

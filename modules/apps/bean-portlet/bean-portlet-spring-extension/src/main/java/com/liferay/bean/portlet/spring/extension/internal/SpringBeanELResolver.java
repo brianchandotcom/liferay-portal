@@ -63,13 +63,13 @@ public class SpringBeanELResolver extends ELResolver {
 			bean = _beanFactory.getBean(beanName);
 		}
 
-		if (bean != null) {
-			elContext.setPropertyResolved(true);
-
-			return bean;
+		if (bean == null) {
+			return null;
 		}
 
-		return null;
+		elContext.setPropertyResolved(true);
+
+		return bean;
 	}
 
 	@Override

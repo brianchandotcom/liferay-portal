@@ -156,19 +156,20 @@ public class AssetEntryInfoItemFieldValuesProvider
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		if (themeDisplay != null) {
-			try {
-				WebImage webImage = new WebImage(
-					user.getPortraitURL(themeDisplay));
+		if (themeDisplay == null) {
+			return null;
+		}
 
-				webImage.setAlt(user.getFullName());
+		try {
+			WebImage webImage = new WebImage(user.getPortraitURL(themeDisplay));
 
-				return webImage;
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
+			webImage.setAlt(user.getFullName());
+
+			return webImage;
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
 			}
 		}
 

@@ -7,9 +7,11 @@ import {useCallback, useEffect, useState} from 'react';
 import {useSearchParams} from 'react-router-dom';
 import {Liferay} from '~/common/services/liferay';
 
-import {IProps as IFilterOptions} from '../utils/constants/filterOptions';
+import {
+	FILTER_MAP,
+	IProps as IFilterOptions,
+} from '../utils/constants/filterOptions';
 import {JiraEnum} from '../utils/constants/jiraEnum';
-import {getFilterParams} from '../utils/getFilterParams';
 import {IJiraIssue} from './useJiraIssue';
 
 export interface IJiraResponse {
@@ -31,107 +33,155 @@ export interface IProps {
 	[JiraEnum.SORT_ORDER]?: string;
 }
 
-const useJiraSearch = (
-		page: number,
-		pageSize:number
-	) => {
+const getSearchParams = (
+	urlSearchParams: URLSearchParams,
+	defaultParams?: IProps,
+	params?: IProps
+): URLSearchParams => {
+	const newURLSearchParams = new URLSearchParams(urlSearchParams);
 
+	for (const key in params) {
+		const defaultValue = defaultParams?.[key as keyof IProps];
+		const value = params[key as keyof IProps];
+
+		if (value === undefined || value === null || value === defaultValue) {
+			newURLSearchParams.delete(key);
+
+			continue;
+		}
+
+		if (key === JiraEnum.FILTERS) {
+			const filters = value as IFilterOptions;
+			const defaultFilters = defaultValue as IFilterOptions | undefined;
+
+			for (const filterKey in filters) {
+				const defaultFilterValue =
+					defaultFilters?.[filterKey as keyof typeof filters];
+				const filterValue = filters[filterKey as keyof typeof filters];
+
+				if (
+					filterValue === undefined ||
+					filterValue === null ||
+					!filterValue.length ||
+					(defaultFilterValue !== undefined &&
+						filterValue.join(',') === defaultFilterValue.join(','))
+				) {
+					newURLSearchParams.delete(filterKey);
+
+					continue;
+				}
+
+				newURLSearchParams.set(filterKey, filterValue.join(','));
+			}
+		}
+		else if (typeof value === 'string') {
+			if (value) {
+				newURLSearchParams.set(key, value);
+			}
+			else {
+				newURLSearchParams.delete(key);
+			}
+		}
+		else if (typeof value === 'number') {
+			newURLSearchParams.set(key, String(value));
+		}
+	}
+
+	return newURLSearchParams;
+};
+
+const processSearchParams = (
+	urlSearchParams: URLSearchParams,
+	defaultParams?: IProps
+): string => {
+	const newURLSearchParams = new URLSearchParams(urlSearchParams);
+
+	for (const key in defaultParams) {
+		const value = defaultParams[key as keyof IProps];
+
+		if (key === JiraEnum.FILTERS) {
+			const filters = value as IFilterOptions;
+
+			for (const filterKey in filters) {
+				const filterValue = filters[filterKey as keyof typeof filters];
+
+				if (
+					!newURLSearchParams.has(filterKey) &&
+					filterValue &&
+					filterValue.length
+				) {
+					newURLSearchParams.set(filterKey, filterValue.join(','));
+				}
+			}
+		}
+		else if (!newURLSearchParams.has(key) && typeof value === 'string') {
+			newURLSearchParams.set(key, value);
+		}
+		else if (!newURLSearchParams.has(key) && typeof value === 'number') {
+			newURLSearchParams.set(key, String(value));
+		}
+	}
+
+	return newURLSearchParams
+		.toString()
+		.split('&')
+		.map((param) => {
+			const [key, value] = param.split('=');
+			const mappedKey = FILTER_MAP[key] ?? key;
+
+			return `${mappedKey}=${value}`;
+		})
+		.join('&');
+};
+
+const useJiraSearch = (defaultParams?: IProps) => {
 	const [jiraSearch, setJiraSearch] = useState<IJiraResponse>();
 	const [loading, setLoading] = useState(true);
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	const fetchJiraSearch = useCallback(async (page:number, pageSize:number, params: URLSearchParams) => {
-		setLoading(true);
+	const fetchJiraSearch = useCallback(
+		async (urlSearchParams: URLSearchParams, defaultParams?: IProps) => {
+			setLoading(true);
 
-		const queryString = getFilterParams(params.toString());
+			const queryString = processSearchParams(
+				urlSearchParams,
+				defaultParams
+			);
 
-		try {
-			const response: IJiraResponse =
-				await Liferay.OAuth2Client.FromUserAgentApplication(
-					'liferay-customer-etc-spring-boot-oaua'
-				)
-					.fetch(
-						`/jira/security-vulnerabilities/search?${queryString}&page=${page}&pageSize=${pageSize}`
+			try {
+				const response: IJiraResponse =
+					await Liferay.OAuth2Client.FromUserAgentApplication(
+						'liferay-customer-etc-spring-boot-oaua'
 					)
-					.then((response) => response.json());
+						.fetch(
+							`/jira/security-vulnerabilities/search?${queryString}`
+						)
+						.then((response) => response.json());
 
-			setJiraSearch(response);
-		}
-		catch (error) {
-			console.error('Error fetching Jira data:', error);
-		}
-		finally {
-			setLoading(false);
-		}
-	}, []);
+				setJiraSearch(response);
+			}
+			catch (error) {
+				console.error('Error fetching Jira data:', error);
+			}
+			finally {
+				setLoading(false);
+			}
+		},
+		[]
+	);
 
 	const updateSearchParams = useCallback(
-		(newParams?: IProps) => {
-			const newSearchParams = new URLSearchParams(searchParams);
-
-			if (newParams === undefined) {
-				return;
-			}
-
-			for (const key in newParams) {
-				if (Object.prototype.hasOwnProperty.call(newParams, key)) {
-					const value = newParams[key as keyof IProps];
-
-					if (value === undefined || value === null) {
-						newSearchParams.delete(key);
-						continue;
-					}
-
-					if (key === JiraEnum.FILTERS) {
-						const filters = value as IFilterOptions;
-
-						for (const filterKey in filters) {
-							if (
-								Object.prototype.hasOwnProperty.call(
-									filters,
-									filterKey
-								)
-							) {
-								const filterValue =
-									filters[filterKey as keyof typeof filters];
-
-								if (
-									filterValue === undefined ||
-									filterValue === null ||
-									!filterValue.length
-								) {
-									newSearchParams.delete(filterKey);
-									continue;
-								}
-
-								newSearchParams.set(
-									filterKey,
-									filterValue.join(',')
-								);
-							}
-						}
-					}
-					else if (typeof value === 'string') {
-						if (value) {
-							newSearchParams.set(key, value);
-						}
-						else {
-							newSearchParams.delete(key);
-						}
-					}
-				}
-			}
-
-			setSearchParams(newSearchParams);
-
-			return newSearchParams;
+		(params: IProps) => {
+			setSearchParams((urlSearchParams) => {
+				return getSearchParams(urlSearchParams, defaultParams, params);
+			});
 		},
-		[searchParams, setSearchParams]
+		[defaultParams, setSearchParams]
 	);
 
 	useEffect(() => {
-		fetchJiraSearch(page, pageSize, searchParams);
-	}, [fetchJiraSearch, page, pageSize, searchParams]);
+		fetchJiraSearch(searchParams, defaultParams);
+	}, [defaultParams, fetchJiraSearch, searchParams]);
 
 	return {jiraSearch, loading, searchParams, updateSearchParams};
 };

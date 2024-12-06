@@ -12,6 +12,7 @@ import SVTable from '../../components/SVTable';
 
 import './SecurityVulnerabilitiesList.css';
 
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar/lib/PaginationBarWithBasicItems';
 import {useMemo} from 'react';
 import {Link} from 'react-router-dom';
 import {SVWaves} from '~/common/icons/sv_waves';
@@ -20,19 +21,38 @@ import {getFormattedDate} from '~/routes/customer-portal/utils/getFormattedDate'
 import {IRow} from '../../components/SVTable/SVTable';
 import SVAffectedVersions from '../../components/SVTable/components/SVAffectedVersions';
 import {IJiraIssue} from '../../hooks/useJiraIssue';
-import useJiraSearch from '../../hooks/useJiraSearch';
+import useJiraSearch, {IProps as IJiraSearch} from '../../hooks/useJiraSearch';
 import {FILTER_OPTIONS} from '../../utils/constants/filterOptions';
 import {JiraEnum} from '../../utils/constants/jiraEnum';
+import {
+	paginationDeltas,
+	paginationLabels,
+} from '../../utils/constants/paginationOptions';
 import {SORT_OPTIONS} from '../../utils/constants/sortOptions';
-import { ClayPaginationBarWithBasicItems } from '@clayui/pagination-bar/lib/PaginationBarWithBasicItems';
-import usePagination from '../../components/SVTable/hooks/usePaginationSV';
 
 const SecurityVulnerabilitiesList = () => {
-
-	const pagination = usePagination();
+	const defaultParams: IJiraSearch = useMemo(
+		() => ({
+			[JiraEnum.PAGE]: 1,
+			[JiraEnum.PAGE_SIZE]: 15,
+		}),
+		[]
+	);
 
 	const {jiraSearch, loading, searchParams, updateSearchParams} =
-		useJiraSearch(pagination.activePage, pagination.activeDelta);
+		useJiraSearch(defaultParams);
+
+	const setPage = (page: number) => {
+		updateSearchParams({
+			[JiraEnum.PAGE]: page,
+		});
+	};
+
+	const setPageSize = (pageSize: number) => {
+		updateSearchParams({
+			[JiraEnum.PAGE_SIZE]: pageSize,
+		});
+	};
 
 	const columns = [
 		{
@@ -145,9 +165,7 @@ const SecurityVulnerabilitiesList = () => {
 								sortOptions={SORT_OPTIONS}
 							/>
 
-							<SVPanel
-								text="for-information-on-previously-addressed-cves-fixed-in-dxp-2024-q1-1-or-earlier-please-visit-our-help-center"
-							/>
+							<SVPanel text="for-information-on-previously-addressed-cves-fixed-in-dxp-2024-q1-1-or-earlier-please-visit-our-help-center" />
 						</div>
 
 						<div className="col-9">
@@ -161,8 +179,21 @@ const SecurityVulnerabilitiesList = () => {
 									/>
 
 									<ClayPaginationBarWithBasicItems
-										{...pagination}
-										totalItems={jiraSearch?.[JiraEnum.TOTAL]!}
+										active={jiraSearch?.[JiraEnum.PAGE]}
+										activeDelta={
+											jiraSearch?.[JiraEnum.PAGE_SIZE]
+										}
+										deltas={paginationDeltas}
+										labels={paginationLabels}
+										onActiveChange={(value: number) =>
+											setPage(value)
+										}
+										onDeltaChange={(value: number) =>
+											setPageSize(value)
+										}
+										totalItems={
+											jiraSearch?.[JiraEnum.TOTAL]!
+										}
 									/>
 								</>
 							) : (

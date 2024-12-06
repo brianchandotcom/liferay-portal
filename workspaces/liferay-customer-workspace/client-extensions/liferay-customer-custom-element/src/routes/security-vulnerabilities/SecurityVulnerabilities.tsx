@@ -5,6 +5,8 @@
 
 import Pages from './pages';
 
+import './SecurityVulnerabilities.css';
+
 const SecurityVulnerabilities = () => {
 	return <Pages />;
 };

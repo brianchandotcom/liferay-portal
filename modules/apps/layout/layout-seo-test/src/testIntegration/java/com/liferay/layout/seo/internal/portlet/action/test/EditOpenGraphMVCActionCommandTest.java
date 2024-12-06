@@ -253,7 +253,6 @@ public class EditOpenGraphMVCActionCommandTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
 			ContentLayoutTestUtil.getThemeDisplay(_company, _group, _layout));
-
 		mockLiferayPortletActionRequest.setParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
 		mockLiferayPortletActionRequest.setParameter(

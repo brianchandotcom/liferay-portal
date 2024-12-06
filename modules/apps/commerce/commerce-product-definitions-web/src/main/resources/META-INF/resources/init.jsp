@@ -47,6 +47,7 @@ page import="com.liferay.commerce.product.definitions.web.internal.constants.CPC
 page import="com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPConfigurationListDisplayContext" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPConfigurationListQualifiersDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionConfigurationDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionDisplayLayoutDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionLinkDisplayContext" %><%@
@@ -158,6 +159,7 @@ page import="java.util.Arrays" %><%@
 page import="java.util.Calendar" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
+page import="java.util.Objects" %><%@
 page import="java.util.StringJoiner" %><%@
 page import="java.util.TimeZone" %>
 

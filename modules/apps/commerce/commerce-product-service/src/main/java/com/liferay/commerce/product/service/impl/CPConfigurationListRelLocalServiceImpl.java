@@ -12,9 +12,12 @@ import com.liferay.account.model.AccountGroupTable;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceOrderTypeTable;
 import com.liferay.commerce.product.exception.DuplicateCPConfigurationListRelException;
+import com.liferay.commerce.product.exception.InvalidCPConfigurationListException;
+import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPConfigurationListRel;
 import com.liferay.commerce.product.model.CPConfigurationListRelTable;
 import com.liferay.commerce.product.model.CPConfigurationListTable;
+import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.base.CPConfigurationListRelLocalServiceBaseImpl;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -338,6 +341,14 @@ public class CPConfigurationListRelLocalServiceImpl
 			long classNameId, long classPK, long cpConfigurationListId)
 		throws PortalException {
 
+		CPConfigurationList cpConfigurationList =
+			_cpConfigurationListLocalService.getCPConfigurationList(
+				cpConfigurationListId);
+
+		if (cpConfigurationList.isMasterCPConfigurationList()) {
+			throw new InvalidCPConfigurationListException();
+		}
+
 		CPConfigurationListRel cpConfigurationListRel =
 			cpConfigurationListRelPersistence.fetchByC_C_C(
 				classNameId, classPK, cpConfigurationListId);
@@ -349,6 +360,9 @@ public class CPConfigurationListRelLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CPConfigurationListLocalService _cpConfigurationListLocalService;
 
 	@Reference
 	private CustomSQL _customSQL;

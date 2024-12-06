@@ -9,15 +9,16 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPPriceRangeFacetsDisplayContext;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ConfigurationAction.class
 )
 public class CPPriceRangeFacetsConfigurationAction
-	extends DefaultConfigurationAction {
+	extends BaseConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
@@ -46,8 +47,8 @@ public class CPPriceRangeFacetsConfigurationAction
 		try {
 			CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext =
 				new CPPriceRangeFacetsDisplayContext(
-					_commercePriceFormatter, cpRequestHelper.getRenderRequest(),
-					null,
+					_commercePriceFormatter, _configurationProvider,
+					cpRequestHelper.getRenderRequest(), null,
 					_getPaginationStartParameterName(
 						portletSharedSearchResponse),
 					portletSharedSearchResponse);
@@ -79,6 +80,9 @@ public class CPPriceRangeFacetsConfigurationAction
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private PortletSharedSearchRequest _portletSharedSearchRequest;

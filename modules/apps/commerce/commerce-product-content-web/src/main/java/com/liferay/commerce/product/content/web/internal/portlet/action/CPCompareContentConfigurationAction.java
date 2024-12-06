@@ -12,11 +12,13 @@ import com.liferay.commerce.product.content.web.internal.display.context.CPCompa
 import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,16 +33,17 @@ import org.osgi.service.component.annotations.Reference;
 	service = ConfigurationAction.class
 )
 public class CPCompareContentConfigurationAction
-	extends DefaultConfigurationAction {
+	extends BaseConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
 		try {
 			CPCompareContentDisplayContext cpCompareContentDisplayContext =
 				new CPCompareContentDisplayContext(
-					_cpCompareHelper, _cpContentListEntryRendererRegistry,
+					_configurationProvider, _cpCompareHelper,
+					_cpContentListEntryRendererRegistry,
 					_cpContentListRendererRegistry, _cpDefinitionHelper,
-					_cpTypeRegistry, httpServletRequest);
+					_cpTypeRegistry, _groupLocalService, httpServletRequest);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -57,6 +60,9 @@ public class CPCompareContentConfigurationAction
 		CPCompareContentConfigurationAction.class);
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private CPCompareHelper _cpCompareHelper;
 
 	@Reference
@@ -71,5 +77,8 @@ public class CPCompareContentConfigurationAction
 
 	@Reference
 	private CPTypeRegistry _cpTypeRegistry;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

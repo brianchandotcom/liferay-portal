@@ -14,10 +14,12 @@ import com.liferay.commerce.product.content.web.internal.display.context.CPCompa
 import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -74,9 +76,10 @@ public class CPCompareContentPortlet extends MVCPortlet {
 
 			CPCompareContentDisplayContext cpCompareContentDisplayContext =
 				new CPCompareContentDisplayContext(
-					_cpCompareHelper, _cpContentListEntryRendererRegistry,
+					_configurationProvider, _cpCompareHelper,
+					_cpContentListEntryRendererRegistry,
 					_cpContentListRendererRegistry, _cpDefinitionHelper,
-					_cpTypeRegistry, httpServletRequest);
+					_cpTypeRegistry, _groupLocalService, httpServletRequest);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -91,6 +94,9 @@ public class CPCompareContentPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPCompareContentPortlet.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPCompareContentHelper _cpCompareContentHelper;
@@ -110,6 +116,9 @@ public class CPCompareContentPortlet extends MVCPortlet {
 
 	@Reference
 	private CPTypeRegistry _cpTypeRegistry;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

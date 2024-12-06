@@ -16,7 +16,7 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 		<liferay-template:template-selector
 			className="<%= CPPublisherPortlet.class.getName() %>"
 			displayStyle="<%= cpPublisherConfigurationDisplayContext.getDisplayStyle() %>"
-			displayStyleGroupId="<%= cpPublisherConfigurationDisplayContext.getDisplayStyleGroupId() %>"
+			displayStyleGroupKey="<%= cpPublisherConfigurationDisplayContext.getDisplayStyleGroupKey() %>"
 			refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
 			showEmptyOption="<%= true %>"
 		/>

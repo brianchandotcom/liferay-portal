@@ -23,6 +23,7 @@ import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,6 +57,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CPSearchResultsDisplayContext {
 
 	public CPSearchResultsDisplayContext(
+			ConfigurationProvider configurationProvider,
 			CPContentListEntryRendererRegistry
 				cpContentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
@@ -65,6 +67,7 @@ public class CPSearchResultsDisplayContext {
 			PortletSharedSearchResponse portletSharedSearchResponse)
 		throws ConfigurationException {
 
+		_configurationProvider = configurationProvider;
 		_cpContentListEntryRendererRegistry =
 			cpContentListEntryRendererRegistry;
 		_cpContentListRendererRegistry = cpContentListRendererRegistry;
@@ -76,7 +79,7 @@ public class CPSearchResultsDisplayContext {
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
 		_cpSearchResultsPortletInstanceConfiguration =
-			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+			configurationProvider.getPortletInstanceConfiguration(
 				CPSearchResultsPortletInstanceConfiguration.class,
 				_cpRequestHelper.getThemeDisplay());
 		_cpSortPortletInstanceConfiguration =
@@ -372,6 +375,7 @@ public class CPSearchResultsDisplayContext {
 			PortalUtil.getCurrentURL(_cpRequestHelper.getRequest()), "start");
 	}
 
+	private final ConfigurationProvider _configurationProvider;
 	private final CPContentListEntryRendererRegistry
 		_cpContentListEntryRendererRegistry;
 	private final CPContentListRendererRegistry _cpContentListRendererRegistry;

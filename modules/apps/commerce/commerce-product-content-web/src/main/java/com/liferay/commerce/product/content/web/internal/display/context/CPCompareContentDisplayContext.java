@@ -22,9 +22,12 @@ import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -43,25 +46,28 @@ import javax.servlet.http.HttpServletRequest;
 public class CPCompareContentDisplayContext {
 
 	public CPCompareContentDisplayContext(
+			ConfigurationProvider configurationProvider,
 			CPCompareHelper cpCompareHelper,
 			CPContentListEntryRendererRegistry
 				cpContentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
 			CPDefinitionHelper cpDefinitionHelper,
-			CPTypeRegistry cpTypeRegistry,
+			CPTypeRegistry cpTypeRegistry, GroupLocalService groupLocalService,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		_configurationProvider = configurationProvider;
 		_cpContentListEntryRendererRegistry =
 			cpContentListEntryRendererRegistry;
 		_cpContentListRendererRegistry = cpContentListRendererRegistry;
 		_cpDefinitionHelper = cpDefinitionHelper;
 		_cpTypeRegistry = cpTypeRegistry;
+		_groupLocalService = groupLocalService;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
 		_cpCompareContentPortletInstanceConfiguration =
-			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+			configurationProvider.getPortletInstanceConfiguration(
 				CPCompareContentPortletInstanceConfiguration.class,
 				_cpRequestHelper.getThemeDisplay());
 
@@ -201,8 +207,61 @@ public class CPCompareContentDisplayContext {
 	}
 
 	public long getDisplayStyleGroupId() {
-		return _cpCompareContentPortletInstanceConfiguration.
-			displayStyleGroupId();
+		if (_displayStyleGroupId != null) {
+			return _displayStyleGroupId;
+		}
+
+		String displayStyleGroupExternalReferenceCode =
+			_cpCompareContentPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
+
+		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				themeDisplay.getCompanyId());
+		}
+
+		if (group != null) {
+			_displayStyleGroupId = group.getGroupId();
+		}
+		else {
+			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+		}
+
+		return _displayStyleGroupId;
+	}
+
+	public String getDisplayStyleGroupKey() {
+		if (Validator.isNotNull(_displayStyleGroupKey)) {
+			return _displayStyleGroupKey;
+		}
+
+		String displayStyleGroupExternalReferenceCode =
+			_cpCompareContentPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
+
+		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				themeDisplay.getCompanyId());
+		}
+
+		if (group != null) {
+			_displayStyleGroupKey = group.getGroupKey();
+		}
+		else {
+			_displayStyleGroupKey = StringPool.BLANK;
+		}
+
+		return _displayStyleGroupKey;
 	}
 
 	public int getProductsLimit() {
@@ -253,6 +312,7 @@ public class CPCompareContentDisplayContext {
 		return false;
 	}
 
+	private final ConfigurationProvider _configurationProvider;
 	private final CPCompareContentPortletInstanceConfiguration
 		_cpCompareContentPortletInstanceConfiguration;
 	private final CPContentListEntryRendererRegistry
@@ -262,5 +322,8 @@ public class CPCompareContentDisplayContext {
 	private final List<Long> _cpDefinitionIds;
 	private final CPRequestHelper _cpRequestHelper;
 	private final CPTypeRegistry _cpTypeRegistry;
+	private Long _displayStyleGroupId;
+	private String _displayStyleGroupKey;
+	private final GroupLocalService _groupLocalService;
 
 }

@@ -23,11 +23,12 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import java.io.IOException;
 
@@ -65,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "javax.portlet.name=" + CPPortletKeys.CP_PUBLISHER_WEB,
 	service = ConfigurationAction.class
 )
-public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
+public class CPPublisherConfigurationAction extends BaseConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
@@ -74,11 +76,12 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 				cpPublisherConfigurationDisplayContext =
 					new CPPublisherConfigurationDisplayContext(
 						_assetCategoryLocalService, _assetTagLocalService,
+						_configurationProvider,
 						_cpContentListEntryRendererRegistry,
 						_cpContentListRendererRegistry, _cpDataSourceRegistry,
 						_cpDefinitionHelper, _cpInstanceHelper,
 						_cpPublisherWebHelper, _cpTypeRegistry,
-						httpServletRequest, _itemSelector);
+						_groupLocalService, httpServletRequest, _itemSelector);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -464,6 +467,9 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private CPContentListEntryRendererRegistry
 		_cpContentListEntryRendererRegistry;
 
@@ -487,6 +493,9 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 
 	@Reference
 	private CPTypeRegistry _cpTypeRegistry;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ItemSelector _itemSelector;

@@ -9,10 +9,12 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionFacetsDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.builder.CPSpecificationOptionsFacetDisplayContextBuilder;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -92,9 +94,13 @@ public class CPSpecificationOptionFacetsPortlet extends MVCPortlet {
 			cpSpecificationOptionsFacetDisplayBuilder =
 				new CPSpecificationOptionsFacetDisplayContextBuilder();
 
+		cpSpecificationOptionsFacetDisplayBuilder.configurationProvider(
+			_configurationProvider);
 		cpSpecificationOptionsFacetDisplayBuilder.
 			cpSpecificationOptionLocalService(
 				_cpSpecificationOptionLocalService);
+		cpSpecificationOptionsFacetDisplayBuilder.groupLocalService(
+			_groupLocalService);
 		cpSpecificationOptionsFacetDisplayBuilder.portal(portal);
 		cpSpecificationOptionsFacetDisplayBuilder.portletSharedSearchRequest(
 			portletSharedSearchRequest);
@@ -107,7 +113,13 @@ public class CPSpecificationOptionFacetsPortlet extends MVCPortlet {
 		CPSpecificationOptionFacetsPortlet.class);
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private CPSpecificationOptionLocalService
 		_cpSpecificationOptionLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

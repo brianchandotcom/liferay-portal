@@ -24,11 +24,13 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -77,15 +79,16 @@ public class CPPublisherPortlet extends MVCPortlet {
 		try {
 			CPPublisherDisplayContext cpPublisherDisplayContext =
 				new CPPublisherDisplayContext(
-					_amImageHTMLTagFactory, _commerceCatalogDefaultImage,
-					_commerceMediaResolver, _cpAttachmentFileEntryLocalService,
+					_amImageHTMLTagFactory, _configurationProvider,
+					_commerceCatalogDefaultImage, _commerceMediaResolver,
+					_cpAttachmentFileEntryLocalService,
 					_cpContentListEntryRendererRegistry,
 					_cpContentListRendererRegistry, _cpDataSourceRegistry,
 					_cpDefinitionHelper, _cpDefinitionLocalService,
 					_cpFriendlyURL, _cpPublisherWebHelper, _cpTypeRegistry,
 					_dlFileEntryLocalService,
 					_dlFileEntryModelResourcePermission,
-					_friendlyURLEntryLocalService,
+					_friendlyURLEntryLocalService, _groupLocalService,
 					_portal.getHttpServletRequest(renderRequest), _portal);
 
 			renderRequest.setAttribute(
@@ -111,6 +114,9 @@ public class CPPublisherPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceMediaResolver _commerceMediaResolver;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPAttachmentFileEntryLocalService
@@ -155,6 +161,9 @@ public class CPPublisherPortlet extends MVCPortlet {
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

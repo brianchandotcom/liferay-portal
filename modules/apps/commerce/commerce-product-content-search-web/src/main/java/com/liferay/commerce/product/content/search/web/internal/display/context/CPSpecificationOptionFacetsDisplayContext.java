@@ -7,10 +7,16 @@ package com.liferay.commerce.product.content.search.web.internal.display.context
 
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.product.content.search.web.internal.configuration.CPSpecificationOptionFacetsPortletInstanceConfiguration;
+import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -24,10 +30,27 @@ import javax.servlet.http.HttpServletRequest;
 public class CPSpecificationOptionFacetsDisplayContext implements Serializable {
 
 	public CPSpecificationOptionFacetsDisplayContext(
+			ConfigurationProvider configurationProvider,
+			GroupLocalService groupLocalService,
 			HttpServletRequest httpServletRequest)
 		throws ConfigurationException {
 
+		_configurationProvider = configurationProvider;
+		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
+
+		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
+
+		_cpSpecificationOptionFacetsPortletInstanceConfiguration =
+			configurationProvider.getPortletInstanceConfiguration(
+				CPSpecificationOptionFacetsPortletInstanceConfiguration.class,
+				_cpRequestHelper.getThemeDisplay());
+	}
+
+	public CPSpecificationOptionFacetsPortletInstanceConfiguration
+		getCPSpecificationOptionFacetsPortletInstanceConfiguration() {
+
+		return _cpSpecificationOptionFacetsPortletInstanceConfiguration;
 	}
 
 	public List<CPSpecificationOptionsSearchFacetDisplayContext>
@@ -37,23 +60,57 @@ public class CPSpecificationOptionFacetsDisplayContext implements Serializable {
 	}
 
 	public long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId != 0) {
-			return _displayStyleGroupId;
+		return _cpSpecificationOptionFacetsPortletInstanceConfiguration.
+			displayStyleGroupId();
+	}
+
+	public String getDisplayStyleGroupKey() {
+		if (Validator.isNotNull(_displayStyleGroupKey)) {
+			return _displayStyleGroupKey;
 		}
 
-		long displayStyleGroupId = _DISPLAY_STYLE_GROUP_ID;
+		String displayStyleGroupExternalReferenceCode =
+			_cpSpecificationOptionFacetsPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
 
-		if (displayStyleGroupId <= 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
 
-			displayStyleGroupId = themeDisplay.getScopeGroupId();
+		Group group = themeDisplay.getScopeGroup();
+
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				themeDisplay.getCompanyId());
 		}
 
-		_displayStyleGroupId = displayStyleGroupId;
+		if (group != null) {
+			_displayStyleGroupKey = group.getGroupKey();
+		}
+		else {
+			_displayStyleGroupKey = StringPool.BLANK;
+		}
 
-		return _displayStyleGroupId;
+		return _displayStyleGroupKey;
+	}
+
+	public int getFrequencyThreshold() {
+		return _cpSpecificationOptionFacetsPortletInstanceConfiguration.
+			frequencyThreshold();
+	}
+
+	public int getMaxSpecifications() {
+		return _cpSpecificationOptionFacetsPortletInstanceConfiguration.
+			maxSpecifications();
+	}
+
+	public int getMaxTerms() {
+		return _cpSpecificationOptionFacetsPortletInstanceConfiguration.
+			maxTerms();
+	}
+
+	public String getSpecificationsOrder() {
+		return _cpSpecificationOptionFacetsPortletInstanceConfiguration.
+			specificationsOrder();
 	}
 
 	public boolean hasCommerceChannel() throws PortalException {
@@ -74,6 +131,11 @@ public class CPSpecificationOptionFacetsDisplayContext implements Serializable {
 		return false;
 	}
 
+	public boolean isFrequenciesVisible() {
+		return _cpSpecificationOptionFacetsPortletInstanceConfiguration.
+			frequenciesVisible();
+	}
+
 	public void setCPSpecificationOptionsSearchFacetDisplayContexts(
 		List<CPSpecificationOptionsSearchFacetDisplayContext>
 			cpSpecificationOptionsSearchFacetDisplayContexts) {
@@ -82,11 +144,14 @@ public class CPSpecificationOptionFacetsDisplayContext implements Serializable {
 			cpSpecificationOptionsSearchFacetDisplayContexts;
 	}
 
-	private static final long _DISPLAY_STYLE_GROUP_ID = 0;
-
+	private final ConfigurationProvider _configurationProvider;
+	private final CPRequestHelper _cpRequestHelper;
+	private final CPSpecificationOptionFacetsPortletInstanceConfiguration
+		_cpSpecificationOptionFacetsPortletInstanceConfiguration;
 	private List<CPSpecificationOptionsSearchFacetDisplayContext>
 		_cpSpecificationOptionsSearchFacetDisplayContexts;
-	private long _displayStyleGroupId;
+	private String _displayStyleGroupKey;
+	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 
 }

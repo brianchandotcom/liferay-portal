@@ -6,21 +6,23 @@
 package com.liferay.commerce.product.content.search.web.internal.display.context.builder;
 
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.commerce.product.content.search.web.internal.configuration.CPOptionFacetsPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionsSearchFacetDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionsSearchFacetTermDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionLocalService;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -33,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 
 /**
@@ -54,21 +55,9 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			_portletSharedSearchRequest.search(_renderRequest);
 
-		PortletPreferences portletPreferences =
-			portletSharedSearchResponse.getPortletPreferences(_renderRequest);
-
-		if (portletPreferences != null) {
-			_displayStyle = portletPreferences.getValue(
-				"displayStyle", _displayStyle);
-			_frequencyThreshold = GetterUtil.getInteger(
-				portletPreferences.getValue("frequencyThreshold", null),
-				_frequencyThreshold);
-			_frequenciesVisible = GetterUtil.getBoolean(
-				portletPreferences.getValue("frequenciesVisible", "true"),
-				true);
-			_maxTerms = GetterUtil.getInteger(
-				portletPreferences.getValue("maxTerms", null), _maxTerms);
-		}
+		_cpOptionFacetsPortletInstanceConfiguration =
+			cpOptionsSearchFacetDisplayContext.
+				getCPOptionFacetsPortletInstanceConfiguration();
 
 		cpOptionsSearchFacetDisplayContext.setFacets(_getFacets());
 		cpOptionsSearchFacetDisplayContext.setCPOptionLocalService(
@@ -83,10 +72,20 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		return cpOptionsSearchFacetDisplayContext;
 	}
 
+	public void configurationProvider(
+		ConfigurationProvider configurationProvider) {
+
+		_configurationProvider = configurationProvider;
+	}
+
 	public void cpOptionLocalService(
 		CPOptionLocalService cpOptionLocalService) {
 
 		_cpOptionLocalService = cpOptionLocalService;
+	}
+
+	public void groupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
 	public void portal(Portal portal) {
@@ -100,18 +99,19 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 	}
 
 	protected CPOptionsSearchFacetTermDisplayContext buildTermDisplayContext(
-		int frequency, int popularity, boolean selected, String term) {
+		int frequency, boolean frequencyVisible, int popularity,
+		boolean selected, String term) {
 
 		CPOptionsSearchFacetTermDisplayContext
 			cpOptionsSearchFacetTermDisplayContext =
 				new CPOptionsSearchFacetTermDisplayContext();
 
-		cpOptionsSearchFacetTermDisplayContext.setTerm(term);
 		cpOptionsSearchFacetTermDisplayContext.setFrequency(frequency);
 		cpOptionsSearchFacetTermDisplayContext.setFrequencyVisible(
-			_frequenciesVisible);
+			frequencyVisible);
 		cpOptionsSearchFacetTermDisplayContext.setPopularity(popularity);
 		cpOptionsSearchFacetTermDisplayContext.setSelected(selected);
+		cpOptionsSearchFacetTermDisplayContext.setTerm(term);
 
 		return cpOptionsSearchFacetTermDisplayContext;
 	}
@@ -130,8 +130,13 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		int maxCount = 1;
 		int minCount = 1;
 
-		if (_frequenciesVisible &&
-			_displayStyle.equals(
+		int frequencyThreshold =
+			_cpOptionFacetsPortletInstanceConfiguration.frequencyThreshold();
+		int maxTerms = _cpOptionFacetsPortletInstanceConfiguration.maxTerms();
+
+		if (_cpOptionFacetsPortletInstanceConfiguration.frequenciesVisible() &&
+			StringUtil.equals(
+				_cpOptionFacetsPortletInstanceConfiguration.displayStyle(),
 				"ddmTemplate_CP-SPECIFICATION-OPTION-FACET-CLOUD-FTL")) {
 
 			// The cloud style may not list tags in the order of frequency.
@@ -139,7 +144,7 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 			// number of terms or we run out of terms.
 
 			for (int i = 0, j = 0; i < _tuples.size(); i++, j++) {
-				if (j >= _maxTerms) {
+				if (j >= maxTerms) {
 					break;
 				}
 
@@ -147,7 +152,7 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 
 				Integer frequency = (Integer)tuple.getObject(2);
 
-				if (_frequencyThreshold > frequency) {
+				if (frequencyThreshold > frequency) {
 					j--;
 
 					continue;
@@ -165,7 +170,7 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		}
 
 		for (int i = 0, j = 0; i < _tuples.size(); i++, j++) {
-			if ((_maxTerms > 0) && (j >= _maxTerms)) {
+			if ((maxTerms > 0) && (j >= maxTerms)) {
 				break;
 			}
 
@@ -173,7 +178,7 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 
 			Integer frequency = (Integer)tuple.getObject(2);
 
-			if (_frequencyThreshold > frequency) {
+			if (frequencyThreshold > frequency) {
 				j--;
 
 				continue;
@@ -188,7 +193,10 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 
 			cpOptionsSearchFacetTermDisplayContexts.add(
 				buildTermDisplayContext(
-					frequency, popularity, isSelected(cpOption, term), term));
+					frequency,
+					_cpOptionFacetsPortletInstanceConfiguration.
+						frequenciesVisible(),
+					popularity, isSelected(cpOption, term), term));
 		}
 
 		return cpOptionsSearchFacetTermDisplayContexts;
@@ -217,6 +225,7 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 
 		try {
 			return new CPOptionsSearchFacetDisplayContext(
+				_configurationProvider, _groupLocalService,
 				_portal.getHttpServletRequest(_renderRequest));
 		}
 		catch (ConfigurationException configurationException) {
@@ -293,11 +302,11 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		return tuples;
 	}
 
+	private ConfigurationProvider _configurationProvider;
+	private CPOptionFacetsPortletInstanceConfiguration
+		_cpOptionFacetsPortletInstanceConfiguration;
 	private CPOptionLocalService _cpOptionLocalService;
-	private String _displayStyle = StringPool.BLANK;
-	private boolean _frequenciesVisible;
-	private int _frequencyThreshold;
-	private int _maxTerms;
+	private GroupLocalService _groupLocalService;
 	private Portal _portal;
 	private PortletSharedSearchRequest _portletSharedSearchRequest;
 	private final RenderRequest _renderRequest;

@@ -12,13 +12,14 @@ import com.liferay.commerce.product.content.search.web.internal.display.context.
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ConfigurationAction.class
 )
 public class CPSearchResultsConfigurationAction
-	extends DefaultConfigurationAction {
+	extends BaseConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
@@ -47,7 +48,7 @@ public class CPSearchResultsConfigurationAction
 		try {
 			CPSearchResultsDisplayContext cpSearchResultsDisplayContext =
 				new CPSearchResultsDisplayContext(
-					_cpContentListEntryRendererRegistry,
+					_configurationProvider, _cpContentListEntryRendererRegistry,
 					_cpContentListRendererRegistry, _cpDefinitionHelper,
 					_cpTypeRegistry, httpServletRequest,
 					portletSharedSearchResponse);
@@ -64,6 +65,9 @@ public class CPSearchResultsConfigurationAction
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPSearchResultsConfigurationAction.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPContentListEntryRendererRegistry

@@ -71,6 +71,11 @@ public class LongIntegerObjectFieldBusinessType
 		return PropertyDefinition.PropertyType.LONG;
 	}
 
+	@Override
+	public boolean isLocalizable() {
+		return true;
+	}
+
 	@Reference
 	private Language _language;
 

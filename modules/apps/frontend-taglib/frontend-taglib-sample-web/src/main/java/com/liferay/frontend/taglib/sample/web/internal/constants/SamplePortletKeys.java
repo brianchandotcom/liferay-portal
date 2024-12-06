@@ -14,7 +14,7 @@ public class SamplePortletKeys {
 		"SAMPLE_DISPLAY_CONTEXT";
 
 	public static final String SAMPLE_PORTLET =
-		"com_liferay_sample_web_portlet_SamplePortlet";
+		"com_liferay_frontend_taglib_sample_web_portlet_SamplePortlet";
 
 	public static final String SEARCH_ITERATOR_DISPLAY_CONTEXT =
 		"SEARCH_ITERATOR_DISPLAY_CONTEXT";

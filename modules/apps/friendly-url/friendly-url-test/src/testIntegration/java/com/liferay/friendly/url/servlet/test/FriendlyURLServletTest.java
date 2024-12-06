@@ -74,7 +74,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -174,13 +173,13 @@ public class FriendlyURLServletTest {
 			).build());
 
 		_testGetRedirectForAlternativeSite(
-			_redirectConstructor2.newInstance("/en/home", true, false),
+			_redirectConstructor2.newInstance("/home", true, false),
 			"/home-gb");
 		_testGetRedirectForAlternativeSite(
-			_redirectConstructor2.newInstance("/en/home", true, true),
+			_redirectConstructor2.newInstance("/home", true, true),
 			"/en/home-gb");
 		_testGetRedirectForAlternativeSite(
-			_redirectConstructor2.newInstance("/en/home", true, true),
+			_redirectConstructor2.newInstance("/home", true, true),
 			"/en-US/home-gb");
 		_testGetRedirectForAlternativeSite(
 			_redirectConstructor2.newInstance("/hu/home-hu", true, true),
@@ -195,18 +194,15 @@ public class FriendlyURLServletTest {
 
 		_testGetRedirectForAlternativeSite(
 			_redirectConstructor2.newInstance(
-				StringBundler.concat("/en", publicGroupFriendlyURL, "/home"),
-				true, false),
+				publicGroupFriendlyURL + "/home", true, false),
 			publicGroupFriendlyURL + "/home-gb");
 		_testGetRedirectForAlternativeSite(
 			_redirectConstructor2.newInstance(
-				StringBundler.concat("/en", publicGroupFriendlyURL, "/home"),
-				true, true),
+				publicGroupFriendlyURL + "/home", true, true),
 			StringBundler.concat("/en", publicGroupFriendlyURL, "/home-gb"));
 		_testGetRedirectForAlternativeSite(
 			_redirectConstructor2.newInstance(
-				StringBundler.concat("/en", publicGroupFriendlyURL, "/home"),
-				true, true),
+				publicGroupFriendlyURL + "/home", true, true),
 			StringBundler.concat("/en-US", publicGroupFriendlyURL, "/home-gb"));
 		_testGetRedirectForAlternativeSite(
 			_redirectConstructor2.newInstance(
@@ -224,7 +220,7 @@ public class FriendlyURLServletTest {
 			_redirectConstructor2.newInstance(getURL(layout), false, false),
 			"/fr/home");
 		_testGetRedirectForAlternativeSite(
-			_redirectConstructor2.newInstance("/en/home", true, true),
+			_redirectConstructor2.newInstance("/home", true, true),
 			"/fr/home-gb");
 
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
@@ -371,11 +367,11 @@ public class FriendlyURLServletTest {
 
 	@Test
 	public void testGetRedirectWithI18nPath() throws Throwable {
-		testGetI18nRedirect("/fr", "/en");
-		testGetI18nRedirect("/hu", "/hu");
-		testGetI18nRedirect("/en", "/en");
-		testGetI18nRedirect("/en_GB", "/en_GB");
-		testGetI18nRedirect("/en_US", "/en_US");
+		testGetI18nRedirect("/fr");
+		testGetI18nRedirect("/hu");
+		testGetI18nRedirect("/en");
+		testGetI18nRedirect("/en_GB");
+		testGetI18nRedirect("/en_US");
 	}
 
 	@Test(expected = NoSuchGroupException.class)
@@ -694,8 +690,6 @@ public class FriendlyURLServletTest {
 
 		String oldPath = getPath(_group, layout);
 
-		Locale locale = LocaleUtil.getSiteDefault();
-
 		layout = _layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getParentLayoutId(), layout.getNameMap(),
@@ -703,7 +697,8 @@ public class FriendlyURLServletTest {
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(),
 			HashMapBuilder.put(
-				locale, StringPool.SLASH + RandomTestUtil.randomString()
+				LocaleUtil.getSiteDefault(),
+				StringPool.SLASH + RandomTestUtil.randomString()
 			).build(),
 			layout.isIconImage(), null, layout.getStyleBookEntryId(),
 			layout.getFaviconFileEntryId(), layout.getMasterLayoutPlid(),
@@ -721,7 +716,7 @@ public class FriendlyURLServletTest {
 		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals(
-			StringPool.SLASH + locale.getLanguage() + layout.getFriendlyURL(),
+			layout.getFriendlyURL(),
 			mockHttpServletResponse.getRedirectedUrl());
 
 		Assert.assertEquals(302, mockHttpServletResponse.getStatus());
@@ -778,9 +773,7 @@ public class FriendlyURLServletTest {
 			"&p_v_l_s_g_id=0";
 	}
 
-	protected void testGetI18nRedirect(String i18nPath, String expectedI18nPath)
-		throws Throwable {
-
+	protected void testGetI18nRedirect(String i18nPath) throws Throwable {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -798,16 +791,8 @@ public class FriendlyURLServletTest {
 
 		mockHttpServletRequest.setRequestURI(requestURI);
 
-		Object expectedRedirect = null;
-
-		if (!Objects.equals(i18nPath, expectedI18nPath)) {
-			expectedRedirect = _redirectConstructor2.newInstance(
-				expectedI18nPath + requestURI, true, true);
-		}
-		else {
-			expectedRedirect = _redirectConstructor1.newInstance(
-				getURL(_layout));
-		}
+		Object expectedRedirect = _redirectConstructor1.newInstance(
+			getURL(_layout));
 
 		testGetRedirect(
 			mockHttpServletRequest, _group.getFriendlyURL(), expectedRedirect);

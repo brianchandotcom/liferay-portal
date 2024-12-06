@@ -38,6 +38,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -228,11 +229,14 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 
 	@Test
 	public void testIncludeI18nPathDefaultLocaleAlgorithm2() throws Exception {
-		int originalLocalePrependFriendlyURLStyle =
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			_group.getCompanyId());
 
 		try {
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
+			portletPreferences.setValue(
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, String.valueOf(2));
+
+			portletPreferences.store();
 
 			_assertLocalizedSiteLayoutFriendlyURL(
 				_group.getGroupId(),
@@ -241,18 +245,21 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 				"/home", LocaleUtil.US, LocaleUtil.US, "/home", true);
 		}
 		finally {
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
-				originalLocalePrependFriendlyURLStyle;
+			portletPreferences.reset(
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 		}
 	}
 
 	@Test
 	public void testIncludeI18nPathDefaultLocaleAlgorithm3() throws Exception {
-		int originalLocalePrependFriendlyURLStyle =
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			_group.getCompanyId());
 
 		try {
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 3;
+			portletPreferences.setValue(
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, String.valueOf(3));
+
+			portletPreferences.store();
 
 			_assertLocalizedSiteLayoutFriendlyURL(
 				_group.getGroupId(),
@@ -261,8 +268,8 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 				"/home", LocaleUtil.US, LocaleUtil.US, "/home", false);
 		}
 		finally {
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
-				originalLocalePrependFriendlyURLStyle;
+			portletPreferences.reset(
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 		}
 	}
 
@@ -397,7 +404,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			true, LocaleUtil.US, null, "/home");
+			true, LocaleUtil.US, null, "/home", false);
 	}
 
 	@Test
@@ -405,7 +412,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			true, LocaleUtil.CANADA_FRENCH, null, "/accueil");
+			true, LocaleUtil.CANADA_FRENCH, null, "/accueil", true);
 	}
 
 	@Test
@@ -413,7 +420,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			true, LocaleUtil.US, "/-/blogs/one", "/home");
+			true, LocaleUtil.US, "/-/blogs/one", "/home", false);
 	}
 
 	@Test
@@ -421,7 +428,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			true, LocaleUtil.CANADA_FRENCH, "/-/blogs/one", "/accueil");
+			true, LocaleUtil.CANADA_FRENCH, "/-/blogs/one", "/accueil", true);
 	}
 
 	@Test
@@ -429,7 +436,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			true, LocaleUtil.US, "?param=value", "/home");
+			true, LocaleUtil.US, "?param=value", "/home", false);
 	}
 
 	@Test
@@ -437,7 +444,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			true, LocaleUtil.CANADA_FRENCH, "?param=value", "/accueil");
+			true, LocaleUtil.CANADA_FRENCH, "?param=value", "/accueil", true);
 	}
 
 	@Test
@@ -445,7 +452,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			true, LocaleUtil.US, "/tags/one", "/home");
+			true, LocaleUtil.US, "/tags/one", "/home", false);
 	}
 
 	@Test
@@ -453,7 +460,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			true, LocaleUtil.CANADA_FRENCH, "/tags/one", "/accueil");
+			true, LocaleUtil.CANADA_FRENCH, "/tags/one", "/accueil", true);
 	}
 
 	@Test
@@ -461,7 +468,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			false, LocaleUtil.US, null, "/home");
+			false, LocaleUtil.US, null, "/home", false);
 	}
 
 	@Test
@@ -469,7 +476,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			false, LocaleUtil.CANADA_FRENCH, null, "/accueil");
+			false, LocaleUtil.CANADA_FRENCH, null, "/accueil", true);
 	}
 
 	@Test
@@ -477,7 +484,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			false, LocaleUtil.US, "/-/blogs/one", "/home");
+			false, LocaleUtil.US, "/-/blogs/one", "/home", false);
 	}
 
 	@Test
@@ -485,7 +492,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			false, LocaleUtil.CANADA_FRENCH, "/-/blogs/one", "/accueil");
+			false, LocaleUtil.CANADA_FRENCH, "/-/blogs/one", "/accueil", true);
 	}
 
 	@Test
@@ -493,7 +500,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			false, LocaleUtil.US, "?param=value", "/home");
+			false, LocaleUtil.US, "?param=value", "/home", false);
 	}
 
 	@Test
@@ -501,7 +508,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			false, LocaleUtil.CANADA_FRENCH, "?param=value", "/accueil");
+			false, LocaleUtil.CANADA_FRENCH, "?param=value", "/accueil", true);
 	}
 
 	@Test
@@ -509,7 +516,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			false, LocaleUtil.US, "/tags/one", "/home");
+			false, LocaleUtil.US, "/tags/one", "/home", false);
 	}
 
 	@Test
@@ -517,7 +524,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 		throws Exception {
 
 		_testWronglyLocalizedSiteLayoutFriendlyURL(
-			false, LocaleUtil.CANADA_FRENCH, "/tags/one", "/accueil");
+			false, LocaleUtil.CANADA_FRENCH, "/tags/one", "/accueil", true);
 	}
 
 	@Test
@@ -739,7 +746,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 
 		sb = new StringBundler(includeI18nPath ? 7 : 5);
 
-		if (includeI18nPath) {
+		if (includeI18nPath && !Objects.equals(locale.getLanguage(), "en")) {
 			sb.append(StringPool.SLASH);
 			sb.append(_portal.getI18nPathLanguageId(locale, StringPool.BLANK));
 		}
@@ -866,7 +873,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 
 	private void _testWronglyLocalizedSiteLayoutFriendlyURL(
 			boolean privateLayout, Locale locale, String queryString,
-			String expectedLayoutFriendlyURL)
+			String expectedLayoutFriendlyURL, boolean includeI18nPath)
 		throws Exception {
 
 		String requestedFriendlyURL = "/inicio";
@@ -882,7 +889,7 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 			LayoutTestUtil.addTypePortletLayout(
 				_group.getGroupId(), privateLayout, _nameMap, _friendlyURLMap),
 			requestedFriendlyURL, locale, LocaleUtil.SPAIN,
-			expectedLayoutFriendlyURL, true);
+			expectedLayoutFriendlyURL, includeI18nPath);
 	}
 
 	private void _testWronglyLocalizedVirtualLayoutFriendlyURL(

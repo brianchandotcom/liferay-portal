@@ -5,13 +5,13 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import getRandomString from '../../utils/getRandomString';
-import {samplePageTest} from './fixtures/samplePageTest';
+import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../../../fixtures/pageViewModePagesTest';
+import getRandomString from '../../../../../utils/getRandomString';
+import {samplePageTest} from '../../../../frontend-taglib/fixtures/samplePageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

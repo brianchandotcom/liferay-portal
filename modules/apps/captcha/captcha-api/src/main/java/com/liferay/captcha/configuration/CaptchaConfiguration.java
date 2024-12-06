@@ -12,7 +12,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Pei-Jung Lan
  */
-@ExtendedObjectClassDefinition(category = "security-tools")
+@ExtendedObjectClassDefinition(
+	category = "security-tools",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
 	id = "com.liferay.captcha.configuration.CaptchaConfiguration",
 	localization = "content/Language", name = "captcha-configuration-name"

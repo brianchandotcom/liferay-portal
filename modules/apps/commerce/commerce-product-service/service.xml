@@ -1602,6 +1602,7 @@
 		<exception>DuplicateCPSpecificationOptionKey</exception>
 		<exception>DuplicateCPSpecificationOptionListTypeDefinitionRel</exception>
 		<exception>DuplicateCPTaxCategory</exception>
+		<exception>InvalidCPConfigurationList</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
 		<exception>RequiredCPConfigurationList</exception>
 		<exception>RequiredCPOption</exception>

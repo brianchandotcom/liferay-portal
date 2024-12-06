@@ -26,4 +26,5 @@ export {default as editCpConfigurationList} from './edit_cp_configuration_list';
 export {default as editCpDefinition} from './edit_cp_definition';
 export {default as editCpDefinitionVisibility} from './edit_cp_definition_visibility';
 export {default as editCpInstanceUnitOfMeasure} from './edit_cp_instance_unit_of_measure';
+export {default as qualifiers} from './qualifiers';
 export {default as viewCpInstanceUnitOfMeasure} from './view_cp_instance_unit_of_measure';

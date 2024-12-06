@@ -36,9 +36,16 @@ public class NotificationUtil {
 		String body, String senderName, String subject,
 		String recipientEmailAddress) {
 
+		String hostName = JenkinsResultsParserUtil.getHostName(null);
+
+		if (!hostName.endsWith(".liferay.com") ||
+			!hostName.endsWith(".lax.liferay.com")) {
+
+			hostName = hostName + ".lax.liferay.com";
+		}
+
 		sendEmail(
-			JenkinsResultsParserUtil.combine(
-				senderName, "@", JenkinsResultsParserUtil.getHostName(null)),
+			JenkinsResultsParserUtil.combine(senderName, "@", hostName),
 			senderName, recipientEmailAddress, subject, body);
 	}
 

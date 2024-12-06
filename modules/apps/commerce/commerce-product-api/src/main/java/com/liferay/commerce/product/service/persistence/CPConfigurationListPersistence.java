@@ -811,58 +811,54 @@ public interface CPConfigurationListPersistence
 	public int countByG_C(long[] groupIds, long companyId);
 
 	/**
-	 * Returns the cp configuration list where groupId = &#63; and masterCPConfigurationList = &#63; or throws a <code>NoSuchCPConfigurationListException</code> if it could not be found.
+	 * Returns the cp configuration list where groupId = &#63; and master = &#63; or throws a <code>NoSuchCPConfigurationListException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID
-	 * @param masterCPConfigurationList the master cp configuration list
+	 * @param master the master
 	 * @return the matching cp configuration list
 	 * @throws NoSuchCPConfigurationListException if a matching cp configuration list could not be found
 	 */
-	public CPConfigurationList findByG_M(
-			long groupId, boolean masterCPConfigurationList)
+	public CPConfigurationList findByG_M(long groupId, boolean master)
 		throws NoSuchCPConfigurationListException;
 
 	/**
-	 * Returns the cp configuration list where groupId = &#63; and masterCPConfigurationList = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the cp configuration list where groupId = &#63; and master = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param masterCPConfigurationList the master cp configuration list
+	 * @param master the master
 	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
 	 */
-	public CPConfigurationList fetchByG_M(
-		long groupId, boolean masterCPConfigurationList);
+	public CPConfigurationList fetchByG_M(long groupId, boolean master);
 
 	/**
-	 * Returns the cp configuration list where groupId = &#63; and masterCPConfigurationList = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the cp configuration list where groupId = &#63; and master = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param masterCPConfigurationList the master cp configuration list
+	 * @param master the master
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
 	 */
 	public CPConfigurationList fetchByG_M(
-		long groupId, boolean masterCPConfigurationList,
-		boolean useFinderCache);
+		long groupId, boolean master, boolean useFinderCache);
 
 	/**
-	 * Removes the cp configuration list where groupId = &#63; and masterCPConfigurationList = &#63; from the database.
+	 * Removes the cp configuration list where groupId = &#63; and master = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param masterCPConfigurationList the master cp configuration list
+	 * @param master the master
 	 * @return the cp configuration list that was removed
 	 */
-	public CPConfigurationList removeByG_M(
-			long groupId, boolean masterCPConfigurationList)
+	public CPConfigurationList removeByG_M(long groupId, boolean master)
 		throws NoSuchCPConfigurationListException;
 
 	/**
-	 * Returns the number of cp configuration lists where groupId = &#63; and masterCPConfigurationList = &#63;.
+	 * Returns the number of cp configuration lists where groupId = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param masterCPConfigurationList the master cp configuration list
+	 * @param master the master
 	 * @return the number of matching cp configuration lists
 	 */
-	public int countByG_M(long groupId, boolean masterCPConfigurationList);
+	public int countByG_M(long groupId, boolean master);
 
 	/**
 	 * Returns all the cp configuration lists where displayDate &lt; &#63; and status = &#63;.

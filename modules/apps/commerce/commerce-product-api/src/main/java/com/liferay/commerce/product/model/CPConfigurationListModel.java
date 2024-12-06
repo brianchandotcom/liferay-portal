@@ -266,25 +266,25 @@ public interface CPConfigurationListModel
 		long parentCPConfigurationListId);
 
 	/**
-	 * Returns the master cp configuration list of this cp configuration list.
+	 * Returns the master of this cp configuration list.
 	 *
-	 * @return the master cp configuration list of this cp configuration list
+	 * @return the master of this cp configuration list
 	 */
-	public boolean getMasterCPConfigurationList();
+	public boolean getMaster();
 
 	/**
-	 * Returns <code>true</code> if this cp configuration list is master cp configuration list.
+	 * Returns <code>true</code> if this cp configuration list is master.
 	 *
-	 * @return <code>true</code> if this cp configuration list is master cp configuration list; <code>false</code> otherwise
+	 * @return <code>true</code> if this cp configuration list is master; <code>false</code> otherwise
 	 */
-	public boolean isMasterCPConfigurationList();
+	public boolean isMaster();
 
 	/**
-	 * Sets whether this cp configuration list is master cp configuration list.
+	 * Sets whether this cp configuration list is master.
 	 *
-	 * @param masterCPConfigurationList the master cp configuration list of this cp configuration list
+	 * @param master the master of this cp configuration list
 	 */
-	public void setMasterCPConfigurationList(boolean masterCPConfigurationList);
+	public void setMaster(boolean master);
 
 	/**
 	 * Returns the name of this cp configuration list.

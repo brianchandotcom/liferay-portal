@@ -27,7 +27,7 @@ create unique index IX_1A3FBF81 on CPConfigurationEntrySetting (uuid_[$COLUMN_LE
 
 create unique index IX_9AAA5A84 on CPConfigurationList (companyId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_AC55D871 on CPConfigurationList (groupId, companyId, status);
-create index IX_3366F4F8 on CPConfigurationList (groupId, masterCPConfigurationList);
+create index IX_36C0FFD3 on CPConfigurationList (groupId, master);
 create unique index IX_E989EBF5 on CPConfigurationList (groupId, uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_85ED285B on CPConfigurationList (parentCPConfigurationListId);
 create index IX_DD7144ED on CPConfigurationList (status, displayDate);

@@ -81,22 +81,21 @@ public interface CPConfigurationListLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPConfigurationList addCPConfigurationList(
 			String externalReferenceCode, long groupId, long userId,
-			long parentCPConfigurationListId, boolean masterCPConfigurationList,
-			String name, double priority, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire)
+			long parentCPConfigurationListId, boolean master, String name,
+			double priority, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPConfigurationList addOrUpdateCPConfigurationList(
 			String externalReferenceCode, long companyId, long groupId,
-			long userId, long parentCPConfigurationListId,
-			boolean masterCPConfigurationList, String name, double priority,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			long userId, long parentCPConfigurationListId, boolean master,
+			String name, double priority, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire)
@@ -387,9 +386,9 @@ public interface CPConfigurationListLocalService
 	public CPConfigurationList updateCPConfigurationList(
 			String externalReferenceCode, long cpConfigurationListId,
 			long groupId, long userId, long parentCPConfigurationListId,
-			boolean masterCPConfigurationList, String name, double priority,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			boolean master, String name, double priority, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire)

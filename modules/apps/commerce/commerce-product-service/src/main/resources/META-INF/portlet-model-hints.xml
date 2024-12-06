@@ -179,7 +179,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="parentCPConfigurationListId" type="long" />
-		<field name="masterCPConfigurationList" type="boolean" />
+		<field name="master" type="boolean" />
 		<field name="name" type="String" />
 		<field name="priority" type="double" />
 		<field name="displayDate" type="Date" />

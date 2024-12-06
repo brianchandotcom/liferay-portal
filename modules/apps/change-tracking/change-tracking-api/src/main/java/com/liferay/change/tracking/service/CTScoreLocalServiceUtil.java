@@ -51,6 +51,10 @@ public class CTScoreLocalServiceUtil {
 		return getService().addCTScore(ctScore);
 	}
 
+	public static CTScore addCTScore(long ctCollectionId) {
+		return getService().addCTScore(ctCollectionId);
+	}
+
 	/**
 	 * Creates a new ct score with the primary key. Does not add the ct score to the database.
 	 *
@@ -69,6 +73,12 @@ public class CTScoreLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static CTScore decrementScore(
+		long ctCollectionId, long modelClassNameId) {
+
+		return getService().decrementScore(ctCollectionId, modelClassNameId);
 	}
 
 	/**
@@ -199,6 +209,10 @@ public class CTScoreLocalServiceUtil {
 		return getService().fetchCTScore(ctScoreId);
 	}
 
+	public static CTScore fetchCTScoreByCTCollectionId(long ctCollectionId) {
+		return getService().fetchCTScoreByCTCollectionId(ctCollectionId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -263,6 +277,12 @@ public class CTScoreLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static CTScore incrementScore(
+		long ctCollectionId, long modelClassNameId) {
+
+		return getService().incrementScore(ctCollectionId, modelClassNameId);
 	}
 
 	/**

@@ -13,11 +13,16 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
+import com.liferay.portal.kernel.service.ExceptionRetryAcceptor;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.spring.aop.Property;
+import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -66,6 +71,8 @@ public interface CTScoreLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTScore addCTScore(CTScore ctScore);
 
+	public CTScore addCTScore(long ctCollectionId);
+
 	/**
 	 * Creates a new ct score with the primary key. Does not add the ct score to the database.
 	 *
@@ -80,6 +87,18 @@ public interface CTScoreLocalService
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@BufferedIncrement(incrementClass = NumberIncrement.class)
+	@Retry(
+		acceptor = ExceptionRetryAcceptor.class,
+		properties = {
+			@Property(
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value = "org.hibernate.StaleObjectStateException"
+			)
+		}
+	)
+	public CTScore decrementScore(long ctCollectionId, long modelClassNameId);
 
 	/**
 	 * Deletes the ct score from the database. Also notifies the appropriate model listeners.
@@ -191,6 +210,9 @@ public interface CTScoreLocalService
 	public CTScore fetchCTScore(long ctScoreId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CTScore fetchCTScoreByCTCollectionId(long ctCollectionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -242,6 +264,18 @@ public interface CTScoreLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@BufferedIncrement(incrementClass = NumberIncrement.class)
+	@Retry(
+		acceptor = ExceptionRetryAcceptor.class,
+		properties = {
+			@Property(
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value = "org.hibernate.StaleObjectStateException"
+			)
+		}
+	)
+	public CTScore incrementScore(long ctCollectionId, long modelClassNameId);
 
 	/**
 	 * Updates the ct score in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

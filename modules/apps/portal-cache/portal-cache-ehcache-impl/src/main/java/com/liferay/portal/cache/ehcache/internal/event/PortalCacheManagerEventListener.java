@@ -10,14 +10,14 @@ import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import net.sf.ehcache.Status;
-import net.sf.ehcache.event.CacheManagerEventListener;
+import org.ehcache.Cache;
+import org.ehcache.Status;
+import org.ehcache.core.events.CacheManagerListener;
 
 /**
  * @author Shuyang Zhou
  */
-public class PortalCacheManagerEventListener
-	implements CacheManagerEventListener {
+public class PortalCacheManagerEventListener implements CacheManagerListener {
 
 	public PortalCacheManagerEventListener(
 		PortalCacheManagerListener portalCacheManagerListener,
@@ -31,8 +31,21 @@ public class PortalCacheManagerEventListener
 	}
 
 	@Override
-	public void dispose() {
-		_portalCacheManagerListener.dispose();
+	public void cacheAdded(String alias, Cache<?, ?> cache) {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Added cache " + alias);
+		}
+
+		_portalCacheManagerListener.notifyPortalCacheAdded(alias);
+	}
+
+	@Override
+	public void cacheRemoved(String alias, Cache<?, ?> cache) {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Removed cache " + alias);
+		}
+
+		_portalCacheManagerListener.notifyPortalCacheRemoved(alias);
 	}
 
 	@Override
@@ -45,20 +58,11 @@ public class PortalCacheManagerEventListener
 			return false;
 		}
 
-		PortalCacheManagerEventListener portalCacheManagerEventListener =
+		PortalCacheManagerEventListener ehcacheCacheManagerListener =
 			(PortalCacheManagerEventListener)object;
 
 		return _portalCacheManagerListener.equals(
-			portalCacheManagerEventListener._portalCacheManagerListener);
-	}
-
-	public PortalCacheManagerListener getCacheManagerListener() {
-		return _portalCacheManagerListener;
-	}
-
-	@Override
-	public Status getStatus() {
-		return Status.STATUS_ALIVE;
+			ehcacheCacheManagerListener._portalCacheManagerListener);
 	}
 
 	@Override
@@ -67,26 +71,13 @@ public class PortalCacheManagerEventListener
 	}
 
 	@Override
-	public void init() {
-		_portalCacheManagerListener.init();
-	}
-
-	@Override
-	public void notifyCacheAdded(String portalCacheName) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Added cache " + portalCacheName);
+	public void stateTransition(Status from, Status to) {
+		if (to == Status.AVAILABLE) {
+			_portalCacheManagerListener.init();
 		}
-
-		_portalCacheManagerListener.notifyPortalCacheAdded(portalCacheName);
-	}
-
-	@Override
-	public void notifyCacheRemoved(String portalCacheName) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Removed cache " + portalCacheName);
+		else if (to == Status.UNINITIALIZED) {
+			_portalCacheManagerListener.dispose();
 		}
-
-		_portalCacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
 	}
 
 	private final Log _log;

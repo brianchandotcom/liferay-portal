@@ -99,11 +99,8 @@ public class OrganizationResourceDTOConverterTest {
 		StringBuilder sb = new StringBuilder();
 
 		for (Locale locale : originalAvailableLocales) {
-			sb.append(
-				locale.toString()
-			).append(
-				","
-			);
+			sb.append(locale.toString());
+			sb.append(",");
 		}
 
 		_companyLocalService.updatePreferences(

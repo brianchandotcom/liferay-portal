@@ -128,7 +128,9 @@ public class CETConfigurationFactoryTest {
 	}
 
 	@Test
-	public void testAddControlPanelThemeCSSClientExtensionEntryRel() throws Exception {
+	public void testAddControlPanelThemeCSSClientExtensionEntryRel()
+		throws Exception {
+
 		String pid1 = ConfigurationTestUtil.createFactoryConfiguration(
 			_PID,
 			_getThemeCSSCETConfigurationProperties(_virtualInstanceCompanyId));

@@ -145,7 +145,8 @@ public class ObjectActionLocalServiceImpl
 		objectAction.setErrorMessageMap(
 			errorMessageMap, LocaleUtil.getSiteDefault());
 		objectAction.setLabelMap(
-			_fillLabelMap(labelMap, name, objectDefinition.getDefaultLocale()),
+			_populateLabelMap(
+				labelMap, name, objectDefinition.getDefaultLocale()),
 			objectDefinition.getDefaultLocale());
 		objectAction.setName(name);
 		objectAction.setObjectActionExecutorKey(objectActionExecutorKey);
@@ -349,7 +350,7 @@ public class ObjectActionLocalServiceImpl
 			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
 
 			objectAction.setLabelMap(
-				_fillLabelMap(
+				_populateLabelMap(
 					labelMap, objectAction.getName(),
 					objectDefinition.getDefaultLocale()),
 				objectDefinition.getDefaultLocale());
@@ -385,7 +386,7 @@ public class ObjectActionLocalServiceImpl
 
 		if (objectDefinition.isApproved()) {
 			objectAction.setLabelMap(
-				_fillLabelMap(
+				_populateLabelMap(
 					labelMap, objectAction.getName(),
 					objectDefinition.getDefaultLocale()),
 				objectDefinition.getDefaultLocale());
@@ -405,7 +406,8 @@ public class ObjectActionLocalServiceImpl
 			conditionExpression, objectActionTriggerKey, objectDefinition);
 
 		objectAction.setLabelMap(
-			_fillLabelMap(labelMap, name, objectDefinition.getDefaultLocale()),
+			_populateLabelMap(
+				labelMap, name, objectDefinition.getDefaultLocale()),
 			objectDefinition.getDefaultLocale());
 		objectAction.setName(name);
 		objectAction.setObjectActionTriggerKey(objectActionTriggerKey);
@@ -448,7 +450,7 @@ public class ObjectActionLocalServiceImpl
 		}
 	}
 
-	private Map<Locale, String> _fillLabelMap(
+	private Map<Locale, String> _populateLabelMap(
 		Map<Locale, String> labelMap, String name, Locale locale) {
 
 		if ((labelMap == null) || labelMap.isEmpty()) {

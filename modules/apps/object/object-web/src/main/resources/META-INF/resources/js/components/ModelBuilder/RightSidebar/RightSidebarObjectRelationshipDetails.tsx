@@ -6,8 +6,8 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
-import {API, openToast, stringUtils} from '@liferay/object-js-components-web';
-import {createResourceURL, sub} from 'frontend-js-web';
+import {API, stringUtils} from '@liferay/object-js-components-web';
+import {createResourceURL, openToast, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {isEdge, isNode} from 'react-flow-renderer';
 
@@ -144,7 +144,7 @@ export function RightSidebarObjectRelationshipDetails({
 			catch (error: unknown) {
 				const {message} = error as Error;
 
-				openToast({message, type: 'danger'});
+				openToast({autoClose: 15000, message, type: 'danger'});
 			}
 
 			if (!objectRelationship || !objectRelationship?.id) {

@@ -1366,7 +1366,7 @@ testWithPrivatePages.describe('Menu Display Fragment', () => {
 
 			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-			// Assert layouts in menud display fragment
+			// Assert layouts in menu display fragment
 
 			const menuDisplay = page.locator(
 				'.lfr-layout-structure-item-com-liferay-fragment-renderer-menu-display-internal-menudisplayfragmentrenderer'
@@ -1397,7 +1397,7 @@ testWithPrivatePages.describe('Menu Display Fragment', () => {
 				value: '1',
 			});
 
-			// Assert layouts in menud display fragment
+			// Assert layouts in menu display fragment
 
 			await hoverAndExpectToBeVisible({
 				autoClick: false,
@@ -1420,7 +1420,7 @@ testWithPrivatePages.describe('Menu Display Fragment', () => {
 				value: 'Stacked',
 			});
 
-			// Assert layouts in menud display fragment
+			// Assert layouts in menu display fragment
 
 			await expect(
 				menuDisplay.getByText(parentLayoutTitle)

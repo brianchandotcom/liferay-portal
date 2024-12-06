@@ -129,24 +129,10 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof
-					DuplicateCommercePriceEntryExternalReferenceCodeException ||
-				exception instanceof NoSuchCPInstanceException ||
-				exception instanceof NoSuchPriceEntryException ||
-				exception instanceof NoSuchPriceListException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, exception.getClass());
-
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-			}
-			else if (exception instanceof CommercePriceEntryPriceException ||
-					 exception instanceof
-						 CommercePriceListMaxPriceValueException ||
-					 exception instanceof
-						 CommercePriceListMinPriceValueException ||
-					 exception instanceof
-						 DuplicateCommercePriceEntryException) {
+			if (exception instanceof CommercePriceEntryPriceException ||
+				exception instanceof CommercePriceListMaxPriceValueException ||
+				exception instanceof CommercePriceListMinPriceValueException ||
+				exception instanceof DuplicateCommercePriceEntryException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
@@ -157,6 +143,17 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 					actionRequest, "redirect");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (exception instanceof
+						DuplicateCommercePriceEntryExternalReferenceCodeException ||
+					 exception instanceof NoSuchCPInstanceException ||
+					 exception instanceof NoSuchPriceEntryException ||
+					 exception instanceof NoSuchPriceListException ||
+					 exception instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
 				throw exception;

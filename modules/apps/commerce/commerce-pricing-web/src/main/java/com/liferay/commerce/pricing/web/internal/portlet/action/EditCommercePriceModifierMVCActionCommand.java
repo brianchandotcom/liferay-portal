@@ -69,17 +69,7 @@ public class EditCommercePriceModifierMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchPriceListException ||
-				exception instanceof NoSuchPriceModifierException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, exception.getClass());
-
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-			}
-			else if (exception instanceof
-						CommercePriceModifierAmountException) {
-
+			if (exception instanceof CommercePriceModifierAmountException) {
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
@@ -89,6 +79,14 @@ public class EditCommercePriceModifierMVCActionCommand
 					actionRequest, "redirect");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (exception instanceof NoSuchPriceListException ||
+					 exception instanceof NoSuchPriceModifierException ||
+					 exception instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
 				throw exception;

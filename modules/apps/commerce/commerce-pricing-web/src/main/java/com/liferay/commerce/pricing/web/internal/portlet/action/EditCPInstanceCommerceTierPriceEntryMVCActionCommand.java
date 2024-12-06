@@ -105,20 +105,9 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 		}
 		catch (Exception exception) {
 			if (exception instanceof
-					DuplicateCommerceTierPriceEntryExternalReferenceCodeException ||
-				exception instanceof NoSuchTierPriceEntryException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, exception.getClass());
-
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-			}
-			else if (exception instanceof
-						CommerceTierPriceEntryMinQuantityException ||
-					 exception instanceof
-						 CommerceTierPriceEntryPriceException ||
-					 exception instanceof
-						 DuplicateCommerceTierPriceEntryException) {
+					CommerceTierPriceEntryMinQuantityException ||
+				exception instanceof CommerceTierPriceEntryPriceException ||
+				exception instanceof DuplicateCommerceTierPriceEntryException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
@@ -129,6 +118,15 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 					actionRequest, "redirect");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (exception instanceof
+						DuplicateCommerceTierPriceEntryExternalReferenceCodeException ||
+					 exception instanceof NoSuchTierPriceEntryException ||
+					 exception instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
 				throw exception;

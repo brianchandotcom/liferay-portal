@@ -80,7 +80,10 @@ public class EditCommerceOrderItemMVCActionCommand
 			}
 		}
 		catch (Throwable throwable) {
-			if (throwable instanceof CommerceOrderValidatorException) {
+			if (throwable instanceof CommerceOrderItemPriceException ||
+				throwable instanceof
+					CommerceOrderItemRequestedDeliveryDateException) {
+
 				SessionErrors.add(
 					actionRequest, throwable.getClass(), throwable);
 
@@ -89,10 +92,7 @@ public class EditCommerceOrderItemMVCActionCommand
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
-			else if (throwable instanceof CommerceOrderItemPriceException ||
-					 throwable instanceof
-						 CommerceOrderItemRequestedDeliveryDateException) {
-
+			else if (throwable instanceof CommerceOrderValidatorException) {
 				SessionErrors.add(
 					actionRequest, throwable.getClass(), throwable);
 

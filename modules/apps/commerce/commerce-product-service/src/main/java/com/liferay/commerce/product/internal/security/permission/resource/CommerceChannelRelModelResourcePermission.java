@@ -12,7 +12,12 @@ import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.permission.CommerceInventoryWarehousePermission;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
+import com.liferay.commerce.product.model.CPConfigurationList;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannelRel;
+import com.liferay.commerce.product.permission.CommerceCatalogPermission;
+import com.liferay.commerce.product.service.CPConfigurationListLocalService;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
@@ -45,15 +50,37 @@ public class CommerceChannelRelModelResourcePermission
 			CommerceChannelRel commerceChannelRel, String actionId)
 		throws PortalException {
 
-		long commerceDiscountClassNameId = classNameLocalService.getClassNameId(
-			CommerceDiscount.class.getName());
-
-		long addressClassNameId = classNameLocalService.getClassNameId(
-			Address.class.getName());
-
 		if (Objects.equals(
 				commerceChannelRel.getClassNameId(),
-				commerceDiscountClassNameId)) {
+				classNameLocalService.getClassNameId(
+					Address.class.getName()))) {
+
+			Address address = addressLocalService.getAddress(
+				commerceChannelRel.getClassPK());
+
+			accountEntryModelResourcePermission.check(
+				permissionChecker, address.getClassPK(), actionId);
+		}
+		else if (Objects.equals(
+					commerceChannelRel.getClassNameId(),
+					classNameLocalService.getClassNameId(
+						CPConfigurationList.class.getName()))) {
+
+			CPConfigurationList cpConfigurationList =
+				cpConfigurationListLocalService.getCPConfigurationList(
+					commerceChannelRel.getClassPK());
+
+			CommerceCatalog commerceCatalog =
+				commerceCatalogLocalService.fetchCommerceCatalogByGroupId(
+					cpConfigurationList.getGroupId());
+
+			commerceCatalogPermission.check(
+				permissionChecker, commerceCatalog, actionId);
+		}
+		else if (Objects.equals(
+					commerceChannelRel.getClassNameId(),
+					classNameLocalService.getClassNameId(
+						CommerceDiscount.class.getName()))) {
 
 			CommerceDiscount commerceDiscount =
 				commerceDiscountLocalService.getCommerceDiscount(
@@ -64,34 +91,19 @@ public class CommerceChannelRelModelResourcePermission
 				actionId);
 		}
 		else if (Objects.equals(
-					commerceChannelRel.getClassNameId(), addressClassNameId)) {
-
-			Address address = addressLocalService.getAddress(
-				commerceChannelRel.getClassPK());
-
-			accountEntryModelResourcePermission.check(
-				permissionChecker, address.getClassPK(), actionId);
-		}
-		else {
-			long commerceInventoryWarehouseClassNameId =
-				classNameLocalService.getClassNameId(
-					CommerceInventoryWarehouse.class.getName());
-
-			if (Objects.equals(
 					commerceChannelRel.getClassNameId(),
-					commerceInventoryWarehouseClassNameId)) {
+					classNameLocalService.getClassNameId(
+						CommerceInventoryWarehouse.class.getName()))) {
 
-				CommerceInventoryWarehouse commerceInventoryWarehouse =
-					commerceInventoryWarehouseLocalService.
-						getCommerceInventoryWarehouse(
-							commerceChannelRel.getClassPK());
+			CommerceInventoryWarehouse commerceInventoryWarehouse =
+				commerceInventoryWarehouseLocalService.
+					getCommerceInventoryWarehouse(
+						commerceChannelRel.getClassPK());
 
-				commerceDiscountPermission.check(
-					permissionChecker,
-					commerceInventoryWarehouse.
-						getCommerceInventoryWarehouseId(),
-					actionId);
-			}
+			commerceDiscountPermission.check(
+				permissionChecker,
+				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				actionId);
 		}
 	}
 
@@ -114,11 +126,10 @@ public class CommerceChannelRelModelResourcePermission
 			CommerceChannelRel commerceChannelRel, String actionId)
 		throws PortalException {
 
-		long addressClassNameId = classNameLocalService.getClassNameId(
-			Address.class.getName());
-
 		if (Objects.equals(
-				commerceChannelRel.getClassNameId(), addressClassNameId)) {
+				commerceChannelRel.getClassNameId(),
+				classNameLocalService.getClassNameId(
+					Address.class.getName()))) {
 
 			Address address = addressLocalService.getAddress(
 				commerceChannelRel.getClassPK());
@@ -127,12 +138,28 @@ public class CommerceChannelRelModelResourcePermission
 				permissionChecker, address.getClassPK(), actionId);
 		}
 
-		long commerceDiscountClassNameId = classNameLocalService.getClassNameId(
-			CommerceDiscount.class.getName());
+		if (Objects.equals(
+				commerceChannelRel.getClassNameId(),
+				classNameLocalService.getClassNameId(
+					CPConfigurationList.class.getName()))) {
+
+			CPConfigurationList cpConfigurationList =
+				cpConfigurationListLocalService.getCPConfigurationList(
+					commerceChannelRel.getClassPK());
+
+			CommerceCatalog commerceCatalog =
+				commerceCatalogLocalService.fetchCommerceCatalogByGroupId(
+					cpConfigurationList.getGroupId());
+
+			return commerceCatalogPermission.contains(
+				permissionChecker, commerceCatalog.getCommerceCatalogId(),
+				actionId);
+		}
 
 		if (Objects.equals(
 				commerceChannelRel.getClassNameId(),
-				commerceDiscountClassNameId)) {
+				classNameLocalService.getClassNameId(
+					CommerceDiscount.class.getName()))) {
 
 			CommerceDiscount commerceDiscount =
 				commerceDiscountLocalService.getCommerceDiscount(
@@ -143,13 +170,10 @@ public class CommerceChannelRelModelResourcePermission
 				actionId);
 		}
 
-		long commerceInventoryWarehouseClassNameId =
-			classNameLocalService.getClassNameId(
-				CommerceInventoryWarehouse.class.getName());
-
 		if (Objects.equals(
 				commerceChannelRel.getClassNameId(),
-				commerceInventoryWarehouseClassNameId)) {
+				classNameLocalService.getClassNameId(
+					CommerceInventoryWarehouse.class.getName()))) {
 
 			CommerceInventoryWarehouse commerceInventoryWarehouse =
 				commerceInventoryWarehouseLocalService.
@@ -203,6 +227,12 @@ public class CommerceChannelRelModelResourcePermission
 	protected ClassNameLocalService classNameLocalService;
 
 	@Reference
+	protected CommerceCatalogLocalService commerceCatalogLocalService;
+
+	@Reference
+	protected CommerceCatalogPermission commerceCatalogPermission;
+
+	@Reference
 	protected CommerceChannelRelLocalService commerceChannelRelLocalService;
 
 	@Reference
@@ -218,5 +248,8 @@ public class CommerceChannelRelModelResourcePermission
 	@Reference
 	protected CommerceInventoryWarehousePermission
 		commerceInventoryWarehousePermission;
+
+	@Reference
+	protected CPConfigurationListLocalService cpConfigurationListLocalService;
 
 }

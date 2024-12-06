@@ -173,10 +173,6 @@ const ListView: React.FC<ListViewProps> = ({
 	};
 
 	const filter = useMemo(() => {
-		if (!managementToolbarProps.applyFilters) {
-			return;
-		}
-
 		const appliedFilters: {[key: string]: string} = {
 			...filterVariables.appliedFilter,
 		};
@@ -219,12 +215,7 @@ const ListView: React.FC<ListViewProps> = ({
 		const filter = {filter: baseFilter, ...filters};
 
 		return filter;
-	}, [
-		filterSchema?.fields,
-		filterVariables,
-		managementToolbarProps.applyFilters,
-		onApplyFilterMemo,
-	]);
+	}, [filterSchema?.fields, filterVariables, onApplyFilterMemo]);
 
 	const getURLSearchParams = useCallback(
 		() => ({

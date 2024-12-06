@@ -50,14 +50,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 	title,
 	totalItems,
 }) => {
-	let [{filters}] = useContext(ListViewContext);
-
-	if (!applyFilters) {
-		filters = {
-			entries: [],
-			filter: {},
-		};
-	}
+	const [{filters}] = useContext(ListViewContext);
 
 	const disabled = totalItems === 0;
 

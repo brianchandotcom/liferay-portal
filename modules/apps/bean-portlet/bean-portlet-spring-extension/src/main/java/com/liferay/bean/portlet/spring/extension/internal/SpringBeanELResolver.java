@@ -44,24 +44,26 @@ public class SpringBeanELResolver extends ELResolver {
 
 	@Override
 	public Object getValue(ELContext elContext, Object base, Object property) {
-		if ((base == null) && (property != null)) {
-			String beanName = property.toString();
+		if ((base != null) || (property == null)) {
+			return null;
+		}
 
-			if (_beanFactory.containsBean(beanName)) {
-				PortletRequest portletRequest = _beanFactory.getBean(
-					"portletRequest", PortletRequest.class);
+		String beanName = property.toString();
 
-				Object bean = portletRequest.getAttribute(beanName);
+		if (_beanFactory.containsBean(beanName)) {
+			PortletRequest portletRequest = _beanFactory.getBean(
+				"portletRequest", PortletRequest.class);
 
-				if (bean == null) {
-					bean = _beanFactory.getBean(beanName);
-				}
+			Object bean = portletRequest.getAttribute(beanName);
 
-				if (bean != null) {
-					elContext.setPropertyResolved(true);
+			if (bean == null) {
+				bean = _beanFactory.getBean(beanName);
+			}
 
-					return bean;
-				}
+			if (bean != null) {
+				elContext.setPropertyResolved(true);
+
+				return bean;
 			}
 		}
 

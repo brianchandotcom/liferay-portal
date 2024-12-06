@@ -154,12 +154,14 @@ public abstract class BaseBeanPortletMethod implements BeanPortletMethod {
 		ServeResourceMethod serveResourceMethod = _method.getAnnotation(
 			ServeResourceMethod.class);
 
-		if (serveResourceMethod != null) {
-			String resourceID = serveResourceMethod.resourceID();
+		if (serveResourceMethod == null) {
+			return null;
+		}
 
-			if (Validator.isNotNull(resourceID)) {
-				return resourceID;
-			}
+		String resourceID = serveResourceMethod.resourceID();
+
+		if (Validator.isNotNull(resourceID)) {
+			return resourceID;
 		}
 
 		return null;

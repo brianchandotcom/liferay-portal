@@ -97,9 +97,11 @@ test(
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 		await expect(
-			page.getByText(
-				'You do not have the roles required to access this portlet.'
-			)
+			page
+				.getByText(
+					'You do not have the roles required to access this portlet.'
+				)
+				.first()
 		).toBeVisible();
 	}
 );
@@ -435,9 +437,11 @@ test(
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
 		await expect(
-			page.getByText(
-				'You do not have the roles required to access this portlet.'
-			)
+			page
+				.getByText(
+					'You do not have the roles required to access this portlet.'
+				)
+				.first()
 		).toBeVisible();
 	}
 );

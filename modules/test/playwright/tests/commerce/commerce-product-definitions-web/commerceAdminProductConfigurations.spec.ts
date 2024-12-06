@@ -33,7 +33,6 @@ test('LPD-42555 Verify configuration list table appears', async ({
 test('LPD-43390 Create child configuration list', async ({
 	applicationsMenuPage,
 	commerceAdminProductConfigurationListsPage,
-	page,
 }) => {
 	await applicationsMenuPage.goToCommerceProductConfigurationLists(false);
 

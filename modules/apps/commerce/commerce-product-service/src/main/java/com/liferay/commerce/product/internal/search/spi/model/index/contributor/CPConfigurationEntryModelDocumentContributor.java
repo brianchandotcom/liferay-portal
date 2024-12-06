@@ -94,10 +94,11 @@ public class CPConfigurationEntryModelDocumentContributor
 
 				document.addKeyword(
 					CPField.ASSET_CATEGORY_NAMES,
-					_toLowerCaseStringArray(
+					TransformUtil.unsafeTransform(
 						_assetCategoryLocalService.getCategoryNames(
 							CPDefinition.class.getName(),
-							cpConfigurationEntry.getClassPK())));
+							cpConfigurationEntry.getClassPK()),
+						String::toLowerCase, String.class));
 
 				document.addKeyword(Field.NAME, cpDefinition.getName());
 
@@ -120,14 +121,6 @@ public class CPConfigurationEntryModelDocumentContributor
 					exception);
 			}
 		}
-	}
-
-	private String[] _toLowerCaseStringArray(String[] categoryNames) {
-		for (int i = 0; i < categoryNames.length; i++) {
-			categoryNames[i] = categoryNames[i].toLowerCase();
-		}
-
-		return categoryNames;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

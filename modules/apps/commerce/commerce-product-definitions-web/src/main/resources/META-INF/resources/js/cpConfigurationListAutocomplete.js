@@ -47,13 +47,10 @@ export default function ({
 		formattedData.catalogId = document.querySelector(
 			`#${namespace}commerceCatalogId`
 		)?.value;
-
 		formattedData.name = document.querySelector(`#${namespace}name`)?.value;
-
 		formattedData.parentProductConfigurationListId = document.querySelector(
 			`#${namespace}parentCPConfigurationId`
 		)?.value;
-
 		formattedData.priority = document.querySelector(
 			`#${namespace}priority`
 		)?.value;

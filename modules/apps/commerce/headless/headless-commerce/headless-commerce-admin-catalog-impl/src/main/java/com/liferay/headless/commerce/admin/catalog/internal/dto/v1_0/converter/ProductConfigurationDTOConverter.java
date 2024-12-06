@@ -229,6 +229,13 @@ public class ProductConfigurationDTOConverter
 			CPConfigurationEntry cpConfigurationEntry)
 		throws Exception {
 
+		if (!StringUtil.equals(
+				CPDefinition.class.getName(),
+				cpConfigurationEntry.getClassName())) {
+
+			return null;
+		}
+
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpConfigurationEntry.getClassPK());
 

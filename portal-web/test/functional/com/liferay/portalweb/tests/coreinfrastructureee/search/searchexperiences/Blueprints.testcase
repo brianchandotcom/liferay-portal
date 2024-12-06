@@ -397,10 +397,9 @@ definition {
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
-		Select(
-			locator1 = "Select#SELECT_ID",
-			selectFieldId = "employee",
-			value1 = "False");
+		Uncheck.uncheckToggleSwitch(
+			key_titleName = "employee",
+			locator1 = "TextInput#INPUT_CONTAINS_TITLE");
 
 		PortletEntry.save();
 

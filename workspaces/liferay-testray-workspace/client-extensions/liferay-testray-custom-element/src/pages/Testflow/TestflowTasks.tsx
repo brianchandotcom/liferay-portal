@@ -376,11 +376,6 @@ const TestFlowTasks = () => {
 								value: i18n.translate('score'),
 							},
 							{
-								clickable: true,
-								key: 'caseResultAmount',
-								value: i18n.translate('tests'),
-							},
-							{
 								key: 'error',
 								render: (errors: string) =>
 									errors && (

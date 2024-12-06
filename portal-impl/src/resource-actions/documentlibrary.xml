@@ -63,6 +63,7 @@
 				<action-key>DOWNLOAD</action-key>
 				<action-key>OVERRIDE_CHECKOUT</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_DISCUSSION</action-key>
 				<action-key>VIEW</action-key>
@@ -82,6 +83,7 @@
 				<action-key>DELETE_DISCUSSION</action-key>
 				<action-key>OVERRIDE_CHECKOUT</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_DISCUSSION</action-key>
 			</guest-unsupported>

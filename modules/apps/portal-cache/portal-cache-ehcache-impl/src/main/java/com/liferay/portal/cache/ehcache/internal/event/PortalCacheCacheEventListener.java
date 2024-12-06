@@ -12,7 +12,6 @@ import com.liferay.portal.cache.ehcache.internal.BaseEhcachePortalCache;
 import com.liferay.portal.cache.ehcache.internal.EhcacheValue;
 import com.liferay.portal.cache.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -57,14 +56,6 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	public Object clone() {
 		return new PortalCacheCacheEventListener<>(
 			_aggregatedPortalCacheListener, _portalCache);
-	}
-
-	public PortalCacheListener<K, V> getCacheListener() {
-		return _aggregatedPortalCacheListener;
-	}
-
-	public PortalCache<K, V> getPortalCache() {
-		return _portalCache;
 	}
 
 	@Override

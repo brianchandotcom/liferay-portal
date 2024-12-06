@@ -138,6 +138,34 @@ public class CPConfigurationListQualifiersDisplayContext
 			false);
 	}
 
+	public List<FDSActionDropdownItem>
+			getCPConfigurationListAccountGroupFDSActionDropdownItems()
+		throws PortalException {
+
+		return getFDSActionDropdownItems(
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					httpServletRequest, AccountPortletKeys.ACCOUNT_GROUPS_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/account_admin/edit_account_group"
+			).setRedirect(
+				cpRequestHelper.getCurrentURL()
+			).setParameter(
+				"accountGroupId", "{accountGroup.id}"
+			).buildString(),
+			false);
+	}
+
+	public String getCPConfigurationListAccountGroupsAPIURL()
+		throws PortalException {
+
+		return StringBundler.concat(
+			"/o/headless-commerce-admin-catalog/v1.0",
+			"/product-configuration-lists/", getCPConfigurationListId(),
+			"/product-configuration-list-account-groups");
+	}
+
 	public String getCPConfigurationListAccountsAPIURL()
 		throws PortalException {
 

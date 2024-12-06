@@ -34,6 +34,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTSchemaVersion;
+import com.liferay.change.tracking.model.CTScore;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
@@ -43,6 +44,7 @@ import com.liferay.change.tracking.service.persistence.CTCommentPersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
 import com.liferay.change.tracking.service.persistence.CTMessagePersistence;
 import com.liferay.change.tracking.service.persistence.CTPreferencesPersistence;
+import com.liferay.change.tracking.service.persistence.CTScorePersistence;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -517,6 +519,13 @@ public class CTCollectionLocalServiceImpl
 
 		_ctMessagePersistence.removeByCtCollectionId(
 			ctCollection.getCtCollectionId());
+
+		CTScore ctScore = _ctScorePersistence.fetchByCtCollectionId(
+			ctCollection.getCtCollectionId());
+
+		if (ctScore != null) {
+			_ctScorePersistence.remove(ctScore);
+		}
 
 		Group group = _groupLocalService.fetchGroup(
 			ctCollection.getCompanyId(),
@@ -1602,6 +1611,9 @@ public class CTCollectionLocalServiceImpl
 
 	@Reference
 	private CTSchemaVersionLocalService _ctSchemaVersionLocalService;
+
+	@Reference
+	private CTScorePersistence _ctScorePersistence;
 
 	@Reference
 	private CTServiceRegistry _ctServiceRegistry;

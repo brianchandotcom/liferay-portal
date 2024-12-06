@@ -6,8 +6,8 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayPanel from '@clayui/panel';
-import {API, openToast, stringUtils} from '@liferay/object-js-components-web';
-import {sub} from 'frontend-js-web';
+import {API, stringUtils} from '@liferay/object-js-components-web';
+import {openToast, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {useStore} from 'react-flow-renderer';
 
@@ -121,6 +121,7 @@ export function RightSidebarObjectFieldDetails() {
 			}
 			catch (error) {
 				openToast({
+					autoClose: 15000,
 					message: (error as Error).message,
 					type: 'danger',
 				});

@@ -186,6 +186,15 @@ public class CPConfigurationListRelServiceImpl
 	}
 
 	@Override
+	public CPConfigurationListRel getCPConfigurationListRel(
+			long cpConfigurationListRelId)
+		throws PortalException {
+
+		return cpConfigurationListRelLocalService.getCPConfigurationListRel(
+			cpConfigurationListRelId);
+	}
+
+	@Override
 	public List<CPConfigurationListRel> getCPConfigurationListRels(
 			long cpConfigurationListId)
 		throws PortalException {
@@ -209,6 +218,29 @@ public class CPConfigurationListRelServiceImpl
 	}
 
 	@Override
+	public List<CPConfigurationListRel> getCPConfigurationListRels(
+			String className, long cpConfigurationListId)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpConfigurationListId, ActionKeys.VIEW);
+
+		return cpConfigurationListRelLocalService.getCPConfigurationListRels(
+			className, cpConfigurationListId);
+	}
+
+	@Override
+	public List<CPConfigurationListRel> getCPConfigurationListRels(
+			String className, long cpConfigurationListId, int start, int end,
+			OrderByComparator<CPConfigurationListRel> orderByComparator)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpConfigurationListId, ActionKeys.VIEW);
+
+		return cpConfigurationListRelLocalService.getCPConfigurationListRels(
+			className, cpConfigurationListId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getCPConfigurationListRelsCount(long cpConfigurationListId)
 		throws PortalException {
 
@@ -216,6 +248,17 @@ public class CPConfigurationListRelServiceImpl
 
 		return cpConfigurationListRelLocalService.
 			getCPConfigurationListRelsCount(cpConfigurationListId);
+	}
+
+	@Override
+	public int getCPConfigurationListRelsCount(
+			String className, long cpConfigurationListId)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpConfigurationListId, ActionKeys.VIEW);
+
+		return cpConfigurationListRelLocalService.
+			getCPConfigurationListRelsCount(className, cpConfigurationListId);
 	}
 
 	private void _checkCommerceCatalog(

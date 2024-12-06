@@ -6,27 +6,42 @@
 package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.cache.ehcache.internal.configuration.EhcachePortalCacheManagerConfiguration;
+import com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener;
 import com.liferay.portal.cache.test.util.TestPortalCacheListener;
 import com.liferay.portal.cache.test.util.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
-import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.io.Serializable;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
+import java.util.logging.Level;
 
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
-import net.sf.ehcache.config.CacheConfiguration;
-import net.sf.ehcache.config.Configuration;
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
+import org.ehcache.config.CacheConfiguration;
+import org.ehcache.config.Configuration;
+import org.ehcache.config.builders.CacheConfigurationBuilder;
+import org.ehcache.config.builders.CacheManagerBuilder;
+import org.ehcache.config.builders.ResourcePoolsBuilder;
+import org.ehcache.impl.internal.executor.OnDemandExecutionService;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -36,11 +51,6 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatchers;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
 /**
  * @author Shuyang Zhou
@@ -63,27 +73,42 @@ public class BaseEhcachePortalCacheTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		Configuration configuration = new Configuration();
+		_cacheConfigurationBuilder =
+			CacheConfigurationBuilder.newCacheConfigurationBuilder(
+				Object.class, Object.class, ResourcePoolsBuilder.heap(100));
 
-		CacheConfiguration cacheConfiguration = new CacheConfiguration();
+		CacheManagerBuilder<CacheManager> cacheManagerBuilder =
+			CacheManagerBuilder.newCacheManagerBuilder();
 
-		cacheConfiguration.setMaxEntriesLocalHeap(100);
+		ExecutorService executorService = ReflectionTestUtil.getFieldValue(
+			BaseEhcachePortalCacheManager.class, "_executorService");
 
-		configuration.addDefaultCache(cacheConfiguration);
+		_cacheManager = cacheManagerBuilder.using(
+			new OnDemandExecutionService() {
 
-		_cacheManager = CacheManager.newInstance(configuration);
+				@Override
+				public ExecutorService getOrderedExecutor(
+						String poolAlias, BlockingQueue<Runnable> queue)
+					throws IllegalArgumentException {
+
+					return executorService;
+				}
+
+			}
+		).build(
+			true
+		);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		_cacheManager.shutdown();
+		_cacheManager.close();
 	}
 
 	@Before
 	public void setUp() {
-		_cacheManager.addCache(_PORTAL_CACHE_NAME);
-
-		_ehcache = _cacheManager.getCache(_PORTAL_CACHE_NAME);
+		_cache = _cacheManager.createCache(
+			_PORTAL_CACHE_NAME, _cacheConfigurationBuilder);
 
 		BaseEhcachePortalCacheManager baseEhcachePortalCacheManager =
 			new BaseEhcachePortalCacheManager() {
@@ -92,10 +117,21 @@ public class BaseEhcachePortalCacheTest {
 		ReflectionTestUtil.setFieldValue(
 			baseEhcachePortalCacheManager, "_cacheManager", _cacheManager);
 
+		EhcachePortalCacheManagerConfiguration
+			ehcachePortalCacheManagerConfiguration =
+				new EhcachePortalCacheManagerConfiguration(
+					_cacheConfigurationBuilder.build(), null,
+					Collections.emptySet());
+
+		ReflectionTestUtil.setFieldValue(
+			baseEhcachePortalCacheManager,
+			"_ehcachePortalCacheManagerConfiguration",
+			ehcachePortalCacheManagerConfiguration);
+
 		_ehcachePortalCache = new EhcachePortalCache<>(
 			baseEhcachePortalCacheManager,
 			new EhcachePortalCacheConfiguration(
-				_PORTAL_CACHE_NAME, null, false));
+				_PORTAL_CACHE_NAME, null, Object.class, Object.class, false));
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
 
@@ -112,7 +148,14 @@ public class BaseEhcachePortalCacheTest {
 
 	@After
 	public void tearDown() {
-		_cacheManager.removeAllCaches();
+		Configuration configuration = _cacheManager.getRuntimeConfiguration();
+
+		Map<String, CacheConfiguration<?, ?>> cacheConfigurations =
+			configuration.getCacheConfigurations();
+
+		for (String key : cacheConfigurations.keySet()) {
+			_cacheManager.removeCache(key);
+		}
 	}
 
 	@Test
@@ -250,21 +293,25 @@ public class BaseEhcachePortalCacheTest {
 
 	@Test
 	public void testDispose() {
-		Assert.assertNotNull(_cacheManager.getCache(_PORTAL_CACHE_NAME));
+		Assert.assertNotNull(
+			_cacheManager.getCache(
+				_PORTAL_CACHE_NAME, Object.class, Object.class));
 
 		_ehcachePortalCache.dispose();
 
-		Assert.assertNull(_cacheManager.getCache(_PORTAL_CACHE_NAME));
+		Assert.assertNull(
+			_cacheManager.getCache(
+				_PORTAL_CACHE_NAME, Object.class, Object.class));
 	}
 
 	@Test
 	public void testGetEhcache() {
-		Assert.assertSame(_ehcache, _ehcachePortalCache.getEhcache());
+		Assert.assertSame(_cache, _ehcachePortalCache.getEhcache());
 	}
 
 	@Test
 	public void testGetEhcacheConcurrently() throws Exception {
-		Ehcache ehcache = _ehcachePortalCache.getEhcache();
+		Cache<?, ?> cache = _ehcachePortalCache.getEhcache();
 
 		_ehcachePortalCache.resetEhcache();
 		_cacheManager.removeCache(_PORTAL_CACHE_NAME);
@@ -286,9 +333,9 @@ public class BaseEhcachePortalCacheTest {
 
 		controllerThread.start();
 
-		FutureTask<Ehcache> futureTask1 = new FutureTask<>(
+		FutureTask<Cache<?, ?>> futureTask1 = new FutureTask<>(
 			_ehcachePortalCache::getEhcache);
-		FutureTask<Ehcache> futureTask2 = new FutureTask<>(
+		FutureTask<Cache<?, ?>> futureTask2 = new FutureTask<>(
 			_ehcachePortalCache::getEhcache);
 
 		Thread thread1 = new Thread(
@@ -302,7 +349,7 @@ public class BaseEhcachePortalCacheTest {
 		countDownLatch.countDown();
 
 		Assert.assertNotNull(futureTask1.get());
-		Assert.assertNotSame(ehcache, futureTask2.get());
+		Assert.assertNotSame(cache, futureTask2.get());
 
 		Assert.assertSame(futureTask1.get(), futureTask2.get());
 	}
@@ -322,12 +369,6 @@ public class BaseEhcachePortalCacheTest {
 	public void testGetName() {
 		Assert.assertEquals(
 			_PORTAL_CACHE_NAME, _ehcachePortalCache.getPortalCacheName());
-	}
-
-	@Test
-	public void testGetPortalCache() {
-		_testGetPortalCache(false);
-		_testGetPortalCache(true);
 	}
 
 	@Test
@@ -536,6 +577,48 @@ public class BaseEhcachePortalCacheTest {
 		_defaultPortalCacheReplicator.assertPut(_KEY_2, _VALUE_2);
 
 		_defaultPortalCacheReplicator.reset();
+
+		// Remove Logging
+
+		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
+		_ehcachePortalCache.put(_KEY_2, _VALUE_2);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				PortalCacheCacheEventListener.class.getName() +
+					StringPool.PERIOD +
+						_ehcachePortalCache.getPortalCacheName(),
+				Level.FINE)) {
+
+			_ehcachePortalCache.remove(_KEY_1);
+			_ehcachePortalCache.remove(_KEY_2, _VALUE_2);
+			_ehcachePortalCache.removeAll();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
+
+			LogEntry logEntry1 = logEntries.get(0);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Removed ", _KEY_1, " from ",
+					_ehcachePortalCache.getPortalCacheName()),
+				logEntry1.getMessage());
+
+			LogEntry logEntry2 = logEntries.get(1);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Removed ", _KEY_2, " from ",
+					_ehcachePortalCache.getPortalCacheName()),
+				logEntry2.getMessage());
+
+			LogEntry logEntry3 = logEntries.get(2);
+
+			Assert.assertEquals(
+				"Cleared " + _ehcachePortalCache.getPortalCacheName(),
+				logEntry3.getMessage());
+		}
 	}
 
 	@Test
@@ -603,7 +686,7 @@ public class BaseEhcachePortalCacheTest {
 
 	@Test
 	public void testResetEhcache() {
-		DCLSingleton<Ehcache> ehcacheDCLSingleton =
+		DCLSingleton<Cache<Object, Object>> ehcacheDCLSingleton =
 			ReflectionTestUtil.getFieldValue(
 				_ehcachePortalCache, "_ehcacheDCLSingleton");
 
@@ -627,11 +710,29 @@ public class BaseEhcachePortalCacheTest {
 		ReflectionTestUtil.setFieldValue(
 			baseEhcachePortalCacheManager, "_cacheManager", _cacheManager);
 
+		CacheConfigurationBuilder<Serializable, Object>
+			cacheConfigurationBuilder =
+				CacheConfigurationBuilder.newCacheConfigurationBuilder(
+					Serializable.class, Object.class,
+					ResourcePoolsBuilder.heap(100));
+
+		EhcachePortalCacheManagerConfiguration
+			ehcachePortalCacheManagerConfiguration =
+				new EhcachePortalCacheManagerConfiguration(
+					cacheConfigurationBuilder.build(), null,
+					Collections.emptySet());
+
+		ReflectionTestUtil.setFieldValue(
+			baseEhcachePortalCacheManager,
+			"_ehcachePortalCacheManagerConfiguration",
+			ehcachePortalCacheManagerConfiguration);
+
 		EhcachePortalCache<String, Object> ehcachePortalCache =
 			new EhcachePortalCache<>(
 				baseEhcachePortalCacheManager,
 				new EhcachePortalCacheConfiguration(
-					"SerializablePortalCache", null, true));
+					"SerializablePortalCache", null, Serializable.class,
+					Object.class, true));
 
 		Assert.assertTrue(ehcachePortalCache.isSerializable());
 
@@ -669,17 +770,14 @@ public class BaseEhcachePortalCacheTest {
 
 		int timeToLive = 600;
 
-		Ehcache ehcache = _ehcachePortalCache.getEhcache();
+		Cache<Object, Object> cache =
+			(Cache<Object, Object>)_ehcachePortalCache.getEhcache();
 
 		// Put
 
 		_ehcachePortalCache.put(_KEY_2, _VALUE_2, timeToLive);
 
-		Element element = ehcache.get(_KEY_2);
-
-		Assert.assertEquals(_KEY_2, element.getObjectKey());
-		Assert.assertEquals(_VALUE_2, element.getObjectValue());
-		Assert.assertEquals(timeToLive, element.getTimeToLive());
+		Assert.assertEquals(_VALUE_2, _ehcachePortalCache.get(_KEY_2));
 
 		_defaultPortalCacheListener.assertPut(_KEY_2, _VALUE_2, timeToLive);
 
@@ -691,15 +789,11 @@ public class BaseEhcachePortalCacheTest {
 
 		// Put if absent
 
-		ehcache.removeElement(element);
+		cache.remove(_KEY_2);
 
 		_ehcachePortalCache.putIfAbsent(_KEY_2, _VALUE_2, timeToLive);
 
-		element = ehcache.get(_KEY_2);
-
-		Assert.assertEquals(_KEY_2, element.getObjectKey());
-		Assert.assertEquals(_VALUE_2, element.getObjectValue());
-		Assert.assertEquals(timeToLive, element.getTimeToLive());
+		Assert.assertEquals(_VALUE_2, _ehcachePortalCache.get(_KEY_2));
 
 		_defaultPortalCacheListener.assertPut(_KEY_2, _VALUE_2, timeToLive);
 
@@ -711,15 +805,11 @@ public class BaseEhcachePortalCacheTest {
 
 		// Replace 1
 
-		ehcache.removeElement(element);
+		cache.remove(_KEY_2);
 
 		_ehcachePortalCache.replace(_KEY_1, _VALUE_2, timeToLive);
 
-		element = ehcache.get(_KEY_1);
-
-		Assert.assertEquals(_KEY_1, element.getObjectKey());
-		Assert.assertEquals(_VALUE_2, element.getObjectValue());
-		Assert.assertEquals(timeToLive, element.getTimeToLive());
+		Assert.assertEquals(_VALUE_2, _ehcachePortalCache.get(_KEY_1));
 
 		_defaultPortalCacheListener.assertUpdated(_KEY_1, _VALUE_2, timeToLive);
 
@@ -732,17 +822,13 @@ public class BaseEhcachePortalCacheTest {
 
 		// Replace 2
 
-		ehcache.removeElement(element);
+		cache.remove(_KEY_1);
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
 
 		_ehcachePortalCache.replace(_KEY_1, _VALUE_1, _VALUE_2, timeToLive);
 
-		element = ehcache.get(_KEY_1);
-
-		Assert.assertEquals(_KEY_1, element.getObjectKey());
-		Assert.assertEquals(_VALUE_2, element.getObjectValue());
-		Assert.assertEquals(timeToLive, element.getTimeToLive());
+		Assert.assertEquals(_VALUE_2, _ehcachePortalCache.get(_KEY_1));
 
 		_defaultPortalCacheListener.assertPut(_KEY_1, _VALUE_1);
 		_defaultPortalCacheListener.assertUpdated(_KEY_1, _VALUE_2, timeToLive);
@@ -756,58 +842,6 @@ public class BaseEhcachePortalCacheTest {
 		_defaultPortalCacheReplicator.reset();
 	}
 
-	private void _testGetPortalCache(boolean dbPartitionEnabled) {
-		BaseEhcachePortalCacheManager baseEhcachePortalCacheManager =
-			Mockito.spy(BaseEhcachePortalCacheManager.class);
-
-		try (MockedStatic<DBPartition> dbPartitionMockedStatic =
-				Mockito.mockStatic(DBPartition.class)) {
-
-			dbPartitionMockedStatic.when(
-				DBPartition::isPartitionEnabled
-			).thenReturn(
-				dbPartitionEnabled
-			);
-
-			Mockito.doReturn(
-				null
-			).when(
-				baseEhcachePortalCacheManager
-			).getPortalCache(
-				ArgumentMatchers.anyString(), ArgumentMatchers.anyBoolean(),
-				ArgumentMatchers.anyBoolean()
-			);
-
-			baseEhcachePortalCacheManager.getPortalCache(_PORTAL_CACHE_NAME);
-
-			ArgumentCaptor<Boolean> argumentCaptor = ArgumentCaptor.forClass(
-				Boolean.class);
-
-			Mockito.verify(
-				baseEhcachePortalCacheManager
-			).getPortalCache(
-				ArgumentMatchers.anyString(), ArgumentMatchers.anyBoolean(),
-				argumentCaptor.capture()
-			);
-
-			Assert.assertEquals(dbPartitionEnabled, argumentCaptor.getValue());
-
-			Mockito.clearInvocations(baseEhcachePortalCacheManager);
-
-			baseEhcachePortalCacheManager.getPortalCache(
-				_PORTAL_CACHE_NAME, false);
-
-			Mockito.verify(
-				baseEhcachePortalCacheManager
-			).getPortalCache(
-				ArgumentMatchers.anyString(), ArgumentMatchers.anyBoolean(),
-				argumentCaptor.capture()
-			);
-
-			Assert.assertEquals(dbPartitionEnabled, argumentCaptor.getValue());
-		}
-	}
-
 	private static final String _KEY_1 = "KEY_1";
 
 	private static final String _KEY_2 = "KEY_2";
@@ -818,12 +852,14 @@ public class BaseEhcachePortalCacheTest {
 
 	private static final String _VALUE_2 = "VALUE_2";
 
+	private static CacheConfigurationBuilder<Object, Object>
+		_cacheConfigurationBuilder;
 	private static CacheManager _cacheManager;
 
+	private Cache<Object, Object> _cache;
 	private TestPortalCacheListener<String, String> _defaultPortalCacheListener;
 	private TestPortalCacheReplicator<String, String>
 		_defaultPortalCacheReplicator;
-	private Ehcache _ehcache;
 	private EhcachePortalCache<String, String> _ehcachePortalCache;
 
 }

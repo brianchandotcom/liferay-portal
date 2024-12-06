@@ -28,7 +28,7 @@ CommerceAddressDisplayContext commerceAddressDisplayContext = (CommerceAddressDi
 							<liferay-template:template-selector
 								className="<%= CommerceAddressContentPortlet.class.getName() %>"
 								displayStyle="<%= commerceAddressDisplayContext.getDisplayStyle() %>"
-								displayStyleGroupId="<%= commerceAddressDisplayContext.getDisplayStyleGroupId() %>"
+								displayStyleGroupKey="<%= commerceAddressDisplayContext.getDisplayStyleGroupKey() %>"
 								refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
 								showEmptyOption="<%= true %>"
 							/>

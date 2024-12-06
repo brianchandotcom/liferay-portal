@@ -28,7 +28,7 @@ CommerceCartContentDisplayContext commerceCartContentDisplayContext = (CommerceC
 							<liferay-template:template-selector
 								className="<%= CommerceCartContentPortlet.class.getName() %>"
 								displayStyle="<%= commerceCartContentDisplayContext.getDisplayStyle() %>"
-								displayStyleGroupId="<%= commerceCartContentDisplayContext.getDisplayStyleGroupId() %>"
+								displayStyleGroupKey="<%= commerceCartContentDisplayContext.getDisplayStyleGroupKey() %>"
 								refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
 								showEmptyOption="<%= true %>"
 							/>

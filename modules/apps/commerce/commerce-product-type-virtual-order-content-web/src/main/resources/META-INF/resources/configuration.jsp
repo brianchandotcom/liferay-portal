@@ -28,7 +28,7 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 							<liferay-template:template-selector
 								className="<%= CommerceVirtualOrderItemContentPortlet.class.getName() %>"
 								displayStyle="<%= commerceVirtualOrderItemContentDisplayContext.getDisplayStyle() %>"
-								displayStyleGroupId="<%= commerceVirtualOrderItemContentDisplayContext.getDisplayStyleGroupId() %>"
+								displayStyleGroupKey="<%= commerceVirtualOrderItemContentDisplayContext.getDisplayStyleGroupKey() %>"
 								refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
 								showEmptyOption="<%= true %>"
 							/>

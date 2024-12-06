@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -80,7 +81,7 @@ public class CommerceCartContentMiniPortlet extends MVCPortlet {
 						_cpDefinitionHelper, _cpInstanceHelper,
 						_commerceOrderModelResourcePermission,
 						_commerceProductPortletResourcePermission,
-						_percentageFormatter,
+						_percentageFormatter, _groupLocalService,
 						_portal.getHttpServletRequest(renderRequest), _portal);
 
 			renderRequest.setAttribute(
@@ -131,6 +132,9 @@ public class CommerceCartContentMiniPortlet extends MVCPortlet {
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private PercentageFormatter _percentageFormatter;

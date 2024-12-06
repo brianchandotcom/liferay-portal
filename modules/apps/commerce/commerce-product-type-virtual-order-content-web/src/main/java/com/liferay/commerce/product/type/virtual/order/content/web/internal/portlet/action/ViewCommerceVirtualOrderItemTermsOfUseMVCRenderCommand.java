@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -55,7 +56,7 @@ public class ViewCommerceVirtualOrderItemTermsOfUseMVCRenderCommand
 						_commerceVirtualOrderItemFileEntryModelResourcePermission,
 						_cpDefinitionHelper,
 						_cpDefinitionVirtualSettingLocalService,
-						_cpInstanceHelper,
+						_cpInstanceHelper, _groupLocalService,
 						_portal.getHttpServletRequest(renderRequest));
 
 			renderRequest.setAttribute(
@@ -94,6 +95,9 @@ public class ViewCommerceVirtualOrderItemTermsOfUseMVCRenderCommand
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

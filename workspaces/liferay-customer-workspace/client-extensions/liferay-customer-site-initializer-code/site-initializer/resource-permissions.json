@@ -379,6 +379,24 @@
 	},
 	{
 		"actionIds": [
+			"VIEW_COMMERCE_ORDERS",
+			"VIEW_OPEN_COMMERCE_ORDERS"
+		],
+		"resourceName": "com.liferay.commerce.order",
+		"roleName": "Partner Manager",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW_COMMERCE_ORDERS",
+			"VIEW_OPEN_COMMERCE_ORDERS"
+		],
+		"resourceName": "com.liferay.commerce.order",
+		"roleName": "Partner Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
 			"VIEW_SITE_ADMINISTRATION"
 		],
 		"resourceName": "com.liferay.depot.model.DepotEntry",

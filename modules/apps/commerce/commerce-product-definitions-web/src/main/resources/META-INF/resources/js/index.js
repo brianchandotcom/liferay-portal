@@ -5,6 +5,7 @@
 
 export {default as EditDisplayLayout} from './EditDisplayLayout';
 export {default as InstanceDetails} from './InstanceDetails';
+export {default as accountGroups} from './accountGroups';
 export {default as accounts} from './accounts';
 export {default as addCpConfigurationList} from './addCpConfigurationList';
 export {default as addCpDefinition} from './addCpDefinition';

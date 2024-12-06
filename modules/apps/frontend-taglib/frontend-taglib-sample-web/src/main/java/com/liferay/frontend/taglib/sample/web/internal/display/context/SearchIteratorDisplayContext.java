@@ -46,7 +46,7 @@ public class SearchIteratorDisplayContext {
 				liferayPortletRequest, liferayPortletResponse),
 			null, "no-items-were-found");
 
-		searchContainer.setId("StringItemSearchContainer");
+		searchContainer.setId("stringItemSearchContainer");
 		searchContainer.setOrderByCol(
 			SearchOrderByUtil.getOrderByCol(
 				_renderRequest, SamplePortletKeys.SAMPLE_PORTLET,

@@ -14,6 +14,7 @@ CPConfigurationList cpConfigurationList = cpConfigurationListQualifiersDisplayCo
 
 String accountQualifiers = ParamUtil.getString(request, "accountQualifiers", cpConfigurationListQualifiersDisplayContext.getActiveAccountEligibility());
 String channelQualifiers = ParamUtil.getString(request, "channelQualifiers", cpConfigurationListQualifiersDisplayContext.getActiveChannelEligibility());
+String orderTypeQualifiers = ParamUtil.getString(request, "orderTypeQualifiers", cpConfigurationListQualifiersDisplayContext.getActiveOrderTypeEligibility());
 %>
 
 <portlet:actionURL name="/cp_configuration_lists/edit_cp_configuration_list_qualifiers" var="editCPConfigurationListQualifiersActionURL" />
@@ -75,6 +76,28 @@ String channelQualifiers = ParamUtil.getString(request, "channelQualifiers", cpC
 	<c:if test='<%= Objects.equals(channelQualifiers, "channels") %>'>
 		<%@ include file="/configuration_list/qualifier/channels.jspf" %>
 	</c:if>
+
+	<div class="row">
+		<div class="col-12">
+			<commerce-ui:panel
+				bodyClasses="flex-fill"
+				collapsed="<%= false %>"
+				collapsible="<%= false %>"
+				title='<%= LanguageUtil.get(request, "order-type-eligibility") %>'
+			>
+				<div class="row">
+					<aui:fieldset markupView="lexicon">
+						<aui:input checked='<%= Objects.equals(orderTypeQualifiers, "all") %>' label="all-order-types" name="qualifiers--orderType--" type="radio" value="all" />
+						<aui:input checked='<%= Objects.equals(orderTypeQualifiers, "orderTypes") %>' label="specific-order-types" name="qualifiers--orderType--" type="radio" value="orderTypes" />
+					</aui:fieldset>
+				</div>
+			</commerce-ui:panel>
+		</div>
+	</div>
+
+	<c:if test='<%= Objects.equals(orderTypeQualifiers, "orderTypes") %>'>
+		<%@ include file="/configuration_list/qualifier/order_types.jspf" %>
+	</c:if>
 </aui:form>
 
 <liferay-frontend:component
@@ -98,6 +121,19 @@ String channelQualifiers = ParamUtil.getString(request, "channelQualifiers", cpC
 			"searchParam", "channelQualifiers"
 		).put(
 			"selector", "qualifiers--channel--"
+		).build()
+	%>'
+	module="{qualifiers} from commerce-product-definitions-web"
+/>
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"currentURL", currentURL
+		).put(
+			"searchParam", "orderTypeQualifiers"
+		).put(
+			"selector", "qualifiers--orderType--"
 		).build()
 	%>'
 	module="{qualifiers} from commerce-product-definitions-web"

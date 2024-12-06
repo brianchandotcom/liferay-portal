@@ -63,6 +63,8 @@ public class FaroSubscriptionDisplay {
 			baseOSBOfferingEntry.getProductEntryId());
 		_startDate = baseOSBOfferingEntry.getStartDate();
 
+		_lastAnniversaryDate = _getLastAnniversaryDate(false, _startDate);
+
 		FaroSubscriptionPlan baseFaroSubscriptionPlan =
 			FaroSubscriptionConstants.getFaroSubscriptionPlanByProductEntryId(
 				baseOSBOfferingEntry.getProductEntryId());
@@ -182,7 +184,8 @@ public class FaroSubscriptionDisplay {
 
 		if (_lastAnniversaryDate == null) {
 			_lastAnniversaryDate = _getLastAnniversaryDate(
-				faroProject, _startDate);
+				_isBasicSubscription(faroProject.getSubscription()),
+				_startDate);
 		}
 
 		_syncedIndividualsCount =
@@ -230,7 +233,8 @@ public class FaroSubscriptionDisplay {
 
 		if (_lastAnniversaryDate == null) {
 			_lastAnniversaryDate = _getLastAnniversaryDate(
-				faroProject, _startDate);
+				_isBasicSubscription(faroProject.getSubscription()),
+				_startDate);
 		}
 
 		JSONObject subscriptionJSONObject = JSONFactoryUtil.createJSONObject(
@@ -363,10 +367,9 @@ public class FaroSubscriptionDisplay {
 	}
 
 	private Date _getLastAnniversaryDate(
-			FaroProject faroProject, Date startDate)
-		throws Exception {
+		boolean basicSubscription, Date startDate) {
 
-		if (_isBasicSubscription(faroProject.getSubscription())) {
+		if (basicSubscription) {
 			return new Date(startDate.getTime() / Time.DAY * Time.DAY);
 		}
 

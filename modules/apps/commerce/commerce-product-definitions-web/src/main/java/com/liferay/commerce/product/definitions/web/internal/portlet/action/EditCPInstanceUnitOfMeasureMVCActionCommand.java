@@ -7,10 +7,12 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.price.list.exception.CommercePriceEntryPriceException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPInstanceUnitOfMeasureIncrementalOrderQuantityException;
+import com.liferay.commerce.product.exception.CPInstanceUnitOfMeasurePriceException;
 import com.liferay.commerce.product.exception.CPInstanceUnitOfMeasureRateException;
 import com.liferay.commerce.product.exception.DuplicateCPInstanceUnitOfMeasureKeyException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -87,8 +89,10 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 			}
 		}
 		catch (Throwable throwable) {
-			if (throwable instanceof
+			if (throwable instanceof CommercePriceEntryPriceException ||
+				throwable instanceof
 					CPInstanceUnitOfMeasureIncrementalOrderQuantityException ||
+				throwable instanceof CPInstanceUnitOfMeasurePriceException ||
 				throwable instanceof CPInstanceUnitOfMeasureRateException ||
 				throwable instanceof
 					DuplicateCPInstanceUnitOfMeasureKeyException) {
@@ -158,7 +162,8 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 			actionRequest, "pricingQuantity");
 		boolean primary = ParamUtil.getBoolean(actionRequest, "primary");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
-		BigDecimal rate = _commercePriceFormatter.parse(actionRequest, "rate");
+		BigDecimal rate = _commercePriceFormatter.parse(
+			actionRequest, CPInstanceUnitOfMeasure.class.getName(), "rate");
 		String sku = ParamUtil.getString(actionRequest, "sku");
 
 		if (cpInstanceUnitOfMeasureId > 0) {
@@ -208,7 +213,7 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 			cpInstanceId);
 
 		BigDecimal basePrice = _commercePriceFormatter.parse(
-			actionRequest, "basePrice");
+			actionRequest, CommercePriceEntry.class.getName(), "basePrice");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstanceUnitOfMeasure.class.getName(), actionRequest);
@@ -220,7 +225,7 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 		}
 
 		BigDecimal promoPrice = _commercePriceFormatter.parse(
-			actionRequest, "promoPrice");
+			actionRequest, CommercePriceEntry.class.getName(), "promoPrice");
 
 		if (promoPrice != null) {
 			_updateCommercePriceEntry(

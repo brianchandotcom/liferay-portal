@@ -49,6 +49,8 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 
 	<aui:model-context bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" />
 
+	<liferay-ui:error exception="<%= CommerceDiscountAmountException.class %>" message="please-enter-a-valid-amount" />
+
 	<liferay-ui:error exception="<%= CommerceDiscountMaxPriceValueException.class %>">
 		<liferay-ui:message arguments="<%= CommercePriceConstants.PRICE_VALUE_MAX %>" key="price-max-value-is-x" />
 	</liferay-ui:error>

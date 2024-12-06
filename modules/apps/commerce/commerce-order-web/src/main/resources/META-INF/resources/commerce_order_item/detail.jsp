@@ -52,6 +52,8 @@ Date requestedDeliveryDate = commerceOrderItem.getRequestedDeliveryDate();
 			</c:if>
 		</liferay-ui:error>
 
+		<liferay-ui:error exception="<%= CommerceOrderItemPriceException.class %>" message="please-enter-a-valid-price" />
+
 		<aui:input name="decimalQuantity" type="quantity" value="<%= commerceOrderEditDisplayContext.getQuantity(commerceOrderItem) %>">
 			<aui:validator name="min">0</aui:validator>
 			<aui:validator name="number" />

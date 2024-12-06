@@ -154,6 +154,10 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	Extend a theme's CSS with CSS that uses a frontend-token-definition.json file.
 
+- *liferay-sample-theme-css-4*
+
+	Extend a theme's CSS that uses `styled` as its base theme and apply it to admin pages.
+
 - *liferay-sample-theme-favicon*
 
 	Replace a theme's favicon.

@@ -24,7 +24,7 @@
 							<liferay-template:template-selector
 								className="<%= CommerceOrderContentPortlet.class.getName() %>"
 								displayStyle="<%= commerceOrderContentDisplayContext.getDisplayStyle(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
-								displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
+								displayStyleGroupKey="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupKey(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
 								refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
 								showEmptyOption="<%= true %>"
 							/>

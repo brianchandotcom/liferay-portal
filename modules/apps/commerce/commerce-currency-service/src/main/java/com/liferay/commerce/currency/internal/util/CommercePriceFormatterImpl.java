@@ -12,11 +12,37 @@ import com.liferay.commerce.currency.configuration.RoundingTypeConfiguration;
 import com.liferay.commerce.currency.constants.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.discount.exception.CommerceDiscountAmountException;
+import com.liferay.commerce.discount.model.CommerceDiscount;
+import com.liferay.commerce.exception.CommerceOrderItemPriceException;
+import com.liferay.commerce.exception.CommerceOrderPriceException;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.payment.exception.CommercePaymentEntryAmountException;
+import com.liferay.commerce.payment.model.CommercePaymentEntry;
+import com.liferay.commerce.price.list.exception.CommercePriceEntryPriceException;
+import com.liferay.commerce.price.list.exception.CommerceTierPriceEntryPriceException;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.commerce.pricing.exception.CommercePriceModifierAmountException;
+import com.liferay.commerce.pricing.model.CommercePriceModifier;
+import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelPriceException;
+import com.liferay.commerce.product.exception.CPInstancePriceException;
+import com.liferay.commerce.product.exception.CPInstanceUnitOfMeasurePriceException;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
+import com.liferay.commerce.shipping.engine.fixed.exception.CommerceShippingFixedOptionAmountException;
+import com.liferay.commerce.shipping.engine.fixed.exception.CommerceShippingFixedOptionRelPriceException;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -25,6 +51,9 @@ import java.math.RoundingMode;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 
@@ -87,7 +116,8 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	}
 
 	@Override
-	public BigDecimal parse(ActionRequest actionRequest, String param)
+	public BigDecimal parse(
+			ActionRequest actionRequest, String className, String param)
 		throws Exception {
 
 		String price = ParamUtil.getString(
@@ -104,13 +134,43 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return new BigDecimal(parse(price, themeDisplay.getLocale()));
+		return new BigDecimal(
+			parse(className, price, themeDisplay.getLocale()));
 	}
 
 	@Override
-	public String parse(String price, Locale locale) throws Exception {
+	public String parse(String className, String price, Locale locale)
+		throws Exception {
+
 		if (Validator.isNull(price)) {
 			price = BigDecimal.ZERO.toString();
+		}
+
+		_validatePrice(className, price);
+
+		DecimalFormatSymbols decimalFormatSymbols =
+			DecimalFormatSymbols.getInstance(locale);
+
+		if (Objects.equals(
+				decimalFormatSymbols.getDecimalSeparator(), CharPool.PERIOD) &&
+			_validateCommaDecimalPattern(price)) {
+
+			price = StringUtil.replace(
+				price, CharPool.PERIOD, StringPool.BLANK);
+
+			price = StringUtil.replace(price, CharPool.COMMA, CharPool.PERIOD);
+		}
+		else if ((Objects.equals(
+					decimalFormatSymbols.getDecimalSeparator(),
+					CharPool.COMMA) ||
+				  Objects.equals(
+					  decimalFormatSymbols.getDecimalSeparator(),
+					  CharPool.ARABIC_DECIMAL_SEPARATOR)) &&
+				 _validatePeriodDecimalPattern(price)) {
+
+			price = StringUtil.replace(price, CharPool.COMMA, StringPool.BLANK);
+
+			price = StringUtil.replace(price, CharPool.PERIOD, CharPool.COMMA);
 		}
 
 		DecimalFormat decimalFormat = _getDecimalFormat(null, locale);
@@ -166,6 +226,91 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 		return decimalFormat;
 	}
+
+	private boolean _validateCommaDecimalPattern(String price) {
+		Matcher matcher = _commaDecimalPattern.matcher(price);
+
+		return matcher.find();
+	}
+
+	private boolean _validatePeriodDecimalPattern(String price) {
+		Matcher matcher = _periodDecimalPattern.matcher(price);
+
+		return matcher.find();
+	}
+
+	private void _validatePrice(String className, String price)
+		throws Exception {
+
+		if (Validator.isNotNull(className) &&
+			!_validateCommaDecimalPattern(price) &&
+			!_validatePeriodDecimalPattern(price)) {
+
+			if (Objects.equals(className, CommerceDiscount.class.getName())) {
+				throw new CommerceDiscountAmountException();
+			}
+			else if (Objects.equals(className, CommerceOrder.class.getName())) {
+				throw new CommerceOrderPriceException();
+			}
+			else if (Objects.equals(
+						className, CommerceOrderItem.class.getName())) {
+
+				throw new CommerceOrderItemPriceException();
+			}
+			else if (Objects.equals(
+						className, CommercePaymentEntry.class.getName())) {
+
+				throw new CommercePaymentEntryAmountException();
+			}
+			else if (Objects.equals(
+						className, CommercePriceEntry.class.getName())) {
+
+				throw new CommercePriceEntryPriceException();
+			}
+			else if (Objects.equals(
+						className, CommercePriceModifier.class.getName())) {
+
+				throw new CommercePriceModifierAmountException();
+			}
+			else if (Objects.equals(
+						className,
+						CommerceShippingFixedOption.class.getName())) {
+
+				throw new CommerceShippingFixedOptionAmountException();
+			}
+			else if (Objects.equals(
+						className,
+						CommerceShippingFixedOptionRel.class.getName())) {
+
+				throw new CommerceShippingFixedOptionRelPriceException();
+			}
+			else if (Objects.equals(
+						className, CommerceTierPriceEntry.class.getName())) {
+
+				throw new CommerceTierPriceEntryPriceException();
+			}
+			else if (Objects.equals(
+						className,
+						CPDefinitionOptionValueRel.class.getName())) {
+
+				throw new CPDefinitionOptionValueRelPriceException();
+			}
+			else if (Objects.equals(className, CPInstance.class.getName())) {
+				throw new CPInstancePriceException();
+			}
+			else if (Objects.equals(
+						className, CPInstanceUnitOfMeasure.class.getName())) {
+
+				throw new CPInstanceUnitOfMeasurePriceException();
+			}
+		}
+	}
+
+	private static final Pattern _commaDecimalPattern = Pattern.compile(
+		"^\\d{1,3}(?:\\.\\d{3})*(?:,\\d+)?$|^\\d+(?:,\\d+)?$");
+	private static final Pattern _periodDecimalPattern = Pattern.compile(
+		"((^\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?$)|(^\\d{1,2}(?:,\\d{2})*" +
+			"(?:,\\d{3})(?:\\.\\d+)?$))|^\\d+(?:\\.\\d+)?$");
 
 	private volatile RoundingTypeConfiguration _roundingTypeConfiguration;
 

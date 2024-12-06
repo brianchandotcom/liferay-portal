@@ -2100,7 +2100,7 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
-	public void testFillLabelMap() throws Exception {
+	public void testPopulateLabelMap() throws Exception {
 
 		// label map as null
 

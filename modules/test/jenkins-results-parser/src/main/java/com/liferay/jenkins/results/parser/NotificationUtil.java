@@ -66,6 +66,13 @@ public class NotificationUtil {
 		String recipientEmailAddress, String subject, String body,
 		String attachmentFileName, String mimeType) {
 
+		Thread thread = Thread.currentThread();
+
+		if (thread.getContextClassLoader() == null) {
+			thread.setContextClassLoader(
+				NotificationUtil.class.getClassLoader());
+		}
+
 		body = JenkinsResultsParserUtil.redact(body);
 		subject = JenkinsResultsParserUtil.redact(subject);
 

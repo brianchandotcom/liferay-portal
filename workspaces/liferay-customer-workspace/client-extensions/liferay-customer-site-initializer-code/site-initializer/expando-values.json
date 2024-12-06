@@ -103,7 +103,7 @@
 	},
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
-		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:securityAdvisoriesMenuItem#]",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:securityVulnerabilitiesMenuItem#]",
 		"columnName": "Menu Item Type",
 		"data": "Image"
 	},

@@ -91,15 +91,15 @@
 								"useNewTab": false
 							},
 							{
-								"externalReferenceCode": "securityAdvisoriesMenuItem",
+								"externalReferenceCode": "securityVulnerabilitiesMenuItem",
 								"name_i18n": {
-									"en_US": "Security Advisories",
-									"es_ES": "Avisos de seguridad",
-									"ja_JP": "セキュリティ情報",
-									"pt_BR": "Avisos de segurança"
+									"en_US": "Security Vulnerabilities",
+									"es_ES": "Vulnerabilidades de Seguridad",
+									"ja_JP": "セキュリティ脆弱性",
+									"pt_BR": "Vulnerabilidades de Segurança"
 								},
 								"type": "url",
-								"url": "/security-advisories",
+								"url": "/security-vulnerabilities",
 								"useNewTab": false
 							}
 						],

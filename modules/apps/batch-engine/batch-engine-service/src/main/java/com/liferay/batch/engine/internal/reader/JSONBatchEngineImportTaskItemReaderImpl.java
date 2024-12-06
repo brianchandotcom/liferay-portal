@@ -52,15 +52,15 @@ public class JSONBatchEngineImportTaskItemReaderImpl
 
 	@Override
 	public Map<String, Object> read() throws Exception {
-		if (_jsonParser.nextToken() == JsonToken.START_OBJECT) {
-			return _fieldNameFilter.apply(
-				_objectMapper.readValue(
-					_jsonParser,
-					new TypeReference<Map<String, Object>>() {
-					}));
+		if (_jsonParser.nextToken() != JsonToken.START_OBJECT) {
+			return null;
 		}
 
-		return null;
+		return _fieldNameFilter.apply(
+			_objectMapper.readValue(
+				_jsonParser,
+				new TypeReference<Map<String, Object>>() {
+				}));
 	}
 
 	private static final JsonFactory _jsonFactory = new JsonFactory();

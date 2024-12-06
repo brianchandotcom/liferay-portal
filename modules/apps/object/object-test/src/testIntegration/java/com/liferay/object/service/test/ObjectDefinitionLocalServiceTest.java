@@ -2371,14 +2371,13 @@ public class ObjectDefinitionLocalServiceTest {
 					objectDefinition.getScope(), objectDefinition.getStatus());
 
 			Assert.assertEquals(
-				defaultLanguageId, objectDefinition.getDefaultLanguageId());
-
-			Assert.assertEquals(
 				objectField.getObjectFieldId(),
 				objectDefinition.getDescriptionObjectFieldId());
 			Assert.assertEquals(
 				objectField.getObjectFieldId(),
 				objectDefinition.getTitleObjectFieldId());
+			Assert.assertEquals(
+				defaultLanguageId, objectDefinition.getDefaultLanguageId());
 		}
 		finally {
 			LocaleUtil.setDefault(

@@ -33,7 +33,7 @@ export class SamplePage {
 	async setupSampleWidget({site}) {
 		const widgetDefinition = getWidgetDefinition({
 			id: getRandomString(),
-			widgetName: 'com_liferay_sample_web_portlet_SamplePortlet',
+			widgetName: 'com_liferay_frontend_taglib_sample_web_portlet_SamplePortlet',
 		});
 
 		const layout = await this.apiHelpers.headlessDelivery.createSitePage({

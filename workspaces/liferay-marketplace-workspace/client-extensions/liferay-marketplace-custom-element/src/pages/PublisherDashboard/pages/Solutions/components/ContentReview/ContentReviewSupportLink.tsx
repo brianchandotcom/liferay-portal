@@ -47,7 +47,7 @@ export function ContentReviewSupportLink({
 			<div className="align-items-center bg-light d-flex justify-content-center mr-5 suport-link">
 				<ClayIcon symbol={symbol} />
 			</div>
-			<div>
+			<div className="text-truncate">
 				<p className="m-0">{linkLabel}</p>
 				<a href={getPrefixHref(href)} target="_blank">
 					<span className="bold h4 m-0 text-primary">{href}</span>

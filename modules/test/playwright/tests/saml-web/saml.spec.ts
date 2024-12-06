@@ -33,11 +33,13 @@ import {ServiceProviderConnectionsPage} from '../../pages/saml-web/ServiceProvid
 import {SiteSettingsPage} from '../../pages/site-admin-web/SiteSettingsPage';
 import {EditUserPage} from '../../pages/users-admin-web/EditUserPage';
 import {UsersAndOrganizationsPage} from '../../pages/users-admin-web/UsersAndOrganizationsPage';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout} from '../../utils/performLogin';
 import {reloadUntilVisible} from '../../utils/reloadUntilVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
+import {waitForLoading} from '../osb-faro-web/utils/loading';
 import {
 	TIdentityProvider,
 	configureIdentityProvider,
@@ -1375,6 +1377,123 @@ test('LPD-32210 AC1 TC5: Verify unsuccessful IdP initiated SSO with any redirect
 	await expect(await newPage.getByLabel('Email Address')).toBeVisible();
 
 	await expect(await newPage.url()).toContain(homeUrl);
+});
+
+test('LPD-32213 AC1 TC1: Verify SP initiated SSO from a restricted resource with prompt enabled redirects user back to resource after authentication.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create a user on the IdP instance
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// Create a new page on the SP Instance
+
+	const pagesAdminPage = new PagesAdminPage(spAdminPage);
+
+	await pagesAdminPage.goto();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: pageTitle,
+	});
+
+	// Remove guest view permission from new page
+
+	await pagesAdminPage.goto();
+
+	await pagesAdminPage.changePagesPermissions(
+		[pageTitle],
+		['guest_ACTION_VIEW']
+	);
+
+	const spNewPageUrl = DEFAULT_SP_URL + '/web/guest/' + pageTitle;
+
+	// Enable Prompt Enabled option
+
+	const siteSettingsPage = new SiteSettingsPage(spAdminPage);
+
+	await siteSettingsPage.goToSiteSetting('Login', 'Login');
+
+	await waitForLoading(siteSettingsPage.page);
+
+	await siteSettingsPage.page.getByLabel('Prompt Enabled').setChecked(true);
+
+	if (
+		await siteSettingsPage.page
+			.getByRole('button', {name: 'Save'})
+			.isVisible()
+	) {
+		await siteSettingsPage.page.getByRole('button', {name: 'Save'}).click();
+	}
+	else {
+		await siteSettingsPage.page
+			.getByRole('button', {name: 'Update'})
+			.click();
+	}
+
+	await waitForAlert(siteSettingsPage.page);
+
+	// Attempt to access resource as unauthenticated user
+
+	const newPage = await browser.newPage({
+		baseURL: DEFAULT_SP_URL,
+	});
+
+	await newPage.goto(spNewPageUrl);
+
+	// Verify redirected to IdP for authentication
+
+	await expect(await newPage.getByLabel('Email Address')).toBeVisible();
+
+	expect(await newPage.url()).toContain(DEFAULT_IDP_URL);
+
+	// Authenticate on IdP to finish SSO
+
+	await newPage.getByLabel('Email Address').fill(userAccount.emailAddress);
+	await newPage.getByLabel('Password').fill('test');
+	await newPage.getByRole('button', {name: 'Sign In'}).click();
+
+	// Verify user is logged in
+
+	await newPage.getByTitle('User Profile Menu').waitFor({timeout: 30 * 1000});
+
+	// Verify user is redirected back to restricted resource
+
+	expect(await newPage.url()).toContain(spNewPageUrl);
+
+	// Clear Prompt Enabled
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: siteSettingsPage.page.getByRole('link', {
+			name: 'Reset Default Values',
+		}),
+		trigger: siteSettingsPage.page.getByRole('button', {
+			name: 'Actions',
+		}),
+	});
+
+	await waitForAlert(siteSettingsPage.page);
 });
 
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({

@@ -43,6 +43,13 @@ public class CTScoreLocalServiceWrapper
 		return _ctScoreLocalService.addCTScore(ctScore);
 	}
 
+	@Override
+	public com.liferay.change.tracking.model.CTScore addCTScore(
+		long ctCollectionId) {
+
+		return _ctScoreLocalService.addCTScore(ctCollectionId);
+	}
+
 	/**
 	 * Creates a new ct score with the primary key. Does not add the ct score to the database.
 	 *
@@ -65,6 +72,14 @@ public class CTScoreLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctScoreLocalService.createPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTScore decrementScore(
+		long ctCollectionId, long modelClassNameId) {
+
+		return _ctScoreLocalService.decrementScore(
+			ctCollectionId, modelClassNameId);
 	}
 
 	/**
@@ -223,6 +238,14 @@ public class CTScoreLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.change.tracking.model.CTScore
+		fetchCTScoreByCTCollectionId(long ctCollectionId) {
+
+		return _ctScoreLocalService.fetchCTScoreByCTCollectionId(
+			ctCollectionId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -297,6 +320,14 @@ public class CTScoreLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctScoreLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTScore incrementScore(
+		long ctCollectionId, long modelClassNameId) {
+
+		return _ctScoreLocalService.incrementScore(
+			ctCollectionId, modelClassNameId);
 	}
 
 	/**

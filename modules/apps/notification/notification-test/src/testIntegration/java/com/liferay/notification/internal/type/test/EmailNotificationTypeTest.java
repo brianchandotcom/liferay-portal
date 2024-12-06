@@ -171,6 +171,17 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	public static void setUpClass() throws Exception {
 		BaseNotificationTypeTest.setUpClass();
 
+		_freeMarkerEngineConfiguration = _configurationAdmin.getConfiguration(
+			"com.liferay.portal.template.freemarker.configuration." +
+				"FreeMarkerEngineConfiguration",
+			StringPool.QUESTION);
+
+		ConfigurationTestUtil.saveConfiguration(
+			_freeMarkerEngineConfiguration,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"restrictedVariables", true
+			).build());
+
 		Bundle bundle = FrameworkUtil.getBundle(
 			EmailNotificationTypeTest.class);
 
@@ -183,30 +194,19 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				"type", TemplateContextContributor.TYPE_GLOBAL
 			).build());
 
-		_freeMarkerEngineConfiguration = _configurationAdmin.getConfiguration(
-			"com.liferay.portal.template.freemarker.configuration." +
-				"FreeMarkerEngineConfiguration",
-			StringPool.QUESTION);
-
-		ConfigurationTestUtil.saveConfiguration(
-			_freeMarkerEngineConfiguration,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"restrictedVariables", true
-			).build());
-
 		_pushServiceContext();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		ServiceContextThreadLocal.popServiceContext();
+		ConfigurationTestUtil.deleteConfiguration(
+			_freeMarkerEngineConfiguration);
 
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
 
-		ConfigurationTestUtil.deleteConfiguration(
-			_freeMarkerEngineConfiguration);
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Before

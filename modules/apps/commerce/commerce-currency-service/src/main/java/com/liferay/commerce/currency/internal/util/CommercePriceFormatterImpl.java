@@ -242,67 +242,69 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	private void _validatePrice(String className, String price)
 		throws Exception {
 
-		if (Validator.isNotNull(className) &&
-			!_hasCommaDecimalPattern(price) &&
-			!_hasPeriodDecimalPattern(price)) {
+		if (Validator.isNull(className) ||
+			_hasCommaDecimalPattern(price) ||
+			_hasPeriodDecimalPattern(price)) {
 
-			if (Objects.equals(className, CommerceDiscount.class.getName())) {
-				throw new CommerceDiscountAmountException();
-			}
-			else if (Objects.equals(className, CommerceOrder.class.getName())) {
-				throw new CommerceOrderPriceException();
-			}
-			else if (Objects.equals(
-						className, CommerceOrderItem.class.getName())) {
+			return;
+		}
 
-				throw new CommerceOrderItemPriceException();
-			}
-			else if (Objects.equals(
-						className, CommercePaymentEntry.class.getName())) {
+		if (Objects.equals(className, CommerceDiscount.class.getName())) {
+			throw new CommerceDiscountAmountException();
+		}
+		else if (Objects.equals(className, CommerceOrder.class.getName())) {
+			throw new CommerceOrderPriceException();
+		}
+		else if (Objects.equals(
+					className, CommerceOrderItem.class.getName())) {
 
-				throw new CommercePaymentEntryAmountException();
-			}
-			else if (Objects.equals(
-						className, CommercePriceEntry.class.getName())) {
+			throw new CommerceOrderItemPriceException();
+		}
+		else if (Objects.equals(
+					className, CommercePaymentEntry.class.getName())) {
 
-				throw new CommercePriceEntryPriceException();
-			}
-			else if (Objects.equals(
-						className, CommercePriceModifier.class.getName())) {
+			throw new CommercePaymentEntryAmountException();
+		}
+		else if (Objects.equals(
+					className, CommercePriceEntry.class.getName())) {
 
-				throw new CommercePriceModifierAmountException();
-			}
-			else if (Objects.equals(
-						className,
-						CommerceShippingFixedOption.class.getName())) {
+			throw new CommercePriceEntryPriceException();
+		}
+		else if (Objects.equals(
+					className, CommercePriceModifier.class.getName())) {
 
-				throw new CommerceShippingFixedOptionAmountException();
-			}
-			else if (Objects.equals(
-						className,
-						CommerceShippingFixedOptionRel.class.getName())) {
+			throw new CommercePriceModifierAmountException();
+		}
+		else if (Objects.equals(
+					className,
+					CommerceShippingFixedOption.class.getName())) {
 
-				throw new CommerceShippingFixedOptionRelPriceException();
-			}
-			else if (Objects.equals(
-						className, CommerceTierPriceEntry.class.getName())) {
+			throw new CommerceShippingFixedOptionAmountException();
+		}
+		else if (Objects.equals(
+					className,
+					CommerceShippingFixedOptionRel.class.getName())) {
 
-				throw new CommerceTierPriceEntryPriceException();
-			}
-			else if (Objects.equals(
-						className,
-						CPDefinitionOptionValueRel.class.getName())) {
+			throw new CommerceShippingFixedOptionRelPriceException();
+		}
+		else if (Objects.equals(
+					className, CommerceTierPriceEntry.class.getName())) {
 
-				throw new CPDefinitionOptionValueRelPriceException();
-			}
-			else if (Objects.equals(className, CPInstance.class.getName())) {
-				throw new CPInstancePriceException();
-			}
-			else if (Objects.equals(
-						className, CPInstanceUnitOfMeasure.class.getName())) {
+			throw new CommerceTierPriceEntryPriceException();
+		}
+		else if (Objects.equals(
+					className,
+					CPDefinitionOptionValueRel.class.getName())) {
 
-				throw new CPInstanceUnitOfMeasurePriceException();
-			}
+			throw new CPDefinitionOptionValueRelPriceException();
+		}
+		else if (Objects.equals(className, CPInstance.class.getName())) {
+			throw new CPInstancePriceException();
+		}
+		else if (Objects.equals(
+					className, CPInstanceUnitOfMeasure.class.getName())) {
+
+			throw new CPInstanceUnitOfMeasurePriceException();
 		}
 	}
 

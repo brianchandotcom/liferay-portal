@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "com.liferay", name: "net.sf.ehcache", version: "2.10.6.LIFERAY-PATCHED-2"
+	compileInclude group: "org.ehcache", name: "ehcache", version: "3.10.8"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "javax.xml.bind", name: "jaxb-api", version: "2.3.0"

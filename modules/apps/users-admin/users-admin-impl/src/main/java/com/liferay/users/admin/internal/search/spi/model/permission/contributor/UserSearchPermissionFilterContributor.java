@@ -48,7 +48,7 @@ public class UserSearchPermissionFilterContributor
 		}
 
 		_addManagedOrganizationUsersFilter(booleanFilter, permissionChecker);
-		_addOwnedUsersFilter(booleanFilter, userId);
+		_addOwnedUsersFilter(booleanFilter, permissionChecker, userId);
 	}
 
 	private void _addManagedOrganizationUsersFilter(
@@ -82,25 +82,33 @@ public class UserSearchPermissionFilterContributor
 	}
 
 	private void _addOwnedUsersFilter(
-		BooleanFilter booleanFilter, long userId) {
+		BooleanFilter booleanFilter, PermissionChecker permissionChecker,
+		long userId) {
 
 		TermsFilter termsFilter = new TermsFilter(Field.ENTRY_CLASS_PK);
 
-		List<Contact> contacts = _contactLocalService.dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
-				ContactTable.INSTANCE
-			).from(
-				ContactTable.INSTANCE
-			).where(
-				ContactTable.INSTANCE.classNameId.eq(
-					_portal.getClassNameId(User.class)
-				).and(
-					ContactTable.INSTANCE.userId.eq(userId)
-				)
-			));
+		User user = permissionChecker.getUser();
 
-		for (Contact contact : contacts) {
-			termsFilter.addValue(String.valueOf(contact.getClassPK()));
+		if ((userId == 0) || user.isGuestUser()) {
+			termsFilter.addValue(String.valueOf(userId));
+		}
+		else {
+			List<Contact> contacts = _contactLocalService.dslQuery(
+				DSLQueryFactoryUtil.selectDistinct(
+					ContactTable.INSTANCE
+				).from(
+					ContactTable.INSTANCE
+				).where(
+					ContactTable.INSTANCE.classNameId.eq(
+						_portal.getClassNameId(User.class)
+					).and(
+						ContactTable.INSTANCE.userId.eq(userId)
+					)
+				));
+
+			for (Contact contact : contacts) {
+				termsFilter.addValue(String.valueOf(contact.getClassPK()));
+			}
 		}
 
 		if (!termsFilter.isEmpty()) {

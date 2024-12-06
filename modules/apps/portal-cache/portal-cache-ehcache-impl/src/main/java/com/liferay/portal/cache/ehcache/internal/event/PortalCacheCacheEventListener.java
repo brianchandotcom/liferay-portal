@@ -113,24 +113,6 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	}
 
 	@Override
-	public void onRemoval(Object key, Object value) {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Removed ", _getKey(key), " from ",
-					_portalCache.getPortalCacheName()));
-		}
-
-		if (_aggregatedPortalCacheListener.isEmpty()) {
-			return;
-		}
-
-		_aggregatedPortalCacheListener.notifyEntryRemoved(
-			_portalCache, _getKey(key), _getValue(value),
-			_getTimeToLive(value));
-	}
-
-	@Override
 	public void onUpdate(Object key, Object oldValue, Object newValue) {
 		if (_log.isDebugEnabled()) {
 			_log.debug(

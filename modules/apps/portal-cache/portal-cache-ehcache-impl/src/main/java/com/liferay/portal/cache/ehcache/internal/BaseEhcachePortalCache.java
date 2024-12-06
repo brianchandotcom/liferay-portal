@@ -5,10 +5,15 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.BasePortalCache;
+import com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener;
 import com.liferay.portal.cache.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.Serializable;
 
@@ -41,6 +46,9 @@ public abstract class BaseEhcachePortalCache<K extends Serializable, V>
 		_portalCacheName = ehcachePortalCacheConfiguration.getPortalCacheName();
 		_serializable =
 			ehcachePortalCacheConfiguration.isRequireSerialization();
+		_log = LogFactoryUtil.getLog(
+			PortalCacheCacheEventListener.class.getName() + StringPool.PERIOD +
+				_portalCacheName);
 	}
 
 	@Override
@@ -83,6 +91,12 @@ public abstract class BaseEhcachePortalCache<K extends Serializable, V>
 		Cache<?, ?> cache = getEhcache();
 
 		cache.clear();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Cleared " + getPortalCacheName());
+		}
+
+		aggregatedPortalCacheListener.notifyRemoveAll(this);
 	}
 
 	protected abstract void dispose();
@@ -113,15 +127,39 @@ public abstract class BaseEhcachePortalCache<K extends Serializable, V>
 	protected void doRemove(K key) {
 		Cache<Object, Object> cache = (Cache<Object, Object>)getEhcache();
 
-		cache.remove(_wrapKey(key));
+		Object wrappedKey = _wrapKey(key);
+
+		V value = _getValue(cache.get(wrappedKey));
+
+		cache.remove(wrappedKey);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Removed ", key, " from ", getPortalCacheName()));
+		}
+
+		aggregatedPortalCacheListener.notifyEntryRemoved(
+			this, key, value, DEFAULT_TIME_TO_LIVE);
 	}
 
 	@Override
 	protected boolean doRemove(K key, V value) {
 		Cache<Object, Object> cache = (Cache<Object, Object>)getEhcache();
 
-		return cache.remove(
+		boolean removed = cache.remove(
 			_wrapKey(key), _wrapValue(value, DEFAULT_TIME_TO_LIVE));
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Removed ", key, " from ", getPortalCacheName()));
+		}
+
+		aggregatedPortalCacheListener.notifyEntryRemoved(
+			this, key, value, DEFAULT_TIME_TO_LIVE);
+
+		return removed;
 	}
 
 	@Override
@@ -192,6 +230,7 @@ public abstract class BaseEhcachePortalCache<K extends Serializable, V>
 		return new EhcacheValue(value, duration);
 	}
 
+	private final Log _log;
 	private final String _portalCacheName;
 	private final boolean _serializable;
 

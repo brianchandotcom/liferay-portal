@@ -25,15 +25,18 @@ import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -62,6 +65,7 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 			CPDefinitionVirtualSettingLocalService
 				cpDefinitionVirtualSettingLocalService,
 			CPInstanceHelper cpInstanceHelper,
+			GroupLocalService groupLocalService,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -74,6 +78,7 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 		_cpDefinitionVirtualSettingLocalService =
 			cpDefinitionVirtualSettingLocalService;
 		_cpInstanceHelper = cpInstanceHelper;
+		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
 
 		_commerceVirtualOrderItemContentRequestHelper =
@@ -171,20 +176,63 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 	}
 
 	public long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId > 0) {
+		if (_displayStyleGroupId != null) {
 			return _displayStyleGroupId;
 		}
 
-		_displayStyleGroupId =
+		String displayStyleGroupExternalReferenceCode =
 			_commerceVirtualOrderItemContentPortletInstanceConfiguration.
-				displayStyleGroupId();
+				displayStyleGroupExternalReferenceCode();
 
-		if (_displayStyleGroupId <= 0) {
-			_displayStyleGroupId =
-				_commerceVirtualOrderItemContentRequestHelper.getScopeGroupId();
+		ThemeDisplay themeDisplay =
+			_commerceVirtualOrderItemContentRequestHelper.getThemeDisplay();
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				themeDisplay.getCompanyId());
+		}
+
+		if (group != null) {
+			_displayStyleGroupId = group.getGroupId();
+		}
+		else {
+			_displayStyleGroupId = themeDisplay.getScopeGroupId();
 		}
 
 		return _displayStyleGroupId;
+	}
+
+	public String getDisplayStyleGroupKey() {
+		if (Validator.isNotNull(_displayStyleGroupKey)) {
+			return _displayStyleGroupKey;
+		}
+
+		String displayStyleGroupExternalReferenceCode =
+			_commerceVirtualOrderItemContentPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
+
+		ThemeDisplay themeDisplay =
+			_commerceVirtualOrderItemContentRequestHelper.getThemeDisplay();
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				themeDisplay.getCompanyId());
+		}
+
+		if (group != null) {
+			_displayStyleGroupKey = group.getGroupKey();
+		}
+		else {
+			_displayStyleGroupKey = StringPool.BLANK;
+		}
+
+		return _displayStyleGroupKey;
 	}
 
 	public ResourceURL getDownloadResourceURL(
@@ -379,7 +427,9 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 	private final CPDefinitionVirtualSettingLocalService
 		_cpDefinitionVirtualSettingLocalService;
 	private final CPInstanceHelper _cpInstanceHelper;
-	private long _displayStyleGroupId;
+	private Long _displayStyleGroupId;
+	private String _displayStyleGroupKey;
+	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer<CommerceVirtualOrderItem> _searchContainer;
 

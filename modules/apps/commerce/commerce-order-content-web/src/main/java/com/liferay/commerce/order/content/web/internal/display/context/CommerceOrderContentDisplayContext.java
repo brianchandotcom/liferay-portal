@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -86,6 +87,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -147,6 +149,7 @@ public class CommerceOrderContentDisplayContext {
 			CommerceTermEntryService commerceTermEntryService,
 			ConfigurationProvider configurationProvider,
 			DLAppLocalService dlAppLocalService,
+			GroupLocalService groupLocalService,
 			HttpServletRequest httpServletRequest, ItemSelector itemSelector,
 			ModelResourcePermission<CommerceOrder> modelResourcePermission,
 			PercentageFormatter percentageFormatter,
@@ -172,6 +175,7 @@ public class CommerceOrderContentDisplayContext {
 		_commerceTermEntryService = commerceTermEntryService;
 		_configurationProvider = configurationProvider;
 		_dlAppLocalService = dlAppLocalService;
+		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
 		_itemSelector = itemSelector;
 		_modelResourcePermission = modelResourcePermission;
@@ -203,6 +207,8 @@ public class CommerceOrderContentDisplayContext {
 
 		_commerceOrderNoteId = ParamUtil.getLong(
 			httpServletRequest, "commerceOrderNoteId");
+
+		_group = _themeDisplay.getScopeGroup();
 	}
 
 	public CommerceChannel fetchCommerceChannel() {
@@ -570,6 +576,12 @@ public class CommerceOrderContentDisplayContext {
 	public long getDisplayStyleGroupId(String portletId)
 		throws ConfigurationException {
 
+		if (_displayStyleGroupId != null) {
+			return _displayStyleGroupId;
+		}
+
+		String displayStyleGroupExternalReferenceCode;
+
 		if (Validator.isNull(portletId)) {
 			return _cpRequestHelper.getScopeGroupId();
 		}
@@ -583,8 +595,24 @@ public class CommerceOrderContentDisplayContext {
 							class,
 						_themeDisplay);
 
-			return openCommerceOrderContentPortletInstanceConfiguration.
-				displayStyleGroupId();
+			displayStyleGroupExternalReferenceCode =
+				openCommerceOrderContentPortletInstanceConfiguration.
+					displayStyleGroupExternalReferenceCode();
+
+			if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+				_group = _groupLocalService.fetchGroupByExternalReferenceCode(
+					displayStyleGroupExternalReferenceCode,
+					_themeDisplay.getCompanyId());
+			}
+
+			if (_group != null) {
+				_displayStyleGroupId = _group.getGroupId();
+			}
+			else {
+				_displayStyleGroupId = _themeDisplay.getScopeGroupId();
+			}
+
+			return _displayStyleGroupId;
 		}
 		else if (portletId.equals(CommercePortletKeys.COMMERCE_ORDER_CONTENT)) {
 			CommerceOrderContentPortletInstanceConfiguration
@@ -593,11 +621,89 @@ public class CommerceOrderContentDisplayContext {
 						CommerceOrderContentPortletInstanceConfiguration.class,
 						_themeDisplay);
 
-			return commerceOrderContentPortletInstanceConfiguration.
-				displayStyleGroupId();
+			displayStyleGroupExternalReferenceCode =
+				commerceOrderContentPortletInstanceConfiguration.
+					displayStyleGroupExternalReferenceCode();
+
+			if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+				_group = _groupLocalService.fetchGroupByExternalReferenceCode(
+					displayStyleGroupExternalReferenceCode,
+					_themeDisplay.getCompanyId());
+			}
+
+			if (_group != null) {
+				_displayStyleGroupId = _group.getGroupId();
+			}
+			else {
+				_displayStyleGroupId = _themeDisplay.getScopeGroupId();
+			}
+
+			return _displayStyleGroupId;
 		}
 
 		return _cpRequestHelper.getScopeGroupId();
+	}
+
+	public String getDisplayStyleGroupKey(String portletId)
+		throws ConfigurationException {
+
+		if (Validator.isNotNull(_displayStyleGroupKey)) {
+			return _displayStyleGroupKey;
+		}
+
+		String displayStyleGroupExternalReferenceCode;
+
+		if (portletId.equals(CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)) {
+			OpenCommerceOrderContentPortletInstanceConfiguration
+				openCommerceOrderContentPortletInstanceConfiguration =
+					_configurationProvider.getPortletInstanceConfiguration(
+						OpenCommerceOrderContentPortletInstanceConfiguration.
+							class,
+						_themeDisplay);
+
+			displayStyleGroupExternalReferenceCode =
+				openCommerceOrderContentPortletInstanceConfiguration.
+					displayStyleGroupExternalReferenceCode();
+
+			if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+				_group = _groupLocalService.fetchGroupByExternalReferenceCode(
+					displayStyleGroupExternalReferenceCode,
+					_themeDisplay.getCompanyId());
+			}
+
+			if (_group != null) {
+				_displayStyleGroupKey = _group.getGroupKey();
+			}
+			else {
+				_displayStyleGroupKey = StringPool.BLANK;
+			}
+		}
+		else if (portletId.equals(CommercePortletKeys.COMMERCE_ORDER_CONTENT)) {
+			CommerceOrderContentPortletInstanceConfiguration
+				commerceOrderContentPortletInstanceConfiguration =
+					_configurationProvider.getPortletInstanceConfiguration(
+						CommerceOrderContentPortletInstanceConfiguration.class,
+						_themeDisplay);
+
+			displayStyleGroupExternalReferenceCode =
+				commerceOrderContentPortletInstanceConfiguration.
+					displayStyleGroupExternalReferenceCode();
+
+			if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+				_group = _groupLocalService.fetchGroupByExternalReferenceCode(
+					displayStyleGroupExternalReferenceCode,
+					_themeDisplay.getCompanyId());
+			}
+
+			if (_group != null) {
+				_displayStyleGroupKey = _group.getGroupKey();
+			}
+			else {
+				_displayStyleGroupKey = StringPool.BLANK;
+			}
+		}
+
+		return _displayStyleGroupKey;
 	}
 
 	public List<DropdownItem> getDropdownItems() throws Exception {
@@ -1410,7 +1516,11 @@ public class CommerceOrderContentDisplayContext {
 	private final CommerceTermEntryService _commerceTermEntryService;
 	private final ConfigurationProvider _configurationProvider;
 	private final CPRequestHelper _cpRequestHelper;
+	private Long _displayStyleGroupId;
+	private String _displayStyleGroupKey;
 	private final DLAppLocalService _dlAppLocalService;
+	private Group _group;
+	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private final ModelResourcePermission<CommerceOrder>

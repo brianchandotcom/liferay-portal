@@ -146,17 +146,19 @@ public class JSR330BeanPortletPostProcessor
 
 		Annotation[] annotations = accessibleObject.getAnnotations();
 
-		if (annotations.length > 0) {
-			for (Class<? extends Annotation> autowiredAnnotationType :
-					_autowiredAnnotationTypes) {
+		if (annotations.length <= 0) {
+			return null;
+		}
 
-				AnnotationAttributes mergedAnnotationAttributes =
-					AnnotatedElementUtils.getMergedAnnotationAttributes(
-						accessibleObject, autowiredAnnotationType);
+		for (Class<? extends Annotation> autowiredAnnotationType :
+				_autowiredAnnotationTypes) {
 
-				if (mergedAnnotationAttributes != null) {
-					return mergedAnnotationAttributes;
-				}
+			AnnotationAttributes mergedAnnotationAttributes =
+				AnnotatedElementUtils.getMergedAnnotationAttributes(
+					accessibleObject, autowiredAnnotationType);
+
+			if (mergedAnnotationAttributes != null) {
+				return mergedAnnotationAttributes;
 			}
 		}
 

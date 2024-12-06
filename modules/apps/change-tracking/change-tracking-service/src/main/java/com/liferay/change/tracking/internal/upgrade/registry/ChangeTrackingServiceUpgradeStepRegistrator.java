@@ -138,6 +138,11 @@ public class ChangeTrackingServiceUpgradeStepRegistrator
 		registry.register(
 			"2.12.3", "2.12.4",
 			new CTProcessResourceUpgradeProcess(_resourceLocalService));
+
+		registry.register(
+			"2.12.4", "2.13.0",
+			new com.liferay.change.tracking.internal.upgrade.v2_13_0.
+				SchemaUpgradeProcess());
 	}
 
 	@Reference

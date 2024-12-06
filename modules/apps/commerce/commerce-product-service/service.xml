@@ -369,6 +369,11 @@
 			<finder-column name="classPK" />
 			<finder-column name="CPConfigurationListId" />
 		</finder>
+		<finder name="C_C_V" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="visible" />
+		</finder>
 	</entity>
 	<entity external-reference-code="company" local-service="true" name="CPConfigurationList" remote-service="true" uuid="true">
 

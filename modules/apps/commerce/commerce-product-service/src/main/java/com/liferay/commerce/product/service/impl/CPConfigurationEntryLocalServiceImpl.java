@@ -135,6 +135,14 @@ public class CPConfigurationEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CPConfigurationEntry> getCPConfigurationEntries(
+		long classNameId, long classPK, boolean visible) {
+
+		return cpConfigurationEntryPersistence.findByC_C_V(
+			classNameId, classPK, visible);
+	}
+
+	@Override
 	public CPConfigurationEntry getCPConfigurationEntry(
 			long classNameId, long classPK, long cpConfigurationListId)
 		throws PortalException {

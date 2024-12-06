@@ -6,6 +6,7 @@
 package com.liferay.analytics.machine.learning.internal.dispatch.executor;
 
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.AnalyticsMostViewedContentRecommendation;
+import com.liferay.analytics.machine.learning.internal.recommendation.constants.RecommendationConstants;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
@@ -74,6 +75,11 @@ public class
 	@Override
 	public String getName() {
 		return KEY;
+	}
+
+	@Override
+	protected int getRecommendationCode() {
+		return RecommendationConstants.MOST_VIEWED_CONTENT_RECOMMENDATION_CODE;
 	}
 
 }

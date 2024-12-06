@@ -101,13 +101,13 @@ test('Cannot publish empty ctCollection', async ({
 
 	await changeTrackingPage.workOnPublication(ctCollection);
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	await page.reload();
 
 	await page.getByRole('link', {name: 'Publish'}).click();
 
-	await expect(page.getByText('Publish: ' + ctCollection.name)).toBeVisible();
+	await expect(page.getByText('Publish: ' + ctCollection.body.name)).toBeVisible();
 
 	await page
 		.locator('li')
@@ -211,11 +211,11 @@ test('Publish Parallel Publications', async ({
 	await waitForAlert(page, `Success:${title2} was created successfully.`);
 
 	await apiHelpers.headlessChangeTracking.publishCTCollection(
-		ctCollection.id
+		ctCollection.body.id
 	);
 
 	await apiHelpers.headlessChangeTracking.publishCTCollection(
-		ctCollection2.id
+		ctCollection2.body.id
 	);
 
 	await journalPage.goto(site.friendlyUrlPath);
@@ -245,7 +245,7 @@ test('LPD-33274 Disable Publish button after first click', async ({
 		titleMap: {en_US: title},
 	});
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	await page.getByRole('link', {name: 'Publish'}).click();
 

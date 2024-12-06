@@ -105,7 +105,7 @@ test('LPD-39341 Sandbox mode allows users to work on production without permissi
 	await changeTrackingPage.workOnPublication(ctCollection);
 
 	await apiHelpers.headlessChangeTracking.publishCTCollection(
-		ctCollection.id
+		ctCollection.body.id
 	);
 
 	await page.reload();

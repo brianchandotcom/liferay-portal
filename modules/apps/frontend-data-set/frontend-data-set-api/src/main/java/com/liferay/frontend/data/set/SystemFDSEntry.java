@@ -5,6 +5,8 @@
 
 package com.liferay.frontend.data.set;
 
+import com.liferay.portal.util.PropsValues;
+
 /**
  * @author Daniel Sanz
  */
@@ -13,10 +15,14 @@ public interface SystemFDSEntry {
 	public String getAdditionalAPIURLParameters();
 
 	public default int getDefaultItemsPerPage() {
-		return 10;
+		return PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA;
 	}
 
 	public String getDescription();
+
+	public default int[] getListOfItemsPerPage() {
+		return PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES;
+	}
 
 	public String getName();
 

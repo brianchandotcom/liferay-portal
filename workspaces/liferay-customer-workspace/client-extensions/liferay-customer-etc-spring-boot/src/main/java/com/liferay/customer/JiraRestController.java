@@ -275,9 +275,17 @@ public class JiraRestController extends BaseRestController {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			String fieldValue = jsonObject.getString("name");
+			String name = jsonObject.optString("name");
 
-			flattenedJSONArray.put(fieldValue);
+			if (Validator.isNotNull(name)) {
+				flattenedJSONArray.put(name);
+			}
+
+			String value = jsonObject.optString("value");
+
+			if (Validator.isNotNull(value)) {
+				flattenedJSONArray.put(value);
+			}
 		}
 
 		return flattenedJSONArray;
@@ -472,8 +480,8 @@ public class JiraRestController extends BaseRestController {
 				issueFieldsJSONObject.getJSONArray(_FIELD_VERSIONS))
 		).put(
 			"category",
-			_getJSONObjectFieldValue(
-				issueFieldsJSONObject.optJSONObject(
+			_flattenJSONArray(
+				issueFieldsJSONObject.optJSONArray(
 					_jiraSecurityVulnerabilityFieldCategory))
 		).put(
 			"components",

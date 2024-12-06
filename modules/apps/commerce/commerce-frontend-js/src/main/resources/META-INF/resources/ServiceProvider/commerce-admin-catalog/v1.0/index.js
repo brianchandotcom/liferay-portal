@@ -6,5 +6,6 @@
 export {default as optionAPI} from './Option';
 export {default as productAPI} from './Product';
 export {default as productConfigurationListAPI} from './ProductConfigurationList';
+export {default as productConfigurationListAccountAPI} from './ProductConfigurationListAccount';
 export {default as productGroupsAPI} from './ProductGroups';
 export {default as specificationAPI} from './Specification';

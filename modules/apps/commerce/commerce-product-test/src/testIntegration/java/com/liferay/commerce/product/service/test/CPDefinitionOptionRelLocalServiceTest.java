@@ -89,6 +89,7 @@ public class CPDefinitionOptionRelLocalServiceTest {
 		}
 
 		_cpOptionLocalService.deleteCPOptions(_serviceContext.getCompanyId());
+
 		_serviceContext = null;
 	}
 

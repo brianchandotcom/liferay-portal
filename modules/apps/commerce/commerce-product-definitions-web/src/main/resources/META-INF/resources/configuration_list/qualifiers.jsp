@@ -13,6 +13,7 @@ CPConfigurationListQualifiersDisplayContext cpConfigurationListQualifiersDisplay
 CPConfigurationList cpConfigurationList = cpConfigurationListQualifiersDisplayContext.getCPConfigurationList();
 
 String accountQualifiers = ParamUtil.getString(request, "accountQualifiers", cpConfigurationListQualifiersDisplayContext.getActiveAccountEligibility());
+String channelQualifiers = ParamUtil.getString(request, "channelQualifiers", cpConfigurationListQualifiersDisplayContext.getActiveChannelEligibility());
 %>
 
 <portlet:actionURL name="/cp_configuration_lists/edit_cp_configuration_list_qualifiers" var="editCPConfigurationListQualifiersActionURL" />
@@ -21,6 +22,7 @@ String accountQualifiers = ParamUtil.getString(request, "accountQualifiers", cpC
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpConfigurationList == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="accountQualifiers" type="hidden" value="<%= accountQualifiers %>" />
+	<aui:input name="channelQualifiers" type="hidden" value="<%= channelQualifiers %>" />
 	<aui:input name="cpConfigurationListId" type="hidden" value="<%= cpConfigurationListQualifiersDisplayContext.getCPConfigurationListId() %>" />
 
 	<aui:model-context bean="<%= cpConfigurationList %>" model="<%= CPConfigurationList.class %>" />
@@ -51,6 +53,28 @@ String accountQualifiers = ParamUtil.getString(request, "accountQualifiers", cpC
 	<c:if test='<%= Objects.equals(accountQualifiers, "accountGroups") %>'>
 		<%@ include file="/configuration_list/qualifier/account_groups.jspf" %>
 	</c:if>
+
+	<div class="row">
+		<div class="col-12">
+			<commerce-ui:panel
+				bodyClasses="flex-fill"
+				collapsed="<%= false %>"
+				collapsible="<%= false %>"
+				title='<%= LanguageUtil.get(request, "channel-eligibility") %>'
+			>
+				<div class="row">
+					<aui:fieldset markupView="lexicon">
+						<aui:input checked='<%= Objects.equals(channelQualifiers, "all") %>' label="all-channels" name="qualifiers--channel--" type="radio" value="all" />
+						<aui:input checked='<%= Objects.equals(channelQualifiers, "channels") %>' label="specific-channels" name="qualifiers--channel--" type="radio" value="channels" />
+					</aui:fieldset>
+				</div>
+			</commerce-ui:panel>
+		</div>
+	</div>
+
+	<c:if test='<%= Objects.equals(channelQualifiers, "channels") %>'>
+		<%@ include file="/configuration_list/qualifier/channels.jspf" %>
+	</c:if>
 </aui:form>
 
 <liferay-frontend:component
@@ -61,6 +85,19 @@ String accountQualifiers = ParamUtil.getString(request, "accountQualifiers", cpC
 			"searchParam", "accountQualifiers"
 		).put(
 			"selector", "qualifiers--account--"
+		).build()
+	%>'
+	module="{qualifiers} from commerce-product-definitions-web"
+/>
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"currentURL", currentURL
+		).put(
+			"searchParam", "channelQualifiers"
+		).put(
+			"selector", "qualifiers--channel--"
 		).build()
 	%>'
 	module="{qualifiers} from commerce-product-definitions-web"

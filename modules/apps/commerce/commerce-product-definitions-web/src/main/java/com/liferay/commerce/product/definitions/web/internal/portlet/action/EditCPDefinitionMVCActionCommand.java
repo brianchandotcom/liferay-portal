@@ -689,47 +689,46 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			commerceAvailabilityEstimateId);
 	}
 
-	private void _updateMasteConfiguration(
+	private void _updateMasterConfiguration(
 			ActionRequest actionRequest, long cpDefinitionId)
 		throws Exception {
 
-		String cpDefinitionInventoryEngine = ParamUtil.getString(
-			actionRequest, "CPDefinitionInventoryEngine");
-		String lowStockActivity = ParamUtil.getString(
-			actionRequest, "lowStockActivity");
+		long cpTaxCategoryId = ParamUtil.getLong(
+			actionRequest, "cpTaxCategoryId");
+		String allowedOrderQuantities = ParamUtil.getString(
+			actionRequest, "allowedOrderQuantities");
+		boolean backOrders = ParamUtil.getBoolean(actionRequest, "backOrders");
 		long commerceAvailabilityEstimateId = ParamUtil.getLong(
 			actionRequest, "commerceAvailabilityEstimateId");
+		String cpDefinitionInventoryEngine = ParamUtil.getString(
+			actionRequest, "CPDefinitionInventoryEngine");
+		double depth = ParamUtil.getDouble(actionRequest, "depth");
 		boolean displayAvailability = ParamUtil.getBoolean(
 			actionRequest, "displayAvailability");
 		boolean displayStockQuantity = ParamUtil.getBoolean(
 			actionRequest, "displayStockQuantity");
-		boolean backOrders = ParamUtil.getBoolean(actionRequest, "backOrders");
-		BigDecimal minStockQuantity = _commerceOrderItemQuantityFormatter.parse(
-			actionRequest, "minStockQuantity");
-		BigDecimal minOrderQuantity = _commerceOrderItemQuantityFormatter.parse(
-			actionRequest, "minOrderQuantity");
+		boolean freeShipping = ParamUtil.getBoolean(
+			actionRequest, "freeShipping");
+		double height = ParamUtil.getDouble(actionRequest, "height");
+		String lowStockActivity = ParamUtil.getString(
+			actionRequest, "lowStockActivity");
 		BigDecimal maxOrderQuantity = _commerceOrderItemQuantityFormatter.parse(
 			actionRequest, "maxOrderQuantity");
+		BigDecimal minOrderQuantity = _commerceOrderItemQuantityFormatter.parse(
+			actionRequest, "minOrderQuantity");
+		BigDecimal minStockQuantity = _commerceOrderItemQuantityFormatter.parse(
+			actionRequest, "minStockQuantity");
 		BigDecimal multipleOrderQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
 				actionRequest, "multipleOrderQuantity");
-
-		String allowedOrderQuantities = ParamUtil.getString(
-			actionRequest, "allowedOrderQuantities");
 		boolean shippable = ParamUtil.getBoolean(actionRequest, "shippable");
-		boolean freeShipping = ParamUtil.getBoolean(
-			actionRequest, "freeShipping");
-		boolean shipSeparately = ParamUtil.getBoolean(
-			actionRequest, "shipSeparately");
 		double shippingExtraPrice = ParamUtil.getDouble(
 			actionRequest, "shippingExtraPrice");
-		double width = ParamUtil.getDouble(actionRequest, "width");
-		double height = ParamUtil.getDouble(actionRequest, "height");
-		double depth = ParamUtil.getDouble(actionRequest, "depth");
-		double weight = ParamUtil.getDouble(actionRequest, "weight");
-		long cpTaxCategoryId = ParamUtil.getLong(
-			actionRequest, "cpTaxCategoryId");
+		boolean shipSeparately = ParamUtil.getBoolean(
+			actionRequest, "shipSeparately");
 		boolean taxExempt = ParamUtil.getBoolean(actionRequest, "taxExempt");
+		double weight = ParamUtil.getDouble(actionRequest, "weight");
+		double width = ParamUtil.getDouble(actionRequest, "width");
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpDefinitionId);
@@ -983,7 +982,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			_updateCPDefinitionInventory(_actionRequest, cpDefinitionId);
 			_updateShippingInfo(_actionRequest, cpDefinitionId);
 			_updateTaxCategoryInfo(_actionRequest, cpDefinitionId);
-			_updateMasteConfiguration(_actionRequest, cpDefinitionId);
+			_updateMasterConfiguration(_actionRequest, cpDefinitionId);
 
 			_updateCPDefinition(
 				_cpDefinition,

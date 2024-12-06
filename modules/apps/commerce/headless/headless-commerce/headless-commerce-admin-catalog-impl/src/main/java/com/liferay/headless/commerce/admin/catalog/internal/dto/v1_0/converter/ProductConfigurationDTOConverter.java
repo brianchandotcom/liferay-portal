@@ -20,6 +20,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductShippingConfiguration;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductTaxConfiguration;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -58,7 +59,6 @@ public class ProductConfigurationDTOConverter
 		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
 			CPConfigurationEntry cpConfigurationEntry;
 			CPDefinition cpDefinition;
-			String entityName = null;
 
 			if (dtoConverterContext.getId() != null) {
 				cpDefinition = _cpDefinitionService.getCPDefinition(
@@ -66,9 +66,6 @@ public class ProductConfigurationDTOConverter
 
 				cpConfigurationEntry =
 					cpDefinition.fetchMasterCPConfigurationEntry();
-
-				entityName = cpDefinition.getName(
-					LocaleUtil.toLanguageId(dtoConverterContext.getLocale()));
 			}
 			else {
 				ProductConfigurationDTOConverterContext
@@ -80,18 +77,6 @@ public class ProductConfigurationDTOConverter
 					_cpConfigurationEntryService.getCPConfigurationEntry(
 						productConfigurationDTOConverterContext.
 							getCPConfigurationEntryId());
-
-				if (StringUtil.equals(
-						CPDefinition.class.getName(),
-						cpConfigurationEntry.getClassName())) {
-
-					cpDefinition = _cpDefinitionService.getCPDefinition(
-						cpConfigurationEntry.getCPConfigurationEntryId());
-
-					entityName = cpDefinition.getName(
-						LocaleUtil.toLanguageId(
-							dtoConverterContext.getLocale()));
-				}
 			}
 
 			if (cpConfigurationEntry == null) {
@@ -106,7 +91,9 @@ public class ProductConfigurationDTOConverter
 			productConfiguration.setEntityExternalReferenceCode(
 				() -> _getEntityExternalReferenceCode(cpConfigurationEntry));
 			productConfiguration.setEntityId(cpConfigurationEntry::getClassPK);
-			productConfiguration.setEntityName(entityName);
+			productConfiguration.setEntityName(
+				() -> _getEntityName(
+					cpConfigurationEntry, dtoConverterContext.getLocale()));
 			productConfiguration.setExternalReferenceCode(
 				cpConfigurationEntry::getExternalReferenceCode);
 			productConfiguration.setId(
@@ -248,6 +235,23 @@ public class ProductConfigurationDTOConverter
 		CProduct cProduct = cpDefinition.getCProduct();
 
 		return cProduct.getExternalReferenceCode();
+	}
+
+	private String _getEntityName(
+			CPConfigurationEntry cpConfigurationEntry, Locale locale)
+		throws PortalException {
+
+		if (!StringUtil.equals(
+				CPDefinition.class.getName(),
+				cpConfigurationEntry.getClassName())) {
+
+			return null;
+		}
+
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpConfigurationEntry.getCPConfigurationEntryId());
+
+		return cpDefinition.getName(LocaleUtil.toLanguageId(locale));
 	}
 
 	private String _getTaxCategory(CPTaxCategory cpTaxCategory, Locale locale) {

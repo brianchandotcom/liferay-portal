@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
@@ -16,6 +16,7 @@ export class CommerceAdminProductConfigurationListsPage extends CommerceDNDTable
 	readonly addConfigurationListPriority: Locator;
 	readonly addConfigurationListSaveButton: Locator;
 	readonly newConfigurationListName: Locator;
+	readonly frame: FrameLocator;
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -26,21 +27,22 @@ export class CommerceAdminProductConfigurationListsPage extends CommerceDNDTable
 		this.addConfigurationList = page
 			.getByTestId('management-toolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
-		this.addConfigurationListCatalog = page
-			.frameLocator('iframe[title="Add New Product Configuration"]')
-			.getByLabel('Catalog Required');
-		this.addConfigurationListName = page
-			.frameLocator('iframe[title="Add New Product Configuration"]')
-			.getByLabel('Name Required');
-		this.addConfigurationListParentListElement = page
-			.frameLocator('iframe[title="Add New Product Configuration"]')
-			.getByRole('menuitem', {name: 'Master Configuration Master'});
-		this.addConfigurationListParentList = page
-			.frameLocator('iframe[title="Add New Product Configuration"]')
-			.getByPlaceholder('Type Here');
-		this.addConfigurationListPriority = page
-			.frameLocator('iframe[title="Add New Product Configuration"]')
-			.getByLabel('Priority Required');
+
+		this.frame = page.frameLocator(
+			'iframe[title="Add New Product Configuration"]'
+		);
+		this.addConfigurationListCatalog =
+			this.frame.getByLabel('Catalog Required');
+		this.addConfigurationListName = this.frame.getByLabel('Name Required');
+		this.addConfigurationListParentListElement = this.frame.getByRole(
+			'menuitem',
+			{name: 'Master Configuration Master'}
+		);
+		this.addConfigurationListParentList =
+			this.frame.getByPlaceholder('Type Here');
+		this.addConfigurationListPriority =
+			this.frame.getByLabel('Priority Required');
+
 		this.addConfigurationListSaveButton = page.getByRole('button', {
 			name: 'Submit',
 		});

@@ -360,7 +360,11 @@ export class CommerceLayoutsPage {
 		siteName: string = 'guest'
 	) {
 		await this.page
-			.getByRole('link', {exact: true, name: 'Display Page Template'})
+			.getByRole('link', {exact: true, name: 'Display Page Templates'})
+			.click();
+		await this.page.getByRole('button', {exact: true, name: 'New'}).click();
+		await this.page
+			.getByRole('menuitem', {exact: true, name: 'Display Page Template'})
 			.click();
 		await this.page
 			.getByRole('button', {exact: true, name: 'Blank'})

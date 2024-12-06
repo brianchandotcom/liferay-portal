@@ -33,7 +33,6 @@ import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.AutoIncrementObjectFieldBuilder;
-import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.EncryptedObjectFieldBuilder;
 import com.liferay.object.field.builder.FormulaObjectFieldBuilder;
@@ -342,12 +341,12 @@ public class ObjectFieldLocalServiceTest {
 					).build())));
 		AssertUtils.assertFailure(
 			ObjectFieldLocalizedException.class,
-			"Only Boolean,LongText,RichText and Text business types support " +
-				"localization",
+			"Only Boolean,Date,LongText,RichText and Text business types " +
+				"support localization",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false,
 				Arrays.asList(
-					new DateObjectFieldBuilder(
+					new AutoIncrementObjectFieldBuilder(
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())

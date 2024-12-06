@@ -65,7 +65,7 @@ test.beforeEach(
 test.afterEach(async ({apiHelpers}) => {
 	for (let i = 0; i < ctCollections.length; i++) {
 		await apiHelpers.headlessChangeTracking.deleteCTCollection(
-			ctCollections[i].id
+			ctCollections[i].body.id
 		);
 	}
 });
@@ -141,7 +141,7 @@ test('LPD-22768 Add options to interact with the same entity in other publicatio
 	await goToPublicationTimelineModal(page, journalPage);
 
 	const entityHistoryModalLocator = getEntityHistoryTableLocator(page);
-	await entityHistoryModalLocator.getByText(ctCollections[0].name).waitFor();
+	await entityHistoryModalLocator.getByText(ctCollections[0].body.name).waitFor();
 
 	const firstDropdown = entityHistoryModalLocator
 		.locator('.item-actions .dropdown svg.lexicon-icon-ellipsis-v')
@@ -180,7 +180,7 @@ test('LPD-38392 Assert View Entity Modification History sorting', async ({
 	page,
 }) => {
 	await apiHelpers.headlessChangeTracking.publishCTCollection(
-		ctCollections[0].id
+		ctCollections[0].body.id
 	);
 
 	date = moment().format('ll');

@@ -26,7 +26,7 @@ export const test = mergeTests(
 );
 
 test.afterEach(async ({apiHelpers, ctCollection}) => {
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.id);
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.body.id);
 });
 
 test('LPD-33336 Buffered increment runnable processing occurs in the same thread when not in production mode', async ({

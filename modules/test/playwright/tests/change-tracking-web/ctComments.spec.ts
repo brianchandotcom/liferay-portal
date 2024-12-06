@@ -23,7 +23,7 @@ export const test = mergeTests(
 let user;
 
 test.afterEach(async ({apiHelpers, ctCollection}) => {
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.id);
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.body.id);
 
 	const role = await apiHelpers.headlessAdminUser.getRoles('Administrator');
 
@@ -34,7 +34,7 @@ test.afterEach(async ({apiHelpers, ctCollection}) => {
 });
 
 test.beforeEach(async ({apiHelpers, ctCollection}) => {
-	await apiHelpers.headlessChangeTracking.checkoutCTCollection('0');
+	await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
 
 	user = await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
 		'demo.unprivileged@liferay.com'
@@ -49,7 +49,7 @@ test.beforeEach(async ({apiHelpers, ctCollection}) => {
 	);
 
 	await apiHelpers.headlessChangeTracking.checkoutCTCollection(
-		ctCollection.id
+		ctCollection.body.id
 	);
 });
 
@@ -68,7 +68,7 @@ test('LPD-17130 Only comment owners are allowed to perform actions on the commen
 		`Success:${journalName} was created successfully.`
 	);
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	await changeTrackingPage.addComment();
 
@@ -80,7 +80,7 @@ test('LPD-17130 Only comment owners are allowed to perform actions on the commen
 
 	await performLogin(page, user.alternateName);
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	await changeTrackingPage.openComments();
 

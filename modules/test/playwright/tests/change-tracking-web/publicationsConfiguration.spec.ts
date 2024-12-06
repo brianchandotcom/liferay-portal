@@ -94,7 +94,7 @@ test('LPD-29282 Assert administrator can not see the hidden fields if show all d
 }) => {
 	await changeTrackingPage.toggleShowAllDataConfiguration(false);
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	await changeTrackingPage.reviewChange(journalArticleTitle);
 
@@ -116,7 +116,7 @@ test('LPD-29282 Assert administrator can see the hidden fields if show all data 
 }) => {
 	await changeTrackingPage.toggleShowAllDataConfiguration(true);
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	await changeTrackingPage.reviewChange(journalArticleTitle);
 
@@ -142,7 +142,7 @@ test('LPD-29282 Assert publications user can not see the hidden fields if show a
 	const user = await changeTrackingPage.addUserWithPublicationsUserRole();
 
 	await changeTrackingPage.addUserToPublication(
-		ctCollection.name,
+		ctCollection.body.name,
 		'Viewer',
 		user
 	);
@@ -151,7 +151,7 @@ test('LPD-29282 Assert publications user can not see the hidden fields if show a
 
 	await performLogin(page, user.alternateName);
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	await changeTrackingPage.reviewChange(journalArticleTitle);
 

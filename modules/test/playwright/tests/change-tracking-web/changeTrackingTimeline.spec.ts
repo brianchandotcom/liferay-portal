@@ -69,7 +69,7 @@ test.beforeEach(
 );
 
 test.afterEach(async ({apiHelpers, ctCollection}) => {
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.id);
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.body.id);
 });
 
 test('LPD-25853 Edit in x publication is added in the timeline dropdown actions', async ({
@@ -94,7 +94,7 @@ test('LPD-25853 Edit in x publication is added in the timeline dropdown actions'
 	await timelineActionsButton.click();
 
 	const editButton = page.getByRole('button', {
-		name: `Edit in ${ctCollection.name}`,
+		name: `Edit in ${ctCollection.body.name}`,
 	});
 	await editButton.waitFor();
 	await expect(editButton).toBeVisible();
@@ -102,13 +102,13 @@ test('LPD-25853 Edit in x publication is added in the timeline dropdown actions'
 
 	await page
 		.locator('.change-tracking-indicator-title')
-		.filter({hasText: ctCollection.name})
+		.filter({hasText: ctCollection.body.name})
 		.waitFor();
 
 	await expect(
 		page
 			.locator('.change-tracking-indicator-title')
-			.filter({hasText: ctCollection.name})
+			.filter({hasText: ctCollection.body.name})
 	).toBeVisible();
 });
 
@@ -142,11 +142,11 @@ test('LPD-25853 Review Change is added in the timeline dropdown actions', async 
 
 	await page
 		.locator('.publication-name')
-		.filter({hasText: ctCollection.name})
+		.filter({hasText: ctCollection.body.name})
 		.waitFor();
 
 	await expect(
-		page.locator('.publication-name').filter({hasText: ctCollection.name})
+		page.locator('.publication-name').filter({hasText: ctCollection.body.name})
 	).toBeVisible();
 
 	await expect(page.getByText(title2)).toBeVisible();
@@ -282,7 +282,7 @@ test('LPD-25853 Timeline actions are not visible to user without permissions', a
 	await timelineButton.waitFor();
 	await timelineButton.click();
 
-	await page.getByText(ctCollection.name).waitFor();
+	await page.getByText(ctCollection.body.name).waitFor();
 
 	const timelineActionsButton = page.locator('.publication-timeline button');
 
@@ -351,7 +351,7 @@ test('LPD-26155 Conflict warning is visible when content is edited in more than 
 	await expect(conflictIcon).toBeVisible();
 
 	await apiHelpers.headlessChangeTracking.deleteCTCollection(
-		ctCollection2.id
+		ctCollection2.body.id
 	);
 });
 
@@ -446,7 +446,7 @@ test('LPD-37842 Timeline icon is yellow for cross-publication edits.', async ({
 	await expect(timelineButton).toHaveCSS('color', 'rgb(255, 182, 141)');
 
 	await apiHelpers.headlessChangeTracking.deleteCTCollection(
-		ctCollection2.id
+		ctCollection2.body.id
 	);
 });
 

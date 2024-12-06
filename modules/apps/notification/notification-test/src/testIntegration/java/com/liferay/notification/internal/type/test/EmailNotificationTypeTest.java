@@ -315,7 +315,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		executeNotificationObjectAction(
 			0,
 			_addNotificationTemplate(
-				"${testTemplateContextContributorKey}",
+				"${testTemplateContextContributorKey};\n${.data_model[\"" +
+					"ObjectRelationship#C_ParentObjectDefinition#oneToMany" +
+						"ObjectRelationship_textObjectField\"].getData()}",
 				NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
 				Collections.singletonMap(
 					LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]"),
@@ -324,7 +326,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					LocaleUtil.US, user1.getEmailAddress())));
 
 		_assertNotificationQueueEntryBody(
-			"testTemplateContextContributorValue");
+			"testTemplateContextContributorValue;\n" +
+				parentObjectEntryValues.get("textObjectField"));
 	}
 
 	@Test

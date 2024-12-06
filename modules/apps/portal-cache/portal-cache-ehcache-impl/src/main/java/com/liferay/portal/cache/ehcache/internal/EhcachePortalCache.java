@@ -10,12 +10,15 @@ import com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventList
 
 import java.io.Serializable;
 
+import java.util.EnumSet;
 import java.util.function.Supplier;
 
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.event.NotificationScope;
-import net.sf.ehcache.event.RegisteredEventListeners;
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
+import org.ehcache.config.CacheRuntimeConfiguration;
+import org.ehcache.event.EventFiring;
+import org.ehcache.event.EventOrdering;
+import org.ehcache.event.EventType;
 
 /**
  * @author Brian Wing Shun Chan
@@ -37,7 +40,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public Ehcache getEhcache() {
+	public Cache<?, ?> getEhcache() {
 		return _ehcacheDCLSingleton.getSingleton(_ehcacheSupplier);
 	}
 
@@ -51,29 +54,41 @@ public class EhcachePortalCache<K extends Serializable, V>
 		_ehcacheDCLSingleton.destroy(null);
 	}
 
-	private Ehcache _createEhcache() {
+	private Cache<?, ?> _createEhcache() {
 		synchronized (_cacheManager) {
-			if (!_cacheManager.cacheExists(getPortalCacheName())) {
-				_cacheManager.addCache(getPortalCacheName());
+			Cache<?, ?> cache = _cacheManager.getCache(
+				getPortalCacheName(), keyType, valueType);
+
+			if (cache == null) {
+				BaseEhcachePortalCacheManager<?, ?>
+					baseEhcachePortalCacheManager =
+						(BaseEhcachePortalCacheManager<?, ?>)
+							getPortalCacheManager();
+
+				_cacheManager.createCache(
+					getPortalCacheName(),
+					baseEhcachePortalCacheManager.newBuilder());
 			}
 		}
 
-		Ehcache ehcache = _cacheManager.getCache(getPortalCacheName());
+		Cache<?, ?> cache = _cacheManager.getCache(
+			getPortalCacheName(), keyType, valueType);
 
-		RegisteredEventListeners registeredEventListeners =
-			ehcache.getCacheEventNotificationService();
+		CacheRuntimeConfiguration<?, ?> cacheRuntimeConfiguration =
+			cache.getRuntimeConfiguration();
 
-		registeredEventListeners.registerListener(
+		cacheRuntimeConfiguration.registerCacheEventListener(
 			new PortalCacheCacheEventListener<>(
 				aggregatedPortalCacheListener, this),
-			NotificationScope.ALL);
+			EventOrdering.ORDERED, EventFiring.SYNCHRONOUS,
+			EnumSet.allOf(EventType.class));
 
-		return ehcache;
+		return cache;
 	}
 
 	private final CacheManager _cacheManager;
-	private final DCLSingleton<Ehcache> _ehcacheDCLSingleton =
+	private final DCLSingleton<Cache<?, ?>> _ehcacheDCLSingleton =
 		new DCLSingleton<>();
-	private final Supplier<Ehcache> _ehcacheSupplier;
+	private final Supplier<Cache<?, ?>> _ehcacheSupplier;
 
 }

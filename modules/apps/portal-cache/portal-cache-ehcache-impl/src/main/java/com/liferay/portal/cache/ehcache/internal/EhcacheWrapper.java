@@ -5,13 +5,13 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
-import net.sf.ehcache.Ehcache;
+import org.ehcache.Cache;
 
 /**
  * @author Tina Tian
  */
 public interface EhcacheWrapper {
 
-	public Ehcache getEhcache();
+	public Cache<?, ?> getEhcache();
 
 }

@@ -199,7 +199,10 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 					</div>
 
 					<div>
-						<span className="app-details-page-app-info-title">
+						<span
+							className="app-details-page-app-info-title d-block text-truncate"
+							title={selectedApp.name?.en_US}
+						>
 							{selectedApp.name?.en_US}
 						</span>
 

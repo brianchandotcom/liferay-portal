@@ -61,7 +61,7 @@ public class NotificationUtil {
 			body, attachmentFileName, null);
 	}
 
-	public static void sendEmail(
+	public static synchronized void sendEmail(
 		String senderEmailAddress, String senderName,
 		String recipientEmailAddress, String subject, String body,
 		String attachmentFileName, String mimeType) {

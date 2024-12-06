@@ -68,14 +68,14 @@ public class CompanyBatchEngineUnitWrapper implements BundleBatchEngineUnit {
 
 	@Override
 	public Bundle getBundle() {
-		if (_batchEngineUnit instanceof BundleBatchEngineUnit) {
-			BundleBatchEngineUnit bundleBatchEngineUnit =
-				(BundleBatchEngineUnit)_batchEngineUnit;
-
-			return bundleBatchEngineUnit.getBundle();
+		if (!(_batchEngineUnit instanceof BundleBatchEngineUnit)) {
+			return null;
 		}
 
-		return null;
+		BundleBatchEngineUnit bundleBatchEngineUnit =
+			(BundleBatchEngineUnit)_batchEngineUnit;
+
+		return bundleBatchEngineUnit.getBundle();
 	}
 
 	@Override

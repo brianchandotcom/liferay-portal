@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -116,6 +117,18 @@ public class CPConfigurationListQualifiersDisplayContext
 		return "all";
 	}
 
+	public String getActiveOrderTypeEligibility() throws PortalException {
+		int cpConfigurationListRelsCount =
+			_cpConfigurationListRelService.getCPConfigurationListRelsCount(
+				CommerceOrderType.class.getName(), getCPConfigurationListId());
+
+		if (cpConfigurationListRelsCount > 0) {
+			return "orderTypes";
+		}
+
+		return "all";
+	}
+
 	public CPConfigurationList getCPConfigurationList() throws PortalException {
 		if (_cpConfigurationList != null) {
 			return _cpConfigurationList;
@@ -216,6 +229,34 @@ public class CPConfigurationListQualifiersDisplayContext
 			"/o/headless-commerce-admin-catalog/v1.0",
 			"/product-configuration-lists/", getCPConfigurationListId(),
 			"/product-configuration-list-channels");
+	}
+
+	public List<FDSActionDropdownItem>
+			getCPConfigurationListOrderTypeFDSActionDropdownItems()
+		throws PortalException {
+
+		return getFDSActionDropdownItems(
+			PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					httpServletRequest, CommerceOrderType.class.getName(),
+					PortletProvider.Action.MANAGE)
+			).setMVCRenderCommandName(
+				"/commerce_order_type/edit_commerce_order_type"
+			).setRedirect(
+				cpRequestHelper.getCurrentURL()
+			).setParameter(
+				"commerceOrderTypeId", "{orderType.id}"
+			).buildString(),
+			false);
+	}
+
+	public String getCPConfigurationListOrderTypesAPIURL()
+		throws PortalException {
+
+		return StringBundler.concat(
+			"/o/headless-commerce-admin-catalog/v1.0",
+			"/product-configuration-lists/", getCPConfigurationListId(),
+			"/product-configuration-list-order-types");
 	}
 
 	public PortletURL getPortletCPConfigurationListURL() {

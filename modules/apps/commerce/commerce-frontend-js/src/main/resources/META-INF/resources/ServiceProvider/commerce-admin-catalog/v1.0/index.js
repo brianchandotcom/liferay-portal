@@ -9,5 +9,6 @@ export {default as productConfigurationListAPI} from './ProductConfigurationList
 export {default as productConfigurationListAccountAPI} from './ProductConfigurationListAccount';
 export {default as productConfigurationListAccountGroupAPI} from './ProductConfigurationListAccountGroup';
 export {default as productConfigurationListChannelAPI} from './ProductConfigurationListChannel';
+export {default as productConfigurationListOrderTypeAPI} from './ProductConfigurationListOrderType';
 export {default as productGroupsAPI} from './ProductGroups';
 export {default as specificationAPI} from './Specification';

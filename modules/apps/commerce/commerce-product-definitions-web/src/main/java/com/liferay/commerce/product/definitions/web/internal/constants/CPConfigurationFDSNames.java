@@ -25,6 +25,11 @@ public class CPConfigurationFDSNames {
 		CPPortletKeys.CP_CONFIGURATION_LISTS +
 			"-productConfigurationListQualifierChannels";
 
+	public static final String
+		PRODUCT_CONFIGURATION_LIST_QUALIFIER_ORDER_TYPES =
+			CPPortletKeys.CP_CONFIGURATION_LISTS +
+				"-productConfigurationListQualifierOrderTypes";
+
 	public static final String PRODUCT_CONFIGURATION_LISTS =
 		CPPortletKeys.CP_CONFIGURATION_LISTS + "-productConfigurationLists";
 

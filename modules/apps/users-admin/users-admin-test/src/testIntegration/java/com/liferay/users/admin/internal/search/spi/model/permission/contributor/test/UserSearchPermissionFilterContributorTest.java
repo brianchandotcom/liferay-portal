@@ -7,6 +7,7 @@ package com.liferay.users.admin.internal.search.spi.model.permission.contributor
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -98,6 +100,26 @@ public class UserSearchPermissionFilterContributorTest {
 			new long[0], ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(2, _performUserSearchCount(user));
+	}
+
+	@Test
+	public void testWhenHasOwnerPermissionSearchWithGuestUser()
+		throws Exception {
+
+		Company company = CompanyLocalServiceUtil.getCompanyById(
+			TestPropsValues.getCompanyId());
+
+		User guestUser = company.getGuestUser();
+
+		Assert.assertEquals(0, _performUserSearchCount(guestUser));
+
+		UserTestUtil.addUser(
+			guestUser.getCompanyId(), guestUser.getUserId(),
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new long[0], ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(0, _performUserSearchCount(guestUser));
 	}
 
 	private User _addOrganizationUser(Organization organization)

@@ -54,9 +54,10 @@ export function CardLink({description, icon, title}: CardLinkProps) {
 					<span className="card-link-info-text">{title}</span>
 					{description && (
 						<a
-							className="card-link-info-description"
+							className="card-link-info-description text-truncate"
 							href={getPrefixHref(description)}
 							target="_blank"
+							title={description}
 						>
 							{description}
 						</a>

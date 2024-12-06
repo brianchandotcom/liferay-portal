@@ -124,9 +124,18 @@ public class NotificationUtil {
 
 				File attachmentFile = new File(attachmentFileName);
 
-				attachmentBodyPart.setFileName(attachmentFile.getName());
+				long attachmentFileSize = attachmentFile.length();
 
-				multipart.addBodyPart(attachmentBodyPart);
+				if (attachmentFileSize < _BYTES_MAX_SIZE_ATTACHMENT) {
+					attachmentBodyPart.setFileName(attachmentFile.getName());
+
+					multipart.addBodyPart(attachmentBodyPart);
+				}
+				else {
+					System.out.println(
+						"Attachment file size for " + attachmentFile +
+							" exceeds 10MB cannot be attached to email");
+				}
 			}
 
 			mimeMessage.setContent(multipart);
@@ -228,6 +237,8 @@ public class NotificationUtil {
 			ioException.printStackTrace();
 		}
 	}
+
+	private static final long _BYTES_MAX_SIZE_ATTACHMENT = 1024 * 1024 * 10;
 
 	static {
 		Thread thread = Thread.currentThread();

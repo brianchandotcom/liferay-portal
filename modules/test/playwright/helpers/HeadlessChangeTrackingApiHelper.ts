@@ -3,22 +3,25 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import getRandomString from '../utils/getRandomString';
+import {CTCollectionApi} from '@liferay/change-tracking-rest-client-js'
+
 import {ApiHelpers} from './ApiHelpers';
+import getRandomString from '../utils/getRandomString';
 
 export class HeadlessChangeTrackingApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
 
 	constructor(apiHelpers: ApiHelpers) {
+
 		this.apiHelpers = apiHelpers;
 		this.basePath = 'change-tracking-rest/v1.0';
 	}
 
-	async checkoutCTCollection(ctCollectionId: string) {
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/ct-collections/${ctCollectionId}/checkout`
-		);
+	async checkoutCTCollection(ctCollectionId: number) {
+		const ctCollectionApiClient = await this.apiHelpers.buildRestClient(CTCollectionApi);
+
+		return (await ctCollectionApiClient.postCTCollectionCheckout(ctCollectionId));
 	}
 
 	async createCTCollection(name: string) {
@@ -29,21 +32,20 @@ export class HeadlessChangeTrackingApiHelper {
 			status: {code: 0, label: 'string', label_i18n: 'string'},
 		};
 
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/ct-collections`,
-			{data: requestBody}
-		);
+		const ctCollectionApiClient = await this.apiHelpers.buildRestClient(CTCollectionApi);
+
+		return (await ctCollectionApiClient.postCTCollection(requestBody));
 	}
 
-	async deleteCTCollection(ctCollectionId: string) {
-		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/ct-collections/${ctCollectionId}`
-		);
+	async deleteCTCollection(ctCollectionId: number) {
+		const ctCollectionApiClient = await this.apiHelpers.buildRestClient(CTCollectionApi);
+
+		return (await ctCollectionApiClient.deleteCTCollection(ctCollectionId));
 	}
 
 	async publishCTCollection(ctCollectionId: number) {
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/ct-collections/${ctCollectionId}/publish`
-		);
+		const ctCollectionApiClient = await this.apiHelpers.buildRestClient(CTCollectionApi);
+
+		return (await ctCollectionApiClient.postCTCollectionPublish(ctCollectionId));
 	}
 }

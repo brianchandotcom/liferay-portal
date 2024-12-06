@@ -24,6 +24,14 @@
 		background-color: var(--color-neutral-1);
 	}
 
+	.sv-name-link {
+		text-decoration: none;
+	}
+
+	.sv-row {
+		cursor: pointer;
+	}
+
 	.sv-severity {
 		border-radius: var(--border-radius-sm);
 		font-size: var(--font-size-sm);

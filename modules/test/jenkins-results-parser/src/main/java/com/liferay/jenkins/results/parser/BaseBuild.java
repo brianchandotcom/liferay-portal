@@ -1119,14 +1119,16 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public StopWatchRecordsGroup getStopWatchRecordsGroup() {
-		if (!Objects.equals(getStatus(), "completed")) {
-			_stopWatchRecordsGroup = null;
+		if (!(this instanceof TopLevelBuild)) {
+			if (!Objects.equals(getStatus(), "completed")) {
+				_stopWatchRecordsGroup = null;
 
-			return new StopWatchRecordsGroup();
-		}
+				return new StopWatchRecordsGroup();
+			}
 
-		if (_stopWatchRecordsGroup != null) {
-			return _stopWatchRecordsGroup;
+			if (_stopWatchRecordsGroup != null) {
+				return _stopWatchRecordsGroup;
+			}
 		}
 
 		_stopWatchRecordsGroup = new StopWatchRecordsGroup();

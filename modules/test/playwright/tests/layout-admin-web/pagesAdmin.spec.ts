@@ -518,11 +518,9 @@ test.describe('Miller Columns drag and drop', () => {
 			}) => {
 				await expect(
 					getColumn(columnIndex)
-						.locator(
-							'.miller-columns-item .miller-columns-item-mask'
-						)
+						.locator('.miller-columns-item')
 						.nth(itemIndex)
-				).toHaveText(title);
+				).toContainText(title);
 			};
 
 			await dragItem(getItem('Page 1-1'), getItem('Page 1-2'), 'bottom');
@@ -722,7 +720,7 @@ test('Can add and delete a child page', async ({
 	await pagesAdminPage.goto(site.friendlyUrlPath);
 
 	await page
-		.getByRole('menuitem', {exact: true, name: parentPageName})
+		.locator('.miller-columns-item', {hasText: parentPageName})
 		.click({position: {x: 10, y: 10}});
 
 	await expect(page.getByRole('link', {name: childPageName})).toBeVisible();

@@ -3,5 +3,6 @@
 <Configuration strict="true">
 	<Loggers>
 		<Logger level="ERROR" name="com.liferay.portal.cache.ehcache.internal.BaseEhcachePortalCacheManager" />
+		<Logger level="WARN" name="org.ehcache.core.EhcacheManager" />
 	</Loggers>
 </Configuration>

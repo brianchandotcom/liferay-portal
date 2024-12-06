@@ -36,11 +36,11 @@ public class PortalAcceptancePullRequestJob
 
 	@Override
 	public List<BatchTestClassGroup> getBatchTestClassGroups() {
-		if (batchTestClassGroups != null) {
-			return batchTestClassGroups;
-		}
-
 		synchronized (jobProperties) {
+			if (batchTestClassGroups != null) {
+				return batchTestClassGroups;
+			}
+
 			PortalGitWorkingDirectory portalGitWorkingDirectory =
 				getPortalGitWorkingDirectory();
 
@@ -72,9 +72,9 @@ public class PortalAcceptancePullRequestJob
 
 				return batchTestClassGroups;
 			}
-		}
 
-		return super.getBatchTestClassGroups();
+			return super.getBatchTestClassGroups();
+		}
 	}
 
 	public boolean isCentralMergePullRequest() {

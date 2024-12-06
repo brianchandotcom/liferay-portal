@@ -23,7 +23,11 @@ import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -40,6 +44,8 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 	@Parameterized.Parameters(name = "Testcase-{index}: Testing {0} .{1}")
 	public static Iterable<Object[]> data() throws Exception {
 		List<Object[]> objectsArray = new ArrayList<>();
+
+		Map<String, Set<String>> issueKeyFileTypesMap = new HashMap<>();
 
 		String[] issueKeys = StringUtil.split(
 			System.getProperty("issue.key", null), StringPool.COMMA);
@@ -70,8 +76,26 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 
 			for (String fileType : fileTypes) {
 				if (_hasValidUpgradeFiles(issueKey, fileType)) {
-					objectsArray.add(new Object[] {issueKey, fileType});
+					issueKeyFileTypesMap.compute(
+						issueKey,
+						(key, value) -> {
+							if (value == null) {
+								value = new HashSet<>();
+							}
+
+							value.add(fileType);
+
+							return value;
+						});
 				}
+			}
+		}
+
+		for (Map.Entry<String, Set<String>> entry :
+				issueKeyFileTypesMap.entrySet()) {
+
+			for (String fileType : entry.getValue()) {
+				objectsArray.add(new Object[] {entry.getKey(), fileType});
 			}
 		}
 

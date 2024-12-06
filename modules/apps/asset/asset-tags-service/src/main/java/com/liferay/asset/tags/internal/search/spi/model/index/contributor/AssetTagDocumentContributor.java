@@ -112,13 +112,13 @@ public class AssetTagDocumentContributor
 			return organization.getGroupId();
 		}
 
-		if (baseModel instanceof User) {
-			User user = (User)baseModel;
-
-			return user.getGroupId();
+		if (!(baseModel instanceof User)) {
+			return null;
 		}
 
-		return null;
+		User user = (User)baseModel;
+
+		return user.getGroupId();
 	}
 
 	private String[] _getNames(List<AssetTag> assetTags) {

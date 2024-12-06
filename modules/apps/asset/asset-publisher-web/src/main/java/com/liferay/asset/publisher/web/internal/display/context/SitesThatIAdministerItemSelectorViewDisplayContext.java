@@ -127,13 +127,13 @@ public class SitesThatIAdministerItemSelectorViewDisplayContext
 		).put(
 			"usersGroups",
 			() -> {
-				if (filterManageableGroups) {
-					User user = themeDisplay.getUser();
-
-					return user.getUserId();
+				if (!filterManageableGroups) {
+					return null;
 				}
 
-				return null;
+				User user = themeDisplay.getUser();
+
+				return user.getUserId();
 			}
 		).build();
 

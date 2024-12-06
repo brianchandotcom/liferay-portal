@@ -178,25 +178,25 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 				unicodeProperties.toString(), serviceContext);
 		}
 
-		if (Objects.equals(
+		if (!Objects.equals(
 				selectionStyle,
 				AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
 
-			return _assetListEntryService.addManualAssetListEntry(
-				null, themeDisplay.getScopeGroupId(), title,
-				ListUtil.toLongArray(
-					_assetPublisherHelper.getAssetEntries(
-						actionRequest, portletPreferences,
-						themeDisplay.getPermissionChecker(),
-						_assetPublisherHelper.getGroupIds(
-							portletPreferences, themeDisplay.getScopeGroupId(),
-							themeDisplay.getLayout()),
-						true, true),
-					AssetEntry::getEntryId),
-				serviceContext);
+			return null;
 		}
 
-		return null;
+		return _assetListEntryService.addManualAssetListEntry(
+			null, themeDisplay.getScopeGroupId(), title,
+			ListUtil.toLongArray(
+				_assetPublisherHelper.getAssetEntries(
+					actionRequest, portletPreferences,
+					themeDisplay.getPermissionChecker(),
+					_assetPublisherHelper.getGroupIds(
+						portletPreferences, themeDisplay.getScopeGroupId(),
+						themeDisplay.getLayout()),
+					true, true),
+				AssetEntry::getEntryId),
+			serviceContext);
 	}
 
 	private void _handlePortalException(

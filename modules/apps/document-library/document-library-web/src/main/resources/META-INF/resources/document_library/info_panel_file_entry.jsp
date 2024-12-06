@@ -56,6 +56,14 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 			</clay:content-section>
 		</clay:content-col>
 
+		<clay:content-col>
+			<ul class="autofit-padded-no-gutters autofit-row">
+				<li class="autofit-col">
+					<liferay-util:include page="/document_library/subscribe_file_entry.jsp" servletContext="<%= application %>" />
+				</li>
+			</ul>
+		</clay:content-col>
+
 		<%
 		DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 		%>

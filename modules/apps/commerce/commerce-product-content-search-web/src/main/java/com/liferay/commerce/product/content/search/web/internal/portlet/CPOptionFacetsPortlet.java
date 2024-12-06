@@ -9,7 +9,9 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionsSearchFacetDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.builder.CPOptionsSearchFacetDisplayContextBuilder;
 import com.liferay.commerce.product.service.CPOptionLocalService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -71,20 +73,30 @@ public class CPOptionFacetsPortlet extends MVCPortlet {
 		_buildCPOptionsSearchFacetDisplayContext(RenderRequest renderRequest) {
 
 		CPOptionsSearchFacetDisplayContextBuilder
-			cpOptionsSearchFacetDisplayBuilder =
+			cpOptionsSearchFacetDisplayContextBuilder =
 				new CPOptionsSearchFacetDisplayContextBuilder(renderRequest);
 
-		cpOptionsSearchFacetDisplayBuilder.cpOptionLocalService(
+		cpOptionsSearchFacetDisplayContextBuilder.configurationProvider(
+			_configurationProvider);
+		cpOptionsSearchFacetDisplayContextBuilder.cpOptionLocalService(
 			_cpOptionLocalService);
-		cpOptionsSearchFacetDisplayBuilder.portal(_portal);
-		cpOptionsSearchFacetDisplayBuilder.portletSharedSearchRequest(
+		cpOptionsSearchFacetDisplayContextBuilder.groupLocalService(
+			_groupLocalService);
+		cpOptionsSearchFacetDisplayContextBuilder.portal(_portal);
+		cpOptionsSearchFacetDisplayContextBuilder.portletSharedSearchRequest(
 			_portletSharedSearchRequest);
 
-		return cpOptionsSearchFacetDisplayBuilder.build();
+		return cpOptionsSearchFacetDisplayContextBuilder.build();
 	}
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private CPOptionLocalService _cpOptionLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

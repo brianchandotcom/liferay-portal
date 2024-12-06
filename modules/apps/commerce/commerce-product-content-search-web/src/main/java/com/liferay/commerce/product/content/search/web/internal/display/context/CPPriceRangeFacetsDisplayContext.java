@@ -12,7 +12,7 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPPriceRangeFacetsPortletInstanceConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -35,12 +35,14 @@ public class CPPriceRangeFacetsDisplayContext {
 
 	public CPPriceRangeFacetsDisplayContext(
 			CommercePriceFormatter commercePriceFormatter,
+			ConfigurationProvider configurationProvider,
 			RenderRequest renderRequest, Facet facet,
 			String paginationStartParameterName,
 			PortletSharedSearchResponse portletSharedSearchResponse)
 		throws PortalException {
 
 		_commercePriceFormatter = commercePriceFormatter;
+		_configurationProvider = configurationProvider;
 		_renderRequest = renderRequest;
 		_facet = facet;
 		_paginationStartParameterName = paginationStartParameterName;
@@ -50,7 +52,7 @@ public class CPPriceRangeFacetsDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		_cpPriceRangeFacetsPortletInstanceConfiguration =
-			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+			configurationProvider.getPortletInstanceConfiguration(
 				CPPriceRangeFacetsPortletInstanceConfiguration.class,
 				_themeDisplay);
 	}
@@ -172,6 +174,7 @@ public class CPPriceRangeFacetsDisplayContext {
 	}
 
 	private final CommercePriceFormatter _commercePriceFormatter;
+	private final ConfigurationProvider _configurationProvider;
 	private final CPPriceRangeFacetsPortletInstanceConfiguration
 		_cpPriceRangeFacetsPortletInstanceConfiguration;
 	private final Facet _facet;

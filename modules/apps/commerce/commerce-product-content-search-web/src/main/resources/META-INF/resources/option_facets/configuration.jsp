@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext = new CPOptionsSearchFacetDisplayContext(request);
+CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext = (CPOptionsSearchFacetDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -34,8 +34,8 @@ CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext = new CPOp
 			<div class="display-template">
 				<liferay-template:template-selector
 					className="<%= CPOptionsSearchFacetDisplayContext.class.getName() %>"
-					displayStyle='<%= portletPreferences.getValue("displayStyle", "") %>'
-					displayStyleGroupId="<%= cpOptionsSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
+					displayStyle="<%= cpOptionsSearchFacetDisplayContext.getDisplayStyle() %>"
+					displayStyleGroupKey="<%= cpOptionsSearchFacetDisplayContext.getDisplayStyleGroupKey() %>"
 					refreshURL="<%= configurationRenderURL %>"
 					showEmptyOption="<%= true %>"
 				/>
@@ -46,10 +46,10 @@ CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext = new CPOp
 			collapsible="<%= true %>"
 			label="advanced-configuration"
 		>
-			<aui:input label="max-options" name="preferences--maxOptions--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("maxOptions", null), 10) %>' />
-			<aui:input label="max-terms" name="preferences--maxTerms--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("maxTerms", null), 10) %>' />
-			<aui:input label="frequency-threshold" name="preferences--frequencyThreshold--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("frequencyThreshold", null), 1) %>' />
-			<aui:input label="display-frequencies" name="preferences--frequenciesVisible--" type="checkbox" value='<%= GetterUtil.getBoolean(portletPreferences.getValue("frequenciesVisible", null), true) %>' />
+			<aui:input label="max-options" name="preferences--maxOptions--" value="<%= cpOptionsSearchFacetDisplayContext.getMaxOptions() %>" />
+			<aui:input label="max-terms" name="preferences--maxTerms--" value="<%= cpOptionsSearchFacetDisplayContext.getMaxTerms() %>" />
+			<aui:input label="frequency-threshold" name="preferences--frequencyThreshold--" value="<%= cpOptionsSearchFacetDisplayContext.getFrequencyThreshold() %>" />
+			<aui:input label="display-frequencies" name="preferences--frequenciesVisible--" type="checkbox" value="<%= cpOptionsSearchFacetDisplayContext.isFrequenciesVisible() %>" />
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 

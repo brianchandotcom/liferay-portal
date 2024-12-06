@@ -16,7 +16,7 @@ CPCompareContentDisplayContext cpCompareContentDisplayContext = (CPCompareConten
 		<liferay-template:template-selector
 			className="<%= CPCompareContentPortlet.class.getName() %>"
 			displayStyle="<%= cpCompareContentDisplayContext.getDisplayStyle() %>"
-			displayStyleGroupId="<%= cpCompareContentDisplayContext.getDisplayStyleGroupId() %>"
+			displayStyleGroupKey="<%= cpCompareContentDisplayContext.getDisplayStyleGroupKey() %>"
 			refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
 			showEmptyOption="<%= true %>"
 		/>

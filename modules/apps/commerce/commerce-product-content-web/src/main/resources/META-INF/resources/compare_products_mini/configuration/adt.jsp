@@ -16,7 +16,7 @@ CPCompareContentMiniDisplayContext cpCompareContentMiniDisplayContext = (CPCompa
 		<liferay-template:template-selector
 			className="<%= CPCompareContentMiniPortlet.class.getName() %>"
 			displayStyle="<%= cpCompareContentMiniDisplayContext.getDisplayStyle() %>"
-			displayStyleGroupId="<%= cpCompareContentMiniDisplayContext.getDisplayStyleGroupId() %>"
+			displayStyleGroupKey="<%= cpCompareContentMiniDisplayContext.getDisplayStyleGroupKey() %>"
 			refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
 			showEmptyOption="<%= true %>"
 		/>

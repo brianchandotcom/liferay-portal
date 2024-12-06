@@ -16,7 +16,7 @@ CPContentConfigurationDisplayContext cpContentConfigurationDisplayContext = (CPC
 		<liferay-template:template-selector
 			className="<%= CPContentPortlet.class.getName() %>"
 			displayStyle="<%= cpContentConfigurationDisplayContext.getDisplayStyle() %>"
-			displayStyleGroupId="<%= cpContentConfigurationDisplayContext.getDisplayStyleGroupId() %>"
+			displayStyleGroupKey="<%= cpContentConfigurationDisplayContext.getDisplayStyleGroupKey() %>"
 			refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
 			showEmptyOption="<%= true %>"
 		/>

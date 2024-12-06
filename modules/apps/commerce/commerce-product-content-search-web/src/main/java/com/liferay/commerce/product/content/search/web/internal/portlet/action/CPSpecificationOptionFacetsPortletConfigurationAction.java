@@ -7,16 +7,18 @@ package com.liferay.commerce.product.content.search.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionFacetsDisplayContext;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -25,6 +27,7 @@ import javax.portlet.PortletConfig;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Crescenzo Rega
@@ -33,8 +36,8 @@ import org.osgi.service.component.annotations.Component;
 	property = "javax.portlet.name=" + CPPortletKeys.CP_SPECIFICATION_OPTION_FACETS,
 	service = ConfigurationAction.class
 )
-public class CPSpecificationtOptionFacetPortletConfigurationAction
-	extends DefaultConfigurationAction {
+public class CPSpecificationOptionFacetsPortletConfigurationAction
+	extends BaseConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
@@ -42,6 +45,7 @@ public class CPSpecificationtOptionFacetPortletConfigurationAction
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new CPSpecificationOptionFacetsDisplayContext(
+					_configurationProvider, _groupLocalService,
 					httpServletRequest));
 		}
 		catch (Exception exception) {
@@ -85,6 +89,12 @@ public class CPSpecificationtOptionFacetPortletConfigurationAction
 	private static final int _MAX_SIZE_LIMIT = 100;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CPSpecificationtOptionFacetPortletConfigurationAction.class);
+		CPSpecificationOptionFacetsPortletConfigurationAction.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

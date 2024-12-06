@@ -46,6 +46,10 @@ public class
 				dispatchTrigger.getDispatchTriggerId(),
 				DispatchTaskStatus.IN_PROGRESS);
 
+		scheduleNotification(
+			dispatchTrigger.getCompanyId(),
+			dispatchTrigger.getDispatchTriggerId());
+
 		Date resourceLastModifiedDate = getLatestSuccessfulDispatchLogEndDate(
 			dispatchTrigger.getDispatchTriggerId());
 

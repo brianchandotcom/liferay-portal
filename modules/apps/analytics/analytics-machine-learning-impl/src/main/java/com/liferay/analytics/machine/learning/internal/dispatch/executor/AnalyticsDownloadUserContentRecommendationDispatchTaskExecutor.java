@@ -45,6 +45,10 @@ public class AnalyticsDownloadUserContentRecommendationDispatchTaskExecutor
 				dispatchTrigger.getDispatchTriggerId(),
 				DispatchTaskStatus.IN_PROGRESS);
 
+		scheduleNotification(
+			dispatchTrigger.getCompanyId(),
+			dispatchTrigger.getDispatchTriggerId());
+
 		Date resourceLastModifiedDate = getLatestSuccessfulDispatchLogEndDate(
 			dispatchTrigger.getDispatchTriggerId());
 

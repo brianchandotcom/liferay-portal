@@ -100,11 +100,11 @@ public class PostalAddressUtilTest {
 			invocation -> {
 				Locale locale = invocation.getArgument(0, Locale.class);
 
-				if (locale.equals(LocaleUtil.US)) {
-					return "en_US";
-				}
-				else if (locale.equals(LocaleUtil.BRAZIL)) {
+				if (locale.equals(LocaleUtil.BRAZIL)) {
 					return "pt_BR";
+				}
+				else if (locale.equals(LocaleUtil.US)) {
+					return "en_US";
 				}
 
 				return null;

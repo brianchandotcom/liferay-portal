@@ -5,15 +5,15 @@
 
 package com.liferay.frontend.data.set;
 
-import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Daniel Sanz
  */
 public interface SystemFDSEntryRegistry {
 
-	public Map<String, SystemFDSEntry> getSystemFDSEntries();
-
 	public SystemFDSEntry getSystemFDSEntry(String fdsName);
+
+	public Set<String> getSystemFDSNames();
 
 }

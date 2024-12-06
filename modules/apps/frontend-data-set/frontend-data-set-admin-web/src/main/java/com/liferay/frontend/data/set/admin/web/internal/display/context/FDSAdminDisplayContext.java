@@ -36,7 +36,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
@@ -214,35 +214,41 @@ public class FDSAdminDisplayContext {
 	}
 
 	public JSONArray getSystemFDSEntryJSONArray() throws Exception {
-		Map<String, SystemFDSEntry> systemFDSEntries =
-			_systemFDSEntryRegistry.getSystemFDSEntries();
+		Set<String> systemFDSNames =
+			_systemFDSEntryRegistry.getSystemFDSNames();
 
-		if (systemFDSEntries == null) {
+		if (systemFDSNames == null) {
 			return JSONFactoryUtil.createJSONArray();
 		}
 
 		return JSONUtil.toJSONArray(
-			systemFDSEntries.values(),
-			systemFDSEntry -> JSONUtil.put(
-				"additionalAPIURLParameters",
-				systemFDSEntry.getAdditionalAPIURLParameters()
-			).put(
-				"defaultItemsPerPage", systemFDSEntry.getDefaultItemsPerPage()
-			).put(
-				"description", systemFDSEntry.getDescription()
-			).put(
-				"name", systemFDSEntry.getName()
-			).put(
-				"restApplication", systemFDSEntry.getRESTApplication()
-			).put(
-				"restEndpoint", systemFDSEntry.getRESTEndpoint()
-			).put(
-				"restSchema", systemFDSEntry.getRESTSchema()
-			).put(
-				"symbol", systemFDSEntry.getSymbol()
-			).put(
-				"title", systemFDSEntry.getTitle()
-			));
+			systemFDSNames,
+			systemFDSName -> {
+				SystemFDSEntry systemFDSEntry =
+					_systemFDSEntryRegistry.getSystemFDSEntry(systemFDSName);
+
+				return JSONUtil.put(
+					"additionalAPIURLParameters",
+					systemFDSEntry.getAdditionalAPIURLParameters()
+				).put(
+					"defaultItemsPerPage",
+					systemFDSEntry.getDefaultItemsPerPage()
+				).put(
+					"description", systemFDSEntry.getDescription()
+				).put(
+					"name", systemFDSEntry.getName()
+				).put(
+					"restApplication", systemFDSEntry.getRESTApplication()
+				).put(
+					"restEndpoint", systemFDSEntry.getRESTEndpoint()
+				).put(
+					"restSchema", systemFDSEntry.getRESTSchema()
+				).put(
+					"symbol", systemFDSEntry.getSymbol()
+				).put(
+					"title", systemFDSEntry.getTitle()
+				);
+			});
 	}
 
 	public boolean hasAddDataSetObjectEntryPermission() {

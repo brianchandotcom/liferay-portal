@@ -9,13 +9,9 @@ import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
-import com.liferay.petra.string.StringPool;
 
 import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -29,19 +25,13 @@ import org.osgi.service.component.annotations.Deactivate;
 public class SystemFDSEntryRegistryImpl implements SystemFDSEntryRegistry {
 
 	@Override
-	public Map<String, SystemFDSEntry> getSystemFDSEntries() {
-		if (!_opened) {
-			getSystemFDSEntry(StringPool.BLANK);
-
-			_opened = true;
-		}
-
-		return Collections.unmodifiableMap(_systemFDSEntries);
+	public SystemFDSEntry getSystemFDSEntry(String fdsName) {
+		return _serviceTrackerMap.getService(fdsName);
 	}
 
 	@Override
-	public SystemFDSEntry getSystemFDSEntry(String fdsName) {
-		return _serviceTrackerMap.getService(fdsName);
+	public Set<String> getSystemFDSNames() {
+		return Collections.unmodifiableSet(_serviceTrackerMap.keySet());
 	}
 
 	@Activate
@@ -49,44 +39,15 @@ public class SystemFDSEntryRegistryImpl implements SystemFDSEntryRegistry {
 		_bundleContext = bundleContext;
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, SystemFDSEntry.class, "frontend.data.set.name",
-			new ServiceTrackerMapListener
-				<String, SystemFDSEntry, SystemFDSEntry>() {
-
-				@Override
-				public void keyEmitted(
-					ServiceTrackerMap<String, SystemFDSEntry> serviceTrackerMap,
-					String key, SystemFDSEntry service,
-					SystemFDSEntry content) {
-
-					_systemFDSEntries.put(key, service);
-				}
-
-				@Override
-				public void keyRemoved(
-					ServiceTrackerMap<String, SystemFDSEntry> serviceTrackerMap,
-					String key, SystemFDSEntry service,
-					SystemFDSEntry content) {
-
-					_systemFDSEntries.remove(key);
-				}
-
-			});
+			bundleContext, SystemFDSEntry.class, "frontend.data.set.name");
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
-
-		_opened = false;
-
-		_systemFDSEntries.clear();
 	}
 
 	private BundleContext _bundleContext;
-	private boolean _opened;
 	private ServiceTrackerMap<String, SystemFDSEntry> _serviceTrackerMap;
-	private final ConcurrentMap<String, SystemFDSEntry> _systemFDSEntries =
-		new ConcurrentHashMap<>();
 
 }

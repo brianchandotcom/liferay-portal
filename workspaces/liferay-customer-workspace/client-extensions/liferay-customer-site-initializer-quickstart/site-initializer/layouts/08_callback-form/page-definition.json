@@ -88,6 +88,39 @@
 									{
 										"definition": {
 											"fragment": {
+												"key": "BASIC_COMPONENT-html"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "element-html",
+													"value": {
+														"fragmentLink": {
+														},
+														"html": {
+															"value_i18n": {
+																"en_US": "For the most efficient assistance, please create a <a href='https://help.liferay.com/hc/en-us'>support ticket</a>.",
+																"es_ES": "Para obtener una asistencia más efectiva, por favor crea un <a href='https://help.liferay.com/hc/es'>ticket de soporte</a>.",
+																"ja_JP": "最も効率的なサポートのために、<a href='https://help.liferay.com/hc/ja'>サポートチケット</a>を作成してください。",
+																"pt_BR": "Para obter a assistência mais eficiente, por favor, crie um <a href='https://help.liferay.com/hc/pt'>ticket de suporte</a>."
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"fontWeight": "fontWeightNormal",
+												"textColor": "colorNeutral7"
+											},
+											"indexed": true,
+											"name": "Header Paragraph"
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
 											"fragmentConfig": {
@@ -100,10 +133,10 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Request a Support Engineer to contact you as soon as possible.",
-																"es_ES": "Solicita que una persona de Soporte te contacte lo antes posible.",
-																"ja_JP": "サポートエンジニアにできるだけ早く貴社に連絡するよう依頼します。",
-																"pt_BR": "Solicite que um Engenheiro de Suporte entre em contato com você o mais rápido possível."
+																"en_US": "If you'd still like to request a callback, please fill out this form.",
+																"es_ES": "Si aún necesitas que te devolvamos la llamada, por favor rellena este formulario.",
+																"ja_JP": "コールバックをご希望の方は、こちらのフォームにご記入ください。",
+																"pt_BR": "Se você ainda gostaria de solicitar um retorno de chamada, por favor, preencha este formulário."
 															}
 														}
 													}

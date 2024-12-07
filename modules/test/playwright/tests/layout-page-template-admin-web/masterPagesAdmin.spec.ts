@@ -42,78 +42,99 @@ test('Validate if the Blank page template can not be edited and deleted', async 
 	).not.toBeVisible();
 });
 
-test('Add a page based on custom master', async ({
-	masterPagesPage,
-	pageEditorPage,
-	pagesAdminPage,
-	site,
-}) => {
-	const masterName = getRandomString();
+test(
+	'Add a page based on custom master',
+	{
+		tag: ['@LPS-102566', '@LPS-140318'],
+	},
+	async ({masterPagesPage, page, pageEditorPage, pagesAdminPage, site}) => {
+		const masterName = getRandomString();
 
-	let buttonId: string;
+		let buttonId: string;
 
-	await test.step('Create and publish new custom master page and edit it', async () => {
-		await masterPagesPage.goto(site.friendlyUrlPath);
+		await test.step('Create and publish new custom master page and edit it', async () => {
+			await masterPagesPage.goto(site.friendlyUrlPath);
 
-		await masterPagesPage.createNewMaster(masterName);
+			await masterPagesPage.createNewMaster(masterName);
 
-		await masterPagesPage.editMaster(masterName);
-	});
-
-	await test.step('Add and configure a Button fragment on master page', async () => {
-		await pageEditorPage.addFragment('Basic Components', 'Button');
-
-		buttonId = await pageEditorPage.getFragmentId('Button');
-
-		expect(
-			await pageEditorPage.getFragmentStyle({
-				fragmentId: buttonId,
-				style: 'backgroundColor',
-			})
-		).toBe('rgba(0, 0, 0, 0)');
-
-		await pageEditorPage.changeFragmentConfiguration({
-			fieldLabel: 'Background Color',
-			fragmentId: buttonId,
-			tab: 'Styles',
-			value: 'Gray 300',
-			valueFromStylebook: true,
+			await masterPagesPage.editMaster(masterName);
 		});
 
-		expect(
-			await pageEditorPage.getFragmentStyle({
+		await test.step('Add and configure a Button fragment on master page', async () => {
+			await pageEditorPage.addFragment('Basic Components', 'Button');
+
+			buttonId = await pageEditorPage.getFragmentId('Button');
+
+			expect(
+				await pageEditorPage.getFragmentStyle({
+					fragmentId: buttonId,
+					style: 'backgroundColor',
+				})
+			).toBe('rgba(0, 0, 0, 0)');
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Background Color',
 				fragmentId: buttonId,
-				style: 'backgroundColor',
-			})
-		).toBe('rgb(231, 231, 237)');
+				tab: 'Styles',
+				value: 'Gray 300',
+				valueFromStylebook: true,
+			});
 
-		await pageEditorPage.publishPage();
-	});
+			expect(
+				await pageEditorPage.getFragmentStyle({
+					fragmentId: buttonId,
+					style: 'backgroundColor',
+				})
+			).toBe('rgb(231, 231, 237)');
 
-	const pageName = getRandomString();
-
-	await test.step('Assert custom masters as an option when add a new page', async () => {
-		await pagesAdminPage.goto(site.friendlyUrlPath);
-
-		await pagesAdminPage.createNewPage({
-			name: pageName,
-			template: masterName,
+			await pageEditorPage.publishPage();
 		});
-	});
 
-	await test.step('Assert the new page inherits elements from custom masters', async () => {
-		await pagesAdminPage.goto(site.friendlyUrlPath);
+		const pageName = getRandomString();
 
-		await pagesAdminPage.editPage(pageName);
+		await test.step('Assert custom masters as an option when add a new page', async () => {
+			await pagesAdminPage.goto(site.friendlyUrlPath);
 
-		expect(
-			await pageEditorPage.getFragmentStyle({
-				fragmentId: buttonId,
-				style: 'backgroundColor',
-			})
-		).toBe('rgb(231, 231, 237)');
-	});
-});
+			await pagesAdminPage.createNewPage({
+				name: pageName,
+				template: masterName,
+			});
+		});
+
+		await test.step('Assert the new page inherits elements from custom masters', async () => {
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pagesAdminPage.editPage(pageName);
+
+			expect(
+				await pageEditorPage.getFragmentStyle({
+					fragmentId: buttonId,
+					style: 'backgroundColor',
+				})
+			).toBe('rgb(231, 231, 237)');
+		});
+
+		await test.step('Update custom master', async () => {
+			await masterPagesPage.goto(site.friendlyUrlPath);
+
+			await masterPagesPage.editMaster(masterName);
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			page.on('dialog', (dialog) => dialog.accept());
+
+			await pageEditorPage.publishPage();
+		});
+
+		await test.step('Assert the new page inherits updated elements from custom master', async () => {
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pagesAdminPage.editPage(pageName);
+
+			await expect(page.getByText('Heading Example')).toBeVisible();
+		});
+	}
+);
 
 test('Fragments hidden in master pages are hidden in pages that use it and visibility can not be changed', async ({
 	masterPagesPage,

@@ -291,6 +291,10 @@ definition {
 	@description = "This is a test for LPS-110247. View available mapping fields in different type editable fields of fragment."
 	@priority = 4
 	test ViewAvailableMappingFields {
+		task ("Enable featured content fragment set") {
+			FragmentsAdmin.enableFeaturedContent();
+		}
+
 		task ("Add a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",
@@ -652,6 +656,10 @@ definition {
 		property portal.acceptance = "true";
 
 		var baseURL = PropsUtil.get("portal.url");
+
+		task ("Enable featured content fragment set") {
+			FragmentsAdmin.enableFeaturedContent();
+		}
 
 		task ("Add a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

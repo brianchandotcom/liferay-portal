@@ -17,6 +17,10 @@ definition {
 			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
+		task ("Enable featured content fragment set") {
+			FragmentsAdmin.enableFeaturedContent();
+		}
+
 		task ("Activate local live staging") {
 			JSONStaging.enableLocalStaging(groupName = "Test Site Name");
 		}

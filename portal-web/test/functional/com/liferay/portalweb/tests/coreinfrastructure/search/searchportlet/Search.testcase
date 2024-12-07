@@ -3074,6 +3074,10 @@ definition {
 	@description = "This is a use case for LPS-141138."
 	@priority = 4
 	test ViewObjectsSearchResultDetailsDisplayPageTemplate {
+		task ("Enable featured content fragment set") {
+			FragmentsAdmin.enableFeaturedContent();
+		}
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

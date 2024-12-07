@@ -114,6 +114,13 @@ public class ProductConfigurationListResourceImpl
 					searchContext.setGroupIds(
 						new long[] {commerceCatalog.getGroupId()});
 				}
+				else {
+					searchContext.setGroupIds(
+						transformToLongArray(
+							_commerceCatalogLocalService.search(
+								contextCompany.getCompanyId()),
+							CommerceCatalog::getGroupId));
+				}
 			},
 			sorts,
 			document -> _toProductConfigurationList(

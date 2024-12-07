@@ -40,7 +40,7 @@ public class CPConfigurationListModelPreFilterContributor
 			for (long groupId : groupIds) {
 				booleanFilter.add(
 					new TermFilter(Field.GROUP_ID, String.valueOf(groupId)),
-					BooleanClauseOccur.MUST);
+					BooleanClauseOccur.SHOULD);
 			}
 		}
 	}

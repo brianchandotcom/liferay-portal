@@ -256,7 +256,7 @@ public class ProductConfigurationDTOConverter
 		}
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
-			cpConfigurationEntry.getCPConfigurationEntryId());
+			cpConfigurationEntry.getClassPK());
 
 		return cpDefinition.getName(LocaleUtil.toLanguageId(locale));
 	}

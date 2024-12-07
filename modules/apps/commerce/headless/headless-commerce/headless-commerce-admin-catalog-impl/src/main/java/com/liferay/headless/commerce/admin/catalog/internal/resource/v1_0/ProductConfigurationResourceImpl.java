@@ -296,7 +296,7 @@ public class ProductConfigurationResourceImpl
 					productShippingConfiguration.getShippingSeparately(),
 					cpConfigurationEntry.isShipSeparately()),
 				GetterUtil.getBoolean(
-					!productTaxConfiguration.getTaxable(),
+					!_isTaxable(productTaxConfiguration),
 					cpConfigurationEntry.isTaxExempt()),
 				GetterUtil.getBoolean(
 					productConfiguration.getVisible(),
@@ -414,7 +414,7 @@ public class ProductConfigurationResourceImpl
 					productShippingConfiguration.getShippingSeparately(),
 					masterCPConfigurationEntry.isShipSeparately()),
 				GetterUtil.getBoolean(
-					!productTaxConfiguration.getTaxable(),
+					!_isTaxable(productTaxConfiguration),
 					masterCPConfigurationEntry.isTaxExempt()),
 				GetterUtil.getBoolean(
 					productConfiguration.getVisible(),
@@ -594,6 +594,16 @@ public class ProductConfigurationResourceImpl
 		}
 
 		return productTaxConfiguration;
+	}
+
+	private boolean _isTaxable(
+		ProductTaxConfiguration productTaxConfiguration) {
+
+		if (productTaxConfiguration.getTaxable() == null) {
+			return true;
+		}
+
+		return productTaxConfiguration.getTaxable();
 	}
 
 	private ProductConfiguration _toProductConfiguration(

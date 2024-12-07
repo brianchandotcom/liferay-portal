@@ -24,6 +24,8 @@ export async function enableSystemFeatureFlag({page, title, type}: Props) {
 	const url = URLS[type];
 
 	await expect(async () => {
+		await page.goto(PORTLET_URLS.systemSettings);
+
 		await page.goto(url);
 
 		await expect(page.getByLabel(title)).toBeVisible({timeout: 3000});
@@ -59,6 +61,8 @@ export async function disableSystemFeatureFlag({page, title, type}: Props) {
 	const url = URLS[type];
 
 	await expect(async () => {
+		await page.goto(PORTLET_URLS.systemSettings);
+
 		await page.goto(url);
 
 		await expect(page.getByLabel(title)).toBeVisible({timeout: 3000});

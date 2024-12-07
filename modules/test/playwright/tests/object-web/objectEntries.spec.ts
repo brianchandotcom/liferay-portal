@@ -770,6 +770,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				{code: 0},
 				undefined,
 				'default',
+				'company',
 				objectField
 			);
 
@@ -783,6 +784,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				{code: 0},
 				undefined,
 				'default',
+				'company',
 				objectField
 			);
 

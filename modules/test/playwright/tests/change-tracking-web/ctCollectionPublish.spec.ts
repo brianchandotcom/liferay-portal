@@ -107,7 +107,9 @@ test('Cannot publish empty ctCollection', async ({
 
 	await page.getByRole('link', {name: 'Publish'}).click();
 
-	await expect(page.getByText('Publish: ' + ctCollection.body.name)).toBeVisible();
+	await expect(
+		page.getByText('Publish: ' + ctCollection.body.name)
+	).toBeVisible();
 
 	await page
 		.locator('li')

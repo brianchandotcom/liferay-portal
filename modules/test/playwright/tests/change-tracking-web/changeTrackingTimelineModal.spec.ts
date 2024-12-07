@@ -141,7 +141,9 @@ test('LPD-22768 Add options to interact with the same entity in other publicatio
 	await goToPublicationTimelineModal(page, journalPage);
 
 	const entityHistoryModalLocator = getEntityHistoryTableLocator(page);
-	await entityHistoryModalLocator.getByText(ctCollections[0].body.name).waitFor();
+	await entityHistoryModalLocator
+		.getByText(ctCollections[0].body.name)
+		.waitFor();
 
 	const firstDropdown = entityHistoryModalLocator
 		.locator('.item-actions .dropdown svg.lexicon-icon-ellipsis-v')

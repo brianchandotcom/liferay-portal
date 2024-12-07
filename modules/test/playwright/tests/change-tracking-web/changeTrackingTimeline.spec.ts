@@ -69,7 +69,9 @@ test.beforeEach(
 );
 
 test.afterEach(async ({apiHelpers, ctCollection}) => {
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.body.id);
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(
+		ctCollection.body.id
+	);
 });
 
 test('LPD-25853 Edit in x publication is added in the timeline dropdown actions', async ({
@@ -146,7 +148,9 @@ test('LPD-25853 Review Change is added in the timeline dropdown actions', async 
 		.waitFor();
 
 	await expect(
-		page.locator('.publication-name').filter({hasText: ctCollection.body.name})
+		page
+			.locator('.publication-name')
+			.filter({hasText: ctCollection.body.name})
 	).toBeVisible();
 
 	await expect(page.getByText(title2)).toBeVisible();

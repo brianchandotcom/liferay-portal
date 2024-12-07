@@ -418,7 +418,7 @@ export class DataApiHelpers extends ApiHelpers {
 				await this.headlessCommerceReturn.deleteCommerceReturn(item.id);
 			}
 			else if (item.type === 'ctCollection') {
-				await this.headlessChangeTracking.deleteCTCollection(item.id)
+				await this.headlessChangeTracking.deleteCTCollection(item.id);
 			}
 			else if (item.type === 'discount') {
 				await this.headlessCommerceAdminPricing.deleteDiscount(item.id);

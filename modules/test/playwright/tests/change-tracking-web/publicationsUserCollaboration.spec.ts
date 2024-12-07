@@ -103,5 +103,7 @@ test('LPD-30098 Invite user as admin', async ({
 	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user1.id));
 	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user2.id));
 
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.body.id);
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(
+		ctCollection.body.id
+	);
 });

@@ -23,7 +23,9 @@ export const test = mergeTests(
 let user;
 
 test.afterEach(async ({apiHelpers, ctCollection}) => {
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.body.id);
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(
+		ctCollection.body.id
+	);
 
 	const role = await apiHelpers.headlessAdminUser.getRoles('Administrator');
 

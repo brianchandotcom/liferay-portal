@@ -70,7 +70,9 @@ test('LPD-31710 Publication bar disappears when trying to select a publication',
 		page.locator('li').filter({hasText: ctCollection.body.name})
 	).toBeVisible();
 
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.body.id);
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(
+		ctCollection.body.id
+	);
 });
 
 test('LPD-36221 Publications bar breaks when enabling the FF for LPD-20131', async ({
@@ -120,5 +122,7 @@ test('LPD-36221 Publications bar breaks when enabling the FF for LPD-20131', asy
 		false
 	);
 
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.body.id);
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(
+		ctCollection.body.id
+	);
 });

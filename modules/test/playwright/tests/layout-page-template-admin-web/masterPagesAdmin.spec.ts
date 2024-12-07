@@ -165,7 +165,7 @@ test('Fragments hidden in master pages are hidden in pages that use it and visib
 
 		await pageEditorPage.hideFragment(headingId);
 
-		expect(headingFragment).not.toBeVisible();
+		await expect(headingFragment).not.toBeVisible();
 
 		await pageEditorPage.publishPage();
 	});
@@ -184,10 +184,10 @@ test('Fragments hidden in master pages are hidden in pages that use it and visib
 
 		await pagesAdminPage.editPage(pageName);
 
-		expect(buttonFragment).toBeVisible();
+		await expect(buttonFragment).toBeVisible();
 		expect(buttonFragment.getAttribute('inert')).toBeDefined();
 
-		expect(headingFragment).not.toBeVisible();
+		await expect(headingFragment).not.toBeVisible();
 		expect(headingFragment.getAttribute('inert')).toBeDefined();
 	});
 });

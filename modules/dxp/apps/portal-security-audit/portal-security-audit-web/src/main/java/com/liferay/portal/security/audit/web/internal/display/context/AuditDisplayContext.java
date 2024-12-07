@@ -5,13 +5,10 @@
 
 package com.liferay.portal.security.audit.web.internal.display.context;
 
-import com.liferay.petra.function.UnsafeTriFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletQName;
@@ -397,26 +394,24 @@ public class AuditDisplayContext {
 		_paging = paging;
 	}
 
+	@FunctionalInterface
+	public interface ParamGetter<V> {
+
+		public V get(
+			HttpServletRequest httpServletRequest, String param,
+			V defaultValue);
+
+	}
+
 	private <T> T _getParamWithOrWithoutNamespace(
-		UnsafeTriFunction<HttpServletRequest, String, T, T, Exception>
-			unsafeTriFunction,
-		String param, T defaultValue) {
+		ParamGetter<T> paramGetter, String param, T defaultValue) {
 
-		try {
-			return unsafeTriFunction.apply(
-				(HttpServletRequest)_servletRequestWrapper.getRequest(),
-				PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + param,
-				unsafeTriFunction.apply(
-					(HttpServletRequest)_servletRequestWrapper.getRequest(),
-					param,
-					unsafeTriFunction.apply(
-						_httpServletRequest, param, defaultValue)));
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		return defaultValue;
+		return paramGetter.get(
+			(HttpServletRequest)_servletRequestWrapper.getRequest(),
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + param,
+			paramGetter.get(
+				(HttpServletRequest)_servletRequestWrapper.getRequest(), param,
+				paramGetter.get(_httpServletRequest, param, defaultValue)));
 	}
 
 	private PortletURL _getPortletURL() throws Exception {
@@ -489,9 +484,6 @@ public class AuditDisplayContext {
 
 		return _portletURL;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AuditDisplayContext.class);
 
 	private String _className;
 	private String _classPK;

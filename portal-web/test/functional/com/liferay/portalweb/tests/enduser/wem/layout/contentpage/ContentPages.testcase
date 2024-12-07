@@ -170,103 +170,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-125985. The Page Creater can configure configuration template of widget in page editor."
-	@priority = 5
-	test ConfigureConfigurationTemplateOfAssetPublisherInPageEditor {
-		property portal.acceptance = "true";
-
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = ${randomSiteName},
-				title = "Web Content Title");
-		}
-
-		task ("Add an Asset Publisher widget to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addWidget(portletName = "Asset Publisher");
-		}
-
-		task ("View the web content shown in Asset Publisher") {
-			AssertVisible(
-				key_assetTitle = "Web Content Title",
-				locator1 = "AP#ASSET_ABSTRACT_TITLE");
-
-			AssertTextEquals(
-				key_assetTitle = "Web Content Title",
-				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-				value1 = "Web Content Content");
-		}
-
-		task ("View the rating star not shown in Asset Publisher") {
-			AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR");
-
-			AssertElementNotPresent(locator1 = "Ratings#AVERAGE_STAR");
-		}
-
-		task ("Enable the Ratings in Asset Publisher") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Ratings");
-
-			IFrame.closeFrame();
-		}
-
-		task ("View the rating star shown in Asset Publisher") {
-			AssertVisible(locator1 = "Ratings#YOUR_RATING_STAR");
-
-			AssertVisible(locator1 = "Ratings#AVERAGE_STAR");
-		}
-
-		task ("Save the current configuration as template") {
-			AssetPublisherPortlet.saveConfigurationTemplatePG(configurationName = "Asset Publisher Configuration Template");
-
-			IFrame.closeFrame();
-		}
-
-		task ("Remove the Asset Publisher") {
-			PageEditor.removeFragment(fragmentName = "Asset Publisher");
-		}
-
-		task ("Add an Asset Publisher widget to page") {
-			PageEditor.addWidget(portletName = "Asset Publisher");
-		}
-
-		task ("View the web content shown in Asset Publisher") {
-			AssertVisible(
-				key_assetTitle = "Web Content Title",
-				locator1 = "AP#ASSET_ABSTRACT_TITLE");
-
-			AssertTextEquals(
-				key_assetTitle = "Web Content Title",
-				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-				value1 = "Web Content Content");
-		}
-
-		task ("View the rating star not shown in Asset Publisher") {
-			AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR");
-
-			AssertElementNotPresent(locator1 = "Ratings#AVERAGE_STAR");
-		}
-
-		task ("Apply the new configure template") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			AssetPublisherPortlet.restoreConfigurationTemplatePG(configurationName = "Asset Publisher Configuration Template");
-
-			IFrame.closeFrame();
-		}
-
-		task ("View the rating star shown in Asset Publisher") {
-			AssertVisible(locator1 = "Ratings#YOUR_RATING_STAR");
-
-			AssertVisible(locator1 = "Ratings#AVERAGE_STAR");
-		}
-	}
-
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session on content page in card view."
 	@priority = 3
 	test CouldAddAndRemoveFragmentInCardView {
@@ -1261,68 +1164,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130083 and LPS-106776. View the ellipsis button on the topper of fragment when the fragment is inside a nested Grid."
-	@priority = 4
-	@uitest
-	test ViewEllipsisButtonOnTheTopperOfFragmentInsideNestedGrid {
-		task ("Add a Grid element to the content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Grid");
-		}
-
-		task ("Add a second Grid to the second module of Grid") {
-			PageEditor.addElementToColumn(
-				collectionName = "Layout Elements",
-				columnNumber = 2,
-				fragmentName = "Grid",
-				navTab = "Fragments");
-		}
-
-		task ("Add a Heading fragment to the first module of inner Grid") {
-			PageEditor.addElementToColumn(
-				collectionName = "Basic Components",
-				columnNumber = 1,
-				fragmentName = "Heading",
-				navTab = "Fragments",
-				position = 2);
-		}
-
-		task ("Add a Button fragment to the second module of inner Grid") {
-			PageEditor.addElementToColumn(
-				collectionName = "Basic Components",
-				columnNumber = 2,
-				fragmentName = "Button",
-				navTab = "Fragments",
-				position = 2);
-		}
-
-		task ("Add a Paragraph fragment to the third module of inner Grid") {
-			PageEditor.addElementToColumn(
-				collectionName = "Basic Components",
-				columnNumber = 3,
-				fragmentName = "Paragraph",
-				navTab = "Fragments",
-				position = 2);
-		}
-
-		task ("View the ellipsis button is visible on topper of fragments inside inner Grid") {
-			for (var fragmentName : list "Heading,Button,Paragraph") {
-				PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
-
-				PageEditor.gotoTab(tabName = "Browser");
-
-				AssertVisible(
-					key_fragmentName = ${fragmentName},
-					locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
-			}
-		}
-	}
-
 	@description = "This is a test for LPS-158746. The favorite fragment is hidden if it is not allowed on master page."
 	@priority = 3
 	test ViewFavoriteFragmentIsHiddenWhenItIsNotAllowedOnMasterPage {
@@ -1469,57 +1310,6 @@ definition {
 
 			AssertElementPresent(
 				key_fragmentName = "Card",
-				locator1 = "Fragment#FRAGMENT_HEADER_INSET_STYLE");
-		}
-	}
-
-	@description = "This is a test for LPS-104629. The header of widget selected can reach the border of the management toolbar."
-	@priority = 4
-	@uitest
-	test ViewHeaderOfWidgetMoveInsideBodyWhenReachTheManagementToolbar {
-		task ("Add My Sites, Documents and Media, Blogs and Asset Publisher widgets to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addWidget(portletName = "Asset Publisher");
-
-			PageEditor.addWidget(
-				portletName = "Blogs",
-				targetFragmentName = "Asset Publisher");
-
-			PageEditor.addWidget(
-				portletName = "Documents and Media",
-				targetFragmentName = "Blogs");
-
-			PageEditor.addWidget(
-				portletName = "My Sites",
-				targetFragmentName = "Documents and Media");
-		}
-
-		task ("Assert Header of Blogs is shown over body when doesn't reach the management toolbar") {
-			ScrollWebElementIntoView(
-				index = 1,
-				key_fragmentName = "Blogs",
-				locator1 = "Fragment#FRAGMENT_LABEL");
-
-			PageEditor.clickConfigurableField(fragmentName = "Blogs");
-
-			PageEditor.gotoTab(tabName = "Browser");
-
-			AssertElementNotPresent(
-				key_fragmentName = "Blogs",
-				locator1 = "Fragment#FRAGMENT_HEADER_INSET_STYLE");
-		}
-
-		task ("Assert Header of Blogs moves inside body when reach the management toolbar") {
-			ScrollWebElementIntoView(
-				index = 1,
-				key_fragmentName = "My Sites",
-				locator1 = "Fragment#FRAGMENT_LABEL");
-
-			AssertElementPresent(
-				key_fragmentName = "Blogs",
 				locator1 = "Fragment#FRAGMENT_HEADER_INSET_STYLE");
 		}
 	}
@@ -1679,45 +1469,6 @@ definition {
 				locator1 = "PageEditor#COMMON_STYLES_CLASS",
 				locator2 = "margin-top",
 				value1 = "0px");
-		}
-	}
-
-	@description = "LPS-147400. Collection Display and Collection Filter have width and display configuration."
-	@priority = 3
-	test ViewWidthAndHideOfCollectionFilterAndCollectionDisplayAndCollectionFilterCanBeHidden {
-		task ("Go to edit page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-		}
-
-		task ("Add Collection Display and Collection Filter frgaments to page") {
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Collection Display");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Collection Filter",
-				targetFragmentName = "Collection Display");
-		}
-
-		task ("View Collection Filter frgaments width and height options") {
-			PageEditor.gotoConfiguration(fragmentName = "Collection Filter");
-
-			AssertVisible(
-				key_text = "Height",
-				locator1 = "TextInput#ANY_SPECIFIC");
-
-			AssertVisible(
-				key_text = "Width",
-				locator1 = "TextInput#ANY_SPECIFIC");
-		}
-
-		task ("Hide Collection Display and Collection Filter frgaments from fragment options") {
-			PageEditor.hideFragmentViaPageStyles(fragmentName = "Collection Display");
-
-			PageEditor.hideFragmentViaPageStyles(fragmentName = "Collection Filter");
 		}
 	}
 

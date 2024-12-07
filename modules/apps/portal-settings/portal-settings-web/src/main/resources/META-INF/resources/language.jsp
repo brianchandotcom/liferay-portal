@@ -68,10 +68,14 @@
 
 		String[] currentLanguageIds = PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.LOCALES, StringPool.COMMA, PropsValues.LOCALES_ENABLED);
 
-		for (String currentLanguageId : currentLanguageIds) {
-			Locale currentLocale = LocaleUtil.fromLanguageId(currentLanguageId);
+		Set<String> set = new HashSet<>();
 
-			leftList.add(new KeyValuePair(currentLanguageId, currentLocale.getDisplayName(locale)));
+		for (String currentLanguageId : currentLanguageIds) {
+			if (set.add(currentLanguageId)) {
+				Locale currentLocale = LocaleUtil.fromLanguageId(currentLanguageId);
+
+				leftList.add(new KeyValuePair(currentLanguageId, currentLocale.getDisplayName(locale)));
+			}
 		}
 
 		// Right list

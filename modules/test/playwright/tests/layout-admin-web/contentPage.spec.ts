@@ -263,6 +263,51 @@ test(
 );
 
 test(
+	'In edit mode the page should still show the elements of the page that are not from the page itself, like the header, footer, or elements defined by the theme',
+	{
+		tag: '@LPS-81870',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Assert header and footer
+
+		await expect(page.getByTitle(`Go to ${site.name}`)).toBeVisible();
+
+		await expect(
+			page.getByText('This search bar is not visible to users yet.')
+		).toBeVisible();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByText(
+				'This area is defined by the theme. You can change the theme settings by clicking More in the Page Design Options panel on the sidebar.'
+			),
+			trigger: page.locator('#banner'),
+		});
+
+		await expect(page.getByText('Powered by ')).toBeAttached();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByText(
+				'This area is defined by the theme. You can change the theme settings by clicking More in the Page Design Options panel on the sidebar.'
+			),
+			trigger: page.locator('#footer'),
+		});
+	}
+);
+
+test(
 	'The deprecated label exist for the contributed Featured Content Fragment Set',
 	{
 		tag: '@LPD-42061',

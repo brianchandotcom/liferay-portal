@@ -5,14 +5,19 @@
 
 import {Locator, expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
+import {waitForAlert} from '../../utils/waitForAlert';
 
 export const test = mergeTests(
+	apiHelpersTest,
 	pagesAdminPagesTest,
 	isolatedSiteTest,
 	loginTest(),
@@ -133,6 +138,54 @@ test(
 
 			await expect(page.getByText('Heading Example')).toBeVisible();
 		});
+	}
+);
+
+test(
+	'Can duplicate a master page template',
+	{
+		tag: '@LPS-102208',
+	},
+	async ({apiHelpers, masterPagesPage, page, site}) => {
+
+		// Add master page template
+
+		const masterName = getRandomString();
+
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+			{
+				groupId: site.id,
+				name: masterName,
+				type: 'master-layout',
+			}
+		);
+
+		// Duplicate master page template
+
+		await masterPagesPage.goto(site.friendlyUrlPath);
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {name: 'Make a Copy'}),
+			trigger: page
+				.locator('.card-page-item')
+				.filter({hasText: masterName})
+				.getByLabel('More actions'),
+		});
+
+		await hoverAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByText('Master Page', {exact: true}).nth(1),
+			trigger: page.getByRole('menuitem', {name: 'Make a Copy'}),
+		});
+
+		await waitForAlert(page);
+
+		// Assert master page template is duplicated
+
+		await expect(
+			page.getByRole('link', {exact: true, name: `${masterName} (Copy)`})
+		).toBeVisible();
 	}
 );
 

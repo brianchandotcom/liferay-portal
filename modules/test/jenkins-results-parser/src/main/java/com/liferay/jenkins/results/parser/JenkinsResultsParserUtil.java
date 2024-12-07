@@ -4968,6 +4968,10 @@ public class JenkinsResultsParserUtil {
 						}
 					}
 
+					if (url.startsWith("https://releases-cdn.liferay.com")) {
+						httpURLConnection.setRequestProperty("User-Agent", "");
+					}
+
 					if (url.contains("/oauth2/")) {
 						httpURLConnection.setRequestProperty(
 							"accept", "application/json");

@@ -30,17 +30,17 @@ public class AuthorizationServerMetadataResolverTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testMetadataIsCached() throws Exception {
+	public void testResolveOIDCProviderMetadata() throws Exception {
 		Field field =
 			AuthorizationServerMetadataResolver.class.getDeclaredField(
 				"_oidcProviderMetadataPortalCache");
 
 		field.setAccessible(true);
+
 		field.set(_authorizationServerMetadataResolver, _portalCache);
 
 		String authServerWellKnownURI =
 			"https://accounts.google.com/.well-known/openid-configuration";
-
 		int metadataCacheInSecs = 90;
 		long oAuthClientEntryId = RandomTestUtil.randomLong();
 
@@ -48,7 +48,6 @@ public class AuthorizationServerMetadataResolverTest {
 			_authorizationServerMetadataResolver.resolveOIDCProviderMetadata(
 				authServerWellKnownURI, metadataCacheInSecs,
 				oAuthClientEntryId);
-
 		OIDCProviderMetadata oidcProviderMetadata2 =
 			_authorizationServerMetadataResolver.resolveOIDCProviderMetadata(
 				authServerWellKnownURI, metadataCacheInSecs,

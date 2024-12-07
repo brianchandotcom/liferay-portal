@@ -39,6 +39,10 @@ definition {
 			BlogsConfiguration.enableReadingTime();
 		}
 
+		task ("Enable featured content fragment set") {
+			FragmentsAdmin.enableFeaturedContent();
+		}
+
 		task ("Add a Banner Center fragment to display page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 

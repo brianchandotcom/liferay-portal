@@ -66,7 +66,7 @@
 
 		List<KeyValuePair> leftList = new ArrayList<>();
 
-		String[] currentLanguageIds = PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.LOCALES, StringPool.COMMA, PropsValues.LOCALES_ENABLED);
+		String[] currentLanguageIds = ArrayUtil.unique(PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.LOCALES, StringPool.COMMA, PropsValues.LOCALES_ENABLED));
 
 		for (String currentLanguageId : currentLanguageIds) {
 			Locale currentLocale = LocaleUtil.fromLanguageId(currentLanguageId);

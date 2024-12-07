@@ -11,6 +11,9 @@ import {loginTest} from '../../fixtures/loginTest';
 import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
+import {ApiHelpers} from '../../helpers/ApiHelpers';
+import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEditorPage';
+import {MasterPagesPage} from '../../pages/layout-page-template-admin-web/MasterPagesPage';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
@@ -24,6 +27,46 @@ export const test = mergeTests(
 	masterPagesPagesTest,
 	pageEditorPagesTest
 );
+
+async function addMasterPage(
+	apiHelpers: ApiHelpers,
+	masterPageName: string,
+	masterPagesPage: MasterPagesPage,
+	pageEditorPage: PageEditorPage,
+	site: Site
+) {
+
+	// Add master page
+
+	const masterPage =
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+			{
+				groupId: site.id,
+				name: masterPageName,
+				type: 'master-layout',
+			}
+		);
+
+	// Edit master page
+
+	await masterPagesPage.goto(site.friendlyUrlPath);
+
+	await masterPagesPage.editMaster(masterPageName);
+
+	await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+	const headingId = await pageEditorPage.getFragmentId('Heading');
+
+	await pageEditorPage.editTextEditable(
+		headingId,
+		'element-text',
+		`Master Page: ${masterPageName}`
+	);
+
+	await pageEditorPage.publishPage();
+
+	return masterPage;
+}
 
 test('Validate if the Blank page template can not be edited and deleted', async ({
 	masterPagesPage,
@@ -138,6 +181,103 @@ test(
 
 			await expect(page.getByText('Heading Example')).toBeVisible();
 		});
+	}
+);
+
+test(
+	'Assert the content in drop zone is not changed when change master of page',
+	{
+		tag: '@LPS-102200',
+	},
+	async ({apiHelpers, masterPagesPage, page, pageEditorPage, site}) => {
+
+		// Add master 2 page templates
+
+		const masterPageName1 = getRandomString();
+
+		const masterPage1 = await addMasterPage(
+			apiHelpers,
+			masterPageName1,
+			masterPagesPage,
+			pageEditorPage,
+			site
+		);
+
+		const masterPageName2 = getRandomString();
+
+		await addMasterPage(
+			apiHelpers,
+			masterPageName2,
+			masterPagesPage,
+			pageEditorPage,
+			site
+		);
+
+		// Create a page based on first master page
+
+		const layoutTitle = getRandomString();
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			masterLayoutPlid: masterPage1.plid,
+			options: {type: 'content'},
+			title: layoutTitle,
+		});
+
+		// Go to edit mode
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Assert inherited fragment from master page is visible
+
+		await expect(
+			page.getByText(`Master Page: ${masterPageName1}`)
+		).toBeVisible();
+		await expect(
+			page.getByText(`Master Page: ${masterPageName2}`)
+		).not.toBeVisible();
+
+		// Add a new fragment
+
+		await pageEditorPage.addFragment('Basic Components', 'Button');
+
+		// Change master page to second custom master
+
+		await pageEditorPage.goToSidebarTab('Page Design Options');
+
+		await page.getByLabel(masterPageName2).click();
+
+		await pageEditorPage.waitForChangesSaved();
+
+		// Assert inherited fragment from master page is visible
+
+		await expect(
+			page.getByText(`Master Page: ${masterPageName1}`)
+		).not.toBeVisible();
+		await expect(
+			page.getByText(`Master Page: ${masterPageName2}`)
+		).toBeVisible();
+
+		await expect(page.getByText('Go Somewhere')).toBeVisible();
+
+		// Change master page to blank master
+
+		await pageEditorPage.goToSidebarTab('Page Design Options');
+
+		await page.getByLabel('Blank').click();
+
+		await pageEditorPage.waitForChangesSaved();
+
+		// Assert inherited fragment from master page is visible
+
+		await expect(
+			page.getByText(`Master Page: ${masterPageName1}`)
+		).not.toBeVisible();
+		await expect(
+			page.getByText(`Master Page: ${masterPageName2}`)
+		).not.toBeVisible();
+
+		await expect(page.getByText('Go Somewhere')).toBeVisible();
 	}
 );
 

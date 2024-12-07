@@ -30,14 +30,6 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_upgradeOAuthClientEntriesWithOIDCProviderConfiguration();
-
-		_upgradeOAuthClientEntriesWithoutOIDCProviderConfiguration();
-	}
-
-	private void _upgradeOAuthClientEntriesWithOIDCProviderConfiguration()
-		throws Exception {
-
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			"(service.factoryPid=com.liferay.portal.security.sso.openid." +
 				"connect.internal.configuration." +
@@ -51,31 +43,27 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 			Dictionary<String, Object> properties =
 				configuration.getProperties();
 
-			if (properties != null) {
-				String openIdConnectClientId = GetterUtil.getString(
-					properties.get("openIdConnectClientId"));
+			if (properties == null) {
+				continue;
+			}
 
-				long discoveryEndPointCacheInMillis = GetterUtil.getLong(
-					properties.get("discoveryEndPointCacheInMillis"));
+			String openIdConnectClientId = GetterUtil.getString(
+				properties.get("openIdConnectClientId"));
 
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							"update OAuthClientEntry set " +
-								"metadataCacheInMillis = ? where clientId = " +
-									"?")) {
+			long discoveryEndPointCacheInMillis = GetterUtil.getLong(
+				properties.get("discoveryEndPointCacheInMillis"));
 
-					preparedStatement.setLong(
-						1, discoveryEndPointCacheInMillis);
-					preparedStatement.setString(2, openIdConnectClientId);
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"update OAuthClientEntry set metadataCacheInMillis = " +
+							"? where clientId = ?")) {
 
-					preparedStatement.execute();
-				}
+				preparedStatement.setLong(1, discoveryEndPointCacheInMillis);
+				preparedStatement.setString(2, openIdConnectClientId);
+
+				preparedStatement.execute();
 			}
 		}
-	}
-
-	private void _upgradeOAuthClientEntriesWithoutOIDCProviderConfiguration()
-		throws Exception {
 
 		try (Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(

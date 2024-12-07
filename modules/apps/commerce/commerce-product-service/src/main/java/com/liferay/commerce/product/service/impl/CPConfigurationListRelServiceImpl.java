@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.product.service.impl;
 
-import com.liferay.commerce.product.exception.NoSuchCPConfigurationListException;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPConfigurationListRel;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -224,12 +223,8 @@ public class CPConfigurationListRelServiceImpl
 		throws PortalException {
 
 		CPConfigurationList cpConfigurationList =
-			_cpConfigurationListLocalService.fetchCPConfigurationList(
+			_cpConfigurationListLocalService.getCPConfigurationList(
 				cpConfigurationListId);
-
-		if (cpConfigurationList == null) {
-			throw new NoSuchCPConfigurationListException();
-		}
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.fetchCommerceCatalogByGroupId(

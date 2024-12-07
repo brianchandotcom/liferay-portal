@@ -1073,6 +1073,10 @@ definition {
 	test RotateDisplayedImageViaImageEditor {
 		property portal.acceptance = "true";
 
+		task ("Enable featured content fragment set") {
+			FragmentsAdmin.enableFeaturedContent();
+		}
+
 		task ("Add a Banner Center fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
@@ -1151,6 +1155,10 @@ definition {
 	@priority = 5
 	test ViewDashedOutlineOfMappedEditableFieldWhenHoverOnAssets {
 		property portal.acceptance = "true";
+
+		task ("Enable featured content fragment set") {
+			FragmentsAdmin.enableFeaturedContent();
+		}
 
 		task ("Add a web content, a blogs entry and a document") {
 			JSONWebcontent.addWebContent(

@@ -61,6 +61,7 @@ const SecurityVulnerabilitiesItem = () => {
 				category: issue[JiraEnum.FIELDS]?.[JiraEnum.CATEGORY],
 				classification:
 					issue[JiraEnum.FIELDS]?.[JiraEnum.CLASSIFICATION],
+				link: `/${issue?.[JiraEnum.KEY]}`,
 				prioritySummary: (
 					<div className="sv-priority-summary">
 						<div className="align-items-center d-flex">

@@ -4,7 +4,7 @@
  */
 
 import ClayTable from '@clayui/table';
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import './SVTable.css';
 
@@ -16,6 +16,7 @@ export interface IColumn {
 }
 
 export interface IRow {
+	link?: string;
 	[key: string]: string | number | JSX.Element | undefined;
 }
 
@@ -43,50 +44,19 @@ const SVTable = ({columns, rows}: IProps) => {
 			</ClayTable.Head>
 
 			<ClayTable.Body align="left">
-				{rows.map((row, index) => {
-					let navigationLink = '#';
-					const prioritySummaryElement = row['prioritySummary'];
-
-					if (React.isValidElement(prioritySummaryElement)) {
-						const prioritySummaryDiv =
-							prioritySummaryElement as React.ReactElement;
-
-						if (
-							prioritySummaryDiv.type === 'div' &&
-							prioritySummaryDiv.props.children
-						) {
-							const linkChild =
-								prioritySummaryDiv.props.children[0].props
-									.children[1].props.children;
-
-							if (React.isValidElement(linkChild)) {
-								const linkElement =
-									linkChild as React.ReactElement;
-
-								if (
-									linkElement.type === Link &&
-									linkElement.props.to
-								) {
-									navigationLink = linkElement.props.to;
-								}
-							}
-						}
-					}
-
-					return (
-						<ClayTable.Row
-							className="sv-row"
-							key={index}
-							onClick={() => navigate(navigationLink)}
-						>
-							{columns.map((column) => (
-								<ClayTable.Cell key={column.columnKey}>
-									{row[column.columnKey]}
-								</ClayTable.Cell>
-							))}
-						</ClayTable.Row>
-					);
-				})}
+				{rows.map((row, index) => (
+					<ClayTable.Row
+						className="sv-row"
+						key={index}
+						onClick={() => row.link && navigate(row.link)} // Navigate only if link is present
+					>
+						{columns.map((column) => (
+							<ClayTable.Cell key={column.columnKey}>
+								{row[column.columnKey]}
+							</ClayTable.Cell>
+						))}
+					</ClayTable.Row>
+				))}
 			</ClayTable.Body>
 		</ClayTable>
 	);

@@ -18,6 +18,7 @@ import {
 	disableSystemFeatureFlag,
 	enableSystemFeatureFlag,
 } from '../../utils/systemFeatureFlag';
+import {waitForAlert} from '../../utils/waitForAlert';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
@@ -210,6 +211,54 @@ test(
 		expect(await page.title()).toBe(
 			`${pageName} - ${site.name} - Liferay DXP`
 		);
+	}
+);
+
+test(
+	'Discarding a draft will revert a content page back to its most recent published version',
+	{
+		tag: ['@LPS-78726', '@LPS-168168'],
+	},
+	async ({apiHelpers, page, pageEditorPage, pagesAdminPage, site}) => {
+
+		// Create a page with a heading fragment
+
+		const fragmentId = getRandomString();
+
+		const fragmentDefinition = getFragmentDefinition({
+			id: fragmentId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const layoutTitle = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([fragmentDefinition]),
+			siteId: site.id,
+			title: layoutTitle,
+		});
+
+		// Go to edit mode and remove fragment
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.removeFragment(fragmentId);
+
+		// Discard draft
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		page.on('dialog', (dialog) => dialog.accept());
+
+		await pagesAdminPage.clickOnAction('Discard Draft', layoutTitle);
+
+		await waitForAlert(page);
+
+		// Go to edit mode and assert fragment is present
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await expect(page.getByText('Heading Example')).toBeVisible();
 	}
 );
 

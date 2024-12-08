@@ -51,8 +51,8 @@ modules/apps/bookmarks/    @liferay-content-management
 modules/apps/bulk/    @liferay-content-management
 modules/apps/calendar/    @liferay-bpm
 modules/apps/captcha/    @liferay-appsec
-modules/apps/change-tracking/    @liferay-site-management
 modules/apps/change-set/
+modules/apps/change-tracking/    @liferay-site-management
 modules/apps/click-to-chat/    @liferay-site-management
 modules/apps/client-extension/
 modules/apps/comment/    @liferay-content-management

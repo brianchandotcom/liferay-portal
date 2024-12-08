@@ -1141,7 +1141,7 @@ test.describe('Page Contents Panel', () => {
 
 			// Go to page contents panel and click in edit
 
-			await pageEditorPage.clickPageContentContentAction(
+			await pageEditorPage.clickPageContentAction(
 				'Edit',
 				ANIMALS_COLLECTION_NAME
 			);
@@ -1154,7 +1154,7 @@ test.describe('Page Contents Panel', () => {
 
 			// Go to page contents panel and click in view items
 
-			await pageEditorPage.clickPageContentContentAction(
+			await pageEditorPage.clickPageContentAction(
 				'View Items',
 				ANIMALS_COLLECTION_NAME
 			);
@@ -1192,7 +1192,7 @@ test.describe('Page Contents Panel', () => {
 
 			// Go to page contents panel, click in add items and add a new item
 
-			await pageEditorPage.clickPageContentContentAction(
+			await pageEditorPage.clickPageContentAction(
 				'Add Items',
 				ANIMALS_COLLECTION_NAME,
 				'Animal'
@@ -1207,7 +1207,7 @@ test.describe('Page Contents Panel', () => {
 
 			// Go to page contents panel and click in permissions
 
-			await pageEditorPage.clickPageContentContentAction(
+			await pageEditorPage.clickPageContentAction(
 				'Permissions',
 				ANIMALS_COLLECTION_NAME
 			);

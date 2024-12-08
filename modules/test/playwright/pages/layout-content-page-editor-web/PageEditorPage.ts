@@ -436,7 +436,7 @@ export class PageEditorPage {
 		await this.page.getByRole('button', {name: 'Save'}).click();
 	}
 
-	async clickPageContentContentAction(
+	async clickPageContentAction(
 		action: string,
 		name: string,
 		subMenuAction?: string

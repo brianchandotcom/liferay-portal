@@ -197,3 +197,78 @@ test('Allow changing image resolution in other viewports', async ({
 
 	expect(page.getByLabel('Resolution')).toHaveValue('auto');
 });
+
+test(
+	'Allow rotating an image via Page Content panel',
+	{tag: ['@LPS-133933']},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+		// Create a page with a image fragment
+
+		const imageId = getRandomString();
+
+		const imageFragment = getFragmentDefinition({
+			id: imageId,
+			key: 'BASIC_COMPONENT-image',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([imageFragment]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Select the image directly
+
+		await pageEditorPage.selectEditable(imageId, 'image-square');
+
+		await page.getByTitle('Select Image').click();
+
+		const articleCard = page
+			.frameLocator('iframe[title="Select"]')
+			.getByText('orange.jpg');
+
+		await clickAndExpectToBeHidden({
+			target: page.locator('.modal-dialog'),
+			trigger: articleCard,
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		// Go to page contents panel and edit image
+
+		await pageEditorPage.goToSidebarTab('Page Content');
+
+		await pageEditorPage.clickPageContentAction('Edit Image', 'orange');
+
+		// Check image is not rotated
+
+		await page
+			.locator(
+				'img[alt="The image to preview"][style*="transform: none"]'
+			)
+			.waitFor();
+
+		// Rotate image
+
+		await expect(async () => {
+			await page.locator('.lexicon-icon-rotate').click();
+
+			await expect(
+				page.locator(
+					'img[alt="The image to preview"][style*="transform: translate"]'
+				)
+			).toBeVisible({timeout: 1000});
+		}).toPass();
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		// Check version of image
+
+		await expect(
+			page.locator('.page-editor__editable[src*="version=2.0"]')
+		).toBeVisible();
+	}
+);

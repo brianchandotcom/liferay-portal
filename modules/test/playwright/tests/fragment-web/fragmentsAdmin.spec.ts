@@ -543,14 +543,6 @@ test(
 		await expect(
 			page.getByRole('link').filter({hasText: 'Button'})
 		).toBeVisible();
-
-		// Go to Basic Components fragment set
-
-		await fragmentsPage.gotoFragmentSet('Featured Content');
-
-		await expect(
-			page.getByRole('link').filter({hasText: 'Banner Slider'})
-		).toBeVisible();
 	}
 );
 

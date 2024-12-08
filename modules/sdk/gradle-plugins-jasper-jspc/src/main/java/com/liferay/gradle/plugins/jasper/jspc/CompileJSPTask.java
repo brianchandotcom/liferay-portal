@@ -61,7 +61,8 @@ public class CompileJSPTask extends DefaultTask {
 				boolean validate, boolean blockExternal) {
 
 				return new TldScanner(
-					jspCServletContext, namespaceAware, validate, blockExternal) {
+					jspCServletContext, namespaceAware, validate,
+					blockExternal) {
 
 					@Override
 					public void scanJars() {

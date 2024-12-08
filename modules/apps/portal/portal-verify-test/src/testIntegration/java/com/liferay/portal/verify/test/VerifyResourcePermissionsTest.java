@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -64,7 +65,8 @@ public class VerifyResourcePermissionsTest extends BaseVerifyProcessTestCase {
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			long[] companyIds = PortalInstancePool.getCompanyIds();
+			long[] companyIds = (long[])ReflectionTestUtil.invoke(
+				PortalInstancePool.class, "_getCompanyIdsBySQL", null, null);
 
 			Assert.assertEquals(
 				logEntries.toString(), 2 * companyIds.length,

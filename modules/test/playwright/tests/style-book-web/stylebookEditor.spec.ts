@@ -14,6 +14,10 @@ import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
 import getRandomString from '../../utils/getRandomString';
+import {
+	disableSystemFeatureFlag,
+	enableSystemFeatureFlag,
+} from '../../utils/systemFeatureFlag';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -75,6 +79,14 @@ test('LPD-35561 Preview StyleBook when edit StyleBook', async ({
 	site,
 	styleBooksPage,
 }) => {
+	await test.step('Enable feature flag', async () => {
+		await enableSystemFeatureFlag({
+			page,
+			title: 'Featured Content Fragment Set',
+			type: 'Deprecation',
+		});
+	});
+
 	await test.step('Add a content page', async () => {
 		await productMenuPage.openProductMenuIfClosed();
 
@@ -92,7 +104,7 @@ test('LPD-35561 Preview StyleBook when edit StyleBook', async ({
 		await pageEditorPage.goToSidebarTab('Fragments and Widgets');
 
 		await pageEditorPage.addFragment(
-			'Featured Content',
+			'Featured Content Deprecated',
 			'Banner Center',
 			page.locator('div.page-editor__root')
 		);
@@ -211,5 +223,13 @@ test('LPD-35561 Preview StyleBook when edit StyleBook', async ({
 		await expect(
 			page.getByRole('link', {name: styleBookName})
 		).toBeVisible();
+	});
+
+	await test.step('Disable feature flag', async () => {
+		await disableSystemFeatureFlag({
+			page,
+			title: 'Featured Content Fragment Set',
+			type: 'Deprecation',
+		});
 	});
 });

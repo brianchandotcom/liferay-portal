@@ -553,10 +553,7 @@ test.describe('Image Resolution', () => {
 
 			// Map Image
 
-			await pageEditorPage.addFragment(
-				'Featured Content',
-				'Banner Center'
-			);
+			await pageEditorPage.addFragment('Layout Elements', 'Container');
 
 			const containerId = await pageEditorPage.getFragmentId('Container');
 

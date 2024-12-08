@@ -121,7 +121,7 @@ test.describe('Page content', () => {
 		},
 		async ({apiHelpers, page, simulationMenuPage, site}) => {
 
-			// Create page and go to view mode
+			// Create page
 
 			const layout = await apiHelpers.headlessDelivery.createSitePage({
 				pageDefinition: getPageDefinition(),
@@ -129,35 +129,41 @@ test.describe('Page content', () => {
 				title: getRandomString(),
 			});
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-			);
+			// Go to view mode and check info messages
 
-			// Open simulation panel
+			await expect(async () => {
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+				);
 
-			await simulationMenuPage.openSimulationPanel();
+				// Open simulation panel
 
-			// Assert empty messages
+				await simulationMenuPage.openSimulationPanel();
 
-			await expect(
-				page.getByText('Showing content for the segment "Anyone".')
-			).toBeVisible();
+				// Assert empty messages
 
-			await expect(
-				page.getByText(
-					'No segments have been added yet. To add a new segment go to Product Menu > People > Segments.'
-				)
-			).toBeVisible();
+				await expect(
+					page.getByText('Showing content for the segment "Anyone".')
+				).toBeVisible({timeout: 5000});
 
-			await simulationMenuPage.changePreviewBy('Experiences');
+				await expect(
+					page.getByText(
+						'No segments have been added yet. To add a new segment go to Product Menu > People > Segments.'
+					)
+				).toBeVisible({timeout: 1000});
 
-			await expect(
-				page.getByText('Showing content for the experience "Default".')
-			).toBeVisible();
+				await simulationMenuPage.changePreviewBy('Experiences');
 
-			await expect(
-				page.getByText('No experiences have been added yet.')
-			).toBeVisible();
+				await expect(
+					page.getByText(
+						'Showing content for the experience "Default".'
+					)
+				).toBeVisible({timeout: 1000});
+
+				await expect(
+					page.getByText('No experiences have been added yet.')
+				).toBeVisible({timeout: 1000});
+			}).toPass();
 		}
 	);
 });

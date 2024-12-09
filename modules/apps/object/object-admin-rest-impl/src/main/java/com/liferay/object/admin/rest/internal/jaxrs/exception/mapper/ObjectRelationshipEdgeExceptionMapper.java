@@ -40,8 +40,8 @@ public class ObjectRelationshipEdgeExceptionMapper
 		return new Problem(
 			Response.Status.BAD_REQUEST,
 			ObjectExceptionMapperUtil.getTitle(
-				_acceptLanguage, null, _language,
-				objectRelationshipEdgeException.getMessage(),
+				_acceptLanguage, objectRelationshipEdgeException.getArguments(),
+				_language, objectRelationshipEdgeException.getMessage(),
 				objectRelationshipEdgeException.getMessageKey()));
 	}
 

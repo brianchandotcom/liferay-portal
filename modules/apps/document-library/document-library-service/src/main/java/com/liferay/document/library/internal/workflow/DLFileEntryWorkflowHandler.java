@@ -5,6 +5,7 @@
 
 package com.liferay.document.library.internal.workflow;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -16,14 +17,19 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -47,6 +53,43 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DLFileEntryWorkflowHandler
 	extends BaseWorkflowHandler<DLFileEntry> {
+
+	@Override
+	public void contributeWorkflowContext(
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
+			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		boolean hasAssetDisplayPage = GetterUtil.getBoolean(
+			serviceContext.getAttribute("hasAssetDisplayPage"));
+
+		if ((themeDisplay == null) || !hasAssetDisplayPage) {
+			return;
+		}
+
+		long classPK = GetterUtil.getLong(
+			(String)workflowContext.get(
+				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+
+		DLFileVersion dlFileVersion = _dlFileVersionLocalService.getFileVersion(
+			classPK);
+
+		String friendlyURL =
+			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				new InfoItemReference(
+					FileEntry.class.getName(),
+					new ClassPKInfoItemIdentifier(
+						dlFileVersion.getFileEntryId())),
+				themeDisplay);
+
+		if (Validator.isNotNull(friendlyURL)) {
+			serviceContext.setAttribute("friendlyURL", friendlyURL);
+		}
+	}
 
 	@Override
 	public AssetRenderer<DLFileEntry> getAssetRenderer(long classPK)
@@ -164,6 +207,10 @@ public class DLFileEntryWorkflowHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryWorkflowHandler.class);
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

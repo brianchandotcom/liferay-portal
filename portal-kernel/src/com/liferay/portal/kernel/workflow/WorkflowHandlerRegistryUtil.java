@@ -142,6 +142,8 @@ public class WorkflowHandlerRegistryUtil {
 			WorkflowConstants.CONTEXT_USER_ID, String.valueOf(userId)
 		).build();
 
+		workflowHandler.contributeWorkflowContext(workflowContext);
+
 		T updatedModel = workflowHandler.updateStatus(
 			model, status, workflowContext);
 

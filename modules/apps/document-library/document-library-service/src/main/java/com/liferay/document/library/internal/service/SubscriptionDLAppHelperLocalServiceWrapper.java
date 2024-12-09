@@ -6,7 +6,6 @@
 package com.liferay.document.library.internal.service;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.document.library.internal.util.DLSubscriptionSender;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -18,8 +17,6 @@ import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceWrappe
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -32,7 +29,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -169,23 +165,11 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 			return;
 		}
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+		String friendlyURL = GetterUtil.getString(
+			serviceContext.getAttribute("friendlyURL"));
 
-		boolean hasAssetDisplayPage = GetterUtil.getBoolean(
-			serviceContext.getAttribute("hasAssetDisplayPage"));
-
-		if ((themeDisplay != null) && hasAssetDisplayPage) {
-			String friendlyURL =
-				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					new InfoItemReference(
-						FileEntry.class.getName(),
-						new ClassPKInfoItemIdentifier(
-							fileVersion.getFileEntryId())),
-					themeDisplay);
-
-			if (Validator.isNotNull(friendlyURL)) {
-				entryURL = friendlyURL;
-			}
+		if (Validator.isNotNull(friendlyURL)) {
+			entryURL = friendlyURL;
 		}
 
 		if (Validator.isNull(entryURL)) {
@@ -341,10 +325,6 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 	@Reference
 	private AssetDisplayPageEntryFormProcessor
 		_assetDisplayPageEntryFormProcessor;
-
-	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 
 	private Closeable _closeable;
 

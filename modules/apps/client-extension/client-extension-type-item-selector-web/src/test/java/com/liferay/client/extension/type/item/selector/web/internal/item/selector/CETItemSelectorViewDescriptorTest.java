@@ -7,11 +7,14 @@ package com.liferay.client.extension.type.item.selector.web.internal.item.select
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.GlobalCSSCET;
 import com.liferay.client.extension.type.GlobalJSCET;
+import com.liferay.client.extension.type.ThemeCSSCET;
 import com.liferay.client.extension.type.item.selector.criterion.CETItemSelectorCriterion;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -65,11 +68,25 @@ public class CETItemSelectorViewDescriptorTest {
 
 	@Test
 	public void testGetSearchContainer() throws PortalException {
+		GlobalCSSCET globalCSSCET1 = Mockito.mock(GlobalCSSCET.class);
+
 		Mockito.when(
-			_cetItemSelectorCriterion.getType()
+			globalCSSCET1.getScope()
 		).thenReturn(
-			ClientExtensionEntryConstants.TYPE_GLOBAL_JS
+			"company"
 		);
+
+		GlobalCSSCET globalCSSCET2 = Mockito.mock(GlobalCSSCET.class);
+
+		Mockito.when(
+			globalCSSCET2.getScope()
+		).thenReturn(
+			""
+		);
+
+		_testGetSearchContainer(
+			globalCSSCET1, globalCSSCET2,
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
 
 		GlobalJSCET globalJSCET1 = Mockito.mock(GlobalJSCET.class);
 
@@ -87,13 +104,46 @@ public class CETItemSelectorViewDescriptorTest {
 			""
 		);
 
+		_testGetSearchContainer(
+			globalJSCET1, globalJSCET2,
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
+
+		ThemeCSSCET themeCSSCET1 = Mockito.mock(ThemeCSSCET.class);
+
+		Mockito.when(
+			themeCSSCET1.getScope()
+		).thenReturn(
+			"controlPanel"
+		);
+
+		ThemeCSSCET themeCSSCET2 = Mockito.mock(ThemeCSSCET.class);
+
+		Mockito.when(
+			themeCSSCET2.getScope()
+		).thenReturn(
+			""
+		);
+
+		_testGetSearchContainer(
+			themeCSSCET1, themeCSSCET2,
+			ClientExtensionEntryConstants.TYPE_THEME_CSS);
+	}
+
+	private void _testGetSearchContainer(CET cet1, CET cet2, String type)
+		throws PortalException {
+
+		Mockito.when(
+			_cetItemSelectorCriterion.getType()
+		).thenReturn(
+			type
+		);
+
 		Mockito.when(
 			_cetManager.getCETs(
-				Mockito.anyLong(), Mockito.any(),
-				Mockito.eq(ClientExtensionEntryConstants.TYPE_GLOBAL_JS),
+				Mockito.anyLong(), Mockito.any(), Mockito.eq(type),
 				Mockito.any(), Mockito.any())
 		).thenReturn(
-			Arrays.asList(globalJSCET1, globalJSCET2)
+			Arrays.asList(cet1, cet2)
 		);
 
 		SearchContainer<CET> searchContainer =
@@ -103,9 +153,10 @@ public class CETItemSelectorViewDescriptorTest {
 
 		Assert.assertEquals(results.toString(), 1, results.size());
 
-		GlobalJSCET globalJSCET3 = (GlobalJSCET)results.get(0);
+		CET cet3 = results.get(0);
 
-		Assert.assertEquals("", globalJSCET3.getScope());
+		Assert.assertEquals(
+			"", ReflectionTestUtil.invoke(cet3, "getScope", null));
 	}
 
 	private static CETItemSelectorCriterion _cetItemSelectorCriterion;

@@ -101,25 +101,24 @@ public class NotificationTemplateContextFactory {
 			).put(
 				"icsFile",
 				() -> {
-					if (Objects.equals(
+					if (!Objects.equals(
 							notificationTemplateContext.
 								getNotificationTemplateType(),
 							NotificationTemplateType.INVITE)) {
 
-						CalendarBookingLocalService
-							calendarBookingLocalService =
-								_calendarBookingLocalServiceSnapshot.get();
-
-						String calendarBookingString =
-							calendarBookingLocalService.exportCalendarBooking(
-								calendarBooking.getCalendarBookingId(),
-								CalendarUtil.ICAL_EXTENSION);
-
-						return FileUtil.createTempFile(
-							calendarBookingString.getBytes());
+						return null;
 					}
 
-					return null;
+					CalendarBookingLocalService calendarBookingLocalService =
+						_calendarBookingLocalServiceSnapshot.get();
+
+					String calendarBookingString =
+						calendarBookingLocalService.exportCalendarBooking(
+							calendarBooking.getCalendarBookingId(),
+							CalendarUtil.ICAL_EXTENSION);
+
+					return FileUtil.createTempFile(
+						calendarBookingString.getBytes());
 				}
 			).put(
 				"location", calendarBooking.getLocation()

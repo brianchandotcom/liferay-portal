@@ -146,15 +146,15 @@ public class CalendarBookingCTDisplayRenderer
 		).display(
 			"repeat",
 			() -> {
-				if (Validator.isNotNull(calendarBooking.getRecurrence())) {
-					Recurrence recurrence = calendarBooking.getRecurrenceObj();
-
-					Frequency frequency = recurrence.getFrequency();
-
-					return frequency.getValue();
+				if (Validator.isNull(calendarBooking.getRecurrence())) {
+					return null;
 				}
 
-				return null;
+				Recurrence recurrence = calendarBooking.getRecurrenceObj();
+
+				Frequency frequency = recurrence.getFrequency();
+
+				return frequency.getValue();
 			}
 		).display(
 			"resources",
@@ -162,29 +162,28 @@ public class CalendarBookingCTDisplayRenderer
 				List<CalendarBooking> childCalendarBookings =
 					calendarBooking.getChildCalendarBookings();
 
-				if (!childCalendarBookings.isEmpty()) {
-					StringBundler sb = new StringBundler(
-						2 * childCalendarBookings.size());
-
-					for (CalendarBooking childCalendarBooking :
-							childCalendarBookings) {
-
-						CalendarResource calendarResource =
-							childCalendarBooking.getCalendarResource();
-
-						sb.append(
-							calendarResource.getName(
-								displayBuilder.getLocale()));
-
-						sb.append(StringPool.COMMA_AND_SPACE);
-					}
-
-					sb.setIndex(sb.index() - 1);
-
-					return sb.toString();
+				if (childCalendarBookings.isEmpty()) {
+					return null;
 				}
 
-				return null;
+				StringBundler sb = new StringBundler(
+					2 * childCalendarBookings.size());
+
+				for (CalendarBooking childCalendarBooking :
+						childCalendarBookings) {
+
+					CalendarResource calendarResource =
+						childCalendarBooking.getCalendarResource();
+
+					sb.append(
+						calendarResource.getName(displayBuilder.getLocale()));
+
+					sb.append(StringPool.COMMA_AND_SPACE);
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				return sb.toString();
 			}
 		);
 	}

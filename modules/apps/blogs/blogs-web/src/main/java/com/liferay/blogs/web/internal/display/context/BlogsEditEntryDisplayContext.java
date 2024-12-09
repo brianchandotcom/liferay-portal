@@ -365,29 +365,29 @@ public class BlogsEditEntryDisplayContext {
 			() -> {
 				BlogsEntry blogsEntry = getBlogsEntry();
 
-				if (blogsEntry != null) {
-					return HashMapBuilder.<String, Object>put(
-						"content", UnicodeFormatter.toString(getContent())
-					).put(
-						"customDescription", isCustomAbstract()
-					).put(
-						"description", getDescription()
-					).put(
-						"pending", blogsEntry.isPending()
-					).put(
-						"status", blogsEntry.getStatus()
-					).put(
-						"subtitle",
-						BeanParamUtil.getString(
-							getBlogsEntry(), _httpServletRequest, "subtitle")
-					).put(
-						"title", getTitle()
-					).put(
-						"userId", blogsEntry.getUserId()
-					).build();
+				if (blogsEntry == null) {
+					return null;
 				}
 
-				return null;
+				return HashMapBuilder.<String, Object>put(
+					"content", UnicodeFormatter.toString(getContent())
+				).put(
+					"customDescription", isCustomAbstract()
+				).put(
+					"description", getDescription()
+				).put(
+					"pending", blogsEntry.isPending()
+				).put(
+					"status", blogsEntry.getStatus()
+				).put(
+					"subtitle",
+					BeanParamUtil.getString(
+						getBlogsEntry(), _httpServletRequest, "subtitle")
+				).put(
+					"title", getTitle()
+				).put(
+					"userId", blogsEntry.getUserId()
+				).build();
 			}
 		).build();
 	}

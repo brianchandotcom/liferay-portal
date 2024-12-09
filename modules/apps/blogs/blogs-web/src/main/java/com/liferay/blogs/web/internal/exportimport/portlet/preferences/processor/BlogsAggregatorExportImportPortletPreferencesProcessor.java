@@ -113,17 +113,16 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 						_organizationLocalService.fetchOrganization(
 							primaryKeyLong);
 
-					if (organization != null) {
-						portletDataContext.addReferenceElement(
-							portlet,
-							portletDataContext.getExportDataRootElement(),
-							organization,
-							PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-
-						return organization.getUuid();
+					if (organization == null) {
+						return null;
 					}
 
-					return null;
+					portletDataContext.addReferenceElement(
+						portlet, portletDataContext.getExportDataRootElement(),
+						organization,
+						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+
+					return organization.getUuid();
 				};
 
 			_exportImportPortletPreferencesProcessorHelper.

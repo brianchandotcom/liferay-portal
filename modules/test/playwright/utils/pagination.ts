@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Page} from '@playwright/test';
-
-import {clickAndExpectToBeVisible} from './clickAndExpectToBeVisible';
+import {FrameLocator, Page, expect} from '@playwright/test';
 
 function getPaginator(page: Page | FrameLocator) {
 	return page.locator('[data-qa-id="paginator"]');
@@ -26,11 +24,22 @@ export async function gotoPage(page, pageNumber: number | string) {
 }
 
 export async function setItemsPerPage(page, limit: number | string) {
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: getPaginator(page).getByRole('option', {
-			name: `${limit} Entries per Page`,
-		}),
-		trigger: getPaginator(page).getByLabel('Items per Page'),
+	const timeout = 300;
+	const option = getPaginator(page).getByRole('option', {
+		name: `${limit} Entries per Page`,
 	});
+
+	await expect(async () => {
+		if (await option.isHidden({timeout})) {
+			await getPaginator(page)
+				.getByLabel('Items per Page')
+				.click({timeout});
+		}
+
+		await expect(option).toBeVisible({timeout});
+	}).toPass({
+		intervals: [timeout * 2, timeout * 3, timeout * 4],
+	});
+
+	await option.click();
 }

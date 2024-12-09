@@ -1541,7 +1541,7 @@ components:
                         The page section's html properties
                     properties:
                         htmlTag:
-                            enum: [Article, Aside, Div, Footer, Header, Main, Nav, Section]
+                            enum: [Article, Aside, Div, Footer, Header, Nav, Section]
                             type: string
                     type: object
                 indexed:

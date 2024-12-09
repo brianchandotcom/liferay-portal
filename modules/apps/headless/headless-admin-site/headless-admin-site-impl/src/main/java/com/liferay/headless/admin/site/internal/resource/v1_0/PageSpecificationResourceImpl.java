@@ -560,7 +560,7 @@ public class PageSpecificationResourceImpl
 		throws Exception {
 
 		return _pageSpecificationDTOConverter.toDTO(
-			LayoutUtil.updateSettings(
+			LayoutUtil.updateLayout(
 				layout, widgetPageSpecification.getSettings(), serviceContext));
 	}
 

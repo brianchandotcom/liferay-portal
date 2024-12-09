@@ -57,18 +57,18 @@ public class LayoutUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		updateLayout(
+			layout, contentPageSpecification.getSettings(), serviceContext);
+
 		_updatePageExperiences(
 			layout, contentPageSpecification.getPageExperiences());
-
-		updateSettings(
-			layout, contentPageSpecification.getSettings(), serviceContext);
 
 		return LayoutLocalServiceUtil.updateStatus(
 			serviceContext.getUserId(), layout.getPlid(),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
-	public static Layout updateSettings(
+	public static Layout updateLayout(
 			Layout layout, Settings settings, ServiceContext serviceContext)
 		throws Exception {
 

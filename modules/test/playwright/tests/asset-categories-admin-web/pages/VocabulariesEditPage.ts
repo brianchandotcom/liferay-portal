@@ -29,7 +29,7 @@ export class VocabulariesEditPage {
 		await this.fillName(name);
 
 		if (description) {
-			await this.fillDescription(description);
+			await this.descriptionInput.fill(description);
 		}
 
 		await this.page.on('dialog', (dialog) => dialog.accept());
@@ -47,10 +47,6 @@ export class VocabulariesEditPage {
 		});
 
 		await this.deleteButton.click();
-	}
-
-	async fillDescription(description: string) {
-		await this.descriptionInput.fill(description);
 	}
 
 	async fillName(name: string) {

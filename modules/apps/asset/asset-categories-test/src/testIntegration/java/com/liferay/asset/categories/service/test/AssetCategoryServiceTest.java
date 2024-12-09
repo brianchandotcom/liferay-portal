@@ -73,17 +73,17 @@ public class AssetCategoryServiceTest {
 	}
 
 	@Test
-	public void testAddCategoryWithViewPermission() throws Exception {
+	public void testAddCategory() throws Exception {
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_testAddCategoryWithViewPermission(
+		_testAddCategory(
 			String.valueOf(assetCategory.getPrimaryKey()), RoleConstants.GUEST);
-		_testAddCategoryWithViewPermission(
+		_testAddCategory(
 			String.valueOf(assetCategory.getPrimaryKey()), RoleConstants.OWNER);
-		_testAddCategoryWithViewPermission(
+		_testAddCategory(
 			String.valueOf(assetCategory.getPrimaryKey()),
 			RoleConstants.SITE_MEMBER);
 	}
@@ -146,8 +146,7 @@ public class AssetCategoryServiceTest {
 		}
 	}
 
-	private void _testAddCategoryWithViewPermission(
-			String primKey, String roleName)
+	private void _testAddCategory(String primKey, String roleName)
 		throws Exception {
 
 		Role role = _roleLocalService.getRole(_group.getCompanyId(), roleName);

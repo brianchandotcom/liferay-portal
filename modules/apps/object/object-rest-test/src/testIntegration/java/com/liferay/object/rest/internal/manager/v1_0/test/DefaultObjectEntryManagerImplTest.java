@@ -265,11 +265,39 @@ public class DefaultObjectEntryManagerImplTest
 				"pt_BR", "2025-01-01"
 			).build()
 		).put(
+			"localizedDecimalObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", 5.0
+			).put(
+				"pt_BR", 2.7
+			).build()
+		).put(
+			"localizedIntegerObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", 50
+			).put(
+				"pt_BR", 27
+			).build()
+		).put(
+			"localizedLongIntegerObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", 50L
+			).put(
+				"pt_BR", 27L
+			).build()
+		).put(
 			"localizedLongTextObjectFieldName_i18n",
 			HashMapBuilder.put(
 				"en_US", "en_US localizedLongTextObjectFieldValue"
 			).put(
 				"pt_BR", "pt_BR localizedLongTextObjectFieldValue"
+			).build()
+		).put(
+			"localizedPrecisionDecimalObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", new BigDecimal("0.18775433729")
+			).put(
+				"pt_BR", new BigDecimal("0.03750624632")
 			).build()
 		).put(
 			"localizedRichTextObjectFieldName_i18n",
@@ -386,6 +414,15 @@ public class DefaultObjectEntryManagerImplTest
 				).name(
 					"decimalObjectFieldName"
 				).build(),
+				new DecimalObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"localizedDecimalObjectFieldName"
+				).build(),
 				new FormulaObjectFieldBuilder(
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
@@ -407,12 +444,30 @@ public class DefaultObjectEntryManagerImplTest
 				).name(
 					"integerObjectFieldName"
 				).build(),
+				new IntegerObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"localizedIntegerObjectFieldName"
+				).build(),
 				new LongIntegerObjectFieldBuilder(
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString())
 				).name(
 					"longIntegerObjectFieldName"
+				).build(),
+				new LongIntegerObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"localizedLongIntegerObjectFieldName"
 				).build(),
 				new LongTextObjectFieldBuilder(
 				).labelMap(
@@ -449,6 +504,15 @@ public class DefaultObjectEntryManagerImplTest
 						RandomTestUtil.randomString())
 				).name(
 					"precisionDecimalObjectFieldName"
+				).build(),
+				new PrecisionDecimalObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"localizedPrecisionDecimalObjectFieldName"
 				).build(),
 				new RichTextObjectFieldBuilder(
 				).labelMap(
@@ -2232,8 +2296,17 @@ public class DefaultObjectEntryManagerImplTest
 					).put(
 						"localizedDateObjectFieldName", "2024-01-01"
 					).put(
+						"localizedDecimalObjectFieldName", 5.0
+					).put(
+						"localizedIntegerObjectFieldName", 50
+					).put(
+						"localizedLongIntegerObjectFieldName", 50L
+					).put(
 						"localizedLongTextObjectFieldName",
 						"en_US localizedLongTextObjectFieldValue"
+					).put(
+						"localizedPrecisionDecimalObjectFieldName",
+						new BigDecimal("0.18775433729")
 					).put(
 						"localizedRichTextObjectFieldName",
 						"en_US <i>localizedRichTextObjectFieldValue</i>"
@@ -2296,8 +2369,36 @@ public class DefaultObjectEntryManagerImplTest
 								"pt_BR", "2023-01-01"
 							).build()
 						).put(
+							"localizedDecimalObjectFieldName_i18n",
+							HashMapBuilder.put(
+								"en_US", 10.0
+							).put(
+								"pt_BR", 5.4
+							).build()
+						).put(
+							"localizedIntegerObjectFieldName_i18n",
+							HashMapBuilder.put(
+								"en_US", 100
+							).put(
+								"pt_BR", 54
+							).build()
+						).put(
+							"localizedLongIntegerObjectFieldName_i18n",
+							HashMapBuilder.put(
+								"en_US", 100L
+							).put(
+								"pt_BR", 54L
+							).build()
+						).put(
 							"localizedLongTextObjectFieldName",
 							"en_US localizedLongTextObjectFieldValue"
+						).put(
+							"localizedPrecisionDecimalObjectFieldName_i18n",
+							HashMapBuilder.put(
+								"en_US", new BigDecimal("0.28775433729")
+							).put(
+								"pt_BR", new BigDecimal("0.33750624632")
+							).build()
 						).put(
 							"localizedTextObjectFieldName_i18n",
 							HashMapBuilder.put(
@@ -2335,12 +2436,40 @@ public class DefaultObjectEntryManagerImplTest
 							"pt_BR", _getTimestamp("2023-01-01")
 						).build()
 					).put(
+						"localizedDecimalObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", 10.0
+						).put(
+							"pt_BR", 5.4
+						).build()
+					).put(
+						"localizedIntegerObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", 100
+						).put(
+							"pt_BR", 54
+						).build()
+					).put(
+						"localizedLongIntegerObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", 100L
+						).put(
+							"pt_BR", 54L
+						).build()
+					).put(
 						"localizedLongTextObjectFieldName",
 						"en_US localizedLongTextObjectFieldValue"
 					).put(
 						"localizedLongTextObjectFieldName_i18n",
 						HashMapBuilder.put(
 							"en_US", "en_US localizedLongTextObjectFieldValue"
+						).build()
+					).put(
+						"localizedPrecisionDecimalObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", new BigDecimal("0.28775433729")
+						).put(
+							"pt_BR", new BigDecimal("0.33750624632")
 						).build()
 					).put(
 						"localizedTextObjectFieldName",
@@ -2504,6 +2633,35 @@ public class DefaultObjectEntryManagerImplTest
 				"filter",
 				buildEqualsExpressionFilterString(
 					"localizedDateObjectFieldName", _getTimestamp("2024-01-01"))
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				buildEqualsExpressionFilterString(
+					"localizedDecimalObjectFieldName", 5.0)
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				buildEqualsExpressionFilterString(
+					"localizedIntegerObjectFieldName", 50)
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				buildEqualsExpressionFilterString(
+					"localizedLongIntegerObjectFieldName", 50L)
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				buildEqualsExpressionFilterString(
+					"localizedPrecisionDecimalObjectFieldName",
+					new BigDecimal("0.18775433729"))
 			).build(),
 			childObjectEntry1);
 		testGetObjectEntries(
@@ -2706,6 +2864,46 @@ public class DefaultObjectEntryManagerImplTest
 				"sort", "localizedDateObjectFieldName:desc"
 			).build(),
 			childObjectEntry1, childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedDecimalObjectFieldName:asc"
+			).build(),
+			childObjectEntry1, childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedDecimalObjectFieldName:desc"
+			).build(),
+			childObjectEntry2, childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedIntegerObjectFieldName:asc"
+			).build(),
+			childObjectEntry1, childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedIntegerObjectFieldName:desc"
+			).build(),
+			childObjectEntry2, childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedLongIntegerObjectFieldName:asc"
+			).build(),
+			childObjectEntry1, childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedLongIntegerObjectFieldName:desc"
+			).build(),
+			childObjectEntry2, childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedPrecisionDecimalObjectFieldName:asc"
+			).build(),
+			childObjectEntry1, childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedPrecisionDecimalObjectFieldName:desc"
+			).build(),
+			childObjectEntry2, childObjectEntry1);
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"sort", "localizedTextObjectFieldName:asc"

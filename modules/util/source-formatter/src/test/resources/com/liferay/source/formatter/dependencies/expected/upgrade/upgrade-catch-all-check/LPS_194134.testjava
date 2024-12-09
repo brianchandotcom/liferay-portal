@@ -1,0 +1,41 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPS_194134 {
+
+	public void method(
+		long userId, long fileEntryId, String sourceFileName, String mimeType,
+		String title, String description, String changeLog,
+		boolean majorVersion, byte[] bytes, ServiceContext serviceContext) {
+
+		DLAppLocalServiceUtil.updateFileEntry(123, fileEntryId, "test123", mimeType, title, description, changeLog, majorVersion, bytes, serviceContext);
+		DLAppLocalServiceUtil.updateFileEntry(userId, fileEntryId, sourceFileName, mimeType, title, null, description, changeLog, dlVersionNumberIncrease, majorVersion, null, null, bytes, serviceContext);
+		_dlAppLocalService.updateFileEntry(userId, fileEntryId, sourceFileName, mimeType, title, null, description, changeLog, dlVersionNumberIncrease, majorVersion, null, null, bytes, serviceContext);
+	}
+
+	public void method(
+		long userId, long fileEntryId, String sourceFileName, String mimeType,
+		String title, String description, String changeLog,
+		DLVersionNumberIncrease dlVersionNumberIncrease, byte[] bytes,
+		ServiceContext serviceContext) {
+
+		DLAppLocalServiceUtil.updateFileEntry(123, fileEntryId, "test123", mimeType, title, description, changeLog, dlVersionNumberIncrease, bytes, serviceContext);
+		DLAppLocalServiceUtil.updateFileEntry(userId, fileEntryId, sourceFileName, mimeType, title, null, description, changeLog, dlVersionNumberIncrease, bytes, null, null, serviceContext);
+		_dlAppLocalService.updateFileEntry(userId, fileEntryId, sourceFileName, mimeType, title, null, description, changeLog, dlVersionNumberIncrease, bytes, null, null, serviceContext);
+	}
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+}

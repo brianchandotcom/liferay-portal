@@ -1,0 +1,24 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPS_159679 {
+
+	public void method() {
+		CookieKeys.COMMERCE_CONTINUE_AS_GUEST;
+		CookieKeys.ID;
+		CookieKeys.SCREEN_NAME;
+	}
+
+	public void method(HttpServletRequest httpServletRequest, String name) {
+		CookieKeys.getCookie(httpServletRequest, "test123");
+		CookieKeys.getCookie(httpServletRequest, name);
+	}
+
+}

@@ -1,0 +1,79 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_29234 {
+
+	public void method() {
+		new CommerceCatalogCreateDateComparator();
+		new CPAttachmentFileEntryDisplayDateComparator();
+		new CPAttachmentFileEntryModifiedDateComparator();
+		new CPAttachmentFileEntryPriorityComparator();
+		new CPDefinitionDisplayDateComparator();
+		new CPDefinitionLinkPriorityComparator();
+		new CPDefinitionModifiedDateComparator();
+		new CPDefinitionNameComparator();
+		new CPDefinitionOptionRelCreateDateComparator();
+		new CPDefinitionOptionRelNameComparator();
+		new CPDefinitionOptionRelPriorityComparator();
+		new CPDefinitionOptionValueRelNameComparator();
+		new CPDefinitionOptionValueRelPriorityComparator();
+		new CPDefinitionSpecificationOptionValuePriorityComparator();
+		new CPDefinitionVersionComparator();
+		new CPInstanceCreateDateComparator();
+		new CPInstanceDisplayDateComparator();
+		new CPInstanceSkuComparator();
+		new CPInstanceUnitOfMeasurePriorityComparator();
+		new CPMeasurementUnitPriorityComparator();
+		new CPOptionCategoryModifiedDateComparator();
+		new CPOptionCategoryPriorityComparator();
+		new CPOptionCategoryTitleComparator();
+		new CPOptionModifiedDateComparator();
+		new CPOptionNameComparator();
+		new CPOptionValueNameComparator();
+		new CPOptionValuePriorityComparator();
+		new CPSpecificationOptionModifiedDateComparator();
+		new CPSpecificationOptionTitleComparator();
+		new CPTaxCategoryCreateDateComparator();
+	}
+
+	public void method(boolean showHiddenPages) {
+		new CommerceCatalogCreateDateComparator(showHiddenPages);
+		new CPAttachmentFileEntryDisplayDateComparator(showHiddenPages);
+		new CPAttachmentFileEntryModifiedDateComparator(showHiddenPages);
+		new CPAttachmentFileEntryPriorityComparator(showHiddenPages);
+		new CPDefinitionDisplayDateComparator(showHiddenPages);
+		new CPDefinitionLinkPriorityComparator(showHiddenPages);
+		new CPDefinitionModifiedDateComparator(showHiddenPages);
+		new CPDefinitionNameComparator(showHiddenPages);
+		new CPDefinitionOptionRelCreateDateComparator(showHiddenPages);
+		new CPDefinitionOptionRelNameComparator(showHiddenPages);
+		new CPDefinitionOptionRelPriorityComparator(showHiddenPages);
+		new CPDefinitionOptionValueRelNameComparator(showHiddenPages);
+		new CPDefinitionOptionValueRelPriorityComparator(showHiddenPages);
+		new CPDefinitionSpecificationOptionValuePriorityComparator(showHiddenPages);
+		new CPDefinitionVersionComparator(showHiddenPages);
+		new CPInstanceCreateDateComparator(showHiddenPages);
+		new CPInstanceDisplayDateComparator(showHiddenPages);
+		new CPInstanceSkuComparator(showHiddenPages);
+		new CPInstanceUnitOfMeasurePriorityComparator(showHiddenPages);
+		new CPMeasurementUnitPriorityComparator(showHiddenPages);
+		new CPOptionCategoryModifiedDateComparator(showHiddenPages);
+		new CPOptionCategoryPriorityComparator(showHiddenPages);
+		new CPOptionCategoryTitleComparator(showHiddenPages);
+		new CPOptionModifiedDateComparator(showHiddenPages);
+		new CPOptionNameComparator(showHiddenPages);
+		new CPOptionValueNameComparator(showHiddenPages);
+		new CPOptionValuePriorityComparator(showHiddenPages);
+		new CPSpecificationOptionModifiedDateComparator(showHiddenPages);
+		new CPSpecificationOptionTitleComparator(showHiddenPages);
+		new CPTaxCategoryCreateDateComparator(showHiddenPages);
+	}
+
+}

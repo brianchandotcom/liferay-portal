@@ -1,0 +1,91 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_28287 {
+
+	public void method() {
+		new CommerceAddressCreateDateComparator();
+		new CommerceAddressNameComparator();
+		new CommerceAddressRestrictionCreateDateComparator();
+		new CommerceAvailabilityEstimatePriorityComparator();
+		new CommerceOrderCreateDateComparator();
+		new CommerceOrderIdComparator();
+		new CommerceOrderItemCreateDateComparator();
+		new CommerceOrderPaymentCreateDateComparator();
+		new CommerceOrderTotalComparator();
+		new CommerceShipmentCreateDateComparator();
+		new CommerceShipmentExpectedDateComparator();
+		new CommerceShipmentIdComparator();
+		new CommerceShipmentItemCreateDateComparator();
+		new CommerceShipmentShippingDateComparator();
+		new CommerceShippingMethodPriorityComparator();
+		new CommerceSubscriptionEntryCreateDateComparatorOrganizationIdComparator();
+		new OrganizationNameComparator();
+		new OrganizationTypeComparator();
+		new PasswordPolicyDescriptionComparator();
+		new PasswordPolicyNameComparator();
+		new ResourceActionBitwiseValueComparator();
+		new RoleDescriptionComparator();
+		new RoleNameComparator();
+		new RoleRoleIdComparator();
+		new RoleTypeComparator();
+		new SocialActivitySetModifiedDateComparator();
+		new TeamNameComparator();
+		new UserEmailAddressComparator();
+		new UserFirstNameComparator();
+		new UserGroupDescriptionComparator();
+		new UserGroupIdComparator();
+		new UserIdComparator();
+		new UserJobTitleComparator();
+		new UserLastNameComparator();
+		new UserLoginDateComparator();
+		new UserScreenNameComparator();
+	}
+
+	public void method(boolean showHiddenPages) {
+		new CommerceAddressCreateDateComparator(showHiddenPages);
+		new CommerceAddressNameComparator(showHiddenPages);
+		new CommerceAddressRestrictionCreateDateComparator(showHiddenPages);
+		new CommerceAvailabilityEstimatePriorityComparator(showHiddenPages);
+		new CommerceOrderCreateDateComparator(showHiddenPages);
+		new CommerceOrderIdComparator(showHiddenPages);
+		new CommerceOrderItemCreateDateComparator(showHiddenPages);
+		new CommerceOrderPaymentCreateDateComparator(showHiddenPages);
+		new CommerceOrderTotalComparator(showHiddenPages);
+		new CommerceShipmentCreateDateComparator(showHiddenPages);
+		new CommerceShipmentExpectedDateComparator(showHiddenPages);
+		new CommerceShipmentIdComparator(showHiddenPages);
+		new CommerceShipmentItemCreateDateComparator(showHiddenPages);
+		new CommerceShipmentShippingDateComparator(showHiddenPages);
+		new CommerceShippingMethodPriorityComparator(showHiddenPages);
+		new CommerceSubscriptionEntryCreateDateComparatorOrganizationIdComparator(showHiddenPages);
+		new OrganizationNameComparator(showHiddenPages);
+		new OrganizationTypeComparator(showHiddenPages);
+		new PasswordPolicyDescriptionComparator(showHiddenPages);
+		new PasswordPolicyNameComparator(showHiddenPages);
+		new ResourceActionBitwiseValueComparator(showHiddenPages);
+		new RoleDescriptionComparator(showHiddenPages);
+		new RoleNameComparator(showHiddenPages);
+		new RoleRoleIdComparator(showHiddenPages);
+		new RoleTypeComparator(showHiddenPages);
+		new SocialActivitySetModifiedDateComparator(showHiddenPages);
+		new TeamNameComparator(showHiddenPages);
+		new UserEmailAddressComparator(showHiddenPages);
+		new UserFirstNameComparator(showHiddenPages);
+		new UserGroupDescriptionComparator(showHiddenPages);
+		new UserGroupIdComparator(showHiddenPages);
+		new UserIdComparator(showHiddenPages);
+		new UserJobTitleComparator(showHiddenPages);
+		new UserLastNameComparator(showHiddenPages);
+		new UserLoginDateComparator(showHiddenPages);
+		new UserScreenNameComparator(showHiddenPages);
+	}
+
+}

@@ -1,0 +1,41 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPS_197984 {
+
+	public void method(
+		Address address, EmailAddress emailAddress, OrgLabor orgLabor,
+		Phone phone, Website website) {
+
+		address.getTypeId();
+		address.setTypeId();
+		emailAddress.getTypeId();
+		emailAddress.setTypeId();
+		orgLabor.getTypeId();
+		orgLabor.setTypeId();
+		phone.getTypeId();
+		phone.setTypeId();
+		website.getTypeId();
+		website.setTypeId();
+	}
+
+	public void method(Contact contact) {
+		contact.getPrefixId();
+		contact.getSuffixId();
+		contact.setPrefixId();
+		contact.setSuffixId();
+	}
+
+	public void method(Organization organization) {
+		organization.getStatusId();
+		organization.setStatusId();
+	}
+
+}

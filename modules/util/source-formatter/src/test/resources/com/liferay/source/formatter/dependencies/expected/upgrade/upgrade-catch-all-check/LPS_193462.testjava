@@ -1,0 +1,48 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPS_193462 {
+
+	public void method(
+		long userId, String className, long classPK, String street1,
+		String street2, String street3, String city, String zip, long regionId,
+		long countryId, long typeId, boolean mailing, boolean primary) {
+
+		AddressLocalServiceUtil.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, ServiceContextThreadLocal.getServiceContext());
+		AddressServiceUtil.addAddress(123, "test123", classPK, street1, street2, street3, city, zip,regionId, countryId, typeId, mailing, primary);
+		AddressServiceUtil.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, ServiceContextThreadLocal.getServiceContext());
+		_addressLocalService.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, ServiceContextThreadLocal.getServiceContext());
+		_addressService.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, ServiceContextThreadLocal.getServiceContext());
+	}
+
+	public void method(
+		long userId, String className, long classPK, String street1,
+		String street2, String street3, String city, String zip, long regionId,
+		long countryId, long typeId, boolean mailing, boolean primary,
+		ServiceContext serviceContext) {
+
+		AddressLocalServiceUtil.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, serviceContext);
+		AddressServiceUtil.addAddress(userId, "test123", 123, street1, street2, street3, city, zip,regionId, countryId, typeId, mailing, primary, serviceContext);
+		AddressServiceUtil.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, serviceContext);
+		_addressLocalService.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, serviceContext);
+		_addressService.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, serviceContext);
+	}
+
+	@Reference
+	private AddressLocalService _addressLocalService;
+
+	@Reference
+	private AddressService _addressService;
+
+}

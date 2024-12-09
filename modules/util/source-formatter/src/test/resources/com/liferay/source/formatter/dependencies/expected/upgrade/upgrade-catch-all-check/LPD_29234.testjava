@@ -1,0 +1,79 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPD_29234 {
+
+	public void method() {
+		CommerceCatalogCreateDateComparator.getInstance(false);
+		CPAttachmentFileEntryDisplayDateComparator.getInstance(false);
+		CPAttachmentFileEntryModifiedDateComparator.getInstance(false);
+		CPAttachmentFileEntryPriorityComparator.getInstance(false);
+		CPDefinitionDisplayDateComparator.getInstance(false);
+		CPDefinitionLinkPriorityComparator.getInstance(false);
+		CPDefinitionModifiedDateComparator.getInstance(false);
+		CPDefinitionNameComparator.getInstance(false);
+		CPDefinitionOptionRelCreateDateComparator.getInstance(false);
+		CPDefinitionOptionRelNameComparator.getInstance(false);
+		CPDefinitionOptionRelPriorityComparator.getInstance(false);
+		CPDefinitionOptionValueRelNameComparator.getInstance(false);
+		CPDefinitionOptionValueRelPriorityComparator.getInstance(false);
+		CPDefinitionSpecificationOptionValuePriorityComparator.getInstance(false);
+		CPDefinitionVersionComparator.getInstance(false);
+		CPInstanceCreateDateComparator.getInstance(false);
+		CPInstanceDisplayDateComparator.getInstance(false);
+		CPInstanceSkuComparator.getInstance(false);
+		CPInstanceUnitOfMeasurePriorityComparator.getInstance(true);
+		CPMeasurementUnitPriorityComparator.getInstance(false);
+		CPOptionCategoryModifiedDateComparator.getInstance(false);
+		CPOptionCategoryPriorityComparator.getInstance(false);
+		CPOptionCategoryTitleComparator.getInstance(false);
+		CPOptionModifiedDateComparator.getInstance(false);
+		CPOptionNameComparator.getInstance(false);
+		CPOptionValueNameComparator.getInstance(false);
+		CPOptionValuePriorityComparator.getInstance(false);
+		CPSpecificationOptionModifiedDateComparator.getInstance(false);
+		CPSpecificationOptionTitleComparator.getInstance(false);
+		CPTaxCategoryCreateDateComparator.getInstance(false);
+	}
+
+	public void method(boolean showHiddenPages) {
+		CommerceCatalogCreateDateComparator.getInstance(showHiddenPages);
+		CPAttachmentFileEntryDisplayDateComparator.getInstance(showHiddenPages);
+		CPAttachmentFileEntryModifiedDateComparator.getInstance(showHiddenPages);
+		CPAttachmentFileEntryPriorityComparator.getInstance(showHiddenPages);
+		CPDefinitionDisplayDateComparator.getInstance(showHiddenPages);
+		CPDefinitionLinkPriorityComparator.getInstance(showHiddenPages);
+		CPDefinitionModifiedDateComparator.getInstance(showHiddenPages);
+		CPDefinitionNameComparator.getInstance(showHiddenPages);
+		CPDefinitionOptionRelCreateDateComparator.getInstance(showHiddenPages);
+		CPDefinitionOptionRelNameComparator.getInstance(showHiddenPages);
+		CPDefinitionOptionRelPriorityComparator.getInstance(showHiddenPages);
+		CPDefinitionOptionValueRelNameComparator.getInstance(showHiddenPages);
+		CPDefinitionOptionValueRelPriorityComparator.getInstance(showHiddenPages);
+		CPDefinitionSpecificationOptionValuePriorityComparator.getInstance(showHiddenPages);
+		CPDefinitionVersionComparator.getInstance(showHiddenPages);
+		CPInstanceCreateDateComparator.getInstance(showHiddenPages);
+		CPInstanceDisplayDateComparator.getInstance(showHiddenPages);
+		CPInstanceSkuComparator.getInstance(showHiddenPages);
+		CPInstanceUnitOfMeasurePriorityComparator.getInstance(showHiddenPages);
+		CPMeasurementUnitPriorityComparator.getInstance(showHiddenPages);
+		CPOptionCategoryModifiedDateComparator.getInstance(showHiddenPages);
+		CPOptionCategoryPriorityComparator.getInstance(showHiddenPages);
+		CPOptionCategoryTitleComparator.getInstance(showHiddenPages);
+		CPOptionModifiedDateComparator.getInstance(showHiddenPages);
+		CPOptionNameComparator.getInstance(showHiddenPages);
+		CPOptionValueNameComparator.getInstance(showHiddenPages);
+		CPOptionValuePriorityComparator.getInstance(showHiddenPages);
+		CPSpecificationOptionModifiedDateComparator.getInstance(showHiddenPages);
+		CPSpecificationOptionTitleComparator.getInstance(showHiddenPages);
+		CPTaxCategoryCreateDateComparator.getInstance(showHiddenPages);
+	}
+
+}

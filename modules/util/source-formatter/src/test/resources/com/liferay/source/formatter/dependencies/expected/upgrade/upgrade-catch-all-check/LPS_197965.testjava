@@ -1,0 +1,32 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPS_197965 {
+
+	public void method(long companyId, String externalReferenceCode) {
+		CPInstanceLocalServiceUtil.fetchByExternalReferenceCode(123, "test123");
+		CPInstanceLocalServiceUtil.fetchCPInstanceByExternalReferenceCode(externalReferenceCode, companyId);
+		CPInstanceLocalServiceUtil.fetchCPInstanceByExternalReferenceCode(123, "test123");
+		CPInstanceLocalServiceUtil.fetchCPInstanceByExternalReferenceCode(externalReferenceCode, companyId);
+		CPInstanceServiceUtil.fetchCPInstanceByExternalReferenceCode(externalReferenceCode, companyId);
+		_cpInstanceLocalService.fetchCPInstanceByExternalReferenceCode(externalReferenceCode, companyId);
+		_cpInstanceLocalService.fetchCPInstanceByExternalReferenceCode(externalReferenceCode, companyId);
+		_cpInstanceService.fetchCPInstanceByExternalReferenceCode(externalReferenceCode, companyId);
+	}
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
+
+}

@@ -1,0 +1,33 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPS_202927 {
+
+	public void method(
+		long userId, long repositoryId, long parentFolderId, String name,
+		String description, com.liferay.portal.kernel.service.ServiceContext
+			serviceContext) {
+
+		DLAppLocalServiceUtil.addFolder(null, userId, repositoryId, parentFolderId, name, description, serviceContext);
+		DLAppServiceUtil.addFolder(123, repositoryId, parentFolderId, name, description, serviceContext);
+		DLAppServiceUtil.addFolder(null, userId, repositoryId, parentFolderId, name, description, serviceContext);
+		_dlAppLocalService.addFolder(null, userId, repositoryId, parentFolderId, name, description, serviceContext);
+		_dlAppService.addFolder(null, userId, repositoryId, parentFolderId, name, description, serviceContext);
+	}
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLAppService _dlAppService;
+
+}

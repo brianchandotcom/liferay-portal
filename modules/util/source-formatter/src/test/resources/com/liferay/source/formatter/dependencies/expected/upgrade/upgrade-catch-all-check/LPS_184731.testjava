@@ -1,0 +1,26 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPS_184731 {
+
+	public void method(
+		long userId, long groupId, long parentFolderId, String name,
+		String description, ServiceContext serviceContext) {
+
+		JournalFolderLocalServiceUtil.addFolder(123, groupId, parentFolderId, "test123", description, serviceContext);
+		_journalFolderLocalService.addFolder(null, userId, groupId, parentFolderId, name, description, serviceContext);
+	}
+
+	@Reference
+	private JournalFolderLocalService _journalFolderLocalService;
+
+}

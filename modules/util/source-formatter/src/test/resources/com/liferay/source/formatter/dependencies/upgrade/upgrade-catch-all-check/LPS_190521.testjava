@@ -1,0 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Kyle Miho
+ */
+public class LPS_190521 {
+
+	public void method(long companyId, String externalReferenceCode) {
+		_cpDefinitionLocalService.fetchCPDefinitionByCProductExternalReferenceCode(companyId, externalReferenceCode);
+		_cpDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode(123, "test123");
+		_cpDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode(companyId, externalReferenceCode);
+	}
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
+
+}

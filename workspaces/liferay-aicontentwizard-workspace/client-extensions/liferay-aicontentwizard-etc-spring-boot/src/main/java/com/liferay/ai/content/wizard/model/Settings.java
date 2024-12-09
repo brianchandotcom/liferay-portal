@@ -14,17 +14,17 @@ public class Settings {
 
 	public Settings(JSONObject jsonObject) {
 		apiKey = jsonObject.getString("apiKey");
-		imageModel = jsonObject.getJSONObject(
+		imageModelName = jsonObject.getJSONObject(
 			"imageModel"
 		).getString(
 			"name"
 		);
-		model = jsonObject.getJSONObject(
+		modelName = jsonObject.getJSONObject(
 			"model"
 		).getString(
 			"name"
 		);
-		provider = jsonObject.getJSONObject(
+		providerName = jsonObject.getJSONObject(
 			"provider"
 		).getString(
 			"name"
@@ -33,8 +33,8 @@ public class Settings {
 
 	public String apiKey;
 	public long id;
-	public String imageModel;
-	public String model;
-	public String provider;
+	public String imageModelName;
+	public String modelName;
+	public String providerName;
 
 }

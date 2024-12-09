@@ -70,7 +70,7 @@ public class SettingsRestController extends BaseRestController {
 			jsonObject.put(
 				"active", true
 			).put(
-				"provider", settings.provider
+				"provider", settings.providerName
 			);
 		}
 

@@ -75,7 +75,7 @@ public class AIRestController extends BaseRestController {
 			).apiKey(
 				settings.apiKey
 			).modelName(
-				settings.model
+				settings.modelName
 			).responseFormat(
 				"json_schema"
 			).strictJsonSchema(

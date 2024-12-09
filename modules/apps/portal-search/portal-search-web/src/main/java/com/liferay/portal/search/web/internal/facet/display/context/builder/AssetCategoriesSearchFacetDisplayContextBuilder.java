@@ -14,7 +14,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
-import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -244,39 +243,38 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 		FacetCollector facetCollector = facet.getFacetCollector();
 
-		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
+		return TransformUtil.transform(
+			facetCollector.getTermCollectors(),
+			termCollector -> {
+				long assetCategoryId = 0;
 
-		List<Tuple> buckets = new ArrayList<>(termCollectors.size());
+				String fieldName = facet.getFieldName();
 
-		for (TermCollector termCollector : termCollectors) {
-			long assetCategoryId = 0;
+				if ((fieldName != null) &&
+					fieldName.equals("assetVocabularyCategoryIds")) {
 
-			String fieldName = facet.getFieldName();
+					String[] parts = StringUtil.split(
+						termCollector.getTerm(), StringPool.DASH);
 
-			if ((fieldName != null) &&
-				fieldName.equals("assetVocabularyCategoryIds")) {
-
-				String[] parts = StringUtil.split(
-					termCollector.getTerm(), StringPool.DASH);
-
-				assetCategoryId = GetterUtil.getLong(parts[1]);
-			}
-			else {
-				assetCategoryId = GetterUtil.getLong(termCollector.getTerm());
-			}
-
-			if (assetCategoryId > 0) {
-				AssetCategory assetCategory = _fetchAssetCategory(
-					assetCategoryId);
-
-				if (assetCategory != null) {
-					buckets.add(
-						new Tuple(assetCategory, termCollector.getFrequency()));
+					assetCategoryId = GetterUtil.getLong(parts[1]);
 				}
-			}
-		}
+				else {
+					assetCategoryId = GetterUtil.getLong(
+						termCollector.getTerm());
+				}
 
-		return buckets;
+				if (assetCategoryId > 0) {
+					AssetCategory assetCategory = _fetchAssetCategory(
+						assetCategoryId);
+
+					if (assetCategory != null) {
+						return new Tuple(
+							assetCategory, termCollector.getFrequency());
+					}
+				}
+
+				return null;
+			});
 	}
 
 	private AssetCategoriesSearchFacetDisplayContext

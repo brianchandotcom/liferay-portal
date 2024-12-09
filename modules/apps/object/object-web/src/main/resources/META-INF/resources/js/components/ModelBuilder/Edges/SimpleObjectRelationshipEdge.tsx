@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React from 'react';
-import {EdgeText} from 'react-flow-renderer';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
@@ -17,6 +18,7 @@ import './Edge.scss';
 interface SimpleObjectRelationshipEdgeProps
 	extends BaseObjectRepationShipEdgeProps {
 	id: number;
+	isRootStructure: boolean;
 	label: string;
 	markerEndId: string;
 	markerStartId: string;
@@ -29,6 +31,7 @@ export function SimpleObjectRelationshipEdge({
 	edgeId,
 	edgePath,
 	id,
+	isRootStructure,
 	label,
 	labelBgStyle,
 	labelStyle,
@@ -37,14 +40,25 @@ export function SimpleObjectRelationshipEdge({
 	objectRelationshipEdgeStyle,
 	reverseEdgePath,
 }: SimpleObjectRelationshipEdgeProps) {
+	const buttonRef = useRef(null);
 	const [_, dispatch] = useObjectFolderContext();
+	const [foreignObjectWidth, setForeignObjectWidth] = useState<number>(0);
+
+	const foreignObjectHeight = 25;
+
+	useEffect(() => {
+		if (buttonRef.current) {
+			const buttonWidth = (buttonRef.current as HTMLButtonElement)
+				.offsetWidth;
+			setForeignObjectWidth(buttonWidth);
+		}
+	}, [buttonRef, label]);
 
 	return (
-		<g className="react-flow__connection">
+		<>
 			<OneMarker objectRelationshipId={id.toString()} />
 
 			<ManyMarker objectRelationshipId={id.toString()} />
-
 			<path
 				className="react-flow__edge-path"
 				d={edgePath}
@@ -60,25 +74,39 @@ export function SimpleObjectRelationshipEdge({
 				markerEnd={`url(#${markerStartId})`}
 				style={objectRelationshipEdgeStyle}
 			/>
+			<foreignObject
+				height={foreignObjectHeight}
+				width={foreignObjectWidth}
+				x={edgeCenterX - foreignObjectWidth / 2}
+				y={edgeCenterY - foreignObjectHeight / 2}
+			>
+				<ClayButton
+					className="react-flow__edge-button"
+					onClick={() => {
+						dispatch({
+							payload: {
+								selectedObjectRelationshipId: id,
+							},
+							type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
+						});
+					}}
+					ref={buttonRef}
+					style={{
+						backgroundColor: labelBgStyle.fill,
+						...labelBgStyle,
+						...labelStyle,
+					}}
+				>
+					{label}
 
-			<EdgeText
-				label={label}
-				labelBgBorderRadius={4}
-				labelBgPadding={[8, 5]}
-				labelBgStyle={labelBgStyle}
-				labelShowBg
-				labelStyle={labelStyle}
-				onClick={() => {
-					dispatch({
-						payload: {
-							selectedObjectRelationshipId: id,
-						},
-						type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
-					});
-				}}
-				x={edgeCenterX}
-				y={edgeCenterY}
-			/>
-		</g>
+					{isRootStructure && (
+						<>
+							&nbsp;
+							<ClayIcon symbol="organizations" />
+						</>
+					)}
+				</ClayButton>
+			</foreignObject>
+		</>
 	);
 }

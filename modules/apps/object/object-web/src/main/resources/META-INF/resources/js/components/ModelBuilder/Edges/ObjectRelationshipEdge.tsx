@@ -149,6 +149,7 @@ export default function ObjectRelationshipEdge({
 			edgeId={edgeId}
 			edgePath={edgePath}
 			id={id}
+			isRootStructure={edge}
 			label={label}
 			labelBgStyle={labelBgStyle}
 			labelStyle={labelStyle}

@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Text} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React, {useRef} from 'react';
 import {EdgeText} from 'react-flow-renderer';
 
@@ -40,6 +41,7 @@ export function ManyObjectRelationshipEdge({
 	const [_, dispatch] = useObjectFolderContext();
 	const menuElementRef = useRef(null);
 	const triggerElementRef = useRef<HTMLElement | null>(null);
+	const someObjectRelationshipInheritance = data.some(({edge}) => edge);
 
 	return (
 		<g className="react-flow__connection">
@@ -77,6 +79,7 @@ export function ManyObjectRelationshipEdge({
 				<ClayDropDown.ItemList>
 					{data.map((objectRelationshipEdgeData, index) => (
 						<ClayDropDown.Item
+							className="lfr-objects__model-builder-many-edge-dropdown-item-button"
 							key={index}
 							onClick={() => {
 								dispatch({
@@ -87,19 +90,27 @@ export function ManyObjectRelationshipEdge({
 									type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
 								});
 							}}
+							symbolRight="angle-right"
+							{...(objectRelationshipEdgeData.edge
+								? {symbolLeft: 'organizations'}
+								: {})}
 						>
-							<div className="lfr-objects__model-builder-self-edge-dropdown-item">
+							<div
+								className={classNames({
+									'lfr-objects__model-builder-many-edge-dropdown-item-details':
+										someObjectRelationshipInheritance &&
+										!objectRelationshipEdgeData.edge,
+								})}
+							>
 								<div>
-									<div>
+									<Text size={4}>
 										{objectRelationshipEdgeData.label}
-									</div>
-
-									<span className="text-small">
-										{objectRelationshipEdgeData.type}
-									</span>
+									</Text>
 								</div>
 
-								<ClayIcon symbol="angle-right" />
+								<Text size={3}>
+									{objectRelationshipEdgeData.type}
+								</Text>
 							</div>
 						</ClayDropDown.Item>
 					))}

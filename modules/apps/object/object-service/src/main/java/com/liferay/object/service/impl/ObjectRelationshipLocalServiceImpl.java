@@ -97,6 +97,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -1855,10 +1856,8 @@ public class ObjectRelationshipLocalServiceImpl
 			objectDefinition2.isUnmodifiableSystemObject()) {
 
 			throw new ObjectRelationshipEdgeException(
-				"Object relationship must not be between unmodifiable system " +
-					"object definitions to be an edge of a root context",
-				"object-relationship-must-not-be-between-unmodifiable-system-" +
-					"object-definitions-to-be-an-edge-of-a-root-context");
+				"System object definitions cannot inherit configurations",
+				"system-object-definitions-cannot-inherit-configurations");
 		}
 
 		// Circular reference in a root context must be validated before
@@ -1945,10 +1944,17 @@ public class ObjectRelationshipLocalServiceImpl
 				objectDefinition1.getScope(), objectDefinition2.getScope())) {
 
 			throw new ObjectRelationshipEdgeException(
-				"Unable to bind the object definitions when they have " +
-					"different scopes",
-				"unable-to-bind-the-object-definitions-when-they-have-" +
-					"different-scopes");
+				Arrays.asList(
+					objectDefinition1.getShortName(),
+					objectDefinition2.getShortName()),
+				String.format(
+					"The scope of \"%s\" is not the same as \"%s\". To " +
+						"enable inheritance, the objects must have the same " +
+							"scope",
+					objectDefinition1.getShortName(),
+					objectDefinition2.getShortName()),
+				"the-scope-of-x-is-not-the-same-as-x-to-enable-inheritance-" +
+					"the-objects-must-have-the-same-scope");
 		}
 	}
 

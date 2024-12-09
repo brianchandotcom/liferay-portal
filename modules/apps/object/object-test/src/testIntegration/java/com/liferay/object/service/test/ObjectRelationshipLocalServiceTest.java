@@ -1103,8 +1103,11 @@ public class ObjectRelationshipLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
-			"Unable to bind the object definitions when they have different " +
-				"scopes",
+			String.format(
+				"The scope of \"%s\" is not the same as \"%s\". To enable " +
+					"inheritance, the objects must have the same scope",
+				objectDefinitionB.getShortName(),
+				siteObjectDefinition.getShortName()),
 			() -> _bindObjectDefinitions(
 				objectDefinitionB.getObjectDefinitionId(),
 				siteObjectDefinition.getObjectDefinitionId()));
@@ -1813,8 +1816,7 @@ public class ObjectRelationshipLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
-			"Object relationship must not be between unmodifiable system " +
-				"object definitions to be an edge of a root context",
+			"System object definitions cannot inherit configurations",
 			() -> _objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship5.getExternalReferenceCode(),
 				objectRelationship5.getObjectRelationshipId(),

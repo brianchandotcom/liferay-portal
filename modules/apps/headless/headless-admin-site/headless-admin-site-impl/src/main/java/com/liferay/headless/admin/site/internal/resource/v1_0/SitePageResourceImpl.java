@@ -182,6 +182,29 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				0, serviceContext));
 	}
 
+	@Override
+	public Page<SitePage> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		if (parameters.containsKey("siteId")) {
+			Group group = _groupLocalService.getGroup(
+				(Long)parameters.get("siteId"));
+
+			return getSiteSiteByExternalReferenceCodeSitePagesPage(
+				group.getExternalReferenceCode(), search, null, filter,
+				pagination, sorts);
+		}
+
+		throw new NotSupportedException(
+			"One of the following parameters must be specified: [siteId]");
+	}
+
 	private SitePage _toSitePage(Layout layout) throws Exception {
 		return _sitePageDTOConverter.toDTO(
 			new DefaultDTOConverterContext(

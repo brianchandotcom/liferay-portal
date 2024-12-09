@@ -28,6 +28,13 @@ jest.mock(
 	() => jest.fn()
 );
 
+jest.mock(
+	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/FormService',
+	() => ({
+		getFormFields: jest.fn(() => Promise.resolve({})),
+	})
+);
+
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
 	sub: jest.fn((langKey, arg) => langKey.replace('x', arg)),

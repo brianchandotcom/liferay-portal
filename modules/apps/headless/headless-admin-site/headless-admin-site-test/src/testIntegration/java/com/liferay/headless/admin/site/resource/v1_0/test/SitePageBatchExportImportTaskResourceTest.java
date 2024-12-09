@@ -18,6 +18,7 @@ import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -256,6 +257,33 @@ public class SitePageBatchExportImportTaskResourceTest {
 	private SitePage _randomSitePage() throws Exception {
 		return new SitePage() {
 			{
+				creatorExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				datePublished = RandomTestUtil.nextDate();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+				setFriendlyUrlPath_i18n(
+					HashMapBuilder.put(
+						LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+						() -> {
+							String randomString = StringUtil.toLowerCase(
+								RandomTestUtil.randomString());
+
+							return StringPool.FORWARD_SLASH + randomString;
+						}
+					).put(
+						LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+						() -> {
+							String randomString = StringUtil.toLowerCase(
+								RandomTestUtil.randomString());
+
+							return StringPool.FORWARD_SLASH + randomString;
+						}
+					).build());
 				setName_i18n(
 					HashMapBuilder.put(
 						LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
@@ -267,6 +295,7 @@ public class SitePageBatchExportImportTaskResourceTest {
 				setPageSettings(
 					new WidgetPageSettings() {
 						{
+							setHiddenFromNavigation(true);
 							setLayoutTemplateId("1_column");
 							setType(Type.WIDGET_PAGE_SETTINGS);
 						}

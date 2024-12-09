@@ -131,13 +131,13 @@ public class SettingsRestController extends BaseRestController {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
-						"Deactivation of ",
+						"Deactivated ", itemJSONObject.getInt("id"),
+						" with provider ",
 						settingsJSONObject.getJSONObject(
 							"provider"
 						).getString(
 							"name"
-						),
-						" Provider with ID: ", itemJSONObject.getInt("id")));
+						)));
 			}
 		}
 

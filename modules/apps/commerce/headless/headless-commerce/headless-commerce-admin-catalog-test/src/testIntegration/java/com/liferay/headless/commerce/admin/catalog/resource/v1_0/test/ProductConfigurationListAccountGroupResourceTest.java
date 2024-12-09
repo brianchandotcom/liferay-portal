@@ -5,16 +5,304 @@
 
 package com.liferay.headless.commerce.admin.catalog.resource.v1_0.test;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.product.model.CPConfigurationList;
+import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPConfigurationListLocalService;
+import com.liferay.commerce.product.service.CPConfigurationListRelLocalService;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductConfigurationListAccountGroup;
+import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
+import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
+import com.liferay.headless.commerce.core.util.DateConfig;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.Inject;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Zoltán Takács
+ * @author Danny Situ
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class ProductConfigurationListAccountGroupResourceTest
 	extends BaseProductConfigurationListAccountGroupResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_user = UserTestUtil.addUser(testCompany);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			testCompany.getCompanyId(), testGroup.getGroupId(),
+			_user.getUserId());
+
+		_accountEntry = _accountEntryLocalService.addAccountEntry(
+			_user.getUserId(), 0, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			"business", 1, _serviceContext);
+
+		_commerceCatalog = _commerceCatalogLocalService.addCommerceCatalog(
+			RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), "USD", "en_US", false,
+			_serviceContext);
+
+		DateConfig dateConfig = DateConfig.toDisplayDateConfig(
+			RandomTestUtil.nextDate(), _user.getTimeZone());
+
+		_cpConfigurationList =
+			_cpConfigurationListLocalService.addCPConfigurationList(
+				RandomTestUtil.randomString(), _commerceCatalog.getGroupId(),
+				_user.getUserId(), 0, false, RandomTestUtil.randomString(), 0D,
+				dateConfig.getMonth(), dateConfig.getDay(),
+				dateConfig.getYear(), dateConfig.getHour(),
+				dateConfig.getMinute(), 0, 0, 0, 0, 0, true);
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		for (Long accountGroupId : _accountGroupIds) {
+			_accountGroupLocalService.deleteAccountGroup(accountGroupId);
+		}
+
+		for (Long productConfigurationListAccountGroupId :
+				_productConfigurationListAccountGroupIds) {
+
+			_cpConfigurationListRelLocalService.deleteCPConfigurationListRel(
+				productConfigurationListAccountGroupId);
+		}
+	}
+
+	@Override
+	@Test
+	public void testDeleteProductConfigurationListAccountGroup()
+		throws Exception {
+
+		long cpConfigurationListId =
+			_cpConfigurationList.getCPConfigurationListId();
+
+		ProductConfigurationListAccountGroup
+			productConfigurationListAccountGroup =
+				productConfigurationListAccountGroupResource.
+					postProductConfigurationListIdProductConfigurationListAccountGroup(
+						cpConfigurationListId,
+						randomProductConfigurationListAccountGroup());
+
+		productConfigurationListAccountGroupResource.
+			deleteProductConfigurationListAccountGroup(
+				productConfigurationListAccountGroup.
+					getProductConfigurationListAccountGroupId());
+
+		Page<ProductConfigurationListAccountGroup> page =
+			productConfigurationListAccountGroupResource.
+				getProductConfigurationListIdProductConfigurationListAccountGroupsPage(
+					cpConfigurationListId, null, null, Pagination.of(1, 10),
+					null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
+	@Ignore
+	@Test
+	public void testGraphQLDeleteProductConfigurationListAccountGroup()
+		throws Exception {
+
+		super.testGraphQLDeleteProductConfigurationListAccountGroup();
+	}
+
+	@Override
+	protected ProductConfigurationListAccountGroup
+			randomProductConfigurationListAccountGroup()
+		throws Exception {
+
+		AccountGroup randomAccountGroup =
+			_accountGroupLocalService.addAccountGroup(
+				_user.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), _serviceContext);
+
+		_accountGroupIds.add(randomAccountGroup.getAccountGroupId());
+
+		_accountGroupRelLocalService.addAccountGroupRel(
+			randomAccountGroup.getAccountGroupId(),
+			AccountEntry.class.getName(), _accountEntry.getAccountEntryId());
+
+		return new ProductConfigurationListAccountGroup() {
+			{
+				accountGroupExternalReferenceCode =
+					randomAccountGroup.getExternalReferenceCode();
+				accountGroupId = randomAccountGroup.getAccountGroupId();
+				productConfigurationListAccountGroupId =
+					RandomTestUtil.randomLong();
+				productConfigurationListExternalReferenceCode =
+					_cpConfigurationList.getExternalReferenceCode();
+				productConfigurationListId =
+					_cpConfigurationList.getCPConfigurationListId();
+			}
+		};
+	}
+
+	@Override
+	protected ProductConfigurationListAccountGroup
+			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroupsPage_addProductConfigurationListAccountGroup(
+				String externalReferenceCode,
+				ProductConfigurationListAccountGroup
+					productConfigurationListAccountGroup)
+		throws Exception {
+
+		ProductConfigurationListAccountGroup
+			postProductConfigurationListAccountGroup =
+				productConfigurationListAccountGroupResource.
+					postProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroup(
+						externalReferenceCode,
+						productConfigurationListAccountGroup);
+
+		_productConfigurationListAccountGroupIds.add(
+			postProductConfigurationListAccountGroup.
+				getProductConfigurationListAccountGroupId());
+
+		return postProductConfigurationListAccountGroup;
+	}
+
+	@Override
+	protected String
+			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroupsPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _cpConfigurationList.getExternalReferenceCode();
+	}
+
+	@Override
+	protected ProductConfigurationListAccountGroup
+			testGetProductConfigurationListIdProductConfigurationListAccountGroupsPage_addProductConfigurationListAccountGroup(
+				Long id,
+				ProductConfigurationListAccountGroup
+					productConfigurationListAccountGroup)
+		throws Exception {
+
+		ProductConfigurationListAccountGroup
+			postProductConfigurationListAccountGroup =
+				productConfigurationListAccountGroupResource.
+					postProductConfigurationListIdProductConfigurationListAccountGroup(
+						id, productConfigurationListAccountGroup);
+
+		_productConfigurationListAccountGroupIds.add(
+			postProductConfigurationListAccountGroup.
+				getProductConfigurationListAccountGroupId());
+
+		return postProductConfigurationListAccountGroup;
+	}
+
+	@Override
+	protected Long
+			testGetProductConfigurationListIdProductConfigurationListAccountGroupsPage_getId()
+		throws Exception {
+
+		return _cpConfigurationList.getCPConfigurationListId();
+	}
+
+	@Override
+	protected ProductConfigurationListAccountGroup
+			testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup(
+				ProductConfigurationListAccountGroup
+					productConfigurationListAccountGroup)
+		throws Exception {
+
+		ProductConfigurationListAccountGroup
+			postProductConfigurationListAccountGroup =
+				productConfigurationListAccountGroupResource.
+					postProductConfigurationListIdProductConfigurationListAccountGroup(
+						productConfigurationListAccountGroup.
+							getProductConfigurationListId(),
+						productConfigurationListAccountGroup);
+
+		_productConfigurationListAccountGroupIds.add(
+			postProductConfigurationListAccountGroup.
+				getProductConfigurationListAccountGroupId());
+
+		return postProductConfigurationListAccountGroup;
+	}
+
+	@Override
+	protected ProductConfigurationListAccountGroup
+			testPostProductConfigurationListIdProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup(
+				ProductConfigurationListAccountGroup
+					productConfigurationListAccountGroup)
+		throws Exception {
+
+		ProductConfigurationListAccountGroup
+			postProductConfigurationListAccountGroup =
+				productConfigurationListAccountGroupResource.
+					postProductConfigurationListIdProductConfigurationListAccountGroup(
+						_cpConfigurationList.getCPConfigurationListId(),
+						productConfigurationListAccountGroup);
+
+		_productConfigurationListAccountGroupIds.add(
+			postProductConfigurationListAccountGroup.
+				getProductConfigurationListAccountGroupId());
+
+		return postProductConfigurationListAccountGroup;
+	}
+
+	@DeleteAfterTestRun
+	private AccountEntry _accountEntry;
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	private final List<Long> _accountGroupIds = new ArrayList<>();
+
+	@Inject
+	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Inject
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
+
+	@DeleteAfterTestRun
+	private CommerceCatalog _commerceCatalog;
+
+	@Inject
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	@DeleteAfterTestRun
+	private CPConfigurationList _cpConfigurationList;
+
+	@Inject
+	private CPConfigurationListLocalService _cpConfigurationListLocalService;
+
+	@Inject
+	private CPConfigurationListRelLocalService
+		_cpConfigurationListRelLocalService;
+
+	private final List<Long> _productConfigurationListAccountGroupIds =
+		new ArrayList<>();
+	private ServiceContext _serviceContext;
+
+	@DeleteAfterTestRun
+	private User _user;
+
 }

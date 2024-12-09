@@ -751,6 +751,9 @@ public class DefaultObjectEntryManagerImpl
 			serviceBuilderObjectEntry.getExternalReferenceCode(),
 			objectDefinition, objectEntry);
 
+		String scopeKey = String.valueOf(
+			serviceBuilderObjectEntry.getGroupId());
+
 		ServiceContext serviceContext = _createServiceContext(
 			dtoConverterContext, objectDefinition, objectEntry);
 
@@ -758,8 +761,7 @@ public class DefaultObjectEntryManagerImpl
 			objectEntryId,
 			_toObjectValues(
 				dtoConverterContext.getLocale(), objectDefinition, objectEntry,
-				String.valueOf(serviceBuilderObjectEntry.getGroupId()),
-				serviceContext),
+				scopeKey, serviceContext),
 			serviceContext);
 
 		return _toObjectEntry(
@@ -767,8 +769,7 @@ public class DefaultObjectEntryManagerImpl
 			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry,
-				String.valueOf(serviceBuilderObjectEntry.getGroupId())));
+				serviceBuilderObjectEntry, scopeKey));
 	}
 
 	@Override

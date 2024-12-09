@@ -5,6 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {waitForAlert} from '../../utils/waitForAlert';
+
 export class AccountSettingsPage {
 	readonly accountSettingsMenuItem: Locator;
 	readonly page: Page;
@@ -47,8 +49,28 @@ export class AccountSettingsPage {
 		]);
 	}
 
+	async goToDisplaySettings() {
+		await this.goToAccountSettings();
+
+		await this.page.locator('.nav-link', {hasText: 'Preferences'}).click();
+
+		await this.page
+			.locator('.nav-link', {hasText: 'Display Settings'})
+			.click();
+	}
+
 	async selectAccountLanguage(option: string) {
 		await this.languageSelect.selectOption(option);
 		await this.saveButton.click();
+	}
+
+	async setTimeZone(timeZone: string) {
+		const timeZoneSelect = this.page.getByLabel('Time Zone');
+
+		await timeZoneSelect.selectOption(timeZone);
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(this.page);
 	}
 }

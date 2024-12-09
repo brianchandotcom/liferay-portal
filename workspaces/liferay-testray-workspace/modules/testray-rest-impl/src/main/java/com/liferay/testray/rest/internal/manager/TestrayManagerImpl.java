@@ -1170,8 +1170,7 @@ public class TestrayManagerImpl implements TestrayManager {
 		for (Map<String, Serializable> values :
 				_objectEntryLocalService.getValuesList(
 					0, companyId, userId,
-					objectDefinition.getObjectDefinitionId(),
-					new String[] {"r_caseToCaseResult_c_caseId"},
+					objectDefinition.getObjectDefinitionId(), null,
 					_filterFactory.create(
 						"buildId eq '" + testrayBuildId1 + "' and errors ne ''",
 						objectDefinition),

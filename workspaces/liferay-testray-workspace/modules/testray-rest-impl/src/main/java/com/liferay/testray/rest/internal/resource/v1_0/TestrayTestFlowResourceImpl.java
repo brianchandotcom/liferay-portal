@@ -62,21 +62,14 @@ public class TestrayTestFlowResourceImpl
 
 		StringBundler sb = new StringBundler(34);
 
-		sb.append("select count(cr.r_subtaskToCaseResults_c_subtaskId) as ");
-		sb.append("caseResultAmount, s.c_subtaskId_, s.dueStatus_, s.errors_,");
+		sb.append("select s.c_subtaskId_, s.dueStatus_, s.errors_,");
 		sb.append("s.issues_, s.score_, s.name_, u.firstName, u.userId, ");
 		sb.append("u.lastName, u.middleName, u.uuid_, u.portraitId, ");
 		sb.append("ta.c_taskId_ from o_[%COMPANY_ID%]_subtask s inner join ");
-		sb.append("O_[%COMPANY_ID%]_CaseResult cr on ");
-		sb.append("cr.r_subtaskToCaseResults_c_subtaskId = s.c_subtaskId_ ");
-		sb.append("inner join o_[%COMPANY_ID%]_component c on ");
-		sb.append("c.c_componentId_ = cr.");
-		sb.append("r_componentToCaseResult_c_componentId inner join ");
-		sb.append("o_[%COMPANY_ID%]_team t on c.r_teamToComponents_c_teamId ");
-		sb.append("= t.c_teamId_ inner join o_[%COMPANY_ID%]_task ta on ta.");
-		sb.append("c_taskId_ = s.r_taskToSubtasks_c_taskId left join User_ u ");
-		sb.append("on u.userId = s.r_userToSubtasks_userId where ");
-		sb.append("s.dueStatus_ != 'MERGED' ");
+		sb.append("o_[%COMPANY_ID%]_task ta on ta.c_taskId_ = ");
+		sb.append("s.r_taskToSubtasks_c_taskId left join User_ u on u.userId ");
+		sb.append("= s.r_userToSubtasks_userId where s.dueStatus_ != ");
+		sb.append("'MERGED' ");
 
 		List<Object> params = new ArrayList<>();
 
@@ -106,10 +99,14 @@ public class TestrayTestFlowResourceImpl
 		}
 
 		if (Validator.isNotNull(testrayComponentIds)) {
-			sb.append("and c.c_componentId_ in (");
+			sb.append("and exists (select cr.c_caseResultId_ from ");
+			sb.append("O_[%COMPANY_ID%]_CaseResult cr where ");
+			sb.append("cr.r_subtaskToCaseResults_c_subtaskId = ");
+			sb.append("s.c_subtaskId_ and cr.");
+			sb.append("r_componentToCaseResult_c_componentId in (");
 			sb.append(
 				TestrayUtil.interpolateParams(params, testrayComponentIds));
-			sb.append(") ");
+			sb.append(") limit 1)");
 		}
 
 		if (Validator.isNotNull(testrayTaskId)) {
@@ -118,9 +115,12 @@ public class TestrayTestFlowResourceImpl
 		}
 
 		if (Validator.isNotNull(testrayTeamIds)) {
-			sb.append("and t.c_teamId_ in (");
+			sb.append("and exists (select cr.c_caseResultId_ from ");
+			sb.append("O_[%COMPANY_ID%]_CaseResult cr where ");
+			sb.append("cr.r_subtaskToCaseResults_c_subtaskId = ");
+			sb.append("s.c_subtaskId_ and cr.r_teamToCaseResult_c_teamId in (");
 			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
-			sb.append(") ");
+			sb.append(") limit 1)");
 		}
 
 		if (Validator.isNotNull(testrayUserId)) {
@@ -154,8 +154,6 @@ public class TestrayTestFlowResourceImpl
 				values,
 				value -> new TestraySubtask() {
 					{
-						caseResultAmount = GetterUtil.getLong(
-							value.get("caseresultamount"));
 						error = GetterUtil.getString(value.get("errors_"));
 						id = GetterUtil.getLong(value.get("c_subtaskid_"));
 						issues = GetterUtil.getString(value.get("issues_"));

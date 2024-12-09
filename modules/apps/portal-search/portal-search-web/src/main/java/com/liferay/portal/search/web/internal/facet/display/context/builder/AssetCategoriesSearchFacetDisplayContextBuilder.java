@@ -263,17 +263,18 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 						termCollector.getTerm());
 				}
 
-				if (assetCategoryId > 0) {
-					AssetCategory assetCategory = _fetchAssetCategory(
-						assetCategoryId);
-
-					if (assetCategory != null) {
-						return new Tuple(
-							assetCategory, termCollector.getFrequency());
-					}
+				if (assetCategoryId <= 0) {
+					return null;
 				}
 
-				return null;
+				AssetCategory assetCategory = _fetchAssetCategory(
+					assetCategoryId);
+
+				if (assetCategory == null) {
+					return null;
+				}
+
+				return new Tuple(assetCategory, termCollector.getFrequency());
 			});
 	}
 

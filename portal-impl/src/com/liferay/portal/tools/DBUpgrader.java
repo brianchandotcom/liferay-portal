@@ -125,6 +125,10 @@ public class DBUpgrader {
 	}
 
 	public static boolean isUpgradeDatabaseAutoRunEnabled() {
+		if (_upgradeClient){
+			return true;
+		}
+
 		if (PortalRunMode.isTestMode()) {
 			return GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));

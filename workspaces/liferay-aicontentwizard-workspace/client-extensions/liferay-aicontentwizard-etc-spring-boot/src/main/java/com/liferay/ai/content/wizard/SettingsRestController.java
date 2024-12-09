@@ -77,8 +77,8 @@ public class SettingsRestController extends BaseRestController {
 		return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
 	}
 
-	@PostMapping("/save")
-	public ResponseEntity<String> saveSettings(
+	@PostMapping
+	public ResponseEntity<String> post(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
 		JSONObject jsonObject = new JSONObject(json);

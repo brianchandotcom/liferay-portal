@@ -55,7 +55,7 @@ export default class AIWizardContentOAuth2 extends OAuth2Client {
 	}
 
 	async saveSettings(data: unknown) {
-		const response = await this.fetch('/settings/save', {
+		const response = await this.fetch('/settings', {
 			body: JSON.stringify(data),
 			method: 'POST',
 		});

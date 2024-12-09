@@ -1411,7 +1411,10 @@ public class DefaultObjectEntryManagerImpl
 				fileEntry.setFileSourceURL(() -> (String)null);
 			}
 			catch (IOException ioException) {
-				throw new IllegalArgumentException(ioException);
+				throw new IllegalArgumentException(
+					"Unable to download file from " +
+						fileEntry.getFileSourceURL(),
+					ioException);
 			}
 		}
 

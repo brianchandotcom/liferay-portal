@@ -13643,18 +13643,17 @@ public class ObjectEntryResourceTest {
 
 		// File with URL attachment and host down
 
+		String hostDownFileSourceURL = StringBundler.concat(
+			"http://", testCompany.getVirtualHostname(), ":8081");
+
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title",
-				"java.net.ConnectException: Connection refused (Connection " +
-					"refused)"
+				"title", "Unable to download file from " + hostDownFileSourceURL
 			),
 			_toFileEntry(
-				RandomTestUtil.randomString() + ".txt",
-				StringBundler.concat(
-					"http://", testCompany.getVirtualHostname(), ":8081"),
+				RandomTestUtil.randomString() + ".txt", hostDownFileSourceURL,
 				null, null),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
@@ -13671,8 +13670,7 @@ public class ObjectEntryResourceTest {
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
-				"java.net.MalformedURLException: no protocol: " +
-					malformedFileSourceURL
+				"Unable to download file from " + malformedFileSourceURL
 			),
 			_toFileEntry(
 				RandomTestUtil.randomString() + ".txt", malformedFileSourceURL,
@@ -13691,8 +13689,7 @@ public class ObjectEntryResourceTest {
 			fileEntry -> JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title",
-				"java.io.FileNotFoundException: " + notFoundFileSourceURL
+				"title", "Unable to download file from " + notFoundFileSourceURL
 			),
 			_toFileEntry(
 				RandomTestUtil.randomString() + ".txt", notFoundFileSourceURL,

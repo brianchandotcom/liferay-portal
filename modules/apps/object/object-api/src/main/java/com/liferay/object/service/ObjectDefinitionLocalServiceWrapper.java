@@ -712,6 +712,17 @@ public class ObjectDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectDefinition
+		updateRootDescendantNodeObjectDefinition(
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			long rootObjectDefinitionId) {
+
+		return _objectDefinitionLocalService.
+			updateRootDescendantNodeObjectDefinition(
+				objectDefinition, rootObjectDefinitionId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectDefinition
 			updateRootObjectDefinitionId(
 				long objectDefinitionId, long rootObjectDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

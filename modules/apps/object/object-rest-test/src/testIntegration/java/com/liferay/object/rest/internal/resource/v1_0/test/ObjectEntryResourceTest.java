@@ -9262,33 +9262,31 @@ public class ObjectEntryResourceTest {
 				TestPropsValues.getUserId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			objectRelationship.getName(),
-			_createObjectEntriesJSONArray(
-				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME_1,
-				new String[] {
-					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
-				}));
-
-		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				objectRelationship.getName(),
+				_createObjectEntriesJSONArray(
+					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
+					_OBJECT_FIELD_NAME_1,
+					new String[] {
+						_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
+					})
+			).toString(),
 			_getEndpoint(
 				TestPropsValues.getGroupId(), _siteScopedObjectDefinition1),
 			Http.Method.POST);
-
-		String objectRelationshipName = objectRelationship.getName();
 
 		JSONObject actualJSONObject1 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
 			).put(
-				objectRelationshipName,
+				objectRelationship.getName(),
 				_createObjectEntriesJSONArray(
 					new String[] {_ERC_VALUE_3}, _OBJECT_FIELD_NAME_2,
 					new String[] {_NEW_OBJECT_FIELD_VALUE_2})
 			).toString(),
 			_siteScopedObjectDefinition1.getRESTContextPath() + "/" +
-				jsonObject1.getLong("id"),
+				jsonObject.getLong("id"),
 			Http.Method.PUT);
 
 		JSONAssert.assertEquals(
@@ -9296,7 +9294,7 @@ public class ObjectEntryResourceTest {
 				"externalReferenceCode", String.valueOf(_ERC_VALUE_3)
 			).toString(),
 			actualJSONObject1.getJSONArray(
-				objectRelationshipName
+				objectRelationship.getName()
 			).getJSONObject(
 				0
 			).toString(),

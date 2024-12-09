@@ -33,19 +33,21 @@ public class PageCommentsLayoutAssetEntryProvider
 	public AssetEntry getLayoutAssetEntry(
 		HttpServletRequest httpServletRequest, Layout layout) {
 
-		if (layout.isTypeAssetDisplay()) {
-			String portletNamespace = _portal.getPortletNamespace(
-				ParamUtil.getString(httpServletRequest, "p_p_id"));
+		if (!layout.isTypeAssetDisplay()) {
+			return null;
+		}
 
-			String className = ParamUtil.getString(
-				httpServletRequest, portletNamespace + "className");
+		String portletNamespace = _portal.getPortletNamespace(
+			ParamUtil.getString(httpServletRequest, "p_p_id"));
 
-			long classPK = ParamUtil.getLong(
-				httpServletRequest, portletNamespace + "classPK");
+		String className = ParamUtil.getString(
+			httpServletRequest, portletNamespace + "className");
 
-			if (Validator.isNotNull(className) && (classPK != 0)) {
-				return _assetEntryLocalService.fetchEntry(className, classPK);
-			}
+		long classPK = ParamUtil.getLong(
+			httpServletRequest, portletNamespace + "classPK");
+
+		if (Validator.isNotNull(className) && (classPK != 0)) {
+			return _assetEntryLocalService.fetchEntry(className, classPK);
 		}
 
 		return null;

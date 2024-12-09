@@ -212,9 +212,11 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 					onClick: ({processClose}: {processClose: Function}) => {
 						processClose();
 
-						fetch(item.actions.delete.href, {
+						const url = `${API_URL.ACTIONS}/${item.id}`;
+
+						fetch(url, {
 							headers: DEFAULT_FETCH_HEADERS,
-							method: item.actions.delete.method,
+							method: 'DELETE',
 						})
 							.then(() => {
 								openDefaultSuccessToast();

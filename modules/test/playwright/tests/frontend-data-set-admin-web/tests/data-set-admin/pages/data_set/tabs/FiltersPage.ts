@@ -440,4 +440,8 @@ export class FiltersPage {
 	async saveAddFilterForm() {
 		await this.newFilterForm.saveButton.click();
 	}
+
+	async selectTab(tabLabel: string) {
+		await this.dataSetPage.selectTab(tabLabel);
+	}
 }

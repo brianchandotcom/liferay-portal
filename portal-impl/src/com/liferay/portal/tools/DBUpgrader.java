@@ -125,7 +125,7 @@ public class DBUpgrader {
 	}
 
 	public static boolean isUpgradeDatabaseAutoRunEnabled() {
-		if (_upgradeClient){
+		if (_upgradeClient) {
 			return true;
 		}
 

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -21,7 +22,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.function.Consumer;
 
@@ -50,7 +52,7 @@ public class CompanyThreadLocalTest {
 	}
 
 	@Test
-	public void testCentralizedCompanyThreadLocalsWithSetWithSafeCloseable() {
+	public void testCentralizedCompanyThreadLocalsWithSetCompanyId() {
 		DataSample dataSample = Mockito.mock(DataSample.class);
 
 		DataSampleThreadLocal.addDataSample(dataSample);
@@ -72,63 +74,126 @@ public class CompanyThreadLocalTest {
 
 		TimeZoneThreadLocal.setDefaultTimeZone(pstTimeZone);
 
+		_originalCompanyId = CompanyThreadLocal.getCompanyId();
+
+		try {
+			CompanyThreadLocal.setCompanyId(1L);
+
+			for (CentralizedCompanyThreadLocal<?>
+					centralizedCompanyThreadLocal :
+						CentralizedCompanyThreadLocal.
+							getCentralizedCompanyThreadLocals()) {
+
+				Object initialValue = ReflectionTestUtil.invoke(
+					centralizedCompanyThreadLocal, "initialValue",
+					new Class<?>[0]);
+
+				Object actualValue = centralizedCompanyThreadLocal.get();
+
+				String name = centralizedCompanyThreadLocal.toString();
+
+				if (name.contains("DataSampleThreadLocal")) {
+					DataSampleThreadLocal dataSampleThreadLocalInitialValue =
+						(DataSampleThreadLocal)initialValue;
+
+					DataSampleThreadLocal dataSampleThreadLocalActualValue =
+						(DataSampleThreadLocal)actualValue;
+
+					initialValue =
+						dataSampleThreadLocalInitialValue.getDataSamples();
+
+					actualValue =
+						dataSampleThreadLocalActualValue.getDataSamples();
+				}
+
+				Assert.assertEquals(initialValue, actualValue);
+			}
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(_originalCompanyId);
+		}
+	}
+
+	@Test
+	public void testCentralizedCompanyThreadLocalsWithSetCompanyIdWithSafeCloseable() {
+		DataSample dataSample = Mockito.mock(DataSample.class);
+
+		DataSampleThreadLocal.addDataSample(dataSample);
+
+		GroupThreadLocal.setGroupId(1L);
+
+		LocaleThreadLocal.setDefaultLocale(LocaleUtil.GERMAN);
+
+		PasswordModificationThreadLocal.setPasswordUnencrypted("passwordTest");
+
+		PrincipalThreadLocal.setName("userTest");
+		PrincipalThreadLocal.setPassword("passwordTest");
+
+		ServiceContext serviceContext = Mockito.mock(ServiceContext.class);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		TimeZone pstTimeZone = TimeZone.getTimeZone("PST");
+
+		TimeZoneThreadLocal.setDefaultTimeZone(pstTimeZone);
+
+		Map<CentralizedCompanyThreadLocal<?>, Object>
+			centralizedCompanyThreadLocalMap = new HashMap<>();
+
+		for (CentralizedCompanyThreadLocal<?> centralizedCompanyThreadLocal :
+				CentralizedCompanyThreadLocal.
+					getCentralizedCompanyThreadLocals()) {
+
+			centralizedCompanyThreadLocalMap.put(
+				centralizedCompanyThreadLocal,
+				centralizedCompanyThreadLocal.get());
+		}
+
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(1L)) {
 
-			List<DataSample> dataSamples =
-				DataSampleThreadLocal.getDataSamples();
+			for (CentralizedCompanyThreadLocal<?>
+					centralizedCompanyThreadLocal :
+						CentralizedCompanyThreadLocal.
+							getCentralizedCompanyThreadLocals()) {
 
-			Assert.assertFalse(dataSamples.contains(dataSample));
+				Object initialValue = ReflectionTestUtil.invoke(
+					centralizedCompanyThreadLocal, "initialValue",
+					new Class<?>[0]);
 
-			Assert.assertNotEquals(
-				1L,
-				GroupThreadLocal.getGroupId(
-				).longValue());
+				Object actualValue = centralizedCompanyThreadLocal.get();
 
-			Assert.assertNotEquals(
-				LocaleUtil.GERMAN, LocaleThreadLocal.getDefaultLocale());
+				String name = centralizedCompanyThreadLocal.toString();
 
-			Assert.assertNotEquals(
-				"passwordTest",
-				PasswordModificationThreadLocal.getPasswordUnencrypted());
+				if (name.contains("DataSampleThreadLocal")) {
+					DataSampleThreadLocal dataSampleThreadLocalInitialValue =
+						(DataSampleThreadLocal)initialValue;
 
-			Assert.assertNotEquals("userTest", PrincipalThreadLocal.getName());
+					DataSampleThreadLocal dataSampleThreadLocalActualValue =
+						(DataSampleThreadLocal)actualValue;
 
-			Assert.assertNotEquals(
-				"passwordTest", PrincipalThreadLocal.getPassword());
+					initialValue =
+						dataSampleThreadLocalInitialValue.getDataSamples();
 
-			Assert.assertNotEquals(
-				serviceContext, ServiceContextThreadLocal.getServiceContext());
+					actualValue =
+						dataSampleThreadLocalActualValue.getDataSamples();
+				}
 
-			Assert.assertNotEquals(
-				pstTimeZone, TimeZoneThreadLocal.getDefaultTimeZone());
+				Assert.assertEquals(initialValue, actualValue);
+			}
 		}
 
-		List<DataSample> dataSamples = DataSampleThreadLocal.getDataSamples();
+		for (CentralizedCompanyThreadLocal<?> centralizedCompanyThreadLocal :
+				CentralizedCompanyThreadLocal.
+					getCentralizedCompanyThreadLocals()) {
 
-		Assert.assertTrue(dataSamples.contains(dataSample));
+			Object value = centralizedCompanyThreadLocalMap.get(
+				centralizedCompanyThreadLocal);
 
-		Assert.assertEquals(
-			1L,
-			GroupThreadLocal.getGroupId(
-			).longValue());
+			Object actualValue = centralizedCompanyThreadLocal.get();
 
-		Assert.assertEquals(
-			LocaleUtil.GERMAN, LocaleThreadLocal.getDefaultLocale());
-
-		Assert.assertEquals(
-			"passwordTest",
-			PasswordModificationThreadLocal.getPasswordUnencrypted());
-
-		Assert.assertEquals("userTest", PrincipalThreadLocal.getName());
-
-		Assert.assertEquals("passwordTest", PrincipalThreadLocal.getPassword());
-
-		Assert.assertEquals(
-			serviceContext, ServiceContextThreadLocal.getServiceContext());
-
-		Assert.assertEquals(
-			pstTimeZone, TimeZoneThreadLocal.getDefaultTimeZone());
+			Assert.assertEquals(value, actualValue);
+		}
 	}
 
 	@Test
@@ -153,5 +218,7 @@ public class CompanyThreadLocalTest {
 			Assert.assertNotNull(unsupportedOperationException);
 		}
 	}
+
+	private long _originalCompanyId;
 
 }

@@ -12,7 +12,6 @@ import {useId} from 'frontend-js-components-web';
 import {openToast} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import AddLocalizationSelectModal from '../../../../../../app/components/AddLocalizationSelectModal';
 import {CheckboxField} from '../../../../../../app/components/fragment_configuration_fields/CheckboxField';
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
 import {TextField} from '../../../../../../app/components/fragment_configuration_fields/TextField';
@@ -136,8 +135,6 @@ export function FormGeneralPanel({item}) {
 }
 
 function FormOptions({item, onValueSelect}) {
-	const [hasLocalizableFields, setHasLocalizableFields] = useState(false);
-
 	return (
 		<div className="mb-3 panel-group-sm">
 			<ClayPanel
@@ -150,20 +147,8 @@ function FormOptions({item, onValueSelect}) {
 				<ClayPanel.Body>
 					<FormMappingOptions
 						item={item}
-						onAfterSave={(fields) => {
-							setHasLocalizableFields(
-								fields.some((field) => field.localizable)
-							);
-						}}
 						onValueSelect={onValueSelect}
 					/>
-
-					{hasLocalizableFields ? (
-						<AddLocalizationSelectModal
-							formId={item.itemId}
-							onCloseModal={() => setHasLocalizableFields(false)}
-						/>
-					) : null}
 
 					{formIsMapped(item) && Liferay.FeatureFlags['LPD-10727'] ? (
 						<FormMultistepOptions

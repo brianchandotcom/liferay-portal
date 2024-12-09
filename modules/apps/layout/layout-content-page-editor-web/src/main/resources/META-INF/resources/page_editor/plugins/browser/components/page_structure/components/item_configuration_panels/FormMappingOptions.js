@@ -7,27 +7,29 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {useControlledState} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useMemo} from 'react';
 
-import AddLocalizationSelectModal from '../../../../../../app/components/AddLocalizationSelectModal';
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
 import {FORM_MAPPING_SOURCES} from '../../../../../../app/config/constants/formMappingSources';
 import {LAYOUT_TYPES} from '../../../../../../app/config/constants/layoutTypes';
 import {config} from '../../../../../../app/config/index';
-import {useSelector} from '../../../../../../app/contexts/StoreContext';
+import {
+	useDispatch,
+	useSelector,
+} from '../../../../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import {formIsMapped} from '../../../../../../app/utils/formIsMapped';
+import {openAddLocalizationSelect} from '../../../../../../app/utils/openAddLocalizationSelect';
 import {openInfoFieldSelector} from '../../../../../../common/openInfoFieldSelector';
 
 export default function FormMappingOptions({
 	hideLabel = false,
 	item,
-	onAfterSave,
 	onValueSelect,
 }) {
-	const [openAddLocalizationSelectModal, setOpenAddLocalizationSelectModal] =
-		useState(false);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+
+	const dispatch = useDispatch();
 
 	const formTypes = useMemo(() => getTypes(), []);
 
@@ -71,7 +73,12 @@ export default function FormMappingOptions({
 						saveMapping(fields);
 
 						if (Liferay.FeatureFlags['LPD-37927']) {
-							onAfterSave(fields);
+							if (fields.some((field) => field.localizable)) {
+								openAddLocalizationSelect({
+									dispatch,
+									formId: item.itemId,
+								});
+							}
 						}
 					},
 					segmentsExperienceId,
@@ -83,12 +90,12 @@ export default function FormMappingOptions({
 		},
 		[
 			formTypes,
+			dispatch,
 			item,
 			onValueSelect,
 			setClassNameId,
 			setClassTypeId,
 			segmentsExperienceId,
-			onAfterSave,
 		]
 	);
 
@@ -161,15 +168,6 @@ export default function FormMappingOptions({
 					value={classTypeId}
 				/>
 			)}
-
-			{openAddLocalizationSelectModal ? (
-				<AddLocalizationSelectModal
-					formId={item.itemId}
-					onCloseModal={() =>
-						setOpenAddLocalizationSelectModal(false)
-					}
-				/>
-			) : null}
 		</>
 	);
 }

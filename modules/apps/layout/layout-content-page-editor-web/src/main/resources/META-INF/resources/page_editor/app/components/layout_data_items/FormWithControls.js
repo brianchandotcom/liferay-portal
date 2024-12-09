@@ -6,7 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React from 'react';
 
 import FormMappingOptions from '../../../plugins/browser/components/page_structure/components/item_configuration_panels/FormMappingOptions';
 import {config} from '../../config';
@@ -19,7 +19,6 @@ import {formIsUnavailable} from '../../utils/formIsUnavailable';
 import {getEditableLocalizedValue} from '../../utils/getEditableLocalizedValue';
 import isItemEmpty from '../../utils/isItemEmpty';
 import {useSaveFormConfig} from '../../utils/useSaveFormConfig';
-import AddLocalizationSelectModal from '../AddLocalizationSelectModal';
 import ContainerWithControls from './ContainerWithControls';
 
 const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
@@ -41,7 +40,6 @@ const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 });
 
 function Form({children, item}) {
-	const [hasLocalizableFields, setHasLocalizableFields] = useState(false);
 	const localConfig = useItemLocalConfig(item.itemId);
 
 	const showLoadingState = localConfig.loading;
@@ -81,13 +79,7 @@ function Form({children, item}) {
 	const isMapped = formIsMapped(item);
 
 	if (isEmpty || !isMapped) {
-		return (
-			<FormEmptyState
-				isMapped={isMapped}
-				item={item}
-				setHasLocalizableFields={setHasLocalizableFields}
-			/>
-		);
+		return <FormEmptyState isMapped={isMapped} item={item} />;
 	}
 
 	const {showMessagePreview} = localConfig;
@@ -103,18 +95,11 @@ function Form({children, item}) {
 			>
 				{children}
 			</div>
-
-			{hasLocalizableFields ? (
-				<AddLocalizationSelectModal
-					formId={item.itemId}
-					onCloseModal={() => setHasLocalizableFields(false)}
-				/>
-			) : null}
 		</>
 	);
 }
 
-function FormEmptyState({isMapped, item, setHasLocalizableFields}) {
+function FormEmptyState({isMapped, item}) {
 	const saveFormConfig = useSaveFormConfig(item);
 
 	const localConfig = useItemLocalConfig(item.itemId);
@@ -159,11 +144,6 @@ function FormEmptyState({isMapped, item, setHasLocalizableFields}) {
 				<FormMappingOptions
 					hideLabel={true}
 					item={item}
-					onAfterSave={(fields) => {
-						setHasLocalizableFields(
-							fields.some((field) => field.localizable)
-						);
-					}}
 					onValueSelect={saveFormConfig}
 				/>
 			</div>

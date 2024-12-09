@@ -123,7 +123,9 @@ public class DateTimeObjectFieldBusinessType
 			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
-		String value = MapUtil.getString(values, objectField.getName());
+		String value = String.valueOf(
+			ObjectFieldBusinessType.super.getValue(
+				objectField, userId, values));
 
 		if (Validator.isNull(value)) {
 			return null;

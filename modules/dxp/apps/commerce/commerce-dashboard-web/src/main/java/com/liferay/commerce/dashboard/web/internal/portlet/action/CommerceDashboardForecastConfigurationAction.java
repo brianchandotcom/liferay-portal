@@ -6,8 +6,11 @@
 package com.liferay.commerce.dashboard.web.internal.portlet.action;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.commerce.dashboard.web.internal.constants.CommerceDashboardPortletKeys;
 import com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardForecastDisplayContext;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -16,6 +19,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -52,6 +56,7 @@ public class CommerceDashboardForecastConfigurationAction
 				commerceDashboardForecastDisplayContext =
 					new CommerceDashboardForecastDisplayContext(
 						_accountEntryModelResourcePermission,
+						_assetCategoryLocalService, _configurationProvider,
 						httpServletRequest);
 
 			httpServletRequest.setAttribute(
@@ -77,9 +82,23 @@ public class CommerceDashboardForecastConfigurationAction
 		String[] assetCategoryIds = ArrayUtil.toStringArray(
 			serviceContext.getAssetCategoryIds());
 
+		String[] assetCategoryExternalReferenceCodes =
+			new String[assetCategoryIds.length];
+
+		for (int i = 0; i < assetCategoryIds.length; i++) {
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.fetchAssetCategory(
+					GetterUtil.getLong(assetCategoryIds[i]));
+
+			if (assetCategory != null) {
+				assetCategoryExternalReferenceCodes[i] =
+					assetCategory.getExternalReferenceCode();
+			}
+		}
+
 		setPreference(
-			actionRequest, "assetCategoryIds",
-			StringUtil.merge(assetCategoryIds));
+			actionRequest, "assetCategoryExternalReferenceCodes",
+			StringUtil.merge(assetCategoryExternalReferenceCodes));
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
@@ -94,5 +113,11 @@ public class CommerceDashboardForecastConfigurationAction
 	)
 	private volatile ModelResourcePermission<AccountEntry>
 		_accountEntryModelResourcePermission;
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

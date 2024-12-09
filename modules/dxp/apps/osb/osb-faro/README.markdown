@@ -16,6 +16,14 @@ make sure "Expose daemon on tcp://localhost:2375 without TLS" on the "General" p
 
 1. Start the image: `./gradlew startDocker`.
 
+#### Building a local Docker image
+
+1. Make Sure 1Password app and CLI are properly installed in your computer (See: https://developer.1password.com/docs/cli/get-started/#install)
+
+1. Turn on 1Password desktop app integration (See: https://developer.1password.com/docs/cli/get-started/#step-2-turn-on-the-1password-desktop-app-integration)
+
+1. Run `./gradlew buildAppDockerImage`
+
 #### Redeploying Faro Apps
 
 1. Navigate to root directory of `com-liferay-osb-faro-private`.

@@ -81,7 +81,7 @@ public class SpSessionTerminationSamlPortalFilterTest {
 			boolean enabled, long companyId)
 		throws Exception {
 
-		long existingCompanyId = CompanyThreadLocal.getCompanyId();
+		long originalEnabled = CompanyThreadLocal.getCompanyId();
 
 		CompanyThreadLocal.setCompanyId(companyId);
 
@@ -89,7 +89,7 @@ public class SpSessionTerminationSamlPortalFilterTest {
 			SamlProviderConfigurationHelperUtil.
 				getSamlProviderConfigurationHelper();
 
-		boolean existingValue = samlProviderConfigurationHelper.isEnabled();
+		boolean originalEnabled = samlProviderConfigurationHelper.isEnabled();
 
 		samlProviderConfigurationHelper.updateProperties(
 			UnicodePropertiesBuilder.create(
@@ -104,14 +104,14 @@ public class SpSessionTerminationSamlPortalFilterTest {
 					UnicodePropertiesBuilder.create(
 						true
 					).put(
-						"saml.enabled", String.valueOf(existingValue)
+						"saml.enabled", String.valueOf(originalEnabled)
 					).build());
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
 			}
 			finally {
-				CompanyThreadLocal.setCompanyId(existingCompanyId);
+				CompanyThreadLocal.setCompanyId(originalEnabled);
 			}
 		};
 	}

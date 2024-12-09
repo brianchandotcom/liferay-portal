@@ -116,10 +116,17 @@ components:
                     type: integer
         RecommendationConfiguration:
             properties:
-                contentRecommenderMostPopularItemsEnabled:
+                contentRecommenderMostPopularItems:
+                    $ref: "#/components/schemas/RecommendationItem"
+                contentRecommenderUserPersonalization:
+                    $ref: "#/components/schemas/RecommendationItem"
+        RecommendationItem:
+            properties:
+                enabled:
                     type: boolean
-                contentRecommenderUserPersonalizationEnabled:
-                    type: boolean
+                status:
+                    enum: [Configuring, Disabled, Enabled, Failed]
+                    type: string
         Site:
             properties:
                 channelName:

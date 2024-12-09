@@ -11,23 +11,26 @@ import com.liferay.ai.content.wizard.langchain4j.tools.KnowledgeBaseTools;
 import com.liferay.ai.content.wizard.langchain4j.tools.SitePageTools;
 import com.liferay.ai.content.wizard.langchain4j.tools.SiteTools;
 import com.liferay.ai.content.wizard.langchain4j.tools.ToolsContext;
+import com.liferay.ai.content.wizard.model.Settings;
+import com.liferay.ai.content.wizard.services.SettingsService;
 import com.liferay.client.extension.util.spring.boot.BaseRestController;
-import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
 
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.service.SystemMessage;
+import dev.langchain4j.service.UserMessage;
 
 import java.net.URL;
 
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,13 +46,25 @@ public class AIRestController extends BaseRestController {
 	@PostMapping(
 		produces = MediaType.APPLICATION_JSON_VALUE, value = "/generate"
 	)
-	public ResponseEntity<String> generate(@RequestBody String json)
+	public ResponseEntity<String> generate(
+			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
+
+		Settings settings = _settingsService.getActiveSettings(jwt);
+
+		if (settings == null) {
+			return new ResponseEntity<>(
+				new JSONObject(
+				).put(
+					"message", "Settings not found"
+				).toString(),
+				HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
 		JSONObject jsonObject = new JSONObject(json);
 
 		ToolsContext toolsContext = new ToolsContext(
-			_getAuthorization(),
+			"Bearer " + jwt.getTokenValue(),
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain),
 			jsonObject.getLong("siteId"));
 
@@ -58,9 +73,9 @@ public class AIRestController extends BaseRestController {
 		).chatLanguageModel(
 			OpenAiChatModel.builder(
 			).apiKey(
-				_openAIAPIKey
+				settings.apiKey
 			).modelName(
-				_openAIModelName
+				settings.model
 			).responseFormat(
 				"json_schema"
 			).strictJsonSchema(
@@ -82,7 +97,7 @@ public class AIRestController extends BaseRestController {
 			new JSONObject(
 			).put(
 				"output",
-				liferayAIService.systemMessage(jsonObject.getString("question"))
+				liferayAIService.chat(jsonObject.getString("question"))
 			).toString(),
 			HttpStatus.OK);
 	}
@@ -94,23 +109,11 @@ public class AIRestController extends BaseRestController {
 				"Do not answer topics related to competitors, if you are not " +
 					"sure with Tools to use just say 'Sorry, I cannot help you.'"
 		)
-		public String systemMessage(String message);
+		public String chat(@UserMessage String message);
 
-	}
-
-	private String _getAuthorization() {
-		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-aicontentwizard-etc-spring-boot-oauth-application-" +
-				"headless-server");
 	}
 
 	@Autowired
-	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
-
-	@Value("${liferay.aicontentwizard.openai.api.key}")
-	private String _openAIAPIKey;
-
-	@Value("${liferay.aicontentwizard.openai.model.name}")
-	private String _openAIModelName;
+	private SettingsService _settingsService;
 
 }

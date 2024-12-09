@@ -83,6 +83,15 @@ public class CPConfigurationListServiceUtil {
 		return getService().deleteCPConfigurationList(cpConfigurationListId);
 	}
 
+	public static CPConfigurationList
+			fetchCPConfigurationListByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCPConfigurationListByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static CPConfigurationList forceDeleteCPConfigurationList(
 			CPConfigurationList cpConfigurationList)
 		throws PortalException {

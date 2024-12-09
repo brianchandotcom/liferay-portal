@@ -104,6 +104,11 @@ public interface CPConfigurationListRelService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPConfigurationListRel getCPConfigurationListRel(
+			long cpConfigurationListRelId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPConfigurationListRel> getCPConfigurationListRels(
 			long cpConfigurationListId)
 		throws PortalException;
@@ -115,7 +120,23 @@ public interface CPConfigurationListRelService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPConfigurationListRel> getCPConfigurationListRels(
+			String className, long cpConfigurationListId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPConfigurationListRel> getCPConfigurationListRels(
+			String className, long cpConfigurationListId, int start, int end,
+			OrderByComparator<CPConfigurationListRel> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPConfigurationListRelsCount(long cpConfigurationListId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPConfigurationListRelsCount(
+			String className, long cpConfigurationListId)
 		throws PortalException;
 
 	/**

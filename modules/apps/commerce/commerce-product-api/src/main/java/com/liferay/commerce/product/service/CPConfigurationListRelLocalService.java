@@ -287,6 +287,15 @@ public interface CPConfigurationListRelLocalService
 		long cpConfigurationListId, int start, int end,
 		OrderByComparator<CPConfigurationListRel> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPConfigurationListRel> getCPConfigurationListRels(
+		String className, long cpConfigurationListId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPConfigurationListRel> getCPConfigurationListRels(
+		String className, long cpConfigurationListId, int start, int end,
+		OrderByComparator<CPConfigurationListRel> orderByComparator);
+
 	/**
 	 * Returns the number of cp configuration list rels.
 	 *
@@ -297,6 +306,10 @@ public interface CPConfigurationListRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPConfigurationListRelsCount(long cpConfigurationListId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPConfigurationListRelsCount(
+		String className, long cpConfigurationListId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

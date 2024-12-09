@@ -89,6 +89,16 @@ public class CPConfigurationListServiceWrapper
 	}
 
 	@Override
+	public CPConfigurationList fetchCPConfigurationListByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpConfigurationListService.
+			fetchCPConfigurationListByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	@Override
 	public CPConfigurationList forceDeleteCPConfigurationList(
 			CPConfigurationList cpConfigurationList)
 		throws com.liferay.portal.kernel.exception.PortalException {

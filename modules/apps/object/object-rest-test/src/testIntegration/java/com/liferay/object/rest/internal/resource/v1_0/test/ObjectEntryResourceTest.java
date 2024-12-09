@@ -13707,6 +13707,18 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
 
+		// File with URL attachment and resource not found
+
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put("status", "NOT_FOUND"),
+			_toFileEntry(
+				StringBundler.concat(
+					"http://", testCompany.getVirtualHostname(), ":8081"),
+				RandomTestUtil.randomString() + ".txt", null, null),
+			httpMethod, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+			useExternalReferenceCode);
+
 		// File with URL attachment and unsupported protocol
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
@@ -13718,18 +13730,6 @@ public class ObjectEntryResourceTest {
 			_toFileEntry(
 				StringBundler.concat(
 					"file://", testCompany.getVirtualHostname(), ":8080"),
-				RandomTestUtil.randomString() + ".txt", null, null),
-			httpMethod, null, objectDefinition,
-			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
-			useExternalReferenceCode);
-
-		// File with URL attachment and resource not found
-
-		_testPatchPutCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put("status", "NOT_FOUND"),
-			_toFileEntry(
-				StringBundler.concat(
-					"http://", testCompany.getVirtualHostname(), ":8081"),
 				RandomTestUtil.randomString() + ".txt", null, null),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,

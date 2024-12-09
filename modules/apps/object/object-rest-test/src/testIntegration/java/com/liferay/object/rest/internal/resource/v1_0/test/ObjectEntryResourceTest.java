@@ -9288,16 +9288,15 @@ public class ObjectEntryResourceTest {
 				postJSONObject.getLong("id"),
 			Http.Method.PUT);
 
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"externalReferenceCode", String.valueOf(_ERC_VALUE_3)
-			).toString(),
+		Assert.assertEquals(
+			_ERC_VALUE_3,
 			putJSONObject.getJSONArray(
 				_objectRelationship1.getName()
 			).getJSONObject(
 				0
-			).toString(),
-			JSONCompareMode.LENIENT);
+			).getString(
+				"externalReferenceCode"
+			));
 	}
 
 	@Test

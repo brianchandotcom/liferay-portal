@@ -48,11 +48,10 @@ test.describe('Manage object definitions through Model Builder', () => {
 		modelBuilderDiagramPage,
 	}) => {
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
 
 		const commerceOrderItemLabel = 'Commerce Order Item';
 
@@ -192,18 +191,16 @@ test.describe('Manage object definitions through Model Builder', () => {
 		modelBuilderObjectDefinitionNodePage,
 	}) => {
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 2},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 2},
+			});
 
 		const objectDefinition2 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 2},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 2},
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition1.id,
@@ -256,11 +253,10 @@ test.describe('Manage object definitions through Model Builder', () => {
 		modelBuilderObjectDefinitionNodePage,
 	}) => {
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
 
 		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
 
@@ -325,18 +321,17 @@ test.describe('Manage object definitions through Model Builder', () => {
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				objectFolder.externalReferenceCode
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
 
 		const objectDefinition2 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition1.id,
@@ -596,18 +591,16 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		viewObjectDefinitionsPage,
 	}) => {
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 2},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 2},
+			});
 
 		const objectDefinition2 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 2},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 2},
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition1.id,
@@ -662,11 +655,10 @@ test.describe('Manage object definitions through a Page', () => {
 		viewObjectDefinitionsPage,
 	}) => {
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
@@ -702,11 +694,10 @@ test.describe('Manage object definitions through a Page', () => {
 		viewObjectDefinitionsPage,
 	}) => {
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,

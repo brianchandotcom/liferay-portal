@@ -104,11 +104,10 @@ test('can see available path parameter properties of a singleElement endpoint', 
 	page,
 }) => {
 	const objectDefinition =
-		(await apiHelpers.objectAdmin.postRandomObjectDefinition(
-			{code: 0},
-			undefined,
-			'default'
-		)) as ObjectDefinition;
+		(await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFolderExternalReferenceCode: 'default',
+			status: {code: 0},
+		})) as ObjectDefinition;
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -155,11 +154,10 @@ test('can see path parameter property with map details', async ({
 	page,
 }) => {
 	const objectDefinition =
-		(await apiHelpers.objectAdmin.postRandomObjectDefinition(
-			{code: 0},
-			undefined,
-			'default'
-		)) as ObjectDefinition;
+		(await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFolderExternalReferenceCode: 'default',
+			status: {code: 0},
+		})) as ObjectDefinition;
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 

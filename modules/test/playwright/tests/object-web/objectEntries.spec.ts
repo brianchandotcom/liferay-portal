@@ -101,11 +101,10 @@ test.describe('Manage object entries through Page Templates', () => {
 		});
 
 		const objectDefinition2 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition2.id,
@@ -676,13 +675,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 		viewObjectEntriesPage,
 	}) => {
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default',
-				undefined,
-				'textField'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+				titleObjectFieldName: 'textField',
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition1.id,
@@ -690,11 +687,10 @@ test.describe('Manage object entries through View Object Entries', () => {
 		});
 
 		const objectDefinition2 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition2.id,
@@ -766,13 +762,12 @@ test.describe('Manage object entries through View Object Entries', () => {
 		const objectField = 'textField';
 
 		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default',
-				'company',
-				objectField
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				scope: 'company',
+				status: {code: 0},
+				titleObjectFieldName: objectField,
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition1.id,
@@ -780,13 +775,12 @@ test.describe('Manage object entries through View Object Entries', () => {
 		});
 
 		const objectDefinition2 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default',
-				'company',
-				objectField
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				scope: 'company',
+				status: {code: 0},
+				titleObjectFieldName: objectField,
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition2.id,
@@ -924,11 +918,13 @@ test.describe('Manage object entries through View Object Entries', () => {
 		viewObjectEntriesPage,
 	}) => {
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				[mockedObjectFields.attachmentFieldDocumentsAndMedia],
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields: [
+					mockedObjectFields.attachmentFieldDocumentsAndMedia,
+				],
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
@@ -958,13 +954,11 @@ test.describe('Manage object entries through Workflow', () => {
 		workflowTasksPage,
 	}) => {
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default',
-				undefined,
-				'textField'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+				titleObjectFieldName: 'textField',
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
@@ -1029,13 +1023,11 @@ test.describe('Manage object entries through Workflow', () => {
 		const assetType = 'Single Approver';
 
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default',
-				undefined,
-				'textField'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+				titleObjectFieldName: 'textField',
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,

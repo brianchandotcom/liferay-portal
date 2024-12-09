@@ -127,6 +127,7 @@ function KeyboardMovementProvider({
 
 				if (targetItem && onMove) {
 					onMove(sources, targetItem, target.position);
+
 					setMovementText({
 						isFinalPosition: true,
 						items,
@@ -135,8 +136,6 @@ function KeyboardMovementProvider({
 						target,
 					});
 				}
-
-				disableMovement();
 			}
 			else if (key === 'Escape') {
 				disableMovement();

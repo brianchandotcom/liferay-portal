@@ -11,7 +11,7 @@ import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../utils/getRandomString';
-import {performLogout} from '../../../../utils/performLogin';
+import performLogin, {performLogout} from '../../../../utils/performLogin';
 
 // Structured Content utilities
 
@@ -559,19 +559,26 @@ test('An unauthorized user accessing a page with a data set fragment', async ({
 		await expect(page.getByRole('button', {name: 'Sign In'})).toBeVisible();
 	});
 
-	await test.step('Go to Data Set fragment page', async () => {
-		await dataSetFragmentPage.goToPage({layout});
+	try {
+		await test.step('Go to Data Set fragment page', async () => {
+			await dataSetFragmentPage.goToPage({layout});
 
-		await page
-			.locator('.data-set-content-wrapper')
-			.waitFor({state: 'visible'});
-	});
-
-	await test.step('Assert that no results are displayed', async () => {
-		await expect(
-			page
+			await page
 				.locator('.data-set-content-wrapper')
-				.getByText('No Results Found')
-		).toBeVisible();
-	});
+				.waitFor({state: 'visible'});
+		});
+
+		await test.step('Assert that no results are displayed', async () => {
+			await expect(
+				page
+					.locator('.data-set-content-wrapper')
+					.getByText('No Results Found')
+			).toBeVisible();
+		});
+	}
+	finally {
+		await test.step('Log back in as admin', async () => {
+			await performLogin(page, 'test');
+		});
+	}
 });

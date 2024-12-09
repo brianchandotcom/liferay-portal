@@ -86,7 +86,7 @@ public class SettingsRestController extends BaseRestController {
 		JSONObject settingsJSONObject = _save(jwt, json);
 
 		if (jsonObject.getBoolean("active")) {
-			_settingsService.setSettings(settingsJSONObject);
+			_settingsService.setActiveSettings(settingsJSONObject);
 
 			_deactivateSettings(jwt, settingsJSONObject);
 		}

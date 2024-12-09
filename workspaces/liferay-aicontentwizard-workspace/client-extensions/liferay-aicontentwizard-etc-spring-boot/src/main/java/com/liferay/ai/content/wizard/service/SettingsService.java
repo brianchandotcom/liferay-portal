@@ -8,9 +8,6 @@ package com.liferay.ai.content.wizard.service;
 import com.liferay.ai.content.wizard.model.Settings;
 import com.liferay.client.extension.util.spring.boot.service.BaseService;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -46,15 +43,9 @@ public class SettingsService extends BaseService {
 		return _activeSettings;
 	}
 
-	public void setSettings(JSONObject jsonObject) {
+	public void setActiveSettings(JSONObject jsonObject) {
 		_activeSettings = new Settings(jsonObject);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Saved Settings for " + _activeSettings.provider);
-		}
 	}
-
-	private static final Log _log = LogFactory.getLog(SettingsService.class);
 
 	private Settings _activeSettings;
 

@@ -12,6 +12,7 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PortalInstances;
 
 import java.util.List;
 
@@ -40,6 +41,30 @@ public class CompanyObjectDefinitionPortalInstanceLifecycleListener
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			_objectDefinitionLocalService.undeployObjectDefinition(
 				objectDefinition);
+		}
+	}
+
+	@Override
+	public void portalInstanceRegistered(Company company) throws Exception {
+		if (!DBPartition.isPartitionEnabled() ||
+			!PortalInstances.isCompanyInCopyProcess()) {
+
+			return;
+		}
+
+		List<ObjectDefinition> objectDefinitions =
+			_objectDefinitionLocalService.getObjectDefinitions(
+				company.getCompanyId(), WorkflowConstants.STATUS_APPROVED);
+
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			if (objectDefinition.isActive()) {
+				_objectDefinitionLocalService.deployObjectDefinition(
+					objectDefinition);
+			}
+			else {
+				_objectDefinitionLocalService.deployInactiveObjectDefinition(
+					objectDefinition);
+			}
 		}
 	}
 

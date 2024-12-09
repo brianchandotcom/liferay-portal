@@ -56,6 +56,8 @@ public class MappingContentUtil {
 				return infoField.getLabel(locale);
 			}
 		).put(
+			"localizable", infoField.isLocalizable()
+		).put(
 			"name", infoField.getName()
 		).put(
 			"repeatable", infoField.isMultivalued() || infoField.isRepeatable()

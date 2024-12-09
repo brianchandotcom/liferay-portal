@@ -14,6 +14,7 @@ import type {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
 export interface FormField {
 	key: string;
 	label: string;
+	localizable: boolean;
 	name: string;
 	required: boolean;
 	type: string;

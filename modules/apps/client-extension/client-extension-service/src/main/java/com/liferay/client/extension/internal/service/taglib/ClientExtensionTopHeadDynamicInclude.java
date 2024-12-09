@@ -8,13 +8,20 @@ package com.liferay.client.extension.internal.service.taglib;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.internal.service.taglib.util.ClientExtensionDynamicIncludeUtil;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
+import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.GlobalCSSCET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -61,13 +68,40 @@ public class ClientExtensionTopHeadDynamicInclude implements DynamicInclude {
 				continue;
 			}
 
-			printWriter.print("<link data-senna-track=\"temporary\" href=\"");
-			printWriter.print(globalCSSCET.getURL());
-			printWriter.print(StringPool.QUOTE);
-			printWriter.print(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-					httpServletRequest));
-			printWriter.print(" rel=\"stylesheet\" type=\"text/css\" />");
+			_writeStyleSheet(
+				httpServletRequest, printWriter, globalCSSCET.getURL());
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-34650")) {
+
+			return;
+		}
+
+		try {
+			List<CET> cets = _cetManager.getCETs(
+				themeDisplay.getCompanyId(), null,
+				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
+				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null);
+
+			for (CET cet : cets) {
+				GlobalCSSCET globalCSSCET = (GlobalCSSCET)cet;
+
+				if (!StringUtil.equalsIgnoreCase(
+						globalCSSCET.getScope(), "company")) {
+
+					continue;
+				}
+
+				_writeStyleSheet(
+					httpServletRequest, printWriter, globalCSSCET.getURL());
+			}
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to inject CSS client extensions for company " +
+					themeDisplay.getCompanyId(),
+				exception);
 		}
 	}
 
@@ -76,6 +110,22 @@ public class ClientExtensionTopHeadDynamicInclude implements DynamicInclude {
 		dynamicIncludeRegistry.register(
 			"/html/common/themes/top_head.jsp#post");
 	}
+
+	private void _writeStyleSheet(
+		HttpServletRequest httpServletRequest, PrintWriter printWriter,
+		String url) {
+
+		printWriter.print("<link data-senna-track=\"temporary\" href=\"");
+		printWriter.print(url);
+		printWriter.print(StringPool.QUOTE);
+		printWriter.print(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest));
+		printWriter.print(" rel=\"stylesheet\" type=\"text/css\" />");
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClientExtensionTopHeadDynamicInclude.class);
 
 	@Reference
 	private CETManager _cetManager;

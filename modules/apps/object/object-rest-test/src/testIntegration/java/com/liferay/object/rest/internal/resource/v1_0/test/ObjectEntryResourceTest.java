@@ -13687,7 +13687,7 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
 
-		// File with URL attachment and wrong url
+		// File with URL attachment and malformed url
 
 		String malformedUrl = StringBundler.concat(
 			"http//", testCompany.getVirtualHostname(), ":8080/",

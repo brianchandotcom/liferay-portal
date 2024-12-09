@@ -54,7 +54,7 @@ export default function useCheckFormsValidity() {
 		for (const form of forms) {
 			if (
 				hasLocalizationSelect(fragmentEntryLinks) &&
-				!hasLocalizableFields(fragmentEntryLinks)
+				!(await hasLocalizableFields(stateRef.current, form.itemId))
 			) {
 				addError(
 					validations,

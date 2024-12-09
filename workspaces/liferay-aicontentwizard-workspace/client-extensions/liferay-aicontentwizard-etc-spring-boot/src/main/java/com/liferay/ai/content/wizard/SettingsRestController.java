@@ -106,14 +106,12 @@ public class SettingsRestController extends BaseRestController {
 
 		_settingsService.setActiveSettings(settingsJSONObject);
 
-		String filter =
-			"active eq true and id ne '" + settingsJSONObject.getLong("id") +
-				"'";
-
 		JSONArray jsonArray = new JSONObject(
 			get(
 				"Bearer " + jwt.getTokenValue(),
-				"/o/c/k9l6aicontentwizardsettings?filter=" + filter)
+				StringBundler.concat(
+					"/o/c/k9l6aicontentwizardsettings?filter=active eq true ",
+					"and id ne '", settingsJSONObject.getLong("id"), "'"))
 		).getJSONArray(
 			"items"
 		);

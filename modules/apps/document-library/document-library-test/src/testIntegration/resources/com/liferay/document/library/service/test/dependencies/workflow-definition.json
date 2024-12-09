@@ -1,0 +1,150 @@
+{
+	"#child-nodes": [
+		{
+			"#tag-name": "name",
+			"#value": "438f2d43-a767-fd76-345c-94251070cfebt"
+		},
+		{
+			"#tag-name": "version",
+			"#value": "1"
+		},
+		{
+			"#child-nodes": [
+				{
+					"#tag-name": "name",
+					"#value": "79053f6a-21be-46fb-a092-fbc90af5c8d3"
+				},
+				{
+					"#tag-name": "description",
+					"#value": "Begin a workflow."
+				},
+				{
+					"#cdata-value": [
+						"{",
+						"    \"xy\": [",
+						"        300,",
+						"        100",
+						"    ]",
+						"}"
+					],
+					"#tag-name": "metadata"
+				},
+				{
+					"#tag-name": "initial",
+					"#value": "true"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#tag-name": "label",
+							"#value": "Start",
+							"language-id": "en_US"
+						}
+					],
+					"#tag-name": "labels"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#child-nodes": [
+								{
+									"#child-nodes": [
+										{
+											"#tag-name": "label",
+											"#value": "Approve",
+											"language-id": "en_US"
+										}
+									],
+									"#tag-name": "labels"
+								},
+								{
+									"#tag-name": "name",
+									"#value": "67c491b0-e763-4b14-b1a8-bc3e55c90e62"
+								},
+								{
+									"#tag-name": "target",
+									"#value": "d0652dae-6712-4448-a2da-07c33be845d2"
+								},
+								{
+									"#tag-name": "default",
+									"#value": "true"
+								}
+							],
+							"#tag-name": "transition"
+						}
+					],
+					"#tag-name": "transitions"
+				}
+			],
+			"#tag-name": "state"
+		},
+		{
+			"#child-nodes": [
+				{
+					"#tag-name": "name",
+					"#value": "d0652dae-6712-4448-a2da-07c33be845d2"
+				},
+				{
+					"#tag-name": "description",
+					"#value": "Conclude the workflow."
+				},
+				{
+					"#cdata-value": [
+						"{",
+						"    \"terminal\": true,",
+						"    \"xy\": [",
+						"        300,",
+						"        400",
+						"    ]",
+						"}"
+					],
+					"#tag-name": "metadata"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#child-nodes": [
+								{
+									"#tag-name": "name",
+									"#value": "Approve"
+								},
+								{
+									"#tag-name": "description"
+								},
+								{
+									"#tag-name": "status",
+									"#value": "0"
+								},
+								{
+									"#tag-name": "priority",
+									"#value": "1"
+								},
+								{
+									"#tag-name": "execution-type",
+									"#value": "onEntry"
+								}
+							],
+							"#tag-name": "action"
+						}
+					],
+					"#tag-name": "actions"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#tag-name": "label",
+							"#value": "Approved",
+							"language-id": "en_US"
+						}
+					],
+					"#tag-name": "labels"
+				}
+			],
+			"#tag-name": "state"
+		}
+	],
+	"#tag-name": "workflow-definition",
+	"xmlns": "urn:liferay.com:liferay-workflow_7.4.0",
+	"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+	"xsi:schemaLocation": "urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+}

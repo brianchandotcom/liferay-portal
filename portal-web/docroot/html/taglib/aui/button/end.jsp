@@ -11,9 +11,9 @@
 	<div class="btn-group btn-group-item dropdown" id="<%= id %>BtnGroup">
 </c:if>
 
-<c:choose>
-	<c:when test='<%= Validator.isNotNull(escapedHREF) && !type.equals("cancel") %>'>
-		<liferay-ui:csp>
+<liferay-ui:csp>
+	<c:choose>
+		<c:when test='<%= Validator.isNotNull(escapedHREF) && !type.equals("cancel") %>'>
 			<a
 				class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
 				href="<%= escapedHREF %>"
@@ -28,10 +28,8 @@
 				<%= AUIUtil.buildData(data) %>
 				<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
 			>
-		</liferay-ui:csp>
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:csp>
+		</c:when>
+		<c:otherwise>
 			<button
 				class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
 
@@ -60,30 +58,30 @@
 				<%= AUIUtil.buildData(data) %>
 				<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
 			>
-		</liferay-ui:csp>
-	</c:otherwise>
-</c:choose>
+		</c:otherwise>
+	</c:choose>
 
-<c:if test='<%= Validator.isNotNull(icon) && iconAlign.equals("left") %>'>
-	<i class="<%= icon %>"></i>
-</c:if>
+	<c:if test='<%= Validator.isNotNull(icon) && iconAlign.equals("left") %>'>
+		<i class="<%= icon %>"></i>
+	</c:if>
 
-<c:if test="<%= Validator.isNotNull(value) %>">
-	<span class="lfr-btn-label"><liferay-ui:message key="<%= value %>" /></span>
-</c:if>
+	<c:if test="<%= Validator.isNotNull(value) %>">
+		<span class="lfr-btn-label"><liferay-ui:message key="<%= value %>" /></span>
+	</c:if>
 
-<c:if test='<%= Validator.isNotNull(icon) && iconAlign.equals("right") %>'>
-	<i class="<%= icon %>"></i>
-</c:if>
+	<c:if test='<%= Validator.isNotNull(icon) && iconAlign.equals("right") %>'>
+		<i class="<%= icon %>"></i>
+	</c:if>
 
-<c:choose>
-	<c:when test="<%= Validator.isNotNull(escapedHREF) %>">
-		</a>
-	</c:when>
-	<c:otherwise>
-		</button>
-	</c:otherwise>
-</c:choose>
+	<c:choose>
+		<c:when test="<%= Validator.isNotNull(escapedHREF) %>">
+			</a>
+		</c:when>
+		<c:otherwise>
+			</button>
+		</c:otherwise>
+	</c:choose>
+</liferay-ui:csp>
 
 <c:if test="<%= dropdown %>">
 	<button aria-expanded="false" aria-haspopup="true" class="btn btn-primary dropdown-toggle <%= cssClass %>" data-toggle="liferay-dropdown" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= id %>Toggle" type="button">

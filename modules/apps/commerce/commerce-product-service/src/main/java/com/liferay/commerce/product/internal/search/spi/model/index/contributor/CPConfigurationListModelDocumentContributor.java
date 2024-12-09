@@ -37,13 +37,13 @@ public class CPConfigurationListModelDocumentContributor
 			}
 
 			document.addKeyword(
+				CPField.CP_CONFIGURATION_LIST_ID,
+				cpConfigurationList.getCPConfigurationListId());
+			document.addKeyword(
 				CPField.EXTERNAL_REFERENCE_CODE,
 				cpConfigurationList.getExternalReferenceCode());
 			document.addKeyword(
 				Field.GROUP_ID, cpConfigurationList.getGroupId());
-			document.addKeyword(
-				CPField.CP_CONFIGURATION_LIST_ID,
-				cpConfigurationList.getCPConfigurationListId());
 			document.addText(Field.NAME, cpConfigurationList.getName());
 			document.addNumber(
 				Field.PRIORITY, cpConfigurationList.getPriority());

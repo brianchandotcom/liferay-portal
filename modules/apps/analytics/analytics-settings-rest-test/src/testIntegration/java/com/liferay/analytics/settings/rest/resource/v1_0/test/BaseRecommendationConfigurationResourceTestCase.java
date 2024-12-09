@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -307,12 +306,11 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals(
-					"contentRecommenderMostPopularItemsEnabled",
+					"contentRecommenderMostPopularItems",
 					additionalAssertFieldName)) {
 
 				if (recommendationConfiguration.
-						getContentRecommenderMostPopularItemsEnabled() ==
-							null) {
+						getContentRecommenderMostPopularItems() == null) {
 
 					valid = false;
 				}
@@ -321,12 +319,11 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"contentRecommenderUserPersonalizationEnabled",
+					"contentRecommenderUserPersonalization",
 					additionalAssertFieldName)) {
 
 				if (recommendationConfiguration.
-						getContentRecommenderUserPersonalizationEnabled() ==
-							null) {
+						getContentRecommenderUserPersonalization() == null) {
 
 					valid = false;
 				}
@@ -456,14 +453,14 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals(
-					"contentRecommenderMostPopularItemsEnabled",
+					"contentRecommenderMostPopularItems",
 					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
 						recommendationConfiguration1.
-							getContentRecommenderMostPopularItemsEnabled(),
+							getContentRecommenderMostPopularItems(),
 						recommendationConfiguration2.
-							getContentRecommenderMostPopularItemsEnabled())) {
+							getContentRecommenderMostPopularItems())) {
 
 					return false;
 				}
@@ -472,14 +469,14 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"contentRecommenderUserPersonalizationEnabled",
+					"contentRecommenderUserPersonalization",
 					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
 						recommendationConfiguration1.
-							getContentRecommenderUserPersonalizationEnabled(),
+							getContentRecommenderUserPersonalization(),
 						recommendationConfiguration2.
-							getContentRecommenderUserPersonalizationEnabled())) {
+							getContentRecommenderUserPersonalization())) {
 
 					return false;
 				}
@@ -597,16 +594,12 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals(
-				"contentRecommenderMostPopularItemsEnabled")) {
-
+		if (entityFieldName.equals("contentRecommenderMostPopularItems")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals(
-				"contentRecommenderUserPersonalizationEnabled")) {
-
+		if (entityFieldName.equals("contentRecommenderUserPersonalization")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -658,10 +651,6 @@ public abstract class BaseRecommendationConfigurationResourceTestCase {
 
 		return new RecommendationConfiguration() {
 			{
-				contentRecommenderMostPopularItemsEnabled =
-					RandomTestUtil.randomBoolean();
-				contentRecommenderUserPersonalizationEnabled =
-					RandomTestUtil.randomBoolean();
 			}
 		};
 	}

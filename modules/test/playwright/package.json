@@ -8,9 +8,9 @@
 	},
 	"description": "",
 	"devDependencies": {
+		"@axe-core/playwright": "^4.9.1",
 		"@liferay/object-admin-rest-client-js": "../../apps/object/object-admin-rest-client-js",
 		"@liferay/portal-tools-rest-builder-test-client-js": "../../util/portal-tools-rest-builder-test-client-js",
-		"@axe-core/playwright": "^4.9.1",
 		"@playwright/test": "1.45.2",
 		"@types/node": "^20.9.0",
 		"@types/yauzl": "^2.10.3",

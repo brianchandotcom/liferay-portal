@@ -116,59 +116,68 @@
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_GROUP_ID_FIELD</td>
-	<td>//input[contains(@id,'AuditPortlet_groupId')]</td>
+	<td>//input[contains(@id,'AuditPortlet_groupId') and not(contains(@type,'hidden'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_USER_ID_FIELD</td>
-	<td>//input[contains(@id,'_com_liferay_portal_security_audit_web_portlet_AuditPortlet_userId')]</td>
+	<td>//input[contains(@id,'_com_liferay_portal_security_audit_web_portlet_AuditPortlet_userId') and not(contains(@type,'hidden'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_USER_NAME_FIELD</td>
-	<td>//input[contains(@id,'AuditPortlet_userName')]</td>
+	<td>//input[contains(@id,'AuditPortlet_userName') and not(contains(@type,'hidden'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_RESOURCE_ID_FIELD</td>
-	<td>//input[contains(@id,'AuditPortlet_classPK')]</td>
+	<td>//input[contains(@id,'AuditPortlet_classPK') and not(contains(@type,'hidden'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_RESOURCE_NAME_FIELD</td>
-	<td>//input[contains(@id,'AuditPortlet_className')]</td>
+	<td>//input[contains(@id,'AuditPortlet_className') and not(contains(@type,'hidden'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_RESOURCE_ACTION_FIELD</td>
-	<td>//input[contains(@id,'AuditPortlet_eventType')]</td>
+	<td>//input[contains(@id,'AuditPortlet_eventType') and not(contains(@type,'hidden'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_SESSION_ID_FIELD</td>
-	<td>//input[contains(@id,'AuditPortlet_sessionID')]</td>
+	<td>//input[contains(@id,'AuditPortlet_sessionID') and not(contains(@type,'hidden'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_CLIENT_IP_FIELD</td>
-	<td>//input[contains(@id,'AuditPortlet_clientIP')]</td>
+	<td>//input[contains(@id,'AuditPortlet_clientIP') and not(contains(@type,'hidden'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_CLIENT_HOST_FIELD</td>
-	<td>//input[contains(@id,'AuditPortlet_clientHost')]</td>
+	<td>//input[contains(@id,'AuditPortlet_clientHost') and not(contains(@type,'hidden'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_SERVER_NAME_FIELD</td>
-	<td>//input[contains(@id,'AuditPortlet_serverName')]</td>
+	<td>//input[contains(@id,'AuditPortlet_serverName') and not(contains(@type,'hidden'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_SERVER_PORT_FIELD</td>
-	<td>//input[contains(@id,'AuditPortlet_serverPort')]</td>
+	<td>//input[contains(@id,'AuditPortlet_serverPort') and not(contains(@type,'hidden'))]</td>
 	<td></td>
 </tr>
+
+<!--INPUT_PATHS -->
+
+<tr>
+	<td>SITE_SEARCH_KEYWORDS_NOT_HIDDEN</td>
+	<td>//input[contains(@name,'keywords') and not(contains(@type,'hidden'))]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

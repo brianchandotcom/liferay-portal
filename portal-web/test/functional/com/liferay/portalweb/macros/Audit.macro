@@ -74,7 +74,7 @@ definition {
 			locator1 = "AuditReports#ADVANCED_SEARCH_${reportFieldKey}_FIELD",
 			value1 = ${searchTerm});
 
-		Click(locator1 = "Icon#BASIC_SEARCH");
+		Click(locator1 = "Button#MAIN_CONTENT_SUBMIT");
 
 		Click(locator1 = "Icon#ADVANCED_SEARCH");
 
@@ -89,7 +89,7 @@ definition {
 				locator1 = "AuditReports#ADVANCED_SEARCH_${reportFieldKey}_FIELD",
 				value1 = ${searchTerm});
 
-			Click(locator1 = "Icon#BASIC_SEARCH");
+			Click(locator1 = "Button#MAIN_CONTENT_SUBMIT");
 		}
 
 		if (${searchTerm} != ${groupId}) {
@@ -101,13 +101,13 @@ definition {
 
 	@summary = "Default summary"
 	macro searchViaKeywords(searchTerm = null, resourceName = null) {
-		WaitForElementPresent(locator1 = "TextInput#SITE_SEARCH_KEYWORDS");
+		WaitForElementPresent(locator1 = "AuditReports#SITE_SEARCH_KEYWORDS_NOT_HIDDEN");
 
 		Type(
-			locator1 = "TextInput#SITE_SEARCH_KEYWORDS",
+			locator1 = "AuditReports#SITE_SEARCH_KEYWORDS_NOT_HIDDEN",
 			value1 = ${searchTerm});
 
-		Click(locator1 = "Button#SUBMIT");
+		Click(locator1 = "Button#MAIN_CONTENT_SUBMIT");
 
 		WaitForElementPresent(
 			key_resourceAction = ${searchTerm},

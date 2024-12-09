@@ -70,19 +70,19 @@ const SecurityVulnerabilitiesItem = () => {
 			label: i18n.translate('category'),
 		},
 		{
-			columnKey: 'classification',
+			columnKey: 'issueClassification',
 			label: i18n.translate('classification'),
 		},
 		{
-			columnKey: 'affectedVersions',
-			label: i18n.translate('affected-versions'),
+			columnKey: 'affectedVersion',
+			label: i18n.translate('affected-version'),
 		},
 	];
 
 	const rows = useMemo(() => {
 		if (jiraSearch?.[JiraEnum.ISSUES]) {
 			return jiraSearch?.[JiraEnum.ISSUES].map((issue: IJiraIssue) => ({
-				affectedVersions: (
+				affectedVersion: (
 					<div>
 						<SVAffectedVersions
 							affectedVersions={
@@ -93,9 +93,11 @@ const SecurityVulnerabilitiesItem = () => {
 						/>
 					</div>
 				),
-				category: issue[JiraEnum.FIELDS]?.[JiraEnum.CATEGORY],
-				classification:
-					issue[JiraEnum.FIELDS]?.[JiraEnum.CLASSIFICATION],
+				category: issue[JiraEnum.FIELDS]?.[JiraEnum.CATEGORIES]
+					?.map(String)
+					.join(', '),
+				issueClassification:
+					issue[JiraEnum.FIELDS]?.[JiraEnum.ISSUE_CLASSIFICATION],
 				link: `/${issue?.[JiraEnum.KEY]}`,
 				prioritySummary: (
 					<div className="sv-priority-summary">
@@ -206,22 +208,22 @@ const SecurityVulnerabilitiesItem = () => {
 							</div>
 						)}
 
-						{jiraIssue[JiraEnum.FIELDS]?.[JiraEnum.CATEGORY] && (
+						{jiraIssue[JiraEnum.FIELDS]?.[JiraEnum.CATEGORIES] && (
 							<div className="mb-4">
 								<h5 className="text-neutral-10">
-									{i18n.translate('category')}
+									{i18n.translate('categories')}
 								</h5>
 
-								{
-									jiraIssue[JiraEnum.FIELDS]?.[
-										JiraEnum.CATEGORY
-									]
-								}
+								{jiraIssue[JiraEnum.FIELDS]?.[
+									JiraEnum.CATEGORIES
+								]
+									?.map(String)
+									.join(', ')}
 							</div>
 						)}
 
 						{jiraIssue[JiraEnum.FIELDS]?.[
-							JiraEnum.CLASSIFICATION
+							JiraEnum.ISSUE_CLASSIFICATION
 						] && (
 							<div className="mb-4">
 								<h5 className="text-neutral-10">
@@ -230,7 +232,7 @@ const SecurityVulnerabilitiesItem = () => {
 
 								{
 									jiraIssue[JiraEnum.FIELDS]?.[
-										JiraEnum.CLASSIFICATION
+										JiraEnum.ISSUE_CLASSIFICATION
 									]
 								}
 							</div>

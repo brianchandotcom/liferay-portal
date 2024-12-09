@@ -151,7 +151,7 @@ public class JiraRestController extends BaseRestController {
 				sb.append(" AND ");
 				sb.append(
 					_getJQLCustomField(
-						_jiraSecurityVulnerabilityFieldCategory));
+						_jiraSecurityVulnerabilityFieldCategories));
 				sb.append(" in ('");
 				sb.append(StringUtil.merge(filterCategories, "','"));
 				sb.append("')");
@@ -225,7 +225,7 @@ public class JiraRestController extends BaseRestController {
 			String[] securityVulnerabilitiesIssueFields = {
 				_FIELD_COMPONENTS, _FIELD_ISSUE_KEY, _FIELD_VERSIONS,
 				_jiraSecurityVulnerabilityFieldAffectedVersionsDetails,
-				_jiraSecurityVulnerabilityFieldCategory,
+				_jiraSecurityVulnerabilityFieldCategories,
 				_jiraSecurityVulnerabilityFieldCustomerPortalDescription,
 				_jiraSecurityVulnerabilityFieldCustomerPortalSummary,
 				_jiraSecurityVulnerabilityFieldCustomerPublishingDate,
@@ -479,10 +479,10 @@ public class JiraRestController extends BaseRestController {
 			_flattenJSONArray(
 				issueFieldsJSONObject.getJSONArray(_FIELD_VERSIONS))
 		).put(
-			"category",
+			"categories",
 			_flattenJSONArray(
 				issueFieldsJSONObject.optJSONArray(
-					_jiraSecurityVulnerabilityFieldCategory))
+					_jiraSecurityVulnerabilityFieldCategories))
 		).put(
 			"components",
 			_flattenJSONArray(
@@ -591,8 +591,8 @@ public class JiraRestController extends BaseRestController {
 	)
 	private String _jiraSecurityVulnerabilityFieldAffectedVersionsDetails;
 
-	@Value("${liferay.customer.jira.security.vulnerability.field.category}")
-	private String _jiraSecurityVulnerabilityFieldCategory;
+	@Value("${liferay.customer.jira.security.vulnerability.field.categories}")
+	private String _jiraSecurityVulnerabilityFieldCategories;
 
 	@Value(
 		"${liferay.customer.jira.security.vulnerability.field.customer.portal.description}"

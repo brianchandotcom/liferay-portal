@@ -11,11 +11,11 @@ import {JiraEnum} from '../utils/constants/jiraEnum';
 export interface IJiraFields {
 	[JiraEnum.AFFECTED_VERSIONS]?: string[];
 	[JiraEnum.AFFECTS]?: string;
-	[JiraEnum.CATEGORY]?: string;
-	[JiraEnum.CLASSIFICATION]?: string;
+	[JiraEnum.CATEGORIES]?: string[];
 	[JiraEnum.CVE_IDS]?: string;
 	[JiraEnum.DESCRIPTION]?: string;
 	[JiraEnum.FIX_VERSIONS]?: string[];
+	[JiraEnum.ISSUE_CLASSIFICATION]?: string;
 	[JiraEnum.PUBLISHED_DATE]?: string;
 	[JiraEnum.SEVERITY]?: string;
 	[JiraEnum.SUMMARY]?: string;

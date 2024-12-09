@@ -6,11 +6,11 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.PageElementTypeUtil;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageElementResource;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
@@ -18,14 +18,12 @@ import com.liferay.layout.util.structure.exception.NoSuchLayoutStructureItemExce
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -374,7 +372,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 		for (PageElement childPageElement : pageElement.getPageElements()) {
 			layoutStructure.addLayoutStructureItem(
-				_externalToInternalValuesMap.get(childPageElement.getType()),
+				PageElementTypeUtil.toInternalType(childPageElement.getType()),
 				childPageElement.getParentExternalReferenceCode(),
 				childPageElement.getPosition());
 
@@ -390,7 +388,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 		LayoutStructureItem layoutStructureItem =
 			layoutStructure.addLayoutStructureItem(
 				pageElement.getExternalReferenceCode(),
-				_externalToInternalValuesMap.get(pageElement.getType()),
+				PageElementTypeUtil.toInternalType(pageElement.getType()),
 				pageElement.getParentExternalReferenceCode(),
 				pageElement.getPosition());
 
@@ -403,32 +401,6 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 		return _pageElementDTOConverter.toDTO(layoutStructureItem);
 	}
-
-	private static final Map<PageElement.Type, String>
-		_externalToInternalValuesMap = HashMapBuilder.put(
-			PageElement.Type.COLLECTION,
-			LayoutDataItemTypeConstants.TYPE_COLLECTION
-		).put(
-			PageElement.Type.COLLECTION_ITEM,
-			LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM
-		).put(
-			PageElement.Type.COLUMN, LayoutDataItemTypeConstants.TYPE_COLUMN
-		).put(
-			PageElement.Type.CONTAINER,
-			LayoutDataItemTypeConstants.TYPE_CONTAINER
-		).put(
-			PageElement.Type.DROP_ZONE,
-			LayoutDataItemTypeConstants.TYPE_DROP_ZONE
-		).put(
-			PageElement.Type.FORM, LayoutDataItemTypeConstants.TYPE_FORM
-		).put(
-			PageElement.Type.FRAGMENT, LayoutDataItemTypeConstants.TYPE_FRAGMENT
-		).put(
-			PageElement.Type.FRAGMENT_DROP_ZONE,
-			LayoutDataItemTypeConstants.TYPE_FRAGMENT_DROP_ZONE
-		).put(
-			PageElement.Type.ROW, LayoutDataItemTypeConstants.TYPE_ROW
-		).build();
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

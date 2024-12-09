@@ -13,13 +13,13 @@ import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.dto.v1_0.Settings;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.PageElementTypeUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -103,7 +102,7 @@ public class LayoutUtil {
 
 			layoutStructure.addLayoutStructureItem(
 				childPageElement.getExternalReferenceCode(),
-				_externalToInternalValuesMap.get(childPageElement.getType()),
+				PageElementTypeUtil.toInternalType(childPageElement.getType()),
 				pageElement.getExternalReferenceCode(),
 				GetterUtil.getInteger(childPageElement.getPosition(), -1));
 
@@ -247,7 +246,7 @@ public class LayoutUtil {
 		for (PageElement pageElement : pageExperience.getPageElements()) {
 			newLayoutStructure.addLayoutStructureItem(
 				pageElement.getExternalReferenceCode(),
-				_externalToInternalValuesMap.get(pageElement.getType()),
+				PageElementTypeUtil.toInternalType(pageElement.getType()),
 				layoutStructure.getMainItemId(),
 				GetterUtil.getInteger(pageElement.getPosition(), -1));
 
@@ -377,31 +376,5 @@ public class LayoutUtil {
 					pageExperience.getExternalReferenceCode()));
 		}
 	}
-
-	private static final Map<PageElement.Type, String>
-		_externalToInternalValuesMap = HashMapBuilder.put(
-			PageElement.Type.COLLECTION,
-			LayoutDataItemTypeConstants.TYPE_COLLECTION
-		).put(
-			PageElement.Type.COLLECTION_ITEM,
-			LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM
-		).put(
-			PageElement.Type.COLUMN, LayoutDataItemTypeConstants.TYPE_COLUMN
-		).put(
-			PageElement.Type.CONTAINER,
-			LayoutDataItemTypeConstants.TYPE_CONTAINER
-		).put(
-			PageElement.Type.DROP_ZONE,
-			LayoutDataItemTypeConstants.TYPE_DROP_ZONE
-		).put(
-			PageElement.Type.FORM, LayoutDataItemTypeConstants.TYPE_FORM
-		).put(
-			PageElement.Type.FRAGMENT, LayoutDataItemTypeConstants.TYPE_FRAGMENT
-		).put(
-			PageElement.Type.FRAGMENT_DROP_ZONE,
-			LayoutDataItemTypeConstants.TYPE_FRAGMENT_DROP_ZONE
-		).put(
-			PageElement.Type.ROW, LayoutDataItemTypeConstants.TYPE_ROW
-		).build();
 
 }

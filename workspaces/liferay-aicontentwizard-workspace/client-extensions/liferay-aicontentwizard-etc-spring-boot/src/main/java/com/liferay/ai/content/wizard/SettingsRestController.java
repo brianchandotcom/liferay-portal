@@ -102,50 +102,47 @@ public class SettingsRestController extends BaseRestController {
 		if (jsonObject.getBoolean("active")) {
 			_settingsService.setActiveSettings(settingsJSONObject);
 
-			_deactivateSettings(jwt, settingsJSONObject);
+
+			String filter =
+				"active eq true and id ne '" + settingsJSONObject.getLong("id") +
+					"'";
+
+			JSONArray jsonArray = new JSONObject(
+				get(
+					"Bearer " + jwt.getTokenValue(),
+					"/o/c/k9l6aicontentwizardsettings?filter=" + filter)
+			).getJSONArray(
+				"items"
+			);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject itemJSONObject = jsonArray.getJSONObject(i);
+
+				patch(
+					"Bearer " + jwt.getTokenValue(),
+					new JSONObject(
+					).put(
+						"active", false
+					).toString(),
+					"/o/c/k9l6aicontentwizardsettings/" +
+						itemJSONObject.getInt("id"));
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Deactivation of ",
+							settingsJSONObject.getJSONObject(
+								"provider"
+							).getString(
+								"name"
+							),
+							" Provider with ID: ", itemJSONObject.getInt("id")));
+				}
+			}
 		}
 
 		return new ResponseEntity<>(
 			settingsJSONObject.toString(), HttpStatus.OK);
-	}
-
-	private void _deactivateSettings(Jwt jwt, JSONObject settingsJSONObject) {
-		String filter =
-			"active eq true and id ne '" + settingsJSONObject.getLong("id") +
-				"'";
-
-		JSONArray jsonArray = new JSONObject(
-			get(
-				"Bearer " + jwt.getTokenValue(),
-				"/o/c/k9l6aicontentwizardsettings?filter=" + filter)
-		).getJSONArray(
-			"items"
-		);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject itemJSONObject = jsonArray.getJSONObject(i);
-
-			patch(
-				"Bearer " + jwt.getTokenValue(),
-				new JSONObject(
-				).put(
-					"active", false
-				).toString(),
-				"/o/c/k9l6aicontentwizardsettings/" +
-					itemJSONObject.getInt("id"));
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Deactivation of ",
-						settingsJSONObject.getJSONObject(
-							"provider"
-						).getString(
-							"name"
-						),
-						" Provider with ID: ", itemJSONObject.getInt("id")));
-			}
-		}
 	}
 
 	private String _get(Jwt jwt, String id) {

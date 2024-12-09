@@ -1096,7 +1096,7 @@ public class PageCollectionDefinition implements Serializable {
 	@GraphQLName("PaginationType")
 	public static enum PaginationType {
 
-		NONE("None"), NUMERIC("Numeric"), SIMPLE("Simple");
+		NONE("None"), NUMERIC("Numeric"), REGULAR("Regular"), SIMPLE("Simple");
 
 		@JsonCreator
 		public static PaginationType create(String value) {

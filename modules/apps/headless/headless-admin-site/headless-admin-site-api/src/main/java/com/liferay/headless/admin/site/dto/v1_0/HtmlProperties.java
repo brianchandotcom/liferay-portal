@@ -168,7 +168,7 @@ public class HtmlProperties implements Serializable {
 	public static enum HtmlTag {
 
 		ARTICLE("Article"), ASIDE("Aside"), DIV("Div"), FOOTER("Footer"),
-		HEADER("Header"), MAIN("Main"), NAV("Nav"), SECTION("Section");
+		HEADER("Header"), NAV("Nav"), SECTION("Section");
 
 		@JsonCreator
 		public static HtmlTag create(String value) {

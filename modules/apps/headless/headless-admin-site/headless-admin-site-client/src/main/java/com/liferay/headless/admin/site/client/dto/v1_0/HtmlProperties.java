@@ -88,7 +88,7 @@ public class HtmlProperties implements Cloneable, Serializable {
 	public static enum HtmlTag {
 
 		ARTICLE("Article"), ASIDE("Aside"), DIV("Div"), FOOTER("Footer"),
-		HEADER("Header"), MAIN("Main"), NAV("Nav"), SECTION("Section");
+		HEADER("Header"), NAV("Nav"), SECTION("Section");
 
 		public static HtmlTag create(String value) {
 			for (HtmlTag htmlTag : values()) {

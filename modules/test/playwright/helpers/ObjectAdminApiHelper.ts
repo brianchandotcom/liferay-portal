@@ -44,13 +44,19 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
-	async postRandomObjectDefinition(
-		status: {code: number},
-		objectFields?: Partial<ObjectField>[],
-		objectFolderExternalReferenceCode?: string,
-		scope: 'site' | 'company' = 'company',
-		titleObjectFieldName?: string
-	): Promise<ObjectDefinition> {
+	async postRandomObjectDefinition({
+		objectFields,
+		objectFolderExternalReferenceCode,
+		scope = 'company',
+		status,
+		titleObjectFieldName,
+	}: {
+		objectFields?: Partial<ObjectField>[];
+		objectFolderExternalReferenceCode?: string;
+		scope?: 'site' | 'company';
+		status: {code: number};
+		titleObjectFieldName?: string;
+	}) {
 		const objectDefinitionExternalReferenceCode =
 			'ObjectDefinition' + getRandomInt();
 

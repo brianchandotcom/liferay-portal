@@ -7,12 +7,22 @@ package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.dto.v1_0.RecommendationConfiguration;
+import com.liferay.analytics.settings.rest.dto.v1_0.RecommendationItem;
 import com.liferay.analytics.settings.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.RecommendationConfigurationResource;
+import com.liferay.dispatch.executor.DispatchTaskStatus;
+import com.liferay.dispatch.model.DispatchLog;
+import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.service.DispatchLogLocalService;
+import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -44,13 +54,32 @@ public class RecommendationConfigurationResourceImpl
 
 		return new RecommendationConfiguration() {
 			{
-				setContentRecommenderMostPopularItemsEnabled(
-					analyticsConfiguration::
-						contentRecommenderMostPopularItemsEnabled);
+				setContentRecommenderMostPopularItems(
+					() -> new RecommendationItem() {
+						{
+							setEnabled(
+								analyticsConfiguration::
+									contentRecommenderMostPopularItemsEnabled);
 
-				setContentRecommenderUserPersonalizationEnabled(
-					analyticsConfiguration::
-						contentRecommenderUserPersonalizationEnabled);
+							setStatus(
+								() -> _getStatus(
+									"analytics-download-most-viewed-content-" +
+										"recommendation"));
+						}
+					});
+				setContentRecommenderUserPersonalization(
+					() -> new RecommendationItem() {
+						{
+							setEnabled(
+								analyticsConfiguration::
+									contentRecommenderUserPersonalizationEnabled);
+
+							setStatus(
+								() -> _getStatus(
+									"analytics-download-user-content-" +
+										"recommendation"));
+						}
+					});
 			}
 		};
 	}
@@ -63,21 +92,25 @@ public class RecommendationConfigurationResourceImpl
 		_analyticsCloudClient.updateAnalyticsDataSourceDetails(
 			_configurationProvider.getCompanyConfiguration(
 				AnalyticsConfiguration.class, contextCompany.getCompanyId()),
-			recommendationConfiguration.
-				getContentRecommenderMostPopularItemsEnabled(),
-			recommendationConfiguration.
-				getContentRecommenderUserPersonalizationEnabled());
+			_isEnabled(
+				recommendationConfiguration.
+					getContentRecommenderMostPopularItems()),
+			_isEnabled(
+				recommendationConfiguration.
+					getContentRecommenderUserPersonalization()));
 
 		_analyticsSettingsManager.updateCompanyConfiguration(
 			contextCompany.getCompanyId(),
 			HashMapBuilder.<String, Object>put(
 				"contentRecommenderMostPopularItemsEnabled",
-				recommendationConfiguration.
-					getContentRecommenderMostPopularItemsEnabled()
+				_isEnabled(
+					recommendationConfiguration.
+						getContentRecommenderMostPopularItems())
 			).put(
 				"contentRecommenderUserPersonalizationEnabled",
-				recommendationConfiguration.
-					getContentRecommenderUserPersonalizationEnabled()
+				_isEnabled(
+					recommendationConfiguration.
+						getContentRecommenderUserPersonalization())
 			).build());
 
 		_recommendationConfiguration = recommendationConfiguration;
@@ -88,6 +121,49 @@ public class RecommendationConfigurationResourceImpl
 		_analyticsCloudClient = new AnalyticsCloudClient(_http);
 	}
 
+	private RecommendationItem.Status _getStatus(String name) {
+		DispatchTrigger dispatchTrigger =
+			_dispatchTriggerLocalService.fetchDispatchTrigger(
+				contextCompany.getCompanyId(), name);
+
+		if (dispatchTrigger == null) {
+			return RecommendationItem.Status.DISABLED;
+		}
+
+		List<DispatchLog> dispatchLogs =
+			_dispatchLogLocalService.getDispatchLogs(
+				dispatchTrigger.getDispatchTriggerId(), 0, 1,
+				OrderByComparatorFactoryUtil.create(
+					"DispatchLog", "startDate", "true"));
+
+		if (ListUtil.isEmpty(dispatchLogs)) {
+			return RecommendationItem.Status.CONFIGURING;
+		}
+
+		DispatchLog dispatchLog = dispatchLogs.get(0);
+
+		DispatchTaskStatus dispatchTaskStatus = DispatchTaskStatus.valueOf(
+			dispatchLog.getStatus());
+
+		if (dispatchTaskStatus == DispatchTaskStatus.FAILED) {
+			return RecommendationItem.Status.FAILED;
+		}
+
+		if (dispatchTaskStatus == DispatchTaskStatus.IN_PROGRESS) {
+			return RecommendationItem.Status.CONFIGURING;
+		}
+
+		if (dispatchTaskStatus == DispatchTaskStatus.SUCCESSFUL) {
+			return RecommendationItem.Status.ENABLED;
+		}
+
+		return RecommendationItem.Status.DISABLED;
+	}
+
+	private boolean _isEnabled(RecommendationItem recommendationItem) {
+		return recommendationItem.getEnabled();
+	}
+
 	private AnalyticsCloudClient _analyticsCloudClient;
 
 	@Reference
@@ -95,6 +171,12 @@ public class RecommendationConfigurationResourceImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private DispatchLogLocalService _dispatchLogLocalService;
+
+	@Reference
+	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 	@Reference
 	private Http _http;

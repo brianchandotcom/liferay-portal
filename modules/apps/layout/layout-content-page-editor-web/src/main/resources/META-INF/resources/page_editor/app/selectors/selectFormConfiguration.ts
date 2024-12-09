@@ -16,31 +16,31 @@ import type {
 export default function selectFormConfiguration(
 	item: LayoutDataItem,
 	layoutData: LayoutData
-): {classNameId: string; classTypeId: string; formId: string} | null {
+):
+	| {classNameId: string; classTypeId: string; formId: string}
+	| Record<string, never> {
 	if (!item) {
-		return null;
+		return {};
 	}
 
 	const findFormConfiguration: (
 		childItem: LayoutDataItem
-	) => {classNameId: string; classTypeId: string; formId: string} | null = (
-		childItem
-	) => {
-		const parentItem = layoutData.items[childItem?.parentId];
-
-		if (!parentItem) {
-			return null;
+	) =>
+		| {classNameId: string; classTypeId: string; formId: string}
+		| Record<string, never> = (childItem) => {
+		if (!childItem) {
+			return {};
 		}
 
-		if (parentItem.type === LAYOUT_DATA_ITEM_TYPES.form) {
-			const classNameId = parentItem.config?.classNameId;
-			const mappingSource = parentItem.config?.formConfig;
+		if (childItem.type === LAYOUT_DATA_ITEM_TYPES.form) {
+			const classNameId = childItem.config?.classNameId;
+			const mappingSource = childItem.config?.formConfig;
 
 			if (classNameId && classNameId !== '0') {
 				return {
 					classNameId,
-					classTypeId: parentItem.config?.classTypeId || '',
-					formId: parentItem.itemId,
+					classTypeId: childItem.config?.classTypeId || '',
+					formId: childItem.itemId,
 				};
 			}
 			else if (
@@ -53,16 +53,16 @@ export default function selectFormConfiguration(
 				return {
 					classNameId: selectedMappingTypes!.type.id,
 					classTypeId: selectedMappingTypes!.subtype?.id || '',
-					formId: parentItem.itemId,
+					formId: childItem.itemId,
 				};
 			}
 			else {
-				return null;
+				return {};
 			}
 		}
 
-		return findFormConfiguration(parentItem);
+		return findFormConfiguration(layoutData.items[childItem.parentId]);
 	};
 
-	return findFormConfiguration(layoutData.items[item.itemId]);
+	return findFormConfiguration(item);
 }

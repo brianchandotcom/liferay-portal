@@ -1097,4 +1097,35 @@ while (manageableCalendarsIterator.hasNext()) {
 	};
 
 	scheduler.load();
+
+	var descriptionBoundingBox = document.getElementById(
+		'<portlet:namespace />descriptionBoundingBox'
+	);
+
+	if (descriptionBoundingBox) {
+		const observer = new MutationObserver((mutations, observer) => {
+			outer: for (const mutation of mutations) {
+				for (const node of mutation.addedNodes) {
+					if (node.tagName === 'IFRAME') {
+						node.addEventListener('load', () => {
+							const iframeBody = node.contentDocument?.body;
+
+							if (iframeBody) {
+								iframeBody.setAttribute(
+									'aria-label',
+									'<%= LanguageUtil.get(request, "description") %>'
+								);
+							}
+
+							observer.disconnect();
+						});
+
+						break outer;
+					}
+				}
+			}
+		});
+
+		observer.observe(descriptionBoundingBox, {childList: true, subtree: true});
+	}
 </aui:script>

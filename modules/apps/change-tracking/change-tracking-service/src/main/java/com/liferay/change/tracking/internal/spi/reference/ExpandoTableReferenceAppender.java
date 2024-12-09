@@ -50,12 +50,12 @@ public class ExpandoTableReferenceAppender implements TableReferenceAppender {
 						Column<T, Long> companyIdColumn = table.getColumn(
 							"companyId", Long.class);
 
-						if (companyIdColumn != null) {
-							return companyIdColumn.eq(
-								ExpandoRowTable.INSTANCE.companyId);
+						if (companyIdColumn == null) {
+							return null;
 						}
 
-						return null;
+						return companyIdColumn.eq(
+							ExpandoRowTable.INSTANCE.companyId);
 					}
 				)
 			).innerJoinON(

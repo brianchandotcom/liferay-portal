@@ -767,24 +767,24 @@ public class CTConflictChecker<T extends CTModel<T>> {
 					Column<?, Long> ctCollectionIdColumn = table.getColumn(
 						"ctCollectionId", Long.class);
 
-					if (ctCollectionIdColumn != null) {
-						if (_targetCTCollectionId ==
-								CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+					if (ctCollectionIdColumn == null) {
+						return null;
+					}
 
-							return ctCollectionIdColumn.in(
-								new Long[] {
-									_sourceCTCollectionId, _targetCTCollectionId
-								});
-						}
+					if (_targetCTCollectionId ==
+							CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 
 						return ctCollectionIdColumn.in(
 							new Long[] {
-								_sourceCTCollectionId, _targetCTCollectionId,
-								CTConstants.CT_COLLECTION_ID_PRODUCTION
+								_sourceCTCollectionId, _targetCTCollectionId
 							});
 					}
 
-					return null;
+					return ctCollectionIdColumn.in(
+						new Long[] {
+							_sourceCTCollectionId, _targetCTCollectionId,
+							CTConstants.CT_COLLECTION_ID_PRODUCTION
+						});
 				});
 
 			joinStep = joinStep.leftJoinOn(table, predicate);

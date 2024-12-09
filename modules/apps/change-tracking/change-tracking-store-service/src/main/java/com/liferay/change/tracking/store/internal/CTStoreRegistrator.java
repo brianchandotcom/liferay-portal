@@ -51,24 +51,24 @@ public class CTStoreRegistrator {
 					if (GetterUtil.getBoolean(
 							serviceReference.getProperty("ct.aware"))) {
 
-						if (StringUtil.equals(
+						if (!StringUtil.equals(
 								storeType, PropsValues.DL_STORE_IMPL)) {
 
-							Store ctStore = bundleContext.getService(
-								serviceReference);
-
-							DLStoreImpl.setStore(ctStore);
-
-							return bundleContext.registerService(
-								Store.class, ctStore,
-								HashMapDictionaryBuilder.<String, Object>put(
-									"default", true
-								).put(
-									"republished", true
-								).build());
+							return null;
 						}
 
-						return null;
+						Store ctStore = bundleContext.getService(
+							serviceReference);
+
+						DLStoreImpl.setStore(ctStore);
+
+						return bundleContext.registerService(
+							Store.class, ctStore,
+							HashMapDictionaryBuilder.<String, Object>put(
+								"default", true
+							).put(
+								"republished", true
+							).build());
 					}
 
 					Store ctStore = _ctStoreFactory.createCTStore(

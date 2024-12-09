@@ -114,7 +114,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -131,7 +130,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
@@ -1426,11 +1424,8 @@ public class DefaultObjectEntryManagerImpl
 
 				fileEntry.setFileSourceURL(() -> (String)null);
 			}
-			catch (MalformedURLException malformedURLException) {
-				throw new IllegalArgumentException(malformedURLException);
-			}
 			catch (IOException ioException) {
-				throw new NotFoundException(ioException);
+				throw new IllegalArgumentException(ioException);
 			}
 		}
 

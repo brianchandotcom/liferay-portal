@@ -6,8 +6,10 @@
 package com.liferay.commerce.dashboard.web.internal.portlet;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.commerce.dashboard.web.internal.constants.CommerceDashboardPortletKeys;
 import com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardForecastDisplayContext;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -67,6 +69,7 @@ public class CommerceDashboardForecastsChartPortlet extends MVCPortlet {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new CommerceDashboardForecastDisplayContext(
 					_accountEntryModelResourcePermission,
+					_assetCategoryLocalService, _configurationProvider,
 					_portal.getHttpServletRequest(renderRequest)));
 		}
 		catch (PortalException portalException) {
@@ -86,6 +89,12 @@ public class CommerceDashboardForecastsChartPortlet extends MVCPortlet {
 	)
 	private volatile ModelResourcePermission<AccountEntry>
 		_accountEntryModelResourcePermission;
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Portal _portal;

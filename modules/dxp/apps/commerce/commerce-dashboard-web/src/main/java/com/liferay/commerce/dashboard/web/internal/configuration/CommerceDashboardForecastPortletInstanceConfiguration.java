@@ -23,7 +23,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CommerceDashboardForecastPortletInstanceConfiguration {
 
-	@Meta.AD(name = "asset-category-ids", required = false)
+	@Meta.AD(name = "asset-category-external-reference-codes", required = false)
+	public String assetCategoryExternalReferenceCodes();
+
+	@Meta.AD(name = "asset-category-ids-description", required = false)
 	public String assetCategoryIds();
 
 }

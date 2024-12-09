@@ -6,6 +6,7 @@
 import {navigate} from 'frontend-js-web';
 import {useCallback, useContext, useEffect, useMemo} from 'react';
 
+import {KeyboardMovementContext} from '../contexts/KeyboardMovementContext';
 import {
 	KeyboardNavigationContext,
 	NavigationTarget,
@@ -50,6 +51,8 @@ export function useKeyboardNavigation({
 	const {columnSizes, setTarget, target} = useContext(
 		KeyboardNavigationContext
 	);
+
+	const {sources} = useContext(KeyboardMovementContext);
 
 	const isTarget = useMemo(
 		() =>
@@ -141,12 +144,12 @@ export function useKeyboardNavigation({
 		}
 	}, [element, isTarget, target.preventFocus]);
 
-	// Focus element after navigate
+	// Focus element after navigate or cancelling movement
 
 	useEffect(() => {
 		const {itemId, type} = getSessionState();
 
-		if (!element || itemId !== id) {
+		if (!element || itemId !== id || !!sources.length) {
 			return;
 		}
 
@@ -155,7 +158,7 @@ export function useKeyboardNavigation({
 		setTarget({columnIndex, itemIndex, preventFocus: true});
 
 		focusElement(element, type);
-	}, [columnIndex, element, id, itemIndex, setTarget]);
+	}, [columnIndex, element, id, itemIndex, setTarget, sources.length]);
 
 	return {
 		isTarget,

@@ -144,7 +144,7 @@ public class AssetVocabularyServiceTest {
 		Assert.assertEquals(
 			StringUtil.toLowerCase(title.trim()), vocabulary.getName());
 
-		_testAssetCategoryLongTitlesAreTrimmed(vocabulary, title);
+		_assertAssetCategoryLongTitlesAreTrimmed(vocabulary, title);
 	}
 
 	@Test
@@ -603,7 +603,7 @@ public class AssetVocabularyServiceTest {
 		Assert.assertEquals(
 			StringUtil.toLowerCase(name.trim()), vocabulary.getName());
 
-		_testAssetCategoryLongTitlesAreTrimmed(vocabulary, title);
+		_assertAssetCategoryLongTitlesAreTrimmed(vocabulary, title);
 	}
 
 	@Rule
@@ -622,6 +622,16 @@ public class AssetVocabularyServiceTest {
 		return results.getLength();
 	}
 
+	private void _assertAssetCategoryLongTitlesAreTrimmed(
+		AssetVocabulary assetVocabulary, String title) {
+
+		Map<Locale, String> titleMap = assetVocabulary.getTitleMap();
+
+		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
+			Assert.assertEquals(title, entry.getValue());
+		}
+	}
+
 	private void _testAddVocabulary(String primKey, String roleName)
 		throws Exception {
 
@@ -633,16 +643,6 @@ public class AssetVocabularyServiceTest {
 				ResourceConstants.SCOPE_INDIVIDUAL, primKey, role.getRoleId());
 
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
-	}
-
-	private void _testAssetCategoryLongTitlesAreTrimmed(
-		AssetVocabulary assetVocabulary, String title) {
-
-		Map<Locale, String> titleMap = assetVocabulary.getTitleMap();
-
-		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
-			Assert.assertEquals(title, entry.getValue());
-		}
 	}
 
 	@Inject

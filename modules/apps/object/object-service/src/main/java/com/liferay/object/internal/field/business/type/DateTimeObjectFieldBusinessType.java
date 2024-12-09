@@ -137,6 +137,11 @@ public class DateTimeObjectFieldBusinessType
 				StringPool.UTC, value));
 	}
 
+	@Override
+	public boolean isLocalizable() {
+		return true;
+	}
+
 	private LocalDateTime _getLocalDateTime(
 		String sourceTimeZoneId, String targetTimeZoneId, String value) {
 

@@ -208,6 +208,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return testPostByExternalReferenceCodeSitePage_addSitePage(sitePage);
 	}
 
+	protected String
+		testGetSiteSiteByExternalReferenceCodeSitePagesPage_getSiteExternalReferenceCode() {
+
+		return testGroup.getExternalReferenceCode();
+	}
+
 	@Override
 	protected SitePage testPostByExternalReferenceCodeSitePage_addSitePage(
 			SitePage sitePage)

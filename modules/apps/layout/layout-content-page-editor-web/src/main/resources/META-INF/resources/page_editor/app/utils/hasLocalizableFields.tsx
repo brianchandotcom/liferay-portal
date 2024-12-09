@@ -3,14 +3,43 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
+import {FormLayoutDataItem} from '../../types/layout_data/FormLayoutDataItem';
+import {State} from '../reducers';
+import selectFormConfiguration from '../selectors/selectFormConfiguration';
+import FormService, {FormFieldSet} from '../services/FormService';
+import {CACHE_KEYS, getCacheItem, getCacheKey} from './cache';
+import {findSelectedFormFields} from './findSelectedFormFields';
 
-export function hasLocalizableFields(
-	fragmentEntryLinks: FragmentEntryLinkMap
-): boolean {
-	return Object.values(fragmentEntryLinks).some(
-		(fragmentEntryLink) =>
-			!fragmentEntryLink?.removed &&
-			fragmentEntryLink.content.includes('data-localizable="true"')
+export async function hasLocalizableFields(
+	state: State,
+	formId: FormLayoutDataItem['itemId']
+): Promise<boolean> {
+	const selectedFormFields = findSelectedFormFields(state, formId);
+
+	const {classNameId, classTypeId} = selectFormConfiguration(
+		state.layoutData.items[formId],
+		state.layoutData
 	);
+
+	const cacheKey = getCacheKey([
+		CACHE_KEYS.formFields,
+		classNameId,
+		classTypeId,
+	]);
+
+	const {data: fields} = getCacheItem<FormFieldSet[]>(cacheKey);
+
+	const promise = fields
+		? Promise.resolve(fields)
+		: FormService.getFormFields({
+				classNameId,
+				classTypeId,
+			});
+
+	const formFields = await promise;
+
+	return formFields
+		.flatMap((field) => field.fields)
+		.filter((field) => selectedFormFields.includes(field.key))
+		.some((field) => field.localizable);
 }

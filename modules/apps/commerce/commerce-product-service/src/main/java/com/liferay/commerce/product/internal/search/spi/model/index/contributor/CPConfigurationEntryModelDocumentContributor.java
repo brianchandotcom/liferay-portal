@@ -49,7 +49,6 @@ public class CPConfigurationEntryModelDocumentContributor
 			document.addKeyword(
 				CPField.CP_CONFIGURATION_LIST_ID,
 				cpConfigurationEntry.getCPConfigurationListId());
-
 			document.addNumber(
 				CPField.CP_CONFIGURATION_LIST_IDS,
 				TransformUtil.transformToArray(
@@ -67,7 +66,6 @@ public class CPConfigurationEntryModelDocumentContributor
 						return cpConfigurationEntry.getCPConfigurationListId();
 					},
 					Long.class));
-
 			document.addText(
 				Field.CLASS_NAME_ID,
 				String.valueOf(cpConfigurationEntry.getClassNameId()));
@@ -99,12 +97,10 @@ public class CPConfigurationEntryModelDocumentContributor
 							CPDefinition.class.getName(),
 							cpConfigurationEntry.getClassPK()),
 						String::toLowerCase, String.class));
-
-				document.addKeyword(Field.NAME, cpDefinition.getName());
-
 				document.addKeyword(
 					CPField.PRODUCT_TYPE_NAME,
 					cpDefinition.getProductTypeName());
+				document.addKeyword(Field.NAME, cpDefinition.getName());
 			}
 
 			if (_log.isDebugEnabled()) {

@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 export class AssetCategoriesAdminPage {
@@ -20,6 +21,19 @@ export class AssetCategoriesAdminPage {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.categoriesAdmin}`
 		);
+	}
+
+	async gotoAction(
+		action: 'Add Subcategory' | 'Delete' | 'Edit' | 'Move' | 'Permissions',
+		title: string
+	) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: action}),
+			trigger: this.page
+				.getByRole('row', {name: title})
+				.getByLabel('Show Actions'),
+		});
 	}
 
 	async gotoVocabulary(name: string) {

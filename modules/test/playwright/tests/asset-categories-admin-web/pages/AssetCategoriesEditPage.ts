@@ -5,11 +5,12 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {AssetCategoriesAdminPage} from './AssetCategoriesAdminPage';
 
 export class AssetCategoriesEditPage {
 	readonly addButton: Locator;
+	readonly assetCategoriesAdminPage: AssetCategoriesAdminPage;
 	readonly cancelButton: Locator;
 	readonly deleteButton: Locator;
 	readonly descriptionField: Locator;
@@ -20,6 +21,7 @@ export class AssetCategoriesEditPage {
 
 	constructor(page: Page) {
 		this.addButton = page.getByRole('button', {name: 'Add'});
+		this.assetCategoriesAdminPage = new AssetCategoriesAdminPage(page);
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.deleteButton = page.getByRole('button', {name: 'Delete'});
 		this.descriptionField = page
@@ -67,18 +69,12 @@ export class AssetCategoriesEditPage {
 		await this.nameInput.fill(name);
 	}
 
-	async goto(action: string, title: string) {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: action}),
-			trigger: this.page
-				.getByRole('row', {name: title})
-				.getByLabel('Show Actions'),
-		});
+	async goto(title: string) {
+		await this.assetCategoriesAdminPage.gotoAction('Edit', title);
 	}
 
 	async goToPropertiesTab(title: string) {
-		await this.goto('Edit', title);
+		await this.goto(title);
 		await this.propertiesTab.click();
 	}
 

@@ -13663,7 +13663,7 @@ public class ObjectEntryResourceTest {
 		// File with URL attachment and resource not found
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put("status", "NOT_FOUND"),
+			fileEntry -> JSONUtil.put("status", "BAD_REQUEST"),
 			_toFileEntry(
 				StringBundler.concat(
 					"http://", testCompany.getVirtualHostname(), ":8081"),

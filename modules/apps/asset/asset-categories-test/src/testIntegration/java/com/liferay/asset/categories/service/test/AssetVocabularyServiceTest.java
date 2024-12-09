@@ -108,6 +108,20 @@ public class AssetVocabularyServiceTest {
 	}
 
 	@Test
+	public void testAddVocabulary() throws Exception {
+		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId(), RandomTestUtil.randomString());
+
+		_testAddVocabulary(
+			String.valueOf(vocabulary.getPrimaryKey()), RoleConstants.GUEST);
+		_testAddVocabulary(
+			String.valueOf(vocabulary.getPrimaryKey()), RoleConstants.OWNER);
+		_testAddVocabulary(
+			String.valueOf(vocabulary.getPrimaryKey()),
+			RoleConstants.SITE_MEMBER);
+	}
+
+	@Test
 	public void testAddVocabularyWithExternalReferenceCode() throws Exception {
 		String externalReferenceCode = StringUtil.randomString();
 
@@ -161,20 +175,6 @@ public class AssetVocabularyServiceTest {
 					externalReferenceCode, _group.getGroupId());
 
 		Assert.assertEquals(vocabulary1, vocabulary2);
-	}
-
-	@Test
-	public void testAddVocabularyWithViewPermission() throws Exception {
-		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId(), RandomTestUtil.randomString());
-
-		_testAddVocabularyWithViewPermission(
-			String.valueOf(vocabulary.getPrimaryKey()), RoleConstants.GUEST);
-		_testAddVocabularyWithViewPermission(
-			String.valueOf(vocabulary.getPrimaryKey()), RoleConstants.OWNER);
-		_testAddVocabularyWithViewPermission(
-			String.valueOf(vocabulary.getPrimaryKey()),
-			RoleConstants.SITE_MEMBER);
 	}
 
 	@Test
@@ -566,8 +566,7 @@ public class AssetVocabularyServiceTest {
 		return results.getLength();
 	}
 
-	private void _testAddVocabularyWithViewPermission(
-			String primKey, String roleName)
+	private void _testAddVocabulary(String primKey, String roleName)
 		throws Exception {
 
 		Role role = _roleLocalService.getRole(_group.getCompanyId(), roleName);

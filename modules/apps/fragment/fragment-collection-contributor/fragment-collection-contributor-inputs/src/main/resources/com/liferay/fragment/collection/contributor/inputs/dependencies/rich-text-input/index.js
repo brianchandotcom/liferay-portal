@@ -18,7 +18,7 @@ else if (layoutMode === 'edit') {
 		inputElement.setAttribute('disabled', true);
 	}
 }
-else if (layoutMode !== 'edit' && input.attributes.localizable) {
+else if (layoutMode !== 'edit' && input.localizable) {
 	CKEDITOR.on('instanceReady', (editorEvent) => {
 		if (editorEvent.editor.name === input.name) {
 			editorEvent.editor.on('change', () => {

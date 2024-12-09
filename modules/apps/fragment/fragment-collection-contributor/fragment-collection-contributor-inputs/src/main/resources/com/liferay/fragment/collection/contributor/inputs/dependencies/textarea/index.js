@@ -65,7 +65,7 @@ function main() {
 
 		textarea.addEventListener('keyup', onInputKeyup);
 
-		if (input.attributes.localizable) {
+		if (input.localizable) {
 			Liferay.on('localizationSelect:localeChanged', (event) => {
 				currentLanguageId = event.languageId;
 

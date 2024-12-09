@@ -92,7 +92,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		super.testGetSiteSiteByExternalReferenceCodeSitePagePermissionsPage();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodeSitePagesPage()
@@ -101,7 +100,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		super.testGetSiteSiteByExternalReferenceCodeSitePagesPage();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodeSitePagesPageWithPagination()

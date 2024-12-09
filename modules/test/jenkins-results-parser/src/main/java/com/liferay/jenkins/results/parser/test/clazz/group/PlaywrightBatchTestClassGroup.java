@@ -30,6 +30,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
@@ -53,7 +55,15 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 					"PORTAL_BATCH_TEST_SELECTOR");
 			}
 
-			_addProjectNames(portalBatchTestSelector);
+			Matcher matcher = _playwrightFileNamePattern.matcher(
+				portalBatchTestSelector);
+
+			if (matcher.matches()) {
+				_addProjectNames(matcher.group("projectName"));
+			}
+			else {
+				_addProjectNames(portalBatchTestSelector);
+			}
 
 			return;
 		}
@@ -550,6 +560,41 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			specFileTitlesMap.put(specFile, specTitles);
 		}
 
+		if (isRootCauseAnalysis()) {
+			String portalBatchTestSelector = System.getenv(
+				"PORTAL_BATCH_TEST_SELECTOR");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(
+					portalBatchTestSelector)) {
+
+				portalBatchTestSelector = getBuildStartProperty(
+					"PORTAL_BATCH_TEST_SELECTOR");
+			}
+
+			Matcher matcher = _playwrightFileNamePattern.matcher(
+				portalBatchTestSelector);
+
+			if (matcher.matches()) {
+				File specFile = new File(rootDir, matcher.group("filePath"));
+
+				TestClass testClass = TestClassFactory.newTestClass(
+					this, specFile);
+
+				for (String specTitle :
+						specFileTitlesMap.getOrDefault(
+							specFile, new HashSet<>())) {
+
+					testClass.addTestClassMethod(
+						TestClassFactory.newTestClassMethod(
+							false, specTitle, testClass));
+				}
+
+				testClasses.add(testClass);
+
+				return testClasses;
+			}
+		}
+
 		for (Map.Entry<File, Set<String>> entry :
 				specFileTitlesMap.entrySet()) {
 
@@ -679,6 +724,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
+	private static final Pattern _playwrightFileNamePattern = Pattern.compile(
+		"tests/(?<filePath>(?<projectName>[^/]+)/.*.spec.ts)");
 	private static JSONObject _playwrightJSONObject;
 	private static final AtomicBoolean _playwrightJSONObjectsLoaded =
 		new AtomicBoolean();

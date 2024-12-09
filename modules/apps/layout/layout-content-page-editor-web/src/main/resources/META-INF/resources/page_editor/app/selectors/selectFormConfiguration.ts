@@ -16,18 +16,20 @@ import type {
 export default function selectFormConfiguration(
 	item: LayoutDataItem,
 	layoutData: LayoutData
-) {
+): {classNameId: string; classTypeId: string; formId: string} | null {
 	if (!item) {
-		return {};
+		return null;
 	}
 
-	const findFormConfiguration: (childItem: LayoutDataItem) => void = (
+	const findFormConfiguration: (
+		childItem: LayoutDataItem
+	) => {classNameId: string; classTypeId: string; formId: string} | null = (
 		childItem
 	) => {
 		const parentItem = layoutData.items[childItem?.parentId];
 
 		if (!parentItem) {
-			return {};
+			return null;
 		}
 
 		if (parentItem.type === LAYOUT_DATA_ITEM_TYPES.form) {
@@ -35,7 +37,11 @@ export default function selectFormConfiguration(
 			const mappingSource = parentItem.config?.formConfig;
 
 			if (classNameId && classNameId !== '0') {
-				return {...parentItem.config, formId: parentItem.itemId};
+				return {
+					classNameId,
+					classTypeId: parentItem.config?.classTypeId || '',
+					formId: parentItem.itemId,
+				};
 			}
 			else if (
 				config.layoutType === LAYOUT_TYPES.display &&
@@ -45,13 +51,13 @@ export default function selectFormConfiguration(
 				const {selectedMappingTypes} = config;
 
 				return {
-					classNameId: selectedMappingTypes?.type.id,
-					classTypeId: selectedMappingTypes?.subtype.id,
+					classNameId: selectedMappingTypes!.type.id,
+					classTypeId: selectedMappingTypes!.subtype?.id || '',
 					formId: parentItem.itemId,
 				};
 			}
 			else {
-				return {};
+				return null;
 			}
 		}
 

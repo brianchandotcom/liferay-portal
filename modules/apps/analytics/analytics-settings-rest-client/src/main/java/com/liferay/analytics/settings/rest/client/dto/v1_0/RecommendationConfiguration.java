@@ -25,58 +25,57 @@ public class RecommendationConfiguration implements Cloneable, Serializable {
 		return RecommendationConfigurationSerDes.toDTO(json);
 	}
 
-	public Boolean getContentRecommenderMostPopularItemsEnabled() {
-		return contentRecommenderMostPopularItemsEnabled;
+	public RecommendationItem getContentRecommenderMostPopularItems() {
+		return contentRecommenderMostPopularItems;
 	}
 
-	public void setContentRecommenderMostPopularItemsEnabled(
-		Boolean contentRecommenderMostPopularItemsEnabled) {
+	public void setContentRecommenderMostPopularItems(
+		RecommendationItem contentRecommenderMostPopularItems) {
 
-		this.contentRecommenderMostPopularItemsEnabled =
-			contentRecommenderMostPopularItemsEnabled;
+		this.contentRecommenderMostPopularItems =
+			contentRecommenderMostPopularItems;
 	}
 
-	public void setContentRecommenderMostPopularItemsEnabled(
-		UnsafeSupplier<Boolean, Exception>
-			contentRecommenderMostPopularItemsEnabledUnsafeSupplier) {
+	public void setContentRecommenderMostPopularItems(
+		UnsafeSupplier<RecommendationItem, Exception>
+			contentRecommenderMostPopularItemsUnsafeSupplier) {
 
 		try {
-			contentRecommenderMostPopularItemsEnabled =
-				contentRecommenderMostPopularItemsEnabledUnsafeSupplier.get();
+			contentRecommenderMostPopularItems =
+				contentRecommenderMostPopularItemsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean contentRecommenderMostPopularItemsEnabled;
+	protected RecommendationItem contentRecommenderMostPopularItems;
 
-	public Boolean getContentRecommenderUserPersonalizationEnabled() {
-		return contentRecommenderUserPersonalizationEnabled;
+	public RecommendationItem getContentRecommenderUserPersonalization() {
+		return contentRecommenderUserPersonalization;
 	}
 
-	public void setContentRecommenderUserPersonalizationEnabled(
-		Boolean contentRecommenderUserPersonalizationEnabled) {
+	public void setContentRecommenderUserPersonalization(
+		RecommendationItem contentRecommenderUserPersonalization) {
 
-		this.contentRecommenderUserPersonalizationEnabled =
-			contentRecommenderUserPersonalizationEnabled;
+		this.contentRecommenderUserPersonalization =
+			contentRecommenderUserPersonalization;
 	}
 
-	public void setContentRecommenderUserPersonalizationEnabled(
-		UnsafeSupplier<Boolean, Exception>
-			contentRecommenderUserPersonalizationEnabledUnsafeSupplier) {
+	public void setContentRecommenderUserPersonalization(
+		UnsafeSupplier<RecommendationItem, Exception>
+			contentRecommenderUserPersonalizationUnsafeSupplier) {
 
 		try {
-			contentRecommenderUserPersonalizationEnabled =
-				contentRecommenderUserPersonalizationEnabledUnsafeSupplier.
-					get();
+			contentRecommenderUserPersonalization =
+				contentRecommenderUserPersonalizationUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean contentRecommenderUserPersonalizationEnabled;
+	protected RecommendationItem contentRecommenderUserPersonalization;
 
 	@Override
 	public RecommendationConfiguration clone()

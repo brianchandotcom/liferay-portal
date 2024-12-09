@@ -5,9 +5,12 @@
 
 package com.liferay.analytics.settings.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -37,51 +40,43 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("RecommendationConfiguration")
+@GraphQLName("RecommendationItem")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "RecommendationConfiguration")
-public class RecommendationConfiguration implements Serializable {
+@XmlRootElement(name = "RecommendationItem")
+public class RecommendationItem implements Serializable {
 
-	public static RecommendationConfiguration toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			RecommendationConfiguration.class, json);
+	public static RecommendationItem toDTO(String json) {
+		return ObjectMapperUtil.readValue(RecommendationItem.class, json);
 	}
 
-	public static RecommendationConfiguration unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			RecommendationConfiguration.class, json);
+	public static RecommendationItem unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(RecommendationItem.class, json);
 	}
 
 	@Schema
-	@Valid
-	public RecommendationItem getContentRecommenderMostPopularItems() {
-		if (_contentRecommenderMostPopularItemsSupplier != null) {
-			contentRecommenderMostPopularItems =
-				_contentRecommenderMostPopularItemsSupplier.get();
+	public Boolean getEnabled() {
+		if (_enabledSupplier != null) {
+			enabled = _enabledSupplier.get();
 
-			_contentRecommenderMostPopularItemsSupplier = null;
+			_enabledSupplier = null;
 		}
 
-		return contentRecommenderMostPopularItems;
+		return enabled;
 	}
 
-	public void setContentRecommenderMostPopularItems(
-		RecommendationItem contentRecommenderMostPopularItems) {
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 
-		this.contentRecommenderMostPopularItems =
-			contentRecommenderMostPopularItems;
-
-		_contentRecommenderMostPopularItemsSupplier = null;
+		_enabledSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setContentRecommenderMostPopularItems(
-		UnsafeSupplier<RecommendationItem, Exception>
-			contentRecommenderMostPopularItemsUnsafeSupplier) {
+	public void setEnabled(
+		UnsafeSupplier<Boolean, Exception> enabledUnsafeSupplier) {
 
-		_contentRecommenderMostPopularItemsSupplier = () -> {
+		_enabledSupplier = () -> {
 			try {
-				return contentRecommenderMostPopularItemsUnsafeSupplier.get();
+				return enabledUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -94,43 +89,48 @@ public class RecommendationConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected RecommendationItem contentRecommenderMostPopularItems;
+	protected Boolean enabled;
 
 	@JsonIgnore
-	private Supplier<RecommendationItem>
-		_contentRecommenderMostPopularItemsSupplier;
+	private Supplier<Boolean> _enabledSupplier;
 
+	@JsonGetter("status")
 	@Schema
 	@Valid
-	public RecommendationItem getContentRecommenderUserPersonalization() {
-		if (_contentRecommenderUserPersonalizationSupplier != null) {
-			contentRecommenderUserPersonalization =
-				_contentRecommenderUserPersonalizationSupplier.get();
+	public Status getStatus() {
+		if (_statusSupplier != null) {
+			status = _statusSupplier.get();
 
-			_contentRecommenderUserPersonalizationSupplier = null;
+			_statusSupplier = null;
 		}
 
-		return contentRecommenderUserPersonalization;
-	}
-
-	public void setContentRecommenderUserPersonalization(
-		RecommendationItem contentRecommenderUserPersonalization) {
-
-		this.contentRecommenderUserPersonalization =
-			contentRecommenderUserPersonalization;
-
-		_contentRecommenderUserPersonalizationSupplier = null;
+		return status;
 	}
 
 	@JsonIgnore
-	public void setContentRecommenderUserPersonalization(
-		UnsafeSupplier<RecommendationItem, Exception>
-			contentRecommenderUserPersonalizationUnsafeSupplier) {
+	public String getStatusAsString() {
+		Status status = getStatus();
 
-		_contentRecommenderUserPersonalizationSupplier = () -> {
+		if (status == null) {
+			return null;
+		}
+
+		return status.toString();
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+
+		_statusSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setStatus(
+		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
+
+		_statusSupplier = () -> {
 			try {
-				return contentRecommenderUserPersonalizationUnsafeSupplier.
-					get();
+				return statusUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -143,11 +143,10 @@ public class RecommendationConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected RecommendationItem contentRecommenderUserPersonalization;
+	protected Status status;
 
 	@JsonIgnore
-	private Supplier<RecommendationItem>
-		_contentRecommenderUserPersonalizationSupplier;
+	private Supplier<Status> _statusSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -155,15 +154,13 @@ public class RecommendationConfiguration implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof RecommendationConfiguration)) {
+		if (!(object instanceof RecommendationItem)) {
 			return false;
 		}
 
-		RecommendationConfiguration recommendationConfiguration =
-			(RecommendationConfiguration)object;
+		RecommendationItem recommendationItem = (RecommendationItem)object;
 
-		return Objects.equals(
-			toString(), recommendationConfiguration.toString());
+		return Objects.equals(toString(), recommendationItem.toString());
 	}
 
 	@Override
@@ -178,30 +175,32 @@ public class RecommendationConfiguration implements Serializable {
 
 		sb.append("{");
 
-		RecommendationItem contentRecommenderMostPopularItems =
-			getContentRecommenderMostPopularItems();
+		Boolean enabled = getEnabled();
 
-		if (contentRecommenderMostPopularItems != null) {
+		if (enabled != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"contentRecommenderMostPopularItems\": ");
+			sb.append("\"enabled\": ");
 
-			sb.append(String.valueOf(contentRecommenderMostPopularItems));
+			sb.append(enabled);
 		}
 
-		RecommendationItem contentRecommenderUserPersonalization =
-			getContentRecommenderUserPersonalization();
+		Status status = getStatus();
 
-		if (contentRecommenderUserPersonalization != null) {
+		if (status != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"contentRecommenderUserPersonalization\": ");
+			sb.append("\"status\": ");
 
-			sb.append(String.valueOf(contentRecommenderUserPersonalization));
+			sb.append("\"");
+
+			sb.append(status);
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -211,10 +210,49 @@ public class RecommendationConfiguration implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.analytics.settings.rest.dto.v1_0.RecommendationConfiguration",
+		defaultValue = "com.liferay.analytics.settings.rest.dto.v1_0.RecommendationItem",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Status")
+	public static enum Status {
+
+		CONFIGURING("Configuring"), DISABLED("Disabled"), ENABLED("Enabled"),
+		FAILED("Failed");
+
+		@JsonCreator
+		public static Status create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Status status : values()) {
+				if (Objects.equals(status.getValue(), value)) {
+					return status;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Status(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

@@ -13632,10 +13632,11 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 				_getFileEntryJSONObject(null, fileEntry, objectDefinition)),
 			_toFileEntry(
+				RandomTestUtil.randomString() + ".txt",
 				StringBundler.concat(
 					"http://", testCompany.getVirtualHostname(), ":8080",
 					customFileEntryRelativeUrl),
-				RandomTestUtil.randomString() + ".txt", null, null),
+				null, null),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
@@ -13645,16 +13646,17 @@ public class ObjectEntryResourceTest {
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put("status", "BAD_REQUEST"),
 			_toFileEntry(
+				RandomTestUtil.randomString() + ".txt",
 				StringBundler.concat(
 					"http://", testCompany.getVirtualHostname(), ":8081"),
-				RandomTestUtil.randomString() + ".txt", null, null),
+				null, null),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
 
 		// File with URL attachment and malformed url
 
-		String malformedUrl = StringBundler.concat(
+		String malformedFileSourceURL = StringBundler.concat(
 			"http//", testCompany.getVirtualHostname(), ":8080/",
 			RandomTestUtil.randomString());
 
@@ -13663,11 +13665,12 @@ public class ObjectEntryResourceTest {
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
-				"java.net.MalformedURLException: no protocol: " + malformedUrl
+				"java.net.MalformedURLException: no protocol: " +
+					malformedFileSourceURL
 			),
 			_toFileEntry(
-				malformedUrl, RandomTestUtil.randomString() + ".txt", null,
-				null),
+				RandomTestUtil.randomString() + ".txt", malformedFileSourceURL,
+				null, null),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
@@ -13677,10 +13680,11 @@ public class ObjectEntryResourceTest {
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put("status", "BAD_REQUEST"),
 			_toFileEntry(
+				RandomTestUtil.randomString() + ".txt",
 				StringBundler.concat(
 					"http://", testCompany.getVirtualHostname(), ":8080/",
 					RandomTestUtil.randomString()),
-				RandomTestUtil.randomString() + ".txt", null, null),
+				null, null),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
@@ -13694,9 +13698,10 @@ public class ObjectEntryResourceTest {
 				"title", "Unsupported protocol"
 			),
 			_toFileEntry(
+				RandomTestUtil.randomString() + ".txt",
 				StringBundler.concat(
 					"file://", testCompany.getVirtualHostname(), ":8080"),
-				RandomTestUtil.randomString() + ".txt", null, null),
+				null, null),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
@@ -14115,10 +14120,11 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 				_getFileEntryJSONObject(null, fileEntry, objectDefinition)),
 			_toFileEntry(
+				customFileEntry.getTitle(),
 				StringBundler.concat(
 					"http://", testCompany.getVirtualHostname(), ":8080",
 					customFileEntryRelativeUrl),
-				customFileEntry.getTitle(), null, _group.getGroupId()),
+				null, _group.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
@@ -14136,7 +14142,7 @@ public class ObjectEntryResourceTest {
 				"java.net.MalformedURLException: no protocol: " + malformedUrl
 			),
 			_toFileEntry(
-				malformedUrl, customFileEntry.getTitle(), null,
+				customFileEntry.getTitle(), malformedUrl, null,
 				_group.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
@@ -14150,9 +14156,10 @@ public class ObjectEntryResourceTest {
 				"title", "Unsupported protocol"
 			),
 			_toFileEntry(
+				customFileEntry.getTitle(),
 				StringBundler.concat(
 					"file://", testCompany.getVirtualHostname(), ":8080"),
-				customFileEntry.getTitle(), null, _group.getGroupId()),
+				null, _group.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
@@ -14161,9 +14168,10 @@ public class ObjectEntryResourceTest {
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put("status", "NOT_FOUND"),
 			_toFileEntry(
+				customFileEntry.getTitle(),
 				StringBundler.concat(
 					"http://", testCompany.getVirtualHostname(), ":8081"),
-				customFileEntry.getTitle(), null, _group.getGroupId()),
+				null, _group.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
@@ -15360,13 +15368,13 @@ public class ObjectEntryResourceTest {
 	}
 
 	private com.liferay.object.rest.dto.v1_0.FileEntry _toFileEntry(
-		String attachmentURL, String fileName,
+		String fileName, String fileSourceURL,
 		String folderExternalReferenceCode, Long folderSiteId) {
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry =
 			new com.liferay.object.rest.dto.v1_0.FileEntry();
 
-		fileEntry.setFileSourceURL(attachmentURL);
+		fileEntry.setFileSourceURL(fileSourceURL);
 		fileEntry.setName(fileName);
 
 		if ((folderExternalReferenceCode != null) || (folderSiteId != null)) {

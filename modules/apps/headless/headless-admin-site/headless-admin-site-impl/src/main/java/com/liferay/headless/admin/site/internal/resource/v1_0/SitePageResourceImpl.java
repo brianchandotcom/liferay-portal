@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -192,7 +193,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				ContentPageSpecification contentPageSpecification)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443") ||
+			!Objects.equals(
+				contentPageSpecification.getStatus(),
+				PageSpecification.Status.DRAFT)) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -210,7 +215,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		if (!Objects.equals(
 				contentPageSpecification.getExternalReferenceCode(),
-				draftLayout.getExternalReferenceCode())) {
+				draftLayout.getExternalReferenceCode()) ||
+			!Objects.equals(
+				draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED)) {
 
 			throw new UnsupportedOperationException();
 		}

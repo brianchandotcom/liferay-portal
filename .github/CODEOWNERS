@@ -78,7 +78,7 @@ modules/apps/document-library/    @liferay-content-management
 modules/apps/dynamic-data-lists/    @liferay-bpm
 modules/apps/dynamic-data-mapping/    @liferay-bpm
 modules/apps/expando/    @liferay-core-infra
-modules/apps/export-import/
+modules/apps/export-import/    @liferay-headless
 modules/apps/external-reference/
 modules/apps/feature-flag/    @liferay-platform-experience
 modules/apps/flags/    @liferay-content-management
@@ -131,17 +131,17 @@ modules/apps/layout/layout-api    @liferay-page-management
 modules/apps/layout/layout-content-page-editor-api    @liferay-page-management
 modules/apps/layout/layout-content-page-editor-web    @liferay-page-management
 modules/apps/layout/layout-content-page-editor-web-test    @liferay-page-management
-modules/apps/layout/layout-display-page-api
-modules/apps/layout/layout-display-page-impl
-modules/apps/layout/layout-display-page-test
+modules/apps/layout/layout-display-page-api    @liferay-page-management
+modules/apps/layout/layout-display-page-impl    @liferay-page-management
+modules/apps/layout/layout-display-page-test    @liferay-page-management
 modules/apps/layout/layout-dynamic-data-mapping-form-field-type
 modules/apps/layout/layout-dynamic-data-mapping-form-field-type-api
 modules/apps/layout/layout-impl    @liferay-page-management
-modules/apps/layout/layout-item-selector-api
-modules/apps/layout/layout-item-selector-web
+modules/apps/layout/layout-item-selector-api    @liferay-page-management
+modules/apps/layout/layout-item-selector-web    @liferay-page-management
 modules/apps/layout/layout-js-components-web    @liferay-page-management
-modules/apps/layout/layout-locked-layouts-web
-modules/apps/layout/layout-locked-layouts-web-test
+modules/apps/layout/layout-locked-layouts-web    @liferay-page-management
+modules/apps/layout/layout-locked-layouts-web-test    @liferay-page-management
 modules/apps/layout/layout-page-template-admin-api    @liferay-page-management
 modules/apps/layout/layout-page-template-admin-web    @liferay-page-management
 modules/apps/layout/layout-page-template-admin-web-test    @liferay-page-management
@@ -150,31 +150,31 @@ modules/apps/layout/layout-page-template-item-selector-api
 modules/apps/layout/layout-page-template-item-selector-web
 modules/apps/layout/layout-page-template-service    @liferay-page-management
 modules/apps/layout/layout-page-template-test    @liferay-page-management
-modules/apps/layout/layout-portlets-web
+modules/apps/layout/layout-portlets-web    @liferay-page-management
 modules/apps/layout/layout-prototype-api    @liferay-page-management
 modules/apps/layout/layout-prototype-impl    @liferay-page-management
 modules/apps/layout/layout-prototype-test    @liferay-page-management
-modules/apps/layout/layout-reports-test
+modules/apps/layout/layout-reports-test    @liferay-page-management
 modules/apps/layout/layout-reports-web    @liferay-page-management
 modules/apps/layout/layout-seo-api    @liferay-page-management
 modules/apps/layout/layout-seo-service    @liferay-page-management
 modules/apps/layout/layout-seo-test    @liferay-page-management
 modules/apps/layout/layout-seo-web    @liferay-page-management
 modules/apps/layout/layout-seo-web-test    @liferay-page-management
-modules/apps/layout/layout-service
-modules/apps/layout/layout-set-prototype-api
-modules/apps/layout/layout-set-prototype-impl
-modules/apps/layout/layout-set-prototype-test
-modules/apps/layout/layout-set-prototype-web
+modules/apps/layout/layout-service    @liferay-page-management
+modules/apps/layout/layout-set-prototype-api    @liferay-headless
+modules/apps/layout/layout-set-prototype-impl    @liferay-headless
+modules/apps/layout/layout-set-prototype-test    @liferay-headless
+modules/apps/layout/layout-set-prototype-web    @liferay-headless
 modules/apps/layout/layout-taglib    @liferay-page-management
 modules/apps/layout/layout-test    @liferay-page-management
 modules/apps/layout/layout-test-util    @liferay-page-management
-modules/apps/layout/layout-theme-item-selector-api
-modules/apps/layout/layout-theme-item-selector-web
-modules/apps/layout/layout-type-controller
+modules/apps/layout/layout-theme-item-selector-api    @liferay-page-management
+modules/apps/layout/layout-theme-item-selector-web    @liferay-page-management
+modules/apps/layout/layout-type-controller    @liferay-page-management
 modules/apps/layout/layout-uad
 modules/apps/layout/layout-uad-test
-modules/apps/layout/layout-utility-page
+modules/apps/layout/layout-utility-page    @liferay-page-management
 modules/apps/layout/layout-utility-page-api    @liferay-page-management
 modules/apps/layout/layout-utility-page-service    @liferay-page-management
 modules/apps/layout/layout-utility-page-test    @liferay-page-management

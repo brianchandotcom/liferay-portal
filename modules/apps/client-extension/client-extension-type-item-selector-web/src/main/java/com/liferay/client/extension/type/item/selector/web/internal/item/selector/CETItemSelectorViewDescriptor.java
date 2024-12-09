@@ -7,6 +7,7 @@ package com.liferay.client.extension.type.item.selector.web.internal.item.select
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.GlobalCSSCET;
 import com.liferay.client.extension.type.GlobalJSCET;
 import com.liferay.client.extension.type.ThemeCSSCET;
 import com.liferay.client.extension.type.item.selector.CETItemSelectorReturnType;
@@ -105,7 +106,17 @@ public class CETItemSelectorViewDescriptor
 
 	private Predicate<CET> _getPredicate(String type) {
 		if (Objects.equals(
-				type, ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
+				type, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)) {
+
+			return cet -> {
+				GlobalCSSCET globalCSSCET = (GlobalCSSCET)cet;
+
+				return !StringUtil.equalsIgnoreCase(
+					globalCSSCET.getScope(), "company");
+			};
+		}
+		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
 
 			return cet -> {
 				GlobalJSCET globalJSCET = (GlobalJSCET)cet;

@@ -1326,13 +1326,11 @@ public class ObjectRelationshipLocalServiceImpl
 				String nodeObjectDefinitionPreviousRESTContextPath =
 					nodeObjectDefinition.getRESTContextPath();
 
-				nodeObjectDefinition.setRootObjectDefinitionId(
-					objectDefinition1.getRootObjectDefinitionId());
-				nodeObjectDefinition.setPortlet(false);
-
 				nodeObjectDefinition =
-					objectDefinitionLocalService.updateObjectDefinition(
-						nodeObjectDefinition);
+					objectDefinitionLocalService.
+						updateRootDescendantNodeObjectDefinition(
+							nodeObjectDefinition,
+							objectDefinition1.getRootObjectDefinitionId());
 
 				if (nodeObjectDefinition.isApproved() &&
 					objectDefinition1.isApproved()) {

@@ -13688,6 +13688,18 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
 
+		// File with URL attachment and host down
+
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put("status", "BAD_REQUEST"),
+			_toFileEntry(
+				StringBundler.concat(
+					"http://", testCompany.getVirtualHostname(), ":8081"),
+				RandomTestUtil.randomString() + ".txt", null, null),
+			httpMethod, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+			useExternalReferenceCode);
+
 		// File with URL attachment and malformed url
 
 		String malformedUrl = StringBundler.concat(
@@ -13714,7 +13726,8 @@ public class ObjectEntryResourceTest {
 			fileEntry -> JSONUtil.put("status", "BAD_REQUEST"),
 			_toFileEntry(
 				StringBundler.concat(
-					"http://", testCompany.getVirtualHostname(), ":8081"),
+					"http://", testCompany.getVirtualHostname(), ":8080/",
+					RandomTestUtil.randomString()),
 				RandomTestUtil.randomString() + ".txt", null, null),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,

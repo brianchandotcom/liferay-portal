@@ -17,7 +17,7 @@ export const FILTER_MAP: {[key: string]: string} = {
 	affectedVersions: 'filterAffectedVersions',
 	category: 'filterCategories',
 	fixVersions: 'filterFixVersions',
-	issueClassification: 'filterIssueClassification',
+	issueClassification: 'filterClassifications',
 	severity: 'filterSeverities',
 };
 

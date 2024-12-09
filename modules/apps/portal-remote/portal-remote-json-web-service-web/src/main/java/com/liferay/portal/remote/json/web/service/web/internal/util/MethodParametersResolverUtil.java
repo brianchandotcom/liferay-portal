@@ -87,14 +87,15 @@ public class MethodParametersResolverUtil {
 				"Unable to read class from path " + resourcePath, ioException);
 		}
 
-		MethodParameterClassVisitor methodParameterClassVisitor =
-			new MethodParameterClassVisitor(classLoader, method);
+		MethodParametersResolverClassVisitor
+			methodParametersResolverClassVisitor =
+				new MethodParametersResolverClassVisitor(classLoader, method);
 
 		classReader.accept(
-			methodParameterClassVisitor, ClassReader.SKIP_FRAMES);
+			methodParametersResolverClassVisitor, ClassReader.SKIP_FRAMES);
 
 		List<MethodParameter> methodParameters =
-			methodParameterClassVisitor.getMethodParameters();
+			methodParametersResolverClassVisitor.getMethodParameters();
 
 		return methodParameters.toArray(new MethodParameter[0]);
 	}
@@ -106,11 +107,13 @@ public class MethodParametersResolverUtil {
 		_methodParameters = new ConcurrentReferenceKeyHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
-	private static class MethodParameterClassVisitor extends ClassVisitor {
+	private static class MethodParametersResolverClassVisitor
+		extends ClassVisitor {
 
 		public List<MethodParameter> getMethodParameters() {
-			if (_methodParameterMethodVisitor != null) {
-				return _methodParameterMethodVisitor.getMethodParameters();
+			if (_methodParametersResolverMethodVisitor != null) {
+				return _methodParametersResolverMethodVisitor.
+					getMethodParameters();
 			}
 
 			return Collections.emptyList();
@@ -146,13 +149,14 @@ public class MethodParametersResolverUtil {
 				}
 			}
 
-			_methodParameterMethodVisitor = new MethodParameterMethodVisitor(
-				_classLoader, _method, parameterCount);
+			_methodParametersResolverMethodVisitor =
+				new MethodParametersResolverMethodVisitor(
+					_classLoader, _method, parameterCount);
 
-			return _methodParameterMethodVisitor;
+			return _methodParametersResolverMethodVisitor;
 		}
 
-		protected MethodParameterClassVisitor(
+		protected MethodParametersResolverClassVisitor(
 			ClassLoader classLoader, Method method) {
 
 			super(Opcodes.ASM9);
@@ -163,11 +167,13 @@ public class MethodParametersResolverUtil {
 
 		private final ClassLoader _classLoader;
 		private final Method _method;
-		private MethodParameterMethodVisitor _methodParameterMethodVisitor;
+		private MethodParametersResolverMethodVisitor
+			_methodParametersResolverMethodVisitor;
 
 	}
 
-	private static class MethodParameterMethodVisitor extends MethodVisitor {
+	private static class MethodParametersResolverMethodVisitor
+		extends MethodVisitor {
 
 		public List<MethodParameter> getMethodParameters() {
 			return _methodParameters;
@@ -196,7 +202,7 @@ public class MethodParametersResolverUtil {
 					parameterTypes[_methodParameters.size()]));
 		}
 
-		protected MethodParameterMethodVisitor(
+		protected MethodParametersResolverMethodVisitor(
 			ClassLoader classLoader, Method method, int parameterCount) {
 
 			super(Opcodes.ASM9);

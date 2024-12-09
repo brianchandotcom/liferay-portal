@@ -48,7 +48,7 @@ const SVTable = ({columns, rows}: IProps) => {
 					<ClayTable.Row
 						className="sv-row"
 						key={index}
-						onClick={() => row.link && navigate(row.link)} // Navigate only if link is present
+						onClick={() => row.link && navigate(row.link)}
 					>
 						{columns.map((column) => (
 							<ClayTable.Cell key={column.columnKey}>

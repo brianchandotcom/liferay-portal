@@ -351,6 +351,8 @@ test.describe('Keyboard movement and navigation', () => {
 
 			await expect(getItem('Page 2-1')).not.toBeVisible();
 
+			await getItem('Page 1-2').waitFor();
+
 			await page.keyboard.press('ArrowUp');
 
 			await expect(

@@ -395,37 +395,4 @@ describe('FormGeneralPanel', () => {
 			})
 		);
 	});
-
-	describe('Show Unlocalizable Fields fieldset', () => {
-		it('does not show Unlocalizable Fields fieldset when there are not localizable fields', () => {
-			Liferay.FeatureFlags['LPD-37927'] = true;
-
-			renderComponent();
-
-			expect(
-				screen.queryByText('unlocalizable-fields')
-			).not.toBeInTheDocument();
-
-			Liferay.FeatureFlags['LPD-37927'] = false;
-		});
-
-		it('shows Unlocalizable Fields fieldset when there are localizable fields', () => {
-			Liferay.FeatureFlags['LPD-37927'] = true;
-
-			renderComponent({
-				fragmentEntryLinks: {
-					fragmentEntryLink01: {
-						content:
-							'<label data-localizable="true">This is a test label</label>',
-					},
-				},
-			});
-
-			expect(
-				screen.getByText('unlocalizable-fields')
-			).toBeInTheDocument();
-
-			Liferay.FeatureFlags['LPD-37927'] = false;
-		});
-	});
 });

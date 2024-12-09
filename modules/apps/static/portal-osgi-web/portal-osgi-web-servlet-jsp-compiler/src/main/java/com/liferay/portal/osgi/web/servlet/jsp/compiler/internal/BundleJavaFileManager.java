@@ -29,8 +29,6 @@ import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardLocation;
 
-import org.apache.jasper.Constants;
-
 /**
  * @author Raymond Augé
  * @author Shuyang Zhou
@@ -119,7 +117,7 @@ public class BundleJavaFileManager
 		throws IOException {
 
 		if ((location == StandardLocation.CLASS_PATH) &&
-			packageName.startsWith(Constants.JSP_PACKAGE_NAME)) {
+			packageName.startsWith("org.apache.jsp")) {
 
 			Map<String, JavaFileObject> javaFileObjects =
 				_javaFileObjectsMap.get(packageName);

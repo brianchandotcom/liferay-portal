@@ -27,18 +27,16 @@ let objectDefinition2: ObjectDefinition;
 
 test.beforeEach(async ({apiHelpers}) => {
 	const newObjectDefinition1 =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition(
-			{code: 0},
-			undefined,
-			'default'
-		);
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFolderExternalReferenceCode: 'default',
+			status: {code: 0},
+		});
 
 	const newObjectDefinition2 =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition(
-			{code: 0},
-			undefined,
-			'default'
-		);
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFolderExternalReferenceCode: 'default',
+			status: {code: 0},
+		});
 
 	objectDefinition1 = newObjectDefinition1;
 	objectDefinition2 = newObjectDefinition2;

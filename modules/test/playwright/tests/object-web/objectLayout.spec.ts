@@ -31,10 +31,10 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 		});
 
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				objectFields
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
 
 		const objectLayoutBlockName = getRandomString();
 

@@ -41,11 +41,10 @@ test.describe('FormView when form storage type is object', () => {
 		page,
 	}) => {
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,

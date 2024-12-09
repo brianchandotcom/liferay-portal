@@ -241,11 +241,10 @@ test.describe('ensure picklist translation', () => {
 		// Create custom object with the picklist
 
 		const objectDefinition: ObjectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
@@ -340,11 +339,10 @@ test.describe('ensure picklist translation', () => {
 		// Create custom object with the picklist
 
 		const objectDefinition: ObjectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				{code: 0},
-				undefined,
-				'default'
-			);
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
 		apiHelpers.data.push({
 			id: objectDefinition.id,
 			type: 'objectDefinition',

@@ -28,18 +28,16 @@ test('can create an object custom view using object relationship entry', async (
 	page,
 }) => {
 	const objectDefinition1 =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition(
-			{code: 0},
-			undefined,
-			'default'
-		);
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFolderExternalReferenceCode: 'default',
+			status: {code: 0},
+		});
 
 	const objectDefinition2 =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition(
-			{code: 0},
-			undefined,
-			'default'
-		);
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFolderExternalReferenceCode: 'default',
+			status: {code: 0},
+		});
 	apiHelpers.data.push({id: objectDefinition1.id, type: 'objectDefinition'});
 
 	apiHelpers.data.push({id: objectDefinition2.id, type: 'objectDefinition'});

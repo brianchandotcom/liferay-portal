@@ -30,11 +30,10 @@ let createdObjectDefinition: ObjectDefinition;
 
 test.beforeEach(async ({apiHelpers}) => {
 	const newObjectDefinition =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition(
-			{code: 0},
-			undefined,
-			'default'
-		);
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFolderExternalReferenceCode: 'default',
+			status: {code: 0},
+		});
 
 	apiHelpers.data.push({
 		id: newObjectDefinition.id,
@@ -220,11 +219,11 @@ test('can send notification email via download action', async ({
 	// Create object definition with an attachment field
 
 	const objectDefinition =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition(
-			{code: 0},
-			[mockedObjectFields.attachmentFieldUserComputer],
-			'default'
-		);
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFields: [mockedObjectFields.attachmentFieldUserComputer],
+			objectFolderExternalReferenceCode: 'default',
+			status: {code: 0},
+		});
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 

@@ -81,7 +81,7 @@ test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers}) => {
 });
 
 test(
-	'Assing a data set to the "Data Set" fragment, change and delete assignment',
+	'Assign a data set to the "Data Set" fragment, change and delete assignment',
 	{
 		tag: '@LPS-172403',
 	},
@@ -136,7 +136,7 @@ test(
 			await dataSetFragmentPage.selectDataSet(dataSetLabel1);
 		});
 
-		await test.step('Change assigment to second data set', async () => {
+		await test.step('Change assignment to second data set', async () => {
 			await dataSetFragmentPage.changeDataSetButton.click();
 
 			const selectionListContainer =

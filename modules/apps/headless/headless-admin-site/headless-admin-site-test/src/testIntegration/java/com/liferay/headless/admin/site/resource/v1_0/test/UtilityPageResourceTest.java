@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 import java.util.Locale;
@@ -396,16 +397,16 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	}
 
 	private UtilityPageResource _getUtilityPageResource() throws Exception {
-		User omniadminUser = UserTestUtil.addOmniadminUser();
+		User testCompanyAdminUser = UserTestUtil.getAdminUser(
+			testCompany.getCompanyId());
 
-		String password = RandomTestUtil.randomString();
+		UtilityPageResource.Builder builder = UtilityPageResource.builder();
 
-		_userLocalService.updatePassword(
-			omniadminUser.getUserId(), password, password, false, true);
-
-		return UtilityPageResource.builder(
-		).authentication(
-			omniadminUser.getEmailAddress(), password
+		return builder.authentication(
+			testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(

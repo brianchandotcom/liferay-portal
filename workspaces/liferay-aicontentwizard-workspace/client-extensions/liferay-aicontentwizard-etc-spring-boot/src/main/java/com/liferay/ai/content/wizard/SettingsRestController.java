@@ -59,9 +59,9 @@ public class SettingsRestController extends BaseRestController {
 
 	@GetMapping("/status")
 	public ResponseEntity<String> getStatus(@AuthenticationPrincipal Jwt jwt) {
-		Settings settings = _settingsService.getActiveSettings(jwt);
-
 		JSONObject jsonObject = new JSONObject();
+
+		Settings settings = _settingsService.getActiveSettings(jwt);
 
 		if (settings != null) {
 			jsonObject.put(

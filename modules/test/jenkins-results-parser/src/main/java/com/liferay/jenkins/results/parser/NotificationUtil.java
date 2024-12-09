@@ -39,7 +39,6 @@ public class NotificationUtil {
 		String hostName = JenkinsResultsParserUtil.getHostName(null);
 
 		if (!hostName.endsWith(".liferay.com")) {
-
 			hostName = hostName + ".lax.liferay.com";
 		}
 

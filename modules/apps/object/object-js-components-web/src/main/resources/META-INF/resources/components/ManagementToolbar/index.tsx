@@ -185,20 +185,16 @@ export function ManagementToolbar({
 								{Liferay.Language.get('save')}
 							</ClayButton>
 
-							{isApproved !== undefined &&
-								!isApproved &&
-								!isRootDescendantNode && (
-									<ClayButton
-										disabled={
-											!hasUpdatePermission || disabled
-										}
-										id={`${portletNamespace}publish`}
-										name="publish"
-										onClick={() => onPublish()}
-									>
-										{Liferay.Language.get('publish')}
-									</ClayButton>
-								)}
+							{isApproved !== undefined && !isApproved && (
+								<ClayButton
+									disabled={!hasUpdatePermission || disabled}
+									id={`${portletNamespace}publish`}
+									name="publish"
+									onClick={() => onPublish()}
+								>
+									{Liferay.Language.get('publish')}
+								</ClayButton>
+							)}
 						</ClayButton.Group>
 					</ClayManagementToolbar.ItemList>
 				)}

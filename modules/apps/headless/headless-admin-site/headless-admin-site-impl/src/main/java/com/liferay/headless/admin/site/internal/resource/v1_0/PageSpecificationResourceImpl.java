@@ -14,7 +14,6 @@ import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
-import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.util.LayoutUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageSpecificationResource;
@@ -314,9 +313,9 @@ public class PageSpecificationResourceImpl
 				throw new UnsupportedOperationException();
 			}
 
-			return _updateWidgetPageSpecification(
-				layout, (WidgetPageSpecification)pageSpecification,
-				serviceContext);
+			return _pageSpecificationDTOConverter.toDTO(
+				LayoutUtil.updateLayout(
+					layout, pageSpecification.getSettings(), serviceContext));
 		}
 
 		if (!Objects.equals(
@@ -335,9 +334,10 @@ public class PageSpecificationResourceImpl
 				"layout.instanceable.allowed", Boolean.TRUE);
 		}
 
-		return _updateContentPageSpecification(
-			(ContentPageSpecification)pageSpecification, layout,
-			serviceContext);
+		return _pageSpecificationDTOConverter.toDTO(
+			LayoutUtil.updateLayout(
+				(ContentPageSpecification)pageSpecification, layout,
+				serviceContext));
 	}
 
 	@Override
@@ -542,26 +542,6 @@ public class PageSpecificationResourceImpl
 
 		return ListUtil.fromArray(
 			_pageSpecificationDTOConverter.toDTO(draftLayout));
-	}
-
-	private PageSpecification _updateContentPageSpecification(
-			ContentPageSpecification contentPageSpecification, Layout layout,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return _pageSpecificationDTOConverter.toDTO(
-			LayoutUtil.updateLayout(
-				contentPageSpecification, layout, serviceContext));
-	}
-
-	private PageSpecification _updateWidgetPageSpecification(
-			Layout layout, WidgetPageSpecification widgetPageSpecification,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return _pageSpecificationDTOConverter.toDTO(
-			LayoutUtil.updateLayout(
-				layout, widgetPageSpecification.getSettings(), serviceContext));
 	}
 
 	@Reference

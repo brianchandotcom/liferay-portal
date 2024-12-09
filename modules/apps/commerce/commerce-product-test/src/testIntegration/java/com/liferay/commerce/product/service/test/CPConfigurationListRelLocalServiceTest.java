@@ -72,6 +72,7 @@ public class CPConfigurationListRelLocalServiceTest {
 			RandomTestUtil.randomString() + "@liferay.com",
 			RandomTestUtil.randomString(), new long[] {_user.getUserId()}, null,
 			_serviceContext);
+
 		_accountGroup = _accountGroupLocalService.addAccountGroup(
 			_serviceContext.getUserId(), null, RandomTestUtil.randomString(),
 			_serviceContext);

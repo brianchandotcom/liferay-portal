@@ -4,8 +4,11 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import {createReadStream} from 'fs';
+import path from 'node:path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -13,12 +16,14 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {waitForAlert} from '../../utils/waitForAlert';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
+	collectionsPagesTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -111,6 +116,217 @@ test.describe('Page content', () => {
 			).toBeVisible();
 
 			await expect(iframe.getByText('E1 Text')).toBeVisible();
+		}
+	);
+
+	test(
+		'Preview content in a widget page by segment',
+		{
+			tag: '@LPS-186155',
+		},
+		async ({
+			apiHelpers,
+			collectionsPage,
+			page,
+			simulationMenuPage,
+			site,
+			widgetPagePage,
+		}) => {
+
+			// Create blogs entry
+
+			const blogsEntryName = getRandomString();
+
+			await apiHelpers.headlessDelivery.postBlog(site.id, {
+				headline: blogsEntryName,
+			});
+
+			// Create document
+
+			const documentName = getRandomString();
+
+			await apiHelpers.headlessDelivery.postDocument(
+				site.id,
+				createReadStream(
+					path.join(__dirname, '/dependencies/attachment.txt')
+				),
+				{
+					fileName: 'attachment.txt',
+					title: documentName,
+				}
+			);
+
+			// Create segments entry
+
+			const userName = getRandomString();
+			const segmentsEntryName = getRandomString();
+
+			const segmentsEntry =
+				await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
+					criteria: {
+						criteria: {
+							user: {
+								conjunction: 'and',
+								filterString: `(firstName eq '${userName}')`,
+								typeValue: 'model',
+							},
+						},
+						filterString: {
+							model: `(firstName eq '${userName}')`,
+						},
+					},
+					groupId: site.id,
+					name: segmentsEntryName,
+				});
+
+			// Create dynamic asset list
+
+			const assetListEntryName = getRandomString();
+
+			const dlFileEntryClassName =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					'com.liferay.document.library.kernel.model.DLFileEntry'
+				);
+
+			const assetListEntry =
+				await apiHelpers.jsonWebServicesAssetListEntry.addDynamicAssetListEntry(
+					{
+						groupId: site.id,
+						title: assetListEntryName,
+						typeSettings: `anyAssetType=${dlFileEntryClassName.classNameId}`,
+					}
+				);
+
+			const blogsEntryClassName =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					'com.liferay.blogs.model.BlogsEntry'
+				);
+
+			await apiHelpers.jsonWebServicesAssetListEntry.updateAssetListEntry(
+				{
+					assetListEntryId: assetListEntry.assetListEntryId,
+					groupId: site.id,
+					segmentsEntryId: segmentsEntry.segmentsEntryId,
+					typeSettings: `anyAssetType=${blogsEntryClassName.classNameId}`,
+				}
+			);
+
+			// Update collection variations priority
+
+			await collectionsPage.goto(site.friendlyUrlPath);
+
+			await page.getByRole('link', {name: assetListEntryName}).click();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Deprioritize'}),
+				trigger: page.getByLabel('Actions for Anyone'),
+			});
+
+			await waitForAlert(
+				page,
+				'Success:Variation Anyone moved to position 2.'
+			);
+
+			// Create page and go to view mode
+
+			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: getRandomString(),
+			});
+
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+			// Add Asset Publisher widget
+
+			await widgetPagePage.addPortlet('Asset Publisher');
+
+			// Select custom collection
+
+			await widgetPagePage.clickOnAction(
+				'Asset Publisher',
+				'Configuration'
+			);
+
+			const configurationIFrame = page.frameLocator(
+				`iframe[title*="Asset Publisher"]`
+			);
+
+			const selectCollectionIframe = configurationIFrame.frameLocator(
+				'iframe[title="Select Collection"]'
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: selectCollectionIframe.getByRole('button', {
+					name: assetListEntryName,
+				}),
+				trigger: configurationIFrame.getByLabel('Select Collection'),
+			});
+
+			await expect(
+				configurationIFrame.getByRole('textbox', {name: 'Collection'})
+			).toHaveValue(assetListEntryName);
+
+			await widgetPagePage.saveAndClose('Asset Publisher');
+
+			await expect(async () => {
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+				);
+
+				// Open simulation panel
+
+				await simulationMenuPage.openSimulationPanel();
+
+				// Assert default collection
+
+				await expect(
+					page.getByText('Showing content for the segment "Anyone".')
+				).toBeVisible({timeout: 5000});
+
+				const simulationPreviewIframe = page.frameLocator(
+					'iframe[title="Simulation Preview"]'
+				);
+
+				await expect(
+					simulationPreviewIframe.getByRole('link', {
+						name: documentName,
+					})
+				).toBeVisible({timeout: 1000});
+				await expect(
+					simulationPreviewIframe.getByRole('link', {
+						name: blogsEntryName,
+					})
+				).not.toBeVisible();
+
+				// Assert segmented collection
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.locator('.dropdown-item', {
+						hasText: segmentsEntryName,
+					}),
+					trigger: page.getByRole('combobox', {name: 'Segment'}),
+				});
+
+				await expect(
+					page.getByText(
+						`Showing content for the segment "${segmentsEntryName}".`
+					)
+				).toBeVisible({timeout: 5000});
+
+				await expect(
+					simulationPreviewIframe.getByRole('link', {
+						name: blogsEntryName,
+					})
+				).toBeVisible({timeout: 1000});
+				await expect(
+					simulationPreviewIframe.getByRole('link', {
+						name: documentName,
+					})
+				).not.toBeVisible();
+			}).toPass();
 		}
 	);
 

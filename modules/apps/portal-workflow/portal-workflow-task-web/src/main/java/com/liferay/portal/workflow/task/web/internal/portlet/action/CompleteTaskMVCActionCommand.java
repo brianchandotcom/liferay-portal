@@ -96,7 +96,7 @@ public class CompleteTaskMVCActionCommand
 					(String)workflowContext.get(
 						WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME));
 
-			workflowHandler.contributeServiceContext(serviceContext);
+			workflowHandler.contributeWorkflowContext(workflowContext);
 
 			workflowContext.put(
 				WorkflowConstants.CONTEXT_USER_ID,

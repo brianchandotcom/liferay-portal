@@ -43,7 +43,16 @@ import org.osgi.service.component.annotations.Reference;
 public class WikiPageWorkflowHandler extends BaseWorkflowHandler<WikiPage> {
 
 	@Override
-	public void contributeServiceContext(ServiceContext serviceContext) {
+	public void contributeWorkflowContext(
+		Map<String, Serializable> workflowContext) {
+
+		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
+			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
+
+		if (serviceContext.getRequest() == null) {
+			return;
+		}
+
 		PortletURL portletURL = null;
 
 		if (serviceContext.getPlid() == LayoutConstants.DEFAULT_PLID) {

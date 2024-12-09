@@ -37,8 +37,17 @@ import org.osgi.service.component.annotations.Reference;
 public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 
 	@Override
-	public void contributeServiceContext(ServiceContext serviceContext) {
+	public void contributeWorkflowContext(
+		Map<String, Serializable> workflowContext) {
+
+		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
+			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
+
 		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		if (httpServletRequest == null) {
+			return;
+		}
 
 		serviceContext.setAttribute(
 			"serverName", httpServletRequest.getServerName());

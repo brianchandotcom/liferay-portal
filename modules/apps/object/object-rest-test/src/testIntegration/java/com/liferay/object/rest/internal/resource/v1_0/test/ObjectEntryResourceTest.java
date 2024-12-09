@@ -7462,7 +7462,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPatchSiteScopedObject() throws Exception {
+	public void testPatchSiteScopedCustomObjectEntry() throws Exception {
 		String newObjectFieldValue = RandomTestUtil.randomString();
 
 		JSONObject objectEntryJSONObject = JSONUtil.put(
@@ -8299,7 +8299,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPostSiteScopedObjectDefinitionInUserGroup()
+	public void testPostSiteScopedCustomObjectEntryInUserGroup()
 		throws Exception {
 
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
@@ -9253,7 +9253,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPutSiteRelationshipWithSiteScopeNestedEntries()
+	public void testPutSiteScopedCustomObjectEntryWithNestedCustomObjectEntries()
 		throws Exception {
 
 		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(

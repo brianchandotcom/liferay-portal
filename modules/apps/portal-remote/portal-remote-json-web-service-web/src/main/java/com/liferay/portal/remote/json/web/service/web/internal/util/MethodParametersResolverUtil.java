@@ -19,11 +19,20 @@ import java.io.InputStream;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentMap;
 
 import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 /**
  * @author Igor Spasic
@@ -96,5 +105,113 @@ public class MethodParametersResolverUtil {
 	private static final ConcurrentMap<AccessibleObject, MethodParameter[]>
 		_methodParameters = new ConcurrentReferenceKeyHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
+
+	private static class MethodParameterClassVisitor extends ClassVisitor {
+
+		public List<MethodParameter> getMethodParameters() {
+			if (_methodParameterMethodVisitor != null) {
+				return _methodParameterMethodVisitor.getMethodParameters();
+			}
+
+			return Collections.emptyList();
+		}
+
+		@Override
+		public MethodVisitor visitMethod(
+			int access, String name, String descriptor, String signature,
+			String[] exceptions) {
+
+			if (!name.equals(_method.getName()) ||
+				!Objects.equals(
+					Type.getMethodDescriptor(_method), descriptor)) {
+
+				return null;
+			}
+
+			int parameterCount = _method.getParameterCount();
+
+			if (!Modifier.isStatic(_method.getModifiers())) {
+				parameterCount++;
+			}
+
+			Class<?>[] parameterTypes = _method.getParameterTypes();
+
+			for (Class<?> parameterType : parameterTypes) {
+				if (StringUtil.equalsIgnoreCase(
+						parameterType.getName(), double.class.getName()) ||
+					StringUtil.equalsIgnoreCase(
+						parameterType.getName(), long.class.getName())) {
+
+					parameterCount++;
+				}
+			}
+
+			_methodParameterMethodVisitor = new MethodParameterMethodVisitor(
+				_classLoader, _method, parameterCount);
+
+			return _methodParameterMethodVisitor;
+		}
+
+		protected MethodParameterClassVisitor(
+			ClassLoader classLoader, Method method) {
+
+			super(Opcodes.ASM9);
+
+			_classLoader = classLoader;
+			_method = method;
+		}
+
+		private final ClassLoader _classLoader;
+		private final Method _method;
+		private MethodParameterMethodVisitor _methodParameterMethodVisitor;
+
+	}
+
+	private static class MethodParameterMethodVisitor extends MethodVisitor {
+
+		public List<MethodParameter> getMethodParameters() {
+			return _methodParameters;
+		}
+
+		@Override
+		public void visitLocalVariable(
+			String name, String descriptor, String signature, Label start,
+			Label end, int index) {
+
+			if ((!Modifier.isStatic(_method.getModifiers()) && (index == 0)) ||
+				(index >= _parameterCount)) {
+
+				return;
+			}
+
+			if (signature != null) {
+				descriptor = StringUtil.removeSubstring(signature, descriptor);
+			}
+
+			Class<?>[] parameterTypes = _method.getParameterTypes();
+
+			_methodParameters.add(
+				new MethodParameter(
+					_classLoader, name, descriptor,
+					parameterTypes[_methodParameters.size()]));
+		}
+
+		protected MethodParameterMethodVisitor(
+			ClassLoader classLoader, Method method, int parameterCount) {
+
+			super(Opcodes.ASM9);
+
+			_classLoader = classLoader;
+			_method = method;
+			_parameterCount = parameterCount;
+		}
+
+		private final ClassLoader _classLoader;
+		private final Method _method;
+		private final List<MethodParameter> _methodParameters =
+			new ArrayList<>();
+		private final int _parameterCount;
+
+	}
 
 }

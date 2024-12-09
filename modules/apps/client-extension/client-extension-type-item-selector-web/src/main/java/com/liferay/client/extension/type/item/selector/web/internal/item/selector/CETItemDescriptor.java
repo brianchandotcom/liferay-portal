@@ -67,16 +67,16 @@ public class CETItemDescriptor
 		).put(
 			"url",
 			() -> {
-				if (Objects.equals(
+				if (!Objects.equals(
 						_cet.getType(),
 						ClientExtensionEntryConstants.TYPE_THEME_FAVICON)) {
 
-					ThemeFaviconCET themeFaviconCET = (ThemeFaviconCET)_cet;
-
-					return themeFaviconCET.getURL();
+					return null;
 				}
 
-				return null;
+				ThemeFaviconCET themeFaviconCET = (ThemeFaviconCET)_cet;
+
+				return themeFaviconCET.getURL();
 			}
 		).toString();
 	}

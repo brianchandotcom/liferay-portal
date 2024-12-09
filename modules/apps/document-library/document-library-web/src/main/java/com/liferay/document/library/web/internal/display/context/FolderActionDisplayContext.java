@@ -200,7 +200,7 @@ public class FolderActionDisplayContext {
 							dropdownItem.putData(
 								"learnMessage", learnMessage.getMessage());
 							dropdownItem.putData(
-								"learnURL", learnMessage.getMessage());
+								"learnURL", learnMessage.getURL());
 
 							ThemeDisplay themeDisplay =
 								(ThemeDisplay)_httpServletRequest.getAttribute(

@@ -1269,7 +1269,9 @@ test.describe('Localization Select Fragment', () => {
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: page.getByRole('option', {name: 'es-ES'}),
+			target: page.getByRole('option', {
+				name: 'Spanish (Spain) Language',
+			}),
 			trigger: languageSelect,
 		});
 

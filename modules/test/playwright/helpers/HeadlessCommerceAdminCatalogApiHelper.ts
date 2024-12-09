@@ -129,6 +129,12 @@ export type TProductConfiguration = {
 	visible?: boolean;
 };
 
+type TProductConfigurationList = {
+	catalogId?: number;
+	id?: number;
+	name?: string;
+};
+
 type TProductVirtualSettings = {
 	activationStatus?: number;
 	duration?: number;
@@ -575,6 +581,74 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 
 		return productConfiguration;
+	}
+
+	async postProductConfigurationList(
+		catalogId: number,
+		name: string
+	): Promise<TProductConfigurationList> {
+		const productConfigurationList = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/product-configuration-lists`,
+			{
+				data: {
+					catalogId,
+					name,
+				},
+			}
+		);
+
+		return productConfigurationList;
+	}
+
+	async postProductConfigurationListAccountGroup(
+		accountGroupId: number,
+		productConfigurationListId: number
+	): Promise<TProductConfigurationList> {
+		const productConfigurationList = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/product-configuration-lists/${productConfigurationListId}/product-configuration-list-account-groups`,
+			{
+				data: {
+					accountGroupId,
+					productConfigurationListId,
+				},
+			}
+		);
+
+		return productConfigurationList;
+	}
+
+	async postProductConfigurationListChannel(
+		channelId: number,
+		productConfigurationListId: number
+	): Promise<TProductConfigurationList> {
+		const productConfigurationList = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/product-configuration-lists/${productConfigurationListId}/product-configuration-list-channels`,
+			{
+				data: {
+					channelId,
+					productConfigurationListId,
+				},
+			}
+		);
+
+		return productConfigurationList;
+	}
+
+	async postProductConfigurationListOrderType(
+		orderTypeId: number,
+		productConfigurationListId: number
+	): Promise<TProductConfigurationList> {
+		const productConfigurationList = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/product-configuration-lists/${productConfigurationListId}/product-configuration-list-order-types`,
+			{
+				data: {
+					orderTypeId,
+					productConfigurationListId,
+				},
+			}
+		);
+
+		return productConfigurationList;
 	}
 
 	async postProductRelatedProduct(

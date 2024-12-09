@@ -80,6 +80,7 @@ import com.liferay.portal.kernel.model.UserNotificationEventTable;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -96,6 +97,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -113,6 +115,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.sql.Connection;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -121,6 +124,9 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
+
+import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -2052,6 +2058,10 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AA", new String[0]
 			).build());
+
+		_assertModelResourceNames(ListUtil.fromArray("C_A", "C_AA"));
+		_assertRootDescendantNodeObjectDefinition("C_AA");
+
 		_testCreateObjectDefinitionTree(
 			true,
 			LinkedHashMapBuilder.put(
@@ -2059,6 +2069,9 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AAAAA", new String[0]
 			).build());
+
+		_assertModelResourceNames(ListUtil.fromArray("C_AAAA", "C_AAAAA"));
+		_assertRootDescendantNodeObjectDefinition("C_AAAAA");
 
 		ObjectDefinition objectDefinitionAAA =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition("AAA");
@@ -2079,6 +2092,11 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			objectDefinitionAAA.getObjectDefinitionId());
+
+		_assertModelResourceNames(
+			ListUtil.fromArray("C_A", "C_AA", "C_AAA", "C_AAAA", "C_AAAAA"));
+		_assertRootDescendantNodeObjectDefinition("C_AAA");
+		_assertRootDescendantNodeObjectDefinition("C_AAAA");
 
 		ObjectDefinition objectDefinitionA =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -2893,6 +2911,40 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(pluralLabelPLOEntryKey.getValue(), pluralLabel);
 	}
 
+	private void _assertModelResourceNames(List<String> objectDefinitionNames)
+		throws Exception {
+
+		Map<String, Set<String>> resourceReferences =
+			ReflectionTestUtil.getFieldValue(
+				_resourceActions, "_resourceReferences");
+
+		ObjectDefinition rootObjectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), objectDefinitionNames.get(0));
+
+		List<String> modelResourceNames = ListUtil.filter(
+			new ArrayList<>(
+				resourceReferences.get(rootObjectDefinition.getPortletId())),
+			resourceName -> StringUtil.startsWith(
+				resourceName,
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION));
+
+		Assert.assertEquals(
+			modelResourceNames.toString(), objectDefinitionNames.size(),
+			modelResourceNames.size());
+
+		for (String objectDefinitionName : objectDefinitionNames) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					TestPropsValues.getCompanyId(), objectDefinitionName);
+
+			Assert.assertThat(
+				modelResourceNames,
+				CoreMatchers.hasItem(objectDefinition.getClassName()));
+		}
+	}
+
 	private void _assertObjectField(
 			ObjectDefinition objectDefinition, String dbColumnName,
 			String dbType, String name, boolean required)
@@ -2907,6 +2959,28 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals("", objectField.getIndexedLanguageId());
 		Assert.assertEquals(required, objectField.isRequired());
+	}
+
+	private void _assertRootDescendantNodeObjectDefinition(String name)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), name);
+
+		Assert.assertEquals(
+			StringPool.BLANK, objectDefinition.getPanelCategoryKey());
+		Assert.assertFalse(objectDefinition.isPortlet());
+
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				objectDefinition.getClassName(), ActionKeys.DELETE));
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				objectDefinition.getClassName(), ActionKeys.UPDATE));
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				objectDefinition.getClassName(), ActionKeys.VIEW));
 	}
 
 	private void _assertSystemObjectFields(

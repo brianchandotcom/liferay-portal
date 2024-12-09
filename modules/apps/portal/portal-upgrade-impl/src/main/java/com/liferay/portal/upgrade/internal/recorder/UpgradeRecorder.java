@@ -326,9 +326,7 @@ public class UpgradeRecorder {
 		new ConcurrentHashMap<>();
 
 	static {
-		if (DBUpgrader.isUpgradeDatabaseAutoRunEnabled() ||
-			DBUpgrader.isUpgradeClient()) {
-
+		if (DBUpgrader.isUpgradeDatabaseAutoRunEnabled()) {
 			_result = "pending";
 			_type = "pending";
 		}

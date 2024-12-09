@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.osgi.debug.SystemChecker;
-import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
@@ -105,11 +104,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 				return "failure";
 			}
 			else if (_isPendingModuleUpgrades()) {
-				if (DBUpgrader.isUpgradeDatabaseAutoRunEnabled()) {
-					return "failure";
-				}
-
-				return "unresolved";
+				return "failure";
 			}
 		}
 

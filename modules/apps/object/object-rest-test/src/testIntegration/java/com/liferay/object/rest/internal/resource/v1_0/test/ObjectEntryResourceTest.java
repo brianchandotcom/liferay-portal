@@ -13691,7 +13691,13 @@ public class ObjectEntryResourceTest {
 		// File with URL attachment and host down
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put("status", "BAD_REQUEST"),
+			fileEntry -> JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"java.net.ConnectException: Connection refused (Connection " +
+					"refused)"
+			),
 			_toFileEntry(
 				RandomTestUtil.randomString() + ".txt",
 				StringBundler.concat(
@@ -13724,13 +13730,19 @@ public class ObjectEntryResourceTest {
 
 		// File with URL attachment and resource not found
 
+		String notFoundFileSourceURL = StringBundler.concat(
+			"http://", testCompany.getVirtualHostname(), ":8080/",
+			RandomTestUtil.randomString());
+
 		_testPatchPutCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put("status", "BAD_REQUEST"),
+			fileEntry -> JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"java.io.FileNotFoundException: " + notFoundFileSourceURL
+			),
 			_toFileEntry(
-				RandomTestUtil.randomString() + ".txt",
-				StringBundler.concat(
-					"http://", testCompany.getVirtualHostname(), ":8080/",
-					RandomTestUtil.randomString()),
+				RandomTestUtil.randomString() + ".txt", notFoundFileSourceURL,
 				null, null),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,

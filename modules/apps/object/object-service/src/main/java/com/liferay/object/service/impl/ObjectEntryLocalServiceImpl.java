@@ -2871,15 +2871,16 @@ public class ObjectEntryLocalServiceImpl
 			locales, _language.getCompanyAvailableLocales(companyId));
 	}
 
-	private String _getLocalizedValue(
-		String languageId, Map<String, String> localizedValues) {
+	private Object _getLocalizedValue(
+		String languageId, Map<String, Object> localizedValues) {
 
-		if (localizedValues == null) {
+		if ((localizedValues == null) ||
+			!localizedValues.containsKey(languageId)) {
+
 			return StringPool.BLANK;
 		}
 
-		return Objects.toString(
-			localizedValues.get(languageId), StringPool.BLANK);
+		return localizedValues.get(languageId);
 	}
 
 	private GroupByStep _getManyToManyObjectEntriesGroupByStep(
@@ -3697,7 +3698,7 @@ public class ObjectEntryLocalServiceImpl
 						preparedStatement, column.getSQLType(),
 						_getLocalizedValue(
 							languageId,
-							(Map<String, String>)values.get(
+							(Map<String, Object>)values.get(
 								objectField.getI18nObjectFieldName())));
 
 					Map<String, Serializable> localizedValues =

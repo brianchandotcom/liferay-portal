@@ -67,11 +67,15 @@ const DEFAULT_USAGE_DATA_VALUES = {
 
 const ADD_ONS_CARDS = [
 	{
-		infoText: i18n.translate('dedicated-resources'),
+		infoText: i18n.translate(
+			'dedicated-resources-provide-customers-with-a-private-liferay-installation'
+		),
 		title: i18n.translate('dedicated-resources'),
 	},
 	{
-		infoText: i18n.translate('private-cluster'),
+		infoText: i18n.translate(
+			'a-private-cluster-separates-all-infrastructure-resources-and-allows-for-site-to-site-vpn-configuration'
+		),
 		title: i18n.translate('private-cluster'),
 	},
 ];
@@ -149,16 +153,20 @@ const useProjectUsageData = () => {
 							SiteAndUserDataEnum.CLIENT_EXTENSIONS_CAPACITY_RAM
 						],
 						dataSizeUnits: 'GB',
-						infoText: i18n.translate('extension-capacity-ram'),
-						maxCountText: 'RAM',
+						infoText: i18n.translate(
+							'amount-of-ram-allocated-across-all-extension-environments'
+						),
+						maxCountText: i18n.translate('total-ram'),
 						title: i18n.translate('extension-capacity-ram'),
 					},
 					{
 						...response[
 							SiteAndUserDataEnum.CLIENT_EXTENSIONS_CAPACITY_CPU
 						],
-						infoText: i18n.translate('extension-capacity-vcpu'),
-						maxCountText: 'vCPU',
+						infoText: i18n.translate(
+							'amount-of-virtual-cpus-allocated-across-all-extension-environments'
+						),
+						maxCountText: i18n.translate('total-vcpu'),
 						title: i18n.translate('extension-capacity-vcpu'),
 					},
 					{
@@ -167,27 +175,35 @@ const useProjectUsageData = () => {
 								.STORAGE_CAPACITY_DOCUMENT_LIBRARY
 						],
 						dataSizeUnits: 'GB',
-						infoText: i18n.translate('storage-capacity'),
-						maxCountText: 'Storage',
+						infoText: i18n.translate(
+							'amount-of-storage-space-available-for-your-projects'
+						),
+						maxCountText: i18n.translate('total-storage'),
 						title: i18n.translate('storage-capacity'),
 					},
 				],
 				siteAndUsers: [
 					{
 						...response[SiteAndUserDataEnum.SITES],
-						infoText: i18n.translate('number-of-sites'),
+						infoText: i18n.translate(
+							'total-number-of-unique-liferay-dxp-sites-each-comprising-a-set-of-pages-and-their-related-content'
+						),
 						title: i18n.translate('number-of-sites'),
 					},
 					{
 						...response[
 							SiteAndUserDataEnum.MONTHLY_ACTIVE_LOGGED_IN_USERS
 						],
-						infoText: i18n.translate('authenticated-logins-malus'),
+						infoText: i18n.translate(
+							'total-unique-authenticated-users-who-visited-sites-on-this-account-at-least-once-per-month'
+						),
 						title: i18n.translate('authenticated-logins-malus'),
 					},
 					{
 						...response[SiteAndUserDataEnum.ANONYMOUS_PAGE_VIEWS],
-						infoText: i18n.translate('anonymous-page-views-apv'),
+						infoText: i18n.translate(
+							'total-count-of-anonymous-page-views-on-all-customer-sites'
+						),
 						title: i18n.translate('anonymous-page-views-apv'),
 					},
 				],

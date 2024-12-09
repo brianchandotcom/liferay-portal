@@ -113,7 +113,7 @@ const ChartContent: React.FC<IChartContentProps> = ({
 							'col empty-text': !displayUsage,
 						})}
 					>
-						{displayUsage && `Total ${maxCountText}`}
+						{displayUsage && maxCountText}
 					</span>
 
 					<span

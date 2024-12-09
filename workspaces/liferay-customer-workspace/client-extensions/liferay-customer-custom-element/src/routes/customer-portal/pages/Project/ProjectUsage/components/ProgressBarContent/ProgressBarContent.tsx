@@ -8,6 +8,7 @@ import React, {useMemo} from 'react';
 import './ProgressBarContent.css';
 
 import classNames from 'classnames';
+import i18n from '~/common/I18n';
 
 interface IProps {
 	displayUsage?: boolean;
@@ -46,7 +47,7 @@ const ProgressBarContent: React.FC<IProps> = ({
 
 					{displayUsage && (
 						<span className="total-value-text">
-							of {maxCount.toLocaleString()}
+							{i18n.translate('of')} {maxCount.toLocaleString()}
 						</span>
 					)}
 				</div>

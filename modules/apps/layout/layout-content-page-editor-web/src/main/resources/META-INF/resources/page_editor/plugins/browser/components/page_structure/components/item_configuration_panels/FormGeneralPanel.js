@@ -41,9 +41,6 @@ import FormMappingOptions from './FormMappingOptions';
 import FormMultistepOptions from './FormMultistepOptions';
 
 export function FormGeneralPanel({item}) {
-	const fragmentEntryLinksRef = useSelectorRef(
-		(state) => state.fragmentEntryLinks
-	);
 	const isMounted = useIsMounted();
 	const updateItemLocalConfig = useUpdateItemLocalConfig();
 
@@ -106,8 +103,7 @@ export function FormGeneralPanel({item}) {
 						</ClayPanel>
 					</div>
 
-					{Liferay.FeatureFlags['LPD-37927'] &&
-					hasLocalizableFields(fragmentEntryLinksRef.current) ? (
+					{Liferay.FeatureFlags['LPD-37927'] ? (
 						<LocalizationOptions
 							item={item}
 							onValueSelect={saveFormConfig}
@@ -481,6 +477,8 @@ const UNLOCALIZED_FIELDS_STATE_OPTIONS = [
 function LocalizationOptions({item, onValueSelect}) {
 	const languageId = useSelector(selectLanguageId);
 
+	const stateRef = useSelectorRef((state) => state);
+
 	const {localizationConfig = {}} = item.config;
 
 	const {unlocalizedFieldsMessage, unlocalizedFieldsState} =
@@ -494,7 +492,18 @@ function LocalizationOptions({item, onValueSelect}) {
 
 	const helpTextId = useId();
 
-	return (
+	const [showLocalizationOptions, setShowLocalizationOptions] =
+		useState(false);
+
+	useEffect(() => {
+		hasLocalizableFields(stateRef.current, item.itemId).then(
+			(hasLocalizableFields) => {
+				setShowLocalizationOptions(hasLocalizableFields);
+			}
+		);
+	}, [stateRef, item.itemId]);
+
+	return showLocalizationOptions ? (
 		<div className="mb-3 panel-group-sm">
 			<ClayPanel
 				collapsable
@@ -578,5 +587,5 @@ function LocalizationOptions({item, onValueSelect}) {
 				</ClayPanel.Body>
 			</ClayPanel>
 		</div>
-	);
+	) : null;
 }

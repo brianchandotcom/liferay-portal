@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipInputStream;
@@ -173,13 +174,18 @@ public class SitePageBatchExportImportTaskResourceTest {
 	private void _assertEquals(
 		SitePage expectedSitePage, SitePage actualSitePage) {
 
+		expectedSitePage.setDateCreated((Date)null);
+		expectedSitePage.setDateModified((Date)null);
+		expectedSitePage.setDatePublished((Date)null);
+		expectedSitePage.setSiteExternalReferenceCode((String)null);
+
+		actualSitePage.setDateCreated((Date)null);
+		actualSitePage.setDateModified((Date)null);
+		actualSitePage.setDatePublished((Date)null);
+		actualSitePage.setSiteExternalReferenceCode((String)null);
+
 		Assert.assertEquals(
-			expectedSitePage.getName_i18n(), actualSitePage.getName_i18n());
-		Assert.assertEquals(
-			expectedSitePage.getPageSettings(),
-			actualSitePage.getPageSettings());
-		Assert.assertEquals(
-			expectedSitePage.getType(), actualSitePage.getType());
+			expectedSitePage.toString(), actualSitePage.toString());
 	}
 
 	private void _assertExecuteStatusEquals(

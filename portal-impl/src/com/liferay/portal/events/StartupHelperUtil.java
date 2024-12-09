@@ -215,8 +215,7 @@ public class StartupHelperUtil {
 	private static boolean _isDBWarmed() {
 		boolean dbWarmed = true;
 
-		if (_dbNew || _upgrading ||
-			DBUpgrader.isUpgradeDatabaseAutoRunEnabled()) {
+		if (_dbNew || DBUpgrader.isUpgradeDatabaseAutoRunEnabled()) {
 
 			dbWarmed = false;
 		}

@@ -17,7 +17,7 @@ export default class AIWizardContentOAuth2 extends OAuth2Client {
 		return this.fetch(`/settings/${id}`, {method: 'DELETE'});
 	}
 
-	async fetch(url: string, options?: FetchRequestInit) {
+	async fetch(url: string, options?: RequestInit) {
 		return this.oAuth2Client.fetch(url, {
 			...options,
 			headers: {
@@ -43,7 +43,9 @@ export default class AIWizardContentOAuth2 extends OAuth2Client {
 	}
 
 	async getSetting(id: string): Promise<any> {
-		return this.fetch(`/settings/${id}`);
+		const response = await this.fetch(`/settings/${id}`);
+
+		return response.json();
 	}
 
 	async getSettings(): Promise<any> {
@@ -53,7 +55,7 @@ export default class AIWizardContentOAuth2 extends OAuth2Client {
 	}
 
 	async saveSettings(data: unknown) {
-		const response = await this.fetch('/settings', {
+		const response = await this.fetch('/settings/save', {
 			body: JSON.stringify(data),
 			method: 'POST',
 		});

@@ -1,5 +1,5 @@
 dependencies {
-	compileOnly group: "com.liferay", name: "org.springframework.context", version: "4.3.30.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay", name: "org.springframework.context", version: "5.3.39.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"

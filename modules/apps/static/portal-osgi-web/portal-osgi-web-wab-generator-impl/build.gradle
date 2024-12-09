@@ -3,7 +3,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.12"
 	compileOnly group: "com.liferay", name: "com.liferay.whip", version: "1.0.5"
 	compileOnly group: "com.liferay", name: "org.springframework.beans", version: "5.3.39.LIFERAY-PATCHED-1"
-	compileOnly group: "com.liferay", name: "org.springframework.context", version: "4.3.30.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay", name: "org.springframework.context", version: "5.3.39.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"

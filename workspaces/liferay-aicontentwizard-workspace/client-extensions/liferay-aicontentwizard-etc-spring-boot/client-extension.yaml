@@ -1,9 +1,9 @@
 assemble:
     - fromTask: bootJar
-liferay-aicontentwizard-etc-spring-boot-oauth-application-headless-server:
+liferay-aicontentwizard-etc-spring-boot-oauth-application-user-agent:
     .serviceAddress: localhost:58081
     .serviceScheme: http
-    name: Liferay AI Content Etc Spring Boot Wizard OAuth Application Headless Server
+    name: Liferay AI Content Wizard Etc Spring Boot OAuth Application User Agent
     scopes:
         - c_k9l6aicontentwizardsetting.everything
         - Liferay.Bulk.REST.everything
@@ -17,11 +17,4 @@ liferay-aicontentwizard-etc-spring-boot-oauth-application-headless-server:
         - Liferay.Headless.Delivery.everything
         - Liferay.Headless.Site.everything
         - Liferay.Object.Admin.REST.everything
-    type: oAuthApplicationHeadlessServer
-liferay-aicontentwizard-etc-spring-boot-oauth-application-user-agent:
-    .serviceAddress: localhost:58081
-    .serviceScheme: http
-    name: Liferay AI Content Wizard Etc Spring Boot OAuth Application User Agent
-    scopes:
-        - c_k9l6aicontentwizardsetting.everything
     type: oAuthApplicationUserAgent

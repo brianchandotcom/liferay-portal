@@ -97,13 +97,13 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 	}
 
 	private WidgetPageSettings _toWidgetPageSettings(Layout layout) {
-		return new WidgetPageSettings() {
-			{
-				setLayoutTemplateId(
-					() -> layout.getTypeSettingsProperty(
-						LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
-			}
-		};
+		WidgetPageSettings widgetPageSettings = new WidgetPageSettings();
+
+		widgetPageSettings.setLayoutTemplateId(
+			() -> layout.getTypeSettingsProperty(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+
+		return widgetPageSettings;
 	}
 
 }

@@ -9256,15 +9256,14 @@ public class ObjectEntryResourceTest {
 	public void testPutSiteRelationsShipWithSiteScopeNestedEntries()
 		throws Exception {
 
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
-				TestPropsValues.getUserId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
+			TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		JSONObject postJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
-				objectRelationship.getName(),
+				_objectRelationship1.getName(),
 				_createObjectEntriesJSONArray(
 					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
 					_OBJECT_FIELD_NAME_1,
@@ -9280,7 +9279,7 @@ public class ObjectEntryResourceTest {
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
 			).put(
-				objectRelationship.getName(),
+				_objectRelationship1.getName(),
 				_createObjectEntriesJSONArray(
 					new String[] {_ERC_VALUE_3}, _OBJECT_FIELD_NAME_2,
 					new String[] {_NEW_OBJECT_FIELD_VALUE_2})
@@ -9294,14 +9293,11 @@ public class ObjectEntryResourceTest {
 				"externalReferenceCode", String.valueOf(_ERC_VALUE_3)
 			).toString(),
 			putJSONObject.getJSONArray(
-				objectRelationship.getName()
+				_objectRelationship1.getName()
 			).getJSONObject(
 				0
 			).toString(),
 			JSONCompareMode.LENIENT);
-
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship);
 	}
 
 	@Test

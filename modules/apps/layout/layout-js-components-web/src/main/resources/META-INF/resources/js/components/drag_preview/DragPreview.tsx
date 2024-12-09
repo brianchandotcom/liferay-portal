@@ -24,6 +24,7 @@ interface DragItem {
 
 interface Props<T> {
 	alignment?: Alignment;
+	focusElement?: boolean;
 	getIcon: (item: T) => string;
 	getLabel: (item: T) => string;
 }
@@ -97,6 +98,7 @@ const getItemStyles = ({
 
 export default function DragPreview<T extends DragItem>({
 	alignment,
+	focusElement,
 	getIcon = (item) => item?.icon || '',
 	getLabel = (item) => item?.name || Liferay.Language.get('element'),
 }: Props<T>) {
@@ -115,6 +117,14 @@ export default function DragPreview<T extends DragItem>({
 		Liferay.Language.direction[Liferay.ThemeDisplay.getLanguageId()];
 
 	const [style, setStyle] = useState<React.CSSProperties>();
+
+	// Focus drag preview if indicated
+
+	useEffect(() => {
+		if (focusElement) {
+			ref.current?.focus();
+		}
+	}, [focusElement]);
 
 	// Set styles during movement
 
@@ -164,10 +174,12 @@ export default function DragPreview<T extends DragItem>({
 		<div className="cadmin">
 			<div className="drag-preview position-fixed">
 				<div
+					aria-label={Liferay.Language.get('movement-preview')}
 					className="align-items-center d-flex drag-preview__content p-2 position-absolute text-2"
 					dir={dir}
 					ref={ref}
 					style={style}
+					tabIndex={-1}
 				>
 					{icon && (
 						<ClayIcon

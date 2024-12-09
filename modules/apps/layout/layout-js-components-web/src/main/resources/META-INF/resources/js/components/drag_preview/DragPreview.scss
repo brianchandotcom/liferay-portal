@@ -22,6 +22,10 @@ html#{$cadmin-selector} {
 				text-align: left;
 				width: 120px;
 				word-wrap: break-word;
+
+				&:focus {
+					outline: none;
+				}
 			}
 		}
 	}

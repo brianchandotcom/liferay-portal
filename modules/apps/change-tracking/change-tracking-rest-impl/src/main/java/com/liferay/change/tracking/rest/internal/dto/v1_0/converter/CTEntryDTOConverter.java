@@ -162,12 +162,11 @@ public class CTEntryDTOConverter
 				setOwnerName(ctEntry::getUserName);
 				setSiteId(
 					() -> {
-						if (document.hasField(Field.GROUP_ID)) {
-							return GetterUtil.getLong(
-								document.get(Field.GROUP_ID));
+						if (!document.hasField(Field.GROUP_ID)) {
+							return null;
 						}
 
-						return null;
+						return GetterUtil.getLong(document.get(Field.GROUP_ID));
 					});
 				setSiteName(
 					() -> {

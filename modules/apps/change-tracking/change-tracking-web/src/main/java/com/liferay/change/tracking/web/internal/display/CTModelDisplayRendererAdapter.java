@@ -36,32 +36,32 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 
 	@Override
 	public InputStream getDownloadInputStream(T model, String key) {
-		if (model instanceof CTModel<?>) {
-			CTModel<?> ctModel = (CTModel<?>)model;
-
-			CTService<?> ctService = _ctDisplayRendererRegistry.getCTService(
-				ctModel);
-
-			return ctService.updateWithUnsafeFunction(
-				ctPersistence -> {
-					Map<String, Function<T, Object>> attributeGetterFunctions =
-						model.getAttributeGetterFunctions();
-
-					Function<T, Object> function = attributeGetterFunctions.get(
-						CamelCaseUtil.toCamelCase(key));
-
-					Blob blob = (Blob)function.apply(model);
-
-					try {
-						return blob.getBinaryStream();
-					}
-					catch (SQLException sqlException) {
-						throw new ORMException(sqlException);
-					}
-				});
+		if (!(model instanceof CTModel<?>)) {
+			return null;
 		}
 
-		return null;
+		CTModel<?> ctModel = (CTModel<?>)model;
+
+		CTService<?> ctService = _ctDisplayRendererRegistry.getCTService(
+			ctModel);
+
+		return ctService.updateWithUnsafeFunction(
+			ctPersistence -> {
+				Map<String, Function<T, Object>> attributeGetterFunctions =
+					model.getAttributeGetterFunctions();
+
+				Function<T, Object> function = attributeGetterFunctions.get(
+					CamelCaseUtil.toCamelCase(key));
+
+				Blob blob = (Blob)function.apply(model);
+
+				try {
+					return blob.getBinaryStream();
+				}
+				catch (SQLException sqlException) {
+					throw new ORMException(sqlException);
+				}
+			});
 	}
 
 	@Override

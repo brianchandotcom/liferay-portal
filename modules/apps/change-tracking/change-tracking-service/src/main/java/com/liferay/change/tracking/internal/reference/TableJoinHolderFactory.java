@@ -187,14 +187,14 @@ public class TableJoinHolderFactory {
 								return stringColumn.neq(StringPool.BLANK);
 							}
 
-							if (clazz == Long.class) {
-								Column<?, Long> longColumn =
-									(Column<?, Long>)column;
-
-								return longColumn.neq(0L);
+							if (clazz != Long.class) {
+								return null;
 							}
 
-							return null;
+							Column<?, Long> longColumn =
+								(Column<?, Long>)column;
+
+							return longColumn.neq(0L);
 						}
 					);
 			}

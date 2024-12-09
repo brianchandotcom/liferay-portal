@@ -424,17 +424,17 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 						Column<?, Long> ctCollectionIdColumn =
 							parentTable.getColumn("ctCollectionId", Long.class);
 
-						if ((ctCollectionIdColumn != null) &&
-							ctCollectionIdColumn.isPrimaryKey()) {
+						if ((ctCollectionIdColumn == null) ||
+							!ctCollectionIdColumn.isPrimaryKey()) {
 
-							return ctCollectionIdColumn.eq(
-								CTConstants.CT_COLLECTION_ID_PRODUCTION
-							).or(
-								ctCollectionIdColumn.eq(ctCollectionId)
-							).withParentheses();
+							return null;
 						}
 
-						return null;
+						return ctCollectionIdColumn.eq(
+							CTConstants.CT_COLLECTION_ID_PRODUCTION
+						).or(
+							ctCollectionIdColumn.eq(ctCollectionId)
+						).withParentheses();
 					}
 				));
 

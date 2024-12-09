@@ -148,22 +148,21 @@ public class ScheduledPublicationUserNotificationHandler
 			).buildString();
 		}
 
-		if (_hasAdministratorRole(userNotificationEvent)) {
-			return PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					serviceContext.getRequest(), serviceContext.getScopeGroup(),
-					CTPortletKeys.PUBLICATIONS, 0, 0,
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/change_tracking/view_stack_trace"
-			).setParameter(
-				"backgroundTaskId", jsonObject.getLong("backgroundTaskId")
-			).setParameter(
-				"ctCollectionName", jsonObject.getString("ctCollectionName")
-			).buildString();
+		if (!_hasAdministratorRole(userNotificationEvent)) {
+			return null;
 		}
 
-		return null;
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				serviceContext.getRequest(), serviceContext.getScopeGroup(),
+				CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/change_tracking/view_stack_trace"
+		).setParameter(
+			"backgroundTaskId", jsonObject.getLong("backgroundTaskId")
+		).setParameter(
+			"ctCollectionName", jsonObject.getString("ctCollectionName")
+		).buildString();
 	}
 
 	private boolean _hasAdministratorRole(

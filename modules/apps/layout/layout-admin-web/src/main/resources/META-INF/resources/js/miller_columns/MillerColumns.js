@@ -430,7 +430,13 @@ function DragPreviewWrapper() {
 		};
 	}, [target]);
 
-	return <DragPreview alignment={alignment} getLabel={getDragPreviewLabel} />;
+	return (
+		<DragPreview
+			alignment={alignment}
+			focusElement={!!sources.length}
+			getLabel={getDragPreviewLabel}
+		/>
+	);
 }
 
 export default MillerColumns;

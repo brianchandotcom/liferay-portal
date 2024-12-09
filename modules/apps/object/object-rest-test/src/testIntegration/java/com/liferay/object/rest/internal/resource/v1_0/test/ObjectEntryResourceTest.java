@@ -9253,7 +9253,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPutSiteRelationsShipWithSiteScopeNestedEntries()
+	public void testPutSiteRelationshipWithSiteScopeNestedEntries()
 		throws Exception {
 
 		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(

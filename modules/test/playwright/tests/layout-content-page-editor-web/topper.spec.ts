@@ -87,7 +87,7 @@ test(
 
 test(
 	'Shows not allowed cursor when trying to multiple select two equal collection items',
-	{tag: ['@LPD-33348']},
+	{tag: ['@LPD-33717']},
 	async ({
 		apiHelpers,
 		collectionsPage,
@@ -133,7 +133,7 @@ test(
 
 		await pageEditorPage.selectFragment(headingId);
 
-		// Check that when simple multiple selection is on the class is present
+		// Check not allowed cursor is present when standard multiple selection
 
 		await page.keyboard.down('Control');
 
@@ -147,7 +147,7 @@ test(
 			page.locator('.page-editor__topper.not-allowed').first()
 		).not.toBeVisible();
 
-		// Check that when range multiple selection is on the class is present
+		// Check not allowed cursor is present when range multiple selection
 
 		await page.keyboard.down('Shift');
 

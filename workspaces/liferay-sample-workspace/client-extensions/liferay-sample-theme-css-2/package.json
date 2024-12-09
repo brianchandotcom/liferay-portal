@@ -1,9 +1,6 @@
 {
-	"dependencies": {
-		"sassy-inputs": "1.0.6"
-	},
 	"liferayDesignPack": {
-		"baseTheme": "unstyled"
+		"baseTheme": "styled"
 	},
 	"main": "package.json",
 	"name": "@liferay/liferay-sample-theme-css-2",

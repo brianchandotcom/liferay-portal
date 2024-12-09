@@ -6,8 +6,8 @@ assemble:
 liferay-sample-theme-css-4:
     clayRTLURL: css/clay_rtl.css
     clayURL: css/clay.css
+    frontendTokenDefinitionJSON: src/frontend-token-definition.json
     mainRTLURL: css/main_rtl.css
     mainURL: css/main.css
     name: Liferay Sample Theme CSS 4
-    scope: controlPanel
     type: themeCSS

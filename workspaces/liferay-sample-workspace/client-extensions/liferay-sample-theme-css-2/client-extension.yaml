@@ -9,4 +9,5 @@ liferay-sample-theme-css-2:
     mainRTLURL: css/main_rtl.css
     mainURL: css/main.css
     name: Liferay Sample Theme CSS 2
+    scope: controlPanel
     type: themeCSS

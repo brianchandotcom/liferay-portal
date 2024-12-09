@@ -148,15 +148,15 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 - *liferay-sample-theme-css-2*
 
-	Extend the CSS of the `unstyled` theme.
+	Extend the CSS of the `styled` theme and apply it to admin pages.
 
 - *liferay-sample-theme-css-3*
 
-	Extend the CSS of the `unstyled` theme and provide frontend token definitions.
+	Extend the CSS of the `unstyled` theme.
 
 - *liferay-sample-theme-css-4*
 
-	Extend the CSS of the `styled` theme and apply it to admin pages.
+	Extend the CSS of the `unstyled` theme and provide frontend token definitions.
 
 - *liferay-sample-theme-favicon*
 

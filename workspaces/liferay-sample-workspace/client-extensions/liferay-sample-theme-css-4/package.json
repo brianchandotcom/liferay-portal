@@ -1,8 +1,0 @@
-{
-	"liferayDesignPack": {
-		"baseTheme": "styled"
-	},
-	"main": "package.json",
-	"name": "@liferay/liferay-sample-theme-css-4",
-	"version": "0.0.0"
-}

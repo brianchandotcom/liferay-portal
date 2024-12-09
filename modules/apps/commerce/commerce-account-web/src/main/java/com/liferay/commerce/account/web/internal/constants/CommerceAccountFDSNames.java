@@ -12,14 +12,14 @@ public class CommerceAccountFDSNames {
 
 	public static final String ACCOUNT_ADDRESS_QUALIFIER_CHANNELS =
 		CommerceAccountPortletKeys.COMMERCE_ACCOUNT +
-			"-account-address-qualifier-channels";
+			"-accountAddressQualifierChannels";
 
 	public static final String ACCOUNT_ENTRY_DEFAULT_SHIPPING_OPTIONS =
 		CommerceAccountPortletKeys.COMMERCE_ACCOUNT +
-			"-account-entry-default-shipping-options";
+			"-accountEntryDefaultShippingOptions";
 
 	public static final String ACCOUNT_ENTRY_DEFAULT_USERS =
 		CommerceAccountPortletKeys.COMMERCE_ACCOUNT +
-			"-account-entry-default-users";
+			"-accountEntryDefaultUsers";
 
 }

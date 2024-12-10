@@ -15,6 +15,7 @@ import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriFunction;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -453,16 +454,11 @@ public class AnnouncementsDisplayContext {
 			UnsafeBiFunction<String, Long, T, E> unsafeBiFunction)
 		throws E {
 
-		List<T> entries = new ArrayList<>();
-
-		for (String externalReferenceCode : externalReferenceCodes) {
-			entries.add(
-				unsafeBiFunction.apply(
-					externalReferenceCode,
-					_announcementsRequestHelper.getCompanyId()));
-		}
-
-		return entries;
+		return TransformUtil.transform(
+			externalReferenceCodes,
+			externalReferenceCode -> unsafeBiFunction.apply(
+				externalReferenceCode,
+				_announcementsRequestHelper.getCompanyId()));
 	}
 
 	private List<String> _getSelectedScopeExternalReferenceCodes(

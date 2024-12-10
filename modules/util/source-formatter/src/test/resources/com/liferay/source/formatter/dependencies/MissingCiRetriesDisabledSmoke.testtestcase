@@ -2,7 +2,7 @@ definition {
 
 	@priority = 5
 	test Smoke {
-		property app.server.types = "jboss,tomcat,weblogic,websphere,wildfly";
+		property app.server.types = "jboss,tomcat,weblogic,wildfly";
 		property database.bare.enabled = "true";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 

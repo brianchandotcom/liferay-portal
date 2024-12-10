@@ -53,12 +53,7 @@
 	<macrodef name="apply-portal-ext-properties">
 		<sequential>
 			<if>
-				<and>
-					<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
-					<not>
-						<equals arg1="${app.server.type}" arg2="websphere" />
-					</not>
-				</and>
+				<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
 				<then>
 					<property name="test.build.liferay.portal.zip.file.name" value="${app.server.portal.dir}" />
 				</then>
@@ -138,12 +133,11 @@ module.framework.properties.osgi.console=11312</echo>
 						<equals arg1="${app.server.type}" arg2="jboss" />
 						<equals arg1="${app.server.type}" arg2="tomcat" />
 						<equals arg1="${app.server.type}" arg2="weblogic" />
-						<equals arg1="${app.server.type}" arg2="websphere" />
 						<equals arg1="${app.server.type}" arg2="wildfly" />
 					</or>
 				</not>
 				<then>
-					<fail>Please set "app.server.type" to one of the following:${line.separator}, jboss, tomcat, weblogic, websphere, or wildfly.</fail>
+					<fail>Please set "app.server.type" to one of the following:${line.separator}, jboss, tomcat, weblogic, or wildfly.</fail>
 				</then>
 			</if>
 
@@ -2897,39 +2891,6 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 						</replace>
 					</then>
 				</elseif>
-				<elseif>
-					<and>
-						<equals arg1="${app.server.type}" arg2="websphere" />
-						<equals arg1="${database.type}" arg2="mysql" />
-					</and>
-					<then>
-						<copy
-							file="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}"
-							tofile="${app.server.lib.global.dir}/${jdbc.mysql.driver}"
-						/>
-
-						<replace
-							file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/resources.xml"
-						>
-							<replacetoken><![CDATA[</xmi:XMI>]]></replacetoken>
-							<replacevalue expandproperties="true">
-								<![CDATA[
-									<resources.jdbc:JDBCProvider xmi:id="Liferay_JDBCProvider" name="Liferay JDBC Provider" providerType="User-defined JDBC Provider" isolatedClassLoader="false" implementationClassName="com.mysql.cj.jdbc.MysqlConnectionPoolDataSource" xa="false">
-										<factories xmi:type="resources.jdbc:DataSource" xmi:id="Liferay_DataSource" name="Liferay DataSource" jndiName="jdbc/LiferayPool" providerType="User-defined JDBC Provider" authMechanismPreference="BASIC_PASSWORD" authDataAlias="" manageCachedHandles="false" logMissingTransactionContext="true" diagnoseConnectionUsage="false" relationalResourceAdapter="builtin_rra" statementCacheSize="10" datasourceHelperClassname="com.ibm.websphere.rsadapter.GenericDataStoreHelper">
-											<propertySet xmi:id="J2EEResourcePropertySet_1">
-												<resourceProperties xmi:id="J2EEResourceProperty_1" name="user" type="java.lang.String" value="${database.username}" required="false" />
-												<resourceProperties xmi:id="J2EEResourceProperty_2" name="password" type="java.lang.String" value="${database.password}" required="false" />
-												<resourceProperties xmi:id="J2EEResourceProperty_3" name="url" type="java.lang.String" value="jdbc:mysql://${database.host}/${database.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false&amp;serverTimezone=GMT&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true" required="false" />
-											</propertySet>
-											<connectionPool xmi:id="ConnectionPool_1" connectionTimeout="1800" maxConnections="100" minConnections="5" reapTime="180" unusedTimeout="1800" agedTimeout="180" purgePolicy="EntirePool" />
-										</factories>
-									</resources.jdbc:JDBCProvider>
-								</xmi:XMI>
-								]]>
-							</replacevalue>
-						</replace>
-					</then>
-				</elseif>
 				<else>
 					<fail message="Tests utilizing JNDI are not available." />
 				</else>
@@ -2980,16 +2941,6 @@ portal.dir=/domains/liferay/autodeploy/ROOT
 server.detector.server.id=weblogic</echo>
 							</else>
 						</if>
-					</then>
-				</elseif>
-				<elseif>
-					<equals arg1="${app.server.type}" arg2="websphere" />
-					<then>
-						<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
-extra.lib.dirs=javaext
-global.lib.dir=lib
-portal.dir=profiles/liferay/installedApps/liferay-cell/liferay-portal.ear/liferay-portal.war
-server.detector.server.id=websphere</echo>
 					</then>
 				</elseif>
 				<elseif>
@@ -5028,51 +4979,6 @@ tell application "Safari" to quit
 
 					<delete file="${weblogic.fix.sh}" />
 				</then>
-				<elseif>
-					<equals arg1="${app.server.type}" arg2="websphere" />
-					<then>
-						<replace
-							dir="${app.server.websphere.dir}"
-							includes="**/*.js,**/*.metadata,**/*.properties,**/*.props,**/*.sh,**/*.txt,**/*.xml"
-						>
-							<replacefilter
-								token="/opt/dev/projects/github/liferay-portal/bundles"
-								value="${app.server.parent.dir}"
-							/>
-						</replace>
-
-						<replace
-							dir="${app.server.websphere.dir}"
-							includes="**/*.sh"
-						>
-							<replacefilter
-								token="#!/bin/sh"
-								value="#!/bin/bash"
-							/>
-						</replace>
-
-						<chmod
-							perm="a+x"
-						>
-							<fileset
-								dir="${app.server.websphere.bin.dir}"
-							>
-								<include name="**/*.sh" />
-							</fileset>
-						</chmod>
-
-						<chmod
-							perm="a+x"
-						>
-							<fileset
-								dir="${app.server.websphere.dir}"
-							>
-								<include name="bin/**/*.sh" />
-								<include name="java*/**/bin/*" />
-							</fileset>
-						</chmod>
-					</then>
-				</elseif>
 			</if>
 		</sequential>
 	</macrodef>
@@ -6483,21 +6389,6 @@ ${custom.upgrade.properties}</echo>
 			</if>
 
 			<if>
-				<equals arg1="@{app.server.type}" arg2="websphere" />
-				<then>
-					<var name="app.server.dir" value="${app.server.parent.dir}/websphere-@{app.server.version}" />
-					<var name="app.server.zip.name" value="websphere-@{app.server.version}.zip" />
-
-					<var name="app.server.bin.dir" value="${app.server.dir}/bin" />
-					<var name="app.server.classes.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/classes/" />
-					<var name="app.server.instance.dir" value="${app.server.dir}/profiles/liferay" />
-					<var name="app.server.lib.global.dir" value="${app.server.dir}/modules/com/liferay/portal/main" />
-					<var name="app.server.lib.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/lib/" />
-					<var name="app.server.shielded-container-lib.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/shielded-container-lib/" />
-				</then>
-			</if>
-
-			<if>
 				<equals arg1="@{app.server.type}" arg2="wildfly" />
 				<then>
 					<var name="app.server.dir" value="${app.server.parent.dir}/wildfly-@{app.server.version}" />
@@ -6536,7 +6427,6 @@ ${custom.upgrade.properties}</echo>
 				<or>
 					<equals arg1="@{app.server.type}" arg2="jboss" />
 					<equals arg1="@{app.server.type}" arg2="weblogic" />
-					<equals arg1="@{app.server.type}" arg2="websphere" />
 					<equals arg1="@{app.server.type}" arg2="wildfly" />
 				</or>
 				<then>
@@ -6546,20 +6436,10 @@ ${custom.upgrade.properties}</echo>
 				</then>
 			</if>
 
-			<if>
-				<equals arg1="@{app.server.type}" arg2="websphere" />
-				<then>
-					<echo append="true" file="${app.server.properties.file}">
-						app.server.@{app.server.type}.custom.zip.name=${app.server.zip.name}
-					</echo>
-				</then>
-				<else>
-					<echo append="true" file="${app.server.properties.file}">
-						app.server.@{app.server.type}.zip.name=${app.server.zip.name}
-						app.server.@{app.server.type}.zip.url=${app.server.zip.url}
-					</echo>
-				</else>
-			</if>
+			<echo append="true" file="${app.server.properties.file}">
+				app.server.@{app.server.type}.zip.name=${app.server.zip.name}
+				app.server.@{app.server.type}.zip.url=${app.server.zip.url}
+			</echo>
 
 			<beanshell>
 				<![CDATA[
@@ -7087,7 +6967,6 @@ log.sanitizer.enabled=false</echo>
 						<elseif>
 							<or>
 								<contains string="${suite.search.engine}" substring="remote-elasticsearch" />
-								<equals arg1="${app.server.type}" arg2="websphere" />
 								<istrue value="${remote.elasticsearch.enabled}" />
 							</or>
 							<then>
@@ -8508,7 +8387,6 @@ ${docker.start.error}</fail>
 				<elseif>
 					<or>
 						<contains string="${suite.search.engine}" substring="remote-elasticsearch" />
-						<equals arg1="${app.server.type}" arg2="websphere" />
 						<istrue value="${remote.elasticsearch.enabled}" />
 					</or>
 					<then>
@@ -10104,13 +9982,6 @@ org.apache.catalina.tribes.level = FINE]]>
 					</and>
 					<then>
 						<delete dir="${test.app.server.liferay.home}/osgi/state" />
-
-						<if>
-							<equals arg1="${app.server.type}" arg2="websphere" />
-							<then>
-								<delete dir="${test.app.server.liferay.home}/logs" />
-							</then>
-						</if>
 					</then>
 					<else>
 						<if>
@@ -11848,25 +11719,6 @@ ${update.properties}</echo>
 	</Loggers>
 </Configuration>]]>
 		</echo>
-
-		<!-- Temporarily increase Tika log level until LPS-193838 -->
-
-		<get-testcase-property property.name="portal.version" />
-
-		<if>
-			<and>
-				<equals arg1="${app.server.type}" arg2="websphere" />
-				<isset property="portal.version" />
-			</and>
-			<then>
-				<echo file="${liferay.home}/osgi/log4j/com.liferay.portal.tika-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
-<Configuration strict="true">
-	<Loggers>
-		<Logger level="ERROR" name="com.liferay.portal.tika.internal.extract.TextExtractorImpl" />
-	</Loggers>
-</Configuration>]]></echo>
-			</then>
-		</if>
 	</target>
 
 	<target name="prepare-osgi-module-configurations">
@@ -12571,25 +12423,6 @@ include-and-override=${liferay.home}/portal-setup-wizard.properties</echo>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
 mail.session.mail.smtp.port=25000</echo>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${vm.vmdk.suffix}" arg2="websphere-6.1.0.27" />
-				<equals arg1="${vm.vmdk.suffix}" arg2="websphere-7.0.0.7" />
-				<equals arg1="${vm.vmdk.suffix}" arg2="websphere-8.0.0.0" />
-			</or>
-			<then>
-				<replace
-					file="portal-impl/src/portal-ext.properties"
-					token="liferay.home=${liferay.home}"
-					value="liferay.home=C:/WINDOWS/system32/config/systemprofile/liferay"
-				/>
-
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-deploy</echo>
 			</then>
 		</if>
 
@@ -14045,10 +13878,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			</then>
 			<else>
 				<if>
-					<or>
-						<equals arg1="${app.server.type}" arg2="weblogic" />
-						<equals arg1="${app.server.type}" arg2="websphere" />
-					</or>
+					<equals arg1="${app.server.type}" arg2="weblogic" />
 					<then>
 						<prepare-test-app-server-custom />
 					</then>
@@ -14079,63 +13909,12 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					</then>
 				</if>
 
-				<if>
-					<equals arg1="${app.server.type}" arg2="websphere" />
-					<then>
-						<tstamp>
-							<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
-						</tstamp>
-
-						<mkdir dir="${tstamp.value}" />
-
-						<unzip
-							dest="${tstamp.value}"
-							src="liferay-portal.war"
-						/>
-
-						<if>
-							<available file="${tstamp.value}/WEB-INF/ibm-web-ext.xmi" />
-							<then>
-								<replace
-									file="${tstamp.value}/WEB-INF/ibm-web-ext.xmi"
-								>
-									<replacetoken><![CDATA[value="16"]]></replacetoken>
-									<replacevalue><![CDATA[value="18"]]></replacevalue>
-								</replace>
-							</then>
-						</if>
-
-						<zip
-							basedir="${tstamp.value}"
-							destfile="liferay-portal.war"
-						/>
-
-						<delete dir="${tstamp.value}" />
-
-						<copy
-							file="liferay-portal.war"
-							tofile="${app.server.websphere.deploy.dir}/liferay-portal.war"
-						/>
-					</then>
-					<else>
-						<unzip
-							dest="${app.server.portal.dir}"
-							src="liferay-portal.war"
-						/>
-					</else>
-				</if>
+				<unzip
+					dest="${app.server.portal.dir}"
+					src="liferay-portal.war"
+				/>
 
 				<ant antfile="build.xml" inheritAll="false" target="update-app-server-scripts" />
-
-				<if>
-					<equals arg1="${app.server.type}" arg2="websphere" />
-					<then>
-						<copy
-							file="${app.server.portal.dir}/WEB-INF/ibm-web-ext.xml"
-							tofile="${app.server.websphere.instance.dir}/config/cells/liferay-cell/applications/liferay-portal.ear/deployments/liferay-portal/liferay-portal.war/WEB-INF/ibm-web-ext.xml"
-						/>
-					</then>
-				</if>
 
 				<if>
 					<matches pattern="(file|https?)://" string="${test.build.portal.elasticsearch.zip.url}" />
@@ -16353,18 +16132,6 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="websphere.ssl.truststore.enabled" />
-
-		<if>
-			<and>
-				<equals arg1="${app.server.type}" arg2="websphere" />
-				<equals arg1="${websphere.ssl.truststore.enabled}" arg2="true" />
-			</and>
-			<then>
-				<antcall target="setup-websphere-ssl-truststore" />
-			</then>
-		</if>
-
 		<get-testcase-property property.name="portal.context" />
 		<propertycopy from="portal.context[${env.CI_TEST_SUITE}]" name="portal.context" silent="true" />
 
@@ -16732,15 +16499,6 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 		<setup-testable-tomcat />
 	</target>
 
-	<target name="setup-websphere-ssl-truststore">
-		<replace
-			file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/nodes/liferay-node/servers/server1/server.xml"
-		>
-			<replacetoken><![CDATA[genericJvmArguments="]]></replacetoken>
-			<replacevalue expandproperties="true"><![CDATA[genericJvmArguments="-Djavax.net.ssl.trustStore=${app.server.websphere.dir}/java/8.0/jre/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit -Djavax.net.ssl.trustStoreType=jks ]]></replacevalue>
-		</replace>
-	</target>
-
 	<target name="start-app-server">
 		<if>
 			<not>
@@ -17004,34 +16762,16 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 
 		<trycatch property="upgrade.error">
 			<try>
-				<if>
-					<equals arg1="${app.server.type}" arg2="websphere" />
-					<then>
-						<java
-							dir="${liferay.home}/tools/portal-tools-db-upgrade-client"
-							failonerror="true"
-							fork="true"
-							jar="${liferay.home}/tools/portal-tools-db-upgrade-client/com.liferay.portal.tools.db.upgrade.client.jar"
-							jvm="${java.jdk.home}/bin/java"
-							timeout="${upgrade.client.timeout}"
-						>
-							<env key="JAVA_HOME" value="${java.jdk.home}" />
-							<env key="WAS_HOME" value="${app.server.dir}" />
-						</java>
-					</then>
-					<else>
-						<java
-							dir="${liferay.home}/tools/portal-tools-db-upgrade-client"
-							failonerror="true"
-							fork="true"
-							jar="${liferay.home}/tools/portal-tools-db-upgrade-client/com.liferay.portal.tools.db.upgrade.client.jar"
-							jvm="${java.jdk.home}/bin/java"
-							timeout="${upgrade.client.timeout}"
-						>
-							<env key="JAVA_HOME" value="${java.jdk.home}" />
-						</java>
-					</else>
-				</if>
+				<java
+					dir="${liferay.home}/tools/portal-tools-db-upgrade-client"
+					failonerror="true"
+					fork="true"
+					jar="${liferay.home}/tools/portal-tools-db-upgrade-client/com.liferay.portal.tools.db.upgrade.client.jar"
+					jvm="${java.jdk.home}/bin/java"
+					timeout="${upgrade.client.timeout}"
+				>
+					<env key="JAVA_HOME" value="${java.jdk.home}" />
+				</java>
 			</try>
 			<catch>
 				<antcall target="print-jstack-logs">
@@ -17225,23 +16965,9 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 		</fail>
 
 		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="weblogic" />
-				<equals arg1="${app.server.type}" arg2="websphere" />
-			</or>
+			<equals arg1="${app.server.type}" arg2="weblogic" />
 			<then>
-				<if>
-					<equals arg1="${app.server.type}" arg2="weblogic" />
-					<then>
-						<var name="admin.server.path" value="8080/console" />
-					</then>
-					<elseif>
-						<equals arg1="${app.server.type}" arg2="websphere" />
-						<then>
-							<var name="admin.server.path" value="9060" />
-						</then>
-					</elseif>
-				</if>
+				<var name="admin.server.path" value="8080/console" />
 
 				<waitfor checkevery="5" checkeveryunit="second" maxwait="5" maxwaitunit="minute" timeoutproperty="admin.server.shutdown.timeout">
 					<not>

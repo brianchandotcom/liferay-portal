@@ -11,7 +11,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -105,8 +104,8 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		}
 	}
 
-	public void invalidateCache() {
-		_jsImportMapsCache.invalidate();
+	public void invalidateCache(long companyId) {
+		_jsImportMapsCache.invalidate(companyId);
 	}
 
 	@Override
@@ -120,8 +119,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 		modified();
 
-		_jsImportMapsCache = new JSImportMapsCache(
-			_companyLocalService, _jsonFactory);
+		_jsImportMapsCache = new JSImportMapsCache(_jsonFactory);
 
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, JSImportMapsContributor.class,
@@ -163,10 +161,6 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private volatile BundleContext _bundleContext;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
 	private JSImportMapsCache _jsImportMapsCache;
 	private volatile JSImportMapsConfiguration _jsImportMapsConfiguration;
 

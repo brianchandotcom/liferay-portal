@@ -362,6 +362,73 @@ public class PageSpecificationResourceImpl
 			serviceContext);
 	}
 
+	@Override
+	protected void preparePatch(
+		PageSpecification pageSpecification,
+		PageSpecification existingPageSpecification) {
+
+		Settings settings = pageSpecification.getSettings();
+
+		if (settings != null) {
+			Settings existingSettings = existingPageSpecification.getSettings();
+
+			if (settings.getColorSchemeName() != null) {
+				existingSettings.setColorSchemeName(
+					settings::getColorSchemeName);
+			}
+
+			if (settings.getCss() != null) {
+				existingSettings.setCss(settings::getCss);
+			}
+
+			if (settings.getFavIcon() != null) {
+				existingSettings.setFavIcon(settings::getFavIcon);
+			}
+
+			if (settings.getGlobalCSSClientExtensions() != null) {
+				existingSettings.setGlobalCSSClientExtensions(
+					settings::getGlobalCSSClientExtensions);
+			}
+
+			if (settings.getGlobalJSClientExtensions() != null) {
+				existingSettings.setGlobalJSClientExtensions(
+					settings::getGlobalJSClientExtensions);
+			}
+
+			if (settings.getJavascript() != null) {
+				existingSettings.setJavascript(settings::getJavascript);
+			}
+
+			if (settings.getMasterPageItemExternalReference() != null) {
+				existingSettings.setMasterPageItemExternalReference(
+					settings::getMasterPageItemExternalReference);
+			}
+
+			if (settings.getStyleBookItemExternalReference() != null) {
+				existingSettings.setStyleBookItemExternalReference(
+					settings::getStyleBookItemExternalReference);
+			}
+
+			if (settings.getThemeCSSClientExtension() != null) {
+				existingSettings.setThemeCSSClientExtension(
+					settings::getThemeCSSClientExtension);
+			}
+
+			if (settings.getThemeName() != null) {
+				existingSettings.setThemeName(settings::getThemeName);
+			}
+
+			if (settings.getThemeSettings() != null) {
+				existingSettings.setThemeSettings(settings::getThemeSettings);
+			}
+
+			if (settings.getThemeSpritemapClientExtension() != null) {
+				existingSettings.setThemeSpritemapClientExtension(
+					settings::getThemeSpritemapClientExtension);
+			}
+		}
+	}
+
 	private void _addChildPageElements(
 		LayoutStructure layoutStructure, PageElement pageElement) {
 

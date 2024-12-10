@@ -1768,6 +1768,14 @@ components:
                                 - $ref: "#/components/schemas/SitePageFormSubmissionResult"
                                 - $ref: "#/components/schemas/URLFormSubmissionResult"
                             type: object
+                        formType:
+                            enum: [Multistep, Simple]
+                            type: string
+                        numberOfSteps:
+                            # @review
+                            description:
+                                The page form's number of steps.
+                            type: integer
                     type: object
                 fragmentStyle:
                     $ref: "#/components/schemas/FragmentStyle"

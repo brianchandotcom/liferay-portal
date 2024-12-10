@@ -32,7 +32,7 @@ const Content: React.FC<IContentProps> = ({
 	return (
 		<ClayTable
 			className="compose-table"
-			data-testId={type}
+			data-testid={type}
 			hover={!disabled}
 		>
 			<ClayTable.Head>

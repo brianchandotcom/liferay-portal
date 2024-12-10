@@ -8,7 +8,6 @@ package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -142,15 +141,6 @@ public class JavaFileObjectResolver {
 
 		try {
 			Enumeration<URL> enumeration = classLoader.getResources(path);
-
-			if ((enumeration == null) ||
-				((enumeration != null) && !enumeration.hasMoreElements())) {
-
-				// This is a fallback so that WebSphere can find resources
-				// during the JSP compilation process
-
-				enumeration = classLoader.getResources(path + StringPool.SLASH);
-			}
 
 			if ((enumeration != null) && enumeration.hasMoreElements()) {
 				urls = Collections.list(enumeration);

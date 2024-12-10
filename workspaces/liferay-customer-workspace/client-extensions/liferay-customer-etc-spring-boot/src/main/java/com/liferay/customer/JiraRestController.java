@@ -90,7 +90,7 @@ public class JiraRestController extends BaseRestController {
 			}
 
 			return new ResponseEntity<>(
-				"No issue found with key " + issueKey, HttpStatus.UNAUTHORIZED);
+				"No issue found with key " + issueKey, HttpStatus.NOT_FOUND);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

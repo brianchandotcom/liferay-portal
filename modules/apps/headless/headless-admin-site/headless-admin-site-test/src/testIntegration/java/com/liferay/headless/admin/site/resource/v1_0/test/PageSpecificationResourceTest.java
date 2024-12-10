@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -931,7 +932,7 @@ public class PageSpecificationResourceTest
 			};
 		}
 
-		Map<String, String> map = HashMapBuilder.put(
+		Map<String, String> map = TreeMapBuilder.put(
 			"lfr-theme:" + RandomTestUtil.randomString(),
 			RandomTestUtil.randomString()
 		).put(

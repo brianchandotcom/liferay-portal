@@ -404,15 +404,14 @@ public class AuditDisplayContext {
 	}
 
 	private <T> T _getParamWithOrWithoutNamespace(
-		ParamGetter<T> paramGetter, String paramName, T defaultValue) {
+		ParamGetter<T> paramGetter, String param, T defaultValue) {
 
 		return paramGetter.get(
 			(HttpServletRequest)_servletRequestWrapper.getRequest(),
-			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + paramName,
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + param,
 			paramGetter.get(
-				(HttpServletRequest)_servletRequestWrapper.getRequest(),
-				paramName,
-				paramGetter.get(_httpServletRequest, paramName, defaultValue)));
+				(HttpServletRequest)_servletRequestWrapper.getRequest(), param,
+				paramGetter.get(_httpServletRequest, param, defaultValue)));
 	}
 
 	private PortletURL _getPortletURL() throws Exception {

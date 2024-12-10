@@ -488,9 +488,14 @@ test.describe('Fragments Panel', () => {
 
 			await highlightedSet.waitFor();
 
-			const favoriteButton = page.getByTitle(
-				'Mark Reports Display as Favorite'
+			await expandSection(
+				page.getByRole('menuitem', {
+					exact: true,
+					name: 'Collaboration',
+				})
 			);
+
+			const favoriteButton = page.getByTitle('Mark Blogs as Favorite');
 
 			// If the widget is already marked as favorite, unmark it
 
@@ -504,7 +509,7 @@ test.describe('Fragments Panel', () => {
 
 			// Check that the widget is inside Highlighted set
 
-			await expect(highlightedSet).toContainText('Reports Display');
+			await expect(highlightedSet).toContainText('Blogs');
 
 			// Create a Widget page and check that the widget is also inside Highlighted set in a widget page
 
@@ -520,7 +525,7 @@ test.describe('Fragments Panel', () => {
 
 			highlightedSet = page.locator('.panel', {hasText: 'Highlighted'});
 
-			await expect(highlightedSet).toContainText('Reports Display');
+			await expect(highlightedSet).toContainText('Blogs');
 
 			// Check that a new user with update permissions cannot see the changes
 
@@ -547,7 +552,7 @@ test.describe('Fragments Panel', () => {
 
 			await widgetPagePage.openAddPanel();
 
-			await expect(highlightedSet).not.toContainText('Reports Display');
+			await expect(highlightedSet).not.toContainText('Blogs');
 		}
 	);
 

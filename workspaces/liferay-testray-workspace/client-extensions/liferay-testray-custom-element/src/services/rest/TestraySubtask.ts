@@ -183,7 +183,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubtask> {
 	): Promise<APIResponse<TestraySubtask>> {
 		return this.fetcher.put(
 			`/testray-testflow/testray-subtask/merge`,
-			subtasks
+			subtasks.map(({error: _, ...subtask}) => subtask)
 		);
 	}
 

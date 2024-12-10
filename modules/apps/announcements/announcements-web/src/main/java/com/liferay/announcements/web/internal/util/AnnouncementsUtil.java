@@ -185,61 +185,56 @@ public class AnnouncementsUtil {
 	public static List<Organization> getOrganizations(ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		List<Organization> filteredOrganizations = new ArrayList<>();
-
 		List<Organization> organizations =
 			OrganizationLocalServiceUtil.getUserOrganizations(
 				themeDisplay.getUserId());
 
-		for (Organization organization : organizations) {
-			if (OrganizationPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(),
-					organization.getOrganizationId(),
-					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+		return TransformUtil.transform(
+			organizations,
+			organization -> {
+				if (OrganizationPermissionUtil.contains(
+						themeDisplay.getPermissionChecker(),
+						organization.getOrganizationId(),
+						ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
-				filteredOrganizations.add(organization);
-			}
-		}
+					return organization;
+				}
 
-		return filteredOrganizations;
+				return null;
+			});
 	}
 
 	public static List<Role> getRoles(ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		List<Role> filteredRoles = new ArrayList<>();
+		return TransformUtil.transform(
+			RoleLocalServiceUtil.getRoles(themeDisplay.getCompanyId()),
+			role -> {
+				if (hasManageAnnouncementsPermission(
+						role, themeDisplay.getPermissionChecker())) {
 
-		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			themeDisplay.getCompanyId());
+					return role;
+				}
 
-		for (Role role : roles) {
-			if (hasManageAnnouncementsPermission(
-					role, themeDisplay.getPermissionChecker())) {
-
-				filteredRoles.add(role);
-			}
-		}
-
-		return filteredRoles;
+				return null;
+			});
 	}
 
 	public static List<UserGroup> getUserGroups(ThemeDisplay themeDisplay) {
-		List<UserGroup> filteredUserGroups = new ArrayList<>();
+		return TransformUtil.transform(
+			UserGroupLocalServiceUtil.getUserGroups(
+				themeDisplay.getCompanyId()),
+			userGroup -> {
+				if (UserGroupPermissionUtil.contains(
+						themeDisplay.getPermissionChecker(),
+						userGroup.getUserGroupId(),
+						ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
-		List<UserGroup> userGroups = UserGroupLocalServiceUtil.getUserGroups(
-			themeDisplay.getCompanyId());
+					return userGroup;
+				}
 
-		for (UserGroup userGroup : userGroups) {
-			if (UserGroupPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(),
-					userGroup.getUserGroupId(),
-					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-
-				filteredUserGroups.add(userGroup);
-			}
-		}
-
-		return filteredUserGroups;
+				return null;
+			});
 	}
 
 	public static boolean hasManageAnnouncementsPermission(

@@ -10,6 +10,7 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -74,6 +75,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -595,6 +597,20 @@ public class EmailNotificationType extends BaseNotificationType {
 						PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 
 					continue;
+				}
+
+				if (Objects.equals(
+						infoField.getInfoFieldType(),
+						RelationshipInfoFieldType.INSTANCE) &&
+					(infoFieldValue.getValue() instanceof KeyValuePair)) {
+
+					KeyValuePair keyValuePair =
+						(KeyValuePair)infoFieldValue.getValue();
+
+					infoFieldValue = new InfoFieldValue<>(
+						infoField,
+						GetterUtil.getObject(
+							keyValuePair.getKey(), StringPool.BLANK));
 				}
 
 				TemplateNode templateNode =

@@ -881,6 +881,8 @@ public class PageSpecificationResourceTest
 		for (int i = 0; i < count; i++) {
 			String curExternalReferenceCode = RandomTestUtil.randomString();
 
+			int curPosition = i;
+
 			pageElements[i] = new PageElement() {
 				{
 					setDefinition(() -> new PageContainerDefinition());
@@ -897,6 +899,7 @@ public class PageSpecificationResourceTest
 						});
 					setParentExternalReferenceCode(
 						() -> curParentExternalReferenceCode);
+					setPosition(() -> curPosition);
 					setType(() -> PageElement.Type.CONTAINER);
 				}
 			};

@@ -20,7 +20,6 @@ import {hasLocalizableFields} from './hasLocalizableFields';
 import {hasLocalizationSelect} from './hasLocalizationSelect';
 import hasRequiredInputChild from './hasRequiredInputChild';
 import {hasVisibleFormButtonChild} from './hasVisibleFormButtonChild';
-import hasVisibleSubmitChild from './hasVisibleSubmitChild';
 import {isItemHidden} from './isItemHidden';
 import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
 import isLocalizationSelect from './isLocalizationSelect';
@@ -64,11 +63,11 @@ export default function useCheckFormsValidity() {
 			}
 
 			if (
-				!hasVisibleSubmitChild(
-					form.itemId,
-					globalContext,
-					layoutData,
+				!hasVisibleFormButtonChild(
 					fragmentEntryLinks,
+					form.itemId,
+					layoutData,
+					'submit',
 					selectedViewportSize
 				)
 			) {

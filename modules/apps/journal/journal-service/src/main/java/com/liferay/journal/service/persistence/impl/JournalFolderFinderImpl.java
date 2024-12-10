@@ -167,8 +167,6 @@ public class JournalFolderFinderImpl
 		try {
 			session = openSession();
 
-			String articleSQLId = COUNT_A_BY_G_U_F_DDMSI_NOT_S;
-
 			String sql = updateSQL(
 				StringBundler.concat(
 					StringPool.OPEN_PARENTHESIS,
@@ -177,7 +175,7 @@ public class JournalFolderFinderImpl
 						inlineSQLHelper),
 					") UNION ALL (",
 					getArticlesSQL(
-						articleSQLId, groupId, queryDefinition,
+						COUNT_A_BY_G_U_F_DDMSI_NOT_S, groupId, queryDefinition,
 						inlineSQLHelper),
 					StringPool.CLOSE_PARENTHESIS),
 				folderId, ddmStructureId, statuses);
@@ -243,8 +241,6 @@ public class JournalFolderFinderImpl
 		try {
 			session = openSession();
 
-			String articleSQLId = FIND_A_BY_G_U_F_DDMSI;
-
 			String sql = updateSQL(
 				StringBundler.concat(
 					StringPool.OPEN_PARENTHESIS,
@@ -253,7 +249,7 @@ public class JournalFolderFinderImpl
 						inlineSQLHelper),
 					") UNION ALL (",
 					getArticlesSQL(
-						articleSQLId, groupId, queryDefinition,
+						FIND_A_BY_G_U_F_DDMSI, groupId, queryDefinition,
 						inlineSQLHelper),
 					StringPool.CLOSE_PARENTHESIS),
 				folderId, ddmStructureId, null);
@@ -343,8 +339,6 @@ public class JournalFolderFinderImpl
 		try {
 			session = openSession();
 
-			String articleSQLId = FIND_A_BY_G_U_F_DDMSI_L_NOT_S;
-
 			String sql = updateSQL(
 				StringBundler.concat(
 					StringPool.OPEN_PARENTHESIS,
@@ -353,7 +347,7 @@ public class JournalFolderFinderImpl
 						inlineSQLHelper),
 					") UNION ALL (",
 					getArticlesSQL(
-						articleSQLId, groupId, queryDefinition,
+						FIND_A_BY_G_U_F_DDMSI_L_NOT_S, groupId, queryDefinition,
 						inlineSQLHelper),
 					StringPool.CLOSE_PARENTHESIS),
 				folderId, ddmStructureId, statuses);

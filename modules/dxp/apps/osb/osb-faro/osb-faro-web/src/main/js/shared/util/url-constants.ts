@@ -36,6 +36,7 @@ enum URLConstants {
 	IndividualsDashboardInterestsDocumentation = 'https://learn.liferay.com/analytics-cloud/latest/en/people/individuals/individuals-dashboard.html#interests',
 	IndividualsDashboardDocumentation = 'https://learn.liferay.com/analytics-cloud/latest/en/people/individuals/individuals-dashboard.html',
 	InterestTopicsDocumentation = 'https://learn.liferay.com/analytics-cloud/latest/en/workspace-data/definitions/managing-interest-topics.html',
+	MaintenanceModeAndDeprecationDocumentation = 'https://help.liferay.com/hc/en-us/articles/360015767952-Maintenance-Mode-and-Deprecation',
 	PrivacyPolicy = 'https://www.liferay.com/privacy-policy',
 	RequestLogDocumentation = 'https://learn.liferay.com/analytics-cloud/latest/en/workspace-data/data-control-and-privacy.html',
 	SalesforceAddDocumentation = 'https://developer.salesforce.com/page/Connected_Apps',

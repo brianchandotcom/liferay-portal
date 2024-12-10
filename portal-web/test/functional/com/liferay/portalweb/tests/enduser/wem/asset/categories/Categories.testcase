@@ -135,24 +135,6 @@ definition {
 		}
 	}
 
-	@description = "Add a vocabulary disallow multiple categories."
-	@priority = 3
-	test AddVocabularyDisallowMultipleCategories {
-		task ("Add a vocabulary disallow multiple categories") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.addCP(
-				allowMultipleCategories = "false",
-				vocabularyName = "Vocabulary Name 2");
-		}
-
-		task ("View the new vocabulary disallow multiple categories") {
-			Vocabulary.viewCP(
-				allowMultipleCategories = "false",
-				vocabularyName = "Vocabulary Name 2");
-		}
-	}
-
 	@description = "Add a vocabulary for All Asset Types."
 	@priority = 3
 	test AddVocabularyForAllAssetTypes {

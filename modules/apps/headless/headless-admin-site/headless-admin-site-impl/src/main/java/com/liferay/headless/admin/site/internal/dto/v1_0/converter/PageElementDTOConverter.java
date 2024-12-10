@@ -12,6 +12,8 @@ import com.liferay.headless.admin.site.dto.v1_0.PageContainerDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageDropZoneDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageFormDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageFormStepContainerDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageFormStepDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageFragmentDropZoneDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageFragmentInstanceDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageRowDefinition;
@@ -19,6 +21,7 @@ import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
@@ -119,12 +122,18 @@ public class PageElementDTOConverter
 
 		if (Objects.equals(
 				layoutStructureItem.getItemType(),
-				LayoutDataItemTypeConstants.TYPE_FORM_STEP) ||
-			Objects.equals(
+				LayoutDataItemTypeConstants.TYPE_FORM_STEP)) {
+
+			return new PageFormStepDefinition();
+		}
+
+		if (Objects.equals(
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_FORM_STEP_CONTAINER)) {
 
-			throw new UnsupportedOperationException();
+			return _pageFormStepContainerDefinitionDTOConverter.toDTO(
+				(FormStepContainerStyledLayoutStructureItem)
+					layoutStructureItem);
 		}
 
 		if (Objects.equals(
@@ -220,6 +229,14 @@ public class PageElementDTOConverter
 	)
 	private DTOConverter<FormStyledLayoutStructureItem, PageFormDefinition>
 		_pageFormDefinitionDTOConverter;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageFormStepContainerDefinitionDTOConverter)"
+	)
+	private DTOConverter
+		<FormStepContainerStyledLayoutStructureItem,
+		 PageFormStepContainerDefinition>
+			_pageFormStepContainerDefinitionDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageFragmentDropZoneDefinitionDTOConverter)"

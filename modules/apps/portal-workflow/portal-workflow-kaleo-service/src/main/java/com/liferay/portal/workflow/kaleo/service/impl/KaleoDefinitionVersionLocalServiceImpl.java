@@ -428,12 +428,11 @@ public class KaleoDefinitionVersionLocalServiceImpl
 			)
 		);
 
-		List<Object> entriesValues = kaleoDefinitionVersionPersistence.dslQuery(
-			dslQuery);
-
 		List<Long> kaleoDefinitionVersionIds = new ArrayList<>();
 
-		for (Object result : entriesValues) {
+		for (Object result :
+				kaleoDefinitionVersionPersistence.dslQuery(dslQuery)) {
+
 			kaleoDefinitionVersionIds.add((Long)result);
 		}
 

@@ -434,13 +434,13 @@ public class JiraRestController extends BaseRestController {
 		String publishingStatus = fieldsJSONObject.optString(
 			"publishingStatus");
 
-		LocalDateTime publishingDate = _parsePublishingDate(
-			jwt, issueJSONObject);
+		if (publishingStatus.equals("Ready for Publishing")) {
+			LocalDateTime publishingDate = _parsePublishingDate(
+				jwt, issueJSONObject);
 
-		if (publishingStatus.equals("Ready for Publishing") &&
-			publishingDate.isBefore(LocalDateTime.now())) {
-
-			return true;
+			if (publishingDate.isBefore(LocalDateTime.now())) {
+				return true;
+			}
 		}
 
 		return false;

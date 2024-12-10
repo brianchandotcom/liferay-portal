@@ -17,4 +17,6 @@ export const MIN_LENGTH = 3;
 
 export const NOT_FOUND_GIF = `${IMAGES_PATH}/states/search_state.svg`;
 
+export const REFETCH_JOB_INTERVAL = 3000;
+
 export const SPRITEMAP = IMAGES_PATH + '/clay/icons.svg';

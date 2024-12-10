@@ -243,10 +243,7 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 				}
 			}
 
-			Assert.assertTrue(
-				Arrays.toString(taxonomyCategoryBriefs2) +
-					" does not contain " + taxonomyCategoryBrief1,
-				contains);
+			Assert.assertTrue(contains);
 		}
 	}
 

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.task.web.internal.notifications;
 
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -65,6 +66,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_setUpCTCollectionLocalService();
 		_setUpUserNotificationEventLocalService();
 		_setUpWorkflowTaskManagerUtil();
 		_setUpWorkflowTaskPermission();
@@ -235,6 +237,12 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			}
 
 		};
+	}
+
+	private static void _setUpCTCollectionLocalService() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			_workflowTaskUserNotificationHandler, "_ctCollectionLocalService",
+			ProxyFactory.newDummyInstance(CTCollectionLocalService.class));
 	}
 
 	private static void _setUpUserNotificationEventLocalService()

@@ -185,57 +185,56 @@ public class YearlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 		).put(
 			monthDayKey,
 			() -> {
-				if (yearlyMode ==
+				if (yearlyMode !=
 						CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_YEAR) {
 
-					String monthDayValue =
-						subscriptionTypeSettingsUnicodeProperties.get(
-							monthDayKey);
-
-					if (Validator.isBlank(monthDayValue)) {
-						throw new CPSubscriptionTypeSettingsException(
-							"The " + monthDayKey + " field is mandatory");
-					}
-
-					int monthDay = GetterUtil.getInteger(monthDayValue, -1);
-
-					if ((monthDay < 1) || (monthDay > 31)) {
-						throw new CPSubscriptionTypeSettingsException(
-							StringBundler.concat(
-								"Invalid ", monthDayKey, " ", monthDayValue));
-					}
-
-					return monthDayValue;
+					return null;
 				}
 
-				return null;
+				String monthDayValue =
+					subscriptionTypeSettingsUnicodeProperties.get(monthDayKey);
+
+				if (Validator.isBlank(monthDayValue)) {
+					throw new CPSubscriptionTypeSettingsException(
+						"The " + monthDayKey + " field is mandatory");
+				}
+
+				int monthDay = GetterUtil.getInteger(monthDayValue, -1);
+
+				if ((monthDay < 1) || (monthDay > 31)) {
+					throw new CPSubscriptionTypeSettingsException(
+						StringBundler.concat(
+							"Invalid ", monthDayKey, " ", monthDayValue));
+				}
+
+				return monthDayValue;
 			}
 		).put(
 			monthKey,
 			() -> {
-				if (yearlyMode ==
+				if (yearlyMode !=
 						CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_YEAR) {
 
-					String monthValue =
-						subscriptionTypeSettingsUnicodeProperties.get(monthKey);
-
-					if (Validator.isBlank(monthValue)) {
-						throw new CPSubscriptionTypeSettingsException(
-							"The " + monthKey + " field is mandatory");
-					}
-
-					int month = GetterUtil.getInteger(monthValue, -1);
-
-					if ((month < 0) || (month > 11)) {
-						throw new CPSubscriptionTypeSettingsException(
-							StringBundler.concat(
-								"Invalid ", monthKey, " ", monthValue));
-					}
-
-					return monthValue;
+					return null;
 				}
 
-				return null;
+				String monthValue =
+					subscriptionTypeSettingsUnicodeProperties.get(monthKey);
+
+				if (Validator.isBlank(monthValue)) {
+					throw new CPSubscriptionTypeSettingsException(
+						"The " + monthKey + " field is mandatory");
+				}
+
+				int month = GetterUtil.getInteger(monthValue, -1);
+
+				if ((month < 0) || (month > 11)) {
+					throw new CPSubscriptionTypeSettingsException(
+						StringBundler.concat(
+							"Invalid ", monthKey, " ", monthValue));
+				}
+
+				return monthValue;
 			}
 		).put(
 			yearlyModeKey,

@@ -183,30 +183,29 @@ public class MonthlyCPSubscriptionTypeImpl implements CPSubscriptionType {
 		).put(
 			monthDayKey,
 			() -> {
-				if (monthlyMode ==
+				if (monthlyMode !=
 						CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_MONTH) {
 
-					String monthDayValue =
-						subscriptionTypeSettingsUnicodeProperties.get(
-							monthDayKey);
-
-					if (Validator.isBlank(monthDayValue)) {
-						throw new CPSubscriptionTypeSettingsException(
-							"The " + monthDayKey + " field is mandatory");
-					}
-
-					int monthDay = GetterUtil.getInteger(monthDayValue, -1);
-
-					if ((monthDay < 1) || (monthDay > 31)) {
-						throw new CPSubscriptionTypeSettingsException(
-							StringBundler.concat(
-								"Invalid ", monthDayKey, " ", monthDayValue));
-					}
-
-					return monthDayValue;
+					return null;
 				}
 
-				return null;
+				String monthDayValue =
+					subscriptionTypeSettingsUnicodeProperties.get(monthDayKey);
+
+				if (Validator.isBlank(monthDayValue)) {
+					throw new CPSubscriptionTypeSettingsException(
+						"The " + monthDayKey + " field is mandatory");
+				}
+
+				int monthDay = GetterUtil.getInteger(monthDayValue, -1);
+
+				if ((monthDay < 1) || (monthDay > 31)) {
+					throw new CPSubscriptionTypeSettingsException(
+						StringBundler.concat(
+							"Invalid ", monthDayKey, " ", monthDayValue));
+				}
+
+				return monthDayValue;
 			}
 		).put(
 			monthlyModeKey,

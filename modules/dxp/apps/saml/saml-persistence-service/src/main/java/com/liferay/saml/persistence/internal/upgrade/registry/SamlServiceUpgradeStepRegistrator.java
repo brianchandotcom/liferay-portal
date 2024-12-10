@@ -107,9 +107,12 @@ public class SamlServiceUpgradeStepRegistrator
 				"VARCHAR(1024) null"));
 
 		registry.register(
-			"2.4.1", "2.5.0",
+			"2.4.1", "2.4.2",
 			new com.liferay.saml.persistence.internal.upgrade.v3_0_0.
-				SamlIdpSpSessionUpgradeProcess(),
+				SamlIdpSpSessionUpgradeProcess());
+
+		registry.register(
+			"2.4.2", "2.5.0",
 			new com.liferay.saml.persistence.internal.upgrade.v3_0_0.
 				SamlSpSessionUpgradeProcess());
 

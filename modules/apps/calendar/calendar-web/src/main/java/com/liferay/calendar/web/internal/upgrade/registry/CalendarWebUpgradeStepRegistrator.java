@@ -36,8 +36,10 @@ public class CalendarWebUpgradeStepRegistrator
 
 		registry.register("1.0.0", "1.0.1", new DummyUpgradeStep());
 
+		registry.register("1.0.1", "1.0.2", new UpgradePortalPreferences());
+
 		registry.register(
-			"1.0.1", "1.1.0", new UpgradePortalPreferences(),
+			"1.0.2", "1.1.0",
 			new com.liferay.calendar.web.internal.upgrade.v1_1_0.
 				UpgradePortletId());
 

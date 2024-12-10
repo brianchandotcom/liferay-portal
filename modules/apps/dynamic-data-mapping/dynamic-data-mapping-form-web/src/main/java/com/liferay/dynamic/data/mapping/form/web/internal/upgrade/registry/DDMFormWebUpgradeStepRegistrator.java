@@ -28,10 +28,12 @@ public class DDMFormWebUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.registerInitialization();
 
+		registry.register("0.0.1", "0.0.2", new UpgradeDDMFormAdminPortletId());
+
+		registry.register("0.0.2", "0.0.3", new UpgradeDDMFormPortletId());
+
 		registry.register(
-			"0.0.1", "1.0.0", new UpgradeDDMFormAdminPortletId(),
-			new UpgradeDDMFormPortletId(),
-			new UpgradeDDMFormPortletPreferences());
+			"0.0.3", "1.0.0", new UpgradeDDMFormPortletPreferences());
 
 		registry.register(
 			"1.0.0", "1.0.1",

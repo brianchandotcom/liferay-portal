@@ -38,11 +38,14 @@ public class QuestionsWebUpgradeStepRegistrator
 					_sapEntryService));
 
 		registry.register(
-			"1.0.1", "1.1.0",
+			"1.0.1", "1.0.2",
 			new com.liferay.questions.web.internal.upgrade.v1_1_0.
 				QuestionsConfigurationUpgradeProcess(
 					_configurationAdmin, _configurationProvider,
-					_mbCategoryLocalService),
+					_mbCategoryLocalService));
+
+		registry.register(
+			"1.0.2", "1.1.0",
 			new com.liferay.questions.web.internal.upgrade.v1_1_0.
 				UpgradePortletPreferences(_mbCategoryLocalService));
 	}

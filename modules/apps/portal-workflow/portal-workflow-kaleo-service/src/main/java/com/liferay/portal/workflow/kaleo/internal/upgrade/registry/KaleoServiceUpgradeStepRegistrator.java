@@ -59,7 +59,10 @@ public class KaleoServiceUpgradeStepRegistrator
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"0.0.1", "1.0.0", new KaleoTaskInstanceTokenUpgradeProcess(),
+			"0.0.1", "0.0.2", new KaleoTaskInstanceTokenUpgradeProcess());
+
+		registry.register(
+			"0.0.2", "1.0.0",
 			new com.liferay.portal.workflow.kaleo.internal.upgrade.v1_0_0.
 				SchemaUpgradeProcess());
 
@@ -67,10 +70,11 @@ public class KaleoServiceUpgradeStepRegistrator
 			"1.0.0", "1.1.0", new WorkflowContextUpgradeProcess());
 
 		registry.register(
-			"1.1.0", "1.2.0",
+			"1.1.0", "1.1.1",
 			new com.liferay.portal.workflow.kaleo.internal.upgrade.v1_2_0.
-				SchemaUpgradeProcess(),
-			new UpgradePortletId());
+				SchemaUpgradeProcess());
+
+		registry.register("1.1.1", "1.2.0", new UpgradePortletId());
 
 		registry.register(
 			"1.2.0", "1.2.1",
@@ -78,10 +82,12 @@ public class KaleoServiceUpgradeStepRegistrator
 				"KaleoLog", "comment_", "TEXT null"),
 			new KaleoNotificationRecipientUpgradeProcess());
 
+		registry.register("1.2.1", "1.2.2", new UpgradeClassNames());
+
+		registry.register("1.2.2", "1.2.3", new KaleoActionUpgradeProcess());
+
 		registry.register(
-			"1.2.1", "1.3.0", new UpgradeClassNames(),
-			new KaleoActionUpgradeProcess(),
-			new KaleoDefinitionUpgradeProcess());
+			"1.2.3", "1.3.0", new KaleoDefinitionUpgradeProcess());
 
 		registry.register(
 			"1.3.0", "1.3.1",
@@ -105,7 +111,7 @@ public class KaleoServiceUpgradeStepRegistrator
 		registry.register("1.4.1", "1.4.2", new DummyUpgradeProcess());
 
 		registry.register(
-			"1.4.2", "2.0.0",
+			"1.4.2", "1.4.3",
 			new BaseSQLServerDatetimeUpgradeProcess(
 				new Class<?>[] {
 					KaleoActionTable.class, KaleoConditionTable.class,
@@ -120,7 +126,10 @@ public class KaleoServiceUpgradeStepRegistrator
 					KaleoTaskInstanceTokenTable.class, KaleoTaskTable.class,
 					KaleoTimerInstanceTokenTable.class, KaleoTimerTable.class,
 					KaleoTransitionTable.class
-				}),
+				}));
+
+		registry.register(
+			"1.4.3", "2.0.0",
 			new com.liferay.portal.workflow.kaleo.internal.upgrade.v2_0_0.
 				SchemaUpgradeProcess());
 

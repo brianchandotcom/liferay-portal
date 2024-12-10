@@ -32,13 +32,17 @@ public class BookmarksServiceUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.register("0.0.1", "0.0.2", new UpgradeKernelPackage());
 
+		registry.register("0.0.2", "0.0.3", new UpgradeLastPublishDate());
+
 		registry.register(
-			"0.0.2", "1.0.0", new UpgradeLastPublishDate(),
+			"0.0.3", "1.0.0",
 			new UpgradePortletSettings(_settingsLocatorHelper));
 
 		registry.register(
-			"1.0.0", "2.0.0", new UpgradeBookmarksEntryResourceBlock(),
-			new UpgradeBookmarksFolderResourceBlock());
+			"1.0.0", "1.0.1", new UpgradeBookmarksEntryResourceBlock());
+
+		registry.register(
+			"1.0.1", "2.0.0", new UpgradeBookmarksFolderResourceBlock());
 
 		registry.register(
 			"2.0.0", "2.1.0",

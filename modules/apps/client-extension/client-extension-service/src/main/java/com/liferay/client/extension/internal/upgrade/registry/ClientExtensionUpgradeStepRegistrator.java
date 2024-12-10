@@ -67,8 +67,10 @@ public class ClientExtensionUpgradeStepRegistrator
 			new com.liferay.client.extension.internal.upgrade.v2_5_0.
 				RemoteAppEntryUpgradeProcess());
 
+		registry.register("2.5.0", "2.5.1", new ClassNamesUpgradeProcess());
+
 		registry.register(
-			"2.5.0", "3.0.0", new ClassNamesUpgradeProcess(),
+			"2.5.1", "3.0.0",
 			new com.liferay.client.extension.internal.upgrade.v3_0_0.
 				ClientExtensionEntryUpgradeProcess());
 

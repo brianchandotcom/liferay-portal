@@ -31,9 +31,12 @@ public class ReportsServiceUpgradeStepRegistrator
 				"reports-portlet", _releaseLocalService));
 
 		registry.register(
-			"0.0.1", "1.0.0",
+			"0.0.1", "0.0.2",
 			new com.liferay.portal.reports.engine.console.internal.upgrade.
-				v1_0_0.ReportDefinitionUpgradeProcess(),
+				v1_0_0.ReportDefinitionUpgradeProcess());
+
+		registry.register(
+			"0.0.2", "1.0.0",
 			new com.liferay.portal.reports.engine.console.internal.upgrade.
 				v1_0_0.ReportEntryUpgradeProcess());
 

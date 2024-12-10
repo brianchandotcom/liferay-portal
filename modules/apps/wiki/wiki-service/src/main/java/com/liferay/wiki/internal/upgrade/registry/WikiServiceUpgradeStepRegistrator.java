@@ -45,11 +45,20 @@ public class WikiServiceUpgradeStepRegistrator
 
 		registry.register("0.0.2", "0.0.3", new UpgradeKernelPackage());
 
+		registry.register("0.0.3", "0.0.4", new UpgradeCompanyId());
+
+		registry.register("0.0.4", "0.0.5", new UpgradeLastPublishDate());
+
+		registry.register("0.0.5", "0.0.6", new UpgradePortletPreferences());
+
 		registry.register(
-			"0.0.3", "1.0.0", new UpgradeCompanyId(),
-			new UpgradeLastPublishDate(), new UpgradePortletPreferences(),
-			new UpgradePortletSettings(_settingsLocatorHelper),
-			new WikiPageResourceUpgradeProcess(), new WikiPageUpgradeProcess());
+			"0.0.6", "0.0.7",
+			new UpgradePortletSettings(_settingsLocatorHelper));
+
+		registry.register(
+			"0.0.7", "0.0.8", new WikiPageResourceUpgradeProcess());
+
+		registry.register("0.0.8", "1.0.0", new WikiPageUpgradeProcess());
 
 		registry.register("1.0.0", "1.1.0", new WikiNodeUpgradeProcess());
 

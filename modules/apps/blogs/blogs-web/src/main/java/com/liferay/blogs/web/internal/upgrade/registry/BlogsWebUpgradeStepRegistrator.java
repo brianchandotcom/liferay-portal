@@ -27,8 +27,10 @@ public class BlogsWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.registerInitialization();
 
+		registry.register("0.0.1", "0.0.2", new UpgradePortletPreferences());
+
 		registry.register(
-			"0.0.1", "1.0.0", new UpgradePortletPreferences(),
+			"0.0.2", "1.0.0",
 			new UpgradePortletSettings(_settingsLocatorHelper));
 
 		registry.register(

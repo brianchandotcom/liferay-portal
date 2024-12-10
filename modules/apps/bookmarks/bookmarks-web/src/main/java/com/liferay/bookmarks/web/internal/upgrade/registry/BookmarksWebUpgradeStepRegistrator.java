@@ -27,9 +27,9 @@ public class BookmarksWebUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.registerInitialization();
 
-		registry.register(
-			"0.0.1", "1.0.0", new UpgradeAdminPortlets(),
-			new UpgradePortletPreferences());
+		registry.register("0.0.1", "0.0.2", new UpgradeAdminPortlets());
+
+		registry.register("0.0.2", "1.0.0", new UpgradePortletPreferences());
 
 		registry.register(
 			"1.0.0", "1.0.1",

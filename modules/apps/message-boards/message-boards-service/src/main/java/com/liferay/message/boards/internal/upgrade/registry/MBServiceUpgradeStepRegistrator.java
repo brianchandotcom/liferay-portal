@@ -75,10 +75,12 @@ public class MBServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				}));
 
 		registry.register(
-			"2.0.0", "3.0.0",
+			"2.0.0", "2.0.1",
 			new ViewCountUpgradeProcess(
-				"MBThread", MBThread.class, "threadId", "viewCount"),
-			new MBMessageTreePathUpgradeProcess());
+				"MBThread", MBThread.class, "threadId", "viewCount"));
+
+		registry.register(
+			"2.0.1", "3.0.0", new MBMessageTreePathUpgradeProcess());
 
 		registry.register("3.0.0", "3.1.0", new UrlSubjectUpgradeProcess());
 

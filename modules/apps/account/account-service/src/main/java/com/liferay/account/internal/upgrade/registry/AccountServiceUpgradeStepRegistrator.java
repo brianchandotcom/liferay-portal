@@ -49,10 +49,11 @@ public class AccountServiceUpgradeStepRegistrator
 				RoleUpgradeProcess());
 
 		registry.register(
-			"1.0.3", "1.1.0",
+			"1.0.3", "1.0.4",
 			new com.liferay.account.internal.upgrade.v1_1_0.
-				AccountEntryUpgradeProcess(),
-			new SchemaUpgradeProcess());
+				AccountEntryUpgradeProcess());
+
+		registry.register("1.0.4", "1.1.0", new SchemaUpgradeProcess());
 
 		registry.register(
 			"1.1.0", "1.1.1",

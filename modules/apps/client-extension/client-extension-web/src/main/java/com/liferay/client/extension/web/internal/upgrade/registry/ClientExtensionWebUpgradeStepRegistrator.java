@@ -32,11 +32,12 @@ public class ClientExtensionWebUpgradeStepRegistrator
 				UpgradePortletId());
 
 		registry.register(
-			"1.0.0", "2.0.0",
+			"1.0.0", "1.0.1",
 			UpgradeProcessFactory.runSQL(
 				"delete from Release_ where servletContextName = " +
-					"'com.liferay.remote.app.web'"),
-			new UpgradePortletId());
+					"'com.liferay.remote.app.web'"));
+
+		registry.register("1.0.1", "2.0.0", new UpgradePortletId());
 
 		registry.register("2.0.0", "3.0.0", new DummyUpgradeStep());
 

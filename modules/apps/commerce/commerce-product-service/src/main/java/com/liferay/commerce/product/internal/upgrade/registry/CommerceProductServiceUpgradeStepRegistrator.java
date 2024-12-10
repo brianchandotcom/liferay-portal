@@ -139,9 +139,12 @@ public class CommerceProductServiceUpgradeStepRegistrator
 				CPDefinitionOptionRelUpgradeProcess());
 
 		registry.register(
-			"1.9.0", "1.10.0",
+			"1.9.0", "1.9.1",
 			new com.liferay.commerce.product.internal.upgrade.v1_10_0.
-				CPAttachmentFileEntryUpgradeProcess(_jsonFactory),
+				CPAttachmentFileEntryUpgradeProcess(_jsonFactory));
+
+		registry.register(
+			"1.9.1", "1.10.0",
 			new com.liferay.commerce.product.internal.upgrade.v1_10_0.
 				CPInstanceUpgradeProcess(_jsonFactory));
 

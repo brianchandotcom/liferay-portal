@@ -122,8 +122,10 @@ public class DDMServiceUpgradeStepRegistrator
 
 		registry.register("0.0.2", "0.0.3", new UpgradeKernelPackage());
 
+		registry.register("0.0.3", "0.0.4", new UpgradeCompanyId());
+
 		registry.register(
-			"0.0.3", "1.0.0", new UpgradeCompanyId(),
+			"0.0.4", "0.0.5",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.
 				DynamicDataMappingUpgradeProcess(
 					_assetEntryLocalService, _classNameLocalService, _ddm,
@@ -135,8 +137,9 @@ public class DDMServiceUpgradeStepRegistrator
 					_expandoTableLocalService, _expandoValueLocalService,
 					_resourceActions, _resourceLocalService,
 					_resourcePermissionLocalService, _store,
-					_viewCountEntryLocalService),
-			new UpgradeLastPublishDate());
+					_viewCountEntryLocalService));
+
+		registry.register("0.0.5", "1.0.0", new UpgradeLastPublishDate());
 
 		registry.register(
 			"1.0.0", "1.0.1",
@@ -155,13 +158,19 @@ public class DDMServiceUpgradeStepRegistrator
 				DDMFormFieldValidationUpgradeProcess(_jsonFactory));
 
 		registry.register(
-			"1.0.3", "1.1.0",
+			"1.0.3", "1.0.4",
 			new CheckboxFieldToCheckboxMultipleFieldUpgradeProcess(
 				ddmFormJSONDeserializer, ddmFormValuesDeserializer,
-				ddmFormValuesSerializer, _jsonFactory),
+				ddmFormValuesSerializer, _jsonFactory));
+
+		registry.register(
+			"1.0.4", "1.0.5",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0.
 				DDMStructureUpgradeProcess(
-					ddmFormJSONDeserializer, ddmFormSerializer),
+					ddmFormJSONDeserializer, ddmFormSerializer));
+
+		registry.register(
+			"1.0.5", "1.1.0",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0.
 				DataProviderInstanceUpgradeProcess(_jsonFactory));
 
@@ -196,16 +205,25 @@ public class DDMServiceUpgradeStepRegistrator
 		registry.register("1.2.0", "1.2.1", new DummyUpgradeStep());
 
 		registry.register(
-			"1.2.1", "2.0.0",
+			"1.2.1", "1.2.2",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0.
 				DDMFormInstanceUpgradeProcess(
 					_classNameLocalService, _counterLocalService,
 					_resourceActions, _resourceActionLocalService,
-					_resourcePermissionLocalService),
+					_resourcePermissionLocalService));
+
+		registry.register(
+			"1.2.2", "1.2.3",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0.
-				DDMFormInstanceRecordUpgradeProcess(_assetEntryLocalService),
+				DDMFormInstanceRecordUpgradeProcess(_assetEntryLocalService));
+
+		registry.register(
+			"1.2.3", "1.2.4",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0.
-				DDMFormInstanceRecordVersionUpgradeProcess(),
+				DDMFormInstanceRecordVersionUpgradeProcess());
+
+		registry.register(
+			"1.2.4", "2.0.0",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0.
 				ResourceActionUpgradeProcess(_resourceActionLocalService));
 
@@ -375,11 +393,14 @@ public class DDMServiceUpgradeStepRegistrator
 						"is null or templateKey = ''"));
 
 		registry.register(
-			"3.7.4", "3.8.0",
+			"3.7.4", "3.7.5",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v3_8_0.
 				DDMStructureUpgradeProcess(
 					ddmFormJSONDeserializer, _ddmFormLayoutDeserializer,
-					ddmFormLayoutSerializer, ddmFormSerializer, _jsonFactory),
+					ddmFormLayoutSerializer, ddmFormSerializer, _jsonFactory));
+
+		registry.register(
+			"3.7.5", "3.8.0",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v3_8_0.
 				DDMContentUpgradeProcess(
 					ddmFormJSONDeserializer, _jsonFactory));
@@ -425,10 +446,13 @@ public class DDMServiceUpgradeStepRegistrator
 				DDMStructureUpgradeProcess(_ddmDataDefinitionConverter));
 
 		registry.register(
-			"4.0.0", "4.1.0",
+			"4.0.0", "4.0.1",
 			new DDMFieldUpgradeProcess(
 				_jsonFactory, _jsonDDMFormDeserializer,
-				_jsonDDMFormValuesDeserializer),
+				_jsonDDMFormValuesDeserializer));
+
+		registry.register(
+			"4.0.1", "4.1.0",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v4_1_0.
 				SchemaUpgradeProcess());
 

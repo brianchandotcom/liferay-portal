@@ -112,9 +112,12 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 			"3.1.3", "3.1.4", new ResourcePermissionUpgradeProcess());
 
 		registry.register(
-			"3.1.4", "3.2.0",
+			"3.1.4", "3.1.5",
 			new com.liferay.layout.page.template.internal.upgrade.v3_2_0.
-				LayoutPageTemplateCollectionUpgradeProcess(),
+				LayoutPageTemplateCollectionUpgradeProcess());
+
+		registry.register(
+			"3.1.5", "3.2.0",
 			new com.liferay.layout.page.template.internal.upgrade.v3_2_0.
 				LayoutPageTemplateEntryUpgradeProcess());
 

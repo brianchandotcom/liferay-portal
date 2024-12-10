@@ -83,9 +83,12 @@ public class CalendarServiceUpgradeStepRegistrator
 		registry.register("1.0.7", "2.0.0", new SchemaUpgradeProcess());
 
 		registry.register(
-			"2.0.0", "3.0.0", new UpgradeCalendarBookingResourceBlock(),
-			new UpgradeCalendarResourceBlock(),
-			new UpgradeCalendarResourceResourceBlock());
+			"2.0.0", "2.0.1", new UpgradeCalendarBookingResourceBlock());
+
+		registry.register("2.0.1", "2.0.2", new UpgradeCalendarResourceBlock());
+
+		registry.register(
+			"2.0.2", "3.0.0", new UpgradeCalendarResourceResourceBlock());
 
 		registry.register(
 			"3.0.0", "3.0.1",

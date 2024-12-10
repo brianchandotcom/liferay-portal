@@ -457,8 +457,8 @@ public class PageSpecificationResourceTest
 		}
 
 		Assert.assertEquals(
-			curPageExperiences.toString(), curPageExperiences.length,
-			pageExperiences.length);
+			Arrays.toString(curPageExperiences), pageExperiences.length,
+			curPageExperiences.length);
 
 		for (PageExperience curPageExperience : curPageExperiences) {
 			PageExperience pageExperience = _getPageExperience(
@@ -522,8 +522,8 @@ public class PageSpecificationResourceTest
 		Assert.assertTrue(ArrayUtil.isNotEmpty(curPageElements));
 
 		Assert.assertEquals(
-			curPageElements.toString(), curPageElements.length,
-			pageElements.length);
+			Arrays.toString(curPageElements), pageElements.length,
+			curPageElements.length);
 
 		for (PageElement curPageElement : curPageElements) {
 			PageElement pageElement = _getPageElement(

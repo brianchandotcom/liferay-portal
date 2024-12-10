@@ -352,8 +352,8 @@ public class PageSpecificationResourceTest
 
 			if (Objects.equals(additionalAssertFieldName, "settings")) {
 				_assertSettings(
-					pageSpecification2.getSettings(),
-					pageSpecification1.getSettings());
+					pageSpecification1.getSettings(),
+					pageSpecification2.getSettings());
 
 				continue;
 			}
@@ -397,8 +397,8 @@ public class PageSpecificationResourceTest
 				}
 
 				_assertWidgetPageSpecification(
-					(WidgetPageSpecification)pageSpecification2,
-					(WidgetPageSpecification)pageSpecification1);
+					(WidgetPageSpecification)pageSpecification1,
+					(WidgetPageSpecification)pageSpecification2);
 
 				continue;
 			}
@@ -466,8 +466,8 @@ public class PageSpecificationResourceTest
 				expectedPageExperiences);
 
 			_assertPageElements(
-				curPageExperience.getPageElements(),
-				pageExperience.getPageElements());
+				pageExperience.getPageElements(),
+				curPageExperience.getPageElements());
 		}
 	}
 

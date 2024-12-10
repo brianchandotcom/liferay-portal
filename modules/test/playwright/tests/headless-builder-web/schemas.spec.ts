@@ -195,7 +195,7 @@ testFeatureFlagsDisabled(
 			await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
 		for (let i = 0; i <= 21; i++) {
-			objectDefinitions.push(
+			const objectDefinition = (
 				await objectDefinitionAPIClient.postObjectDefinition({
 					active: true,
 					externalReferenceCode: `objectDefinition${i}`,
@@ -231,7 +231,9 @@ testFeatureFlagsDisabled(
 						code: 0,
 					},
 				})
-			);
+			).body;
+
+			objectDefinitions.push(objectDefinition);
 		}
 
 		objectDefinitions.forEach((objectDefinition) => {

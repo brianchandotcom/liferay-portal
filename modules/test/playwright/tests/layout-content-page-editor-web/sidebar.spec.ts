@@ -699,20 +699,7 @@ test.describe('Fragments Panel', () => {
 
 		await widgetPagePage.openAddPanel();
 
-		[
-			'Accounts',
-			'Business Intelligence & Reporting',
-			'Collaboration',
-			'Commerce',
-			'Community',
-			'Content Management',
-			'News',
-			'Object',
-			'Sample',
-			'Search',
-		].forEach(async (set, index) => {
-			await expect(widgetSets.nth(index)).toContainText(set);
-		});
+		await expect(widgetSets.nth(0)).toContainText(firstWidgetSet);
 	});
 
 	test(

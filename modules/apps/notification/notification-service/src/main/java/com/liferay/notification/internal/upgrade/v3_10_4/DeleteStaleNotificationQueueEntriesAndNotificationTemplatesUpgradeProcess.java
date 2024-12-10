@@ -51,11 +51,11 @@ public class
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_deleteNotificationQueueEntry();
-		_deleteNotificationTemplate();
+		_deleteNotificationQueueEntries();
+		_deleteNotificationTemplates();
 	}
 
-	private void _deleteNotificationQueueEntry() throws Exception {
+	private void _deleteNotificationQueueEntries() throws Exception {
 		try (PreparedStatement deletePreparedStatement1 =
 				 _getDeletePreparedStatement("notificationQueueEntryId",
 					 "NQueueEntryAttachment");
@@ -136,7 +136,7 @@ public class
 				"notificationRecipientId = ", notificationRecipientId));
 	}
 
-	private void _deleteNotificationTemplate() throws Exception {
+	private void _deleteNotificationTemplates() throws Exception {
 		try (PreparedStatement deletePreparedStatement1 =
 				 _getDeletePreparedStatement("notificationTemplateId",
 					 "NTemplateAttachment");

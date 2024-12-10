@@ -1379,7 +1379,7 @@ test('LPD-32210 AC1 TC5: Verify unsuccessful IdP initiated SSO with any redirect
 	await expect(await newPage.url()).toContain(homeUrl);
 });
 
-test('LPD-32213 AC1 TC1: Verify SP initiated SSO from a restricted resource with prompt enabled redirects user back to resource after authentication.', async ({
+test('LPD-32213 AC1 TC1 and TC5: Verify SP initiated SSO from a restricted resource with prompt enabled redirects user back to resource after authentication.', async ({
 	browser,
 }) => {
 	const idpAdminPage = await configureVirtualInstanceForSaml(
@@ -1467,7 +1467,20 @@ test('LPD-32213 AC1 TC1: Verify SP initiated SSO from a restricted resource with
 
 	expect(await newPage.url()).toContain(DEFAULT_IDP_URL);
 
-	// Authenticate on IdP to finish SSO
+	// Provide invalid credentials to test LPD-32213 TC4
+
+	await newPage.getByLabel('Email Address').fill(userAccount.emailAddress);
+	await newPage.getByLabel('Password').fill('invalid');
+	await newPage.getByRole('button', {name: 'Sign In'}).click();
+	await newPage.waitForTimeout(2000);
+
+	// Expect to remain unauthenticated on IdP
+
+	await expect(await newPage.getByLabel('Email Address')).toBeVisible();
+
+	expect(await newPage.url()).toContain(DEFAULT_IDP_URL);
+
+	// End TC4.  Successfully authenticate on IdP to finish SSO
 
 	await newPage.getByLabel('Email Address').fill(userAccount.emailAddress);
 	await newPage.getByLabel('Password').fill('test');

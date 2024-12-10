@@ -7,8 +7,6 @@ package com.liferay.portal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.portal.events.StartupHelperUtil;
-import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -19,7 +17,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -37,7 +34,6 @@ import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -90,18 +86,6 @@ public class VerifyLayoutResourcePermissionsTest
 			TestPropsValues.getCompanyId(), RoleConstants.OWNER);
 
 		_user = UserTestUtil.addUser();
-
-		_upgrading = ReflectionTestUtil.getAndSetFieldValue(
-			StartupHelperUtil.class, "_upgrading", true);
-	}
-
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_upgrading", _upgrading);
 	}
 
 	@Test
@@ -202,9 +186,7 @@ public class VerifyLayoutResourcePermissionsTest
 		return new VerifyResourcePermissions();
 	}
 
-	private void _assertEmptyResourcePermissions(Layout... layouts)
-		throws Exception {
-
+	private void _assertEmptyResourcePermissions(Layout... layouts) {
 		for (Layout layout : layouts) {
 			Assert.assertTrue(
 				ListUtil.isEmpty(
@@ -257,8 +239,6 @@ public class VerifyLayoutResourcePermissionsTest
 		}
 	}
 
-	private static boolean _upgrading;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -266,10 +246,6 @@ public class VerifyLayoutResourcePermissionsTest
 	private Role _groupRole;
 	private List<String> _guestActions;
 	private Role _guestRole;
-
-	@Inject
-	private MultiVMPool _multiVMPool;
-
 	private List<String> _ownerActions;
 	private Role _ownerRole;
 

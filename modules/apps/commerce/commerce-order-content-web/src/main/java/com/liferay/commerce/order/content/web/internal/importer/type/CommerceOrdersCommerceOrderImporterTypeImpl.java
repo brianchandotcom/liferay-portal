@@ -67,12 +67,11 @@ public class CommerceOrdersCommerceOrderImporterTypeImpl
 		long selectedCommerceOrderId = ParamUtil.getLong(
 			httpServletRequest, getCommerceOrderImporterItemParamName());
 
-		if (selectedCommerceOrderId > 0) {
-			return _commerceOrderService.getCommerceOrder(
-				selectedCommerceOrderId);
+		if (selectedCommerceOrderId <= 0) {
+			return null;
 		}
 
-		return null;
+		return _commerceOrderService.getCommerceOrder(selectedCommerceOrderId);
 	}
 
 	@Override

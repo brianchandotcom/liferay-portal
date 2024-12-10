@@ -69,18 +69,18 @@ public class CommerceOrderAssetDisplayPageFriendlyURLResolver
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			_getLayoutDisplayPageObjectProvider(commerceOrder);
 
-		if ((layoutDisplayPageObjectProvider != null) &&
-			AssetDisplayPageUtil.hasAssetDisplayPage(
+		if ((layoutDisplayPageObjectProvider == null) ||
+			!AssetDisplayPageUtil.hasAssetDisplayPage(
 				groupId, layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassPK(),
 				layoutDisplayPageObjectProvider.getClassTypeId())) {
 
-			return super.getActualURL(
-				companyId, groupId, privateLayout, mainPath, friendlyURL,
-				params, requestContext);
+			return null;
 		}
 
-		return null;
+		return super.getActualURL(
+			companyId, groupId, privateLayout, mainPath, friendlyURL, params,
+			requestContext);
 	}
 
 	@Override

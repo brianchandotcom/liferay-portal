@@ -72,12 +72,11 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 		long commerceWishListId = ParamUtil.getLong(
 			httpServletRequest, getCommerceOrderImporterItemParamName());
 
-		if (commerceWishListId > 0) {
-			return _commerceWishListService.getCommerceWishList(
-				commerceWishListId);
+		if (commerceWishListId <= 0) {
+			return null;
 		}
 
-		return null;
+		return _commerceWishListService.getCommerceWishList(commerceWishListId);
 	}
 
 	@Override

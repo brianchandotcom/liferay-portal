@@ -249,13 +249,12 @@ public class CommerceOrderEditDisplayContext {
 			_commerceOrderRequestHelper.getRequest(),
 			"commerceNotificationQueueEntryId");
 
-		if (commerceNotificationQueueEntryId > 0) {
-			return _commerceNotificationQueueEntryLocalService.
-				getCommerceNotificationQueueEntry(
-					commerceNotificationQueueEntryId);
+		if (commerceNotificationQueueEntryId <= 0) {
+			return null;
 		}
 
-		return null;
+		return _commerceNotificationQueueEntryLocalService.
+			getCommerceNotificationQueueEntry(commerceNotificationQueueEntryId);
 	}
 
 	public CommerceOrder getCommerceOrder() {

@@ -413,20 +413,20 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 	private CreationMenu _getFDSCreationMenu(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		if (fdsName.equals(CommerceOrderFragmentFDSNames.PENDING_ORDERS) &&
-			(_getCommerceAccount(httpServletRequest) != null)) {
+		if (!fdsName.equals(CommerceOrderFragmentFDSNames.PENDING_ORDERS) ||
+			(_getCommerceAccount(httpServletRequest) == null)) {
 
-			return CreationMenuBuilder.addPrimaryDropdownItem(
-				dropdownItem -> {
-					dropdownItem.setHref("addCommerceOrder");
-					dropdownItem.setLabel(
-						_language.get(httpServletRequest, "add-order"));
-					dropdownItem.setTarget("event");
-				}
-			).build();
+			return null;
 		}
 
-		return null;
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("addCommerceOrder");
+				dropdownItem.setLabel(
+					_language.get(httpServletRequest, "add-order"));
+				dropdownItem.setTarget("event");
+			}
+		).build();
 	}
 
 	private Map<String, Object> _getReturnableOrderItemsContextParams(

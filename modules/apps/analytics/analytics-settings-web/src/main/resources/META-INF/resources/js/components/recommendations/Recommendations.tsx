@@ -3,17 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {DisplayType} from '@clayui/alert';
 import {Body, Cell, Head, Row, Table, Text} from '@clayui/core';
 import {ClayToggle} from '@clayui/form';
+import ClayLabel from '@clayui/label';
 import {useModal} from '@clayui/modal';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {
+	JobStatus,
+	TExtendedRecommendationConfiguration,
 	TRecommendationConfiguration,
 	fetchRecommendationConfiguration,
 	updateRecommendationConfiguration,
 } from '../../utils/api';
+import {REFETCH_JOB_INTERVAL} from '../../utils/constants';
 import {useRequest} from '../../utils/useRequest';
 import StateRenderer from '../StateRenderer';
 import DisableJobModal from './DisableJobModal';
@@ -39,6 +44,11 @@ const header: {
 		width: '104px',
 	},
 	{
+		key: 'status',
+		value: Liferay.Language.get('status'),
+		width: '165px',
+	},
+	{
 		displayText: false,
 		key: 'toggle',
 		value: Liferay.Language.get('toggle'),
@@ -46,54 +56,65 @@ const header: {
 	},
 ];
 
+const statusMap: {
+	[key in JobStatus]: {
+		label: string;
+		value: DisplayType;
+	};
+} = {
+	[JobStatus.Disabled]: {
+		label: Liferay.Language.get('disabled'),
+		value: 'secondary',
+	},
+	[JobStatus.Enabled]: {
+		label: Liferay.Language.get('enabled'),
+		value: 'info',
+	},
+	[JobStatus.Configuring]: {
+		label: Liferay.Language.get('configuring'),
+		value: 'info',
+	},
+};
+
 interface IRecommendationsContentProps {
-	data: TRecommendationConfiguration | null;
+	jobs: Job[];
+	onJobChange: () => void;
 }
 
 const RecommendationsContent: React.FC<IRecommendationsContentProps> = ({
-	data,
+	jobs,
+	onJobChange,
 }) => {
-	const [jobs, setJobs] = useState<Job[]>(initialJobs);
 	const [selectedJobIndex, setSelectedJobIndex] = useState<number>(-1);
 	const {observer, onOpenChange, open} = useModal();
 
-	useEffect(() => {
-		if (data) {
-			setJobs(
-				initialJobs.map((job: Job) => ({
-					...job,
-					active: data[job.id],
-				}))
-			);
-		}
-	}, [data]);
-
-	const handleDisableJob = async (index: number, message: string) => {
+	const handleChangeJob = async (index: number, message: string) => {
 		const updatedJobs = [...jobs];
 
 		updatedJobs[index] = {
 			...updatedJobs[index],
-			active: !updatedJobs[index].active,
+			enabled: !updatedJobs[index].enabled,
 		};
 
-		const recomendationConfiguration: TRecommendationConfiguration | {} =
-			updatedJobs.reduce((acc, cur) => {
-				return {
-					...acc,
-					[cur.id]: cur.active,
-				};
-			}, {});
+		const recomendationConfiguration = updatedJobs.reduce((acc, cur) => {
+			return {
+				...acc,
+				[cur.id]: {
+					enabled: cur.enabled,
+				},
+			};
+		}, {}) as TRecommendationConfiguration;
 
 		const {ok} = await updateRecommendationConfiguration(
-			recomendationConfiguration as TRecommendationConfiguration
+			recomendationConfiguration
 		);
 
 		if (ok) {
-			setJobs(updatedJobs);
-
 			Liferay.Util.openToast({
 				message: sub(message, [updatedJobs[index].title]),
 			});
+
+			onJobChange();
 		}
 	};
 
@@ -110,7 +131,7 @@ const RecommendationsContent: React.FC<IRecommendationsContentProps> = ({
 
 				<Body>
 					{jobs.map(
-						({active, description, id, title, type}, index) => (
+						({description, enabled, id, title, type}, index) => (
 							<Row data-testid={id} key={id}>
 								<Cell>
 									<Text size={3} weight="bold">
@@ -126,17 +147,32 @@ const RecommendationsContent: React.FC<IRecommendationsContentProps> = ({
 									<Text size={3}>{type}</Text>
 								</Cell>
 
+								<Cell>
+									<ClayLabel
+										displayType={
+											statusMap[jobs[index].status].value
+										}
+									>
+										{statusMap[jobs[index].status].label}
+									</ClayLabel>
+								</Cell>
+
 								<Cell id="toggle" textValue={title}>
 									<ClayToggle
+										disabled={
+											jobs[index].enabled &&
+											jobs[index].status ===
+												JobStatus.Configuring
+										}
 										onToggle={async () => {
-											if (jobs[index].active) {
+											if (jobs[index].enabled) {
 												onOpenChange(true);
 												setSelectedJobIndex(index);
 
 												return;
 											}
 											else {
-												handleDisableJob(
+												handleChangeJob(
 													index,
 													Liferay.Language.get(
 														'x-was-updated-successfully'
@@ -146,7 +182,7 @@ const RecommendationsContent: React.FC<IRecommendationsContentProps> = ({
 												return;
 											}
 										}}
-										toggled={active}
+										toggled={enabled}
 									/>
 								</Cell>
 							</Row>
@@ -163,7 +199,7 @@ const RecommendationsContent: React.FC<IRecommendationsContentProps> = ({
 						onOpenChange(false);
 					}}
 					onDisable={() => {
-						handleDisableJob(
+						handleChangeJob(
 							selectedJobIndex,
 							Liferay.Language.get('x-was-disabled-successfully')
 						);
@@ -179,14 +215,51 @@ const RecommendationsContent: React.FC<IRecommendationsContentProps> = ({
 };
 
 const Recommendations: React.FC = () => {
-	const {data, error, loading} = useRequest<TRecommendationConfiguration>(
-		fetchRecommendationConfiguration
-	);
+	const [jobs, setJobs] = useState<Job[]>(initialJobs);
+	const [loaded, setLoaded] = useState(false);
+	const {data, error, refetch} =
+		useRequest<TExtendedRecommendationConfiguration>(
+			fetchRecommendationConfiguration
+		);
+
+	useEffect(() => {
+		let refetchJobs: NodeJS.Timeout | null = null;
+
+		if (data) {
+			setJobs(
+				initialJobs.map((job: Job) => ({
+					...job,
+					...data[job.id],
+				}))
+			);
+
+			refetchJobs = setTimeout(() => {
+				const configuring = Object.values(data).some(
+					({status}) => status === JobStatus.Configuring
+				);
+
+				if (configuring) {
+					clearTimeout(refetchJobs as NodeJS.Timeout);
+
+					refetch();
+				}
+			}, REFETCH_JOB_INTERVAL);
+
+			setLoaded(true);
+		}
+
+		return () => clearTimeout(refetchJobs as NodeJS.Timeout);
+	}, [data, refetch]);
 
 	return (
-		<StateRenderer empty={!data} error={error} loading={loading}>
+		<StateRenderer empty={!data} error={error} loading={!loaded}>
 			<StateRenderer.Success>
-				<RecommendationsContent data={data} />
+				<RecommendationsContent
+					jobs={jobs}
+					onJobChange={() => {
+						refetch();
+					}}
+				/>
 			</StateRenderer.Success>
 		</StateRenderer>
 	);

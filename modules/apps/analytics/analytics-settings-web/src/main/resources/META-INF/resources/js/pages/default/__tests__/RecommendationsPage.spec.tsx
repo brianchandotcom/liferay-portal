@@ -9,12 +9,18 @@ import '@testing-library/jest-dom/extend-expect';
 import {act, render, screen} from '@testing-library/react';
 import fetch from 'jest-fetch-mock';
 
-import {JobId} from '../../../utils/api';
+import {JobId, JobStatus} from '../../../utils/api';
 import RecommendationsPage from '../RecommendationsPage';
 
 const response = {
-	[JobId.ContentRecommenderMostPopularItemsEnabled]: true,
-	[JobId.ContentRecommenderUserPersonalizationEnabled]: true,
+	[JobId.ContentRecommenderMostPopularItems]: {
+		enabled: true,
+		status: JobStatus.Enabled,
+	},
+	[JobId.ContentRecommenderUserPersonalization]: {
+		enabled: true,
+		status: JobStatus.Enabled,
+	},
 };
 
 describe('RecommendationsPage', () => {

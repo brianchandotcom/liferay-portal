@@ -8,12 +8,18 @@ import {act, render} from '@testing-library/react';
 import fetch from 'jest-fetch-mock';
 import React from 'react';
 
-import {JobId} from '../../..//utils/api';
+import {JobId, JobStatus} from '../../..//utils/api';
 import RecommendationsStep from '../RecommendationsStep';
 
 const response = {
-	[JobId.ContentRecommenderMostPopularItemsEnabled]: true,
-	[JobId.ContentRecommenderUserPersonalizationEnabled]: true,
+	[JobId.ContentRecommenderMostPopularItems]: {
+		enabled: true,
+		status: JobStatus.Enabled,
+	},
+	[JobId.ContentRecommenderUserPersonalization]: {
+		enabled: true,
+		status: JobStatus.Enabled,
+	},
 };
 
 describe('Recommendations Step', () => {
